@@ -223,7 +223,7 @@ class PricingEngine:
     Handles intelligent pricing strategies, A/B testing, and optimization.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.price_points: Dict[str, PricePoint] = {}
         self.active_tests: Dict[str, PriceTest] = {}
         self.demand_data: List[DemandData] = []

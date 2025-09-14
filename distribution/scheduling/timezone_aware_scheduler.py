@@ -125,20 +125,20 @@ class TimezoneAwareScheduler:
         ["America/Los_Angeles", "America/Vancouver"]  # Wave 7: West America
     ]
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.audience_data: Dict[str, TimezoneAudience] = {}
         self.scheduled_items: List[ScheduledItem] = []
         self.platform_constraints: Dict[str, Dict[str, Any]] = {}
         self._schedule_lock = asyncio.Lock()
         
-    async def add_audience_data(self, timezone_data: List[TimezoneAudience]):
+    async def add_audience_data(self, timezone_data -> None: List[TimezoneAudience]) -> None:
         """Add audience data for multiple timezones"""
         for audience in timezone_data:
             self.audience_data[audience.timezone] = audience
             
         logger.info(f"Added audience data for {len(timezone_data)} timezones")
         
-    async def set_platform_constraints(self, platform: str, constraints: Dict[str, Any]):
+    async def set_platform_constraints(self, platform -> None: str, constraints -> None: Dict[str, Any]) -> None:
         """Set scheduling constraints for a platform"""
         self.platform_constraints[platform] = constraints
         logger.info(f"Set constraints for platform: {platform}")
@@ -602,7 +602,7 @@ class TimezoneAwareScheduler:
         return report
 
 # Usage example
-async def example_usage():
+async def example_usage() -> None:
     """Example usage of TimezoneAwareScheduler"""
     scheduler = TimezoneAwareScheduler()
     

@@ -78,7 +78,7 @@ class MetaOptimizer:
     Comprehensive meta-data optimizer for SEO that generates and optimizes
     all necessary meta tags for better search engine visibility.
     """
-    def __init__(self, language: str = "en", region: str = "US"):
+    def __init__(self, language -> None: str = "en", region -> None: str = "US") -> None:
         """
         Initialize the meta optimizer.
         

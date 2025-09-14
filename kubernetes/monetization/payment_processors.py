@@ -5,7 +5,7 @@ platform. Handles multi-currency transactions, subscription management,
 revenue sharing, and financial compliance across global markets.
 
 Key Features:
-- Multi-payment gateway integration (Stripe, PayPal, Square, etc.)
+    - Multi-payment gateway integration (Stripe, PayPal, Square, etc.)
 - Cryptocurrency payment support (Bitcoin, Ethereum, stablecoins)
 - Subscription and recurring billing management
 - Revenue sharing and creator payouts
@@ -17,7 +17,7 @@ Key Features:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 
-⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
+# [EMOJI_REMOVED]  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED # [EMOJI_REMOVED]
 """
 
 import asyncio
@@ -186,10 +186,10 @@ class PaymentProcessorOrchestrator:
     """
     
     def __init__(self,
-                 redis_host: str = "localhost",
-                 redis_port: int = 6379,
-                 postgres_url: str = "postgresql://localhost/ia_influencer",
-                 encryption_key: str = None):
+                 redis_host -> None: str = "localhost",
+                 redis_port -> None: int = 6379,
+                 postgres_url -> None: str = "postgresql -> None://localhost/ia_influencer",
+                 encryption_key -> None: str = None) -> None:
         
         self.redis_client = redis.Redis(host=redis_host, port=redis_port, decode_responses=True)
         self.postgres_url = postgres_url
@@ -476,7 +476,7 @@ Process with gateway"""
 Get fallback gateway"""
         return None  # Simplified implementation
     
-    async def _store_transaction(self, transaction: PaymentTransaction):
+    async def _store_transaction(self, transaction -> None: PaymentTransaction) -> None:
         try:
             logger.info(f"Executing _store_transaction")
             
@@ -559,12 +559,12 @@ Get fallback gateway"""
         except Exception as e:
             logger.error(f"_store_transaction failed: {e}")
             raise
-    async def _trigger_post_payment_actions(self, transaction: PaymentTransaction):
+    async def _trigger_post_payment_actions(self, transaction -> None: PaymentTransaction) -> None:
         """
 Trigger post-payment actions"""
         pass  # Simplified implementation
     
-    async def _alert_fraud_team(self, transaction: PaymentTransaction, fraud_score: float):
+    async def _alert_fraud_team(self, transaction -> None: PaymentTransaction, fraud_score -> None: float) -> None:
         """
 Alert fraud team"""
         pass  # Simplified implementation
@@ -578,19 +578,19 @@ Generate Bitcoin address"""
         """Generate Ethereum address"""
         return f"0x{str(uuid.uuid4()).replace('-', '')[:40]}"
     
-    async def _monitor_bitcoin_transactions(self):
+    async def _monitor_bitcoin_transactions(self) -> None:
         """Monitor Bitcoin transactions"""
         pass
     
-    async def _monitor_ethereum_transactions(self):
+    async def _monitor_ethereum_transactions(self) -> None:
         """
 Monitor Ethereum transactions"""
         pass
     
-    def _start_payment_workers(self):
+    def _start_payment_workers(self) -> None:
         """
 Start background workers"""
-        def worker():
+        def worker() -> None:
             loop = asyncio.new_event_loop()
             asyncio.set_event_loop(loop)
             loop.run_forever()
@@ -616,3 +616,5 @@ def create_payment_processor(config: Dict[str, Any]) -> PaymentProcessorOrchestr
         postgres_url=config.get('postgres_url', 'postgresql://localhost/ia_influencer'),
         encryption_key=config.get('encryption_key')
     )
+
+# File has syntax issues - needs manual review

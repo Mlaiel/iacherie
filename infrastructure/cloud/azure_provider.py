@@ -142,7 +142,7 @@ class AzureProvider:
     - Azure Virtual Networks and security groups
     """
     
-    def __init__(self, credentials: AzureCredentials):
+    def __init__(self, credentials -> None: AzureCredentials) -> None:
         """Initialize Azure provider with credentials"""
         self.credentials = credentials
         self.subscription_id = credentials.subscription_id
@@ -170,7 +170,7 @@ class AzureProvider:
             }
         }
         
-    def _initialize_clients(self):
+    def _initialize_clients(self) -> None:
         """Initialize Azure service clients"""
         if not AZURE_AVAILABLE:
             logger.warning("Azure SDK not available. Using simulation mode.")
@@ -207,7 +207,7 @@ class AzureProvider:
         except Exception as e:
             logger.error(f"Failed to initialize Azure clients: {e}")
             
-    def _ensure_resource_group(self):
+    def _ensure_resource_group(self) -> None:
         """Ensure resource group exists"""
         try:
             self.clients['resource'].resource_groups.create_or_update(
@@ -718,7 +718,7 @@ class AzureProvider:
             logger.error(f"Failed to create network interface {nic_name}: {e}")
             raise
             
-    async def _install_ainflue_extensions(self, vm_name: str, location: str):
+    async def _install_ainflue_extensions(self, vm_name -> None: str, location -> None: str) -> None:
         """Install Ainflue software via VM extensions"""
         try:
             extension_params = {
@@ -781,7 +781,7 @@ class AzureProvider:
         # For now, return a placeholder
         return f"/subscriptions/{self.subscription_id}/resourceGroups/{self.resource_group}/providers/Microsoft.OperationalInsights/workspaces/ainflue-logs"
         
-    async def _configure_sql_firewall(self, server_name: str):
+    async def _configure_sql_firewall(self, server_name -> None: str) -> None:
         """Configure SQL Server firewall rules"""
         try:
             # Allow Azure services
@@ -800,7 +800,7 @@ class AzureProvider:
         except Exception as e:
             logger.error(f"Failed to configure SQL firewall: {e}")
             
-    async def _create_blob_containers(self, storage_account_name: str, containers: List[str]):
+    async def _create_blob_containers(self, storage_account_name -> None: str, containers -> None: List[str]) -> None:
         """Create blob containers in storage account"""
         try:
             # Get storage account key

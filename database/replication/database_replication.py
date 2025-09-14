@@ -136,7 +136,7 @@ class IReplicationHandler(ABC):
 class PostgreSQLReplicationHandler(IReplicationHandler):
     """PostgreSQL replication handler with WAL streaming and logical replication."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._topology: Optional[ReplicationTopology] = None
         self._master_pool: Optional[asyncpg.Pool] = None
         self._slave_pools: Dict[str, asyncpg.Pool] = {}
@@ -196,7 +196,7 @@ class PostgreSQLReplicationHandler(IReplicationHandler):
         
         return "".join(dsn_parts)
     
-    async def _verify_replication_setup(self):
+    async def _verify_replication_setup(self) -> None:
         """Verify PostgreSQL replication is properly configured."""
         try:
             async with self._master_pool.acquire() as conn:
@@ -262,7 +262,7 @@ class PostgreSQLReplicationHandler(IReplicationHandler):
             logger.error(f"❌ Failed to stop PostgreSQL replication: {e}")
             return False
     
-    async def _replication_monitoring_loop(self):
+    async def _replication_monitoring_loop(self) -> None:
         """Main replication monitoring loop."""
         while self._is_running:
             try:
@@ -515,7 +515,7 @@ class PostgreSQLReplicationHandler(IReplicationHandler):
 class MongoDBReplicationHandler(IReplicationHandler):
     """MongoDB replication handler with replica sets and cross-cluster replication."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._topology: Optional[ReplicationTopology] = None
         self._client: Optional[motor.motor_asyncio.AsyncIOMotorClient] = None
         self._is_running = False
@@ -557,7 +557,7 @@ class MongoDBReplicationHandler(IReplicationHandler):
             logger.error(f"❌ Failed to initialize MongoDB replication: {e}")
             return False
     
-    async def _verify_replica_set(self):
+    async def _verify_replica_set(self) -> None:
         """Verify MongoDB replica set configuration."""
         try:
             db = self._client[self._topology.master.database]
@@ -613,7 +613,7 @@ class MongoDBReplicationHandler(IReplicationHandler):
             logger.error(f"❌ Failed to stop MongoDB replication: {e}")
             return False
     
-    async def _replication_monitoring_loop(self):
+    async def _replication_monitoring_loop(self) -> None:
         """MongoDB replication monitoring loop."""
         while self._is_running:
             try:
@@ -825,7 +825,7 @@ class MongoDBReplicationHandler(IReplicationHandler):
 class ElasticsearchReplicationHandler(IReplicationHandler):
     """Elasticsearch replication handler with cross-cluster replication."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._topology: Optional[ReplicationTopology] = None
         self._client: Optional[AsyncElasticsearch] = None
         self._is_running = False
@@ -863,7 +863,7 @@ class ElasticsearchReplicationHandler(IReplicationHandler):
             logger.error(f"❌ Failed to initialize Elasticsearch replication: {e}")
             return False
     
-    async def _verify_cluster_health(self):
+    async def _verify_cluster_health(self) -> None:
         """Verify Elasticsearch cluster health."""
         try:
             health = await self._client.cluster.health()
@@ -914,7 +914,7 @@ class ElasticsearchReplicationHandler(IReplicationHandler):
             logger.error(f"❌ Failed to stop Elasticsearch replication: {e}")
             return False
     
-    async def _replication_monitoring_loop(self):
+    async def _replication_monitoring_loop(self) -> None:
         """Elasticsearch replication monitoring loop."""
         while self._is_running:
             try:
@@ -1104,7 +1104,7 @@ class ElasticsearchReplicationHandler(IReplicationHandler):
 class DatabaseReplicationCoordinator:
     """Coordinates replication across multiple database types."""
     
-    def __init__(self, config: Optional[ReplicationConfig] = None):
+    def __init__(self, config -> None: Optional[ReplicationConfig] = None) -> None:
         self._config = config
         self._handlers: Dict[str, IReplicationHandler] = {}
         self._is_initialized = False
@@ -1338,7 +1338,7 @@ class DatabaseReplicationCoordinator:
                 disk_usage_percent=0.0
             )
     
-    async def close(self):
+    async def close(self) -> None:
         """Close all handlers."""
         try:
             for db_type, handler in self._handlers.items():

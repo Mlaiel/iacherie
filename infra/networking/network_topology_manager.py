@@ -1,3 +1,8 @@
+"""
+Network Topology Manager module
+Enterprise implementation for Ainflue platform
+"""
+
 # Ainflue Infrastructure Module
 # =============================
 # 
@@ -103,7 +108,7 @@ class NetworkTopologyManager:
     security zones, and performance optimization.
     """
     
-    def __init__(self, config_path: str = "/etc/ainflue/network"):
+    def __init__(self, config_path -> None: str = "/etc/ainflue/network") -> None:
         self.config_path = Path(config_path)
         self.config_path.mkdir(parents=True, exist_ok=True)
         self.logger = self._setup_logging()
@@ -136,7 +141,7 @@ class NetworkTopologyManager:
         
         return logger
     
-    def _load_configuration(self):
+    def _load_configuration(self) -> None:
         """Load network configuration from files"""
         try:
             # Load network segments
@@ -252,7 +257,7 @@ class NetworkTopologyManager:
             self.logger.error(f"Failed to add network connection {connection.name}: {str(e)}")
             return False
     
-    def _save_network_segments(self):
+    def _save_network_segments(self) -> None:
         """Save network segments to file"""
         segments_file = self.config_path / "network_segments.yaml"
         
@@ -276,7 +281,7 @@ class NetworkTopologyManager:
         with open(segments_file, 'w') as f:
             yaml.dump(segments_data, f, default_flow_style=False)
     
-    def _save_routing_rules(self):
+    def _save_routing_rules(self) -> None:
         """Save routing rules to file"""
         routing_file = self.config_path / "routing_rules.yaml"
         
@@ -297,7 +302,7 @@ class NetworkTopologyManager:
         with open(routing_file, 'w') as f:
             yaml.dump(routing_data, f, default_flow_style=False)
     
-    def _save_connections(self):
+    def _save_connections(self) -> None:
         """Save connections to file"""
         connections_file = self.config_path / "connections.yaml"
         

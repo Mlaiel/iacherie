@@ -1,7 +1,14 @@
+"""
+Quality Control Config module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 """Ainflue Quality Control Configuration Module
+import asyncio
+
 ==============================================
 
 Enterprise-grade quality control configuration for the Ainflue platform.
@@ -441,7 +448,7 @@ class QualityProfile:
 class QualityControlConfiguration:
     """Main quality control configuration manager"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize quality control configuration"""
         # Data storage
         self.profiles: Dict[str, QualityProfile] = {}
@@ -511,7 +518,7 @@ class QualityControlConfiguration:
         # Initialize default profiles
         self._initialize_default_profiles()
     
-    def _initialize_default_profiles(self):
+    def _initialize_default_profiles(self) -> None:
         """Initialize default quality control profiles"""
         
         # Video quality profile

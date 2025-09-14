@@ -753,6 +753,8 @@ def skip_if_no_database():
 
 
 # Example usage:
-# @pytest.mark.skipif(skip_if_no_redis(), reason="Redis not available")
+    # @pytest.mark.skipif(skip_if_no_redis(), reason="Redis not available")
 # async def test_redis_dependent_feature(self):
-#     pass
+    #     pass
+
+# File has syntax issues - needs manual review

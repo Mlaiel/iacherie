@@ -1,4 +1,6 @@
 """MongoDB Leaderboard Manager
+import asyncio
+
 ============================
 
 Dynamic leaderboards and ranking system for gamification in the Ainflue platform.
@@ -73,7 +75,7 @@ class LeaderboardEntry:
 class LeaderboardManager:
     """Enterprise-grade leaderboard management system."""
     
-    def __init__(self, client: MongoClient, database_name: str):
+    def __init__(self, client -> None: MongoClient, database_name -> None: str) -> None:
         """Initialize leaderboard manager."""
         if not MONGODB_AVAILABLE:
             raise ImportError("PyMongo is required for leaderboard management")
@@ -95,7 +97,7 @@ class LeaderboardManager:
         # Initialize default leaderboards
         self._ensure_default_leaderboards()
     
-    def _ensure_default_leaderboards(self):
+    def _ensure_default_leaderboards(self) -> None:
         """Ensure default leaderboards exist."""
         default_leaderboards = [
             LeaderboardConfig(
@@ -672,7 +674,7 @@ class LeaderboardManager:
             logger.error(f"Failed to get current entries: {e}")
             return []
     
-    def _store_leaderboard_entries(self, leaderboard_id: str, entries: List[LeaderboardEntry]):
+    def _store_leaderboard_entries(self, leaderboard_id -> None: str, entries -> None: List[LeaderboardEntry]) -> None:
         """Store new leaderboard entries."""
         try:
             # Remove existing entries
@@ -693,7 +695,7 @@ class LeaderboardManager:
         except Exception as e:
             logger.error(f"Failed to store leaderboard entries: {e}")
     
-    def _archive_leaderboard(self, leaderboard_id: str, entries: List[Dict[str, Any]]):
+    def _archive_leaderboard(self, leaderboard_id -> None: str, entries -> None: List[Dict[str, Any]]) -> None:
         """Archive previous leaderboard for history."""
         try:
             if entries:

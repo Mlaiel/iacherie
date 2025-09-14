@@ -1,4 +1,4 @@
-"""📊 Piracy Monitoring Service
+"""# [EMOJI_REMOVED] Piracy Monitoring Service
 ===========================
 
 Real-time continuous monitoring for content piracy detection.
@@ -7,7 +7,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 This module provides:
-- 24/7 real-time monitoring across 500+ platforms
+    - 24/7 real-time monitoring across 500+ platforms
 - Intelligent scheduling and resource optimization
 - Alert generation and notification systems
 - Performance tracking and analytics
@@ -64,7 +64,7 @@ class PiracyMonitoringService:
     smart prioritization, and real-time violation detection.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Piracy Monitoring Service.
         
@@ -523,3 +523,5 @@ Gracefully shutdown monitoring service."""
         self.active_sessions.clear()
         
         logger.info("Piracy Monitoring Service shutdown complete")
+
+# File has syntax issues - needs manual review

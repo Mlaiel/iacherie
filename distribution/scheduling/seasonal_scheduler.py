@@ -94,7 +94,7 @@ class SeasonalScheduler:
     - Competitive landscape analysis
     """
     
-    def __init__(self, region: str = "US", timezone: str = "UTC"):
+    def __init__(self, region -> None: str = "US", timezone -> None: str = "UTC") -> None:
         """
         Initialize seasonal scheduler
         
@@ -697,7 +697,7 @@ class SeasonalScheduler:
         return recommendations
 
 # Usage example
-async def main():
+async def main() -> None:
     """Example usage of SeasonalScheduler"""
     scheduler = SeasonalScheduler(region="US", timezone="EST")
     

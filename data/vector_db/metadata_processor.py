@@ -128,7 +128,7 @@ class ProcessedMetadata:
 class ContentTypeDetector:
     """Detects content type from various inputs."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize content type detector."""
         self.mime_to_content_type = {
             # Text
@@ -319,7 +319,7 @@ class ContentTypeDetector:
 class FeatureExtractor:
     """Extracts technical features from content."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize feature extractor."""
         self.content_type_detector = ContentTypeDetector()
     
@@ -603,7 +603,7 @@ class FeatureExtractor:
 class QualityAssessor:
     """Assesses content quality using various metrics."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize quality assessor."""
         pass
     
@@ -940,7 +940,7 @@ class MetadataProcessor:
     - Batch processing support
     """
     
-    def __init__(self, config: Any):
+    def __init__(self, config -> None: Any) -> None:
         """
         Initialize metadata processor.
         

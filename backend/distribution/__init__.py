@@ -1,4 +1,6 @@
 """Advanced Distribution Module - Multi-Platform Content Distribution System
+import asyncio
+
 =========================================================================
 
 Comprehensive content distribution ecosystem providing platform connectivity,
@@ -352,7 +354,7 @@ class DistributionOrchestrator:
     content distribution experience across multiple platforms.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the distribution orchestrator."""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self.initialized = False
@@ -943,7 +945,7 @@ class DistributionOrchestrator:
             return results
 
 
-    async def cleanup(self):
+    async def cleanup(self) -> None:
         """Cleanup all distribution modules."""
         try:
             if self.platform_manager:

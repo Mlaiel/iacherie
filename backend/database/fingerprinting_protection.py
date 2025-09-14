@@ -573,7 +573,7 @@ class VectorEmbedding(Base):
 # EXPORT FUNCTIONS
 # ================================
 
-def get_fingerprinting_protection_models():
+def get_fingerprinting_protection_models() -> None:
     """Get all fingerprinting and protection models."""
     return [
         ContentFingerprint,
@@ -589,7 +589,7 @@ def get_fingerprinting_protection_models():
     ]
 
 
-def create_fingerprinting_protection_tables(engine):
+def create_fingerprinting_protection_tables(engine) -> None:
     """Create all fingerprinting and protection tables."""
     try:
         Base.metadata.create_all(engine, tables=[model.__table__ for model in get_fingerprinting_protection_models()])

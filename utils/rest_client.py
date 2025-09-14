@@ -52,7 +52,7 @@ class RestClient:
     - Response caching
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize REST client"""
         self.session = None
         self.default_config = RequestConfig()
@@ -72,7 +72,7 @@ class RestClient:
         
         logger.info("RestClient initialized")
     
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         """Async context manager entry"""
         if not self.session:
             connector = aiohttp.TCPConnector(
@@ -92,7 +92,7 @@ class RestClient:
         
         return self
     
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         """Async context manager exit"""
         if self.session:
             await self.session.close()
@@ -281,7 +281,7 @@ class RestClient:
         
         return True
     
-    def _handle_failed_request(self, url: str):
+    def _handle_failed_request(self, url -> None: str) -> None:
         """Handle failed request for circuit breaker"""
         if url not in self.failed_requests:
             self.failed_requests[url] = [0, 0]
@@ -289,7 +289,7 @@ class RestClient:
         self.failed_requests[url][0] += 1  # Increment failure count
         self.failed_requests[url][1] = time.time()  # Update last failure time
     
-    def _update_stats(self, method: str, status_code: int, response_time: float, success: bool):
+    def _update_stats(self, method -> None: str, status_code -> None: int, response_time -> None: float, success -> None: bool) -> None:
         """Update request statistics"""
         self.stats['total_requests'] += 1
         
@@ -419,7 +419,7 @@ class RestClient:
         
         return stats
     
-    def reset_stats(self):
+    def reset_stats(self) -> None:
         """Reset statistics"""
         self.stats = {
             'total_requests': 0,

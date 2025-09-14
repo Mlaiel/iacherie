@@ -122,7 +122,7 @@ class HistogramAnalyzer:
 class AdaptiveContrastEnhancer:
     """Adaptive contrast enhancement based on local and global characteristics."""
     
-    def __init__(self, config: ContrastConfig):
+    def __init__(self, config -> None: ContrastConfig) -> None:
         self.config = config
     
     def enhance_contrast(self, image: np.ndarray) -> np.ndarray:
@@ -292,7 +292,7 @@ class AdaptiveContrastEnhancer:
 class ContrastOptimizationEngine:
     """Enterprise contrast optimization engine with multiple algorithms."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.config = ContrastConfig()
         
     async def optimize_contrast(

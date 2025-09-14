@@ -162,7 +162,7 @@ class CrossLayerBridge:
 class Layer2Manager:
     """Enterprise Layer 2 scaling management system"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.networks: Dict[Layer2Network, Layer2Config] = {}
         self.optimizers: Dict[str, ScalingOptimizer] = {}
@@ -198,7 +198,7 @@ class Layer2Manager:
             logger.error(f"Error initializing Layer 2 manager: {str(e)}")
             return False
 
-    async def _setup_l2_networks(self):
+    async def _setup_l2_networks(self) -> None:
         """Setup Layer 2 network configurations"""
         try:
             # Polygon (PoS)
@@ -289,7 +289,7 @@ class Layer2Manager:
         except Exception as e:
             logger.error(f"Error setting up L2 networks: {str(e)}")
 
-    async def _initialize_optimizers(self):
+    async def _initialize_optimizers(self) -> None:
         """Initialize scaling optimizers"""
         try:
             # Gas optimization strategy
@@ -329,7 +329,7 @@ class Layer2Manager:
         except Exception as e:
             logger.error(f"Error initializing optimizers: {str(e)}")
 
-    async def _setup_bridges(self):
+    async def _setup_bridges(self) -> None:
         """Setup cross-layer bridges"""
         try:
             # Ethereum <-> Polygon bridge
@@ -366,7 +366,7 @@ class Layer2Manager:
         except Exception as e:
             logger.error(f"Error setting up bridges: {str(e)}")
 
-    async def _initialize_polygon_manager(self):
+    async def _initialize_polygon_manager(self) -> None:
         """Initialize Polygon-specific management"""
         try:
             self.polygon_manager = PolygonManager(
@@ -390,7 +390,7 @@ class Layer2Manager:
         except Exception as e:
             logger.error(f"Error initializing Polygon manager: {str(e)}")
 
-    async def _start_performance_monitoring(self):
+    async def _start_performance_monitoring(self) -> None:
         """Start performance monitoring for all L2 networks"""
         try:
             # Initialize performance metrics
@@ -671,7 +671,7 @@ class Layer2Manager:
             logger.error(f"Error executing cross-layer transfer: {str(e)}")
             raise
 
-    async def _process_bridge_transfer(self, tx_id: str, bridge: CrossLayerBridge):
+    async def _process_bridge_transfer(self, tx_id -> None: str, bridge -> None: CrossLayerBridge) -> None:
         """Process bridge transfer (simplified simulation)"""
         try:
             transaction = self.transactions[tx_id]

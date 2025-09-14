@@ -63,7 +63,7 @@ class ConfigurationIndex:
     - Status reporting
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """
 Initialize configuration index"""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")

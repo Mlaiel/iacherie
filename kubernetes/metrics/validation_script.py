@@ -58,7 +58,7 @@ class MetricsModuleValidator:
     - Integration capabilities
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.validation_results: Dict[str, Any] = {}
         self.errors: List[str] = []
         self.warnings: List[str] = []
@@ -561,7 +561,7 @@ Generate recommendations based on validation results"""
         return recommendations
 
 
-async def main():
+async def main() -> None:
     """Run complete metrics module validation"""
     
     print("🔍 IA Influencer Agent - Metrics Module Validation")

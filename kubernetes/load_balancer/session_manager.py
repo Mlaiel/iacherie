@@ -98,7 +98,7 @@ class SessionManager:
     distribution for the IA Influencer Agent platform's microservices.
     """
     
-    def __init__(self, redis_client: Optional[redis.Redis] = None, secret_key: str = None):
+    def __init__(self, redis_client -> None: Optional[redis.Redis] = None, secret_key -> None: str = None) -> None:
         self.redis_client = redis_client or redis.Redis(host='localhost', port=6379, db=0)
         self.secret_key = secret_key or self._generate_secret_key()
         

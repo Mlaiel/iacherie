@@ -184,6 +184,7 @@ Complete alert system configuration."""
     updated_by: Optional[str] = None
     
     class Config:
+    """Config: class implementation"""
         use_enum_values = True
         json_encoders = {
             datetime: lambda v: v.isoformat()
@@ -198,11 +199,11 @@ class ConfigurationManager:
     
     def __init__(
         self,
-        cache_manager: CacheManager,
-        redis_client: redis.Redis,
-        config_sources: List[ConfigurationSource] = None,
-        hot_reload: bool = True
-    ):
+        cache_manager -> None: CacheManager,
+        redis_client -> None: redis.Redis,
+        config_sources -> None: List[ConfigurationSource] = None,
+        hot_reload -> None: bool = True
+    ) -> None:
         self.cache_manager = cache_manager
         self.redis_client = redis_client
         self.config_sources = config_sources or [
@@ -223,7 +224,7 @@ class ConfigurationManager:
         
         logger.info("Configuration Manager initialized")
 
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize the configuration manager."""
         try:
             # Load configurations from all sources
@@ -310,7 +311,7 @@ class ConfigurationManager:
             logger.error(f"Failed to update configuration: {e}")
             return False
 
-    async def register_change_callback(self, callback: Callable):
+    async def register_change_callback(self, callback -> None: Callable) -> None:
         """Register callback for configuration changes."""
         self._configuration_callbacks.append(callback)
 
@@ -378,7 +379,7 @@ class ConfigurationManager:
             logger.error(f"Failed to get configuration history: {e}")
             return []
 
-    async def _load_configurations(self):
+    async def _load_configurations(self) -> None:
         """Load configurations from all sources."""
         for source in self.config_sources:
             try:
@@ -396,7 +397,7 @@ class ConfigurationManager:
             except Exception as e:
                 logger.warning(f"Failed to load configuration from {source.value}: {e}")
 
-    async def _load_from_filesystem(self):
+    async def _load_from_filesystem(self) -> None:
         """Load configuration from filesystem."""
         config_files = list(self.config_dir.glob("*.json")) + list(self.config_dir.glob("*.yaml"))
         
@@ -421,7 +422,7 @@ class ConfigurationManager:
             except Exception as e:
                 logger.error(f"Failed to load config file {config_file}: {e}")
 
-    async def _load_from_environment(self):
+    async def _load_from_environment(self) -> None:
         """Load configuration from environment variables."""
         try:
             # Build configuration from environment variables
@@ -441,7 +442,7 @@ class ConfigurationManager:
         except Exception as e:
             logger.error(f"Failed to load configuration from environment: {e}")
 
-    async def _load_from_redis(self):
+    async def _load_from_redis(self) -> None:
         """Load configuration from Redis."""
         try:
             # Get all configuration keys
@@ -458,7 +459,7 @@ class ConfigurationManager:
         except Exception as e:
             logger.error(f"Failed to load configuration from Redis: {e}")
 
-    async def _load_from_database(self):
+    async def _load_from_database(self) -> None:
         try:
             logger.info(f"Executing _load_from_database")
             
@@ -475,10 +476,10 @@ class ConfigurationManager:
             raise
     async def _store_configuration(
         self,
-        scope: ConfigurationScope,
-        scope_id: Optional[str],
-        config: AlertSystemConfiguration
-    ):
+        scope -> None: ConfigurationScope,
+        scope_id -> None: Optional[str],
+        config -> None: AlertSystemConfiguration
+    ) -> None:
         """
 Store configuration to all applicable sources."""
         config_key = self._build_config_key(scope, scope_id)
@@ -499,7 +500,7 @@ Store configuration to all applicable sources."""
         # Add to history
         await self._add_to_history(config_key, config)
 
-    async def _save_to_filesystem(self, config_key: str, config: AlertSystemConfiguration):
+    async def _save_to_filesystem(self, config_key -> None: str, config -> None: AlertSystemConfiguration) -> None:
         """Save configuration to filesystem."""
         try:
             config_file = self.config_dir / f"{config_key}.json"
@@ -510,7 +511,7 @@ Store configuration to all applicable sources."""
         except Exception as e:
             logger.error(f"Failed to save configuration to filesystem: {e}")
 
-    async def _add_to_history(self, config_key: str, config: AlertSystemConfiguration):
+    async def _add_to_history(self, config_key -> None: str, config -> None: AlertSystemConfiguration) -> None:
         """Add configuration change to history."""
         try:
             history_entry = {
@@ -529,7 +530,7 @@ Store configuration to all applicable sources."""
         except Exception as e:
             logger.error(f"Failed to add configuration to history: {e}")
 
-    async def _validate_configurations(self):
+    async def _validate_configurations(self) -> None:
         """Validate all loaded configurations."""
         for config_key, config in self._configurations.items():
             try:
@@ -537,7 +538,7 @@ Store configuration to all applicable sources."""
             except Exception as e:
                 logger.error(f"Configuration validation failed for {config_key}: {e}")
 
-    async def _validate_single_configuration(self, config: AlertSystemConfiguration):
+    async def _validate_single_configuration(self, config -> None: AlertSystemConfiguration) -> None:
         """Validate a single configuration."""
         # Validate severity thresholds
         thresholds = config.severity_thresholds
@@ -557,10 +558,10 @@ Store configuration to all applicable sources."""
 
     async def _notify_configuration_change(
         self,
-        scope: ConfigurationScope,
-        scope_id: Optional[str],
-        config: AlertSystemConfiguration
-    ):
+        scope -> None: ConfigurationScope,
+        scope_id -> None: Optional[str],
+        config -> None: AlertSystemConfiguration
+    ) -> None:
         """Notify registered callbacks of configuration changes."""
         for callback in self._configuration_callbacks:
             try:
@@ -571,7 +572,7 @@ Store configuration to all applicable sources."""
             except Exception as e:
                 logger.error(f"Configuration change callback failed: {e}")
 
-    async def _setup_file_watcher(self):
+    async def _setup_file_watcher(self) -> None:
         """Setup file system watcher for hot-reload."""
         try:
             event_handler = ConfigFileEventHandler(self)
@@ -603,7 +604,7 @@ Store configuration to all applicable sources."""
         else:
             return {'scope': ConfigurationScope.GLOBAL, 'scope_id': None}
 
-    def _set_nested_value(self, dictionary: Dict, path: List[str], value: str):
+    def _set_nested_value(self, dictionary -> None: Dict, path -> None: List[str], value -> None: str) -> None:
         """
 Set nested dictionary value from path list."""
         current = dictionary
@@ -640,11 +641,11 @@ class ConfigFileEventHandler(FileSystemEventHandler):
     """
 File system event handler for configuration hot-reload."""
     
-    def __init__(self, config_manager: ConfigurationManager):
+    def __init__(self, config_manager -> None: ConfigurationManager) -> None:
         self.config_manager = config_manager
         self._last_modified = {}
     
-    def on_modified(self, event):
+    def on_modified(self, event) -> None:
         """
 Handle file modification events."""
         if event.is_directory:
@@ -665,7 +666,7 @@ Handle file modification events."""
         # Reload configuration asynchronously
         asyncio.create_task(self._reload_config_file(file_path))
     
-    async def _reload_config_file(self, file_path: Path):
+    async def _reload_config_file(self, file_path -> None: Path) -> None:
         """
 Reload configuration from modified file."""
         try:
@@ -710,3 +711,5 @@ __all__ = [
     "ConfigurationManager",
     "ConfigFileEventHandler"
 ]
+
+# File has syntax issues - needs manual review

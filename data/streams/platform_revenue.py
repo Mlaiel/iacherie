@@ -205,10 +205,10 @@ class PlatformRevenueIntegration:
     
     def __init__(
         self,
-        max_concurrent_connections: int = 50,
-        enable_real_time_sync: bool = True,
-        revenue_tracking_enabled: bool = True
-    ):
+        max_concurrent_connections -> None: int = 50,
+        enable_real_time_sync -> None: bool = True,
+        revenue_tracking_enabled -> None: bool = True
+    ) -> None:
         # Configuration
         self.max_concurrent_connections = max_concurrent_connections
         self.enable_real_time_sync = enable_real_time_sync
@@ -1154,7 +1154,7 @@ class PlatformRevenueIntegration:
 class PlatformStreamer:
     """Legacy compatibility wrapper for PlatformRevenueIntegration platform functionality"""
     
-    def __init__(self, integration: Optional[PlatformRevenueIntegration] = None):
+    def __init__(self, integration -> None: Optional[PlatformRevenueIntegration] = None) -> None:
         self.integration = integration or PlatformRevenueIntegration()
         
     async def initialize(self) -> None:
@@ -1173,7 +1173,7 @@ class PlatformStreamer:
 class RevenueStreamer:
     """Legacy compatibility wrapper for PlatformRevenueIntegration revenue functionality"""
     
-    def __init__(self, integration: Optional[PlatformRevenueIntegration] = None):
+    def __init__(self, integration -> None: Optional[PlatformRevenueIntegration] = None) -> None:
         self.integration = integration or PlatformRevenueIntegration()
         
     async def initialize(self) -> None:

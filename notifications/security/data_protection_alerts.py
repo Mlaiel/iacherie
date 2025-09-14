@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 class DataProtectionAlerts:
     """Data protection compliance and alerting system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         logger.info("Data protection alerts initialized")
     
     async def notify_compliance_issue(self, compliance_data: Dict[str, Any]) -> bool:

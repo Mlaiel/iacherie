@@ -72,7 +72,7 @@ class CrossPlatformSyncMonitor:
     conflict detection, performance optimization, and automated resolution.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.active_syncs: Dict[str, SyncOperation] = {}
         self.sync_history: List[SyncOperation] = []
         self.conflicts: Dict[str, SyncConflict] = {}
@@ -82,7 +82,7 @@ class CrossPlatformSyncMonitor:
         self._initialize_resolution_rules()
         logger.info("Cross-Platform Sync Monitor initialized")
     
-    def _initialize_resolution_rules(self):
+    def _initialize_resolution_rules(self) -> None:
         """Initialize conflict resolution rules"""
         self.conflict_resolution_rules = {
             SyncConflictType.VERSION_MISMATCH: "use_latest_version",
@@ -170,7 +170,7 @@ class CrossPlatformSyncMonitor:
         total_time = base_time * modifier * priority_modifiers[priority]
         return timedelta(seconds=total_time)
     
-    async def _process_sync_operation(self, operation_id: str):
+    async def _process_sync_operation(self, operation_id -> None: str) -> None:
         """Process individual sync operation"""
         try:
             sync_op = self.active_syncs[operation_id]
@@ -237,7 +237,7 @@ class CrossPlatformSyncMonitor:
         
         return None
     
-    async def _handle_conflict(self, conflict: SyncConflict):
+    async def _handle_conflict(self, conflict -> None: SyncConflict) -> None:
         """Handle sync conflict using resolution rules"""
         resolution_strategy = self.conflict_resolution_rules.get(conflict.conflict_type)
         

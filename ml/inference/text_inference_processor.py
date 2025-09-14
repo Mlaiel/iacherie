@@ -158,7 +158,7 @@ class TextInferenceProcessor:
     - Edge computing ready
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialise le processeur de texte
         
         Args:
@@ -180,7 +180,7 @@ class TextInferenceProcessor:
         
         logger.info("Text Inference Processor initialized - Blogger Intelligence Ready")
     
-    def _load_language_resources(self):
+    def _load_language_resources(self) -> None:
         """Chargement des ressources linguistiques"""
         # Mots vides par langue
         self.stopwords = {
@@ -920,7 +920,7 @@ class TextInferenceProcessor:
         
         return list(set(suggestions))  # Suppression des doublons
     
-    async def _update_analytics(self, creator_id: str, result: TextAnalysisResult):
+    async def _update_analytics(self, creator_id -> None: str, result -> None: TextAnalysisResult) -> None:
         """Mise à jour des analytics créateur"""
         try:
             if creator_id not in self.analytics:

@@ -1,3 +1,8 @@
+"""
+  Init   module
+Enterprise implementation for Ainflue platform
+"""
+
 # Ainflue Infrastructure Module
 # =============================
 # 
@@ -65,7 +70,7 @@ COMPLIANCE_FRAMEWORKS = [
     "NIST"
 ]
 
-def get_security_info():
+def get_security_info() -> None:
     """Get security module information."""
     return {
         "version": __version__,

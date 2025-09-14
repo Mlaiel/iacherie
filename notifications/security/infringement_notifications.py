@@ -36,7 +36,7 @@ class InfringementNotifications:
     Detects and notifies users about content infringement
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize infringement notifications"""
         self.notifications: List[InfringementNotification] = []
         logger.info("Infringement notifications system initialized")
@@ -77,7 +77,7 @@ class InfringementNotifications:
             logger.error(f"Error sending infringement notification: {str(e)}")
             return False
     
-    async def _send_infringement_alert(self, notification: InfringementNotification):
+    async def _send_infringement_alert(self, notification -> None: InfringementNotification) -> None:
         """Send infringement alert based on severity"""
         channels = ["in_app", "email"]
         if notification.severity in ["high", "critical"]:

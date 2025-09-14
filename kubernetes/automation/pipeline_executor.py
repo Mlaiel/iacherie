@@ -187,7 +187,7 @@ class PipelineExecutor(BaseComponent):
     error handling, and intelligent retry mechanisms for
     deployment automation in the IA Influencer Agent platform.
     """
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         super().__init__()
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -1397,7 +1397,7 @@ Build stage execution order based on dependencies"""
         ordered_stages = []
         processed = set()
         
-        def visit_stage(stage_id: str):
+        def visit_stage(stage_id -> None: str) -> None:
             if stage_id in processed:
                 return
             

@@ -73,7 +73,7 @@ class MonetizationConfig:
     memory_limit: str = "4Gi"
     storage_size: str = "500Gi"
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.revenue_models is None:
             self.revenue_models = [RevenueModel.COMMISSION, RevenueModel.LICENSING]
         if self.payment_providers is None:
@@ -95,7 +95,7 @@ class MonetizationOrchestrator:
     - Fraud detection and prevention
     """
     
-    def __init__(self, namespace: str = "ia-influencer-monetization"):
+    def __init__(self, namespace -> None: str = "ia-influencer-monetization") -> None:
         """
         Initialize monetization orchestrator
         

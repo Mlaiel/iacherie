@@ -115,7 +115,7 @@ class PromotionRequest:
 class EnvironmentProvisioner:
     """Provisions and manages environment infrastructure"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.provisioning_templates = {}
         self.active_provisioning = set()
     
@@ -306,7 +306,7 @@ class EnvironmentProvisioner:
 class ModelPromotionManager:
     """Manages model promotions between environments"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.promotion_workflows = {}
         self.approval_rules = {
             EnvironmentType.PRODUCTION: ["lead_engineer", "security_team"],
@@ -379,7 +379,7 @@ class ModelPromotionManager:
         
         return True
     
-    async def _validate_promotion_request(self, promotion_request: PromotionRequest):
+    async def _validate_promotion_request(self, promotion_request -> None: PromotionRequest) -> None:
         """Validate promotion request"""
         # Check if source environment exists and has the model
         # Check if target environment exists
@@ -403,7 +403,7 @@ class ModelPromotionManager:
                 f"Allowed targets: {[t.value for t in allowed_targets]}"
             )
     
-    async def _start_promotion_workflow(self, promotion_request: PromotionRequest):
+    async def _start_promotion_workflow(self, promotion_request -> None: PromotionRequest) -> None:
         """Start the promotion workflow"""
         try:
             logger.info(f"Starting promotion workflow for {promotion_request.promotion_id}")
@@ -566,7 +566,7 @@ class ModelPromotionManager:
         await asyncio.sleep(1)  # Simulate validation time
         return validations
     
-    async def _execute_rollback(self, promotion_request: PromotionRequest):
+    async def _execute_rollback(self, promotion_request -> None: PromotionRequest) -> None:
         """Execute rollback plan"""
         logger.info(f"Executing rollback for promotion {promotion_request.promotion_id}")
         
@@ -585,7 +585,7 @@ class ModelPromotionManager:
 class EnvironmentManager:
     """Main environment manager with comprehensive environment lifecycle management"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.environments = {}
         self.deployments = {}
         self.provisioner = EnvironmentProvisioner()

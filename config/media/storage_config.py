@@ -1,3 +1,8 @@
+"""
+Storage Config module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
@@ -657,7 +662,7 @@ class StoragePool:
 class StorageConfiguration:
     """Main storage configuration manager"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize storage configuration"""
         # Data storage
         self.endpoints: Dict[str, StorageEndpoint] = {}
@@ -730,7 +735,7 @@ class StorageConfiguration:
         # Initialize default configuration
         self._initialize_default_configuration()
     
-    def _initialize_default_configuration(self):
+    def _initialize_default_configuration(self) -> None:
         """Initialize default storage configuration"""
         
         # Primary S3 endpoint

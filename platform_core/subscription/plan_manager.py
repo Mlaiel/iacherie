@@ -156,7 +156,7 @@ Plan d'abonnement intelligent"""
     churn_rate: float = 0.0
     customer_satisfaction: float = 0.0
     
-    def add_feature(self, feature: PlanFeature):
+    def add_feature(self, feature -> None: PlanFeature) -> None:
         """Ajoute une fonctionnalité au plan"""
         # Vérifier les dépendances
         for dep in feature.dependencies:
@@ -166,7 +166,7 @@ Plan d'abonnement intelligent"""
         self.features.append(feature)
         self.updated_at = datetime.utcnow()
         
-    def remove_feature(self, feature_id: str):
+    def remove_feature(self, feature_id -> None: str) -> None:
         """Supprime une fonctionnalité du plan"""
         self.features = [f for f in self.features if f.feature_id != feature_id]
         self.updated_at = datetime.utcnow()
@@ -261,7 +261,7 @@ Calcule le prix dynamique selon la stratégie"""
 class PlanManager:
     """Gestionnaire intelligent des plans d'abonnement"""
     
-    def __init__(self, database_client: Optional[Any] = None):
+    def __init__(self, database_client -> None: Optional[Any] = None) -> None:
         self.database_client = database_client
         self.plans: Dict[str, SubscriptionPlan] = {}
         self.plan_templates: Dict[str, Dict[str, Any]] = {}
@@ -273,7 +273,7 @@ class PlanManager:
         # Charger les plans par défaut
         self._load_default_plans()
         
-    def _load_default_plans(self):
+    def _load_default_plans(self) -> None:
         """
 Charge les plans par défaut de la plateforme"""
         
@@ -657,7 +657,7 @@ Récupère les plans visibles pour un client"""
             "downgrade_rate": 0.0    # Taux de downgrade depuis ce plan
         }
         
-    async def _save_plan(self, plan: SubscriptionPlan):
+    async def _save_plan(self, plan -> None: SubscriptionPlan) -> None:
         """Sauvegarde un plan en base"""
         try:
             logger.info(f"Saving subscription plan {plan.plan_id}")

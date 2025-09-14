@@ -58,7 +58,7 @@ class StorageClassSpec:
 class StorageClassManager:
     """Manages optimized Storage Classes for different workloads"""
     
-    def __init__(self, cloud_provider: str = "aws"):
+    def __init__(self, cloud_provider -> None: str = "aws") -> None:
         self.cloud_provider = cloud_provider
         self.storage_classes: Dict[str, StorageClassSpec] = {}
     
@@ -463,7 +463,7 @@ class StorageClassManager:
         
         return manifests
     
-    def save_manifests_to_files(self, output_dir: str = "./k8s-manifests/storage-classes"):
+    def save_manifests_to_files(self, output_dir -> None: str = "./k8s-manifests/storage-classes") -> None:
         """Save all storage manifests to files"""
         import os
         os.makedirs(output_dir, exist_ok=True)

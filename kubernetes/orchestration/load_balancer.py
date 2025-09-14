@@ -31,7 +31,7 @@ from .base_manager import BaseDeploymentManager
 class MetricsCollector:
     """
 Mock metrics collector."""
-    def __init__(self):
+    def __init__(self) -> None:
         """
 Initialize load balancer metrics collector"""
         self.logger = logging.getLogger(f"{__name__}.MetricsCollector")
@@ -47,7 +47,7 @@ Initialize load balancer metrics collector"""
 
 class CertificateManager:
     """Mock certificate manager."""
-    def __init__(self):
+    def __init__(self) -> None:
         """
 Initialize SSL/TLS certificate management"""
         self.logger = logging.getLogger(f"{__name__}.CertificateManager")
@@ -59,7 +59,7 @@ Initialize SSL/TLS certificate management"""
         self.supported_algorithms = ['RSA-2048', 'RSA-4096', 'ECDSA-256', 'ECDSA-384']
         self.logger.info("CertificateManager initialized with auto-renewal")
     
-    async def request_certificate(self, domain_name: str, validation_method: str = "DNS"):
+    async def request_certificate(self, domain_name -> None: str, validation_method -> None: str = "DNS") -> None:
         """Mock certificate request."""
         return f"arn:aws:acm:us-west-2:123456789012:certificate/{domain_name}"
 
@@ -179,9 +179,9 @@ class LoadBalancerManager(BaseDeploymentManager):
     """
     def __init__(
         self,
-        certificate_manager: Optional[CertificateManager] = None,
-        metrics_collector: Optional[MetricsCollector] = None
-    ):
+        certificate_manager -> None: Optional[CertificateManager] = None,
+        metrics_collector -> None: Optional[MetricsCollector] = None
+    ) -> None:
         super().__init__()
         self.certificate_manager = certificate_manager or CertificateManager()
         self.metrics_collector = metrics_collector or MetricsCollector()

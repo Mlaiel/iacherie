@@ -96,7 +96,7 @@ class QualityAssessment:
 class ContentQualityService:
     """Enterprise content quality assessment and enhancement service."""
     
-    def __init__(self, config_path: Optional[str] = None):
+    def __init__(self, config_path -> None: Optional[str] = None) -> None:
         """Initialize the content quality service.
         
         Args:
@@ -1276,7 +1276,7 @@ class ContentQualityService:
 
 
 # Example usage and testing
-async def main():
+async def main() -> None:
     """Example usage of the ContentQualityService."""
     # Initialize service
     service = ContentQualityService()

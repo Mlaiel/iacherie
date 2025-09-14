@@ -1,3 +1,8 @@
+"""
+Creator Analytics Config module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
@@ -441,7 +446,7 @@ class PredictiveAnalyticsConfig:
 class CreatorAnalyticsConfiguration:
     """Main creator analytics configuration manager"""
     
-    def __init__(self, level: AnalyticsLevel = AnalyticsLevel.PROFESSIONAL):
+    def __init__(self, level -> None: AnalyticsLevel = AnalyticsLevel.PROFESSIONAL) -> None:
         """Initialize creator analytics configuration"""
         self.level = level
         
@@ -470,7 +475,7 @@ class CreatorAnalyticsConfiguration:
         
         self._optimize_for_level()
     
-    def _optimize_for_level(self):
+    def _optimize_for_level(self) -> None:
         """Optimize configurations based on analytics level"""
         if self.level == AnalyticsLevel.BASIC:
             # Basic analytics - essential metrics only

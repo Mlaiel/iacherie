@@ -155,7 +155,7 @@ class TrainingWorker:
 class ResourceManager:
     """🛡️ BACKEND SENIOR - Resource allocation and optimization"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.resource_pools: Dict[str, ResourcePool] = {}
         self.allocation_history = []
         self.optimization_strategies = {
@@ -372,7 +372,7 @@ class ResourceManager:
 class JobScheduler:
     """🎖️ LEAD DEV IA - Intelligent job scheduling and orchestration"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.job_queue: List[Tuple[int, TrainingJobConfig]] = []  # Priority queue
         self.running_jobs: Dict[str, TrainingJobState] = {}
         self.completed_jobs: Dict[str, TrainingJobState] = {}
@@ -515,7 +515,7 @@ class JobScheduler:
 class WorkerManager:
     """⚙️ DEVOPS - Training worker management and coordination"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.workers: Dict[str, TrainingWorker] = {}
         self.worker_pool = concurrent.futures.ThreadPoolExecutor(max_workers=10)
         self.heartbeat_timeout = timedelta(minutes=5)
@@ -640,7 +640,7 @@ class TrainingOrchestrationEngine:
     model training tasks with intelligent resource management and creator optimization.
     """
     
-    def __init__(self, config_path: Optional[str] = None):
+    def __init__(self, config_path -> None: Optional[str] = None) -> None:
         self.config = self._load_config(config_path)
         self.resource_manager = ResourceManager()
         self.job_scheduler = JobScheduler()
@@ -1112,7 +1112,7 @@ class TrainingOrchestrationEngine:
 
 # Example usage and testing
 if __name__ == "__main__":
-    async def test_training_orchestration():
+    async def test_training_orchestration() -> None:
         """Test training orchestration engine"""
         
         # Initialize orchestration engine

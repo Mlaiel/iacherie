@@ -1,3 +1,8 @@
+"""
+Saga Monitoring Analytics module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """Saga Monitoring Analytics - Advanced Performance Analytics
 ============================================================
@@ -55,7 +60,7 @@ class PerformanceMetrics:
 class SagaMonitoringAnalytics:
     """Main analytics system for saga monitoring"""
     
-    def __init__(self, retention_hours: int = 24):
+    def __init__(self, retention_hours -> None: int = 24) -> None:
         self.retention_hours = retention_hours
         self.metrics: deque = deque(maxlen=10000)  # Keep recent metrics
         self.saga_executions: Dict[str, Dict[str, Any]] = {}
@@ -73,10 +78,10 @@ class SagaMonitoringAnalytics:
     
     async def record_saga_started(
         self,
-        saga_id: str,
-        saga_type: str,
-        metadata: Dict[str, Any] = None
-    ):
+        saga_id -> None: str,
+        saga_type -> None: str,
+        metadata -> None: Dict[str, Any] = None
+    ) -> None:
         """Record saga start event"""
         # Start background task if not started yet
         if self._should_start_background and self._background_task is None:
@@ -108,11 +113,11 @@ class SagaMonitoringAnalytics:
     
     async def record_saga_completed(
         self,
-        saga_id: str,
-        success: bool = True,
-        duration: Optional[float] = None,
-        metadata: Dict[str, Any] = None
-    ):
+        saga_id -> None: str,
+        success -> None: bool = True,
+        duration -> None: Optional[float] = None,
+        metadata -> None: Dict[str, Any] = None
+    ) -> None:
         """Record saga completion event"""
         if saga_id not in self.saga_executions:
             logger.warning(f"No start record found for saga {saga_id}")
@@ -160,12 +165,12 @@ class SagaMonitoringAnalytics:
     
     async def record_step_executed(
         self,
-        saga_id: str,
-        step_name: str,
-        duration: float,
-        success: bool = True,
-        metadata: Dict[str, Any] = None
-    ):
+        saga_id -> None: str,
+        step_name -> None: str,
+        duration -> None: float,
+        success -> None: bool = True,
+        metadata -> None: Dict[str, Any] = None
+    ) -> None:
         """Record saga step execution"""
         if saga_id not in self.saga_executions:
             return
@@ -192,12 +197,12 @@ class SagaMonitoringAnalytics:
     
     async def record_compensation_executed(
         self,
-        saga_id: str,
-        compensation_type: str,
-        duration: float,
-        success: bool = True,
-        metadata: Dict[str, Any] = None
-    ):
+        saga_id -> None: str,
+        compensation_type -> None: str,
+        duration -> None: float,
+        success -> None: bool = True,
+        metadata -> None: Dict[str, Any] = None
+    ) -> None:
         """Record compensation execution"""
         if saga_id not in self.saga_executions:
             return
@@ -223,12 +228,12 @@ class SagaMonitoringAnalytics:
     
     async def _record_metric(
         self,
-        saga_id: str,
-        saga_type: str,
-        metric_type: str,
-        value: float,
-        metadata: Dict[str, Any] = None
-    ):
+        saga_id -> None: str,
+        saga_type -> None: str,
+        metric_type -> None: str,
+        value -> None: float,
+        metadata -> None: Dict[str, Any] = None
+    ) -> None:
         """Record individual metric"""
         metric = SagaMetric(
             saga_id=saga_id,
@@ -241,7 +246,7 @@ class SagaMonitoringAnalytics:
         
         self.metrics.append(metric)
     
-    async def _update_performance_metrics(self, saga_type: str):
+    async def _update_performance_metrics(self, saga_type -> None: str) -> None:
         """Update cached performance metrics"""
         # Get completed executions for saga type
         completed_executions = [
@@ -389,7 +394,7 @@ class SagaMonitoringAnalytics:
         
         return dict(trending)
     
-    async def _background_analytics(self):
+    async def _background_analytics(self) -> None:
         """Background task for continuous analytics"""
         while True:
             try:
@@ -406,7 +411,7 @@ class SagaMonitoringAnalytics:
             except Exception as e:
                 logger.error(f"Background analytics error: {e}")
     
-    async def _cleanup_old_data(self):
+    async def _cleanup_old_data(self) -> None:
         """Cleanup old execution data"""
         cutoff_time = time.time() - (self.retention_hours * 3600)
         
@@ -464,13 +469,13 @@ def get_saga_monitoring_analytics() -> SagaMonitoringAnalytics:
 
 
 # Convenience functions
-async def record_saga_started(saga_id: str, saga_type: str, metadata: Dict[str, Any] = None):
+async def record_saga_started(saga_id -> None: str, saga_type -> None: str, metadata -> None: Dict[str, Any] = None) -> None:
     """Convenience function to record saga start"""
     analytics = get_saga_monitoring_analytics()
     await analytics.record_saga_started(saga_id, saga_type, metadata)
 
 
-async def record_saga_completed(saga_id: str, success: bool = True, duration: float = None):
+async def record_saga_completed(saga_id -> None: str, success -> None: bool = True, duration -> None: float = None) -> None:
     """Convenience function to record saga completion"""
     analytics = get_saga_monitoring_analytics()
     await analytics.record_saga_completed(saga_id, success, duration)

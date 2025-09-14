@@ -209,7 +209,7 @@ class PerformanceDashboard:
 class AnalyticsPerformanceEngine:
     """Core analytics performance engine."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(f"{__name__}.AnalyticsPerformanceEngine")
         
         # Performance data stores
@@ -252,7 +252,7 @@ class AnalyticsPerformanceEngine:
             self.logger.error(f"Failed to initialize analytics engine: {e}")
             return False
     
-    async def _load_platform_benchmarks(self):
+    async def _load_platform_benchmarks(self) -> None:
         """Load industry benchmarks for each platform."""
         self.platform_benchmarks = {
             "youtube": {
@@ -293,7 +293,7 @@ class AnalyticsPerformanceEngine:
             }
         }
     
-    async def _initialize_performance_thresholds(self):
+    async def _initialize_performance_thresholds(self) -> None:
         """Initialize performance scoring thresholds."""
         self.performance_thresholds = {
             MetricType.ENGAGEMENT_RATE: {
@@ -319,7 +319,7 @@ class AnalyticsPerformanceEngine:
             }
         }
     
-    async def _load_competitor_data(self):
+    async def _load_competitor_data(self) -> None:
         """Load competitor performance data."""
         # Sample competitor data - in production, this would come from market research APIs
         sample_competitors = [
@@ -368,7 +368,7 @@ class AnalyticsPerformanceEngine:
         for competitor in sample_competitors:
             self.competitor_data[competitor.competitor_id] = competitor
     
-    async def _start_real_time_monitoring(self):
+    async def _start_real_time_monitoring(self) -> None:
         """Start real-time performance monitoring."""
         # This would typically start background tasks for real-time data collection
         self.logger.info("Real-time monitoring started")
@@ -1016,7 +1016,7 @@ class AnalyticsPerformanceEngine:
         
         return recommendations[:5]  # Limit to 5 recommendations
     
-    async def cleanup(self):
+    async def cleanup(self) -> None:
         """Cleanup resources."""
         self.performance_history.clear()
         self.engagement_data.clear()

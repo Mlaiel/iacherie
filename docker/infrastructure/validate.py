@@ -1,3 +1,8 @@
+"""
+Validate module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Ainflue Infrastructure Validation Script
@@ -59,7 +64,7 @@ def validate_compose_syntax(compose_file: Path) -> Dict:
             "error": str(e)
         }
 
-async def main():
+async def main() -> None:
     """Main validation function."""
     print("🔍 Ainflue Infrastructure Validation")
     print("=" * 50)

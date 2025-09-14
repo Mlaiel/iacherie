@@ -28,8 +28,8 @@ class CircuitBreakerOpenException(Exception):
 class CircuitBreaker:
     """Circuit breaker implementation for microservices"""
     
-    def __init__(self, failure_threshold: int = 5, timeout: int = 60, 
-                 expected_exception: type = Exception):
+    def __init__(self, failure_threshold -> None: int = 5, timeout -> None: int = 60, 
+                 expected_exception -> None: type = Exception) -> None:
         self.failure_threshold = failure_threshold
         self.timeout = timeout
         self.expected_exception = expected_exception
@@ -60,14 +60,14 @@ class CircuitBreaker:
         """Check if enough time has passed to attempt reset"""
         return (time.time() - self.last_failure_time) >= self.timeout
         
-    def _on_success(self):
+    def _on_success(self) -> None:
         """Handle successful call"""
         self.failure_count = 0
         if self.state == CircuitBreakerState.HALF_OPEN:
             self.state = CircuitBreakerState.CLOSED
             logger.info("Circuit breaker moved to CLOSED state")
             
-    def _on_failure(self):
+    def _on_failure(self) -> None:
         """Handle failed call"""
         self.failure_count += 1
         self.last_failure_time = time.time()
@@ -80,7 +80,7 @@ class CircuitBreaker:
         """Get current circuit breaker state"""
         return self.state
         
-    def reset(self):
+    def reset(self) -> None:
         """Manually reset circuit breaker"""
         with self._lock:
             self.failure_count = 0

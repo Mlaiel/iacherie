@@ -1,3 +1,8 @@
+"""
+Demo Analytics Agents module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Analytics Agents Demo - 6-Agent Analytics System for Ainflue Platform
@@ -22,20 +27,20 @@ from datetime import datetime
 # Add agents path
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'ai_agents'))
 
-def print_header(title):
+def print_header(title) -> None:
     """
 Print a formatted header."""
     print(f"\n{'='*80}")
     print(f" {title}")
     print('='*80)
 
-def print_section(title):
+def print_section(title) -> None:
     """Print a formatted section."""
     print(f"\n{'-'*60}")
     print(f" {title}")
     print('-'*60)
 
-async def demo_analytics_agents():
+async def demo_analytics_agents() -> None:
     """Demonstrate all 6 analytics agents."""
     
     print_header("AINFLUE PLATFORM - 6-AGENT ANALYTICS SYSTEM DEMO")
@@ -210,7 +215,7 @@ async def demo_analytics_agents():
         import traceback
         traceback.print_exc()
 
-def main():
+def main() -> None:
     """Main demo function."""
     try:
         asyncio.run(demo_analytics_agents())

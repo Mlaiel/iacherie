@@ -62,7 +62,7 @@ class ProcessingMetrics:
     throughput: Optional[float] = None  # MB/s or operations/s
     efficiency_score: float = 0.0
     
-    def finalize(self):
+    def finalize(self) -> None:
         """Finalize metrics calculation"""
         if self.end_time and self.start_time:
             self.duration = (self.end_time - self.start_time).total_seconds()
@@ -74,7 +74,7 @@ class ProcessingMetrics:
             # Calculate efficiency score
             self._calculate_efficiency_score()
     
-    def _calculate_efficiency_score(self):
+    def _calculate_efficiency_score(self) -> None:
         """Calculate overall efficiency score"""
         factors = []
         
@@ -133,7 +133,7 @@ class SystemMetrics:
 class ResourceMonitor:
     """Real-time system resource monitoring"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.logger = logger.getChild(self.__class__.__name__)
         
@@ -158,7 +158,7 @@ class ResourceMonitor:
         except:
             return False
     
-    def start_monitoring(self):
+    def start_monitoring(self) -> None:
         """Start continuous system monitoring"""
         if self.is_monitoring:
             return
@@ -168,14 +168,14 @@ class ResourceMonitor:
         self.monitor_thread.start()
         self.logger.info("Resource monitoring started")
     
-    def stop_monitoring(self):
+    def stop_monitoring(self) -> None:
         """Stop system monitoring"""
         self.is_monitoring = False
         if self.monitor_thread:
             self.monitor_thread.join(timeout=5.0)
         self.logger.info("Resource monitoring stopped")
     
-    def _monitoring_loop(self):
+    def _monitoring_loop(self) -> None:
         """Continuous monitoring loop"""
         while self.is_monitoring:
             try:
@@ -312,7 +312,7 @@ class ResourceMonitor:
 class PerformanceTracker:
     """Main performance tracking and analysis system"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.logger = logger.getChild(self.__class__.__name__)
         
@@ -348,7 +348,7 @@ class PerformanceTracker:
             self.resource_monitor.start_monitoring()
     
     @asynccontextmanager
-    async def track_operation(self, operation_type: str, operation_id: Optional[str] = None):
+    async def track_operation(self, operation_type -> None: str, operation_id -> None: Optional[str] = None) -> None:
         """Context manager for tracking operation performance"""
         if operation_id is None:
             operation_id = f"{operation_type}_{int(time.time() * 1000)}"
@@ -403,7 +403,7 @@ class PerformanceTracker:
             # Check for alerts
             self._check_alerts(metrics)
     
-    def _update_operation_stats(self, metrics: ProcessingMetrics):
+    def _update_operation_stats(self, metrics -> None: ProcessingMetrics) -> None:
         """Update operation statistics"""
         op_type = metrics.operation_type
         stats = self.operation_stats[op_type]
@@ -425,7 +425,7 @@ class PerformanceTracker:
             stats['throughput_values'].append(metrics.throughput)
             stats['average_throughput'] = np.mean(stats['throughput_values'])
     
-    def _check_alerts(self, metrics: ProcessingMetrics):
+    def _check_alerts(self, metrics -> None: ProcessingMetrics) -> None:
         """Check for performance alerts"""
         alerts = []
         
@@ -572,7 +572,7 @@ class PerformanceTracker:
             'recent_alerts_count': len([a for a in self.alerts if a['timestamp'] >= cutoff_time])
         }
     
-    def cleanup(self):
+    def cleanup(self) -> None:
         """Cleanup resources"""
         self.resource_monitor.stop_monitoring()
         gc.collect()

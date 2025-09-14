@@ -1,3 +1,8 @@
+"""
+Regularization Manager module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
@@ -80,7 +85,7 @@ class RegularizationManager:
     adaptive strength tuning, and enterprise-grade monitoring.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize regularization manager."""
         self.config = config or {}
         self.regularization_configs: Dict[RegularizationType, RegularizationConfig] = {}
@@ -97,7 +102,7 @@ class RegularizationManager:
         # Setup default regularization configs
         self._initialize_default_configs()
     
-    def _initialize_creator_profiles(self):
+    def _initialize_creator_profiles(self) -> None:
         """Initialize creator-specific regularization profiles."""
         self.creator_profiles = {
             CreatorType.MUSICIAN: {
@@ -141,7 +146,7 @@ class RegularizationManager:
             }
         }
     
-    def _initialize_default_configs(self):
+    def _initialize_default_configs(self) -> None:
         """Initialize default regularization configurations."""
         default_configs = {
             RegularizationType.DROPOUT: RegularizationConfig(
@@ -664,7 +669,7 @@ __all__ = ['RegularizationManager', 'RegularizationType', 'CreatorType', 'Regula
 
 if __name__ == "__main__":
     # Test the regularization manager
-    async def test_regularization_manager():
+    async def test_regularization_manager() -> None:
         manager = RegularizationManager()
         
         # Create a simple test model

@@ -156,7 +156,7 @@ class EnterpriseValidator:
     Enterprise-grade validation engine with comprehensive compliance and security checks.
     """
     
-    def __init__(self, validation_level: ValidationLevel = ValidationLevel.ENTERPRISE):
+    def __init__(self, validation_level -> None: ValidationLevel = ValidationLevel.ENTERPRISE) -> None:
         self.validation_level = validation_level
         self.validation_rules: Dict[str, ValidationRule] = {}
         self.compliance_standards: Set[ComplianceStandard] = set()
@@ -167,7 +167,7 @@ class EnterpriseValidator:
         self._load_security_policies()
         self._setup_logging()
     
-    def _setup_logging(self):
+    def _setup_logging(self) -> None:
         """Setup enterprise logging"""
         self.logger = logging.getLogger(__name__)
         self.logger.setLevel(logging.INFO)
@@ -180,7 +180,7 @@ class EnterpriseValidator:
             handler.setFormatter(formatter)
             self.logger.addHandler(handler)
     
-    def _load_validation_rules(self):
+    def _load_validation_rules(self) -> None:
         """Load enterprise validation rules"""
         # User data validation rules
         self.add_rule(ValidationRule(
@@ -235,7 +235,7 @@ class EnterpriseValidator:
             error_message="Content copyright compliance check failed"
         ))
     
-    def _load_security_policies(self):
+    def _load_security_policies(self) -> None:
         """Load enterprise security policies"""
         self.security_policies = {
             "password_policy": {
@@ -267,7 +267,7 @@ class EnterpriseValidator:
             }
         }
     
-    def add_rule(self, rule: ValidationRule):
+    def add_rule(self, rule -> None: ValidationRule) -> None:
         """Add a validation rule"""
         self.validation_rules[rule.rule_id] = rule
         self.compliance_standards.update(rule.compliance_standards)
@@ -537,7 +537,7 @@ class EnterpriseValidator:
         content_lower = content.lower()
         return any(phrase in content_lower for phrase in copyrighted_phrases)
     
-    def _log_validation(self, validation_result: Dict[str, Any], context: ValidationContext):
+    def _log_validation(self, validation_result -> None: Dict[str, Any], context -> None: ValidationContext) -> None:
         """Log validation results for audit"""
         audit_entry = {
             "timestamp": datetime.utcnow(),
@@ -564,7 +564,7 @@ class ComplianceValidator:
     Specialized validator for legal and regulatory compliance.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.compliance_rules = self._load_compliance_rules()
         self.certification_status = {}
     
@@ -710,7 +710,7 @@ class SecurityValidator:
     Advanced security validator for vulnerability assessment and threat detection.
     """
     
-    def __init__(self, security_level: SecurityLevel = SecurityLevel.HIGH):
+    def __init__(self, security_level -> None: SecurityLevel = SecurityLevel.HIGH) -> None:
         self.security_level = security_level
         self.threat_patterns = self._load_threat_patterns()
         self.vulnerability_database = self._load_vulnerability_database()
@@ -971,7 +971,7 @@ class PerformanceValidator:
     Performance validation for optimization and monitoring.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.performance_thresholds = {
             "query_time_ms": 1000,
             "memory_usage_mb": 100,

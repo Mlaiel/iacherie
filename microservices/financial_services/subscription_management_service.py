@@ -120,7 +120,7 @@ class BillingEngine(ABC):
 class StripeBillingEngine(BillingEngine):
     """Stripe billing integration"""
     
-    def __init__(self, api_key: str):
+    def __init__(self, api_key -> None: str) -> None:
         self.api_key = api_key
         
     async def process_billing(self, subscription: Subscription) -> BillingEvent:
@@ -162,7 +162,7 @@ class StripeBillingEngine(BillingEngine):
 class SubscriptionManagementService:
     """Enterprise subscription management service"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.subscriptions: Dict[str, Subscription] = {}
         self.plans: Dict[str, SubscriptionPlan] = {}
         self.billing_events: List[BillingEvent] = []
@@ -172,7 +172,7 @@ class SubscriptionManagementService:
         # Load default plans
         self._initialize_default_plans()
         
-    def _initialize_default_plans(self):
+    def _initialize_default_plans(self) -> None:
         """Initialize default subscription plans"""
         default_plans = [
             SubscriptionPlan(
@@ -288,7 +288,7 @@ class SubscriptionManagementService:
         
         return events
     
-    async def _handle_billing_failure(self, subscription: Subscription, event: BillingEvent):
+    async def _handle_billing_failure(self, subscription -> None: Subscription, event -> None: BillingEvent) -> None:
         """Handle billing failure"""
         # Move to past due status
         subscription.status = SubscriptionStatus.PAST_DUE
@@ -370,7 +370,7 @@ class SubscriptionManagementService:
         logger.info(f"Cancelled subscription {subscription_id}")
         return True
     
-    async def track_usage(self, subscription_id: str, feature: str, amount: int = 1):
+    async def track_usage(self, subscription_id -> None: str, feature -> None: str, amount -> None: int = 1) -> None:
         """Track feature usage for subscription"""
         if subscription_id in self.usage_trackers:
             if feature not in self.usage_trackers[subscription_id]:

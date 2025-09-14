@@ -24,7 +24,7 @@ class ValidationResult:
 class SchemaValidator:
     """MongoDB schema validation and compatibility checker."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize schema validator."""
         self._validation_rules = self._load_validation_rules()
     
@@ -62,13 +62,13 @@ class SchemaValidator:
         
         return ValidationResult(is_valid, errors, warnings, compatibility_score)
     
-    def _check_forbidden_patterns(self, schema: Dict[str, Any], errors: List[str], warnings: List[str]):
+    def _check_forbidden_patterns(self, schema -> None: Dict[str, Any], errors -> None: List[str], warnings -> None: List[str]) -> None:
         """Check for forbidden patterns in schema."""
         for field_name in schema.keys():
             if field_name in self._validation_rules["forbidden_field_names"]:
                 errors.append(f"Forbidden field name: {field_name}")
     
-    def _check_nesting_depth(self, schema: Dict[str, Any], errors: List[str], warnings: List[str], depth: int = 0):
+    def _check_nesting_depth(self, schema -> None: Dict[str, Any], errors -> None: List[str], warnings -> None: List[str], depth -> None: int = 0) -> None:
         """Check schema nesting depth."""
         if depth > self._validation_rules["max_nesting_level"]:
             errors.append(f"Schema nesting too deep: {depth} levels")
@@ -78,7 +78,7 @@ class SchemaValidator:
             if isinstance(value, dict):
                 self._check_nesting_depth(value, errors, warnings, depth + 1)
     
-    def _check_field_names(self, schema: Dict[str, Any], errors: List[str], warnings: List[str]):
+    def _check_field_names(self, schema -> None: Dict[str, Any], errors -> None: List[str], warnings -> None: List[str]) -> None:
         """Check field name validity."""
         for field_name in schema.keys():
             if len(field_name) > self._validation_rules["max_field_name_length"]:

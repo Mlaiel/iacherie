@@ -188,7 +188,7 @@ class MultimodalInsights:
 class TrendingContentAnalyzer:
     """Advanced trending content analysis and viral pattern detection"""
     
-    def __init__(self, config: AnalyticsConfig):
+    def __init__(self, config -> None: AnalyticsConfig) -> None:
         self.config = config
         self.trend_patterns = {}
         self.viral_indicators = {}
@@ -349,7 +349,7 @@ class TrendingContentAnalyzer:
 class EngagementPredictor:
     """AI-powered engagement prediction and performance forecasting"""
     
-    def __init__(self, config: AnalyticsConfig):
+    def __init__(self, config -> None: AnalyticsConfig) -> None:
         self.config = config
         self.models = {}
         self.scalers = {}
@@ -360,7 +360,7 @@ class EngagementPredictor:
         
         logger.info("📊 Engagement Predictor initialized")
     
-    def _initialize_ml_models(self):
+    def _initialize_ml_models(self) -> None:
         """Initialize machine learning models"""
         self.models = {
             'random_forest': RandomForestRegressor(n_estimators=100, random_state=42),
@@ -487,7 +487,7 @@ class EngagementPredictor:
 class MultimodalIntelligence:
     """Cross-modal content intelligence and analysis system"""
     
-    def __init__(self, config: AnalyticsConfig):
+    def __init__(self, config -> None: AnalyticsConfig) -> None:
         self.config = config
         self.modality_processors = {}
         self.cross_modal_models = {}
@@ -497,7 +497,7 @@ class MultimodalIntelligence:
         
         logger.info("🧠 Multimodal Intelligence initialized")
     
-    def _initialize_nlp_models(self):
+    def _initialize_nlp_models(self) -> None:
         """Initialize NLP and multimodal models"""
         try:
             # Would initialize actual models in production
@@ -725,7 +725,7 @@ class MultimodalIntelligence:
 class ContentAnalyticsSystem:
     """Main content analytics system orchestrating all analysis components"""
     
-    def __init__(self, config: Optional[AnalyticsConfig] = None):
+    def __init__(self, config -> None: Optional[AnalyticsConfig] = None) -> None:
         """Initialize content analytics system"""
         self.config = config or AnalyticsConfig()
         

@@ -27,11 +27,12 @@ try:
 except ImportError:
     # Create mock objects for testing
     class MockMongoClient:
-        def __init__(self, *args, **kwargs): pass
-        def close(self): pass
-        def server_info(self): return {'version': '4.4.0'}
-        def admin(self): return self
-        def command(self, *args, **kwargs): return {}
+    """MockMongoClient: class implementation"""
+        def __init__(self, *args, **kwargs) -> None: pass
+        def close(self) -> None: pass
+        def server_info(self) -> None: return {'version': '4.4.0'}
+        def admin(self) -> None: return self
+        def command(self, *args, **kwargs) -> None: return {}
     MongoClient = MockMongoClient
     PYMONGO_AVAILABLE = False
 
@@ -100,7 +101,7 @@ class MongoDBCluster:
     - Collaboration session storage for real-time features
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize MongoDB cluster manager"""
         self.clusters: Dict[str, Dict[str, Any]] = {}
         self.performance_cache: Dict[str, PerformanceMetrics] = {}

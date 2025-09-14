@@ -211,7 +211,7 @@ class QuantumAIEngine:
     ✅ Intelligence artificielle hybrid classique-quantique
     """
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.config = config or {}
         self.ai_processors: Dict[AIQuantumProcessingType, QuantumAIProcessor] = {}
         self.ml_accelerators: Dict[MLAccelerationType, QuantumMLAccelerator] = {}
@@ -1128,7 +1128,7 @@ class QuantumAIEngine:
         num_params = len(model.parameters.get("quantum_parameters", {}).get("variational_parameters", []))
         return {"gradients": np.random.uniform(-0.1, 0.1, num_params).tolist()}
     
-    async def _update_quantum_parameters(self, model: QuantumMLModel, gradients: Dict[str, Any], config: Dict[str, Any]):
+    async def _update_quantum_parameters(self, model -> None: QuantumMLModel, gradients -> None: Dict[str, Any], config -> None: Dict[str, Any]) -> None:
         """Mise à jour paramètres quantiques"""
         # Simulation mise à jour paramètres
         pass

@@ -104,9 +104,9 @@ class EventValidator:
     """Comprehensive event validation system"""
     
     def __init__(self,
-                 enable_schema_validation: bool = True,
-                 enable_business_rules: bool = True,
-                 strict_mode: bool = False):
+                 enable_schema_validation -> None: bool = True,
+                 enable_business_rules -> None: bool = True,
+                 strict_mode -> None: bool = False) -> None:
         """Initialize event validator
         
         Args:

@@ -87,7 +87,7 @@ class SecurityEngine:
     and threat protection for the entire Ainflue distribution platform.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize Security Engine"""
         self.active_sessions = {}
         self.security_policies = {}
@@ -430,7 +430,7 @@ class SecurityEngine:
         
         return len(recent_requests) > 50  # More than 50 requests in last minute
     
-    async def _log_security_event(self, event_type: str, details: Dict[str, Any]):
+    async def _log_security_event(self, event_type -> None: str, details -> None: Dict[str, Any]) -> None:
         """Log security event"""
         incident = SecurityIncident(
             incident_id=secrets.token_hex(8),
@@ -445,7 +445,7 @@ class SecurityEngine:
         self.incident_log.append(incident)
         logger.warning(f"Security event: {event_type} - {details}")
     
-    def _load_security_policies(self):
+    def _load_security_policies(self) -> None:
         """Load security policies from configuration"""
         try:
             # Load default security policies

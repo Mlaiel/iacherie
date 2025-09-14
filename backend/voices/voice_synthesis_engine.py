@@ -195,7 +195,7 @@ class SynthesisResult:
 class EmotionVoiceGenerator:
     """Advanced emotional voice generation system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize emotion voice generator"""
         self.emotion_models = {}
         self.emotion_profiles = {}
@@ -291,7 +291,7 @@ class EmotionVoiceGenerator:
             logger.error(f"Failed to analyze text emotions: {e}")
             return [(text, VoiceEmotion.NEUTRAL, 0.5)]
     
-    async def _load_emotion_models(self):
+    async def _load_emotion_models(self) -> None:
         """Load emotion-specific voice models"""
         try:
             # Load pre-trained emotion models
@@ -444,7 +444,7 @@ class EmotionVoiceGenerator:
 class AgeVoiceGenerator:
     """Advanced age-specific voice generation system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize age voice generator"""
         self.age_models = {}
         self.age_profiles = {}
@@ -630,7 +630,7 @@ class AgeVoiceGenerator:
 class CelebrityVoiceCloner:
     """Advanced celebrity voice cloning system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize celebrity voice cloner"""
         self.celebrity_models = {}
         self.voice_encoders = {}
@@ -731,7 +731,7 @@ class CelebrityVoiceCloner:
 class VoiceSynthesisEngine:
     """Unified voice synthesis engine"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         """Initialize voice synthesis engine"""
         self.config = config or {}
         self.emotion_generator = EmotionVoiceGenerator()

@@ -36,12 +36,14 @@ logging.basicConfig(
 logger = logging.getLogger("CompetitorAnalysisService")
 
 class CompetitorType(str, Enum):
+    """CompetitorType class implementation"""
     DIRECT = "direct"
     INDIRECT = "indirect"
     SUBSTITUTE = "substitute"
     POTENTIAL = "potential"
 
 class MetricType(str, Enum):
+    """MetricType class implementation"""
     FOLLOWERS = "followers"
     ENGAGEMENT = "engagement"
     CONTENT_VOLUME = "content_volume"
@@ -52,6 +54,7 @@ class MetricType(str, Enum):
     MARKET_SHARE = "market_share"
 
 class AnalysisType(str, Enum):
+    """AnalysisType class implementation"""
     PERFORMANCE = "performance"
     CONTENT_STRATEGY = "content_strategy"
     AUDIENCE = "audience"
@@ -139,7 +142,7 @@ class CompetitorAnalysisService:
     - **DBA**: Optimized storage and retrieval of competitive data
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.competitors: Dict[str, CompetitorModel] = {}
         self.metrics_data: Dict[str, List[CompetitorMetricModel]] = defaultdict(list)
         self.monitoring_campaigns: Dict[str, MonitoringCampaignModel] = {}
@@ -153,7 +156,7 @@ class CompetitorAnalysisService:
         
         logger.info("🔍 Competitor Analysis Service initialized")
     
-    def _initialize_default_competitors(self):
+    def _initialize_default_competitors(self) -> None:
         """Initialize default competitor profiles"""
         default_competitors = [
             {
@@ -215,7 +218,7 @@ class CompetitorAnalysisService:
             competitor = CompetitorModel(**competitor_data)
             self.competitors[competitor.id] = competitor
     
-    def _initialize_market_intelligence(self):
+    def _initialize_market_intelligence(self) -> None:
         """Initialize market intelligence data"""
         self.market_intelligence = {
             "market_size": {
@@ -531,7 +534,7 @@ class CompetitorAnalysisService:
             logger.error(f"❌ Competitive alerts retrieval failed: {str(e)}")
             raise HTTPException(status_code=500, detail=f"Alerts retrieval failed: {str(e)}")
     
-    async def _initialize_competitor_metrics(self, competitor_id: str):
+    async def _initialize_competitor_metrics(self, competitor_id -> None: str) -> None:
         """Initialize metrics collection for new competitor"""
         competitor = self.competitors[competitor_id]
         
@@ -849,7 +852,7 @@ class CompetitorAnalysisService:
         
         return recommendations
     
-    async def _start_monitoring_campaign(self, campaign_id: str):
+    async def _start_monitoring_campaign(self, campaign_id -> None: str) -> None:
         """Start automated monitoring campaign"""
         # This would typically set up scheduled tasks for data collection
         campaign = self.monitoring_campaigns[campaign_id]
@@ -1096,47 +1099,47 @@ app = FastAPI(title="Competitor Analysis Service", version="1.0.0")
 service = CompetitorAnalysisService()
 
 @app.post("/competitors/add")
-async def add_competitor(competitor: CompetitorModel):
+async def add_competitor(competitor -> None: CompetitorModel) -> None:
     """Add new competitor for tracking"""
     return await service.add_competitor(competitor)
 
 @app.post("/campaigns/create")
-async def create_monitoring_campaign(campaign: MonitoringCampaignModel):
+async def create_monitoring_campaign(campaign -> None: MonitoringCampaignModel) -> None:
     """Create new competitor monitoring campaign"""
     return await service.create_monitoring_campaign(campaign)
 
 @app.post("/competitors/{competitor_id}/collect-metrics")
-async def collect_competitor_metrics(competitor_id: str, platform: str = "overall"):
+async def collect_competitor_metrics(competitor_id -> None: str, platform -> None: str = "overall") -> None:
     """Collect current metrics for competitor"""
     return await service.collect_competitor_metrics(competitor_id, platform)
 
 @app.post("/analysis/generate")
-async def generate_competitive_analysis(analysis_config: CompetitiveAnalysisModel):
+async def generate_competitive_analysis(analysis_config -> None: CompetitiveAnalysisModel) -> None:
     """Generate comprehensive competitive analysis report"""
     return await service.generate_competitive_analysis(analysis_config)
 
 @app.get("/intelligence/{category}")
-async def get_market_intelligence(category: str = "overview"):
+async def get_market_intelligence(category -> None: str = "overview") -> None:
     """Get market intelligence and industry insights"""
     return await service.get_market_intelligence(category)
 
 @app.post("/compare")
-async def compare_competitors(competitor_ids: List[str], metrics: List[MetricType] = None):
+async def compare_competitors(competitor_ids -> None: List[str], metrics -> None: List[MetricType] = None) -> None:
     """Compare multiple competitors across specified metrics"""
     return await service.compare_competitors(competitor_ids, metrics)
 
 @app.get("/alerts")
-async def get_competitive_alerts(user_id: str = None):
+async def get_competitive_alerts(user_id -> None: str = None) -> None:
     """Get competitive intelligence alerts"""
     return await service.get_competitive_alerts(user_id)
 
 @app.get("/metrics")
-async def get_metrics():
+async def get_metrics() -> None:
     """Get competitor analysis service metrics"""
     return await service.get_competitor_metrics()
 
 @app.get("/health")
-async def health_check():
+async def health_check() -> None:
     """Service health check"""
     return {
         "service": "CompetitorAnalysisService",

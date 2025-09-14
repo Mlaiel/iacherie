@@ -91,7 +91,7 @@ class User:
 class AccessControlManager:
     """MongoDB Role-Based Access Control manager."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize access control manager."""
         self._roles: Dict[str, Role] = {}
         self._users: Dict[str, User] = {}
@@ -102,7 +102,7 @@ class AccessControlManager:
         # Initialize system roles
         self._initialize_system_roles()
     
-    def _initialize_system_roles(self):
+    def _initialize_system_roles(self) -> None:
         """Create default system roles."""
         # Super Admin role
         super_admin = Role(
@@ -477,7 +477,7 @@ class AccessControlManager:
         
         return True
     
-    def _clear_user_cache(self, user_id: str):
+    def _clear_user_cache(self, user_id -> None: str) -> None:
         """Clear permission cache for user."""
         keys_to_remove = [key for key in self._permission_cache if key.startswith(f"{user_id}:")]
         for key in keys_to_remove:

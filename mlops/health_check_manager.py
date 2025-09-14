@@ -99,7 +99,7 @@ class ServiceHealth:
 class HealthCheckManager:
     """Enterprise health check manager for ML services"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.health_checks: Dict[str, HealthCheck] = {}
         self.check_results: Dict[str, deque] = defaultdict(lambda: deque(maxlen=1000))
@@ -320,7 +320,7 @@ class HealthCheckManager:
             logger.error(f"Failed to add alert handler: {e}")
             return False
     
-    async def _setup_default_health_checks(self):
+    async def _setup_default_health_checks(self) -> None:
         """Setup default health checks for core services"""
         
         # API Gateway health check
@@ -372,24 +372,24 @@ class HealthCheckManager:
         )
         await self.add_health_check(queue_check)
     
-    async def _start_monitoring(self):
+    async def _start_monitoring(self) -> None:
         """Start health check monitoring tasks"""
         for check_id, health_check in self.health_checks.items():
             if check_id not in self.running_checks:
                 task = asyncio.create_task(self._monitor_health_check(health_check))
                 self.running_checks[check_id] = task
     
-    async def _setup_alert_system(self):
+    async def _setup_alert_system(self) -> None:
         """Setup alert system"""
         # Default alert handler
-        async def default_alert_handler(service_name: str, 
-                                      old_status: HealthStatus, 
-                                      new_status: HealthStatus):
+        async def default_alert_handler(service_name -> None: str, 
+                                      old_status -> None: HealthStatus, 
+                                      new_status -> None: HealthStatus) -> None:
             logger.warning(f"Service {service_name} status changed: {old_status.value} -> {new_status.value}")
         
         await self.add_alert_handler(default_alert_handler)
     
-    async def _monitor_health_check(self, health_check: HealthCheck):
+    async def _monitor_health_check(self, health_check -> None: HealthCheck) -> None:
         """Monitor specific health check continuously"""
         while True:
             try:
@@ -643,7 +643,7 @@ class HealthCheckManager:
                 error=str(e)
             )
     
-    async def _update_service_health(self, service_name: str):
+    async def _update_service_health(self, service_name -> None: str) -> None:
         """Update overall service health based on checks"""
         try:
             service_checks = [
@@ -721,7 +721,7 @@ class HealthCheckManager:
         else:
             return 'low'
     
-    async def _assess_creator_impact(self, service_name: str, creator_impact: Dict[str, Any]):
+    async def _assess_creator_impact(self, service_name -> None: str, creator_impact -> None: Dict[str, Any]) -> None:
         """Assess impact on specific creator types"""
         for creator_type, services in self.creator_service_priorities.items():
             if service_name in services:
@@ -745,9 +745,9 @@ class HealthCheckManager:
             return 0.0
     
     async def _trigger_alerts(self, 
-                            service_name: str,
-                            old_status: HealthStatus,
-                            new_status: HealthStatus):
+                            service_name -> None: str,
+                            old_status -> None: HealthStatus,
+                            new_status -> None: HealthStatus) -> None:
         """Trigger alerts for status changes"""
         try:
             for handler in self.alert_handlers:
@@ -797,7 +797,7 @@ class CreatorHealthMonitor:
 
 
 # Example usage and testing
-async def main():
+async def main() -> None:
     """Example usage of Health Check Manager"""
     manager = HealthCheckManager()
     

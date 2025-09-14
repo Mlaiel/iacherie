@@ -129,7 +129,7 @@ class BatchOperation:
 class GatewayPerformanceOptimizer:
     """Enterprise performance optimizer for payment gateway"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.redis_client = None
         self.connection_pools: Dict[str, ConnectionPool] = {}
@@ -176,7 +176,7 @@ class GatewayPerformanceOptimizer:
             'keep_alive_enabled': True
         }
         
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize the performance optimizer"""
         try:
             # Initialize Redis connection
@@ -211,7 +211,7 @@ class GatewayPerformanceOptimizer:
             logger.error(f"Failed to initialize Gateway Performance Optimizer: {e}")
             raise
     
-    async def _load_configuration(self):
+    async def _load_configuration(self) -> None:
         """Load existing configuration from storage"""
         try:
             # Load optimization rules
@@ -255,7 +255,7 @@ class GatewayPerformanceOptimizer:
         except Exception as e:
             logger.error(f"Failed to load optimizer configuration: {e}")
     
-    async def _initialize_default_rules(self):
+    async def _initialize_default_rules(self) -> None:
         """Initialize default optimization rules"""
         try:
             default_rules = [
@@ -317,7 +317,7 @@ class GatewayPerformanceOptimizer:
         except Exception as e:
             logger.error(f"Failed to initialize default rules: {e}")
     
-    async def _initialize_connection_pools(self):
+    async def _initialize_connection_pools(self) -> None:
         """Initialize connection pools for external services"""
         try:
             default_pools = [
@@ -363,7 +363,7 @@ class GatewayPerformanceOptimizer:
         except Exception as e:
             logger.error(f"Failed to initialize connection pools: {e}")
     
-    async def _collect_performance_metrics(self):
+    async def _collect_performance_metrics(self) -> None:
         """Collect performance metrics continuously"""
         while True:
             try:
@@ -444,11 +444,11 @@ class GatewayPerformanceOptimizer:
     
     async def _store_metric(
         self,
-        metric_type: OptimizationType,
-        value: float,
-        unit: str,
-        source: str
-    ):
+        metric_type -> None: OptimizationType,
+        value -> None: float,
+        unit -> None: str,
+        source -> None: str
+    ) -> None:
         """Store performance metric"""
         try:
             metric = PerformanceMetric(
@@ -479,7 +479,7 @@ class GatewayPerformanceOptimizer:
         except Exception as e:
             logger.error(f"Failed to store metric: {e}")
     
-    async def _run_optimization_engine(self):
+    async def _run_optimization_engine(self) -> None:
         """Run the main optimization engine"""
         while True:
             try:
@@ -539,7 +539,7 @@ class GatewayPerformanceOptimizer:
             logger.error(f"Error evaluating rule condition: {e}")
             return False
     
-    async def _execute_optimization(self, rule: OptimizationRule):
+    async def _execute_optimization(self, rule -> None: OptimizationRule) -> None:
         """Execute optimization based on rule"""
         try:
             optimization_type = rule.optimization_type
@@ -553,7 +553,7 @@ class GatewayPerformanceOptimizer:
         except Exception as e:
             logger.error(f"Error executing optimization {rule.name}: {e}")
     
-    async def _optimize_response_time(self, rule: OptimizationRule):
+    async def _optimize_response_time(self, rule -> None: OptimizationRule) -> None:
         """Optimize response time"""
         try:
             optimizations_applied = []
@@ -583,7 +583,7 @@ class GatewayPerformanceOptimizer:
         except Exception as e:
             logger.error(f"Error in response time optimization: {e}")
     
-    async def _optimize_throughput(self, rule: OptimizationRule):
+    async def _optimize_throughput(self, rule -> None: OptimizationRule) -> None:
         """Optimize throughput"""
         try:
             optimizations_applied = []
@@ -612,7 +612,7 @@ class GatewayPerformanceOptimizer:
         except Exception as e:
             logger.error(f"Error in throughput optimization: {e}")
     
-    async def _optimize_memory_usage(self, rule: OptimizationRule):
+    async def _optimize_memory_usage(self, rule -> None: OptimizationRule) -> None:
         """Optimize memory usage"""
         try:
             optimizations_applied = []
@@ -645,7 +645,7 @@ class GatewayPerformanceOptimizer:
         except Exception as e:
             logger.error(f"Error in memory optimization: {e}")
     
-    async def _optimize_cpu_usage(self, rule: OptimizationRule):
+    async def _optimize_cpu_usage(self, rule -> None: OptimizationRule) -> None:
         """Optimize CPU usage"""
         try:
             optimizations_applied = []
@@ -668,7 +668,7 @@ class GatewayPerformanceOptimizer:
         except Exception as e:
             logger.error(f"Error in CPU optimization: {e}")
     
-    async def _optimize_connection_pool(self, rule: OptimizationRule):
+    async def _optimize_connection_pool(self, rule -> None: OptimizationRule) -> None:
         """Optimize connection pool configuration"""
         try:
             optimizations_applied = []
@@ -697,7 +697,7 @@ class GatewayPerformanceOptimizer:
         except Exception as e:
             logger.error(f"Error in connection pool optimization: {e}")
     
-    async def _optimize_batch_processing(self, rule: OptimizationRule):
+    async def _optimize_batch_processing(self, rule -> None: OptimizationRule) -> None:
         """Optimize batch processing"""
         try:
             optimizations_applied = []
@@ -736,7 +736,7 @@ class GatewayPerformanceOptimizer:
         except Exception as e:
             logger.error(f"Error in batch processing optimization: {e}")
     
-    async def _optimize_cache_hit_rate(self, rule: OptimizationRule):
+    async def _optimize_cache_hit_rate(self, rule -> None: OptimizationRule) -> None:
         """Optimize cache hit rate"""
         try:
             optimizations_applied = []
@@ -760,7 +760,7 @@ class GatewayPerformanceOptimizer:
         except Exception as e:
             logger.error(f"Error in cache optimization: {e}")
     
-    async def _monitor_system_resources(self):
+    async def _monitor_system_resources(self) -> None:
         """Monitor system resources continuously"""
         while True:
             try:
@@ -788,7 +788,7 @@ class GatewayPerformanceOptimizer:
                 logger.error(f"Error in system resource monitoring: {e}")
                 await asyncio.sleep(60)
     
-    async def _handle_resource_exhaustion(self, resource_type: ResourceType, usage: float):
+    async def _handle_resource_exhaustion(self, resource_type -> None: ResourceType, usage -> None: float) -> None:
         """Handle resource exhaustion scenarios"""
         try:
             if resource_type == ResourceType.CPU:
@@ -813,7 +813,7 @@ class GatewayPerformanceOptimizer:
         except Exception as e:
             logger.error(f"Error handling resource exhaustion: {e}")
     
-    async def _process_batch_operations(self):
+    async def _process_batch_operations(self) -> None:
         """Process batch operations queue"""
         while True:
             try:
@@ -832,7 +832,7 @@ class GatewayPerformanceOptimizer:
                 logger.error(f"Error in batch operation processing: {e}")
                 await asyncio.sleep(10)
     
-    async def _execute_batch_operation(self, batch_info: Dict[str, Any]):
+    async def _execute_batch_operation(self, batch_info -> None: Dict[str, Any]) -> None:
         """Execute a batch operation"""
         try:
             batch_id = batch_info['batch_id']
@@ -875,7 +875,7 @@ class GatewayPerformanceOptimizer:
         except Exception as e:
             logger.error(f"Error executing batch operation: {e}")
     
-    async def _process_batch_chunk(self, operation_type: str, chunk: List[Any]):
+    async def _process_batch_chunk(self, operation_type -> None: str, chunk -> None: List[Any]) -> None:
         """Process a chunk of batch operations"""
         try:
             # Simulate batch processing based on operation type
@@ -1042,7 +1042,7 @@ class GatewayPerformanceOptimizer:
             logger.error(f"Failed to apply manual optimization: {e}")
             return False
     
-    async def _save_optimization_rules(self):
+    async def _save_optimization_rules(self) -> None:
         """Save optimization rules to storage"""
         try:
             rules_dict = {}
@@ -1069,7 +1069,7 @@ class GatewayPerformanceOptimizer:
         except Exception as e:
             logger.error(f"Failed to save optimization rules: {e}")
     
-    async def _save_connection_pools(self):
+    async def _save_connection_pools(self) -> None:
         """Save connection pools to storage"""
         try:
             pools_dict = {}
@@ -1096,7 +1096,7 @@ class GatewayPerformanceOptimizer:
         except Exception as e:
             logger.error(f"Failed to save connection pools: {e}")
     
-    async def close(self):
+    async def close(self) -> None:
         """Close the optimizer and cleanup resources"""
         try:
             if self.thread_pool:

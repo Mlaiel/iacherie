@@ -136,7 +136,7 @@ class DataProtectionManager:
     - Data breach detection and reporting
     """
     
-    def __init__(self, encryption_key: str = None):
+    def __init__(self, encryption_key -> None: str = None) -> None:
         """
         Initialize data protection manager
         
@@ -810,7 +810,7 @@ class DataProtectionManager:
             return False
 
 # Usage example
-async def main():
+async def main() -> None:
     """Example usage of DataProtectionManager"""
     # Initialize data protection manager
     dpm = DataProtectionManager()

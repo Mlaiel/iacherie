@@ -127,7 +127,7 @@ class TransformationResult:
 class AudioTransformer:
     """Professional audio transformation and processing engine."""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize audio transformer with configuration."""
         self.config = config or {}
         self.supported_formats = [fmt.value for fmt in AudioFormat]
@@ -243,7 +243,7 @@ class AudioTransformer:
 class VideoTransformer:
     """Professional video transformation and processing engine."""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize video transformer with configuration."""
         self.config = config or {}
         self.supported_formats = [fmt.value for fmt in VideoFormat]
@@ -360,7 +360,7 @@ class VideoTransformer:
 class ImageTransformer:
     """Professional image transformation and processing engine."""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize image transformer with configuration."""
         self.config = config or {}
         self.supported_formats = [fmt.value for fmt in ImageFormat]
@@ -475,7 +475,7 @@ class ImageTransformer:
 class MediaAnalyzer:
     """Advanced media content analyzer with ML capabilities."""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize media analyzer with configuration."""
         self.config = config or {}
         self.audio_transformer = AudioTransformer(config)
@@ -550,7 +550,7 @@ class MediaAnalyzer:
 class FormatValidator:
     """Validator for supported media formats and compatibility."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize format validator."""
         self.supported_audio_formats = [fmt.value for fmt in AudioFormat]
         self.supported_video_formats = [fmt.value for fmt in VideoFormat]
@@ -592,7 +592,7 @@ class FormatValidator:
 class CompressionEngine:
     """Adaptive compression engine for optimal media processing."""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize compression engine with configuration."""
         self.config = config or {}
         

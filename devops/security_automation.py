@@ -162,7 +162,7 @@ class SecurityAutomation:
     - Security metrics collection and dashboards
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         # Vulnerability management
         self.vulnerabilities: Dict[str, Vulnerability] = {}
         self.scan_history: List[SecurityScan] = []
@@ -199,7 +199,7 @@ class SecurityAutomation:
         
         logger.info("SecurityAutomation initialized")
 
-    def _initialize_security_automation(self):
+    def _initialize_security_automation(self) -> None:
         """Initialize security automation system"""
         
         # Start background tasks
@@ -219,7 +219,7 @@ class SecurityAutomation:
         
         logger.info("Security automation initialization complete")
 
-    def _setup_scanner_configs(self):
+    def _setup_scanner_configs(self) -> None:
         """Setup security scanner configurations"""
         
         self.scanner_configs = {
@@ -266,7 +266,7 @@ class SecurityAutomation:
             }
         }
 
-    def _setup_default_policies(self):
+    def _setup_default_policies(self) -> None:
         """Setup default security policies"""
         
         container_policy = SecurityPolicy(
@@ -333,7 +333,7 @@ class SecurityAutomation:
         self.security_policies[container_policy.policy_id] = container_policy
         self.security_policies[network_policy.policy_id] = network_policy
 
-    def _setup_compliance_frameworks(self):
+    def _setup_compliance_frameworks(self) -> None:
         """Setup compliance framework definitions"""
         
         self.compliance_frameworks = {
@@ -412,7 +412,7 @@ class SecurityAutomation:
             }
         }
 
-    def _setup_incident_rules(self):
+    def _setup_incident_rules(self) -> None:
         """Setup incident detection rules"""
         
         self.incident_rules = [
@@ -459,7 +459,7 @@ class SecurityAutomation:
             }
         ]
 
-    def _setup_security_baselines(self):
+    def _setup_security_baselines(self) -> None:
         """Setup security baseline configurations"""
         
         self.security_baselines = {
@@ -570,7 +570,7 @@ class SecurityAutomation:
             logger.error(f"Container image scan failed: {str(e)}")
             raise
 
-    async def _execute_container_scan(self, scan: SecurityScan, config: Dict[str, Any]):
+    async def _execute_container_scan(self, scan -> None: SecurityScan, config -> None: Dict[str, Any]) -> None:
         """Execute container image vulnerability scan"""
         
         try:
@@ -731,7 +731,7 @@ class SecurityAutomation:
             logger.error(f"Source code scan failed: {str(e)}")
             raise
 
-    async def _execute_source_code_scan(self, scan: SecurityScan, config: Dict[str, Any]):
+    async def _execute_source_code_scan(self, scan -> None: SecurityScan, config -> None: Dict[str, Any]) -> None:
         """Execute source code security scan"""
         
         try:
@@ -926,7 +926,7 @@ class SecurityAutomation:
             logger.error(f"Incident creation failed: {str(e)}")
             raise
 
-    async def _create_vulnerability_incident(self, target: str, vulnerabilities: List[Vulnerability]):
+    async def _create_vulnerability_incident(self, target -> None: str, vulnerabilities -> None: List[Vulnerability]) -> None:
         """Create incident for critical vulnerabilities"""
         
         critical_count = len(vulnerabilities)
@@ -949,7 +949,7 @@ class SecurityAutomation:
         
         return False
 
-    async def _auto_respond_incident(self, incident: SecurityIncident, rule: Dict[str, Any]):
+    async def _auto_respond_incident(self, incident -> None: SecurityIncident, rule -> None: Dict[str, Any]) -> None:
         """Auto-respond to security incident"""
         
         try:
@@ -969,7 +969,7 @@ class SecurityAutomation:
         except Exception as e:
             logger.error(f"Auto-response failed: {str(e)}")
 
-    async def _respond_to_critical_vulnerability(self, incident: SecurityIncident):
+    async def _respond_to_critical_vulnerability(self, incident -> None: SecurityIncident) -> None:
         """Respond to critical vulnerability incident"""
         
         response_actions = [
@@ -1089,7 +1089,7 @@ class SecurityAutomation:
         return result
 
     # Background monitoring tasks
-    async def _vulnerability_scanning_loop(self):
+    async def _vulnerability_scanning_loop(self) -> None:
         """Background vulnerability scanning loop"""
         while True:
             try:
@@ -1101,7 +1101,7 @@ class SecurityAutomation:
             except Exception as e:
                 logger.error(f"Vulnerability scanning loop error: {str(e)}")
 
-    async def _perform_scheduled_scans(self):
+    async def _perform_scheduled_scans(self) -> None:
         """Perform scheduled security scans"""
         
         # Mock scheduled scanning
@@ -1121,7 +1121,7 @@ class SecurityAutomation:
             except Exception as e:
                 logger.error(f"Scheduled scan failed: {target} - {str(e)}")
 
-    async def _incident_detection_loop(self):
+    async def _incident_detection_loop(self) -> None:
         """Background incident detection loop"""
         while True:
             try:
@@ -1133,7 +1133,7 @@ class SecurityAutomation:
             except Exception as e:
                 logger.error(f"Incident detection loop error: {str(e)}")
 
-    async def _detect_security_incidents(self):
+    async def _detect_security_incidents(self) -> None:
         """Detect security incidents from various sources"""
         
         # Mock incident detection
@@ -1163,7 +1163,7 @@ class SecurityAutomation:
                 affected_systems=incident_data["systems"]
             )
 
-    async def _policy_enforcement_loop(self):
+    async def _policy_enforcement_loop(self) -> None:
         """Background policy enforcement loop"""
         while True:
             try:
@@ -1175,7 +1175,7 @@ class SecurityAutomation:
             except Exception as e:
                 logger.error(f"Policy enforcement loop error: {str(e)}")
 
-    async def _enforce_policies(self):
+    async def _enforce_policies(self) -> None:
         """Enforce security policies across infrastructure"""
         
         # Mock policy enforcement on sample resources
@@ -1197,7 +1197,7 @@ class SecurityAutomation:
             for policy_id in self.security_policies.keys():
                 await self.enforce_security_policy(policy_id, resource)
 
-    async def _compliance_monitoring_loop(self):
+    async def _compliance_monitoring_loop(self) -> None:
         """Background compliance monitoring loop"""
         while True:
             try:
@@ -1210,7 +1210,7 @@ class SecurityAutomation:
             except Exception as e:
                 logger.error(f"Compliance monitoring loop error: {str(e)}")
 
-    async def _threat_intelligence_loop(self):
+    async def _threat_intelligence_loop(self) -> None:
         """Background threat intelligence loop"""
         while True:
             try:
@@ -1222,7 +1222,7 @@ class SecurityAutomation:
             except Exception as e:
                 logger.error(f"Threat intelligence loop error: {str(e)}")
 
-    async def _update_threat_intelligence(self):
+    async def _update_threat_intelligence(self) -> None:
         """Update threat intelligence indicators"""
         
         # Mock threat intelligence update
@@ -1255,7 +1255,7 @@ class SecurityAutomation:
                 "source": "threat_feed"
             }
 
-    async def _security_metrics_loop(self):
+    async def _security_metrics_loop(self) -> None:
         """Background security metrics collection loop"""
         while True:
             try:
@@ -1267,7 +1267,7 @@ class SecurityAutomation:
             except Exception as e:
                 logger.error(f"Security metrics loop error: {str(e)}")
 
-    async def _collect_security_metrics(self):
+    async def _collect_security_metrics(self) -> None:
         """Collect security metrics"""
         
         try:

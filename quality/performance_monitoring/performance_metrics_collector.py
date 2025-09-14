@@ -1,3 +1,8 @@
+"""
+Performance Metrics Collector module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Performance Metrics Collector - Ainflue DevOps Platform
@@ -143,7 +148,7 @@ class PerformanceMetricsCollector:
     Enterprise performance metrics collection and analysis system
     """
     
-    def __init__(self, config_path: Optional[str] = None):
+    def __init__(self, config_path -> None: Optional[str] = None) -> None:
         self.config_path = Path(config_path) if config_path else Path("config/performance_metrics.yaml")
         self.config = self._load_config()
         self.database_path = Path("data/performance_metrics.db")
@@ -218,7 +223,7 @@ class PerformanceMetricsCollector:
         
         return default_config
 
-    def _initialize_database(self):
+    def _initialize_database(self) -> None:
         """Initialize SQLite database for metrics storage"""
         self.database_path.parent.mkdir(parents=True, exist_ok=True)
         
@@ -266,7 +271,7 @@ class PerformanceMetricsCollector:
             conn.execute("CREATE INDEX IF NOT EXISTS idx_metrics_name_timestamp ON metrics(name, timestamp)")
             conn.execute("CREATE INDEX IF NOT EXISTS idx_alerts_timestamp ON alerts(timestamp)")
 
-    def _initialize_prometheus_metrics(self):
+    def _initialize_prometheus_metrics(self) -> None:
         """Initialize Prometheus metrics"""
         if not self.config["external_integrations"]["prometheus"]["enabled"]:
             return
@@ -289,7 +294,7 @@ class PerformanceMetricsCollector:
         except Exception as e:
             logger.error(f"Failed to initialize Prometheus metrics: {e}")
 
-    def _load_alert_rules(self):
+    def _load_alert_rules(self) -> None:
         """Load alert rules from configuration"""
         # Default alert rules
         default_rules = [
@@ -334,7 +339,7 @@ class PerformanceMetricsCollector:
         for rule in default_rules:
             self.alert_rules[rule.rule_id] = rule
 
-    async def start_collection(self):
+    async def start_collection(self) -> None:
         """Start metrics collection"""
         if self.collection_active:
             logger.warning("Metrics collection already active")
@@ -375,12 +380,12 @@ class PerformanceMetricsCollector:
         # Start background tasks
         await asyncio.gather(*tasks, return_exceptions=True)
 
-    async def stop_collection(self):
+    async def stop_collection(self) -> None:
         """Stop metrics collection"""
         self.collection_active = False
         logger.info("Stopping performance metrics collection")
 
-    async def _collect_system_metrics(self):
+    async def _collect_system_metrics(self) -> None:
         """Collect system performance metrics"""
         interval = self.config["collection"]["interval_seconds"]
         
@@ -435,7 +440,7 @@ class PerformanceMetricsCollector:
                 logger.error(f"System metrics collection failed: {e}")
                 await asyncio.sleep(interval)
 
-    async def _collect_application_metrics(self):
+    async def _collect_application_metrics(self) -> None:
         """Collect application performance metrics"""
         interval = self.config["collection"]["interval_seconds"]
         
@@ -477,7 +482,7 @@ class PerformanceMetricsCollector:
                 logger.error(f"Application metrics collection failed: {e}")
                 await asyncio.sleep(interval)
 
-    async def _collect_database_metrics(self):
+    async def _collect_database_metrics(self) -> None:
         """Collect database performance metrics"""
         interval = self.config["collection"]["interval_seconds"] * 2  # Less frequent
         
@@ -510,10 +515,10 @@ class PerformanceMetricsCollector:
                 logger.error(f"Database metrics collection failed: {e}")
                 await asyncio.sleep(interval)
 
-    async def _store_metric(self, name: str, value: float, metric_type: MetricType, 
-                          source: MetricSource, unit: str, timestamp: datetime,
-                          labels: Optional[Dict[str, str]] = None,
-                          metadata: Optional[Dict[str, Any]] = None):
+    async def _store_metric(self, name -> None: str, value -> None: float, metric_type -> None: MetricType, 
+                          source -> None: MetricSource, unit -> None: str, timestamp -> None: datetime,
+                          labels -> None: Optional[Dict[str, str]] = None,
+                          metadata -> None: Optional[Dict[str, Any]] = None) -> None:
         """Store metric in database and memory"""
         try:
             # Create metric point
@@ -554,8 +559,8 @@ class PerformanceMetricsCollector:
         except Exception as e:
             logger.error(f"Failed to store metric {name}: {e}")
 
-    async def _immediate_store_metric(self, name: str, point: MetricPoint, 
-                                    metric_type: MetricType, source: MetricSource, unit: str):
+    async def _immediate_store_metric(self, name -> None: str, point -> None: MetricPoint, 
+                                    metric_type -> None: MetricType, source -> None: MetricSource, unit -> None: str) -> None:
         """Store metric immediately in database"""
         try:
             with sqlite3.connect(self.database_path) as conn:
@@ -575,13 +580,13 @@ class PerformanceMetricsCollector:
         except Exception as e:
             logger.error(f"Failed to store metric in database: {e}")
 
-    async def _batch_store_metric(self, name: str, point: MetricPoint, 
-                                metric_type: MetricType, source: MetricSource, unit: str):
+    async def _batch_store_metric(self, name -> None: str, point -> None: MetricPoint, 
+                                metric_type -> None: MetricType, source -> None: MetricSource, unit -> None: str) -> None:
         """Store metric in batch (placeholder for optimization)"""
         # In a real implementation, this would accumulate metrics and write in batches
         await self._immediate_store_metric(name, point, metric_type, source, unit)
 
-    async def _store_metric_in_redis(self, name: str, point: MetricPoint):
+    async def _store_metric_in_redis(self, name -> None: str, point -> None: MetricPoint) -> None:
         """Store metric in Redis for fast access"""
         try:
             if self.redis_client:
@@ -595,7 +600,7 @@ class PerformanceMetricsCollector:
         except Exception as e:
             logger.error(f"Failed to store metric in Redis: {e}")
 
-    async def _monitor_alerts(self):
+    async def _monitor_alerts(self) -> None:
         """Monitor metrics for alert conditions"""
         check_interval = self.config["alerting"]["check_interval"]
         
@@ -613,7 +618,7 @@ class PerformanceMetricsCollector:
                 logger.error(f"Alert monitoring failed: {e}")
                 await asyncio.sleep(check_interval)
 
-    async def _check_alert_rule(self, rule: AlertRule):
+    async def _check_alert_rule(self, rule -> None: AlertRule) -> None:
         """Check if alert rule condition is met"""
         try:
             # Get recent metric values
@@ -658,7 +663,7 @@ class PerformanceMetricsCollector:
         else:
             return False
 
-    async def _trigger_alert(self, rule: AlertRule, current_value: float):
+    async def _trigger_alert(self, rule -> None: AlertRule, current_value -> None: float) -> None:
         """Trigger alert notification"""
         try:
             alert_message = f"Alert: {rule.metric_name} {rule.condition} {rule.threshold} (current: {current_value:.2f})"
@@ -685,7 +690,7 @@ class PerformanceMetricsCollector:
         except Exception as e:
             logger.error(f"Failed to trigger alert: {e}")
 
-    async def _send_notification(self, channel: str, message: str, severity: MetricSeverity):
+    async def _send_notification(self, channel -> None: str, message -> None: str, severity -> None: MetricSeverity) -> None:
         """Send alert notification to channel"""
         # Placeholder for notification implementation
         logger.info(f"Notification [{channel}] {severity.value}: {message}")
@@ -909,20 +914,20 @@ class PerformanceMetricsCollector:
 performance_metrics_collector = PerformanceMetricsCollector()
 
 # Convenience functions
-async def start_performance_monitoring():
+async def start_performance_monitoring() -> None:
     """Start performance monitoring"""
     await performance_metrics_collector.start_collection()
 
-async def stop_performance_monitoring():
+async def stop_performance_monitoring() -> None:
     """Stop performance monitoring"""
     await performance_metrics_collector.stop_collection()
 
-async def get_performance_report(hours: int = 24):
+async def get_performance_report(hours -> None: int = 24) -> None:
     """Get performance report"""
     return await performance_metrics_collector.generate_performance_report(hours)
 
-async def record_custom_metric(name: str, value: float, unit: str = "count", 
-                              labels: Optional[Dict[str, str]] = None):
+async def record_custom_metric(name -> None: str, value -> None: float, unit -> None: str = "count", 
+                              labels -> None: Optional[Dict[str, str]] = None) -> None:
     """Record custom application metric"""
     await performance_metrics_collector._store_metric(
         name, value, MetricType.CUSTOM, MetricSource.APPLICATION, 
@@ -931,7 +936,7 @@ async def record_custom_metric(name: str, value: float, unit: str = "count",
 
 if __name__ == "__main__":
     # Example usage
-    async def main():
+    async def main() -> None:
         # Start monitoring
         await start_performance_monitoring()
         

@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 class ContentDistributionReports:
     """Comprehensive content distribution reporting system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         logger.info("Content distribution reports initialized")
     
     async def generate_distribution_report(self, user_id: str, content_id: str) -> Dict[str, Any]:

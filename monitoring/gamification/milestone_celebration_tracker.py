@@ -117,7 +117,7 @@ class MilestoneCelebrationTracker:
     - Influencer milestone highlighting
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize milestone celebration tracker"""
         self.config = config or {}
         self.milestones: Dict[str, Milestone] = {}
@@ -130,7 +130,7 @@ class MilestoneCelebrationTracker:
         self._initialize_milestone_system()
         logger.info("Milestone Celebration Tracker initialized")
     
-    def _initialize_milestone_system(self):
+    def _initialize_milestone_system(self) -> None:
         """Initialize milestone tracking system"""
         try:
             # Setup default milestones
@@ -148,7 +148,7 @@ class MilestoneCelebrationTracker:
             logger.error(f"Failed to initialize milestone system: {e}")
             raise
     
-    def _setup_default_milestones(self):
+    def _setup_default_milestones(self) -> None:
         """Setup default milestone definitions"""
         default_milestones = [
             # Follower milestones
@@ -321,7 +321,7 @@ class MilestoneCelebrationTracker:
         
         return base_config
     
-    def _setup_celebration_templates(self):
+    def _setup_celebration_templates(self) -> None:
         """Setup celebration campaign templates"""
         self.celebration_templates = {
             CelebrationType.PERSONAL_CELEBRATION: {
@@ -362,7 +362,7 @@ class MilestoneCelebrationTracker:
             }
         }
     
-    def _setup_milestone_detection(self):
+    def _setup_milestone_detection(self) -> None:
         """Setup milestone detection algorithms"""
         self.detection_config = {
             "check_frequency": 300,  # seconds
@@ -416,7 +416,7 @@ class MilestoneCelebrationTracker:
             logger.error(f"Failed to track user progress for {user_id}: {e}")
             return {"error": str(e)}
     
-    def _update_user_progress(self, user_id: str, metrics: Dict[str, Any]):
+    def _update_user_progress(self, user_id -> None: str, metrics -> None: Dict[str, Any]) -> None:
         """Update user progress tracking"""
         current_progress = self.user_progress[user_id]
         
@@ -583,7 +583,7 @@ class MilestoneCelebrationTracker:
         
         return config
     
-    async def _execute_celebration_campaign(self, campaign: CelebrationCampaign):
+    async def _execute_celebration_campaign(self, campaign -> None: CelebrationCampaign) -> None:
         """Execute celebration campaign (simulate for now)"""
         # This would integrate with actual notification, social media, and reward systems
         
@@ -945,7 +945,7 @@ class MilestoneCelebrationTracker:
 
 # Example usage and testing
 if __name__ == "__main__":
-    async def test_milestone_celebration():
+    async def test_milestone_celebration() -> None:
         """Test milestone celebration functionality"""
         tracker = MilestoneCelebrationTracker()
         

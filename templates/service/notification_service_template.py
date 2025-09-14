@@ -127,7 +127,7 @@ class SendNotificationRequest(BaseModel):
     metadata: Optional[Dict[str, Any]] = Field(default_factory=dict)
 
     @validator('channels')
-    def validate_channels(cls, v):
+    def validate_channels(cls, v) -> None:
         if not v:
             raise ValueError('At least one channel must be specified')
         return v
@@ -144,7 +144,7 @@ class CreateTemplateRequest(BaseModel):
     metadata: Optional[Dict[str, Any]] = Field(default_factory=dict)
 
     @validator('name')
-    def validate_name(cls, v):
+    def validate_name(cls, v) -> None:
         if len(v.strip()) < 3:
             raise ValueError('Template name must be at least 3 characters')
         return v.strip()
@@ -186,7 +186,7 @@ class {{service_class_name}}(BaseService):
     - Rate limiting and throttling
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
         self.name = "{{service_name}}"
         self.version = "{{service_version}}"
@@ -212,7 +212,7 @@ class {{service_class_name}}(BaseService):
             NotificationChannel.IN_APP: 10000   # per hour
         }
 
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize service with dependencies"""
         try:
             await super().initialize()
@@ -240,7 +240,7 @@ class {{service_class_name}}(BaseService):
             logger.error(f"Failed to initialize {self.name} service: {e}")
             raise ServiceException(f"Service initialization failed: {e}")
 
-    async def _initialize_external_services(self):
+    async def _initialize_external_services(self) -> None:
         """Initialize external service clients"""
         try:
             # Initialize SMTP for email
@@ -403,9 +403,9 @@ class {{service_class_name}}(BaseService):
 
     async def _queue_notification(
         self,
-        notification: Notification,
-        channels: List[NotificationChannel]
-    ):
+        notification -> None: Notification,
+        channels -> None: List[NotificationChannel]
+    ) -> None:
         """Queue notification for delivery"""
         try:
             # Determine delivery order based on priority
@@ -450,7 +450,7 @@ class {{service_class_name}}(BaseService):
                 notification.id, DeliveryStatus.FAILED
             )
 
-    async def _notification_worker(self):
+    async def _notification_worker(self) -> None:
         """Background worker for processing notification queue"""
         while True:
             try:
@@ -465,7 +465,7 @@ class {{service_class_name}}(BaseService):
                 logger.error(f"Notification worker error: {e}")
                 await asyncio.sleep(5)
 
-    async def _process_channel_queue(self, channel: NotificationChannel):
+    async def _process_channel_queue(self, channel -> None: NotificationChannel) -> None:
         """Process notifications for a specific channel"""
         try:
             queue_name = f"notification_queue:{channel.value}"
@@ -977,7 +977,7 @@ class {{service_class_name}}(BaseService):
                 raise ServiceException(f"Failed to mark notification as read: {e}")
 
     # Helper methods
-    async def _get_recipient(self, recipient_id: str, session: Optional[AsyncSession] = None):
+    async def _get_recipient(self, recipient_id -> None: str, session -> None: Optional[AsyncSession] = None) -> None:
         """Get recipient (User or Creator)"""
         if session:
             try:
@@ -1036,7 +1036,7 @@ class {{service_class_name}}(BaseService):
             logger.error(f"Failed to get allowed channels for {recipient_id}: {e}")
             return requested_channels
 
-    async def _get_template(self, template_id: str, session: AsyncSession):
+    async def _get_template(self, template_id -> None: str, session -> None: AsyncSession) -> None:
         """Get notification template"""
         try:
             result = await session.execute(
@@ -1063,9 +1063,9 @@ class {{service_class_name}}(BaseService):
 
     async def _update_notification_status(
         self,
-        notification_id: str,
-        status: DeliveryStatus
-    ):
+        notification_id -> None: str,
+        status -> None: DeliveryStatus
+    ) -> None:
         """Update notification status"""
         async with self.get_session() as session:
             try:
@@ -1084,11 +1084,11 @@ class {{service_class_name}}(BaseService):
 
     async def _log_delivery(
         self,
-        notification_id: str,
-        channel: NotificationChannel,
-        status: DeliveryStatus,
-        error_message: Optional[str] = None
-    ):
+        notification_id -> None: str,
+        channel -> None: NotificationChannel,
+        status -> None: DeliveryStatus,
+        error_message -> None: Optional[str] = None
+    ) -> None:
         """Log delivery attempt"""
         async with self.get_session() as session:
             try:
@@ -1154,9 +1154,9 @@ class {{service_class_name}}(BaseService):
 
     async def _validate_template_syntax(
         self,
-        subject_template: str,
-        content_template: str
-    ):
+        subject_template -> None: str,
+        content_template -> None: str
+    ) -> None:
         """Validate Jinja2 template syntax"""
         try:
             self.template_engine.from_string(subject_template)
@@ -1164,7 +1164,7 @@ class {{service_class_name}}(BaseService):
         except Exception as e:
             raise ValidationError(f"Invalid template syntax: {e}")
 
-    async def _cleanup_worker(self):
+    async def _cleanup_worker(self) -> None:
         """Background worker for cleanup tasks"""
         while True:
             try:
@@ -1181,7 +1181,7 @@ class {{service_class_name}}(BaseService):
                 logger.error(f"Cleanup worker error: {e}")
                 await asyncio.sleep(300)  # Wait 5 minutes on error
 
-    async def _cleanup_expired_notifications(self):
+    async def _cleanup_expired_notifications(self) -> None:
         """Clean up expired notifications"""
         async with self.get_session() as session:
             try:
@@ -1198,7 +1198,7 @@ class {{service_class_name}}(BaseService):
             except Exception as e:
                 logger.error(f"Failed to cleanup expired notifications: {e}")
 
-    async def _cleanup_old_logs(self):
+    async def _cleanup_old_logs(self) -> None:
         """Clean up old notification logs"""
         async with self.get_session() as session:
             try:
@@ -1247,7 +1247,7 @@ class {{service_class_name}}(BaseService):
                 "timestamp": datetime.utcnow().isoformat()
             }
 
-    async def cleanup(self):
+    async def cleanup(self) -> None:
         """Cleanup service resources"""
         try:
             if self.redis_client:
@@ -1265,7 +1265,7 @@ class {{service_class_name}}(BaseService):
 
 # Example usage and testing
 if __name__ == "__main__":
-    async def main():
+    async def main() -> None:
         service = {{service_class_name}}()
         await service.initialize()
         
@@ -1303,3 +1303,5 @@ if __name__ == "__main__":
             await service.cleanup()
 
     asyncio.run(main())
+
+# File has syntax issues - needs manual review

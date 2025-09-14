@@ -81,7 +81,7 @@ class TaxCalculationResult:
 class TaxCalculatorCore:
     """Advanced Tax Calculator Core System"""
     
-    def __init__(self, level: str = "enterprise"):
+    def __init__(self, level -> None: str = "enterprise") -> None:
         self.version = "2.1.0"
         self.level = level
         self.tax_rates = {}
@@ -94,7 +94,7 @@ class TaxCalculatorCore:
         
         logger.info(f"Tax Calculator Core initialized - Level: {level}")
 
-    def _initialize_default_rates(self):
+    def _initialize_default_rates(self) -> None:
         """Initialize default tax rates for common jurisdictions"""
         default_rates = [
             # US rates

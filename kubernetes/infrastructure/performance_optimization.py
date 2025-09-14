@@ -142,7 +142,7 @@ Complete performance optimization specification"""
 class PerformanceOptimizationManager:
     """Advanced performance optimization manager for IA Influencer platform"""
     
-    def __init__(self, k8s_client=None, redis_client=None):
+    def __init__(self, k8s_client=None, redis_client=None) -> None:
         self.k8s_client = k8s_client
         self.redis_client = redis_client
         self.apps_v1 = client.AppsV1Api() if k8s_client else None

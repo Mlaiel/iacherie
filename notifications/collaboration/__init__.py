@@ -98,7 +98,7 @@ class CollaborationNotificationsOrchestrator:
     Gère l'écosystème complet de collaboration Ainflue
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialise l'orchestrateur collaboration notifications"""
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
@@ -127,7 +127,7 @@ class CollaborationNotificationsOrchestrator:
         
         self.logger.info("CollaborationNotificationsOrchestrator initialisé avec succès")
 
-    def _initialize_collaboration_engines(self):
+    def _initialize_collaboration_engines(self) -> None:
         """Initialise tous les engines collaboration"""
         try:
             # Core Collaboration Engines
@@ -211,7 +211,7 @@ class CollaborationNotificationsOrchestrator:
                 'user_id': context.user_id
             }
 
-    async def _validate_collaboration_context(self, context: CollaborationContext):
+    async def _validate_collaboration_context(self, context -> None: CollaborationContext) -> None:
         """Valide le contexte de collaboration"""
         
         if not context.user_id:
@@ -748,9 +748,9 @@ class CollaborationNotificationsOrchestrator:
 
     async def _update_collaboration_tracking(
         self,
-        context: CollaborationContext,
-        notification_result: Dict[str, Any]
-    ):
+        context -> None: CollaborationContext,
+        notification_result -> None: Dict[str, Any]
+    ) -> None:
         """Met à jour le tracking des collaborations"""
         
         if context.collaboration_id:
@@ -768,10 +768,10 @@ class CollaborationNotificationsOrchestrator:
 
     async def _update_orchestrator_metrics(
         self,
-        context: CollaborationContext,
-        distribution_result: Dict[str, Any],
-        processing_time: float
-    ):
+        context -> None: CollaborationContext,
+        distribution_result -> None: Dict[str, Any],
+        processing_time -> None: float
+    ) -> None:
         """Met à jour les métriques de l'orchestrateur"""
         
         # Incrémentation collaborations totales

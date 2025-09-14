@@ -170,7 +170,7 @@ class MonitoringConfig:
 class ValidationConfig:
     """Centralized validation configuration management."""
     
-    def __init__(self, config_level: ConfigLevel = ConfigLevel.DEVELOPMENT):
+    def __init__(self, config_level -> None: ConfigLevel = ConfigLevel.DEVELOPMENT) -> None:
         """Initialize validation configuration.
         
         Args:

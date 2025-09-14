@@ -256,7 +256,7 @@ class EnterpriseGamificationRevenueSystem:
     - Multi-tier reward distribution
     """
     
-    def __init__(self, config: Optional[GamificationConfig] = None):
+    def __init__(self, config -> None: Optional[GamificationConfig] = None) -> None:
         self.config = config or GamificationConfig()
         self.logger = logging.getLogger(__name__)
         self.executor = ThreadPoolExecutor(max_workers=6)
@@ -276,7 +276,7 @@ class EnterpriseGamificationRevenueSystem:
         self.leaderboards = {}
         self.creator_progress = {}
         
-    def _init_ml_models(self):
+    def _init_ml_models(self) -> None:
         """Initialize ML models for gamification optimization"""
         try:
             self.ml_models = {
@@ -307,7 +307,7 @@ class EnterpriseGamificationRevenueSystem:
             self.logger.warning(f"ML models initialization failed: {e}")
             self.ml_models = {}
 
-    def _init_fraud_detection(self):
+    def _init_fraud_detection(self) -> None:
         """Initialize fraud detection for fair play"""
         self.fraud_detection = {
             'max_competitions_per_day': 10,
@@ -321,7 +321,7 @@ class EnterpriseGamificationRevenueSystem:
             ]
         }
 
-    def _init_achievement_templates(self):
+    def _init_achievement_templates(self) -> None:
         """Initialize achievement templates"""
         self.achievement_templates = {
             'first_upload': {
@@ -366,7 +366,7 @@ class EnterpriseGamificationRevenueSystem:
             }
         }
 
-    async def initialize_connections(self):
+    async def initialize_connections(self) -> None:
         """Initialize Redis connection"""
         try:
             self.redis_client = redis.from_url(self.config.redis_url)
@@ -460,10 +460,10 @@ class EnterpriseGamificationRevenueSystem:
 
     async def _validate_competition_creation(
         self,
-        creator_id: str,
-        prize_pool: Decimal,
-        max_participants: int
-    ):
+        creator_id -> None: str,
+        prize_pool -> None: Decimal,
+        max_participants -> None: int
+    ) -> None:
         """Validate competition creation parameters"""
         # Check creator eligibility
         creator_progress = await self._get_creator_progress(creator_id)
@@ -542,7 +542,7 @@ class EnterpriseGamificationRevenueSystem:
         
         return tag_map.get(competition_type, ['general', 'open'])
 
-    async def _store_competition(self, competition: Competition):
+    async def _store_competition(self, competition -> None: Competition) -> None:
         """Store competition in cache and database"""
         try:
             # Store in memory
@@ -564,7 +564,7 @@ class EnterpriseGamificationRevenueSystem:
         except Exception as e:
             self.logger.error(f"Failed to store competition: {e}")
 
-    async def _initialize_competition_leaderboard(self, competition_id: str):
+    async def _initialize_competition_leaderboard(self, competition_id -> None: str) -> None:
         """Initialize leaderboard for competition"""
         try:
             if self.redis_client:
@@ -577,7 +577,7 @@ class EnterpriseGamificationRevenueSystem:
         except Exception as e:
             self.logger.warning(f"Leaderboard initialization failed: {e}")
 
-    async def _schedule_competition_events(self, competition: Competition):
+    async def _schedule_competition_events(self, competition -> None: Competition) -> None:
         """Schedule competition start/end events"""
         try:
             # In production: Use task scheduler like Celery
@@ -652,7 +652,7 @@ class EnterpriseGamificationRevenueSystem:
             self.logger.error(f"Failed to join competition: {e}")
             raise CompetitionError(f"Competition join failed: {e}")
 
-    async def _validate_participation(self, competition: Competition, creator_id: str):
+    async def _validate_participation(self, competition -> None: Competition, creator_id -> None: str) -> None:
         """Validate creator can participate in competition"""
         # Check competition status
         if competition.status not in [CompetitionStatus.UPCOMING, CompetitionStatus.ACTIVE]:
@@ -716,7 +716,7 @@ class EnterpriseGamificationRevenueSystem:
             self.logger.warning(f"Failed to get participation: {e}")
             return None
 
-    async def _process_entry_fee(self, creator_id: str, entry_fee: Decimal):
+    async def _process_entry_fee(self, creator_id -> None: str, entry_fee -> None: Decimal) -> None:
         """Process competition entry fee"""
         try:
             # Mock payment processing
@@ -725,7 +725,7 @@ class EnterpriseGamificationRevenueSystem:
         except Exception as e:
             raise CompetitionError(f"Entry fee processing failed: {e}")
 
-    async def _store_participation(self, participation: CompetitionParticipation):
+    async def _store_participation(self, participation -> None: CompetitionParticipation) -> None:
         """Store participation record"""
         try:
             if self.redis_client:
@@ -738,7 +738,7 @@ class EnterpriseGamificationRevenueSystem:
         except Exception as e:
             self.logger.error(f"Failed to store participation: {e}")
 
-    async def _add_to_leaderboard(self, competition_id: str, creator_id: str, score: float):
+    async def _add_to_leaderboard(self, competition_id -> None: str, creator_id -> None: str, score -> None: float) -> None:
         """Add creator to competition leaderboard"""
         try:
             if self.redis_client:
@@ -747,7 +747,7 @@ class EnterpriseGamificationRevenueSystem:
         except Exception as e:
             self.logger.warning(f"Failed to add to leaderboard: {e}")
 
-    async def _update_participant_count(self, competition_id: str, increment: int):
+    async def _update_participant_count(self, competition_id -> None: str, increment -> None: int) -> None:
         """Update competition participant count"""
         try:
             if self.redis_client:
@@ -841,9 +841,9 @@ class EnterpriseGamificationRevenueSystem:
 
     async def _validate_submission_content(
         self,
-        submission_content: Dict[str, Any],
-        competition_type: CompetitionType
-    ):
+        submission_content -> None: Dict[str, Any],
+        competition_type -> None: CompetitionType
+    ) -> None:
         """Validate submission content"""
         required_fields = {
             CompetitionType.CONTENT_CREATION: ['content_url', 'title', 'description'],
@@ -921,7 +921,7 @@ class EnterpriseGamificationRevenueSystem:
             self.logger.warning(f"Score calculation failed: {e}")
             return 50.0
 
-    async def _update_leaderboard_score(self, competition_id: str, creator_id: str, score: float):
+    async def _update_leaderboard_score(self, competition_id -> None: str, creator_id -> None: str, score -> None: float) -> None:
         """Update creator score on leaderboard"""
         try:
             if self.redis_client:
@@ -1013,7 +1013,7 @@ class EnterpriseGamificationRevenueSystem:
             self.logger.warning(f"Achievement check failed: {e}")
             return False
 
-    async def _process_achievement_reward(self, creator_id: str, reward_amount: Decimal):
+    async def _process_achievement_reward(self, creator_id -> None: str, reward_amount -> None: Decimal) -> None:
         """Process monetary reward for achievement"""
         try:
             # Mock reward processing - integrate with payment system
@@ -1021,7 +1021,7 @@ class EnterpriseGamificationRevenueSystem:
         except Exception as e:
             self.logger.error(f"Achievement reward processing failed: {e}")
 
-    async def _update_creator_achievement_progress(self, creator_id: str, achievement: Achievement):
+    async def _update_creator_achievement_progress(self, creator_id -> None: str, achievement -> None: Achievement) -> None:
         """Update creator's achievement progress"""
         try:
             creator_progress = await self._get_creator_progress(creator_id)
@@ -1090,7 +1090,7 @@ class EnterpriseGamificationRevenueSystem:
         else:
             return 'bronze'
 
-    async def _store_creator_progress(self, progress: CreatorProgress):
+    async def _store_creator_progress(self, progress -> None: CreatorProgress) -> None:
         """Store creator progress data"""
         try:
             if self.redis_client:
@@ -1102,7 +1102,7 @@ class EnterpriseGamificationRevenueSystem:
         except Exception as e:
             self.logger.error(f"Failed to store creator progress: {e}")
 
-    async def _store_achievement_award(self, creator_id: str, achievement: Achievement):
+    async def _store_achievement_award(self, creator_id -> None: str, achievement -> None: Achievement) -> None:
         """Store achievement award record"""
         try:
             if self.redis_client:
@@ -1307,7 +1307,7 @@ class EnterpriseGamificationRevenueSystem:
         
         return bonus_rewards
 
-    async def _process_reward(self, reward: Reward):
+    async def _process_reward(self, reward -> None: Reward) -> None:
         """Process and distribute reward"""
         try:
             # Mock reward processing - integrate with payment system
@@ -1372,7 +1372,7 @@ class EnterpriseGamificationRevenueSystem:
 class CompetitionPrizeManager:
     """Legacy competition prize manager interface"""
     
-    def __init__(self, gamification_system: EnterpriseGamificationRevenueSystem):
+    def __init__(self, gamification_system -> None: EnterpriseGamificationRevenueSystem) -> None:
         self.system = gamification_system
     
     async def manage_competition_prizes(
@@ -1393,7 +1393,7 @@ class CompetitionPrizeManager:
 class GamificationRewardsCalculator:
     """Legacy rewards calculator interface"""
     
-    def __init__(self, gamification_system: EnterpriseGamificationRevenueSystem):
+    def __init__(self, gamification_system -> None: EnterpriseGamificationRevenueSystem) -> None:
         self.system = gamification_system
     
     async def calculate_rewards(
@@ -1411,7 +1411,7 @@ class GamificationRewardsCalculator:
 class CreatorAchievementSystem:
     """Legacy achievement system interface"""
     
-    def __init__(self, gamification_system: EnterpriseGamificationRevenueSystem):
+    def __init__(self, gamification_system -> None: EnterpriseGamificationRevenueSystem) -> None:
         self.system = gamification_system
     
     async def award_achievement(

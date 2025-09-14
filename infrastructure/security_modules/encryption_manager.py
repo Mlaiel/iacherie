@@ -1,4 +1,6 @@
 """
+import asyncio
+
 Encryption Key Management
 Enterprise encryption and key management for Ainflue infrastructure
 
@@ -60,7 +62,7 @@ class EncryptionManager:
     - Compliance with GDPR, CCPA, SOX
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize encryption manager"""
         self.keys = {}
         self.key_policies = {}

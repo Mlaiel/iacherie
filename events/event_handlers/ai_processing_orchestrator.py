@@ -79,7 +79,7 @@ class ProcessingTask:
     result: Optional[Dict[str, Any]] = None
     error: Optional[str] = None
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.dependencies is None:
             self.dependencies = []
         if self.created_at is None:
@@ -112,7 +112,7 @@ class AIProcessingOrchestrator(BaseEventHandler):
                  ai_service_manager=None,
                  model_registry=None,
                  resource_manager=None,
-                 metrics_collector=None):
+                 metrics_collector=None) -> None:
         super().__init__()
         self.ai_service_manager = ai_service_manager
         self.model_registry = model_registry

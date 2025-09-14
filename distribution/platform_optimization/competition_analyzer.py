@@ -93,7 +93,7 @@ class CompetitiveInsight:
 class CompetitionAnalyzer:
     """Advanced competitive analysis engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize competition analyzer"""
         self.competitor_database = {}
         self.market_data = {}

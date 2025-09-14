@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 class service_registryService:
     """Service_registry service implementation"""
     
-    def __init__(self, service_name: str = "service_registry"):
+    def __init__(self, service_name -> None: str = "service_registry") -> None:
         self.service_name = service_name
         self.status = "initialized"
         self.created_at = time.time()

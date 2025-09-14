@@ -132,7 +132,7 @@ class QualityMetrics:
 class ContentFormatConverterMonitor:
     """Main content format converter monitoring system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.active_jobs: Dict[str, ConversionJob] = {}
         self.completed_jobs: List[ConversionJob] = []
         self.conversion_queue: List[ConversionRequest] = []
@@ -247,7 +247,7 @@ class ContentFormatConverterMonitor:
             
         return False
         
-    def _add_to_queue(self, request: ConversionRequest):
+    def _add_to_queue(self, request -> None: ConversionRequest) -> None:
         """Add request to conversion queue with priority sorting"""
         # Insert based on priority
         inserted = False
@@ -260,7 +260,7 @@ class ContentFormatConverterMonitor:
         if not inserted:
             self.conversion_queue.append(request)
             
-    async def process_conversion_queue(self):
+    async def process_conversion_queue(self) -> None:
         """Process queued conversion requests"""
         while self.conversion_queue:
             request = self.conversion_queue.pop(0)
@@ -278,7 +278,7 @@ class ContentFormatConverterMonitor:
             # Process conversion
             await self._process_conversion_job(job)
             
-    async def _process_conversion_job(self, job: ConversionJob):
+    async def _process_conversion_job(self, job -> None: ConversionJob) -> None:
         """Process individual conversion job"""
         job.status = ConversionStatus.PROCESSING
         job.started_at = datetime.now()
@@ -540,7 +540,7 @@ class ContentFormatConverterMonitor:
                 
         return False
         
-    async def cleanup_old_jobs(self, days_old: int = 7):
+    async def cleanup_old_jobs(self, days_old -> None: int = 7) -> None:
         """Clean up old completed jobs"""
         cutoff_date = datetime.now() - timedelta(days=days_old)
         

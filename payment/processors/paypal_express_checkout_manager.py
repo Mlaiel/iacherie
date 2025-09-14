@@ -137,10 +137,10 @@ class PayPalExpressCheckoutManager:
     """
 
     def __init__(self,
-                 paypal_client_id: str,
-                 paypal_client_secret: str,
-                 sandbox_mode: bool = False,
-                 webhook_id: Optional[str] = None):
+                 paypal_client_id -> None: str,
+                 paypal_client_secret -> None: str,
+                 sandbox_mode -> None: bool = False,
+                 webhook_id -> None: Optional[str] = None) -> None:
         """Initialize PayPal Express Checkout Manager"""
         self.client_id = paypal_client_id
         self.client_secret = paypal_client_secret

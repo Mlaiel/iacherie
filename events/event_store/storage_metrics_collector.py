@@ -141,7 +141,7 @@ class StorageMetricsCollector:
     - Business intelligence dashboards
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._metric_series: Dict[str, MetricSeries] = {}
         self._alerts: Dict[str, StorageAlert] = {}
         self._backend_connections: Dict[str, Any] = {}
@@ -167,7 +167,7 @@ class StorageMetricsCollector:
         # Initialize Ainflue business metrics
         self._initialize_business_metrics()
     
-    def _initialize_business_metrics(self):
+    def _initialize_business_metrics(self) -> None:
         """Initialize Ainflue-specific business metrics and thresholds"""
         
         # Define metric configurations for Ainflue business logic
@@ -296,7 +296,7 @@ class StorageMetricsCollector:
             }
         }
     
-    async def initialize(self, backend_connections: Dict[str, Any]):
+    async def initialize(self, backend_connections -> None: Dict[str, Any]) -> None:
         """Initialize the storage metrics collector"""
         
         self._backend_connections = backend_connections
@@ -319,7 +319,7 @@ class StorageMetricsCollector:
         self._is_initialized = True
         logger.info(f"Storage Metrics Collector initialized for {len(backend_connections)} backends")
     
-    async def _initialize_backend_metrics(self, backend_name: str):
+    async def _initialize_backend_metrics(self, backend_name -> None: str) -> None:
         """Initialize metric series for a specific backend"""
         
         for metric_name, config in self._metric_configs.items():
@@ -337,8 +337,8 @@ class StorageMetricsCollector:
         
         logger.info(f"Initialized {len(self._metric_configs)} metrics for backend {backend_name}")
     
-    async def collect_metric(self, backend: str, metric_name: str, 
-                           value: float, tags: Optional[Dict[str, str]] = None):
+    async def collect_metric(self, backend -> None: str, metric_name -> None: str, 
+                           value -> None: float, tags -> None: Optional[Dict[str, str]] = None) -> None:
         """Collect a single metric value"""
         
         series_key = f"{backend}_{metric_name}"
@@ -363,7 +363,7 @@ class StorageMetricsCollector:
         # Check for threshold violations
         await self._check_thresholds(metric_series, data_point)
     
-    async def _update_aggregated_values(self, metric_series: MetricSeries):
+    async def _update_aggregated_values(self, metric_series -> None: MetricSeries) -> None:
         """Update aggregated values for metric series"""
         
         if not metric_series.data_points:
@@ -405,7 +405,7 @@ class StorageMetricsCollector:
         weight = index - lower_index
         return sorted_values[lower_index] * (1 - weight) + sorted_values[upper_index] * weight
     
-    async def _check_thresholds(self, metric_series: MetricSeries, data_point: MetricDataPoint):
+    async def _check_thresholds(self, metric_series -> None: MetricSeries, data_point -> None: MetricDataPoint) -> None:
         """Check if metric violates thresholds and create alerts"""
         
         current_value = data_point.value
@@ -443,8 +443,8 @@ class StorageMetricsCollector:
                     threshold_value=threshold_value
                 )
     
-    async def _create_alert(self, metric_series: MetricSeries, severity: AlertSeverity,
-                          threshold_type: str, current_value: float, threshold_value: float):
+    async def _create_alert(self, metric_series -> None: MetricSeries, severity -> None: AlertSeverity,
+                          threshold_type -> None: str, current_value -> None: float, threshold_value -> None: float) -> None:
         """Create an alert for threshold violation"""
         
         alert_id = f"{metric_series.backend}_{metric_series.metric_name}_{threshold_type}_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}"
@@ -497,7 +497,7 @@ class StorageMetricsCollector:
         
         return None
     
-    async def _collection_task(self, backend_name: str):
+    async def _collection_task(self, backend_name -> None: str) -> None:
         """Background task for collecting metrics from a specific backend"""
         
         while self._is_initialized:
@@ -508,7 +508,7 @@ class StorageMetricsCollector:
                 logger.error(f"Collection task error for {backend_name}: {e}")
                 await asyncio.sleep(60)  # Retry after 1 minute
     
-    async def _collect_backend_metrics(self, backend_name: str):
+    async def _collect_backend_metrics(self, backend_name -> None: str) -> None:
         """Collect metrics from a specific backend"""
         
         try:
@@ -529,7 +529,7 @@ class StorageMetricsCollector:
             # Record error metric
             await self.collect_metric(backend_name, 'error_rate_percent', 100.0)
     
-    async def _collect_postgresql_metrics(self):
+    async def _collect_postgresql_metrics(self) -> None:
         """Collect PostgreSQL-specific metrics"""
         
         # Simulate PostgreSQL metrics collection
@@ -554,7 +554,7 @@ class StorageMetricsCollector:
         await self.collect_metric('postgresql', 'cost_per_hour_usd', random.uniform(20, 40))
         await self.collect_metric('postgresql', 'cost_per_gb_usd', random.uniform(0.10, 0.15))
     
-    async def _collect_mongodb_metrics(self):
+    async def _collect_mongodb_metrics(self) -> None:
         """Collect MongoDB-specific metrics"""
         
         import random
@@ -574,7 +574,7 @@ class StorageMetricsCollector:
         await self.collect_metric('mongodb', 'cost_per_hour_usd', random.uniform(15, 30))
         await self.collect_metric('mongodb', 'cost_per_gb_usd', random.uniform(0.08, 0.12))
     
-    async def _collect_elasticsearch_metrics(self):
+    async def _collect_elasticsearch_metrics(self) -> None:
         """Collect Elasticsearch-specific metrics"""
         
         import random
@@ -590,7 +590,7 @@ class StorageMetricsCollector:
         await self.collect_metric('elasticsearch', 'cost_per_hour_usd', random.uniform(25, 45))
         await self.collect_metric('elasticsearch', 'cost_per_gb_usd', random.uniform(0.15, 0.25))
     
-    async def _collect_redis_metrics(self):
+    async def _collect_redis_metrics(self) -> None:
         """Collect Redis-specific metrics"""
         
         import random
@@ -971,11 +971,11 @@ class StorageMetricsCollector:
         
         return chart_data
     
-    def add_alert_handler(self, handler: callable):
+    def add_alert_handler(self, handler -> None: callable) -> None:
         """Add alert notification handler"""
         self._alert_handlers.append(handler)
     
-    async def acknowledge_alert(self, alert_id: str, acknowledged_by: str):
+    async def acknowledge_alert(self, alert_id -> None: str, acknowledged_by -> None: str) -> None:
         """Acknowledge an alert"""
         
         if alert_id in self._alerts:
@@ -986,7 +986,7 @@ class StorageMetricsCollector:
             
             logger.info(f"Alert {alert_id} acknowledged by {acknowledged_by}")
     
-    async def resolve_alert(self, alert_id: str, resolved_by: str):
+    async def resolve_alert(self, alert_id -> None: str, resolved_by -> None: str) -> None:
         """Resolve an alert"""
         
         if alert_id in self._alerts:
@@ -997,7 +997,7 @@ class StorageMetricsCollector:
             
             logger.info(f"Alert {alert_id} resolved by {resolved_by}")
     
-    async def _alert_monitoring_task(self):
+    async def _alert_monitoring_task(self) -> None:
         """Background task for alert monitoring"""
         
         while self._is_initialized:
@@ -1008,7 +1008,7 @@ class StorageMetricsCollector:
                 logger.error(f"Alert monitoring task error: {e}")
                 await asyncio.sleep(60)
     
-    async def _process_alert_lifecycle(self):
+    async def _process_alert_lifecycle(self) -> None:
         """Process alert lifecycle (auto-resolve, cleanup, etc.)"""
         
         current_time = datetime.utcnow()
@@ -1047,7 +1047,7 @@ class StorageMetricsCollector:
                 (current_time - alert.resolved_at).total_seconds() > 24 * 3600):
                 del self._alerts[alert_id]
     
-    async def _capacity_forecasting_task(self):
+    async def _capacity_forecasting_task(self) -> None:
         """Background task for capacity forecasting"""
         
         while self._is_initialized:
@@ -1058,7 +1058,7 @@ class StorageMetricsCollector:
                 logger.error(f"Capacity forecasting task error: {e}")
                 await asyncio.sleep(3600)
     
-    async def _generate_capacity_forecasts(self):
+    async def _generate_capacity_forecasts(self) -> None:
         """Generate capacity forecasts for key metrics"""
         
         capacity_metrics = ['storage_size_gb', 'storage_utilization_percent', 'event_count_total']
@@ -1076,8 +1076,8 @@ class StorageMetricsCollector:
                 except Exception as e:
                     logger.debug(f"Could not generate forecast for {backend_name}.{metric_name}: {e}")
     
-    async def _create_capacity_alert(self, backend: str, metric_name: str, 
-                                   timeframe: str, projected_value: float):
+    async def _create_capacity_alert(self, backend -> None: str, metric_name -> None: str, 
+                                   timeframe -> None: str, projected_value -> None: float) -> None:
         """Create capacity planning alert"""
         
         alert_id = f"capacity_{backend}_{metric_name}_{timeframe}_{datetime.utcnow().strftime('%Y%m%d')}"
@@ -1103,7 +1103,7 @@ class StorageMetricsCollector:
         self._alerts[alert_id] = alert
         logger.warning(f"Capacity alert created: {alert.title}")
     
-    async def _cost_analysis_task(self):
+    async def _cost_analysis_task(self) -> None:
         """Background task for cost analysis"""
         
         while self._is_initialized:
@@ -1114,7 +1114,7 @@ class StorageMetricsCollector:
                 logger.error(f"Cost analysis task error: {e}")
                 await asyncio.sleep(3600)
     
-    async def _perform_cost_analysis(self):
+    async def _perform_cost_analysis(self) -> None:
         """Perform cost analysis for all backends"""
         
         for backend_name in self._backend_connections.keys():
@@ -1132,7 +1132,7 @@ class StorageMetricsCollector:
             except Exception as e:
                 logger.debug(f"Could not generate cost analysis for {backend_name}: {e}")
     
-    async def _create_cost_alert(self, backend: str, total_cost: float):
+    async def _create_cost_alert(self, backend -> None: str, total_cost -> None: float) -> None:
         """Create cost threshold alert"""
         
         alert_id = f"cost_{backend}_{datetime.utcnow().strftime('%Y%m%d')}"
@@ -1155,7 +1155,7 @@ class StorageMetricsCollector:
         self._alerts[alert_id] = alert
         logger.warning(f"Cost alert created: {alert.title}")
     
-    async def _sla_monitoring_task(self):
+    async def _sla_monitoring_task(self) -> None:
         """Background task for SLA compliance monitoring"""
         
         while self._is_initialized:
@@ -1173,7 +1173,7 @@ class StorageMetricsCollector:
                 logger.error(f"SLA monitoring task error: {e}")
                 await asyncio.sleep(300)
     
-    async def _create_sla_violation_alert(self, backend: str, sla_type: str, sla_data: Dict[str, Any]):
+    async def _create_sla_violation_alert(self, backend -> None: str, sla_type -> None: str, sla_data -> None: Dict[str, Any]) -> None:
         """Create SLA violation alert"""
         
         alert_id = f"sla_{backend}_{sla_type}_{datetime.utcnow().strftime('%Y%m%d_%H%M')}"

@@ -62,7 +62,7 @@ class TrendSignal:
 class TrendAnalyzer:
     """Real-time trend analysis engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize trend analyzer"""
         self.platform_apis = self._initialize_platform_apis()
         self.trend_cache = {}

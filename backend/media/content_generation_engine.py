@@ -45,7 +45,8 @@ try:
 except ImportError:
     TORCH_AVAILABLE = False
     class TorchStub:
-        def device(self, device_type):
+    """TorchStub: class implementation"""
+        def device(self, device_type) -> None:
             return device_type
     torch = TorchStub()
 
@@ -211,7 +212,7 @@ class IAProcessingResult:
 class ContentGenerationEngine:
     """Advanced AI content generation engine"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         """Initialize content generation engine"""
         self.config = config or {}
         self.ai_models = {}
@@ -226,7 +227,7 @@ class ContentGenerationEngine:
         
         logger.info("🤖 Content Generation Engine initialized")
     
-    def _initialize_ai_models(self):
+    def _initialize_ai_models(self) -> None:
         """Initialize AI models for content generation"""
         try:
             if TORCH_AVAILABLE:
@@ -240,7 +241,7 @@ class ContentGenerationEngine:
         except Exception as e:
             logger.error(f"Failed to initialize AI models: {e}")
     
-    def _initialize_enhancement_pipelines(self):
+    def _initialize_enhancement_pipelines(self) -> None:
         """Initialize enhancement pipelines"""
         self.enhancement_pipelines = {
             EnhancementType.VISUAL_QUALITY: self._create_visual_enhancement_pipeline(),
@@ -250,7 +251,7 @@ class ContentGenerationEngine:
         }
         logger.info("Enhancement pipelines initialized")
     
-    def _initialize_optimization_engines(self):
+    def _initialize_optimization_engines(self) -> None:
         """Initialize optimization engines"""
         self.optimization_engines = {
             PlatformType.YOUTUBE: self._create_youtube_optimizer(),
@@ -493,7 +494,7 @@ class ContentGenerationEngine:
     
     # Private helper methods
     
-    async def _update_job_stage(self, job_id: str, stage: ProcessingStage, error: str = None):
+    async def _update_job_stage(self, job_id -> None: str, stage -> None: ProcessingStage, error -> None: str = None) -> None:
         """Update job processing stage"""
         if job_id in self.processing_jobs:
             job = self.processing_jobs[job_id]
@@ -514,7 +515,7 @@ class ContentGenerationEngine:
             }
             job.progress = progress_map.get(stage, 0.0)
     
-    async def _select_generation_model(self, config: GenerationConfig):
+    async def _select_generation_model(self, config -> None: GenerationConfig) -> None:
         """Select appropriate AI model for content type"""
         return self.ai_models.get(config.content_type.value, None)
     
@@ -687,43 +688,43 @@ class ContentGenerationEngine:
     
     # Model initialization helpers
     
-    def _load_text_model(self):
+    def _load_text_model(self) -> None:
         """Load text generation model"""
         return {"type": "text_model", "status": "loaded"}
     
-    def _load_image_model(self):
+    def _load_image_model(self) -> None:
         """Load image generation model"""
         return {"type": "image_model", "status": "loaded"}
     
-    def _load_audio_model(self):
+    def _load_audio_model(self) -> None:
         """Load audio generation model"""
         return {"type": "audio_model", "status": "loaded"}
     
-    def _create_visual_enhancement_pipeline(self):
+    def _create_visual_enhancement_pipeline(self) -> None:
         """Create visual enhancement pipeline"""
         return lambda content, config: content
     
-    def _create_audio_enhancement_pipeline(self):
+    def _create_audio_enhancement_pipeline(self) -> None:
         """Create audio enhancement pipeline"""
         return lambda content, config: content
     
-    def _create_color_correction_pipeline(self):
+    def _create_color_correction_pipeline(self) -> None:
         """Create color correction pipeline"""
         return lambda content, config: content
     
-    def _create_noise_reduction_pipeline(self):
+    def _create_noise_reduction_pipeline(self) -> None:
         """Create noise reduction pipeline"""
         return lambda content, config: content
     
-    def _create_youtube_optimizer(self):
+    def _create_youtube_optimizer(self) -> None:
         """Create YouTube optimizer"""
         return lambda content, config: content
     
-    def _create_instagram_optimizer(self):
+    def _create_instagram_optimizer(self) -> None:
         """Create Instagram optimizer"""
         return lambda content, config: content
     
-    def _create_tiktok_optimizer(self):
+    def _create_tiktok_optimizer(self) -> None:
         """Create TikTok optimizer"""
         return lambda content, config: content
 
@@ -732,7 +733,7 @@ class ContentGenerationEngine:
 class AIContentProcessor:
     """Backward compatibility for AIContentProcessor"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.engine = ContentGenerationEngine(config)
     
     async def process_content(self, content: Any, config: Dict[str, Any]) -> IAProcessingResult:
@@ -745,7 +746,7 @@ class AIContentProcessor:
 class ContentEnhancer:
     """Backward compatibility for ContentEnhancer"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.engine = ContentGenerationEngine(config)
     
     async def enhance_content(self, content: Any, config: Dict[str, Any]) -> IAProcessingResult:
@@ -758,7 +759,7 @@ class ContentEnhancer:
 class FormatOptimizer:
     """Backward compatibility for FormatOptimizer"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.engine = ContentGenerationEngine(config)
     
     async def optimize_format(self, content: Any, config: Dict[str, Any]) -> IAProcessingResult:

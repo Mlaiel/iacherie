@@ -547,7 +547,7 @@ class ForecastModeling(Base):
 # EXPORT FUNCTIONS
 # ================================
 
-def get_analytics_intelligence_models():
+def get_analytics_intelligence_models() -> None:
     """Get all analytics intelligence models."""
     return [
         PredictiveAnalytics,
@@ -560,7 +560,7 @@ def get_analytics_intelligence_models():
     ]
 
 
-def create_analytics_intelligence_tables(engine):
+def create_analytics_intelligence_tables(engine) -> None:
     """Create all analytics intelligence tables."""
     try:
         Base.metadata.create_all(engine, tables=[model.__table__ for model in get_analytics_intelligence_models()])

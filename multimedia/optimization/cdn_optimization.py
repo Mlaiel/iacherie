@@ -67,7 +67,7 @@ class CDNDeploymentResult:
 class GlobalDeliveryEngine:
     """Global content delivery engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.edge_locations = {
             'us-east': ['virginia', 'ohio', 'new-york'],
             'us-west': ['oregon', 'california', 'washington'],
@@ -152,7 +152,7 @@ class GlobalDeliveryEngine:
 class CDNOptimizer:
     """Main CDN optimization engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.delivery_engine = GlobalDeliveryEngine()
         self.supported_providers = list(CDNProvider)
         
@@ -302,8 +302,8 @@ class CDNOptimizer:
         
         return config
     
-    async def _deploy_to_provider(self, file_path: Path, provider: CDNProvider,
-                                regions: List[str], cache_config: Dict[str, Any]):
+    async def _deploy_to_provider(self, file_path -> None: Path, provider -> None: CDNProvider,
+                                regions -> None: List[str], cache_config -> None: Dict[str, Any]) -> None:
         """Deploy file to specific CDN provider"""
         try:
             if provider == CDNProvider.CLOUDFLARE:
@@ -318,8 +318,8 @@ class CDNOptimizer:
             logger.error(f"Provider deployment failed: {e}")
             raise
     
-    async def _deploy_to_cloudflare(self, file_path: Path, regions: List[str],
-                                  cache_config: Dict[str, Any]):
+    async def _deploy_to_cloudflare(self, file_path -> None: Path, regions -> None: List[str],
+                                  cache_config -> None: Dict[str, Any]) -> None:
         """Deploy to Cloudflare CDN"""
         # Simplified Cloudflare deployment
         # In production, this would use Cloudflare API
@@ -328,8 +328,8 @@ class CDNOptimizer:
         # Simulate deployment delay
         await asyncio.sleep(0.5)
     
-    async def _deploy_to_cloudfront(self, file_path: Path, regions: List[str],
-                                   cache_config: Dict[str, Any]):
+    async def _deploy_to_cloudfront(self, file_path -> None: Path, regions -> None: List[str],
+                                   cache_config -> None: Dict[str, Any]) -> None:
         """Deploy to AWS CloudFront"""
         # Simplified CloudFront deployment
         # In production, this would use AWS SDK
@@ -338,8 +338,8 @@ class CDNOptimizer:
         # Simulate deployment delay
         await asyncio.sleep(1.0)
     
-    async def _deploy_generic(self, file_path: Path, regions: List[str],
-                            cache_config: Dict[str, Any]):
+    async def _deploy_generic(self, file_path -> None: Path, regions -> None: List[str],
+                            cache_config -> None: Dict[str, Any]) -> None:
         """Generic CDN deployment"""
         logger.info(f"Deploying {file_path} to generic CDN in regions: {regions}")
         
@@ -391,7 +391,7 @@ class CDNOptimizer:
             'average_cache_hit_rate': sum(p['cache_hit_rate_percent'] for p in performance_data.values()) / len(performance_data)
         }
     
-    def initialize_cdn_endpoints(self):
+    def initialize_cdn_endpoints(self) -> None:
         """Initialize CDN endpoints and configurations"""
         try:
             logger.info("Initializing CDN endpoints...")

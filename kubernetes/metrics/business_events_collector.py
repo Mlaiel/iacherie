@@ -1,4 +1,6 @@
 """IA Influencer Agent - Business Events Metrics Collector
+import logging
+
 Enterprise business metrics collection for content protection and monetization
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -101,7 +103,7 @@ class BusinessEventsCollector:
     including content protection, revenue generation, and user engagement
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.redis_manager = RedisManager()
         self.logger = logger
         self.event_buffer: List[BusinessEvent] = []

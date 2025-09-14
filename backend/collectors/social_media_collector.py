@@ -29,7 +29,7 @@ logger = logging.getLogger(__name__)
 # Individual platform collector classes
 class InstagramCollector(BaseCollector):
     """Instagram content collector."""
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs) -> None:
         super().__init__("instagram", rate_limit=60)
     
     async def search_content(self, query: str, config: CollectionConfig) -> List[CollectorResult]:
@@ -84,7 +84,7 @@ class InstagramCollector(BaseCollector):
 
 class TikTokCollector(BaseCollector):
     """TikTok content collector."""
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs) -> None:
         super().__init__("tiktok", rate_limit=100)
     
     async def search_content(self, query: str, config: CollectionConfig) -> List[CollectorResult]:
@@ -136,7 +136,7 @@ class TikTokCollector(BaseCollector):
 
 class TwitterCollector(BaseCollector):
     """Twitter content collector."""
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs) -> None:
         super().__init__("twitter", rate_limit=180)
     
     async def search_content(self, query: str, config: CollectionConfig) -> List[CollectorResult]:
@@ -186,7 +186,7 @@ class TwitterCollector(BaseCollector):
 
 class FacebookCollector(BaseCollector):
     """Facebook content collector."""
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs) -> None:
         super().__init__("facebook", rate_limit=50)
     
     async def search_content(self, query: str, config: CollectionConfig) -> List[CollectorResult]:
@@ -236,7 +236,7 @@ class FacebookCollector(BaseCollector):
 
 class LinkedInCollector(BaseCollector):
     """LinkedIn content collector."""
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs) -> None:
         super().__init__("linkedin", rate_limit=30)
     
     async def search_content(self, query: str, config: CollectionConfig) -> List[CollectorResult]:
@@ -297,7 +297,7 @@ class SocialMediaCollector(BaseCollector):
     - LinkedIn (posts, articles, company pages, analytics)
     """
     
-    def __init__(self, platforms: Optional[List[str]] = None, **kwargs):
+    def __init__(self, platforms -> None: Optional[List[str]] = None, **kwargs) -> None:
         super().__init__("social_media", rate_limit=300)
         
         # Initialize individual collectors

@@ -124,7 +124,7 @@ class FAISSBackend(VectorBackend):
     """
 FAISS vector database backend."""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.indices: Dict[str, faiss.Index] = {}
         self.metadata: Dict[str, Dict[str, Dict]] = {}
@@ -260,7 +260,7 @@ FAISS vector database backend."""
 class ChromaBackend(VectorBackend):
     """ChromaDB vector database backend."""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.client = chromadb.Client()
         self.collections: Dict[str, Any] = {}
@@ -371,7 +371,7 @@ class VectorDBManager:
     across multiple formats and platforms.
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.backend_type = config.get('backend', 'faiss')
         self.embedding_model_name = config.get('embedding_model', 'all-MiniLM-L6-v2')
@@ -685,7 +685,7 @@ class SimilaritySearcher:
     optimized similarity metrics and ranking algorithms.
     """
     
-    def __init__(self, vector_db: VectorDBManager, config: Dict[str, Any]):
+    def __init__(self, vector_db -> None: VectorDBManager, config -> None: Dict[str, Any]) -> None:
         self.vector_db = vector_db
         self.config = config
         self.similarity_thresholds = config.get('similarity_thresholds', {

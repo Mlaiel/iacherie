@@ -178,7 +178,7 @@ class AWSAIConfiguration:
 class AWSAIIntegration:
     """Comprehensive AWS AI services integration."""
     
-    def __init__(self, config: AWSAIConfiguration):
+    def __init__(self, config -> None: AWSAIConfiguration) -> None:
         self.config = config
         
         # AWS session and clients

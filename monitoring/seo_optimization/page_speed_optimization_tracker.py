@@ -116,7 +116,7 @@ class PageSpeedOptimizationTracker:
     - Automated optimization recommendations
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize page speed optimization tracker"""
         self.config = config or {}
         self.performance_tests: Dict[str, List[PerformanceTest]] = {}
@@ -139,7 +139,7 @@ class PageSpeedOptimizationTracker:
         self._initialize_performance_tracking()
         logger.info("Page Speed Optimization Tracker initialized")
     
-    def _initialize_performance_tracking(self):
+    def _initialize_performance_tracking(self) -> None:
         """Initialize performance tracking components"""
         try:
             # Setup performance testing tools
@@ -160,7 +160,7 @@ class PageSpeedOptimizationTracker:
             logger.error(f"Failed to initialize performance tracking: {e}")
             raise
     
-    def _setup_performance_tools(self):
+    def _setup_performance_tools(self) -> None:
         """Setup performance testing tools configuration"""
         self.tools_config = {
             "lighthouse": {
@@ -184,7 +184,7 @@ class PageSpeedOptimizationTracker:
             }
         }
     
-    def _setup_monitoring_config(self):
+    def _setup_monitoring_config(self) -> None:
         """Setup continuous monitoring configuration"""
         self.monitoring_config = {
             "test_frequency": 3600,  # Test every hour
@@ -195,7 +195,7 @@ class PageSpeedOptimizationTracker:
             "synthetic_monitoring": True
         }
     
-    def _setup_optimization_analyzers(self):
+    def _setup_optimization_analyzers(self) -> None:
         """Setup optimization analysis algorithms"""
         self.optimization_analyzers = {
             "image_optimization": {
@@ -217,7 +217,7 @@ class PageSpeedOptimizationTracker:
             }
         }
     
-    def _setup_performance_budgets(self):
+    def _setup_performance_budgets(self) -> None:
         """Setup default performance budgets"""
         self.default_budgets = {
             "desktop": {
@@ -945,7 +945,7 @@ class PageSpeedOptimizationTracker:
 
 # Example usage and testing
 if __name__ == "__main__":
-    async def test_page_speed_tracking():
+    async def test_page_speed_tracking() -> None:
         """Test page speed optimization tracking functionality"""
         tracker = PageSpeedOptimizationTracker()
         

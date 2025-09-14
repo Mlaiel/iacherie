@@ -114,7 +114,7 @@ class ComplianceMonitor:
     """
 Real-time compliance monitoring and alerting system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logger
         self.audit_logger = AuditLogger()
         self.gdpr_manager = GDPRComplianceManager()

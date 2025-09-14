@@ -1,19 +1,19 @@
-"""� Secrets Management Configuration - IA-Influencer-Agent
+"""# [EMOJI_REMOVED] Secrets Management Configuration - IA-Influencer-Agent
 ==================================================================
 Project Creator & Lead Dev IA: Fahed Mlaiel <mlaiel@live.de>
 Experts: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security Expert + 
          Microservices Architect + Audio Engineer + DevOps Engineer + IA Prompt Engineer
 Date: 2025-08-24
 
-PROPRIÉTAIRE EXCLUSIF: Fahed Mlaiel
-⚠️  AVERTISSEMENT LÉGAL STRICT:
-Toute tentative de copie, vol, réutilisation sans autorisation
-écrite explicite du propriétaire constitue une violation grave
+PROPRI# [EMOJI_REMOVED]TAIRE EXCLUSIF: Fahed Mlaiel
+# [EMOJI_REMOVED]  AVERTISSEMENT L# [EMOJI_REMOVED]GAL STRICT:
+    Toute tentative de copie, vol, r# [EMOJI_REMOVED]utilisation sans autorisation
+# [EMOJI_REMOVED]crite explicite du propri# [EMOJI_REMOVED]taire constitue une violation grave
 des droits d'auteur et sera poursuivie selon la loi allemande.
 Contact: mlaiel@live.de
 
 Enterprise-grade secrets management for secure credential storage
-→ encrypted storage → key rotation → access control → audit logging.
+# [EMOJI_REMOVED] encrypted storage # [EMOJI_REMOVED] key rotation # [EMOJI_REMOVED] access control # [EMOJI_REMOVED] audit logging.
 ==================================================================
 """
 
@@ -154,7 +154,7 @@ class SecretsManager:
     - Emergency access procedures
     """
     
-    def __init__(self, master_key: Optional[str] = None):
+    def __init__(self, master_key -> None: Optional[str] = None) -> None:
         """
 Initialize secrets manager"""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
@@ -919,3 +919,5 @@ Get comprehensive secrets status"""
     async def get_status(self) -> Dict[str, Any]:
         """Get secrets manager status"""
         return await self.get_secrets_status()
+
+# File has syntax issues - needs manual review

@@ -109,7 +109,7 @@ class TaskHandler:
     """
 Base class for task handlers."""
     
-    def __init__(self, handler_type: str):
+    def __init__(self, handler_type -> None: str) -> None:
         self.handler_type = handler_type
         self.logger = logging.getLogger(f"scheduler.handler.{handler_type}")
     
@@ -180,7 +180,7 @@ class ContentAnalysisTaskHandler(TaskHandler):
     """
 Handler for content analysis tasks."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         try:
             logger.info(f"Executing __init__")
             
@@ -241,7 +241,7 @@ Handler for content analysis tasks."""
 class ContentProtectionTaskHandler(TaskHandler):
     """Handler for content protection tasks."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__("content_protection")
     
     async def _execute_task(self, context: TaskExecutionContext) -> Dict[str, Any]:
@@ -302,7 +302,7 @@ class ContentProtectionTaskHandler(TaskHandler):
 class MonitoringTaskHandler(TaskHandler):
     """Handler for monitoring and health check tasks."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__("monitoring")
     
     async def _execute_task(self, context: TaskExecutionContext) -> Dict[str, Any]:
@@ -362,7 +362,7 @@ class MonitoringTaskHandler(TaskHandler):
 class ReportGenerationTaskHandler(TaskHandler):
     """Handler for report generation tasks."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__("report_generation")
     
     async def _execute_task(self, context: TaskExecutionContext) -> Dict[str, Any]:
@@ -396,7 +396,7 @@ class ReportGenerationTaskHandler(TaskHandler):
 class AdvancedWorkflowScheduler:
     """Advanced scheduler for workflow tasks and automation."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger("workflow.scheduler")
         self.notification_manager = NotificationManager()
         self.timezone_manager = TimezoneManager()
@@ -442,7 +442,7 @@ class AdvancedWorkflowScheduler:
         
         return task_id
     
-    async def _validate_task_definition(self, task_definition: TaskDefinition):
+    async def _validate_task_definition(self, task_definition -> None: TaskDefinition) -> None:
         """Validate task definition."""
         if task_definition.handler not in self.task_handlers:
             raise SchedulerException(f"Unknown task handler: {task_definition.handler}")
@@ -631,7 +631,7 @@ class AdvancedWorkflowScheduler:
         await self.register_task(task_definition)
         return task_id
     
-    async def start_scheduler(self):
+    async def start_scheduler(self) -> None:
         """Start the workflow scheduler."""
         if self.running:
             self.logger.warning("Scheduler already running")
@@ -648,12 +648,12 @@ class AdvancedWorkflowScheduler:
         # Register system monitoring
         await self.create_system_monitoring_schedule()
     
-    async def stop_scheduler(self):
+    async def stop_scheduler(self) -> None:
         """Stop the workflow scheduler."""
         self.running = False
         self.logger.info("Stopping workflow scheduler")
     
-    async def _schedule_manager_loop(self):
+    async def _schedule_manager_loop(self) -> None:
         """Main scheduling loop to queue tasks for execution."""
         while self.running:
             try:
@@ -706,7 +706,7 @@ class AdvancedWorkflowScheduler:
         
         return False
     
-    async def _schedule_task_execution(self, task_id: str):
+    async def _schedule_task_execution(self, task_id -> None: str) -> None:
         """Schedule a task for execution."""
         execution_id = f"{task_id}_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}_{uuid.uuid4().hex[:8]}"
         
@@ -726,7 +726,7 @@ class AdvancedWorkflowScheduler:
         
         self.logger.info(f"Scheduled task {task_id} for execution with ID {execution_id}")
     
-    async def _execution_manager_loop(self):
+    async def _execution_manager_loop(self) -> None:
         """Main execution loop to process queued tasks."""
         while self.running:
             try:
@@ -758,7 +758,7 @@ class AdvancedWorkflowScheduler:
                 self.logger.error(f"Error in execution manager loop: {str(e)}")
                 await asyncio.sleep(10)
     
-    async def _execute_task(self, execution_id: str):
+    async def _execute_task(self, execution_id -> None: str) -> None:
         """Execute a scheduled task."""
         execution_info = self.task_executions.get(execution_id)
         if not execution_info:
@@ -840,10 +840,10 @@ class AdvancedWorkflowScheduler:
     
     async def _send_task_notifications(
         self, 
-        task_def: TaskDefinition, 
-        execution_info: Dict, 
-        result: Dict
-    ):
+        task_def -> None: TaskDefinition, 
+        execution_info -> None: Dict, 
+        result -> None: Dict
+    ) -> None:
         """Send notifications for task completion/failure."""
         notification_config = task_def.notification_config
         
@@ -871,7 +871,7 @@ class AdvancedWorkflowScheduler:
                 urgent=notification_config.get("urgent_notifications", False)
             )
     
-    async def _cleanup_manager_loop(self):
+    async def _cleanup_manager_loop(self) -> None:
         """Cleanup old task executions."""
         while self.running:
             try:
@@ -1015,3 +1015,6 @@ class AdvancedWorkflowScheduler:
             "total_executions": len(self.task_executions),
             "scheduler_uptime": "running" if self.running else "stopped"
         }
+]}
+
+# File has syntax issues - needs manual review

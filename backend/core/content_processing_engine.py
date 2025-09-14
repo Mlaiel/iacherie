@@ -1,3 +1,8 @@
+"""
+Content Processing Engine module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """🎯 Content Processing Engine - Multi-Format Upload, Fingerprinting & Protection
 ==============================================================================
@@ -189,7 +194,7 @@ class ContentMetadata:
     processing_time: float = 0.0
     processing_stages: List[str] = field(default_factory=list)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if not self.file_hash and self.file_name:
             self.file_hash = hashlib.md5(self.file_name.encode()).hexdigest()
 
@@ -224,7 +229,7 @@ class ProcessingJob:
     started_at: Optional[datetime] = None
     completed_at: Optional[datetime] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if not self.job_id:
             self.job_id = f"job_{uuid.uuid4().hex[:12]}"
     
@@ -242,7 +247,7 @@ class ProcessingJob:
 class ContentValidator:
     """Content validation and security checking"""
     
-    def __init__(self, limits: ContentLimits):
+    def __init__(self, limits -> None: ContentLimits) -> None:
         self.limits = limits
         self.malware_signatures = [
             # Simplified malware signatures
@@ -958,7 +963,7 @@ class FingerprintEngine:
 class ContentProcessingEngine:
     """Main content processing engine - orchestrates the entire pipeline"""
     
-    def __init__(self, storage_path: str = "/tmp/ainflue_content"):
+    def __init__(self, storage_path -> None: str = "/tmp/ainflue_content") -> None:
         self.storage_path = Path(storage_path)
         self.storage_path.mkdir(parents=True, exist_ok=True)
         
@@ -1041,7 +1046,7 @@ class ContentProcessingEngine:
             logger.error(f"Content submission failed: {e}")
             raise
     
-    async def _process_job(self, job: ProcessingJob):
+    async def _process_job(self, job -> None: ProcessingJob) -> None:
         """Process a content job through the entire pipeline"""
         try:
             job.started_at = datetime.now(timezone.utc)
@@ -1202,7 +1207,7 @@ class ContentProcessingEngine:
             
             logger.error(f"Content processing job {job.job_id} failed: {e}")
     
-    async def _update_job_progress(self, job: ProcessingJob, stage: ProcessingStage, progress: float):
+    async def _update_job_progress(self, job -> None: ProcessingJob, stage -> None: ProcessingStage, progress -> None: float) -> None:
         """Update job progress and stage"""
         job.stage = stage
         job.progress = progress
@@ -1377,7 +1382,7 @@ if __name__ == "__main__":
     # Example usage for testing
     import asyncio
     
-    async def main():
+    async def main() -> None:
         print("🎯 Content Processing Engine Test")
         print("=" * 50)
         

@@ -127,7 +127,7 @@ class DMCAComplianceTracker:
     - Audit trail and documentation management
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.dmca_requests: deque = deque(maxlen=50000)
         self.compliance_audits: List[ComplianceAudit] = []
@@ -306,7 +306,7 @@ class DMCAComplianceTracker:
         
         return "low"
     
-    async def _validate_dmca_request(self, dmca_request: DMCARequest):
+    async def _validate_dmca_request(self, dmca_request -> None: DMCARequest) -> None:
         """Validate DMCA request for completeness and compliance."""
         dmca_request.status = DMCAStatus.UNDER_REVIEW
         validation_issues = []
@@ -354,7 +354,7 @@ class DMCAComplianceTracker:
             dmca_request.status = DMCAStatus.VALID
             dmca_request.processing_notes = "Request validated successfully"
     
-    async def _send_acknowledgment(self, dmca_request: DMCARequest):
+    async def _send_acknowledgment(self, dmca_request -> None: DMCARequest) -> None:
         """Send acknowledgment to requestor."""
         template = self.legal_templates['takedown_acknowledgment']
         
@@ -368,8 +368,8 @@ class DMCAComplianceTracker:
         # Simulate sending email
         logger.info(f"Acknowledgment sent for DMCA request {dmca_request.request_id}")
     
-    async def _send_invalid_notice_response(self, dmca_request: DMCARequest,
-                                          validation_issues: List[str]):
+    async def _send_invalid_notice_response(self, dmca_request -> None: DMCARequest,
+                                          validation_issues -> None: List[str]) -> None:
         """Send response for invalid DMCA notice."""
         template = self.legal_templates['invalid_notice']
         
@@ -382,7 +382,7 @@ class DMCAComplianceTracker:
         # Simulate sending email
         logger.warning(f"Invalid notice response sent for DMCA request {dmca_request.request_id}")
     
-    async def _schedule_priority_processing(self, dmca_request: DMCARequest):
+    async def _schedule_priority_processing(self, dmca_request -> None: DMCARequest) -> None:
         """Schedule priority processing for high-priority requests."""
         # Simulate priority queue processing
         logger.info(f"Priority processing scheduled for DMCA request {dmca_request.request_id}")
@@ -391,7 +391,7 @@ class DMCAComplianceTracker:
         if dmca_request.compliance_score >= 0.95:
             await self._auto_process_takedown(dmca_request)
     
-    async def _auto_process_takedown(self, dmca_request: DMCARequest):
+    async def _auto_process_takedown(self, dmca_request -> None: DMCARequest) -> None:
         """Automatically process clear-cut takedown requests."""
         if dmca_request.request_type != DMCARequestType.TAKEDOWN_NOTICE:
             return
@@ -406,7 +406,7 @@ class DMCAComplianceTracker:
         
         logger.info(f"Auto-processed takedown request {dmca_request.request_id}")
     
-    async def _send_removal_confirmation(self, dmca_request: DMCARequest):
+    async def _send_removal_confirmation(self, dmca_request -> None: DMCARequest) -> None:
         """Send content removal confirmation."""
         template = self.legal_templates['content_removed']
         

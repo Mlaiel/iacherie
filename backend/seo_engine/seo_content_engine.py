@@ -118,7 +118,7 @@ class SEOContentEngine:
     en une interface unifiée avec intelligence artificielle.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialise le moteur de contenu SEO
         
@@ -771,7 +771,7 @@ class SEOContentEngine:
             "og_description": first_paragraph[:300]
         }
     
-    def _update_optimization_stats(self, improvement: float):
+    def _update_optimization_stats(self, improvement -> None: float) -> None:
         """Met à jour les statistiques d'optimisation"""
         total_optimizations = self.stats["total_optimizations"]
         current_avg = self.stats["average_seo_improvement"]

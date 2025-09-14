@@ -88,14 +88,14 @@ class BusinessRulesEngine:
     monetization, collaboration, protection, and compliance.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the business rules engine."""
         self.rules: Dict[str, BusinessRule] = {}
         self.rule_sets: Dict[RuleType, List[str]] = {rule_type: [] for rule_type in RuleType}
         self.logger = logging.getLogger(__name__)
         self._load_default_rules()
     
-    def _load_default_rules(self):
+    def _load_default_rules(self) -> None:
         """Load default business rules."""
         default_rules = [
             # Content validation rules

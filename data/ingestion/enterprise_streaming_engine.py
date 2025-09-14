@@ -259,7 +259,7 @@ class RealTimeIngestionEngine:
     quality control, intelligent buffering, and comprehensive monitoring.
     """
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         """Initialize real-time ingestion engine"""
         self.logger = logging.getLogger(__name__)
         self.config = config or {}
@@ -288,7 +288,7 @@ class RealTimeIngestionEngine:
             'peak_concurrent_sessions': 0
         }
     
-    async def start_server(self):
+    async def start_server(self) -> None:
         """Start the WebSocket streaming server"""
         try:
             if self._is_running:
@@ -314,7 +314,7 @@ class RealTimeIngestionEngine:
             self.logger.error(f"Failed to start streaming server: {str(e)}")
             raise StreamingError(f"Server startup failed: {str(e)}")
     
-    async def stop_server(self):
+    async def stop_server(self) -> None:
         """Stop the WebSocket streaming server"""
         try:
             if not self._is_running:
@@ -544,7 +544,7 @@ class RealTimeIngestionEngine:
     
     # Private methods
     
-    async def _handle_websocket_connection(self, websocket: WebSocketServerProtocol, path: str):
+    async def _handle_websocket_connection(self, websocket -> None: WebSocketServerProtocol, path -> None: str) -> None:
         """Handle incoming WebSocket connection"""
         client_id = f"ws_{uuid.uuid4().hex[:8]}"
         session = None
@@ -600,8 +600,8 @@ class RealTimeIngestionEngine:
             if session:
                 await self.close_session(session.session_id)
     
-    async def _handle_websocket_message(self, session: StreamingSession, 
-                                      data: Dict[str, Any], websocket: WebSocketServerProtocol):
+    async def _handle_websocket_message(self, session -> None: StreamingSession, 
+                                      data -> None: Dict[str, Any], websocket -> None: WebSocketServerProtocol) -> None:
         """Handle WebSocket control messages"""
         try:
             message_type = data.get('type')
@@ -644,7 +644,7 @@ class RealTimeIngestionEngine:
         except Exception as e:
             self.logger.error(f"WebSocket message handling failed: {str(e)}")
     
-    async def _process_streaming_chunk(self, session: StreamingSession, chunk: StreamingChunk):
+    async def _process_streaming_chunk(self, session -> None: StreamingSession, chunk -> None: StreamingChunk) -> None:
         """Process individual streaming chunk"""
         try:
             chunk.status = ChunkStatus.PROCESSING
@@ -661,7 +661,7 @@ class RealTimeIngestionEngine:
             chunk.status = ChunkStatus.FAILED
             raise
     
-    async def _close_all_sessions(self):
+    async def _close_all_sessions(self) -> None:
         """Close all active sessions"""
         try:
             session_ids = list(self._active_sessions.keys())
@@ -679,7 +679,7 @@ class StreamingIngestionEngine:
     load balancing, and intelligent resource allocation.
     """
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         """Initialize streaming ingestion engine"""
         self.logger = logging.getLogger(__name__)
         self.config = config or {}
@@ -707,7 +707,7 @@ class StreamingIngestionEngine:
             'resource_utilization': 0.0
         }
     
-    async def start_streaming_engine(self):
+    async def start_streaming_engine(self) -> None:
         """Start the streaming ingestion engine"""
         try:
             self.logger.info("Starting streaming ingestion engine")
@@ -725,7 +725,7 @@ class StreamingIngestionEngine:
             self.logger.error(f"Failed to start streaming engine: {str(e)}")
             raise StreamingError(f"Engine startup failed: {str(e)}")
     
-    async def stop_streaming_engine(self):
+    async def stop_streaming_engine(self) -> None:
         """Stop the streaming ingestion engine"""
         try:
             self.logger.info("Stopping streaming ingestion engine")
@@ -924,7 +924,7 @@ class StreamingIngestionEngine:
             self.logger.error(f"Content stream creation failed: {str(e)}")
             raise
     
-    async def _load_balancer_loop(self):
+    async def _load_balancer_loop(self) -> None:
         """Load balancer background task"""
         try:
             while True:
@@ -954,7 +954,7 @@ class StreamingIngestionEngine:
         except Exception as e:
             self.logger.error(f"Load balancer error: {str(e)}")
     
-    async def _cleanup_managed_streams(self):
+    async def _cleanup_managed_streams(self) -> None:
         """Clean up all managed streams"""
         try:
             stream_ids = list(self._managed_streams.keys())
@@ -976,7 +976,7 @@ class BatchIngestionProcessor:
     parallel processing, and comprehensive result aggregation.
     """
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         """Initialize batch ingestion processor"""
         self.logger = logging.getLogger(__name__)
         self.config = config or {}
@@ -1067,7 +1067,7 @@ class BatchIngestionProcessor:
             self.logger.error(f"Batch submission failed: {str(e)}")
             raise BatchProcessingError(f"Batch submission failed: {str(e)}")
     
-    async def process_batches(self):
+    async def process_batches(self) -> None:
         """Start batch processing workers"""
         try:
             self.logger.info("Starting batch processing workers")
@@ -1131,7 +1131,7 @@ class BatchIngestionProcessor:
     
     # Private methods
     
-    async def _batch_worker(self, worker_id: str):
+    async def _batch_worker(self, worker_id -> None: str) -> None:
         """Individual batch processing worker"""
         try:
             self.logger.info(f"Batch worker started: {worker_id}")
@@ -1224,14 +1224,14 @@ class BatchIngestionProcessor:
             self.logger.error(f"Batch processing failed: {config.batch_id} - {str(e)}")
             return result
     
-    async def _process_batch_parallel(self, items: List[BatchItem], 
-                                    config: BatchConfiguration, result: BatchResult):
+    async def _process_batch_parallel(self, items -> None: List[BatchItem], 
+                                    config -> None: BatchConfiguration, result -> None: BatchResult) -> None:
         """Process batch items in parallel"""
         try:
             # Create semaphore for concurrent processing
             semaphore = asyncio.Semaphore(config.max_concurrent_workers)
             
-            async def process_item(item: BatchItem):
+            async def process_item(item -> None: BatchItem) -> None:
                 async with semaphore:
                     return await self._process_batch_item(item, config)
             
@@ -1258,8 +1258,8 @@ class BatchIngestionProcessor:
             self.logger.error(f"Parallel batch processing failed: {str(e)}")
             raise
     
-    async def _process_batch_sequential(self, items: List[BatchItem], 
-                                      config: BatchConfiguration, result: BatchResult):
+    async def _process_batch_sequential(self, items -> None: List[BatchItem], 
+                                      config -> None: BatchConfiguration, result -> None: BatchResult) -> None:
         """Process batch items sequentially"""
         try:
             for item in items:
@@ -1282,8 +1282,8 @@ class BatchIngestionProcessor:
             self.logger.error(f"Sequential batch processing failed: {str(e)}")
             raise
     
-    async def _process_batch_adaptive(self, items: List[BatchItem], 
-                                    config: BatchConfiguration, result: BatchResult):
+    async def _process_batch_adaptive(self, items -> None: List[BatchItem], 
+                                    config -> None: BatchConfiguration, result -> None: BatchResult) -> None:
         """Process batch items with adaptive strategy"""
         try:
             # Start with parallel processing, fall back to sequential if needed
@@ -1321,7 +1321,7 @@ class BatchIngestionProcessor:
             item.processing_end = datetime.utcnow()
             raise
     
-    async def _finalize_batch(self, batch_id: str):
+    async def _finalize_batch(self, batch_id -> None: str) -> None:
         """Finalize batch processing"""
         try:
             batch_info = self._active_batches[batch_id]

@@ -27,7 +27,7 @@ logger = logging.getLogger(__name__)
 class TwitchStream:
     """Twitch stream session management"""
     
-    def __init__(self, stream_id: str, user_id: str, title: str, game_id: str):
+    def __init__(self, stream_id -> None: str, user_id -> None: str, title -> None: str, game_id -> None: str) -> None:
         self.stream_id = stream_id
         self.user_id = user_id
         self.title = title
@@ -41,7 +41,7 @@ class TwitchStream:
 class TwitchSubscriber:
     """Twitch subscriber management"""
     
-    def __init__(self, user_id: str, tier: str, gifted: bool = False):
+    def __init__(self, user_id -> None: str, tier -> None: str, gifted -> None: bool = False) -> None:
         self.user_id = user_id
         self.tier = tier  # '1000', '2000', '3000' for Tier 1, 2, 3
         self.gifted = gifted
@@ -52,7 +52,7 @@ class TwitchSubscriber:
 class TwitchClip:
     """Twitch clip management and monetization"""
     
-    def __init__(self, clip_id: str, creator_id: str, title: str):
+    def __init__(self, clip_id -> None: str, creator_id -> None: str, title -> None: str) -> None:
         self.clip_id = clip_id
         self.creator_id = creator_id
         self.title = title
@@ -80,7 +80,7 @@ class TwitchCreatorAPI:
     - Audience growth strategies
     """
     
-    def __init__(self, client_id: str, client_secret: str, redirect_uri: str):
+    def __init__(self, client_id -> None: str, client_secret -> None: str, redirect_uri -> None: str) -> None:
         self.client_id = client_id
         self.client_secret = client_secret
         self.redirect_uri = redirect_uri
@@ -97,12 +97,12 @@ class TwitchCreatorAPI:
             'minute_start': datetime.utcnow().minute
         }
         
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         """Async context manager entry"""
         self.session = aiohttp.ClientSession()
         return self
         
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         """Async context manager exit"""
         if self.session:
             await self.session.close()
@@ -224,7 +224,7 @@ class TwitchCreatorAPI:
             logger.error(f"Error refreshing token: {e}")
             raise TwitchCreatorAPIError(f"Token refresh error: {e}")
 
-    async def _ensure_valid_token(self):
+    async def _ensure_valid_token(self) -> None:
         """Ensure we have a valid access token"""
         if not self.access_token:
             raise TwitchCreatorAPIError("No access token available")
@@ -232,7 +232,7 @@ class TwitchCreatorAPI:
         if self.token_expires_at and datetime.utcnow() >= self.token_expires_at - timedelta(minutes=5):
             await self.refresh_access_token()
 
-    def _check_rate_limit(self):
+    def _check_rate_limit(self) -> None:
         """Check and enforce rate limiting"""
         current_minute = datetime.utcnow().minute
         
@@ -983,7 +983,7 @@ class TwitchCreatorAPI:
     # For brevity, I'm including the core structure and key methods
 
 # Example usage and testing
-async def main():
+async def main() -> None:
     """Example usage of Twitch Creator API integration"""
     
     # Initialize the API client

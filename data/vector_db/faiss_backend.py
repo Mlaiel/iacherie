@@ -133,7 +133,7 @@ class FAISSIndexManager:
 class FAISSMetadataManager:
     """Manages metadata storage for FAISS vectors."""
     
-    def __init__(self, storage_path: str):
+    def __init__(self, storage_path -> None: str) -> None:
         self.storage_path = Path(storage_path)
         self.storage_path.mkdir(parents=True, exist_ok=True)
         self.metadata_file = self.storage_path / "metadata.json"
@@ -266,7 +266,7 @@ class FAISSBackend(BaseVectorBackend):
     - Batch operations optimization
     """
     
-    def __init__(self, config: Any, security_manager: Optional[Any] = None):
+    def __init__(self, config -> None: Any, security_manager -> None: Optional[Any] = None) -> None:
         """Initialize FAISS backend."""
         super().__init__(config, security_manager)
         
@@ -337,7 +337,7 @@ class FAISSBackend(BaseVectorBackend):
         """Load existing FAISS index from disk."""
         try:
             # Load in thread pool to avoid blocking
-            def load_index():
+            def load_index() -> None:
                 index_file = Path(self.storage_path) / "index.faiss"
                 id_map_file = Path(self.storage_path) / "id_map.pkl"
                 
@@ -376,7 +376,7 @@ class FAISSBackend(BaseVectorBackend):
         """Create a new FAISS index."""
         try:
             # Create index in thread pool
-            def create_index():
+            def create_index() -> None:
                 custom_params = self.config.get('backend.custom_params', {})
                 return FAISSIndexManager.create_index(
                     dimension=self.dimension,
@@ -427,7 +427,7 @@ class FAISSBackend(BaseVectorBackend):
                 await self._train_index_if_needed([vector])
             
             # Add vector in thread pool
-            def add_to_index():
+            def add_to_index() -> None:
                 # Assign internal ID
                 internal_id = self.next_id
                 self.id_map[vector_id] = internal_id
@@ -498,7 +498,7 @@ class FAISSBackend(BaseVectorBackend):
                 await self._train_index_if_needed(vector_data)
             
             # Add batch in thread pool
-            def add_batch_to_index():
+            def add_batch_to_index() -> None:
                 results = []
                 
                 for i, vector_id in enumerate(vector_ids):
@@ -575,7 +575,7 @@ class FAISSBackend(BaseVectorBackend):
                     return []
             
             # Search in thread pool
-            def search_index():
+            def search_index() -> None:
                 # Adjust top_k based on filters
                 search_k = min(top_k * 10 if filters else top_k, self.total_vectors)
                 
@@ -649,7 +649,7 @@ class FAISSBackend(BaseVectorBackend):
             internal_id = self.id_map[vector_id]
             
             # Get vector from index in thread pool
-            def get_from_index():
+            def get_from_index() -> None:
                 vector = self.index.reconstruct(internal_id)
                 return vector
             
@@ -757,7 +757,7 @@ class FAISSBackend(BaseVectorBackend):
             
             training_data = np.vstack(sample_vectors[:self.nlist])
             
-            def train_index():
+            def train_index() -> None:
                 self.index.train(training_data)
             
             loop = asyncio.get_event_loop()
@@ -772,7 +772,7 @@ class FAISSBackend(BaseVectorBackend):
     async def _save_index(self) -> bool:
         """Save index and mappings to disk."""
         try:
-            def save_to_disk():
+            def save_to_disk() -> None:
                 # Save FAISS index
                 index_file = Path(self.storage_path) / "index.faiss"
                 faiss.write_index(self.index, str(index_file))

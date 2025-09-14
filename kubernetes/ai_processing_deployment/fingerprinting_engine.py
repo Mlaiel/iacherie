@@ -114,7 +114,7 @@ class AudioFingerprintEngine:
     for robust content identification and similarity detection.
     """
     
-    def __init__(self, sample_rate: int = 22050, feature_size: int = 512):
+    def __init__(self, sample_rate -> None: int = 22050, feature_size -> None: int = 512) -> None:
         """
 Initialize audio fingerprinting engine."""
         self.sample_rate = sample_rate
@@ -322,7 +322,7 @@ class VideoFingerprintEngine:
     motion vectors, and temporal features for robust video identification.
     """
     
-    def __init__(self, frame_sample_rate: int = 1, feature_size: int = 1024):
+    def __init__(self, frame_sample_rate -> None: int = 1, feature_size -> None: int = 1024) -> None:
         """
 Initialize video fingerprinting engine."""
         self.frame_sample_rate = frame_sample_rate  # Extract 1 frame per second
@@ -650,7 +650,7 @@ class ImageFingerprintEngine:
     CLIP embeddings, and feature detection for robust image identification.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """
 Initialize image fingerprinting engine."""
         # Load CLIP model for semantic embeddings
@@ -880,7 +880,7 @@ class TextFingerprintEngine:
     n-grams, and linguistic features for robust text identification.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """
 Initialize text fingerprinting engine."""
         # Load pre-trained models
@@ -1100,14 +1100,14 @@ class SimilaritySearchEngine:
     for fast vector similarity matching across all content types.
     """
     
-    def __init__(self, dimension: int = 512):
+    def __init__(self, dimension -> None: int = 512) -> None:
         """
 Initialize similarity search engine."""
         self.dimension = dimension
         self.indices: Dict[str, faiss.IndexFlatIP] = {}
         self.fingerprint_store: Dict[str, List[FingerprintResult]] = {}
         
-    async def add_fingerprints(self, fingerprints: List[FingerprintResult]):
+    async def add_fingerprints(self, fingerprints -> None: List[FingerprintResult]) -> None:
         """
 Add fingerprints to the search index."""
         try:
@@ -1205,7 +1205,7 @@ class MultiformatFingerprintEngine:
     for comprehensive multi-format content analysis and protection.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """
 Initialize multiformat fingerprinting engine."""
         self.audio_engine = AudioFingerprintEngine()

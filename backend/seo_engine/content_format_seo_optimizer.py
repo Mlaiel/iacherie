@@ -294,7 +294,7 @@ class MultiFormatStrategy:
 class ContentFormatAnalyzer:
     """Analyseur de format de contenu ultra-avancé"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.supported_formats = {
             'video': ['.mp4', '.avi', '.mov', '.wmv', '.flv', '.webm'],
             'audio': ['.mp3', '.wav', '.aac', '.flac', '.ogg', '.m4a'],
@@ -304,7 +304,7 @@ class ContentFormatAnalyzer:
         self.ml_models = {}
         self._initialize_ml_models()
     
-    def _initialize_ml_models(self):
+    def _initialize_ml_models(self) -> None:
         """Initialise les modèles ML avec gestion d'erreurs"""
         try:
             if pipeline:
@@ -358,7 +358,7 @@ class ContentFormatAnalyzer:
 class ContentFormatSEOOptimizer:
     """Optimiseur SEO de format de contenu ultra-avancé avec IA"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.config = config or {}
         self.analyzer = ContentFormatAnalyzer()
         self.db_pool = None
@@ -402,7 +402,7 @@ class ContentFormatSEOOptimizer:
         self.prediction_models = {}
         self._initialize_prediction_models()
     
-    def _initialize_prediction_models(self):
+    def _initialize_prediction_models(self) -> None:
         """Initialise les modèles prédictifs avec gestion d'erreurs"""
         try:
             if tf:
@@ -424,7 +424,7 @@ class ContentFormatSEOOptimizer:
         except Exception as e:
             logger.error(f"Erreur initialisation modèles: {e}")
     
-    def _create_engagement_model(self):
+    def _create_engagement_model(self) -> None:
         """Crée le modèle de prédiction d'engagement avec gestion d'erreurs"""
         if not tf:
             return None
@@ -442,7 +442,7 @@ class ContentFormatSEOOptimizer:
             logger.error(f"Erreur création modèle engagement: {e}")
             return None
     
-    def _create_seo_model(self):
+    def _create_seo_model(self) -> None:
         """Crée le modèle de score SEO avec gestion d'erreurs"""
         if not tf:
             return None
@@ -461,7 +461,7 @@ class ContentFormatSEOOptimizer:
             logger.error(f"Erreur création modèle SEO: {e}")
             return None
     
-    def _create_trends_model(self):
+    def _create_trends_model(self) -> None:
         """Crée le modèle d'analyse de tendances avec gestion d'erreurs"""
         if not KMeans:
             return None
@@ -1324,7 +1324,7 @@ class ContentFormatSEOOptimizer:
 class VoiceSearchOptimizationEngine:
     """Moteur d'optimisation de recherche vocale ultra-avancé avec IA"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.config = config or {}
         self.nlp_pipeline = None
         self.question_classifier = None
@@ -1332,7 +1332,7 @@ class VoiceSearchOptimizationEngine:
         self.local_seo_optimizer = None
         self._initialize_voice_components()
     
-    def _initialize_voice_components(self):
+    def _initialize_voice_components(self) -> None:
         """Initialise les composants de recherche vocale"""
         try:
             # Pipeline NLP pour questions
@@ -1891,7 +1891,7 @@ class VoiceSearchOptimizationEngine:
 class MultiFormatContentSEOOptimizer:
     """Optimiseur SEO de contenu multi-format ultra-avancé avec coordination IA"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.config = config or {}
         self.format_optimizer = ContentFormatSEOOptimizer(config)
         self.voice_optimizer = VoiceSearchOptimizationEngine(config)
@@ -1914,7 +1914,7 @@ class MultiFormatContentSEOOptimizer:
             PlatformType.SPOTIFY: SpotifyAdapter(self.config)
         }
     
-    def _initialize_multi_format_models(self):
+    def _initialize_multi_format_models(self) -> None:
         """Initialise les modèles ML multi-format"""
         try:
             # Modèle de synergie cross-format
@@ -1930,7 +1930,7 @@ class MultiFormatContentSEOOptimizer:
         except Exception as e:
             logger.error(f"Erreur initialisation modèles multi-format: {e}")
     
-    def _create_synergy_model(self):
+    def _create_synergy_model(self) -> None:
         """Crée le modèle de synergie cross-format"""
         model = tf.keras.Sequential([
             tf.keras.layers.Dense(128, activation='relu'),
@@ -1943,7 +1943,7 @@ class MultiFormatContentSEOOptimizer:
         model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
         return model
     
-    def _create_performance_model(self):
+    def _create_performance_model(self) -> None:
         """Crée le modèle de prédiction de performance"""
         model = tf.keras.Sequential([
             tf.keras.layers.Dense(256, activation='relu'),
@@ -1956,7 +1956,7 @@ class MultiFormatContentSEOOptimizer:
         model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
         return model
     
-    def _create_allocation_model(self):
+    def _create_allocation_model(self) -> None:
         """Crée le modèle d'allocation de ressources"""
         return KMeans(n_clusters=3, random_state=42)  # 3 niveaux de ressources
     
@@ -2391,7 +2391,7 @@ class MultiFormatContentSEOOptimizer:
 class PlatformAdapter:
     """Classe de base pour adaptateurs de plateforme"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
     
     async def adapt_content(self, content: str, format_type: ContentFormat) -> Dict[str, Any]:
@@ -2470,22 +2470,27 @@ class InstagramAdapter(PlatformAdapter):
 
 # Classes d'adaptation simplifiées pour autres plateformes
 class TikTokAdapter(PlatformAdapter):
+    """TikTokAdapter class implementation"""
     async def adapt_content(self, content: str, format_type: ContentFormat) -> Dict[str, Any]:
         return {"short_form_optimization": True, "trending_sounds": [], "effects": []}
 
 class LinkedInAdapter(PlatformAdapter):
+    """LinkedInAdapter class implementation"""
     async def adapt_content(self, content: str, format_type: ContentFormat) -> Dict[str, Any]:
         return {"professional_tone": True, "industry_hashtags": [], "thought_leadership": True}
 
 class TwitterAdapter(PlatformAdapter):
+    """TwitterAdapter class implementation"""
     async def adapt_content(self, content: str, format_type: ContentFormat) -> Dict[str, Any]:
         return {"thread_structure": True, "character_optimization": True, "trending_hashtags": []}
 
 class FacebookAdapter(PlatformAdapter):
+    """FacebookAdapter class implementation"""
     async def adapt_content(self, content: str, format_type: ContentFormat) -> Dict[str, Any]:
         return {"engagement_optimization": True, "community_focus": True, "sharing_encouragement": True}
 
 class SpotifyAdapter(PlatformAdapter):
+    """SpotifyAdapter class implementation"""
     async def adapt_content(self, content: str, format_type: ContentFormat) -> Dict[str, Any]:
         return {"episode_optimization": True, "playlist_suggestions": [], "show_notes": True}
 

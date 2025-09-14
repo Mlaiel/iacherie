@@ -75,7 +75,7 @@ class MongoDBMetrics:
 class MongoDBIndexManager:
     """Advanced index management for MongoDB"""
     
-    def __init__(self, collection, config: MongoDBConfig):
+    def __init__(self, collection, config -> None: MongoDBConfig) -> None:
         self.collection = collection
         self.config = config
     
@@ -151,7 +151,7 @@ class MongoDBIndexManager:
 class MongoDBShardingManager:
     """MongoDB sharding configuration and management"""
     
-    def __init__(self, database, config: MongoDBConfig):
+    def __init__(self, database, config -> None: MongoDBConfig) -> None:
         self.database = database
         self.config = config
     
@@ -218,7 +218,7 @@ class MongoDBShardingManager:
 class MongoDBChangeStreamProcessor:
     """Real-time change stream processor"""
     
-    def __init__(self, collection, config: MongoDBConfig):
+    def __init__(self, collection, config -> None: MongoDBConfig) -> None:
         self.collection = collection
         self.config = config
         self.active_streams = {}
@@ -270,7 +270,7 @@ class MongoDBChangeStreamProcessor:
 class MongoDBGridFSManager:
     """GridFS manager for large event payloads"""
     
-    def __init__(self, database, config: MongoDBConfig):
+    def __init__(self, database, config -> None: MongoDBConfig) -> None:
         self.database = database
         self.config = config
         self.gridfs = None
@@ -335,7 +335,7 @@ class MongoDBGridFSManager:
 class MongoDBEventCollection(EventStoreInterface):
     """High-performance MongoDB event collection"""
     
-    def __init__(self, config: MongoDBConfig):
+    def __init__(self, config -> None: MongoDBConfig) -> None:
         self.config = config
         self.client = None
         self.database = None

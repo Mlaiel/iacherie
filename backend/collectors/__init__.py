@@ -124,7 +124,7 @@ PLATFORM_COLLECTORS = {
     'discord': DiscordCollector
 }
 
-def get_collector(platform: str, **kwargs):
+def get_collector(platform -> None: str, **kwargs) -> None:
     """
     Get collector instance for specified platform.
     
@@ -148,11 +148,11 @@ def get_collector(platform: str, **kwargs):
     
     return PLATFORM_COLLECTORS[platform](**kwargs)
 
-def get_supported_platforms():
+def get_supported_platforms() -> None:
     """Get list of supported platforms and collector types."""
     return list(PLATFORM_COLLECTORS.keys())
 
-def get_consolidated_collectors():
+def get_consolidated_collectors() -> None:
     """Get list of consolidated collector types (recommended)."""
     return [
         'social_media',
@@ -163,7 +163,7 @@ def get_consolidated_collectors():
         'miscellaneous'
     ]
 
-def get_individual_platforms():
+def get_individual_platforms() -> None:
     """Get list of individual platform collectors (legacy support)."""
     return [
         'instagram', 'tiktok', 'youtube', 'twitter', 'facebook', 'linkedin',

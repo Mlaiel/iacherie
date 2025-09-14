@@ -244,7 +244,7 @@ class SyncJob(BaseModel):
 class DataSyncService:
     """🔄 Enterprise Data Sync Service - Multi-Expert Implementation"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize with all expert role capabilities"""
         # 🧠 Lead Dev IA: AI optimization engines
         self.ai_optimizer = self._initialize_ai_optimizer()
@@ -604,7 +604,7 @@ class DataSyncService:
             }
         }
 
-    def _load_sample_data(self):
+    def _load_sample_data(self) -> None:
         """Load sample sync configurations and jobs"""
         # Create sample sync configurations
         self._create_sample_configurations()
@@ -612,7 +612,7 @@ class DataSyncService:
         # Create sample sync jobs
         self._create_sample_jobs()
 
-    def _create_sample_configurations(self):
+    def _create_sample_configurations(self) -> None:
         """Create sample sync configurations"""
         sample_configs = [
             {
@@ -655,7 +655,7 @@ class DataSyncService:
             
             self.sync_configurations[config.id] = config
 
-    def _create_sample_jobs(self):
+    def _create_sample_jobs(self) -> None:
         """Create sample sync jobs"""
         config_ids = list(self.sync_configurations.keys())
         
@@ -732,7 +732,7 @@ class DataSyncService:
             logger.error(f"❌ Error creating sync configuration: {str(e)}")
             raise HTTPException(status_code=500, detail=f"Configuration creation failed: {str(e)}")
 
-    async def _validate_sync_config(self, config: SyncConfiguration):
+    async def _validate_sync_config(self, config -> None: SyncConfiguration) -> None:
         """🔒 Security: Validate sync configuration"""
         # Validate required fields
         if not config.source_config or not config.target_config:
@@ -920,7 +920,7 @@ class DataSyncService:
         
         return recommendations[:3]  # Return top 3 recommendations
 
-    async def _setup_config_monitoring(self, config: SyncConfiguration):
+    async def _setup_config_monitoring(self, config -> None: SyncConfiguration) -> None:
         """⚙️ DevOps: Set up monitoring for sync configuration"""
         self.monitoring_system[config.id] = {
             "created_at": datetime.now(),
@@ -973,7 +973,7 @@ class DataSyncService:
         """🧠 Lead Dev IA: Generate AI insights for sync job"""
         return await self._optimize_sync_configuration(config)
 
-    async def _execute_sync_job(self, job: SyncJob, config: SyncConfiguration):
+    async def _execute_sync_job(self, job -> None: SyncJob, config -> None: SyncConfiguration) -> None:
         """🔄 Execute synchronization job"""
         try:
             job.status = SyncStatus.ACTIVE
@@ -1057,7 +1057,7 @@ class DataSyncService:
             })
             logger.error(f"❌ Sync job failed: {job.id} - {str(e)}")
 
-    async def _establish_secure_connection(self, endpoint_type: SyncEndpoint, config: Dict[str, Any]):
+    async def _establish_secure_connection(self, endpoint_type -> None: SyncEndpoint, config -> None: Dict[str, Any]) -> None:
         """🔒 Security: Establish secure connection to endpoint"""
         # Simulate secure connection establishment
         connection_id = str(uuid.uuid4())
@@ -1176,7 +1176,7 @@ class DataSyncService:
             "failed": failed
         }
 
-    async def _monitor_sync_anomalies(self, metrics: SyncMetrics, config: SyncConfiguration):
+    async def _monitor_sync_anomalies(self, metrics -> None: SyncMetrics, config -> None: SyncConfiguration) -> None:
         """🤖 ML Engineer: Monitor for sync anomalies"""
         # Check for performance anomalies
         if metrics.throughput_per_second < 50:  # Low throughput
@@ -1256,7 +1256,7 @@ class DataSyncService:
             ]
         }
 
-    async def _notify_services(self, event_type: str, resource_id: str):
+    async def _notify_services(self, event_type -> None: str, resource_id -> None: str) -> None:
         """🌐 Microservices: Notify other services"""
         logger.info(f"🌐 Event: {event_type} for {resource_id}")
 
@@ -1309,27 +1309,27 @@ app = FastAPI(
 sync_service = DataSyncService()
 
 @app.post("/configurations", response_model=Dict[str, Any])
-async def create_sync_configuration(config: SyncConfiguration):
+async def create_sync_configuration(config -> None: SyncConfiguration) -> None:
     """Create new synchronization configuration"""
     return await sync_service.create_sync_configuration(config)
 
 @app.post("/configurations/{config_id}/jobs", response_model=Dict[str, Any])
-async def start_sync_job(config_id: str, job_type: str = "manual"):
+async def start_sync_job(config_id -> None: str, job_type -> None: str = "manual") -> None:
     """Start synchronization job"""
     return await sync_service.start_sync_job(config_id, job_type)
 
 @app.get("/jobs/{job_id}", response_model=SyncJob)
-async def get_sync_job_status(job_id: str):
+async def get_sync_job_status(job_id -> None: str) -> None:
     """Get synchronization job status"""
     return await sync_service.get_sync_job_status(job_id)
 
 @app.get("/configurations/{config_id}/analytics", response_model=Dict[str, Any])
-async def get_sync_analytics(config_id: str):
+async def get_sync_analytics(config_id -> None: str) -> None:
     """Get comprehensive sync analytics"""
     return await sync_service.get_sync_analytics(config_id)
 
 @app.get("/health")
-async def health_check():
+async def health_check() -> None:
     """Service health check"""
     return await sync_service.get_service_health()
 

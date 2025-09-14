@@ -1,3 +1,9 @@
+"""
+Level Progression module
+Enterprise implementation for Ainflue platform
+"""
+
 # Gamification Engine: level_progression.py
 class LevelProgressionEngine: 
-    def __init__(self, config=None): pass
+    """LevelProgressionEngine: class implementation"""
+    def __init__(self, config=None) -> None: pass

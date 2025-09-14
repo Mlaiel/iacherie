@@ -170,7 +170,7 @@ class ExecutiveReport:
 class ExecutiveDataAnalyzer:
     """Advanced data analysis for executive reporting"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.analysis_cache = {}
         
     async def analyze_business_performance(self, timeframe: str) -> Dict[str, Any]:
@@ -340,7 +340,7 @@ class ExecutiveDataAnalyzer:
 class ExecutiveReportGenerator:
     """Enterprise executive report generation engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.analyzer = ExecutiveDataAnalyzer()
         self.report_templates = {}
         self.generation_queue = []
@@ -669,7 +669,7 @@ class ExecutiveReportGenerator:
 class ExecutiveReportingEventHandler:
     """Main event handler for executive reporting events"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.report_generator = ExecutiveReportGenerator()
         
     async def handle_report_generation(self, definition: ExecutiveReportDefinition,

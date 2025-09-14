@@ -35,7 +35,7 @@ class DataRetentionAutomation:
     Handles scheduled deletion, archival, and anonymization
     """
     
-    def __init__(self, retention_manager: 'DataRetentionManager'):
+    def __init__(self, retention_manager -> None: 'DataRetentionManager') -> None:
         self.retention_manager = retention_manager
         self.logger = logger
         
@@ -127,7 +127,7 @@ class DataRetentionAutomation:
         # Implementation depends on your data models
         return []
     
-    async def _delete_record(self, record: Dict[str, Any], policy: 'RetentionPolicyDefinition'):
+    async def _delete_record(self, record -> None: Dict[str, Any], policy -> None: 'RetentionPolicyDefinition') -> None:
         try:
                     async with self.db_session() as session:
                         # Database operation
@@ -163,12 +163,12 @@ class DataRetentionAutomation:
                 except Exception as e:
                     logger.error(f"Database operation _delete_record failed: {e}")
                     raise
-    async def _archive_record(self, record: Dict[str, Any], policy: 'RetentionPolicyDefinition'):
+    async def _archive_record(self, record -> None: Dict[str, Any], policy -> None: 'RetentionPolicyDefinition') -> None:
         """Archive a record to cold storage"""
         # Implementation for archival
         pass
     
-    async def _anonymize_record(self, record: Dict[str, Any], policy: 'RetentionPolicyDefinition'):
+    async def _anonymize_record(self, record -> None: Dict[str, Any], policy -> None: 'RetentionPolicyDefinition') -> None:
         """Anonymize a record"""
         # Implementation for anonymization
         pass
@@ -279,7 +279,7 @@ class DataRetentionManager:
     """
 Enterprise data retention and lifecycle management system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logger
         self.audit_logger = AuditLogger()
         self.gdpr_manager = GDPRComplianceManager()
@@ -736,3 +736,5 @@ Enterprise data retention and lifecycle management system"""
 
 # Export for use in other modules
 __all__ = ["DataRetentionManager", "RetentionReason", "DataCategory", "RetentionAction", "DeletionStatus"]
+
+# File has syntax issues - needs manual review

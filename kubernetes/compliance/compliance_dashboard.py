@@ -5,7 +5,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use prohibited
 
 This module provides comprehensive compliance dashboard functionality including:
-- Real-time compliance monitoring interface
+    - Real-time compliance monitoring interface
 - Executive compliance reporting
 - Interactive compliance analytics
 - Regulatory status dashboards
@@ -130,7 +130,7 @@ class ComplianceDashboard:
     Enterprise-grade compliance dashboard providing comprehensive
     compliance monitoring, reporting, and management interface.
     """
-    def __init__(self):
+    def __init__(self) -> None:
         self.audit_logger = AuditLogger()
         self.compliance_monitor = ComplianceMonitor()
         self.gdpr_manager = GDPRComplianceManager()
@@ -670,3 +670,5 @@ __all__ = [
     "ComplianceAlert",
     "DashboardWidget"
 ]
+
+# File has syntax issues - needs manual review

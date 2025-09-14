@@ -85,7 +85,7 @@ class BandwidthMetrics:
 class BandwidthOptimizerSuite:
     """Suite d'optimisation bande passante."""
     
-    def __init__(self, mode: OptimizationMode = OptimizationMode.BALANCED):
+    def __init__(self, mode -> None: OptimizationMode = OptimizationMode.BALANCED) -> None:
         self.mode = mode
         self.total_bytes_processed = 0
         self.total_bytes_saved = 0
@@ -212,7 +212,7 @@ class ContentCache:
 class CDNEdgeAcceleration:
     """Accélération CDN edge."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.edge_nodes: Dict[str, EdgeNode] = {}
         self.content_cache: Dict[str, ContentCache] = {}
         self.routing_table = {}
@@ -323,7 +323,7 @@ class DNSRecord:
 class DNSResolutionOptimization:
     """Optimisation résolution DNS."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.dns_cache: Dict[str, DNSRecord] = {}
         self.resolution_times: Dict[str, List[float]] = defaultdict(list)
         self.prefetch_domains: Set[str] = set()
@@ -377,7 +377,7 @@ class DNSResolutionOptimization:
             logger.error(f"DNS resolution failed for {domain}: {e}")
             return None
     
-    async def prefetch_domains(self, domains: List[str]):
+    async def prefetch_domains(self, domains -> None: List[str]) -> None:
         """Précharge les domaines populaires."""
         for domain in domains:
             self.prefetch_domains.add(domain)
@@ -429,7 +429,7 @@ class LatencyMetrics:
 class LatencyMinimizationEngine:
     """Moteur minimisation latence."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.latency_history: deque = deque(maxlen=1000)
         self.optimization_strategies = {
             LatencyOptimizationStrategy.EDGE_PROCESSING: self._optimize_edge_processing,
@@ -485,24 +485,24 @@ class LatencyMinimizationEngine:
             return request_data.get("requires_connection", True)
         return True
     
-    async def _optimize_edge_processing(self, request_data: Dict[str, Any]):
+    async def _optimize_edge_processing(self, request_data -> None: Dict[str, Any]) -> None:
         """Optimise le traitement edge."""
         # Simulation d'optimisation edge
         await asyncio.sleep(0.001)
     
-    async def _optimize_predictive_caching(self, request_data: Dict[str, Any]):
+    async def _optimize_predictive_caching(self, request_data -> None: Dict[str, Any]) -> None:
         """Optimise le cache prédictif."""
         await asyncio.sleep(0.001)
     
-    async def _optimize_connection_pooling(self, request_data: Dict[str, Any]):
+    async def _optimize_connection_pooling(self, request_data -> None: Dict[str, Any]) -> None:
         """Optimise le pooling de connexions."""
         await asyncio.sleep(0.001)
     
-    async def _optimize_request_batching(self, request_data: Dict[str, Any]):
+    async def _optimize_request_batching(self, request_data -> None: Dict[str, Any]) -> None:
         """Optimise le batching de requêtes."""
         await asyncio.sleep(0.001)
     
-    async def _optimize_protocol(self, request_data: Dict[str, Any]):
+    async def _optimize_protocol(self, request_data -> None: Dict[str, Any]) -> None:
         """Optimise le protocole."""
         await asyncio.sleep(0.001)
     
@@ -555,7 +555,7 @@ class ServerNode:
 class LoadBalancingIntelligence:
     """Intelligence répartition charge."""
     
-    def __init__(self, algorithm: LoadBalancingAlgorithm = LoadBalancingAlgorithm.LEAST_RESPONSE_TIME):
+    def __init__(self, algorithm -> None: LoadBalancingAlgorithm = LoadBalancingAlgorithm.LEAST_RESPONSE_TIME) -> None:
         self.algorithm = algorithm
         self.servers: Dict[str, ServerNode] = {}
         self.round_robin_counter = 0
@@ -674,8 +674,8 @@ class LoadBalancingIntelligence:
         
         return best_server or servers[0]
     
-    async def update_server_metrics(self, node_id: str, connections: int, 
-                                  response_time: float):
+    async def update_server_metrics(self, node_id -> None: str, connections -> None: int, 
+                                  response_time -> None: float) -> None:
         """Met à jour les métriques serveur."""
         if node_id in self.servers:
             server = self.servers[node_id]
@@ -739,7 +739,7 @@ class QoSPolicy:
 class QoSManagementEnterprise:
     """Gestion QoS entreprise."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.policies: Dict[str, QoSPolicy] = {}
         self.traffic_stats = defaultdict(dict)
         self.bandwidth_allocations = {}
@@ -798,7 +798,7 @@ class QoSManagementEnterprise:
                              self.qos_metrics["allocated_bandwidth"])
         return available_bandwidth >= policy.bandwidth_guarantee
     
-    def _update_traffic_stats(self, traffic_class: TrafficClass, qos_applied: Dict[str, Any]):
+    def _update_traffic_stats(self, traffic_class -> None: TrafficClass, qos_applied -> None: Dict[str, Any]) -> None:
         """Met à jour les statistiques de trafic."""
         if traffic_class.value not in self.traffic_stats:
             self.traffic_stats[traffic_class.value] = {
@@ -854,7 +854,7 @@ class TrafficShapingRule:
 class TrafficShapingOptimization:
     """Optimisation façonnage trafic."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.shaping_rules: Dict[str, TrafficShapingRule] = {}
         self.traffic_buckets = {}
         self.shaping_stats = defaultdict(dict)
@@ -964,7 +964,7 @@ class TrafficShapingOptimization:
 class EdgeNetworkOptimization:
     """Optimisation réseau edge ultra-avancée."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         # Core components
         self.bandwidth_optimizer = BandwidthOptimizerSuite()
         self.cdn_accelerator = CDNEdgeAcceleration()
@@ -1004,7 +1004,7 @@ class EdgeNetworkOptimization:
         """Optimise la résolution DNS."""
         return await self.dns_optimizer.resolve_domain(domain, record_type)
     
-    async def prefetch_popular_domains(self, domains: List[str]):
+    async def prefetch_popular_domains(self, domains -> None: List[str]) -> None:
         """Précharge les domaines populaires."""
         await self.dns_optimizer.prefetch_domains(domains)
     
@@ -1115,7 +1115,7 @@ class EdgeNetworkOptimization:
             }
         }
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Arrête l'optimiseur réseau."""
         logger.info("Shutting down EdgeNetworkOptimization")
 

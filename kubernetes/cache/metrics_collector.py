@@ -5,7 +5,7 @@ the IA Influencer Agent platform's cache operations with real-time monitoring,
 AI-powered analytics, content-aware insights, and business intelligence.
 
 This module provides:
-- Real-time performance metrics collection with creator-specific insights
+    - Real-time performance metrics collection with creator-specific insights
 - Advanced analytics and trend analysis for content patterns
 - AI-powered anomaly detection and predictive alerting
 - Business intelligence dashboards for monetization metrics
@@ -15,7 +15,7 @@ This module provides:
 - Compliance reporting for data protection regulations
 
 Business Logic Metrics Integration:
-- Content creator engagement metrics (upload patterns, content popularity)
+    - Content creator engagement metrics (upload patterns, content popularity)
 - AI processing performance metrics (fingerprinting speed, accuracy)
 - Protection system metrics (detection rates, false positives)
 - Monetization metrics (revenue tracking, platform performance)
@@ -28,7 +28,7 @@ Copyright: 2025 Fahed Mlaiel - All Rights Reserved
 License: Proprietary - Unauthorized use strictly prohibited
 
 Key Performance Indicators:
-- Content processing time: <30 seconds for audio, <2 minutes for video
+    - Content processing time: <30 seconds for audio, <2 minutes for video
 - Cache hit ratio: >95% for frequently accessed creator content
 - Revenue analytics latency: <5 seconds for real-time insights
 - Creator dashboard response time: <2 seconds for all interactions
@@ -166,7 +166,7 @@ class ContentAnalytics:
 class PrometheusMetricsManager:
     """Prometheus metrics management for enterprise monitoring"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.registry = CollectorRegistry()
         self.metrics: Dict[str, Any] = {}
@@ -180,7 +180,7 @@ class PrometheusMetricsManager:
             start_http_server(port, registry=self.registry)
             logging.info(f"Prometheus metrics server started on port {port}")
     
-    def _initialize_core_metrics(self):
+    def _initialize_core_metrics(self) -> None:
         """Initialize core Prometheus metrics"""
         
         # Cache performance metrics
@@ -270,7 +270,7 @@ class PrometheusMetricsManager:
 class AIAnomalyDetector:
     """AI-powered anomaly detection for cache metrics"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.models: Dict[str, IsolationForest] = {}
         self.scalers: Dict[str, StandardScaler] = {}
@@ -280,7 +280,7 @@ class AIAnomalyDetector:
         # Initialize anomaly detection models
         self._initialize_models()
     
-    def _initialize_models(self):
+    def _initialize_models(self) -> None:
         """Initialize anomaly detection models for different metric types"""
         
         model_configs = {
@@ -389,7 +389,7 @@ class AIAnomalyDetector:
 class BusinessIntelligenceAnalyzer:
     """Business intelligence analyzer for content and revenue metrics"""
     
-    def __init__(self, redis_client: redis.Redis, db_pool: asyncpg.Pool):
+    def __init__(self, redis_client -> None: redis.Redis, db_pool -> None: asyncpg.Pool) -> None:
         self.redis_client = redis_client
         self.db_pool = db_pool
         self.kpi_cache_ttl = 300  # 5 minutes
@@ -550,7 +550,7 @@ class BusinessIntelligenceAnalyzer:
             logging.error(f"Processing efficiency KPI calculation failed: {e}")
             return BusinessMetric(name="content_processing_efficiency", value=0.0, trend=0.0)
     
-    async def _cache_kpis(self, kpis: Dict[str, BusinessMetric]):
+    async def _cache_kpis(self, kpis -> None: Dict[str, BusinessMetric]) -> None:
         """Cache KPIs for quick access"""
         
         try:
@@ -597,7 +597,7 @@ class BusinessIntelligenceAnalyzer:
 class AlertManager:
     """Advanced alerting system for cache and business metrics"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.alert_rules: List[AlertRule] = []
         self.active_alerts: Dict[str, Dict] = {}
@@ -607,7 +607,7 @@ class AlertManager:
         # Initialize default alert rules
         self._initialize_default_rules()
     
-    def _initialize_default_rules(self):
+    def _initialize_default_rules(self) -> None:
         """Initialize default alert rules for critical metrics"""
         
         self.alert_rules = [
@@ -709,7 +709,7 @@ class AlertManager:
         
         return False
     
-    async def _send_alert_notifications(self, alert: Dict[str, Any]):
+    async def _send_alert_notifications(self, alert -> None: Dict[str, Any]) -> None:
         """Send alert notifications to configured channels"""
         
         try:
@@ -737,7 +737,7 @@ class AlertManager:
         except Exception as e:
             logging.error(f"Failed to send alert notifications: {e}")
     
-    async def _send_webhook_notification(self, url: str, message: Dict[str, Any]):
+    async def _send_webhook_notification(self, url -> None: str, message -> None: Dict[str, Any]) -> None:
         """Send webhook notification"""
         
         try:
@@ -751,7 +751,7 @@ class AlertManager:
         except Exception as e:
             logging.error(f"Webhook notification error: {e}")
     
-    async def _send_resolution_notification(self, resolved_alert: Dict[str, Any]):
+    async def _send_resolution_notification(self, resolved_alert -> None: Dict[str, Any]) -> None:
         """Send alert resolution notification"""
         
         try:
@@ -772,16 +772,17 @@ class AlertManager:
         except Exception as e:
             logging.error(f"Failed to send resolution notification: {e}")
     
-    async def _send_email_notification(self, email: str, message: Dict[str, Any]):
+    async def _send_email_notification(self, email -> None: str, message -> None: Dict[str, Any]) -> None:
         """Send email notification (placeholder)"""
         logging.info(f"Email notification would be sent to {email}: {message}")
     
-    async def _send_slack_notification(self, webhook: str, message: Dict[str, Any]):
+    async def _send_slack_notification(self, webhook -> None: str, message -> None: Dict[str, Any]) -> None:
         """Send Slack notification (placeholder)"""
         logging.info(f"Slack notification would be sent to {webhook}: {message}")
 
 
 class CacheMetricsCollector:
+    """CacheMetricsCollector: class implementation"""
 
 
 @dataclass
@@ -839,7 +840,7 @@ class CacheMetricsCollector:
     Enterprise cache metrics collector with real-time monitoring,
     analytics, and intelligent alerting capabilities.
     """
-    def __init__(self, config: CacheConfiguration):
+    def __init__(self, config -> None: CacheConfiguration) -> None:
         """
         Initialize cache metrics collector.
         
@@ -1614,3 +1615,5 @@ class CacheMetricsCollector:
         except Exception as e:
             self.logger.error(f"Error summarizing metric {metric.name}: {str(e)}")
             return {}
+
+# File has syntax issues - needs manual review

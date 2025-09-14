@@ -245,7 +245,7 @@ class QuantumCollaborationEngine:
     ✅ Intelligence collective et synergies
     """
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.config = config or {}
         self.collaboration_matchers: Dict[str, CollaborationMatcher] = {}
         self.partnership_optimizers: Dict[PartnershipType, PartnershipOptimizer] = {}
@@ -642,15 +642,16 @@ class QuantumCollaborationEngine:
         
         return scored_matches[:10]  # Top 10 matches
     
-    async def _get_or_create_collaboration_matcher(self, matcher_type: str):
+    async def _get_or_create_collaboration_matcher(self, matcher_type -> None: str) -> None:
         """Récupération ou création matcher collaboration"""
         if matcher_type not in self.collaboration_matchers:
             self.collaboration_matchers[matcher_type] = await self._create_collaboration_matcher(matcher_type)
         return self.collaboration_matchers[matcher_type]
     
-    async def _create_collaboration_matcher(self, matcher_type: str):
+    async def _create_collaboration_matcher(self, matcher_type -> None: str) -> None:
         """Création matcher collaboration"""
         class MockCollaborationMatcher(CollaborationMatcher):
+    """MockCollaborationMatcher class implementation"""
             async def match_collaborators(self, request: CollaborationRequest) -> List[Dict[str, Any]]:
                 matches = []
                 for i in range(15):
@@ -716,15 +717,16 @@ class QuantumCollaborationEngine:
     # MÉTHODES PRIVÉES - PARTNERSHIP OPTIMIZATION
     # ========================================
     
-    async def _get_or_create_partnership_optimizer(self, partnership_type: PartnershipType):
+    async def _get_or_create_partnership_optimizer(self, partnership_type -> None: PartnershipType) -> None:
         """Récupération ou création optimiseur partenariat"""
         if partnership_type not in self.partnership_optimizers:
             self.partnership_optimizers[partnership_type] = await self._create_partnership_optimizer(partnership_type)
         return self.partnership_optimizers[partnership_type]
     
-    async def _create_partnership_optimizer(self, partnership_type: PartnershipType):
+    async def _create_partnership_optimizer(self, partnership_type -> None: PartnershipType) -> None:
         """Création optimiseur partenariat"""
         class MockPartnershipOptimizer(PartnershipOptimizer):
+    """MockPartnershipOptimizer class implementation"""
             async def optimize_partnership(self, request: PartnershipRequest) -> PartnershipResult:
                 return PartnershipResult(
                     partnership_id=request.partnership_id,
@@ -798,15 +800,16 @@ class QuantumCollaborationEngine:
     # MÉTHODES PRIVÉES - TEAM COORDINATION
     # ========================================
     
-    async def _get_or_create_team_coordinator(self, coordinator_type: str):
+    async def _get_or_create_team_coordinator(self, coordinator_type -> None: str) -> None:
         """Récupération ou création coordinateur équipe"""
         if coordinator_type not in self.team_coordinators:
             self.team_coordinators[coordinator_type] = await self._create_team_coordinator(coordinator_type)
         return self.team_coordinators[coordinator_type]
     
-    async def _create_team_coordinator(self, coordinator_type: str):
+    async def _create_team_coordinator(self, coordinator_type -> None: str) -> None:
         """Création coordinateur équipe"""
         class MockTeamCoordinator(TeamCoordinator):
+    """MockTeamCoordinator class implementation"""
             async def form_optimal_team(self, request: TeamFormationRequest) -> Dict[str, Any]:
                 team_members = []
                 for role in request.required_roles:
@@ -876,15 +879,16 @@ class QuantumCollaborationEngine:
     # MÉTHODES PRIVÉES - NETWORK ANALYSIS
     # ========================================
     
-    async def _get_or_create_network_analyzer(self, analyzer_type: str):
+    async def _get_or_create_network_analyzer(self, analyzer_type -> None: str) -> None:
         """Récupération ou création analyseur réseau"""
         if analyzer_type not in self.network_analyzers:
             self.network_analyzers[analyzer_type] = await self._create_network_analyzer(analyzer_type)
         return self.network_analyzers[analyzer_type]
     
-    async def _create_network_analyzer(self, analyzer_type: str):
+    async def _create_network_analyzer(self, analyzer_type -> None: str) -> None:
         """Création analyseur réseau"""
         class MockNetworkAnalyzer(NetworkAnalyzer):
+    """MockNetworkAnalyzer class implementation"""
             async def analyze_collaboration_network(self, network_data: Dict[str, Any]) -> NetworkAnalysisResult:
                 return NetworkAnalysisResult(
                     network_id=str(uuid.uuid4()),
@@ -984,7 +988,7 @@ class QuantumCollaborationEngine:
         
         return type_advantages.get(collaboration_type, base_advantage)
     
-    async def _update_collaboration_network(self, request: CollaborationRequest, result: CollaborationResult):
+    async def _update_collaboration_network(self, request -> None: CollaborationRequest, result -> None: CollaborationResult) -> None:
         """Mise à jour réseau collaboration"""
         # Ajout noeud demandeur s'il n'existe pas
         if not self.collaboration_network.has_node(request.requester_id):

@@ -230,7 +230,7 @@ class PasswordManager:
 class TokenManager:
     """JWT token management"""
     
-    def __init__(self, secret_key: str, algorithm: str = "HS256"):
+    def __init__(self, secret_key -> None: str, algorithm -> None: str = "HS256") -> None:
         self.secret_key = secret_key
         self.algorithm = algorithm
         
@@ -326,7 +326,7 @@ class MFAManager:
 class RateLimiter:
     """Rate limiting for security"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.attempts: Dict[str, deque] = defaultdict(lambda: deque(maxlen=100))
         self._lock = threading.RLock()
         
@@ -368,12 +368,12 @@ class RateLimiter:
 class IPWhitelist:
     """IP address whitelist/blacklist management"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.whitelist: List[ipaddress.IPv4Network] = []
         self.blacklist: List[ipaddress.IPv4Network] = []
         self._lock = threading.RLock()
         
-    def add_to_whitelist(self, ip_range: str):
+    def add_to_whitelist(self, ip_range -> None: str) -> None:
         """Add IP range to whitelist"""
         with self._lock:
             try:
@@ -382,7 +382,7 @@ class IPWhitelist:
             except ValueError as e:
                 logger.error(f"Invalid IP range {ip_range}: {str(e)}")
                 
-    def add_to_blacklist(self, ip_range: str):
+    def add_to_blacklist(self, ip_range -> None: str) -> None:
         """Add IP range to blacklist"""
         with self._lock:
             try:
@@ -421,7 +421,7 @@ class IPWhitelist:
 class ThreatDetector:
     """Security threat detection"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.patterns = {
             SecurityThreatType.SQL_INJECTION: [
                 r"(?i)(union.*select|select.*from|insert.*into|delete.*from|drop.*table)",
@@ -475,7 +475,7 @@ class ThreatDetector:
 class EncryptionManager:
     """Data encryption and decryption"""
     
-    def __init__(self, key: str = None):
+    def __init__(self, key -> None: str = None) -> None:
         self.key = key or self._generate_key()
         
     def _generate_key(self) -> str:
@@ -527,7 +527,7 @@ class EncryptionManager:
 class SecurityService:
     """Authentication, Authorization, and Security Service"""
     
-    def __init__(self, name: str = "security_service"):
+    def __init__(self, name -> None: str = "security_service") -> None:
         self.name = name
         self.users: Dict[str, User] = {}
         self.sessions: Dict[str, Session] = {}
@@ -545,7 +545,7 @@ class SecurityService:
         self.lockout_duration = 300  # 5 minutes
         self.session_timeout = 3600  # 1 hour
         
-    async def start(self):
+    async def start(self) -> None:
         """Start security service"""
         self.running = True
         
@@ -554,7 +554,7 @@ class SecurityService:
         
         logger.info(f"Started security service: {self.name}")
         
-    async def stop(self):
+    async def stop(self) -> None:
         """Stop security service"""
         self.running = False
         
@@ -810,10 +810,10 @@ class SecurityService:
         """Decrypt sensitive data"""
         return self.encryption_manager.decrypt(encrypted_data, algorithm)
         
-    async def _log_security_event(self, event_type: SecurityThreatType, severity: str,
-                                 description: str, user_id: str = None, 
-                                 ip_address: str = None, user_agent: str = None,
-                                 metadata: Dict[str, Any] = None):
+    async def _log_security_event(self, event_type -> None: SecurityThreatType, severity -> None: str,
+                                 description -> None: str, user_id -> None: str = None, 
+                                 ip_address -> None: str = None, user_agent -> None: str = None,
+                                 metadata -> None: Dict[str, Any] = None) -> None:
         """Log security event"""
         event = SecurityEvent(
             id=secrets.token_hex(16),
@@ -834,7 +834,7 @@ class SecurityService:
             
         logger.warning(f"Security event: {event.description}")
         
-    async def _cleanup_expired_sessions(self):
+    async def _cleanup_expired_sessions(self) -> None:
         """Cleanup expired sessions"""
         while self.running:
             try:

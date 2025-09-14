@@ -93,7 +93,7 @@ class AudioMatcher:
     """
 Advanced audio content matching using multiple algorithms"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.chromaprint_enabled = self.config.get('chromaprint_enabled', True)
         self.spectral_enabled = self.config.get('spectral_enabled', True)
@@ -268,7 +268,7 @@ class VideoMatcher:
     """
 Advanced video content matching"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.frame_sampling_rate = self.config.get('frame_sampling_rate', 1.0)  # frames per second
         self.visual_hash_enabled = self.config.get('visual_hash_enabled', True)
@@ -439,7 +439,7 @@ class TextMatcher:
     """
 Advanced text content matching"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.semantic_enabled = self.config.get('semantic_enabled', True)
         self.language_detection_enabled = self.config.get('language_detection_enabled', True)
@@ -683,7 +683,7 @@ class ContentMatchingEngine:
     """
 Central engine for content matching across all media types"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.audio_matcher = AudioMatcher(self.config.get('audio', {}))
         self.video_matcher = VideoMatcher(self.config.get('video', {}))
@@ -844,7 +844,7 @@ Generate content signature based on type"""
             logger.error(f"Error finding duplicates: {e}")
             return []
     
-    def _cache_signature(self, signature: ContentSignature):
+    def _cache_signature(self, signature -> None: ContentSignature) -> None:
         """Cache signature for performance"""
         try:
             # Implement LRU cache behavior
@@ -862,7 +862,7 @@ Generate content signature based on type"""
         """Retrieve signature from cache"""
         return self.signature_cache.get(content_id)
     
-    def clear_cache(self):
+    def clear_cache(self) -> None:
         """
 Clear signature cache"""
         self.signature_cache.clear()
@@ -888,7 +888,7 @@ Clear signature cache"""
             logger.error(f"Error getting matching statistics: {e}")
             return {}
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Shutdown matching engine"""
         try:
             self.executor.shutdown(wait=True)

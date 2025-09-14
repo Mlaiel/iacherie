@@ -54,6 +54,7 @@ class RedisSettings(BaseSettings):
         return f"{protocol}://{auth}{self.redis_host}:{self.redis_port}/{self.redis_db}"
     
     class Config:
+    """Config: class implementation"""
         env_file = ".env"
         extra = "allow"
 
@@ -91,7 +92,7 @@ redis_settings = RedisSettings()
 class RedisConfiguration:
     """Redis configuration manager for Ainflue platform"""
     
-    def __init__(self, level: str = "enterprise"):
+    def __init__(self, level -> None: str = "enterprise") -> None:
         self.level = level
         self.settings = redis_settings
         

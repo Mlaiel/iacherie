@@ -96,7 +96,7 @@ class InstagramSEOOptimizer:
     - IGTV optimization for long-form content
     """
     
-    def __init__(self, db_pool=None):
+    def __init__(self, db_pool=None) -> None:
         self.db_pool = db_pool
         
         # Instagram-specific optimization data

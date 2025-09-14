@@ -1,3 +1,8 @@
+"""
+Saga Pattern Core module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Ainflue Core Orchestration - Advanced Saga Pattern Engine
@@ -175,10 +180,10 @@ class LocalSagaStepExecutor(SagaStepExecutor):
 class HttpSagaStepExecutor(SagaStepExecutor):
     """HTTP-based saga step executor"""
     
-    def __init__(self, http_client: Any = None):
+    def __init__(self, http_client -> None: Any = None) -> None:
         self.http_client = http_client or self._create_default_client()
     
-    def _create_default_client(self):
+    def _create_default_client(self) -> None:
         """Create default HTTP client"""
         import aiohttp
         return aiohttp.ClientSession()
@@ -200,7 +205,7 @@ class HttpSagaStepExecutor(SagaStepExecutor):
 class SagaOrchestrator:
     """Saga orchestrator for centralized saga execution"""
     
-    def __init__(self, step_executor: SagaStepExecutor):
+    def __init__(self, step_executor -> None: SagaStepExecutor) -> None:
         self.step_executor = step_executor
         self.active_executions: Dict[str, SagaExecution] = {}
         self._lock = asyncio.Lock()
@@ -237,7 +242,7 @@ class SagaOrchestrator:
         
         return execution
     
-    async def _execute_sequential(self, execution: SagaExecution):
+    async def _execute_sequential(self, execution -> None: SagaExecution) -> None:
         """Execute saga steps sequentially"""
         steps = execution.saga_definition.steps
         
@@ -250,7 +255,7 @@ class SagaOrchestrator:
                 
                 execution.completed_steps.append(step.step_id)
     
-    async def _execute_parallel(self, execution: SagaExecution):
+    async def _execute_parallel(self, execution -> None: SagaExecution) -> None:
         """Execute saga steps in parallel where possible"""
         steps = execution.saga_definition.steps
         remaining_steps = steps.copy()
@@ -295,7 +300,7 @@ class SagaOrchestrator:
         
         return True
     
-    async def _execute_step(self, step: SagaStep, execution: SagaExecution):
+    async def _execute_step(self, step -> None: SagaStep, execution -> None: SagaExecution) -> None:
         """Execute individual saga step"""
         step.state = StepState.RUNNING
         step.started_at = datetime.utcnow()
@@ -337,7 +342,7 @@ class SagaOrchestrator:
         step.state = StepState.FAILED
         execution.failed_steps.append(step.step_id)
     
-    async def _compensate_saga(self, execution: SagaExecution):
+    async def _compensate_saga(self, execution -> None: SagaExecution) -> None:
         """Compensate saga by undoing completed steps"""
         execution.state = SagaState.COMPENSATING
         
@@ -352,7 +357,7 @@ class SagaOrchestrator:
         
         execution.state = SagaState.ABORTED
 
-    async def _compensate_step(self, step: SagaStep, execution: SagaExecution):
+    async def _compensate_step(self, step -> None: SagaStep, execution -> None: SagaExecution) -> None:
         """Compensate individual step"""
         if not step.compensation_action:
             logger.info(f"No compensation defined for step {step.name}")
@@ -391,13 +396,13 @@ class SagaOrchestrator:
 class SagaChoreographer:
     """Saga choreographer for event-driven saga execution"""
     
-    def __init__(self, event_bus: Any = None):
+    def __init__(self, event_bus -> None: Any = None) -> None:
         self.event_bus = event_bus
         self.saga_handlers: Dict[str, List[Callable]] = {}
         self.active_sagas: Dict[str, SagaExecution] = {}
         self._lock = asyncio.Lock()
     
-    def register_handler(self, event_type: str, handler: Callable):
+    def register_handler(self, event_type -> None: str, handler -> None: Callable) -> None:
         """Register event handler for choreography"""
         if event_type not in self.saga_handlers:
             self.saga_handlers[event_type] = []
@@ -426,7 +431,7 @@ class SagaChoreographer:
         await self.publish_event(initial_event)
         return execution.execution_id
     
-    async def handle_event(self, event: SagaEvent):
+    async def handle_event(self, event -> None: SagaEvent) -> None:
         """Handle incoming saga event"""
         handlers = self.saga_handlers.get(event.event_type, [])
         
@@ -439,7 +444,7 @@ class SagaChoreographer:
             except Exception as e:
                 logger.error(f"Event handler failed for {event.event_type}: {e}")
     
-    async def publish_event(self, event: SagaEvent):
+    async def publish_event(self, event -> None: SagaEvent) -> None:
         """Publish saga event"""
         if self.event_bus:
             await self.event_bus.publish(event)
@@ -450,7 +455,7 @@ class SagaChoreographer:
 class SagaPatternCore:
     """Advanced enterprise saga pattern core"""
     
-    def __init__(self, level: str = "enterprise"):
+    def __init__(self, level -> None: str = "enterprise") -> None:
         self.level = level
         self.orchestrator = SagaOrchestrator(LocalSagaStepExecutor())
         self.choreographer = SagaChoreographer()
@@ -494,7 +499,7 @@ class SagaPatternCore:
         }
         return configs.get(self.level, configs["enterprise"])
     
-    def _setup_example_sagas(self):
+    def _setup_example_sagas(self) -> None:
         """Setup example saga definitions"""
         # Content processing saga
         content_saga = SagaDefinition(
@@ -582,7 +587,7 @@ class SagaPatternCore:
         await asyncio.sleep(0.1)
         return {"validation_status": "passed", "content_id": data.get("content_id")}
     
-    async def _mock_cleanup_validation(self, data: Dict[str, Any]):
+    async def _mock_cleanup_validation(self, data -> None: Dict[str, Any]) -> None:
         await asyncio.sleep(0.05)
         logger.info("Cleaned up content validation")
     
@@ -590,7 +595,7 @@ class SagaPatternCore:
         await asyncio.sleep(0.2)
         return {"analysis_result": "content_approved", "confidence": 0.95}
     
-    async def _mock_cleanup_ai_analysis(self, data: Dict[str, Any]):
+    async def _mock_cleanup_ai_analysis(self, data -> None: Dict[str, Any]) -> None:
         await asyncio.sleep(0.05)
         logger.info("Cleaned up AI analysis")
     
@@ -598,7 +603,7 @@ class SagaPatternCore:
         await asyncio.sleep(0.1)
         return {"storage_id": "stored_123", "status": "success"}
     
-    async def _mock_cleanup_storage(self, data: Dict[str, Any]):
+    async def _mock_cleanup_storage(self, data -> None: Dict[str, Any]) -> None:
         await asyncio.sleep(0.05)
         logger.info("Cleaned up storage")
     
@@ -606,7 +611,7 @@ class SagaPatternCore:
         await asyncio.sleep(0.1)
         return {"user_id": f"user_{data.get('email', 'unknown')}", "status": "created"}
     
-    async def _mock_delete_user(self, data: Dict[str, Any]):
+    async def _mock_delete_user(self, data -> None: Dict[str, Any]) -> None:
         await asyncio.sleep(0.05)
         logger.info("Deleted user account")
     
@@ -614,7 +619,7 @@ class SagaPatternCore:
         await asyncio.sleep(0.1)
         return {"profile_id": "profile_123", "status": "created"}
     
-    async def _mock_cleanup_profile(self, data: Dict[str, Any]):
+    async def _mock_cleanup_profile(self, data -> None: Dict[str, Any]) -> None:
         await asyncio.sleep(0.05)
         logger.info("Cleaned up user profile")
     
@@ -622,7 +627,7 @@ class SagaPatternCore:
         await asyncio.sleep(0.1)
         return {"email_id": "email_123", "status": "sent"}
     
-    async def _mock_send_cancellation_email(self, data: Dict[str, Any]):
+    async def _mock_send_cancellation_email(self, data -> None: Dict[str, Any]) -> None:
         await asyncio.sleep(0.05)
         logger.info("Sent cancellation email")
     

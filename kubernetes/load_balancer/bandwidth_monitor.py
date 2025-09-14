@@ -6,7 +6,7 @@ of content protection, fingerprinting, and monetization services.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ WARNING: This code is proprietary and confidential.
+# [EMOJI_REMOVED] WARNING: This code is proprietary and confidential.
 Unauthorized copying, distribution, or use without explicit written
 permission from Fahed Mlaiel is strictly prohibited and may result
 in legal action.
@@ -98,7 +98,7 @@ class BandwidthMonitor:
     Agent platform's microservices.
     """
     
-    def __init__(self, collection_interval: int = 10):
+    def __init__(self, collection_interval -> None: int = 10) -> None:
         self.collection_interval = collection_interval
         
         # Traffic monitoring
@@ -620,3 +620,5 @@ class BandwidthMonitor:
             
         except Exception as e:
             logger.error(f"Error during Bandwidth Monitor shutdown: {e}")
+
+# File has syntax issues - needs manual review

@@ -133,7 +133,7 @@ class BlockchainTimestampService:
     """
 Integration with blockchain timestamping services"""
     
-    def __init__(self, config: ServiceConfig):
+    def __init__(self, config -> None: ServiceConfig) -> None:
         self.config = config
         self.service_name = "blockchain_timestamp"
         self.last_request_time = None
@@ -225,7 +225,7 @@ Integration with blockchain timestamping services"""
             logger.error(f"Blockchain service request failed: {e}")
             raise
     
-    async def _apply_rate_limit(self):
+    async def _apply_rate_limit(self) -> None:
         """Apply rate limiting"""
         if self.last_request_time:
             min_interval = 60.0 / self.config.rate_limit_per_minute
@@ -241,7 +241,7 @@ class CopyrightRegistryService:
     """
 Integration with copyright registration services"""
     
-    def __init__(self, config: ServiceConfig):
+    def __init__(self, config -> None: ServiceConfig) -> None:
         self.config = config
         self.service_name = "copyright_registry"
     
@@ -333,7 +333,7 @@ Integration with copyright registration services"""
 class DMCAServiceIntegration:
     """Integration with professional DMCA service providers"""
     
-    def __init__(self, config: ServiceConfig):
+    def __init__(self, config -> None: ServiceConfig) -> None:
         self.config = config
         self.service_name = "dmca_service"
     
@@ -436,7 +436,7 @@ class DMCAServiceIntegration:
 class PaymentProcessorIntegration:
     """Integration with payment processing services"""
     
-    def __init__(self, config: ServiceConfig):
+    def __init__(self, config -> None: ServiceConfig) -> None:
         self.config = config
         self.service_name = "payment_processor"
     
@@ -573,7 +573,7 @@ class PaymentProcessorIntegration:
 class TranslationServiceIntegration:
     """Integration with professional translation services"""
     
-    def __init__(self, config: ServiceConfig):
+    def __init__(self, config -> None: ServiceConfig) -> None:
         self.config = config
         self.service_name = "translation_service"
         self.supported_languages = ['en', 'es', 'fr', 'de', 'it', 'pt', 'ja', 'ko', 'zh', 'ru']
@@ -670,7 +670,7 @@ class TranslationServiceIntegration:
 class ExternalIntegrationsManager:
     """Manager for all external service integrations"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.services: Dict[str, Any] = {}
         self.service_configs: Dict[str, ServiceConfig] = {}
@@ -682,7 +682,7 @@ class ExternalIntegrationsManager:
         
         logger.info("External integrations manager initialized")
     
-    def _initialize_services(self):
+    def _initialize_services(self) -> None:
         """Initialize configured external services"""
         try:
             # Blockchain timestamp service
@@ -768,7 +768,7 @@ class ExternalIntegrationsManager:
             health_check_endpoint=config_dict.get('health_check_endpoint')
         )
     
-    async def start_health_monitoring(self):
+    async def start_health_monitoring(self) -> None:
         """
 Start health monitoring for all services"""
         if self.health_check_task:
@@ -777,7 +777,7 @@ Start health monitoring for all services"""
         self.health_check_task = asyncio.create_task(self._health_check_loop())
         logger.info("Started health monitoring for external services")
     
-    async def stop_health_monitoring(self):
+    async def stop_health_monitoring(self) -> None:
         """Stop health monitoring"""
         if self.health_check_task:
         try:
@@ -802,7 +802,7 @@ Start health monitoring for all services"""
                 except Exception as e:
                     logger.error(f"Metric collection stop_health_monitoring failed: {e}")
                     return None
-    async def _health_check_loop(self):
+    async def _health_check_loop(self) -> None:
         """Health check monitoring loop"""
         while True:
             try:
@@ -818,7 +818,7 @@ Start health monitoring for all services"""
                 logger.error(f"Error in health check loop: {e}")
                 await asyncio.sleep(60)
     
-    async def _check_service_health(self, service_name: str, config: ServiceConfig):
+    async def _check_service_health(self, service_name -> None: str, config -> None: ServiceConfig) -> None:
         """Check health of individual service"""
         try:
             url = f"{config.base_url.rstrip('/')}{config.health_check_endpoint}"
@@ -989,7 +989,7 @@ Create blockchain timestamp using configured service"""
             logger.error(f"Error getting integration status: {e}")
             return {}
     
-    async def disable_service(self, service_name: str):
+    async def disable_service(self, service_name -> None: str) -> None:
         """Disable specific service"""
         config = self.service_configs.get(service_name)
         if config:
@@ -997,7 +997,7 @@ Create blockchain timestamp using configured service"""
             config.status = IntegrationStatus.DISABLED
             logger.info(f"Disabled service: {service_name}")
     
-    async def enable_service(self, service_name: str):
+    async def enable_service(self, service_name -> None: str) -> None:
         """Enable specific service"""
         config = self.service_configs.get(service_name)
         if config:
@@ -1009,7 +1009,7 @@ Create blockchain timestamp using configured service"""
             if config.health_check_endpoint:
                 await self._check_service_health(service_name, config)
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Shutdown all integrations"""
         try:
             await self.stop_health_monitoring()
@@ -1048,3 +1048,5 @@ __all__ = [
     'TranslationServiceIntegration',
     'get_integrations_manager'
 ]
+
+# File has syntax issues - needs manual review

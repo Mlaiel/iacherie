@@ -157,7 +157,7 @@ class KeywordResearchEngine:
     """
 Advanced keyword research and analysis engine."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.keyword_cache: Dict[str, List[Keyword]] = {}
         self.trend_data: Dict[str, Dict[str, float]] = {}
     
@@ -379,7 +379,7 @@ class ContentSEOOptimizer:
     """
 Content SEO optimization engine."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         try:
             logger.info(f"Executing __init__")
             
@@ -781,7 +781,7 @@ Analyze keyword density."""
 class SEOEngine:
     """Main SEO optimization engine."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.content_optimizer = ContentSEOOptimizer()
         self.keyword_research = KeywordResearchEngine()
         self.seo_cache: Dict[str, SEOAnalysis] = {}

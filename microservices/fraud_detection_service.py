@@ -134,11 +134,11 @@ class FraudDetectionEngine(ABC):
 class RuleBasedEngine(FraudDetectionEngine):
     """Rule-based fraud detection engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.rules: List[FraudRule] = []
         self._initialize_default_rules()
     
-    def _initialize_default_rules(self):
+    def _initialize_default_rules(self) -> None:
         """Initialize default fraud detection rules"""
         default_rules = [
             FraudRule(
@@ -273,7 +273,7 @@ class RuleBasedEngine(FraudDetectionEngine):
 class MLFraudEngine(FraudDetectionEngine):
     """Machine learning fraud detection engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.model_loaded = False
         self.feature_weights = {
             "amount_ratio": 0.3,
@@ -432,7 +432,7 @@ class MLFraudEngine(FraudDetectionEngine):
 class FraudDetectionService:
     """Advanced fraud detection and prevention service"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.rule_engine = RuleBasedEngine()
         self.ml_engine = MLFraudEngine()
         self.user_profiles: Dict[str, UserProfile] = {}
@@ -600,7 +600,7 @@ class FraudDetectionService:
             reasons=all_reasons
         )
     
-    async def _update_statistics(self, result: FraudAnalysisResult):
+    async def _update_statistics(self, result -> None: FraudAnalysisResult) -> None:
         """Update fraud detection statistics"""
         
         self.stats["total_transactions"] += 1
@@ -611,7 +611,7 @@ class FraudDetectionService:
         if result.recommended_action == ActionType.BLOCK:
             self.stats["blocked_transactions"] += 1
     
-    async def _update_user_profile(self, transaction: TransactionData, profile: UserProfile):
+    async def _update_user_profile(self, transaction -> None: TransactionData, profile -> None: UserProfile) -> None:
         """Update user profile with transaction data"""
         
         profile.total_transactions += 1
@@ -627,7 +627,7 @@ class FraudDetectionService:
         if transaction.device_fingerprint and transaction.device_fingerprint in self.device_fingerprints:
             self.device_fingerprints[transaction.device_fingerprint]["transaction_count"] += 1
     
-    async def report_fraud(self, transaction_id: str, is_fraud: bool):
+    async def report_fraud(self, transaction_id -> None: str, is_fraud -> None: bool) -> None:
         """Report actual fraud status for learning"""
         
         # Find the transaction result
@@ -664,11 +664,11 @@ class FraudDetectionService:
         
         return stats
     
-    async def add_to_whitelist(self, ip_address: str):
+    async def add_to_whitelist(self, ip_address -> None: str) -> None:
         """Add IP to whitelist"""
         self.whitelist_ips.add(ip_address)
     
-    async def add_to_blacklist(self, ip_address: str):
+    async def add_to_blacklist(self, ip_address -> None: str) -> None:
         """Add IP to blacklist"""
         self.blacklist_ips.add(ip_address)
 

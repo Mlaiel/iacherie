@@ -54,7 +54,7 @@ class ReadMetrics:
 class ReadPreferenceOptimizer:
     """Advanced read preference optimizer with adaptive strategies."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize read preference optimizer."""
         self._metrics = ReadMetrics()
         self._latency_samples: List[float] = []

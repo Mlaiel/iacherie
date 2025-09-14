@@ -213,7 +213,7 @@ class CreatorQuantumEngine:
     ✅ Amélioration continue adaptative
     """
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.config = config or {}
         self.creator_analyzers: Dict[CreatorType, CreatorTypeAnalyzer] = {}
         self.format_optimizers: Dict[ContentFormat, MultiFormatOptimizer] = {}

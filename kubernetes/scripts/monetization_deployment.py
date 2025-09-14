@@ -1,3 +1,8 @@
+"""
+Monetization Deployment module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """Monetization Platform Deployment Manager
 Handles deployment of revenue tracking, payment processing, and licensing automation
@@ -126,7 +131,7 @@ class MonetizationDeploymentManager:
     for the IA Influencer Agent platform
     """
     
-    def __init__(self, config_path: Optional[str] = None):
+    def __init__(self, config_path -> None: Optional[str] = None) -> None:
         """
 Initialize monetization deployment manager"""
         self.config_path = config_path or "/etc/ia-influencer/monetization-deployment.yaml"
@@ -922,7 +927,7 @@ Verify monetization system deployment"""
             raise
 
 
-def main():
+def main() -> None:
     """Main function for CLI usage"""
     import argparse
     

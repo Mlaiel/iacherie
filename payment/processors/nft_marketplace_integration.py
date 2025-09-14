@@ -218,11 +218,11 @@ class NFTMarketplaceIntegration:
     """
 
     def __init__(self,
-                 web3_providers: Dict[str, str],
-                 ipfs_gateway: str,
-                 contract_configs: Dict[str, SmartContractConfig],
-                 database_url: str,
-                 redis_url: str):
+                 web3_providers -> None: Dict[str, str],
+                 ipfs_gateway -> None: str,
+                 contract_configs -> None: Dict[str, SmartContractConfig],
+                 database_url -> None: str,
+                 redis_url -> None: str) -> None:
         """Initialize NFT Marketplace Integration"""
         self.web3_providers = web3_providers
         self.ipfs_gateway = ipfs_gateway

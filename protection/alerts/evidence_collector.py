@@ -29,21 +29,24 @@ try:
 except ImportError:
     AIOHTTP_AVAILABLE = False
     class AioHttpFallback:
+    """AioHttpFallback: class implementation"""
         class ClientSession:
-            def __init__(self, *args, **kwargs): pass
-            async def __aenter__(self): return self
-            async def __aexit__(self, *args): pass
-            async def get(self, url, **kwargs):
+    """ClientSession: class implementation"""
+            def __init__(self, *args, **kwargs) -> None: pass
+            async def __aenter__(self) -> None: return self
+            async def __aexit__(self, *args) -> None: pass
+            async def get(self, url, **kwargs) -> None:
                 return self.Response()
-            async def post(self, url, **kwargs):
+            async def post(self, url, **kwargs) -> None:
                 return self.Response()
         class Response:
-            def __init__(self):
+    """Response: class implementation"""
+            def __init__(self) -> None:
                 self.status = 200
                 self.headers = {}
-            async def text(self): return ""
-            async def json(self): return {}
-            async def read(self): return b""
+            async def text(self) -> None: return ""
+            async def json(self) -> None: return {}
+            async def read(self) -> None: return b""
     aiohttp = AioHttpFallback()
 
 # Optional aiofiles with fallback
@@ -53,8 +56,9 @@ try:
 except ImportError:
     AIOFILES_AVAILABLE = False
     class AioFilesFallback:
+    """AioFilesFallback: class implementation"""
         @staticmethod
-        def open(file, mode='r', **kwargs):
+        def open(file, mode='r', **kwargs) -> None:
             return open(file, mode, **kwargs)
     aiofiles = AioFilesFallback()
 
@@ -69,17 +73,21 @@ try:
 except ImportError:
     SELENIUM_AVAILABLE = False
     class WebDriverFallback:
+    """WebDriverFallback: class implementation"""
         class Chrome:
-            def __init__(self, *args, **kwargs): pass
-            def get(self, url): pass
-            def quit(self): pass
-            def find_element(self, *args): 
+    """Chrome: class implementation"""
+            def __init__(self, *args, **kwargs) -> None: pass
+            def get(self, url) -> None: pass
+            def quit(self) -> None: pass
+            def find_element(self, *args) -> None: 
                 return self.Element()
-            def save_screenshot(self, path): pass
+            def save_screenshot(self, path) -> None: pass
         class Options:
-            def add_argument(self, arg): pass
+    """Options: class implementation"""
+            def add_argument(self, arg) -> None: pass
         class Element:
-            def screenshot(self, path): pass
+    """Element: class implementation"""
+            def screenshot(self, path) -> None: pass
     webdriver = WebDriverFallback()
     Options = WebDriverFallback.Options
     By = None
@@ -94,20 +102,25 @@ try:
 except ImportError:
     PIL_AVAILABLE = False
     class PILFallback:
+    """PILFallback: class implementation"""
         class Image:
+    """Image: class implementation"""
             @staticmethod
-            def open(path): return PILFallback.Image()
-            def save(self, path): pass
+            def open(path) -> None: return PILFallback.Image()
+            def save(self, path) -> None: pass
             # Add Image class for type hints
             class Image:
+    """Image: class implementation"""
                 pass
         class ImageDraw:
+    """ImageDraw: class implementation"""
             @staticmethod
-            def Draw(img): return PILFallback.ImageDraw()
-            def text(self, *args, **kwargs): pass
+            def Draw(img) -> None: return PILFallback.ImageDraw()
+            def text(self, *args, **kwargs) -> None: pass
         class ImageFont:
+    """ImageFont: class implementation"""
             @staticmethod
-            def truetype(*args, **kwargs): return None
+            def truetype(*args, **kwargs) -> None: return None
     Image, ImageDraw, ImageFont = PILFallback.Image, PILFallback.ImageDraw, PILFallback.ImageFont
     PIL_Image = Image.Image  # For type hints
 
@@ -118,10 +131,11 @@ try:
 except ImportError:
     CV2_AVAILABLE = False
     class CV2Fallback:
+    """CV2Fallback: class implementation"""
         @staticmethod
-        def imread(path): return []
+        def imread(path) -> None: return []
         @staticmethod
-        def imwrite(path, img): pass
+        def imwrite(path, img) -> None: pass
     cv2 = CV2Fallback()
 
 # Optional numpy with fallback
@@ -131,8 +145,9 @@ try:
 except ImportError:
     NUMPY_AVAILABLE = False
     class NumpyFallback:
-        def array(self, data): return data
-        def zeros(self, shape): return [0] * (shape if isinstance(shape, int) else shape[0])
+    """NumpyFallback: class implementation"""
+        def array(self, data) -> None: return data
+        def zeros(self, shape) -> None: return [0] * (shape if isinstance(shape, int) else shape[0])
     np = NumpyFallback()
 
 # Optional pydantic with fallback
@@ -142,10 +157,11 @@ try:
 except ImportError:
     PYDANTIC_AVAILABLE = False
     class BaseModel:
-        def __init__(self, **kwargs):
+    """BaseModel: class implementation"""
+        def __init__(self, **kwargs) -> None:
             for key, value in kwargs.items():
                 setattr(self, key, value)
-    def Field(*args, **kwargs): return None
+    def Field(*args, **kwargs) -> None: return None
 
 from ..models.alert_models import Alert
 
@@ -157,11 +173,14 @@ except ImportError:
     EVIDENCE_MODELS_AVAILABLE = False
     # Create fallback classes
     class Evidence:
-        def __init__(self, *args, **kwargs): pass
+    """Evidence: class implementation"""
+        def __init__(self, *args, **kwargs) -> None: pass
     class EvidenceType:
-        def __init__(self, *args, **kwargs): pass
+    """EvidenceType: class implementation"""
+        def __init__(self, *args, **kwargs) -> None: pass
     class EvidenceStatus:
-        def __init__(self, *args, **kwargs): pass
+    """EvidenceStatus: class implementation"""
+        def __init__(self, *args, **kwargs) -> None: pass
 
 # Core imports with fallbacks
 try:
@@ -170,7 +189,8 @@ try:
 except ImportError:
     CONFIG_AVAILABLE = False
     class SettingsFallback:
-        def __getattr__(self, name): return None
+    """SettingsFallback: class implementation"""
+        def __getattr__(self, name) -> None: return None
     settings = SettingsFallback()
 
 try:
@@ -178,7 +198,7 @@ try:
     DATABASE_AVAILABLE = True
 except ImportError:
     DATABASE_AVAILABLE = False
-    def get_async_session(): return None
+    def get_async_session() -> None: return None
 
 try:
     from ...core.storage import StorageManager
@@ -186,7 +206,8 @@ try:
 except ImportError:
     STORAGE_AVAILABLE = False
     class StorageManager:
-        def __init__(self, *args, **kwargs): pass
+    """StorageManager: class implementation"""
+        def __init__(self, *args, **kwargs) -> None: pass
 
 logger = logging.getLogger(__name__)
 
@@ -240,7 +261,7 @@ class WebDriverManager:
     """
 Manages headless web drivers for evidence collection."""
     
-    def __init__(self, config: EvidenceConfig):
+    def __init__(self, config -> None: EvidenceConfig) -> None:
         self.config = config
         self._driver_pool: List[webdriver.Chrome] = []
         self._pool_lock = asyncio.Lock()
@@ -290,7 +311,7 @@ Create a new headless Chrome driver."""
 class ScreenshotCollector:
     """Collects screenshot evidence with watermarking and metadata."""
     
-    def __init__(self, config: EvidenceConfig, driver_manager: WebDriverManager):
+    def __init__(self, config -> None: EvidenceConfig, driver_manager -> None: WebDriverManager) -> None:
         self.config = config
         self.driver_manager = driver_manager
     
@@ -480,7 +501,7 @@ Collect page metadata."""
 class VideoCollector:
     """Collects video evidence of violations."""
     
-    def __init__(self, config: EvidenceConfig, driver_manager: WebDriverManager):
+    def __init__(self, config -> None: EvidenceConfig, driver_manager -> None: WebDriverManager) -> None:
         self.config = config
         self.driver_manager = driver_manager
     
@@ -582,7 +603,7 @@ Calculate file checksum."""
 class MetadataCollector:
     """Collects detailed metadata evidence."""
     
-    def __init__(self, config: EvidenceConfig):
+    def __init__(self, config -> None: EvidenceConfig) -> None:
         try:
             logger.info(f"Executing __init__")
             
@@ -777,9 +798,9 @@ class EvidenceCollector:
     
     def __init__(
         self,
-        config: EvidenceConfig,
-        storage_manager: StorageManager
-    ):
+        config -> None: EvidenceConfig,
+        storage_manager -> None: StorageManager
+    ) -> None:
         self.config = config
         self.storage_manager = storage_manager
         
@@ -1140,20 +1161,20 @@ class EvidenceCollector:
 # Missing classes that are imported in __init__.py
 class CollectionMethod:
     """Evidence collection method configuration"""
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs) -> None:
         pass
 
 class EvidenceValidation:
     """Evidence validation configuration"""
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs) -> None:
         pass
 
 class ScreenshotCapture:
     """Screenshot capture configuration"""
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs) -> None:
         pass
 
 class MetadataExtractor:
     """Metadata extraction configuration"""
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs) -> None:
         pass

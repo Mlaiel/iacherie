@@ -79,7 +79,7 @@ class RateLimitRule:
 class RateLimitingConfiguration:
     """Enterprise rate limiting configuration management"""
     
-    def __init__(self, level: str = "enterprise"):
+    def __init__(self, level -> None: str = "enterprise") -> None:
         self.level = level
         self.redis_enabled = True
         self.distributed_mode = True
@@ -104,7 +104,7 @@ class RateLimitingConfiguration:
         self._configure_geographic_limits()
         self._configure_adaptive_limits()
     
-    def _configure_rate_limit_rules(self):
+    def _configure_rate_limit_rules(self) -> None:
         """Configure basic rate limit rules"""
         if self.level == "enterprise":
             self.user_tier_limits = {
@@ -156,7 +156,7 @@ class RateLimitingConfiguration:
                 }
             }
     
-    def _configure_endpoint_specific_limits(self):
+    def _configure_endpoint_specific_limits(self) -> None:
         """Configure endpoint-specific rate limits"""
         self.endpoint_limits = {
             EndpointCategory.AUTHENTICATION: {
@@ -199,7 +199,7 @@ class RateLimitingConfiguration:
             }
         }
     
-    def _configure_geographic_limits(self):
+    def _configure_geographic_limits(self) -> None:
         """Configure geographic-based rate limits"""
         self.geographic_limits = {
             "high_risk_countries": {
@@ -218,7 +218,7 @@ class RateLimitingConfiguration:
             }
         }
     
-    def _configure_adaptive_limits(self):
+    def _configure_adaptive_limits(self) -> None:
         """Configure adaptive rate limiting based on system load"""
         self.adaptive_settings = {
             "enable_adaptive": True,

@@ -147,7 +147,7 @@ Real-time communication infrastructure specification"""
 class CommunicationInfrastructureManager:
     """Advanced real-time communication and notification infrastructure manager"""
     
-    def __init__(self, k8s_client=None, redis_client=None, kafka_client=None):
+    def __init__(self, k8s_client=None, redis_client=None, kafka_client=None) -> None:
         self.k8s_client = k8s_client
         self.redis_client = redis_client
         self.kafka_client = kafka_client

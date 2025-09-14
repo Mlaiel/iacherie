@@ -67,7 +67,7 @@ class OptimizationResult:
 class PerformanceOptimizationEngine:
     """🛡️ Engine d'optimisation performance enterprise"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize performance optimizer"""
         self.metrics_history = deque(maxlen=10000)
         self.optimization_cache = {}
@@ -95,7 +95,7 @@ class PerformanceOptimizationEngine:
 
     def _setup_memory_monitoring(self) -> threading.Thread:
         """Setup continuous memory monitoring"""
-        def monitor():
+        def monitor() -> None:
             while True:
                 try:
                     memory = psutil.virtual_memory()
@@ -372,22 +372,22 @@ class PerformanceOptimizationEngine:
         
         return recommendations
 
-    async def example_usage(self):
+    async def example_usage(self) -> None:
         """🛡️ Example enterprise performance optimization"""
         logger.info("🛡️ Testing enterprise performance optimization engine")
         
         # Simulate critical ML operations
-        async def critical_inference():
+        async def critical_inference() -> None:
             """Simulate ML inference operation"""
             await asyncio.sleep(0.05)  # 50ms simulation
             return {"prediction": [0.8, 0.2], "confidence": 0.95}
         
-        async def feature_loading():
+        async def feature_loading() -> None:
             """Simulate feature loading operation"""
             await asyncio.sleep(0.2)  # 200ms simulation
             return {"features": np.random.randn(100, 10).tolist()}
         
-        async def model_loading():
+        async def model_loading() -> None:
             """Simulate model loading operation"""
             await asyncio.sleep(1.0)  # 1000ms simulation
             return {"model": "loaded", "version": "1.2.3"}
@@ -435,7 +435,7 @@ class PerformanceOptimizationEngine:
         """
         import asyncio
         
-        async def async_benchmark():
+        async def async_benchmark() -> None:
             return await self.example_usage()
         
         # Run async benchmark in sync context
@@ -459,14 +459,14 @@ class PerformanceOptimizationEngine:
 performance_optimizer = PerformanceOptimizationEngine()
 
 # Convenience function for measuring performance
-async def measure_performance(operation_name: str, operation_func: Callable, level: PerformanceLevel = PerformanceLevel.CRITICAL, *args, **kwargs):
+async def measure_performance(operation_name -> None: str, operation_func -> None: Callable, level -> None: PerformanceLevel = PerformanceLevel.CRITICAL, *args, **kwargs) -> None:
     """Convenience function for performance measurement"""
     return await performance_optimizer.measure_performance(operation_name, operation_func, level, *args, **kwargs)
 
 if __name__ == "__main__":
     import asyncio
     
-    async def main():
+    async def main() -> None:
         optimizer = PerformanceOptimizationEngine()
         await optimizer.example_usage()
     

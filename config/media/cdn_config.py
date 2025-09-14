@@ -1,3 +1,8 @@
+"""
+Cdn Config module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
@@ -658,7 +663,7 @@ class CDNDistribution:
 class CDNConfiguration:
     """Main CDN configuration manager"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize CDN configuration"""
         # Data storage
         self.distributions: Dict[str, CDNDistribution] = {}
@@ -730,7 +735,7 @@ class CDNConfiguration:
         # Initialize default distributions
         self._initialize_default_distributions()
     
-    def _initialize_default_distributions(self):
+    def _initialize_default_distributions(self) -> None:
         """Initialize default CDN distributions"""
         
         # Main content distribution

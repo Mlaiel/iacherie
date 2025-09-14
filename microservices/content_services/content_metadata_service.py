@@ -212,7 +212,7 @@ class ContentMetadataService:
     for all content types with AI-powered analysis and intelligent tagging.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.metadata_store: Dict[str, ContentMetadata] = {}
         self.extraction_templates: Dict[ContentType, Dict[str, Any]] = {}
         self.ai_models: Dict[str, Any] = {}
@@ -228,7 +228,7 @@ class ContentMetadataService:
         
         logger.info("ContentMetadataService initialized successfully")
     
-    def _initialize_extraction_templates(self):
+    def _initialize_extraction_templates(self) -> None:
         """Initialize extraction templates for different content types."""
         self.extraction_templates = {
             ContentType.IMAGE: {
@@ -268,7 +268,7 @@ class ContentMetadataService:
             }
         }
     
-    def _initialize_format_handlers(self):
+    def _initialize_format_handlers(self) -> None:
         """Initialize format-specific handlers."""
         # This would contain actual format handling logic
         self.format_handlers = {
@@ -281,7 +281,7 @@ class ContentMetadataService:
             # ... more handlers
         }
     
-    def _initialize_ai_models(self):
+    def _initialize_ai_models(self) -> None:
         """Initialize AI models for content analysis."""
         # Placeholder for AI model initialization
         self.ai_models = {
@@ -293,7 +293,7 @@ class ContentMetadataService:
             "sentiment_analyzer": {"model": "roberta_sentiment", "confidence_threshold": 0.75}
         }
     
-    def _initialize_enrichment_apis(self):
+    def _initialize_enrichment_apis(self) -> None:
         """Initialize external APIs for metadata enrichment."""
         self.enrichment_apis = {
             "wikipedia": {"enabled": True, "rate_limit": 100},
@@ -1130,7 +1130,7 @@ def get_content_metadata_service() -> ContentMetadataService:
 
 
 # Example usage and testing
-async def example_usage():
+async def example_usage() -> None:
     """Example usage of Content Metadata Service."""
     service = get_content_metadata_service()
     

@@ -199,7 +199,7 @@ class PaymentProcessor:
     real-time analytics with enterprise-grade reliability.
     """
     
-    def __init__(self, db_session: AsyncSession, redis_client: Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: Redis) -> None:
         """
         Initialize Payment Processor.
         

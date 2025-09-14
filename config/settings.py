@@ -11,11 +11,13 @@ try:
 except ImportError:
     # Fallback for environments without pydantic_settings
     class BaseSettings:
-        def __init__(self, **kwargs):
+    """BaseSettings: class implementation"""
+        def __init__(self, **kwargs) -> None:
             for key, value in kwargs.items():
                 setattr(self, key, value)
         
         class Config:
+    """Config: class implementation"""
             env_file = ".env"
             extra = "allow"
 
@@ -76,6 +78,7 @@ class ApplicationSettings(BaseSettings):
         return [origin.strip() for origin in self.cors_origins.split(",")]
     
     class Config:
+    """Config: class implementation"""
         env_file = ".env"
         extra = "allow"
 

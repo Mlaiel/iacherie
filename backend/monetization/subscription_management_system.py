@@ -22,6 +22,7 @@ from typing import Dict, List, Optional, Any
 import redis.asyncio as redis
 
 class SubscriptionTier(Enum):
+    """SubscriptionTier class implementation"""
     FREE = "free"
     BASIC = "basic"
     PREMIUM = "premium"
@@ -29,6 +30,7 @@ class SubscriptionTier(Enum):
     ENTERPRISE = "enterprise"
 
 class SubscriptionStatus(Enum):
+    """SubscriptionStatus class implementation"""
     ACTIVE = "active"
     PAUSED = "paused"
     CANCELLED = "cancelled"
@@ -36,6 +38,7 @@ class SubscriptionStatus(Enum):
 
 @dataclass
 class SubscriptionPlan:
+    """SubscriptionPlan: class implementation"""
     plan_id: str
     name: str
     tier: SubscriptionTier
@@ -50,6 +53,7 @@ class SubscriptionPlan:
 
 @dataclass
 class UserSubscription:
+    """UserSubscription: class implementation"""
     subscription_id: str
     user_id: str
     plan_id: str
@@ -64,7 +68,7 @@ class UserSubscription:
 class EnterpriseSubscriptionManager:
     """Enterprise subscription management system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
         self.redis_client = None
         
@@ -139,7 +143,7 @@ class EnterpriseSubscriptionManager:
             self.logger.error(f"Failed to create subscription: {e}")
             raise
     
-    async def process_recurring_billing(self):
+    async def process_recurring_billing(self) -> None:
         """Process recurring billing for all active subscriptions"""
         try:
             # Mock implementation for recurring billing

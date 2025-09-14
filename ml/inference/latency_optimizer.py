@@ -116,7 +116,7 @@ class LatencyOptimizer:
     - Monitoring temps réel
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialise l'optimiseur de latence
         
         Args:

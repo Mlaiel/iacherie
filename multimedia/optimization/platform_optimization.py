@@ -46,7 +46,7 @@ class PlatformRequirements:
 class PlatformOptimizer:
     """Professional platform-specific optimization system"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize platform optimizer"""
         self.config = config or {}
         self.platform_specs = self._initialize_platform_specs()

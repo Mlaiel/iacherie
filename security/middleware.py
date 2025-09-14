@@ -122,7 +122,7 @@ class WAFEngine:
     """
 Web Application Firewall engine"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.config = config or {}
         self.rules: List[SecurityRule] = []
         self.logger = logging.getLogger(__name__)
@@ -131,7 +131,7 @@ Web Application Firewall engine"""
         # Initialize default security rules
         self._initialize_default_rules()
         
-    async def initialize(self):
+    async def initialize(self) -> None:
         """
 Initialize WAF engine"""
         try:
@@ -150,7 +150,7 @@ Initialize WAF engine"""
             self.logger.error(f"Failed to initialize WAF engine: {str(e)}")
             raise
     
-    def _initialize_default_rules(self):
+    def _initialize_default_rules(self) -> None:
         """Initialize default WAF rules"""
         default_rules = [
             # SQL Injection patterns
@@ -378,7 +378,7 @@ Initialize WAF engine"""
             self.logger.error(f"Bot analysis failed: {str(e)}")
             return 0.0
     
-    async def _log_security_event(self, request_data: Dict[str, Any], threats: List[Dict], status: str):
+    async def _log_security_event(self, request_data -> None: Dict[str, Any], threats -> None: List[Dict], status -> None: str) -> None:
         """Log security event"""
         try:
             event = SecurityEvent(
@@ -425,7 +425,7 @@ Initialize WAF engine"""
 class RateLimiter:
     """Advanced rate limiting with multiple strategies"""
     
-    def __init__(self, redis_client, config: Dict[str, Any] = None):
+    def __init__(self, redis_client, config -> None: Dict[str, Any] = None) -> None:
         self.redis_client = redis_client
         self.config = config or {}
         self.rules: List[RateLimitRule] = []
@@ -434,7 +434,7 @@ class RateLimiter:
         # Initialize default rate limiting rules
         self._initialize_default_rules()
     
-    def _initialize_default_rules(self):
+    def _initialize_default_rules(self) -> None:
         """
 Initialize default rate limiting rules"""
         default_rules = [
@@ -576,7 +576,7 @@ class OAuth2Provider:
     """
 OAuth2 authentication and authorization provider"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.config = config or {}
         self.secret_key = self.config.get('secret_key', secrets.token_urlsafe(32))
         self.access_token_ttl = self.config.get('access_token_ttl', 3600)  # 1 hour
@@ -691,7 +691,7 @@ Create JWT access token"""
 class SecurityMiddleware:
     """Comprehensive security middleware orchestrator"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.config = config or {}
         self.waf = WAFEngine(config.get('waf', {}))
         self.oauth2 = OAuth2Provider(config.get('oauth2', {}))
@@ -699,7 +699,7 @@ class SecurityMiddleware:
         self.redis_client = None
         self.logger = logging.getLogger(__name__)
         
-    async def initialize(self):
+    async def initialize(self) -> None:
         """
 Initialize security middleware"""
         try:

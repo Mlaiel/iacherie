@@ -1,6 +1,9 @@
 """Release Manager"""
+import asyncio
+
 import logging
 logger = logging.getLogger(__name__)
 class ReleaseManager:
-    def __init__(self): logger.info("Release manager initialized")
-    async def manage_release(self, config): return {'status': 'released'}
+    """ReleaseManager: class implementation"""
+    def __init__(self) -> None: logger.info("Release manager initialized")
+    async def manage_release(self, config) -> None: return {'status': 'released'}

@@ -77,7 +77,7 @@ class DetectionMetrics:
     and performance monitoring for the piracy detection system.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Detection Metrics system.
         

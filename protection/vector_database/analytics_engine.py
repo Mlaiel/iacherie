@@ -1,4 +1,4 @@
-"""📊 Vector Database Analytics Engine
+"""# [EMOJI_REMOVED] Vector Database Analytics Engine
 ===================================
 
 Advanced analytics and insights for vector database performance and content patterns.
@@ -7,11 +7,11 @@ Provides detailed metrics, trend analysis, and optimization recommendations.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  AVERTISSEMENT LÉGAL IMPORTANT ⚠️
+# [EMOJI_REMOVED]  AVERTISSEMENT L# [EMOJI_REMOVED]GAL IMPORTANT # [EMOJI_REMOVED]
 =====================================
-Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
+Ce code est la propri# [EMOJI_REMOVED]t# [EMOJI_REMOVED] intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution sans autorisation 
-écrite explicite est strictement interdite et constitue une violation 
+# [EMOJI_REMOVED]crite explicite est strictement interdite et constitue une violation 
 des droits d'auteur passible de poursuites judiciaires.
 
 Contact: mlaiel@live.de
@@ -113,7 +113,7 @@ class MetricsCollector:
     """
 Collect and aggregate performance metrics"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.MetricsCollector")
         
@@ -141,13 +141,13 @@ Collect and aggregate performance metrics"""
             'duplicate_rate': {'type': 'quality', 'aggregations': ['mean', 'sum']}
         }
     
-    async def start_collection(self):
+    async def start_collection(self) -> None:
         """Start background metrics aggregation"""
         if self.auto_aggregate and not self.aggregation_task:
             self.aggregation_task = asyncio.create_task(self._aggregation_loop())
             self.logger.info("Metrics collection started")
     
-    async def stop_collection(self):
+    async def stop_collection(self) -> None:
         """Stop background metrics aggregation"""
         if self.aggregation_task:
             self.aggregation_task.cancel()
@@ -160,12 +160,12 @@ Collect and aggregate performance metrics"""
     
     async def record_metric(
         self,
-        metric_name: str,
-        value: float,
-        unit: str = "",
-        tags: Optional[Dict[str, str]] = None,
-        metadata: Optional[Dict[str, Any]] = None
-    ):
+        metric_name -> None: str,
+        value -> None: float,
+        unit -> None: str = "",
+        tags -> None: Optional[Dict[str, str]] = None,
+        metadata -> None: Optional[Dict[str, Any]] = None
+    ) -> None:
         """Record a new metric value"""
         try:
             metric = PerformanceMetric(
@@ -182,20 +182,20 @@ Collect and aggregate performance metrics"""
         except Exception as e:
             self.logger.error(f"Failed to record metric {metric_name}: {e}")
     
-    async def record_search_performance(self, latency_ms: float, result_count: int, cache_hit: bool):
+    async def record_search_performance(self, latency_ms -> None: float, result_count -> None: int, cache_hit -> None: bool) -> None:
         """Record search operation performance"""
         await self.record_metric('search_latency_ms', latency_ms, 'ms')
         await self.record_metric('search_results', result_count, 'count')
         await self.record_metric('cache_hit_rate', 1.0 if cache_hit else 0.0, 'ratio')
     
-    async def record_index_stats(self, total_vectors: int, index_size_mb: float, dimension: int):
+    async def record_index_stats(self, total_vectors -> None: int, index_size_mb -> None: float, dimension -> None: int) -> None:
         """
 Record index statistics"""
         await self.record_metric('vectors_total', total_vectors, 'count')
         await self.record_metric('index_size_mb', index_size_mb, 'MB')
         await self.record_metric('vector_dimension', dimension, 'count')
     
-    async def record_similarity_distribution(self, similarity_scores: List[float]):
+    async def record_similarity_distribution(self, similarity_scores -> None: List[float]) -> None:
         """
 Record similarity score distribution"""
         if not similarity_scores:
@@ -246,7 +246,7 @@ Get aggregated metric summary for time period"""
             self.logger.error(f"Failed to get metric summary for {metric_name}: {e}")
             return {'error': str(e)}
     
-    async def _aggregation_loop(self):
+    async def _aggregation_loop(self) -> None:
         """Background loop for metrics aggregation"""
         while True:
             try:
@@ -258,7 +258,7 @@ Get aggregated metric summary for time period"""
                 self.logger.error(f"Metrics aggregation error: {e}")
                 await asyncio.sleep(self.aggregation_interval)
     
-    async def _aggregate_metrics(self):
+    async def _aggregate_metrics(self) -> None:
         """Aggregate collected metrics"""
         try:
             current_time = time.time()
@@ -320,7 +320,7 @@ Get aggregated metric summary for time period"""
 class PatternDetector:
     """Detect patterns in vector content and usage"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.PatternDetector")
         
@@ -487,7 +487,7 @@ class PatternDetector:
 class AnalyticsEngine:
     """Main analytics engine coordinating all analytics components"""
     
-    def __init__(self, vector_store, config: Dict[str, Any]):
+    def __init__(self, vector_store, config -> None: Dict[str, Any]) -> None:
         self.vector_store = vector_store
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.AnalyticsEngine")
@@ -508,7 +508,7 @@ class AnalyticsEngine:
         # Background task
         self.reporting_task = None
     
-    async def start_analytics(self):
+    async def start_analytics(self) -> None:
         """Start analytics collection and reporting"""
         await self.metrics_collector.start_collection()
         
@@ -517,7 +517,7 @@ class AnalyticsEngine:
         
         self.logger.info("Analytics engine started")
     
-    async def stop_analytics(self):
+    async def stop_analytics(self) -> None:
         try:
             logger.info(f"Executing stop_analytics")
             
@@ -735,7 +735,7 @@ class AnalyticsEngine:
         
         return charts
     
-    async def _reporting_loop(self):
+    async def _reporting_loop(self) -> None:
         """Background loop for automatic report generation"""
         while True:
             try:
@@ -812,3 +812,5 @@ Export report in specified format"""
         except Exception as e:
             self.logger.error(f"Report export failed: {e}")
             return None
+
+# File has syntax issues - needs manual review

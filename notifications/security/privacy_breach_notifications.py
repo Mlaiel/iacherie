@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 class PrivacyBreachNotifications:
     """Privacy breach detection and notification system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         logger.info("Privacy breach notifications initialized")
     
     async def notify_data_breach(self, breach_data: Dict[str, Any]) -> bool:

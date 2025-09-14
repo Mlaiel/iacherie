@@ -91,7 +91,7 @@ class SearchResult:
 class VectorDatabaseManager:
     """Enterprise vector database management for Ainflue AI content analysis"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize vector database manager"""
         self.vector_stores: Dict[str, Dict[str, Any]] = {}
         self.embedding_cache: Dict[str, np.ndarray] = {}

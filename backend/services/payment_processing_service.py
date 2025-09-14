@@ -69,7 +69,7 @@ class FraudDetection:
 class PaymentProcessor:
     """Advanced payment processor"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.payment_methods = {}
         self.fraud_rules = []
         
@@ -180,7 +180,7 @@ class PaymentProcessor:
 class TransactionManager:
     """Transaction management system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.transactions = {}
         self.refund_policies = {}
     
@@ -239,7 +239,7 @@ class TransactionManager:
 class PaymentProcessingService:
     """Comprehensive payment processing service"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         """Initialize payment processing service"""
         self.config = config or {}
         self.payment_processor = PaymentProcessor()

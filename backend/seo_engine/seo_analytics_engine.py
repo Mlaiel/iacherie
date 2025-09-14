@@ -156,7 +156,7 @@ class SEOAnalyticsEngine:
     et des insights business pour optimiser les stratégies SEO.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialise le moteur d'analytics SEO
         

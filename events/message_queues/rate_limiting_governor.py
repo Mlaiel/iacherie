@@ -281,8 +281,8 @@ class RateLimitingGovernor:
     """
     
     def __init__(self,
-                 metrics_collector: Optional[MetricsCollector] = None,
-                 encryption_manager: Optional[EncryptionManager] = None):
+                 metrics_collector -> None: Optional[MetricsCollector] = None,
+                 encryption_manager -> None: Optional[EncryptionManager] = None) -> None:
         self.metrics = metrics_collector
         self.encryption = encryption_manager
         
@@ -329,7 +329,7 @@ class RateLimitingGovernor:
             logger.error(f"Failed to start rate limiting governor: {str(e)}")
             raise MessageQueueError(f"Rate limiter startup failed: {str(e)}")
     
-    async def stop(self):
+    async def stop(self) -> None:
         """Stop the rate limiting governor"""
         try:
             self.is_running = False
@@ -707,7 +707,7 @@ class RateLimitingGovernor:
     
     # Helper methods
     
-    async def _load_business_rules(self):
+    async def _load_business_rules(self) -> None:
         """Load Ainflue business rate limiting rules"""
         for rule_name, rule_config in AinflueBusiness.RATE_LIMIT_RULES.items():
             rule_config.rule_id = rule_name
@@ -822,7 +822,7 @@ class RateLimitingGovernor:
         
         return quota_status
     
-    async def _handle_rate_limit_exceeded(self, entity_id: str, rule: RateLimitRule, reason: str, context: Dict[str, Any]):
+    async def _handle_rate_limit_exceeded(self, entity_id -> None: str, rule -> None: RateLimitRule, reason -> None: str, context -> None: Dict[str, Any]) -> None:
         """Handle rate limit exceeded based on rule action"""
         state = self.entity_states[entity_id][rule.rule_id]
         
@@ -850,7 +850,7 @@ class RateLimitingGovernor:
             # Log for escalation
             logger.warning(f"Rate limit exceeded for {entity_id}, rule: {rule.name}, reason: {reason}")
     
-    async def _record_allowed_request(self, entity_id: str, rules: List[RateLimitRule], context: Dict[str, Any]):
+    async def _record_allowed_request(self, entity_id -> None: str, rules -> None: List[RateLimitRule], context -> None: Dict[str, Any]) -> None:
         """Record allowed request in statistics"""
         current_time = datetime.now(timezone.utc)
         
@@ -864,7 +864,7 @@ class RateLimitingGovernor:
         self.global_metrics.total_requests += 1
         self.global_metrics.total_allowed += 1
     
-    async def _initialize_adaptive_state(self, rule_id: str):
+    async def _initialize_adaptive_state(self, rule_id -> None: str) -> None:
         """Initialize adaptive algorithm state"""
         self.adaptive_states[rule_id] = {
             "load_history": deque(maxlen=100),
@@ -884,7 +884,7 @@ class RateLimitingGovernor:
     
     # Background tasks
     
-    async def _cleanup_loop(self):
+    async def _cleanup_loop(self) -> None:
         """Background cleanup of old state"""
         while self.is_running:
             try:
@@ -896,7 +896,7 @@ class RateLimitingGovernor:
                 logger.error(f"Error in cleanup loop: {str(e)}")
                 await asyncio.sleep(60)  # Back off on error
     
-    async def _queue_processor_loop(self):
+    async def _queue_processor_loop(self) -> None:
         """Background processing of queued requests"""
         while self.is_running:
             try:
@@ -908,7 +908,7 @@ class RateLimitingGovernor:
                 logger.error(f"Error in queue processor: {str(e)}")
                 await asyncio.sleep(5)  # Back off on error
     
-    async def _cleanup_old_state(self):
+    async def _cleanup_old_state(self) -> None:
         """Clean up old entity states"""
         current_time = datetime.now(timezone.utc)
         cleanup_threshold = timedelta(hours=24)  # Remove state older than 24 hours
@@ -935,7 +935,7 @@ class RateLimitingGovernor:
         if entities_to_remove:
             logger.info(f"Cleaned up {len(entities_to_remove)} old entity states")
     
-    async def _process_queued_requests(self):
+    async def _process_queued_requests(self) -> None:
         """Process queued requests that may now be allowed"""
         for rule_id, queue in self.queued_requests.items():
             if not queue:

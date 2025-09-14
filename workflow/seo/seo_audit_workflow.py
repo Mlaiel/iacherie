@@ -110,7 +110,7 @@ class ComprehensiveAudit:
 class SEOAuditWorkflow:
     """Comprehensive SEO audit workflow with detailed analysis and recommendations."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the SEO audit workflow."""
         self.audit_checkers = {
             AuditCategory.TECHNICAL: self._audit_technical_seo,

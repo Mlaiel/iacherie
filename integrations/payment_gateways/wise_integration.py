@@ -146,7 +146,7 @@ class WiseBalance:
 class WiseAPIClient:
     """Wise API client for payment processing."""
     
-    def __init__(self, api_token: str, sandbox: bool = False, webhook_secret: Optional[str] = None):
+    def __init__(self, api_token -> None: str, sandbox -> None: bool = False, webhook_secret -> None: Optional[str] = None) -> None:
         self.api_token = api_token
         self.webhook_secret = webhook_secret
         self.base_url = "https://api.sandbox.transferwise.tech" if sandbox else "https://api.wise.com"
@@ -161,7 +161,7 @@ class WiseAPIClient:
         self.cache = {}
         self.cache_ttl = 300  # 5 minutes
     
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         """Async context manager entry."""
         self.session = aiohttp.ClientSession(
             headers={
@@ -173,7 +173,7 @@ class WiseAPIClient:
         )
         return self
     
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         """Async context manager exit."""
         if self.session:
             await self.session.close()
@@ -210,7 +210,7 @@ class WiseAPIClient:
             logger.error(f"Request failed: {str(e)}")
             raise
     
-    async def _check_rate_limit(self):
+    async def _check_rate_limit(self) -> None:
         """Check and enforce rate limiting."""
         current_time = time.time()
         
@@ -224,7 +224,7 @@ class WiseAPIClient:
                 logger.warning(f"Rate limit reached, sleeping for {sleep_time:.2f}s")
                 await asyncio.sleep(sleep_time)
     
-    def _update_rate_limit(self, headers: Dict[str, str]):
+    def _update_rate_limit(self, headers -> None: Dict[str, str]) -> None:
         """Update rate limit tracking from response headers."""
         self.rate_limit_requests += 1
         
@@ -532,7 +532,7 @@ class WiseAPIClient:
 class WiseIntegration:
     """Main Wise integration for Ainflue platform."""
     
-    def __init__(self, api_token: str, sandbox: bool = False, webhook_secret: Optional[str] = None):
+    def __init__(self, api_token -> None: str, sandbox -> None: bool = False, webhook_secret -> None: Optional[str] = None) -> None:
         self.api_token = api_token
         self.sandbox = sandbox
         self.webhook_secret = webhook_secret
@@ -788,7 +788,7 @@ class WiseIntegration:
 
 
 # Example usage
-async def main():
+async def main() -> None:
     """Example usage of Wise integration."""
     wise = WiseIntegration(
         api_token="your-wise-api-token",

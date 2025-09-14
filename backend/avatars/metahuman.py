@@ -110,7 +110,7 @@ class BodyFeatures:
 class MetaHumanConfig:
     """Configuration for MetaHuman-style avatar generation"""
     
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs) -> None:
         # Basic parameters
         self.quality = kwargs.get('quality', MetaHumanQuality.HIGH)
         self.age_category = kwargs.get('age_category', AgeCategory.YOUNG_ADULT)
@@ -178,7 +178,7 @@ class MetaHumanGenerator(BaseContentGenerator):
     - Film and animation projects
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(config or {})
         self.logger = logging.getLogger(__name__)
         self._setup_metahuman_pipeline()

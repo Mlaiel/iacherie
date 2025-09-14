@@ -116,7 +116,7 @@ class CollaborationSuccessPredictor:
     analyze success factors, and provide optimization recommendations.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the collaboration success predictor."""
         self.collaboration_profiles: Dict[str, CollaborationProfile] = {}
         self.predictions: List[CollaborationPrediction] = []
@@ -130,7 +130,7 @@ class CollaborationSuccessPredictor:
         self._setup_success_factors()
         self._load_collaboration_patterns()
     
-    def _initialize_success_models(self):
+    def _initialize_success_models(self) -> None:
         """Initialize machine learning models for success prediction."""
         self.success_models = {
             "general_success": {
@@ -183,7 +183,7 @@ class CollaborationSuccessPredictor:
             }
         }
     
-    def _setup_success_factors(self):
+    def _setup_success_factors(self) -> None:
         """Setup weights for different success factors."""
         self.success_factors_weights = {
             SuccessFactor.AUDIENCE_OVERLAP: 0.20,
@@ -196,7 +196,7 @@ class CollaborationSuccessPredictor:
             SuccessFactor.MARKET_OPPORTUNITY: 0.05
         }
     
-    def _load_collaboration_patterns(self):
+    def _load_collaboration_patterns(self) -> None:
         """Load historical collaboration patterns and insights."""
         self.collaboration_patterns = {
             "successful_combinations": {
@@ -282,7 +282,7 @@ class CollaborationSuccessPredictor:
         logger.info(f"Generated collaboration prediction {prediction.prediction_id}: {success_probability:.2%} success probability")
         return prediction
     
-    def _create_participant_profile(self, participant_id: str, participant_data: Dict[str, Any]):
+    def _create_participant_profile(self, participant_id -> None: str, participant_data -> None: Dict[str, Any]) -> None:
         """Create a collaboration profile for a new participant."""
         
         profile = CollaborationProfile(

@@ -114,7 +114,7 @@ class BaseEmbeddingGenerator(ABC):
     """
 Base class for embedding generators."""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
         self.executor = ThreadPoolExecutor(max_workers=4)
@@ -149,7 +149,7 @@ class TextEmbeddingGenerator(BaseEmbeddingGenerator):
     - Text preprocessing and cleaning
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         super().__init__(config)
         self.model_name = config.get('text_model', 'all-MiniLM-L6-v2')
         self.max_length = config.get('max_length', 512)
@@ -294,7 +294,7 @@ class AudioEmbeddingGenerator(BaseEmbeddingGenerator):
     - Audio fingerprinting
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         super().__init__(config)
         self.sample_rate = config.get('sample_rate', 22050)
         self.duration = config.get('max_duration', 30.0)  # Max 30 seconds
@@ -538,7 +538,7 @@ class ImageEmbeddingGenerator(BaseEmbeddingGenerator):
     - Perceptual hashing
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         super().__init__(config)
         self.image_size = config.get('image_size', 224)
         
@@ -768,7 +768,7 @@ class VideoEmbeddingGenerator(BaseEmbeddingGenerator):
     - Video fingerprinting
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         super().__init__(config)
         self.max_frames = config.get('max_frames', 100)
         self.frame_step = config.get('frame_step', 10)
@@ -990,7 +990,7 @@ class MultiModalEmbeddingEngine:
     for processing various content types.
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         
         # Initialize generators

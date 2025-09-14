@@ -1,3 +1,8 @@
+"""
+Database Manager module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Database Operations Manager - Enterprise Database Automation
@@ -50,6 +55,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 class DatabaseType(Enum):
+    """DatabaseType class implementation"""
     POSTGRESQL = "postgresql"
     MYSQL = "mysql"
     MONGODB = "mongodb"
@@ -57,6 +63,7 @@ class DatabaseType(Enum):
     SQLITE = "sqlite"
 
 class OperationStatus(Enum):
+    """OperationStatus class implementation"""
     PENDING = "pending"
     RUNNING = "running"
     SUCCESS = "success"
@@ -64,6 +71,7 @@ class OperationStatus(Enum):
     CANCELLED = "cancelled"
 
 class BackupType(Enum):
+    """BackupType class implementation"""
     FULL = "full"
     INCREMENTAL = "incremental"
     DIFFERENTIAL = "differential"
@@ -122,14 +130,14 @@ class DatabaseManager:
     - Security and compliance
     """
     
-    def __init__(self, config_path: str = "/etc/ainflue/database.json"):
+    def __init__(self, config_path -> None: str = "/etc/ainflue/database.json") -> None:
         self.config_path = config_path
         self.databases: Dict[str, DatabaseConnection] = {}
         self.backup_operations: List[BackupOperation] = []
         self.migration_operations: List[MigrationOperation] = []
         self.active_connections: Dict[str, Any] = {}
         
-    async def load_database_configuration(self):
+    async def load_database_configuration(self) -> None:
         """Load database configuration"""
         try:
             with open(self.config_path, 'r') as f:
@@ -805,7 +813,7 @@ class DatabaseManager:
         
         return report
 
-async def main():
+async def main() -> None:
     """CLI entry point for database manager"""
     import argparse
     

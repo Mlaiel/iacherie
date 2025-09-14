@@ -92,7 +92,7 @@ class WorkflowOrchestrator(BaseComponent):
     Manages complex deployment workflows with support for multiple strategies,
     parallel execution, dependency management, and automated rollbacks.
     """
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         super().__init__()
         self.config = config
         self.logger = logging.getLogger(__name__)

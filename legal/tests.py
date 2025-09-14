@@ -54,20 +54,20 @@ from legal.privacy import (
 class TestLegalComplianceFramework(unittest.TestCase):
     """Test cases for core legal compliance framework"""
     
-    def setUp(self):
+    def setUp(self) -> None:
         """Set up test fixtures"""
         self.framework = LegalComplianceFramework()
         self.content_id = "test_content_123"
         self.user_id = "test_user_456"
     
-    def test_framework_initialization(self):
+    def test_framework_initialization(self) -> None:
         """Test legal compliance framework initialization"""
         self.assertIsInstance(self.framework, LegalComplianceFramework)
         self.assertEqual(len(self.framework.compliance_records), 0)
         self.assertEqual(len(self.framework.active_violations), 0)
         self.assertEqual(self.framework.compliance_metrics["total_checks"], 0)
     
-    async def test_assess_legal_compliance(self):
+    async def test_assess_legal_compliance(self) -> None:
         """Test legal compliance assessment"""
         framework_types = [
             LegalFrameworkType.COPYRIGHT_PROTECTION,
@@ -83,7 +83,7 @@ class TestLegalComplianceFramework(unittest.TestCase):
         self.assertIn("data_protection", results)
         self.assertTrue(len(self.framework.compliance_records) > 0)
     
-    async def test_violation_resolution(self):
+    async def test_violation_resolution(self) -> None:
         """Test violation resolution process"""
         # Create a test compliance record
         framework_types = [LegalFrameworkType.COPYRIGHT_PROTECTION]
@@ -105,7 +105,7 @@ class TestLegalComplianceFramework(unittest.TestCase):
         self.assertEqual(record.compliance_status, ComplianceStatus.COMPLIANT)
         self.assertNotIn(record_id, self.framework.active_violations)
     
-    def test_compliance_metrics(self):
+    def test_compliance_metrics(self) -> None:
         """Test compliance metrics calculation"""
         metrics = self.framework.get_compliance_metrics()
         
@@ -118,19 +118,19 @@ class TestLegalComplianceFramework(unittest.TestCase):
 class TestCopyrightProtectionEngine(unittest.TestCase):
     """Test cases for copyright protection engine"""
     
-    def setUp(self):
+    def setUp(self) -> None:
         """Set up test fixtures"""
         self.engine = CopyrightProtectionEngine()
         self.content_id = "copyright_test_123"
         self.creator_id = "creator_456"
     
-    def test_engine_initialization(self):
+    def test_engine_initialization(self) -> None:
         """Test copyright engine initialization"""
         self.assertIsInstance(self.engine, CopyrightProtectionEngine)
         self.assertEqual(len(self.engine.copyright_registry), 0)
         self.assertEqual(len(self.engine.infringement_detections), 0)
     
-    async def test_copyright_registration(self):
+    async def test_copyright_registration(self) -> None:
         """Test copyright registration process"""
         registration_id = await self.engine.register_copyright(
             self.content_id,
@@ -147,7 +147,7 @@ class TestCopyrightProtectionEngine(unittest.TestCase):
         self.assertEqual(record["creator_id"], self.creator_id)
         self.assertEqual(record["content_type"], "music")
     
-    async def test_infringement_detection(self):
+    async def test_infringement_detection(self) -> None:
         """Test copyright infringement detection"""
         detection_result = await self.engine.detect_infringement(self.content_id)
         
@@ -164,14 +164,14 @@ class TestCopyrightProtectionEngine(unittest.TestCase):
 class TestCopyrightRegistrationManager(unittest.TestCase):
     """Test cases for copyright registration manager"""
     
-    def setUp(self):
+    def setUp(self) -> None:
         """Set up test fixtures"""
         self.manager = CopyrightRegistrationManager()
         self.content_data = b"test content data for copyright"
         self.content_id = "reg_test_123"
         self.creator_id = "creator_789"
     
-    async def test_copyright_registration_workflow(self):
+    async def test_copyright_registration_workflow(self) -> None:
         """Test complete copyright registration workflow"""
         registration_id = await self.manager.register_copyright(
             self.content_id,
@@ -191,7 +191,7 @@ class TestCopyrightRegistrationManager(unittest.TestCase):
         self.assertEqual(record.jurisdiction, "US")
         self.assertIsInstance(record.content_hash, str)
     
-    async def test_duplicate_registration_prevention(self):
+    async def test_duplicate_registration_prevention(self) -> None:
         """Test prevention of duplicate copyright registrations"""
         # Register content first time
         reg_id_1 = await self.manager.register_copyright(
@@ -212,7 +212,7 @@ class TestCopyrightRegistrationManager(unittest.TestCase):
         # Should return same registration ID
         self.assertEqual(reg_id_1, reg_id_2)
     
-    def test_registration_status_check(self):
+    def test_registration_status_check(self) -> None:
         """Test copyright registration status checking"""
         # Test non-existent registration
         status = self.manager.get_registration_status("non_existent_id")
@@ -222,19 +222,19 @@ class TestCopyrightRegistrationManager(unittest.TestCase):
 class TestGDPRComplianceManager(unittest.TestCase):
     """Test cases for GDPR compliance manager"""
     
-    def setUp(self):
+    def setUp(self) -> None:
         """Set up test fixtures"""
         self.manager = GDPRComplianceManager()
         self.user_id = "gdpr_test_user_123"
     
-    def test_manager_initialization(self):
+    def test_manager_initialization(self) -> None:
         """Test GDPR manager initialization"""
         self.assertIsInstance(self.manager, GDPRComplianceManager)
         self.assertEqual(len(self.manager.consent_records), 0)
         self.assertEqual(len(self.manager.privacy_requests), 0)
         self.assertEqual(len(self.manager.data_subjects), 0)
     
-    async def test_consent_collection(self):
+    async def test_consent_collection(self) -> None:
         """Test GDPR consent collection"""
         consent_id = await self.manager.collect_consent(
             self.user_id,
@@ -253,7 +253,7 @@ class TestGDPRComplianceManager(unittest.TestCase):
         self.assertEqual(consent.purpose, "analytics")
         self.assertEqual(consent.status, ConsentStatus.GRANTED)
     
-    async def test_consent_withdrawal(self):
+    async def test_consent_withdrawal(self) -> None:
         """Test GDPR consent withdrawal"""
         # First collect consent
         consent_id = await self.manager.collect_consent(
@@ -271,7 +271,7 @@ class TestGDPRComplianceManager(unittest.TestCase):
         self.assertEqual(consent.status, ConsentStatus.WITHDRAWN)
         self.assertIsNotNone(consent.withdrawn_at)
     
-    async def test_subject_access_request(self):
+    async def test_subject_access_request(self) -> None:
         """Test GDPR subject access request"""
         request_id = await self.manager.process_subject_access_request(self.user_id)
         
@@ -282,7 +282,7 @@ class TestGDPRComplianceManager(unittest.TestCase):
         self.assertEqual(request.user_id, self.user_id)
         self.assertEqual(request.request_type.value, "access")
     
-    async def test_erasure_request(self):
+    async def test_erasure_request(self) -> None:
         """Test GDPR right to erasure request"""
         request_id = await self.manager.process_erasure_request(self.user_id)
         
@@ -297,17 +297,17 @@ class TestGDPRComplianceManager(unittest.TestCase):
 class TestDMCANoticeGenerator(unittest.TestCase):
     """Test cases for DMCA notice generator"""
     
-    def setUp(self):
+    def setUp(self) -> None:
         """Set up test fixtures"""
         self.generator = DMCANoticeGenerator()
     
-    def test_generator_initialization(self):
+    def test_generator_initialization(self) -> None:
         """Test DMCA generator initialization"""
         self.assertIsInstance(self.generator, DMCANoticeGenerator)
         self.assertEqual(len(self.generator.notices), 0)
         self.assertIn("standard", self.generator.notice_templates)
     
-    async def test_dmca_notice_generation(self):
+    async def test_dmca_notice_generation(self) -> None:
         """Test DMCA notice generation"""
         notice_id = await self.generator.generate_dmca_notice(
             copyright_owner="Test Creator",
@@ -328,7 +328,7 @@ class TestDMCANoticeGenerator(unittest.TestCase):
         self.assertEqual(notice.copyright_owner, "Test Creator")
         self.assertIn("infringing-content", notice.infringing_url)
     
-    async def test_dmca_notice_sending(self):
+    async def test_dmca_notice_sending(self) -> None:
         """Test DMCA notice sending process"""
         # Generate notice first
         notice_id = await self.generator.generate_dmca_notice(
@@ -354,17 +354,17 @@ class TestDMCANoticeGenerator(unittest.TestCase):
 class TestDataMinimizationEngine(unittest.TestCase):
     """Test cases for data minimization engine"""
     
-    def setUp(self):
+    def setUp(self) -> None:
         """Set up test fixtures"""
         self.engine = DataMinimizationEngine()
     
-    def test_engine_initialization(self):
+    def test_engine_initialization(self) -> None:
         """Test data minimization engine initialization"""
         self.assertIsInstance(self.engine, DataMinimizationEngine)
         self.assertEqual(len(self.engine.minimization_rules), 0)
         self.assertEqual(len(self.engine.data_assessments), 0)
     
-    async def test_data_necessity_assessment(self):
+    async def test_data_necessity_assessment(self) -> None:
         """Test data necessity assessment"""
         requested_data = {
             "email": "user@example.com",
@@ -398,14 +398,14 @@ class TestDataMinimizationEngine(unittest.TestCase):
 class LegalModuleIntegrationTests(unittest.TestCase):
     """Integration tests for legal module components"""
     
-    def setUp(self):
+    def setUp(self) -> None:
         """Set up integration test fixtures"""
         self.legal_framework = LegalComplianceFramework()
         self.copyright_engine = CopyrightProtectionEngine()
         self.data_protection = DataProtectionManager()
         self.ip_protection = IntellectualPropertyProtection()
     
-    async def test_end_to_end_content_protection(self):
+    async def test_end_to_end_content_protection(self) -> None:
         """Test end-to-end content protection workflow"""
         content_id = "integration_test_content"
         creator_id = "integration_test_creator"
@@ -434,7 +434,7 @@ class LegalModuleIntegrationTests(unittest.TestCase):
         self.assertIn("copyright_protection", compliance_results)
         self.assertIn("data_protection", compliance_results)
     
-    async def test_gdpr_copyright_integration(self):
+    async def test_gdpr_copyright_integration(self) -> None:
         """Test integration between GDPR compliance and copyright protection"""
         user_id = "integration_gdpr_user"
         content_id = "integration_gdpr_content"
@@ -469,7 +469,7 @@ class LegalModuleIntegrationTests(unittest.TestCase):
         self.assertEqual(registration.creator_id, user_id)
 
 
-def run_async_test(coro):
+def run_async_test(coro) -> None:
     """Helper function to run async tests"""
     loop = asyncio.get_event_loop()
     return loop.run_until_complete(coro)

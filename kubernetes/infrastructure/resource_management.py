@@ -67,7 +67,7 @@ class QuotaSpec:
 class ResourceManager:
     """Manages Kubernetes Resource Quotas and Limit Ranges"""
     
-    def __init__(self, base_namespace: str = "ia-influencer"):
+    def __init__(self, base_namespace -> None: str = "ia-influencer") -> None:
         self.base_namespace = base_namespace
         self.workload_specs = self._initialize_workload_specs()
         self.environment_quotas = self._initialize_environment_quotas()
@@ -500,7 +500,7 @@ class ResourceManager:
         
         return manifests
     
-    def save_manifests_to_files(self, output_dir: str = "./k8s-manifests/resource-management"):
+    def save_manifests_to_files(self, output_dir -> None: str = "./k8s-manifests/resource-management") -> None:
         """Save all resource management manifests to files"""
         import os
         os.makedirs(output_dir, exist_ok=True)

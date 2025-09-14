@@ -155,7 +155,7 @@ class CloudSecurityManager:
     """
 Enterprise cloud security management system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """
 Initialize cloud security manager"""
         self.logger = logging.getLogger(self.__class__.__name__)
@@ -815,7 +815,7 @@ Initialize security manager"""
                 }
         
         # Directory traversal pattern
-        if re.search(r'\.\./', action):
+        if re.search(r'../', action):
             return {
                 "threat_level": ThreatLevel.MEDIUM,
                 "event_type": SecurityEventType.DATA_BREACH_ATTEMPT,
@@ -1124,3 +1124,5 @@ Block IP address"""
             except Exception as e:
                 self.logger.error(f"Error in vulnerability scanning loop: {e}")
                 await asyncio.sleep(86400)
+
+# File has syntax issues - needs manual review

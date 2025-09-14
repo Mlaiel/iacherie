@@ -119,7 +119,7 @@ class RouteResponse:
 class AIModelRouter:
     """Advanced AI model routing and selection system."""
     
-    def __init__(self, redis_url: str = None):
+    def __init__(self, redis_url -> None: str = None) -> None:
         self.providers: Dict[str, Dict[AIServiceType, List[AIProvider]]] = defaultdict(lambda: defaultdict(list))
         self.performance_cache = {}
         self.cost_cache = {}
@@ -144,7 +144,7 @@ class AIModelRouter:
         # Initialize default providers
         self._initialize_default_providers()
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize the AI model router."""
         try:
             if self.redis_url:
@@ -159,7 +159,7 @@ class AIModelRouter:
             logger.error(f"Failed to initialize AI model router: {str(e)}")
             raise
     
-    def _initialize_default_providers(self):
+    def _initialize_default_providers(self) -> None:
         """Initialize default AI service providers."""
         # OpenAI providers
         openai_text = AIProvider(
@@ -288,7 +288,7 @@ class AIModelRouter:
         self.register_provider(stability_image)
         self.register_provider(elevenlabs_tts)
     
-    def register_provider(self, provider: AIProvider):
+    def register_provider(self, provider -> None: AIProvider) -> None:
         """Register a new AI service provider."""
         try:
             self.providers[provider.name][provider.service_type].append(provider)
@@ -481,7 +481,7 @@ class AIModelRouter:
         
         return round(adjusted_latency, 2)
     
-    async def _health_check_loop(self):
+    async def _health_check_loop(self) -> None:
         """Continuous health check for providers."""
         while True:
             try:
@@ -492,7 +492,7 @@ class AIModelRouter:
                 logger.error(f"Health check failed: {str(e)}")
                 await asyncio.sleep(60)
     
-    async def _check_provider_health(self):
+    async def _check_provider_health(self) -> None:
         """Check health of all providers."""
         for provider_name, services in self.providers.items():
             for service_type, providers in services.items():
@@ -553,8 +553,8 @@ class AIModelRouter:
         
         return stats
     
-    async def update_provider_performance(self, provider_name: str, service_type: AIServiceType, 
-                                        actual_latency: float, actual_cost: float, quality_rating: float):
+    async def update_provider_performance(self, provider_name -> None: str, service_type -> None: AIServiceType, 
+                                        actual_latency -> None: float, actual_cost -> None: float, quality_rating -> None: float) -> None:
         """Update provider performance metrics based on actual usage."""
         provider_key = f"{provider_name}_{service_type.value}"
         
@@ -591,7 +591,7 @@ class AIModelRouter:
             service_type=service_type.value
         ).set(quality_rating)
     
-    async def cleanup(self):
+    async def cleanup(self) -> None:
         """Cleanup resources."""
         try:
             if self.redis_client:
@@ -631,7 +631,7 @@ async def get_best_provider(service_type: AIServiceType, strategy: RoutingStrate
 
 
 # Example usage
-async def main():
+async def main() -> None:
     """Example usage of AI model router."""
     await ai_router.initialize()
     

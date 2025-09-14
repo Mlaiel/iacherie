@@ -157,7 +157,7 @@ class ProviderIntegrationManager:
     authentication, rate limiting, and standardized interface management.
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """Initialize provider integration manager"""
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -193,7 +193,7 @@ class ProviderIntegrationManager:
         self.token_refresh_task = None
         self.metrics_update_task = None
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize the integration manager"""
         try:
             # Load provider configurations
@@ -212,7 +212,7 @@ class ProviderIntegrationManager:
             self.logger.error(f"Failed to initialize integration manager: {e}")
             raise
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Shutdown the integration manager"""
         try:
             # Cancel background tasks
@@ -230,11 +230,11 @@ class ProviderIntegrationManager:
         except Exception as e:
             self.logger.error(f"Error during integration manager shutdown: {e}")
     
-    async def register_provider(self, provider_name: str, 
-                              integration: BaseProviderInterface,
-                              auth_config: AuthenticationConfig,
-                              rate_limit_config: RateLimitConfig,
-                              quota_config: Optional[QuotaConfig] = None):
+    async def register_provider(self, provider_name -> None: str, 
+                              integration -> None: BaseProviderInterface,
+                              auth_config -> None: AuthenticationConfig,
+                              rate_limit_config -> None: RateLimitConfig,
+                              quota_config -> None: Optional[QuotaConfig] = None) -> None:
         """Register a new provider integration"""
         try:
             # Store integration
@@ -485,7 +485,7 @@ class ProviderIntegrationManager:
             self.logger.error(f"Token refresh failed for {provider_name}: {e}")
             return False
     
-    async def _ensure_authenticated(self, provider_name: str):
+    async def _ensure_authenticated(self, provider_name -> None: str) -> None:
         """Ensure provider is authenticated with valid token"""
         current_token = self.auth_tokens.get(provider_name, {})
         
@@ -602,7 +602,7 @@ class ProviderIntegrationManager:
                 error_message=str(e)
             )
     
-    async def _update_request_metrics(self, provider_name: str, response: APIResponse, response_time: float):
+    async def _update_request_metrics(self, provider_name -> None: str, response -> None: APIResponse, response_time -> None: float) -> None:
         """Update metrics after a request"""
         metrics = self.metrics[provider_name]
         metrics.total_requests += 1
@@ -626,7 +626,7 @@ class ProviderIntegrationManager:
         today = datetime.now().strftime('%Y-%m-%d')
         self.quota_usage[provider_name][today] += 1
     
-    async def _update_error_metrics(self, provider_name: str, error_message: str):
+    async def _update_error_metrics(self, provider_name -> None: str, error_message -> None: str) -> None:
         """Update metrics after an error"""
         metrics = self.metrics[provider_name]
         metrics.total_requests += 1
@@ -634,7 +634,7 @@ class ProviderIntegrationManager:
         metrics.last_error = error_message
         metrics.last_updated = datetime.now()
     
-    async def _initialize_http_sessions(self):
+    async def _initialize_http_sessions(self) -> None:
         """Initialize HTTP sessions for providers"""
         for provider_name in self.integrations.keys():
             self.http_sessions[provider_name] = aiohttp.ClientSession(
@@ -642,7 +642,7 @@ class ProviderIntegrationManager:
                 connector=aiohttp.TCPConnector(limit=100, limit_per_host=20)
             )
     
-    async def _token_refresh_loop(self):
+    async def _token_refresh_loop(self) -> None:
         """Background task to refresh tokens"""
         while True:
             try:
@@ -662,7 +662,7 @@ class ProviderIntegrationManager:
             except Exception as e:
                 self.logger.error(f"Error in token refresh loop: {e}")
     
-    async def _metrics_update_loop(self):
+    async def _metrics_update_loop(self) -> None:
         """Background task to update metrics"""
         while True:
             try:
@@ -680,7 +680,7 @@ class ProviderIntegrationManager:
             except Exception as e:
                 self.logger.error(f"Error in metrics update loop: {e}")
     
-    async def _load_provider_configs(self):
+    async def _load_provider_configs(self) -> None:
         """Load provider configurations"""
         # This would load configurations from files/database
         # For now, providing basic example configurations

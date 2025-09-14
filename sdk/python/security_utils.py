@@ -87,7 +87,7 @@ class SecurityAlert:
 class PasswordValidator:
     """Password security validation (Security expertise)"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.min_length = 8
         self.max_length = 128
         self.require_uppercase = True
@@ -193,14 +193,14 @@ class PasswordValidator:
 class EncryptionManager:
     """Encryption and decryption utilities (Security expertise)"""
     
-    def __init__(self, master_key: Optional[str] = None):
+    def __init__(self, master_key -> None: Optional[str] = None) -> None:
         self.master_key = master_key
         self._fernet = None
         
         if master_key:
             self._setup_encryption()
     
-    def _setup_encryption(self):
+    def _setup_encryption(self) -> None:
         """Setup Fernet encryption with derived key"""
         if isinstance(self.master_key, str):
             # Derive key from master key
@@ -298,7 +298,7 @@ class EncryptionManager:
 class InputSanitizer:
     """Input sanitization and validation (Security expertise)"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         # SQL injection patterns
         self.sql_patterns = [
             r"(union\s+select)",
@@ -421,7 +421,7 @@ class InputSanitizer:
 class ThreatDetector:
     """Intelligent threat detection (Lead Dev IA expertise)"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.request_history = {}  # IP -> list of timestamps
         self.failed_auth_attempts = {}  # IP -> count
         self.suspicious_patterns = {}  # IP -> pattern count
@@ -508,7 +508,7 @@ class ThreatDetector:
         
         return None
     
-    def record_auth_success(self, client_ip: str):
+    def record_auth_success(self, client_ip -> None: str) -> None:
         """Record successful authentication"""
         # Reset failed attempts on successful auth
         self.failed_auth_attempts[client_ip] = 0
@@ -591,7 +591,7 @@ class ThreatDetector:
         
         return None
     
-    def _update_reputation(self, client_ip: str, delta: float):
+    def _update_reputation(self, client_ip -> None: str, delta -> None: float) -> None:
         """Update IP reputation score"""
         current_reputation = self.ip_reputation.get(client_ip, 1.0)
         new_reputation = max(0.0, min(1.0, current_reputation + delta))
@@ -610,7 +610,7 @@ class ThreatDetector:
 class SecurityAuditor:
     """Security audit logging (DevOps expertise)"""
     
-    def __init__(self, log_file: Optional[str] = None):
+    def __init__(self, log_file -> None: Optional[str] = None) -> None:
         self.logger = logging.getLogger('security_audit')
         self.metrics = SecurityMetrics()
         
@@ -623,7 +623,7 @@ class SecurityAuditor:
             self.logger.addHandler(handler)
             self.logger.setLevel(logging.INFO)
     
-    def log_security_event(self, alert: SecurityAlert):
+    def log_security_event(self, alert -> None: SecurityAlert) -> None:
         """Log security event for audit trail"""
         try:
             self.metrics.total_security_events += 1
@@ -670,7 +670,7 @@ class SecurityAuditor:
 class SecurityUtils:
     """Main security utilities class with multi-expert implementation"""
     
-    def __init__(self, master_key: Optional[str] = None, audit_log_file: Optional[str] = None):
+    def __init__(self, master_key -> None: Optional[str] = None, audit_log_file -> None: Optional[str] = None) -> None:
         self.password_validator = PasswordValidator()
         self.encryption_manager = EncryptionManager(master_key)
         self.input_sanitizer = InputSanitizer()
@@ -760,7 +760,7 @@ class SecurityUtils:
 
 
 # Example usage
-def example_security_usage():
+def example_security_usage() -> None:
     """Example security utilities usage"""
     # Initialize security utils
     security = SecurityUtils(

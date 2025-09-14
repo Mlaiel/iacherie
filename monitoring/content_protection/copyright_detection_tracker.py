@@ -116,7 +116,7 @@ class CopyrightDetectionTracker:
     - Performance analytics and compliance reporting
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.copyright_database: Dict[str, CopyrightDatabase] = {}
         self.copyright_claims: deque = deque(maxlen=100000)
@@ -172,7 +172,7 @@ class CopyrightDetectionTracker:
             }
         }
     
-    def _initialize_detection_algorithms(self):
+    def _initialize_detection_algorithms(self) -> None:
         """Initialize copyright detection algorithms."""
         self.detection_algorithms = {
             'spectral_fingerprint': {

@@ -175,7 +175,7 @@ class ObservabilityManager:
     - Custom dashboard and report generation
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         # Metrics storage and processing
         self.metrics: deque = deque(maxlen=50000)
         self.metric_metadata: Dict[str, Dict] = {}
@@ -216,7 +216,7 @@ class ObservabilityManager:
         
         logger.info("ObservabilityManager initialized")
 
-    def _initialize_observability_manager(self):
+    def _initialize_observability_manager(self) -> None:
         """Initialize observability manager"""
         
         # Start background tasks
@@ -237,7 +237,7 @@ class ObservabilityManager:
         
         logger.info("Observability manager initialization complete")
 
-    def _setup_default_alert_rules(self):
+    def _setup_default_alert_rules(self) -> None:
         """Setup default alerting rules"""
         
         self.alert_rules = [
@@ -293,7 +293,7 @@ class ObservabilityManager:
             }
         ]
 
-    def _setup_default_slis_slos(self):
+    def _setup_default_slis_slos(self) -> None:
         """Setup default SLIs and SLOs"""
         
         # Default SLIs
@@ -351,7 +351,7 @@ class ObservabilityManager:
             )
         }
 
-    def _setup_default_dashboards(self):
+    def _setup_default_dashboards(self) -> None:
         """Setup default monitoring dashboards"""
         
         infrastructure_dashboard = Dashboard(
@@ -421,7 +421,7 @@ class ObservabilityManager:
         self.dashboards[infrastructure_dashboard.dashboard_id] = infrastructure_dashboard
         self.dashboards[application_dashboard.dashboard_id] = application_dashboard
 
-    def _setup_escalation_policies(self):
+    def _setup_escalation_policies(self) -> None:
         """Setup alert escalation policies"""
         
         self.escalation_policies = {
@@ -465,7 +465,7 @@ class ObservabilityManager:
             }
         }
 
-    def _setup_log_parsers(self):
+    def _setup_log_parsers(self) -> None:
         """Setup log parsing configurations"""
         
         def nginx_log_parser(log_line: str) -> Dict[str, Any]:
@@ -511,12 +511,12 @@ class ObservabilityManager:
 
     async def collect_metric(
         self,
-        name: str,
-        value: float,
-        labels: Optional[Dict[str, str]] = None,
-        metric_type: MetricType = MetricType.GAUGE,
-        timestamp: Optional[datetime] = None
-    ):
+        name -> None: str,
+        value -> None: float,
+        labels -> None: Optional[Dict[str, str]] = None,
+        metric_type -> None: MetricType = MetricType.GAUGE,
+        timestamp -> None: Optional[datetime] = None
+    ) -> None:
         """
         Collect a metric data point
         
@@ -664,10 +664,10 @@ class ObservabilityManager:
 
     async def finish_trace(
         self,
-        trace_span_id: str,
-        status: TraceStatus = TraceStatus.OK,
-        logs: Optional[List[Dict[str, Any]]] = None
-    ):
+        trace_span_id -> None: str,
+        status -> None: TraceStatus = TraceStatus.OK,
+        logs -> None: Optional[List[Dict[str, Any]]] = None
+    ) -> None:
         """
         Finish a trace span
         
@@ -1018,7 +1018,7 @@ class ObservabilityManager:
             return None
 
     # Background processing tasks
-    async def _metrics_aggregation_loop(self):
+    async def _metrics_aggregation_loop(self) -> None:
         """Background metrics aggregation loop"""
         while True:
             try:
@@ -1028,7 +1028,7 @@ class ObservabilityManager:
             except Exception as e:
                 logger.error(f"Metrics aggregation loop error: {str(e)}")
 
-    async def _aggregate_metrics(self):
+    async def _aggregate_metrics(self) -> None:
         """Aggregate metrics for efficient querying"""
         
         # Group metrics by name and 5-minute windows
@@ -1059,7 +1059,7 @@ class ObservabilityManager:
                 
                 self.aggregated_metrics[metric_name].append(aggregated_point)
 
-    async def _alert_evaluation_loop(self):
+    async def _alert_evaluation_loop(self) -> None:
         """Background alert evaluation loop"""
         while True:
             try:
@@ -1069,7 +1069,7 @@ class ObservabilityManager:
             except Exception as e:
                 logger.error(f"Alert evaluation loop error: {str(e)}")
 
-    async def _evaluate_alert_rules(self):
+    async def _evaluate_alert_rules(self) -> None:
         """Evaluate alert rules against current metrics"""
         
         for rule in self.alert_rules:
@@ -1141,7 +1141,7 @@ class ObservabilityManager:
             except Exception as e:
                 logger.error(f"Alert rule evaluation failed: {rule['name']} - {str(e)}")
 
-    async def _send_alert_notification(self, alert: Alert):
+    async def _send_alert_notification(self, alert -> None: Alert) -> None:
         """Send alert notification based on escalation policy"""
         
         try:
@@ -1157,7 +1157,7 @@ class ObservabilityManager:
         except Exception as e:
             logger.error(f"Alert notification failed: {str(e)}")
 
-    async def _send_notification(self, channel_name: str, alert: Alert):
+    async def _send_notification(self, channel_name -> None: str, alert -> None: Alert) -> None:
         """Send notification to specific channel"""
         
         try:
@@ -1179,7 +1179,7 @@ class ObservabilityManager:
         except Exception as e:
             logger.error(f"Notification sending failed: {channel_name} - {str(e)}")
 
-    async def _log_processing_loop(self):
+    async def _log_processing_loop(self) -> None:
         """Background log processing loop"""
         while True:
             try:
@@ -1189,7 +1189,7 @@ class ObservabilityManager:
             except Exception as e:
                 logger.error(f"Log processing loop error: {str(e)}")
 
-    async def _process_logs(self):
+    async def _process_logs(self) -> None:
         """Process and analyze logs"""
         
         # Analyze error patterns
@@ -1210,7 +1210,7 @@ class ObservabilityManager:
             top_errors = sorted(error_patterns.items(), key=lambda x: x[1], reverse=True)[:5]
             logger.info(f"Top error patterns: {top_errors}")
 
-    async def _process_error_log(self, log_entry: LogEntry):
+    async def _process_error_log(self, log_entry -> None: LogEntry) -> None:
         """Process error logs for immediate action"""
         
         try:
@@ -1249,7 +1249,7 @@ class ObservabilityManager:
         except Exception as e:
             logger.error(f"Error log processing failed: {str(e)}")
 
-    async def _trace_processing_loop(self):
+    async def _trace_processing_loop(self) -> None:
         """Background trace processing loop"""
         while True:
             try:
@@ -1259,7 +1259,7 @@ class ObservabilityManager:
             except Exception as e:
                 logger.error(f"Trace processing loop error: {str(e)}")
 
-    async def _analyze_traces(self):
+    async def _analyze_traces(self) -> None:
         """Analyze traces for performance insights"""
         
         if not self.traces:
@@ -1294,7 +1294,7 @@ class ObservabilityManager:
                         labels={"service": service}
                     )
 
-    async def _slo_evaluation_loop(self):
+    async def _slo_evaluation_loop(self) -> None:
         """Background SLO evaluation loop"""
         while True:
             try:
@@ -1304,7 +1304,7 @@ class ObservabilityManager:
             except Exception as e:
                 logger.error(f"SLO evaluation loop error: {str(e)}")
 
-    async def _evaluate_slos(self):
+    async def _evaluate_slos(self) -> None:
         """Evaluate SLO compliance and error budgets"""
         
         for slo in self.slos.values():
@@ -1352,7 +1352,7 @@ class ObservabilityManager:
             except Exception as e:
                 logger.error(f"SLO evaluation failed: {slo.name} - {str(e)}")
 
-    async def _anomaly_detection_loop(self):
+    async def _anomaly_detection_loop(self) -> None:
         """Background anomaly detection loop"""
         while True:
             try:
@@ -1362,7 +1362,7 @@ class ObservabilityManager:
             except Exception as e:
                 logger.error(f"Anomaly detection loop error: {str(e)}")
 
-    async def _detect_anomalies(self):
+    async def _detect_anomalies(self) -> None:
         """Detect anomalies in metrics using statistical methods"""
         
         # Simple anomaly detection using standard deviation
@@ -1409,7 +1409,7 @@ class ObservabilityManager:
             except Exception as e:
                 logger.error(f"Anomaly detection failed for {metric_name}: {str(e)}")
 
-    async def _health_monitoring_loop(self):
+    async def _health_monitoring_loop(self) -> None:
         """Background health monitoring loop"""
         while True:
             try:
@@ -1419,7 +1419,7 @@ class ObservabilityManager:
             except Exception as e:
                 logger.error(f"Health monitoring loop error: {str(e)}")
 
-    async def _update_system_health(self):
+    async def _update_system_health(self) -> None:
         """Update overall system health status"""
         
         try:

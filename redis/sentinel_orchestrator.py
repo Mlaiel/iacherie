@@ -1,3 +1,8 @@
+"""
+Sentinel Orchestrator module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Redis Sentinel Orchestrator - Ainflue Platform
@@ -106,7 +111,7 @@ class RedisSentinelOrchestrator:
     - Performance optimization
     """
 
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         """Initialize Sentinel orchestrator"""
         self.config = config or self._get_default_config()
         
@@ -1010,7 +1015,7 @@ class RedisSentinelOrchestrator:
 
 
 # Example usage
-async def main():
+async def main() -> None:
     """Example usage of Sentinel Orchestrator"""
     try:
         # Configuration example

@@ -185,7 +185,7 @@ class AIModelPerformanceTracker:
     and comprehensive AI operations analytics.
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(self.__class__.__name__)
         self.prediction_cache = {}
         self.model_metrics_cache = {}
@@ -1295,7 +1295,7 @@ Update real-time prediction cache"""
             logger.error(f"Error initializing drift detection: {e}")
             await self._record_error("drift_detection_init", str(e))
     
-    async def _monitor_model_performance(self, model_id: str):
+    async def _monitor_model_performance(self, model_id -> None: str) -> None:
         """Monitor individual model performance continuously"""
         try:
             while True:
@@ -1333,7 +1333,7 @@ Update real-time prediction cache"""
         except Exception as e:
             logger.error(f"Error monitoring model {model_id}: {e}")
     
-    async def _periodic_accuracy_evaluation(self):
+    async def _periodic_accuracy_evaluation(self) -> None:
         """Perform periodic accuracy evaluation across all models"""
         try:
             while True:
@@ -1347,7 +1347,7 @@ Update real-time prediction cache"""
         except Exception as e:
             logger.error(f"Error in accuracy evaluation: {e}")
     
-    async def _periodic_drift_detection(self):
+    async def _periodic_drift_detection(self) -> None:
         """Perform periodic drift detection for all models"""
         try:
             while True:
@@ -1361,7 +1361,7 @@ Update real-time prediction cache"""
         except Exception as e:
             logger.error(f"Error in drift detection: {e}")
     
-    async def _optimize_model_performance(self):
+    async def _optimize_model_performance(self) -> None:
         """Continuously optimize model performance"""
         try:
             while True:
@@ -1375,7 +1375,7 @@ Update real-time prediction cache"""
         except Exception as e:
             logger.error(f"Error in performance optimization: {e}")
     
-    async def _process_performance_alerts(self):
+    async def _process_performance_alerts(self) -> None:
         """Process performance alerts from the queue"""
         try:
             while True:
@@ -1387,7 +1387,7 @@ Update real-time prediction cache"""
         except Exception as e:
             logger.error(f"Error processing alerts: {e}")
     
-    async def _generate_performance_alert(self, model_id: str, alert_type: str, data: Dict):
+    async def _generate_performance_alert(self, model_id -> None: str, alert_type -> None: str, data -> None: Dict) -> None:
         """Generate a performance alert"""
         try:
             alert = {
@@ -1403,7 +1403,7 @@ Update real-time prediction cache"""
         except Exception as e:
             logger.error(f"Error generating alert: {e}")
     
-    async def _handle_performance_alert(self, alert: Dict):
+    async def _handle_performance_alert(self, alert -> None: Dict) -> None:
         """Handle a performance alert"""
         try:
             logger.warning(f"🚨 AI Model Alert: {alert['alert_type']} for model {alert['model_id']}")
@@ -1436,7 +1436,7 @@ Update real-time prediction cache"""
         
         return severity_mapping.get(alert_type, "low")
     
-    async def _evaluate_model_accuracy(self, model_id: str):
+    async def _evaluate_model_accuracy(self, model_id -> None: str) -> None:
         """Evaluate model accuracy using recent predictions"""
         try:
             # Simplified accuracy evaluation
@@ -1455,7 +1455,7 @@ Update real-time prediction cache"""
         except Exception as e:
             logger.error(f"Error evaluating model accuracy: {e}")
     
-    async def _detect_model_drift(self, model_id: str):
+    async def _detect_model_drift(self, model_id -> None: str) -> None:
         """Detect drift for a specific model"""
         try:
             # Simplified drift detection
@@ -1488,7 +1488,7 @@ Update real-time prediction cache"""
         except Exception as e:
             logger.error(f"Error detecting drift for model {model_id}: {e}")
     
-    async def _analyze_and_optimize_model(self, model_id: str):
+    async def _analyze_and_optimize_model(self, model_id -> None: str) -> None:
         """Analyze and optimize model performance"""
         try:
             # Simple optimization analysis
@@ -1529,7 +1529,7 @@ Update real-time prediction cache"""
         """Analyze confidence score drift"""
         return 0.0  # Simplified implementation
     
-    async def _record_error(self, operation: str, error_message: str, context: str = None):
+    async def _record_error(self, operation -> None: str, error_message -> None: str, context -> None: str = None) -> None:
         """Record error for monitoring"""
         try:
             error_record = {

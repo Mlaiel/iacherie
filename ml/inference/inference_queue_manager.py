@@ -1,3 +1,8 @@
+"""
+Inference Queue Manager module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 🚀 **Inference Queue Manager - Enterprise ML Request Orchestration**
@@ -84,7 +89,7 @@ class InferenceRequest:
     updated_at: datetime = None
     expires_at: datetime = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.created_at is None:
             self.created_at = datetime.utcnow()
         if self.updated_at is None:
@@ -121,7 +126,7 @@ class InferenceQueueManager:
     - Comprehensive monitoring and alerting
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.logger = logging.getLogger(__name__)
         
@@ -194,7 +199,7 @@ class InferenceQueueManager:
             'start_time': time.time()
         }
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize the queue manager"""
         # Connect to Redis
         self.redis_client = redis.from_url(self.redis_url)
@@ -207,7 +212,7 @@ class InferenceQueueManager:
         
         self.logger.info(f"InferenceQueueManager initialized with {self.worker_pool_size} workers")
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Graceful shutdown"""
         self.shutdown_event.set()
         
@@ -400,7 +405,7 @@ class InferenceQueueManager:
             active_workers=len([task for task in self.worker_tasks if not task.done()])
         )
     
-    async def _validate_request(self, request: InferenceRequest):
+    async def _validate_request(self, request -> None: InferenceRequest) -> None:
         """Validate inference request"""
         # Basic validation
         if not request.model_id:
@@ -426,7 +431,7 @@ class InferenceQueueManager:
         if await self._is_circuit_breaker_open(request.model_id):
             raise Exception(f"Circuit breaker is open for model {request.model_id}")
     
-    async def _persist_request(self, request: InferenceRequest):
+    async def _persist_request(self, request -> None: InferenceRequest) -> None:
         """Persist request to Redis"""
         request_data = {
             "request_id": request.request_id,
@@ -447,7 +452,7 @@ class InferenceQueueManager:
             json.dumps(request_data)
         )
     
-    async def _persist_result(self, request_id: str, result: Dict[str, Any]):
+    async def _persist_result(self, request_id -> None: str, result -> None: Dict[str, Any]) -> None:
         """Persist result to Redis"""
         await self.redis_client.setex(
             f"result:{request_id}",
@@ -455,13 +460,13 @@ class InferenceQueueManager:
             json.dumps(result)
         )
     
-    async def _start_workers(self):
+    async def _start_workers(self) -> None:
         """Start worker tasks"""
         for i in range(self.worker_pool_size):
             task = asyncio.create_task(self._worker_loop(f"worker-{i}"))
             self.worker_tasks.append(task)
     
-    async def _worker_loop(self, worker_id: str):
+    async def _worker_loop(self, worker_id -> None: str) -> None:
         """
         Main worker loop for processing requests
         
@@ -507,7 +512,7 @@ class InferenceQueueManager:
         
         return None
     
-    async def _process_request(self, request: InferenceRequest, worker_id: str):
+    async def _process_request(self, request -> None: InferenceRequest, worker_id -> None: str) -> None:
         """
         Process individual inference request
         
@@ -604,7 +609,7 @@ class InferenceQueueManager:
                     await self._record_circuit_breaker_failure(request.model_id)
                     raise Exception(error_msg)
     
-    async def _handle_request_timeout(self, request: InferenceRequest, worker_id: str):
+    async def _handle_request_timeout(self, request -> None: InferenceRequest, worker_id -> None: str) -> None:
         """Handle request timeout"""
         self.logger.warning(f"Request {request.request_id} timed out in worker {worker_id}")
         
@@ -622,7 +627,7 @@ class InferenceQueueManager:
         self.stats['requests_failed'] += 1
         await self._record_circuit_breaker_failure(request.model_id)
     
-    async def _handle_request_error(self, request: InferenceRequest, worker_id: str, error: Exception):
+    async def _handle_request_error(self, request -> None: InferenceRequest, worker_id -> None: str, error -> None: Exception) -> None:
         """Handle request processing error with retry logic"""
         self.logger.error(f"Request {request.request_id} failed in worker {worker_id}: {error}")
         
@@ -654,7 +659,7 @@ class InferenceQueueManager:
         self.stats['requests_failed'] += 1
         await self._record_circuit_breaker_failure(request.model_id)
     
-    async def _send_callback(self, callback_url: str, result_data: Dict[str, Any]):
+    async def _send_callback(self, callback_url -> None: str, result_data -> None: Dict[str, Any]) -> None:
         """Send result callback"""
         try:
             timeout = aiohttp.ClientTimeout(total=10)
@@ -665,7 +670,7 @@ class InferenceQueueManager:
         except Exception as e:
             self.logger.error(f"Callback to {callback_url} failed: {e}")
     
-    async def _cleanup_expired_requests(self):
+    async def _cleanup_expired_requests(self) -> None:
         """Clean up expired requests"""
         current_time = datetime.utcnow()
         expired_requests = []
@@ -677,9 +682,9 @@ class InferenceQueueManager:
         for request_id in expired_requests:
             await self.cancel_request(request_id)
     
-    async def _start_cleanup_task(self):
+    async def _start_cleanup_task(self) -> None:
         """Start periodic cleanup task"""
-        async def cleanup_loop():
+        async def cleanup_loop() -> None:
             while not self.shutdown_event.is_set():
                 await self._cleanup_expired_requests()
                 await asyncio.sleep(60)  # Run every minute
@@ -687,9 +692,9 @@ class InferenceQueueManager:
         task = asyncio.create_task(cleanup_loop())
         self.worker_tasks.append(task)
     
-    async def _start_metrics_task(self):
+    async def _start_metrics_task(self) -> None:
         """Start metrics collection task"""
-        async def metrics_loop():
+        async def metrics_loop() -> None:
             while not self.shutdown_event.is_set():
                 # Update active workers metric
                 active_count = len([task for task in self.worker_tasks if not task.done()])
@@ -756,14 +761,14 @@ class InferenceQueueManager:
         # Half-open state - allow limited requests
         return False
     
-    async def _record_circuit_breaker_success(self, model_id: str):
+    async def _record_circuit_breaker_success(self, model_id -> None: str) -> None:
         """Record successful request for circuit breaker"""
         breaker = self.circuit_breakers.get(model_id, {'failures': 0, 'last_failure': None, 'state': 'closed'})
         breaker['failures'] = 0
         breaker['state'] = 'closed'
         self.circuit_breakers[model_id] = breaker
     
-    async def _record_circuit_breaker_failure(self, model_id: str):
+    async def _record_circuit_breaker_failure(self, model_id -> None: str) -> None:
         """Record failed request for circuit breaker"""
         breaker = self.circuit_breakers.get(model_id, {'failures': 0, 'last_failure': None, 'state': 'closed'})
         breaker['failures'] += 1
@@ -777,7 +782,7 @@ class InferenceQueueManager:
         self.circuit_breakers[model_id] = breaker
 
 # Usage example
-async def main():
+async def main() -> None:
     """Example usage of InferenceQueueManager"""
     config = {
         'redis_url': 'redis://localhost:6379/0',

@@ -1,3 +1,8 @@
+"""
+Index module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """IA Influencer Agent - Cache Deployment Index Module
 ===================================================
@@ -89,7 +94,7 @@ class CacheDeploymentIndex:
     - Sécurité et compliance enterprise
     """
     
-    def __init__(self, config_path: Optional[str] = None):
+    def __init__(self, config_path -> None: Optional[str] = None) -> None:
         """
         Initialise l'index de déploiement du cache.
         

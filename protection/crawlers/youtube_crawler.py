@@ -73,7 +73,7 @@ class YouTubeAPIClient:
     """
 YouTube Data API v3 client with advanced features."""
     
-    def __init__(self, api_key: str, quota_limit: int = 10000):
+    def __init__(self, api_key -> None: str, quota_limit -> None: int = 10000) -> None:
         """
 Initialize YouTube API client."""
         self.api_key = api_key
@@ -259,7 +259,7 @@ Initialize YouTube API client."""
 class YouTubeSeleniumCrawler:
     """Selenium-based YouTube crawler for advanced scraping."""
     
-    def __init__(self, headless: bool = True, proxy: Optional[str] = None):
+    def __init__(self, headless -> None: bool = True, proxy -> None: Optional[str] = None) -> None:
         """
 Initialize Selenium crawler."""
         self.headless = headless
@@ -419,7 +419,7 @@ Parse like count from aria-label."""
             return int(match.group(1).replace(',', ''))
         return 0
     
-    def close(self):
+    def close(self) -> None:
         """Close Selenium driver."""
         if self.driver:
             self.driver.quit()
@@ -438,7 +438,7 @@ class YouTubeCrawler(BasePlatformCrawler):
     - Multi-format content detection
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """
 Initialize YouTube crawler."""
         super().__init__("youtube", config)
@@ -669,7 +669,7 @@ Get current API quota status."""
             "next_reset": (self.api_client.last_reset + timedelta(days=1)).isoformat()
         }
     
-    def cleanup(self):
+    def cleanup(self) -> None:
         """Cleanup crawler resources."""
         if self.selenium_crawler:
             self.selenium_crawler.close()

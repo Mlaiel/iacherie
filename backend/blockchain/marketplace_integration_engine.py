@@ -168,7 +168,7 @@ class MarketplaceAnalytics(Base):
 class MarketplaceConnector(ABC):
     """Abstract base class for marketplace connectors"""
     
-    def __init__(self, config: MarketplaceConfig, session: aiohttp.ClientSession):
+    def __init__(self, config -> None: MarketplaceConfig, session -> None: aiohttp.ClientSession) -> None:
         self.config = config
         self.session = session
         self.rate_limiter = RateLimiter(config.rate_limit)
@@ -565,13 +565,13 @@ class FoundationConnector(MarketplaceConnector):
 class RateLimiter:
     """Rate limiter for API requests"""
     
-    def __init__(self, max_requests: int, time_window: int = 60):
+    def __init__(self, max_requests -> None: int, time_window -> None: int = 60) -> None:
         self.max_requests = max_requests
         self.time_window = time_window
         self.requests = []
         self.lock = asyncio.Lock()
     
-    async def acquire(self):
+    async def acquire(self) -> None:
         """Acquire rate limit token"""
         async with self.lock:
             now = datetime.utcnow()
@@ -595,7 +595,7 @@ class RateLimiter:
 class MarketplaceIntegrator:
     """Main marketplace integration engine"""
     
-    def __init__(self, db_session: AsyncSession, redis_client: aioredis.Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: aioredis.Redis) -> None:
         self.db = db_session
         self.redis = redis_client
         self.session = aiohttp.ClientSession()
@@ -1100,7 +1100,7 @@ class MarketplaceIntegrator:
 class DynamicPricingOptimizer:
     """AI-powered dynamic pricing optimization"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.pricing_models = {
             PricingStrategy.FIXED_PRICE: self._calculate_fixed_price,
             PricingStrategy.DUTCH_AUCTION: self._calculate_dutch_auction_price,
@@ -1241,7 +1241,7 @@ class DynamicPricingOptimizer:
 class MarketplacePerformanceTracker:
     """Tracks and analyzes marketplace performance metrics"""
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client -> None: aioredis.Redis) -> None:
         self.redis = redis_client
     
     async def update_metrics(self, marketplace: MarketplaceType, 

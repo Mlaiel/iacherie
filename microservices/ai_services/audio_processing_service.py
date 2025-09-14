@@ -140,7 +140,7 @@ class AudioProcessingResponse(BaseModel):
 class ChromaFeatureExtractor:
     """Chromagram feature extraction for music analysis"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.sample_rate = 22050
         self.n_chroma = 12
         self.hop_length = 512
@@ -164,7 +164,7 @@ class ChromaFeatureExtractor:
 class SpectralFeatureExtractor:
     """Spectral feature extraction for audio analysis"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.sample_rate = 22050
         self.n_fft = 2048
         self.hop_length = 512
@@ -190,7 +190,7 @@ class SpectralFeatureExtractor:
 class TempoDetector:
     """Tempo detection and rhythm analysis"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.sample_rate = 22050
         self.hop_length = 512
     
@@ -214,7 +214,7 @@ class TempoDetector:
 class AudioFingerprintingEngine:
     """Advanced audio fingerprinting engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.chroma_extractor = ChromaFeatureExtractor()
         self.spectral_extractor = SpectralFeatureExtractor()
         self.tempo_detector = TempoDetector()
@@ -321,7 +321,7 @@ class AudioFingerprintingEngine:
 class MusicAnalysisEngine:
     """Advanced music analysis engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.chroma_extractor = ChromaFeatureExtractor()
         self.spectral_extractor = SpectralFeatureExtractor()
         self.tempo_detector = TempoDetector()
@@ -569,7 +569,7 @@ class SpeechAnalysisEngine:
 class AudioProcessingOrchestrator:
     """Central orchestrator for audio processing operations"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.fingerprinting_engine = AudioFingerprintingEngine()
         self.music_analyzer = MusicAnalysisEngine()
         self.speech_analyzer = SpeechAnalysisEngine()

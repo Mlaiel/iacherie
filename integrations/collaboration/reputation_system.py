@@ -1,4 +1,6 @@
 """
+import asyncio
+
 Reputation System - Collaboration Module
 =======================================
 Système de réputation basé sur performance collaborative.
@@ -45,7 +47,7 @@ class CreatorReputation:
 class ReputationSystem:
     """Système de réputation pour créateurs."""
     
-    def __init__(self, config: Optional[Dict] = None):
+    def __init__(self, config -> None: Optional[Dict] = None) -> None:
         """Initialise le système de réputation."""
         self.config = config or {}
         self.creator_reputations: Dict[str, CreatorReputation] = {}

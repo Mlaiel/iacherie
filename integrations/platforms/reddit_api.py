@@ -25,7 +25,7 @@ logger = logging.getLogger(__name__)
 class RedditPost:
     """Reddit post management and analytics"""
     
-    def __init__(self, post_id: str, subreddit: str, title: str, author: str):
+    def __init__(self, post_id -> None: str, subreddit -> None: str, title -> None: str, author -> None: str) -> None:
         self.post_id = post_id
         self.subreddit = subreddit
         self.title = title
@@ -42,7 +42,7 @@ class RedditPost:
 class RedditComment:
     """Reddit comment management"""
     
-    def __init__(self, comment_id: str, post_id: str, author: str, body: str):
+    def __init__(self, comment_id -> None: str, post_id -> None: str, author -> None: str, body -> None: str) -> None:
         self.comment_id = comment_id
         self.post_id = post_id
         self.author = author
@@ -55,7 +55,7 @@ class RedditComment:
 class RedditSubreddit:
     """Reddit subreddit management"""
     
-    def __init__(self, subreddit_name: str, display_name: str):
+    def __init__(self, subreddit_name -> None: str, display_name -> None: str) -> None:
         self.name = subreddit_name
         self.display_name = display_name
         self.subscribers = 0
@@ -68,7 +68,7 @@ class RedditSubreddit:
 class RedditUser:
     """Reddit user profile management"""
     
-    def __init__(self, username: str):
+    def __init__(self, username -> None: str) -> None:
         self.username = username
         self.link_karma = 0
         self.comment_karma = 0
@@ -96,7 +96,7 @@ class RedditAPI:
     - Influencer identification
     """
     
-    def __init__(self, client_id: str, client_secret: str, user_agent: str, redirect_uri: str):
+    def __init__(self, client_id -> None: str, client_secret -> None: str, user_agent -> None: str, redirect_uri -> None: str) -> None:
         self.client_id = client_id
         self.client_secret = client_secret
         self.user_agent = user_agent
@@ -114,12 +114,12 @@ class RedditAPI:
             'minute_start': datetime.utcnow().minute
         }
         
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         """Async context manager entry"""
         self.session = aiohttp.ClientSession()
         return self
         
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         """Async context manager exit"""
         if self.session:
             await self.session.close()
@@ -247,7 +247,7 @@ class RedditAPI:
             logger.error(f"Error refreshing token: {e}")
             raise RedditAPIError(f"Token refresh error: {e}")
 
-    async def _ensure_valid_token(self):
+    async def _ensure_valid_token(self) -> None:
         """Ensure we have a valid access token"""
         if not self.access_token:
             raise RedditAPIError("No access token available")
@@ -255,7 +255,7 @@ class RedditAPI:
         if self.token_expires_at and datetime.utcnow() >= self.token_expires_at - timedelta(minutes=5):
             await self.refresh_access_token()
 
-    def _check_rate_limit(self):
+    def _check_rate_limit(self) -> None:
         """Check and enforce rate limiting"""
         current_minute = datetime.utcnow().minute
         
@@ -996,7 +996,7 @@ class RedditAPI:
     # Additional helper methods would continue here for comprehensive functionality...
 
 # Example usage and testing
-async def main():
+async def main() -> None:
     """Example usage of Reddit API integration"""
     
     # Initialize the API client

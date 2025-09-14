@@ -57,7 +57,7 @@ class ContentFingerprintResult:
     metadata: Dict[str, Any] = None
     quality_metrics: Dict[str, float] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.metadata is None:
             self.metadata = {}
         if self.quality_metrics is None:
@@ -68,7 +68,7 @@ class ContentFingerprintingWorkflow:
     """
 Workflow integration for content fingerprinting operations."""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.config = config or {}
         self.logger = logging.getLogger("workflow.fingerprinting")
         
@@ -114,9 +114,9 @@ Workflow integration for content fingerprinting operations."""
     
     async def _add_fingerprinting_steps(
         self,
-        pipeline: IntelligentContentPipeline,
-        quality: FingerprintingQuality
-    ):
+        pipeline -> None: IntelligentContentPipeline,
+        quality -> None: FingerprintingQuality
+    ) -> None:
         """Add fingerprinting workflow steps to pipeline."""
         
         # Step 1: Content validation and preparation
@@ -732,7 +732,7 @@ Get quality thresholds for fingerprinting level."""
         
         return storage_id
     
-    async def _create_search_index(self, fp_result: ContentFingerprintResult, storage_id: str):
+    async def _create_search_index(self, fp_result -> None: ContentFingerprintResult, storage_id -> None: str) -> None:
         try:
             logger.info(f"Executing _create_search_index")
             
@@ -762,9 +762,11 @@ Get quality thresholds for fingerprinting level."""
         except Exception as e:
             logger.error(f"_create_search_index failed: {e}")
             raise
-    async def _send_notification(self, event_type: str, data: Dict[str, Any]):
+    async def _send_notification(self, event_type -> None: str, data -> None: Dict[str, Any]) -> None:
         """
 Send notification about workflow events."""
         # Simplified notification implementation
         # await self.notification_service.send(event_type, data)
         pass
+
+# File has syntax issues - needs manual review

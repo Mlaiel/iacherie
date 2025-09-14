@@ -116,7 +116,7 @@ class RevenueOptimizationEngine:
     identify revenue opportunities, and run A/B tests for monetization strategies.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the revenue optimization engine."""
         self.pricing_rules: List[PricingRule] = []
         self.revenue_opportunities: List[RevenueOpportunity] = []
@@ -130,7 +130,7 @@ class RevenueOptimizationEngine:
         self._initialize_default_rules()
         self._setup_revenue_models()
     
-    def _initialize_default_rules(self):
+    def _initialize_default_rules(self) -> None:
         """Initialize default pricing optimization rules."""
         default_rules = [
             PricingRule(
@@ -174,7 +174,7 @@ class RevenueOptimizationEngine:
         self.pricing_rules.extend(default_rules)
         logger.info(f"Initialized {len(default_rules)} default pricing rules")
     
-    def _setup_revenue_models(self):
+    def _setup_revenue_models(self) -> None:
         """Setup predictive revenue models."""
         self.revenue_models = {
             "subscription_ltv": {

@@ -1,4 +1,6 @@
 """
+import asyncio
+
 Load Balancer
 Container load balancing for Ainflue infrastructure
 
@@ -15,7 +17,7 @@ logger = logging.getLogger(__name__)
 class LoadBalancer:
     """Container load balancing management"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize load balancer"""
         logger.info("Load balancer initialized")
         

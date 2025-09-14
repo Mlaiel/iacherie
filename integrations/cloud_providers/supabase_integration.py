@@ -184,7 +184,7 @@ class SupabaseConfig(BaseModel):
     api_rate_limit: int = Field(default=1000, description="API rate limit per minute")
     
     @validator('project_url')
-    def validate_project_url(cls, v):
+    def validate_project_url(cls, v) -> None:
         if not v or not v.startswith('https://'):
             raise ValueError("Valid Supabase project URL required")
         return v
@@ -192,7 +192,7 @@ class SupabaseConfig(BaseModel):
 class SupabaseSecurityManager:
     """Security manager for Supabase - Security Expert role"""
     
-    def __init__(self, config: SupabaseConfig):
+    def __init__(self, config -> None: SupabaseConfig) -> None:
         self.config = config
     
     def generate_rls_policies(self) -> Dict[str, str]:
@@ -478,7 +478,7 @@ class SupabaseSecurityManager:
 class SupabaseMLAnalyzer:
     """ML-powered Supabase analytics - ML Engineer + Lead Dev IA roles"""
     
-    def __init__(self, config: SupabaseConfig, client):
+    def __init__(self, config -> None: SupabaseConfig, client) -> None:
         self.config = config
         self.client = client
         
@@ -706,7 +706,7 @@ class SupabaseMLAnalyzer:
 class SupabaseRealtimeManager:
     """Real-time subscription management - Backend Senior + Microservices roles"""
     
-    def __init__(self, config: SupabaseConfig, client):
+    def __init__(self, config -> None: SupabaseConfig, client) -> None:
         self.config = config
         self.client = client
         self.active_subscriptions = {}
@@ -728,7 +728,7 @@ class SupabaseRealtimeManager:
             # Setup real-time listener
             channel = self.client.channel(f"table_{table_name}_{subscription_id}")
             
-            def handle_change(payload):
+            def handle_change(payload) -> None:
                 if callback:
                     callback(payload)
                 self._handle_realtime_event(subscription, payload)
@@ -758,7 +758,7 @@ class SupabaseRealtimeManager:
             ERROR_COUNTER.labels(error_type="realtime_subscription").inc()
             raise
     
-    def _handle_realtime_event(self, subscription: RealtimeSubscription, payload: Dict):
+    def _handle_realtime_event(self, subscription -> None: RealtimeSubscription, payload -> None: Dict) -> None:
         """Handle real-time events"""
         try:
             event_type = payload.get('eventType')
@@ -779,7 +779,7 @@ class SupabaseRealtimeManager:
         except Exception as e:
             logger.error(f"Real-time event handling failed: {e}")
     
-    def _handle_content_event(self, event_type: str, record: Dict):
+    def _handle_content_event(self, event_type -> None: str, record -> None: Dict) -> None:
         """Handle content table events"""
         if event_type == 'INSERT':
             # New content created
@@ -793,7 +793,7 @@ class SupabaseRealtimeManager:
             if content_id:
                 asyncio.create_task(self._update_content_analytics(content_id, record))
     
-    def _handle_subscription_event(self, event_type: str, record: Dict):
+    def _handle_subscription_event(self, event_type -> None: str, record -> None: Dict) -> None:
         """Handle subscription events"""
         if event_type == 'INSERT':
             # New subscription
@@ -801,7 +801,7 @@ class SupabaseRealtimeManager:
             if creator_id:
                 asyncio.create_task(self._update_creator_subscriber_count(creator_id))
     
-    def _handle_revenue_event(self, event_type: str, record: Dict):
+    def _handle_revenue_event(self, event_type -> None: str, record -> None: Dict) -> None:
         """Handle revenue events"""
         if event_type == 'INSERT':
             # New revenue
@@ -810,7 +810,7 @@ class SupabaseRealtimeManager:
             if creator_id:
                 asyncio.create_task(self._update_creator_revenue(creator_id, amount))
     
-    async def _notify_followers_new_content(self, creator_id: str, content: Dict):
+    async def _notify_followers_new_content(self, creator_id -> None: str, content -> None: Dict) -> None:
         """Notify followers about new content"""
         try:
             # Get creator's subscribers
@@ -836,7 +836,7 @@ class SupabaseRealtimeManager:
         except Exception as e:
             logger.error(f"Follower notification failed: {e}")
     
-    async def _update_content_analytics(self, content_id: str, content: Dict):
+    async def _update_content_analytics(self, content_id -> None: str, content -> None: Dict) -> None:
         """Update content analytics"""
         try:
             # Log analytics event
@@ -852,7 +852,7 @@ class SupabaseRealtimeManager:
         except Exception as e:
             logger.error(f"Content analytics update failed: {e}")
     
-    async def _update_creator_subscriber_count(self, creator_id: str):
+    async def _update_creator_subscriber_count(self, creator_id -> None: str) -> None:
         """Update creator's subscriber count"""
         try:
             # Count active subscriptions
@@ -870,7 +870,7 @@ class SupabaseRealtimeManager:
         except Exception as e:
             logger.error(f"Subscriber count update failed: {e}")
     
-    async def _update_creator_revenue(self, creator_id: str, amount: float):
+    async def _update_creator_revenue(self, creator_id -> None: str, amount -> None: float) -> None:
         """Update creator's total revenue"""
         try:
             # Get current revenue
@@ -912,7 +912,7 @@ class SupabaseRealtimeManager:
             logger.error(f"Unsubscribe failed: {e}")
             return False
     
-    def cleanup_all_subscriptions(self):
+    def cleanup_all_subscriptions(self) -> None:
         """Cleanup all active subscriptions"""
         for subscription_id in list(self.active_subscriptions.keys()):
             asyncio.create_task(self.unsubscribe(subscription_id))
@@ -920,7 +920,7 @@ class SupabaseRealtimeManager:
 class SupabaseIntegration:
     """Main Supabase integration orchestrator - Lead Dev IA + Backend Senior roles"""
     
-    def __init__(self, config: SupabaseConfig):
+    def __init__(self, config -> None: SupabaseConfig) -> None:
         self.config = config
         self.client = None
         self.admin_client = None
@@ -973,7 +973,7 @@ class SupabaseIntegration:
             ERROR_COUNTER.labels(error_type="initialization").inc()
             return False
     
-    async def _setup_database_schema(self):
+    async def _setup_database_schema(self) -> None:
         """Setup database schema"""
         try:
             schema_sql = self.security_manager.create_database_schema()
@@ -985,7 +985,7 @@ class SupabaseIntegration:
         except Exception as e:
             logger.error(f"Database schema setup failed: {e}")
     
-    async def _setup_rls_policies(self):
+    async def _setup_rls_policies(self) -> None:
         """Setup Row Level Security policies"""
         try:
             policies = self.security_manager.generate_rls_policies()
@@ -1231,7 +1231,7 @@ class SupabaseIntegration:
         except Exception:
             return "unhealthy"
     
-    async def cleanup(self):
+    async def cleanup(self) -> None:
         """Cleanup Supabase resources"""
         try:
             # Cleanup real-time subscriptions
@@ -1254,7 +1254,7 @@ class SupabaseIntegration:
 class SupabaseService:
     """Main Supabase service facade - DevOps + Integration role"""
     
-    def __init__(self, config: Optional[SupabaseConfig] = None):
+    def __init__(self, config -> None: Optional[SupabaseConfig] = None) -> None:
         self.config = config or SupabaseConfig(
             project_url="https://your-project.supabase.co",
             anon_key="your-anon-key",
@@ -1283,7 +1283,7 @@ class SupabaseService:
         
         return success
     
-    async def _validate_configuration(self):
+    async def _validate_configuration(self) -> None:
         """Validate service configuration"""
         if "your-project" in self.config.project_url:
             logger.warning("Supabase project URL not configured")
@@ -1318,7 +1318,7 @@ class SupabaseService:
             "error_count": ERROR_COUNTER._value.sum()
         }
     
-    async def cleanup(self):
+    async def cleanup(self) -> None:
         """Cleanup service resources"""
         await self.integration.cleanup()
 
@@ -1337,7 +1337,7 @@ __all__ = [
 
 if __name__ == "__main__":
     # Example usage and testing
-    async def main():
+    async def main() -> None:
         # Initialize service
         service = SupabaseService()
         success = await service.initialize()

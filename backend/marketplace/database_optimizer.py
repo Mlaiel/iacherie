@@ -133,7 +133,7 @@ class ConnectionPoolStats:
 class DatabaseOptimizer:
     """Database performance optimization and monitoring system"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.config = config or {}
         
         # Query monitoring
@@ -230,7 +230,7 @@ class DatabaseOptimizer:
         else:
             return QueryType.SELECT  # Default
     
-    async def _analyze_and_recommend(self, metrics: QueryMetrics):
+    async def _analyze_and_recommend(self, metrics -> None: QueryMetrics) -> None:
         """Analyze query performance and generate recommendations"""
         try:
             recommendations = []
@@ -446,7 +446,7 @@ class DatabaseOptimizer:
             logger.error(f"Table statistics analysis error: {e}")
             return TableStatistics(table_name=table_name)
     
-    async def _recommend_table_optimization(self, stats: TableStatistics):
+    async def _recommend_table_optimization(self, stats -> None: TableStatistics) -> None:
         """Recommend table-level optimizations"""
         try:
             # Check if table should be partitioned

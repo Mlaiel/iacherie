@@ -54,7 +54,7 @@ class LoadBalancerOrchestrator:
     monitoring, and lifecycle management of the entire load balancing infrastructure.
     """
     
-    def __init__(self, config_path: Optional[str] = None):
+    def __init__(self, config_path -> None: Optional[str] = None) -> None:
         self.config_path = config_path or "/etc/ia-influencer/load-balancer.json"
         self.config = {}
         self.is_running = False
@@ -802,7 +802,7 @@ class LoadBalancerOrchestrator:
             logger.error(f"Error during shutdown: {e}")
 
 
-async def main():
+async def main() -> None:
     """Main entry point for the load balancer"""
     logging.basicConfig(
         level=logging.INFO,

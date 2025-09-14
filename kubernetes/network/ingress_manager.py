@@ -109,10 +109,10 @@ class IngressManager:
     
     def __init__(
         self,
-        config_path: str = "/etc/ingress/config.yaml",
-        kubernetes_config: Optional[str] = None,
-        consul_config: Optional[Dict] = None
-    ):
+        config_path -> None: str = "/etc/ingress/config.yaml",
+        kubernetes_config -> None: Optional[str] = None,
+        consul_config -> None: Optional[Dict] = None
+    ) -> None:
         self.config_path = config_path
         self.rules: Dict[str, IngressRule] = {}
         self.services: Dict[str, List[BackendService]] = {}

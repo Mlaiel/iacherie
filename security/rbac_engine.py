@@ -1,3 +1,8 @@
+"""
+Rbac Engine module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 🛡️ Role-Based Access Control (RBAC) Engine - Ainflue Platform
@@ -135,7 +140,7 @@ class RBACEngine:
     - High-performance caching
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.redis_client = None
         self.encryption_key = Fernet.generate_key()
@@ -154,7 +159,7 @@ class RBACEngine:
         
         logger.info("🛡️ RBAC Engine initialized")
 
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize the RBAC engine"""
         try:
             # Initialize Redis connection
@@ -451,8 +456,8 @@ class RBACEngine:
             return []
 
     async def _collect_role_hierarchy(
-        self, role_id: str, effective_roles: List[Role], processed_roles: Set[str]
-    ):
+        self, role_id -> None: str, effective_roles -> None: List[Role], processed_roles -> None: Set[str]
+    ) -> None:
         """Recursively collect role hierarchy"""
         if role_id in processed_roles:
             return
@@ -566,7 +571,7 @@ class RBACEngine:
 
     # Storage and caching methods
     
-    async def _initialize_system_roles(self):
+    async def _initialize_system_roles(self) -> None:
         """Initialize default system roles"""
         system_roles = [
             Role(
@@ -623,7 +628,7 @@ class RBACEngine:
         for role in system_roles:
             await self.create_role(role)
 
-    async def _initialize_system_permissions(self):
+    async def _initialize_system_permissions(self) -> None:
         """Initialize default system permissions"""
         system_permissions = [
             # Content permissions
@@ -708,7 +713,7 @@ class RBACEngine:
         # Assign permissions to roles
         await self._assign_default_permissions()
 
-    async def _assign_default_permissions(self):
+    async def _assign_default_permissions(self) -> None:
         """Assign default permissions to system roles"""
         # Creator roles get basic content permissions
         creator_permissions = [
@@ -731,7 +736,7 @@ class RBACEngine:
         for perm_id in admin_permissions:
             await self.add_permission_to_role("platform_admin", perm_id)
 
-    async def _build_role_hierarchy_cache(self):
+    async def _build_role_hierarchy_cache(self) -> None:
         """Build role hierarchy cache for performance"""
         self.role_hierarchy_cache = {}
         
@@ -741,8 +746,8 @@ class RBACEngine:
             self.role_hierarchy_cache[role_id] = descendants
 
     async def _collect_role_descendants(
-        self, role_id: str, descendants: Set[str], visited: Set[str]
-    ):
+        self, role_id -> None: str, descendants -> None: Set[str], visited -> None: Set[str]
+    ) -> None:
         """Recursively collect role descendants"""
         if role_id in visited:
             return
@@ -799,19 +804,19 @@ class RBACEngine:
         
         return []
 
-    async def _store_role(self, role: Role):
+    async def _store_role(self, role -> None: Role) -> None:
         """Store role to persistent storage"""
         if self.redis_client:
             data = json.dumps(asdict(role), default=str)
             await self.redis_client.set(f"role:{role.id}", data)
 
-    async def _store_permission(self, permission: Permission):
+    async def _store_permission(self, permission -> None: Permission) -> None:
         """Store permission to persistent storage"""
         if self.redis_client:
             data = json.dumps(asdict(permission), default=str)
             await self.redis_client.set(f"permission:{permission.id}", data)
 
-    async def _store_user_role(self, user_role: UserRole):
+    async def _store_user_role(self, user_role -> None: UserRole) -> None:
         """Store user role assignment"""
         if self.redis_client:
             # Get existing user roles
@@ -824,7 +829,7 @@ class RBACEngine:
             data = json.dumps([asdict(ur) for ur in existing_roles], default=str)
             await self.redis_client.set(f"user_roles:{user_role.user_id}", data)
 
-    async def _remove_user_role(self, user_id: str, role_id: str):
+    async def _remove_user_role(self, user_id -> None: str, role_id -> None: str) -> None:
         """Remove user role assignment"""
         if self.redis_client:
             existing_roles = await self._get_user_roles(user_id)
@@ -903,7 +908,7 @@ class RBACEngine:
         # For now, return 0
         return 0
 
-    async def _log_access_decision(self, decision: AccessDecision):
+    async def _log_access_decision(self, decision -> None: AccessDecision) -> None:
         """Log access decision for audit trail"""
         if self.redis_client:
             key = f"access_log:{decision.request.user_id}:{decision.timestamp.isoformat()}"
@@ -926,7 +931,7 @@ class RBACEngine:
             'users_cached': len(self.user_roles_cache)
         }
 
-    async def close(self):
+    async def close(self) -> None:
         """Cleanup resources"""
         if self.redis_client:
             self.redis_client.close()
@@ -940,7 +945,7 @@ __all__ = [
 ]
 
 if __name__ == "__main__":
-    async def test_rbac_engine():
+    async def test_rbac_engine() -> None:
         """Test the RBAC engine"""
         config = {}
         

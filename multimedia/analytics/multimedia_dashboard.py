@@ -128,7 +128,7 @@ class ChartData:
 class RealtimeMonitor:
     """Real-time monitoring coordinator"""
     
-    def __init__(self, config: Optional[DashboardConfig] = None):
+    def __init__(self, config -> None: Optional[DashboardConfig] = None) -> None:
         self.config = config or DashboardConfig()
         self.logger = logger.getChild(self.__class__.__name__)
         
@@ -149,7 +149,7 @@ class RealtimeMonitor:
         # Subscribers for real-time updates
         self.subscribers: List[Callable[[DashboardMetrics], None]] = []
         
-    async def start_monitoring(self):
+    async def start_monitoring(self) -> None:
         """Start real-time monitoring"""
         if self.is_monitoring:
             return
@@ -158,7 +158,7 @@ class RealtimeMonitor:
         self.monitoring_task = asyncio.create_task(self._monitoring_loop())
         self.logger.info("Real-time monitoring started")
     
-    async def stop_monitoring(self):
+    async def stop_monitoring(self) -> None:
         """Stop real-time monitoring"""
         self.is_monitoring = False
         if self.monitoring_task:
@@ -169,7 +169,7 @@ class RealtimeMonitor:
                 pass
         self.logger.info("Real-time monitoring stopped")
     
-    async def _monitoring_loop(self):
+    async def _monitoring_loop(self) -> None:
         """Main monitoring loop"""
         while self.is_monitoring:
             try:
@@ -253,7 +253,7 @@ class RealtimeMonitor:
             self.logger.error(f"Metrics collection failed: {e}")
             return DashboardMetrics(timestamp=datetime.now())
     
-    async def _check_alerts(self, metrics: DashboardMetrics):
+    async def _check_alerts(self, metrics -> None: DashboardMetrics) -> None:
         """Check for alert conditions"""
         try:
             alerts = []
@@ -323,7 +323,7 @@ class RealtimeMonitor:
         except Exception as e:
             self.logger.error(f"Alert checking failed: {e}")
     
-    async def _notify_subscribers(self, metrics: DashboardMetrics):
+    async def _notify_subscribers(self, metrics -> None: DashboardMetrics) -> None:
         """Notify all subscribers of new metrics"""
         try:
             for subscriber in self.subscribers:
@@ -337,11 +337,11 @@ class RealtimeMonitor:
         except Exception as e:
             self.logger.error(f"Subscriber notification process failed: {e}")
     
-    def subscribe(self, callback: Callable[[DashboardMetrics], None]):
+    def subscribe(self, callback -> None: Callable[[DashboardMetrics], None]) -> None:
         """Subscribe to real-time metrics updates"""
         self.subscribers.append(callback)
     
-    def unsubscribe(self, callback: Callable[[DashboardMetrics], None]):
+    def unsubscribe(self, callback -> None: Callable[[DashboardMetrics], None]) -> None:
         """Unsubscribe from real-time metrics updates"""
         if callback in self.subscribers:
             self.subscribers.remove(callback)
@@ -359,7 +359,7 @@ class RealtimeMonitor:
 class AnalyticsDashboard:
     """Analytics dashboard with visualization support"""
     
-    def __init__(self, config: Optional[DashboardConfig] = None):
+    def __init__(self, config -> None: Optional[DashboardConfig] = None) -> None:
         self.config = config or DashboardConfig()
         self.logger = logger.getChild(self.__class__.__name__)
         
@@ -416,12 +416,12 @@ class AnalyticsDashboard:
             }
         }
     
-    async def start(self):
+    async def start(self) -> None:
         """Start the dashboard"""
         await self.monitor.start_monitoring()
         self.logger.info("Analytics dashboard started")
     
-    async def stop(self):
+    async def stop(self) -> None:
         """Stop the dashboard"""
         await self.monitor.stop_monitoring()
         self.logger.info("Analytics dashboard stopped")
@@ -640,7 +640,7 @@ class AnalyticsDashboard:
 class MultimediaDashboard:
     """Main multimedia dashboard coordinator"""
     
-    def __init__(self, config: Optional[DashboardConfig] = None):
+    def __init__(self, config -> None: Optional[DashboardConfig] = None) -> None:
         self.config = config or DashboardConfig()
         self.logger = logger.getChild(self.__class__.__name__)
         
@@ -651,7 +651,7 @@ class MultimediaDashboard:
         # Dashboard state
         self.is_running = False
         
-    async def start(self):
+    async def start(self) -> None:
         """Start the multimedia dashboard"""
         if self.is_running:
             return
@@ -660,7 +660,7 @@ class MultimediaDashboard:
         self.is_running = True
         self.logger.info("Multimedia dashboard started")
     
-    async def stop(self):
+    async def stop(self) -> None:
         """Stop the multimedia dashboard"""
         if not self.is_running:
             return
@@ -673,13 +673,13 @@ class MultimediaDashboard:
         """Get complete dashboard data"""
         return await self.analytics_dashboard.get_dashboard_data()
     
-    def add_analyzer(self, name: str, analyzer: Any):
+    def add_analyzer(self, name -> None: str, analyzer -> None: Any) -> None:
         """Add custom analyzer to dashboard"""
         # This would integrate custom analyzers
         # For now, it's a placeholder
         pass
     
-    def add_tracker(self, name: str, tracker: Any):
+    def add_tracker(self, name -> None: str, tracker -> None: Any) -> None:
         """Add custom tracker to dashboard"""
         # This would integrate custom trackers
         # For now, it's a placeholder

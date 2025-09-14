@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 class AIServicesOrchestrator:
     """Main orchestrator for Docker AI services"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.services_status = {}
         self.active_services = []
         
@@ -100,7 +100,7 @@ class AIServicesOrchestrator:
 if __name__ == "__main__":
     orchestrator = AIServicesOrchestrator()
     
-    async def main():
+    async def main() -> None:
         result = await orchestrator.initialize_services()
         print(f"AI services initialization: {result}")
         

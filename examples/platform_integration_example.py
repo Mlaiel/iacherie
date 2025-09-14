@@ -13,7 +13,7 @@ from datetime import datetime, timedelta
 from integrations.platforms import PlatformCoordinator
 
 
-async def main():
+async def main() -> None:
     """
 Demonstrate platform integration usage"""
     

@@ -1,3 +1,8 @@
+"""
+Communication Protocol Manager module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Communication Protocol Manager - Enterprise Core Component
@@ -155,7 +160,7 @@ class ProtocolAdapter(ABC):
 class HTTPAdapter(ProtocolAdapter):
     """HTTP/HTTPS protocol adapter"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.session = None
         self.metrics = ProtocolMetrics()
         self.config = None
@@ -219,7 +224,7 @@ class HTTPAdapter(ProtocolAdapter):
         """Get HTTP metrics"""
         return self.metrics
     
-    def _update_metrics(self, success: bool, latency: float):
+    def _update_metrics(self, success -> None: bool, latency -> None: float) -> None:
         """Update adapter metrics"""
         self.metrics.total_requests += 1
         self.metrics.last_activity = datetime.utcnow()
@@ -245,7 +250,7 @@ class HTTPAdapter(ProtocolAdapter):
 class WebSocketAdapter(ProtocolAdapter):
     """WebSocket protocol adapter"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.connection = None
         self.metrics = ProtocolMetrics()
         self.config = None
@@ -314,7 +319,7 @@ class WebSocketAdapter(ProtocolAdapter):
         """Get WebSocket metrics"""
         return self.metrics
     
-    def _update_metrics(self, success: bool, latency: float):
+    def _update_metrics(self, success -> None: bool, latency -> None: float) -> None:
         """Update adapter metrics"""
         self.metrics.total_requests += 1
         self.metrics.last_activity = datetime.utcnow()
@@ -339,7 +344,7 @@ class WebSocketAdapter(ProtocolAdapter):
 class GRPCAdapter(ProtocolAdapter):
     """gRPC protocol adapter"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.channel = None
         self.metrics = ProtocolMetrics()
         self.config = None
@@ -401,7 +406,7 @@ class GRPCAdapter(ProtocolAdapter):
         """Get gRPC metrics"""
         return self.metrics
     
-    def _update_metrics(self, success: bool, latency: float):
+    def _update_metrics(self, success -> None: bool, latency -> None: float) -> None:
         """Update adapter metrics"""
         self.metrics.total_requests += 1
         self.metrics.last_activity = datetime.utcnow()
@@ -431,7 +436,7 @@ class CommunicationProtocolManager:
     optimization, and cross-protocol coordination capabilities.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.protocols: Dict[str, ProtocolConfig] = {}
         self.adapters: Dict[str, ProtocolAdapter] = {}
         self.active_connections: Dict[str, List[str]] = {}
@@ -864,7 +869,7 @@ class CommunicationProtocolManager:
         
         return True
     
-    def _update_circuit_breaker(self, protocol_id: str, success: bool):
+    def _update_circuit_breaker(self, protocol_id -> None: str, success -> None: bool) -> None:
         """Update circuit breaker state"""
         if protocol_id not in self.circuit_breakers:
             self.circuit_breakers[protocol_id] = {
@@ -906,7 +911,7 @@ class CommunicationProtocolManager:
         
         return None
     
-    async def _trigger_event(self, event_type: str, event_data: str):
+    async def _trigger_event(self, event_type -> None: str, event_data -> None: str) -> None:
         """Trigger event handlers"""
         handlers = self.event_handlers.get(event_type, [])
         for handler in handlers:
@@ -995,7 +1000,7 @@ async def send_simple_message(
 
 if __name__ == "__main__":
     # Example usage
-    async def main():
+    async def main() -> None:
         # Register protocols
         await register_http_protocol("http1", "api.example.com", 80)
         await register_websocket_protocol("ws1", "ws.example.com", 80)

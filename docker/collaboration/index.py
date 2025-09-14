@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 class CollaborationServicesOrchestrator:
     """Main orchestrator for Docker collaboration services"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.services_status = {}
         self.active_services = []
         
@@ -74,7 +74,7 @@ class CollaborationServicesOrchestrator:
 if __name__ == "__main__":
     orchestrator = CollaborationServicesOrchestrator()
     
-    async def main():
+    async def main() -> None:
         result = await orchestrator.initialize_services()
         print(f"Collaboration services initialization: {result}")
         

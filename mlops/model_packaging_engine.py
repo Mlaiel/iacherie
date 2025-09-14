@@ -123,7 +123,7 @@ class PackageResult:
 class ModelOptimizer:
     """Optimizes models for deployment"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.optimization_cache = {}
     
     async def optimize_model(self, model_path: str, optimization_level: OptimizationLevel,
@@ -330,7 +330,7 @@ class ModelOptimizer:
 class ContainerBuilder:
     """Builds Docker containers for models"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.build_cache = {}
     
     async def build_container(self, model_path: str, metadata: ModelMetadata,
@@ -548,10 +548,12 @@ model = None
 model_loaded = False
 
 class PredictionRequest(BaseModel):
+    """PredictionRequest class implementation"""
     data: List[Dict[str, Any]]
     options: Optional[Dict[str, Any]] = None
 
 class PredictionResponse(BaseModel):
+    """PredictionResponse class implementation"""
     model_config = {"protected_namespaces": ()}
     
     predictions: List[Any]
@@ -560,7 +562,7 @@ class PredictionResponse(BaseModel):
     inference_time_ms: float
     timestamp: str
 
-async def load_model():
+async def load_model() -> None:
     """Load the ML model"""
     global model, model_loaded
     
@@ -659,12 +661,12 @@ def predict(data: List[Dict[str, Any]]) -> List[Any]:
         raise
 
 @app.on_event("startup")
-async def startup_event():
+async def startup_event() -> None:
     """Initialize the model on startup"""
     await load_model()
 
 @app.get("/health")
-async def health_check():
+async def health_check() -> None:
     """Health check endpoint"""
     return {
         "status": "healthy" if model_loaded else "unhealthy",
@@ -675,7 +677,7 @@ async def health_check():
     }
 
 @app.get("/info")
-async def model_info():
+async def model_info() -> None:
     """Get model information"""
     return {
         "model_id": MODEL_ID,
@@ -689,7 +691,7 @@ async def model_info():
     }
 
 @app.post("/predict", response_model=PredictionResponse)
-async def predict_endpoint(request: PredictionRequest):
+async def predict_endpoint(request -> None: PredictionRequest) -> None:
     """Make predictions"""
     if not model_loaded:
         raise HTTPException(status_code=503, detail="Model not loaded")
@@ -785,7 +787,7 @@ if __name__ == "__main__":
 class ModelPackagingEngine:
     """Main model packaging engine with enterprise features"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.optimizer = ModelOptimizer()
         self.container_builder = ContainerBuilder()
         self.packaging_jobs = {}
@@ -886,8 +888,8 @@ class ModelPackagingEngine:
             logger.error(f"Failed to start model packaging: {e}")
             raise
     
-    async def _validate_inputs(self, model_path: str, metadata: ModelMetadata,
-                             config: PackagingConfig):
+    async def _validate_inputs(self, model_path -> None: str, metadata -> None: ModelMetadata,
+                             config -> None: PackagingConfig) -> None:
         """Validate packaging inputs"""
         # Check if model path exists
         if not os.path.exists(model_path):

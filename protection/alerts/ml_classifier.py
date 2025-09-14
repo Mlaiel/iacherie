@@ -1,4 +1,4 @@
-"""🤖 ML Alert Classifier
+"""# [EMOJI_REMOVED] ML Alert Classifier
 =====================
 
 Machine Learning-powered alert classification and enhancement system.
@@ -83,7 +83,7 @@ class FeatureExtractor:
     """
 Extracts features from alerts for ML processing."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.text_vectorizer = TfidfVectorizer(
             max_features=1000,
             stop_words='english',
@@ -273,7 +273,7 @@ class SeverityClassifier:
     """
 Classifies alert severity using ML."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.model = RandomForestClassifier(
             n_estimators=100,
             random_state=42,
@@ -464,7 +464,7 @@ Classifies alert severity using ML."""
 class RiskAssessor:
     """Assesses risk level of alerts."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         try:
             logger.info(f"Executing __init__")
             
@@ -609,7 +609,7 @@ class AlertMLClassifier:
     Main ML classifier for alert processing.
     """
     
-    def __init__(self, cache_manager: CacheManager):
+    def __init__(self, cache_manager -> None: CacheManager) -> None:
         self.cache_manager = cache_manager
         self.severity_classifier = SeverityClassifier()
         self.risk_assessor = RiskAssessor()
@@ -854,3 +854,5 @@ Get user context for classification."""
             explanation_parts.append(f"with {len(evidence)} types of evidence")
         
         return " ".join(explanation_parts) + "."
+
+# File has syntax issues - needs manual review

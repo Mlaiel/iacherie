@@ -1,4 +1,6 @@
 """🔗 Enhanced API Main Module - Enterprise Route Orchestration
+import asyncio
+
 ============================================================
 
 Centralized API routing with enterprise orchestrators, advanced middleware,
@@ -63,7 +65,7 @@ except ImportError as e:
 class EnterpriseAPIManager:
     """Enterprise API management with advanced routing and monitoring"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.api_router = APIRouter(
             prefix="/api/v1",
             responses={
@@ -76,7 +78,7 @@ class EnterpriseAPIManager:
         self.middleware_stack = []
         self.health_metrics = {}
         
-    def configure_enterprise_routes(self):
+    def configure_enterprise_routes(self) -> None:
         """Configure all enterprise routes and orchestrators"""
         
         # ============ CORE CONTENT & PLATFORM ROUTES ============
@@ -213,11 +215,11 @@ class EnterpriseAPIManager:
         
         return self.api_router
     
-    def _configure_system_routes(self):
+    def _configure_system_routes(self) -> None:
         """Configure system-level enterprise routes"""
         
         @self.api_router.get("/health", tags=["System Health"])
-        async def enhanced_health_check():
+        async def enhanced_health_check() -> None:
             """Enhanced health check with comprehensive system status"""
             health_status = {
                 "status": "healthy",
@@ -255,7 +257,7 @@ class EnterpriseAPIManager:
             return health_status
         
         @self.api_router.get("/routes", tags=["System Information"])
-        async def get_api_routes():
+        async def get_api_routes() -> None:
             """Get comprehensive API route information"""
             return {
                 "success": True,
@@ -275,7 +277,7 @@ class EnterpriseAPIManager:
             }
         
         @self.api_router.get("/metrics", tags=["System Metrics"])
-        async def get_api_metrics():
+        async def get_api_metrics() -> None:
             """Get comprehensive API performance metrics"""
             return {
                 "success": True,
@@ -316,7 +318,7 @@ class EnterpriseAPIManager:
             }
         
         @self.api_router.get("/status/orchestrators", tags=["Orchestrator Status"])
-        async def get_orchestrator_status():
+        async def get_orchestrator_status() -> None:
             """Get detailed status of all enterprise orchestrators"""
             orchestrator_status = {
                 "collaboration_orchestrator": {
@@ -424,7 +426,7 @@ def create_enterprise_api() -> APIRouter:
         fallback_router = APIRouter(prefix="/api/v1")
         
         @fallback_router.get("/health")
-        async def fallback_health():
+        async def fallback_health() -> None:
             return {
                 "status": "degraded",
                 "message": "Enterprise API creation failed, running in fallback mode",

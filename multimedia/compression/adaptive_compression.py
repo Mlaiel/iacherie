@@ -38,7 +38,7 @@ class AdaptiveCompressionResult:
 class AdaptiveCompressionEngine:
     """AI-driven adaptive compression with content analysis."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the adaptive compression engine."""
         self.content_analyzers = self._initialize_analyzers()
         

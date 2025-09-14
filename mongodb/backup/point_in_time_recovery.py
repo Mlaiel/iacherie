@@ -26,7 +26,7 @@ class RecoveryPoint:
 class PointInTimeRecovery:
     """Point-in-time recovery manager using oplog replay."""
     
-    def __init__(self, client: MongoClient):
+    def __init__(self, client -> None: MongoClient) -> None:
         """Initialize point-in-time recovery.
         
         Args:

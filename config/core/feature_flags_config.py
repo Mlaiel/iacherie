@@ -139,7 +139,7 @@ class FeatureEvaluation:
 class EnterpriseFeatureFlagsConfiguration:
     """Enterprise-grade feature flags configuration management"""
     
-    def __init__(self, level: str = "enterprise"):
+    def __init__(self, level -> None: str = "enterprise") -> None:
         """Initialize feature flags configuration"""
         self.level = level
         self.feature_flags: Dict[str, FeatureFlag] = {}
@@ -258,7 +258,7 @@ class EnterpriseFeatureFlagsConfiguration:
             }
         }
     
-    def _initialize_core_feature_flags(self):
+    def _initialize_core_feature_flags(self) -> None:
         """Initialize core Ainflue feature flags"""
         
         # Core Platform Features
@@ -471,7 +471,7 @@ class EnterpriseFeatureFlagsConfiguration:
         
         logger.info(f"✅ Initialized {len(all_features)} feature flags")
     
-    def _setup_analytics_tracking(self):
+    def _setup_analytics_tracking(self) -> None:
         """Setup analytics tracking for feature flags"""
         self.analytics_config = {
             "metrics_to_track": [
@@ -631,7 +631,7 @@ class EnterpriseFeatureFlagsConfiguration:
             return feature_flag.environment_values[environment]
         return feature_flag.default_value
     
-    def _track_evaluation(self, evaluation: FeatureEvaluation, feature_flag: FeatureFlag):
+    def _track_evaluation(self, evaluation -> None: FeatureEvaluation, feature_flag -> None: FeatureFlag) -> None:
         """Track feature flag evaluation for analytics"""
         feature_flag.evaluation_count += 1
         

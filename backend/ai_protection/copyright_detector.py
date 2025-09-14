@@ -86,8 +86,8 @@ class CopyrightDetector:
     """AI-powered copyright violation detection system"""
     
     def __init__(self, 
-                 similarity_threshold: float = 0.8,
-                 enable_deep_learning: bool = True):
+                 similarity_threshold -> None: float = 0.8,
+                 enable_deep_learning -> None: bool = True) -> None:
         """
         Initialize copyright detector
         

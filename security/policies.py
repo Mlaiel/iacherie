@@ -85,13 +85,13 @@ class SecurityPolicy:
 class IncidentResponseProcedures:
     """Comprehensive incident response procedures framework"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.response_playbooks = {}
         self.escalation_matrix = {}
         self.communication_templates = {}
         self._initialize_procedures()
     
-    def _initialize_procedures(self):
+    def _initialize_procedures(self) -> None:
         """
 Initialize standard incident response procedures"""
         
@@ -410,12 +410,12 @@ Initialize standard incident response procedures"""
 class SecurityPolicyManager:
     """Comprehensive security policy management system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.policies: Dict[str, SecurityPolicy] = {}
         self.incident_procedures = IncidentResponseProcedures()
         self._initialize_standard_policies()
     
-    def _initialize_standard_policies(self):
+    def _initialize_standard_policies(self) -> None:
         try:
             logger.info(f"Executing _initialize_standard_policies")
             

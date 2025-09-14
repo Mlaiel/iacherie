@@ -1,5 +1,12 @@
+"""
+Model Sdk Builder module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
+import logging
+
 🚀 **Model SDK Builder - Enterprise ML SDK Generation**
 
 **Author:** Fahed Mlaiel (mlaiel@live.de) - Lead Dev IA  
@@ -115,7 +122,7 @@ class ModelSDKBuilder:
     - CI/CD integration for SDK releases
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.template_env = Environment(
             loader=FileSystemLoader(config.get('template_dir', 'templates/sdk'))
@@ -735,20 +742,20 @@ import base64
 class ModelClient:
     """Main client for {sdk_spec.model_name} API"""
     
-    def __init__(self, api_key: str, base_url: str = "{sdk_spec.base_url}", timeout: int = 30):
+    def __init__(self, api_key -> None: str, base_url -> None: str = "{sdk_spec.base_url}", timeout -> None: int = 30) -> None:
         self.api_key = api_key
         self.base_url = base_url.rstrip("/")
         self.timeout = timeout
         self.session = None
     
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         self.session = aiohttp.ClientSession(
             timeout=aiohttp.ClientTimeout(total=self.timeout),
             headers={{"Authorization": f"Bearer {{self.api_key}}"}}
         )
         return self
     
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         if self.session:
             await self.session.close()
     
@@ -786,7 +793,7 @@ class ModelClient:
 
 
 # Usage example
-async def main():
+async def main() -> None:
     async with ModelClient(api_key="your_api_key") as client:
         # Get model info
         info = await client.get_model_info()
@@ -2007,7 +2014,7 @@ from {sdk_spec.sdk_configs[0].package_name.replace("-", "_")} import ModelClient
 
 
 @pytest.mark.asyncio
-async def test_client_initialization():
+async def test_client_initialization() -> None:
     """Test client initialization"""
     client = ModelClient(api_key="test_key")
     assert client.api_key == "test_key"
@@ -2015,7 +2022,7 @@ async def test_client_initialization():
 
 
 @pytest.mark.asyncio
-async def test_predict():
+async def test_predict() -> None:
     """Test prediction functionality"""
     with patch('aiohttp.ClientSession') as mock_session:
         mock_response = AsyncMock()
@@ -2028,7 +2035,7 @@ async def test_predict():
 
 
 @pytest.mark.asyncio
-async def test_health_check():
+async def test_health_check() -> None:
     """Test health check functionality"""
     with patch('aiohttp.ClientSession') as mock_session:
         mock_response = AsyncMock()
@@ -2170,7 +2177,7 @@ For support, please contact: mlaiel@live.de
         return docs
 
 # Usage example
-async def main():
+async def main() -> None:
     """Example usage of ModelSDKBuilder"""
     config = {
         'output_dir': 'generated_sdks',

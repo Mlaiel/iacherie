@@ -1,3 +1,8 @@
+"""
+Ingress Controller Manager module
+Enterprise implementation for Ainflue platform
+"""
+
 # Ainflue Infrastructure Module
 # =============================
 # 
@@ -55,7 +60,7 @@ class IngressControllerManager:
     - Integration with service mesh
     """
     
-    def __init__(self, cluster_config: Optional[str] = None):
+    def __init__(self, cluster_config -> None: Optional[str] = None) -> None:
         self.cluster_config = cluster_config
         self.k8s_client = None
         self.extensions_client = None

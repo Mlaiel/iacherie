@@ -143,7 +143,7 @@ class OnboardingResponse(BaseModel):
 class CreatorOnboardingOrchestrator:
     """Main orchestrator for creator onboarding workflows"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.workflows: Dict[str, OnboardingWorkflow] = {}
         self.creator_profiles: Dict[str, CreatorProfile] = {}
         self.verification_documents: Dict[str, List[VerificationDocument]] = {}

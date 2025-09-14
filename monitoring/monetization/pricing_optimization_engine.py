@@ -136,7 +136,7 @@ class PricingOptimizationEngine:
     - Real-time market adaptation
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.pricing_data: Dict[str, List[PricingData]] = defaultdict(list)
         self.price_recommendations: Dict[str, List[PriceRecommendation]] = defaultdict(list)
@@ -945,7 +945,7 @@ class PricingOptimizationEngine:
 
 # Example usage and testing
 if __name__ == "__main__":
-    async def test_pricing_engine():
+    async def test_pricing_engine() -> None:
         """Test pricing optimization engine."""
         engine = PricingOptimizationEngine()
         

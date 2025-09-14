@@ -69,7 +69,7 @@ class PoolConfiguration:
 class ConnectionPool:
     """Advanced MongoDB connection pool with health monitoring."""
     
-    def __init__(self, config: PoolConfiguration, pool_id: str = None):
+    def __init__(self, config -> None: PoolConfiguration, pool_id -> None: str = None) -> None:
         """Initialize connection pool.
         
         Args:
@@ -371,7 +371,7 @@ class ConnectionPool:
 class ConnectionPoolManager:
     """Manager for multiple connection pools with load balancing."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize connection pool manager."""
         self._pools: Dict[str, ConnectionPool] = {}
         self._pools_lock = threading.RLock()

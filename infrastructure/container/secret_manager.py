@@ -1,4 +1,6 @@
 """
+import asyncio
+
 Secret Manager
 Kubernetes secrets management for Ainflue infrastructure
 
@@ -15,7 +17,7 @@ logger = logging.getLogger(__name__)
 class SecretManager:
     """Kubernetes secrets management"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize secret manager"""
         logger.info("Secret manager initialized")
         

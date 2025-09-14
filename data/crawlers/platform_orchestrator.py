@@ -150,7 +150,7 @@ class PlatformResponse:
 class PlatformOrchestrator:
     """Main platform orchestration system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.platforms: Dict[str, PlatformConfiguration] = {}
         self.platform_metrics: Dict[str, PlatformMetrics] = {}
         self.platform_status: Dict[str, PlatformStatus] = {}
@@ -749,7 +749,7 @@ class PlatformOrchestrator:
 class ApiQuotaManager:
     """Advanced API quota management and optimization"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.quota_configs: Dict[str, Dict] = {}
         self.quota_usage: Dict[str, Dict] = {}
         self.quota_forecasts: Dict[str, Dict] = {}
@@ -903,7 +903,7 @@ class ApiQuotaManager:
 class CrawlerLoadBalancer:
     """Intelligent load balancing for crawler distribution"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.strategies: Dict[LoadBalancingStrategy, Callable] = {}
         self.platform_weights: Dict[str, float] = {}
         self.current_strategy = LoadBalancingStrategy.PERFORMANCE_BASED
@@ -1000,7 +1000,7 @@ class CrawlerLoadBalancer:
 class PlatformHealthMonitor:
     """Advanced platform health monitoring system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.health_checks: Dict[str, Dict] = {}
         self.health_history: Dict[str, List] = {}
         
@@ -1099,7 +1099,7 @@ class PlatformHealthMonitor:
 class ErrorRecoveryEngine:
     """Advanced error recovery and circuit breaker system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.circuit_breakers: Dict[str, Dict] = {}
         self.error_patterns: Dict[str, List] = {}
         self.recovery_strategies: Dict[str, Callable] = {}
@@ -1224,7 +1224,7 @@ class ErrorRecoveryEngine:
 class ResultAggregationEngine:
     """Advanced result aggregation and merging system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.aggregation_strategies: Dict[str, Callable] = {}
         
     async def initialize(self) -> None:
@@ -1540,7 +1540,7 @@ __all__ = [
 
 if __name__ == "__main__":
     # Example usage
-    async def main():
+    async def main() -> None:
         # Create and initialize orchestrator
         orchestrator = await create_platform_orchestrator()
         

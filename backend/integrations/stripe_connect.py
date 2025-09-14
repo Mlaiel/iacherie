@@ -118,12 +118,12 @@ class StripeConnectIntegration:
     
     def __init__(
         self,
-        secret_key: str,
-        publishable_key: str,
-        webhook_secret: Optional[str] = None,
-        base_url: str = "https://api.stripe.com/v1",
-        timeout: int = 30
-    ):
+        secret_key -> None: str,
+        publishable_key -> None: str,
+        webhook_secret -> None: Optional[str] = None,
+        base_url -> None: str = "https -> None://api.stripe.com/v1",
+        timeout -> None: int = 30
+    ) -> None:
         self.secret_key = secret_key
         self.publishable_key = publishable_key
         self.webhook_secret = webhook_secret
@@ -139,16 +139,16 @@ class StripeConnectIntegration:
         
         logger.info("Stripe Connect integration initialized")
     
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         """Async context manager entry."""
         await self._ensure_session()
         return self
     
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         """Async context manager exit."""
         await self.close()
     
-    async def _ensure_session(self):
+    async def _ensure_session(self) -> None:
         """Ensure HTTP session is available."""
         if self.session is None or self.session.closed:
             headers = {
@@ -163,7 +163,7 @@ class StripeConnectIntegration:
                 timeout=aiohttp.ClientTimeout(total=self.timeout)
             )
     
-    async def close(self):
+    async def close(self) -> None:
         """Close HTTP session."""
         if self.session and not self.session.closed:
             await self.session.close()
@@ -706,7 +706,7 @@ async def create_marketplace_payment(
 
 if __name__ == "__main__":
     # Example usage
-    async def main():
+    async def main() -> None:
         import os
         secret_key = os.getenv("STRIPE_SECRET_KEY")
         publishable_key = os.getenv("STRIPE_PUBLISHABLE_KEY")

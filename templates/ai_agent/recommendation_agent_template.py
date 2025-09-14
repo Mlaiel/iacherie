@@ -1,4 +1,6 @@
 """{{agent_name}} Recommendation Agent for Ainflue Platform
+import asyncio
+
 {{agent_description}}
 
 Author: {{author_name}} ({{author_email}})
@@ -124,13 +126,13 @@ class RecommendationRequest(BaseModel):
     created_at: datetime = Field(default_factory=datetime.utcnow)
     
     @validator('num_recommendations')
-    def validate_num_recommendations(cls, v):
+    def validate_num_recommendations(cls, v) -> None:
         if v <= 0 or v > 100:
             raise ValueError('Number of recommendations must be between 1 and 100')
         return v
     
     @validator('diversity_factor', 'novelty_factor')
-    def validate_factors(cls, v):
+    def validate_factors(cls, v) -> None:
         if not 0 <= v <= 1:
             raise ValueError('Factors must be between 0 and 1')
         return v
@@ -206,7 +208,7 @@ class {{agent_name}}Agent(BaseAIAgent):
         
         logger.info(f"RecommendationAgent {agent_id} initialized")
     
-    def _load_models(self):
+    def _load_models(self) -> None:
         """Load recommendation models"""
         try:
             # Load pre-trained embeddings if available
@@ -228,7 +230,7 @@ class {{agent_name}}Agent(BaseAIAgent):
             logger.error(f"Failed to load models: {e}")
             raise RecommendationException(f"Model loading failed: {e}")
     
-    def _initialize_recommenders(self):
+    def _initialize_recommenders(self) -> None:
         """Initialize recommendation algorithms"""
         try:
             # Initialize TF-IDF vectorizer for content-based filtering
@@ -1026,10 +1028,10 @@ class {{agent_name}}Agent(BaseAIAgent):
     
     async def _update_user_profile(
         self, 
-        user_id: str, 
-        request: RecommendationRequest, 
-        result: RecommendationResult
-    ):
+        user_id -> None: str, 
+        request -> None: RecommendationRequest, 
+        result -> None: RecommendationResult
+    ) -> None:
         """Update user profile based on recommendation interaction"""
         if user_id in self.user_profiles:
             user_profile = self.user_profiles[user_id]
@@ -1048,7 +1050,7 @@ class {{agent_name}}Agent(BaseAIAgent):
             if len(user_profile.behavior_history) > 1000:
                 user_profile.behavior_history = user_profile.behavior_history[-1000:]
     
-    async def update_content_catalog(self, content_items: List[ContentItem]):
+    async def update_content_catalog(self, content_items -> None: List[ContentItem]) -> None:
         """Update the content catalog"""
         for item in content_items:
             self.content_items[item.content_id] = item
@@ -1057,11 +1059,11 @@ class {{agent_name}}Agent(BaseAIAgent):
     
     async def update_user_interaction(
         self, 
-        user_id: str, 
-        content_id: str, 
-        interaction_type: str, 
-        interaction_value: float = 1.0
-    ):
+        user_id -> None: str, 
+        content_id -> None: str, 
+        interaction_type -> None: str, 
+        interaction_value -> None: float = 1.0
+    ) -> None:
         """Update user interaction with content"""
         user_profile = await self._get_user_profile(user_id)
         
@@ -1117,7 +1119,7 @@ class {{agent_name}}Agent(BaseAIAgent):
 
 
 # Template usage example
-def create_recommendation_agent_example():
+def create_recommendation_agent_example() -> None:
     """Example of how to create and use a recommendation agent"""
     
     # Define model configurations
@@ -1182,3 +1184,5 @@ TEMPLATE_CONFIG = {
         "A/B testing support"
     ]
 }
+
+# File has syntax issues - needs manual review

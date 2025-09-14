@@ -98,7 +98,7 @@ class RESTAPIManager:
     - Rate limiting and authentication
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.endpoints = {}
         self.api_requests = {}
         self.api_responses = {}

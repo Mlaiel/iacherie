@@ -164,10 +164,10 @@ class WiseMultiCurrencyProcessor:
     
     def __init__(
         self,
-        api_token: str,
-        environment: WiseEnvironment = WiseEnvironment.SANDBOX,
-        webhook_secret: Optional[str] = None
-    ):
+        api_token -> None: str,
+        environment -> None: WiseEnvironment = WiseEnvironment.SANDBOX,
+        webhook_secret -> None: Optional[str] = None
+    ) -> None:
         """
 Initialize Wise Multi-Currency processor"""
         self.api_token = api_token

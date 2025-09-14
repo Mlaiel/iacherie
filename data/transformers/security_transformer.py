@@ -174,7 +174,7 @@ class SecureTransformationResult:
 class SecurityTransformer:
     """Enterprise security transformation engine."""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize security transformer with configuration."""
         self.config = config or {}
         
@@ -198,7 +198,7 @@ class SecurityTransformer:
         
         logger.info("SecurityTransformer initialized")
     
-    def _load_default_policies(self):
+    def _load_default_policies(self) -> None:
         """Load default security policies."""
         default_policies = [
             SecurityPolicy(
@@ -247,7 +247,7 @@ class SecurityTransformer:
         for policy in default_policies:
             self.security_policies[policy.policy_id] = policy
     
-    def _initialize_encryption_keys(self):
+    def _initialize_encryption_keys(self) -> None:
         """Initialize encryption keys (placeholder implementation)."""
         # In production, use proper key management system (KMS)
         self.encryption_keys = {
@@ -514,7 +514,7 @@ class SecurityTransformer:
         data_str = f"{entry.audit_id}:{entry.event_type.value}:{entry.user_id}:{entry.operation}:{entry.timestamp}"
         return hashlib.sha256(data_str.encode()).hexdigest()
     
-    async def _store_audit_entries(self, entries: List[AuditEntry]):
+    async def _store_audit_entries(self, entries -> None: List[AuditEntry]) -> None:
         """Store audit entries (thread-safe)."""
         with self.audit_lock:
             self.audit_entries.extend(entries)
@@ -615,7 +615,7 @@ class SecurityTransformer:
 class ThreatDetector:
     """Threat detection engine for content analysis."""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize threat detector."""
         self.config = config or {}
         self.threat_patterns = self._load_threat_patterns()
@@ -730,7 +730,7 @@ class ThreatDetector:
 class AccessControlManager:
     """Access control manager for security policies."""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize access control manager."""
         self.config = config or {}
         

@@ -47,7 +47,7 @@ class VPAConfig:
 class AutoscalingManager:
     """Unified autoscaling management interface"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.hpa_manager = HPAManager()
         self.vpa_manager = VPAManager()
         self.cluster_autoscaler = ClusterAutoscaler()
@@ -56,7 +56,7 @@ class AutoscalingManager:
 class HPAManager:
     """Horizontal Pod Autoscaler management"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.hpa_configs = {}
         self.logger = logging.getLogger(__name__)
     
@@ -119,7 +119,7 @@ class HPAManager:
 class VPAManager:
     """Vertical Pod Autoscaler management"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.vpa_configs = {}
         self.logger = logging.getLogger(__name__)
     
@@ -159,7 +159,7 @@ class VPAManager:
 class ClusterAutoscaler:
     """Cluster autoscaler management"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.cluster_config = {}
         self.logger = logging.getLogger(__name__)
     

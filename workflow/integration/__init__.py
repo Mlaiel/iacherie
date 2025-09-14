@@ -68,13 +68,13 @@ class IntegrationOrchestrator:
     and microservice coordination.
     """
     
-    def __init__(self, config: IntegrationConfig = None):
+    def __init__(self, config -> None: IntegrationConfig = None) -> None:
         """Initialize integration orchestrator with configuration."""
         self.config = config or IntegrationConfig()
         self.workflows = {}
         self._initialize_workflows()
     
-    def _initialize_workflows(self):
+    def _initialize_workflows(self) -> None:
         """Initialize all integration workflow instances."""
         self.workflows = {
             IntegrationWorkflowType.API_INTEGRATION: APIIntegrationWorkflow(),
@@ -154,13 +154,13 @@ class IntegrationOrchestrator:
         
         return sum(health_scores) / len(health_scores) if health_scores else 0.0
     
-    def get_workflow(self, workflow_type: IntegrationWorkflowType):
+    def get_workflow(self, workflow_type -> None: IntegrationWorkflowType) -> None:
         """Get specific integration workflow instance."""
         return self.workflows.get(workflow_type)
 
 
 # Workflow factory function
-def create_integration_workflow(workflow_type: IntegrationWorkflowType):
+def create_integration_workflow(workflow_type -> None: IntegrationWorkflowType) -> None:
     """Factory function to create specific integration workflow."""
     workflow_classes = {
         IntegrationWorkflowType.API_INTEGRATION: APIIntegrationWorkflow,

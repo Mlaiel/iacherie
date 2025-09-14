@@ -1,4 +1,6 @@
 """{{model_name}} Database Model Template for Ainflue Platform
+import asyncio
+
 {{model_description}}
 
 Author: {{author_name}} ({{author_email}})
@@ -54,7 +56,7 @@ class VersionMixin:
     """Mixin for record versioning"""
     version = Column(Integer, default=1, nullable=False)
     
-    def increment_version(self):
+    def increment_version(self) -> None:
         """Increment version number"""
         self.version = (self.version or 0) + 1
 
@@ -121,7 +123,7 @@ class {{model_name}}Model(Base, AuditMixin, SoftDeleteMixin, VersionMixin):
     )
     
     @validates('status')
-    def validate_status(self, key, status):
+    def validate_status(self, key, status) -> None:
         """Validate status field"""
         valid_statuses = [s.value for s in RecordStatus]
         if status not in valid_statuses:
@@ -129,7 +131,7 @@ class {{model_name}}Model(Base, AuditMixin, SoftDeleteMixin, VersionMixin):
         return status
     
     @validates('name')
-    def validate_name(self, key, name):
+    def validate_name(self, key, name) -> None:
         """Validate name field"""
         if not name or not name.strip():
             raise ValidationError("Name cannot be empty")
@@ -138,27 +140,27 @@ class {{model_name}}Model(Base, AuditMixin, SoftDeleteMixin, VersionMixin):
         return name.strip()
     
     @validates('priority')
-    def validate_priority(self, key, priority):
+    def validate_priority(self, key, priority) -> None:
         """Validate priority field"""
         if priority is not None and (priority < 0 or priority > 10):
             raise ValidationError("Priority must be between 0 and 10")
         return priority
     
-    def soft_delete(self, deleted_by: Optional[uuid.UUID] = None):
+    def soft_delete(self, deleted_by -> None: Optional[uuid.UUID] = None) -> None:
         """Perform soft delete"""
         self.is_deleted = True
         self.deleted_at = datetime.now(timezone.utc)
         self.deleted_by = deleted_by
         self.status = RecordStatus.DELETED.value
     
-    def restore(self):
+    def restore(self) -> None:
         """Restore soft deleted record"""
         self.is_deleted = False
         self.deleted_at = None
         self.deleted_by = None
         self.status = RecordStatus.ACTIVE.value
     
-    def add_tag(self, tag: str):
+    def add_tag(self, tag -> None: str) -> None:
         """Add a tag to the record"""
         if self.tags is None:
             self.tags = []
@@ -167,14 +169,14 @@ class {{model_name}}Model(Base, AuditMixin, SoftDeleteMixin, VersionMixin):
             # Mark as modified for SQLAlchemy
             self.tags = self.tags.copy()
     
-    def remove_tag(self, tag: str):
+    def remove_tag(self, tag -> None: str) -> None:
         """Remove a tag from the record"""
         if self.tags and tag in self.tags:
             self.tags.remove(tag)
             # Mark as modified for SQLAlchemy
             self.tags = self.tags.copy()
     
-    def set_metadata(self, key: str, value: Any):
+    def set_metadata(self, key -> None: str, value -> None: Any) -> None:
         """Set metadata key-value pair"""
         if self.metadata is None:
             self.metadata = {}
@@ -188,7 +190,7 @@ class {{model_name}}Model(Base, AuditMixin, SoftDeleteMixin, VersionMixin):
             return default
         return self.metadata.get(key, default)
     
-    def update_search_vector(self):
+    def update_search_vector(self) -> None:
         """Update search vector for full-text search"""
         searchable_text = []
         
@@ -269,13 +271,13 @@ class {{model_name}}Base(BaseModel):
     is_featured: Optional[bool] = Field(default=False, description="Featured status")
     
     @validator('name')
-    def validate_name(cls, v):
+    def validate_name(cls, v) -> None:
         if not v or not v.strip():
             raise ValueError('Name cannot be empty')
         return v.strip()
     
     @validator('tags')
-    def validate_tags(cls, v):
+    def validate_tags(cls, v) -> None:
         if v is not None:
             # Remove duplicates and empty tags
             v = list(set(tag.strip() for tag in v if tag and tag.strip()))
@@ -304,13 +306,13 @@ class {{model_name}}Update(BaseModel):
     is_locked: Optional[bool] = Field(default=None, description="Lock status")
     
     @validator('name')
-    def validate_name(cls, v):
+    def validate_name(cls, v) -> None:
         if v is not None and (not v or not v.strip()):
             raise ValueError('Name cannot be empty')
         return v.strip() if v else v
     
     @validator('status')
-    def validate_status(cls, v):
+    def validate_status(cls, v) -> None:
         if v is not None:
             valid_statuses = [s.value for s in RecordStatus]
             if v not in valid_statuses:
@@ -360,7 +362,7 @@ class {{model_name}}ListResponse(BaseModel):
 class {{model_name}}Repository:
     """Repository for {{model_name}} database operations"""
     
-    def __init__(self, session: Session):
+    def __init__(self, session -> None: Session) -> None:
         self.session = session
     
     async def create(self, data: {{model_name}}Create, created_by: Optional[str] = None) -> {{model_name}}Model:
@@ -525,3 +527,5 @@ class {{model_name}}Repository:
         self.session.commit()
         
         return updated_count
+
+# File has syntax issues - needs manual review

@@ -1,5 +1,7 @@
 """Analytics Events Configuration Module
 
+import logging
+
 Ultra-advanced configuration management for analytics events with
 ML model parameters, performance thresholds, and optimization settings.
 
@@ -243,7 +245,7 @@ Third-party integration configuration"""
 class AnalyticsConfig:
     """Main analytics configuration class"""
     
-    def __init__(self, environment: AnalyticsEnvironment = AnalyticsEnvironment.DEVELOPMENT):
+    def __init__(self, environment -> None: AnalyticsEnvironment = AnalyticsEnvironment.DEVELOPMENT) -> None:
         self.environment = environment
         self.database = DatabaseConfig()
         self.cache = CacheConfig()

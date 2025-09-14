@@ -1,3 +1,8 @@
+"""
+Real Time Analytics Service module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Enterprise Real-time Analytics Service
@@ -131,7 +136,7 @@ class RealTimeAnalyticsService:
     - Stream processing
     """
     
-    def __init__(self, max_events_memory: int = 100000):
+    def __init__(self, max_events_memory -> None: int = 100000) -> None:
         """Initialize real-time analytics service"""
         self.max_events_memory = max_events_memory
         
@@ -193,7 +198,7 @@ class RealTimeAnalyticsService:
         
         logger.info("RealTimeAnalyticsService initialized")
     
-    async def start(self):
+    async def start(self) -> None:
         """Start the real-time analytics service"""
         try:
             # Start background processing tasks
@@ -209,7 +214,7 @@ class RealTimeAnalyticsService:
             logger.error("Failed to start RealTimeAnalyticsService: %s", e)
             raise
     
-    async def stop(self):
+    async def stop(self) -> None:
         """Stop the real-time analytics service"""
         try:
             self.shutdown_event.set()
@@ -227,7 +232,7 @@ class RealTimeAnalyticsService:
         except Exception as e:
             logger.error("Error stopping RealTimeAnalyticsService: %s", e)
     
-    async def ingest_event(self, event: AnalyticsEvent):
+    async def ingest_event(self, event -> None: AnalyticsEvent) -> None:
         """Ingest a single analytics event"""
         if not self.config["enable_real_time_processing"]:
             return
@@ -235,7 +240,7 @@ class RealTimeAnalyticsService:
         # Add to processing queue for async processing
         await self.processing_queue.put(event)
     
-    async def ingest_events_batch(self, events: List[AnalyticsEvent]):
+    async def ingest_events_batch(self, events -> None: List[AnalyticsEvent]) -> None:
         """Ingest a batch of analytics events"""
         if not self.config["enable_real_time_processing"]:
             return
@@ -243,7 +248,7 @@ class RealTimeAnalyticsService:
         for event in events:
             await self.processing_queue.put(event)
     
-    async def register_metric(self, metric_def: MetricDefinition):
+    async def register_metric(self, metric_def -> None: MetricDefinition) -> None:
         """Register a new metric definition"""
         async with self._lock:
             self.metric_definitions[metric_def.metric_name] = metric_def
@@ -301,13 +306,13 @@ class RealTimeAnalyticsService:
     
     async def create_alert_rule(
         self,
-        rule_name: str,
-        metric_name: str,
-        condition: str,  # e.g., "greater_than", "less_than", "equals"
-        threshold: float,
-        severity: str = "medium",
-        message_template: str = "Alert triggered for {metric_name}"
-    ):
+        rule_name -> None: str,
+        metric_name -> None: str,
+        condition -> None: str,  # e.g., "greater_than", "less_than", "equals"
+        threshold -> None: float,
+        severity -> None: str = "medium",
+        message_template -> None: str = "Alert triggered for {metric_name}"
+    ) -> None:
         """Create a new alert rule"""
         if not self.config["enable_alerts"]:
             return
@@ -325,7 +330,7 @@ class RealTimeAnalyticsService:
         
         logger.info("Created alert rule: %s for metric %s", rule_name, metric_name)
     
-    async def create_dashboard(self, dashboard: Dashboard):
+    async def create_dashboard(self, dashboard -> None: Dashboard) -> None:
         """Create a new dashboard"""
         async with self._lock:
             self.dashboards[dashboard.dashboard_id] = dashboard
@@ -366,7 +371,7 @@ class RealTimeAnalyticsService:
         async with self._lock:
             return [alert for alert in self.alerts.values() if alert.resolved_at is None]
     
-    async def resolve_alert(self, alert_id: str):
+    async def resolve_alert(self, alert_id -> None: str) -> None:
         """Resolve an active alert"""
         async with self._lock:
             if alert_id in self.alerts:
@@ -436,7 +441,7 @@ class RealTimeAnalyticsService:
             
             return dict(self.service_metrics)
     
-    async def _process_event(self, event: AnalyticsEvent):
+    async def _process_event(self, event -> None: AnalyticsEvent) -> None:
         """Process a single event"""
         start_time = time.time()
         
@@ -466,7 +471,7 @@ class RealTimeAnalyticsService:
                 self.service_metrics["processing_latency"] * 0.9 + processing_time * 0.1
             )
     
-    async def _update_metrics(self, event: AnalyticsEvent):
+    async def _update_metrics(self, event -> None: AnalyticsEvent) -> None:
         """Update all relevant metrics for an event"""
         for metric_name, metric_def in self.metric_definitions.items():
             if not metric_def.enabled:
@@ -599,7 +604,7 @@ class RealTimeAnalyticsService:
         else:
             return min(30, base_retention // 86400)  # Max 30 days
     
-    async def _processing_loop(self):
+    async def _processing_loop(self) -> None:
         """Main event processing loop"""
         batch = []
         batch_size = self.config["batch_processing_size"]
@@ -629,7 +634,7 @@ class RealTimeAnalyticsService:
                 logger.error("Error in processing loop: %s", e)
                 await asyncio.sleep(1)
     
-    async def _cleanup_loop(self):
+    async def _cleanup_loop(self) -> None:
         """Background cleanup loop"""
         while not self.shutdown_event.is_set():
             try:
@@ -640,7 +645,7 @@ class RealTimeAnalyticsService:
             except Exception as e:
                 logger.error("Error in cleanup loop: %s", e)
     
-    async def _cleanup_old_data(self):
+    async def _cleanup_old_data(self) -> None:
         """Clean up old data to manage memory"""
         current_time = time.time()
         retention_seconds = self.config["metric_retention_hours"] * 3600
@@ -666,7 +671,7 @@ class RealTimeAnalyticsService:
         
         logger.debug("Completed data cleanup")
     
-    async def _alert_loop(self):
+    async def _alert_loop(self) -> None:
         """Background alert checking loop"""
         while not self.shutdown_event.is_set():
             try:
@@ -677,7 +682,7 @@ class RealTimeAnalyticsService:
             except Exception as e:
                 logger.error("Error in alert loop: %s", e)
     
-    async def _check_alerts(self):
+    async def _check_alerts(self) -> None:
         """Check all alert rules"""
         if not self.config["enable_alerts"]:
             return
@@ -717,7 +722,7 @@ class RealTimeAnalyticsService:
                 if triggered:
                     await self._trigger_alert(rule_name, rule, current_value)
     
-    async def _trigger_alert(self, rule_name: str, rule: Dict[str, Any], current_value: float):
+    async def _trigger_alert(self, rule_name -> None: str, rule -> None: Dict[str, Any], current_value -> None: float) -> None:
         """Trigger an alert"""
         alert_id = f"alert_{int(time.time())}_{rule_name}"
         
@@ -748,7 +753,7 @@ class RealTimeAnalyticsService:
         
         logger.warning("Alert triggered: %s - %s", alert_id, message)
     
-    async def _initialize_default_metrics(self):
+    async def _initialize_default_metrics(self) -> None:
         """Initialize default system metrics"""
         # Events per second metric
         await self.register_metric(MetricDefinition(
@@ -794,7 +799,7 @@ async def get_analytics_service() -> RealTimeAnalyticsService:
         await _analytics_service.start()
     return _analytics_service
 
-async def shutdown_analytics_service():
+async def shutdown_analytics_service() -> None:
     """Shutdown global real-time analytics service"""
     global _analytics_service
     if _analytics_service:
@@ -802,7 +807,7 @@ async def shutdown_analytics_service():
         _analytics_service = None
 
 if __name__ == "__main__":
-    async def test_analytics_service():
+    async def test_analytics_service() -> None:
         """Test real-time analytics service functionality"""
         service = RealTimeAnalyticsService()
         await service.start()

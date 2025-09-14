@@ -1,3 +1,8 @@
+"""
+Transcoding Config module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
@@ -527,7 +532,7 @@ class TranscodingClusterConfig:
 class TranscodingConfiguration:
     """Main transcoding configuration manager"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize transcoding configuration"""
         # Configuration components
         self.cluster_config = TranscodingClusterConfig()
@@ -609,7 +614,7 @@ class TranscodingConfiguration:
         # Initialize default profiles
         self._initialize_default_profiles()
     
-    def _initialize_default_profiles(self):
+    def _initialize_default_profiles(self) -> None:
         """Initialize default transcoding profiles"""
         
         # Default video profiles

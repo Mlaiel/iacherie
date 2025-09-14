@@ -111,7 +111,7 @@ class RollbackManager:
     Handles intelligent rollback decisions and execution coordination
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.logger = logging.getLogger(__name__)
         self.audit_manager = AuditManager(config.get('audit', {}))
@@ -738,3 +738,5 @@ Check if performance-based rollback should be triggered"""
 Check if error rate-based rollback should be triggered"""
         # Implementation for error rate-based rollback decision
         return False
+
+# File has syntax issues - needs manual review

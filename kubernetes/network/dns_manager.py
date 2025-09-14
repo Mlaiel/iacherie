@@ -185,10 +185,10 @@ class DNSManager:
     
     def __init__(
         self,
-        config_path: str = "/etc/dns/config.yaml",
-        provider_credentials: Optional[Dict[str, Any]] = None,
-        kubernetes_config: Optional[str] = None
-    ):
+        config_path -> None: str = "/etc/dns/config.yaml",
+        provider_credentials -> None: Optional[Dict[str, Any]] = None,
+        kubernetes_config -> None: Optional[str] = None
+    ) -> None:
         self.config_path = config_path
         self.provider_credentials = provider_credentials or {}
         

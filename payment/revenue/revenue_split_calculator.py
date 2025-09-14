@@ -143,7 +143,7 @@ class RevenueSplitCalculator:
     payments and creator monetization scenarios.
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """Initialize revenue split calculator"""
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -177,7 +177,7 @@ class RevenueSplitCalculator:
             'GBP': Decimal('7.50')
         }
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize the revenue split calculator"""
         try:
             # Load split rules
@@ -527,7 +527,7 @@ class RevenueSplitCalculator:
             self.logger.error(f"Failed to create split rule: {e}")
             raise
     
-    async def _validate_split_rule(self, rule: RevenueSplitRule):
+    async def _validate_split_rule(self, rule -> None: RevenueSplitRule) -> None:
         """Validate split rule configuration"""
         total_percentage = Decimal('0')
         
@@ -627,7 +627,7 @@ class RevenueSplitCalculator:
             self.logger.error(f"Revenue split simulation failed: {e}")
             raise
     
-    async def _load_split_rules(self):
+    async def _load_split_rules(self) -> None:
         """Load split rules from configuration"""
         # Default split rules for different revenue categories
         default_rules = [
@@ -688,7 +688,7 @@ class RevenueSplitCalculator:
             except Exception as e:
                 self.logger.error(f"Failed to load default rule: {e}")
     
-    async def _load_revenue_tiers(self):
+    async def _load_revenue_tiers(self) -> None:
         """Load revenue tier configurations"""
         self.revenue_tiers = [
             RevenueTier(
@@ -718,7 +718,7 @@ class RevenueSplitCalculator:
             )
         ]
     
-    async def _load_tax_rates(self):
+    async def _load_tax_rates(self) -> None:
         """Load tax withholding rates by jurisdiction"""
         self.tax_rates = {
             'US': Decimal('24'),     # 24% federal withholding

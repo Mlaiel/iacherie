@@ -207,7 +207,7 @@ class BusinessIntelligence:
 class VoiceMonetizationEngine:
     """Advanced voice monetization system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize monetization engine"""
         self.strategies = {}
         self.revenue_tracking = {}
@@ -294,7 +294,7 @@ class VoiceMonetizationEngine:
             logger.error(f"Failed to optimize revenue streams: {e}")
             raise
     
-    async def _generate_implementation_plan(self, strategy: MonetizationStrategy):
+    async def _generate_implementation_plan(self, strategy -> None: MonetizationStrategy) -> None:
         """Generate detailed implementation plan"""
         try:
             phases = []
@@ -395,7 +395,7 @@ class VoiceMonetizationEngine:
 class VoiceBrandManager:
     """Advanced voice brand management system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize brand manager"""
         self.brand_profiles = {}
         self.brand_analytics = {}
@@ -471,7 +471,7 @@ class VoiceBrandManager:
             logger.error(f"Failed to optimize brand positioning: {e}")
             raise
     
-    async def _generate_brand_strategy(self, brand: BrandManagement):
+    async def _generate_brand_strategy(self, brand -> None: BrandManagement) -> None:
         """Generate comprehensive brand strategy"""
         try:
             # Define personality traits based on archetype
@@ -579,7 +579,7 @@ class VoiceBrandManager:
 class VoicePartnershipMatcher:
     """AI-powered partnership matching system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize partnership matcher"""
         self.creator_profiles = {}
         self.partnership_opportunities = {}
@@ -680,7 +680,7 @@ class VoicePartnershipMatcher:
 class VoiceBusinessEngine:
     """Main voice business engine"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         """Initialize voice business engine"""
         self.config = config or {}
         self.monetization_engine = VoiceMonetizationEngine()

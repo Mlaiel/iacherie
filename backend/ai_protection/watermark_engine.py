@@ -77,7 +77,7 @@ class WatermarkResult:
 class WatermarkEngine:
     """Advanced watermarking engine for multimedia content"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize watermark engine"""
         self.audio_engine = None
         self.video_engine = None

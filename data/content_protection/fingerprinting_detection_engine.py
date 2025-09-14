@@ -132,7 +132,7 @@ class SimilarityResult:
 class MultiModalFingerprintingEngine:
     """Unified multi-modal fingerprinting system with AI-powered detection"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.redis_client = None
         self.mongo_client = None
         self.audio_engine = AudioFingerprintingEngine()
@@ -499,7 +499,7 @@ class MultiModalFingerprintingEngine:
 class AudioFingerprintingEngine:
     """Chromaprint + ML audio fingerprinting engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.sample_rate = 22050
         self.hop_length = 512
         self.n_mfcc = 13
@@ -688,7 +688,7 @@ class AudioFingerprintingEngine:
 class VideoProtectionAnalyzer:
     """OpenCV + neural video analysis engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.frame_skip = 30  # Process every 30th frame
         
     async def initialize(self) -> bool:
@@ -785,7 +785,7 @@ class VideoProtectionAnalyzer:
 class ImageCopyrightDetector:
     """CLIP + perceptual image detection engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.hash_size = 16
         
     async def initialize(self) -> bool:
@@ -914,7 +914,7 @@ class ImageCopyrightDetector:
 class TextPlagiarismEngine:
     """BERT/RoBERTa text plagiarism detection engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.tokenizer = None
         self.model = None
         self.sentence_transformer = None

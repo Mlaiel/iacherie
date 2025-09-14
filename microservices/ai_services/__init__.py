@@ -1,4 +1,6 @@
 """
+import asyncio
+
 🤖 AI SERVICES MODULE - ENTERPRISE AI & ML SERVICES
 =====================================================
 
@@ -67,7 +69,7 @@ __all__ = [
     # New services will be added here as they are created
 ]
 
-def get_services():
+def get_services() -> None:
     """Get list of all available AI services."""
     return [
         'ai_inference_service.py',
@@ -88,7 +90,7 @@ def get_services():
         'ai_lifecycle_manager.py'
     ]
 
-async def start_services():
+async def start_services() -> None:
     """Start all AI services."""
     # Initialize and start AI services
     pass

@@ -1,5 +1,7 @@
 """Event Compression Optimizer - Advanced for Ainflue Events
 
+import asyncio
+
 Advanced event compression optimizer with intelligent algorithms,
 real-time optimization, and business-aware compression strategies.
 
@@ -68,7 +70,7 @@ class EventCompressionOptimizer:
     Intelligent algorithms with business-aware compression strategies
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.compression_strategies: List[CompressionStrategy] = []
         self.compression_history: List[CompressionResult] = []
         self.algorithm_performance: Dict[str, Dict[str, float]] = {}
@@ -78,7 +80,7 @@ class EventCompressionOptimizer:
         
         logger.info("EventCompressionOptimizer initialized for Ainflue platform")
     
-    def _initialize_compression_strategies(self):
+    def _initialize_compression_strategies(self) -> None:
         """Initialize compression strategies for different event types"""
         
         # High-priority real-time events - fastest compression
@@ -151,7 +153,7 @@ class EventCompressionOptimizer:
             large_events_strategy
         ]
     
-    def _initialize_algorithm_performance(self):
+    def _initialize_algorithm_performance(self) -> None:
         """Initialize baseline performance metrics for algorithms"""
         
         self.algorithm_performance = {
@@ -447,7 +449,7 @@ class EventCompressionOptimizer:
         else:  # > 1MB - use Brotli
             return await self._compress_brotli(data, CompressionLevel.BEST)
     
-    async def _update_performance_metrics(self, result: CompressionResult):
+    async def _update_performance_metrics(self, result -> None: CompressionResult) -> None:
         """Update algorithm performance metrics"""
         
         algo_key = result.algorithm.value
@@ -593,12 +595,12 @@ class EventCompressionOptimizer:
             )
         }
     
-    def add_compression_strategy(self, strategy: CompressionStrategy):
+    def add_compression_strategy(self, strategy -> None: CompressionStrategy) -> None:
         """Add custom compression strategy"""
         self.compression_strategies.append(strategy)
         logger.info(f"Added compression strategy: {strategy.name}")
     
-    def disable_strategy(self, strategy_name: str):
+    def disable_strategy(self, strategy_name -> None: str) -> None:
         """Disable a compression strategy"""
         for strategy in self.compression_strategies:
             if strategy.name == strategy_name:

@@ -78,7 +78,7 @@ class MigrationRunner:
     - Point-in-time recovery integration
     """
     
-    def __init__(self, migrations_directory: Optional[str] = None):
+    def __init__(self, migrations_directory -> None: Optional[str] = None) -> None:
         self.logger = get_logger(__name__)
         self.config = get_database_settings()
         self.metrics = MetricsCollector()
@@ -645,7 +645,7 @@ ESTIMATED_DURATION = None  # seconds
 SIZE_IMPACT = None  # "small", "medium", "large"
 
 
-def migrate(db_manager):
+def migrate(db_manager) -> None:
     """
     Execute migration
     
@@ -669,7 +669,7 @@ def migrate(db_manager):
     pass  # Remove this line when adding actual migration code
 
 
-def rollback(db_manager):
+def rollback(db_manager) -> None:
     """
     Rollback migration
     
@@ -689,7 +689,7 @@ def rollback(db_manager):
     pass  # Remove this line when adding actual rollback code
 
 
-def verify(db_manager):
+def verify(db_manager) -> None:
     """
     Verify migration was successful
     
@@ -707,7 +707,7 @@ def verify(db_manager):
     return True
 
 
-def pre_migrate(db_manager):
+def pre_migrate(db_manager) -> None:
     """
     Execute before migration (optional)
     
@@ -717,7 +717,7 @@ def pre_migrate(db_manager):
     pass
 
 
-def post_migrate(db_manager):
+def post_migrate(db_manager) -> None:
     """
     Execute after migration (optional)
     
@@ -1007,7 +1007,7 @@ class MigrationRunner:
     - Backup creation before major changes
     """
     
-    def __init__(self, migrations_dir: str = "migrations"):
+    def __init__(self, migrations_dir -> None: str = "migrations") -> None:
         self.logger = get_logger(__name__)
         self.config = get_database_settings()
         self.db_manager = get_postgresql_manager()

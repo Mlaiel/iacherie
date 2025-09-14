@@ -49,7 +49,7 @@ class APIRateLimiter:
     """
 Intelligent rate limiting for platform APIs"""
     
-    def __init__(self, redis_url: Optional[str] = None):
+    def __init__(self, redis_url -> None: Optional[str] = None) -> None:
         self.redis_url = redis_url
         self.redis_client = None
         self.memory_cache = defaultdict(lambda: defaultdict(deque))
@@ -87,7 +87,7 @@ Intelligent rate limiting for platform APIs"""
             }
         }
         
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         """Async context manager entry"""
         if self.redis_url and REDIS_AVAILABLE:
             try:
@@ -98,7 +98,7 @@ Intelligent rate limiting for platform APIs"""
                 logger.warning(f"Failed to connect to Redis: {e}. Using memory cache.")
         return self
         
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         """Async context manager exit"""
         if self.redis_client:
             await self.redis_client.close()
@@ -133,11 +133,11 @@ Intelligent rate limiting for platform APIs"""
             
     async def record_request(
         self,
-        platform: str,
-        endpoint: str = "*",
-        user_id: Optional[str] = None,
-        status_code: int = 200
-    ):
+        platform -> None: str,
+        endpoint -> None: str = "*",
+        user_id -> None: Optional[str] = None,
+        status_code -> None: int = 200
+    ) -> None:
         """
         Record a request for rate limiting tracking
         
@@ -193,7 +193,7 @@ Intelligent rate limiting for platform APIs"""
                     
         return 0
         
-    async def add_platform_limits(self, platform: str, limits: Dict[str, RateLimitRule]):
+    async def add_platform_limits(self, platform -> None: str, limits -> None: Dict[str, RateLimitRule]) -> None:
         """Add custom rate limits for a platform"""
         self.platform_limits[platform] = limits
         logger.info(f"Added rate limits for platform: {platform}")
@@ -287,10 +287,10 @@ Intelligent rate limiting for platform APIs"""
         
     async def _handle_rate_limit_exceeded(
         self,
-        platform: str,
-        endpoint: str,
-        user_id: Optional[str] = None
-    ):
+        platform -> None: str,
+        endpoint -> None: str,
+        user_id -> None: Optional[str] = None
+    ) -> None:
         """Handle rate limit exceeded response"""
         key = f"{platform}:{endpoint}"
         if user_id:
@@ -310,10 +310,10 @@ Intelligent rate limiting for platform APIs"""
         
     async def _handle_server_error(
         self,
-        platform: str,
-        endpoint: str,
-        user_id: Optional[str] = None
-    ):
+        platform -> None: str,
+        endpoint -> None: str,
+        user_id -> None: Optional[str] = None
+    ) -> None:
         """Handle server error response"""
         key = f"{platform}:{endpoint}"
         if user_id:
@@ -344,7 +344,7 @@ Intelligent rate limiting for platform APIs"""
             
         return status
         
-    async def reset_platform_limits(self, platform: str):
+    async def reset_platform_limits(self, platform -> None: str) -> None:
         """Reset all rate limits for a platform (admin function)"""
         if self.redis_client:
             # Find and delete all keys for this platform

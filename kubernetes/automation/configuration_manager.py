@@ -86,7 +86,7 @@ class ConfigurationManager(BaseComponent):
     settings across multiple deployment environments with encryption,
     templating, and dynamic updates.
     """
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         super().__init__()
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -1252,3 +1252,5 @@ class ConfigurationManager(BaseComponent):
             del self.secret_cache[key]
         
         return len(expired_keys)
+
+# File has syntax issues - needs manual review

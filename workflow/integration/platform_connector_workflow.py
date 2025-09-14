@@ -13,6 +13,7 @@ from datetime import datetime
 
 @dataclass
 class Platform_connectorMetrics:
+    """Platform_connectorMetrics: class implementation"""
     integration_health: float = 0.0
     success_rate: float = 0.0
     latency_ms: float = 0.0
@@ -22,6 +23,7 @@ class Platform_connectorMetrics:
 
 @dataclass
 class Platform_connectorResult:
+    """Platform_connectorResult: class implementation"""
     user_id: str
     integration_status: str
     performance_metrics: Platform_connectorMetrics
@@ -32,7 +34,7 @@ class Platform_connectorResult:
 class Platform_connectorWorkflow:
     """Platform_connector integration workflow for Ainflue platform."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize platform connector workflow."""
         self.integration_health = 0.95
         self.performance_threshold = 0.9

@@ -26,11 +26,16 @@ except ImportError:
     MONGODB_AVAILABLE = False
     # Create mock classes to prevent NameError
     class motor:
+    """motor: class implementation"""
         class motor_asyncio:
+    """motor_asyncio: class implementation"""
             class AsyncIOMotorClient:
+    """AsyncIOMotorClient: class implementation"""
                 pass
     class pymongo:
+    """pymongo: class implementation"""
         class MongoClient:
+    """MongoClient: class implementation"""
             pass
 
 logger = logging.getLogger(__name__)
@@ -79,7 +84,7 @@ class MongoDBConfig:
 class MongoDBConnection:
     """MongoDB connection manager with async support."""
     
-    def __init__(self, config: Optional[MongoDBConfig] = None):
+    def __init__(self, config -> None: Optional[MongoDBConfig] = None) -> None:
         """Initialize MongoDB connection manager."""
         if not MONGODB_AVAILABLE:
             raise ImportError("MongoDB dependencies (motor, pymongo) not available")
@@ -171,7 +176,7 @@ class MongoDBConnection:
             self._connected = False
             return False
     
-    async def disconnect(self):
+    async def disconnect(self) -> None:
         """Close async connection."""
         if self._client:
             self._client.close()
@@ -179,7 +184,7 @@ class MongoDBConnection:
         self._connected = False
         logger.info("Disconnected from MongoDB")
     
-    def disconnect_sync(self):
+    def disconnect_sync(self) -> None:
         """Close synchronous connection."""
         if self._sync_client:
             self._sync_client.close()
@@ -221,7 +226,7 @@ class MongoDBConnection:
         return self._sync_client
     
     @property
-    def database(self):
+    def database(self) -> None:
         """Get database instance."""
         return self._database
     

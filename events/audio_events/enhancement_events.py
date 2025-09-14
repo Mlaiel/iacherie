@@ -46,6 +46,7 @@ class MasteringPreset(Enum):
 
 @dataclass
 class AudioEnhancementStartedEvent(BaseEvent):
+    """AudioEnhancementStartedEvent class implementation"""
     user_id: UUID
     file_id: UUID
     enhancement_id: UUID
@@ -53,7 +54,7 @@ class AudioEnhancementStartedEvent(BaseEvent):
     enhancement_type: str
     enhancement_profile: str
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.enhancement.started",
             data={
@@ -66,13 +67,14 @@ class AudioEnhancementStartedEvent(BaseEvent):
 
 @dataclass
 class AudioEnhancementProgressEvent(BaseEvent):
+    """AudioEnhancementProgressEvent class implementation"""
     user_id: UUID
     file_id: UUID
     enhancement_id: UUID
     progress_percentage: float
     current_stage: str
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.enhancement.progress",
             data={
@@ -85,13 +87,14 @@ class AudioEnhancementProgressEvent(BaseEvent):
 
 @dataclass
 class AudioEnhancementCompletedEvent(BaseEvent):
+    """AudioEnhancementCompletedEvent class implementation"""
     user_id: UUID
     file_id: UUID
     enhancement_id: UUID
     filename: str
     enhancement_results: Dict[str, Any] = field(default_factory=dict)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.enhancement.completed",
             data={
@@ -103,13 +106,14 @@ class AudioEnhancementCompletedEvent(BaseEvent):
 
 @dataclass
 class AudioEnhancementFailedEvent(BaseEvent):
+    """AudioEnhancementFailedEvent class implementation"""
     user_id: UUID
     file_id: UUID
     enhancement_id: UUID
     error_code: str
     error_message: str
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.enhancement.failed",
             data={
@@ -122,13 +126,14 @@ class AudioEnhancementFailedEvent(BaseEvent):
 
 @dataclass
 class AudioNoiseReductionEvent(BaseEvent):
+    """AudioNoiseReductionEvent class implementation"""
     user_id: UUID
     file_id: UUID
     noise_reduction_id: UUID
     filename: str
     noise_types: List[str] = field(default_factory=list)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.enhancement.noise_reduction",
             data={
@@ -140,13 +145,14 @@ class AudioNoiseReductionEvent(BaseEvent):
 
 @dataclass
 class AudioMasteringEvent(BaseEvent):
+    """AudioMasteringEvent class implementation"""
     user_id: UUID
     file_id: UUID
     mastering_id: UUID
     filename: str
     mastering_preset: str
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.enhancement.mastering",
             data={
@@ -159,13 +165,14 @@ class AudioMasteringEvent(BaseEvent):
 
 @dataclass
 class AudioAIEnhancementEvent(BaseEvent):
+    """AudioAIEnhancementEvent class implementation"""
     user_id: UUID
     file_id: UUID
     ai_enhancement_id: UUID
     filename: str
     ai_model: str
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.enhancement.ai_enhancement",
             data={
@@ -178,13 +185,14 @@ class AudioAIEnhancementEvent(BaseEvent):
 
 @dataclass
 class AudioUpmixingEvent(BaseEvent):
+    """AudioUpmixingEvent class implementation"""
     user_id: UUID
     file_id: UUID
     upmixing_id: UUID
     filename: str
     target_channels: int
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.enhancement.upmixing",
             data={
@@ -197,13 +205,14 @@ class AudioUpmixingEvent(BaseEvent):
 
 @dataclass
 class AudioStemSeparationEvent(BaseEvent):
+    """AudioStemSeparationEvent class implementation"""
     user_id: UUID
     file_id: UUID
     separation_id: UUID
     filename: str
     stems_extracted: List[str] = field(default_factory=list)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.enhancement.stem_separation",
             data={
@@ -216,13 +225,14 @@ class AudioStemSeparationEvent(BaseEvent):
 
 @dataclass
 class AudioEqualizationEvent(BaseEvent):
+    """AudioEqualizationEvent class implementation"""
     user_id: UUID
     file_id: UUID
     eq_id: UUID
     filename: str
     eq_settings: Dict[str, Any] = field(default_factory=dict)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.enhancement.equalization",
             data={

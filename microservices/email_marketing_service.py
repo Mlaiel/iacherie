@@ -301,7 +301,7 @@ class AutomationWorkflow(BaseModel):
 class EmailMarketingService:
     """📧 Enterprise Email Marketing Service - Multi-Expert Implementation"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize with all expert role capabilities"""
         # 🧠 Lead Dev IA: AI optimization engines
         self.ai_optimizer = self._initialize_ai_optimizer()
@@ -634,7 +634,7 @@ class EmailMarketingService:
             }
         }
 
-    def _load_sample_data(self):
+    def _load_sample_data(self) -> None:
         """Load sample email marketing data"""
         # Create sample subscribers
         self._create_sample_subscribers()
@@ -645,7 +645,7 @@ class EmailMarketingService:
         # Create sample campaigns
         self._create_sample_campaigns()
 
-    def _create_sample_subscribers(self):
+    def _create_sample_subscribers(self) -> None:
         """Create sample subscribers"""
         sample_subscribers = [
             {
@@ -690,7 +690,7 @@ class EmailMarketingService:
             for segment in subscriber.segments:
                 self.segment_index[segment].append(subscriber.id)
 
-    def _create_sample_templates(self):
+    def _create_sample_templates(self) -> None:
         """Create sample email templates"""
         sample_templates = [
             {
@@ -730,7 +730,7 @@ class EmailMarketingService:
             
             self.templates[template.id] = template
 
-    def _create_sample_campaigns(self):
+    def _create_sample_campaigns(self) -> None:
         """Create sample email campaigns"""
         template_ids = list(self.templates.keys())
         
@@ -835,7 +835,7 @@ class EmailMarketingService:
             logger.error(f"❌ Error adding subscriber: {str(e)}")
             raise HTTPException(status_code=500, detail=f"Subscriber addition failed: {str(e)}")
 
-    async def _validate_subscriber_email(self, email: str):
+    async def _validate_subscriber_email(self, email -> None: str) -> None:
         """🔒 Security: Validate email address"""
         # Basic email validation (enhanced in production)
         email_pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
@@ -848,7 +848,7 @@ class EmailMarketingService:
         if domain in disposable_domains:
             raise HTTPException(status_code=400, detail="Disposable email addresses not allowed")
 
-    async def _check_consent_compliance(self, subscriber: Subscriber):
+    async def _check_consent_compliance(self, subscriber -> None: Subscriber) -> None:
         """🔒 Security: Check consent compliance (GDPR, etc.)"""
         # In production, this would check for proper consent records
         logger.info(f"🔒 Consent compliance verified for {subscriber.email}")
@@ -888,12 +888,12 @@ class EmailMarketingService:
         
         return min(100.0, base_score)
 
-    async def _sync_subscriber_with_provider(self, subscriber: Subscriber):
+    async def _sync_subscriber_with_provider(self, subscriber -> None: Subscriber) -> None:
         """🌐 Microservices: Sync subscriber with email provider"""
         # Simulate provider sync
         logger.info(f"🌐 Syncing subscriber {subscriber.email} with email provider")
 
-    async def _trigger_welcome_automation(self, subscriber: Subscriber):
+    async def _trigger_welcome_automation(self, subscriber -> None: Subscriber) -> None:
         """⚙️ DevOps: Trigger welcome email automation"""
         # Find welcome series workflow
         welcome_workflows = [w for w in self.workflows.values() if w.trigger == AutomationTrigger.USER_SIGNUP]
@@ -1339,7 +1339,7 @@ class EmailMarketingService:
         
         return min(1.0, risk_score)
 
-    async def _notify_services(self, event_type: str, resource_id: str):
+    async def _notify_services(self, event_type -> None: str, resource_id -> None: str) -> None:
         """🌐 Microservices: Notify other services"""
         logger.info(f"🌐 Event: {event_type} for {resource_id}")
 
@@ -1388,27 +1388,27 @@ app = FastAPI(
 email_service = EmailMarketingService()
 
 @app.post("/subscribers", response_model=Dict[str, Any])
-async def add_subscriber(subscriber: Subscriber):
+async def add_subscriber(subscriber -> None: Subscriber) -> None:
     """Add new email subscriber"""
     return await email_service.add_subscriber(subscriber)
 
 @app.post("/campaigns", response_model=Dict[str, Any])
-async def create_campaign(campaign: EmailCampaign):
+async def create_campaign(campaign -> None: EmailCampaign) -> None:
     """Create new email campaign"""
     return await email_service.create_campaign(campaign)
 
 @app.get("/campaigns/{campaign_id}/analytics", response_model=EmailMetrics)
-async def get_campaign_analytics(campaign_id: str):
+async def get_campaign_analytics(campaign_id -> None: str) -> None:
     """Get campaign performance analytics"""
     return await email_service.get_campaign_analytics(campaign_id)
 
 @app.get("/subscribers/{subscriber_id}/analytics", response_model=Dict[str, Any])
-async def get_subscriber_analytics(subscriber_id: str):
+async def get_subscriber_analytics(subscriber_id -> None: str) -> None:
     """Get subscriber engagement analytics"""
     return await email_service.get_subscriber_analytics(subscriber_id)
 
 @app.get("/health")
-async def health_check():
+async def health_check() -> None:
     """Service health check"""
     return await email_service.get_service_health()
 

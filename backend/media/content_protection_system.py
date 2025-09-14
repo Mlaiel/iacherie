@@ -191,7 +191,7 @@ class ProtectionResult:
 class ContentProtectionSystem:
     """Unified content protection system"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         """Initialize content protection system"""
         self.config = config or {}
         self.fingerprint_db = {}
@@ -206,7 +206,7 @@ class ContentProtectionSystem:
         
         logger.info("🛡️ Content Protection System initialized")
     
-    def _initialize_fingerprint_engines(self):
+    def _initialize_fingerprint_engines(self) -> None:
         """Initialize fingerprint generation engines"""
         self.fingerprint_engines = {
             FingerprintType.PERCEPTUAL_HASH: self._create_perceptual_hash_engine(),
@@ -217,7 +217,7 @@ class ContentProtectionSystem:
         }
         logger.info("Fingerprint engines initialized")
     
-    def _initialize_watermark_engines(self):
+    def _initialize_watermark_engines(self) -> None:
         """Initialize watermark engines"""
         self.watermark_engines = {
             WatermarkType.VISIBLE: self._create_visible_watermark_engine(),
@@ -226,7 +226,7 @@ class ContentProtectionSystem:
         }
         logger.info("Watermark engines initialized")
     
-    def _initialize_copyright_databases(self):
+    def _initialize_copyright_databases(self) -> None:
         """Initialize copyright database connections"""
         self.copyright_databases = {
             "copyright_office": {"url": "https://api.copyright.gov/", "active": False},
@@ -546,7 +546,7 @@ class ContentProtectionSystem:
             logger.error(f"Encryption failed: {e}")
             return {"success": False, "error": str(e)}
     
-    async def _store_protection_metadata(self, content_id: str, result: ProtectionResult):
+    async def _store_protection_metadata(self, content_id -> None: str, result -> None: ProtectionResult) -> None:
         """Store protection metadata"""
         self.protection_cache[content_id] = {
             "protection_types": [t.value for t in result.protection_types_applied],
@@ -651,7 +651,7 @@ class ContentProtectionSystem:
     
     # Fingerprint engine creators
     
-    def _create_perceptual_hash_engine(self):
+    def _create_perceptual_hash_engine(self) -> None:
         """Create perceptual hash engine"""
         async def perceptual_hash(content_data: Any) -> str:
             try:
@@ -681,28 +681,28 @@ class ContentProtectionSystem:
         
         return perceptual_hash
     
-    def _create_dct_hash_engine(self):
+    def _create_dct_hash_engine(self) -> None:
         """Create DCT hash engine"""
         async def dct_hash(content_data: Any) -> str:
             # Placeholder DCT hash implementation
             return hashlib.sha256(str(content_data).encode()).hexdigest()[:32]
         return dct_hash
     
-    def _create_chromaprint_engine(self):
+    def _create_chromaprint_engine(self) -> None:
         """Create audio chromaprint engine"""
         async def chromaprint(content_data: Any) -> str:
             # Placeholder chromaprint implementation
             return hashlib.sha256(str(content_data).encode()).hexdigest()[:40]
         return chromaprint
     
-    def _create_video_dna_engine(self):
+    def _create_video_dna_engine(self) -> None:
         """Create video DNA engine"""
         async def video_dna(content_data: Any) -> str:
             # Placeholder video DNA implementation
             return hashlib.sha256(str(content_data).encode()).hexdigest()[:48]
         return video_dna
     
-    def _create_feature_hash_engine(self):
+    def _create_feature_hash_engine(self) -> None:
         """Create feature hash engine"""
         async def feature_hash(content_data: Any) -> str:
             # Placeholder feature hash implementation
@@ -711,7 +711,7 @@ class ContentProtectionSystem:
     
     # Watermark engine creators
     
-    def _create_visible_watermark_engine(self):
+    def _create_visible_watermark_engine(self) -> None:
         """Create visible watermark engine"""
         async def visible_watermark(content_data: Any, watermark_text: str, config: Dict[str, Any]) -> Any:
             try:
@@ -743,14 +743,14 @@ class ContentProtectionSystem:
         
         return visible_watermark
     
-    def _create_invisible_watermark_engine(self):
+    def _create_invisible_watermark_engine(self) -> None:
         """Create invisible watermark engine"""
         async def invisible_watermark(content_data: Any, watermark_text: str, config: Dict[str, Any]) -> Any:
             # Placeholder invisible watermark implementation
             return content_data
         return invisible_watermark
     
-    def _create_robust_watermark_engine(self):
+    def _create_robust_watermark_engine(self) -> None:
         """Create robust watermark engine"""
         async def robust_watermark(content_data: Any, watermark_text: str, config: Dict[str, Any]) -> Any:
             # Placeholder robust watermark implementation
@@ -762,7 +762,7 @@ class ContentProtectionSystem:
 class ContentFingerprinting:
     """Backward compatibility for ContentFingerprinting"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.protection_system = ContentProtectionSystem(config)
     
     async def generate_fingerprint(self, content_data: Any, content_id: str) -> ContentFingerprint:
@@ -771,7 +771,7 @@ class ContentFingerprinting:
 class CopyrightValidator:
     """Backward compatibility for CopyrightValidator"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.protection_system = ContentProtectionSystem(config)
     
     async def validate_copyright(self, content_data: Any, content_id: str) -> CopyrightValidationResult:
@@ -780,7 +780,7 @@ class CopyrightValidator:
 class ProtectionEngine:
     """Backward compatibility for ProtectionEngine"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.protection_system = ContentProtectionSystem(config)
     
     async def protect_content(self, content_data: Any, content_id: str, config: ProtectionConfig) -> ProtectionResult:

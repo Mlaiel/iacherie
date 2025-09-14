@@ -1,4 +1,6 @@
 """Pytest Configuration and Shared Fixtures
+import logging
+
 ==========================================
 
 Shared pytest fixtures and configuration for all test modules.
@@ -45,7 +47,7 @@ from . import (
 # Configure pytest
 pytest_plugins = []
 
-def pytest_configure(config):
+def pytest_configure(config) -> None:
     """Configure pytest settings"""
     # Add custom markers
     config.addinivalue_line(
@@ -68,7 +70,7 @@ def pytest_configure(config):
     )
 
 @pytest.fixture(scope="session")
-def event_loop():
+def event_loop() -> None:
     """Create an instance of the default event loop for the test session."""
     loop = asyncio.get_event_loop_policy().new_event_loop()
     yield loop
@@ -95,12 +97,12 @@ async def temp_dir() -> AsyncGenerator[Path, None]:
             shutil.rmtree(temp_path)
 
 @pytest.fixture(scope="session")
-async def mock_database_pool():
+async def mock_database_pool() -> None:
     """Mock database connection pool"""
     pool_mock = AsyncMock()
     
     # Mock connection methods
-    async def mock_acquire():
+    async def mock_acquire() -> None:
         conn_mock = AsyncMock()
         conn_mock.fetch.return_value = MOCK_DATABASE_DATA["users"][:5]
         conn_mock.fetchrow.return_value = MOCK_DATABASE_DATA["users"][0]
@@ -114,7 +116,7 @@ async def mock_database_pool():
     return pool_mock
 
 @pytest.fixture(scope="session")
-async def mock_redis_client():
+async def mock_redis_client() -> None:
     """Mock Redis client"""
     redis_mock = AsyncMock()
     
@@ -137,40 +139,41 @@ async def mock_redis_client():
     return redis_mock
 
 @pytest.fixture(scope="session")
-async def mock_http_client():
+async def mock_http_client() -> None:
     """Mock HTTP client for API testing"""
     
     class MockResponse:
-        def __init__(self, json_data, status=200, headers=None):
+    """MockResponse: class implementation"""
+        def __init__(self, json_data, status=200, headers=None) -> None:
             self.json_data = json_data
             self.status = status
             self.headers = headers or {}
             
-        async def json(self):
+        async def json(self) -> None:
             return self.json_data
             
-        async def text(self):
+        async def text(self) -> None:
             return json.dumps(self.json_data)
             
-        def __aenter__(self):
+        def __aenter__(self) -> None:
             return self
             
-        async def __aexit__(self, exc_type, exc_val, exc_tb):
+        async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
             pass
     
     client_mock = AsyncMock()
     
     # Mock HTTP methods
-    async def mock_get(*args, **kwargs):
+    async def mock_get(*args, **kwargs) -> None:
         return MockResponse({"success": True, "data": MOCK_DATABASE_DATA["users"]})
     
-    async def mock_post(*args, **kwargs):
+    async def mock_post(*args, **kwargs) -> None:
         return MockResponse({"success": True, "id": "12345"}, status=201)
     
-    async def mock_put(*args, **kwargs):
+    async def mock_put(*args, **kwargs) -> None:
         return MockResponse({"success": True, "updated": True})
     
-    async def mock_delete(*args, **kwargs):
+    async def mock_delete(*args, **kwargs) -> None:
         return MockResponse({"success": True, "deleted": True})
     
     client_mock.get = mock_get
@@ -182,7 +185,7 @@ async def mock_http_client():
     return client_mock
 
 @pytest.fixture(scope="function")
-async def mock_ai_service():
+async def mock_ai_service() -> None:
     """Mock AI service for testing"""
     service_mock = AsyncMock()
     
@@ -211,7 +214,7 @@ async def mock_ai_service():
     return service_mock
 
 @pytest.fixture(scope="function")
-async def mock_payment_service():
+async def mock_payment_service() -> None:
     """Mock payment service for testing"""
     service_mock = AsyncMock()
     
@@ -237,7 +240,7 @@ async def mock_payment_service():
     return service_mock
 
 @pytest.fixture(scope="function")
-async def mock_notification_service():
+async def mock_notification_service() -> None:
     """Mock notification service for testing"""
     service_mock = AsyncMock()
     
@@ -262,7 +265,7 @@ async def mock_notification_service():
     return service_mock
 
 @pytest.fixture(scope="function")
-async def mock_storage_service():
+async def mock_storage_service() -> None:
     """Mock storage service for testing"""
     service_mock = AsyncMock()
     
@@ -289,27 +292,27 @@ async def mock_storage_service():
     return service_mock
 
 @pytest.fixture(scope="function")
-def mock_user_data():
+def mock_user_data() -> None:
     """Generate mock user data for testing"""
     return generate_test_user_data()
 
 @pytest.fixture(scope="function")
-def mock_content_data():
+def mock_content_data() -> None:
     """Generate mock content data for testing"""
     return generate_test_content_data()
 
 @pytest.fixture(scope="function")
-def mock_api_key():
+def mock_api_key() -> None:
     """Generate mock API key for testing"""
     return generate_test_api_key()
 
 @pytest.fixture(scope="function")
-def mock_jwt_token():
+def mock_jwt_token() -> None:
     """Generate mock JWT token for testing"""
     return generate_test_jwt_token()
 
 @pytest.fixture(scope="function")
-async def authenticated_user(mock_user_data, mock_jwt_token):
+async def authenticated_user(mock_user_data, mock_jwt_token) -> None:
     """Mock authenticated user with JWT token"""
     return {
         "user": mock_user_data,
@@ -318,7 +321,7 @@ async def authenticated_user(mock_user_data, mock_jwt_token):
     }
 
 @pytest.fixture(scope="function", autouse=True)
-async def setup_test_logging():
+async def setup_test_logging() -> None:
     """Setup test logging for each test"""
     # Create test-specific logger
     test_logger = logging.getLogger("test")
@@ -340,23 +343,24 @@ async def setup_test_logging():
         test_logger.removeHandler(handler)
 
 @pytest.fixture(scope="function")
-async def performance_timer():
+async def performance_timer() -> None:
     """Performance timing utility for tests"""
     import time
     
     class Timer:
-        def __init__(self):
+    """Timer: class implementation"""
+        def __init__(self) -> None:
             self.start_time = None
             self.end_time = None
             
-        def start(self):
+        def start(self) -> None:
             self.start_time = time.time()
             
-        def stop(self):
+        def stop(self) -> None:
             self.end_time = time.time()
             
         @property
-        def elapsed(self):
+        def elapsed(self) -> None:
             if self.start_time and self.end_time:
                 return self.end_time - self.start_time
             return 0
@@ -364,7 +368,7 @@ async def performance_timer():
     return Timer()
 
 @pytest.fixture(scope="function")
-async def mock_external_apis():
+async def mock_external_apis() -> None:
     """Mock external API responses"""
     return {
         "youtube_api": {
@@ -383,7 +387,7 @@ async def mock_external_apis():
 
 # Cleanup fixtures
 @pytest.fixture(scope="session", autouse=True)
-async def cleanup_test_environment():
+async def cleanup_test_environment() -> None:
     """Cleanup test environment after all tests"""
     yield
     

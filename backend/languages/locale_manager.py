@@ -142,7 +142,7 @@ class LocaleManager:
     with comprehensive regional formatting and cultural adaptation
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize locale manager"""
         self.config = config or {}
         self.locales = self._load_locale_definitions()
@@ -642,7 +642,7 @@ class LocaleManager:
         import hashlib
         return hashlib.md5('|'.join(key_parts).encode()).hexdigest()
     
-    async def _update_processing_stats(self, result: LocaleResult):
+    async def _update_processing_stats(self, result -> None: LocaleResult) -> None:
         """Update processing statistics"""
         self.processing_stats["total_requests"] += 1
         

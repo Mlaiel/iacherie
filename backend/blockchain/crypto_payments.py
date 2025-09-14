@@ -134,7 +134,7 @@ class CryptoPaymentProcessor:
     Cryptocurrency Payment Processor for handling crypto transactions
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """
         Initialize Crypto Payment Processor
         
@@ -540,7 +540,7 @@ class PaymentGateway:
     Payment Gateway for managing multiple payment processors and routing
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """
         Initialize Payment Gateway
         

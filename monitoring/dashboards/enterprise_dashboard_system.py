@@ -123,7 +123,7 @@ class EnterpriseDashboardSystem:
     - Export and sharing functionality
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.dashboards: Dict[str, Dashboard] = {}
         self.dashboard_metrics: deque = deque(maxlen=100000)
@@ -233,7 +233,7 @@ class EnterpriseDashboardSystem:
         
         return templates
     
-    def _create_default_dashboards(self):
+    def _create_default_dashboards(self) -> None:
         """Create default enterprise dashboards."""
         # Executive Overview Dashboard
         exec_dashboard = self._create_executive_dashboard()

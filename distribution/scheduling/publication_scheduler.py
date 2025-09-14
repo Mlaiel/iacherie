@@ -144,7 +144,7 @@ class PublicationScheduler:
         }
     }
     
-    def __init__(self, connector_manager: PlatformConnectorManager):
+    def __init__(self, connector_manager -> None: PlatformConnectorManager) -> None:
         self.connector_manager = connector_manager
         self.scheduler = AsyncIOScheduler()
         self.scheduled_publications: Dict[str, ScheduledPublication] = {}
@@ -341,7 +341,7 @@ class PublicationScheduler:
             logger.error(f"Platform optimal slots calculation failed: {str(e)}")
             return []
     
-    async def _execute_publication(self, publication_id: str):
+    async def _execute_publication(self, publication_id -> None: str) -> None:
         """Execute a scheduled publication"""
         try:
             publication = self.scheduled_publications.get(publication_id)
@@ -411,7 +411,7 @@ class PublicationScheduler:
                 if publication.retry_count < publication.max_retries:
                     await self._schedule_retry(publication)
     
-    async def _schedule_retry(self, publication: ScheduledPublication):
+    async def _schedule_retry(self, publication -> None: ScheduledPublication) -> None:
         """Schedule a retry for failed publication"""
         try:
             publication.retry_count += 1
@@ -668,7 +668,7 @@ class PublicationScheduler:
         except Exception:
             return None
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Shutdown the scheduler gracefully"""
         try:
             self.scheduler.shutdown(wait=True)

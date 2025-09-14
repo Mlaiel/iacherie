@@ -174,7 +174,7 @@ class EnterpriseEnforcementOrchestrator:
     📈 DevOps Excellence: Real-time monitoring, auto-scaling, and performance optimization
     """
     
-    def __init__(self, config: Optional[EnterpriseEnforcementConfig] = None):
+    def __init__(self, config -> None: Optional[EnterpriseEnforcementConfig] = None) -> None:
         """
         Initialize Enterprise Enforcement Orchestrator with multi-expert architecture.
         
@@ -230,7 +230,7 @@ class EnterpriseEnforcementOrchestrator:
         
         self.logger.info("🏢 Enterprise Enforcement Orchestrator initialized with multi-expert architecture")
     
-    def _init_security_infrastructure(self):
+    def _init_security_infrastructure(self) -> None:
         """Initialize enterprise security infrastructure (Sécurité Expert)."""
         try:
             # Initialize encryption for sensitive data
@@ -254,7 +254,7 @@ class EnterpriseEnforcementOrchestrator:
             self.logger.error(f"Security infrastructure initialization failed: {e}")
             raise
     
-    def _init_database_infrastructure(self):
+    def _init_database_infrastructure(self) -> None:
         """Initialize high-performance database infrastructure (DBA Expert)."""
         try:
             # Initialize Redis for high-performance caching
@@ -279,7 +279,7 @@ class EnterpriseEnforcementOrchestrator:
             self.logger.error(f"Database infrastructure initialization failed: {e}")
             raise
     
-    def _init_ai_ml_infrastructure(self):
+    def _init_ai_ml_infrastructure(self) -> None:
         """Initialize AI/ML processing infrastructure (Lead Dev IA + ML Engineer)."""
         try:
             # Initialize neural content analysis models
@@ -341,7 +341,7 @@ class EnterpriseEnforcementOrchestrator:
             self.logger.error(f"AI/ML infrastructure initialization failed: {e}")
             raise
     
-    def _init_audio_processing_infrastructure(self):
+    def _init_audio_processing_infrastructure(self) -> None:
         """Initialize audio processing infrastructure (Audio Engineer)."""
         try:
             if self.config.advanced_audio_fingerprinting:
@@ -368,7 +368,7 @@ class EnterpriseEnforcementOrchestrator:
             self.logger.error(f"Audio processing infrastructure initialization failed: {e}")
             raise
     
-    def _init_microservices_infrastructure(self):
+    def _init_microservices_infrastructure(self) -> None:
         """Initialize microservices infrastructure (Microservices Expert)."""
         try:
             # Initialize service registry
@@ -391,7 +391,7 @@ class EnterpriseEnforcementOrchestrator:
             self.logger.error(f"Microservices infrastructure initialization failed: {e}")
             raise
     
-    def _init_monitoring_infrastructure(self):
+    def _init_monitoring_infrastructure(self) -> None:
         """Initialize monitoring and DevOps infrastructure (DevOps Expert)."""
         try:
             if self.config.real_time_monitoring:
@@ -422,7 +422,7 @@ class EnterpriseEnforcementOrchestrator:
             self.logger.error(f"Monitoring infrastructure initialization failed: {e}")
             raise
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize all enforcement components"""
         try:
             logger.info("Initializing enforcement components...")
@@ -831,7 +831,7 @@ class EnterpriseEnforcementOrchestrator:
                 'timestamp': datetime.utcnow().isoformat()
             }
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Shutdown all enforcement components gracefully"""
         try:
             logger.info("Shutting down enforcement orchestrator...")

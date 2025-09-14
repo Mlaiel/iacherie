@@ -86,7 +86,7 @@ Comprehensive analytics report schema."""
     monetization_opportunities: List[str] = Field(default_factory=list)
     
     @validator('report_type')
-    def validate_report_type(cls, v):
+    def validate_report_type(cls, v) -> None:
         """Validate report type."""
         allowed_types = {
             "performance_overview", "audience_analysis", "content_performance",
@@ -99,7 +99,7 @@ Comprehensive analytics report schema."""
         return v
     
     @validator('granularity')
-    def validate_granularity(cls, v):
+    def validate_granularity(cls, v) -> None:
         """Validate data granularity."""
         allowed_granularities = {
             "hourly", "daily", "weekly", "monthly", "quarterly", "yearly"
@@ -517,7 +517,7 @@ class BusinessIntelligenceDashboard(UUIDSchema, TimestampSchema):
     opportunity_notifications: List[str] = Field(default_factory=list)
     
     @validator('dashboard_type')
-    def validate_dashboard_type(cls, v):
+    def validate_dashboard_type(cls, v) -> None:
         """Validate dashboard type."""
         allowed_types = {
             "executive_summary", "performance_overview", "financial_dashboard",

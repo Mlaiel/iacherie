@@ -245,7 +245,7 @@ class RoyaltyDistribution:
 class RightsManagementEngine:
     """Comprehensive digital rights management system"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         """Initialize rights management engine"""
         self.config = config or {}
         self.licenses = {}
@@ -262,7 +262,7 @@ class RightsManagementEngine:
         
         logger.info("⚖️ Rights Management Engine initialized")
     
-    def _initialize_watermark_engines(self):
+    def _initialize_watermark_engines(self) -> None:
         """Initialize watermark engines"""
         self.watermark_engines = {
             WatermarkType.VISIBLE: self._create_visible_watermark_engine(),
@@ -271,7 +271,7 @@ class RightsManagementEngine:
         }
         logger.info("Watermark engines initialized")
     
-    def _initialize_detection_engines(self):
+    def _initialize_detection_engines(self) -> None:
         """Initialize piracy detection engines"""
         self.detection_engines = {
             DetectionMethod.VISUAL_FINGERPRINT: self._create_visual_detection_engine(),
@@ -281,7 +281,7 @@ class RightsManagementEngine:
         }
         logger.info("Detection engines initialized")
     
-    def _initialize_monitoring_services(self):
+    def _initialize_monitoring_services(self) -> None:
         """Initialize platform monitoring services"""
         self.monitoring_services = {
             MonitoringPlatform.YOUTUBE: self._create_youtube_monitor(),
@@ -569,7 +569,7 @@ class RightsManagementEngine:
     
     # Watermark engine creators
     
-    def _create_visible_watermark_engine(self):
+    def _create_visible_watermark_engine(self) -> None:
         """Create visible watermark engine"""
         async def visible_watermark(content_data: Any, config: WatermarkConfig) -> Any:
             try:
@@ -604,7 +604,7 @@ class RightsManagementEngine:
         
         return visible_watermark
     
-    def _create_invisible_watermark_engine(self):
+    def _create_invisible_watermark_engine(self) -> None:
         """Create invisible watermark engine"""
         async def invisible_watermark(content_data: Any, config: WatermarkConfig) -> Any:
             # Placeholder implementation for invisible watermarking
@@ -613,7 +613,7 @@ class RightsManagementEngine:
         
         return invisible_watermark
     
-    def _create_steganographic_engine(self):
+    def _create_steganographic_engine(self) -> None:
         """Create steganographic watermark engine"""
         async def steganographic_watermark(content_data: Any, config: WatermarkConfig) -> Any:
             # Placeholder implementation for steganographic embedding
@@ -624,7 +624,7 @@ class RightsManagementEngine:
     
     # Detection engine creators
     
-    def _create_visual_detection_engine(self):
+    def _create_visual_detection_engine(self) -> None:
         """Create visual fingerprint detection engine"""
         async def visual_detection(content_id: str, platform_data: Any) -> List[PiracyIncident]:
             # Placeholder visual detection implementation
@@ -632,7 +632,7 @@ class RightsManagementEngine:
         
         return visual_detection
     
-    def _create_audio_detection_engine(self):
+    def _create_audio_detection_engine(self) -> None:
         """Create audio fingerprint detection engine"""
         async def audio_detection(content_id: str, platform_data: Any) -> List[PiracyIncident]:
             # Placeholder audio detection implementation
@@ -640,7 +640,7 @@ class RightsManagementEngine:
         
         return audio_detection
     
-    def _create_text_detection_engine(self):
+    def _create_text_detection_engine(self) -> None:
         """Create text similarity detection engine"""
         async def text_detection(content_id: str, platform_data: Any) -> List[PiracyIncident]:
             # Placeholder text detection implementation
@@ -648,7 +648,7 @@ class RightsManagementEngine:
         
         return text_detection
     
-    def _create_watermark_detection_engine(self):
+    def _create_watermark_detection_engine(self) -> None:
         """Create watermark detection engine"""
         async def watermark_detection(content_id: str, platform_data: Any) -> List[PiracyIncident]:
             # Placeholder watermark detection implementation
@@ -658,7 +658,7 @@ class RightsManagementEngine:
     
     # Monitoring service creators
     
-    def _create_youtube_monitor(self):
+    def _create_youtube_monitor(self) -> None:
         """Create YouTube monitoring service"""
         async def youtube_monitor(content_id: str, detection_methods: List[DetectionMethod]) -> List[PiracyIncident]:
             # Placeholder YouTube monitoring implementation
@@ -666,7 +666,7 @@ class RightsManagementEngine:
         
         return youtube_monitor
     
-    def _create_instagram_monitor(self):
+    def _create_instagram_monitor(self) -> None:
         """Create Instagram monitoring service"""
         async def instagram_monitor(content_id: str, detection_methods: List[DetectionMethod]) -> List[PiracyIncident]:
             # Placeholder Instagram monitoring implementation
@@ -674,7 +674,7 @@ class RightsManagementEngine:
         
         return instagram_monitor
     
-    def _create_facebook_monitor(self):
+    def _create_facebook_monitor(self) -> None:
         """Create Facebook monitoring service"""
         async def facebook_monitor(content_id: str, detection_methods: List[DetectionMethod]) -> List[PiracyIncident]:
             # Placeholder Facebook monitoring implementation
@@ -687,7 +687,7 @@ class RightsManagementEngine:
 class PiracyDetection:
     """Backward compatibility for PiracyDetection"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.rights_engine = RightsManagementEngine(config)
     
     async def detect_piracy(self, content_id: str, platforms: List[MonitoringPlatform] = None) -> List[PiracyIncident]:
@@ -696,7 +696,7 @@ class PiracyDetection:
 class WatermarkIntegration:
     """Backward compatibility for WatermarkIntegration"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.rights_engine = RightsManagementEngine(config)
     
     async def apply_watermark(self, content_data: Any, config: WatermarkConfig) -> Dict[str, Any]:
@@ -705,7 +705,7 @@ class WatermarkIntegration:
 class LicenseManager:
     """Backward compatibility for LicenseManager"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.rights_engine = RightsManagementEngine(config)
     
     async def create_license(self, content_id: str, licensee_id: str, licensor_id: str, rights_config: RightsConfig) -> License:

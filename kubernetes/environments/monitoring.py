@@ -218,7 +218,7 @@ class MonitoringEnvironmentManager:
     - SLA monitoring and capacity planning
     """
     
-    def __init__(self, monitoring_level: MonitoringLevel = MonitoringLevel.PRODUCTION, config_path: Optional[str] = None):
+    def __init__(self, monitoring_level -> None: MonitoringLevel = MonitoringLevel.PRODUCTION, config_path -> None: Optional[str] = None) -> None:
         self.monitoring_level = monitoring_level
         self.config_path = config_path or f"./monitoring/{monitoring_level.value}_config.yml"
         self.environment = "monitoring"
@@ -624,7 +624,7 @@ class MonitoringEnvironmentManager:
         }
     
     # Private helper methods
-    def _apply_monitoring_level_config(self):
+    def _apply_monitoring_level_config(self) -> None:
         """
 Apply monitoring level-specific configurations"""
         if self.monitoring_level == MonitoringLevel.ENTERPRISE:

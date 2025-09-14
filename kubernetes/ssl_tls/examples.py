@@ -5,7 +5,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use prohibited
 
 Team Expertise:
-- Lead Dev IA + Backend Senior + ML Engineer
+    - Lead Dev IA + Backend Senior + ML Engineer
 - DBA + Security Expert + Microservices Architect
 - Audio Processing + DevOps + Prompt Engineering
 
@@ -37,7 +37,7 @@ logger = logging.getLogger(__name__)
 class SSLExamplesRunner:
     """Industrial-grade SSL/TLS examples runner"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.cert_manager = create_certificate_manager()
         self.tls_config_manager = create_tls_config_manager()
         self.cert_monitor = create_certificate_monitor()
@@ -188,7 +188,7 @@ PRODUCTION_MONITORING_CONFIG = {
 }
 
 
-def example_basic_certificate_management():
+def example_basic_certificate_management() -> None:
     """Example: Basic certificate management operations"""
     print("=== Basic Certificate Management Example ===")
     
@@ -218,26 +218,26 @@ def example_basic_certificate_management():
         with open(key_path, 'wb') as f:
             f.write(key_data)
         
-        print(f"✓ Self-signed certificate created for {domain}")
+        print(f"# [EMOJI_REMOVED] Self-signed certificate created for {domain}")
         print(f"  Certificate: {cert_path.absolute()}")
         print(f"  Private key: {key_path.absolute()}")
         
         # Validate the certificate
         validation_result = runner.ssl_validator.validate_certificate(cert_data)
-        print(f"✓ Certificate validation: {'Valid' if validation_result.is_valid else 'Invalid'}")
+        print(f"# [EMOJI_REMOVED] Certificate validation: {'Valid' if validation_result.is_valid else 'Invalid'}")
         print(f"  Subject: {validation_result.subject}")
         print(f"  Issuer: {validation_result.issuer}")
         print(f"  Expiry: {validation_result.not_after}")
         
         # List managed certificates
         certificates = runner.cert_manager.list_certificates()
-        print(f"✓ Total managed certificates: {len(certificates)}")
+        print(f"# [EMOJI_REMOVED] Total managed certificates: {len(certificates)}")
         
     except Exception as e:
-        print(f"✗ Error in certificate management example: {e}")
+        print(f"# [EMOJI_REMOVED] Error in certificate management example: {e}")
 
 
-def example_letsencrypt_certificate():
+def example_letsencrypt_certificate() -> None:
     """Example: Let's Encrypt certificate issuance"""
     print("\n=== Let's Encrypt Certificate Example ===")
     
@@ -264,17 +264,17 @@ def example_letsencrypt_certificate():
             organizational_unit="Web Services"
         )
         
-        print(f"📝 Certificate request created for domains: {cert_request.domains}")
+        print(f"# [EMOJI_REMOVED] Certificate request created for domains: {cert_request.domains}")
         print(f"  Challenge type: {cert_request.challenge_type.value}")
         print(f"  Key size: {cert_request.key_size}")
-        print("⚠  Note: This example uses staging environment")
+        print("# [EMOJI_REMOVED]  Note: This example uses staging environment")
         print("   For production, set staging=False in LetsEncryptConfig")
         
         # In a real scenario, you would call:
         # result = letsencrypt_manager.issue_certificate(cert_request)
         
     except Exception as e:
-        print(f"✗ Error in Let's Encrypt example: {e}")
+        print(f"# [EMOJI_REMOVED] Error in Let's Encrypt example: {e}")
         check_interval=3600,
         warning_days=30,
         critical_days=7,
@@ -585,4 +585,6 @@ WantedBy=multi-user.target
     with open(output_dir / "ssl-monitor-logrotate", "w") as f:
         f.write(generate_logrotate_config())
     
-    print("✅ SSL/TLS example configurations exported to examples/configs/")
+    print("# [EMOJI_REMOVED] SSL/TLS example configurations exported to examples/configs/")
+
+# File has syntax issues - needs manual review

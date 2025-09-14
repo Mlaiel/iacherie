@@ -198,7 +198,7 @@ class PlatformRoutingIntelligenceEngine:
     - ROI optimization
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the Platform Routing Intelligence Engine"""
         self.logger = logging.getLogger(__name__)
         self.initialized = False
@@ -325,7 +325,7 @@ class PlatformRoutingIntelligenceEngine:
             }
         }
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize the routing engine and components"""
         try:
             self.logger.info("Initializing Platform Routing Intelligence Engine...")
@@ -340,7 +340,7 @@ class PlatformRoutingIntelligenceEngine:
             self.logger.error(f"Engine initialization failed: {e}")
             raise RoutingError(f"Engine initialization failed: {str(e)}")
     
-    async def _initialize_routing_components(self):
+    async def _initialize_routing_components(self) -> None:
         """Initialize routing component engines"""
         await self.compatibility_analyzer.initialize()
         await self.audience_matcher.initialize()
@@ -451,7 +451,7 @@ class PlatformRoutingIntelligenceEngine:
             self.logger.error(f"Platform routing analysis failed: {request.content_id} - {str(e)}")
             raise RoutingError(f"Platform routing analysis failed: {str(e)}")
     
-    async def _apply_analysis_results(self, result: RoutingResult, analysis_results: Dict[str, Any]):
+    async def _apply_analysis_results(self, result -> None: RoutingResult, analysis_results -> None: Dict[str, Any]) -> None:
         """Apply analysis results to the main result"""
         # Apply compatibility analysis
         if 'compatibility' in analysis_results and analysis_results['compatibility'].get('status') != 'failed':
@@ -728,7 +728,7 @@ class PlatformRoutingIntelligenceEngine:
         
         return risks
     
-    async def _update_metrics(self, processing_time: float, success: bool, result: Optional[RoutingResult]):
+    async def _update_metrics(self, processing_time -> None: float, success -> None: bool, result -> None: Optional[RoutingResult]) -> None:
         """Update performance metrics"""
         self.routing_metrics['total_routings'] += 1
         
@@ -785,7 +785,7 @@ class PlatformRoutingIntelligenceEngine:
 class PlatformCompatibilityAnalyzer:
     """Specialized engine for platform compatibility analysis"""
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize compatibility analyzer"""
         pass
     
@@ -873,7 +873,7 @@ class PlatformCompatibilityAnalyzer:
 class AudiencePlatformMatcher:
     """Specialized engine for audience-platform matching"""
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize audience matcher"""
         pass
     
@@ -955,7 +955,7 @@ class AudiencePlatformMatcher:
 class PerformancePredictionEngine:
     """Specialized engine for performance prediction across platforms"""
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize performance predictor"""
         pass
     
@@ -1031,7 +1031,7 @@ class PerformancePredictionEngine:
 class CrossPlatformSyndicationEngine:
     """Specialized engine for cross-platform syndication optimization"""
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize syndication optimizer"""
         pass
     
@@ -1051,7 +1051,7 @@ class CrossPlatformSyndicationEngine:
 class TimingOptimizationEngine:
     """Specialized engine for timing optimization"""
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize timing optimizer"""
         pass
     

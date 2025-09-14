@@ -109,8 +109,8 @@ class OnPremiseDeploymentHandler:
     """
     
     def __init__(self,
-                 deployment_config_path: str,
-                 security_level: SecurityLevel = SecurityLevel.HIGH):
+                 deployment_config_path -> None: str,
+                 security_level -> None: SecurityLevel = SecurityLevel.HIGH) -> None:
         """Initialize on-premise deployment handler"""
         
         self.deployment_config_path = Path(deployment_config_path)
@@ -154,7 +154,7 @@ class OnPremiseDeploymentHandler:
         
         logger.info(f"On-premise deployment handler initialized with {security_level.value} security")
     
-    def _initialize_security_framework(self):
+    def _initialize_security_framework(self) -> None:
         """🔒 Security - Initialize enterprise security framework"""
         
         # Generate encryption keys
@@ -1142,7 +1142,7 @@ class OnPremiseDeploymentHandler:
         return scaling_result
 
 # Example usage demonstrating all expert roles
-async def example_usage():
+async def example_usage() -> None:
     """🎖️ Lead Dev IA - Example demonstrating all expert roles"""
     
     # Initialize on-premise deployment handler

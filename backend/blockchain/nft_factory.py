@@ -100,7 +100,7 @@ class NFTFactory:
     NFT Factory for creating and managing NFT collections and individual NFTs
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """
         Initialize NFT Factory
         
@@ -374,7 +374,7 @@ class NFTFactoryManager:
     Manager class for coordinating multiple NFT factories across networks
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """
         Initialize NFT Factory Manager
         

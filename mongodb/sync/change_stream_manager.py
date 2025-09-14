@@ -32,7 +32,7 @@ logger = logging.getLogger(__name__)
 class ChangeStreamManager:
     """Enterprise-grade MongoDB change streams management system."""
     
-    def __init__(self, connection_string: str, database_name: Optional[str] = None):
+    def __init__(self, connection_string -> None: str, database_name -> None: Optional[str] = None) -> None:
         """Initialize change stream manager."""
         if not MONGODB_AVAILABLE:
             raise ImportError("PyMongo is required for change stream management")
@@ -54,7 +54,7 @@ class ChangeStreamManager:
         self.processing_threads = []
         self.shutdown_event = threading.Event()
         
-    def add_event_handler(self, handler: Callable[[Dict[str, Any]], None]):
+    def add_event_handler(self, handler -> None: Callable[[Dict[str, Any]], None]) -> None:
         """Add event handler for change stream events."""
         self.event_handlers.append(handler)
         logger.info(f"Added event handler: {handler.__name__}")
@@ -228,7 +228,7 @@ class ChangeStreamManager:
             logger.error(f"Failed to start cluster change stream: {e}")
             raise
     
-    def _monitor_stream(self, stream_id: str):
+    def _monitor_stream(self, stream_id -> None: str) -> None:
         """Monitor a change stream and process events."""
         logger.info(f"Starting stream monitor for: {stream_id}")
         
@@ -331,7 +331,7 @@ class ChangeStreamManager:
         
         return event
     
-    def _process_event_immediate(self, event: SyncEvent):
+    def _process_event_immediate(self, event -> None: SyncEvent) -> None:
         """Process event immediately for real-time handlers."""
         for handler in self.event_handlers:
             try:
@@ -339,7 +339,7 @@ class ChangeStreamManager:
             except Exception as e:
                 logger.error(f"Event handler failed: {e}")
     
-    def start_event_processors(self, num_threads: int = 3):
+    def start_event_processors(self, num_threads -> None: int = 3) -> None:
         """Start background event processing threads."""
         for i in range(num_threads):
             processor_thread = threading.Thread(
@@ -352,7 +352,7 @@ class ChangeStreamManager:
         
         logger.info(f"Started {num_threads} event processing threads")
     
-    def _process_events(self, processor_name: str):
+    def _process_events(self, processor_name -> None: str) -> None:
         """Process events from the event queue."""
         logger.info(f"Event processor started: {processor_name}")
         
@@ -373,7 +373,7 @@ class ChangeStreamManager:
         
         logger.info(f"Event processor stopped: {processor_name}")
     
-    def _process_single_event(self, event: SyncEvent):
+    def _process_single_event(self, event -> None: SyncEvent) -> None:
         """Process a single sync event."""
         try:
             # Apply any transformations
@@ -410,7 +410,7 @@ class ChangeStreamManager:
         # This could filter by collection, operation type, field values, etc.
         return True
     
-    def stop_stream(self, stream_id: str):
+    def stop_stream(self, stream_id -> None: str) -> None:
         """Stop a specific change stream."""
         if stream_id in self.running_streams:
             self.running_streams.remove(stream_id)
@@ -424,7 +424,7 @@ class ChangeStreamManager:
             
             logger.info(f"Stopped change stream: {stream_id}")
     
-    def stop_all_streams(self):
+    def stop_all_streams(self) -> None:
         """Stop all change streams."""
         for stream_id in list(self.running_streams):
             self.stop_stream(stream_id)
@@ -458,7 +458,7 @@ class ChangeStreamManager:
                 tokens[stream_id] = stream_info['resume_token']
         return tokens
     
-    def shutdown(self):
+    def shutdown(self) -> None:
         """Shutdown change stream manager."""
         logger.info("Shutting down change stream manager")
         

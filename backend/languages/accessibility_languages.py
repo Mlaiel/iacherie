@@ -200,7 +200,7 @@ class AccessibilityLanguageEngine:
     multilingual accessibility features and inclusive design support
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize accessibility language engine"""
         self.config = config or {}
         self.accessibility_cache = {}
@@ -480,8 +480,8 @@ class AccessibilityLanguageEngine:
         
         return adapted_content
     
-    async def _process_visual_accessibility(self, request: AccessibilityRequest,
-                                          result: AccessibilityResult):
+    async def _process_visual_accessibility(self, request -> None: AccessibilityRequest,
+                                          result -> None: AccessibilityResult) -> None:
         """Process visual accessibility requirements"""
         # Generate visual accessibility information
         visual_info = VisualAccessibilityInfo(
@@ -516,8 +516,8 @@ class AccessibilityLanguageEngine:
         
         result.visual_accessibility = visual_info
     
-    async def _process_auditory_accessibility(self, request: AccessibilityRequest,
-                                            result: AccessibilityResult):
+    async def _process_auditory_accessibility(self, request -> None: AccessibilityRequest,
+                                            result -> None: AccessibilityResult) -> None:
         """Process auditory accessibility requirements"""
         # Generate audio accessibility information
         audio_info = AudioAccessibilityInfo(
@@ -552,8 +552,8 @@ class AccessibilityLanguageEngine:
         
         result.audio_accessibility = audio_info
     
-    async def _process_cognitive_accessibility(self, request: AccessibilityRequest,
-                                             result: AccessibilityResult):
+    async def _process_cognitive_accessibility(self, request -> None: AccessibilityRequest,
+                                             result -> None: AccessibilityResult) -> None:
         """Process cognitive accessibility requirements"""
         if request.cognitive_support_level:
             # Apply the specified cognitive support
@@ -579,8 +579,8 @@ class AccessibilityLanguageEngine:
             
             result.cognitive_adaptations.append(adaptation)
     
-    async def _process_motor_accessibility(self, request: AccessibilityRequest,
-                                         result: AccessibilityResult):
+    async def _process_motor_accessibility(self, request -> None: AccessibilityRequest,
+                                         result -> None: AccessibilityResult) -> None:
         """Process motor accessibility requirements"""
         # Add keyboard navigation support
         result.adapted_content = await self._add_keyboard_navigation(
@@ -599,8 +599,8 @@ class AccessibilityLanguageEngine:
             "Avoid requiring precise mouse movements"
         ])
     
-    async def _process_speech_accessibility(self, request: AccessibilityRequest,
-                                          result: AccessibilityResult):
+    async def _process_speech_accessibility(self, request -> None: AccessibilityRequest,
+                                          result -> None: AccessibilityResult) -> None:
         """Process speech accessibility requirements"""
         # Add alternative input methods
         result.adapted_content = await self._add_alternative_inputs(
@@ -614,8 +614,8 @@ class AccessibilityLanguageEngine:
             "Avoid speech-only interfaces"
         ])
     
-    async def _process_neurological_accessibility(self, request: AccessibilityRequest,
-                                                result: AccessibilityResult):
+    async def _process_neurological_accessibility(self, request -> None: AccessibilityRequest,
+                                                result -> None: AccessibilityResult) -> None:
         """Process neurological accessibility requirements"""
         # Remove seizure triggers
         result.adapted_content = await self._remove_seizure_triggers(

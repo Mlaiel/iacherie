@@ -145,7 +145,7 @@ class IPFSStorage:
     IPFS Storage system for decentralized content storage
     """
     
-    def __init__(self, config: StorageConfig):
+    def __init__(self, config -> None: StorageConfig) -> None:
         """
         Initialize IPFS Storage
         
@@ -704,7 +704,7 @@ class StorageManager:
     Manager class for coordinating multiple IPFS storage instances
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """
         Initialize Storage Manager
         

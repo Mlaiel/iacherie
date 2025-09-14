@@ -129,19 +129,19 @@ class Snapshot:
 class AggregateRoot(ABC, Generic[T]):
     """Base aggregate root class"""
     
-    def __init__(self, aggregate_id: str):
+    def __init__(self, aggregate_id -> None: str) -> None:
         self.id = aggregate_id
         self.version = 0
         self.uncommitted_events: List[Event] = []
         self.applied_events: List[Event] = []
     
     @abstractmethod
-    def apply_event(self, event: Event):
+    def apply_event(self, event -> None: Event) -> None:
         """Apply event to aggregate"""
         pass
     
-    def raise_event(self, event_type: str, event_data: Dict[str, Any], 
-                   metadata: Optional[Dict[str, Any]] = None):
+    def raise_event(self, event_type -> None: str, event_data -> None: Dict[str, Any], 
+                   metadata -> None: Optional[Dict[str, Any]] = None) -> None:
         """Raise new domain event"""
         event = Event(
             aggregate_id=self.id,
@@ -153,12 +153,12 @@ class AggregateRoot(ABC, Generic[T]):
         )
         self.uncommitted_events.append(event)
     
-    def mark_events_as_committed(self):
+    def mark_events_as_committed(self) -> None:
         """Mark uncommitted events as committed"""
         self.applied_events.extend(self.uncommitted_events)
         self.uncommitted_events.clear()
     
-    def load_from_history(self, events: List[Event]):
+    def load_from_history(self, events -> None: List[Event]) -> None:
         """Load aggregate from event history"""
         for event in events:
             self.apply_event(event)
@@ -177,7 +177,7 @@ class AggregateRoot(ABC, Generic[T]):
             'state': self.__dict__.copy()
         }
     
-    def load_from_snapshot(self, snapshot_data: Dict[str, Any]):
+    def load_from_snapshot(self, snapshot_data -> None: Dict[str, Any]) -> None:
         """Load aggregate from snapshot"""
         self.version = snapshot_data['version']
         state = snapshot_data.get('state', {})
@@ -188,7 +188,7 @@ class AggregateRoot(ABC, Generic[T]):
 class EventStore:
     """In-memory event store implementation"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.events: Dict[str, List[Event]] = defaultdict(list)
         self.snapshots: Dict[str, Snapshot] = {}
         self.global_events: List[Event] = []
@@ -254,16 +254,16 @@ class EventStore:
             key = f"{aggregate_type}:{aggregate_id}"
             return self.snapshots.get(key)
     
-    def subscribe(self, event_type: str, handler: callable):
+    def subscribe(self, event_type -> None: str, handler -> None: callable) -> None:
         """Subscribe to event type"""
         self.subscribers[event_type].append(handler)
     
-    def unsubscribe(self, event_type: str, handler: callable):
+    def unsubscribe(self, event_type -> None: str, handler -> None: callable) -> None:
         """Unsubscribe from event type"""
         if handler in self.subscribers[event_type]:
             self.subscribers[event_type].remove(handler)
     
-    def _notify_subscribers(self, event: Event):
+    def _notify_subscribers(self, event -> None: Event) -> None:
         """Notify event subscribers"""
         for handler in self.subscribers.get(event.event_type, []):
             try:
@@ -291,7 +291,7 @@ class EventStore:
 class Repository(ABC, Generic[T]):
     """Abstract repository for aggregates"""
     
-    def __init__(self, event_store: EventStore, aggregate_type: Type[T]):
+    def __init__(self, event_store -> None: EventStore, aggregate_type -> None: Type[T]) -> None:
         self.event_store = event_store
         self.aggregate_type = aggregate_type
         self.snapshot_frequency = 10  # Take snapshot every 10 events
@@ -356,7 +356,7 @@ class Repository(ABC, Generic[T]):
             logger.error(f"Failed to save aggregate {aggregate.id}: {str(e)}")
             return False
     
-    async def _create_snapshot(self, aggregate: T):
+    async def _create_snapshot(self, aggregate -> None: T) -> None:
         """Create and save snapshot"""
         try:
             snapshot_data = aggregate.create_snapshot()
@@ -374,22 +374,22 @@ class Repository(ABC, Generic[T]):
 class EventProjection(ABC):
     """Abstract event projection"""
     
-    def __init__(self, name: str):
+    def __init__(self, name -> None: str) -> None:
         self.name = name
         self.last_processed_version = 0
         self.is_rebuilding = False
     
     @abstractmethod
-    async def handle_event(self, event: Event):
+    async def handle_event(self, event -> None: Event) -> None:
         """Handle event for projection"""
         pass
     
     @abstractmethod
-    async def reset(self):
+    async def reset(self) -> None:
         """Reset projection state"""
         pass
     
-    async def rebuild(self, events: List[Event]):
+    async def rebuild(self, events -> None: List[Event]) -> None:
         """Rebuild projection from events"""
         try:
             self.is_rebuilding = True
@@ -409,7 +409,7 @@ class EventProjection(ABC):
 class EventSourcingCore:
     """Core event sourcing management system"""
     
-    def __init__(self, level: str = "enterprise"):
+    def __init__(self, level -> None: str = "enterprise") -> None:
         self.level = level
         self.event_store = EventStore()
         self.repositories: Dict[str, Repository] = {}
@@ -495,17 +495,17 @@ class EventSourcingCore:
             logger.error(f"Health check failed: {str(e)}")
             return False
     
-    def register_repository(self, name: str, repository: Repository):
+    def register_repository(self, name -> None: str, repository -> None: Repository) -> None:
         """Register aggregate repository"""
         self.repositories[name] = repository
         logger.info(f"Registered repository: {name}")
     
-    def register_projection(self, projection: EventProjection):
+    def register_projection(self, projection -> None: EventProjection) -> None:
         """Register event projection"""
         self.projections[projection.name] = projection
         logger.info(f"Registered projection: {projection.name}")
     
-    def register_event_handler(self, event_type: str, handler: callable):
+    def register_event_handler(self, event_type -> None: str, handler -> None: callable) -> None:
         """Register event handler"""
         self.event_handlers[event_type].append(handler)
         self.event_store.subscribe(event_type, handler)
@@ -535,7 +535,7 @@ class EventSourcingCore:
             logger.error(f"Failed to replay events for {projection_name}: {str(e)}")
             return False
     
-    async def _handle_global_event(self, event: Event):
+    async def _handle_global_event(self, event -> None: Event) -> None:
         """Handle global event processing"""
         try:
             self.metrics['events_processed'] += 1
@@ -553,7 +553,7 @@ class EventSourcingCore:
         except Exception as e:
             logger.error(f"Global event handling error: {str(e)}")
     
-    async def _projection_processor(self, projection: EventProjection):
+    async def _projection_processor(self, projection -> None: EventProjection) -> None:
         """Process events for projection"""
         while self.is_running:
             try:

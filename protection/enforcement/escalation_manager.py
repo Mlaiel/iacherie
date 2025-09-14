@@ -141,7 +141,7 @@ Complete escalation history for a case"""
     total_time_spent: timedelta = timedelta()
     total_cost: float = 0.0
     
-    def add_escalation(self, escalation: 'CaseEscalation'):
+    def add_escalation(self, escalation -> None: 'CaseEscalation') -> None:
         """
 Add escalation to history"""
         self.escalations.append(escalation)
@@ -152,7 +152,7 @@ Add escalation to history"""
         
         self.current_level = escalation.to_level
     
-    def calculate_totals(self):
+    def calculate_totals(self) -> None:
         """
 Calculate total time and cost"""
         total_time = timedelta()
@@ -203,12 +203,12 @@ Individual case escalation instance"""
     notes: List[str] = field(default_factory=list)
     evidence_updates: List[str] = field(default_factory=list)
     
-    def add_action(self, action: EscalationAction):
+    def add_action(self, action -> None: EscalationAction) -> None:
         """
 Add action to escalation"""
         self.actions.append(action)
     
-    def add_note(self, note: str):
+    def add_note(self, note -> None: str) -> None:
         """
 Add note to escalation"""
         timestamp = datetime.utcnow().isoformat()
@@ -225,7 +225,7 @@ class AutomatedEscalationEngine:
     """
 Engine for automated case escalation"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.escalation_rules: Dict[str, EscalationRule] = {}
         self.active_escalations: Dict[str, CaseEscalation] = {}
@@ -251,7 +251,7 @@ Engine for automated case escalation"""
         self._setup_default_rules()
         logger.info("Automated escalation engine initialized")
     
-    def _setup_default_rules(self):
+    def _setup_default_rules(self) -> None:
         """Setup default escalation rules"""
         default_rules = [
             EscalationRule(
@@ -503,9 +503,9 @@ Engine for automated case escalation"""
     
     async def _execute_automated_actions(
         self,
-        escalation: CaseEscalation,
-        actions: List[str]
-    ):
+        escalation -> None: CaseEscalation,
+        actions -> None: List[str]
+    ) -> None:
         """
 Execute automated actions for escalation"""
         try:
@@ -590,9 +590,9 @@ Execute automated actions for escalation"""
     
     async def _send_escalation_notifications(
         self,
-        escalation: CaseEscalation,
-        recipients: List[str]
-    ):
+        escalation -> None: CaseEscalation,
+        recipients -> None: List[str]
+    ) -> None:
         """Send notifications about escalation"""
         try:
             for recipient in recipients:
@@ -751,7 +751,7 @@ Execute automated actions for escalation"""
         """Get complete escalation history for case"""
         return self.escalation_history.get(case_id)
     
-    async def monitor_escalations(self):
+    async def monitor_escalations(self) -> None:
         """
 Monitor active escalations for deadlines and status updates"""
         try:
@@ -786,7 +786,7 @@ Monitor active escalations for deadlines and status updates"""
         except Exception as e:
             logger.error(f"Error monitoring escalations: {e}")
     
-    async def _handle_overdue_escalation(self, escalation: CaseEscalation):
+    async def _handle_overdue_escalation(self, escalation -> None: CaseEscalation) -> None:
         """Handle overdue escalation"""
         try:
             # Send urgent notifications
@@ -874,7 +874,7 @@ Get escalation engine statistics"""
             logger.error(f"Error getting escalation statistics: {e}")
             return {}
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Shutdown escalation engine"""
         try:
             # Save state of active escalations
@@ -912,3 +912,5 @@ __all__ = [
     'EscalationOutcome',
     'get_escalation_engine'
 ]
+
+# File has syntax issues - needs manual review

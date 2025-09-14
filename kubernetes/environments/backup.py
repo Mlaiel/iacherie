@@ -135,7 +135,7 @@ class BackupEnvironmentManager:
     - Compliance and audit trails
     """
     
-    def __init__(self, config_path: Optional[str] = None):
+    def __init__(self, config_path -> None: Optional[str] = None) -> None:
         self.config_path = config_path or "/config/backup.yml"
         self.environment = "backup"
         
@@ -591,7 +591,7 @@ Backup databases"""
             logger.error(f"Configuration restore failed: {e}")
             return False
     
-    async def _send_backup_notification(self, backup_job: Dict):
+    async def _send_backup_notification(self, backup_job -> None: Dict) -> None:
         """Send backup completion notification"""
         try:
             # Implement notification logic
@@ -599,7 +599,7 @@ Backup databases"""
         except Exception as e:
             logger.error(f"Failed to send backup notification: {e}")
     
-    async def _send_restore_notification(self, restore_job: Dict):
+    async def _send_restore_notification(self, restore_job -> None: Dict) -> None:
         """Send restore completion notification"""
         try:
             # Implement notification logic

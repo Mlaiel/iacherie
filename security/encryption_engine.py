@@ -1,3 +1,8 @@
+"""
+Encryption Engine module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 🔐 Advanced Encryption Engine - Ainflue Platform
@@ -121,7 +126,7 @@ class AdvancedEncryptionEngine:
     - Compliance with industry standards
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.backend = default_backend()
         
@@ -793,7 +798,7 @@ class AdvancedEncryptionEngine:
         """Get key from store"""
         return self.key_store.get(key_id)
 
-    def _validate_key(self, key: EncryptionKey):
+    def _validate_key(self, key -> None: EncryptionKey) -> None:
         """Validate key before use"""
         if key.expires_at and key.expires_at < datetime.now():
             raise ValueError("Key has expired")
@@ -808,7 +813,7 @@ class AdvancedEncryptionEngine:
         """Generate unique key ID"""
         return f"key_{int(time.time())}_{secrets.token_hex(8)}"
 
-    def _get_hash_algorithm(self, algorithm: HashAlgorithm):
+    def _get_hash_algorithm(self, algorithm -> None: HashAlgorithm) -> None:
         """Get cryptography hash algorithm object"""
         if algorithm == HashAlgorithm.SHA256:
             return hashes.SHA256()
@@ -863,7 +868,7 @@ __all__ = [
 ]
 
 if __name__ == "__main__":
-    async def test_encryption_engine():
+    async def test_encryption_engine() -> None:
         """Test the advanced encryption engine"""
         config = {}
         

@@ -157,7 +157,7 @@ class LicenseEngine:
     - Advanced security with encryption and digital signatures
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """
 Initialize the License Engine."""
         self.config = config

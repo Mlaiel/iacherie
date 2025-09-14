@@ -126,7 +126,7 @@ class GeneratorConfig:
 class TemporalFeatureGenerator:
     """🔬 Générateur de features temporelles pour ML"""
     
-    def __init__(self, config: GeneratorConfig):
+    def __init__(self, config -> None: GeneratorConfig) -> None:
         self.config = config
         self.generator_id = str(uuid.uuid4())
         self.patterns: Dict[str, List[TemporalPattern]] = {}
@@ -799,7 +799,7 @@ def create_temporal_feature_generator(
     )
     return TemporalFeatureGenerator(config)
 
-async def demo_temporal_feature_generator():
+async def demo_temporal_feature_generator() -> None:
     """Démo du générateur de features temporelles"""
     generator = create_temporal_feature_generator()
     

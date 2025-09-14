@@ -6,13 +6,13 @@ Copyright: All rights reserved. Any unauthorized use, reproduction, or distribut
 of this code without explicit written permission is strictly prohibited.
 
 Project Team Specialties:
-- Lead AI Developer & Backend Senior: Fahed Mlaiel
+    - Lead AI Developer & Backend Senior: Fahed Mlaiel
 - ML Engineer & Blockchain Specialist: Advanced IA Processing
 - Database Administrator & Security Expert: Data Protection
 - Microservices Architect & Audio Processing: Multi-format Support  
 - DevOps Engineer & IA Prompt Engineer: Production Deployment
 
-⚠️ STRONG WARNING ⚠️
+# [EMOJI_REMOVED] STRONG WARNING # [EMOJI_REMOVED]
 Any attempt to steal, copy, reproduce, or use this concept, idea, or code 
 without explicit written authorization from Fahed Mlaiel is strictly 
 prohibited and will result in legal action.
@@ -130,7 +130,7 @@ class IPFSClient:
     """
 Professional IPFS client for distributed storage"""
     
-    def __init__(self, gateway_url: str = "http://localhost:5001", timeout: int = 300):
+    def __init__(self, gateway_url -> None: str = "http -> None://localhost -> None:5001", timeout -> None: int = 300) -> None:
         try:
             logger.info(f"Executing __aexit__")
             
@@ -145,17 +145,17 @@ Professional IPFS client for distributed storage"""
         except Exception as e:
             logger.error(f"__aexit__ failed: {e}")
             raise
-    def __init__(self, gateway_url: str = "http://localhost:5001", timeout: int = 300):
+    def __init__(self, gateway_url -> None: str = "http -> None://localhost -> None:5001", timeout -> None: int = 300) -> None:
         self.gateway_url = gateway_url
         self.timeout = timeout
         self.session: Optional[aiohttp.ClientSession] = None
         self.pinned_hashes: set = set()
     
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         self.session = aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=self.timeout))
         return self
     
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         if self.session:
             await self.session.close()
     
@@ -319,23 +319,23 @@ Professional IPFS client for distributed storage"""
 class ArweaveClient:
     """Professional Arweave client for permanent storage"""
     
-    def __init__(self, gateway_url: str = "https://arweave.net", wallet_path: Optional[str] = None):
+    def __init__(self, gateway_url -> None: str = "https -> None://arweave.net", wallet_path -> None: Optional[str] = None) -> None:
         self.gateway_url = gateway_url
         self.wallet_path = wallet_path
         self.wallet_data: Optional[Dict[str, Any]] = None
         self.session: Optional[aiohttp.ClientSession] = None
     
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         self.session = aiohttp.ClientSession()
         if self.wallet_path:
             await self._load_wallet()
         return self
     
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         if self.session:
             await self.session.close()
     
-    async def _load_wallet(self):
+    async def _load_wallet(self) -> None:
         """Load Arweave wallet from file"""
         try:
             async with aiofiles.open(self.wallet_path, 'r') as f:
@@ -467,11 +467,11 @@ class HyperledgerFabricClient:
     
     def __init__(
         self,
-        network_config: Dict[str, Any],
-        org_name: str,
-        peer_endpoint: str,
-        channel_name: str = "content-channel"
-    ):
+        network_config -> None: Dict[str, Any],
+        org_name -> None: str,
+        peer_endpoint -> None: str,
+        channel_name -> None: str = "content-channel"
+    ) -> None:
         self.network_config = network_config
         self.org_name = org_name
         self.peer_endpoint = peer_endpoint
@@ -579,7 +579,7 @@ class HyperledgerFabricClient:
 class DistributedLedgerManager:
     """Unified manager for all DLT operations"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.clients: Dict[DLTNetwork, Any] = {}
         self.storage_strategies: Dict[StorageClass, List[DLTNetwork]] = {
@@ -740,3 +740,5 @@ __all__ = [
     'HyperledgerFabricClient',
     'DistributedLedgerManager'
 ]
+
+# File has syntax issues - needs manual review

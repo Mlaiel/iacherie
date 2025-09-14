@@ -180,7 +180,7 @@ class ElevenLabsConfiguration:
 class ElevenLabsIntegration:
     """Comprehensive ElevenLabs voice synthesis integration."""
     
-    def __init__(self, config: ElevenLabsConfiguration):
+    def __init__(self, config -> None: ElevenLabsConfiguration) -> None:
         self.config = config
         self.session = None
         

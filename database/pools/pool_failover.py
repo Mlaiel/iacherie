@@ -1,3 +1,8 @@
+"""
+Pool Failover module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """Pool Failover - High Availability and Recovery Management
 ===========================================================
@@ -86,7 +91,7 @@ class CircuitBreakerState:
 class CircuitBreaker:
     """Circuit breaker implementation for database connections"""
     
-    def __init__(self, pool_id: str, endpoint: str, config: FailoverConfig):
+    def __init__(self, pool_id -> None: str, endpoint -> None: str, config -> None: FailoverConfig) -> None:
         self.pool_id = pool_id
         self.endpoint = endpoint
         self.config = config
@@ -95,7 +100,7 @@ class CircuitBreaker:
         
         logger.debug(f"🔄 Circuit breaker created for {pool_id}:{endpoint}")
 
-    async def call(self, func: Callable, *args, **kwargs):
+    async def call(self, func -> None: Callable, *args, **kwargs) -> None:
         """Execute function with circuit breaker protection"""
         async with self._lock:
             # Check if circuit is open
@@ -138,7 +143,7 @@ class CircuitBreaker:
         
         return time_since_open > min_wait_time
 
-    async def _record_success(self):
+    async def _record_success(self) -> None:
         """Record successful operation"""
         self.state.success_count += 1
         self.state.last_success_time = datetime.now(timezone.utc)
@@ -150,7 +155,7 @@ class CircuitBreaker:
                 self.state.opened_at = None
                 logger.info(f"✅ Circuit breaker closed for {self.pool_id}:{self.endpoint}")
 
-    async def _record_failure(self, error: str):
+    async def _record_failure(self, error -> None: str) -> None:
         """Record failed operation"""
         self.state.failure_count += 1
         self.state.last_failure_time = datetime.now(timezone.utc)
@@ -165,7 +170,7 @@ class CircuitBreaker:
 class FailoverManager:
     """Manages failover for a specific database pool"""
     
-    def __init__(self, config: FailoverConfig):
+    def __init__(self, config -> None: FailoverConfig) -> None:
         self.config = config
         self.current_endpoint = config.primary_endpoint
         self.state = FailoverState.HEALTHY
@@ -181,7 +186,7 @@ class FailoverManager:
         
         logger.info(f"🛡️ Failover manager created for pool {config.pool_id}")
 
-    def _initialize_circuit_breakers(self):
+    def _initialize_circuit_breakers(self) -> None:
         """Initialize circuit breakers for all endpoints"""
         all_endpoints = [self.config.primary_endpoint] + self.config.secondary_endpoints
         
@@ -190,7 +195,7 @@ class FailoverManager:
                 self.config.pool_id, endpoint, self.config
             )
 
-    async def start_monitoring(self):
+    async def start_monitoring(self) -> None:
         """Start health monitoring and failover detection"""
         if self._health_check_task and not self._health_check_task.done():
             logger.warning(f"Health monitoring already running for {self.config.pool_id}")
@@ -199,7 +204,7 @@ class FailoverManager:
         self._health_check_task = asyncio.create_task(self._health_check_loop())
         logger.info(f"🔄 Health monitoring started for {self.config.pool_id}")
 
-    async def stop_monitoring(self):
+    async def stop_monitoring(self) -> None:
         """Stop health monitoring"""
         if self._health_check_task:
             self._health_check_task.cancel()
@@ -219,7 +224,7 @@ class FailoverManager:
         
         logger.info(f"⏹️ Health monitoring stopped for {self.config.pool_id}")
 
-    async def _health_check_loop(self):
+    async def _health_check_loop(self) -> None:
         """Main health check loop"""
         while True:
             try:
@@ -231,7 +236,7 @@ class FailoverManager:
             except Exception as e:
                 logger.error(f"❌ Health check loop error for {self.config.pool_id}: {e}")
 
-    async def _perform_health_checks(self):
+    async def _perform_health_checks(self) -> None:
         """Perform health checks on all endpoints"""
         current_healthy = await self._check_endpoint_health(self.current_endpoint)
         
@@ -264,7 +269,7 @@ class FailoverManager:
             logger.debug(f"Health check failed for {endpoint}: {e}")
             return False
 
-    async def _mock_health_check(self, endpoint: str):
+    async def _mock_health_check(self, endpoint -> None: str) -> None:
         """Mock health check implementation"""
         # In real implementation, this would actually connect to the database
         await asyncio.sleep(0.1)  # Simulate network delay
@@ -274,7 +279,7 @@ class FailoverManager:
         if random.random() < 0.1:  # 10% failure rate
             raise Exception(f"Mock health check failure for {endpoint}")
 
-    async def _attempt_failover(self):
+    async def _attempt_failover(self) -> None:
         """Attempt to failover to a healthy secondary endpoint"""
         async with self._lock:
             if self.state == FailoverState.FAILED:
@@ -297,7 +302,7 @@ class FailoverManager:
             if not self._recovery_task or self._recovery_task.done():
                 self._recovery_task = asyncio.create_task(self._recovery_loop())
 
-    async def _execute_failover(self, new_endpoint: str):
+    async def _execute_failover(self, new_endpoint -> None: str) -> None:
         """Execute failover to new endpoint"""
         start_time = time.time()
         old_endpoint = self.current_endpoint
@@ -338,7 +343,7 @@ class FailoverManager:
             logger.error(f"❌ Failover failed: {old_endpoint} → {new_endpoint}: {e}")
             self.state = FailoverState.FAILED
 
-    async def _attempt_failback(self):
+    async def _attempt_failback(self) -> None:
         """Attempt to failback to primary endpoint"""
         if self.current_endpoint == self.config.primary_endpoint:
             return
@@ -352,7 +357,7 @@ class FailoverManager:
         if await self._check_endpoint_health(self.config.primary_endpoint):
             await self._execute_failback()
 
-    async def _execute_failback(self):
+    async def _execute_failback(self) -> None:
         """Execute failback to primary endpoint"""
         start_time = time.time()
         old_endpoint = self.current_endpoint
@@ -392,7 +397,7 @@ class FailoverManager:
             
             logger.error(f"❌ Failback failed: {old_endpoint} → {self.config.primary_endpoint}: {e}")
 
-    async def _recovery_loop(self):
+    async def _recovery_loop(self) -> None:
         """Recovery loop for failed pools"""
         attempt = 0
         
@@ -424,7 +429,7 @@ class FailoverManager:
                 logger.error(f"❌ Recovery attempt error: {e}")
                 await asyncio.sleep(10)
 
-    async def _execute_recovery(self, endpoint: str):
+    async def _execute_recovery(self, endpoint -> None: str) -> None:
         """Execute recovery to healthy endpoint"""
         start_time = time.time()
         
@@ -501,13 +506,13 @@ class FailoverManager:
 class PoolFailoverManager:
     """Central failover manager for all database pools"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.failover_managers: Dict[str, FailoverManager] = {}
         self._initialized = False
         
         logger.info("🛡️ Pool Failover Manager initialized")
 
-    async def register_pool(self, config: FailoverConfig):
+    async def register_pool(self, config -> None: FailoverConfig) -> None:
         """Register a pool for failover management"""
         if config.pool_id in self.failover_managers:
             logger.warning(f"Pool {config.pool_id} already registered for failover")
@@ -522,7 +527,7 @@ class PoolFailoverManager:
         
         logger.info(f"✅ Pool {config.pool_id} registered for failover")
 
-    async def start_all_monitoring(self):
+    async def start_all_monitoring(self) -> None:
         """Start monitoring for all registered pools"""
         for manager in self.failover_managers.values():
             await manager.start_monitoring()
@@ -530,7 +535,7 @@ class PoolFailoverManager:
         self._initialized = True
         logger.info("🔄 Failover monitoring started for all pools")
 
-    async def stop_all_monitoring(self):
+    async def stop_all_monitoring(self) -> None:
         """Stop monitoring for all pools"""
         for manager in self.failover_managers.values():
             await manager.stop_monitoring()

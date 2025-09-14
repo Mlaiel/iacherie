@@ -128,7 +128,7 @@ class ROIAnalyticsCalculator:
     - Real-time ROI monitoring and alerting
     """
     
-    def __init__(self, db_url: str, discount_rate: float = 0.1):
+    def __init__(self, db_url -> None: str, discount_rate -> None: float = 0.1) -> None:
         """Initialize ROI analytics calculator"""
         self.db_url = db_url
         self.discount_rate = discount_rate  # For NPV calculations
@@ -1372,7 +1372,7 @@ class ROIAnalyticsCalculator:
         return recommendations
 
 # Usage example
-async def main():
+async def main() -> None:
     """Test the ROI analytics calculator"""
     try:
         # Initialize calculator

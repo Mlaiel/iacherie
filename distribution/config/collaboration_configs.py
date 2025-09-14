@@ -146,7 +146,7 @@ class CollaborationConfigs:
     - Communication preferences
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.collaboration_configs: Dict[CollaborationType, CollaborationConfig] = {}
         self.revenue_share_configs: Dict[RevenueShareModel, RevenueShareConfig] = {}
         self.matching_config = CreatorMatchingConfig()
@@ -155,7 +155,7 @@ class CollaborationConfigs:
         self.communication_config = CommunicationConfig()
         self._load_default_configurations()
         
-    def _load_default_configurations(self):
+    def _load_default_configurations(self) -> None:
         """Load default collaboration configurations"""
         
         # Cross-promotion collaborations
@@ -570,7 +570,7 @@ class CollaborationConfigs:
             
         return recommendations[:5]  # Return top 5 recommendations
         
-    def export_config(self, output_path: str):
+    def export_config(self, output_path -> None: str) -> None:
         """Export configuration to JSON file"""
         config_data = {
             "collaboration_configs": {

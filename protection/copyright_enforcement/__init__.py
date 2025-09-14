@@ -9,13 +9,13 @@ Email: mlaiel@live.de
 Copyright: All rights reserved. Unauthorized use, distribution, or modification
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
 
-⚠️ STRICT COPYRIGHT WARNING ⚠️
+# [EMOJI_REMOVED] STRICT COPYRIGHT WARNING # [EMOJI_REMOVED]
 ALL RIGHTS RESERVED. UNAUTHORIZED USE PROHIBITED.
 This code belongs exclusively to Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use will result in immediate legal action.
 
 Module Features:
-- Automated DMCA takedown generation and submission
+    - Automated DMCA takedown generation and submission
 - Legal case management and escalation workflows
 - Revenue claim automation and recovery tracking
 - Platform-specific enforcement protocols
@@ -29,7 +29,7 @@ Module Features:
 - Automated escalation management
 
 Team Expertise:
-- Lead Developer & AI Architect: Advanced AI systems, industrial-grade architecture
+    - Lead Developer & AI Architect: Advanced AI systems, industrial-grade architecture
 - Senior Backend Engineer: Enterprise-level Python, microservices, scalability  
 - ML Engineer: Machine learning pipelines, fingerprinting algorithms
 - Database Administrator: PostgreSQL optimization, data architecture
@@ -307,3 +307,5 @@ SUPPORTED_PLATFORMS = [
     "twitch",
     "pinterest"
 ]
+
+# File has syntax issues - needs manual review

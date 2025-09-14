@@ -1,3 +1,8 @@
+"""
+Competition Service module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 🏆 COMPETITION SERVICE
@@ -130,7 +135,7 @@ class CompetitionSubmission:
     expert_ratings: List[float] = None
     ai_score: Optional[float] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.expert_ratings is None:
             self.expert_ratings = []
 
@@ -168,7 +173,7 @@ class Competition:
     view_count: int = 0
     engagement_score: float = 0.0
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if not self.participants:
             self.participants = {}
         if not self.submissions:
@@ -201,7 +206,7 @@ class CompetitionService:
     - AI Prompt Engineer: Dynamic competition descriptions and engagement
     """
     
-    def __init__(self, redis_url: str = "redis://localhost:6379"):
+    def __init__(self, redis_url -> None: str = "redis -> None://localhost -> None:6379") -> None:
         """Initialize competition service"""
         self.redis_url = redis_url
         self.redis_client = None
@@ -233,7 +238,7 @@ class CompetitionService:
         
         logger.info("Competition Service initialized")
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize Redis connection and competition templates"""
         try:
             self.redis_client = redis.from_url(self.redis_url)
@@ -254,7 +259,7 @@ class CompetitionService:
             logger.error(f"Failed to initialize Competition Service: {e}")
             raise
     
-    async def _initialize_competition_templates(self):
+    async def _initialize_competition_templates(self) -> None:
         """Initialize predefined competition templates"""
         
         # Music Competition Templates
@@ -509,8 +514,8 @@ class CompetitionService:
             logger.error(f"Failed to submit entry: {e}")
             raise
     
-    async def _ai_score_submission(self, submission: CompetitionSubmission, 
-                                  competition: Competition):
+    async def _ai_score_submission(self, submission -> None: CompetitionSubmission, 
+                                  competition -> None: Competition) -> None:
         """AI-powered submission scoring"""
         try:
             # Simulate AI scoring based on competition criteria
@@ -609,8 +614,8 @@ class CompetitionService:
             logger.error(f"Failed to process vote: {e}")
             return False
     
-    async def _calculate_overall_score(self, submission: CompetitionSubmission,
-                                     competition: Competition):
+    async def _calculate_overall_score(self, submission -> None: CompetitionSubmission,
+                                     competition -> None: Competition) -> None:
         """Calculate overall submission score based on judging type"""
         try:
             total_score = 0.0
@@ -656,7 +661,7 @@ class CompetitionService:
         except Exception as e:
             logger.error(f"Failed to calculate overall score: {e}")
     
-    async def _update_leaderboard(self, competition_id: str):
+    async def _update_leaderboard(self, competition_id -> None: str) -> None:
         """Update real-time competition leaderboard"""
         try:
             competition = self.competitions[competition_id]
@@ -777,7 +782,7 @@ class CompetitionService:
             logger.error(f"Failed to finalize competition: {e}")
             raise
     
-    async def _award_prizes(self, competition: Competition, winners: Dict[str, Any]):
+    async def _award_prizes(self, competition -> None: Competition, winners -> None: Dict[str, Any]) -> None:
         """Award prizes and badges to competition winners"""
         try:
             # This would integrate with the reward management service
@@ -899,7 +904,7 @@ class CompetitionService:
         # Placeholder implementation - would include voting eligibility logic
         return True
     
-    async def _save_competition_to_redis(self, competition: Competition):
+    async def _save_competition_to_redis(self, competition -> None: Competition) -> None:
         """Save competition data to Redis"""
         try:
             if self.redis_client:
@@ -920,7 +925,7 @@ class CompetitionService:
         except Exception as e:
             logger.error(f"Failed to save competition to Redis: {e}")
     
-    async def _save_leaderboard_to_redis(self, leaderboard: Leaderboard):
+    async def _save_leaderboard_to_redis(self, leaderboard -> None: Leaderboard) -> None:
         """Save leaderboard data to Redis for real-time access"""
         try:
             if self.redis_client:
@@ -937,7 +942,7 @@ class CompetitionService:
         except Exception as e:
             logger.error(f"Failed to save leaderboard to Redis: {e}")
     
-    async def _load_competition_data(self):
+    async def _load_competition_data(self) -> None:
         """Load existing competition data from Redis"""
         try:
             if self.redis_client:
@@ -953,7 +958,7 @@ class CompetitionService:
         except Exception as e:
             logger.error(f"Failed to load competition data from Redis: {e}")
     
-    async def _initialize_ai_models(self):
+    async def _initialize_ai_models(self) -> None:
         """Initialize AI models for matchmaking and scoring"""
         try:
             # Placeholder for AI model initialization
@@ -1014,7 +1019,7 @@ class CompetitionService:
         # Placeholder implementation
         return []
     
-    async def cleanup_expired_competitions(self):
+    async def cleanup_expired_competitions(self) -> None:
         """Background service: Clean up expired competitions"""
         try:
             current_time = datetime.now()
@@ -1039,7 +1044,7 @@ class CompetitionService:
         except Exception as e:
             logger.error(f"Failed to cleanup expired competitions: {e}")
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Graceful shutdown of competition service"""
         try:
             if self.redis_client:
@@ -1052,7 +1057,7 @@ class CompetitionService:
             logger.error(f"Error during shutdown: {e}")
 
 # Example usage and testing
-async def main():
+async def main() -> None:
     """Example usage of Competition Service"""
     service = CompetitionService()
     await service.initialize()

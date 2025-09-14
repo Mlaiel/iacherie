@@ -66,7 +66,7 @@ class CohortAnalysisMonitor:
     - Advanced clustering and segmentation
     """
     
-    def __init__(self, db_url: str, redis_url: str = None):
+    def __init__(self, db_url -> None: str, redis_url -> None: str = None) -> None:
         """Initialize cohort analysis monitor"""
         self.db_url = db_url
         self.redis_url = redis_url
@@ -584,7 +584,7 @@ class CohortAnalysisMonitor:
         return recommendations
 
 # Usage example for testing
-async def main():
+async def main() -> None:
     """Test the cohort analysis monitor"""
     try:
         # Initialize monitor (would use real DB in production)

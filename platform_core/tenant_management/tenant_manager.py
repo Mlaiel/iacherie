@@ -86,7 +86,7 @@ class TenantManager:
     """
 Gestionnaire principal des tenants"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.tenants: Dict[str, TenantConfig] = {}
         self.usage_tracker: Dict[str, TenantUsage] = {}
@@ -373,7 +373,7 @@ Mettre à jour le statut d'un tenant"""
 class QueryTransformer:
     """Advanced query transformation engine for tenant isolation"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.transformation_rules = {
             'table_prefix': True,
             'row_level_security': True,
@@ -416,7 +416,7 @@ class QueryTransformer:
 class TenantEncryptionManager:
     """Advanced encryption management for tenant data"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.encryption_algorithms = {
             'basic': 'AES-128',
             'standard': 'AES-256',
@@ -480,7 +480,7 @@ class TenantEncryptionManager:
 class TenantAuditLogger:
     """Comprehensive audit logging for tenant operations"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.audit_events = []
         self.compliance_mapping = {
             'GDPR': ['data_access', 'data_modification', 'data_deletion'],
@@ -524,7 +524,7 @@ class TenantAuditLogger:
 class DataMaskingEngine:
     """Advanced data masking for tenant privacy protection"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.masking_rules = {
             'minimal': {
                 'email': 'partial',
@@ -582,7 +582,7 @@ class DataMaskingEngine:
 class TenantDataIsolator:
     """Gestionnaire d'isolation des données par tenant"""
     
-    def __init__(self, tenant_manager: TenantManager):
+    def __init__(self, tenant_manager -> None: TenantManager) -> None:
         """Initialize tenant data isolator with advanced security and compliance features"""
         try:
             logger.info("Initializing TenantDataIsolator with enterprise security features...")

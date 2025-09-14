@@ -25,7 +25,7 @@ logger = logging.getLogger(__name__)
 class MediumArticle:
     """Medium article management and analytics"""
     
-    def __init__(self, article_id: str, title: str, author_id: str):
+    def __init__(self, article_id -> None: str, title -> None: str, author_id -> None: str) -> None:
         self.article_id = article_id
         self.title = title
         self.author_id = author_id
@@ -43,7 +43,7 @@ class MediumArticle:
 class MediumPublication:
     """Medium publication management"""
     
-    def __init__(self, publication_id: str, name: str):
+    def __init__(self, publication_id -> None: str, name -> None: str) -> None:
         self.publication_id = publication_id
         self.name = name
         self.description = ""
@@ -55,7 +55,7 @@ class MediumPublication:
 class MediumUser:
     """Medium user profile management"""
     
-    def __init__(self, user_id: str, username: str):
+    def __init__(self, user_id -> None: str, username -> None: str) -> None:
         self.user_id = user_id
         self.username = username
         self.name = ""
@@ -86,7 +86,7 @@ class MediumPartnerAPI:
     - Audience growth tactics
     """
     
-    def __init__(self, integration_token: str):
+    def __init__(self, integration_token -> None: str) -> None:
         self.integration_token = integration_token
         self.base_url = "https://api.medium.com/v1"
         self.session = None
@@ -96,17 +96,17 @@ class MediumPartnerAPI:
             'hour_start': datetime.utcnow().hour
         }
         
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         """Async context manager entry"""
         self.session = aiohttp.ClientSession()
         return self
         
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         """Async context manager exit"""
         if self.session:
             await self.session.close()
 
-    def _check_rate_limit(self):
+    def _check_rate_limit(self) -> None:
         """Check and enforce rate limiting"""
         current_hour = datetime.utcnow().hour
         
@@ -803,7 +803,7 @@ class MediumPartnerAPI:
     # Additional helper methods for comprehensive functionality...
 
 # Example usage and testing
-async def main():
+async def main() -> None:
     """Example usage of Medium Partner API integration"""
     
     # Initialize the API client

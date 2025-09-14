@@ -125,7 +125,7 @@ class NotificationManager:
     """
 Gestionnaire principal des notifications"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.templates: Dict[str, NotificationTemplate] = {}
         self.pending_notifications: List[NotificationRequest] = []
@@ -427,7 +427,7 @@ Gestionnaire principal des notifications"""
 class TemplateManager:
     """Gestionnaire de templates de notifications"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.templates: Dict[str, NotificationTemplate] = {}
         self._create_default_templates()
     

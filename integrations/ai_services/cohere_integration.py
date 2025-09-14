@@ -119,13 +119,13 @@ class CohereEnterpriseClient:
     
     def __init__(
         self,
-        api_key: Optional[str] = None,
-        base_url: str = "https://api.cohere.ai/v1",
-        timeout: int = 120,
-        max_retries: int = 3,
-        enable_prompt_optimization: bool = True,
-        enable_cost_optimization: bool = True
-    ):
+        api_key -> None: Optional[str] = None,
+        base_url -> None: str = "https -> None://api.cohere.ai/v1",
+        timeout -> None: int = 120,
+        max_retries -> None: int = 3,
+        enable_prompt_optimization -> None: bool = True,
+        enable_cost_optimization -> None: bool = True
+    ) -> None:
         """Initialize Cohere client with enterprise configuration."""
         self.api_key = api_key
         self.base_url = base_url.rstrip('/')
@@ -723,11 +723,11 @@ class CohereEnterpriseClient:
             
         logger.info("✅ Cohere client closed")
 
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         """Async context manager entry."""
         return self
 
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         """Async context manager exit."""
         await self.close()
 
@@ -757,7 +757,7 @@ def create_cohere_client(
 
 
 # Example usage for creator workflows
-async def example_creator_content_generation():
+async def example_creator_content_generation() -> None:
     """Example of creator-specific content generation."""
     try:
         client = create_cohere_client(api_key="your-api-key")

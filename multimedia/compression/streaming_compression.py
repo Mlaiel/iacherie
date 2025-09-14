@@ -27,7 +27,7 @@ class StreamingConfig:
 class StreamingCompressionEngine:
     """Real-time compression engine for streaming applications."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the streaming compression engine."""
         self.active_streams = {}
         self.compression_presets = self._load_streaming_presets()

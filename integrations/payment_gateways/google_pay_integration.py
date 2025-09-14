@@ -96,7 +96,7 @@ class GooglePayConfig:
     software_info_id: str = "ainflue.creator.platform"
     software_info_version: str = "1.0.0"
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.supported_networks is None:
             self.supported_networks = [
                 CardNetwork.AMEX,
@@ -168,7 +168,7 @@ class GooglePayIntegration(BaseIntegration):
     - Dynamic payment request generation
     """
 
-    def __init__(self, config: GooglePayConfig):
+    def __init__(self, config -> None: GooglePayConfig) -> None:
         super().__init__("google_pay")
         self.config = config
         self.security_manager = SecurityManager()
@@ -820,7 +820,7 @@ def create_google_pay_integration(
     return GooglePayIntegration(config)
 
 # Example usage for Ainflue platform
-async def example_google_pay_flow():
+async def example_google_pay_flow() -> None:
     """Example Google Pay integration usage"""
     
     # Initialize Google Pay integration with Stripe

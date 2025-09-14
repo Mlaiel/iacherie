@@ -161,7 +161,7 @@ class InfluencerTycoon:
     and income simulation for the influencer gaming experience.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.players: Dict[str, TycoonPlayer] = {}
         self.asset_templates: Dict[TycoonAssetType, Dict[str, Any]] = {}
@@ -173,7 +173,7 @@ class InfluencerTycoon:
         self._initialize_templates()
         logger.info("🎮 Influencer Tycoon initialized")
     
-    def _initialize_templates(self):
+    def _initialize_templates(self) -> None:
         """Initialize asset and upgrade templates."""
         # Asset templates with balanced progression
         self.asset_templates = {
@@ -468,7 +468,7 @@ class InfluencerTycoon:
             logger.error(f"Error processing offline progress: {e}")
             return {"income_earned": Decimal('0'), "hours_offline": 0}
     
-    async def _update_player_level(self, player: TycoonPlayer):
+    async def _update_player_level(self, player -> None: TycoonPlayer) -> None:
         """Update player level based on progress."""
         # Simple level calculation based on total spent
         total_spent = float(player.metrics.total_spent)

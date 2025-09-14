@@ -134,7 +134,7 @@ class PerformanceCollector:
     """
 Collects performance metrics from various sources."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.collection_interval = 30  # seconds
         self.running = False
         self._stop_event = threading.Event()
@@ -360,7 +360,7 @@ Stop metric collection."""
 class AlertManager:
     """Manages performance alerts and notifications."""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.active_alerts: Dict[str, Alert] = {}
         self.alert_history: List[Alert] = []
@@ -507,7 +507,7 @@ class PerformanceMonitor:
     - Automated performance tuning and self-healing capabilities
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """
 Initialize the Performance Monitor."""
         self.config = config

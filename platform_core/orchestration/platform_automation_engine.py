@@ -1,3 +1,8 @@
+"""
+Platform Automation Engine module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Platform Automation Engine - Enterprise Core Component
@@ -159,7 +164,7 @@ class PlatformAutomationEngine:
     scheduled tasks, event-driven automation, and self-service operations.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.workflows: Dict[str, AutomationWorkflow] = {}
         self.scheduled_tasks: Dict[str, ScheduledTask] = {}
         self.active_executions: Dict[str, WorkflowExecution] = {}
@@ -212,7 +217,7 @@ class PlatformAutomationEngine:
         
         logger.info("Platform Automation Engine initialized")
     
-    async def start_engine(self):
+    async def start_engine(self) -> None:
         """Start the automation engine if not already started"""
         if not self._engine_started:
             await self._start_engine()
@@ -536,7 +541,7 @@ class PlatformAutomationEngine:
     
     # Private methods
     
-    async def _start_engine(self):
+    async def _start_engine(self) -> None:
         """Start automation engine"""
         # Start worker tasks
         for i in range(self.worker_count):
@@ -548,7 +553,7 @@ class PlatformAutomationEngine:
         
         logger.info(f"Automation engine started with {self.worker_count} workers")
     
-    async def _worker_loop(self, worker_name: str):
+    async def _worker_loop(self, worker_name -> None: str) -> None:
         """Worker loop for executing workflows"""
         while True:
             try:
@@ -576,7 +581,7 @@ class PlatformAutomationEngine:
                 logger.error(f"Worker {worker_name} error: {e}")
                 await asyncio.sleep(1)
     
-    async def _scheduler_loop(self):
+    async def _scheduler_loop(self) -> None:
         """Scheduler loop for handling scheduled tasks"""
         while True:
             try:
@@ -614,7 +619,7 @@ class PlatformAutomationEngine:
                 logger.error(f"Scheduler loop error: {e}")
                 await asyncio.sleep(60)
     
-    async def _execute_workflow_actions(self, execution: WorkflowExecution):
+    async def _execute_workflow_actions(self, execution -> None: WorkflowExecution) -> None:
         """Execute all actions in a workflow"""
         try:
             execution.status = TaskStatus.RUNNING
@@ -655,7 +660,7 @@ class PlatformAutomationEngine:
                 if len(self.execution_history) > self.max_execution_history:
                     self.execution_history = self.execution_history[-self.max_execution_history:]
     
-    async def _execute_actions_sequential(self, execution: WorkflowExecution, workflow: AutomationWorkflow):
+    async def _execute_actions_sequential(self, execution -> None: WorkflowExecution, workflow -> None: AutomationWorkflow) -> None:
         """Execute actions sequentially"""
         for i, action in enumerate(workflow.actions):
             if execution.status in [TaskStatus.CANCELLED, TaskStatus.PAUSED]:
@@ -687,7 +692,7 @@ class PlatformAutomationEngine:
                     execution.status = TaskStatus.FAILED
                     break
     
-    async def _execute_actions_parallel(self, execution: WorkflowExecution, workflow: AutomationWorkflow):
+    async def _execute_actions_parallel(self, execution -> None: WorkflowExecution, workflow -> None: AutomationWorkflow) -> None:
         """Execute actions in parallel"""
         tasks = []
         
@@ -836,7 +841,7 @@ class PlatformAutomationEngine:
         
         return True
     
-    async def _setup_workflow_triggers(self, workflow: AutomationWorkflow):
+    async def _setup_workflow_triggers(self, workflow -> None: AutomationWorkflow) -> None:
         """Set up workflow triggers"""
         if workflow.trigger == AutomationTrigger.SCHEDULE:
             # Create scheduled task
@@ -1003,7 +1008,7 @@ class PlatformAutomationEngine:
         execution.result_data[f"health_check_{target}"] = "healthy"
         return True
     
-    async def _trigger_event(self, event_type: str, event_data: str):
+    async def _trigger_event(self, event_type -> None: str, event_data -> None: str) -> None:
         """Trigger event handlers"""
         handlers = self.event_handlers.get(event_type, [])
         for handler in handlers:
@@ -1064,7 +1069,7 @@ async def execute_workflow_by_name(workflow_name: str) -> Optional[str]:
 
 if __name__ == "__main__":
     # Example usage
-    async def main():
+    async def main() -> None:
         # Create a simple scaling workflow
         scaling_action = await create_scaling_action("api-service", 5)
         

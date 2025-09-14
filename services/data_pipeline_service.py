@@ -160,8 +160,8 @@ class DataPipelineService:
     - Enterprise-grade security and compliance
     """
 
-    def __init__(self, redis_url: str = "redis://localhost:6379", 
-                 database_url: str = "postgresql+asyncpg://user:pass@localhost/ainflue"):
+    def __init__(self, redis_url -> None: str = "redis -> None://localhost -> None:6379", 
+                 database_url -> None: str = "postgresql+asyncpg -> None://user -> None:pass@localhost/ainflue") -> None:
         self.logger = logging.getLogger(__name__)
         self.redis_url = redis_url
         self.database_url = database_url
@@ -207,7 +207,7 @@ class DataPipelineService:
         
         self.logger.info("Data Pipeline Service initialized")
 
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize data pipeline service"""
         try:
             # Initialize Redis connection
@@ -246,7 +246,7 @@ class DataPipelineService:
             self.logger.error(f"Failed to initialize Data Pipeline Service: {e}")
             raise
 
-    async def _start_pipeline_tasks(self):
+    async def _start_pipeline_tasks(self) -> None:
         """Start background pipeline management tasks"""
         
         # Pipeline execution monitor
@@ -391,7 +391,7 @@ class DataPipelineService:
             self.logger.error(f"Error executing pipeline {pipeline_id}: {e}")
             raise
 
-    async def _execute_pipeline_job(self, pipeline_job: PipelineJob):
+    async def _execute_pipeline_job(self, pipeline_job -> None: PipelineJob) -> None:
         """Execute individual pipeline job"""
         
         start_time = time.time()
@@ -988,7 +988,7 @@ class DataPipelineService:
         except Exception as e:
             return {"success": False, "error": str(e)}
 
-    async def _monitor_pipeline_execution(self):
+    async def _monitor_pipeline_execution(self) -> None:
         """Monitor pipeline execution status"""
         
         while True:
@@ -1012,7 +1012,7 @@ class DataPipelineService:
                 self.logger.error(f"Error monitoring pipeline execution: {e}")
                 await asyncio.sleep(600)
 
-    async def _monitor_data_quality(self):
+    async def _monitor_data_quality(self) -> None:
         """Monitor data quality across pipelines"""
         
         while True:
@@ -1043,7 +1043,7 @@ class DataPipelineService:
                 self.logger.error(f"Error monitoring data quality: {e}")
                 await asyncio.sleep(1200)
 
-    async def _collect_performance_metrics(self):
+    async def _collect_performance_metrics(self) -> None:
         """Collect pipeline performance metrics"""
         
         while True:
@@ -1072,7 +1072,7 @@ class DataPipelineService:
                 self.logger.error(f"Error collecting performance metrics: {e}")
                 await asyncio.sleep(600)
 
-    async def _monitor_schema_evolution(self):
+    async def _monitor_schema_evolution(self) -> None:
         """Monitor schema changes and evolution"""
         
         while True:
@@ -1090,7 +1090,7 @@ class DataPipelineService:
                 self.logger.error(f"Error monitoring schema evolution: {e}")
                 await asyncio.sleep(1800)
 
-    async def _track_data_lineage(self):
+    async def _track_data_lineage(self) -> None:
         """Track data lineage across pipelines"""
         
         while True:
@@ -1116,7 +1116,7 @@ class DataPipelineService:
 
     # Validation and utility methods
     
-    async def _validate_data_source(self, source: DataSource):
+    async def _validate_data_source(self, source -> None: DataSource) -> None:
         """Validate data source configuration"""
         
         required_fields = {
@@ -1160,7 +1160,7 @@ class DataPipelineService:
         except Exception as e:
             return {"success": False, "error": str(e)}
 
-    async def _validate_pipeline_config(self, config: Dict[str, Any]):
+    async def _validate_pipeline_config(self, config -> None: Dict[str, Any]) -> None:
         """Validate pipeline configuration"""
         
         required_fields = ["sources", "target"]
@@ -1171,7 +1171,7 @@ class DataPipelineService:
         if not isinstance(config["sources"], list) or not config["sources"]:
             raise ValueError("Sources must be a non-empty list")
 
-    async def _update_data_lineage(self, pipeline_job: PipelineJob, load_result: Dict[str, Any]):
+    async def _update_data_lineage(self, pipeline_job -> None: PipelineJob, load_result -> None: Dict[str, Any]) -> None:
         """Update data lineage tracking"""
         
         if load_result.get("success"):
@@ -1192,8 +1192,8 @@ class DataPipelineService:
                 json.dumps(lineage_entry)
             )
 
-    async def _update_pipeline_metrics(self, pipeline_job: PipelineJob, 
-                                     execution_time: float, quality_report: DataQualityReport):
+    async def _update_pipeline_metrics(self, pipeline_job -> None: PipelineJob, 
+                                     execution_time -> None: float, quality_report -> None: DataQualityReport) -> None:
         """Update pipeline performance metrics"""
         
         throughput = pipeline_job.records_processed / execution_time if execution_time > 0 else 0.0
@@ -1225,7 +1225,7 @@ class DataPipelineService:
 
     # Redis persistence methods
     
-    async def _save_pipeline_job(self, job: PipelineJob):
+    async def _save_pipeline_job(self, job -> None: PipelineJob) -> None:
         """Save pipeline job to Redis"""
         
         job_data = {
@@ -1247,7 +1247,7 @@ class DataPipelineService:
             json.dumps(job_data)
         )
 
-    async def _save_data_source(self, source: DataSource):
+    async def _save_data_source(self, source -> None: DataSource) -> None:
         """Save data source to Redis"""
         
         source_data = {
@@ -1267,7 +1267,7 @@ class DataPipelineService:
             json.dumps(source_data)
         )
 
-    async def _save_pipeline_registry(self):
+    async def _save_pipeline_registry(self) -> None:
         """Save pipeline registry to Redis"""
         
         await self.redis_client.setex(
@@ -1276,7 +1276,7 @@ class DataPipelineService:
             json.dumps(self.pipeline_registry)
         )
 
-    async def _save_schema_registry(self):
+    async def _save_schema_registry(self) -> None:
         """Save schema registry to Redis"""
         
         await self.redis_client.setex(
@@ -1285,7 +1285,7 @@ class DataPipelineService:
             json.dumps(self.schema_registry)
         )
 
-    async def _load_pipeline_configurations(self):
+    async def _load_pipeline_configurations(self) -> None:
         """Load pipeline configurations from Redis"""
         
         try:
@@ -1296,7 +1296,7 @@ class DataPipelineService:
         except Exception as e:
             self.logger.warning(f"Could not load pipeline configurations: {e}")
 
-    async def _load_data_sources(self):
+    async def _load_data_sources(self) -> None:
         """Load data sources from Redis"""
         
         try:
@@ -1324,7 +1324,7 @@ class DataPipelineService:
         except Exception as e:
             self.logger.warning(f"Could not load data sources: {e}")
 
-    async def _load_schema_registry(self):
+    async def _load_schema_registry(self) -> None:
         """Load schema registry from Redis"""
         
         try:
@@ -1390,7 +1390,7 @@ class DataPipelineService:
             "last_updated": datetime.utcnow().isoformat()
         }
 
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Shutdown data pipeline service"""
         
         # Cancel pipeline tasks
@@ -1412,7 +1412,7 @@ class DataPipelineService:
 
 
 # Example usage
-async def main():
+async def main() -> None:
     """Example usage of Data Pipeline Service"""
     
     pipeline_service = DataPipelineService()

@@ -1,4 +1,6 @@
 """🚀 Platform Core Subscription - Subscription Management System
+import asyncio
+
 ================================================================
 Module: backend/platform_core/subscription/subscription_manager.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -105,7 +107,7 @@ class Subscription:
 class SubscriptionManager:
     """Gestionnaire principal des abonnements"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialise le gestionnaire d'abonnements
         
         Args:

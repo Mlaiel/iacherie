@@ -63,7 +63,7 @@ class Metric:
 class AlertingSystemIntelligence:
     """Système alertes intelligent."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.alerts: Dict[str, Alert] = {}
         self.alert_rules = {}
         self.notification_channels = []
@@ -94,7 +94,7 @@ class AlertingSystemIntelligence:
         
         return alert_id
     
-    async def _send_notification(self, alert: Alert):
+    async def _send_notification(self, alert -> None: Alert) -> None:
         """Envoie une notification."""
         # Simulation d'envoi de notification
         pass
@@ -114,7 +114,7 @@ class AlertingSystemIntelligence:
 class EdgeMetricsOptimization:
     """Optimisation métriques edge."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.metrics: Dict[str, List[Metric]] = defaultdict(list)
         self.metric_thresholds = {}
         self.aggregated_metrics = {}
@@ -172,7 +172,7 @@ class EdgeMetricsOptimization:
 class PerformanceMonitoringAI:
     """Monitoring performance IA."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.performance_data = defaultdict(list)
         self.anomaly_threshold = 2.0  # Standard deviations
         self.baseline_metrics = {}
@@ -230,7 +230,7 @@ class PerformanceMonitoringAI:
 class EdgeMonitoringAnalytics:
     """Monitoring & Analytics Edge ultra-performant."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.alerting_system = AlertingSystemIntelligence()
         self.metrics_optimizer = EdgeMetricsOptimization()
         self.performance_monitor = PerformanceMonitoringAI()
@@ -314,7 +314,7 @@ class EdgeMonitoringAnalytics:
             }
         }
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Arrête le système de monitoring."""
         logger.info("Shutting down EdgeMonitoringAnalytics")
 

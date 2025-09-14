@@ -209,7 +209,7 @@ class CreatorProfilingIntelligenceEngine:
     - Creator-creator and creator-brand matching
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the Creator Profiling Intelligence Engine"""
         self.logger = logging.getLogger(__name__)
         self.initialized = False
@@ -231,7 +231,7 @@ class CreatorProfilingIntelligenceEngine:
             'average_processing_time': 0.0
         }
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize the profiling engine and models"""
         try:
             self.logger.info("Initializing Creator Profiling Intelligence Engine...")
@@ -249,7 +249,7 @@ class CreatorProfilingIntelligenceEngine:
             self.logger.error(f"Engine initialization failed: {e}")
             raise ProfilingError(f"Engine initialization failed: {str(e)}")
     
-    async def _initialize_ai_models(self):
+    async def _initialize_ai_models(self) -> None:
         """Initialize AI models for creator analysis"""
         try:
             # Text classification models
@@ -277,7 +277,7 @@ class CreatorProfilingIntelligenceEngine:
             self.logger.warning(f"AI model loading failed: {e}")
             self.models = {}
     
-    async def _initialize_analysis_engines(self):
+    async def _initialize_analysis_engines(self) -> None:
         """Initialize specialized analysis engines"""
         await self.content_analyzer.initialize()
         await self.audience_analyzer.initialize()
@@ -442,7 +442,7 @@ class CreatorProfilingIntelligenceEngine:
             # Process requests concurrently with semaphore for resource control
             semaphore = asyncio.Semaphore(3)  # Limit concurrent analyses
             
-            async def analyze_single(request):
+            async def analyze_single(request) -> None:
                 async with semaphore:
                     return await self.analyze_creator(request)
             
@@ -464,7 +464,7 @@ class CreatorProfilingIntelligenceEngine:
             self.logger.error(f"Batch analysis failed: {e}")
             raise
     
-    async def _apply_content_analysis(self, profile: CreatorProfile, analysis_result: Dict[str, Any]):
+    async def _apply_content_analysis(self, profile -> None: CreatorProfile, analysis_result -> None: Dict[str, Any]) -> None:
         """Apply content style analysis results to profile"""
         if 'content_style' in analysis_result:
             try:
@@ -487,7 +487,7 @@ class CreatorProfilingIntelligenceEngine:
         if 'posting_schedule' in analysis_result:
             profile.posting_schedule = analysis_result['posting_schedule']
     
-    async def _apply_audience_analysis(self, profile: CreatorProfile, analysis_result: Dict[str, Any]):
+    async def _apply_audience_analysis(self, profile -> None: CreatorProfile, analysis_result -> None: Dict[str, Any]) -> None:
         """Apply audience analysis results to profile"""
         if 'demographics' in analysis_result:
             profile.audience_demographics = analysis_result['demographics']
@@ -504,7 +504,7 @@ class CreatorProfilingIntelligenceEngine:
         if 'engagement_rate' in analysis_result:
             profile.engagement_rate = analysis_result['engagement_rate']
     
-    async def _apply_brand_voice_analysis(self, profile: CreatorProfile, analysis_result: Dict[str, Any]):
+    async def _apply_brand_voice_analysis(self, profile -> None: CreatorProfile, analysis_result -> None: Dict[str, Any]) -> None:
         """Apply brand voice analysis results to profile"""
         if 'brand_voice' in analysis_result:
             try:
@@ -515,7 +515,7 @@ class CreatorProfilingIntelligenceEngine:
         if 'language_preferences' in analysis_result:
             profile.language_preferences = analysis_result['language_preferences']
     
-    async def _apply_performance_metrics(self, profile: CreatorProfile, metrics: Dict[str, Any]):
+    async def _apply_performance_metrics(self, profile -> None: CreatorProfile, metrics -> None: Dict[str, Any]) -> None:
         """Apply performance metrics to profile"""
         if 'average_views' in metrics:
             profile.average_views = metrics['average_views']
@@ -571,7 +571,7 @@ class CreatorProfilingIntelligenceEngine:
         
         return min(score, 1.0)
     
-    async def _update_metrics(self, processing_time: float, success: bool):
+    async def _update_metrics(self, processing_time -> None: float, success -> None: bool) -> None:
         """Update performance metrics"""
         self.profiling_metrics['total_analyses_performed'] += 1
         
@@ -609,7 +609,7 @@ class CreatorProfilingIntelligenceEngine:
 class ContentStyleAnalysisEngine:
     """Specialized engine for content style analysis"""
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize content style analysis"""
         self.style_keywords = {
             ContentStyle.PROFESSIONAL: ['business', 'corporate', 'formal', 'industry', 'expert'],
@@ -820,7 +820,7 @@ class ContentStyleAnalysisEngine:
 class AudienceAnalysisEngine:
     """Specialized engine for audience analysis"""
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize audience analysis"""
         pass
     
@@ -908,7 +908,7 @@ class AudienceAnalysisEngine:
 class BrandVoiceAnalysisEngine:
     """Specialized engine for brand voice analysis"""
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize brand voice analysis"""
         self.voice_indicators = {
             BrandVoiceType.FRIENDLY: ['thanks', 'please', 'love', 'amazing', 'awesome'],
@@ -1000,7 +1000,7 @@ class BrandVoiceAnalysisEngine:
 class CollaborationMatchingEngine:
     """Specialized engine for collaboration matching"""
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize collaboration matching"""
         pass
     
@@ -1139,8 +1139,8 @@ class CollaborationMatchingEngine:
         else:
             return "low"
     
-    async def _analyze_collaboration_potential(self, match: CollaborationMatch,
-                                             creator1: CreatorProfile, creator2: CreatorProfile):
+    async def _analyze_collaboration_potential(self, match -> None: CollaborationMatch,
+                                             creator1 -> None: CreatorProfile, creator2 -> None: CreatorProfile) -> None:
         """Analyze and add detailed collaboration insights"""
         # Recommended collaboration types
         match.recommended_collaboration_types = await self._suggest_collaboration_types(creator1, creator2)

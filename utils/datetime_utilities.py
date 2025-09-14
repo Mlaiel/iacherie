@@ -1,4 +1,6 @@
 """
+from datetime import datetime
+
 Date and Time Utilities - Enterprise DateTime Management System
 ==============================================================
 
@@ -75,7 +77,7 @@ class DateTimeRange:
     end: datetime.datetime
     timezone: Optional[str] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.start >= self.end:
             raise ValueError("Start time must be before end time")
 
@@ -88,7 +90,7 @@ class BusinessHours:
     timezone: str
     working_days: List[int] = None  # 0=Monday, 6=Sunday
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.working_days is None:
             self.working_days = [0, 1, 2, 3, 4]  # Monday to Friday
 
@@ -117,9 +119,9 @@ class DateTimeUtilities:
     """
     
     def __init__(self,
-                 default_timezone: str = "UTC",
-                 business_hours: Optional[BusinessHours] = None,
-                 holiday_calendar: Optional[List[HolidayDefinition]] = None):
+                 default_timezone -> None: str = "UTC",
+                 business_hours -> None: Optional[BusinessHours] = None,
+                 holiday_calendar -> None: Optional[List[HolidayDefinition]] = None) -> None:
         """
         Initialize datetime utilities
         
@@ -681,7 +683,7 @@ class DateTimeUtilities:
             logger.error(f"Failed to get month boundaries for {dt}: {e}")
             raise
 
-    def add_holiday(self, holiday: HolidayDefinition):
+    def add_holiday(self, holiday -> None: HolidayDefinition) -> None:
         """
         Add holiday to calendar
         
@@ -690,7 +692,7 @@ class DateTimeUtilities:
         """
         self.holidays[holiday.date] = holiday
 
-    def remove_holiday(self, date: datetime.date):
+    def remove_holiday(self, date -> None: datetime.date) -> None:
         """
         Remove holiday from calendar
         
@@ -895,7 +897,7 @@ def get_system_timezone() -> str:
         return "UTC"
 
 
-def sleep_until(target_time: datetime.datetime):
+def sleep_until(target_time -> None: datetime.datetime) -> None:
     """
     Sleep until specified datetime
     

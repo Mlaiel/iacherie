@@ -86,7 +86,7 @@ class RecoveryProgress:
 class ReputationProtector:
     """Advanced reputation protection and recovery management system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize reputation protector"""
         self.protection_plans = {}
         self.reputation_scores = {}
@@ -650,7 +650,7 @@ class ReputationProtector:
             'first_review': base_time + timedelta(days=7)
         }
     
-    async def _initialize_reputation_monitoring(self, plan: ProtectionPlan):
+    async def _initialize_reputation_monitoring(self, plan -> None: ProtectionPlan) -> None:
         """Initialize reputation monitoring systems"""
         self.monitoring_systems[plan.creator_id] = {
             'plan': plan,

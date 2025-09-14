@@ -94,7 +94,7 @@ class CollaborationSuccessTracker:
     - Network effect analysis
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """
 Initialize collaboration success tracker"""
         

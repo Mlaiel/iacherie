@@ -137,7 +137,7 @@ class PCIComplianceManager:
     compliance monitoring, assessment scheduling, and reporting capabilities.
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """Initialize PCI compliance manager"""
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -173,7 +173,7 @@ class PCIComplianceManager:
         self.compliance_monitor_task = None
         self.assessment_scheduler_task = None
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize the PCI compliance manager"""
         try:
             # Initialize encryption
@@ -198,7 +198,7 @@ class PCIComplianceManager:
             self.logger.error(f"Failed to initialize PCI compliance manager: {e}")
             raise
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Shutdown the compliance manager"""
         try:
             # Cancel background tasks
@@ -754,7 +754,7 @@ class PCIComplianceManager:
             self.logger.error(f"TLS version check failed for {endpoint}: {e}")
             return None
     
-    async def _initialize_encryption(self):
+    async def _initialize_encryption(self) -> None:
         """Initialize encryption for data protection"""
         try:
             # Generate or load encryption key
@@ -773,7 +773,7 @@ class PCIComplianceManager:
             self.logger.error(f"Failed to initialize encryption: {e}")
             raise
     
-    async def _load_compliance_checks(self):
+    async def _load_compliance_checks(self) -> None:
         """Load PCI DSS compliance checks"""
         # Load comprehensive set of PCI DSS checks
         checks = [
@@ -810,7 +810,7 @@ class PCIComplianceManager:
         for check in checks:
             self.compliance_checks[check.check_id] = check
     
-    async def _load_network_topology(self):
+    async def _load_network_topology(self) -> None:
         """Load network topology configuration"""
         # Example network segments
         self.network_segments = {
@@ -841,7 +841,7 @@ class PCIComplianceManager:
             )
         }
     
-    async def _load_security_baselines(self):
+    async def _load_security_baselines(self) -> None:
         """Load security baseline configurations"""
         self.security_baselines = {
             'encryption': {
@@ -865,7 +865,7 @@ class PCIComplianceManager:
             }
         }
     
-    async def _compliance_monitoring_loop(self):
+    async def _compliance_monitoring_loop(self) -> None:
         """Background task for continuous compliance monitoring"""
         while True:
             try:
@@ -881,7 +881,7 @@ class PCIComplianceManager:
             except Exception as e:
                 self.logger.error(f"Error in compliance monitoring loop: {e}")
     
-    async def _assessment_scheduler_loop(self):
+    async def _assessment_scheduler_loop(self) -> None:
         """Background task for scheduling security assessments"""
         while True:
             try:
@@ -916,7 +916,7 @@ class PCIComplianceManager:
         frequency_delta = frequency_map.get(check.frequency, timedelta(days=1))
         return now - check.last_check >= frequency_delta
     
-    async def _execute_security_assessment(self, assessment: SecurityAssessment):
+    async def _execute_security_assessment(self, assessment -> None: SecurityAssessment) -> None:
         """Execute a scheduled security assessment"""
         try:
             self.logger.info(f"Executing security assessment: {assessment.assessment_id}")

@@ -152,7 +152,7 @@ class DeploymentResult:
 class HealthChecker:
     """Health check system for deployed models"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.health_cache = {}
         self.check_history = {}
     
@@ -267,7 +267,7 @@ class HealthChecker:
 class TrafficManager:
     """Manages traffic splitting between blue and green environments"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.traffic_rules = {}
         self.traffic_history = []
     
@@ -376,7 +376,7 @@ class TrafficManager:
 class ModelDeployer:
     """Handles model deployment to specific environments"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.deployed_models = {}
         self.deployment_history = []
     
@@ -429,22 +429,22 @@ class ModelDeployer:
             logger.error(f"Model deployment failed: {e}")
             raise
     
-    async def _prepare_deployment(self, endpoint: ModelEndpoint, request: DeploymentRequest):
+    async def _prepare_deployment(self, endpoint -> None: ModelEndpoint, request -> None: DeploymentRequest) -> None:
         """Prepare deployment environment"""
         logger.info(f"Preparing deployment for {endpoint.endpoint_id}")
         await asyncio.sleep(1)  # Simulate preparation time
     
-    async def _deploy_containers(self, endpoint: ModelEndpoint, request: DeploymentRequest):
+    async def _deploy_containers(self, endpoint -> None: ModelEndpoint, request -> None: DeploymentRequest) -> None:
         """Deploy model containers"""
         logger.info(f"Deploying containers for {endpoint.endpoint_id}")
         await asyncio.sleep(2)  # Simulate container deployment
     
-    async def _configure_networking(self, endpoint: ModelEndpoint, request: DeploymentRequest):
+    async def _configure_networking(self, endpoint -> None: ModelEndpoint, request -> None: DeploymentRequest) -> None:
         """Configure networking for endpoint"""
         logger.info(f"Configuring networking for {endpoint.endpoint_id}")
         await asyncio.sleep(0.5)  # Simulate network configuration
     
-    async def _setup_monitoring(self, endpoint: ModelEndpoint, request: DeploymentRequest):
+    async def _setup_monitoring(self, endpoint -> None: ModelEndpoint, request -> None: DeploymentRequest) -> None:
         """Setup monitoring for endpoint"""
         logger.info(f"Setting up monitoring for {endpoint.endpoint_id}")
         await asyncio.sleep(0.5)  # Simulate monitoring setup
@@ -491,7 +491,7 @@ class ModelDeployer:
 class BlueGreenDeployer:
     """Main Blue-Green deployment orchestrator"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.health_checker = HealthChecker()
         self.traffic_manager = TrafficManager()
         self.model_deployer = ModelDeployer()
@@ -555,7 +555,7 @@ class BlueGreenDeployer:
             logger.error(f"Blue-green deployment failed: {e}")
             raise
     
-    async def _prepare_deployment(self, request: DeploymentRequest, result: DeploymentResult):
+    async def _prepare_deployment(self, request -> None: DeploymentRequest, result -> None: DeploymentResult) -> None:
         """Prepare for deployment"""
         result.deployment_log.append("Preparing blue-green deployment")
         
@@ -583,7 +583,7 @@ class BlueGreenDeployer:
         
         await asyncio.sleep(0.5)  # Simulate preparation
     
-    async def _deploy_to_target_environment(self, request: DeploymentRequest, result: DeploymentResult):
+    async def _deploy_to_target_environment(self, request -> None: DeploymentRequest, result -> None: DeploymentResult) -> None:
         """Deploy model to target environment"""
         target_env = DeploymentEnvironment(result.metadata["target_environment"])
         
@@ -599,7 +599,7 @@ class BlueGreenDeployer:
         
         result.deployment_log.append(f"Model deployed to {target_env.value}: {endpoint.endpoint_id}")
     
-    async def _perform_health_checks(self, request: DeploymentRequest, result: DeploymentResult):
+    async def _perform_health_checks(self, request -> None: DeploymentRequest, result -> None: DeploymentResult) -> None:
         """Perform comprehensive health checks"""
         target_env = DeploymentEnvironment(result.metadata["target_environment"])
         target_endpoint = result.blue_endpoint if target_env == DeploymentEnvironment.BLUE else result.green_endpoint
@@ -621,7 +621,7 @@ class BlueGreenDeployer:
         
         result.deployment_log.append("Health checks passed")
     
-    async def _switch_traffic(self, request: DeploymentRequest, result: DeploymentResult):
+    async def _switch_traffic(self, request -> None: DeploymentRequest, result -> None: DeploymentResult) -> None:
         """Switch traffic to new deployment"""
         target_env = DeploymentEnvironment(result.metadata["target_environment"])
         
@@ -652,7 +652,7 @@ class BlueGreenDeployer:
         
         result.deployment_log.append("Traffic switched successfully")
     
-    async def _validate_deployment(self, request: DeploymentRequest, result: DeploymentResult):
+    async def _validate_deployment(self, request -> None: DeploymentRequest, result -> None: DeploymentResult) -> None:
         """Validate deployment after traffic switch"""
         result.deployment_log.append("Validating deployment")
         
@@ -675,7 +675,7 @@ class BlueGreenDeployer:
         result.metadata["validation_health_history"] = health_history
         result.deployment_log.append("Deployment validation passed")
     
-    async def _cleanup_old_deployment(self, request: DeploymentRequest, result: DeploymentResult):
+    async def _cleanup_old_deployment(self, request -> None: DeploymentRequest, result -> None: DeploymentResult) -> None:
         """Clean up old deployment"""
         current_active = result.metadata.get("current_active")
         
@@ -693,8 +693,8 @@ class BlueGreenDeployer:
         
         result.deployment_log.append("Cleanup completed")
     
-    async def _handle_deployment_failure(self, request: DeploymentRequest, 
-                                       result: DeploymentResult, error_message: str):
+    async def _handle_deployment_failure(self, request -> None: DeploymentRequest, 
+                                       result -> None: DeploymentResult, error_message -> None: str) -> None:
         """Handle deployment failure and rollback if needed"""
         result.status = DeploymentStatus.FAILED
         result.error_message = error_message
@@ -714,7 +714,7 @@ class BlueGreenDeployer:
             except Exception as rollback_error:
                 result.deployment_log.append(f"Rollback failed: {rollback_error}")
     
-    async def _perform_rollback(self, request: DeploymentRequest, result: DeploymentResult):
+    async def _perform_rollback(self, request -> None: DeploymentRequest, result -> None: DeploymentResult) -> None:
         """Perform rollback to previous deployment"""
         target_env = DeploymentEnvironment(result.metadata["target_environment"])
         current_active = result.metadata.get("current_active")

@@ -1,3 +1,8 @@
+"""
+Demo Industrial Audio Fingerprinting module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """🎵 Industrial Audio Fingerprinting System - Demo Script
 ======================================================
@@ -109,12 +114,12 @@ Add noise to audio"""
         return audio + noise
     
     @staticmethod
-    def save_to_file(audio: np.ndarray, filename: str, sample_rate: int = 22050):
+    def save_to_file(audio -> None: np.ndarray, filename -> None: str, sample_rate -> None: int = 22050) -> None:
         """
 Save audio to file"""
         sf.write(filename, audio, sample_rate)
 
-async def demonstrate_industrial_fingerprinting():
+async def demonstrate_industrial_fingerprinting() -> None:
     """
 Demonstrate the industrial audio fingerprinting system"""
     print("🎵 Industrial Audio Fingerprinting System Demonstration")
@@ -337,7 +342,7 @@ Demonstrate the industrial audio fingerprinting system"""
     print("   🏭 Scale: 100M+ fingerprints capability")
     print("=" * 60)
 
-def main():
+def main() -> None:
     """Main demo function"""
     try:
         asyncio.run(demonstrate_industrial_fingerprinting())

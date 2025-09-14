@@ -54,7 +54,7 @@ class BlockchainWatermarkRegistry:
     """
 Professional blockchain integration for watermark registry and verification"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.web3 = None
         self.contract = None
@@ -63,7 +63,7 @@ Professional blockchain integration for watermark registry and verification"""
         if BLOCKCHAIN_AVAILABLE:
             self._initialize_blockchain()
     
-    def _initialize_blockchain(self):
+    def _initialize_blockchain(self) -> None:
         """
 Initialize blockchain connection"""
         try:
@@ -550,7 +550,7 @@ Initialize blockchain connection"""
             "blockchain_verified": False
         }
     
-    async def _store_local_record(self, record: WatermarkRecord):
+    async def _store_local_record(self, record -> None: WatermarkRecord) -> None:
         try:
             logger.info(f"Executing _store_local_record")
             

@@ -1,4 +1,6 @@
 """Royalty Calculator
+import asyncio
+
 =================
 
 Advanced royalty calculation engine with multi-model support,
@@ -58,10 +60,10 @@ class RoyaltyCalculator:
     
     def __init__(
         self,
-        repository: LicensingRepository = None,
-        currency_converter: CurrencyConverter = None,
-        cache_manager: CacheManager = None
-    ):
+        repository -> None: LicensingRepository = None,
+        currency_converter -> None: CurrencyConverter = None,
+        cache_manager -> None: CacheManager = None
+    ) -> None:
         """
 Initialize calculator with dependencies"""
         self.repository = repository or LicensingRepository()

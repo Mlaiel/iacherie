@@ -259,7 +259,7 @@ class SEOOptimizationHandler(BaseEventHandler):
     competitor insights, trend alignment, and platform-specific optimization.
     """
     
-    def __init__(self, ai_engine: Any):
+    def __init__(self, ai_engine -> None: Any) -> None:
         """
 Initialize SEO optimization handler"""
         super().__init__()
@@ -278,7 +278,7 @@ Initialize SEO optimization handler"""
         self.optimization_stats = defaultdict(int)
         self.performance_metrics = defaultdict(list)
     
-    def _initialize_nlp_models(self):
+    def _initialize_nlp_models(self) -> None:
         """
 Initialize NLP models for text analysis"""
         try:
@@ -866,7 +866,7 @@ Generate optimized content based on SEO analysis"""
             'supported_optimization_types': [opt_type.value for opt_type in SEOOptimizationType]
         }
     
-    async def cleanup(self):
+    async def cleanup(self) -> None:
         """
 Cleanup handler resources"""
         logger.info("Cleaning up SEO optimization handler resources")

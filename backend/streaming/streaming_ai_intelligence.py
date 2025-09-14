@@ -142,7 +142,7 @@ class PredictionResult:
 class AIStreamingProcessor:
     """AI-powered streaming content processor"""
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client -> None: aioredis.Redis) -> None:
         self.redis = redis_client
         self.models = {}
         self.processing_queue = asyncio.Queue()
@@ -224,7 +224,7 @@ class AIStreamingProcessor:
 class AIContentStreamingEnhancer:
     """AI-powered content enhancement for streaming"""
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client -> None: aioredis.Redis) -> None:
         self.redis = redis_client
         self.enhancement_models = {}
         self.processing_cache = {}
@@ -283,7 +283,7 @@ class AIContentStreamingEnhancer:
 class AIPredictionStreamingEngine:
     """AI prediction engine for streaming optimization"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         self.prediction_models = {}
@@ -353,7 +353,7 @@ class AIPredictionStreamingEngine:
 class AIStreamingRecommendationEngine:
     """AI-powered recommendation engine for streaming"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         self.recommendation_models = {}
@@ -418,7 +418,7 @@ class AIStreamingRecommendationEngine:
 class ContentIntelligenceStreamer:
     """Content intelligence and analytics for streaming"""
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client -> None: aioredis.Redis) -> None:
         self.redis = redis_client
         self.intelligence_engines = {}
         self.analytics_cache = {}
@@ -494,7 +494,7 @@ class ContentIntelligenceStreamer:
 class StreamingAIIntelligence:
     """Unified AI intelligence system - Main service class"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         

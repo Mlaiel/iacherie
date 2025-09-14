@@ -118,7 +118,7 @@ class CreatorProfile:
 class MetaLearningDataset(Dataset):
     """Dataset for meta-learning tasks"""
     
-    def __init__(self, tasks: List[MetaTask], episodes_per_task: int = 100):
+    def __init__(self, tasks -> None: List[MetaTask], episodes_per_task -> None: int = 100) -> None:
         self.tasks = tasks
         self.episodes_per_task = episodes_per_task
         self.episodes = self._generate_episodes()
@@ -205,11 +205,11 @@ class MetaNetwork(nn.Module):
     
     def __init__(
         self, 
-        input_dim: int, 
-        output_dim: int, 
-        hidden_dims: List[int] = [128, 64],
-        meta_learning_rate: float = 0.001
-    ):
+        input_dim -> None: int, 
+        output_dim -> None: int, 
+        hidden_dims -> None: List[int] = [128, 64],
+        meta_learning_rate -> None: float = 0.001
+    ) -> None:
         super().__init__()
         
         self.input_dim = input_dim
@@ -256,11 +256,11 @@ class MAMLLearner:
     
     def __init__(
         self,
-        meta_network: MetaNetwork,
-        inner_lr: float = 0.01,
-        outer_lr: float = 0.001,
-        adaptation_steps: int = 5
-    ):
+        meta_network -> None: MetaNetwork,
+        inner_lr -> None: float = 0.01,
+        outer_lr -> None: float = 0.001,
+        adaptation_steps -> None: int = 5
+    ) -> None:
         self.meta_network = meta_network
         self.inner_lr = inner_lr
         self.outer_lr = outer_lr
@@ -378,7 +378,7 @@ class MAMLLearner:
 class MetaLearningSystem:
     """Advanced meta-learning system for creator platforms"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize meta-learning system"""
         self.config = config or {}
         
@@ -986,7 +986,7 @@ def get_meta_learning_system() -> MetaLearningSystem:
     return _meta_learning_system_instance
 
 # Test and validation functions
-async def test_meta_learning_system():
+async def test_meta_learning_system() -> None:
     """Test meta-learning system functionality"""
     system = MetaLearningSystem({
         'algorithm': 'maml',

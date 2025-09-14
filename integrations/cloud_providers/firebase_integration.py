@@ -185,7 +185,7 @@ class FirebaseConfig(BaseModel):
     admin_sdk_enabled: bool = Field(default=True, description="Enable Admin SDK features")
     
     @validator('project_id')
-    def validate_project_id(cls, v):
+    def validate_project_id(cls, v) -> None:
         if not v or len(v) < 3:
             raise ValueError("Valid Firebase project ID required")
         return v
@@ -193,7 +193,7 @@ class FirebaseConfig(BaseModel):
 class FirebaseSecurityManager:
     """Security manager for Firebase - Security Expert role"""
     
-    def __init__(self, config: FirebaseConfig):
+    def __init__(self, config -> None: FirebaseConfig) -> None:
         self.config = config
         
     def generate_firestore_rules(self, creator_focused: bool = True) -> str:
@@ -356,7 +356,7 @@ service firebase.storage {
 class FirebaseMLAnalytics:
     """ML-powered Firebase analytics - ML Engineer + Lead Dev IA roles"""
     
-    def __init__(self, config: FirebaseConfig, db_client):
+    def __init__(self, config -> None: FirebaseConfig, db_client) -> None:
         self.config = config
         self.db = db_client
         
@@ -632,7 +632,7 @@ class FirebaseMLAnalytics:
 class FirebaseRealtimeManager:
     """Real-time data management - Backend Senior + Microservices roles"""
     
-    def __init__(self, config: FirebaseConfig, db_client):
+    def __init__(self, config -> None: FirebaseConfig, db_client) -> None:
         self.config = config
         self.db = db_client
         self.active_listeners = {}
@@ -656,9 +656,9 @@ class FirebaseRealtimeManager:
             logger.error(f"Real-time listeners setup failed: {e}")
             return False
     
-    def _setup_user_events_listener(self):
+    def _setup_user_events_listener(self) -> None:
         """Setup listener for user events"""
-        def on_user_event_snapshot(col_snapshot, changes, read_time):
+        def on_user_event_snapshot(col_snapshot, changes, read_time) -> None:
             for change in changes:
                 if change.type.name == 'ADDED':
                     self._handle_new_user_event(change.document.to_dict())
@@ -670,9 +670,9 @@ class FirebaseRealtimeManager:
         listener = events_ref.on_snapshot(on_user_event_snapshot)
         self.active_listeners['user_events'] = listener
     
-    def _setup_content_updates_listener(self):
+    def _setup_content_updates_listener(self) -> None:
         """Setup listener for content updates"""
-        def on_content_snapshot(col_snapshot, changes, read_time):
+        def on_content_snapshot(col_snapshot, changes, read_time) -> None:
             for change in changes:
                 if change.type.name == 'ADDED':
                     self._handle_new_content(change.document.to_dict())
@@ -683,9 +683,9 @@ class FirebaseRealtimeManager:
         listener = content_ref.on_snapshot(on_content_snapshot)
         self.active_listeners['content'] = listener
     
-    def _setup_revenue_events_listener(self):
+    def _setup_revenue_events_listener(self) -> None:
         """Setup listener for revenue events"""
-        def on_revenue_snapshot(col_snapshot, changes, read_time):
+        def on_revenue_snapshot(col_snapshot, changes, read_time) -> None:
             for change in changes:
                 if change.type.name == 'ADDED':
                     self._handle_revenue_event(change.document.to_dict())
@@ -694,7 +694,7 @@ class FirebaseRealtimeManager:
         listener = revenue_ref.on_snapshot(on_revenue_snapshot)
         self.active_listeners['revenue'] = listener
     
-    def _handle_new_user_event(self, event_data: Dict):
+    def _handle_new_user_event(self, event_data -> None: Dict) -> None:
         """Handle new user event"""
         try:
             # Process real-time analytics
@@ -714,7 +714,7 @@ class FirebaseRealtimeManager:
         except Exception as e:
             logger.error(f"User event handling failed: {e}")
     
-    def _handle_new_content(self, content_data: Dict):
+    def _handle_new_content(self, content_data -> None: Dict) -> None:
         """Handle new content creation"""
         try:
             content_id = content_data.get("content_id")
@@ -731,7 +731,7 @@ class FirebaseRealtimeManager:
         except Exception as e:
             logger.error(f"New content handling failed: {e}")
     
-    def _handle_content_update(self, content_data: Dict):
+    def _handle_content_update(self, content_data -> None: Dict) -> None:
         """Handle content updates"""
         try:
             content_id = content_data.get("content_id")
@@ -744,7 +744,7 @@ class FirebaseRealtimeManager:
         except Exception as e:
             logger.error(f"Content update handling failed: {e}")
     
-    def _handle_revenue_event(self, revenue_data: Dict):
+    def _handle_revenue_event(self, revenue_data -> None: Dict) -> None:
         """Handle revenue events"""
         try:
             creator_uid = revenue_data.get("creator_uid")
@@ -761,7 +761,7 @@ class FirebaseRealtimeManager:
         except Exception as e:
             logger.error(f"Revenue event handling failed: {e}")
     
-    def _update_view_metrics(self, event_data: Dict):
+    def _update_view_metrics(self, event_data -> None: Dict) -> None:
         """Update view metrics in real-time"""
         content_id = event_data.get("content_id")
         if content_id:
@@ -772,7 +772,7 @@ class FirebaseRealtimeManager:
                 'last_viewed': datetime.utcnow()
             })
     
-    def _handle_subscription_event(self, event_data: Dict):
+    def _handle_subscription_event(self, event_data -> None: Dict) -> None:
         """Handle subscription events"""
         creator_uid = event_data.get("data", {}).get("creator_uid")
         if creator_uid:
@@ -782,7 +782,7 @@ class FirebaseRealtimeManager:
                 'subscriber_count': firestore.Increment(1)
             })
     
-    def _handle_purchase_event(self, event_data: Dict):
+    def _handle_purchase_event(self, event_data -> None: Dict) -> None:
         """Handle purchase events"""
         creator_uid = event_data.get("data", {}).get("creator_uid")
         amount = event_data.get("data", {}).get("amount", 0)
@@ -794,7 +794,7 @@ class FirebaseRealtimeManager:
                 'total_revenue': firestore.Increment(amount)
             })
     
-    def _initialize_content_analytics(self, content_id: str):
+    def _initialize_content_analytics(self, content_id -> None: str) -> None:
         """Initialize analytics for new content"""
         analytics_data = {
             'content_id': content_id,
@@ -808,7 +808,7 @@ class FirebaseRealtimeManager:
         
         self.db.collection('analytics').document(content_id).set(analytics_data)
     
-    async def _notify_followers_new_content(self, creator_uid: str, content_data: Dict):
+    async def _notify_followers_new_content(self, creator_uid -> None: str, content_data -> None: Dict) -> None:
         """Notify followers about new content"""
         try:
             # Get creator's followers
@@ -832,7 +832,7 @@ class FirebaseRealtimeManager:
         except Exception as e:
             logger.error(f"Follower notification failed: {e}")
     
-    async def _send_push_notification(self, user_uid: str, notification_data: Dict):
+    async def _send_push_notification(self, user_uid -> None: str, notification_data -> None: Dict) -> None:
         """Send push notification to user"""
         try:
             # In real implementation, would use Firebase Cloud Messaging
@@ -841,7 +841,7 @@ class FirebaseRealtimeManager:
         except Exception as e:
             logger.error(f"Push notification failed: {e}")
     
-    def _update_content_metrics(self, content_id: str, content_data: Dict):
+    def _update_content_metrics(self, content_id -> None: str, content_data -> None: Dict) -> None:
         """Update content performance metrics"""
         try:
             analytics_ref = self.db.collection('analytics').document(content_id)
@@ -860,7 +860,7 @@ class FirebaseRealtimeManager:
         except Exception as e:
             logger.error(f"Content metrics update failed: {e}")
     
-    def _update_creator_revenue_metrics(self, creator_uid: str, amount: float):
+    def _update_creator_revenue_metrics(self, creator_uid -> None: str, amount -> None: float) -> None:
         """Update creator revenue metrics"""
         try:
             # Update monthly revenue
@@ -878,7 +878,7 @@ class FirebaseRealtimeManager:
         except Exception as e:
             logger.error(f"Revenue metrics update failed: {e}")
     
-    async def _send_revenue_notification(self, creator_uid: str, amount: float):
+    async def _send_revenue_notification(self, creator_uid -> None: str, amount -> None: float) -> None:
         """Send revenue notification to creator"""
         try:
             notification_data = {
@@ -893,7 +893,7 @@ class FirebaseRealtimeManager:
         except Exception as e:
             logger.error(f"Revenue notification failed: {e}")
     
-    def cleanup_listeners(self):
+    def cleanup_listeners(self) -> None:
         """Cleanup active listeners"""
         for listener_name, listener in self.active_listeners.items():
             try:
@@ -907,7 +907,7 @@ class FirebaseRealtimeManager:
 class FirebaseIntegration:
     """Main Firebase integration orchestrator - Lead Dev IA + Backend Senior roles"""
     
-    def __init__(self, config: FirebaseConfig):
+    def __init__(self, config -> None: FirebaseConfig) -> None:
         self.config = config
         self.app = None
         self.db = None
@@ -1185,7 +1185,7 @@ class FirebaseIntegration:
         
         return await self.ml_analytics.generate_creator_insights(creator_uid)
     
-    async def _save_user_to_firestore(self, user: FirebaseUser):
+    async def _save_user_to_firestore(self, user -> None: FirebaseUser) -> None:
         """Save user data to Firestore"""
         user_data = asdict(user)
         user_data['created_at'] = user.created_at
@@ -1193,7 +1193,7 @@ class FirebaseIntegration:
         
         self.db.collection('users').document(user.uid).set(user_data)
     
-    async def _save_content_to_firestore(self, content: CreatorContent):
+    async def _save_content_to_firestore(self, content -> None: CreatorContent) -> None:
         """Save content data to Firestore"""
         content_data = asdict(content)
         content_data['created_at'] = content.created_at
@@ -1201,14 +1201,14 @@ class FirebaseIntegration:
         
         self.db.collection('content').document(content.content_id).set(content_data)
     
-    async def _save_event_to_firestore(self, event: RealtimeEvent):
+    async def _save_event_to_firestore(self, event -> None: RealtimeEvent) -> None:
         """Save event data to Firestore"""
         event_data = asdict(event)
         event_data['timestamp'] = event.timestamp
         
         self.db.collection('events').document(event.event_id).set(event_data)
     
-    async def _update_user_last_login(self, uid: str):
+    async def _update_user_last_login(self, uid -> None: str) -> None:
         """Update user's last login timestamp"""
         self.db.collection('users').document(uid).update({
             'last_login': datetime.utcnow()
@@ -1277,7 +1277,7 @@ class FirebaseIntegration:
             logger.error(f"Storage health check failed: {e}")
             return "unhealthy"
     
-    async def cleanup(self):
+    async def cleanup(self) -> None:
         """Cleanup Firebase resources"""
         try:
             # Cleanup real-time listeners
@@ -1296,7 +1296,7 @@ class FirebaseIntegration:
 class FirebaseService:
     """Main Firebase service facade - DevOps + Integration role"""
     
-    def __init__(self, config: Optional[FirebaseConfig] = None):
+    def __init__(self, config -> None: Optional[FirebaseConfig] = None) -> None:
         self.config = config or FirebaseConfig(
             project_id="your-firebase-project-id",
             service_account_path="path/to/service-account.json",
@@ -1324,7 +1324,7 @@ class FirebaseService:
         
         return success
     
-    async def _validate_configuration(self):
+    async def _validate_configuration(self) -> None:
         """Validate service configuration"""
         if not os.path.exists(self.config.service_account_path):
             logger.warning("Firebase service account file not found")
@@ -1363,7 +1363,7 @@ class FirebaseService:
             "error_count": ERROR_COUNTER._value.sum()
         }
     
-    async def cleanup(self):
+    async def cleanup(self) -> None:
         """Cleanup service resources"""
         await self.integration.cleanup()
 
@@ -1382,7 +1382,7 @@ __all__ = [
 
 if __name__ == "__main__":
     # Example usage and testing
-    async def main():
+    async def main() -> None:
         # Initialize service
         service = FirebaseService()
         success = await service.initialize()

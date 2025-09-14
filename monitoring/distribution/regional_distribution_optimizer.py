@@ -122,7 +122,7 @@ class RegionalPerformance:
 class RegionalDistributionOptimizer:
     """Main regional distribution optimization system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.regional_profiles = self._initialize_regional_profiles()
         self.regional_content: Dict[str, List[RegionalContent]] = defaultdict(list)
         self.distribution_schedules: List[DistributionSchedule] = []

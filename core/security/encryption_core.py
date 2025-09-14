@@ -116,7 +116,7 @@ class EncryptionMetrics:
 class EncryptionCore:
     """Enterprise encryption core management system"""
     
-    def __init__(self, config: Optional[EncryptionConfig] = None, level: str = "enterprise"):
+    def __init__(self, config -> None: Optional[EncryptionConfig] = None, level -> None: str = "enterprise") -> None:
         """Initialize encryption core"""
         self.config = config or EncryptionConfig()
         self.level = level
@@ -507,7 +507,7 @@ class EncryptionCore:
         else:
             return hashlib.sha256(data).hexdigest()
     
-    def _update_avg_time(self, operation: str, start_time: float):
+    def _update_avg_time(self, operation -> None: str, start_time -> None: float) -> None:
         """Update average operation time"""
         operation_time = time.time() - start_time
         
@@ -522,7 +522,7 @@ class EncryptionCore:
                 (self.metrics.avg_decryption_time * (total_ops - 1) + operation_time) / total_ops
             )
     
-    async def _key_rotation_loop(self):
+    async def _key_rotation_loop(self) -> None:
         """Automatic key rotation loop"""
         while not self._shutdown_event.is_set():
             try:
@@ -572,7 +572,7 @@ class EncryptionCore:
             logger.error(f"Key rotation failed: {str(e)}")
             return False
     
-    def _clear_sensitive_data(self):
+    def _clear_sensitive_data(self) -> None:
         """Clear sensitive data from memory"""
         if self.config.secure_memory:
             self.symmetric_keys.clear()
@@ -598,7 +598,7 @@ class EncryptionCore:
             logger.error(f"Encryption health check failed: {str(e)}")
             return False
     
-    async def _health_monitor_loop(self):
+    async def _health_monitor_loop(self) -> None:
         """Health monitoring loop"""
         while not self._shutdown_event.is_set():
             try:

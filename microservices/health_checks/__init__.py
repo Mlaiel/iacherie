@@ -25,7 +25,7 @@ class HealthStatus(Enum):
 class HealthCheck:
     """Individual health check implementation"""
     
-    def __init__(self, name: str, check_func: Callable, timeout: int = 30):
+    def __init__(self, name -> None: str, check_func -> None: Callable, timeout -> None: int = 30) -> None:
         self.name = name
         self.check_func = check_func
         self.timeout = timeout
@@ -73,7 +73,7 @@ class HealthCheck:
                 'timestamp': time.time()
             }
     
-    async def _execute_check(self):
+    async def _execute_check(self) -> None:
         """Execute the check function"""
         if asyncio.iscoroutinefunction(self.check_func):
             return await self.check_func()
@@ -83,15 +83,15 @@ class HealthCheck:
 class HealthChecker:
     """Health checker for multiple services"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.checks: Dict[str, HealthCheck] = {}
         
-    def add_check(self, health_check: HealthCheck):
+    def add_check(self, health_check -> None: HealthCheck) -> None:
         """Add a health check"""
         self.checks[health_check.name] = health_check
         logger.info(f"Added health check: {health_check.name}")
         
-    def remove_check(self, check_name: str):
+    def remove_check(self, check_name -> None: str) -> None:
         """Remove a health check"""
         if check_name in self.checks:
             del self.checks[check_name]
@@ -131,17 +131,17 @@ class HealthChecker:
 class ServiceHealthManager:
     """Manages health for an entire service"""
     
-    def __init__(self, service_name: str):
+    def __init__(self, service_name -> None: str) -> None:
         self.service_name = service_name
         self.health_checker = HealthChecker()
         self.startup_time = time.time()
         
-    def add_database_check(self, db_connection_func: Callable):
+    def add_database_check(self, db_connection_func -> None: Callable) -> None:
         """Add database connectivity check"""
         check = HealthCheck("database", db_connection_func)
         self.health_checker.add_check(check)
         
-    def add_external_service_check(self, service_name: str, check_func: Callable):
+    def add_external_service_check(self, service_name -> None: str, check_func -> None: Callable) -> None:
         """Add external service dependency check"""
         check = HealthCheck(f"external_service_{service_name}", check_func)
         self.health_checker.add_check(check)

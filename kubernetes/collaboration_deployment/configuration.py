@@ -139,7 +139,7 @@ class CollaborationConfigurationManager:
     - Real-time configuration updates
     - Disaster recovery and backup
     """
-    def __init__(self, config_dir: str = "./config"):
+    def __init__(self, config_dir -> None: str = "./config") -> None:
         """Initialize the collaboration configuration manager."""
         self.config_dir = Path(config_dir)
         
@@ -680,7 +680,7 @@ class CollaborationConfigManager:
     - Configuration templating
     """
     
-    def __init__(self, deployment_config):
+    def __init__(self, deployment_config) -> None:
         """
 Initialize configuration manager."""
         self.deployment_config = deployment_config
@@ -1255,7 +1255,7 @@ Update configuration for a specific service."""
             "KAFKA_BROKERS": f"kafka-{environment}:9092"
         }
         
-        def replace_vars(obj):
+        def replace_vars(obj) -> None:
             if isinstance(obj, str):
                 for var, value in template_vars.items():
                     obj = obj.replace(f"${{{var}}}", value)

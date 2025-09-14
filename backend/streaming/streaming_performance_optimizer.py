@@ -160,7 +160,7 @@ class ResourceScaling:
 class RealTimeMetricsCollector:
     """Real-time performance metrics collection"""
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client -> None: aioredis.Redis) -> None:
         self.redis = redis_client
         self.metrics_buffer = defaultdict(lambda: deque(maxlen=1000))
         self.collectors = {}
@@ -289,7 +289,7 @@ class RealTimeMetricsCollector:
 class AdaptiveQualityController:
     """Adaptive quality control system"""
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client -> None: aioredis.Redis) -> None:
         self.redis = redis_client
         self.quality_profiles = {}
         self.adaptation_rules = {}
@@ -381,7 +381,7 @@ class AdaptiveQualityController:
 class BandwidthOptimizer:
     """Bandwidth optimization system"""
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client -> None: aioredis.Redis) -> None:
         self.redis = redis_client
         self.bandwidth_profiles = {}
         self.optimization_algorithms = {}
@@ -443,7 +443,7 @@ class BandwidthOptimizer:
 class IntelligentScaler:
     """Intelligent resource scaling system"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         self.scaling_policies = {}
@@ -543,7 +543,7 @@ class IntelligentScaler:
 class PerformanceAnalyzer:
     """Advanced performance analysis engine"""
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client -> None: aioredis.Redis) -> None:
         self.redis = redis_client
         self.analysis_models = {}
         self.performance_baselines = {}
@@ -601,7 +601,7 @@ class PerformanceAnalyzer:
 class StreamingPerformanceOptimizer:
     """Unified streaming performance optimizer - Main service class"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         

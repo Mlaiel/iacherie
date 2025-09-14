@@ -51,7 +51,7 @@ class RoutingDecision:
 class AlertFilter:
     """Alert filtering and suppression logic"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize alert filter"""
         self.suppression_rules = self._load_suppression_rules()
         self.recent_alerts = deque(maxlen=1000)  # Keep last 1000 alerts
@@ -248,7 +248,7 @@ class IntelligentAlertRouter:
     Routes alerts to appropriate teams based on context and machine learning
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize intelligent alert router"""
         self.pagerduty_client = PagerDutyClient()
         self.escalation_manager = EscalationManager()
@@ -495,8 +495,8 @@ class IntelligentAlertRouter:
         
         return min(base_score, 1.0)
     
-    def _create_pagerduty_incident(self, alert_context: AlertContext,
-                                 incident_severity: IncidentSeverity):
+    def _create_pagerduty_incident(self, alert_context -> None: AlertContext,
+                                 incident_severity -> None: IncidentSeverity) -> None:
         """Create PagerDuty incident"""
         
         if not self.pagerduty_client.initialized:
@@ -540,7 +540,7 @@ class IntelligentAlertRouter:
         else:
             logger.error(f"Failed to create PagerDuty incident for alert {alert_context.alert_id}")
     
-    def _send_notifications(self, alert_context: AlertContext, decision: RoutingDecision):
+    def _send_notifications(self, alert_context -> None: AlertContext, decision -> None: RoutingDecision) -> None:
         """Send notifications to appropriate channels"""
         
         # This would integrate with notification systems (Slack, Email, SMS)
@@ -548,7 +548,7 @@ class IntelligentAlertRouter:
             logger.info(f"Sending notification to {channel} for alert {alert_context.alert_id}")
             # Implementation would send actual notifications
     
-    def _record_routing_decision(self, alert_context: AlertContext, decision: RoutingDecision):
+    def _record_routing_decision(self, alert_context -> None: AlertContext, decision -> None: RoutingDecision) -> None:
         """Record routing decision for machine learning and analysis"""
         
         decision_record = {

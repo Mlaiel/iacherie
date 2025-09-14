@@ -191,8 +191,8 @@ class OptimizationEngine:
     advanced AI algorithms and 53 specialized optimization agents.
     """
     
-    def __init__(self, db_session: AsyncSession, redis_client: Redis,
-                 revenue_calculator=None, analytics_engine=None):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: Redis,
+                 revenue_calculator=None, analytics_engine=None) -> None:
         """
         Initialize Optimization Engine.
         

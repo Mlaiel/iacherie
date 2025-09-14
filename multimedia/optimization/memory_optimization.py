@@ -39,7 +39,7 @@ class MemoryProfile:
 class MemoryOptimizer:
     """Professional memory optimization system"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize memory optimizer"""
         self.config = config or {}
         self.memory_pools: Dict[str, int] = {}

@@ -40,7 +40,7 @@ class AWSProvider:
     - SageMaker for AI/ML workloads
     """
     
-    def __init__(self, credentials: Optional[AWSCredentials] = None):
+    def __init__(self, credentials -> None: Optional[AWSCredentials] = None) -> None:
         self.credentials = credentials or AWSCredentials()
         self.region = self.credentials.region
         

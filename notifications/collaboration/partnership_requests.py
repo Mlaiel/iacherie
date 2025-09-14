@@ -1,3 +1,9 @@
+"""
+Partnership Requests module
+Enterprise implementation for Ainflue platform
+"""
+
 # Collaboration Engine: partnership_requests.py
 class PartnershipRequestsEngine: 
-    def __init__(self, config=None): pass
+    """PartnershipRequestsEngine: class implementation"""
+    def __init__(self, config=None) -> None: pass

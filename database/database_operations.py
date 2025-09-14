@@ -1,4 +1,6 @@
 """🔄 Database Operations - Consolidated Enterprise Data Operations
+from datetime import datetime
+
 ================================================================
 Module: database/database_operations.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -149,7 +151,7 @@ class BulkOperationConfig:
 class AdvancedCRUDOperations:
     """Advanced CRUD operations with performance optimization and transaction safety"""
     
-    def __init__(self, connection_manager=None):
+    def __init__(self, connection_manager=None) -> None:
         self.connection_manager = connection_manager
         self.operation_metrics: Dict[str, OperationMetrics] = {}
         self.active_transactions: Dict[str, Any] = {}
@@ -172,8 +174,8 @@ class AdvancedCRUDOperations:
         )
         return operation_id
     
-    def _complete_operation_tracking(self, operation_id: str, rows_affected: int = 0, 
-                                   error: Optional[str] = None):
+    def _complete_operation_tracking(self, operation_id -> None: str, rows_affected -> None: int = 0, 
+                                   error -> None: Optional[str] = None) -> None:
         """Complete operation tracking with metrics"""
         if operation_id in self.operation_metrics:
             metrics = self.operation_metrics[operation_id]
@@ -466,8 +468,8 @@ class AdvancedCRUDOperations:
         )
     
     @asynccontextmanager
-    async def transaction_scope(self, isolation_level: TransactionIsolationLevel = 
-                               TransactionIsolationLevel.READ_COMMITTED):
+    async def transaction_scope(self, isolation_level -> None: TransactionIsolationLevel = 
+                               TransactionIsolationLevel.READ_COMMITTED) -> None:
         """Advanced transaction context manager with isolation level control"""
         transaction_id = self._generate_operation_id()
         
@@ -536,7 +538,7 @@ class AdvancedCRUDOperations:
 class IntelligentMigrationManager:
     """Intelligent database migration management with ML-powered optimization"""
     
-    def __init__(self, connection_manager=None):
+    def __init__(self, connection_manager=None) -> None:
         self.connection_manager = connection_manager
         self.migration_history: List[Dict[str, Any]] = []
         self.rollback_points: Dict[str, Dict[str, Any]] = {}
@@ -638,7 +640,7 @@ class IntelligentMigrationManager:
             "safety_score": max(0, 100 - len(warnings) * 20 - len(errors) * 50)
         }
     
-    async def _create_rollback_point(self, conn, migration_id: str):
+    async def _create_rollback_point(self, conn, migration_id -> None: str) -> None:
         """Create rollback point for migration"""
         try:
             # Get current schema state
@@ -663,7 +665,7 @@ class IntelligentMigrationManager:
             logger.warning(f"Failed to create rollback point: {e}")
     
     @asynccontextmanager
-    async def _migration_transaction(self, conn):
+    async def _migration_transaction(self, conn) -> None:
         """Transaction context for migrations"""
         try:
             await conn.execute("BEGIN")
@@ -673,8 +675,8 @@ class IntelligentMigrationManager:
             await conn.execute("ROLLBACK")
             raise
     
-    async def _record_migration_execution(self, conn, migration_id: str, name: str, 
-                                        script: str, executed_at: datetime.datetime):
+    async def _record_migration_execution(self, conn, migration_id -> None: str, name -> None: str, 
+                                        script -> None: str, executed_at -> None: datetime.datetime) -> None:
         """Record migration execution in history table"""
         try:
             # Ensure migration history table exists
@@ -702,7 +704,7 @@ class IntelligentMigrationManager:
         except Exception as e:
             logger.warning(f"Failed to record migration history: {e}")
     
-    async def _execute_rollback(self, migration_id: str):
+    async def _execute_rollback(self, migration_id -> None: str) -> None:
         """Execute rollback for a migration"""
         if migration_id not in self.rollback_points:
             raise ValueError(f"No rollback point found for migration {migration_id}")

@@ -108,8 +108,8 @@ class InferencePerformanceMonitor:
     """🔧 Moniteur de performance d'inférence ML"""
     
     def __init__(self, 
-                 redis_url: str = "redis://localhost:6379/0",
-                 prometheus_port: int = 8090):
+                 redis_url -> None: str = "redis -> None://localhost -> None:6379/0",
+                 prometheus_port -> None: int = 8090) -> None:
         self.redis_url = redis_url
         self.prometheus_port = prometheus_port
         
@@ -174,7 +174,7 @@ class InferencePerformanceMonitor:
         self.total_errors = 0
         self.total_latency_sum = 0.0
         
-    def _setup_prometheus_metrics(self):
+    def _setup_prometheus_metrics(self) -> None:
         """Configure les métriques Prometheus"""
         # Counters
         self.request_counter = Counter(
@@ -231,7 +231,7 @@ class InferencePerformanceMonitor:
             ['model_id', 'creator_type']
         )
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialise le moniteur"""
         try:
             # Redis connection
@@ -251,7 +251,7 @@ class InferencePerformanceMonitor:
             logger.error(f"Failed to initialize monitor: {e}")
             raise
     
-    async def record_inference(self, metrics: InferenceMetrics):
+    async def record_inference(self, metrics -> None: InferenceMetrics) -> None:
         """Enregistre les métriques d'une inférence"""
         try:
             # Ajouter à l'historique
@@ -306,7 +306,7 @@ class InferencePerformanceMonitor:
         except Exception as e:
             logger.error(f"Failed to record inference metrics: {e}")
     
-    async def _store_metrics_redis(self, metrics: InferenceMetrics):
+    async def _store_metrics_redis(self, metrics -> None: InferenceMetrics) -> None:
         """Stocke les métriques dans Redis"""
         try:
             # Clé basée sur la date pour partitioning
@@ -361,7 +361,7 @@ class InferencePerformanceMonitor:
         except Exception as e:
             logger.error(f"Failed to store metrics in Redis: {e}")
     
-    async def _check_thresholds(self, metrics: InferenceMetrics):
+    async def _check_thresholds(self, metrics -> None: InferenceMetrics) -> None:
         """Vérifie les seuils de performance et déclenche des alertes"""
         try:
             thresholds = self.thresholds.get(metrics.creator_type)
@@ -425,7 +425,7 @@ class InferencePerformanceMonitor:
         except Exception as e:
             logger.error(f"Failed to check thresholds: {e}")
     
-    async def _trigger_alert(self, alert: Dict[str, Any]):
+    async def _trigger_alert(self, alert -> None: Dict[str, Any]) -> None:
         """Déclenche une alerte"""
         try:
             alert["timestamp"] = datetime.utcnow().isoformat()
@@ -455,7 +455,7 @@ class InferencePerformanceMonitor:
         except Exception as e:
             logger.error(f"Failed to trigger alert: {e}")
     
-    async def _resource_monitoring_loop(self):
+    async def _resource_monitoring_loop(self) -> None:
         """Boucle de monitoring des ressources système"""
         while True:
             try:
@@ -481,7 +481,7 @@ class InferencePerformanceMonitor:
                 logger.error(f"Resource monitoring error: {e}")
                 await asyncio.sleep(10)
     
-    async def _performance_analysis_loop(self):
+    async def _performance_analysis_loop(self) -> None:
         """Boucle d'analyse des performances"""
         while True:
             try:
@@ -493,7 +493,7 @@ class InferencePerformanceMonitor:
             except Exception as e:
                 logger.error(f"Performance analysis error: {e}")
     
-    async def _alert_processing_loop(self):
+    async def _alert_processing_loop(self) -> None:
         """Boucle de traitement des alertes"""
         while True:
             try:
@@ -505,7 +505,7 @@ class InferencePerformanceMonitor:
             except Exception as e:
                 logger.error(f"Alert processing error: {e}")
     
-    async def _calculate_performance_stats(self):
+    async def _calculate_performance_stats(self) -> None:
         """Calcule les statistiques de performance"""
         try:
             if not self.inference_history:
@@ -551,7 +551,7 @@ class InferencePerformanceMonitor:
         except Exception as e:
             logger.error(f"Failed to calculate performance stats: {e}")
     
-    async def _check_global_error_rates(self):
+    async def _check_global_error_rates(self) -> None:
         """Vérifie les taux d'erreur globaux"""
         try:
             if not self.inference_history:
@@ -592,7 +592,7 @@ class InferencePerformanceMonitor:
         except Exception as e:
             logger.error(f"Failed to check global error rates: {e}")
     
-    def add_alert_callback(self, callback: callable):
+    def add_alert_callback(self, callback -> None: callable) -> None:
         """Ajoute un callback d'alerte"""
         self.alert_callbacks.append(callback)
     
@@ -667,13 +667,13 @@ class InferencePerformanceMonitor:
             return {"error": str(e)}
 
 # Usage example avec création de métriques simulées
-async def demo_performance_monitor():
+async def demo_performance_monitor() -> None:
     """Démo du moniteur de performance"""
     monitor = InferencePerformanceMonitor()
     await monitor.initialize()
     
     # Ajouter un callback d'alerte
-    async def alert_handler(alert):
+    async def alert_handler(alert) -> None:
         print(f"🚨 ALERT: {alert['message']}")
     
     monitor.add_alert_callback(alert_handler)

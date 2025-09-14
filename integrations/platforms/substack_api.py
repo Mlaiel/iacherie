@@ -25,7 +25,7 @@ logger = logging.getLogger(__name__)
 class SubstackPost:
     """Substack post management and analytics"""
     
-    def __init__(self, post_id: str, title: str, author_id: str):
+    def __init__(self, post_id -> None: str, title -> None: str, author_id -> None: str) -> None:
         self.post_id = post_id
         self.title = title
         self.author_id = author_id
@@ -42,7 +42,7 @@ class SubstackPost:
 class SubstackSubscriber:
     """Substack subscriber management"""
     
-    def __init__(self, subscriber_id: str, email: str, subscription_type: str):
+    def __init__(self, subscriber_id -> None: str, email -> None: str, subscription_type -> None: str) -> None:
         self.subscriber_id = subscriber_id
         self.email = email
         self.subscription_type = subscription_type  # 'free', 'paid', 'founding'
@@ -54,7 +54,7 @@ class SubstackSubscriber:
 class SubstackPublication:
     """Substack publication management"""
     
-    def __init__(self, publication_id: str, name: str, subdomain: str):
+    def __init__(self, publication_id -> None: str, name -> None: str, subdomain -> None: str) -> None:
         self.publication_id = publication_id
         self.name = name
         self.subdomain = subdomain
@@ -84,7 +84,7 @@ class SubstackAPI:
     - Creator economy insights
     """
     
-    def __init__(self, api_token: str, publication_subdomain: str):
+    def __init__(self, api_token -> None: str, publication_subdomain -> None: str) -> None:
         self.api_token = api_token
         self.publication_subdomain = publication_subdomain
         self.base_url = f"https://{publication_subdomain}.substack.com/api/v1"
@@ -95,17 +95,17 @@ class SubstackAPI:
             'minute_start': datetime.utcnow().minute
         }
         
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         """Async context manager entry"""
         self.session = aiohttp.ClientSession()
         return self
         
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         """Async context manager exit"""
         if self.session:
             await self.session.close()
 
-    def _check_rate_limit(self):
+    def _check_rate_limit(self) -> None:
         """Check and enforce rate limiting"""
         current_minute = datetime.utcnow().minute
         
@@ -655,7 +655,7 @@ class SubstackAPI:
     # Additional helper methods for comprehensive functionality would continue here...
 
 # Example usage and testing
-async def main():
+async def main() -> None:
     """Example usage of Substack API integration"""
     
     # Initialize the API client

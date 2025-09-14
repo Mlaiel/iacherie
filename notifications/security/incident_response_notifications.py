@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 class IncidentResponseNotifications:
     """Security incident response notification system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         logger.info("Incident response notifications initialized")
     
     async def trigger_incident_response(self, incident_data: Dict[str, Any]) -> bool:
@@ -41,7 +41,7 @@ class IncidentResponseNotifications:
             logger.error(f"Error triggering incident response: {str(e)}")
             return False
     
-    async def _notify_security_team(self, response_data: Dict[str, Any]):
+    async def _notify_security_team(self, response_data -> None: Dict[str, Any]) -> None:
         """Notify security team about incident"""
         notification_data = {
             "title": "🚨 Security Incident Response",

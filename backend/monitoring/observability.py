@@ -139,7 +139,7 @@ class EnterpriseObservability:
     - AIOps (Moogsoft)
     """
     
-    def __init__(self, config: Optional[EnterpriseConfig] = None):
+    def __init__(self, config -> None: Optional[EnterpriseConfig] = None) -> None:
         """Initialize enterprise observability system"""
         self.config = config or EnterpriseConfig()
         self.logger = logging.getLogger(__name__)
@@ -195,7 +195,7 @@ class EnterpriseObservability:
             self.logger.error(f"Failed to initialize Enterprise Observability: {e}")
             return False
     
-    async def _initialize_base_monitoring(self):
+    async def _initialize_base_monitoring(self) -> None:
         """Initialize base monitoring system"""
         if HAS_BASE_MONITORING:
             base_config = {
@@ -212,7 +212,7 @@ class EnterpriseObservability:
             await self._base_monitoring.start()
             self.logger.info("Base monitoring system initialized")
     
-    async def _initialize_distributed_tracing(self):
+    async def _initialize_distributed_tracing(self) -> None:
         """Initialize Jaeger distributed tracing"""
         if not HAS_JAEGER:
             self.logger.warning("Jaeger client not available - tracing disabled")
@@ -244,7 +244,7 @@ class EnterpriseObservability:
         except Exception as e:
             self.logger.error(f"Failed to initialize Jaeger tracing: {e}")
     
-    async def _initialize_enhanced_metrics(self):
+    async def _initialize_enhanced_metrics(self) -> None:
         """Initialize Prometheus + Thanos metrics"""
         try:
             # Thanos configuration for long-term storage
@@ -262,7 +262,7 @@ class EnterpriseObservability:
         except Exception as e:
             self.logger.error(f"Failed to initialize enhanced metrics: {e}")
     
-    async def _initialize_enhanced_logging(self):
+    async def _initialize_enhanced_logging(self) -> None:
         """Initialize ELK + Loki logging backends"""
         try:
             # Configure Loki for additional log aggregation
@@ -281,7 +281,7 @@ class EnterpriseObservability:
         except Exception as e:
             self.logger.error(f"Failed to initialize enhanced logging: {e}")
     
-    async def _initialize_datadog_apm(self):
+    async def _initialize_datadog_apm(self) -> None:
         """Initialize DataDog APM"""
         if not HAS_DATADOG or not self.config.datadog_api_key:
             self.logger.warning("DataDog not available or API key missing")
@@ -298,7 +298,7 @@ class EnterpriseObservability:
         except Exception as e:
             self.logger.error(f"Failed to initialize DataDog APM: {e}")
     
-    async def _initialize_chaos_engineering(self):
+    async def _initialize_chaos_engineering(self) -> None:
         """Initialize Gremlin chaos engineering"""
         try:
             if not self.config.gremlin_api_key:
@@ -317,7 +317,7 @@ class EnterpriseObservability:
         except Exception as e:
             self.logger.error(f"Failed to initialize chaos engineering: {e}")
     
-    async def _initialize_aiops(self):
+    async def _initialize_aiops(self) -> None:
         """Initialize Moogsoft AIOps integration"""
         try:
             if not self.config.moogsoft_api_key:
@@ -336,12 +336,12 @@ class EnterpriseObservability:
         except Exception as e:
             self.logger.error(f"Failed to initialize AIOps: {e}")
     
-    async def _configure_thanos_sidecar(self, config: Dict[str, Any]):
+    async def _configure_thanos_sidecar(self, config -> None: Dict[str, Any]) -> None:
         """Configure Thanos sidecar for long-term metrics storage"""
         # Implementation would configure Thanos sidecar
         self.logger.info("Thanos sidecar configured for long-term storage")
     
-    async def _configure_loki_logging(self, config: Dict[str, Any]):
+    async def _configure_loki_logging(self, config -> None: Dict[str, Any]) -> None:
         """Configure Loki logging backend"""
         # Implementation would configure Loki logging
         self.logger.info("Loki logging backend configured")
@@ -366,7 +366,7 @@ class EnterpriseObservability:
             self.logger.error(f"Failed to start trace: {e}")
             return None
     
-    async def finish_trace(self, trace_id: str, **kwargs):
+    async def finish_trace(self, trace_id -> None: str, **kwargs) -> None:
         """Finish a distributed trace"""
         if trace_id in self._active_traces:
             try:
@@ -382,7 +382,7 @@ class EnterpriseObservability:
             except Exception as e:
                 self.logger.error(f"Failed to finish trace: {e}")
     
-    async def record_metric(self, name: str, value: float, tags: Optional[Dict[str, str]] = None):
+    async def record_metric(self, name -> None: str, value -> None: float, tags -> None: Optional[Dict[str, str]] = None) -> None:
         """Record enterprise metric"""
         try:
             # Record to base monitoring if available
@@ -466,7 +466,7 @@ class EnterpriseObservability:
             }
         }
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Shutdown enterprise observability system"""
         try:
             # Finish all active traces

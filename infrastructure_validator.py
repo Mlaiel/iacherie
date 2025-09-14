@@ -1,3 +1,8 @@
+"""
+Infrastructure Validator module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Infrastructure Validation Script
@@ -16,7 +21,7 @@ import subprocess
 class InfrastructureValidator:
     """Validates infrastructure components"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.root_path = Path('.')
         self.docker_configs = []
         self.k8s_manifests = []
@@ -353,7 +358,7 @@ class InfrastructureValidator:
         
         return min(100, score)
     
-    def print_summary(self, report: Dict[str, Any]):
+    def print_summary(self, report -> None: Dict[str, Any]) -> None:
         """Print infrastructure validation summary"""
         summary = report['summary']
         score = report['infrastructure_score']
@@ -376,7 +381,7 @@ class InfrastructureValidator:
         
         print("=" * 80)
 
-def main():
+def main() -> None:
     """Main infrastructure validation"""
     validator = InfrastructureValidator()
     report = validator.generate_infrastructure_report()

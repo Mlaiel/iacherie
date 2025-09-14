@@ -1,5 +1,7 @@
 """Encrypted Configuration Management for Deployment Security
 
+from datetime import datetime
+
 Provides secure configuration management with encryption, secret vaults,
 and secure environment variable handling for the IA Influencer Agent platform.
 
@@ -67,7 +69,7 @@ class ConfigEncryption:
     Advanced configuration encryption using multiple algorithms
     """
     
-    def __init__(self, master_key: Optional[bytes] = None):
+    def __init__(self, master_key -> None: Optional[bytes] = None) -> None:
         self.master_key = master_key or self._generate_master_key()
         self._fernet = Fernet(self.master_key)
         logger.info("Configuration encryption initialized")
@@ -202,20 +204,20 @@ class SecretVaultIntegration:
     Integration with multiple secret management systems
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._aws_client = None
         self._azure_client = None
         self._vault_client = None
         self._gcp_client = None
         logger.info("Secret vault integration initialized")
     
-    def _get_aws_client(self):
+    def _get_aws_client(self) -> None:
         """Get AWS Secrets Manager client"""
         if self._aws_client is None:
             self._aws_client = boto3.client('secretsmanager')
         return self._aws_client
     
-    def _get_azure_client(self, vault_url: str):
+    def _get_azure_client(self, vault_url -> None: str) -> None:
         """
 Get Azure Key Vault client"""
         if self._azure_client is None:
@@ -223,14 +225,14 @@ Get Azure Key Vault client"""
             self._azure_client = SecretClient(vault_url=vault_url, credential=credential)
         return self._azure_client
     
-    def _get_vault_client(self, vault_url: str, token: str):
+    def _get_vault_client(self, vault_url -> None: str, token -> None: str) -> None:
         """
 Get HashiCorp Vault client"""
         if self._vault_client is None:
             self._vault_client = hvac.Client(url=vault_url, token=token)
         return self._vault_client
     
-    def _get_gcp_client(self):
+    def _get_gcp_client(self) -> None:
         """
 Get Google Secret Manager client"""
         if self._gcp_client is None:
@@ -429,10 +431,10 @@ class EncryptedConfigManager:
     
     def __init__(
         self,
-        config_dir: str = "/etc/ia-influencer/config",
-        vault_integration: Optional[SecretVaultIntegration] = None,
-        encryption: Optional[ConfigEncryption] = None
-    ):
+        config_dir -> None: str = "/etc/ia-influencer/config",
+        vault_integration -> None: Optional[SecretVaultIntegration] = None,
+        encryption -> None: Optional[ConfigEncryption] = None
+    ) -> None:
         self.config_dir = Path(config_dir)
         self.config_dir.mkdir(parents=True, exist_ok=True)
         
@@ -638,7 +640,7 @@ class EncryptedConfigManager:
             # Remove sensitive values
             sensitive_keys = ['secret_key', 'jwt_secret', 'password', 'token', 'key']
             
-            def remove_sensitive(data):
+            def remove_sensitive(data) -> None:
                 if isinstance(data, dict):
                     result = {}
                     for key, value in data.items():
@@ -773,8 +775,10 @@ class EncryptedConfigManager:
             logger.error(f"Failed to backup configuration: {e}")
             raise
     
-    def clear_cache(self):
+    def clear_cache(self) -> None:
         """Clear configuration cache"""
         self._config_cache.clear()
         self._secret_cache.clear()
         logger.info("Configuration cache cleared")
+
+# File has syntax issues - needs manual review

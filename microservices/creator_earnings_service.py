@@ -173,7 +173,7 @@ class CreatorEarningsService:
     and advanced financial analytics for creators across multiple revenue streams.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.earning_records: Dict[str, EarningRecord] = {}
         self.creator_earnings: Dict[str, List[str]] = defaultdict(list)  # creator_id -> earning_ids
         self.tax_configurations: Dict[TaxJurisdiction, TaxConfiguration] = {}
@@ -188,7 +188,7 @@ class CreatorEarningsService:
         
         logger.info("CreatorEarningsService initialized successfully")
     
-    def _initialize_tax_configurations(self):
+    def _initialize_tax_configurations(self) -> None:
         """Initialize default tax configurations."""
         tax_configs = [
             TaxConfiguration(
@@ -236,7 +236,7 @@ class CreatorEarningsService:
         for config in tax_configs:
             self.tax_configurations[config.jurisdiction] = config
     
-    def _initialize_exchange_rates(self):
+    def _initialize_exchange_rates(self) -> None:
         """Initialize currency exchange rates (would integrate with real-time API)."""
         # Base rates to USD (example rates)
         self.currency_exchange_rates = {
@@ -258,7 +258,7 @@ class CreatorEarningsService:
             "ETH_USD": Decimal("2800.00")
         }
     
-    def _initialize_fee_structures(self):
+    def _initialize_fee_structures(self) -> None:
         """Initialize platform and payment processor fees."""
         # Platform fees (as percentage)
         self.platform_fee_rates = {
@@ -827,7 +827,7 @@ def get_creator_earnings_service() -> CreatorEarningsService:
 
 
 # Example usage and testing
-async def example_usage():
+async def example_usage() -> None:
     """Example usage of Creator Earnings Service."""
     service = get_creator_earnings_service()
     

@@ -246,7 +246,7 @@ class ComplianceGapRecord(Base):
 class JurisdictionAnalyzer:
     """Analyzes and maps jurisdiction-specific requirements"""
     
-    def __init__(self, db_session: AsyncSession, redis_client: aioredis.Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: aioredis.Redis) -> None:
         self.db = db_session
         self.redis = redis_client
         
@@ -549,7 +549,7 @@ class JurisdictionAnalyzer:
 class CrossBorderDataManager:
     """Manages cross-border data flows and transfer compliance"""
     
-    def __init__(self, db_session: AsyncSession, redis_client: aioredis.Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: aioredis.Redis) -> None:
         self.db = db_session
         self.redis = redis_client
         
@@ -857,7 +857,7 @@ class CrossBorderDataManager:
 class LocalizationManager:
     """Manages data localization compliance requirements"""
     
-    def __init__(self, db_session: AsyncSession):
+    def __init__(self, db_session -> None: AsyncSession) -> None:
         self.db = db_session
         
     async def assess_localization_compliance(self, 
@@ -945,7 +945,7 @@ class LocalizationManager:
 class ComplianceGapAnalyzer:
     """Analyzes and identifies compliance gaps across jurisdictions"""
     
-    def __init__(self, db_session: AsyncSession, redis_client: aioredis.Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: aioredis.Redis) -> None:
         self.db = db_session
         self.redis = redis_client
         
@@ -1064,7 +1064,7 @@ class ComplianceGapAnalyzer:
 class InternationalCompliance:
     """Main international compliance management engine"""
     
-    def __init__(self, db_session: AsyncSession, redis_client: aioredis.Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: aioredis.Redis) -> None:
         self.db = db_session
         self.redis = redis_client
         

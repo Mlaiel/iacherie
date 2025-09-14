@@ -1,5 +1,7 @@
 """Base Content Generator
 
+import asyncio
+
 Classe de base pour les générateurs de contenu avatar.
 Remplace temporairement la dépendance ai_engine manquante.
 
@@ -21,7 +23,7 @@ class ContentGenerationContext:
     quality_level: str = "standard"
     custom_parameters: Dict[str, Any] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.custom_parameters is None:
             self.custom_parameters = {}
 
@@ -29,7 +31,7 @@ class ContentGenerationContext:
 class BaseContentGenerator:
     """Classe de base pour tous les générateurs de contenu"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.generator_type = "base"
         self.version = "1.0.0"

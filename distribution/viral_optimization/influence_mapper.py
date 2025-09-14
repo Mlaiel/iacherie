@@ -1,5 +1,7 @@
 """Influence Mapper - Network Influence Analysis Engine
 
+import asyncio
+
 Maps and analyzes influence networks to optimize content distribution
 through key influencers and network topology understanding.
 
@@ -47,7 +49,7 @@ class NetworkTopology:
 class InfluenceMapper:
     """Influence network mapping and analysis engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize influence mapper"""
         self.network_cache = {}
         

@@ -83,7 +83,7 @@ class PerformanceTuningEngine:
     ML Engineer implementation with adaptive optimization algorithms
     """
     
-    def __init__(self, redis_settings: RedisSettings):
+    def __init__(self, redis_settings -> None: RedisSettings) -> None:
         self.redis_settings = redis_settings
         self.redis_client: Optional[redis.Redis] = None
         
@@ -124,7 +124,7 @@ class PerformanceTuningEngine:
         self._initialize_optimization_rules()
         self._initialize_performance_targets()
     
-    def _initialize_optimization_rules(self):
+    def _initialize_optimization_rules(self) -> None:
         """Initialize ML-driven optimization rules"""
         try:
             # Memory optimization rules
@@ -198,7 +198,7 @@ class PerformanceTuningEngine:
         except Exception as e:
             logger.error(f"Error initializing optimization rules: {e}")
     
-    def _initialize_performance_targets(self):
+    def _initialize_performance_targets(self) -> None:
         """Initialize performance targets for different metrics"""
         try:
             self.performance_targets = {
@@ -213,7 +213,7 @@ class PerformanceTuningEngine:
         except Exception as e:
             logger.error(f"Error initializing performance targets: {e}")
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize the performance tuning engine"""
         try:
             # Connect to Redis
@@ -247,7 +247,7 @@ class PerformanceTuningEngine:
             logger.error(f"Failed to initialize Performance Tuning Engine: {e}")
             raise
     
-    async def _metrics_collector(self):
+    async def _metrics_collector(self) -> None:
         """Collect performance metrics from Redis"""
         while self._running:
             try:
@@ -360,7 +360,7 @@ class PerformanceTuningEngine:
         
         return metrics
     
-    async def _optimization_engine(self):
+    async def _optimization_engine(self) -> None:
         """Main optimization engine with ML-driven decisions"""
         while self._running:
             try:
@@ -658,7 +658,7 @@ class PerformanceTuningEngine:
             logger.error(f"Error applying rule {rule.rule_id}: {e}")
             return False
     
-    async def _rollback_config(self, original_config: Dict[str, Any]):
+    async def _rollback_config(self, original_config -> None: Dict[str, Any]) -> None:
         """Rollback configuration changes"""
         try:
             for config_key, config_value in original_config.items():
@@ -668,7 +668,7 @@ class PerformanceTuningEngine:
         except Exception as e:
             logger.error(f"Error rolling back configuration: {e}")
     
-    async def _monitor_optimization_impact(self, applied_rules: List[str]):
+    async def _monitor_optimization_impact(self, applied_rules -> None: List[str]) -> None:
         """Monitor the impact of applied optimizations"""
         try:
             # Wait for changes to take effect
@@ -749,7 +749,7 @@ class PerformanceTuningEngine:
             logger.error(f"Error updating confidence score: {e}")
             return rule.confidence_score
     
-    async def _ml_trainer(self):
+    async def _ml_trainer(self) -> None:
         """Train ML models for better optimization decisions"""
         while self._running:
             try:
@@ -794,7 +794,7 @@ class PerformanceTuningEngine:
         
         return training_data
     
-    async def _train_performance_models(self, training_data: List[Dict[str, Any]]):
+    async def _train_performance_models(self, training_data -> None: List[Dict[str, Any]]) -> None:
         """Train performance prediction models"""
         try:
             # Placeholder for ML model training
@@ -818,7 +818,7 @@ class PerformanceTuningEngine:
         except Exception as e:
             logger.error(f"Error training models: {e}")
     
-    async def _update_rules_from_learning(self):
+    async def _update_rules_from_learning(self) -> None:
         """Update optimization rules based on ML learning"""
         try:
             # Update rule parameters based on learning
@@ -830,7 +830,7 @@ class PerformanceTuningEngine:
         except Exception as e:
             logger.error(f"Error updating rules from learning: {e}")
     
-    async def _profile_analyzer(self):
+    async def _profile_analyzer(self) -> None:
         """Analyze workload patterns and create performance profiles"""
         while self._running:
             try:
@@ -917,7 +917,7 @@ class PerformanceTuningEngine:
             logger.error(f"Error classifying workload type: {e}")
             return "mixed"
     
-    async def _adapt_strategy_to_profile(self, profile: PerformanceProfile):
+    async def _adapt_strategy_to_profile(self, profile -> None: PerformanceProfile) -> None:
         """Adapt optimization strategy based on workload profile"""
         try:
             # Adjust strategy based on workload type
@@ -935,7 +935,7 @@ class PerformanceTuningEngine:
         except Exception as e:
             logger.error(f"Error adapting strategy to profile: {e}")
     
-    async def _performance_monitor(self):
+    async def _performance_monitor(self) -> None:
         """Monitor overall performance and alert on issues"""
         while self._running:
             try:
@@ -982,7 +982,7 @@ class PerformanceTuningEngine:
         
         return issues
     
-    async def _handle_performance_issues(self, issues: List[Dict[str, Any]]):
+    async def _handle_performance_issues(self, issues -> None: List[Dict[str, Any]]) -> None:
         """Handle critical performance issues"""
         try:
             for issue in issues:
@@ -995,7 +995,7 @@ class PerformanceTuningEngine:
         except Exception as e:
             logger.error(f"Error handling performance issues: {e}")
     
-    async def _trigger_emergency_optimization(self, issue: Dict[str, Any]):
+    async def _trigger_emergency_optimization(self, issue -> None: Dict[str, Any]) -> None:
         """Trigger emergency optimization for critical issues"""
         try:
             # Find emergency rules for the specific metric
@@ -1013,7 +1013,7 @@ class PerformanceTuningEngine:
         except Exception as e:
             logger.error(f"Error in emergency optimization: {e}")
     
-    async def _store_metrics(self, metrics: Dict[PerformanceMetricType, PerformanceMetric]):
+    async def _store_metrics(self, metrics -> None: Dict[PerformanceMetricType, PerformanceMetric]) -> None:
         """Store metrics in Redis"""
         try:
             metrics_data = {}
@@ -1029,7 +1029,7 @@ class PerformanceTuningEngine:
         except Exception as e:
             logger.error(f"Error storing metrics: {e}")
     
-    async def _store_optimization_rule(self, rule: OptimizationRule):
+    async def _store_optimization_rule(self, rule -> None: OptimizationRule) -> None:
         """Store optimization rule in Redis"""
         try:
             rule_data = {
@@ -1050,7 +1050,7 @@ class PerformanceTuningEngine:
         except Exception as e:
             logger.error(f"Error storing optimization rule: {e}")
     
-    async def _store_performance_profile(self, profile: PerformanceProfile):
+    async def _store_performance_profile(self, profile -> None: PerformanceProfile) -> None:
         """Store performance profile in Redis"""
         try:
             profile_data = {
@@ -1072,7 +1072,7 @@ class PerformanceTuningEngine:
         except Exception as e:
             logger.error(f"Error storing performance profile: {e}")
     
-    async def _store_config_change(self, rule_id: str, original_config: Dict[str, Any], new_config: Dict[str, Any]):
+    async def _store_config_change(self, rule_id -> None: str, original_config -> None: Dict[str, Any], new_config -> None: Dict[str, Any]) -> None:
         """Store configuration change for monitoring"""
         try:
             change_data = {
@@ -1088,7 +1088,7 @@ class PerformanceTuningEngine:
         except Exception as e:
             logger.error(f"Error storing config change: {e}")
     
-    async def _load_historical_data(self):
+    async def _load_historical_data(self) -> None:
         """Load historical performance data"""
         try:
             # Load optimization rules
@@ -1115,7 +1115,7 @@ class PerformanceTuningEngine:
         except Exception as e:
             logger.error(f"Error loading historical data: {e}")
     
-    async def _establish_baseline(self):
+    async def _establish_baseline(self) -> None:
         """Establish performance baseline"""
         try:
             # Collect initial metrics for baseline
@@ -1161,7 +1161,7 @@ class PerformanceTuningEngine:
             logger.error(f"Error getting performance status: {e}")
             return {'error': str(e)}
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Shutdown the performance tuning engine"""
         try:
             self._running = False

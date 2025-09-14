@@ -96,7 +96,7 @@ class ComplianceViolation:
 class EnterpriseComplianceConfiguration:
     """Enterprise-grade compliance configuration management"""
     
-    def __init__(self, level: str = "enterprise"):
+    def __init__(self, level -> None: str = "enterprise") -> None:
         """Initialize compliance configuration"""
         self.level = level
         self.compliance_rules: Dict[str, ComplianceRule] = {}
@@ -231,7 +231,7 @@ class EnterpriseComplianceConfiguration:
             }
         }
     
-    def _initialize_compliance_frameworks(self):
+    def _initialize_compliance_frameworks(self) -> None:
         """Initialize compliance frameworks and rules"""
         # GDPR Rules
         gdpr_rules = [
@@ -322,7 +322,7 @@ class EnterpriseComplianceConfiguration:
         
         logger.info(f"✅ Initialized {len(all_rules)} compliance rules across {len(self.active_frameworks)} frameworks")
     
-    def _setup_monitoring_systems(self):
+    def _setup_monitoring_systems(self) -> None:
         """Setup compliance monitoring systems"""
         monitoring_config = {
             "data_flow_monitoring": {
@@ -461,7 +461,7 @@ class EnterpriseComplianceConfiguration:
         # Default: compliant
         return {"compliant": True}
     
-    def _log_compliance_check(self, data_operation: Dict[str, Any], validation_result: Dict[str, Any]):
+    def _log_compliance_check(self, data_operation -> None: Dict[str, Any], validation_result -> None: Dict[str, Any]) -> None:
         """Log compliance check for audit trail"""
         audit_entry = {
             "timestamp": datetime.utcnow().isoformat(),

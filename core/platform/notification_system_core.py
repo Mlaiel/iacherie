@@ -154,7 +154,7 @@ class NotificationDelivery:
 class NotificationProvider(ABC):
     """Abstract notification provider"""
     
-    def __init__(self, name: str, channel: NotificationChannel):
+    def __init__(self, name -> None: str, channel -> None: NotificationChannel) -> None:
         self.name = name
         self.channel = channel
         self.active = True
@@ -178,7 +178,7 @@ class NotificationProvider(ABC):
 class EmailProvider(NotificationProvider):
     """Email notification provider"""
     
-    def __init__(self, name: str = "EmailProvider"):
+    def __init__(self, name -> None: str = "EmailProvider") -> None:
         super().__init__(name, NotificationChannel.EMAIL)
         
     async def send(self, delivery: NotificationDelivery) -> bool:
@@ -221,7 +221,7 @@ class EmailProvider(NotificationProvider):
 class SMSProvider(NotificationProvider):
     """SMS notification provider"""
     
-    def __init__(self, name: str = "SMSProvider"):
+    def __init__(self, name -> None: str = "SMSProvider") -> None:
         super().__init__(name, NotificationChannel.SMS)
         
     async def send(self, delivery: NotificationDelivery) -> bool:
@@ -264,7 +264,7 @@ class SMSProvider(NotificationProvider):
 class PushProvider(NotificationProvider):
     """Push notification provider"""
     
-    def __init__(self, name: str = "PushProvider"):
+    def __init__(self, name -> None: str = "PushProvider") -> None:
         super().__init__(name, NotificationChannel.PUSH)
         
     async def send(self, delivery: NotificationDelivery) -> bool:
@@ -307,11 +307,11 @@ class PushProvider(NotificationProvider):
 class TemplateEngine:
     """Notification template engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.templates: Dict[str, NotificationTemplate] = {}
         self._load_default_templates()
     
-    def _load_default_templates(self):
+    def _load_default_templates(self) -> None:
         """Load default notification templates"""
         default_templates = [
             NotificationTemplate(
@@ -348,7 +348,7 @@ class TemplateEngine:
         for template in default_templates:
             self.templates[template.id] = template
     
-    def register_template(self, template: NotificationTemplate):
+    def register_template(self, template -> None: NotificationTemplate) -> None:
         """Register notification template"""
         self.templates[template.id] = template
         logger.info(f"Registered template: {template.name}")
@@ -400,12 +400,12 @@ class TemplateEngine:
 class RateLimiter:
     """Rate limiter for notifications"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.limits: Dict[str, Dict[str, Any]] = {}
         self.counters: Dict[str, Dict[str, int]] = {}
         self.reset_times: Dict[str, Dict[str, datetime]] = {}
     
-    def set_limit(self, key: str, limit: int, window_seconds: int):
+    def set_limit(self, key -> None: str, limit -> None: int, window_seconds -> None: int) -> None:
         """Set rate limit for a key"""
         self.limits[key] = {
             'limit': limit,
@@ -446,7 +446,7 @@ class RateLimiter:
 class NotificationSystemCore:
     """Core notification system"""
     
-    def __init__(self, level: str = "enterprise"):
+    def __init__(self, level -> None: str = "enterprise") -> None:
         self.level = level
         self.providers: Dict[NotificationChannel, List[NotificationProvider]] = {}
         self.template_engine = TemplateEngine()
@@ -542,7 +542,7 @@ class NotificationSystemCore:
             logger.error(f"Health check failed: {str(e)}")
             return False
     
-    def _initialize_providers(self):
+    def _initialize_providers(self) -> None:
         """Initialize notification providers"""
         # Email providers
         self.providers[NotificationChannel.EMAIL] = [EmailProvider()]
@@ -556,7 +556,7 @@ class NotificationSystemCore:
         # In-app notification (handled internally)
         self.providers[NotificationChannel.IN_APP] = []
     
-    def _setup_rate_limits(self):
+    def _setup_rate_limits(self) -> None:
         """Setup default rate limits"""
         # Per user limits
         self.rate_limiter.set_limit("user_email_hourly", 10, 3600)  # 10 emails per hour per user
@@ -567,7 +567,7 @@ class NotificationSystemCore:
         self.rate_limiter.set_limit("global_email_per_minute", 1000, 60)  # 1000 emails per minute globally
         self.rate_limiter.set_limit("global_sms_per_minute", 100, 60)     # 100 SMS per minute globally
     
-    async def _notification_processor(self, worker_id: str):
+    async def _notification_processor(self, worker_id -> None: str) -> None:
         """Background notification processor"""
         while self.is_running:
             try:
@@ -583,7 +583,7 @@ class NotificationSystemCore:
                 logger.error(f"Notification processor {worker_id} error: {str(e)}")
                 await asyncio.sleep(1)
     
-    async def _process_delivery(self, delivery: NotificationDelivery):
+    async def _process_delivery(self, delivery -> None: NotificationDelivery) -> None:
         """Process notification delivery"""
         try:
             start_time = time.time()
@@ -644,7 +644,7 @@ class NotificationSystemCore:
             self.metrics['notifications_failed'] += 1
             logger.error(f"Failed to process delivery {delivery.id}: {str(e)}")
     
-    async def _check_delivery_status(self, delivery: NotificationDelivery, provider: NotificationProvider):
+    async def _check_delivery_status(self, delivery -> None: NotificationDelivery, provider -> None: NotificationProvider) -> None:
         """Check delivery status after sending"""
         try:
             # Wait a bit before checking status
@@ -786,18 +786,18 @@ class NotificationSystemCore:
             return request.recipient_id  # Use user ID for in-app notifications
         return None
     
-    def register_provider(self, channel: NotificationChannel, provider: NotificationProvider):
+    def register_provider(self, channel -> None: NotificationChannel, provider -> None: NotificationProvider) -> None:
         """Register notification provider"""
         if channel not in self.providers:
             self.providers[channel] = []
         self.providers[channel].append(provider)
         logger.info(f"Registered {provider.name} for channel {channel.value}")
     
-    def register_template(self, template: NotificationTemplate):
+    def register_template(self, template -> None: NotificationTemplate) -> None:
         """Register notification template"""
         self.template_engine.register_template(template)
     
-    def set_user_preferences(self, user_id: str, preferences: UserPreferences):
+    def set_user_preferences(self, user_id -> None: str, preferences -> None: UserPreferences) -> None:
         """Set user notification preferences"""
         preferences.user_id = user_id
         preferences.updated_at = datetime.utcnow()

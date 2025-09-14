@@ -179,7 +179,7 @@ class LegalActionResult:
 class DMCAProcessor:
     """DMCA takedown processing engine"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.templates = self._load_dmca_templates()
         
@@ -464,7 +464,7 @@ The infringing use is not authorized by the copyright owner, its agent, or the l
 class LegalDocumentGenerator:
     """Legal document generation engine"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.templates = self._load_document_templates()
     
@@ -662,7 +662,7 @@ Date: ___________              Date: ___________
 class SettlementNegotiator:
     """Automated settlement negotiation engine"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.negotiation_strategies = self._load_negotiation_strategies()
     
@@ -821,7 +821,7 @@ class LegalAutomationEngine:
     legal document generation, settlement negotiation, and court filing automation.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize legal automation engine"""
         self.config = config or {}
         
@@ -1362,7 +1362,7 @@ class LegalAutomationEngine:
         
         return base_time
     
-    async def _update_automation_metrics(self, action_result: LegalActionResult):
+    async def _update_automation_metrics(self, action_result -> None: LegalActionResult) -> None:
         """Update automation performance metrics"""
         try:
             action_type = action_result.action_type.value

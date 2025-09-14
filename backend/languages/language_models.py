@@ -122,7 +122,7 @@ class LanguageModelEngine:
     with BERT, GPT, and cross-lingual model integration
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize language model engine"""
         self.config = config or {}
         self.models = {}

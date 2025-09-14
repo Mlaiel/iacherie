@@ -150,7 +150,7 @@ class WorkflowMetrics:
 class WorkflowEngineCore:
     """Enterprise workflow engine core management system"""
     
-    def __init__(self, level: str = "enterprise"):
+    def __init__(self, level -> None: str = "enterprise") -> None:
         """Initialize workflow engine core"""
         self.level = level
         self.metrics = WorkflowMetrics()
@@ -195,7 +195,7 @@ class WorkflowEngineCore:
             logger.error(f"❌ Workflow engine initialization failed: {str(e)}")
             return False
     
-    def _register_default_handlers(self):
+    def _register_default_handlers(self) -> None:
         """Register default task handlers"""
         self.task_handlers = {
             "log": self._handle_log_task,
@@ -207,7 +207,7 @@ class WorkflowEngineCore:
             "notification": self._handle_notification_task
         }
     
-    async def _create_sample_workflows(self):
+    async def _create_sample_workflows(self) -> None:
         """Create sample workflow definitions"""
         # Content approval workflow
         content_approval_tasks = [
@@ -464,7 +464,7 @@ class WorkflowEngineCore:
         
         return resolved_inputs
     
-    async def _execution_worker(self, worker_id: str):
+    async def _execution_worker(self, worker_id -> None: str) -> None:
         """Background task execution worker"""
         logger.info(f"Worker {worker_id} started")
         
@@ -484,7 +484,7 @@ class WorkflowEngineCore:
         
         logger.info(f"Worker {worker_id} stopped")
     
-    async def _execute_task(self, instance_id: str, task_id: str):
+    async def _execute_task(self, instance_id -> None: str, task_id -> None: str) -> None:
         """Execute a single task"""
         try:
             instance = self.workflow_instances.get(instance_id)
@@ -603,7 +603,7 @@ class WorkflowEngineCore:
         
         return True
     
-    async def _execute_automated_task(self, task_config: TaskConfig, task_instance: TaskInstance, instance: WorkflowInstance):
+    async def _execute_automated_task(self, task_config -> None: TaskConfig, task_instance -> None: TaskInstance, instance -> None: WorkflowInstance) -> None:
         """Execute automated task"""
         # Simulate automated task execution
         await asyncio.sleep(0.1)
@@ -614,12 +614,12 @@ class WorkflowEngineCore:
         }
         task_instance.status = TaskStatus.COMPLETED
     
-    async def _execute_human_task(self, task_config: TaskConfig, task_instance: TaskInstance, instance: WorkflowInstance):
+    async def _execute_human_task(self, task_config -> None: TaskConfig, task_instance -> None: TaskInstance, instance -> None: WorkflowInstance) -> None:
         """Execute human task (mark as pending user action)"""
         task_instance.status = TaskStatus.PENDING
         # Human tasks require manual completion via API
     
-    async def _execute_wait_task(self, task_config: TaskConfig, task_instance: TaskInstance, instance: WorkflowInstance):
+    async def _execute_wait_task(self, task_config -> None: TaskConfig, task_instance -> None: TaskInstance, instance -> None: WorkflowInstance) -> None:
         """Execute wait task"""
         wait_seconds = task_config.inputs.get("seconds", 1)
         await asyncio.sleep(wait_seconds)
@@ -627,7 +627,7 @@ class WorkflowEngineCore:
         task_instance.outputs = {"waited_seconds": wait_seconds}
         task_instance.status = TaskStatus.COMPLETED
     
-    async def _complete_task(self, instance_id: str, task_id: str):
+    async def _complete_task(self, instance_id -> None: str, task_id -> None: str) -> None:
         """Complete task and trigger next tasks"""
         instance = self.workflow_instances.get(instance_id)
         if not instance:
@@ -675,7 +675,7 @@ class WorkflowEngineCore:
         ):
             await self._complete_workflow(instance_id)
     
-    async def _complete_workflow(self, instance_id: str):
+    async def _complete_workflow(self, instance_id -> None: str) -> None:
         """Complete workflow instance"""
         instance = self.workflow_instances.get(instance_id)
         if not instance:
@@ -709,7 +709,7 @@ class WorkflowEngineCore:
         
         logger.info(f"✅ Workflow instance '{instance_id}' {instance.status.value}")
     
-    async def _handle_task_failure(self, instance_id: str, task_id: str):
+    async def _handle_task_failure(self, instance_id -> None: str, task_id -> None: str) -> None:
         """Handle task failure"""
         instance = self.workflow_instances.get(instance_id)
         if not instance:
@@ -799,7 +799,7 @@ class WorkflowEngineCore:
         logger.info(f"🔔 Notification to {recipient}: {message}")
         return {"notification_sent": True, "recipient": recipient}
     
-    async def _scheduler_loop(self):
+    async def _scheduler_loop(self) -> None:
         """Process scheduled tasks and retries"""
         while not self._shutdown_event.is_set():
             try:
@@ -823,7 +823,7 @@ class WorkflowEngineCore:
                 logger.error(f"Scheduler error: {str(e)}")
                 await asyncio.sleep(60)
     
-    async def _emit_event(self, event_type: str, data: Dict[str, Any]):
+    async def _emit_event(self, event_type -> None: str, data -> None: Dict[str, Any]) -> None:
         """Emit workflow event"""
         event = {
             "event_type": event_type,
@@ -892,7 +892,7 @@ class WorkflowEngineCore:
             logger.error(f"Workflow engine health check failed: {str(e)}")
             return False
     
-    async def _health_monitor_loop(self):
+    async def _health_monitor_loop(self) -> None:
         """Health monitoring loop"""
         while not self._shutdown_event.is_set():
             try:

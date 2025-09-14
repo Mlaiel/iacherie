@@ -131,7 +131,7 @@ class SEOGovernanceReport:
 class SEOGovernanceFramework:
     """Enterprise SEO governance and compliance framework"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """Initialize SEO governance framework
         
         Args:
@@ -592,7 +592,7 @@ class SEOGovernanceFramework:
         """Generate unique violation ID"""
         return f"viol_{uuid.uuid4().hex[:8]}"
     
-    async def _log_violation(self, violation: ComplianceViolation):
+    async def _log_violation(self, violation -> None: ComplianceViolation) -> None:
         """Log violation to audit trail"""
         audit_entry = {
             'timestamp': datetime.now().isoformat(),

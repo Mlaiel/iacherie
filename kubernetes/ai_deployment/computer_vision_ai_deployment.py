@@ -164,7 +164,7 @@ class ComputerVisionAIConfig:
     streaming_output: bool = False
     database_storage: bool = True
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         try:
                     # Request validation
                     if not data:
@@ -204,7 +204,7 @@ class ComputerVisionAIDeployment:
     - Comprehensive analytics and monitoring
     """
     
-    def __init__(self, namespace: str = "ia-influencer-computer-vision"):
+    def __init__(self, namespace -> None: str = "ia-influencer-computer-vision") -> None:
         """
         Initialize computer vision AI deployment
         
@@ -1263,3 +1263,5 @@ Optimize model for vision workload"""
         except Exception as e:
             logger.error(f"Computer vision cleanup failed: {e}")
             raise
+
+# File has syntax issues - needs manual review

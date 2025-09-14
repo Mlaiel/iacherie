@@ -79,7 +79,7 @@ class MultiFormatProcessor:
     Professional multi-format content processor for creator uploads
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.storage_manager = StorageManager()
         self.content_validator = ContentValidator()
         self.security_validator = SecurityValidator()
@@ -365,7 +365,7 @@ class ContentIngestionPipeline:
     upload, validation, processing, and storage workflow
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.processor = MultiFormatProcessor()
         self.storage_manager = StorageManager()
         
@@ -461,7 +461,7 @@ class ContentIngestionPipeline:
         
         return temp_file_path
 
-    async def _cleanup_temp_file(self, temp_file_path: Path):
+    async def _cleanup_temp_file(self, temp_file_path -> None: Path) -> None:
         """Cleanup temporary file"""
         try:
             if temp_file_path.exists():

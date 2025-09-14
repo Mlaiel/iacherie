@@ -142,7 +142,7 @@ class AdvancedAnalyticsEngine:
     """
 Ultra-advanced analytics engine for copyright enforcement"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.settings = get_settings()
         self.cache_manager = CacheManager()
         self.email_service = EmailService()
@@ -757,7 +757,7 @@ Generate comprehensive executive summary report"""
 class ReportScheduler:
     """Automated report scheduling and delivery system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.analytics_engine = AdvancedAnalyticsEngine()
         self.email_service = EmailService()
     

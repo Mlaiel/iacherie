@@ -126,7 +126,7 @@ class AinflueDistributedTracer:
     - Intelligent alerting
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         
         # Active spans tracking
@@ -167,9 +167,9 @@ class AinflueDistributedTracer:
         
         logger.info("AinflueDistributedTracer initialized with enterprise features")
 
-    def _start_background_processors(self):
+    def _start_background_processors(self) -> None:
         """Start background processing threads."""
-        def trace_analyzer():
+        def trace_analyzer() -> None:
             while True:
                 try:
                     self._analyze_completed_traces()
@@ -178,7 +178,7 @@ class AinflueDistributedTracer:
                     logger.error(f"Error in trace analyzer: {e}")
                     time.sleep(30)
         
-        def performance_monitor():
+        def performance_monitor() -> None:
             while True:
                 try:
                     self._monitor_performance_trends()
@@ -199,13 +199,13 @@ class AinflueDistributedTracer:
     @contextmanager
     def start_span(
         self,
-        operation_name: str,
-        service_name: str,
-        span_type: SpanType,
-        parent_span_id: Optional[str] = None,
-        business_context: Optional[Dict[str, Any]] = None,
-        tags: Optional[Dict[str, str]] = None
-    ):
+        operation_name -> None: str,
+        service_name -> None: str,
+        span_type -> None: SpanType,
+        parent_span_id -> None: Optional[str] = None,
+        business_context -> None: Optional[Dict[str, Any]] = None,
+        tags -> None: Optional[Dict[str, str]] = None
+    ) -> None:
         """Start a new distributed tracing span with enterprise features."""
         span_id = str(uuid.uuid4())
         trace_id = parent_span_id or str(uuid.uuid4())
@@ -271,7 +271,7 @@ class AinflueDistributedTracer:
             
             logger.debug(f"Span completed: {operation_name} in {span_context.duration_ms:.2f}ms")
 
-    def add_span_log(self, span_id: str, event: str, data: Optional[Dict[str, Any]] = None):
+    def add_span_log(self, span_id -> None: str, event -> None: str, data -> None: Optional[Dict[str, Any]] = None) -> None:
         """Add a log entry to an active span."""
         if span_id in self.active_spans:
             log_entry = {
@@ -281,12 +281,12 @@ class AinflueDistributedTracer:
             }
             self.active_spans[span_id].logs.append(log_entry)
 
-    def add_span_tag(self, span_id: str, key: str, value: str):
+    def add_span_tag(self, span_id -> None: str, key -> None: str, value -> None: str) -> None:
         """Add a tag to an active span."""
         if span_id in self.active_spans:
             self.active_spans[span_id].tags[key] = value
 
-    def update_business_context(self, span_id: str, context: Dict[str, Any]):
+    def update_business_context(self, span_id -> None: str, context -> None: Dict[str, Any]) -> None:
         """Update business context for an active span."""
         if span_id in self.active_spans:
             self.active_spans[span_id].business_context.update(context)
@@ -325,7 +325,7 @@ class AinflueDistributedTracer:
         logger.info(f"Started business transaction: {transaction_type} ({transaction_id})")
         return transaction_id
 
-    def complete_business_transaction(self, transaction_id: str, status: TraceStatus = TraceStatus.SUCCESS):
+    def complete_business_transaction(self, transaction_id -> None: str, status -> None: TraceStatus = TraceStatus.SUCCESS) -> None:
         """Complete a business transaction."""
         if transaction_id in self.business_transactions:
             transaction = self.business_transactions[transaction_id]
@@ -378,7 +378,7 @@ class AinflueDistributedTracer:
         score = max(0, 1 - (duration_ms / (expected * 3)))  # Score decreases as duration exceeds 3x expected
         return min(1.0, score)
 
-    def _check_sla_compliance(self, span: SpanContext):
+    def _check_sla_compliance(self, span -> None: SpanContext) -> None:
         """Check SLA compliance for span."""
         if span.duration_ms is None:
             return
@@ -399,7 +399,7 @@ class AinflueDistributedTracer:
                 self.metrics['sla_violations'] += 1
                 logger.warning(f"SLA violation: {span.operation_name} took {span.duration_ms:.2f}ms (threshold: {threshold}ms)")
 
-    def _analyze_completed_traces(self):
+    def _analyze_completed_traces(self) -> None:
         """Analyze completed traces for patterns and optimization opportunities."""
         try:
             for trace_id, spans in list(self.completed_traces.items()):
@@ -466,7 +466,7 @@ class AinflueDistributedTracer:
             sla_compliance=sla_compliance
         )
 
-    def _monitor_performance_trends(self):
+    def _monitor_performance_trends(self) -> None:
         """Monitor performance trends and detect anomalies."""
         try:
             if len(self.performance_history) < 10:
@@ -488,7 +488,7 @@ class AinflueDistributedTracer:
         except Exception as e:
             logger.error(f"Error monitoring performance trends: {e}")
 
-    def _calculate_business_value_metrics(self, transaction: BusinessTransaction):
+    def _calculate_business_value_metrics(self, transaction -> None: BusinessTransaction) -> None:
         """Calculate business value metrics for completed transaction."""
         try:
             # Calculate transaction success metrics
@@ -536,7 +536,7 @@ def get_tracer(config: Optional[Dict[str, Any]] = None) -> AinflueDistributedTra
     return _tracer_instance
 
 # Convenience functions for common tracing patterns
-def trace_audio_processing(pipeline_type: str, input_format: str, output_format: str, file_size_mb: float):
+def trace_audio_processing(pipeline_type -> None: str, input_format -> None: str, output_format -> None: str, file_size_mb -> None: float) -> None:
     """Convenience function for tracing audio processing."""
     tracer = get_tracer()
     return tracer.start_business_transaction(
@@ -549,7 +549,7 @@ def trace_audio_processing(pipeline_type: str, input_format: str, output_format:
         }
     )
 
-def trace_collaboration(partnership_id: str, workflow_type: str, creator_a_id: str, creator_b_id: str):
+def trace_collaboration(partnership_id -> None: str, workflow_type -> None: str, creator_a_id -> None: str, creator_b_id -> None: str) -> None:
     """Convenience function for tracing collaboration."""
     tracer = get_tracer()
     return tracer.start_business_transaction(
@@ -562,7 +562,7 @@ def trace_collaboration(partnership_id: str, workflow_type: str, creator_a_id: s
         }
     )
 
-def trace_monetization(flow_type: str, amount: float, currency: str, payment_method: str, creator_id: str):
+def trace_monetization(flow_type -> None: str, amount -> None: float, currency -> None: str, payment_method -> None: str, creator_id -> None: str) -> None:
     """Convenience function for tracing monetization."""
     tracer = get_tracer()
     return tracer.start_business_transaction(

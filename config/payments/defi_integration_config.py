@@ -1,7 +1,14 @@
+"""
+Defi Integration Config module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 """Ainflue DeFi Integration Configuration Module
+import asyncio
+
 ===============================================
 
 Enterprise-grade DeFi integration configuration for the Ainflue platform.
@@ -552,7 +559,7 @@ class ArbitrageConfig:
 class DeFiIntegrationConfiguration:
     """Main DeFi integration configuration manager"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize DeFi integration configuration"""
         # Configuration components
         self.yield_farming = YieldFarmingConfig()
@@ -637,7 +644,7 @@ class DeFiIntegrationConfiguration:
         # Initialize sample data
         self._initialize_sample_data()
     
-    def _initialize_sample_data(self):
+    def _initialize_sample_data(self) -> None:
         """Initialize sample DeFi data"""
         
         # Sample tokens

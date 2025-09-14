@@ -124,7 +124,7 @@ class GCPProvider:
     - Monitoring and logging
     """
     
-    def __init__(self, credentials: GCPCredentials):
+    def __init__(self, credentials -> None: GCPCredentials) -> None:
         """Initialize GCP provider with credentials"""
         self.credentials = credentials
         self.project_id = credentials.project_id
@@ -149,7 +149,7 @@ class GCPProvider:
             }
         }
         
-    def _initialize_clients(self):
+    def _initialize_clients(self) -> None:
         """Initialize GCP service clients"""
         if not GCP_AVAILABLE:
             logger.warning("GCP SDK not available. Using simulation mode.")

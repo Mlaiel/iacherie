@@ -25,10 +25,10 @@ STYLES = {
     'main': 'ui_components.styles.css'
 }
 
-def get_component_list():
+def get_component_list() -> None:
     """Get list of available UI components"""
     return list(UI_COMPONENTS.keys())
 
-def get_component_path(component_name):
+def get_component_path(component_name) -> None:
     """Get path for specific component"""
     return UI_COMPONENTS.get(component_name)

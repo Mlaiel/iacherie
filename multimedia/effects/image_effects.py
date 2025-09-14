@@ -34,7 +34,7 @@ class ImageEffectsConfig:
 class ArtisticFilters:
     """Collection of artistic filter effects."""
     
-    def __init__(self, config: ImageEffectsConfig):
+    def __init__(self, config -> None: ImageEffectsConfig) -> None:
         self.config = config
     
     def oil_painting_effect(self, image: np.ndarray, radius: int = 7, intensity: int = 20) -> np.ndarray:
@@ -151,7 +151,7 @@ class ArtisticFilters:
 class CreativeFilters:
     """Advanced creative filters and effects."""
     
-    def __init__(self, config: ImageEffectsConfig):
+    def __init__(self, config -> None: ImageEffectsConfig) -> None:
         self.config = config
     
     def pop_art_effect(self, image: np.ndarray, levels: int = 4) -> np.ndarray:
@@ -235,7 +235,7 @@ class CreativeFilters:
 class GeometricEffects:
     """Geometric transformation effects."""
     
-    def __init__(self, config: ImageEffectsConfig):
+    def __init__(self, config -> None: ImageEffectsConfig) -> None:
         self.config = config
     
     def fisheye_effect(self, image: np.ndarray, strength: float = 0.5) -> np.ndarray:
@@ -307,7 +307,7 @@ class GeometricEffects:
 class ImageEffectsEngine:
     """Enterprise image effects processing engine with professional creative tools."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.config = ImageEffectsConfig()
         self.artistic_filters = ArtisticFilters(self.config)
         self.creative_filters = CreativeFilters(self.config)

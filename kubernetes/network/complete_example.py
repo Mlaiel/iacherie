@@ -40,11 +40,11 @@ class IAInfluencerNetworkDemo:
     Showcases all features for content protection and monetization platform
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.orchestrator = None
         self.managers = {}
         
-    async def run_complete_demo(self):
+    async def run_complete_demo(self) -> None:
         """
 Run complete network deployment demonstration"""
         try:
@@ -85,7 +85,7 @@ Run complete network deployment demonstration"""
             logger.error(f"Demo failed: {e}")
             print(f"❌ Demo failed: {e}")
     
-    async def _demo_network_initialization(self):
+    async def _demo_network_initialization(self) -> None:
         """Demonstrate network infrastructure initialization"""
         print("\n📡 1. NETWORK INFRASTRUCTURE INITIALIZATION")
         print("-" * 50)
@@ -126,7 +126,7 @@ Run complete network deployment demonstration"""
             status = "✅ Ready" if manager else "❌ Not Available"
             print(f"   {name.capitalize()} Manager: {status}")
     
-    async def _demo_content_protection_deployment(self):
+    async def _demo_content_protection_deployment(self) -> None:
         """Demonstrate content protection infrastructure deployment"""
         print("\n🛡️ 2. CONTENT PROTECTION INFRASTRUCTURE")
         print("-" * 50)
@@ -180,7 +180,7 @@ Run complete network deployment demonstration"""
                 result = await self.managers['firewall'].add_firewall_rule(rule)
                 print(f"🔥 Firewall Rule '{rule.name}': {'✅ Added' if result else '❌ Failed'}")
     
-    async def _demo_content_delivery_configuration(self):
+    async def _demo_content_delivery_configuration(self) -> None:
         """Demonstrate multi-format content delivery configuration"""
         print("\n🎵 3. MULTI-FORMAT CONTENT DELIVERY CONFIGURATION")
         print("-" * 50)
@@ -250,7 +250,7 @@ Run complete network deployment demonstration"""
         if optimized_audio_url:
             print(f"   URL: {optimized_audio_url}")
     
-    async def _demo_traffic_analytics_setup(self):
+    async def _demo_traffic_analytics_setup(self) -> None:
         """Demonstrate traffic analytics and monitoring setup"""
         print("\n📊 4. TRAFFIC ANALYTICS AND MONITORING")
         print("-" * 50)
@@ -327,7 +327,7 @@ Run complete network deployment demonstration"""
         for anomaly in anomalies[:3]:  # Show top 3
             print(f"   {anomaly.get('type', 'Unknown')}: Severity {anomaly.get('severity_score', 0):.2f}")
     
-    async def _demo_geographic_distribution(self):
+    async def _demo_geographic_distribution(self) -> None:
         """Demonstrate geographic content distribution"""
         print("\n🌍 5. GEOGRAPHIC CONTENT DISTRIBUTION")
         print("-" * 50)
@@ -397,7 +397,7 @@ Run complete network deployment demonstration"""
             print(f"   Total Deployments: {len(geo_analytics.get('regional_performance', {}))}")
             print(f"   Optimization Opportunities: {len(geo_analytics.get('optimization_opportunities', []))}")
     
-    async def _demo_performance_monitoring(self):
+    async def _demo_performance_monitoring(self) -> None:
         """Demonstrate network performance monitoring"""
         print("\n⚡ 6. NETWORK PERFORMANCE MONITORING")
         print("-" * 50)
@@ -439,7 +439,7 @@ Run complete network deployment demonstration"""
             print(f"   {i}. {rec.strategy.value}: {rec.description}")
             print(f"      Priority: {rec.priority}, Impact: {rec.impact_score:.2f}")
     
-    async def _demo_real_world_operations(self):
+    async def _demo_real_world_operations(self) -> None:
         """Demonstrate real-world content platform operations"""
         print("\n🎬 7. REAL-WORLD CONTENT OPERATIONS SIMULATION")
         print("-" * 50)
@@ -527,7 +527,7 @@ Run complete network deployment demonstration"""
                 
                 await self.managers['analytics'].record_traffic(traffic_data)
     
-    async def _demo_analytics_and_insights(self):
+    async def _demo_analytics_and_insights(self) -> None:
         """Demonstrate analytics and insights generation"""
         print("\n📊 8. ANALYTICS AND INSIGHTS GENERATION")
         print("-" * 50)
@@ -590,7 +590,7 @@ Run complete network deployment demonstration"""
             print(f"   👥 Active Users: {dashboard_data.get('active_users', 0)}")
             print(f"   🚨 Active Alerts: {len(dashboard_data.get('alerts', []))}")
     
-    async def _demo_optimization_recommendations(self):
+    async def _demo_optimization_recommendations(self) -> None:
         """Demonstrate optimization recommendations"""
         print("\n🔧 9. OPTIMIZATION RECOMMENDATIONS")
         print("-" * 50)
@@ -668,7 +668,7 @@ Run complete network deployment demonstration"""
         print("   ✅ Ready for production content protection and monetization!")
 
 
-async def main():
+async def main() -> None:
     """Run the complete IA Influencer Agent Network Demo"""
     
     # Setup logging

@@ -139,7 +139,7 @@ class StripeMarketplaceManager:
     functionality with intelligent seller management and optimization.
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.stripe_client = stripe
         self.ml_models = {}
@@ -159,7 +159,7 @@ class StripeMarketplaceManager:
         # ⚙️ DevOps: Initialize monitoring
         self._initialize_monitoring()
     
-    def _initialize_ml_models(self):
+    def _initialize_ml_models(self) -> None:
         """🤖 Lead Dev IA: Initialize ML models for marketplace optimization"""
         try:
             # Seller performance prediction model
@@ -187,14 +187,14 @@ class StripeMarketplaceManager:
         except Exception as e:
             logger.error(f"❌ Failed to initialize ML models: {e}")
     
-    def _initialize_security(self):
+    def _initialize_security(self) -> None:
         """🔒 Security: Initialize security components"""
         self.webhook_secret = self.config.get('stripe_webhook_secret')
         self.max_transaction_amount = Decimal(self.config.get('max_transaction_amount', '100000'))
         self.fraud_threshold = Decimal(self.config.get('fraud_threshold', '0.85'))
         logger.info("✅ Security components initialized")
     
-    def _initialize_monitoring(self):
+    def _initialize_monitoring(self) -> None:
         """⚙️ DevOps: Initialize monitoring and performance tracking"""
         self.metrics = {
             'total_sellers': 0,
@@ -472,7 +472,7 @@ class StripeMarketplaceManager:
             logger.error(f"❌ Seller success prediction failed: {e}")
             return 0.75  # Default probability
     
-    async def _setup_audio_specialization(self, seller: Seller):
+    async def _setup_audio_specialization(self, seller -> None: Seller) -> None:
         """🎵 Audio Engineer: Setup audio content specialization"""
         
         # Add audio-specific metadata
@@ -942,7 +942,7 @@ class StripeMarketplaceManager:
         
         return min(risk_score, 1.0)
     
-    async def _update_seller_metrics(self):
+    async def _update_seller_metrics(self) -> None:
         """⚙️ DevOps: Update seller-related metrics"""
         
         self.metrics['total_sellers'] = len(self.sellers)
@@ -962,7 +962,7 @@ class StripeMarketplaceManager:
                 completed_onboardings / self.metrics['total_sellers']
             )
     
-    async def _update_transaction_metrics(self, transaction: MarketplaceTransaction):
+    async def _update_transaction_metrics(self, transaction -> None: MarketplaceTransaction) -> None:
         """⚙️ DevOps: Update transaction-related metrics"""
         
         self.metrics['total_transactions'] += 1
@@ -1121,7 +1121,7 @@ class StripeMarketplaceManager:
 
 
 # 🎖️ MULTI-ROLE EXPERT VALIDATION
-async def validate_multi_role_implementation():
+async def validate_multi_role_implementation() -> None:
     """Comprehensive validation of all 9 expert roles implementation"""
     
     print("🎖️ STRIPE MARKETPLACE MANAGER - MULTI-ROLE EXPERT VALIDATION")

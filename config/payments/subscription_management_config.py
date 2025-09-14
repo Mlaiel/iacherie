@@ -18,20 +18,22 @@ try:
 except ImportError:
     # Fallback for environments without pydantic_settings
     class BaseSettings:
-        def __init__(self, **kwargs):
+    """BaseSettings: class implementation"""
+        def __init__(self, **kwargs) -> None:
             for key, value in kwargs.items():
                 setattr(self, key, value)
         
         class Config:
+    """Config: class implementation"""
             env_prefix = ""
             case_sensitive = False
             extra = "allow"
     
-    def Field(**kwargs):
+    def Field(**kwargs) -> None:
         return kwargs.get('default_factory', kwargs.get('default'))()
     
-    def validator(field_name):
-        def decorator(func):
+    def validator(field_name) -> None:
+        def decorator(func) -> None:
             return func
         return decorator
 
@@ -468,6 +470,7 @@ class SubscriptionManagementSettings(BaseSettings):
     )
     
     class Config:
+    """Config: class implementation"""
         env_prefix = "SUBSCRIPTION_MANAGEMENT_"
         case_sensitive = False
         extra = "allow"

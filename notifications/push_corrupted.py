@@ -99,7 +99,7 @@ Push notification delivery tracking result."""
 class PushNotifier:
     """
 Enterprise push notification service with multi-platform support and analytics."""
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
         self.metrics = MetricsCollector()
         
@@ -468,7 +468,7 @@ Send push notification via Firebase Cloud Messaging."""
                 result = await response.json()
                 return result
 
-    def _validate_message(self, message: PushMessage):
+    def _validate_message(self, message -> None: PushMessage) -> None:
         """Validate push notification message."""
         if not message.content.title:
             raise ValueError("Push notification title is required")
@@ -505,7 +505,7 @@ Send batch of messages for a specific platform."""
         # Use semaphore to limit concurrent requests
         semaphore = asyncio.Semaphore(self.max_concurrent_requests)
         
-        async def send_single_message(message: PushMessage):
+        async def send_single_message(message -> None: PushMessage) -> None:
             try:
                 logger.info(f"Executing send_single_message for user {message.user_id}")
                 
@@ -546,7 +546,7 @@ Send batch of messages for a specific platform."""
         
         return True
 
-    async def _track_delivery_metrics(self, result: PushDeliveryResult):
+    async def _track_delivery_metrics(self, result -> None: PushDeliveryResult) -> None:
         """Track push notification delivery metrics."""
         await self.metrics.increment(
             "push_sent_total",
@@ -648,3 +648,5 @@ Send batch of messages for a specific platform."""
 
     async def _get_ab_test_results(self, start_date: datetime, end_date: datetime, filters: Optional[Dict]) -> Dict[str, Any]:
         return {}
+
+# File has syntax issues - needs manual review

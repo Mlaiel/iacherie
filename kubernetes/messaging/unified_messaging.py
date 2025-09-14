@@ -61,7 +61,7 @@ class Message:
     reply_to: Optional[str] = None
     headers: Dict[str, str] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.created_at is None:
             self.created_at = datetime.utcnow()
         if self.headers is None:
@@ -109,7 +109,7 @@ class QueueStats:
     consumer_count: int = 0
     last_updated: datetime = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.last_updated is None:
             self.last_updated = datetime.utcnow()
 
@@ -117,7 +117,7 @@ class QueueStats:
 class MessageBackend(ABC):
     """Abstract base class for message backends"""
     
-    def __init__(self, config: MessagingConfig):
+    def __init__(self, config -> None: MessagingConfig) -> None:
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
     
@@ -165,7 +165,7 @@ class MessageBackend(ABC):
 class UnifiedMessagingSystem:
     """Unified messaging system that can use multiple backends"""
     
-    def __init__(self, config: Optional[MessagingConfig] = None):
+    def __init__(self, config -> None: Optional[MessagingConfig] = None) -> None:
         self.config = config or MessagingConfig.from_env()
         self.backends: Dict[MessagingBackend, MessageBackend] = {}
         self.primary_backend: Optional[MessageBackend] = None

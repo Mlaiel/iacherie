@@ -13,6 +13,7 @@ from datetime import datetime
 
 @dataclass
 class MigrationMetrics:
+    """MigrationMetrics: class implementation"""
     integration_health: float = 0.0
     success_rate: float = 0.0
     latency_ms: float = 0.0
@@ -22,6 +23,7 @@ class MigrationMetrics:
 
 @dataclass
 class MigrationResult:
+    """MigrationResult: class implementation"""
     user_id: str
     integration_status: str
     performance_metrics: MigrationMetrics
@@ -32,7 +34,7 @@ class MigrationResult:
 class MigrationWorkflow:
     """Migration integration workflow for Ainflue platform."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize migration workflow."""
         self.integration_health = 0.95
         self.performance_threshold = 0.9

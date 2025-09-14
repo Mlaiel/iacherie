@@ -78,7 +78,7 @@ class VideoMetrics:
 class MotionDetector:
     """Advanced motion detection and analysis"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.logger = logger.getChild(self.__class__.__name__)
         
@@ -155,7 +155,7 @@ class MotionDetector:
 class SceneAnalyzer:
     """Scene change detection and analysis"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.logger = logger.getChild(self.__class__.__name__)
         
@@ -260,7 +260,7 @@ class SceneAnalyzer:
 class VideoAnalyzer:
     """Comprehensive video analysis engine"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.logger = logger.getChild(self.__class__.__name__)
         

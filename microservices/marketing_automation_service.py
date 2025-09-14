@@ -1,3 +1,8 @@
+"""
+Marketing Automation Service module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 🎯 MarketingAutomationService - AI-Powered Marketing Campaign Automation
@@ -157,7 +162,7 @@ class MarketingAutomationService:
     - AI Prompt: Intelligent content generation and personalization
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.redis_client = redis.Redis(
             host=config.get('redis_host', 'localhost'),
@@ -851,7 +856,7 @@ class MarketingAutomationService:
         
         return formats
 
-    async def _store_campaign(self, campaign: Campaign):
+    async def _store_campaign(self, campaign -> None: Campaign) -> None:
         """🗄️ DBA: Store campaign with optimized indexing"""
         try:
             campaign_data = asdict(campaign)
@@ -1149,7 +1154,7 @@ class MarketingAutomationService:
     # Including budget optimization, audience targeting, performance tracking, etc.
 
 # Usage Example
-async def main():
+async def main() -> None:
     """🎯 Example usage of MarketingAutomationService"""
     
     config = {

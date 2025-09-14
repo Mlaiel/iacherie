@@ -32,7 +32,7 @@ class ImageWatermarkEngine:
     """
 Professional image watermarking engine with multiple embedding techniques"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.block_size = 8  # For DCT
         self.max_payload = 1024  # Maximum bytes to embed
         

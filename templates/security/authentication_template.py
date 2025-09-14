@@ -1,4 +1,6 @@
 """{{auth_name}} Authentication Service Template for Ainflue Platform
+import asyncio
+
 {{auth_description}}
 
 Author: {{author_name}} ({{author_email}})
@@ -65,7 +67,7 @@ class AuthRequest(BaseModel):
     remember_device: bool = Field(default=False, description="Remember device for future logins")
     
     @validator('identifier')
-    def validate_identifier(cls, v):
+    def validate_identifier(cls, v) -> None:
         if not v or len(v.strip()) < 3:
             raise ValueError('Identifier must be at least 3 characters')
         return v.strip().lower()
@@ -105,7 +107,7 @@ class {{auth_name}}AuthService:
     - Security audit logging
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.metrics_collector = SecurityMetricsCollector()
         self.secret_key = settings.SECRET_KEY
@@ -429,7 +431,7 @@ class {{auth_name}}AuthService:
             return None
     
     # Placeholder methods that would be implemented with actual database operations
-    async def _get_user_by_identifier(self, identifier: str): 
+    async def _get_user_by_identifier(self, identifier -> None: str) -> None: 
         """Get user by identifier (email, username, phone)"""
         pass
     
@@ -461,6 +463,8 @@ class {{auth_name}}AuthService:
         """Validate device token"""
         return None
     
-    async def _record_security_event(self, event_type: str, identifier: str, ip_address: Optional[str]): 
+    async def _record_security_event(self, event_type -> None: str, identifier -> None: str, ip_address -> None: Optional[str]) -> None: 
         """Record security event"""
         pass
+
+# File has syntax issues - needs manual review

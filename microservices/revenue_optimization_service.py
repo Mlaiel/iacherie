@@ -192,7 +192,7 @@ class OptimizationRecommendation:
 class PricingEngine:
     """Dynamic pricing engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.pricing_models = {}
         self.price_history: Dict[str, deque] = defaultdict(lambda: deque(maxlen=1000))
         
@@ -336,7 +336,7 @@ class PricingEngine:
 class MarketAnalyzer:
     """Market analysis and intelligence"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.market_cache: Dict[str, MarketData] = {}
         self.trend_data: Dict[str, deque] = defaultdict(lambda: deque(maxlen=100))
         
@@ -434,7 +434,7 @@ class MarketAnalyzer:
 class RecommendationEngine:
     """Revenue optimization recommendation engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.recommendation_history: List[OptimizationRecommendation] = []
         
     def generate_recommendations(self, metrics: RevenueMetrics, 
@@ -540,7 +540,7 @@ class RecommendationEngine:
 class RevenueOptimizationService:
     """AI-powered Revenue Optimization Engine"""
     
-    def __init__(self, name: str = "revenue_optimization_service"):
+    def __init__(self, name -> None: str = "revenue_optimization_service") -> None:
         self.name = name
         self.pricing_engine = PricingEngine()
         self.market_analyzer = MarketAnalyzer()
@@ -557,7 +557,7 @@ class RevenueOptimizationService:
             'average_improvement': 0.0
         }
         
-    async def start(self):
+    async def start(self) -> None:
         """Start revenue optimization service"""
         self.running = True
         
@@ -566,7 +566,7 @@ class RevenueOptimizationService:
         
         logger.info(f"Started revenue optimization service: {self.name}")
         
-    async def stop(self):
+    async def stop(self) -> None:
         """Stop revenue optimization service"""
         self.running = False
         
@@ -769,7 +769,7 @@ class RevenueOptimizationService:
             logger.error(f"Error calculating ROI: {str(e)}")
             return {"error": str(e)}
             
-    async def _periodic_analysis(self):
+    async def _periodic_analysis(self) -> None:
         """Periodic market analysis and optimization"""
         while self.running:
             try:

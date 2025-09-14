@@ -1,3 +1,8 @@
+"""
+Session Store Manager module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
@@ -113,7 +118,7 @@ class SessionStoreManager:
     **Microservices**: Coordination sessions distribuées multi-services
     """
     
-    def __init__(self, redis_pool, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, redis_pool, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.redis_pool = redis_pool
         self.config = config or self._get_default_config()
         
@@ -182,7 +187,7 @@ class SessionStoreManager:
         key = base64.urlsafe_b64encode(kdf.derive(password))
         return key
     
-    async def start_background_tasks(self):
+    async def start_background_tasks(self) -> None:
         """**Backend Senior**: Démarrage tâches arrière-plan"""
         if self.cleanup_task is None or self.cleanup_task.done():
             self.cleanup_task = asyncio.create_task(self._session_cleanup_loop())
@@ -192,7 +197,7 @@ class SessionStoreManager:
         
         logger.info("🚀 Tâches background sessions démarrées")
     
-    async def stop_background_tasks(self):
+    async def stop_background_tasks(self) -> None:
         """**Backend Senior**: Arrêt tâches arrière-plan"""
         if self.cleanup_task:
             self.cleanup_task.cancel()
@@ -295,7 +300,7 @@ class SessionStoreManager:
         
         return current_sessions < max_sessions
     
-    async def _cleanup_user_expired_sessions(self, user_id: str):
+    async def _cleanup_user_expired_sessions(self, user_id -> None: str) -> None:
         """**DBA**: Nettoyage sessions expirées utilisateur"""
         if user_id not in self.user_sessions:
             return
@@ -312,7 +317,7 @@ class SessionStoreManager:
         for session_id in expired_sessions:
             await self.delete_session(session_id)
     
-    async def _store_session(self, session_data: SessionData):
+    async def _store_session(self, session_data -> None: SessionData) -> None:
         """**DBA**: Stockage session avec optimisation"""
         
         # Sérialisation données
@@ -480,7 +485,7 @@ class SessionStoreManager:
         # Comparaison exacte pour démo - en production, implémenter logique plus sophistiquée
         return stored == current
     
-    async def _handle_security_violation(self, session: SessionData, reason: str):
+    async def _handle_security_violation(self, session -> None: SessionData, reason -> None: str) -> None:
         """**Sécurité**: Gestion violation sécurité"""
         
         # Enregistrement événement sécurité
@@ -502,7 +507,7 @@ class SessionStoreManager:
         
         logger.warning(f"🚨 Violation sécurité session {session.session_id}: {reason}")
     
-    async def _update_last_access(self, session: SessionData):
+    async def _update_last_access(self, session -> None: SessionData) -> None:
         """**DBA**: Mise à jour dernier accès optimisée"""
         current_time = datetime.now(timezone.utc)
         session.last_accessed = current_time
@@ -668,7 +673,7 @@ class SessionStoreManager:
         logger.info(f"🚫 {invalidated_count} sessions invalidées pour utilisateur {user_id}")
         return invalidated_count
     
-    async def _session_cleanup_loop(self):
+    async def _session_cleanup_loop(self) -> None:
         """**DBA**: Boucle nettoyage sessions expirées"""
         while True:
             try:
@@ -679,7 +684,7 @@ class SessionStoreManager:
                 logger.error(f"❌ Erreur nettoyage sessions: {e}")
                 await asyncio.sleep(60)
     
-    async def _cleanup_expired_sessions(self):
+    async def _cleanup_expired_sessions(self) -> None:
         """**DBA**: Nettoyage sessions expirées"""
         current_time = datetime.now(timezone.utc)
         expired_sessions = []
@@ -699,7 +704,7 @@ class SessionStoreManager:
             logger.info(f"🧹 {cleanup_count} sessions expirées nettoyées")
             self.metrics.expired_sessions += cleanup_count
     
-    async def _metrics_collection_loop(self):
+    async def _metrics_collection_loop(self) -> None:
         """**DevOps**: Boucle collecte métriques"""
         while True:
             try:
@@ -709,7 +714,7 @@ class SessionStoreManager:
                 logger.error(f"❌ Erreur collecte métriques sessions: {e}")
                 await asyncio.sleep(60)
     
-    async def _collect_metrics(self):
+    async def _collect_metrics(self) -> None:
         """**DevOps**: Collecte métriques détaillées"""
         
         # Comptage sessions actives
@@ -832,19 +837,20 @@ class SessionStoreManager:
         }
 
 # Factory function
-async def create_session_store_manager(redis_pool, config: Optional[Dict[str, Any]] = None):
+async def create_session_store_manager(redis_pool, config -> None: Optional[Dict[str, Any]] = None) -> None:
     """**Backend Senior**: Factory création gestionnaire sessions"""
     manager = SessionStoreManager(redis_pool, config)
     await manager.start_background_tasks()
     return manager
 
 if __name__ == "__main__":
-    async def demo():
+    async def demo() -> None:
         """Démonstration Session Store Manager"""
         
         # Configuration Redis simulée
         class MockRedisPool:
-            def get_connection(self):
+    """MockRedisPool: class implementation"""
+            def get_connection(self) -> None:
                 from unittest.mock import AsyncMock
                 mock = AsyncMock()
                 mock.setex.return_value = True

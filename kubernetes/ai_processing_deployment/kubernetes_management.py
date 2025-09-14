@@ -157,7 +157,7 @@ class KubernetesTemplateManager:
     Jinja2 templating and validation.
     """
     
-    def __init__(self, template_dir: str = "/templates/kubernetes"):
+    def __init__(self, template_dir -> None: str = "/templates/kubernetes") -> None:
         """Initialize template manager."""
         self.template_dir = Path(template_dir)
         self.template_env = jinja2.Environment(
@@ -166,7 +166,7 @@ class KubernetesTemplateManager:
         )
         self._ensure_template_directory()
     
-    def _ensure_template_directory(self):
+    def _ensure_template_directory(self) -> None:
         """
 Ensure template directory exists with default templates."""
         self.template_dir.mkdir(parents=True, exist_ok=True)
@@ -174,7 +174,7 @@ Ensure template directory exists with default templates."""
         # Create default templates if they don't exist
         self._create_default_templates()
     
-    def _create_default_templates(self):
+    def _create_default_templates(self) -> None:
         """
 Create default Kubernetes manifest templates."""
         # Deployment template
@@ -544,7 +544,7 @@ class KubernetesClient:
     monitoring, and error handling capabilities.
     """
     
-    def __init__(self, kubeconfig_path: Optional[str] = None):
+    def __init__(self, kubeconfig_path -> None: Optional[str] = None) -> None:
         """
 Initialize Kubernetes client."""
         self.kubeconfig_path = kubeconfig_path
@@ -559,7 +559,7 @@ Initialize Kubernetes client."""
         
         self.template_manager = KubernetesTemplateManager()
         
-    def _load_kube_config(self):
+    def _load_kube_config(self) -> None:
         """
 Load Kubernetes configuration."""
         try:
@@ -639,7 +639,7 @@ Load Kubernetes configuration."""
             logger.error(f"Deployment failed with exception: {e}")
             return False
     
-    async def _ensure_namespace(self, namespace: str):
+    async def _ensure_namespace(self, namespace -> None: str) -> None:
         """Ensure namespace exists, create if it doesn't."""
         try:
             self.core_v1.read_namespace(name=namespace)
@@ -1130,7 +1130,7 @@ class KubernetesDeploymentManager:
     all aspects of AI processing infrastructure deployment.
     """
     
-    def __init__(self, config: ProcessingConfig):
+    def __init__(self, config -> None: ProcessingConfig) -> None:
         """
 Initialize deployment manager."""
         self.config = config

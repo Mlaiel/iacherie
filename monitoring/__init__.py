@@ -34,7 +34,7 @@ try:
     class MonitoringSystem:
         """Main monitoring system orchestrator with enterprise capabilities"""
         
-        def __init__(self):
+        def __init__(self) -> None:
             self.business_monitoring = BusinessMonitoringCore()
             self.dashboard = ProductionDashboard()
             self.enterprise_orchestrator = enterprise_orchestrator
@@ -90,11 +90,11 @@ try:
                 logger.error(f"Failed to get comprehensive status: {e}")
                 return self.get_system_status()
         
-        async def start_enterprise_monitoring(self):
+        async def start_enterprise_monitoring(self) -> None:
             """Start enterprise-level continuous monitoring"""
             await self.enterprise_orchestrator.start_continuous_monitoring()
         
-        def add_alert_handler(self, handler):
+        def add_alert_handler(self, handler) -> None:
             """Add enterprise alert handler"""
             add_enterprise_alert_handler(handler)
     

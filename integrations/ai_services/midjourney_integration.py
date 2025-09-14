@@ -98,12 +98,12 @@ class MidjourneyEnterpriseClient:
     
     def __init__(
         self,
-        api_key: Optional[str] = None,
-        base_url: str = "https://api.midjourney.com/v1",
-        timeout: int = 300,
-        max_retries: int = 3,
-        enable_creator_workflows: bool = True
-    ):
+        api_key -> None: Optional[str] = None,
+        base_url -> None: str = "https -> None://api.midjourney.com/v1",
+        timeout -> None: int = 300,
+        max_retries -> None: int = 3,
+        enable_creator_workflows -> None: bool = True
+    ) -> None:
         """Initialize Midjourney client with enterprise configuration."""
         self.api_key = api_key
         self.base_url = base_url.rstrip('/')
@@ -512,15 +512,15 @@ class MidjourneyEnterpriseClient:
             
         logger.info("✅ Midjourney client closed")
 
-    def __enter__(self):
+    def __enter__(self) -> None:
         """Context manager entry."""
         return self
 
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         """Async context manager entry."""
         return self
 
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         """Async context manager exit."""
         await self.close()
 
@@ -547,7 +547,7 @@ def create_midjourney_client(
 
 
 # Example usage for creator workflows
-async def example_creator_image_generation():
+async def example_creator_image_generation() -> None:
     """Example of creator-specific image generation workflow."""
     try:
         client = create_midjourney_client(api_key="your-api-key")

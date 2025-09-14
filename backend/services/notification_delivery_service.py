@@ -158,7 +158,7 @@ class NotificationCampaign:
 class NotificationManager:
     """Gestionnaire principal de notifications"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         self.template_engine = jinja2.Environment(loader=jinja2.DictLoader({}))
@@ -352,7 +352,7 @@ class NotificationManager:
 class DeliveryEngine:
     """Moteur de livraison de notifications"""
     
-    def __init__(self, redis_client: aioredis.Redis, notification_manager: NotificationManager):
+    def __init__(self, redis_client -> None: aioredis.Redis, notification_manager -> None: NotificationManager) -> None:
         self.redis = redis_client
         self.notification_manager = notification_manager
         self.email_client = None
@@ -533,7 +533,7 @@ class DeliveryEngine:
 class NotificationDeliveryService:
     """Service principal de livraison de notifications"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         self.notification_manager = NotificationManager(redis_client, db_session)

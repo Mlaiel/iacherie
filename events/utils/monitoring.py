@@ -16,12 +16,12 @@ logger = logging.getLogger(__name__)
 class MetricsCollector:
     """Collects and manages metrics for event processing"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.metrics = {}
         self.enabled = True
         logger.info("MetricsCollector initialized (placeholder implementation)")
     
-    def record_event(self, event_type: str, event_data: Dict[str, Any] = None):
+    def record_event(self, event_type -> None: str, event_data -> None: Dict[str, Any] = None) -> None:
         """Record an event metric"""
         if not self.enabled:
             return
@@ -41,7 +41,7 @@ class MetricsCollector:
         
         logger.debug(f"Recorded metric: {metric_key}")
     
-    def record_processing_time(self, event_type: str, processing_time: float):
+    def record_processing_time(self, event_type -> None: str, processing_time -> None: float) -> None:
         """Record processing time for an event type"""
         if not self.enabled:
             return
@@ -68,17 +68,17 @@ class MetricsCollector:
         """Get all collected metrics"""
         return self.metrics.copy()
     
-    def reset_metrics(self):
+    def reset_metrics(self) -> None:
         """Reset all metrics"""
         self.metrics.clear()
         logger.info("Metrics reset")
     
-    def enable(self):
+    def enable(self) -> None:
         """Enable metrics collection"""
         self.enabled = True
         logger.info("Metrics collection enabled")
     
-    def disable(self):
+    def disable(self) -> None:
         """Disable metrics collection"""
         self.enabled = False
         logger.info("Metrics collection disabled")

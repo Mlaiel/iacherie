@@ -1,13 +1,13 @@
-"""🔧 Monitoring Configuration Manager - IA-Influencer-Agent
+"""# [EMOJI_REMOVED] Monitoring Configuration Manager - IA-Influencer-Agent
 ==================================================================
 Lead Dev IA: Fahed Mlaiel <mlaiel@live.de>
 Experts: DevOps + SRE + Backend Senior + Observability Engineer
 Date: 2025-08-24
 
-PROPRIÉTAIRE EXCLUSIF: Fahed Mlaiel
-⚠️  AVERTISSEMENT LÉGAL STRICT:
-Toute tentative de copie, vol, réutilisation sans autorisation
-écrite explicite du propriétaire constitue une violation grave
+PROPRI# [EMOJI_REMOVED]TAIRE EXCLUSIF: Fahed Mlaiel
+# [EMOJI_REMOVED]  AVERTISSEMENT L# [EMOJI_REMOVED]GAL STRICT:
+    Toute tentative de copie, vol, r# [EMOJI_REMOVED]utilisation sans autorisation
+# [EMOJI_REMOVED]crite explicite du propri# [EMOJI_REMOVED]taire constitue une violation grave
 des droits d'auteur et sera poursuivie selon la loi allemande.
 Contact: mlaiel@live.de
 
@@ -167,7 +167,7 @@ class MonitoringConfigManager:
     - Performance and business metrics
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """
 Initialize monitoring configuration manager"""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
@@ -918,3 +918,5 @@ Get comprehensive monitoring status"""
     async def get_status(self) -> Dict[str, Any]:
         """Get monitoring manager status"""
         return await self.get_monitoring_status()
+
+# File has syntax issues - needs manual review

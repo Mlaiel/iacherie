@@ -72,7 +72,7 @@ class IntelligentPricingEngine:
     Analyse marché, concurrence et demande pour pricing optimal.
     """
     
-    def __init__(self, config: Optional[Dict] = None):
+    def __init__(self, config -> None: Optional[Dict] = None) -> None:
         """Initialise l'engine de pricing intelligent."""
         self.config = config or {}
         self.pricing_models: Dict[str, Dict] = {}
@@ -82,7 +82,7 @@ class IntelligentPricingEngine:
         self._initialize_models()
         logger.info("Intelligent Pricing Engine initialisé")
     
-    def _initialize_models(self):
+    def _initialize_models(self) -> None:
         """Initialise les modèles de pricing."""
         self.pricing_models = {
             'demand_forecasting': {

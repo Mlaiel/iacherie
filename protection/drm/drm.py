@@ -136,7 +136,7 @@ class AdvancedDRMSystem:
     Ultra-advanced Digital Rights Management system
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.protected_content = {}
         self.licenses = {}
@@ -208,7 +208,7 @@ class AdvancedDRMSystem:
         
         logger.info("Advanced DRM System initialized")
     
-    def _initialize_crypto_components(self):
+    def _initialize_crypto_components(self) -> None:
         """Initialize cryptographic components"""
         try:
             # Generate master keys
@@ -229,7 +229,7 @@ class AdvancedDRMSystem:
             logger.error(f"Failed to initialize crypto components: {str(e)}")
             raise
     
-    def _start_background_tasks(self):
+    def _start_background_tasks(self) -> None:
         """Start background maintenance tasks"""
         try:
             # Key rotation task
@@ -843,7 +843,7 @@ Generate unique device fingerprint"""
             return None
     
     # Background tasks
-    async def _key_rotation_task(self):
+    async def _key_rotation_task(self) -> None:
         """Background task for key rotation"""
         while True:
             try:
@@ -861,7 +861,7 @@ Generate unique device fingerprint"""
             except Exception as e:
                 logger.error(f"Key rotation task failed: {str(e)}")
     
-    async def _license_validation_task(self):
+    async def _license_validation_task(self) -> None:
         """Background task for license validation"""
         while True:
             try:
@@ -884,7 +884,7 @@ Generate unique device fingerprint"""
             except Exception as e:
                 logger.error(f"License validation task failed: {str(e)}")
     
-    async def _usage_monitoring_task(self):
+    async def _usage_monitoring_task(self) -> None:
         """Background task for usage monitoring"""
         while True:
             try:

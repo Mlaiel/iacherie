@@ -140,7 +140,7 @@ class PlatformConnector(ABC):
 class YouTubeConnector(PlatformConnector):
     """YouTube platform connector"""
     
-    def __init__(self, config: PlatformConfig):
+    def __init__(self, config -> None: PlatformConfig) -> None:
         self.config = config
         self.credentials: Optional[PlatformCredentials] = None
     
@@ -209,7 +209,7 @@ class YouTubeConnector(PlatformConnector):
 class InstagramConnector(PlatformConnector):
     """Instagram platform connector"""
     
-    def __init__(self, config: PlatformConfig):
+    def __init__(self, config -> None: PlatformConfig) -> None:
         self.config = config
         self.credentials: Optional[PlatformCredentials] = None
     
@@ -275,7 +275,7 @@ class InstagramConnector(PlatformConnector):
 class SpotifyConnector(PlatformConnector):
     """Spotify platform connector"""
     
-    def __init__(self, config: PlatformConfig):
+    def __init__(self, config -> None: PlatformConfig) -> None:
         self.config = config
         self.credentials: Optional[PlatformCredentials] = None
     
@@ -340,7 +340,7 @@ class SpotifyConnector(PlatformConnector):
 class PlatformConnectorService:
     """Multi-platform API integration management service"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.platforms: Dict[str, PlatformConfig] = {}
         self.connectors: Dict[str, PlatformConnector] = {}
         self.credentials: Dict[str, PlatformCredentials] = {}
@@ -349,7 +349,7 @@ class PlatformConnectorService:
         # Initialize default platforms
         self._initialize_platforms()
     
-    def _initialize_platforms(self):
+    def _initialize_platforms(self) -> None:
         """Initialize supported platforms"""
         platforms = [
             PlatformConfig(

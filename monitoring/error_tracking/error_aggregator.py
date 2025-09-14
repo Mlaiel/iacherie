@@ -51,7 +51,7 @@ class ErrorAggregator:
     Collects errors from multiple sources and provides statistics
     """
     
-    def __init__(self, max_events: int = 10000, retention_hours: int = 24):
+    def __init__(self, max_events -> None: int = 10000, retention_hours -> None: int = 24) -> None:
         """
         Initialize error aggregator
         
@@ -453,7 +453,7 @@ class ErrorAggregator:
         else:
             return 24  # Default to 24 hours
     
-    def _start_cleanup_task(self):
+    def _start_cleanup_task(self) -> None:
         """Start background cleanup task"""
         try:
             # Try to start async cleanup if in async context
@@ -464,7 +464,7 @@ class ErrorAggregator:
             # Not in async context, cleanup will happen on new events
             pass
     
-    async def _periodic_cleanup(self):
+    async def _periodic_cleanup(self) -> None:
         """Periodic cleanup task"""
         while True:
             await asyncio.sleep(3600)  # Run every hour

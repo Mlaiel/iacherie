@@ -172,14 +172,14 @@ class MemoryCache(ICacheProvider[T]):
     Ideal for frequently accessed small datasets and session data.
     """
     
-    def __init__(self, config: CacheConfig):
+    def __init__(self, config -> None: CacheConfig) -> None:
         self.config = config
         self._cache: OrderedDict[str, CacheEntry] = OrderedDict()
         self._stats = CacheStats()
         self._lock = threading.RLock()
         self._cleanup_task: Optional[asyncio.Task] = None
         
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize memory cache."""
         logger.info("🧠 Initializing Memory Cache...")
         
@@ -279,7 +279,7 @@ class MemoryCache(ICacheProvider[T]):
             self._stats.last_updated = datetime.now(timezone.utc)
         return self._stats
     
-    def _update_stats(self, start_time: datetime):
+    def _update_stats(self, start_time -> None: datetime) -> None:
         """Update performance statistics."""
         access_time = (datetime.now(timezone.utc) - start_time).total_seconds() * 1000  # ms
         if self._stats.average_access_time == 0:
@@ -288,7 +288,7 @@ class MemoryCache(ICacheProvider[T]):
             # Exponential moving average
             self._stats.average_access_time = 0.9 * self._stats.average_access_time + 0.1 * access_time
     
-    async def _cleanup_expired(self):
+    async def _cleanup_expired(self) -> None:
         """Cleanup expired entries periodically."""
         while True:
             try:
@@ -316,7 +316,7 @@ class MemoryCache(ICacheProvider[T]):
             except Exception as e:
                 logger.error(f"Cache cleanup error: {e}")
     
-    async def close(self):
+    async def close(self) -> None:
         """Close memory cache."""
         if self._cleanup_task:
             self._cleanup_task.cancel()
@@ -334,13 +334,13 @@ class RedisCache(ICacheProvider[T]):
     Supports clustering, persistence, and advanced data structures.
     """
     
-    def __init__(self, config: CacheConfig, redis_url: str):
+    def __init__(self, config -> None: CacheConfig, redis_url -> None: str) -> None:
         self.config = config
         self.redis_url = redis_url
         self._redis: Optional[aioredis.Redis] = None
         self._stats = CacheStats()
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize Redis cache."""
         if not REDIS_AVAILABLE:
             raise RuntimeError("Redis not available")
@@ -467,7 +467,7 @@ class RedisCache(ICacheProvider[T]):
         self._stats.last_updated = datetime.now(timezone.utc)
         return self._stats
     
-    def _update_stats(self, start_time: datetime):
+    def _update_stats(self, start_time -> None: datetime) -> None:
         """Update performance statistics."""
         access_time = (datetime.now(timezone.utc) - start_time).total_seconds() * 1000  # ms
         if self._stats.average_access_time == 0:
@@ -475,7 +475,7 @@ class RedisCache(ICacheProvider[T]):
         else:
             self._stats.average_access_time = 0.9 * self._stats.average_access_time + 0.1 * access_time
     
-    async def close(self):
+    async def close(self) -> None:
         """Close Redis cache."""
         if self._redis:
             await self._redis.close()
@@ -489,12 +489,12 @@ class MultiLevelCache(ICacheProvider[T]):
     Automatically promotes frequently accessed data to faster cache levels.
     """
     
-    def __init__(self, memory_config: CacheConfig, redis_config: Optional[CacheConfig] = None, redis_url: Optional[str] = None):
+    def __init__(self, memory_config -> None: CacheConfig, redis_config -> None: Optional[CacheConfig] = None, redis_url -> None: Optional[str] = None) -> None:
         self.memory_cache = MemoryCache(memory_config)
         self.redis_cache = RedisCache(redis_config, redis_url) if redis_config and redis_url else None
         self._stats = CacheStats()
         
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize multi-level cache."""
         logger.info("🏗️ Initializing Multi-Level Cache...")
         
@@ -594,7 +594,7 @@ class MultiLevelCache(ICacheProvider[T]):
         
         return combined_stats
     
-    async def close(self):
+    async def close(self) -> None:
         """Close multi-level cache."""
         await self.memory_cache.close()
         if self.redis_cache:
@@ -609,11 +609,11 @@ class DatabaseCacheManager:
     caching strategies for all database operations and business logic data.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._caches: Dict[str, ICacheProvider] = {}
         self._cache_configs: Dict[str, CacheConfig] = {}
         
-    async def initialize_cache(self, cache_name: str, cache_type: str, config: CacheConfig, **kwargs):
+    async def initialize_cache(self, cache_name -> None: str, cache_type -> None: str, config -> None: CacheConfig, **kwargs) -> None:
         """Initialize a named cache instance."""
         logger.info(f"🚀 Initializing {cache_type} cache: {cache_name}")
         
@@ -638,7 +638,7 @@ class DatabaseCacheManager:
             raise ValueError(f"Cache not found: {cache_name}")
         return self._caches[cache_name]
     
-    async def setup_default_caches(self, redis_url: Optional[str] = None):
+    async def setup_default_caches(self, redis_url -> None: Optional[str] = None) -> None:
         """Setup default caches for the platform."""
         # Session cache (fast access, short TTL)
         session_config = CacheConfig(
@@ -679,13 +679,13 @@ class DatabaseCacheManager:
         """Get statistics for all caches."""
         return {name: cache.get_stats() for name, cache in self._caches.items()}
     
-    async def clear_all_caches(self):
+    async def clear_all_caches(self) -> None:
         """Clear all cache instances."""
         for name, cache in self._caches.items():
             await cache.clear()
             logger.info(f"🧹 Cache {name} cleared")
     
-    async def close_all_caches(self):
+    async def close_all_caches(self) -> None:
         """Close all cache instances."""
         for name, cache in self._caches.items():
             await cache.close()

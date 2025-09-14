@@ -113,7 +113,7 @@ class AIProtectionOrchestrator:
     machine learning optimization and automated decision making.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize AI Protection Orchestrator"""
         self.config = config or {}
         self.watermark_engine = WatermarkEngine()
@@ -142,7 +142,7 @@ class AIProtectionOrchestrator:
         
         self._initialize_ai_models()
         
-    def _initialize_ai_models(self):
+    def _initialize_ai_models(self) -> None:
         """Initialize AI models for intelligent orchestration"""
         try:
             # Content analysis models
@@ -158,7 +158,7 @@ class AIProtectionOrchestrator:
             self.threat_assessor = None
             self.strategy_optimizer = None
     
-    def _load_content_analysis_model(self):
+    def _load_content_analysis_model(self) -> None:
         """Load content analysis AI model"""
         # Placeholder for actual ML model loading
         # In production, this would load a trained model for content analysis
@@ -168,7 +168,7 @@ class AIProtectionOrchestrator:
             'capabilities': ['format_detection', 'quality_assessment', 'content_classification']
         }
     
-    def _load_threat_assessment_model(self):
+    def _load_threat_assessment_model(self) -> None:
         """Load threat assessment AI model"""
         # Placeholder for actual ML model loading
         # In production, this would load a trained model for threat analysis
@@ -178,7 +178,7 @@ class AIProtectionOrchestrator:
             'capabilities': ['vulnerability_detection', 'risk_scoring', 'attack_prediction']
         }
     
-    def _load_strategy_optimization_model(self):
+    def _load_strategy_optimization_model(self) -> None:
         """Load strategy optimization AI model"""
         # Placeholder for actual ML model loading
         # In production, this would load a trained model for strategy optimization
@@ -761,7 +761,7 @@ class AIProtectionOrchestrator:
             logger.error(f"Fingerprinting failed: {e}")
             return {'error': str(e)}
     
-    async def _update_performance_metrics(self, result: ProtectionResult):
+    async def _update_performance_metrics(self, result -> None: ProtectionResult) -> None:
         """Update orchestrator performance metrics"""
         try:
             # Update processing time metrics

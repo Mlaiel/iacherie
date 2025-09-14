@@ -1,4 +1,6 @@
 """{{agent_name}} Content Analysis Agent for Ainflue Platform
+import asyncio
+
 {{agent_description}}
 
 Author: {{author_name}} ({{author_email}})
@@ -158,12 +160,12 @@ class {{agent_name}}Agent(BaseAIAgent):
     
     def __init__(
         self,
-        agent_id: str,
-        model_configs: Dict[str, Dict[str, Any]],
-        enable_deep_analysis: bool = True,
-        cache_size: int = 1000,
+        agent_id -> None: str,
+        model_configs -> None: Dict[str, Dict[str, Any]],
+        enable_deep_analysis -> None: bool = True,
+        cache_size -> None: int = 1000,
         **kwargs
-    ):
+    ) -> None:
         super().__init__(agent_id=agent_id, **kwargs)
         self.model_configs = model_configs
         self.enable_deep_analysis = enable_deep_analysis
@@ -187,7 +189,7 @@ class {{agent_name}}Agent(BaseAIAgent):
         
         logger.info(f"ContentAnalysisAgent {agent_id} initialized")
     
-    def _load_models(self):
+    def _load_models(self) -> None:
         """Load content analysis models"""
         try:
             # Load sentiment analysis model
@@ -213,7 +215,7 @@ class {{agent_name}}Agent(BaseAIAgent):
             logger.error(f"Failed to load models: {e}")
             raise ContentAnalysisException(f"Model loading failed: {e}")
     
-    def _initialize_nlp_pipeline(self):
+    def _initialize_nlp_pipeline(self) -> None:
         """Initialize spaCy NLP pipeline"""
         try:
             # Load spaCy model for entity extraction
@@ -562,7 +564,7 @@ class {{agent_name}}Agent(BaseAIAgent):
         """Check for potential copyright issues"""
         try:
             # Simplified copyright check
-            copyright_indicators = ["copyright", "©", "all rights reserved", "proprietary"]
+            copyright_indicators = ["copyright", "# [EMOJI_REMOVED]", "all rights reserved", "proprietary"]
             warnings = []
             
             text_lower = text.lower()
@@ -635,10 +637,10 @@ class {{agent_name}}Agent(BaseAIAgent):
     
     async def _process_analysis_results(
         self, 
-        analysis_results: Dict[str, Any], 
-        result_data: Dict[str, Any],
-        task: ContentAnalysisTask
-    ):
+        analysis_results -> None: Dict[str, Any], 
+        result_data -> None: Dict[str, Any],
+        task -> None: ContentAnalysisTask
+    ) -> None:
         """Process and aggregate analysis results"""
         
         # Process sentiment results
@@ -919,7 +921,7 @@ class {{agent_name}}Agent(BaseAIAgent):
 
 
 # Template usage example
-def create_content_analysis_agent_example():
+def create_content_analysis_agent_example() -> None:
     """Example of how to create and use a content analysis agent"""
     
     # Define model configurations
@@ -977,3 +979,5 @@ TEMPLATE_CONFIG = {
         "Performance monitoring"
     ]
 }
+
+# File has syntax issues - needs manual review

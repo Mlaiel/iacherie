@@ -112,7 +112,7 @@ class CodecInfo:
 class CodecRegistry:
     """Professional codec registry and management system"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize codec registry"""
         self.config = config or {}
         self.codecs: Dict[str, CodecInfo] = {}
@@ -124,7 +124,7 @@ class CodecRegistry:
         self._initialize_audio_codecs()
         self._initialize_subtitle_codecs()
     
-    def _initialize_video_codecs(self):
+    def _initialize_video_codecs(self) -> None:
         """Initialize video codec registry"""
         try:
             # H.264/AVC
@@ -285,7 +285,7 @@ class CodecRegistry:
         except Exception as e:
             logger.error(f"Error initializing video codecs: {e}")
     
-    def _initialize_audio_codecs(self):
+    def _initialize_audio_codecs(self) -> None:
         """Initialize audio codec registry"""
         try:
             # AAC
@@ -379,7 +379,7 @@ class CodecRegistry:
         except Exception as e:
             logger.error(f"Error initializing audio codecs: {e}")
     
-    def _initialize_subtitle_codecs(self):
+    def _initialize_subtitle_codecs(self) -> None:
         """Initialize subtitle codec registry"""
         try:
             # SubRip

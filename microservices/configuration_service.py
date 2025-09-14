@@ -169,7 +169,7 @@ class ConfigurationValidator:
 class EncryptionManager:
     """Configuration encryption manager"""
     
-    def __init__(self, encryption_key: str = None):
+    def __init__(self, encryption_key -> None: str = None) -> None:
         self.encryption_key = encryption_key or self._generate_key()
         
     def _generate_key(self) -> str:
@@ -238,7 +238,7 @@ class ConfigurationProvider(ABC):
 class FileConfigurationProvider(ConfigurationProvider):
     """File-based configuration provider"""
     
-    def __init__(self, config_dir: str = "./config"):
+    def __init__(self, config_dir -> None: str = "./config") -> None:
         self.config_dir = Path(config_dir)
         self.config_dir.mkdir(exist_ok=True)
         
@@ -359,7 +359,7 @@ class FileConfigurationProvider(ConfigurationProvider):
 class EnvironmentConfigurationProvider(ConfigurationProvider):
     """Environment variables configuration provider"""
     
-    def __init__(self, prefix: str = "AINFLUE_"):
+    def __init__(self, prefix -> None: str = "AINFLUE_") -> None:
         self.prefix = prefix
         
     async def load_configurations(self, profile: str = None) -> Dict[str, ConfigurationEntry]:
@@ -428,7 +428,7 @@ class EnvironmentConfigurationProvider(ConfigurationProvider):
 class ConfigurationService:
     """Centralized Configuration Management Service"""
     
-    def __init__(self, name: str = "configuration_service"):
+    def __init__(self, name -> None: str = "configuration_service") -> None:
         self.name = name
         self.profiles: Dict[str, ConfigurationProfile] = {}
         self.active_profile: Optional[str] = None
@@ -444,12 +444,12 @@ class ConfigurationService:
         self.add_provider(FileConfigurationProvider())
         self.add_provider(EnvironmentConfigurationProvider())
         
-    def add_provider(self, provider: ConfigurationProvider):
+    def add_provider(self, provider -> None: ConfigurationProvider) -> None:
         """Add configuration provider"""
         self.providers.append(provider)
         logger.info(f"Added configuration provider: {type(provider).__name__}")
         
-    def add_change_listener(self, listener: Callable[[str, ConfigurationEntry, ConfigurationEntry], None]):
+    def add_change_listener(self, listener -> None: Callable[[str, ConfigurationEntry, ConfigurationEntry], None]) -> None:
         """Add configuration change listener"""
         self.change_listeners.append(listener)
         
@@ -474,7 +474,7 @@ class ConfigurationService:
         
         return profile
         
-    async def set_active_profile(self, profile_name: str):
+    async def set_active_profile(self, profile_name -> None: str) -> None:
         """Set active configuration profile"""
         if profile_name not in self.profiles:
             await self.load_profile(profile_name)
@@ -657,12 +657,12 @@ class ConfigurationService:
         """Check if cache is still valid"""
         return time.time() - self.last_cache_update < self.cache_ttl
         
-    def _invalidate_cache(self):
+    def _invalidate_cache(self) -> None:
         """Invalidate configuration cache"""
         self.cache.clear()
         self.last_cache_update = 0
         
-    async def reload_configurations(self, profile: str = None):
+    async def reload_configurations(self, profile -> None: str = None) -> None:
         """Reload configurations from sources"""
         profile_name = profile or self.active_profile
         if profile_name and profile_name in self.profiles:

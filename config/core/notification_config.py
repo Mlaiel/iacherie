@@ -1,7 +1,14 @@
+"""
+Notification Config module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 """Ainflue Notification Configuration Module
+import asyncio
+
 ===========================================
 
 Enterprise-grade notification configuration for the Ainflue platform.
@@ -325,7 +332,7 @@ class NotificationAnalyticsConfig:
 class NotificationConfiguration:
     """Main notification configuration manager"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize notification configuration"""
         # Channel configurations
         self.email_config = EmailNotificationConfig()

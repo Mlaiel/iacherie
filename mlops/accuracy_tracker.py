@@ -1,3 +1,8 @@
+"""
+Accuracy Tracker module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 🎯 Accuracy Tracker - Enterprise MLOps Platform
@@ -85,8 +90,8 @@ class AccuracyTracker:
     """
     
     def __init__(self, 
-                 db_path: str = "/tmp/accuracy_tracker.db",
-                 retention_days: int = 90):
+                 db_path -> None: str = "/tmp/accuracy_tracker.db",
+                 retention_days -> None: int = 90) -> None:
         self.db_path = db_path
         self.retention_days = retention_days
         self.baselines: Dict[str, BaselineConfig] = {}
@@ -125,7 +130,7 @@ class AccuracyTracker:
         self._setup_database()
         logger.info("🎯 AccuracyTracker initialized for enterprise MLOps monitoring")
     
-    def _setup_database(self):
+    def _setup_database(self) -> None:
         """Initialisation de la base de données SQLite"""
         try:
             with sqlite3.connect(self.db_path) as conn:
@@ -173,12 +178,12 @@ class AccuracyTracker:
             raise
     
     async def set_baseline(self, 
-                          model_id: str,
-                          baseline_accuracy: float,
-                          baseline_version: str,
-                          comparison_method: str = "statistical_test",
-                          significance_threshold: float = 0.05,
-                          improvement_threshold: float = 0.02):
+                          model_id -> None: str,
+                          baseline_accuracy -> None: float,
+                          baseline_version -> None: str,
+                          comparison_method -> None: str = "statistical_test",
+                          significance_threshold -> None: float = 0.05,
+                          improvement_threshold -> None: float = 0.02) -> None:
         """Définir le baseline pour un modèle"""
         try:
             baseline_config = BaselineConfig(
@@ -323,7 +328,7 @@ class AccuracyTracker:
             logger.error(f"❌ Error detecting trend for {model_id}: {e}")
             return AccuracyTrend.UNKNOWN
     
-    async def _save_accuracy_metric(self, metric: AccuracyMetrics):
+    async def _save_accuracy_metric(self, metric -> None: AccuracyMetrics) -> None:
         """Sauvegarde d'une métrique en base de données"""
         try:
             with sqlite3.connect(self.db_path) as conn:
@@ -354,7 +359,7 @@ class AccuracyTracker:
         except Exception as e:
             logger.error(f"❌ Error saving accuracy metric: {e}")
     
-    async def _check_alerts(self, metric: AccuracyMetrics, model_category: ModelCategory):
+    async def _check_alerts(self, metric -> None: AccuracyMetrics, model_category -> None: ModelCategory) -> None:
         """Vérification et déclenchement d'alertes"""
         try:
             thresholds = self.creator_thresholds.get(model_category, self.creator_thresholds[ModelCategory.GENERAL_ML])
@@ -518,12 +523,12 @@ class AccuracyTracker:
             logger.error(f"❌ Error comparing models: {e}")
             return {"error": str(e)}
     
-    def add_alert_callback(self, callback: Callable):
+    def add_alert_callback(self, callback -> None: Callable) -> None:
         """Ajouter un callback pour les alertes"""
         self.alert_callbacks.append(callback)
         logger.info(f"📢 Alert callback added. Total callbacks: {len(self.alert_callbacks)}")
     
-    async def cleanup_old_data(self):
+    async def cleanup_old_data(self) -> None:
         """Nettoyage des données anciennes"""
         try:
             cutoff_date = datetime.now() - timedelta(days=self.retention_days)
@@ -547,7 +552,7 @@ class AccuracyTracker:
 
 
 # Exemple d'utilisation pour démonstration
-async def main():
+async def main() -> None:
     """Démonstration des capacités de l'AccuracyTracker"""
     tracker = AccuracyTracker()
     

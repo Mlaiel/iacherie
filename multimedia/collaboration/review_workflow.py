@@ -60,7 +60,7 @@ class ReviewComment:
     severity: str = "info"  # info, warning, error, critical
     resolved: bool = False
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.timestamp is None:
             self.timestamp = datetime.now().timestamp()
 
@@ -82,7 +82,7 @@ class ReviewRequest:
     attachments: List[str] = field(default_factory=list)
     metadata: Dict[str, Any] = field(default_factory=dict)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.created_at is None:
             self.created_at = datetime.now().timestamp()
 
@@ -90,7 +90,7 @@ class ReviewRequest:
 class ReviewWorkflowManager:
     """Professional review workflow management system"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize review workflow manager"""
         self.config = config or {}
         self.reviews: Dict[str, ReviewRequest] = {}
@@ -102,7 +102,7 @@ class ReviewWorkflowManager:
         # Initialize default workflows
         self._initialize_default_workflows()
         
-    def _initialize_default_workflows(self):
+    def _initialize_default_workflows(self) -> None:
         """Initialize default review workflows"""
         self.workflows.update({
             'standard': [
@@ -420,9 +420,9 @@ class ReviewWorkflowManager:
     
     async def _send_review_notification(
         self,
-        review: ReviewRequest,
-        notification_type: str
-    ):
+        review -> None: ReviewRequest,
+        notification_type -> None: str
+    ) -> None:
         """Send review-related notifications"""
         try:
             # This would integrate with notification system

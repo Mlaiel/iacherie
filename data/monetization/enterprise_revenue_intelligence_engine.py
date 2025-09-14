@@ -142,9 +142,9 @@ class EnterpriseRevenueIntelligenceEngine:
     """
 
     def __init__(self, 
-                 database_session: Optional[AsyncSession] = None,
-                 redis_client: Optional[redis.Redis] = None,
-                 config: Optional[Dict[str, Any]] = None):
+                 database_session -> None: Optional[AsyncSession] = None,
+                 redis_client -> None: Optional[redis.Redis] = None,
+                 config -> None: Optional[Dict[str, Any]] = None) -> None:
         # Backend Senior: High-performance initialization
         self.database_session = database_session
         self.redis_client = redis_client
@@ -571,7 +571,7 @@ class EnterpriseRevenueIntelligenceEngine:
     for content creators across multiple platforms with 53 AI agents.
     """
     
-    def __init__(self, db_session: AsyncSession, redis_client: Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: Redis) -> None:
         """
         Initialize Enterprise Revenue Intelligence Engine.
         
@@ -770,7 +770,7 @@ class EnterpriseRevenueIntelligenceEngine:
             "Leverage trending topics for increased visibility"
         ]
     
-    async def _cache_report(self, report: RevenueReport):
+    async def _cache_report(self, report -> None: RevenueReport) -> None:
         """Cache revenue report"""
         cache_key = f"revenue_report:{report.user_id}:{report.report_id}"
         await self.redis.setex(
@@ -860,7 +860,7 @@ class EnterpriseRevenueIntelligenceEngine:
 class RevenueCalculator:
     """Revenue calculation engine"""
     
-    def __init__(self, db_session: AsyncSession, redis_client: Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: Redis) -> None:
         self.db_session = db_session
         self.redis = redis_client
         self.logger = logging.getLogger(__name__)
@@ -882,7 +882,7 @@ class RevenueCalculator:
 class AnalyticsEngine:
     """Analytics processing engine"""
     
-    def __init__(self, db_session: AsyncSession, redis_client: Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: Redis) -> None:
         self.db_session = db_session
         self.redis = redis_client
         self.logger = logging.getLogger(__name__)
@@ -909,7 +909,7 @@ class AnalyticsEngine:
 class OptimizationEngine:
     """AI-powered optimization engine"""
     
-    def __init__(self, db_session: AsyncSession, redis_client: Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: Redis) -> None:
         self.db_session = db_session
         self.redis = redis_client
         self.logger = logging.getLogger(__name__)
@@ -1102,7 +1102,7 @@ async def validate_enterprise_revenue_intelligence_performance() -> bool:
 
 if __name__ == "__main__":
     # DevOps: Performance validation runner
-    async def main():
+    async def main() -> None:
         success = await validate_enterprise_revenue_intelligence_performance()
         print(f"\n🤖 Enterprise Revenue Intelligence Engine validation: {'✅ PASSED' if success else '❌ FAILED'}")
         print("🎯 Multi-Role Implementation Complete:")

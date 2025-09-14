@@ -1,3 +1,8 @@
+"""
+Prompt Optimization Template module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 🤖 Prompt Optimization Template - Enterprise MLOps Platform
@@ -122,8 +127,8 @@ class PromptOptimizationTemplate:
     """
     
     def __init__(self,
-                 db_path: str = "/tmp/prompt_optimization.db",
-                 evaluation_cache_size: int = 1000):
+                 db_path -> None: str = "/tmp/prompt_optimization.db",
+                 evaluation_cache_size -> None: int = 1000) -> None:
         self.db_path = db_path
         self.evaluation_cache_size = evaluation_cache_size
         
@@ -162,7 +167,7 @@ class PromptOptimizationTemplate:
         self._setup_database()
         logger.info("🤖 PromptOptimizationTemplate initialized for enterprise prompt engineering")
     
-    def _setup_database(self):
+    def _setup_database(self) -> None:
         """Initialisation de la base de données"""
         try:
             with sqlite3.connect(self.db_path) as conn:
@@ -524,7 +529,7 @@ class PromptOptimizationTemplate:
         else:
             return original_text
     
-    async def _run_ab_testing(self, experiment: PromptExperiment):
+    async def _run_ab_testing(self, experiment -> None: PromptExperiment) -> None:
         """Exécution d'A/B testing sur les templates"""
         try:
             all_templates = [experiment.base_template] + experiment.candidate_templates
@@ -567,7 +572,7 @@ class PromptOptimizationTemplate:
             logger.error(f"❌ A/B testing error: {e}")
             experiment.status = "failed"
     
-    async def _run_genetic_optimization(self, experiment: PromptExperiment):
+    async def _run_genetic_optimization(self, experiment -> None: PromptExperiment) -> None:
         """Optimisation génétique des prompts"""
         try:
             # Simplification pour la démo - vraie implémentation serait plus complexe
@@ -660,7 +665,7 @@ class PromptOptimizationTemplate:
             version=f"{template.version}_mutated"
         )
     
-    async def _run_bayesian_optimization(self, experiment: PromptExperiment):
+    async def _run_bayesian_optimization(self, experiment -> None: PromptExperiment) -> None:
         """Optimisation bayésienne (version simplifiée)"""
         try:
             # Version simplifiée - vraie implémentation utiliserait des librairies spécialisées
@@ -681,7 +686,7 @@ class PromptOptimizationTemplate:
                 }
             
             # Sélection basée sur acquisition function (Upper Confidence Bound simplifié)
-            def acquisition_function(performance):
+            def acquisition_function(performance) -> None:
                 return performance["mean_score"] + 1.96 * performance["uncertainty"]
             
             best_template_id = max(
@@ -710,7 +715,7 @@ class PromptOptimizationTemplate:
             logger.error(f"❌ Bayesian optimization error: {e}")
             experiment.status = "failed"
     
-    async def _run_simple_evaluation(self, experiment: PromptExperiment):
+    async def _run_simple_evaluation(self, experiment -> None: PromptExperiment) -> None:
         """Évaluation simple de tous les templates"""
         try:
             all_templates = [experiment.base_template] + experiment.candidate_templates
@@ -924,7 +929,7 @@ class PromptOptimizationTemplate:
         
         return (max(0, mean_score - margin), min(1, mean_score + margin))
     
-    async def _save_template_to_db(self, template: PromptTemplate):
+    async def _save_template_to_db(self, template -> None: PromptTemplate) -> None:
         """Sauvegarde template en DB"""
         try:
             with sqlite3.connect(self.db_path) as conn:
@@ -952,7 +957,7 @@ class PromptOptimizationTemplate:
         except Exception as e:
             logger.error(f"❌ Error saving template to DB: {e}")
     
-    async def _save_experiment_to_db(self, experiment: PromptExperiment):
+    async def _save_experiment_to_db(self, experiment -> None: PromptExperiment) -> None:
         """Sauvegarde expérience en DB"""
         try:
             with sqlite3.connect(self.db_path) as conn:
@@ -1014,30 +1019,30 @@ class PromptOptimizationTemplate:
             logger.error(f"❌ Error generating optimization report: {e}")
             return {"error": str(e)}
     
-    def add_optimization_callback(self, callback: Callable):
+    def add_optimization_callback(self, callback -> None: Callable) -> None:
         """Ajouter callback d'optimisation"""
         self.optimization_callbacks.append(callback)
         logger.info(f"🔬 Optimization callback added. Total: {len(self.optimization_callbacks)}")
     
-    def add_evaluation_callback(self, callback: Callable):
+    def add_evaluation_callback(self, callback -> None: Callable) -> None:
         """Ajouter callback d'évaluation"""
         self.evaluation_callbacks.append(callback)
         logger.info(f"📊 Evaluation callback added. Total: {len(self.evaluation_callbacks)}")
 
 
 # Exemple d'utilisation pour démonstration
-async def main():
+async def main() -> None:
     """Démonstration des capacités du PromptOptimizationTemplate"""
     
     optimizer = PromptOptimizationTemplate()
     
     # Callbacks de démonstration
-    async def optimization_callback(experiment: PromptExperiment):
+    async def optimization_callback(experiment -> None: PromptExperiment) -> None:
         print(f"🔬 OPTIMIZATION COMPLETED: {experiment.experiment_id}")
         print(f"   Improvement: {experiment.improvement_percentage:.2f}%")
         print(f"   Best template: {experiment.best_template_id}")
     
-    async def evaluation_callback(evaluation: PromptEvaluation):
+    async def evaluation_callback(evaluation -> None: PromptEvaluation) -> None:
         avg_score = statistics.mean(evaluation.scores.values())
         print(f"📊 EVALUATION: {evaluation.template_id} - Score: {avg_score:.3f}")
     

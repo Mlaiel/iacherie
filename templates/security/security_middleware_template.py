@@ -154,7 +154,7 @@ class SecurityValidator:
             r"(\s*--|\s*/\*|\*/)",
             r"(\s*;\s*(shutdown|drop|delete))",
             r"(char\(|ascii\(|substring\()",
-            r"(information_schema|sysdatabases|sys\.tables)"
+            r"(information_schema|sysdatabases|sys.tables)"
         ]
         
         query_lower = query.lower()
@@ -252,9 +252,9 @@ class {{service_class_name}}(BaseHTTPMiddleware):
     def __init__(
         self,
         app,
-        config: Optional[SecurityConfig] = None,
+        config -> None: Optional[SecurityConfig] = None,
         **kwargs
-    ):
+    ) -> None:
         super().__init__(app)
         self.config = config or SecurityConfig()
         
@@ -284,7 +284,7 @@ class {{service_class_name}}(BaseHTTPMiddleware):
         
         logger.info("Security middleware initialized successfully")
 
-    async def dispatch(self, request: Request, call_next):
+    async def dispatch(self, request -> None: Request, call_next) -> None:
         """Main middleware dispatch method"""
         start_time = datetime.utcnow()
         
@@ -999,4 +999,6 @@ class {{service_class_name}}(BaseHTTPMiddleware):
                 "rate_limiting",
                 "geo_filtering"
             ]
-        }
+        }))))
+
+# File has syntax issues - needs manual review

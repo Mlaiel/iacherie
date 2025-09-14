@@ -119,7 +119,7 @@ class EmailCampaignManager:
     - Real-time delivery tracking and analytics
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """Initialize email campaign manager"""
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -604,7 +604,7 @@ class EmailCampaignManager:
 
 
 # Example usage and testing
-async def main():
+async def main() -> None:
     """Example usage of EmailCampaignManager"""
     
     config = {

@@ -131,7 +131,7 @@ class BacklinkMonitoringSystem:
     - Link velocity monitoring
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize backlink monitoring system"""
         self.config = config or {}
         self.backlinks: Dict[str, Backlink] = {}
@@ -159,7 +159,7 @@ class BacklinkMonitoringSystem:
         self._initialize_backlink_monitoring()
         logger.info("Backlink Monitoring System initialized")
     
-    def _initialize_backlink_monitoring(self):
+    def _initialize_backlink_monitoring(self) -> None:
         """Initialize backlink monitoring components"""
         try:
             # Setup link quality analyzers
@@ -180,7 +180,7 @@ class BacklinkMonitoringSystem:
             logger.error(f"Failed to initialize backlink monitoring: {e}")
             raise
     
-    def _setup_quality_analyzers(self):
+    def _setup_quality_analyzers(self) -> None:
         """Setup link quality analysis algorithms"""
         self.quality_factors = {
             "domain_authority": {"weight": 0.25, "threshold": 50},
@@ -202,7 +202,7 @@ class BacklinkMonitoringSystem:
             "link_schemes": ["private-blog-networks", "link-exchanges"]
         }
     
-    def _setup_domain_authority_tracking(self):
+    def _setup_domain_authority_tracking(self) -> None:
         """Setup domain authority tracking system"""
         self.authority_metrics = {
             "moz_da": {"api_endpoint": "moz_api", "weight": 0.4},
@@ -210,7 +210,7 @@ class BacklinkMonitoringSystem:
             "semrush_as": {"api_endpoint": "semrush_api", "weight": 0.3}
         }
     
-    def _setup_competitor_analysis(self):
+    def _setup_competitor_analysis(self) -> None:
         """Setup competitor backlink analysis"""
         self.competitor_config = {
             "max_competitors": 10,
@@ -223,7 +223,7 @@ class BacklinkMonitoringSystem:
             }
         }
     
-    def _setup_toxic_link_detection(self):
+    def _setup_toxic_link_detection(self) -> None:
         """Setup toxic link detection algorithms"""
         self.toxic_detection_config = {
             "spam_score_api": "moz_spam_score",
@@ -508,7 +508,7 @@ class BacklinkMonitoringSystem:
         else:
             return LinkQuality.TOXIC
     
-    async def _update_domain_profile(self, domain: str, link: Backlink):
+    async def _update_domain_profile(self, domain -> None: str, link -> None: Backlink) -> None:
         """Update domain authority profile"""
         if domain not in self.domain_profiles:
             self.domain_profiles[domain] = DomainProfile(
@@ -533,7 +533,7 @@ class BacklinkMonitoringSystem:
             profile.domain_authority = max(profile.domain_authority, link.domain_authority)
             profile.page_authority = max(profile.page_authority, link.page_authority)
     
-    async def _update_backlink_database(self, links: List[Backlink]):
+    async def _update_backlink_database(self, links -> None: List[Backlink]) -> None:
         """Update backlink database"""
         for link in links:
             self.backlinks[link.link_id] = link
@@ -875,7 +875,7 @@ class BacklinkMonitoringSystem:
 
 # Example usage and testing
 if __name__ == "__main__":
-    async def test_backlink_monitoring():
+    async def test_backlink_monitoring() -> None:
         """Test backlink monitoring functionality"""
         monitor = BacklinkMonitoringSystem()
         

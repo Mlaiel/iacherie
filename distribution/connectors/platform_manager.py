@@ -65,7 +65,7 @@ class PlatformManager:
     for multi-platform content distribution across all supported platforms.
     """
     
-    def __init__(self, platform_credentials: Dict[str, Dict[str, str]]):
+    def __init__(self, platform_credentials -> None: Dict[str, Dict[str, str]]) -> None:
         """Initialize platform manager with all connector systems"""
         self.platform_credentials = platform_credentials
         

@@ -1,3 +1,9 @@
+"""
+Challenge Notifications module
+Enterprise implementation for Ainflue platform
+"""
+
 # Gamification Engine: challenge_notifications.py
 class ChallengeNotificationsEngine: 
-    def __init__(self, config=None): pass
+    """ChallengeNotificationsEngine: class implementation"""
+    def __init__(self, config=None) -> None: pass

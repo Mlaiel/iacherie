@@ -244,7 +244,7 @@ class SubscriptionManager(BaseIntegration):
     - Customer portal integration
     """
 
-    def __init__(self, config: SubscriptionConfig):
+    def __init__(self, config -> None: SubscriptionConfig) -> None:
         super().__init__("subscription_manager")
         self.config = config
         self.security_manager = SecurityManager()
@@ -580,7 +580,7 @@ class SubscriptionManager(BaseIntegration):
             logger.error("Failed to create subscription invoice", error=str(e))
             raise SubscriptionError(f"Invoice creation failed: {e}")
 
-    async def _schedule_next_billing(self, subscription: Subscription):
+    async def _schedule_next_billing(self, subscription -> None: Subscription) -> None:
         """Schedule next billing for subscription"""
         try:
             if subscription.status not in [SubscriptionStatus.ACTIVE, SubscriptionStatus.TRIALING]:
@@ -606,7 +606,7 @@ class SubscriptionManager(BaseIntegration):
         except Exception as e:
             logger.error("Failed to schedule next billing", error=str(e))
 
-    async def process_scheduled_billing(self):
+    async def process_scheduled_billing(self) -> None:
         """Process all scheduled billing jobs"""
         try:
             current_time = datetime.utcnow()
@@ -635,7 +635,7 @@ class SubscriptionManager(BaseIntegration):
         except Exception as e:
             logger.error("Failed to process scheduled billing", error=str(e))
 
-    async def _process_subscription_billing(self, subscription: Subscription):
+    async def _process_subscription_billing(self, subscription -> None: Subscription) -> None:
         """Process billing for a specific subscription"""
         try:
             plan = self._plans.get(subscription.plan_id)
@@ -766,7 +766,7 @@ class SubscriptionManager(BaseIntegration):
                         error=str(e))
             return False
 
-    async def _schedule_payment_retry(self, invoice: Invoice):
+    async def _schedule_payment_retry(self, invoice -> None: Invoice) -> None:
         """Schedule payment retry for failed invoice"""
         try:
             if invoice.attempt_count >= self.config.max_payment_attempts:
@@ -922,7 +922,7 @@ class SubscriptionManager(BaseIntegration):
                         error=str(e))
             raise SubscriptionError(f"Subscription update failed: {e}")
 
-    async def _handle_plan_change(self, subscription: Subscription, new_plan_id: str):
+    async def _handle_plan_change(self, subscription -> None: Subscription, new_plan_id -> None: str) -> None:
         """Handle subscription plan change with proration"""
         try:
             if not self.config.enable_proration:
@@ -965,10 +965,10 @@ class SubscriptionManager(BaseIntegration):
             raise SubscriptionError(f"Plan change failed: {e}")
 
     async def _create_proration_invoice(self, 
-                                      subscription: Subscription, 
-                                      amount: Decimal, 
-                                      old_plan: SubscriptionPlan, 
-                                      new_plan: SubscriptionPlan):
+                                      subscription -> None: Subscription, 
+                                      amount -> None: Decimal, 
+                                      old_plan -> None: SubscriptionPlan, 
+                                      new_plan -> None: SubscriptionPlan) -> None:
         """Create proration invoice for plan change"""
         try:
             invoice_id = str(uuid.uuid4())
@@ -1122,7 +1122,7 @@ class SubscriptionManager(BaseIntegration):
         else:
             return amount  # Default to monthly
 
-    async def _emit_event(self, event_type: str, data: Dict[str, Any]):
+    async def _emit_event(self, event_type -> None: str, data -> None: Dict[str, Any]) -> None:
         """Emit subscription event"""
         try:
             event = {
@@ -1150,7 +1150,7 @@ class SubscriptionManager(BaseIntegration):
         except Exception as e:
             logger.error("Failed to emit event", error=str(e))
 
-    async def _send_webhooks(self, event: Dict[str, Any]):
+    async def _send_webhooks(self, event -> None: Dict[str, Any]) -> None:
         """Send event webhooks to configured endpoints"""
         try:
             if not self.config.webhook_endpoints:
@@ -1203,7 +1203,7 @@ class SubscriptionManager(BaseIntegration):
         except Exception as e:
             logger.error("Failed to send webhooks", error=str(e))
 
-    def register_event_handler(self, event_type: str, handler: Callable):
+    def register_event_handler(self, event_type -> None: str, handler -> None: Callable) -> None:
         """Register event handler for subscription events"""
         if event_type not in self._event_handlers:
             self._event_handlers[event_type] = []
@@ -1269,7 +1269,7 @@ def create_subscription_manager(**kwargs) -> SubscriptionManager:
     return SubscriptionManager(config)
 
 # Example usage for Ainflue platform
-async def example_subscription_flow():
+async def example_subscription_flow() -> None:
     """Example subscription management usage"""
     
     # Initialize subscription manager

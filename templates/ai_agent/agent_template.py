@@ -1,4 +1,6 @@
 """{{agent_name}} AI Agent for Ainflue Platform
+import asyncio
+
 {{agent_description}}
 
 Author: {{author_name}} ({{author_email}})
@@ -77,7 +79,7 @@ class I{{agent_name}}Agent(ABC):
 class {{agent_name}}Agent(BaseAIAgent, I{{agent_name}}Agent):
     """{{agent_name}} AI agent implementation"""
     
-    def __init__(self, model_name: str = "default", **kwargs):
+    def __init__(self, model_name -> None: str = "default", **kwargs) -> None:
         super().__init__(agent_name="{{agent_name}}", **kwargs)
         self.model_name = model_name
         self.state = {{agent_name}}State.IDLE
@@ -96,7 +98,7 @@ class {{agent_name}}Agent(BaseAIAgent, I{{agent_name}}Agent):
         # Initialize model
         self._initialize_model()
     
-    def _initialize_model(self):
+    def _initialize_model(self) -> None:
         """Initialize the AI model"""
         try:
             self.model = self.model_manager.load_model(self.model_name)
@@ -309,3 +311,5 @@ async def create_{{agent_name_lower}}_agent(model_name: str = "default") -> {{ag
     "models": ["gpt-3.5-turbo", "gpt-4", "claude-3"],
     "default_model": "gpt-3.5-turbo"
 }
+
+# File has syntax issues - needs manual review

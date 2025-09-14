@@ -123,19 +123,19 @@ class CompetitiveAnalytics:
     - Trend identification
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize competitive analytics engine"""
         self.competitors: Dict[str, Competitor] = {}
         self.metrics_history: Dict[str, List[CompetitorMetrics]] = defaultdict(list)
         self.content_analysis: Dict[str, List[ContentAnalysis]] = defaultdict(list)
         self.session: Optional[aiohttp.ClientSession] = None
         
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         """Async context manager entry"""
         self.session = aiohttp.ClientSession()
         return self
         
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         """Async context manager exit"""
         if self.session:
             await self.session.close()
@@ -338,7 +338,7 @@ class CompetitiveAnalytics:
             # Use semaphore to limit concurrent analyses
             semaphore = asyncio.Semaphore(5)  # Max 5 concurrent analyses
             
-            async def analyze_with_semaphore(competitor_id):
+            async def analyze_with_semaphore(competitor_id) -> None:
                 async with semaphore:
                     return await self.analyze_competitor(competitor_id)
             
@@ -860,7 +860,7 @@ class CompetitiveAnalytics:
         return recommendations
 
 # Usage example
-async def main():
+async def main() -> None:
     """Example usage of CompetitiveAnalytics"""
     async with CompetitiveAnalytics() as analytics:
         

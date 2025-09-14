@@ -81,7 +81,7 @@ class ModelEncryptionManager:
     Enterprise model encryption manager with HSM simulation
     """
     
-    def __init__(self, key_store_path: str = "./encryption_keys", hsm_simulation: bool = True):
+    def __init__(self, key_store_path -> None: str = "./encryption_keys", hsm_simulation -> None: bool = True) -> None:
         self.key_store_path = Path(key_store_path)
         self.key_store_path.mkdir(exist_ok=True)
         self.hsm_simulation = hsm_simulation
@@ -561,7 +561,7 @@ class ModelEncryptionManager:
         logger.info(f"Re-encryption from {old_key_id} to {new_key_id} scheduled")
 
 # Usage Example
-async def main():
+async def main() -> None:
     """Example usage of ModelEncryptionManager"""
     manager = ModelEncryptionManager()
     

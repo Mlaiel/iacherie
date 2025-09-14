@@ -231,7 +231,7 @@ class ComplianceReportingEngine:
     multi-jurisdiction legal compliance, and audit trail management.
     """
     
-    def __init__(self, db_session: AsyncSession, redis_client: Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: Redis) -> None:
         """
         Initialize Compliance Reporting Engine.
         
@@ -634,7 +634,7 @@ class ComplianceReportingEngine:
         else:
             return 0.0
     
-    async def _store_compliance_results(self, user_id: str, results: Dict[str, Any]):
+    async def _store_compliance_results(self, user_id -> None: str, results -> None: Dict[str, Any]) -> None:
         """Store compliance check results"""
         cache_key = f"compliance_results:{user_id}"
         await self.redis.setex(
@@ -643,7 +643,7 @@ class ComplianceReportingEngine:
             json.dumps(results, default=str)
         )
     
-    async def _generate_compliance_alerts(self, user_id: str, results: Dict[str, Any]):
+    async def _generate_compliance_alerts(self, user_id -> None: str, results -> None: Dict[str, Any]) -> None:
         """Generate compliance alerts if needed"""
         if results["overall_status"] != ComplianceStatus.COMPLIANT.value:
             # Send alert notification
@@ -653,7 +653,7 @@ class ComplianceReportingEngine:
 class ComplianceManager:
     """Compliance management engine"""
     
-    def __init__(self, db_session: AsyncSession, redis_client: Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: Redis) -> None:
         self.db_session = db_session
         self.redis = redis_client
         self.logger = logging.getLogger(__name__)
@@ -685,25 +685,25 @@ class ComplianceManager:
         
         return check
     
-    async def _check_gdpr_compliance(self, user_id: str, check: ComplianceCheck):
+    async def _check_gdpr_compliance(self, user_id -> None: str, check -> None: ComplianceCheck) -> None:
         """Check GDPR compliance"""
         # Placeholder implementation
         check.status = ComplianceStatus.COMPLIANT
         check.details = {"privacy_policy": "present", "consent_mechanisms": "active"}
     
-    async def _check_ccpa_compliance(self, user_id: str, check: ComplianceCheck):
+    async def _check_ccpa_compliance(self, user_id -> None: str, check -> None: ComplianceCheck) -> None:
         """Check CCPA compliance"""
         # Placeholder implementation
         check.status = ComplianceStatus.COMPLIANT
         check.details = {"privacy_rights": "implemented", "opt_out": "available"}
     
-    async def _check_dmca_compliance(self, user_id: str, check: ComplianceCheck):
+    async def _check_dmca_compliance(self, user_id -> None: str, check -> None: ComplianceCheck) -> None:
         """Check DMCA compliance"""
         # Placeholder implementation
         check.status = ComplianceStatus.COMPLIANT
         check.details = {"takedown_procedures": "active", "agent_registered": True}
     
-    async def _check_tax_compliance(self, user_id: str, check: ComplianceCheck):
+    async def _check_tax_compliance(self, user_id -> None: str, check -> None: ComplianceCheck) -> None:
         """Check tax reporting compliance"""
         # Placeholder implementation
         check.status = ComplianceStatus.COMPLIANT
@@ -713,7 +713,7 @@ class ComplianceManager:
 class ReportingEngine:
     """Advanced reporting engine"""
     
-    def __init__(self, db_session: AsyncSession, redis_client: Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: Redis) -> None:
         self.db_session = db_session
         self.redis = redis_client
         self.logger = logging.getLogger(__name__)

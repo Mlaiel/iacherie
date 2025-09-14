@@ -33,7 +33,7 @@ class FilterConfig:
 class StyleTransferModel(nn.Module):
     """Lightweight neural style transfer model."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super(StyleTransferModel, self).__init__()
         
         # Encoder
@@ -66,7 +66,7 @@ class StyleTransferModel(nn.Module):
             nn.Tanh()
         )
         
-    def _residual_block(self, channels):
+    def _residual_block(self, channels) -> None:
         return nn.Sequential(
             nn.Conv2d(channels, channels, 3, 1, 1),
             nn.InstanceNorm2d(channels),
@@ -75,7 +75,7 @@ class StyleTransferModel(nn.Module):
             nn.InstanceNorm2d(channels)
         )
     
-    def forward(self, x):
+    def forward(self, x) -> None:
         residual = x
         out = self.encoder(x)
         out = self.residual_blocks(out)
@@ -85,7 +85,7 @@ class StyleTransferModel(nn.Module):
 class AIFilterEngine:
     """Enterprise AI filter and style transfer engine."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.models = {}
         self.config = FilterConfig()

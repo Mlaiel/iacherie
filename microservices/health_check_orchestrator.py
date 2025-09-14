@@ -1,3 +1,8 @@
+"""
+Health Check Orchestrator module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Enterprise Health Check Orchestrator Service
@@ -112,7 +117,7 @@ class HealthCheckOrchestrator:
     - Recovery tracking
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize health check orchestrator"""
         self.health_checks: Dict[str, HealthCheckConfig] = {}
         self.service_health: Dict[str, ServiceHealth] = {}
@@ -132,7 +137,7 @@ class HealthCheckOrchestrator:
         
         logger.info("HealthCheckOrchestrator initialized")
     
-    async def start(self):
+    async def start(self) -> None:
         """Start the health check orchestrator"""
         try:
             # Create HTTP session
@@ -148,7 +153,7 @@ class HealthCheckOrchestrator:
             logger.error("Failed to start HealthCheckOrchestrator: %s", e)
             raise
     
-    async def stop(self):
+    async def stop(self) -> None:
         """Stop the health check orchestrator"""
         try:
             self.shutdown_event.set()
@@ -167,9 +172,9 @@ class HealthCheckOrchestrator:
     
     async def register_service(
         self,
-        service_name: str,
-        checks: List[HealthCheckConfig]
-    ):
+        service_name -> None: str,
+        checks -> None: List[HealthCheckConfig]
+    ) -> None:
         """Register a service with health checks"""
         async with self._lock:
             # Initialize service health
@@ -191,7 +196,7 @@ class HealthCheckOrchestrator:
         
         logger.info("Registered service '%s' with %d health checks", service_name, len(checks))
     
-    async def unregister_service(self, service_name: str):
+    async def unregister_service(self, service_name -> None: str) -> None:
         """Unregister a service"""
         async with self._lock:
             # Stop and remove check tasks
@@ -284,7 +289,7 @@ class HealthCheckOrchestrator:
                 "timestamp": time.time()
             }
     
-    async def force_check(self, service_name: str, check_name: Optional[str] = None):
+    async def force_check(self, service_name -> None: str, check_name -> None: Optional[str] = None) -> None:
         """Force immediate health check"""
         if check_name:
             check_key = f"{service_name}.{check_name}"
@@ -300,13 +305,13 @@ class HealthCheckOrchestrator:
             for check_key, config in service_checks:
                 await self._execute_health_check(check_key, config)
     
-    async def add_alert_rule(self, rule: AlertRule):
+    async def add_alert_rule(self, rule -> None: AlertRule) -> None:
         """Add a custom alert rule"""
         async with self._lock:
             self.alert_rules[rule.name] = rule
         logger.info("Added alert rule: %s", rule.name)
     
-    async def remove_alert_rule(self, rule_name: str):
+    async def remove_alert_rule(self, rule_name -> None: str) -> None:
         """Remove an alert rule"""
         async with self._lock:
             self.alert_rules.pop(rule_name, None)
@@ -317,7 +322,7 @@ class HealthCheckOrchestrator:
         async with self._lock:
             return self.alert_history[-limit:]
     
-    def _setup_default_alert_rules(self):
+    def _setup_default_alert_rules(self) -> None:
         """Setup default alert rules"""
         self.alert_rules = {
             "service_down": AlertRule(
@@ -343,12 +348,12 @@ class HealthCheckOrchestrator:
             )
         }
     
-    async def _start_health_checks(self):
+    async def _start_health_checks(self) -> None:
         """Start all health check tasks"""
         for check_key, config in self.health_checks.items():
             await self._start_check_task(check_key, config)
     
-    async def _start_check_task(self, check_key: str, config: HealthCheckConfig):
+    async def _start_check_task(self, check_key -> None: str, config -> None: HealthCheckConfig) -> None:
         """Start a single health check task"""
         if not config.enabled:
             return
@@ -361,7 +366,7 @@ class HealthCheckOrchestrator:
             self._health_check_loop(check_key, config)
         )
     
-    async def _stop_health_checks(self):
+    async def _stop_health_checks(self) -> None:
         """Stop all health check tasks"""
         tasks = list(self.check_tasks.values())
         self.check_tasks.clear()
@@ -372,7 +377,7 @@ class HealthCheckOrchestrator:
         if tasks:
             await asyncio.gather(*tasks, return_exceptions=True)
     
-    async def _health_check_loop(self, check_key: str, config: HealthCheckConfig):
+    async def _health_check_loop(self, check_key -> None: str, config -> None: HealthCheckConfig) -> None:
         """Health check execution loop"""
         while not self.shutdown_event.is_set():
             try:
@@ -384,7 +389,7 @@ class HealthCheckOrchestrator:
                 logger.error("Error in health check loop for %s: %s", check_key, e)
                 await asyncio.sleep(config.interval)
     
-    async def _execute_health_check(self, check_key: str, config: HealthCheckConfig):
+    async def _execute_health_check(self, check_key -> None: str, config -> None: HealthCheckConfig) -> None:
         """Execute a single health check"""
         service_name = check_key.split('.')[0]
         start_time = time.time()
@@ -466,10 +471,10 @@ class HealthCheckOrchestrator:
     
     async def _update_service_health(
         self,
-        service_name: str,
-        check_name: str,
-        result: HealthCheckResult
-    ):
+        service_name -> None: str,
+        check_name -> None: str,
+        result -> None: HealthCheckResult
+    ) -> None:
         """Update service health based on check result"""
         async with self._lock:
             if service_name not in self.service_health:
@@ -510,7 +515,7 @@ class HealthCheckOrchestrator:
             # Check alert rules
             await self._check_alert_rules(service)
     
-    async def _check_alert_rules(self, service: ServiceHealth):
+    async def _check_alert_rules(self, service -> None: ServiceHealth) -> None:
         """Check alert rules for a service"""
         current_time = time.time()
         
@@ -533,7 +538,7 @@ class HealthCheckOrchestrator:
             except Exception as e:
                 logger.error("Error checking alert rule %s: %s", rule_name, e)
     
-    async def _trigger_alert(self, service: ServiceHealth, rule: AlertRule):
+    async def _trigger_alert(self, service -> None: ServiceHealth, rule -> None: AlertRule) -> None:
         """Trigger an alert"""
         alert = {
             "timestamp": time.time(),
@@ -567,7 +572,7 @@ async def get_health_orchestrator() -> HealthCheckOrchestrator:
         await _orchestrator.start()
     return _orchestrator
 
-async def shutdown_health_orchestrator():
+async def shutdown_health_orchestrator() -> None:
     """Shutdown global health check orchestrator"""
     global _orchestrator
     if _orchestrator:
@@ -575,17 +580,17 @@ async def shutdown_health_orchestrator():
         _orchestrator = None
 
 if __name__ == "__main__":
-    async def test_health_orchestrator():
+    async def test_health_orchestrator() -> None:
         """Test health orchestrator functionality"""
         orchestrator = HealthCheckOrchestrator()
         await orchestrator.start()
         
         try:
             # Define test health checks
-            async def always_healthy():
+            async def always_healthy() -> None:
                 return True
             
-            async def always_unhealthy():
+            async def always_unhealthy() -> None:
                 return False
             
             checks = [

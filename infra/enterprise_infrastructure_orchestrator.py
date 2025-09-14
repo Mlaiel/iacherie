@@ -1,3 +1,8 @@
+"""
+Enterprise Infrastructure Orchestrator module
+Enterprise implementation for Ainflue platform
+"""
+
 # Ainflue Infrastructure Module - Enterprise Infrastructure Orchestrator
 # =====================================================================
 # 
@@ -90,7 +95,7 @@ class InfrastructureConfig:
 class AinflueEnterpriseInfrastructureOrchestrator:
     """Master orchestrator for all Ainflue infrastructure components"""
     
-    def __init__(self, config: InfrastructureConfig):
+    def __init__(self, config -> None: InfrastructureConfig) -> None:
         """Initialize the enterprise infrastructure orchestrator
         
         Args:
@@ -135,7 +140,7 @@ class AinflueEnterpriseInfrastructureOrchestrator:
         
         return logger
     
-    def _initialize_managers(self):
+    def _initialize_managers(self) -> None:
         """Initialize all infrastructure component managers"""
         try:
             # Core platform managers
@@ -814,7 +819,7 @@ def create_enterprise_orchestrator(environment: str = "production",
     return AinflueEnterpriseInfrastructureOrchestrator(config)
 
 # Example usage
-async def main():
+async def main() -> None:
     """Example deployment execution"""
     # Create orchestrator
     orchestrator = create_enterprise_orchestrator(

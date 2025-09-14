@@ -79,7 +79,7 @@ class AccuracyDegradationMonitor:
     - Historical degradation pattern analysis
     """
     
-    def __init__(self, monitoring_config: Dict[str, Any] = None):
+    def __init__(self, monitoring_config -> None: Dict[str, Any] = None) -> None:
         self.logger = logging.getLogger(__name__)
         self.config = monitoring_config or self._get_default_config()
         
@@ -537,7 +537,7 @@ class AccuracyDegradationMonitor:
             return None
 
 # Example usage and testing
-async def main():
+async def main() -> None:
     """Example usage of AccuracyDegradationMonitor."""
     monitor = AccuracyDegradationMonitor()
     

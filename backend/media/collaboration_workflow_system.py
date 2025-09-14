@@ -257,7 +257,7 @@ class TeamWorkspace:
 class RealTimeCollaborationManager:
     """Manages real-time collaboration features"""
     
-    def __init__(self, config: CollaborationConfig):
+    def __init__(self, config -> None: CollaborationConfig) -> None:
         self.config = config
         self.active_sessions: Dict[str, CollaborationSession] = {}
         self.user_sessions: Dict[str, Set[str]] = defaultdict(set)  # user_id -> session_ids
@@ -446,10 +446,10 @@ class RealTimeCollaborationManager:
     
     async def _notify_session_event(
         self, 
-        session_id: str, 
-        event_type: CollaborationEventType, 
-        data: Dict[str, Any]
-    ):
+        session_id -> None: str, 
+        event_type -> None: CollaborationEventType, 
+        data -> None: Dict[str, Any]
+    ) -> None:
         """Notify all session participants of event"""
         session = self.active_sessions.get(session_id)
         if not session:
@@ -466,12 +466,12 @@ class RealTimeCollaborationManager:
         for user in session.active_users:
             await self._send_to_user(user.user_id, event_payload)
     
-    async def _send_to_user(self, user_id: str, payload: Dict[str, Any]):
+    async def _send_to_user(self, user_id -> None: str, payload -> None: Dict[str, Any]) -> None:
         """Send payload to specific user"""
         # Placeholder for WebSocket implementation
         logger.debug(f"Sending to user {user_id}: {payload['type']}")
     
-    async def _trigger_auto_save(self, session_id: str):
+    async def _trigger_auto_save(self, session_id -> None: str) -> None:
         """Trigger auto-save for session"""
         # Placeholder for auto-save implementation
         logger.debug(f"Auto-save triggered for session {session_id}")
@@ -518,7 +518,7 @@ class RealTimeCollaborationManager:
 class WorkflowEngine:
     """Manages collaboration workflows and task coordination"""
     
-    def __init__(self, config: CollaborationConfig):
+    def __init__(self, config -> None: CollaborationConfig) -> None:
         self.config = config
         self.workflows: Dict[str, Workflow] = {}
         self.task_queue = []
@@ -671,7 +671,7 @@ class WorkflowEngine:
             logger.error(f"Failed to get workflow progress: {e}")
             return {}
     
-    async def _update_workflow_status(self, workflow: Workflow):
+    async def _update_workflow_status(self, workflow -> None: Workflow) -> None:
         """Update workflow status based on task statuses"""
         if not workflow.tasks:
             return
@@ -696,22 +696,22 @@ class WorkflowEngine:
                     return task
         return None
     
-    async def _notify_workflow_created(self, workflow: Workflow):
+    async def _notify_workflow_created(self, workflow -> None: Workflow) -> None:
         """Notify participants about new workflow"""
         # Placeholder for notification implementation
         logger.info(f"Notifying participants about workflow {workflow.workflow_id}")
     
-    async def _notify_task_assigned(self, task: WorkflowTask):
+    async def _notify_task_assigned(self, task -> None: WorkflowTask) -> None:
         """Notify users about task assignment"""
         # Placeholder for notification implementation
         logger.info(f"Notifying users about task assignment {task.task_id}")
     
     async def _notify_task_status_changed(
         self, 
-        task: WorkflowTask, 
-        old_status: WorkflowStatus, 
-        updated_by: str
-    ):
+        task -> None: WorkflowTask, 
+        old_status -> None: WorkflowStatus, 
+        updated_by -> None: str
+    ) -> None:
         """Notify about task status change"""
         # Placeholder for notification implementation
         logger.info(f"Task {task.task_id} status changed by {updated_by}")
@@ -720,7 +720,7 @@ class WorkflowEngine:
 class ApprovalWorkflowManager:
     """Manages approval workflows and review processes"""
     
-    def __init__(self, config: CollaborationConfig):
+    def __init__(self, config -> None: CollaborationConfig) -> None:
         self.config = config
         self.approval_requests: Dict[str, ApprovalRequest] = {}
         
@@ -839,7 +839,7 @@ class ApprovalWorkflowManager:
             logger.error(f"Failed to get approval status: {e}")
             return {}
     
-    async def _finalize_approval_request(self, request: ApprovalRequest):
+    async def _finalize_approval_request(self, request -> None: ApprovalRequest) -> None:
         """Finalize approval request based on all decisions"""
         decisions = [approval['decision'] for approval in request.approvals.values()]
         
@@ -856,22 +856,22 @@ class ApprovalWorkflowManager:
         
         await self._notify_approval_completed(request)
     
-    async def _notify_approval_requested(self, request: ApprovalRequest):
+    async def _notify_approval_requested(self, request -> None: ApprovalRequest) -> None:
         """Notify approvers about new approval request"""
         # Placeholder for notification implementation
         logger.info(f"Notifying approvers about request {request.request_id}")
     
     async def _notify_approval_submitted(
         self, 
-        request: ApprovalRequest, 
-        approver_id: str, 
-        decision: ApprovalStatus
-    ):
+        request -> None: ApprovalRequest, 
+        approver_id -> None: str, 
+        decision -> None: ApprovalStatus
+    ) -> None:
         """Notify about submitted approval"""
         # Placeholder for notification implementation
         logger.info(f"Approval {decision.value} submitted for request {request.request_id}")
     
-    async def _notify_approval_completed(self, request: ApprovalRequest):
+    async def _notify_approval_completed(self, request -> None: ApprovalRequest) -> None:
         """Notify about completed approval process"""
         # Placeholder for notification implementation
         logger.info(f"Approval process completed for request {request.request_id}: {request.status.value}")
@@ -880,7 +880,7 @@ class ApprovalWorkflowManager:
 class TeamWorkspaceManager:
     """Manages team workspaces and project coordination"""
     
-    def __init__(self, config: CollaborationConfig):
+    def __init__(self, config -> None: CollaborationConfig) -> None:
         self.config = config
         self.workspaces: Dict[str, TeamWorkspace] = {}
         
@@ -1025,17 +1025,17 @@ class TeamWorkspaceManager:
             logger.error(f"Failed to get workspace activity: {e}")
             return {}
     
-    async def _notify_workspace_created(self, workspace: TeamWorkspace):
+    async def _notify_workspace_created(self, workspace -> None: TeamWorkspace) -> None:
         """Notify about workspace creation"""
         # Placeholder for notification implementation
         logger.info(f"Workspace created: {workspace.workspace_id}")
     
-    async def _notify_member_added(self, workspace: TeamWorkspace, user: User, added_by: str):
+    async def _notify_member_added(self, workspace -> None: TeamWorkspace, user -> None: User, added_by -> None: str) -> None:
         """Notify about member addition"""
         # Placeholder for notification implementation
         logger.info(f"Member {user.user_id} added to workspace {workspace.workspace_id}")
     
-    async def _notify_member_removed(self, workspace: TeamWorkspace, user_id: str, removed_by: str):
+    async def _notify_member_removed(self, workspace -> None: TeamWorkspace, user_id -> None: str, removed_by -> None: str) -> None:
         """Notify about member removal"""
         # Placeholder for notification implementation
         logger.info(f"Member {user_id} removed from workspace {workspace.workspace_id}")
@@ -1044,7 +1044,7 @@ class TeamWorkspaceManager:
 class CollaborationWorkflowSystem:
     """Main collaboration workflow system orchestrating all components"""
     
-    def __init__(self, config: Optional[CollaborationConfig] = None):
+    def __init__(self, config -> None: Optional[CollaborationConfig] = None) -> None:
         """Initialize collaboration workflow system"""
         self.config = config or CollaborationConfig()
         
@@ -1234,28 +1234,28 @@ class CollaborationWorkflowSystem:
 # Backward compatibility classes for existing imports
 class CollaborationTools_Legacy:
     """Legacy wrapper for collaboration tools"""
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs) -> None:
         self.system = CollaborationWorkflowSystem(*args, **kwargs)
         self.realtime_manager = self.system.realtime_manager
 
 
 class CollaborationWorkflowEngine_Legacy:
     """Legacy wrapper for workflow engine"""
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs) -> None:
         config = CollaborationConfig()
         self.engine = WorkflowEngine(config)
 
 
 class TeamMediaWorkspace_Legacy:
     """Legacy wrapper for team workspace"""
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs) -> None:
         config = CollaborationConfig()
         self.manager = TeamWorkspaceManager(config)
 
 
 class ApprovalWorkflowManager_Legacy:
     """Legacy wrapper for approval manager"""
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs) -> None:
         config = CollaborationConfig()
         self.manager = ApprovalWorkflowManager(config)
 

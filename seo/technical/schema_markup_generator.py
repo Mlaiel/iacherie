@@ -91,7 +91,7 @@ class SchemaGenerationConfig:
 class SchemaMarkupGenerator:
     """Advanced schema markup generation engine."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the Schema Markup Generator."""
         self.schema_context = "https://schema.org"
         self.property_mappings = self._load_property_mappings()

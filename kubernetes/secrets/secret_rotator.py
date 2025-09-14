@@ -94,9 +94,9 @@ class SecretRotator:
     
     def __init__(
         self,
-        vault_manager: VaultManager,
-        config: SecretsConfig = None
-    ):
+        vault_manager -> None: VaultManager,
+        config -> None: SecretsConfig = None
+    ) -> None:
         """
         Initialize secret rotator.
         
@@ -892,7 +892,7 @@ class EmergencyRotator:
     """
 Emergency secret rotation for security incidents."""
     
-    def __init__(self, rotator: SecretRotator):
+    def __init__(self, rotator -> None: SecretRotator) -> None:
         self.rotator = rotator
         self.vault = rotator.vault
         self.notifications = rotator.notifications
@@ -1011,7 +1011,7 @@ class InfluencerSecretRotator(SecretRotator):
     - Fingerprinting algorithm keys
     """
     
-    def __init__(self, vault_manager: VaultManager, config: SecretsConfig = None):
+    def __init__(self, vault_manager -> None: VaultManager, config -> None: SecretsConfig = None) -> None:
         super().__init__(vault_manager, config)
         self.platform_rotators = {
             'youtube': self._rotate_youtube_credentials,
@@ -1506,7 +1506,7 @@ class InfluencerEmergencyRotator(EmergencyRotator):
     - Content protection key leaks
     """
     
-    def __init__(self, rotator: InfluencerSecretRotator):
+    def __init__(self, rotator -> None: InfluencerSecretRotator) -> None:
         super().__init__(rotator)
         self.influencer_rotator = rotator
     
@@ -1736,3 +1736,5 @@ class InfluencerEmergencyRotator(EmergencyRotator):
             
         except Exception as e:
             logger.error(f"Failed to notify payment system for {processor}: {e}")
+
+# File has syntax issues - needs manual review

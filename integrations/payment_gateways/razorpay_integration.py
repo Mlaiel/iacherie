@@ -133,11 +133,11 @@ class RazorpayPaymentProcessor:
     
     def __init__(
         self,
-        key_id: str,
-        key_secret: str,
-        webhook_secret: Optional[str] = None,
-        base_url: str = "https://api.razorpay.com/v1"
-    ):
+        key_id -> None: str,
+        key_secret -> None: str,
+        webhook_secret -> None: Optional[str] = None,
+        base_url -> None: str = "https -> None://api.razorpay.com/v1"
+    ) -> None:
         """Initialize Razorpay payment processor.
         
         Args:
@@ -868,15 +868,15 @@ class RazorpayPaymentProcessor:
             self.logger.error(f"Failed to get card details: {e}")
             raise
 
-    async def close(self):
+    async def close(self) -> None:
         """Close the HTTP session."""
         await self.session.aclose()
 
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         """Async context manager entry."""
         return self
 
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         """Async context manager exit."""
         await self.close()
 

@@ -227,7 +227,7 @@ class AudienceAnalyzer:
     - Quality scoring avec détection de fake followers
     """
     
-    def __init__(self, db_session=None, redis_client=None):
+    def __init__(self, db_session=None, redis_client=None) -> None:
         self.db_session = db_session
         self.redis_client = redis_client
         self.audience_profiles = {}
@@ -238,7 +238,7 @@ class AudienceAnalyzer:
         # Initialiser les modèles
         self._initialize_segmentation_models()
     
-    def _initialize_segmentation_models(self):
+    def _initialize_segmentation_models(self) -> None:
         """Initialise les modèles de segmentation"""
         try:
             # Modèle de clustering pour segmentation démographique
@@ -468,7 +468,7 @@ class DemographicMatcher:
     - Personnalisation par segment
     """
     
-    def __init__(self, audience_analyzer):
+    def __init__(self, audience_analyzer) -> None:
         self.audience_analyzer = audience_analyzer
         self.demographic_weights = self._initialize_demographic_weights()
         self.compatibility_matrix = {}
@@ -555,7 +555,7 @@ class CollaborationPredictor:
     - Recommandations personnalisées
     """
     
-    def __init__(self, db_session=None, redis_client=None):
+    def __init__(self, db_session=None, redis_client=None) -> None:
         self.db_session = db_session
         self.redis_client = redis_client
         self.prediction_models = {}
@@ -566,7 +566,7 @@ class CollaborationPredictor:
         # Initialiser les modèles prédictifs
         self._initialize_prediction_models()
     
-    def _initialize_prediction_models(self):
+    def _initialize_prediction_models(self) -> None:
         """Initialise les modèles de prédiction"""
         try:
             # Modèle de prédiction de succès
@@ -715,7 +715,7 @@ class CollaborationPredictor:
             logger.error(f"Erreur prédiction succès: {e}")
             return 0.5
     
-    async def train_prediction_models(self, training_data: List[Dict]):
+    async def train_prediction_models(self, training_data -> None: List[Dict]) -> None:
         """Entraîne les modèles de prédiction avec des données historiques"""
         try:
             if len(training_data) < 10:
@@ -763,7 +763,7 @@ class ContentSimilarity:
     - Détection de plagiat et originalité
     """
     
-    def __init__(self, db_session=None, redis_client=None):
+    def __init__(self, db_session=None, redis_client=None) -> None:
         self.db_session = db_session
         self.redis_client = redis_client
         self.content_vectors = {}
@@ -773,7 +773,7 @@ class ContentSimilarity:
         # Initialiser les modèles
         self._initialize_similarity_models()
     
-    def _initialize_similarity_models(self):
+    def _initialize_similarity_models(self) -> None:
         """Initialise les modèles de similarité"""
         try:
             # Vectorizer TF-IDF pour analyse textuelle

@@ -105,7 +105,7 @@ Deployment result structure"""
 class DeploymentOrchestrator:
     """Enterprise deployment orchestration engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """
 Initialize deployment orchestrator"""
         self.initialized = False

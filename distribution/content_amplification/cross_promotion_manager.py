@@ -83,7 +83,7 @@ class CrossPromotionManager:
     - Viral cascade management
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.platform_connectors = {}
         self.audience_analytics = {}
         self.synergy_models = {}
@@ -508,7 +508,7 @@ class CrossPromotionManager:
             'engagement_timeline': []
         }
 
-    async def _wait_for_optimal_timing(self, timing: datetime):
+    async def _wait_for_optimal_timing(self, timing -> None: datetime) -> None:
         """Wait for optimal timing (simplified)"""
         # In real implementation, this would wait until the specified time
         pass
@@ -526,8 +526,8 @@ class CrossPromotionManager:
         }
 
     async def _optimize_remaining_sequence(
-        self, plan: CrossPromotionPlan, platform_result: Dict[str, Any], execution_tracker: Dict[str, Any]
-    ):
+        self, plan -> None: CrossPromotionPlan, platform_result -> None: Dict[str, Any], execution_tracker -> None: Dict[str, Any]
+    ) -> None:
         """Optimize remaining promotion sequence based on results"""
         # Real-time optimization logic would go here
         pass

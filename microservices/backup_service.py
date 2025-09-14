@@ -1,3 +1,8 @@
+"""
+Backup Service module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 💾 BACKUP SERVICE
@@ -126,7 +131,7 @@ class CompressionManager:
             raise
     
     @staticmethod
-    def decompress_file(source_path: str, dest_path: str):
+    def decompress_file(source_path -> None: str, dest_path -> None: str) -> None:
         """Decompress a gzip file"""
         try:
             with gzip.open(source_path, 'rb') as f_in:
@@ -145,7 +150,7 @@ class EncryptionManager:
         return Fernet.generate_key().decode()
     
     @staticmethod
-    def encrypt_file(source_path: str, dest_path: str, key: str):
+    def encrypt_file(source_path -> None: str, dest_path -> None: str, key -> None: str) -> None:
         """Encrypt a file"""
         try:
             fernet = Fernet(key.encode())
@@ -163,7 +168,7 @@ class EncryptionManager:
             raise
     
     @staticmethod
-    def decrypt_file(source_path: str, dest_path: str, key: str):
+    def decrypt_file(source_path -> None: str, dest_path -> None: str, key -> None: str) -> None:
         """Decrypt a file"""
         try:
             fernet = Fernet(key.encode())
@@ -183,7 +188,7 @@ class EncryptionManager:
 class S3BackupManager:
     """AWS S3 backup operations"""
     
-    def __init__(self, bucket_name: str, access_key: str = None, secret_key: str = None):
+    def __init__(self, bucket_name -> None: str, access_key -> None: str = None, secret_key -> None: str = None) -> None:
         self.bucket_name = bucket_name
         self.s3_client = boto3.client(
             's3',
@@ -226,7 +231,7 @@ class S3BackupManager:
 class BackupService:
     """Advanced distributed backup and disaster recovery service"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.service_name = "BackupService"
         self.version = "1.0.0"
         self.backup_jobs: Dict[str, BackupJob] = {}
@@ -241,11 +246,11 @@ class BackupService:
     
     async def initialize(
         self,
-        redis_url: str = "redis://localhost:6379/0",
-        s3_bucket: str = None,
-        s3_access_key: str = None,
-        s3_secret_key: str = None
-    ):
+        redis_url -> None: str = "redis -> None://localhost -> None:6379/0",
+        s3_bucket -> None: str = None,
+        s3_access_key -> None: str = None,
+        s3_secret_key -> None: str = None
+    ) -> None:
         """Initialize the backup service"""
         try:
             # Initialize Redis connection
@@ -308,7 +313,7 @@ class BackupService:
         logger.info(f"💾 Created backup job '{name}' (ID: {job_id})")
         return job_id
     
-    async def _execute_backup(self, job: BackupJob):
+    async def _execute_backup(self, job -> None: BackupJob) -> None:
         """Execute a backup job"""
         try:
             logger.info(f"🔄 Starting backup: {job.name}")
@@ -535,7 +540,7 @@ class BackupService:
             logger.error(f"❌ Backup verification failed: {str(e)}")
             return False
     
-    async def _save_backup_job(self, job: BackupJob):
+    async def _save_backup_job(self, job -> None: BackupJob) -> None:
         """Save backup job to storage"""
         if self.redis_client:
             try:
@@ -555,7 +560,7 @@ class BackupService:
             except Exception as e:
                 logger.error(f"❌ Failed to save backup job: {str(e)}")
     
-    async def _save_backup_schedule(self, schedule: BackupSchedule):
+    async def _save_backup_schedule(self, schedule -> None: BackupSchedule) -> None:
         """Save backup schedule to storage"""
         if self.redis_client:
             try:
@@ -575,7 +580,7 @@ class BackupService:
             except Exception as e:
                 logger.error(f"❌ Failed to save backup schedule: {str(e)}")
     
-    async def _load_backup_data(self):
+    async def _load_backup_data(self) -> None:
         """Load backup jobs and schedules from storage"""
         if self.redis_client:
             try:
@@ -646,7 +651,7 @@ class BackupService:
         """List all backup jobs"""
         return [await self.get_backup_status(job_id) for job_id in self.backup_jobs.keys()]
     
-    async def cleanup_old_backups(self, retention_days: int = 30):
+    async def cleanup_old_backups(self, retention_days -> None: int = 30) -> None:
         """Clean up old backup files"""
         cutoff_date = datetime.now() - timedelta(days=retention_days)
         cleaned_count = 0
@@ -700,7 +705,7 @@ class BackupService:
 backup_service = BackupService()
 
 # Example usage
-async def main():
+async def main() -> None:
     """Example usage of the backup service"""
     try:
         # Initialize service

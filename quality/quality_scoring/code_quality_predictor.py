@@ -1,3 +1,8 @@
+"""
+Code Quality Predictor module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Code Quality Predictor - Ainflue AI Platform
@@ -127,7 +132,7 @@ class CodeQualityPredictor:
     AI-powered code quality prediction system
     """
     
-    def __init__(self, config_path: Optional[str] = None):
+    def __init__(self, config_path -> None: Optional[str] = None) -> None:
         self.config_path = Path(config_path) if config_path else Path("config/quality_predictor.yaml")
         self.config = self._load_config()
         self.models: Dict[str, Any] = {}
@@ -190,7 +195,7 @@ class CodeQualityPredictor:
         
         return default_config
 
-    def _initialize_database(self):
+    def _initialize_database(self) -> None:
         """Initialize SQLite database"""
         self.database_path.parent.mkdir(parents=True, exist_ok=True)
         
@@ -237,7 +242,7 @@ class CodeQualityPredictor:
                 )
             """)
 
-    def _initialize_ai_models(self):
+    def _initialize_ai_models(self) -> None:
         """Initialize AI models and transformers"""
         try:
             if self.config["ai_integration"]["use_transformers"]:
@@ -776,7 +781,7 @@ class CodeQualityPredictor:
         """Get model accuracy from training history"""
         return 0.85  # Default accuracy placeholder
 
-    async def _store_prediction(self, prediction: QualityPrediction):
+    async def _store_prediction(self, prediction -> None: QualityPrediction) -> None:
         """Store prediction in database"""
         try:
             with sqlite3.connect(self.database_path) as conn:
@@ -799,7 +804,7 @@ class CodeQualityPredictor:
         except Exception as e:
             logger.error(f"Failed to store prediction: {e}")
 
-    async def _train_model(self, prediction_type: QualityPredictionType):
+    async def _train_model(self, prediction_type -> None: QualityPredictionType) -> None:
         """Train ML model for specific prediction type"""
         logger.info(f"Training model for {prediction_type.value}")
         
@@ -820,15 +825,15 @@ class CodeQualityPredictor:
 code_quality_predictor = CodeQualityPredictor()
 
 # Convenience functions
-async def predict_maintainability(file_path: str):
+async def predict_maintainability(file_path -> None: str) -> None:
     """Predict code maintainability"""
     return await code_quality_predictor.predict_quality(file_path, QualityPredictionType.MAINTAINABILITY)
 
-async def predict_bug_proneness(file_path: str):
+async def predict_bug_proneness(file_path -> None: str) -> None:
     """Predict bug proneness"""
     return await code_quality_predictor.predict_quality(file_path, QualityPredictionType.BUG_PRONENESS)
 
-async def analyze_code_quality(file_path: str):
+async def analyze_code_quality(file_path -> None: str) -> None:
     """Comprehensive code quality analysis"""
     results = {}
     for pred_type in QualityPredictionType:
@@ -842,7 +847,7 @@ async def analyze_code_quality(file_path: str):
 
 if __name__ == "__main__":
     # Example usage
-    async def main():
+    async def main() -> None:
         file_path = "sample_code.py"
         prediction = await predict_maintainability(file_path)
         print(f"Quality Level: {prediction.quality_level.value}")

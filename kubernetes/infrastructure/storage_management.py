@@ -120,7 +120,7 @@ class StorageManager:
     """
 Main storage management system"""
     
-    def __init__(self, k8s_client=None, aws_session=None):
+    def __init__(self, k8s_client=None, aws_session=None) -> None:
         self.k8s_client = k8s_client
         self.aws_session = aws_session
         self.core_v1 = client.CoreV1Api() if k8s_client else None

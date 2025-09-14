@@ -81,7 +81,7 @@ class OptimizationRecommendation:
 class CreatorFundOptimizer:
     """Advanced creator fund optimization engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize creator fund optimizer"""
         self.fund_requirements = {}
         self.platform_rates = {}

@@ -1,3 +1,8 @@
+"""
+Biometric Authentication module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 🔐 Biometric Authentication Engine Enterprise - Advanced Identity Verification
@@ -85,7 +90,7 @@ class VerificationResult:
 class BiometricProcessor:
     """Base class for biometric processing"""
     
-    def __init__(self, biometric_type: str):
+    def __init__(self, biometric_type -> None: str) -> None:
         self.biometric_type = biometric_type
         self.quality_threshold = 0.7
         self.verification_threshold = 0.85
@@ -109,7 +114,7 @@ class BiometricProcessor:
 class FaceProcessor(BiometricProcessor):
     """Face recognition processor with liveness detection"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__("face")
         self.face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
         self.eye_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_eye.xml')
@@ -263,7 +268,7 @@ class FaceProcessor(BiometricProcessor):
 class VoiceProcessor(BiometricProcessor):
     """Voice recognition processor with anti-spoofing"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__("voice")
         self.sample_rate = 16000
         self.frame_duration = 0.025  # 25ms frames
@@ -439,7 +444,7 @@ class BiometricAuthenticationEngine:
     Advanced multi-modal biometric verification system
     """
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         """Initialize biometric authentication engine"""
         self.config = config or {}
         self.database_path = self.config.get('database_path', 'biometric_templates.db')
@@ -471,7 +476,7 @@ class BiometricAuthenticationEngine:
             'false_rejection_rate': 0.0
         }
     
-    def _initialize_database(self):
+    def _initialize_database(self) -> None:
         """Initialize SQLite database for template storage"""
         try:
             conn = sqlite3.connect(self.database_path)
@@ -518,7 +523,7 @@ class BiometricAuthenticationEngine:
             logger.error(f"Database initialization failed: {e}")
             raise
     
-    def _initialize_encryption(self):
+    def _initialize_encryption(self) -> None:
         """Initialize encryption for template protection"""
         try:
             # Use a key derivation function for the encryption key
@@ -540,7 +545,7 @@ class BiometricAuthenticationEngine:
             logger.error(f"Encryption initialization failed: {e}")
             raise
     
-    def _initialize_redis(self):
+    def _initialize_redis(self) -> None:
         """Initialize Redis for caching"""
         try:
             redis_host = self.config.get('redis_host', 'localhost')
@@ -763,7 +768,7 @@ class BiometricAuthenticationEngine:
         """Decrypt biometric template data"""
         return self.encryption_key.decrypt(encrypted_data)
     
-    async def _store_template(self, template: BiometricTemplate):
+    async def _store_template(self, template -> None: BiometricTemplate) -> None:
         """Store biometric template in database"""
         try:
             conn = sqlite3.connect(self.database_path)
@@ -857,7 +862,7 @@ class BiometricAuthenticationEngine:
             logger.error(f"Template loading failed: {e}")
             return None
     
-    async def _log_verification(self, result: VerificationResult, context: Dict[str, Any] = None):
+    async def _log_verification(self, result -> None: VerificationResult, context -> None: Dict[str, Any] = None) -> None:
         """Log verification attempt"""
         try:
             context = context or {}
@@ -888,7 +893,7 @@ class BiometricAuthenticationEngine:
         except Exception as e:
             logger.error(f"Verification logging failed: {e}")
     
-    async def _update_template_usage(self, template: BiometricTemplate):
+    async def _update_template_usage(self, template -> None: BiometricTemplate) -> None:
         """Update template usage statistics"""
         try:
             conn = sqlite3.connect(self.database_path)
@@ -1017,7 +1022,7 @@ class BiometricAuthenticationEngine:
         return self.metrics.copy()
 
 # CLI interface for testing
-async def main():
+async def main() -> None:
     """Main function for command-line testing"""
     import argparse
     

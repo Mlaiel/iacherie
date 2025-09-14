@@ -93,7 +93,7 @@ class CreatorMultiFormatCore:
     with enterprise-grade performance and reliability standards.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.creator_profiles: Dict[str, CreatorProfile] = {}
         self.processing_queue: List[ContentProcessingRequest] = []
         self.business_rules: Dict[CreatorType, Dict[str, Any]] = {}
@@ -117,7 +117,7 @@ class CreatorMultiFormatCore:
             logger.error(f"❌ Creator Multi-Format Core initialization failed: {str(e)}")
             return False
     
-    async def _setup_business_rules(self):
+    async def _setup_business_rules(self) -> None:
         """Setup creator type-specific business rules"""
         self.business_rules = {
             CreatorType.MUSICIAN: {
@@ -199,11 +199,11 @@ class CreatorMultiFormatCore:
         
         logger.info("✅ Creator type business rules configured")
     
-    async def _setup_creator_types(self):
+    async def _setup_creator_types(self) -> None:
         """Setup creator type configurations"""
         logger.info("✅ Creator type configurations loaded")
     
-    async def _setup_performance_monitoring(self):
+    async def _setup_performance_monitoring(self) -> None:
         """Setup performance monitoring"""
         self.performance_metrics = {
             "processing_speed_ms": 0.0,
@@ -477,7 +477,7 @@ class CreatorMultiFormatCore:
             logger.error(f"❌ Business insights generation failed: {str(e)}")
             return {}
     
-    async def _update_performance_metrics(self, result: ContentProcessingResult):
+    async def _update_performance_metrics(self, result -> None: ContentProcessingResult) -> None:
         """Update system performance metrics"""
         try:
             # Update processing speed

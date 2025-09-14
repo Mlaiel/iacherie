@@ -108,7 +108,7 @@ class ModuleIndex:
     transformation capability mapping for the entire transformers ecosystem.
     """
     
-    def __init__(self, transformers_path: Optional[str] = None):
+    def __init__(self, transformers_path -> None: Optional[str] = None) -> None:
         """
         Initialize module index.
         
@@ -465,7 +465,7 @@ Get optimization suggestions for the transformer ecosystem."""
             logger.error(f"Index export failed: {str(e)}")
             return False
     
-    async def _scan_core_modules(self, transformers_dir: Path):
+    async def _scan_core_modules(self, transformers_dir -> None: Path) -> None:
         """Scan core transformer modules."""
         core_modules = [
             ("data_transformer", "DataTransformer", "Main transformation coordinator"),
@@ -511,7 +511,7 @@ Get optimization suggestions for the transformer ecosystem."""
                 
                 self.modules[module_name] = module_info
     
-    async def _scan_specialized_processors(self, transformers_dir: Path):
+    async def _scan_specialized_processors(self, transformers_dir -> None: Path) -> None:
         """Scan specialized processor modules."""
         specialized_modules = [
             ("format_converter", "FormatConverter", "Universal format conversion"),
@@ -542,7 +542,7 @@ Get optimization suggestions for the transformer ecosystem."""
                 
                 self.modules[module_name] = module_info
     
-    async def _scan_utility_modules(self, transformers_dir: Path):
+    async def _scan_utility_modules(self, transformers_dir -> None: Path) -> None:
         """Scan utility modules."""
         utility_modules = [
             ("batch_processor", "BatchProcessor", "High-performance batch processing"),
@@ -571,7 +571,7 @@ Get optimization suggestions for the transformer ecosystem."""
                 
                 self.modules[module_name] = module_info
     
-    async def _build_dependency_graph(self):
+    async def _build_dependency_graph(self) -> None:
         """Build module dependency graph."""
         self.dependency_graph.clear()
         
@@ -588,7 +588,7 @@ Get optimization suggestions for the transformer ecosystem."""
             
             self.dependency_graph[module_name] = deps
     
-    async def _generate_capability_matrix(self):
+    async def _generate_capability_matrix(self) -> None:
         """Generate transformation capability matrix."""
         self.capabilities.clear()
         
@@ -612,7 +612,7 @@ Get optimization suggestions for the transformer ecosystem."""
             
             self.capabilities[module_name] = capabilities
     
-    async def _load_dependencies(self, module_name: str):
+    async def _load_dependencies(self, module_name -> None: str) -> None:
         """Load module dependencies recursively."""
         module_info = self.modules.get(module_name)
         if not module_info:

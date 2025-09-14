@@ -57,7 +57,7 @@ class IntrusionAttempt:
     detected_at: datetime
     confidence: float
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.evidence is None:
             self.evidence = {}
 
@@ -96,7 +96,7 @@ class IntrusionPreventionSystem:
     Detects and prevents various types of security intrusions.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.enabled = True
         self.prevention_rules = self._initialize_prevention_rules()
         self.blocked_ips = set()
@@ -620,7 +620,7 @@ class IntrusionPreventionSystem:
         # Simplified implementation
         return 3 if ip_address in self.blocked_ips else 1
     
-    def _apply_rate_limit(self, source_ip: str, user_id: Optional[str]):
+    def _apply_rate_limit(self, source_ip -> None: str, user_id -> None: Optional[str]) -> None:
         """Apply rate limiting"""
         
         if source_ip not in self.rate_limits:
@@ -765,12 +765,12 @@ class IntrusionPreventionSystem:
         
         return False
     
-    def unblock_ip(self, ip_address: str):
+    def unblock_ip(self, ip_address -> None: str) -> None:
         """Unblock an IP address"""
         self.blocked_ips.discard(ip_address)
         logger.info(f"Unblocked IP: {ip_address}")
     
-    def unblock_user(self, user_id: str):
+    def unblock_user(self, user_id -> None: str) -> None:
         """Unblock a user"""
         self.blocked_users.discard(user_id)
         logger.info(f"Unblocked user: {user_id}")
@@ -817,22 +817,22 @@ class IntrusionPreventionSystem:
             'recent_intrusions': recent_count
         }
     
-    def enable_prevention(self):
+    def enable_prevention(self) -> None:
         """Enable intrusion prevention"""
         self.enabled = True
         logger.info("Intrusion prevention enabled")
     
-    def disable_prevention(self):
+    def disable_prevention(self) -> None:
         """Disable intrusion prevention"""
         self.enabled = False
         logger.info("Intrusion prevention disabled")
     
-    def enable_auto_response(self):
+    def enable_auto_response(self) -> None:
         """Enable automatic response to intrusions"""
         self.auto_response_enabled = True
         logger.info("Auto-response enabled")
     
-    def disable_auto_response(self):
+    def disable_auto_response(self) -> None:
         """Disable automatic response to intrusions"""
         self.auto_response_enabled = False
         logger.info("Auto-response disabled")

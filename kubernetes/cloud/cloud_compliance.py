@@ -145,7 +145,7 @@ class CloudComplianceManager:
     """
 Enterprise cloud compliance and governance manager"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """
 Initialize cloud compliance manager"""
         self.logger = logging.getLogger(self.__class__.__name__)
@@ -171,7 +171,7 @@ Initialize cloud compliance manager"""
         
         self.logger.info("Cloud Compliance Manager initialized")
 
-    def _initialize_compliance_frameworks(self):
+    def _initialize_compliance_frameworks(self) -> None:
         """Initialize predefined compliance framework controls"""
         try:
             # GDPR Controls
@@ -194,7 +194,7 @@ Initialize cloud compliance manager"""
         except Exception as e:
             self.logger.error(f"Failed to initialize compliance frameworks: {e}")
 
-    def _load_gdpr_controls(self):
+    def _load_gdpr_controls(self) -> None:
         """Load GDPR compliance controls"""
         gdpr_controls = [
             {
@@ -261,7 +261,7 @@ Initialize cloud compliance manager"""
             )
             self.compliance_controls[control.control_id] = control
 
-    def _load_soc2_controls(self):
+    def _load_soc2_controls(self) -> None:
         """
 Load SOC2 compliance controls"""
         soc2_controls = [
@@ -314,7 +314,7 @@ Load SOC2 compliance controls"""
             )
             self.compliance_controls[control.control_id] = control
 
-    def _load_iso27001_controls(self):
+    def _load_iso27001_controls(self) -> None:
         """
 Load ISO27001 compliance controls"""
         iso_controls = [
@@ -367,7 +367,7 @@ Load ISO27001 compliance controls"""
             )
             self.compliance_controls[control.control_id] = control
 
-    def _load_hipaa_controls(self):
+    def _load_hipaa_controls(self) -> None:
         """
 Load HIPAA compliance controls"""
         hipaa_controls = [
@@ -420,7 +420,7 @@ Load HIPAA compliance controls"""
             )
             self.compliance_controls[control.control_id] = control
 
-    def _load_pci_dss_controls(self):
+    def _load_pci_dss_controls(self) -> None:
         """
 Load PCI DSS compliance controls"""
         pci_controls = [
@@ -970,7 +970,7 @@ Perform comprehensive compliance assessment"""
             self.logger.error(f"Failed to remediate finding: {e}")
             return False
 
-    async def schedule_continuous_monitoring(self):
+    async def schedule_continuous_monitoring(self) -> None:
         """Schedule continuous compliance monitoring"""
         try:
             # This would integrate with a job scheduler

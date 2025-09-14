@@ -18,17 +18,17 @@ __all__ = ['LoadBalancer', 'RoundRobinBalancer', 'WeightedRoundRobinBalancer', '
 class LoadBalancer(ABC):
     """Abstract base class for load balancers"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.servers: List[Dict[str, Any]] = []
         self._lock = threading.Lock()
     
-    def add_server(self, server: Dict[str, Any]):
+    def add_server(self, server -> None: Dict[str, Any]) -> None:
         """Add a server to the pool"""
         with self._lock:
             self.servers.append(server)
             logger.info(f"Added server: {server.get('id', 'unknown')}")
     
-    def remove_server(self, server_id: str):
+    def remove_server(self, server_id -> None: str) -> None:
         """Remove a server from the pool"""
         with self._lock:
             self.servers = [s for s in self.servers if s.get('id') != server_id]
@@ -42,7 +42,7 @@ class LoadBalancer(ABC):
 class RoundRobinBalancer(LoadBalancer):
     """Round-robin load balancer"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
         self.current_index = 0
     
@@ -59,7 +59,7 @@ class RoundRobinBalancer(LoadBalancer):
 class WeightedRoundRobinBalancer(LoadBalancer):
     """Weighted round-robin load balancer"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
         self.current_weights: Dict[str, int] = {}
     
@@ -110,12 +110,12 @@ class RandomBalancer(LoadBalancer):
 class HealthAwareBalancer(LoadBalancer):
     """Health-aware load balancer that only routes to healthy servers"""
     
-    def __init__(self, base_balancer: LoadBalancer = None):
+    def __init__(self, base_balancer -> None: LoadBalancer = None) -> None:
         super().__init__()
         self.base_balancer = base_balancer or RoundRobinBalancer()
         self.health_status: Dict[str, bool] = {}
     
-    def update_server_health(self, server_id: str, is_healthy: bool):
+    def update_server_health(self, server_id -> None: str, is_healthy -> None: bool) -> None:
         """Update health status of a server"""
         with self._lock:
             self.health_status[server_id] = is_healthy

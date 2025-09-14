@@ -102,7 +102,7 @@ class ProtectionBusinessCore:
     violation detection, and legal compliance with enterprise-grade reliability.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.protection_profiles: Dict[str, ProtectionProfile] = {}
         self.violation_reports: Dict[str, ViolationReport] = {}
         self.legal_actions: Dict[str, LegalAction] = {}
@@ -129,7 +129,7 @@ class ProtectionBusinessCore:
             logger.error(f"❌ Protection Business Core initialization failed: {str(e)}")
             return False
     
-    async def _setup_protection_policies(self):
+    async def _setup_protection_policies(self) -> None:
         """Setup content protection policies"""
         self.protection_policies = {
             "copyright_protection": {
@@ -168,7 +168,7 @@ class ProtectionBusinessCore:
         
         logger.info("✅ Protection policies configured")
     
-    async def _setup_monitoring_systems(self):
+    async def _setup_monitoring_systems(self) -> None:
         """Setup content monitoring systems"""
         self.monitoring_systems = {
             "platform_monitors": {
@@ -223,7 +223,7 @@ class ProtectionBusinessCore:
         
         logger.info("✅ Monitoring systems configured")
     
-    async def _setup_legal_frameworks(self):
+    async def _setup_legal_frameworks(self) -> None:
         """Setup legal frameworks and templates"""
         self.legal_frameworks = {
             "dmca_templates": {
@@ -266,7 +266,7 @@ class ProtectionBusinessCore:
         
         logger.info("✅ Legal frameworks configured")
     
-    async def _setup_performance_monitoring(self):
+    async def _setup_performance_monitoring(self) -> None:
         """Setup performance monitoring"""
         self.performance_metrics = {
             "detection_accuracy": 0.0,
@@ -374,7 +374,7 @@ class ProtectionBusinessCore:
             logger.error(f"❌ Copyright validation failed: {str(e)}")
             return False
     
-    async def _configure_content_monitoring(self, profile: ProtectionProfile):
+    async def _configure_content_monitoring(self, profile -> None: ProtectionProfile) -> None:
         """Configure monitoring for specific content type"""
         try:
             content_type = profile.content_type
@@ -714,7 +714,7 @@ class ProtectionBusinessCore:
             logger.error(f"❌ Legal action execution failed: {str(e)}")
             return False
     
-    async def _update_detection_metrics(self, violations: List[ViolationReport]):
+    async def _update_detection_metrics(self, violations -> None: List[ViolationReport]) -> None:
         """Update detection performance metrics"""
         try:
             if not violations:

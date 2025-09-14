@@ -1,4 +1,6 @@
 """IA Influencer Agent - Performance Monitoring & Optimization
+from datetime import datetime
+
 Enterprise performance monitoring for messaging infrastructure
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -75,7 +77,7 @@ class MessagingPerformanceMonitor:
     Enterprise performance monitoring system for messaging infrastructure
     Monitors system metrics, queue performance, and provides optimization
     """
-    def __init__(self):
+    def __init__(self) -> None:
         self.redis_client: Optional[aioredis.Redis] = None
         self.metrics_history: List[PerformanceMetrics] = []
         self.alert_rules: List[AlertRule] = []

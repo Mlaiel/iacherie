@@ -1,3 +1,8 @@
+"""
+  Init   module
+Enterprise implementation for Ainflue platform
+"""
+
 # =============================================================================
 # AINFLUE PROTECTION RIGHTS DOCKER MODULE
 # =============================================================================
@@ -8,6 +13,8 @@
 # =============================================================================
 
 """
+from typing import Dict, List, Optional, Union, Tuple
+
 Protection Rights Docker Module
 
 This module provides Docker containers for comprehensive content protection

@@ -138,7 +138,7 @@ class StreamingPlatformLicenseManager:
     platforms with automated optimization and compliance monitoring.
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """
 Initialize streaming platform license manager."""
         self.config = config
@@ -165,7 +165,7 @@ Initialize streaming platform license manager."""
         
         self.logger.info("Streaming Platform License Manager initialized successfully")
 
-    def _load_platform_specifications(self):
+    def _load_platform_specifications(self) -> None:
         """Load specifications for all supported platforms."""
         self.platform_specs = {
             StreamingPlatform.SPOTIFY: PlatformSpecifications(
@@ -266,7 +266,7 @@ Initialize streaming platform license manager."""
             )
         }
 
-    def _initialize_platform_apis(self):
+    def _initialize_platform_apis(self) -> None:
         """
 Initialize API connections for streaming platforms."""
         for platform, specs in self.platform_specs.items():
@@ -761,7 +761,7 @@ Generate recommended actions based on licensing results."""
         
         return monitoring_config
 
-    def _update_licensing_metrics(self, platform_licenses: Dict[str, Any]):
+    def _update_licensing_metrics(self, platform_licenses -> None: Dict[str, Any]) -> None:
         """Update licensing performance metrics."""
         successful_licenses = sum(
             1 for result in platform_licenses.values()
@@ -941,7 +941,7 @@ class RevenueOptimizationEngine:
     """
 Revenue optimization engine for streaming platforms."""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """
 Initialize revenue optimization engine."""
         self.config = config

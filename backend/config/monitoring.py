@@ -1,4 +1,6 @@
 """Monitoring Configuration Module - Consolidated Monitoring Configs
+import logging
+
 ================================================================
 
 Consolidates all monitoring-related configurations from:

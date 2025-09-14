@@ -1,4 +1,6 @@
 """
+import asyncio
+
 Environment Configuration Loader for Redis Enterprise
 Backend Senior Implementation - Multi-Environment Configuration Management
 
@@ -40,7 +42,7 @@ class EnvironmentConfig:
     feature_flags: Dict[str, bool] = field(default_factory=dict)
     custom_settings: Dict[str, Any] = field(default_factory=dict)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         """Set default values based on environment type"""
         if not self.redis_config:
             self.redis_config = self._get_default_redis_config()
@@ -198,7 +200,7 @@ class EnvironmentConfigLoader:
     Backend Senior implementation with robust environment management
     """
     
-    def __init__(self, redis_settings: Optional[RedisSettings] = None):
+    def __init__(self, redis_settings -> None: Optional[RedisSettings] = None) -> None:
         self.redis_settings = redis_settings or RedisSettings()
         self.redis_client: Optional[redis.Redis] = None
         self.current_environment: Optional[EnvironmentType] = None
@@ -214,7 +216,7 @@ class EnvironmentConfigLoader:
         # Auto-detect current environment
         self._detect_environment()
     
-    def _detect_environment(self):
+    def _detect_environment(self) -> None:
         """Auto-detect current environment from various sources"""
         try:
             # Check environment variable
@@ -243,7 +245,7 @@ class EnvironmentConfigLoader:
             logger.warning(f"Error detecting environment, defaulting to development: {e}")
             self.current_environment = EnvironmentType.DEVELOPMENT
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize the environment configuration loader"""
         try:
             # Connect to Redis
@@ -268,7 +270,7 @@ class EnvironmentConfigLoader:
             logger.error(f"Failed to initialize Environment Configuration Loader: {e}")
             raise
     
-    async def _load_file_configurations(self):
+    async def _load_file_configurations(self) -> None:
         """Load configurations from files"""
         try:
             # Create config directory if it doesn't exist
@@ -294,7 +296,7 @@ class EnvironmentConfigLoader:
         except Exception as e:
             logger.error(f"Error loading file configurations: {e}")
     
-    async def _load_config_file(self, config_file: Path, env_type: EnvironmentType):
+    async def _load_config_file(self, config_file -> None: Path, env_type -> None: EnvironmentType) -> None:
         """Load configuration from YAML file"""
         try:
             with open(config_file, 'r') as f:
@@ -323,7 +325,7 @@ class EnvironmentConfigLoader:
                 environment_type=env_type
             )
     
-    async def _save_config_file(self, config_file: Path, config: EnvironmentConfig):
+    async def _save_config_file(self, config_file -> None: Path, config -> None: EnvironmentConfig) -> None:
         """Save configuration to YAML file"""
         try:
             config_data = {
@@ -345,7 +347,7 @@ class EnvironmentConfigLoader:
         except Exception as e:
             logger.error(f"Error saving config file {config_file}: {e}")
     
-    async def _load_redis_configurations(self):
+    async def _load_redis_configurations(self) -> None:
         """Load configurations from Redis"""
         try:
             # Load environment configurations from Redis
@@ -364,7 +366,7 @@ class EnvironmentConfigLoader:
         except Exception as e:
             logger.error(f"Error loading Redis configurations: {e}")
     
-    async def _apply_environment_overrides(self):
+    async def _apply_environment_overrides(self) -> None:
         """Apply environment-specific overrides"""
         try:
             # Check for environment overrides in Redis
@@ -385,7 +387,7 @@ class EnvironmentConfigLoader:
         except Exception as e:
             logger.error(f"Error applying environment overrides: {e}")
     
-    def _apply_env_var_overrides(self):
+    def _apply_env_var_overrides(self) -> None:
         """Apply overrides from environment variables"""
         try:
             current_config = self.environments.get(self.current_environment.value)
@@ -417,7 +419,7 @@ class EnvironmentConfigLoader:
         except Exception as e:
             logger.error(f"Error applying environment variable overrides: {e}")
     
-    def _merge_configurations(self, base_config: EnvironmentConfig, override_data: Dict[str, Any]):
+    def _merge_configurations(self, base_config -> None: EnvironmentConfig, override_data -> None: Dict[str, Any]) -> None:
         """Merge override data into base configuration"""
         try:
             for section, values in override_data.items():
@@ -469,7 +471,7 @@ class EnvironmentConfigLoader:
             logger.error(f"Error updating environment configuration: {e}")
             return False
     
-    async def _save_redis_configuration(self, environment: str, config: EnvironmentConfig):
+    async def _save_redis_configuration(self, environment -> None: str, config -> None: EnvironmentConfig) -> None:
         """Save configuration to Redis"""
         try:
             # Load existing configurations
@@ -498,7 +500,7 @@ class EnvironmentConfigLoader:
         except Exception as e:
             logger.error(f"Error saving Redis configuration: {e}")
     
-    async def reload_configurations(self):
+    async def reload_configurations(self) -> None:
         """Reload all configurations"""
         try:
             self.environments.clear()
@@ -578,7 +580,7 @@ class EnvironmentConfigLoader:
             logger.error(f"Error getting merged Redis configuration: {e}")
             return {}
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Shutdown the configuration loader"""
         try:
             if self.redis_client:

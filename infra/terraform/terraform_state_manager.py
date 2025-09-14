@@ -1,3 +1,8 @@
+"""
+Terraform State Manager module
+Enterprise implementation for Ainflue platform
+"""
+
 # Ainflue Infrastructure Module
 # =============================
 # 
@@ -41,7 +46,7 @@ class TerraformStateManager:
     state locking, and backup capabilities.
     """
     
-    def __init__(self, project_name: str, environment: str, region: str = "us-west-2"):
+    def __init__(self, project_name -> None: str, environment -> None: str, region -> None: str = "us-west-2") -> None:
         """
         Initialize Terraform state manager.
         

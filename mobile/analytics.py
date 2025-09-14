@@ -22,7 +22,7 @@ try:
     from core.database import get_database_session
 except ImportError:
     # Fallback for standalone operation
-    def get_logger(name: str):
+    def get_logger(name -> None: str) -> None:
         try:
                     # Request validation
                     if not data:
@@ -87,10 +87,10 @@ except ImportError:
                 except Exception as e:
                     logger.error(f"API handler get_logger failed: {e}")
                     return {"status": "error", "message": str(e)}
-    def get_settings():
+    def get_settings() -> None:
         return {"analytics_retention_days": 90}
     
-    def get_database_session():
+    def get_database_session() -> None:
         return None
 
 
@@ -108,7 +108,7 @@ class MobileEvent:
     device_info: Optional[Dict[str, Any]] = None
     location_info: Optional[Dict[str, Any]] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if isinstance(self.timestamp, str):
             self.timestamp = datetime.fromisoformat(self.timestamp)
 
@@ -139,7 +139,7 @@ Mobile performance metric."""
     timestamp: datetime
     context: Optional[Dict[str, Any]] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if isinstance(self.timestamp, str):
             self.timestamp = datetime.fromisoformat(self.timestamp)
 
@@ -159,7 +159,7 @@ Mobile user session tracking."""
     is_active: bool = True
     session_quality: Optional[str] = None  # high, medium, low
     
-    def end_session(self):
+    def end_session(self) -> None:
         """
 End the session and calculate duration."""
         self.end_time = datetime.utcnow()
@@ -193,7 +193,7 @@ class BusinessMetric:
     timestamp: datetime = None
     period: str = "daily"  # daily, weekly, monthly
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.timestamp is None:
             self.timestamp = datetime.utcnow()
 
@@ -201,7 +201,7 @@ class BusinessMetric:
 class MobileAnalytics:
     """Professional mobile analytics tracking system."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = get_logger("mobile.analytics")
         self.settings = get_settings()
         self.events: List[MobileEvent] = []
@@ -608,7 +608,7 @@ Get platform distribution."""
 class PerformanceTracker:
     """Mobile performance monitoring and tracking."""
     
-    def __init__(self, analytics: MobileAnalytics):
+    def __init__(self, analytics -> None: MobileAnalytics) -> None:
         self.logger = get_logger("mobile.performance_tracker")
         self.analytics = analytics
     
@@ -689,7 +689,7 @@ class PerformanceTracker:
 class UsageMonitor:
     """Mobile usage pattern monitoring."""
     
-    def __init__(self, analytics: MobileAnalytics):
+    def __init__(self, analytics -> None: MobileAnalytics) -> None:
         self.logger = get_logger("mobile.usage_monitor")
         self.analytics = analytics
     
@@ -852,7 +852,7 @@ Create usage monitor instance."""
 if __name__ == "__main__":
     import asyncio
     
-    async def test_mobile_analytics():
+    async def test_mobile_analytics() -> None:
         """Test mobile analytics functionality."""
         
         # Create analytics system
@@ -905,3 +905,5 @@ if __name__ == "__main__":
     
     # Run tests
     asyncio.run(test_mobile_analytics())
+
+# File has syntax issues - needs manual review

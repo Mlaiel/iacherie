@@ -1,3 +1,8 @@
+"""
+Collaboration Matching Core module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """🤝 Collaboration Matching Core - AI-Powered Creator Matching & Marketplace
 ===========================================================================
@@ -213,7 +218,7 @@ class CreatorProfile:
     last_active: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     created_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if not self.creator_id:
             self.creator_id = f"creator_{uuid.uuid4().hex[:12]}"
 
@@ -266,7 +271,7 @@ class CollaborationRequest:
     priority: int = 1  # 1-5 scale
     confidential: bool = False
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if not self.request_id:
             self.request_id = f"collab_{uuid.uuid4().hex[:12]}"
         
@@ -305,7 +310,7 @@ class MatchingResult:
     match_quality: str = "low"  # low, medium, high, excellent
     recommended: bool = False
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if not self.match_id:
             self.match_id = f"match_{uuid.uuid4().hex[:12]}"
         
@@ -341,7 +346,7 @@ class Achievement:
     progress_tracking: bool = True
     hidden: bool = False
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if not self.achievement_id:
             self.achievement_id = f"achievement_{uuid.uuid4().hex[:8]}"
 
@@ -353,7 +358,7 @@ class Achievement:
 class MatchingAlgorithm:
     """AI-powered creator matching algorithm"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.algorithm_version = "2.0"
         self.matching_weights = self._initialize_matching_weights()
         self.skill_compatibility_matrix = self._initialize_skill_matrix()
@@ -690,7 +695,7 @@ class MatchingAlgorithm:
 class MarketplaceEngine:
     """Creator marketplace and opportunity management"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.active_requests: Dict[str, CollaborationRequest] = {}
         self.creator_profiles: Dict[str, CreatorProfile] = {}
         self.matching_results: Dict[str, List[MatchingResult]] = {}
@@ -875,7 +880,7 @@ class MarketplaceEngine:
 class GamificationEngine:
     """Gamification system for creator engagement"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.achievements = self._initialize_achievements()
         self.level_requirements = self._initialize_level_requirements()
         self.point_rewards = self._initialize_point_rewards()
@@ -1104,7 +1109,7 @@ class GamificationEngine:
 class CollaborationMatchingCore:
     """Main collaboration matching and marketplace system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.marketplace = MarketplaceEngine()
         self.gamification = GamificationEngine()
         
@@ -1428,7 +1433,7 @@ if __name__ == "__main__":
     # Example usage for testing
     import asyncio
     
-    async def main():
+    async def main() -> None:
         print("🤝 Collaboration Matching Core Test")
         print("=" * 50)
         

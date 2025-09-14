@@ -117,10 +117,10 @@ class EventMetricsCollector:
     """Advanced event metrics collection and analysis system"""
     
     def __init__(self,
-                 collection_interval: int = 10,
-                 retention_period_hours: int = 24,
-                 enable_real_time: bool = True,
-                 max_metric_points: int = 10000):
+                 collection_interval -> None: int = 10,
+                 retention_period_hours -> None: int = 24,
+                 enable_real_time -> None: bool = True,
+                 max_metric_points -> None: int = 10000) -> None:
         """Initialize metrics collector
         
         Args:

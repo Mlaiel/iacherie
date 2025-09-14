@@ -91,7 +91,7 @@ class HealthValidator(BaseComponent):
     of the IA Influencer Agent platform including pods, services, databases,
     AI models, and external dependencies.
     """
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         super().__init__()
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -128,7 +128,7 @@ class HealthValidator(BaseComponent):
         # Initialize health checks
         self._initialize_health_checks()
 
-    def _initialize_health_checks(self):
+    def _initialize_health_checks(self) -> None:
         """
 Initialize built-in health checks"""
         
@@ -431,7 +431,7 @@ Initialize built-in health checks"""
             timeout=10
         ))
 
-    def register_health_check(self, health_check: HealthCheck):
+    def register_health_check(self, health_check -> None: HealthCheck) -> None:
         """Register a new health check"""
         self.health_checks[health_check.name] = health_check
         self.health_history[health_check.name] = []
@@ -1478,7 +1478,7 @@ Get overall health summary"""
         
         return summary
 
-    async def cleanup(self):
+    async def cleanup(self) -> None:
         """
 Cleanup resources"""
         await self.http_session.close()

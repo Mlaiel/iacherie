@@ -77,7 +77,7 @@ class CreditOffer:
     is_active: bool = True
     created_at: datetime = None
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.created_at is None:
             self.created_at = datetime.utcnow()
 
@@ -100,7 +100,7 @@ class CreditApplication:
     created_at: datetime = None
     updated_at: datetime = None
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.created_at is None:
             self.created_at = datetime.utcnow()
         if self.updated_at is None:
@@ -133,10 +133,10 @@ class PayPalCreditIntegration:
     """
 
     def __init__(self, 
-                 paypal_client_id: str,
-                 paypal_client_secret: str,
-                 environment: str = "sandbox",
-                 database_url: Optional[str] = None):
+                 paypal_client_id -> None: str,
+                 paypal_client_secret -> None: str,
+                 environment -> None: str = "sandbox",
+                 database_url -> None: Optional[str] = None) -> None:
         """Initialize PayPal Credit Integration with enterprise configuration"""
         self.client_id = paypal_client_id
         self.client_secret = paypal_client_secret
@@ -802,7 +802,7 @@ class PayPalCreditIntegration:
 
 
 # 🧪 Example usage and testing
-async def test_paypal_credit_integration():
+async def test_paypal_credit_integration() -> None:
     """Test PayPal Credit Integration functionality"""
     try:
         # Initialize integration

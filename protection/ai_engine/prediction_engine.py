@@ -41,7 +41,7 @@ class PredictionEngine:
     Enterprise AI prediction engine for content protection
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.models = {}
         self.scalers = {}
@@ -65,7 +65,7 @@ class PredictionEngine:
         
         logger.info("Prediction Engine initialized with advanced ML models")
     
-    def _initialize_models(self):
+    def _initialize_models(self) -> None:
         """Initialize all prediction models"""
         try:
             for prediction_type, model_type in self.prediction_types.items():

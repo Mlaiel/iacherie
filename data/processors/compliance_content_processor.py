@@ -117,7 +117,7 @@ class ComplianceReport:
 class ContentModerator:
     """Automated content moderation engine"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.logger = logging.getLogger(f"{__name__}.ContentModerator")
         self.config = config or {}
         
@@ -328,7 +328,7 @@ class ContentModerator:
 class CopyrightDetector:
     """Copyright violation detection system"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.logger = logging.getLogger(f"{__name__}.CopyrightDetector")
         self.config = config or {}
         
@@ -433,7 +433,7 @@ class CopyrightDetector:
 class LegalComplianceChecker:
     """Legal compliance verification system"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.logger = logging.getLogger(f"{__name__}.LegalComplianceChecker")
         self.config = config or {}
         
@@ -587,7 +587,7 @@ class LegalComplianceChecker:
 class AgeRatingAnalyzer:
     """Content age rating analysis system"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.logger = logging.getLogger(f"{__name__}.AgeRatingAnalyzer")
         self.config = config or {}
         
@@ -727,7 +727,7 @@ class ComplianceContentProcessor:
     and policy enforcement for the IA Influencer Agent platform.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.logger = logging.getLogger(f"{__name__}.ComplianceContentProcessor")
         self.config = config or {}
         
@@ -963,7 +963,7 @@ class ComplianceContentProcessor:
         
         return notes
     
-    def _update_compliance_stats(self, report: ComplianceReport):
+    def _update_compliance_stats(self, report -> None: ComplianceReport) -> None:
         """Update compliance statistics"""
         self.compliance_stats['total_reviews'] += 1
         self.compliance_stats['violations_detected'] += len(report.violations_detected)

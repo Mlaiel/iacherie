@@ -168,7 +168,7 @@ class TenantAwareBase(Base):
     __abstract__ = True
     
     @declared_attr
-    def tenant_id(cls):
+    def tenant_id(cls) -> None:
         return Column(
             String(36),
             nullable=False,
@@ -177,7 +177,7 @@ class TenantAwareBase(Base):
         )
     
     @declared_attr
-    def __table_args__(cls):
+    def __table_args__(cls) -> None:
         return (
             Index(f'ix_{cls.__tablename__}_tenant_id', 'tenant_id'),
             CheckConstraint('length(tenant_id) > 0', name=f'ck_{cls.__tablename__}_tenant_id_not_empty'),
@@ -329,7 +329,7 @@ class PostModel(TenantAwareBase):
 class TenantContext:
     """Tenant context for request lifecycle"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._tenant_id: Optional[str] = None
         self._tenant_info: Optional[TenantInfo] = None
     
@@ -341,12 +341,12 @@ class TenantContext:
     def tenant_info(self) -> Optional[TenantInfo]:
         return self._tenant_info
     
-    def set_tenant(self, tenant_id: str, tenant_info: Optional[TenantInfo] = None):
+    def set_tenant(self, tenant_id -> None: str, tenant_info -> None: Optional[TenantInfo] = None) -> None:
         """Set current tenant context"""
         self._tenant_id = tenant_id
         self._tenant_info = tenant_info
     
-    def clear(self):
+    def clear(self) -> None:
         """Clear tenant context"""
         self._tenant_id = None
         self._tenant_info = None
@@ -359,17 +359,17 @@ tenant_context = TenantContext()
 class TenantRepository(Generic[T]):
     """Base repository with tenant awareness"""
     
-    def __init__(self, model_class: Type[T], session: AsyncSession):
+    def __init__(self, model_class -> None: Type[T], session -> None: AsyncSession) -> None:
         self.model_class = model_class
         self.session = session
         self.logger = logging.getLogger(__name__)
     
-    def _ensure_tenant_context(self):
+    def _ensure_tenant_context(self) -> None:
         """Ensure tenant context is set"""
         if not tenant_context.tenant_id:
             raise ValueError("Tenant context not set. Call set_tenant_context() first.")
     
-    def _add_tenant_filter(self, query):
+    def _add_tenant_filter(self, query) -> None:
         """Add tenant filter to query"""
         self._ensure_tenant_context()
         if hasattr(self.model_class, 'tenant_id'):
@@ -452,7 +452,7 @@ class TenantRepository(Generic[T]):
         result = await self.session.execute(query)
         return result.scalar()
     
-    async def _log_audit_event(self, event_type: str, old_values: Dict, new_values: Dict):
+    async def _log_audit_event(self, event_type -> None: str, old_values -> None: Dict, new_values -> None: Dict) -> None:
         """Log audit event"""
         if not hasattr(self.model_class, '__tablename__'):
             return
@@ -472,7 +472,7 @@ class TenantRepository(Generic[T]):
 class UserRepository(TenantRepository[UserModel]):
     """User repository with tenant awareness"""
     
-    def __init__(self, session: AsyncSession):
+    def __init__(self, session -> None: AsyncSession) -> None:
         super().__init__(UserModel, session)
     
     async def get_by_email(self, email: str) -> Optional[UserModel]:
@@ -503,7 +503,7 @@ class UserRepository(TenantRepository[UserModel]):
 class PostRepository(TenantRepository[PostModel]):
     """Post repository with tenant awareness"""
     
-    def __init__(self, session: AsyncSession):
+    def __init__(self, session -> None: AsyncSession) -> None:
         super().__init__(PostModel, session)
     
     async def get_by_user(self, user_id: str) -> List[PostModel]:
@@ -527,7 +527,7 @@ class PostRepository(TenantRepository[PostModel]):
 class TenantManager:
     """Multi-tenant management service"""
     
-    def __init__(self, config: MultiTenantConfig):
+    def __init__(self, config -> None: MultiTenantConfig) -> None:
         self.config = config
         self.engine: Optional[AsyncEngine] = None
         self.session_factory = None
@@ -535,7 +535,7 @@ class TenantManager:
         self.logger = logging.getLogger(__name__)
         self._tenant_cache: Dict[str, TenantInfo] = {}
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize tenant manager"""
         # Create database engine
         self.engine = create_async_engine(
@@ -567,12 +567,12 @@ class TenantManager:
         
         self.logger.info("Tenant manager initialized")
     
-    async def _create_tables(self):
+    async def _create_tables(self) -> None:
         """Create database tables"""
         async with self.engine.begin() as conn:
             await conn.run_sync(Base.metadata.create_all)
     
-    async def _setup_row_level_security(self):
+    async def _setup_row_level_security(self) -> None:
         """Setup PostgreSQL row-level security"""
         if "postgresql" not in self.config.database_url:
             return
@@ -656,7 +656,7 @@ class TenantManager:
             self.logger.info(f"Created tenant: {tenant_info.name} ({tenant_info.id})")
             return tenant_info.id
     
-    async def _create_tenant_schema(self, tenant_id: str):
+    async def _create_tenant_schema(self, tenant_id -> None: str) -> None:
         """Create separate schema for tenant"""
         schema_name = f"tenant_{tenant_id.replace('-', '_')}"
         
@@ -673,7 +673,7 @@ class TenantManager:
             
         self.logger.info(f"Created schema for tenant: {schema_name}")
     
-    async def _create_tenant_database(self, tenant_id: str):
+    async def _create_tenant_database(self, tenant_id -> None: str) -> None:
         """Create separate database for tenant"""
         database_name = f"tenant_{tenant_id.replace('-', '_')}"
         
@@ -738,7 +738,7 @@ class TenantManager:
             
             return tenant_info
     
-    async def _cache_tenant_info(self, tenant_info: TenantInfo):
+    async def _cache_tenant_info(self, tenant_info -> None: TenantInfo) -> None:
         """Cache tenant information"""
         self._tenant_cache[tenant_info.id] = tenant_info
         
@@ -831,7 +831,7 @@ class TenantManager:
             
             return False
     
-    async def _drop_tenant_schema(self, tenant_id: str):
+    async def _drop_tenant_schema(self, tenant_id -> None: str) -> None:
         """Drop tenant schema"""
         schema_name = f"tenant_{tenant_id.replace('-', '_')}"
         
@@ -840,7 +840,7 @@ class TenantManager:
         
         self.logger.info(f"Dropped schema for tenant: {schema_name}")
     
-    async def _drop_tenant_database(self, tenant_id: str):
+    async def _drop_tenant_database(self, tenant_id -> None: str) -> None:
         """Drop tenant database"""
         database_name = f"tenant_{tenant_id.replace('-', '_')}"
         
@@ -848,7 +848,7 @@ class TenantManager:
         self.logger.info(f"Would drop database for tenant: {database_name}")
     
     @asynccontextmanager
-    async def get_session(self, tenant_id: str):
+    async def get_session(self, tenant_id -> None: str) -> None:
         """Get database session with tenant context"""
         tenant_info = await self.get_tenant(tenant_id)
         if not tenant_info:
@@ -942,7 +942,7 @@ class TenantManager:
                 "timestamp": datetime.utcnow().isoformat()
             }
     
-    async def cleanup(self):
+    async def cleanup(self) -> None:
         """Cleanup tenant manager"""
         if self.redis:
             await self.redis.close()
@@ -952,7 +952,7 @@ class TenantManager:
 
 
 # Usage example and test functions
-async def example_usage():
+async def example_usage() -> None:
     """Example usage of multi-tenant system"""
     
     # Configure multi-tenant system

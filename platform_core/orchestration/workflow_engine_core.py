@@ -1,3 +1,8 @@
+"""
+Workflow Engine Core module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Workflow Engine Core - Enterprise Component
@@ -158,7 +163,7 @@ class TaskExecutor(ABC):
 class PythonFunctionExecutor(TaskExecutor):
     """Executor for Python function tasks"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.functions: Dict[str, Callable] = {}
     
     def register_function(self, name: str, func: Callable) -> None:
@@ -200,7 +205,7 @@ class PythonFunctionExecutor(TaskExecutor):
 class HttpRequestExecutor(TaskExecutor):
     """Executor for HTTP request tasks"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._session: Optional[object] = None  # aiohttp.ClientSession
     
     async def execute(self, task: TaskDefinition, context: Dict[str, Any]) -> Any:
@@ -273,7 +278,7 @@ class WorkflowEngineCore:
     recovery mechanisms with enterprise-grade reliability.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.workflows: Dict[str, WorkflowDefinition] = {}
         self.executions: Dict[str, WorkflowExecution] = {}
@@ -836,7 +841,7 @@ class WorkflowEngineCore:
         """Check for circular dependencies in task graph"""
         task_deps = {task.task_id: set(task.dependencies) for task in tasks}
         
-        def has_cycle(node, visited, rec_stack):
+        def has_cycle(node, visited, rec_stack) -> None:
             visited.add(node)
             rec_stack.add(node)
             
@@ -888,11 +893,11 @@ class WorkflowEngineCore:
                 await asyncio.sleep(300)
     
     # Context Manager Support
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         await self.start()
         return self
     
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         await self.stop()
 
 
@@ -937,7 +942,7 @@ def aggregate_health_results(database_health: Dict[str, Any], cache_health: Dict
 
 
 # Example usage
-async def main():
+async def main() -> None:
     """Example usage of Workflow Engine Core"""
     async with create_workflow_engine() as engine:
         # Register custom functions

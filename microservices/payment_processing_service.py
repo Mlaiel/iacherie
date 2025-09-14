@@ -1,3 +1,8 @@
+"""
+Payment Processing Service module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Enterprise Payment Processing Service
@@ -153,15 +158,15 @@ class GatewayConfig:
 class PaymentGatewayInterface:
     """Base interface for payment gateways"""
     
-    def __init__(self, config: GatewayConfig):
+    def __init__(self, config -> None: GatewayConfig) -> None:
         self.config = config
         self.session: Optional[aiohttp.ClientSession] = None
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize gateway connection"""
         self.session = aiohttp.ClientSession()
     
-    async def cleanup(self):
+    async def cleanup(self) -> None:
         """Cleanup resources"""
         if self.session:
             await self.session.close()
@@ -245,7 +250,7 @@ class MockPaymentGateway(PaymentGatewayInterface):
 class StripePaymentGateway(PaymentGatewayInterface):
     """Stripe payment gateway implementation"""
     
-    def __init__(self, config: GatewayConfig):
+    def __init__(self, config -> None: GatewayConfig) -> None:
         super().__init__(config)
         self.base_url = "https://api.stripe.com/v1"
         if config.sandbox:
@@ -407,7 +412,7 @@ class PaymentProcessingService:
     - Comprehensive logging and monitoring
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize payment processing service"""
         self.gateways: Dict[PaymentGateway, PaymentGatewayInterface] = {}
         self.gateway_configs: Dict[PaymentGateway, GatewayConfig] = {}
@@ -452,7 +457,7 @@ class PaymentProcessingService:
         
         logger.info("PaymentProcessingService initialized")
     
-    async def start(self):
+    async def start(self) -> None:
         """Start the payment processing service"""
         try:
             # Initialize gateways
@@ -464,7 +469,7 @@ class PaymentProcessingService:
             logger.error("Failed to start PaymentProcessingService: %s", e)
             raise
     
-    async def stop(self):
+    async def stop(self) -> None:
         """Stop the payment processing service"""
         try:
             self.shutdown_event.set()
@@ -477,7 +482,7 @@ class PaymentProcessingService:
         except Exception as e:
             logger.error("Error stopping PaymentProcessingService: %s", e)
     
-    async def register_gateway(self, config: GatewayConfig):
+    async def register_gateway(self, config -> None: GatewayConfig) -> None:
         """Register a payment gateway"""
         async with self._lock:
             if config.gateway == PaymentGateway.STRIPE:
@@ -753,7 +758,7 @@ class PaymentProcessingService:
         
         return True
     
-    async def _update_fraud_tracking(self, request: PaymentRequest, response: PaymentResponse):
+    async def _update_fraud_tracking(self, request -> None: PaymentRequest, response -> None: PaymentResponse) -> None:
         """Update fraud tracking data"""
         customer_pattern = self.fraud_patterns[f"customer_{request.customer_id}"]
         current_time = time.time()
@@ -766,10 +771,10 @@ class PaymentProcessingService:
     
     async def _update_metrics(
         self,
-        gateway_type: PaymentGateway,
-        response: PaymentResponse,
-        processing_time: float
-    ):
+        gateway_type -> None: PaymentGateway,
+        response -> None: PaymentResponse,
+        processing_time -> None: float
+    ) -> None:
         """Update gateway metrics"""
         metrics = self.metrics[gateway_type]
         current_time = time.time()
@@ -790,7 +795,7 @@ class PaymentProcessingService:
         count = metrics["total_transactions"]
         metrics["avg_processing_time"] = (old_avg * (count - 1) + processing_time) / count
     
-    async def _process_webhook_event(self, gateway_type: PaymentGateway, webhook_data: Dict[str, Any]):
+    async def _process_webhook_event(self, gateway_type -> None: PaymentGateway, webhook_data -> None: Dict[str, Any]) -> None:
         """Process webhook event data"""
         # Update payment status based on webhook
         if gateway_type == PaymentGateway.STRIPE:
@@ -798,7 +803,7 @@ class PaymentProcessingService:
         elif gateway_type == PaymentGateway.MOCK:
             await self._process_mock_webhook(webhook_data)
     
-    async def _process_stripe_webhook(self, webhook_data: Dict[str, Any]):
+    async def _process_stripe_webhook(self, webhook_data -> None: Dict[str, Any]) -> None:
         """Process Stripe webhook"""
         event_type = webhook_data.get("type")
         event_data = webhook_data.get("data", {}).get("object", {})
@@ -824,7 +829,7 @@ class PaymentProcessingService:
                         payment_response.updated_at = time.time()
                         break
     
-    async def _process_mock_webhook(self, webhook_data: Dict[str, Any]):
+    async def _process_mock_webhook(self, webhook_data -> None: Dict[str, Any]) -> None:
         """Process mock webhook (for testing)"""
         # Simple mock webhook processing
         pass
@@ -840,7 +845,7 @@ async def get_payment_service() -> PaymentProcessingService:
         await _payment_service.start()
     return _payment_service
 
-async def shutdown_payment_service():
+async def shutdown_payment_service() -> None:
     """Shutdown global payment processing service"""
     global _payment_service
     if _payment_service:
@@ -848,7 +853,7 @@ async def shutdown_payment_service():
         _payment_service = None
 
 if __name__ == "__main__":
-    async def test_payment_service():
+    async def test_payment_service() -> None:
         """Test payment processing service functionality"""
         service = PaymentProcessingService()
         await service.start()

@@ -1,3 +1,8 @@
+"""
+Audio Inference Engine module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 🎵 Audio Inference Engine - Specialized Music Creator Processing
@@ -208,7 +213,7 @@ class AudioInferenceEngine:
     - Live streaming audio processing
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize the audio inference engine."""
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
@@ -1143,7 +1148,7 @@ class AudioInferenceEngine:
             self.logger.error(f"Confidence score calculation failed: {e}")
             return 0.5
     
-    async def _update_performance_metrics(self, result: AudioAnalysisResult):
+    async def _update_performance_metrics(self, result -> None: AudioAnalysisResult) -> None:
         """Update performance tracking metrics."""
         try:
             self.performance_metrics["total_analyses"] += 1

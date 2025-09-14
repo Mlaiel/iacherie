@@ -1,4 +1,6 @@
 """🚀 Platform Core Subscription - Quota Management System
+import asyncio
+
 ==========================================================
 Module: backend/platform_core/subscription/quota_manager.py  
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -71,7 +73,7 @@ class ResourceQuota:
     created_at: Optional[datetime] = None
     metadata: Optional[Dict[str, Any]] = None
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.created_at is None:
             self.created_at = datetime.now()
 
@@ -140,7 +142,7 @@ class UsageTracker:
 class QuotaManager:
     """Gestionnaire principal des quotas"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialise le gestionnaire de quotas
         
         Args:
@@ -366,7 +368,7 @@ class QuotaManager:
         else:
             return now + timedelta(days=1)  # Default to daily
 
-    async def _trigger_warning_callbacks(self, quota: ResourceQuota):
+    async def _trigger_warning_callbacks(self, quota -> None: ResourceQuota) -> None:
         """Déclenche les callbacks d'alerte"""
         for callback in self.warning_callbacks:
             try:
@@ -374,7 +376,7 @@ class QuotaManager:
             except Exception as e:
                 logger.error(f"Error in warning callback: {e}")
 
-    async def _trigger_exceeded_callbacks(self, quota: ResourceQuota):
+    async def _trigger_exceeded_callbacks(self, quota -> None: ResourceQuota) -> None:
         """Déclenche les callbacks de dépassement"""
         for callback in self.exceeded_callbacks:
             try:
@@ -382,11 +384,11 @@ class QuotaManager:
             except Exception as e:
                 logger.error(f"Error in exceeded callback: {e}")
 
-    def add_warning_callback(self, callback: callable):
+    def add_warning_callback(self, callback -> None: callable) -> None:
         """Ajoute un callback d'alerte"""
         self.warning_callbacks.append(callback)
 
-    def add_exceeded_callback(self, callback: callable):
+    def add_exceeded_callback(self, callback -> None: callable) -> None:
         """Ajoute un callback de dépassement"""
         self.exceeded_callbacks.append(callback)
 

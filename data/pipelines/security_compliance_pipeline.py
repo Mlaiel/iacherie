@@ -105,7 +105,7 @@ class ThreatDetectionEngine:
     Advanced AI-powered threat detection and analysis system
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.threat_patterns = {}
         self.ml_models = {}
         self.detection_rules = []
@@ -385,7 +385,7 @@ class ComplianceMonitoringEngine:
     Automated compliance monitoring and enforcement system
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.compliance_rules = {}
         self.audit_history = []
         self.notification_manager = NotificationManager()
@@ -594,7 +594,7 @@ class IncidentResponsePipeline:
     Automated incident response and management system
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.active_incidents = {}
         self.response_playbooks = {}
         self.notification_manager = NotificationManager()
@@ -806,7 +806,7 @@ class SecurityCompliancePipeline:
     Main security compliance pipeline coordinating all security engines
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.threat_detector = ThreatDetectionEngine()
         self.compliance_monitor = ComplianceMonitoringEngine()
         self.incident_responder = IncidentResponsePipeline()

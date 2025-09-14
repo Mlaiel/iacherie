@@ -91,7 +91,7 @@ class SEOWorkflowResult:
 class SEOWorkflowOrchestrator:
     """Advanced SEO workflow orchestration engine for Ainflue Platform."""
     
-    def __init__(self, config: Optional[SEOWorkflowConfig] = None):
+    def __init__(self, config -> None: Optional[SEOWorkflowConfig] = None) -> None:
         """Initialize the SEO workflow orchestrator.
         
         Args:

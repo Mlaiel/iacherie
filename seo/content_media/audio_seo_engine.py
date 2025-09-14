@@ -138,7 +138,7 @@ class AudioSEOConfig:
 class AudioSEOEngine:
     """Advanced audio SEO optimization engine."""
     
-    def __init__(self, spotify_client_id: Optional[str] = None, spotify_client_secret: Optional[str] = None):
+    def __init__(self, spotify_client_id -> None: Optional[str] = None, spotify_client_secret -> None: Optional[str] = None) -> None:
         """Initialize the Audio SEO Engine.
         
         Args:
@@ -158,7 +158,7 @@ class AudioSEOEngine:
         # Audio analysis cache
         self.analysis_cache = {}
         
-    def _setup_audio_tools(self):
+    def _setup_audio_tools(self) -> None:
         """Setup audio processing tools."""
         try:
             # Setup speech recognition
@@ -185,7 +185,7 @@ class AudioSEOEngine:
         except Exception as e:
             logger.error(f"Error setting up audio tools: {e}")
     
-    def _setup_spotify(self, client_id: Optional[str], client_secret: Optional[str]):
+    def _setup_spotify(self, client_id -> None: Optional[str], client_secret -> None: Optional[str]) -> None:
         """Setup Spotify API client."""
         try:
             if client_id and client_secret:

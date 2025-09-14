@@ -1,4 +1,6 @@
 """WebSockets - WebSocket Handlers and Events
+import logging
+
 Consolidated WebSocket functionality for real-time communication.
 
 This module consolidates WebSocket functionality from:
@@ -101,7 +103,7 @@ class ConnectionInfo(BaseModel):
 class WebSocketManager:
     """Manages WebSocket connections and message routing"""
     
-    def __init__(self, redis_client: Optional[redis.Redis] = None):
+    def __init__(self, redis_client -> None: Optional[redis.Redis] = None) -> None:
         self.active_connections: Dict[str, WebSocket] = {}
         self.connection_info: Dict[str, ConnectionInfo] = {}
         self.user_connections: Dict[str, Set[str]] = {}  # user_id -> connection_ids
@@ -144,7 +146,7 @@ class WebSocketManager:
         
         return connection_id
     
-    async def disconnect(self, connection_id: str):
+    async def disconnect(self, connection_id -> None: str) -> None:
         """Disconnect WebSocket client"""
         if connection_id not in self.active_connections:
             return
@@ -169,7 +171,7 @@ class WebSocketManager:
         if connection_id in self.connection_info:
             del self.connection_info[connection_id]
     
-    async def send_to_connection(self, connection_id: str, message: WebSocketMessage):
+    async def send_to_connection(self, connection_id -> None: str, message -> None: WebSocketMessage) -> None:
         """Send message to specific connection"""
         if connection_id in self.active_connections:
             websocket = self.active_connections[connection_id]
@@ -186,21 +188,21 @@ class WebSocketManager:
                 print(f"Error sending message to {connection_id}: {e}")
                 await self.disconnect(connection_id)
     
-    async def send_to_user(self, user_id: str, message: WebSocketMessage):
+    async def send_to_user(self, user_id -> None: str, message -> None: WebSocketMessage) -> None:
         """Send message to all connections of a user"""
         if user_id in self.user_connections:
             connections = self.user_connections[user_id].copy()
             for connection_id in connections:
                 await self.send_to_connection(connection_id, message)
     
-    async def send_to_channel(self, channel: str, message: WebSocketMessage):
+    async def send_to_channel(self, channel -> None: str, message -> None: WebSocketMessage) -> None:
         """Send message to all subscribers of a channel"""
         if channel in self.channel_subscriptions:
             connections = self.channel_subscriptions[channel].copy()
             for connection_id in connections:
                 await self.send_to_connection(connection_id, message)
     
-    async def broadcast(self, message: WebSocketMessage, exclude_connections: Set[str] = None):
+    async def broadcast(self, message -> None: WebSocketMessage, exclude_connections -> None: Set[str] = None) -> None:
         """Broadcast message to all connected clients"""
         exclude_connections = exclude_connections or set()
         
@@ -273,10 +275,10 @@ class WebSocketManager:
 class ContentEventHandler:
     """Handle content-related WebSocket events"""
     
-    def __init__(self, manager: WebSocketManager):
+    def __init__(self, manager -> None: WebSocketManager) -> None:
         self.manager = manager
     
-    async def handle_content_upload_progress(self, user_id: str, content_id: str, progress: float):
+    async def handle_content_upload_progress(self, user_id -> None: str, content_id -> None: str, progress -> None: float) -> None:
         """Handle content upload progress updates"""
         message = WebSocketMessage(
             event_type=EventType.CONTENT_UPLOADED,
@@ -291,7 +293,7 @@ class ContentEventHandler:
         
         await self.manager.send_to_user(user_id, message)
     
-    async def handle_content_protection_alert(self, user_id: str, content_id: str, violation_type: str):
+    async def handle_content_protection_alert(self, user_id -> None: str, content_id -> None: str, violation_type -> None: str) -> None:
         """Handle content protection violation alerts"""
         message = WebSocketMessage(
             event_type=EventType.CONTENT_VIOLATION,
@@ -313,10 +315,10 @@ class ContentEventHandler:
 class CollaborationEventHandler:
     """Handle collaboration-related WebSocket events"""
     
-    def __init__(self, manager: WebSocketManager):
+    def __init__(self, manager -> None: WebSocketManager) -> None:
         self.manager = manager
     
-    async def handle_collaboration_request(self, from_user_id: str, to_user_id: str, collaboration_data: Dict[str, Any]):
+    async def handle_collaboration_request(self, from_user_id -> None: str, to_user_id -> None: str, collaboration_data -> None: Dict[str, Any]) -> None:
         """Handle new collaboration request"""
         message = WebSocketMessage(
             event_type=EventType.COLLABORATION_REQUEST,
@@ -327,7 +329,7 @@ class CollaborationEventHandler:
         
         await self.manager.send_to_user(to_user_id, message)
     
-    async def handle_collaboration_response(self, from_user_id: str, to_user_id: str, response: str, collaboration_id: str):
+    async def handle_collaboration_response(self, from_user_id -> None: str, to_user_id -> None: str, response -> None: str, collaboration_id -> None: str) -> None:
         """Handle collaboration request response"""
         event_type = EventType.COLLABORATION_ACCEPTED if response == "accepted" else EventType.COLLABORATION_DECLINED
         
@@ -347,10 +349,10 @@ class CollaborationEventHandler:
 class AnalyticsEventHandler:
     """Handle analytics-related WebSocket events"""
     
-    def __init__(self, manager: WebSocketManager):
+    def __init__(self, manager -> None: WebSocketManager) -> None:
         self.manager = manager
     
-    async def handle_real_time_analytics(self, user_id: str, analytics_data: Dict[str, Any]):
+    async def handle_real_time_analytics(self, user_id -> None: str, analytics_data -> None: Dict[str, Any]) -> None:
         """Handle real-time analytics updates"""
         message = WebSocketMessage(
             event_type=EventType.ANALYTICS_UPDATE,
@@ -361,7 +363,7 @@ class AnalyticsEventHandler:
         
         await self.manager.send_to_user(user_id, message)
     
-    async def handle_performance_alert(self, user_id: str, alert_data: Dict[str, Any]):
+    async def handle_performance_alert(self, user_id -> None: str, alert_data -> None: Dict[str, Any]) -> None:
         """Handle performance alerts"""
         message = WebSocketMessage(
             event_type=EventType.PERFORMANCE_ALERT,
@@ -379,13 +381,13 @@ class AnalyticsEventHandler:
 class WebSocketHandler:
     """Main WebSocket handler consolidating all functionality"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.manager = WebSocketManager()
         self.content_handler = ContentEventHandler(self.manager)
         self.collaboration_handler = CollaborationEventHandler(self.manager)
         self.analytics_handler = AnalyticsEventHandler(self.manager)
     
-    async def handle_connection(self, websocket: WebSocket, user_id: str, client_info: Dict[str, Any]):
+    async def handle_connection(self, websocket -> None: WebSocket, user_id -> None: str, client_info -> None: Dict[str, Any]) -> None:
         """Handle new WebSocket connection"""
         connection_id = await self.manager.connect(websocket, user_id, client_info)
         
@@ -408,7 +410,7 @@ class WebSocketHandler:
             print(f"WebSocket error for connection {connection_id}: {e}")
             await self.manager.disconnect(connection_id)
     
-    async def handle_message(self, connection_id: str, message_data: Dict[str, Any]):
+    async def handle_message(self, connection_id -> None: str, message_data -> None: Dict[str, Any]) -> None:
         """Handle incoming WebSocket message"""
         message_type = message_data.get("type")
         
@@ -508,7 +510,7 @@ class CollaborationPermission(str, Enum):
 class RealTimeCollaborationManager:
     """Real-time collaboration manager for creators"""
     
-    def __init__(self, websocket_manager: WebSocketManager):
+    def __init__(self, websocket_manager -> None: WebSocketManager) -> None:
         self.websocket_manager = websocket_manager
         self.active_sessions = {}
         self.collaboration_state = defaultdict(dict)
@@ -830,7 +832,7 @@ class RealTimeCollaborationManager:
 class LiveStreamManager:
     """Manager for live streaming and real-time content"""
     
-    def __init__(self, websocket_manager: WebSocketManager):
+    def __init__(self, websocket_manager -> None: WebSocketManager) -> None:
         self.websocket_manager = websocket_manager
         self.active_streams = {}
         self.stream_viewers = defaultdict(set)
@@ -949,12 +951,12 @@ live_stream_manager = LiveStreamManager(WebSocketManager())
 class EnhancedWebSocketHandler(WebSocketHandler):
     """Enhanced WebSocket handler with collaboration features"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
         self.collaboration_manager = collaboration_manager
         self.live_stream_manager = live_stream_manager
     
-    async def handle_collaboration_message(self, websocket, message: Dict[str, Any]):
+    async def handle_collaboration_message(self, websocket, message -> None: Dict[str, Any]) -> None:
         """Handle collaboration-specific messages"""
         try:
             message_type = message.get("type")
@@ -1010,7 +1012,7 @@ class EnhancedWebSocketHandler(WebSocketHandler):
 class EnterpriseCollaborationManager:
     """Enterprise-grade real-time collaboration with advanced features"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.active_sessions = {}  # session_id -> collaboration_data
         self.user_sessions = defaultdict(set)  # user_id -> set of session_ids
         self.session_permissions = {}  # session_id -> permissions
@@ -1263,7 +1265,7 @@ class EnterpriseCollaborationManager:
 class ConflictResolutionEngine:
     """Operational transformation engine for conflict resolution"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.pending_operations = defaultdict(list)
     
     async def transform_operation(
@@ -1286,7 +1288,7 @@ class ConflictResolutionEngine:
 class PresenceManager:
     """Manage user presence in collaboration sessions"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.user_presence = {}  # session_id -> {user_id -> presence_data}
     
     async def user_joined(self, session_id: str, user_id: str) -> None:
@@ -1319,7 +1321,7 @@ class PresenceManager:
 class HighConcurrencyWebSocketManager:
     """Enterprise WebSocket manager supporting 100K+ concurrent connections"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.connection_pools = {}  # server_id -> connection_pool
         self.load_balancer = WebSocketLoadBalancer()
         self.connection_monitor = ConnectionMonitor()
@@ -1399,7 +1401,7 @@ class HighConcurrencyWebSocketManager:
 class WebSocketLoadBalancer:
     """Load balancer for WebSocket connections"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.server_pools = ["pool_1", "pool_2", "pool_3"]
         self.pool_loads = defaultdict(int)
     
@@ -1421,7 +1423,7 @@ class ConnectionMonitor:
 class MessageQueue:
     """High-performance message queue for WebSocket messages"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.queue = asyncio.Queue(maxsize=10000)
         self.batch_processor = MessageBatchProcessor()
     
@@ -1454,7 +1456,7 @@ class MessageBatchProcessor:
 class AutoScalingManager:
     """Automatic scaling manager for WebSocket infrastructure"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.scaling_thresholds = {
             "connections_per_server": 1000,
             "cpu_threshold": 80,

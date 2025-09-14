@@ -154,7 +154,7 @@ class MultiFormatContentMonitor:
     supported by the IA Influencer Agent Platform with format-specific optimizations.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.content_metrics: Dict[str, ContentPerformanceMetrics] = {}
         self.format_analytics: Dict[ContentFormat, List[FormatSpecificAnalytics]] = defaultdict(list)
         self.performance_history: Dict[str, List[ContentPerformanceMetrics]] = defaultdict(list)
@@ -225,7 +225,7 @@ class MultiFormatContentMonitor:
             logger.error(f"❌ Failed to track content performance: {e}")
             return False
     
-    async def _calculate_derived_metrics(self, metrics: ContentPerformanceMetrics):
+    async def _calculate_derived_metrics(self, metrics -> None: ContentPerformanceMetrics) -> None:
         """Calculate derived performance metrics"""
         try:
             # Calculate engagement rate

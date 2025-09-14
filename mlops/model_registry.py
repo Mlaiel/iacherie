@@ -151,7 +151,7 @@ class ModelGovernance:
 class ModelRegistryEnhanced:
     """Enhanced enterprise model registry with advanced lifecycle management"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.models: Dict[str, ModelMetadata] = {}
         self.versions: Dict[str, List[ModelVersion]] = defaultdict(list)
@@ -598,7 +598,7 @@ class ModelRegistryEnhanced:
             logger.error(f"Failed to compare models: {e}")
             return {}
     
-    async def _setup_model_templates(self):
+    async def _setup_model_templates(self) -> None:
         """Setup model templates for different creator types"""
         for creator_type, categories in self.creator_model_templates.items():
             for category, model_types in categories.items():
@@ -609,7 +609,7 @@ class ModelRegistryEnhanced:
                     )
                     # Templates are stored separately and used for guidance
     
-    async def _setup_governance_framework(self):
+    async def _setup_governance_framework(self) -> None:
         """Setup governance framework"""
         # Define governance levels and requirements
         self.governance_levels = {
@@ -630,7 +630,7 @@ class ModelRegistryEnhanced:
             }
         }
     
-    async def _setup_automated_monitoring(self):
+    async def _setup_automated_monitoring(self) -> None:
         """Setup automated monitoring for models"""
         asyncio.create_task(self._monitor_model_performance())
         asyncio.create_task(self._monitor_model_drift())
@@ -784,7 +784,7 @@ class ModelRegistryEnhanced:
         else:
             return "Models have similar performance. Consider other factors."
     
-    async def _monitor_model_performance(self):
+    async def _monitor_model_performance(self) -> None:
         """Background task to monitor model performance"""
         while True:
             try:
@@ -804,7 +804,7 @@ class ModelRegistryEnhanced:
             except Exception as e:
                 logger.error(f"Performance monitoring error: {e}")
     
-    async def _monitor_model_drift(self):
+    async def _monitor_model_drift(self) -> None:
         """Background task to monitor model drift"""
         while True:
             try:
@@ -819,8 +819,8 @@ class ModelRegistryEnhanced:
                 logger.error(f"Drift monitoring error: {e}")
     
     async def _analyze_performance_trends(self, 
-                                        model_id: str,
-                                        performance_history: List[Dict[str, Any]]):
+                                        model_id -> None: str,
+                                        performance_history -> None: List[Dict[str, Any]]) -> None:
         """Analyze performance trends for model"""
         if len(performance_history) < 5:
             return
@@ -837,7 +837,7 @@ class ModelRegistryEnhanced:
                 if abs(change) > 10:  # 10% change threshold
                     logger.info(f"Model {model_id} {metric} changed by {change:.1f}%")
     
-    async def _check_model_drift(self, model_id: str):
+    async def _check_model_drift(self, model_id -> None: str) -> None:
         """Check for model drift"""
         # Simplified drift check
         # In real implementation, this would analyze data distributions
@@ -845,7 +845,7 @@ class ModelRegistryEnhanced:
 
 
 # Example usage and testing
-async def main():
+async def main() -> None:
     """Example usage of Enhanced Model Registry"""
     registry = ModelRegistryEnhanced()
     

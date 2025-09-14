@@ -132,7 +132,7 @@ class SERPTrend:
 class SERPFeatureTracker:
     """Advanced SERP feature tracking and analysis system"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize SERP Feature Tracker
         
         Args:
@@ -1002,7 +1002,7 @@ class SERPFeatureTracker:
 
 
 # Example usage
-async def main():
+async def main() -> None:
     """Example usage of SERP Feature Tracker"""
     try:
         # Initialize tracker

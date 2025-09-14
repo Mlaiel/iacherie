@@ -1,4 +1,6 @@
 """
+import asyncio
+
 Authentication Routes - Enterprise Security & Identity Management
 Advanced authentication with JWT, OAuth2, 2FA, RBAC, and session management.
 
@@ -45,6 +47,7 @@ PASSWORD_RESET_EXPIRE_HOURS = 2
 # ========================================
 
 class UserRole(str, Enum):
+    """UserRole class implementation"""
     ADMIN = "admin"
     CREATOR = "creator"
     MODERATOR = "moderator"
@@ -53,6 +56,7 @@ class UserRole(str, Enum):
     API_USER = "api_user"
 
 class SubscriptionTier(str, Enum):
+    """SubscriptionTier class implementation"""
     FREE = "free"
     BASIC = "basic"
     PRO = "pro"
@@ -60,6 +64,7 @@ class SubscriptionTier(str, Enum):
     UNLIMITED = "unlimited"
 
 class AuthMethod(str, Enum):
+    """AuthMethod class implementation"""
     EMAIL_PASSWORD = "email_password"
     GOOGLE_OAUTH = "google_oauth"
     MICROSOFT_OAUTH = "microsoft_oauth"
@@ -68,12 +73,14 @@ class AuthMethod(str, Enum):
     SSO_SAML = "sso_saml"
 
 class SessionStatus(str, Enum):
+    """SessionStatus class implementation"""
     ACTIVE = "active"
     EXPIRED = "expired"
     REVOKED = "revoked"
     SUSPENDED = "suspended"
 
 class TwoFactorMethod(str, Enum):
+    """TwoFactorMethod class implementation"""
     SMS = "sms"
     EMAIL = "email"
     TOTP = "totp"
@@ -84,6 +91,7 @@ class TwoFactorMethod(str, Enum):
 # ========================================
 
 class UserRegistration(BaseModel):
+    """UserRegistration class implementation"""
     email: EmailStr = Field(..., description="User email address")
     password: str = Field(..., min_length=8, max_length=128, description="Strong password")
     first_name: str = Field(..., min_length=1, max_length=50)
@@ -96,7 +104,7 @@ class UserRegistration(BaseModel):
     terms_accepted: bool = Field(..., description="Must accept terms")
     
     @validator('password')
-    def validate_password_strength(cls, v):
+    def validate_password_strength(cls, v) -> None:
         if len(v) < 8:
             raise ValueError('Password must be at least 8 characters long')
         if not re.search(r'[A-Z]', v):
@@ -110,12 +118,13 @@ class UserRegistration(BaseModel):
         return v
     
     @validator('terms_accepted')
-    def validate_terms(cls, v):
+    def validate_terms(cls, v) -> None:
         if not v:
             raise ValueError('Terms and conditions must be accepted')
         return v
 
 class UserLogin(BaseModel):
+    """UserLogin class implementation"""
     email: EmailStr = Field(..., description="User email address")
     password: str = Field(..., description="User password")
     remember_me: bool = Field(default=False)
@@ -123,6 +132,7 @@ class UserLogin(BaseModel):
     device_fingerprint: Optional[str] = Field(None, description="Device fingerprint for security")
 
 class TokenResponse(BaseModel):
+    """TokenResponse class implementation"""
     access_token: str = Field(..., description="JWT access token")
     refresh_token: str = Field(..., description="JWT refresh token")
     token_type: str = Field(default="bearer")
@@ -135,6 +145,7 @@ class TokenResponse(BaseModel):
     session_id: str
 
 class UserProfile(BaseModel):
+    """UserProfile class implementation"""
     id: str
     email: EmailStr
     first_name: str
@@ -158,48 +169,55 @@ class UserProfile(BaseModel):
     storage_quota_gb: int = Field(default=10)
 
 class PasswordChange(BaseModel):
+    """PasswordChange class implementation"""
     current_password: str = Field(..., description="Current password")
     new_password: str = Field(..., min_length=8, max_length=128)
     confirm_password: str = Field(..., description="Confirm new password")
     
     @validator('confirm_password')
-    def passwords_match(cls, v, values):
+    def passwords_match(cls, v, values) -> None:
         if 'new_password' in values and v != values['new_password']:
             raise ValueError('Passwords do not match')
         return v
 
 class PasswordReset(BaseModel):
+    """PasswordReset class implementation"""
     email: EmailStr = Field(..., description="Email address for password reset")
     captcha_token: Optional[str] = Field(None)
 
 class PasswordResetConfirm(BaseModel):
+    """PasswordResetConfirm class implementation"""
     token: str = Field(..., description="Password reset token")
     new_password: str = Field(..., min_length=8, max_length=128)
     confirm_password: str = Field(..., description="Confirm new password")
     
     @validator('confirm_password')
-    def passwords_match(cls, v, values):
+    def passwords_match(cls, v, values) -> None:
         if 'new_password' in values and v != values['new_password']:
             raise ValueError('Passwords do not match')
         return v
 
 class TwoFactorSetup(BaseModel):
+    """TwoFactorSetup class implementation"""
     method: TwoFactorMethod = Field(..., description="2FA method to setup")
     phone_number: Optional[str] = Field(None, description="Phone number for SMS 2FA")
     backup_email: Optional[EmailStr] = Field(None, description="Backup email for email 2FA")
 
 class TwoFactorVerification(BaseModel):
+    """TwoFactorVerification class implementation"""
     token: str = Field(..., min_length=6, max_length=8, description="2FA verification code")
     method: TwoFactorMethod = Field(..., description="2FA method used")
     remember_device: bool = Field(default=False)
 
 class OAuth2AuthRequest(BaseModel):
+    """OAuth2AuthRequest class implementation"""
     provider: AuthMethod = Field(..., description="OAuth2 provider")
     authorization_code: str = Field(..., description="OAuth2 authorization code")
     redirect_uri: str = Field(..., description="OAuth2 redirect URI")
     state: Optional[str] = Field(None, description="CSRF protection state")
 
 class SessionInfo(BaseModel):
+    """SessionInfo class implementation"""
     session_id: str
     user_id: str
     device_info: Dict[str, str] = Field(default_factory=dict)
@@ -212,12 +230,14 @@ class SessionInfo(BaseModel):
     is_current: bool = Field(default=False)
 
 class APIKeyRequest(BaseModel):
+    """APIKeyRequest class implementation"""
     name: str = Field(..., min_length=1, max_length=100, description="API key name")
     description: Optional[str] = Field(None, max_length=500)
     permissions: List[str] = Field(..., min_items=1, description="API key permissions")
     expires_at: Optional[datetime] = Field(None, description="Optional expiration date")
 
 class APIKeyResponse(BaseModel):
+    """APIKeyResponse class implementation"""
     id: str
     name: str
     key: str = Field(..., description="API key (shown only once)")
@@ -238,7 +258,7 @@ def verify_password(password: str, hashed: str) -> bool:
     """Verify password against hash"""
     return bcrypt.checkpw(password.encode('utf-8'), hashed.encode('utf-8'))
 
-def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
+def create_access_token(data -> None: dict, expires_delta -> None: Optional[timedelta] = None) -> None:
     """Create JWT access token"""
     to_encode = data.copy()
     if expires_delta:
@@ -250,7 +270,7 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
 
-def create_refresh_token(data: dict):
+def create_refresh_token(data -> None: dict) -> None:
     """Create JWT refresh token"""
     to_encode = data.copy()
     expire = datetime.utcnow() + timedelta(days=REFRESH_TOKEN_EXPIRE_DAYS)
@@ -304,7 +324,7 @@ async def get_current_active_user(current_user: dict = Depends(get_current_user)
         raise HTTPException(status_code=400, detail="Inactive user")
     return current_user
 
-async def require_role(required_role: UserRole):
+async def require_role(required_role -> None: UserRole) -> None:
     """Dependency to require specific user role"""
     def role_checker(current_user: dict = Depends(get_current_user)) -> dict:
         if current_user["role"] != required_role.value:
@@ -321,10 +341,10 @@ async def require_role(required_role: UserRole):
 
 @router.post("/register", response_model=UserProfile)
 async def register_user(
-    background_tasks: BackgroundTasks,
-    user_data: UserRegistration,
-    request: Request
-):
+    background_tasks -> None: BackgroundTasks,
+    user_data -> None: UserRegistration,
+    request -> None: Request
+) -> None:
     """Register new user with comprehensive validation"""
     
     # Check if user already exists
@@ -360,10 +380,10 @@ async def register_user(
 
 @router.post("/login", response_model=TokenResponse)
 async def login_user(
-    background_tasks: BackgroundTasks,
-    login_data: UserLogin,
-    request: Request
-):
+    background_tasks -> None: BackgroundTasks,
+    login_data -> None: UserLogin,
+    request -> None: Request
+) -> None:
     """Authenticate user and create session"""
     
     # In production, verify credentials against database
@@ -440,9 +460,9 @@ async def logout_user(
 
 @router.post("/refresh", response_model=TokenResponse)
 async def refresh_access_token(
-    background_tasks: BackgroundTasks,
-    refresh_token: str
-):
+    background_tasks -> None: BackgroundTasks,
+    refresh_token -> None: str
+) -> None:
     """Refresh access token using refresh token"""
     
     payload = verify_token(refresh_token, "refresh")
@@ -561,9 +581,9 @@ async def change_password(
 
 @router.post("/password/reset")
 async def request_password_reset(
-    background_tasks: BackgroundTasks,
-    reset_request: PasswordReset
-):
+    background_tasks -> None: BackgroundTasks,
+    reset_request -> None: PasswordReset
+) -> None:
     """Request password reset"""
     
     # Generate reset token
@@ -579,9 +599,9 @@ async def request_password_reset(
 
 @router.post("/password/reset/confirm")
 async def confirm_password_reset(
-    background_tasks: BackgroundTasks,
-    reset_confirm: PasswordResetConfirm
-):
+    background_tasks -> None: BackgroundTasks,
+    reset_confirm -> None: PasswordResetConfirm
+) -> None:
     """Confirm password reset with token"""
     
     # In production, verify token from database
@@ -682,9 +702,9 @@ async def disable_two_factor(
 
 @router.post("/oauth2/authorize")
 async def oauth2_authorize(
-    background_tasks: BackgroundTasks,
-    auth_request: OAuth2AuthRequest
-):
+    background_tasks -> None: BackgroundTasks,
+    auth_request -> None: OAuth2AuthRequest
+) -> None:
     """Handle OAuth2 authorization"""
     
     # In production, exchange authorization code for tokens
@@ -859,9 +879,9 @@ async def revoke_api_key(
 
 @router.post("/verify-email")
 async def verify_email(
-    background_tasks: BackgroundTasks,
-    verification_token: str
-):
+    background_tasks -> None: BackgroundTasks,
+    verification_token -> None: str
+) -> None:
     """Verify email address"""
     
     # In production, verify token and mark email as verified
@@ -874,9 +894,9 @@ async def verify_email(
 
 @router.post("/resend-verification")
 async def resend_verification_email(
-    background_tasks: BackgroundTasks,
-    email: EmailStr
-):
+    background_tasks -> None: BackgroundTasks,
+    email -> None: EmailStr
+) -> None:
     """Resend email verification"""
     
     verification_token = secrets.token_urlsafe(32)
@@ -910,112 +930,112 @@ async def get_user_permissions(
 # BACKGROUND TASKS
 # ========================================
 
-async def send_verification_email(email: str, user_id: str):
+async def send_verification_email(email -> None: str, user_id -> None: str) -> None:
     """Send email verification"""
     await asyncio.sleep(1)
     print(f"Verification email sent to {email} for user {user_id}")
 
-async def log_registration_event(user_id: str, ip_address: str):
+async def log_registration_event(user_id -> None: str, ip_address -> None: str) -> None:
     """Log user registration"""
     await asyncio.sleep(0.5)
     print(f"User {user_id} registered from {ip_address}")
 
-async def log_login_event(user_id: str, ip_address: str):
+async def log_login_event(user_id -> None: str, ip_address -> None: str) -> None:
     """Log successful login"""
     await asyncio.sleep(0.5)
     print(f"User {user_id} logged in from {ip_address}")
 
-async def log_failed_login(email: str, ip_address: str):
+async def log_failed_login(email -> None: str, ip_address -> None: str) -> None:
     """Log failed login attempt"""
     await asyncio.sleep(0.5)
     print(f"Failed login attempt for {email} from {ip_address}")
 
-async def update_last_login(user_id: str):
+async def update_last_login(user_id -> None: str) -> None:
     """Update last login timestamp"""
     await asyncio.sleep(0.5)
     print(f"Updated last login for user {user_id}")
 
-async def invalidate_session(session_id: str):
+async def invalidate_session(session_id -> None: str) -> None:
     """Invalidate session"""
     await asyncio.sleep(0.5)
     print(f"Session {session_id} invalidated")
 
-async def log_logout_event(user_id: str):
+async def log_logout_event(user_id -> None: str) -> None:
     """Log user logout"""
     await asyncio.sleep(0.5)
     print(f"User {user_id} logged out")
 
-async def log_profile_update(user_id: str, updates: Dict[str, Any]):
+async def log_profile_update(user_id -> None: str, updates -> None: Dict[str, Any]) -> None:
     """Log profile update"""
     await asyncio.sleep(0.5)
     print(f"Profile updated for user {user_id}: {list(updates.keys())}")
 
-async def log_password_change(user_id: str):
+async def log_password_change(user_id -> None: str) -> None:
     """Log password change"""
     await asyncio.sleep(0.5)
     print(f"Password changed for user {user_id}")
 
-async def send_password_change_notification(email: str):
+async def send_password_change_notification(email -> None: str) -> None:
     """Send password change notification"""
     await asyncio.sleep(1)
     print(f"Password change notification sent to {email}")
 
-async def send_password_reset_email(email: str, token: str):
+async def send_password_reset_email(email -> None: str, token -> None: str) -> None:
     """Send password reset email"""
     await asyncio.sleep(1)
     print(f"Password reset email sent to {email} with token {token[:8]}...")
 
-async def log_password_reset(token: str):
+async def log_password_reset(token -> None: str) -> None:
     """Log password reset"""
     await asyncio.sleep(0.5)
     print(f"Password reset completed with token {token[:8]}...")
 
-async def log_2fa_setup(user_id: str, method: TwoFactorMethod):
+async def log_2fa_setup(user_id -> None: str, method -> None: TwoFactorMethod) -> None:
     """Log 2FA setup"""
     await asyncio.sleep(0.5)
     print(f"2FA setup for user {user_id} with method {method}")
 
-async def send_sms_verification(phone: str, code: str):
+async def send_sms_verification(phone -> None: str, code -> None: str) -> None:
     """Send SMS verification"""
     await asyncio.sleep(1)
     print(f"SMS verification sent to {phone} with code {code}")
 
-async def log_2fa_verification(user_id: str, method: TwoFactorMethod):
+async def log_2fa_verification(user_id -> None: str, method -> None: TwoFactorMethod) -> None:
     """Log 2FA verification"""
     await asyncio.sleep(0.5)
     print(f"2FA verified for user {user_id} with method {method}")
 
-async def log_2fa_disable(user_id: str):
+async def log_2fa_disable(user_id -> None: str) -> None:
     """Log 2FA disable"""
     await asyncio.sleep(0.5)
     print(f"2FA disabled for user {user_id}")
 
-async def log_oauth_login(provider: AuthMethod):
+async def log_oauth_login(provider -> None: AuthMethod) -> None:
     """Log OAuth login"""
     await asyncio.sleep(0.5)
     print(f"OAuth login with provider {provider}")
 
-async def invalidate_all_user_sessions(user_id: str, exclude_session: str):
+async def invalidate_all_user_sessions(user_id -> None: str, exclude_session -> None: str) -> None:
     """Invalidate all user sessions except one"""
     await asyncio.sleep(1)
     print(f"All sessions invalidated for user {user_id} except {exclude_session}")
 
-async def log_session_revocation(user_id: str, session_id: str):
+async def log_session_revocation(user_id -> None: str, session_id -> None: str) -> None:
     """Log session revocation"""
     await asyncio.sleep(0.5)
     print(f"Session {session_id} revoked for user {user_id}")
 
-async def log_api_key_creation(user_id: str, key_id: str):
+async def log_api_key_creation(user_id -> None: str, key_id -> None: str) -> None:
     """Log API key creation"""
     await asyncio.sleep(0.5)
     print(f"API key {key_id} created for user {user_id}")
 
-async def log_api_key_revocation(user_id: str, key_id: str):
+async def log_api_key_revocation(user_id -> None: str, key_id -> None: str) -> None:
     """Log API key revocation"""
     await asyncio.sleep(0.5)
     print(f"API key {key_id} revoked for user {user_id}")
 
-async def log_email_verification(token: str):
+async def log_email_verification(token -> None: str) -> None:
     """Log email verification"""
     await asyncio.sleep(0.5)
     print(f"Email verified with token {token[:8]}...")

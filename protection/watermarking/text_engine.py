@@ -160,7 +160,7 @@ class TextAnalysisResult:
 class LinguisticProcessor:
     """Advanced linguistic processing engine (IA Prompt Engineer Expert)"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.language_patterns = {
             'en': r'[a-zA-Z\s]+',
             'fr': r'[a-zA-Zàâäçéèêëïîôöùûüÿ\s]+',
@@ -215,7 +215,7 @@ class LinguisticProcessor:
 class SteganographicEncoder:
     """Advanced steganographic encoding engine (Security Expert)"""
     
-    def __init__(self, security_key: Optional[str] = None):
+    def __init__(self, security_key -> None: Optional[str] = None) -> None:
         self.security_key = security_key or self._generate_key()
         self.cipher = Fernet(base64.urlsafe_b64encode(self.security_key.encode()[:32].ljust(32, b'0')))
     
@@ -268,7 +268,7 @@ class SteganographicEncoder:
 class SemanticWatermarker:
     """Semantic watermarking engine (ML Engineer Expert)"""
     
-    def __init__(self, linguistic_processor: LinguisticProcessor):
+    def __init__(self, linguistic_processor -> None: LinguisticProcessor) -> None:
         self.linguistic_processor = linguistic_processor
         self.synonym_maps = {
             'good': ['excellent', 'great', 'wonderful'],
@@ -311,7 +311,7 @@ class SemanticWatermarker:
 class TextWatermarkEngine:
     """Main text watermarking engine (Backend Senior Expert)"""
     
-    def __init__(self, config: TextWatermarkConfig):
+    def __init__(self, config -> None: TextWatermarkConfig) -> None:
         self.config = config
         self.linguistic_processor = LinguisticProcessor()
         self.steganographic_encoder = SteganographicEncoder(config.security_key)
@@ -319,7 +319,7 @@ class TextWatermarkEngine:
         self.redis_client = None
         self.kafka_producer = None
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize async components (Microservices Expert)"""
         try:
             if aioredis:
@@ -482,7 +482,7 @@ class TextWatermarkEngine:
             logger.error(f"Unicode extraction failed: {e}")
             return None
     
-    async def close(self):
+    async def close(self) -> None:
         """Close async connections (DevOps Expert)"""
         if self.redis_client:
             await self.redis_client.close()

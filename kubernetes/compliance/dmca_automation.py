@@ -94,7 +94,7 @@ class DMCAAutomation:
     """
 Automated DMCA compliance and takedown system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logger
         self.audit_logger = AuditLogger()
         self.automated_takedowns = settings.DMCA_AUTOMATED_TAKEDOWNS

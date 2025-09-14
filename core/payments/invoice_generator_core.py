@@ -108,7 +108,7 @@ class Invoice:
 class InvoiceGeneratorCore:
     """Enterprise invoice generation system"""
     
-    def __init__(self, level: str = "enterprise"):
+    def __init__(self, level -> None: str = "enterprise") -> None:
         """Initialize invoice generator core"""
         self.level = level
         self.invoices: Dict[str, Invoice] = {}
@@ -135,7 +135,7 @@ class InvoiceGeneratorCore:
         
         logger.info(f"📄 Invoice Generator Core initialized - Level: {level}")
 
-    def _initialize_templates(self):
+    def _initialize_templates(self) -> None:
         """Initialize default invoice templates"""
         
         self.templates["standard"] = {
@@ -378,7 +378,7 @@ class InvoiceGeneratorCore:
         # In production, would use library like weasyprint or pdfkit
         return html_content.encode('utf-8')
 
-    async def update_invoice_status(self, invoice_id: str, status: InvoiceStatus):
+    async def update_invoice_status(self, invoice_id -> None: str, status -> None: InvoiceStatus) -> None:
         """Update invoice status"""
         
         invoice = self.invoices.get(invoice_id)

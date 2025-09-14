@@ -178,7 +178,7 @@ class IntegrationEnvironmentManager:
     - Authentication and authorization management
     """
     
-    def __init__(self, config_path: Optional[str] = None):
+    def __init__(self, config_path -> None: Optional[str] = None) -> None:
         self.config_path = config_path or "/config/integrations.yml"
         self.environment = "integration"
         
@@ -768,7 +768,7 @@ Initialize social media platform configurations"""
             )
         ]
     
-    def _setup_social_media_integrations(self):
+    def _setup_social_media_integrations(self) -> None:
         """Setup social media platform integrations"""
         logger.info("Setting up social media integrations")
         for platform in self.social_media_platforms:
@@ -779,7 +779,7 @@ Initialize social media platform configurations"""
                     'last_sync': datetime.now().isoformat()
                 }
     
-    def _setup_payment_integrations(self):
+    def _setup_payment_integrations(self) -> None:
         """Setup payment provider integrations"""
         logger.info("Setting up payment integrations")
         for provider in self.payment_providers:
@@ -790,7 +790,7 @@ Initialize social media platform configurations"""
                     'last_sync': datetime.now().isoformat()
                 }
     
-    def _setup_cloud_integrations(self):
+    def _setup_cloud_integrations(self) -> None:
         """Setup cloud service integrations"""
         logger.info("Setting up cloud service integrations")
         for service in self.cloud_services:
@@ -801,7 +801,7 @@ Initialize social media platform configurations"""
                     'last_sync': datetime.now().isoformat()
                 }
     
-    def _setup_webhook_endpoints(self):
+    def _setup_webhook_endpoints(self) -> None:
         """Setup webhook endpoints"""
         logger.info("Setting up webhook endpoints")
         for webhook in self.webhooks:
@@ -812,7 +812,7 @@ Initialize social media platform configurations"""
                     'last_sync': datetime.now().isoformat()
                 }
     
-    def _setup_api_clients(self):
+    def _setup_api_clients(self) -> None:
         """Setup API clients"""
         logger.info("Setting up API clients")
         for api_config in self.api_configs:
@@ -822,7 +822,7 @@ Initialize social media platform configurations"""
                 'last_sync': datetime.now().isoformat()
             }
     
-    def _setup_integration_monitoring(self):
+    def _setup_integration_monitoring(self) -> None:
         """Setup integration monitoring"""
         logger.info("Setting up integration monitoring")
     
@@ -868,8 +868,8 @@ Process payment with specific provider"""
         logger.info(f"Processing payment with {config.provider_name}")
         return {'status': 'success', 'transaction_id': 'tx_123456'}
     
-    def _log_payment_transaction(self, provider: str, payment_data: Dict[str, Any], 
-                               result: Dict[str, Any]):
+    def _log_payment_transaction(self, provider -> None: str, payment_data -> None: Dict[str, Any], 
+                               result -> None: Dict[str, Any]) -> None:
         """Log payment transaction"""
         logger.info(f"Payment logged: {provider} - {result['status']}")
     
@@ -896,7 +896,7 @@ Route webhook event to appropriate handler"""
         logger.info(f"Routing webhook event: {webhook_name}")
         return {'status': 'processed'}
     
-    def _log_api_call(self, service: str, endpoint: str, status: str):
+    def _log_api_call(self, service -> None: str, endpoint -> None: str, status -> None: str) -> None:
         """Log API call"""
         call_record = {
             'service': service,

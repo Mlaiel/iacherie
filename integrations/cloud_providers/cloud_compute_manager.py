@@ -126,7 +126,7 @@ class LoadBalancerConfig:
 class MultiCloudComputeManager:
     """Enterprise multi-cloud compute resource manager."""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """Initialize multi-cloud compute manager.
         
         Args:
@@ -946,7 +946,7 @@ class MultiCloudComputeManager:
 
 
 # Example usage
-async def example_usage():
+async def example_usage() -> None:
     """Example usage of MultiCloudComputeManager."""
     
     config = {

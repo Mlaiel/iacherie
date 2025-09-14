@@ -1,4 +1,6 @@
 """
+import asyncio
+
 Management Service Entry Point - Distribution Management Hub
 ==========================================================
 
@@ -35,12 +37,12 @@ health_checker = HealthChecker()
 revenue_distribution = RevenueDistribution()
 
 @management_router.get("/health")
-async def management_health():
+async def management_health() -> None:
     """Management service health check"""
     return {"status": "healthy", "service": "management"}
 
 @management_router.get("/system-status")
-async def get_system_status():
+async def get_system_status() -> None:
     """Get comprehensive system status"""
     return await health_checker.get_system_status()
 

@@ -26,7 +26,7 @@ logger = logging.getLogger(__name__)
 # Individual platform collector classes (simplified implementations)
 class MiscCollector(BaseCollector):
     """Miscellaneous content collector."""
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs) -> None:
         super().__init__("misc", rate_limit=30)
     
     async def search_content(self, query: str, config: CollectionConfig) -> List[CollectorResult]:
@@ -62,7 +62,7 @@ class MiscellaneousCollector(BaseCollector):
     for flexible content collection from various sources.
     """
     
-    def __init__(self, platform_configs: Optional[Dict[str, Dict]] = None):
+    def __init__(self, platform_configs -> None: Optional[Dict[str, Dict]] = None) -> None:
         """Initialize with platform-specific configurations."""
         super().__init__("miscellaneous", rate_limit=60)
         
@@ -89,7 +89,7 @@ class MiscellaneousCollector(BaseCollector):
         
         logger.info("Initialized unified miscellaneous collector")
     
-    def register_specialized_collector(self, platform_name: str, config: Dict[str, Any]):
+    def register_specialized_collector(self, platform_name -> None: str, config -> None: Dict[str, Any]) -> None:
         """Register a new specialized collector dynamically."""
         # This allows for future expansion without code changes
         # Platform-specific collectors can be registered at runtime

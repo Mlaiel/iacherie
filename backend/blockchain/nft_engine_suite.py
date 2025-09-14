@@ -125,7 +125,7 @@ class BatchMintingRequest:
 class MintingEngine:
     """Professional NFT minting engine with optimization"""
     
-    def __init__(self, web3_provider: Web3, config: Dict[str, Any]):
+    def __init__(self, web3_provider -> None: Web3, config -> None: Dict[str, Any]) -> None:
         self.web3 = web3_provider
         self.config = config
         self.minting_queue: List[BatchMintingRequest] = []
@@ -254,7 +254,7 @@ class BatchOperation:
 class CollectionOrchestrator:
     """NFT collection orchestration with automated management"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.collections: Dict[str, NFTCollection] = {}
         self.batch_operations: Dict[str, BatchOperation] = {}
@@ -412,7 +412,7 @@ class MetadataUpdate:
 class DynamicMetadata:
     """Smart metadata system with dynamic updates"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.metadata_store: Dict[str, Dict[str, Any]] = {}
         self.update_history: Dict[str, List[MetadataUpdate]] = {}
         self.update_rules: Dict[str, Dict[str, Any]] = {}
@@ -567,7 +567,7 @@ class NFTShares:
 class FractionalOwnership:
     """Fractional NFT ownership management"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.fractional_nfts: Dict[str, NFTShares] = {}
         self.user_shares: Dict[str, List[str]] = {}  # user -> share_ids
         
@@ -710,7 +710,7 @@ class RarityAnalysis:
 class RarityCalculator:
     """Algorithmic rarity calculation with multiple methods"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.collection_traits: Dict[str, Dict[str, Dict[str, int]]] = {}  # collection -> trait -> value -> count
         self.collection_sizes: Dict[str, int] = {}
         
@@ -873,7 +873,7 @@ class MarketplaceListing:
 class MarketplaceConnector:
     """Multi-marketplace integration connector"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.supported_marketplaces = {
             'opensea': 'https://api.opensea.io/api/v1',
             'rarible': 'https://api.rarible.org/v0.1',
@@ -1042,7 +1042,7 @@ class RoyaltyPayment:
 class RoyaltyEnforcer:
     """Automated royalty enforcement system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.royalty_configs: Dict[str, RoyaltyConfig] = {}
         self.payments: Dict[str, RoyaltyPayment] = {}
         
@@ -1144,7 +1144,7 @@ class NFTUtility:
 class UtilityManager:
     """NFT utility management system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.utilities: Dict[str, NFTUtility] = {}
         self.token_utilities: Dict[str, List[str]] = {}  # token_id -> utility_ids
         
@@ -1259,7 +1259,7 @@ class TransferValidation:
 class TransferValidator:
     """NFT transfer validation and security checks"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.blacklisted_addresses: Set[str] = set()
         self.transfer_limits: Dict[str, Dict[str, Any]] = {}
         self.security_rules: Dict[str, Any] = {}
@@ -1404,7 +1404,7 @@ class BurnRecord:
 class BurnController:
     """NFT burn control with deflationary mechanisms"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.burned_tokens: Dict[str, BurnRecord] = {}
         self.burn_rules: Dict[str, Dict[str, Any]] = {}
         self.deflation_metrics: Dict[str, Any] = {
@@ -1540,7 +1540,7 @@ class BurnController:
 class NFTEngineSuiteManager:
     """Central manager for all NFT engine functionalities"""
     
-    def __init__(self, web3_provider: Web3, config: Dict[str, Any]):
+    def __init__(self, web3_provider -> None: Web3, config -> None: Dict[str, Any]) -> None:
         self.web3 = web3_provider
         self.config = config
         
@@ -1573,7 +1573,7 @@ class NFTEngineSuiteManager:
             logger.error(f"Error initializing NFT engine: {str(e)}")
             return False
 
-    async def _setup_default_metadata_rules(self):
+    async def _setup_default_metadata_rules(self) -> None:
         """Setup default metadata update rules"""
         default_rules = {
             'name': {'immutable': True},
@@ -1585,7 +1585,7 @@ class NFTEngineSuiteManager:
         
         self.dynamic_metadata.update_rules = default_rules
 
-    async def _setup_default_transfer_limits(self):
+    async def _setup_default_transfer_limits(self) -> None:
         """Setup default transfer security settings"""
         # Add common blacklisted addresses (example)
         suspicious_addresses = [
@@ -1595,7 +1595,7 @@ class NFTEngineSuiteManager:
         
         self.transfer_validator.blacklisted_addresses.update(suspicious_addresses)
 
-    async def _setup_marketplace_apis(self):
+    async def _setup_marketplace_apis(self) -> None:
         """Setup marketplace API configurations"""
         # Would load actual API keys from config
         if 'marketplace_apis' in self.config:

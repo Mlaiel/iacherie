@@ -1,3 +1,8 @@
+"""
+Distributed State Machine module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """Distributed State Machine - Advanced Saga State Management
 ============================================================
@@ -82,7 +87,7 @@ class StateHistory:
 class DistributedStateMachine:
     """Distributed state machine for saga coordination"""
     
-    def __init__(self, saga_id: str, initial_state: str):
+    def __init__(self, saga_id -> None: str, initial_state -> None: str) -> None:
         self.saga_id = saga_id
         self.current_states: Set[str] = {initial_state}
         self.state_history: List[StateHistory] = []
@@ -160,10 +165,10 @@ class DistributedStateMachine:
     
     async def complete_parallel_branch(
         self,
-        branch_id: str,
-        final_state: str,
-        result: Dict[str, Any] = None
-    ):
+        branch_id -> None: str,
+        final_state -> None: str,
+        result -> None: Dict[str, Any] = None
+    ) -> None:
         """Mark parallel branch as completed"""
         if branch_id in self.parallel_branches:
             branch = self.parallel_branches[branch_id]
@@ -235,10 +240,10 @@ class DistributedStateMachine:
     
     async def _update_state(
         self,
-        target_state: str,
-        trigger_event: str,
-        context: Dict[str, Any]
-    ):
+        target_state -> None: str,
+        trigger_event -> None: str,
+        context -> None: Dict[str, Any]
+    ) -> None:
         """Update state machine state"""
         # Record history
         for current_state in self.current_states:
@@ -263,9 +268,9 @@ class DistributedStateMachine:
     
     async def _execute_pre_transition_hooks(
         self,
-        target_state: str,
-        context: Dict[str, Any]
-    ):
+        target_state -> None: str,
+        context -> None: Dict[str, Any]
+    ) -> None:
         """Execute pre-transition hooks"""
         hooks = self.transition_handlers.get(f"pre_{target_state}", [])
         for hook in hooks:
@@ -276,10 +281,10 @@ class DistributedStateMachine:
     
     async def _execute_post_transition_hooks(
         self,
-        previous_states: Set[str],
-        target_state: str,
-        context: Dict[str, Any]
-    ):
+        previous_states -> None: Set[str],
+        target_state -> None: str,
+        context -> None: Dict[str, Any]
+    ) -> None:
         """Execute post-transition hooks"""
         hooks = self.transition_handlers.get(f"post_{target_state}", [])
         for hook in hooks:
@@ -293,7 +298,7 @@ class DistributedStateMachine:
         completion_states = {"saga_completed", "saga_failed", "compensation_completed"}
         return bool(self.current_states.intersection(completion_states))
     
-    async def _handle_saga_completion(self):
+    async def _handle_saga_completion(self) -> None:
         """Handle saga completion"""
         logger.info(f"Saga {self.saga_id} completed with states: {self.current_states}")
         
@@ -329,9 +334,9 @@ class DistributedStateMachine:
     
     def register_transition_handler(
         self,
-        event_type: str,
-        handler: Callable
-    ):
+        event_type -> None: str,
+        handler -> None: Callable
+    ) -> None:
         """Register transition handler"""
         if event_type not in self.transition_handlers:
             self.transition_handlers[event_type] = []
@@ -380,11 +385,11 @@ class ContentProcessingStateMachine(DistributedStateMachine):
         "compensation_completed": "Compensation completed"
     }
     
-    def __init__(self, saga_id: str):
+    def __init__(self, saga_id -> None: str) -> None:
         super().__init__(saga_id, "content_uploaded")
         self._setup_content_processing_transitions()
     
-    def _setup_content_processing_transitions(self):
+    def _setup_content_processing_transitions(self) -> None:
         """Setup content processing specific transitions"""
         # Register transition handlers
         self.register_transition_handler(
@@ -404,11 +409,11 @@ class ContentProcessingStateMachine(DistributedStateMachine):
     
     async def _handle_ai_analysis_completed(
         self,
-        state_machine: 'DistributedStateMachine',
-        previous_states: Set[str],
-        target_state: str,
-        context: Dict[str, Any]
-    ):
+        state_machine -> None: 'DistributedStateMachine',
+        previous_states -> None: Set[str],
+        target_state -> None: str,
+        context -> None: Dict[str, Any]
+    ) -> None:
         """Handle AI analysis completion - start parallel branches"""
         if target_state == "ai_analysis_completed":
             # Start parallel branches for protection and SEO
@@ -424,11 +429,11 @@ class ContentProcessingStateMachine(DistributedStateMachine):
     
     async def _check_distribution_ready(
         self,
-        state_machine: 'DistributedStateMachine',
-        previous_states: Set[str],
-        target_state: str,
-        context: Dict[str, Any]
-    ):
+        state_machine -> None: 'DistributedStateMachine',
+        previous_states -> None: Set[str],
+        target_state -> None: str,
+        context -> None: Dict[str, Any]
+    ) -> None:
         """Check if ready for distribution after protection or SEO"""
         # Check if both protection and SEO parallel branches are completed
         protection_ready = any("protection" in branch.branch_name and branch.is_ready_for_sync() 
@@ -450,7 +455,7 @@ class ContentProcessingStateMachine(DistributedStateMachine):
 class StateMachineManager:
     """Manager for multiple distributed state machines"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.state_machines: Dict[str, DistributedStateMachine] = {}
     
     def create_state_machine(
@@ -474,7 +479,7 @@ class StateMachineManager:
         """Get state machine by saga ID"""
         return self.state_machines.get(saga_id)
     
-    def remove_state_machine(self, saga_id: str):
+    def remove_state_machine(self, saga_id -> None: str) -> None:
         """Remove state machine"""
         if saga_id in self.state_machines:
             del self.state_machines[saga_id]

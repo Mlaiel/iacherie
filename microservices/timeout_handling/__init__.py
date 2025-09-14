@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 class timeout_handlingService:
     """Timeout_handling service implementation"""
     
-    def __init__(self, service_name: str = "timeout_handling"):
+    def __init__(self, service_name -> None: str = "timeout_handling") -> None:
         self.service_name = service_name
         self.status = "initialized"
         self.created_at = time.time()

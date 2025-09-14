@@ -129,10 +129,10 @@ class NotificationManager:
     
     def __init__(
         self,
-        redis_url: str,
-        database_session: AsyncSession,
-        config: Optional[Dict[str, Any]] = None
-    ):
+        redis_url -> None: str,
+        database_session -> None: AsyncSession,
+        config -> None: Optional[Dict[str, Any]] = None
+    ) -> None:
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
         
@@ -181,7 +181,7 @@ class NotificationManager:
         # Webhook callbacks for status updates
         self.status_webhooks: List[str] = []
         
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize the notification manager."""
         # Connect to Redis
         self.redis_client = redis.from_url(self.redis_url)
@@ -194,17 +194,17 @@ class NotificationManager:
         
         self.logger.info("Notification manager initialized")
     
-    def register_channel_provider(self, channel: NotificationChannel, provider: Any):
+    def register_channel_provider(self, channel -> None: NotificationChannel, provider -> None: Any) -> None:
         """Register channel-specific provider."""
         self.channel_providers[channel] = provider
         self.logger.info(f"Registered provider for channel: {channel.value}")
     
-    def add_template(self, template: NotificationTemplate):
+    def add_template(self, template -> None: NotificationTemplate) -> None:
         """Add notification template."""
         self.templates[template.id] = template
         self.logger.info(f"Added notification template: {template.name}")
     
-    def remove_template(self, template_id: str):
+    def remove_template(self, template_id -> None: str) -> None:
         """Remove notification template."""
         if template_id in self.templates:
             del self.templates[template_id]
@@ -303,7 +303,7 @@ class NotificationManager:
         self.logger.info(f"Queued batch notification {batch_id} for {len(recipients)} recipients")
         return batch_id
     
-    async def start_processing(self):
+    async def start_processing(self) -> None:
         """Start notification processing workers."""
         if self.is_running:
             return
@@ -321,7 +321,7 @@ class NotificationManager:
         
         self.logger.info(f"Started {self.worker_count} notification workers")
     
-    async def stop_processing(self):
+    async def stop_processing(self) -> None:
         """Stop notification processing workers."""
         if not self.is_running:
             return
@@ -338,7 +338,7 @@ class NotificationManager:
         
         self.logger.info("Stopped notification processing")
     
-    async def _notification_worker(self, worker_name: str):
+    async def _notification_worker(self, worker_name -> None: str) -> None:
         """Notification processing worker."""
         self.logger.info(f"Started notification worker: {worker_name}")
         
@@ -359,7 +359,7 @@ class NotificationManager:
                 self.logger.error(f"Worker {worker_name} error: {e}")
                 await asyncio.sleep(1)
     
-    async def _process_notification(self, notification: Notification):
+    async def _process_notification(self, notification -> None: Notification) -> None:
         """Process individual notification."""
         try:
             notification.status = NotificationStatus.SENDING
@@ -435,7 +435,7 @@ class NotificationManager:
         except Exception as e:
             return {'success': False, 'error': str(e)}
     
-    async def _render_notification(self, notification: Notification):
+    async def _render_notification(self, notification -> None: Notification) -> None:
         """Render notification content using template."""
         template = self.templates.get(notification.template_id)
         if not template:
@@ -458,7 +458,7 @@ class NotificationManager:
         body_template = self.jinja_env.from_string(template.body_template)
         notification.body = body_template.render(**context)
     
-    def _validate_notification(self, notification: Notification):
+    def _validate_notification(self, notification -> None: Notification) -> None:
         """Validate notification before sending."""
         if not notification.recipient.address:
             raise ValueError("Recipient address is required")
@@ -499,7 +499,7 @@ class NotificationManager:
         window.append(current_time)
         return True
     
-    async def _schedule_notification(self, notification: Notification):
+    async def _schedule_notification(self, notification -> None: Notification) -> None:
         """Schedule notification for future delivery."""
         # Store in Redis with expiration
         schedule_key = f"scheduled_notification:{notification.scheduled_at.timestamp()}:{notification.id}"
@@ -516,7 +516,7 @@ class NotificationManager:
             json.dumps(notification_data)
         )
     
-    async def _scheduled_notification_processor(self):
+    async def _scheduled_notification_processor(self) -> None:
         """Process scheduled notifications."""
         while self.is_running:
             try:
@@ -559,7 +559,7 @@ class NotificationManager:
                 self.logger.error(f"Scheduled processor error: {e}")
                 await asyncio.sleep(30)
     
-    def _setup_rate_limits(self):
+    def _setup_rate_limits(self) -> None:
         """Setup default rate limits for channels."""
         self.rate_limits = {
             NotificationChannel.EMAIL: {
@@ -580,13 +580,13 @@ class NotificationManager:
             }
         }
     
-    async def _load_templates(self):
+    async def _load_templates(self) -> None:
         """Load notification templates from database."""
         # This would typically load from database
         # For now, we'll initialize with empty templates
         pass
     
-    async def _update_notification_status(self, notification: Notification):
+    async def _update_notification_status(self, notification -> None: Notification) -> None:
         """Update notification status in persistent storage."""
         # Update in-memory store
         self.active_notifications[notification.id] = notification
@@ -595,7 +595,7 @@ class NotificationManager:
         # await self.db_session.merge(notification)
         # await self.db_session.commit()
     
-    async def _send_status_webhook(self, notification: Notification):
+    async def _send_status_webhook(self, notification -> None: Notification) -> None:
         """Send webhook notification for status updates."""
         if not self.status_webhooks:
             return
@@ -672,12 +672,12 @@ class NotificationManager:
             'batch_notifications': len(self.batch_notifications)
         }
     
-    def add_status_webhook(self, webhook_url: str):
+    def add_status_webhook(self, webhook_url -> None: str) -> None:
         """Add webhook URL for status updates."""
         if webhook_url not in self.status_webhooks:
             self.status_webhooks.append(webhook_url)
     
-    def remove_status_webhook(self, webhook_url: str):
+    def remove_status_webhook(self, webhook_url -> None: str) -> None:
         """Remove webhook URL."""
         if webhook_url in self.status_webhooks:
             self.status_webhooks.remove(webhook_url)
@@ -685,7 +685,7 @@ class NotificationManager:
 
 # Example usage
 if __name__ == "__main__":
-    async def main():
+    async def main() -> None:
         from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
         from sqlalchemy.orm import sessionmaker
         

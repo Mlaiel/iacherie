@@ -125,7 +125,7 @@ class OptimizationMetrics:
 class ContentOptimizationWorkflow:
     """Advanced content optimization workflow with AI-powered analysis."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the content optimization workflow."""
         self.optimization_engines = {
             "readability": self._analyze_readability,

@@ -1,4 +1,6 @@
 """
+import logging
+
 🔍 Content Validation Service
 Enterprise-grade content validation, quality assurance, and compliance service
 
@@ -108,7 +110,7 @@ class ValidationResult(BaseModel):
 class ValidationRule(ABC):
     """Abstract base class for validation rules"""
     
-    def __init__(self, name: str, category: ValidationCategory, severity: ValidationSeverity):
+    def __init__(self, name -> None: str, category -> None: ValidationCategory, severity -> None: ValidationSeverity) -> None:
         self.name = name
         self.category = category
         self.severity = severity
@@ -121,7 +123,7 @@ class ValidationRule(ABC):
 class FileSizeValidationRule(ValidationRule):
     """Validates file size constraints"""
     
-    def __init__(self, max_size_mb: int = 100):
+    def __init__(self, max_size_mb -> None: int = 100) -> None:
         super().__init__("file_size", ValidationCategory.TECHNICAL, ValidationSeverity.HIGH)
         self.max_size_bytes = max_size_mb * 1024 * 1024
     
@@ -147,7 +149,7 @@ class FileSizeValidationRule(ValidationRule):
 class SecurityScanRule(ValidationRule):
     """Security scanning validation rule"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__("security_scan", ValidationCategory.SECURITY, ValidationSeverity.CRITICAL)
         self.malicious_patterns = [
             rb'<script',
@@ -191,7 +193,7 @@ class SecurityScanRule(ValidationRule):
 class ContentQualityRule(ValidationRule):
     """Content quality assessment using ML"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__("content_quality", ValidationCategory.QUALITY, ValidationSeverity.MEDIUM)
     
     async def validate(self, request: ValidationRequest) -> List[ValidationIssue]:
@@ -251,7 +253,7 @@ class ContentQualityRule(ValidationRule):
 class MetadataValidationRule(ValidationRule):
     """Validates content metadata completeness"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__("metadata_validation", ValidationCategory.METADATA, ValidationSeverity.LOW)
     
     async def validate(self, request: ValidationRequest) -> List[ValidationIssue]:
@@ -291,7 +293,7 @@ class ContentValidationService:
     - ML Engineer: Quality assessment algorithms, automated decision making
     """
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.config = config or {}
         self.rules: Dict[str, ValidationRule] = {}
         self.cache: Dict[str, ValidationResult] = {}
@@ -310,7 +312,7 @@ class ContentValidationService:
                    rules_count=len(self.rules),
                    config=self.config)
     
-    def _initialize_rules(self):
+    def _initialize_rules(self) -> None:
         """Initialize default validation rules"""
         self.rules.update({
             'file_size': FileSizeValidationRule(
@@ -558,7 +560,7 @@ class ContentValidationService:
         
         return recommendations
     
-    def _update_metrics(self, result: ValidationResult, processing_time: float):
+    def _update_metrics(self, result -> None: ValidationResult, processing_time -> None: float) -> None:
         """Update service metrics"""
         self.metrics['total_validations'] += 1
         
@@ -615,7 +617,7 @@ class ContentValidationService:
         }
 
 # Example usage and testing
-async def example_usage():
+async def example_usage() -> None:
     """Example usage of the Content Validation Service"""
     
     # Initialize service

@@ -87,7 +87,7 @@ class BackupConfig:
 class BackupAutomation:
     """MongoDB backup automation manager."""
     
-    def __init__(self, config: BackupConfig):
+    def __init__(self, config -> None: BackupConfig) -> None:
         """Initialize backup automation."""
         self.config = config
         self.backup_dir = Path(f"backup-automation/{config.cluster_name}")
@@ -110,7 +110,7 @@ class BackupAutomation:
         # Initialize cloud storage client
         self.storage_client = self._initialize_storage_client()
     
-    def _initialize_storage_client(self):
+    def _initialize_storage_client(self) -> None:
         """Initialize cloud storage client based on provider."""
         if self.config.storage_provider == "aws":
             if boto3 is None:
@@ -1176,7 +1176,7 @@ echo "Restore completed to database: $TARGET_DB"
 
 
 # Example usage
-async def setup_mongodb_backup_automation():
+async def setup_mongodb_backup_automation() -> None:
     """Example backup automation setup."""
     config = BackupConfig(
         cluster_name="mongodb-prod",

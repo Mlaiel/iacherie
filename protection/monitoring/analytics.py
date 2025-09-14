@@ -82,7 +82,7 @@ class AnalyticsReport:
 class AdvancedAnalyticsEngine:
     """Enterprise-grade analytics engine for protection monitoring"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """Initialize analytics engine with enterprise configuration"""
         self.config = config
         self.metrics_buffer = deque(maxlen=10000)
@@ -103,7 +103,7 @@ class AdvancedAnalyticsEngine:
         
         logger.info("🔬 Advanced Protection Analytics Engine initialized")
     
-    async def initialize_analytics_infrastructure(self):
+    async def initialize_analytics_infrastructure(self) -> None:
         """Initialize analytics infrastructure components"""
         try:
             # Initialize behavioral learning models
@@ -227,7 +227,7 @@ class AdvancedAnalyticsEngine:
     
     # Private helper methods
     
-    async def _initialize_behavioral_models(self):
+    async def _initialize_behavioral_models(self) -> None:
         """Initialize machine learning models for behavioral analysis"""
         try:
             self.behavioral_models['anomaly_detector'] = {}
@@ -237,7 +237,7 @@ class AdvancedAnalyticsEngine:
         except Exception as e:
             logger.error(f"Behavioral models initialization failed: {e}")
     
-    async def _initialize_threat_intelligence(self):
+    async def _initialize_threat_intelligence(self) -> None:
         """Initialize threat intelligence feeds and sources"""
         try:
             self.threat_intelligence_feed['internal'] = {}
@@ -245,7 +245,7 @@ class AdvancedAnalyticsEngine:
         except Exception as e:
             logger.error(f"Threat intelligence initialization failed: {e}")
     
-    async def _establish_performance_baselines(self):
+    async def _establish_performance_baselines(self) -> None:
         """Establish performance baselines for anomaly detection"""
         try:
             self.performance_baselines = {
@@ -263,12 +263,12 @@ class AdvancedAnalyticsEngine:
         random_suffix = hashlib.md5(f"{timestamp}{time.time()}".encode()).hexdigest()[:8]
         return f"INC-{timestamp}-{random_suffix}"
     
-    async def _store_security_incident(self, incident: SecurityIncident):
+    async def _store_security_incident(self, incident -> None: SecurityIncident) -> None:
         """Store security incident in analytics database"""
         # Placeholder for incident storage
         pass
     
-    async def cleanup_analytics_resources(self):
+    async def cleanup_analytics_resources(self) -> None:
         """Cleanup analytics resources"""
         try:
             logger.info("✅ Analytics resources cleanup completed")

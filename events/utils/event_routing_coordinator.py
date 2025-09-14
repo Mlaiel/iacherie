@@ -94,7 +94,7 @@ class EventRoutingCoordinator:
     Dynamic routing with business logic, load balancing, and service health monitoring
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.routing_rules: List[RoutingRule] = []
         self.service_endpoints: Dict[str, ServiceEndpoint] = {}
         self.routing_history: deque = deque(maxlen=5000)
@@ -108,7 +108,7 @@ class EventRoutingCoordinator:
         
         logger.info("EventRoutingCoordinator initialized for Ainflue platform")
     
-    def _initialize_default_rules(self):
+    def _initialize_default_rules(self) -> None:
         """Initialize default routing rules for Ainflue services"""
         
         self.routing_rules = [
@@ -166,7 +166,7 @@ class EventRoutingCoordinator:
             )
         ]
     
-    def _initialize_default_services(self):
+    def _initialize_default_services(self) -> None:
         """Initialize default service endpoints"""
         
         services = [

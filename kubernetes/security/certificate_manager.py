@@ -80,12 +80,12 @@ class CertificateManager:
     
     def __init__(
         self,
-        cert_dir: str = "/etc/ssl/certs",
-        key_dir: str = "/etc/ssl/private",
-        ca_dir: str = "/etc/ssl/ca-certificates",
-        auto_renewal: bool = True,
-        renewal_threshold_days: int = 30
-    ):
+        cert_dir -> None: str = "/etc/ssl/certs",
+        key_dir -> None: str = "/etc/ssl/private",
+        ca_dir -> None: str = "/etc/ssl/ca-certificates",
+        auto_renewal -> None: bool = True,
+        renewal_threshold_days -> None: int = 30
+    ) -> None:
         self.cert_dir = Path(cert_dir)
         self.key_dir = Path(key_dir)
         self.ca_dir = Path(ca_dir)
@@ -575,7 +575,7 @@ class TLSConfigGenerator:
         "DHE-RSA-AES256-GCM-SHA384"
     ]
     
-    def __init__(self, cert_manager: CertificateManager):
+    def __init__(self, cert_manager -> None: CertificateManager) -> None:
         self.cert_manager = cert_manager
         logger.info("TLS configuration generator initialized")
     
@@ -736,3 +736,6 @@ server {{
         except Exception as e:
             logger.error(f"Failed to create SSL context: {e}")
             raise
+)
+
+# File has syntax issues - needs manual review

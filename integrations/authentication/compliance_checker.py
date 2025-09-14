@@ -37,7 +37,7 @@ class ComplianceRule:
 class ComplianceChecker:
     """Advanced compliance checking and validation."""
     
-    def __init__(self, security_scanner):
+    def __init__(self, security_scanner) -> None:
         self.security_scanner = security_scanner
         self.compliance_rules = self._load_compliance_rules()
         

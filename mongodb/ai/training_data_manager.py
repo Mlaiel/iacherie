@@ -17,7 +17,7 @@ logger = logging.getLogger(__name__)
 class TrainingDataManager:
     """Training dataset management and versioning."""
     
-    def __init__(self, client: MongoClient, database_name: str):
+    def __init__(self, client -> None: MongoClient, database_name -> None: str) -> None:
         """Initialize training data manager."""
         self.client = client
         self.database = client[database_name]
@@ -45,7 +45,7 @@ class TrainingDataManager:
 class ModelMonitoring:
     """AI model performance monitoring and drift detection."""
     
-    def __init__(self, client: MongoClient, database_name: str):
+    def __init__(self, client -> None: MongoClient, database_name -> None: str) -> None:
         """Initialize model monitoring."""
         self.client = client
         self.database = client[database_name]
@@ -69,7 +69,7 @@ class ModelMonitoring:
 class PipelineIntegrator:
     """ML pipeline integration and orchestration."""
     
-    def __init__(self, client: MongoClient, database_name: str):
+    def __init__(self, client -> None: MongoClient, database_name -> None: str) -> None:
         """Initialize pipeline integrator."""
         self.client = client
         self.database = client[database_name]
@@ -95,7 +95,7 @@ class PipelineIntegrator:
 class AIAnalytics:
     """AI-driven analytics and insights."""
     
-    def __init__(self, client: MongoClient, database_name: str):
+    def __init__(self, client -> None: MongoClient, database_name -> None: str) -> None:
         """Initialize AI analytics."""
         self.client = client
         self.database = client[database_name]

@@ -152,7 +152,7 @@ class PerformanceAlert:
 class PerformanceCollector:
     """Performance data collection system."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.performance_records: deque = deque(maxlen=50000)
         self.active_requests: Dict[str, dict] = {}
         
@@ -196,7 +196,7 @@ class PerformanceCollector:
         self.active_requests[request_id] = tracking_data
         return tracking_data
     
-    async def update_request_tracking(self, request_id: str, stage: str, **kwargs):
+    async def update_request_tracking(self, request_id -> None: str, stage -> None: str, **kwargs) -> None:
         """Update request tracking with stage information."""
         if request_id not in self.active_requests:
             return
@@ -287,7 +287,7 @@ class PerformanceCollector:
         
         return record
     
-    async def _update_metric_aggregates(self, record: PerformanceRecord):
+    async def _update_metric_aggregates(self, record -> None: PerformanceRecord) -> None:
         """Update metric aggregates with new record."""
         provider_key = f"{record.provider}_{record.model}"
         
@@ -333,7 +333,7 @@ class PerformanceCollector:
 class PerformanceAnalyzer:
     """Performance analysis and metrics calculation system."""
     
-    def __init__(self, collector: PerformanceCollector):
+    def __init__(self, collector -> None: PerformanceCollector) -> None:
         self.collector = collector
         self.thresholds: Dict[str, PerformanceThreshold] = {}
         self.alerts: Dict[str, PerformanceAlert] = {}
@@ -405,7 +405,7 @@ class PerformanceAnalyzer:
         
         return metrics
     
-    def _update_prometheus_metrics(self, provider: str, model: str, metrics: Dict[PerformanceMetric, float]):
+    def _update_prometheus_metrics(self, provider -> None: str, model -> None: str, metrics -> None: Dict[PerformanceMetric, float]) -> None:
         """Update Prometheus metrics."""
         for metric, value in metrics.items():
             if metric == PerformanceMetric.LATENCY:
@@ -695,7 +695,7 @@ class PerformanceAnalyzer:
 class AIPerformanceMonitor:
     """Main AI performance monitoring system."""
     
-    def __init__(self, redis_url: str = None):
+    def __init__(self, redis_url -> None: str = None) -> None:
         self.collector = PerformanceCollector()
         self.analyzer = PerformanceAnalyzer(self.collector)
         self.redis_client = None
@@ -718,7 +718,7 @@ class AIPerformanceMonitor:
             PerformanceMetric.MEMORY_USAGE: (80, 95)  # 80% warning, 95% critical
         }
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize the performance monitoring system."""
         try:
             if self.redis_url:
@@ -740,7 +740,7 @@ class AIPerformanceMonitor:
             logger.error(f"Failed to initialize performance monitor: {str(e)}")
             raise
     
-    async def _setup_default_thresholds(self):
+    async def _setup_default_thresholds(self) -> None:
         """Set up default performance thresholds."""
         for metric, (warning, critical) in self.default_thresholds.items():
             await self.analyzer.set_threshold(
@@ -752,8 +752,8 @@ class AIPerformanceMonitor:
             )
     
     @asynccontextmanager
-    async def track_request(self, provider: str, model: str, service_type: str, 
-                          request_id: Optional[str] = None, user_id: Optional[str] = None):
+    async def track_request(self, provider -> None: str, model -> None: str, service_type -> None: str, 
+                          request_id -> None: Optional[str] = None, user_id -> None: Optional[str] = None) -> None:
         """Context manager for tracking request performance."""
         
         if not request_id:
@@ -872,7 +872,7 @@ class AIPerformanceMonitor:
         
         return summary
     
-    async def _threshold_monitoring_loop(self):
+    async def _threshold_monitoring_loop(self) -> None:
         """Continuous threshold monitoring."""
         while True:
             try:
@@ -888,7 +888,7 @@ class AIPerformanceMonitor:
                 logger.error(f"Threshold monitoring failed: {str(e)}")
                 await asyncio.sleep(60)
     
-    async def _metrics_calculation_loop(self):
+    async def _metrics_calculation_loop(self) -> None:
         """Periodic metrics calculation."""
         while True:
             try:
@@ -906,7 +906,7 @@ class AIPerformanceMonitor:
                 logger.error(f"Metrics calculation failed: {str(e)}")
                 await asyncio.sleep(300)
     
-    async def _status_update_loop(self):
+    async def _status_update_loop(self) -> None:
         """Update performance status for providers."""
         while True:
             try:
@@ -967,7 +967,7 @@ class AIPerformanceMonitor:
         else:
             return PerformanceStatus.EXCELLENT
     
-    async def _process_alert(self, alert: PerformanceAlert):
+    async def _process_alert(self, alert -> None: PerformanceAlert) -> None:
         """Process a performance alert."""
         
         # Store alert in Redis
@@ -979,7 +979,7 @@ class AIPerformanceMonitor:
         logger.warning(f"Performance Alert [{alert.severity.value.upper()}]: {alert.description}")
         logger.info(f"Recommendation: {alert.recommendation}")
     
-    async def cleanup(self):
+    async def cleanup(self) -> None:
         """Cleanup resources."""
         try:
             # Cancel monitoring tasks
@@ -1005,7 +1005,7 @@ performance_monitor = AIPerformanceMonitor()
 
 
 @asynccontextmanager
-async def track_ai_performance(provider: str, model: str, service_type: str, **kwargs):
+async def track_ai_performance(provider -> None: str, model -> None: str, service_type -> None: str, **kwargs) -> None:
     """Track AI request performance using global monitor."""
     async with performance_monitor.track_request(provider, model, service_type, **kwargs) as tracking:
         yield tracking
@@ -1017,7 +1017,7 @@ async def record_ai_performance(**kwargs) -> PerformanceRecord:
 
 
 # Example usage
-async def main():
+async def main() -> None:
     """Example usage of AI performance monitor."""
     await performance_monitor.initialize()
     

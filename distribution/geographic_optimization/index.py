@@ -32,7 +32,7 @@ class GeographicOptimizationResults:
 class GeographicOptimizationEngine:
     """Main geographic optimization engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize geographic optimization engine"""
         self.supported_regions = [
             'North America', 'Europe', 'Asia-Pacific', 'Latin America',

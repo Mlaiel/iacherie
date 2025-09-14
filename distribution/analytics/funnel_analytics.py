@@ -142,13 +142,13 @@ class FunnelAnalytics:
     - Real-time funnel monitoring
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.user_events: List[Dict[str, Any]] = []
         self.funnels: Dict[str, FunnelDefinition] = {}
         self.user_journeys: Dict[str, List[UserJourney]] = defaultdict(list)
         self.analysis_cache: Dict[str, FunnelAnalysisResult] = {}
         
-    async def add_user_events(self, events: List[Dict[str, Any]]):
+    async def add_user_events(self, events -> None: List[Dict[str, Any]]) -> None:
         """Add user events for funnel analysis"""
         for event in events:
             # Ensure required fields
@@ -162,7 +162,7 @@ class FunnelAnalytics:
             
         logger.info(f"Added {len(events)} user events for funnel analysis")
         
-    async def define_funnel(self, definition: FunnelDefinition):
+    async def define_funnel(self, definition -> None: FunnelDefinition) -> None:
         """Define a new conversion funnel"""
         # Validate funnel definition
         if not definition.steps:
@@ -775,7 +775,7 @@ class FunnelAnalytics:
         return recommendations
 
 # Usage example
-async def example_usage():
+async def example_usage() -> None:
     """Example usage of FunnelAnalytics"""
     analytics = FunnelAnalytics()
     

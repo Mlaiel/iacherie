@@ -1,3 +1,8 @@
+"""
+Production Environment Manager module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """🔧 Production Environment Configuration Manager - Ainflue Platform
 ===================================================================
@@ -188,7 +193,7 @@ class ProductionEnvironmentManager:
     - Compliance settings
     """
     
-    def __init__(self, namespace: str = "ainflue"):
+    def __init__(self, namespace -> None: str = "ainflue") -> None:
         self.namespace = namespace
         self.config = ProductionEnvironmentConfig()
         self.kubernetes_client = None

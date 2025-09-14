@@ -97,7 +97,7 @@ class MatchingConfiguration:
 class CollaborationMatcher:
     """AI-powered intelligent creator collaboration matching system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize collaboration matcher"""
         self.creator_database = {}
         self.matching_models = self._init_matching_models()
@@ -958,7 +958,7 @@ class CollaborationMatcher:
             {'creator_id': 'alt_creator_2', 'alternative_reason': 'geographic_advantage', 'potential_score': 0.68}
         ]
     
-    async def _store_matching_history(self, creator_id: str, results: MatchingResults):
+    async def _store_matching_history(self, creator_id -> None: str, results -> None: MatchingResults) -> None:
         """Store matching history for learning"""
         if creator_id not in self.matching_history:
             self.matching_history[creator_id] = []

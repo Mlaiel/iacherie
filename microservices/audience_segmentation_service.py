@@ -138,7 +138,7 @@ class AudienceSegmentationService:
     behavioral analysis, and predictive insights for marketing optimization.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize Audience Segmentation Service with enterprise configuration"""
         self.service_name = "AudienceSegmentationService"
         self.version = "1.0.0"
@@ -994,7 +994,7 @@ class AudienceSegmentationService:
     # Additional utility methods would be implemented here...
 
 # Example usage and testing
-async def main():
+async def main() -> None:
     """Example usage of Audience Segmentation Service"""
     service = AudienceSegmentationService()
     

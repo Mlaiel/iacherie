@@ -18,6 +18,7 @@ from ..core.base_event import BaseEvent
 
 
 class LicenseType(Enum):
+    """LicenseType class implementation"""
     COMMERCIAL = "commercial"
     NON_COMMERCIAL = "non_commercial"
     SYNC = "sync"
@@ -26,6 +27,7 @@ class LicenseType(Enum):
 
 
 class RevenueSource(Enum):
+    """RevenueSource class implementation"""
     STREAMING = "streaming"
     DOWNLOAD = "download"
     LICENSING = "licensing"
@@ -34,6 +36,7 @@ class RevenueSource(Enum):
 
 
 class PaymentStatus(Enum):
+    """PaymentStatus class implementation"""
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -43,12 +46,13 @@ class PaymentStatus(Enum):
 
 @dataclass
 class AudioMonetizationStartedEvent(BaseEvent):
+    """AudioMonetizationStartedEvent class implementation"""
     user_id: UUID
     file_id: UUID
     monetization_id: UUID
     monetization_type: str
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.monetization.started",
             data={
@@ -61,13 +65,14 @@ class AudioMonetizationStartedEvent(BaseEvent):
 
 @dataclass
 class AudioLicenseCreatedEvent(BaseEvent):
+    """AudioLicenseCreatedEvent class implementation"""
     user_id: UUID
     file_id: UUID
     license_id: UUID
     license_type: str
     price: float
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.monetization.license_created",
             data={
@@ -81,6 +86,7 @@ class AudioLicenseCreatedEvent(BaseEvent):
 
 @dataclass
 class AudioRevenueGeneratedEvent(BaseEvent):
+    """AudioRevenueGeneratedEvent class implementation"""
     user_id: UUID
     file_id: UUID
     revenue_id: UUID
@@ -88,7 +94,7 @@ class AudioRevenueGeneratedEvent(BaseEvent):
     currency: str
     revenue_source: str
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.monetization.revenue_generated",
             data={
@@ -103,6 +109,7 @@ class AudioRevenueGeneratedEvent(BaseEvent):
 
 @dataclass
 class AudioRoyaltyDistributedEvent(BaseEvent):
+    """AudioRoyaltyDistributedEvent class implementation"""
     user_id: UUID
     file_id: UUID
     distribution_id: UUID
@@ -110,7 +117,7 @@ class AudioRoyaltyDistributedEvent(BaseEvent):
     currency: str
     recipients: List[Dict[str, Any]] = field(default_factory=list)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.monetization.royalty_distributed",
             data={
@@ -125,6 +132,7 @@ class AudioRoyaltyDistributedEvent(BaseEvent):
 
 @dataclass
 class AudioSaleCompletedEvent(BaseEvent):
+    """AudioSaleCompletedEvent class implementation"""
     user_id: UUID
     file_id: UUID
     sale_id: UUID
@@ -132,7 +140,7 @@ class AudioSaleCompletedEvent(BaseEvent):
     amount: float
     currency: str
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.monetization.sale_completed",
             data={
@@ -147,13 +155,14 @@ class AudioSaleCompletedEvent(BaseEvent):
 
 @dataclass
 class AudioStreamingRevenueEvent(BaseEvent):
+    """AudioStreamingRevenueEvent class implementation"""
     user_id: UUID
     file_id: UUID
     platform: str
     streams_count: int
     revenue: float
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.monetization.streaming_revenue",
             data={
@@ -167,13 +176,14 @@ class AudioStreamingRevenueEvent(BaseEvent):
 
 @dataclass
 class AudioSyncLicenseRequestEvent(BaseEvent):
+    """AudioSyncLicenseRequestEvent class implementation"""
     user_id: UUID
     file_id: UUID
     request_id: UUID
     project_type: str
     requested_usage: str
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.monetization.sync_license_request",
             data={
@@ -187,6 +197,7 @@ class AudioSyncLicenseRequestEvent(BaseEvent):
 
 @dataclass
 class AudioPerformanceRoyaltyEvent(BaseEvent):
+    """AudioPerformanceRoyaltyEvent class implementation"""
     user_id: UUID
     file_id: UUID
     performance_id: UUID
@@ -194,7 +205,7 @@ class AudioPerformanceRoyaltyEvent(BaseEvent):
     performance_date: datetime
     royalty_amount: float
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.monetization.performance_royalty",
             data={
@@ -208,13 +219,14 @@ class AudioPerformanceRoyaltyEvent(BaseEvent):
 
 @dataclass
 class AudioMonetizationAnalyticsEvent(BaseEvent):
+    """AudioMonetizationAnalyticsEvent class implementation"""
     user_id: UUID
     file_id: UUID
     analytics_id: UUID
     total_revenue: float
     revenue_breakdown: Dict[str, float] = field(default_factory=dict)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.monetization.analytics",
             data={
@@ -228,13 +240,14 @@ class AudioMonetizationAnalyticsEvent(BaseEvent):
 
 @dataclass
 class AudioNFTMintingEvent(BaseEvent):
+    """AudioNFTMintingEvent class implementation"""
     user_id: UUID
     file_id: UUID
     nft_id: UUID
     blockchain: str
     mint_price: float
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.monetization.nft_minting",
             data={

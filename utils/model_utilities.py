@@ -61,7 +61,7 @@ class ModelUtilities:
     - Model deployment preparation
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize model utilities"""
         self.models_registry: Dict[str, List[ModelVersion]] = {}
         self.active_models: Dict[str, Any] = {}
@@ -505,7 +505,7 @@ class ModelUtilities:
             logger.error(f"Failed to get model registry summary: {e}")
             return {}
     
-    def _check_performance_thresholds(self, metrics: ModelMetrics, model_name: str):
+    def _check_performance_thresholds(self, metrics -> None: ModelMetrics, model_name -> None: str) -> None:
         """Check if model meets performance thresholds"""
         warnings_list = []
         

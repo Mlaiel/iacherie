@@ -44,7 +44,7 @@ class EngagementScore:
 class EngagementScoringWorkflow:
     """AI-powered engagement scoring workflow"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.metrics_collector = MetricsCollector()
         self.user_scores: Dict[str, EngagementScore] = {}
         self.scoring_weights = {

@@ -67,8 +67,8 @@ class StageResult:
     """
 Result object for pipeline stage execution."""
     
-    def __init__(self, stage: PipelineStage, success: bool, data: Dict = None, 
-                 errors: List[str] = None, duration: float = 0.0):
+    def __init__(self, stage -> None: PipelineStage, success -> None: bool, data -> None: Dict = None, 
+                 errors -> None: List[str] = None, duration -> None: float = 0.0) -> None:
         self.stage = stage
         self.success = success
         self.data = data or {}
@@ -94,7 +94,7 @@ Convert stage result to dictionary."""
 class PipelineStageProcessor:
     """Base class for pipeline stage processors."""
     
-    def __init__(self, stage: PipelineStage):
+    def __init__(self, stage -> None: PipelineStage) -> None:
         self.stage = stage
         self.logger = logging.getLogger(f"pipeline.{stage.value}")
         self.metrics = MetricsCollector()
@@ -195,7 +195,7 @@ class ContentValidationProcessor(PipelineStageProcessor):
     """
 Validate content format, size, and basic requirements."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         try:
             logger.info(f"Executing __init__")
             
@@ -299,7 +299,7 @@ class ContentPreprocessingProcessor(PipelineStageProcessor):
     """
 Preprocess content for analysis and optimization."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__(PipelineStage.PREPROCESSING)
     
     async def process(self, content_item: ContentItem, context: Dict) -> Dict:
@@ -401,7 +401,7 @@ Generate thumbnails or preview images."""
 class FeatureExtractionProcessor(PipelineStageProcessor):
     """Extract features for AI analysis and matching."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__(PipelineStage.FEATURE_EXTRACTION)
         self.content_analyzer = ContentAnalyzer()
     
@@ -509,7 +509,7 @@ Extract features from content."""
 class AIAnalysisProcessor(PipelineStageProcessor):
     """Advanced AI analysis of content."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__(PipelineStage.AI_ANALYSIS)
         self.content_analyzer = ContentAnalyzer()
     
@@ -655,7 +655,7 @@ Perform comprehensive AI analysis."""
 class ContentPipelineManager:
     """Advanced pipeline manager with dynamic stage orchestration."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger("pipeline.manager")
         self.metrics = MetricsCollector()
         self.active_pipelines = {}
@@ -717,7 +717,7 @@ class ContentPipelineManager:
         self.logger.info(f"Created pipeline {pipeline_id} with {len(stages)} stages")
         return pipeline_id
     
-    async def _queue_pipeline(self, pipeline_id: str, priority: PipelinePriority):
+    async def _queue_pipeline(self, pipeline_id -> None: str, priority -> None: PipelinePriority) -> None:
         """Queue pipeline for execution."""
         self.pipeline_queue.append((priority.value, pipeline_id))
         # Sort queue by priority (higher values first)
@@ -725,7 +725,7 @@ class ContentPipelineManager:
         
         self.active_pipelines[pipeline_id]["status"] = PipelineStatus.QUEUED
     
-    async def execute_pipelines(self):
+    async def execute_pipelines(self) -> None:
         """Execute queued pipelines."""
         while True:
             # Check for available pipeline slots
@@ -746,7 +746,7 @@ class ContentPipelineManager:
             
             await asyncio.sleep(0.1)  # Prevent tight loop
     
-    async def _execute_pipeline(self, pipeline_id: str):
+    async def _execute_pipeline(self, pipeline_id -> None: str) -> None:
         """Execute a complete pipeline."""
         pipeline_info = self.active_pipelines[pipeline_id]
         pipeline_info["status"] = PipelineStatus.RUNNING
@@ -887,3 +887,5 @@ class ContentPipelineManager:
             "max_concurrent": self.max_concurrent_pipelines,
             "queue_length": len(self.pipeline_queue)
         }
+
+# File has syntax issues - needs manual review

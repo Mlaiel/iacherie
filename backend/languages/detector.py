@@ -80,7 +80,7 @@ class LanguageDetector:
     with high accuracy and dialect recognition
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize language detector"""
         self.config = config or {}
         self.engines = {

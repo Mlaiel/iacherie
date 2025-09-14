@@ -216,7 +216,7 @@ class MonetizationPerformanceIntelligence:
     revenue optimization insights, and payment processing performance monitoring.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.monetization_metrics: Dict[str, List[MonetizationPerformanceMetrics]] = defaultdict(list)
         self.payment_analytics: Dict[str, PaymentProcessingAnalytics] = {}
         self.optimization_recommendations: Dict[str, MonetizationOptimizationRecommendations] = {}
@@ -583,18 +583,18 @@ class MonetizationPerformanceIntelligence:
     
     async def _analyze_payment_processing(
         self,
-        metrics: MonetizationPerformanceMetrics,
-        raw_data: Dict[str, Any]
-    ):
+        metrics -> None: MonetizationPerformanceMetrics,
+        raw_data -> None: Dict[str, Any]
+    ) -> None:
         """Analyze payment processing performance"""
         # Payment processing analysis would be implemented here
         logger.info(f"Payment processing analysis completed for {metrics.monetization_id}")
     
     async def _calculate_tax_compliance(
         self,
-        metrics: MonetizationPerformanceMetrics,
-        raw_data: Dict[str, Any]
-    ):
+        metrics -> None: MonetizationPerformanceMetrics,
+        raw_data -> None: Dict[str, Any]
+    ) -> None:
         """Calculate tax and compliance metrics"""
         # Tax compliance calculations would be implemented here
         logger.info(f"Tax compliance calculation completed for {metrics.monetization_id}")
@@ -610,9 +610,9 @@ class MonetizationPerformanceIntelligence:
     
     async def _generate_monetization_recommendations(
         self,
-        monetization_id: str,
-        metrics: MonetizationPerformanceMetrics
-    ):
+        monetization_id -> None: str,
+        metrics -> None: MonetizationPerformanceMetrics
+    ) -> None:
         """Generate monetization optimization recommendations"""
         recommendations = MonetizationOptimizationRecommendations(monetization_id=monetization_id)
         
@@ -959,9 +959,9 @@ class MonetizationPerformanceIntelligence:
     
     async def _update_security_compliance(
         self,
-        analytics: PaymentProcessingAnalytics,
-        transaction_data: Dict[str, Any]
-    ):
+        analytics -> None: PaymentProcessingAnalytics,
+        transaction_data -> None: Dict[str, Any]
+    ) -> None:
         """Update security and compliance metrics"""
         # Security and compliance updates would be implemented here
         logger.info(f"Security compliance updated for {analytics.processor_id}")

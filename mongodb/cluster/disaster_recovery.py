@@ -68,9 +68,9 @@ class DisasterRecovery:
     """Enterprise-grade MongoDB disaster recovery system."""
     
     def __init__(self, 
-                 primary_connection: str,
-                 backup_connections: List[str],
-                 backup_location: str):
+                 primary_connection -> None: str,
+                 backup_connections -> None: List[str],
+                 backup_location -> None: str) -> None:
         """Initialize disaster recovery system."""
         if not MONGODB_AVAILABLE:
             raise ImportError("PyMongo is required for disaster recovery")
@@ -93,7 +93,7 @@ class DisasterRecovery:
         # Initialize default recovery plans
         self._initialize_default_plans()
     
-    def _initialize_default_plans(self):
+    def _initialize_default_plans(self) -> None:
         """Initialize default disaster recovery plans."""
         # Hardware failure scenario
         hardware_scenario = DisasterScenario(
@@ -151,7 +151,7 @@ class DisasterRecovery:
         
         self.recovery_plans.append(default_plan)
     
-    async def start_monitoring(self):
+    async def start_monitoring(self) -> None:
         """Start disaster recovery monitoring."""
         logger.info("Starting disaster recovery monitoring")
         
@@ -165,7 +165,7 @@ class DisasterRecovery:
                 logger.error(f"DR monitoring error: {e}")
                 await asyncio.sleep(self.health_check_interval)
     
-    async def _check_system_health(self):
+    async def _check_system_health(self) -> None:
         """Check overall system health for disaster indicators."""
         try:
             # Connect to primary
@@ -300,7 +300,7 @@ class DisasterRecovery:
         else:
             return "LOW"
     
-    async def _initiate_preventive_measures(self):
+    async def _initiate_preventive_measures(self) -> None:
         """Initiate preventive measures for high risk situations."""
         logger.warning("Initiating preventive disaster recovery measures")
         
@@ -313,7 +313,7 @@ class DisasterRecovery:
         # Alert operations team
         await self._send_alert("HIGH", "Elevated disaster risk detected")
     
-    async def _trigger_disaster_response(self):
+    async def _trigger_disaster_response(self) -> None:
         """Trigger disaster response procedures."""
         logger.critical("Triggering disaster response procedures")
         
@@ -331,7 +331,7 @@ class DisasterRecovery:
         # In production, this would analyze the current situation and select the best plan
         return self.recovery_plans[0] if self.recovery_plans else None
     
-    async def _execute_recovery_plan(self, plan: RecoveryPlan):
+    async def _execute_recovery_plan(self, plan -> None: RecoveryPlan) -> None:
         """Execute a disaster recovery plan."""
         logger.info(f"Executing recovery plan: {plan.name}")
         
@@ -469,7 +469,7 @@ class DisasterRecovery:
             logger.error(f"Data integrity verification failed: {e}")
             return False
     
-    async def _validate_backups(self):
+    async def _validate_backups(self) -> None:
         """Validate backup integrity and accessibility."""
         recent_backups = self._get_recent_backups()
         
@@ -486,24 +486,24 @@ class DisasterRecovery:
             logger.error(f"Backup integrity verification failed: {e}")
             return False
     
-    async def _test_failover_capability(self):
+    async def _test_failover_capability(self) -> None:
         """Test failover capability without impacting production."""
         # Implement non-disruptive failover testing
         pass
     
-    async def _verify_failover_readiness(self):
+    async def _verify_failover_readiness(self) -> None:
         """Verify that failover systems are ready."""
         # Check secondary readiness
         # Verify network connectivity
         # Validate application configuration
         pass
     
-    async def _create_emergency_backup(self):
+    async def _create_emergency_backup(self) -> None:
         """Create an emergency backup."""
         logger.info("Creating emergency backup")
         # Implement emergency backup creation
     
-    async def _send_alert(self, severity: str, message: str):
+    async def _send_alert(self, severity -> None: str, message -> None: str) -> None:
         """Send disaster recovery alert."""
         alert = {
             "severity": severity,
@@ -554,7 +554,7 @@ class DisasterRecovery:
             "last_test": None  # Would track last DR test
         }
     
-    def close(self):
+    def close(self) -> None:
         """Close disaster recovery connections."""
         if self.primary_client:
             self.primary_client.close()

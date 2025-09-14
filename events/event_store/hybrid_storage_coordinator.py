@@ -99,7 +99,7 @@ class HybridStorageCoordinator:
     - Real-time monitoring and alerting
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._backends: Dict[StorageBackendType, IEventStoreBackend] = {}
         self._backend_health: Dict[StorageBackendType, bool] = {}
         self._routing_rules: Dict[str, RoutingRule] = {}
@@ -113,7 +113,7 @@ class HybridStorageCoordinator:
         # Initialize Ainflue business routing
         self._initialize_business_routing()
     
-    def _initialize_business_routing(self):
+    def _initialize_business_routing(self) -> None:
         """Initialize Ainflue-specific routing rules"""
         
         # Content lifecycle events require reliability
@@ -147,7 +147,7 @@ class HybridStorageCoordinator:
         for event_type in performance_events:
             self._routing_rules[event_type] = RoutingRule.PERFORMANCE_FIRST
     
-    async def initialize(self, backends: Dict[StorageBackendType, IEventStoreBackend]):
+    async def initialize(self, backends -> None: Dict[StorageBackendType, IEventStoreBackend]) -> None:
         """Initialize coordinator with backends"""
         
         self._backends = backends
@@ -409,7 +409,7 @@ class HybridStorageCoordinator:
         
         return True
     
-    def _record_failure(self, backend_type: StorageBackendType):
+    def _record_failure(self, backend_type -> None: StorageBackendType) -> None:
         """Record failure and update circuit breaker"""
         
         if backend_type not in self._circuit_breakers:
@@ -428,7 +428,7 @@ class HybridStorageCoordinator:
             breaker['is_open'] = True
             logger.warning(f"Circuit breaker opened for {backend_type}")
     
-    def _reset_circuit_breaker(self, backend_type: StorageBackendType):
+    def _reset_circuit_breaker(self, backend_type -> None: StorageBackendType) -> None:
         """Reset circuit breaker on success"""
         
         if backend_type in self._circuit_breakers:
@@ -438,8 +438,8 @@ class HybridStorageCoordinator:
                 'is_open': False
             })
     
-    async def _schedule_synchronization(self, event: BaseEvent,
-                                      backends: List[StorageBackendType]):
+    async def _schedule_synchronization(self, event -> None: BaseEvent,
+                                      backends -> None: List[StorageBackendType]) -> None:
         """Schedule asynchronous synchronization between backends"""
         
         # This is a simplified implementation
@@ -490,7 +490,7 @@ class HybridStorageCoordinator:
         # Default to PostgreSQL for reliability
         return StorageBackendType.POSTGRESQL
     
-    async def _perform_health_checks(self):
+    async def _perform_health_checks(self) -> None:
         """Perform health checks on all backends"""
         
         for backend_type, backend in self._backends.items():
@@ -507,7 +507,7 @@ class HybridStorageCoordinator:
                 logger.error(f"Health check failed for {backend_type}: {e}")
                 self._backend_health[backend_type] = False
     
-    async def _health_monitor_task(self):
+    async def _health_monitor_task(self) -> None:
         """Background task for continuous health monitoring"""
         
         while self._is_initialized:
@@ -518,7 +518,7 @@ class HybridStorageCoordinator:
                 logger.error(f"Health monitoring task error: {e}")
                 await asyncio.sleep(10)  # Shorter retry interval on error
     
-    async def _synchronization_task(self):
+    async def _synchronization_task(self) -> None:
         """Background task for cross-backend synchronization"""
         
         while self._is_initialized:
@@ -529,7 +529,7 @@ class HybridStorageCoordinator:
                 logger.error(f"Synchronization task error: {e}")
                 await asyncio.sleep(30)  # Shorter retry on error
     
-    async def _perform_synchronization_check(self):
+    async def _perform_synchronization_check(self) -> None:
         """Check synchronization status between backends"""
         
         # Simplified implementation - check event counts and timestamps
@@ -585,7 +585,7 @@ class HybridStorageCoordinator:
                 except Exception as e:
                     logger.error(f"Synchronization check failed for {backend1}-{backend2}: {e}")
     
-    async def _optimization_task(self):
+    async def _optimization_task(self) -> None:
         """Background task for performance optimization"""
         
         while self._is_initialized:
@@ -596,7 +596,7 @@ class HybridStorageCoordinator:
                 logger.error(f"Optimization task error: {e}")
                 await asyncio.sleep(60)
     
-    async def _perform_optimization_analysis(self):
+    async def _perform_optimization_analysis(self) -> None:
         """Analyze performance and suggest optimizations"""
         
         # Collect metrics from all backends

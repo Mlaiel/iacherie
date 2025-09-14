@@ -88,7 +88,7 @@ class ScriptConfig:
     output_file: Optional[str] = None
     error_file: Optional[str] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         """
 Add default environment variables"""
         self.environment_variables.update({
@@ -120,7 +120,7 @@ class BaseProvisioningScript(ABC):
     """
 Abstract base class for provisioning scripts"""
     
-    def __init__(self, config: ScriptConfig):
+    def __init__(self, config -> None: ScriptConfig) -> None:
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self.execution_history: List[ScriptResult] = []
@@ -752,7 +752,7 @@ main "$@"
 class DeploymentScript(BaseProvisioningScript):
     """Deployment script for infrastructure and applications"""
     
-    def __init__(self, config: ScriptConfig, deployment_config: Dict[str, Any]):
+    def __init__(self, config -> None: ScriptConfig, deployment_config -> None: Dict[str, Any]) -> None:
         super().__init__(config)
         self.deployment_config = deployment_config
     
@@ -1396,7 +1396,7 @@ class RollbackScript(BaseProvisioningScript):
     """
 Rollback script for infrastructure and deployment recovery"""
     
-    def __init__(self, config: ScriptConfig, rollback_config: Dict[str, Any]):
+    def __init__(self, config -> None: ScriptConfig, rollback_config -> None: Dict[str, Any]) -> None:
         super().__init__(config)
         self.rollback_config = rollback_config
     
@@ -1508,12 +1508,12 @@ class ScriptManager:
     """
 Manager for provisioning scripts"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.scripts: Dict[str, BaseProvisioningScript] = {}
         self.logger = logging.getLogger(__name__)
         self.execution_queue: List[str] = []
         
-    def register_script(self, name: str, script: BaseProvisioningScript):
+    def register_script(self, name -> None: str, script -> None: BaseProvisioningScript) -> None:
         """
 Register a provisioning script"""
         self.scripts[name] = script

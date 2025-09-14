@@ -97,7 +97,7 @@ class ContainerOptimizer:
     Provides intelligent optimization with performance and security focus
     """
 
-    def __init__(self, runtime: ContainerRuntime = ContainerRuntime.DOCKER):
+    def __init__(self, runtime -> None: ContainerRuntime = ContainerRuntime.DOCKER) -> None:
         self.runtime = runtime
         self.docker_client = None
         self.optimization_cache: Dict[str, OptimizationResult] = {}
@@ -181,7 +181,7 @@ class ContainerOptimizer:
             logger.error(f"Failed to read Dockerfile: {e}")
             raise
 
-    async def _write_dockerfile(self, output_path: Path, content: str):
+    async def _write_dockerfile(self, output_path -> None: Path, content -> None: str) -> None:
         """Write optimized Dockerfile"""
         try:
             output_path.parent.mkdir(parents=True, exist_ok=True)
@@ -762,7 +762,7 @@ class ContainerRegistry:
     Container registry integration for optimized images
     """
     
-    def __init__(self, registry_url: str, credentials: Optional[Dict[str, str]] = None):
+    def __init__(self, registry_url -> None: str, credentials -> None: Optional[Dict[str, str]] = None) -> None:
         self.registry_url = registry_url
         self.credentials = credentials
         self.docker_client = None
@@ -825,7 +825,7 @@ def create_optimization_config(
 
 # Example usage
 if __name__ == "__main__":
-    async def main():
+    async def main() -> None:
         # Create optimizer
         optimizer = create_container_optimizer()
         

@@ -97,7 +97,7 @@ class CollaborationEvent:
 class RealTimeCollaborationEngine:
     """Moteur de collaboration temps réel."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.active_sessions: Dict[str, CollaborationSession] = {}
         self.event_history: Dict[str, List[CollaborationEvent]] = defaultdict(list)
         self.user_sessions: Dict[str, Set[str]] = defaultdict(set)
@@ -249,7 +249,7 @@ class RealTimeCollaborationEngine:
             logger.error(f"Failed to leave session: {e}")
             return False
     
-    async def _close_session(self, session_id: str):
+    async def _close_session(self, session_id -> None: str) -> None:
         """Ferme une session de collaboration."""
         try:
             if session_id in self.active_sessions:
@@ -309,7 +309,7 @@ class SyncTask:
 class CrossPlatformSynchronizer:
     """Synchroniseur cross-plateforme intelligent."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.platform_configs: Dict[str, PlatformConfig] = {}
         self.sync_tasks: Dict[str, SyncTask] = {}
         self.sync_queue: asyncio.Queue = asyncio.Queue()
@@ -353,7 +353,7 @@ class CrossPlatformSynchronizer:
             logger.error(f"Failed to create sync task: {e}")
             return ""
     
-    async def start_sync_processor(self):
+    async def start_sync_processor(self) -> None:
         """Démarre le processeur de synchronisation."""
         self.is_running = True
         
@@ -370,7 +370,7 @@ class CrossPlatformSynchronizer:
             except Exception as e:
                 logger.error(f"Sync processor error: {e}")
     
-    async def _process_sync_task(self, task_id: str):
+    async def _process_sync_task(self, task_id -> None: str) -> None:
         """Traite une tâche de synchronisation."""
         try:
             task = self.sync_tasks[task_id]
@@ -513,7 +513,7 @@ class CreationTask:
 class CollaborativeContentCreator:
     """Créateur de contenu collaboratif."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.projects: Dict[str, CreationProject] = {}
         self.tasks: Dict[str, CreationTask] = {}
         self.asset_storage: Dict[str, Dict[str, Any]] = {}
@@ -689,7 +689,7 @@ class PartnershipOpportunity:
 class AIPartnershipMatcher:
     """Matcher de partenariats alimenté par IA."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.creator_profiles: Dict[str, CreatorProfile] = {}
         self.partnership_opportunities: Dict[str, PartnershipOpportunity] = {}
         self.collaboration_history: Dict[str, List[str]] = defaultdict(list)
@@ -841,12 +841,12 @@ class WorkflowTemplate:
 class WorkflowAccelerator:
     """Accélérateur de workflows collaboratifs."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.templates: Dict[str, WorkflowTemplate] = {}
         self.active_workflows: Dict[str, Dict[str, Any]] = {}
         self._initialize_default_templates()
     
-    def _initialize_default_templates(self):
+    def _initialize_default_templates(self) -> None:
         """Initialise les templates par défaut."""
         # Template vidéo collaborative
         video_template = WorkflowTemplate(
@@ -991,7 +991,7 @@ class CommunicationMessage:
 class CommunicationOptimizer:
     """Optimiseur de communication."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.messages: Dict[str, CommunicationMessage] = {}
         self.active_channels: Dict[str, List[str]] = defaultdict(list)
         
@@ -1022,7 +1022,7 @@ class CommunicationOptimizer:
             logger.error(f"Failed to send message: {e}")
             return ""
     
-    async def _optimize_message_delivery(self, message: CommunicationMessage):
+    async def _optimize_message_delivery(self, message -> None: CommunicationMessage) -> None:
         """Optimise la livraison du message."""
         # TODO: Implémentation optimisation livraison
         # - Compression contenu si nécessaire
@@ -1038,7 +1038,7 @@ class CommunicationOptimizer:
 class EdgeCollaborationAccelerator:
     """Accélérateur principal de collaboration edge."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.real_time_engine = RealTimeCollaborationEngine()
         self.cross_platform_sync = CrossPlatformSynchronizer()
         self.content_creator = CollaborativeContentCreator()

@@ -696,7 +696,7 @@ class TextProcessingEngine(ProcessingEngine):
 class ContentProcessingOrchestrator:
     """Main orchestrator for content processing operations"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.processing_engines = {
             "audio": AudioProcessingEngine(),
             "video": VideoProcessingEngine(),
@@ -759,7 +759,7 @@ class ContentProcessingOrchestrator:
                 error_message=f"Job submission failed: {str(e)}"
             )
     
-    async def process_queue(self):
+    async def process_queue(self) -> None:
         """Process jobs in the queue"""
         
         while True:
@@ -792,7 +792,7 @@ class ContentProcessingOrchestrator:
                 logger.error(f"Queue processing error: {str(e)}")
                 await asyncio.sleep(5)  # Wait longer on error
     
-    async def _start_processing_job(self, job: ProcessingJob):
+    async def _start_processing_job(self, job -> None: ProcessingJob) -> None:
         """Start processing a job"""
         
         job.status = ProcessingStatus.PROCESSING
@@ -804,7 +804,7 @@ class ContentProcessingOrchestrator:
         # Process in background
         asyncio.create_task(self._execute_processing_job(job))
     
-    async def _execute_processing_job(self, job: ProcessingJob):
+    async def _execute_processing_job(self, job -> None: ProcessingJob) -> None:
         """Execute processing operations for a job"""
         
         try:
@@ -899,7 +899,7 @@ class ContentProcessingOrchestrator:
         
         return False
     
-    def _add_to_queue(self, job: ProcessingJob):
+    def _add_to_queue(self, job -> None: ProcessingJob) -> None:
         """Add job to processing queue with priority ordering"""
         
         priority_order = {
@@ -931,7 +931,7 @@ class ContentProcessingOrchestrator:
                 return i + 1
         return None
     
-    async def _send_completion_callback(self, job: ProcessingJob):
+    async def _send_completion_callback(self, job -> None: ProcessingJob) -> None:
         """Send completion callback (simulated)"""
         try:
             logger.info(f"Sending completion callback for job {job.job_id} to {job.callback_url}")

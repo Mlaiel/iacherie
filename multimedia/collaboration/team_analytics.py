@@ -98,7 +98,7 @@ class CollaborationMetric:
 class TeamAnalyticsEngine:
     """Core team analytics and performance tracking engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.team_metrics = defaultdict(list)  # team_id -> [TeamMetric]
         self.user_metrics = defaultdict(list)  # user_id -> [UserMetric]
         self.collaboration_metrics = []  # List of CollaborationMetric
@@ -328,7 +328,7 @@ class TeamAnalyticsEngine:
             logger.error(f"Failed to generate performance report: {e}")
             return {}
     
-    async def _track_task_completion(self, team_id: str, activity_data: Dict[str, Any]):
+    async def _track_task_completion(self, team_id -> None: str, activity_data -> None: Dict[str, Any]) -> None:
         """Track task completion activity"""
         try:
             task_id = activity_data.get('task_id')
@@ -358,7 +358,7 @@ class TeamAnalyticsEngine:
         except Exception as e:
             logger.error(f"Failed to track task completion: {e}")
     
-    async def _track_collaboration_session(self, team_id: str, activity_data: Dict[str, Any]):
+    async def _track_collaboration_session(self, team_id -> None: str, activity_data -> None: Dict[str, Any]) -> None:
         """Track collaboration session activity"""
         try:
             session_id = activity_data.get('session_id')
@@ -605,7 +605,7 @@ class TeamAnalyticsEngine:
             logger.error(f"Failed to get cached analytics: {e}")
             return None
     
-    async def _cache_analytics(self, cache_key: str, result: Dict[str, Any]):
+    async def _cache_analytics(self, cache_key -> None: str, result -> None: Dict[str, Any]) -> None:
         """Cache analytics result"""
         try:
             self.analytics_cache[cache_key] = (result, time.time())
@@ -613,7 +613,7 @@ class TeamAnalyticsEngine:
         except Exception as e:
             logger.error(f"Failed to cache analytics: {e}")
     
-    async def _metric_aggregation_task(self):
+    async def _metric_aggregation_task(self) -> None:
         """Background task for metric aggregation"""
         while True:
             try:
@@ -625,7 +625,7 @@ class TeamAnalyticsEngine:
             except Exception as e:
                 logger.error(f"Metric aggregation task error: {e}")
     
-    async def _analytics_cleanup_task(self):
+    async def _analytics_cleanup_task(self) -> None:
         """Background task for cleaning up old analytics data"""
         while True:
             try:
@@ -649,7 +649,7 @@ class TeamAnalyticsEngine:
             except Exception as e:
                 logger.error(f"Analytics cleanup task error: {e}")
     
-    async def _aggregate_hourly_metrics(self):
+    async def _aggregate_hourly_metrics(self) -> None:
         """Aggregate metrics into hourly summaries"""
         try:
             # Implementation for hourly metric aggregation
@@ -767,7 +767,7 @@ class TeamAnalyticsEngine:
 class CollaborationMetricsCollector:
     """Specialized collector for collaboration metrics"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.analytics_engine = TeamAnalyticsEngine()
     
     async def track_real_time_collaboration(self, session_id: str, participants: List[str],

@@ -1,7 +1,14 @@
+"""
+Encryption Config module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 """Ainflue Encryption Configuration Module
+import asyncio
+
 =========================================
 
 Enterprise-grade encryption configuration for the Ainflue platform.
@@ -381,7 +388,7 @@ class ComplianceEncryptionConfig:
 class EncryptionConfiguration:
     """Main encryption configuration manager"""
     
-    def __init__(self, provider: KeyManagementProvider = KeyManagementProvider.AWS_KMS):
+    def __init__(self, provider -> None: KeyManagementProvider = KeyManagementProvider.AWS_KMS) -> None:
         """Initialize encryption configuration"""
         self.provider = provider
         

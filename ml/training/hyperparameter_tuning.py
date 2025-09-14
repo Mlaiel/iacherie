@@ -104,7 +104,7 @@ class HyperparameterTuner:
     """
 Tuner d'hyperparamètres avancé"""
     
-    def __init__(self, config: OptimizationConfig):
+    def __init__(self, config -> None: OptimizationConfig) -> None:
         self.config = config
         self.studies: Dict[str, optuna.Study] = {}
         self.optimization_history: List[OptimizationResult] = []
@@ -189,7 +189,7 @@ Optimise les hyperparamètres d'un modèle"""
         study = self.create_study(study_name)
         
         # Fonction objective
-        def objective(trial):
+        def objective(trial) -> None:
             """
             Fonction objectif pour l'optimisation Bayésienne
             Optimise les hyperparamètres selon le type de créateur
@@ -460,7 +460,7 @@ Trace l'historique d'optimisation"""
             return study.best_params
         return {}
     
-    def export_study_results(self, study_name: str, filepath: str):
+    def export_study_results(self, study_name -> None: str, filepath -> None: str) -> None:
         """
 Exporte les résultats d'une étude"""
         study = self.studies.get(study_name)
@@ -502,7 +502,7 @@ Exporte les résultats d'une étude"""
                 )
             )
             
-            def multi_objective_function(trial):
+            def multi_objective_function(trial) -> None:
                 """
                 Fonction multi-objectif pour optimiser plusieurs métriques simultanément
                 Ex: accuracy + creator_engagement + inference_speed
@@ -613,7 +613,7 @@ Exporte les résultats d'une étude"""
         )
         
         # Fonction objective multi-objectifs
-        def multi_objective(trial):
+        def multi_objective(trial) -> None:
             return self._multi_objective_function(
                 trial, model_class, param_space, X, y, objectives
             )
@@ -766,7 +766,7 @@ Espace de paramètres pour Random Forest"""
 
 
 # Exemple d'utilisation
-async def example_usage():
+async def example_usage() -> None:
     """Exemple d'utilisation du tuner"""
     
     from sklearn.ensemble import RandomForestClassifier

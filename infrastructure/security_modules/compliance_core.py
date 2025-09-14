@@ -37,7 +37,7 @@ class ComplianceCoreManager:
     - Multi-framework audit coordination
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         # Initialize all compliance managers
         self.gdpr_manager = GDPRComplianceManager()
         self.ccpa_manager = CCPAComplianceManager()

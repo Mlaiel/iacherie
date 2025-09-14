@@ -1,3 +1,8 @@
+"""
+Helm Package Manager module
+Enterprise implementation for Ainflue platform
+"""
+
 # Ainflue Infrastructure Module
 # =============================
 # 
@@ -77,7 +82,7 @@ class HelmPackageManager:
     validation, and multi-environment support.
     """
     
-    def __init__(self, kubeconfig_path: Optional[str] = None):
+    def __init__(self, kubeconfig_path -> None: Optional[str] = None) -> None:
         """
         Initialize Helm package manager.
         

@@ -160,7 +160,7 @@ class CollaborationMonitoringManager:
     - Automated performance tuning
     - Predictive analytics and forecasting
     """
-    def __init__(self, config: Any):
+    def __init__(self, config -> None: Any) -> None:
         """
 Initialize the collaboration monitoring manager."""
         self.config = config
@@ -735,7 +735,7 @@ class CollaborationMonitoringService:
     - Performance analytics
     """
     
-    def __init__(self, deployment_config):
+    def __init__(self, deployment_config) -> None:
         """
 Initialize monitoring service."""
         self.deployment_config = deployment_config

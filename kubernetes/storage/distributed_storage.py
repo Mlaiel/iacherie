@@ -190,7 +190,7 @@ class DistributedStorageManager:
     - Security with encryption and access controls
     """
     
-    def __init__(self, config: DistributedStorageConfig):
+    def __init__(self, config -> None: DistributedStorageConfig) -> None:
         self.config = config
         self.metrics = DistributedStorageMetrics(cluster_name=config.cluster_name)
         self.nodes: Dict[str, StorageNode] = {}
@@ -200,14 +200,14 @@ class DistributedStorageManager:
         
         logger.info(f"🚀 DistributedStorageManager initialized for cluster: {config.cluster_name}")
     
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         """Async context manager entry"""
         self._session = aiohttp.ClientSession(
             timeout=aiohttp.ClientTimeout(total=30)
         )
         return self
     
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         """
 Async context manager exit"""
         if self._session:
@@ -469,7 +469,7 @@ Initialize distributed storage cluster"""
             logger.error(f"❌ Replication setup failed: {e}")
             return {"success": False, "error": str(e)}
     
-    async def _configure_node_replication(self, node: StorageNode, config: Dict[str, Any]):
+    async def _configure_node_replication(self, node -> None: StorageNode, config -> None: Dict[str, Any]) -> None:
         """Configure replication for a specific node"""
         try:
             # Node-specific replication configuration
@@ -537,7 +537,7 @@ Initialize distributed storage cluster"""
             logger.error(f"❌ Monitoring setup failed: {e}")
             return {"success": False, "error": str(e)}
     
-    async def _start_health_checks(self):
+    async def _start_health_checks(self) -> None:
         """Start continuous health monitoring"""
         try:
             health_check_task = asyncio.create_task(self._health_check_loop())
@@ -548,7 +548,7 @@ Initialize distributed storage cluster"""
         except Exception as e:
             logger.error(f"❌ Failed to start health checks: {e}")
     
-    async def _health_check_loop(self):
+    async def _health_check_loop(self) -> None:
         """Continuous health check loop"""
         while True:
             try:
@@ -572,7 +572,7 @@ Initialize distributed storage cluster"""
             except Exception as e:
                 logger.error(f"❌ Health check loop error: {e}")
     
-    async def _handle_unhealthy_node(self, node: StorageNode):
+    async def _handle_unhealthy_node(self, node -> None: StorageNode) -> None:
         """Handle unhealthy node detection"""
         try:
             node.error_count += 1
@@ -587,7 +587,7 @@ Initialize distributed storage cluster"""
         except Exception as e:
             logger.error(f"❌ Failed to handle unhealthy node {node.node_id}: {e}")
     
-    async def _trigger_data_rebalancing(self, failed_node: str):
+    async def _trigger_data_rebalancing(self, failed_node -> None: str) -> None:
         """Trigger data rebalancing after node failure"""
         try:
             logger.info(f"⚖️ Triggering data rebalancing due to failed node: {failed_node}")
@@ -897,7 +897,7 @@ Initialize distributed storage cluster"""
             logger.error(f"❌ Failed to get cluster metrics: {e}")
             return {"error": str(e)}
     
-    async def _update_node_metrics(self, node: StorageNode):
+    async def _update_node_metrics(self, node -> None: StorageNode) -> None:
         """Update metrics for a specific node"""
         try:
             metrics_url = f"http://{node.hostname}:{node.port}/metrics"
@@ -994,7 +994,7 @@ Factory function to create distributed storage manager"""
 
 
 # Usage Example
-async def main():
+async def main() -> None:
     """
 Example usage of DistributedStorageManager"""
     try:

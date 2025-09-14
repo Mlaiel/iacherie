@@ -95,9 +95,9 @@ class CrossValidationFramework:
     """
     
     def __init__(self, 
-                 enable_statistical_tests: bool = True,
-                 enable_visualization: bool = True,
-                 cache_results: bool = True):
+                 enable_statistical_tests -> None: bool = True,
+                 enable_visualization -> None: bool = True,
+                 cache_results -> None: bool = True) -> None:
         """Initialize cross-validation framework"""
         
         self.enable_statistical_tests = enable_statistical_tests
@@ -365,10 +365,10 @@ class CrossValidationFramework:
         return optimized_config
     
     def _create_cv_splitter(self,
-                          config: ValidationConfig,
-                          X: np.ndarray,
-                          y: np.ndarray,
-                          creator_data: Optional[pd.DataFrame]):
+                          config -> None: ValidationConfig,
+                          X -> None: np.ndarray,
+                          y -> None: np.ndarray,
+                          creator_data -> None: Optional[pd.DataFrame]) -> None:
         """🔬 ML Engineer - Create appropriate cross-validation splitter"""
         
         if config.strategy == ValidationStrategy.K_FOLD:
@@ -402,7 +402,7 @@ class CrossValidationFramework:
             # Default to k-fold
             return KFold(n_splits=config.n_folds, shuffle=config.shuffle, random_state=config.random_state)
     
-    def _bootstrap_splitter(self, n_samples: int, n_splits: int, random_state: int):
+    def _bootstrap_splitter(self, n_samples -> None: int, n_splits -> None: int, random_state -> None: int) -> None:
         """🔬 ML Engineer - Bootstrap splitter implementation"""
         
         rng = np.random.RandomState(random_state)
@@ -935,7 +935,7 @@ class CrossValidationFramework:
         return recommendations
 
 # Example usage demonstrating all expert roles
-async def example_usage():
+async def example_usage() -> None:
     """🎖️ Lead Dev IA - Example demonstrating all expert roles"""
     
     # Generate sample data for demonstration

@@ -188,7 +188,7 @@ class DataIntegrityManager:
     and quality assurance for the IA Influencer Agent database.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.logger = get_logger(f"{__name__}.DataIntegrityManager")
         self.settings = get_settings()
@@ -239,7 +239,7 @@ class DataIntegrityManager:
             self.logger.error(f"❌ Failed to initialize Data Integrity Manager: {e}")
             return False
     
-    async def _create_integrity_schema(self):
+    async def _create_integrity_schema(self) -> None:
         """Create data integrity schema"""
         self.logger.debug("Creating data integrity schema...")
         
@@ -498,7 +498,7 @@ class DataIntegrityManager:
         
         self.logger.debug("✅ Data integrity schema created successfully")
     
-    async def _load_validation_rules(self):
+    async def _load_validation_rules(self) -> None:
         """Load validation rules from database"""
         try:
             async with self._db_manager.get_session() as session:
@@ -536,7 +536,7 @@ class DataIntegrityManager:
         except Exception as e:
             self.logger.error(f"Failed to load validation rules: {e}")
     
-    async def _run_comprehensive_validation(self):
+    async def _run_comprehensive_validation(self) -> None:
         """Run comprehensive data validation"""
         try:
             self.logger.info("🔍 Running comprehensive data validation...")
@@ -886,7 +886,7 @@ class DataIntegrityManager:
             self.logger.error(f"Failed to execute validation rule {rule['rule_name']}: {e}")
             return []
     
-    async def _calculate_quality_metrics(self, table_name: str):
+    async def _calculate_quality_metrics(self, table_name -> None: str) -> None:
         """Calculate data quality metrics for a table"""
         try:
             async with self._db_manager.get_session() as session:
@@ -966,7 +966,7 @@ class DataIntegrityManager:
         except Exception as e:
             self.logger.error(f"Failed to calculate quality metrics for {table_name}: {e}")
     
-    async def _store_validation_issues(self, issues: List[ValidationIssue]):
+    async def _store_validation_issues(self, issues -> None: List[ValidationIssue]) -> None:
         """Store validation issues in database"""
         try:
             if not issues:
@@ -1002,7 +1002,7 @@ class DataIntegrityManager:
         except Exception as e:
             self.logger.error(f"Failed to store validation issues: {e}")
     
-    async def _generate_integrity_report(self, report_type: str, report_data: Dict[str, Any]):
+    async def _generate_integrity_report(self, report_type -> None: str, report_data -> None: Dict[str, Any]) -> None:
         """Generate data integrity report"""
         try:
             # Calculate overall integrity score
@@ -1146,7 +1146,7 @@ Perform health check"""
                 'timestamp': datetime.utcnow().isoformat()
             }
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Shutdown the data integrity manager"""
         try:
             self.logger.info("🚨 Shutting down Data Integrity Manager...")

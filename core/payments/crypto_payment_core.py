@@ -141,7 +141,7 @@ class DeFiPool:
 class BlockchainConnector:
     """Blockchain network connector"""
     
-    def __init__(self, blockchain: Blockchain):
+    def __init__(self, blockchain -> None: Blockchain) -> None:
         self.blockchain = blockchain
         self.rpc_endpoints = self._get_rpc_endpoints()
         self.explorer_urls = self._get_explorer_urls()
@@ -366,7 +366,7 @@ class BlockchainConnector:
 class CryptoPriceOracle:
     """Cryptocurrency price oracle"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.price_cache = {}
         self.cache_duration = timedelta(minutes=5)
         self.price_sources = ["coinbase", "binance", "kraken", "coingecko"]
@@ -479,7 +479,7 @@ class CryptoPriceOracle:
 class DeFiManager:
     """DeFi protocol manager"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.pools = {}
         self.staking_positions = {}
         self.yield_strategies = {}
@@ -489,7 +489,7 @@ class DeFiManager:
         
         logger.info("DeFi Manager initialized")
 
-    def _initialize_defi_pools(self):
+    def _initialize_defi_pools(self) -> None:
         """Initialize DeFi liquidity pools"""
         default_pools = [
             {
@@ -638,7 +638,7 @@ class DeFiManager:
 class CryptoPaymentCore:
     """Main Crypto Payment Core System"""
     
-    def __init__(self, level: str = "enterprise"):
+    def __init__(self, level -> None: str = "enterprise") -> None:
         self.version = "2.1.0"
         self.level = level
         self.wallets = {}

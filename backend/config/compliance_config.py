@@ -220,7 +220,7 @@ class ComplianceReport:
 class JurisdictionConfig:
     """Base jurisdiction configuration"""
     
-    def __init__(self, jurisdiction_code: str, jurisdiction_name: str):
+    def __init__(self, jurisdiction_code -> None: str, jurisdiction_name -> None: str) -> None:
         self.jurisdiction_code = jurisdiction_code
         self.jurisdiction_name = jurisdiction_name
         self.applicable_frameworks: List[ComplianceFramework] = []
@@ -234,7 +234,7 @@ class JurisdictionConfig:
 class EUGDPRConfig(JurisdictionConfig):
     """European Union GDPR configuration"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__("EU", "European Union")
         self.applicable_frameworks = [ComplianceFramework.GDPR]
         self.data_localization_required = True
@@ -254,7 +254,7 @@ class EUGDPRConfig(JurisdictionConfig):
 class USCCPAConfig(JurisdictionConfig):
     """California Consumer Privacy Act configuration"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__("US-CA", "California, United States")
         self.applicable_frameworks = [ComplianceFramework.CCPA]
         self.data_localization_required = False
@@ -272,7 +272,7 @@ class USCCPAConfig(JurisdictionConfig):
 class USHIPAAConfig(JurisdictionConfig):
     """HIPAA configuration for health data"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__("US", "United States (Health)")
         self.applicable_frameworks = [ComplianceFramework.HIPAA]
         self.data_localization_required = False
@@ -294,7 +294,7 @@ class USHIPAAConfig(JurisdictionConfig):
 class ComplianceValidator:
     """Compliance validation and assessment engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.validation_rules: Dict[ComplianceFramework, List[ComplianceRule]] = {}
         self.jurisdiction_configs: Dict[str, JurisdictionConfig] = {}
         self.data_classification_rules: Dict[str, DataCategory] = {}
@@ -598,7 +598,7 @@ class ComplianceValidator:
 class DataClassifier:
     """Automatic data classification for compliance"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.classification_patterns: Dict[DataCategory, List[str]] = {}
         self.sensitive_data_patterns: List[str] = []
         self.personal_data_patterns: List[str] = []
@@ -697,7 +697,7 @@ class DataClassifier:
 class ConsentManager:
     """Consent management and tracking system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.consent_records: Dict[str, Dict[str, Any]] = {}
         self.consent_templates: Dict[str, Dict[str, Any]] = {}
         self.consent_history: Dict[str, List[Dict[str, Any]]] = {}
@@ -811,7 +811,7 @@ class ConsentManager:
 class ComplianceConfigManager:
     """Main compliance configuration and management system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         # Core components
         self.validator = ComplianceValidator()
         self.data_classifier = DataClassifier()

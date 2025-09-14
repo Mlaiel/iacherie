@@ -69,7 +69,7 @@ class AIPerformanceOptimizer:
     resource utilization, and inference speed.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize AI performance optimizer."""
         self.is_active = False
         self.metrics_history: List[PerformanceMetrics] = []
@@ -89,7 +89,7 @@ class AIPerformanceOptimizer:
         
         logger.info("⚡ AI Performance Optimizer initialized")
     
-    async def start(self):
+    async def start(self) -> None:
         """Start the AI performance optimizer service."""
         try:
             self.is_active = True
@@ -107,7 +107,7 @@ class AIPerformanceOptimizer:
             self.is_active = False
             raise
     
-    async def stop(self):
+    async def stop(self) -> None:
         """Stop the AI performance optimizer service."""
         try:
             self.is_active = False
@@ -124,9 +124,9 @@ class AIPerformanceOptimizer:
         except Exception as e:
             logger.error(f"❌ Error stopping AI Performance Optimizer: {e}")
     
-    async def _start_performance_monitoring(self):
+    async def _start_performance_monitoring(self) -> None:
         """Start continuous performance monitoring."""
-        def monitoring_loop():
+        def monitoring_loop() -> None:
             while self.is_active:
                 try:
                     # Collect performance metrics
@@ -181,7 +181,7 @@ class AIPerformanceOptimizer:
             logger.error(f"❌ Error collecting performance metrics: {e}")
             return None
     
-    def _analyze_performance(self, metrics: PerformanceMetrics):
+    def _analyze_performance(self, metrics -> None: PerformanceMetrics) -> None:
         """Analyze performance metrics and generate optimization recommendations."""
         try:
             recommendations = []
@@ -239,7 +239,7 @@ class AIPerformanceOptimizer:
         except Exception as e:
             logger.error(f"❌ Error analyzing performance: {e}")
     
-    async def _initialize_optimization_engine(self):
+    async def _initialize_optimization_engine(self) -> None:
         """Initialize the optimization engine."""
         logger.info("🔧 Optimization engine initialized")
     
@@ -439,17 +439,17 @@ class AIPerformanceOptimizer:
 ai_performance_optimizer = AIPerformanceOptimizer()
 
 
-async def start():
+async def start() -> None:
     """Start the AI Performance Optimizer service."""
     await ai_performance_optimizer.start()
 
 
-async def stop():
+async def stop() -> None:
     """Stop the AI Performance Optimizer service."""
     await ai_performance_optimizer.stop()
 
 
-async def main():
+async def main() -> None:
     """Main entry point for testing the service."""
     print("⚡ AI PERFORMANCE OPTIMIZER - ENTERPRISE SERVICE")
     print("=" * 50)

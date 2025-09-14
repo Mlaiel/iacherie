@@ -1,3 +1,8 @@
+"""
+Logging Config module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
@@ -175,7 +180,7 @@ class PerformanceLoggingConfig:
 class CustomJSONFormatter(logging.Formatter):
     """Custom JSON formatter for structured logging"""
     
-    def format(self, record):
+    def format(self, record) -> None:
         """Format log record as JSON"""
         log_entry = {
             "timestamp": datetime.utcfromtimestamp(record.created).isoformat(),
@@ -207,9 +212,9 @@ class LoggingConfiguration:
     """Main logging configuration manager"""
     
     def __init__(self, 
-                 level: LogLevel = LogLevel.INFO,
-                 format_type: LogFormat = LogFormat.JSON,
-                 destinations: List[LogDestination] = None):
+                 level -> None: LogLevel = LogLevel.INFO,
+                 format_type -> None: LogFormat = LogFormat.JSON,
+                 destinations -> None: List[LogDestination] = None) -> None:
         """Initialize logging configuration"""
         self.level = level
         self.format_type = format_type
@@ -229,7 +234,7 @@ class LoggingConfiguration:
         self.loggers: Dict[str, logging.Logger] = {}
         self._setup_logging()
     
-    def _setup_logging(self):
+    def _setup_logging(self) -> None:
         """Setup logging configuration"""
         # Root logger configuration
         root_logger = logging.getLogger()
@@ -308,7 +313,7 @@ class LoggingConfiguration:
         else:
             return int(size_str)
     
-    def _setup_specific_loggers(self):
+    def _setup_specific_loggers(self) -> None:
         """Setup specific loggers for different components"""
         # Security logger
         security_logger = logging.getLogger('ainflue.security')
@@ -390,14 +395,14 @@ class LoggingConfiguration:
             "loggers": list(self.loggers.keys())
         }
     
-    async def rotate_logs(self):
+    async def rotate_logs(self) -> None:
         """Manually rotate logs"""
         for logger_name, logger in self.loggers.items():
             for handler in logger.handlers:
                 if isinstance(handler, logging.handlers.RotatingFileHandler):
                     handler.doRollover()
     
-    def log_security_event(self, event_type: str, details: Dict[str, Any]):
+    def log_security_event(self, event_type -> None: str, details -> None: Dict[str, Any]) -> None:
         """Log security event"""
         security_logger = self.get_logger('security')
         security_logger.info(
@@ -409,7 +414,7 @@ class LoggingConfiguration:
             }
         )
     
-    def log_business_event(self, event_type: str, user_id: str, details: Dict[str, Any]):
+    def log_business_event(self, event_type -> None: str, user_id -> None: str, details -> None: Dict[str, Any]) -> None:
         """Log business event"""
         business_logger = self.get_logger('business')
         business_logger.info(
@@ -422,7 +427,7 @@ class LoggingConfiguration:
             }
         )
     
-    def log_performance_metric(self, metric_name: str, value: float, unit: str):
+    def log_performance_metric(self, metric_name -> None: str, value -> None: float, unit -> None: str) -> None:
         """Log performance metric"""
         performance_logger = self.get_logger('performance')
         performance_logger.debug(

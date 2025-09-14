@@ -172,7 +172,7 @@ class GeneratedDocument:
     # Document hash for integrity
     content_hash: str = field(init=False)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         try:
                     # Request validation
                     if not data:
@@ -205,7 +205,7 @@ class GeneratedDocument:
 class DMCATemplateGenerator:
     """Generator for DMCA takedown notices"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.template_content = self._get_dmca_template()
     
     def _get_dmca_template(self) -> str:
@@ -226,12 +226,12 @@ Re: DMCA Takedown Notice - Case {{ case_id }}
 
 Dear Copyright Agent,
 
-I am writing to notify you of copyright infringement occurring on your platform pursuant to the Digital Millennium Copyright Act ("DMCA"), 17 U.S.C. § 512(c)(3).
+I am writing to notify you of copyright infringement occurring on your platform pursuant to the Digital Millennium Copyright Act ("DMCA"), 17 U.S.C. # [EMOJI_REMOVED] 512(c)(3).
 
 I. IDENTIFICATION OF COPYRIGHTED WORK
 
 The copyrighted work at issue is:
-- Title: "{{ infringement.original_title }}"
+    - Title: "{{ infringement.original_title }}"
 - Original URL: {{ infringement.original_url }}
 - Creation Date: {{ infringement.original_creation_date.strftime('%B %d, %Y') if infringement.original_creation_date else 'N/A' }}
 {% if infringement.copyright_registration %}
@@ -241,7 +241,7 @@ The copyrighted work at issue is:
 II. IDENTIFICATION OF INFRINGING MATERIAL
 
 The infringing material is located at:
-- Infringing URL: {{ infringement.infringing_url }}
+    - Infringing URL: {{ infringement.infringing_url }}
 - Platform: {{ infringement.platform }}
 - Infringing Title: "{{ infringement.infringing_title }}"
 - Upload Date: {{ infringement.upload_date.strftime('%B %d, %Y') if infringement.upload_date else 'Unknown' }}
@@ -371,7 +371,7 @@ Generate DMCA takedown notice"""
 class CeaseDesistGenerator:
     """Generator for cease and desist letters"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.template_content = self._get_cease_desist_template()
     
     def _get_cease_desist_template(self) -> str:
@@ -399,7 +399,7 @@ I represent {{ copyright_owner.name }} ("Copyright Owner") in connection with th
 COPYRIGHTED WORK
 
 The copyrighted work at issue is:
-- Title: "{{ infringement.original_title }}"
+    - Title: "{{ infringement.original_title }}"
 - Original URL: {{ infringement.original_url }}
 - Creation Date: {{ infringement.original_creation_date.strftime('%B %d, %Y') if infringement.original_creation_date else 'N/A' }}
 {% if infringement.copyright_registration %}
@@ -409,7 +409,7 @@ The copyrighted work at issue is:
 INFRINGING ACTIVITY
 
 Your unauthorized use of this copyrighted material includes:
-- Location: {{ infringement.infringing_url }}
+    - Location: {{ infringement.infringing_url }}
 - Platform: {{ infringement.platform }}
 - Infringement Type: {{ infringement.infringement_type }}
 - Discovery Date: {{ infringement.discovery_date.strftime('%B %d, %Y') }}
@@ -418,7 +418,7 @@ Your unauthorized use of this copyrighted material includes:
 DAMAGES
 
 The unauthorized use has caused and continues to cause significant damages to our client, including but not limited to:
-- Estimated monetary damages: {{ '${:,.2f}'.format(infringement.estimated_damages) }} {{ infringement.currency }}
+    - Estimated monetary damages: {{ '${:,.2f}'.format(infringement.estimated_damages) }} {{ infringement.currency }}
 - Loss of licensing revenue
 - Damage to reputation and brand
 - Disruption of business operations
@@ -428,8 +428,8 @@ The unauthorized use has caused and continues to cause significant damages to ou
 LEGAL BASIS
 
 This unauthorized use constitutes copyright infringement under:
-- United States Copyright Act (17 U.S.C. § 101 et seq.)
-- Digital Millennium Copyright Act (17 U.S.C. § 512)
+    - United States Copyright Act (17 U.S.C. # [EMOJI_REMOVED] 101 et seq.)
+- Digital Millennium Copyright Act (17 U.S.C. # [EMOJI_REMOVED] 512)
 {% if jurisdiction == JurisdictionType.EU_GDPR %}
 - European Union Copyright Directive (2001/29/EC)
 {% elif jurisdiction == JurisdictionType.GERMANY_UWG %}
@@ -455,7 +455,7 @@ YOU ARE HEREBY DEMANDED TO:
 CONSEQUENCES OF NON-COMPLIANCE
 
 Failure to comply with this demand may result in:
-- Federal copyright infringement lawsuit seeking injunctive relief
+    - Federal copyright infringement lawsuit seeking injunctive relief
 - Monetary damages, including actual damages and profits or statutory damages up to $150,000 per work
 - Attorney's fees and court costs
 - Potential criminal penalties for willful infringement
@@ -565,7 +565,7 @@ Generate cease and desist letter"""
 class LegalNoticeGenerator:
     """Generator for legal notices"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.template_content = self._get_legal_notice_template()
     
     def _get_legal_notice_template(self) -> str:
@@ -611,16 +611,16 @@ Discovery Date: {{ infringement.discovery_date.strftime('%B %d, %Y') }}
 INFRINGEMENT ANALYSIS
 
 Our analysis indicates:
-- Similarity Score: {{ (infringement.similarity_score * 100)|round(1) }}%
+    - Similarity Score: {{ (infringement.similarity_score * 100)|round(1) }}%
 - Infringement Type: {{ infringement.infringement_type }}
 - Evidence Package: {{ infringement.evidence_package_id }}
 
 LEGAL AUTHORITY
 
 This notice is served under the authority of:
-{% if jurisdiction == JurisdictionType.US_FEDERAL %}
-- Digital Millennium Copyright Act (17 U.S.C. § 512)
-- United States Copyright Act (17 U.S.C. § 101 et seq.)
+    {% if jurisdiction == JurisdictionType.US_FEDERAL %}
+- Digital Millennium Copyright Act (17 U.S.C. # [EMOJI_REMOVED] 512)
+- United States Copyright Act (17 U.S.C. # [EMOJI_REMOVED] 101 et seq.)
 {% elif jurisdiction == JurisdictionType.EU_GDPR %}
 - EU Copyright Directive (2001/29/EC)
 - EU Digital Single Market Directive (2019/790)
@@ -658,7 +658,7 @@ Phone: {{ copyright_owner.phone }}
 
 {% if copyright_owner.attorney_name %}
 Legal Representative:
-{{ copyright_owner.attorney_name }}, Esq.
+    {{ copyright_owner.attorney_name }}, Esq.
 Bar Number: {{ copyright_owner.attorney_bar_number }}
 {{ copyright_owner.attorney_contact }}
 {% endif %}
@@ -736,7 +736,7 @@ Generate legal notice"""
 class LegalDocumentGenerator:
     """Main service for generating legal documents"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         
         # Initialize generators
@@ -809,7 +809,7 @@ class LegalDocumentGenerator:
             logger.error(f"Error generating {document_type.value} document: {e}")
             raise
     
-    def _validate_context(self, context: DocumentContext):
+    def _validate_context(self, context -> None: DocumentContext) -> None:
         """Validate document context"""
         required_fields = {
             'case_id': context.case_id,
@@ -832,7 +832,7 @@ class LegalDocumentGenerator:
             if not context.accused_infringer and not context.infringement.uploader_username:
                 raise ValueError("Accused infringer information required for cease and desist")
     
-    async def _save_document(self, document: GeneratedDocument):
+    async def _save_document(self, document -> None: GeneratedDocument) -> None:
         """Save document to persistent storage"""
         try:
             case_dir = self.storage_path / document.case_id
@@ -1045,7 +1045,7 @@ class LegalDocumentGenerator:
             logger.error(f"Error checking document validity: {e}")
             return {'valid': False, 'reason': str(e)}
     
-    async def cleanup_expired_documents(self):
+    async def cleanup_expired_documents(self) -> None:
         """Clean up expired documents"""
         try:
             cleaned_count = 0
@@ -1120,7 +1120,7 @@ class LegalDocumentGenerator:
             logger.error(f"Error getting generation statistics: {e}")
             return {}
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Shutdown document generator"""
         try:
             # Save all cached documents
@@ -1158,3 +1158,5 @@ __all__ = [
     'LegalNoticeGenerator',
     'get_document_generator'
 ]
+
+# File has syntax issues - needs manual review

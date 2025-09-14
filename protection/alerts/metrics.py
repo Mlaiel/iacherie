@@ -178,10 +178,10 @@ class AlertMetricsCollector:
     
     def __init__(
         self,
-        cache_manager: CacheManager,
-        redis_client: redis.Redis,
-        prometheus_registry: Optional[CollectorRegistry] = None
-    ):
+        cache_manager -> None: CacheManager,
+        redis_client -> None: redis.Redis,
+        prometheus_registry -> None: Optional[CollectorRegistry] = None
+    ) -> None:
         self.cache_manager = cache_manager
         self.redis_client = redis_client
         self.prometheus_registry = prometheus_registry or CollectorRegistry()
@@ -208,7 +208,7 @@ class AlertMetricsCollector:
         
         logger.info("Alert Metrics Collector initialized")
 
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize the metrics collector."""
         try:
             # Load historical metrics
@@ -227,7 +227,7 @@ class AlertMetricsCollector:
             raise
 
     @asynccontextmanager
-    async def timer(self, operation_name: str):
+    async def timer(self, operation_name -> None: str) -> None:
         """Context manager for timing operations."""
         start_time = time.time()
         try:
@@ -236,7 +236,7 @@ class AlertMetricsCollector:
             duration = time.time() - start_time
             await self.record_timing(operation_name, duration)
 
-    async def record_alert_created(self, alert: ContentProtectionAlert):
+    async def record_alert_created(self, alert -> None: ContentProtectionAlert) -> None:
         """
 Record metrics for alert creation."""
         try:
@@ -275,7 +275,7 @@ Record metrics for alert creation."""
         except Exception as e:
             logger.error(f"Failed to record alert creation metrics: {e}")
 
-    async def record_alert_resolved(self, alert: ContentProtectionAlert, resolution_time_seconds: float):
+    async def record_alert_resolved(self, alert -> None: ContentProtectionAlert, resolution_time_seconds -> None: float) -> None:
         """Record metrics for alert resolution."""
         try:
             # Resolution counter
@@ -319,7 +319,7 @@ Record metrics for alert creation."""
         except Exception as e:
             logger.error(f"Failed to record alert resolution metrics: {e}")
 
-    async def record_notification_sent(self, channel: str, success: bool, latency_ms: float):
+    async def record_notification_sent(self, channel -> None: str, success -> None: bool, latency_ms -> None: float) -> None:
         """Record notification delivery metrics."""
         try:
             # Notification counter
@@ -347,7 +347,7 @@ Record metrics for alert creation."""
         except Exception as e:
             logger.error(f"Failed to record notification metrics: {e}")
 
-    async def record_escalation(self, alert_id: str, from_level: str, to_level: str, reason: str):
+    async def record_escalation(self, alert_id -> None: str, from_level -> None: str, to_level -> None: str, reason -> None: str) -> None:
         """Record escalation metrics."""
         try:
             await self._increment_prometheus_counter("alert_escalations_total", {
@@ -373,7 +373,7 @@ Record metrics for alert creation."""
         except Exception as e:
             logger.error(f"Failed to record escalation metrics: {e}")
 
-    async def record_evidence_collected(self, alert_id: str, evidence_type: str, collection_time_ms: float, success: bool):
+    async def record_evidence_collected(self, alert_id -> None: str, evidence_type -> None: str, collection_time_ms -> None: float, success -> None: bool) -> None:
         """Record evidence collection metrics."""
         try:
             await self._increment_prometheus_counter("evidence_collection_total", {
@@ -406,7 +406,7 @@ Record metrics for alert creation."""
         except Exception as e:
             logger.error(f"Failed to record evidence collection metrics: {e}")
 
-    async def record_timing(self, operation: str, duration_seconds: float):
+    async def record_timing(self, operation -> None: str, duration_seconds -> None: float) -> None:
         """Record operation timing."""
         try:
             await self._record_prometheus_histogram(f"{operation}_duration_seconds", duration_seconds)
@@ -420,7 +420,7 @@ Record metrics for alert creation."""
         except Exception as e:
             logger.error(f"Failed to record timing for {operation}: {e}")
 
-    async def record_error(self, error_type: str, error_details: Dict[str, Any] = None):
+    async def record_error(self, error_type -> None: str, error_details -> None: Dict[str, Any] = None) -> None:
         """Record error metrics."""
         try:
             await self._increment_prometheus_counter("errors_total", {
@@ -439,7 +439,7 @@ Record metrics for alert creation."""
         except Exception as e:
             logger.error(f"Failed to record error metrics: {e}")
 
-    async def record_security_event(self, event_type: str, severity: str, details: Dict[str, Any] = None):
+    async def record_security_event(self, event_type -> None: str, severity -> None: str, details -> None: Dict[str, Any] = None) -> None:
         """Record security-related metrics."""
         try:
             await self._increment_prometheus_counter("security_events_total", {
@@ -589,7 +589,7 @@ Record metrics for alert creation."""
             logger.error(f"Failed to export Prometheus metrics: {e}")
             return ""
 
-    def _initialize_metrics(self):
+    def _initialize_metrics(self) -> None:
         """Initialize Prometheus metrics."""
         # Alert metrics
         self._prometheus_metrics["alerts_created_total"] = Counter(
@@ -643,7 +643,7 @@ Record metrics for alert creation."""
             registry=self.prometheus_registry
         )
 
-    async def _increment_prometheus_counter(self, metric_name: str, labels: Dict[str, str] = None):
+    async def _increment_prometheus_counter(self, metric_name -> None: str, labels -> None: Dict[str, str] = None) -> None:
         """Increment Prometheus counter."""
         if metric_name in self._prometheus_metrics:
             if labels:
@@ -651,7 +651,7 @@ Record metrics for alert creation."""
             else:
                 self._prometheus_metrics[metric_name].inc()
 
-    async def _record_prometheus_histogram(self, metric_name: str, value: float, labels: Dict[str, str] = None):
+    async def _record_prometheus_histogram(self, metric_name -> None: str, value -> None: float, labels -> None: Dict[str, str] = None) -> None:
         """
 Record value in Prometheus histogram."""
         if metric_name in self._prometheus_metrics:
@@ -660,7 +660,7 @@ Record value in Prometheus histogram."""
             else:
                 self._prometheus_metrics[metric_name].observe(value)
 
-    async def _update_real_time_metrics(self, metric_name: str, value: Union[int, float]):
+    async def _update_real_time_metrics(self, metric_name -> None: str, value -> None: Union[int, float]) -> None:
         """
 Update real-time metrics."""
         if metric_name not in self._real_time_metrics:
@@ -681,7 +681,7 @@ Get current value of a Prometheus counter."""
         except:
             return 0.0
 
-    async def _load_historical_metrics(self):
+    async def _load_historical_metrics(self) -> None:
         """
 Load historical metrics from storage."""
         try:
@@ -703,7 +703,7 @@ Load historical metrics from storage."""
         except Exception as e:
             logger.error(f"Failed to load historical metrics: {e}")
 
-    async def _metrics_aggregation_loop(self):
+    async def _metrics_aggregation_loop(self) -> None:
         """Background loop for metrics aggregation."""
         while True:
             try:
@@ -721,7 +721,7 @@ Load historical metrics from storage."""
             except Exception as e:
                 logger.error(f"Metrics aggregation loop error: {e}")
 
-    async def _metrics_cleanup_loop(self):
+    async def _metrics_cleanup_loop(self) -> None:
         """Background loop for metrics cleanup."""
         while True:
             try:
@@ -733,7 +733,7 @@ Load historical metrics from storage."""
             except Exception as e:
                 logger.error(f"Metrics cleanup loop error: {e}")
 
-    async def _process_metric_buffer(self):
+    async def _process_metric_buffer(self) -> None:
         """Process metrics from buffer to persistent storage."""
         if not self._metric_buffer:
             return
@@ -751,7 +751,7 @@ Load historical metrics from storage."""
         except Exception as e:
             logger.error(f"Failed to process metric buffer: {e}")
 
-    async def _store_metric_in_redis(self, metric: AlertMetric):
+    async def _store_metric_in_redis(self, metric -> None: AlertMetric) -> None:
         """Store individual metric in Redis time series."""
         try:
             metrics_key = f"alert_metrics:{metric.metric_name}"
@@ -775,7 +775,7 @@ Load historical metrics from storage."""
         except Exception as e:
             logger.error(f"Failed to store metric in Redis: {e}")
 
-    async def _aggregate_metrics(self):
+    async def _aggregate_metrics(self) -> None:
         """Aggregate metrics for different time periods."""
         try:
             # Aggregate hourly, daily, weekly metrics
@@ -795,7 +795,7 @@ Load historical metrics from storage."""
         except Exception as e:
             logger.error(f"Failed to aggregate metrics: {e}")
 
-    async def _aggregate_time_period(self, period: str, end_time: datetime, duration: timedelta):
+    async def _aggregate_time_period(self, period -> None: str, end_time -> None: datetime, duration -> None: timedelta) -> None:
         """Aggregate metrics for a specific time period."""
         start_time = end_time - duration
         
@@ -846,7 +846,7 @@ Load historical metrics from storage."""
                         {json.dumps(agg_data): end_timestamp}
                     )
 
-    async def _update_derived_metrics(self):
+    async def _update_derived_metrics(self) -> None:
         """Update derived and calculated metrics."""
         try:
             # Update business metrics calculations
@@ -859,7 +859,7 @@ Load historical metrics from storage."""
         except Exception as e:
             logger.error(f"Failed to update derived metrics: {e}")
 
-    async def _update_business_metrics(self):
+    async def _update_business_metrics(self) -> None:
         """Update business-related metrics."""
         try:
             # Calculate automation rate
@@ -882,7 +882,7 @@ Load historical metrics from storage."""
         except Exception as e:
             logger.error(f"Failed to update business metrics: {e}")
 
-    async def _cleanup_old_metrics(self):
+    async def _cleanup_old_metrics(self) -> None:
         """Clean up old metrics to manage storage."""
         try:
             cutoff_time = datetime.now(timezone.utc) - timedelta(days=30)

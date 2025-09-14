@@ -85,7 +85,7 @@ class FailoverEvent:
 class HealthAssessment:
     """Assesses database health and makes failover decisions."""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self._config = config or {}
         self._health_thresholds = self._config.get('health_thresholds', {
             'max_latency_ms': 1000,
@@ -188,7 +188,7 @@ class HealthAssessment:
 class RecoveryOrchestrator:
     """Orchestrates recovery procedures after failover."""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self._config = config or {}
         self._recovery_timeout = self._config.get('recovery_timeout', 300)  # 5 minutes
         self._is_recovering = False
@@ -336,7 +336,7 @@ class RecoveryOrchestrator:
 class DisasterRecoveryManager:
     """Manages disaster recovery scenarios."""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self._config = config or {}
         self._backup_sites = self._config.get('backup_sites', [])
         self._rpo_minutes = self._config.get('rpo_minutes', 15)  # Recovery Point Objective
@@ -448,7 +448,7 @@ class DisasterRecoveryManager:
 class FailoverManager:
     """Main failover manager coordinating all failover operations."""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self._config = config or {}
         self._health_assessment = HealthAssessment(config)
         self._recovery_orchestrator = RecoveryOrchestrator(config)
@@ -496,7 +496,7 @@ class FailoverManager:
             logger.error(f"Failed to start failover monitoring: {e}")
             return False
     
-    async def stop_monitoring(self):
+    async def stop_monitoring(self) -> None:
         """Stop health monitoring."""
         try:
             self._is_monitoring = False
@@ -513,7 +513,7 @@ class FailoverManager:
         except Exception as e:
             logger.error(f"Error stopping failover monitoring: {e}")
     
-    async def _monitoring_loop(self):
+    async def _monitoring_loop(self) -> None:
         """Main monitoring loop."""
         try:
             while self._is_monitoring:
@@ -573,8 +573,8 @@ class FailoverManager:
             is_responding=health_factor > 0.1
         )
     
-    async def _trigger_failover(self, instance_id: str, config: Dict[str, Any], 
-                               metrics: HealthMetrics):
+    async def _trigger_failover(self, instance_id -> None: str, config -> None: Dict[str, Any], 
+                               metrics -> None: HealthMetrics) -> None:
         """Trigger failover for a failing instance."""
         try:
             database_type = config.get('type', 'unknown')
@@ -637,7 +637,7 @@ class FailoverManager:
         
         return None
     
-    def _update_instance_config_after_failover(self, old_master: str, new_master: str):
+    def _update_instance_config_after_failover(self, old_master -> None: str, new_master -> None: str) -> None:
         """Update instance configuration after successful failover."""
         if old_master in self._monitored_instances and new_master:
             # Move the failed instance to replicas and promote new master

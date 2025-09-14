@@ -1,4 +1,7 @@
 """Advanced Monitoring Configuration for IA Influencer Agent Platform
+import asyncio
+import logging
+
 ==================================================================
 
 Comprehensive configuration system for industrial-grade monitoring
@@ -6,7 +9,7 @@ with environment-specific settings, performance tuning, and
 business intelligence customization.
 
 Configuration Areas:
-- Monitoring stack modes and performance settings
+    - Monitoring stack modes and performance settings
 - AI fingerprinting thresholds and optimization parameters
 - Revenue monitoring rules and fraud detection settings
 - Security monitoring patterns and threat detection rules
@@ -276,7 +279,7 @@ class MonitoringConfigurationManager:
     and runtime configuration management.
     """
     
-    def __init__(self, config_path: Optional[str] = None):
+    def __init__(self, config_path -> None: Optional[str] = None) -> None:
         self.config_path = config_path or os.getenv("MONITORING_CONFIG_PATH", "config/monitoring.yaml")
         self.environment = EnvironmentType(os.getenv("ENVIRONMENT", "development"))
         
@@ -323,7 +326,7 @@ Load configuration from YAML file"""
         except Exception as e:
             raise RuntimeError(f"Failed to load configuration from {config_file}: {e}")
     
-    def _apply_environment_overrides(self):
+    def _apply_environment_overrides(self) -> None:
         try:
             logger.info(f"Executing _apply_environment_overrides")
             
@@ -351,7 +354,7 @@ Load configuration from YAML file"""
                 
                 self._config[section][key] = value
     
-    def _validate_configuration(self):
+    def _validate_configuration(self) -> None:
         """Validate configuration completeness and correctness"""
         
         required_sections = ["redis", "database", "alerting", "performance"]
@@ -657,7 +660,7 @@ Load configuration from YAML file"""
         perf_config = self._config.get("performance", {})
         return PerformanceConfiguration(**perf_config)
     
-    def save_configuration(self, output_path: Optional[str] = None):
+    def save_configuration(self, output_path -> None: Optional[str] = None) -> None:
         """Save current configuration to file"""
         output_file = Path(output_path or self.config_path)
         
@@ -679,10 +682,10 @@ Load configuration from YAML file"""
         """Get complete configuration dictionary"""
         return self._config.copy()
     
-    def update_config(self, updates: Dict[str, Any]):
+    def update_config(self, updates -> None: Dict[str, Any]) -> None:
         """
 Update configuration with new values"""
-        def deep_update(base_dict: Dict, update_dict: Dict):
+        def deep_update(base_dict -> None: Dict, update_dict -> None: Dict) -> None:
             for key, value in update_dict.items():
                 if isinstance(value, dict) and key in base_dict and isinstance(base_dict[key], dict):
                     deep_update(base_dict[key], value)
@@ -746,3 +749,6 @@ EXAMPLE_CONFIGS = {
         "performance": {"metrics_collection_interval": 30, "metrics_retention_days": 90, "auto_scaling_enabled": True}
     }
 }
+}}
+
+# File has syntax issues - needs manual review

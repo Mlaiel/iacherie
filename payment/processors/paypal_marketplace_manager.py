@@ -144,7 +144,7 @@ class PayPalMarketplaceManager:
     - Comprehensive marketplace analytics and reporting
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """Initialize PayPal marketplace manager"""
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -621,7 +621,7 @@ class PayPalMarketplaceManager:
             'seller_payment_scheduled': success
         }
     
-    def _initialize_default_commission_rules(self):
+    def _initialize_default_commission_rules(self) -> None:
         """Revenue Management: Initialize default commission rules"""
         # Standard commission rule
         standard_rule = CommissionRule(

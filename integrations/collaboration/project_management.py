@@ -89,7 +89,7 @@ class ProjectManagement:
     Gestion complète workflow, tasks et deadlines.
     """
     
-    def __init__(self, config: Optional[Dict] = None):
+    def __init__(self, config -> None: Optional[Dict] = None) -> None:
         """Initialise le gestionnaire de projets."""
         self.config = config or {}
         self.projects: Dict[str, Project] = {}
@@ -459,7 +459,7 @@ class ProjectManagement:
         
         return True
     
-    async def _update_project_progress(self, project_id: str):
+    async def _update_project_progress(self, project_id -> None: str) -> None:
         """Met à jour le progress d'un projet."""
         if project_id not in self.projects:
             return

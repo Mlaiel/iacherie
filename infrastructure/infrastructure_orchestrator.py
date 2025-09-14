@@ -1,4 +1,6 @@
 """
+from datetime import datetime
+
 Ainflue Infrastructure Orchestrator - Master Infrastructure Coordination
 © 2025 Fahed Mlaiel. All rights reserved.
 
@@ -26,17 +28,23 @@ except ImportError as e:
     logging.warning(f"Some infrastructure modules not available: {e}")
     # Mock classes for testing
     class MultiCloudManager:
-        async def provision_resources(self, *args): return {'status': 'simulated'}
+    """MultiCloudManager: class implementation"""
+        async def provision_resources(self, *args) -> None: return {'status': 'simulated'}
     class KubernetesManager:
-        async def deploy_clusters(self, *args): return {'status': 'simulated'}
+    """KubernetesManager: class implementation"""
+        async def deploy_clusters(self, *args) -> None: return {'status': 'simulated'}
     class ObservabilityStack:
-        async def deploy_monitoring_stack(self, *args): return {'status': 'simulated'}
+    """ObservabilityStack: class implementation"""
+        async def deploy_monitoring_stack(self, *args) -> None: return {'status': 'simulated'}
     class PerformanceOptimizer:
-        async def configure_predictive_scaling(self, *args): return {'status': 'simulated'}
+    """PerformanceOptimizer: class implementation"""
+        async def configure_predictive_scaling(self, *args) -> None: return {'status': 'simulated'}
     class PipelineOrchestrator:
-        async def setup_pipeline(self, *args): return {'status': 'simulated'}
+    """PipelineOrchestrator: class implementation"""
+        async def setup_pipeline(self, *args) -> None: return {'status': 'simulated'}
     class SecurityManager:
-        async def setup_encryption(self, *args): return {'status': 'simulated'}
+    """SecurityManager: class implementation"""
+        async def setup_encryption(self, *args) -> None: return {'status': 'simulated'}
 
 logger = logging.getLogger(__name__)
 
@@ -67,7 +75,7 @@ class InfrastructureConfig:
     monitoring_config: Dict[str, Any] = None
     business_logic_config: Dict[str, Any] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.instance_types is None:
             self.instance_types = {}
         if self.scaling_config is None:
@@ -94,7 +102,7 @@ class InfrastructureOrchestrator:
     - Business logic integration
     """
     
-    def __init__(self, config: InfrastructureConfig):
+    def __init__(self, config -> None: InfrastructureConfig) -> None:
         self.config = config
         self.state = InfrastructureState.INITIALIZING
         self.deployment_id = None
@@ -1438,7 +1446,7 @@ def load_infrastructure_config(config_path: str) -> InfrastructureConfig:
 
 # Example usage and testing
 if __name__ == "__main__":
-    async def main():
+    async def main() -> None:
         # Example configuration
         config = InfrastructureConfig(
             environment="production",

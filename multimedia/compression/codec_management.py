@@ -37,7 +37,7 @@ class CodecInfo:
 class CodecManager:
     """Enterprise codec management system."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the codec manager."""
         self.codecs = self._initialize_codec_database()
         self.compatibility_matrix = self._build_compatibility_matrix()

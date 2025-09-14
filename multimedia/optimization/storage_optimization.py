@@ -49,7 +49,7 @@ class StorageOptimization:
 class StorageOptimizer:
     """Professional storage optimization system"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize storage optimizer"""
         self.config = config or {}
         self.optimization_config = StorageOptimization()

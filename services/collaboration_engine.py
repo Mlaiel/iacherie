@@ -83,7 +83,7 @@ class CollaborationEngine:
     """
 Advanced creator collaboration and matching system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.creator_profiles = {}
         self.collaborations = {}
         self.matching_history = {}
@@ -482,7 +482,7 @@ Register or update creator profile for collaboration matching"""
             logger.error(f"Error applying preference filters: {str(e)}")
             return False
     
-    async def _generate_collaboration_contract(self, proposal: CollaborationProposal):
+    async def _generate_collaboration_contract(self, proposal -> None: CollaborationProposal) -> None:
         """Generate automatic collaboration contract terms"""
         try:
             contract_terms = {
@@ -505,7 +505,7 @@ Register or update creator profile for collaboration matching"""
         except Exception as e:
             logger.error(f"Error generating collaboration contract: {str(e)}")
     
-    async def _create_collaboration_workspace(self, proposal: CollaborationProposal):
+    async def _create_collaboration_workspace(self, proposal -> None: CollaborationProposal) -> None:
         """Create collaborative workspace for accepted proposal"""
         try:
             workspace = {
@@ -561,7 +561,7 @@ Register or update creator profile for collaboration matching"""
             logger.error(f"Error generating project milestones: {str(e)}")
             return []
     
-    async def _finalize_collaboration_revenue(self, collaboration: CollaborationProposal):
+    async def _finalize_collaboration_revenue(self, collaboration -> None: CollaborationProposal) -> None:
         """Finalize revenue distribution for completed collaboration"""
         try:
             # This would integrate with the revenue distribution engine
@@ -574,10 +574,10 @@ Register or update creator profile for collaboration matching"""
     
     async def _initiate_dispute_resolution(
         self,
-        collaboration: CollaborationProposal,
-        disputing_user: str,
-        dispute_data: Dict
-    ):
+        collaboration -> None: CollaborationProposal,
+        disputing_user -> None: str,
+        dispute_data -> None: Dict
+    ) -> None:
         """Initiate dispute resolution process"""
         try:
             dispute_record = {

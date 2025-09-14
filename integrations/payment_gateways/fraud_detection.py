@@ -147,7 +147,7 @@ class FraudConfig:
     enable_geolocation_analysis: bool = True
     enable_velocity_analysis: bool = True
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.allowed_countries is None:
             self.allowed_countries = ["US", "CA", "GB", "DE", "FR", "AU", "JP"]
         if self.blocked_countries is None:
@@ -183,7 +183,7 @@ class PaymentFraudDetection(BaseIntegration):
     - Integration with external fraud databases
     """
 
-    def __init__(self, config: FraudConfig):
+    def __init__(self, config -> None: FraudConfig) -> None:
         super().__init__("fraud_detection")
         self.config = config
         self.security_manager = SecurityManager()
@@ -219,7 +219,7 @@ class PaymentFraudDetection(BaseIntegration):
                        "geolocation": config.enable_geolocation_analysis
                    })
 
-    def _load_geoip_database(self):
+    def _load_geoip_database(self) -> None:
         """Load GeoIP database for location analysis"""
         try:
             # In production, use actual GeoIP2 database file
@@ -440,7 +440,7 @@ class PaymentFraudDetection(BaseIntegration):
                 confidence=0.0
             )
 
-    def _clean_velocity_data(self):
+    def _clean_velocity_data(self) -> None:
         """Clean old velocity tracking data"""
         current_time = datetime.utcnow()
         minute_cutoff = current_time - timedelta(minutes=1)
@@ -1184,7 +1184,7 @@ def create_fraud_detection_system(**kwargs) -> PaymentFraudDetection:
     return PaymentFraudDetection(config)
 
 # Example usage for Ainflue platform
-async def example_fraud_detection_flow():
+async def example_fraud_detection_flow() -> None:
     """Example fraud detection usage"""
     
     # Initialize fraud detection system

@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 class PlatformSpecificNotifications:
     """Platform-specific notification and alert system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         logger.info("Platform specific notifications initialized")
     
     async def notify_platform_update(self, user_id: str, platform: str, update_data: Dict[str, Any]) -> bool:

@@ -93,7 +93,7 @@ class MemoryManagementOptimizer:
     DBA implementation with advanced memory optimization strategies
     """
     
-    def __init__(self, redis_settings: RedisSettings):
+    def __init__(self, redis_settings -> None: RedisSettings) -> None:
         self.redis_settings = redis_settings
         self.redis_client: Optional[redis.Redis] = None
         
@@ -134,7 +134,7 @@ class MemoryManagementOptimizer:
         # Initialize optimization rules
         self._initialize_optimization_rules()
     
-    def _initialize_optimization_rules(self):
+    def _initialize_optimization_rules(self) -> None:
         """Initialize memory optimization rules"""
         try:
             # High memory usage rule
@@ -211,7 +211,7 @@ class MemoryManagementOptimizer:
         except Exception as e:
             logger.error(f"Error initializing optimization rules: {e}")
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize the memory management optimizer"""
         try:
             # Connect to Redis
@@ -245,7 +245,7 @@ class MemoryManagementOptimizer:
             logger.error(f"Failed to initialize Memory Management Optimizer: {e}")
             raise
     
-    async def _memory_analyzer(self):
+    async def _memory_analyzer(self) -> None:
         """Continuous memory analysis"""
         while self._running:
             try:
@@ -385,7 +385,7 @@ class MemoryManagementOptimizer:
             logger.error(f"Error calculating optimization potential: {e}")
             return 0.0
     
-    async def _optimization_engine(self):
+    async def _optimization_engine(self) -> None:
         """Main optimization engine"""
         while self._running:
             try:
@@ -521,8 +521,8 @@ class MemoryManagementOptimizer:
         except Exception:
             return 0
     
-    async def _apply_optimizations(self, rules: List[MemoryOptimizationRule], 
-                                 analysis: MemoryUsageAnalysis):
+    async def _apply_optimizations(self, rules -> None: List[MemoryOptimizationRule], 
+                                 analysis -> None: MemoryUsageAnalysis) -> None:
         """Apply optimization rules"""
         try:
             optimizations_applied = 0
@@ -596,7 +596,7 @@ class MemoryManagementOptimizer:
             logger.error(f"Error applying optimization rule {rule.rule_id}: {e}")
             return False
     
-    async def _apply_default_ttl_optimization(self, default_ttl: int):
+    async def _apply_default_ttl_optimization(self, default_ttl -> None: int) -> None:
         """Apply default TTL to keys without expiration"""
         try:
             # Find keys without TTL (this is a sample - real implementation would be more efficient)
@@ -642,7 +642,7 @@ class MemoryManagementOptimizer:
         except Exception as e:
             logger.error(f"Error applying default TTL optimization: {e}")
     
-    async def _rollback_config(self, original_config: Dict[str, Any]):
+    async def _rollback_config(self, original_config -> None: Dict[str, Any]) -> None:
         """Rollback configuration changes"""
         try:
             for config_key, config_value in original_config.items():
@@ -652,9 +652,9 @@ class MemoryManagementOptimizer:
         except Exception as e:
             logger.error(f"Error rolling back config: {e}")
     
-    async def _monitor_optimization_impact(self, rule: MemoryOptimizationRule, 
-                                         before_analysis: MemoryUsageAnalysis,
-                                         original_config: Dict[str, Any]):
+    async def _monitor_optimization_impact(self, rule -> None: MemoryOptimizationRule, 
+                                         before_analysis -> None: MemoryUsageAnalysis,
+                                         original_config -> None: Dict[str, Any]) -> None:
         """Monitor the impact of optimization"""
         try:
             # Wait for optimization to take effect
@@ -695,7 +695,7 @@ class MemoryManagementOptimizer:
         except Exception as e:
             logger.error(f"Error monitoring optimization impact: {e}")
     
-    async def _fragmentation_monitor(self):
+    async def _fragmentation_monitor(self) -> None:
         """Monitor and handle memory fragmentation"""
         while self._running:
             try:
@@ -730,7 +730,7 @@ class MemoryManagementOptimizer:
                 logger.error(f"Error in fragmentation monitor: {e}")
                 await asyncio.sleep(60)
     
-    async def _start_defragmentation(self):
+    async def _start_defragmentation(self) -> None:
         """Start active defragmentation"""
         try:
             # Check if defragmentation is supported and enabled
@@ -754,7 +754,7 @@ class MemoryManagementOptimizer:
         except Exception as e:
             logger.error(f"Error starting defragmentation: {e}")
     
-    async def _monitor_defragmentation(self):
+    async def _monitor_defragmentation(self) -> None:
         """Monitor defragmentation progress"""
         try:
             # Check defragmentation status
@@ -782,7 +782,7 @@ class MemoryManagementOptimizer:
         except Exception as e:
             logger.error(f"Error monitoring defragmentation: {e}")
     
-    async def _data_structure_analyzer(self):
+    async def _data_structure_analyzer(self) -> None:
         """Analyze data structures for optimization opportunities"""
         while self._running:
             try:
@@ -889,7 +889,7 @@ class MemoryManagementOptimizer:
         
         return suggestions
     
-    async def _memory_cleaner(self):
+    async def _memory_cleaner(self) -> None:
         """Clean up memory by removing expired keys and optimizing storage"""
         while self._running:
             try:
@@ -913,7 +913,7 @@ class MemoryManagementOptimizer:
                 logger.error(f"Error in memory cleaner: {e}")
                 await asyncio.sleep(300)
     
-    async def _force_garbage_collection(self):
+    async def _force_garbage_collection(self) -> None:
         """Force Redis garbage collection"""
         try:
             # Python garbage collection
@@ -951,7 +951,7 @@ class MemoryManagementOptimizer:
             logger.error(f"Error cleaning expired keys: {e}")
             return 0
     
-    async def _optimize_key_ttls(self):
+    async def _optimize_key_ttls(self) -> None:
         """Optimize TTL values for memory efficiency"""
         try:
             if not self.key_expiration_optimization:
@@ -994,7 +994,7 @@ class MemoryManagementOptimizer:
         except Exception as e:
             logger.error(f"Error optimizing key TTLs: {e}")
     
-    async def _trigger_immediate_optimization(self, analysis: MemoryUsageAnalysis):
+    async def _trigger_immediate_optimization(self, analysis -> None: MemoryUsageAnalysis) -> None:
         """Trigger immediate optimization for critical situations"""
         try:
             memory_usage_pct = (analysis.used_memory / analysis.total_memory) * 100
@@ -1025,7 +1025,7 @@ class MemoryManagementOptimizer:
         except Exception as e:
             logger.error(f"Error in immediate optimization: {e}")
     
-    async def _store_memory_analysis(self, analysis: MemoryUsageAnalysis):
+    async def _store_memory_analysis(self, analysis -> None: MemoryUsageAnalysis) -> None:
         """Store memory analysis in Redis"""
         try:
             analysis_data = {
@@ -1047,7 +1047,7 @@ class MemoryManagementOptimizer:
         except Exception as e:
             logger.error(f"Error storing memory analysis: {e}")
     
-    async def _store_optimization_rule(self, rule: MemoryOptimizationRule):
+    async def _store_optimization_rule(self, rule -> None: MemoryOptimizationRule) -> None:
         """Store optimization rule in Redis"""
         try:
             rule_data = {
@@ -1069,7 +1069,7 @@ class MemoryManagementOptimizer:
         except Exception as e:
             logger.error(f"Error storing optimization rule: {e}")
     
-    async def _store_fragmentation_info(self):
+    async def _store_fragmentation_info(self) -> None:
         """Store fragmentation information in Redis"""
         try:
             frag_data = {
@@ -1086,7 +1086,7 @@ class MemoryManagementOptimizer:
         except Exception as e:
             logger.error(f"Error storing fragmentation info: {e}")
     
-    async def _store_data_structure_analysis(self):
+    async def _store_data_structure_analysis(self) -> None:
         """Store data structure analysis in Redis"""
         try:
             analysis_data = {}
@@ -1106,8 +1106,8 @@ class MemoryManagementOptimizer:
         except Exception as e:
             logger.error(f"Error storing data structure analysis: {e}")
     
-    async def _store_optimization_impact(self, rule: MemoryOptimizationRule,
-                                       before: MemoryUsageAnalysis, after: MemoryUsageAnalysis):
+    async def _store_optimization_impact(self, rule -> None: MemoryOptimizationRule,
+                                       before -> None: MemoryUsageAnalysis, after -> None: MemoryUsageAnalysis) -> None:
         """Store optimization impact analysis"""
         try:
             impact_data = {
@@ -1136,7 +1136,7 @@ class MemoryManagementOptimizer:
         except Exception as e:
             logger.error(f"Error storing optimization impact: {e}")
     
-    async def _load_optimization_history(self):
+    async def _load_optimization_history(self) -> None:
         """Load optimization history from Redis"""
         try:
             # Load optimization rules
@@ -1164,7 +1164,7 @@ class MemoryManagementOptimizer:
         except Exception as e:
             logger.error(f"Error loading optimization history: {e}")
     
-    async def _capture_config_baseline(self):
+    async def _capture_config_baseline(self) -> None:
         """Capture baseline Redis configuration"""
         try:
             # Capture key memory-related configurations
@@ -1231,7 +1231,7 @@ class MemoryManagementOptimizer:
             logger.error(f"Error getting memory status: {e}")
             return {'error': str(e)}
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Shutdown the memory management optimizer"""
         try:
             self._running = False

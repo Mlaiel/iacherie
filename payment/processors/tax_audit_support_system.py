@@ -100,7 +100,7 @@ class AuditTrailEntry:
     hash_signature: str
     metadata: Dict[str, Any] = None
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.metadata is None:
             self.metadata = {}
 
@@ -121,7 +121,7 @@ class AuditDocument:
     tags: List[str] = None
     metadata: Dict[str, Any] = None
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.tags is None:
             self.tags = []
         if self.metadata is None:
@@ -150,7 +150,7 @@ class TaxAudit:
     created_at: datetime = None
     updated_at: datetime = None
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.documents_requested is None:
             self.documents_requested = []
         if self.documents_provided is None:
@@ -192,8 +192,8 @@ class TaxAuditSupportSystem:
     """
 
     def __init__(self, 
-                 database_url: Optional[str] = None,
-                 document_storage_path: str = "/tmp/audit_documents"):
+                 database_url -> None: Optional[str] = None,
+                 document_storage_path -> None: str = "/tmp/audit_documents") -> None:
         """Initialize Tax Audit Support System with enterprise configuration"""
         self.database_url = database_url
         self.document_storage_path = document_storage_path
@@ -1038,7 +1038,7 @@ class TaxAuditSupportSystem:
 
 
 # 🧪 Example usage and testing
-async def test_tax_audit_support_system():
+async def test_tax_audit_support_system() -> None:
     """Test Tax Audit Support System functionality"""
     try:
         # Initialize system

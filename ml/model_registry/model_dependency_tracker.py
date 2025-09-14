@@ -82,7 +82,7 @@ class ImpactAnalysis:
 class ModelDependencyTracker:
     """Enterprise Model Dependency Tracking System"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.dependency_graph = nx.DiGraph()
         self.dependencies: Dict[str, ModelDependency] = {}
@@ -620,7 +620,7 @@ class ModelDependencyTracker:
 dependency_tracker = ModelDependencyTracker()
 
 
-async def main():
+async def main() -> None:
     """Test the Model Dependency Tracker"""
     tracker = ModelDependencyTracker()
     

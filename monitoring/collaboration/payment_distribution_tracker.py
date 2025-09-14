@@ -142,7 +142,7 @@ class PaymentDistributionTracker:
     - Financial reporting and analytics
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize payment distribution tracker."""
         self.config = config or {}
         self.recipients: Dict[str, PaymentRecipient] = {}
@@ -185,7 +185,7 @@ class PaymentDistributionTracker:
         logger.info("💰 Payment Distribution Tracker initialized")
         self._setup_default_configurations()
     
-    def _setup_default_configurations(self):
+    def _setup_default_configurations(self) -> None:
         """Setup default payment configurations."""
         self.default_distribution_rules = {
             "minimum_threshold": Decimal('10.00'),
@@ -637,7 +637,7 @@ class PaymentDistributionTracker:
                 "error_message": random.choice(error_messages)
             }
     
-    def _update_payment_success_rate(self):
+    def _update_payment_success_rate(self) -> None:
         """Update payment success rate metric."""
         total_payments = self.metrics["successful_payments"] + self.metrics["failed_payments"]
         if total_payments > 0:

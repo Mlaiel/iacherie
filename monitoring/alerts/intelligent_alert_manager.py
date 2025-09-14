@@ -134,7 +134,7 @@ class IntelligentAlertManager:
     - Advanced notification routing
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """
 Initialize the intelligent alert manager"""
         self.alert_rules: Dict[str, AlertRule] = {}
@@ -157,7 +157,7 @@ Initialize the intelligent alert manager"""
         
         logger.info("IntelligentAlertManager initialized")
     
-    def _initialize_default_rules(self):
+    def _initialize_default_rules(self) -> None:
         """Initialize default alert rules for all categories"""
         
         # Business Alert Rules
@@ -303,12 +303,12 @@ Initialize the intelligent alert manager"""
         
         logger.info(f"Initialized {len(self.alert_rules)} default alert rules")
     
-    def add_alert_rule(self, rule: AlertRule):
+    def add_alert_rule(self, rule -> None: AlertRule) -> None:
         """Add a new alert rule"""
         self.alert_rules[rule.rule_id] = rule
         logger.info(f"Added alert rule: {rule.rule_id} - {rule.name}")
     
-    def remove_alert_rule(self, rule_id: str):
+    def remove_alert_rule(self, rule_id -> None: str) -> None:
         """Remove an alert rule"""
         if rule_id in self.alert_rules:
             del self.alert_rules[rule_id]
@@ -442,7 +442,7 @@ Initialize the intelligent alert manager"""
         
         return False
     
-    async def _process_new_alert(self, alert: IntelligentAlert):
+    async def _process_new_alert(self, alert -> None: IntelligentAlert) -> None:
         """Process a new alert through the intelligent system"""
         # Add to active alerts
         self.active_alerts[alert.alert_id] = alert
@@ -465,14 +465,14 @@ Initialize the intelligent alert manager"""
         
         logger.info(f"Processed new alert: {alert.alert_id} - {alert.title}")
     
-    async def _schedule_escalation(self, alert: IntelligentAlert):
+    async def _schedule_escalation(self, alert -> None: IntelligentAlert) -> None:
         """Schedule automatic escalation for an alert"""
         rule = self.alert_rules[alert.rule_id]
         
         if not rule.escalation_levels:
             return
         
-        async def escalate_alert():
+        async def escalate_alert() -> None:
             try:
                 logger.info(f"Starting escalation for alert {alert.alert_id}")
                 
@@ -656,7 +656,7 @@ Initialize the intelligent alert manager"""
         else:
             return timedelta(minutes=5)  # Default to 5 minutes
     
-    def _update_resolution_time_stats(self, resolution_time_seconds: float):
+    def _update_resolution_time_stats(self, resolution_time_seconds -> None: float) -> None:
         """
 Update average resolution time statistics"""
         current_avg = self.alert_stats["avg_resolution_time"]
@@ -670,13 +670,13 @@ Update average resolution time statistics"""
         else:
             self.alert_stats["avg_resolution_time"] = resolution_time_seconds
     
-    async def _send_alert_notifications(self, alert: IntelligentAlert):
+    async def _send_alert_notifications(self, alert -> None: IntelligentAlert) -> None:
         """Send initial alert notifications"""
         # This would integrate with existing notification systems
         logger.info(f"Sending notifications for alert: {alert.alert_id}")
         # Implementation would call existing notification services
     
-    async def _send_escalation_notifications(self, alert: IntelligentAlert, level_config: Dict[str, Any]):
+    async def _send_escalation_notifications(self, alert -> None: IntelligentAlert, level_config -> None: Dict[str, Any]) -> None:
         """Send escalation notifications"""
         channels = level_config.get("channels", [])
         logger.warning(f"Sending escalation notifications for alert {alert.alert_id} to channels: {channels}")

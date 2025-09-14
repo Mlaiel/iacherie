@@ -35,7 +35,7 @@ from .base_manager import BaseDeploymentManager
 class EncryptionManager:
     """
 Mock encryption manager."""
-    def __init__(self):
+    def __init__(self) -> None:
         """
 Initialize encryption manager with security protocols"""
         self.logger = logging.getLogger(f"{__name__}.EncryptionManager")
@@ -47,7 +47,7 @@ Initialize encryption manager with security protocols"""
         self.vault_integration = True
         self.logger.info("EncryptionManager initialized with enterprise security")
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         try:
             logger.info(f"Executing initialize")
             
@@ -62,19 +62,19 @@ Initialize encryption manager with security protocols"""
         except Exception as e:
             logger.error(f"initialize failed: {e}")
             raise
-    async def encrypt_data(self, data: str):
+    async def encrypt_data(self, data -> None: str) -> None:
         # Mock encryption - just base64 encode for demo
         import base64
         return base64.b64encode(data.encode()).decode()
     
-    async def decrypt_data(self, encrypted_data: str):
+    async def decrypt_data(self, encrypted_data -> None: str) -> None:
         # Mock decryption - just base64 decode for demo
         import base64
         return base64.b64decode(encrypted_data.encode()).decode()
 
 class MetricsCollector:
     """Mock metrics collector."""
-    def __init__(self):
+    def __init__(self) -> None:
         """
 Initialize configuration metrics collector"""
         self.logger = logging.getLogger(f"{__name__}.MetricsCollector")
@@ -176,10 +176,10 @@ class ConfigurationManager(BaseDeploymentManager):
     """
     def __init__(
         self,
-        encryption_manager: Optional[EncryptionManager] = None,
-        metrics_collector: Optional[MetricsCollector] = None,
-        kubernetes_client: Optional[client.CoreV1Api] = None
-    ):
+        encryption_manager -> None: Optional[EncryptionManager] = None,
+        metrics_collector -> None: Optional[MetricsCollector] = None,
+        kubernetes_client -> None: Optional[client.CoreV1Api] = None
+    ) -> None:
         super().__init__()
         self.encryption_manager = encryption_manager or EncryptionManager()
         self.metrics_collector = metrics_collector or MetricsCollector()

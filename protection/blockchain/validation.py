@@ -138,20 +138,20 @@ class BlockchainValidator:
     Provides comprehensive validation for content, transactions, and proofs
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.web3_connections = {}
         self.ipfs_client = None
         self.session = None
         self._init_connections()
     
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         """
 Async context manager entry"""
         self.session = aiohttp.ClientSession()
         return self
     
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         """
 Async context manager exit"""
         if self.session:
@@ -159,7 +159,7 @@ Async context manager exit"""
         if self.ipfs_client:
             self.ipfs_client.close()
     
-    def _init_connections(self):
+    def _init_connections(self) -> None:
         """
 Initialize blockchain and storage connections"""
         try:

@@ -79,7 +79,7 @@ class EnterpriseServiceRegistry:
     """
 Registry for enterprise services with dependency management"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._services: Dict[str, EnterpriseServiceInfo] = {}
         self._lock = threading.RLock()
         self._observers: List[Callable] = []
@@ -145,7 +145,7 @@ Update service status"""
             logger.error(f"Failed to update service status {service_id}: {e}")
             return False
     
-    def _notify_observers(self, event: str, service_info: EnterpriseServiceInfo):
+    def _notify_observers(self, event -> None: str, service_info -> None: EnterpriseServiceInfo) -> None:
         """Notify registered observers"""
         for observer in self._observers:
             try:
@@ -157,7 +157,7 @@ Update service status"""
 class EnterpriseOrchestrator:
     """Advanced orchestrator for enterprise service coordination"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.registry = EnterpriseServiceRegistry()
         self._executor = ThreadPoolExecutor(max_workers=10, thread_name_prefix="enterprise")
         self._monitoring_tasks: Set[asyncio.Task] = set()
@@ -190,7 +190,7 @@ class EnterpriseOrchestrator:
         ordered_services = []
         processed = set()
         
-        def process_service(service_id: str):
+        def process_service(service_id -> None: str) -> None:
             if service_id in processed:
                 return
                 
@@ -275,9 +275,9 @@ Initialize a single enterprise service"""
             
         return None
     
-    async def _start_service_monitoring(self, service_id: str):
+    async def _start_service_monitoring(self, service_id -> None: str) -> None:
         """Start monitoring for a specific service"""
-        async def monitor_service():
+        async def monitor_service() -> None:
             try:
                 service_info = self.registry.get_service(service_id)
                 if service_info and service_info.instance:
@@ -348,7 +348,7 @@ Get comprehensive enterprise system status"""
             'services': services_status
         }
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """
 Graceful shutdown of enterprise services"""
         logger.info("Shutting down enterprise orchestrator...")
@@ -369,7 +369,7 @@ Graceful shutdown of enterprise services"""
 class EnterpriseIndex:
     """Main enterprise index providing unified access to all enterprise features"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.orchestrator = EnterpriseOrchestrator()
         self._initialized = False
         
@@ -466,7 +466,7 @@ Get enterprise service by type"""
             
         return await self.orchestrator.get_enterprise_status()
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """
 Shutdown enterprise index"""
         await self.orchestrator.shutdown()

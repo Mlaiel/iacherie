@@ -224,7 +224,7 @@ class NotificationCampaign:
 class RealTimeNotificationEngine:
     """Real-time notification processing engine"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         self.notification_queue = None
@@ -334,7 +334,7 @@ class RealTimeNotificationEngine:
 class MultiChannelDeliverySystem:
     """Multi-channel notification delivery system"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         self.channel_handlers = {}
@@ -450,7 +450,7 @@ class MultiChannelDeliverySystem:
 class AudienceSegmentationEngine:
     """Intelligent audience segmentation and targeting system"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         self.segmentation_rules = {}
@@ -513,7 +513,7 @@ class AudienceSegmentationEngine:
 class NotificationAnalyticsTracker:
     """Notification performance analytics and tracking system"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         self.analytics_collectors = {}
@@ -576,7 +576,7 @@ class NotificationAnalyticsTracker:
 class StreamingNotificationManager:
     """Unified streaming notification manager - Main service class"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         

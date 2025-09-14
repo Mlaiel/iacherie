@@ -1,4 +1,6 @@
 """
+import logging
+
 Core Security Components for Ainflue Platform
 Provides encryption, hashing, token management, and security utilities
 """
@@ -17,7 +19,7 @@ logger = get_logger("security")
 class SecurityManager:
     """Main security manager for the platform"""
     
-    def __init__(self, secret_key: Optional[str] = None):
+    def __init__(self, secret_key -> None: Optional[str] = None) -> None:
         self.secret_key = secret_key or self._generate_secret_key()
         self.logger = get_logger("security_manager")
     
@@ -89,7 +91,7 @@ class SecurityManager:
 class TokenManager:
     """Manages security tokens and API keys"""
     
-    def __init__(self, expiry_hours: int = 24):
+    def __init__(self, expiry_hours -> None: int = 24) -> None:
         self.expiry_hours = expiry_hours
         self.logger = get_logger("token_manager")
         self.active_tokens: Dict[str, Dict[str, Any]] = {}
@@ -152,7 +154,7 @@ class TokenManager:
 class SecurityValidator:
     """Validates security requirements and policies"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = get_logger("security_validator")
     
     def validate_password_strength(self, password: str) -> Dict[str, Any]:

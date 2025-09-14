@@ -152,7 +152,7 @@ class AuditConfiguration:
 class AuditLogger:
     """Comprehensive audit logging system."""
     
-    def __init__(self, config: Optional[AuditConfiguration] = None):
+    def __init__(self, config -> None: Optional[AuditConfiguration] = None) -> None:
         self.config = config or AuditConfiguration()
         
         # Initialize storage

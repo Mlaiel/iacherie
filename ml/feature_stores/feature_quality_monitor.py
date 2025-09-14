@@ -1,3 +1,8 @@
+"""
+Feature Quality Monitor module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 🚀 **Feature Quality Monitor - Enterprise ML Feature Validation**
@@ -118,7 +123,7 @@ class FeatureQualityMonitor:
     - Integration with feature stores and ML pipelines
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.logger = logging.getLogger(__name__)
         
@@ -1024,12 +1029,12 @@ class FeatureQualityMonitor:
     
     async def _update_feature_profile(
         self,
-        feature_name: str,
-        feature_type: FeatureType,
-        feature_data: Any,
-        quality_scores: Dict[QualityMetric, float],
-        thresholds: List[QualityThreshold]
-    ):
+        feature_name -> None: str,
+        feature_type -> None: FeatureType,
+        feature_data -> None: Any,
+        quality_scores -> None: Dict[QualityMetric, float],
+        thresholds -> None: List[QualityThreshold]
+    ) -> None:
         """Update feature profile with latest data"""
         series = pd.Series(feature_data) if not isinstance(feature_data, pd.Series) else feature_data
         statistics = self._calculate_basic_statistics(series, feature_type)
@@ -1114,7 +1119,7 @@ class FeatureQualityMonitor:
         }
 
 # Usage example
-async def main():
+async def main() -> None:
     """Example usage of FeatureQualityMonitor"""
     config = {
         'alerts': {

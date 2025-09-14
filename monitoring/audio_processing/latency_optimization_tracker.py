@@ -100,7 +100,7 @@ class LatencyOptimizationTracker:
     - Resource utilization correlation
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.latency_profiles: deque = deque(maxlen=10000)
         self.stage_history: Dict[LatencyStage, deque] = {
@@ -112,7 +112,7 @@ class LatencyOptimizationTracker:
         
         logger.info("Latency Optimization Tracker initialized")
     
-    def _initialize_thresholds(self):
+    def _initialize_thresholds(self) -> None:
         """Initialize latency thresholds and targets."""
         self.thresholds = {
             # Stage-specific latency targets (ms)
@@ -147,7 +147,7 @@ class LatencyOptimizationTracker:
             }
         }
     
-    def _initialize_optimization_engine(self):
+    def _initialize_optimization_engine(self) -> None:
         """Initialize the optimization recommendation engine."""
         self.optimization_rules = {
             LatencyStage.SOURCE_SEPARATION: {
@@ -351,7 +351,7 @@ class LatencyOptimizationTracker:
         
         return recommendations[:5]  # Limit to top 5 recommendations
     
-    async def _check_stage_performance(self, measurement: LatencyMeasurement):
+    async def _check_stage_performance(self, measurement -> None: LatencyMeasurement) -> None:
         """Check individual stage performance against thresholds."""
         stage_target = self.thresholds['stage_targets'].get(measurement.stage)
         

@@ -44,7 +44,7 @@ logger = logging.getLogger(__name__)
 class ChromaDBEmbeddingFunction:
     """Custom embedding function wrapper for ChromaDB."""
     
-    def __init__(self, external_embedding_func: Optional[callable] = None):
+    def __init__(self, external_embedding_func -> None: Optional[callable] = None) -> None:
         """
         Initialize embedding function.
         
@@ -73,7 +73,7 @@ class ChromaDBEmbeddingFunction:
 class ChromaDBCollectionManager:
     """Manages ChromaDB collections and their configurations."""
     
-    def __init__(self, client: Any, collection_name: str = "ainflue_vectors"):
+    def __init__(self, client -> None: Any, collection_name -> None: str = "ainflue_vectors") -> None:
         """
         Initialize collection manager.
         
@@ -174,7 +174,7 @@ class ChromaDBBackend(BaseVectorBackend):
     - Query optimization
     """
     
-    def __init__(self, config: Any, security_manager: Optional[Any] = None):
+    def __init__(self, config -> None: Any, security_manager -> None: Optional[Any] = None) -> None:
         """Initialize ChromaDB backend."""
         super().__init__(config, security_manager)
         

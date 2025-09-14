@@ -16,7 +16,8 @@ try:
 except ImportError:
     # Fallback for environments without pydantic_settings
     class BaseSettings:
-        def __init__(self, **kwargs):
+    """BaseSettings: class implementation"""
+        def __init__(self, **kwargs) -> None:
             for key, value in kwargs.items():
                 setattr(self, key, value)
 
@@ -118,7 +119,7 @@ class InferenceConfiguration:
 class MLPipelineSettings:
     """ML pipeline configuration settings"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         # Model Configurations
         self.model_configurations = {
             "content_classifier": ModelConfiguration(
@@ -451,7 +452,7 @@ class MLPipelineSettings:
         """Get inference configuration for model"""
         return self.inference_settings.get(model_name)
     
-    def add_model_config(self, model_name: str, config: ModelConfiguration):
+    def add_model_config(self, model_name -> None: str, config -> None: ModelConfiguration) -> None:
         """Add new model configuration"""
         self.model_configurations[model_name] = config
     

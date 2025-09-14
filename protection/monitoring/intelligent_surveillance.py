@@ -32,14 +32,15 @@ try:
 except ImportError:
     NUMPY_AVAILABLE = False
     class NumpyFallback:
-        def mean(self, data): return sum(data) / len(data) if data else 0
-        def std(self, data):
+    """NumpyFallback: class implementation"""
+        def mean(self, data) -> None: return sum(data) / len(data) if data else 0
+        def std(self, data) -> None:
             if not data: return 0
             mean_val = self.mean(data)
             return (sum((x - mean_val) ** 2 for x in data) / len(data)) ** 0.5
-        def array(self, data): return data
-        def zeros(self, shape): return [0] * (shape if isinstance(shape, int) else shape[0])
-        def dot(self, a, b): return sum(x*y for x, y in zip(a, b))
+        def array(self, data) -> None: return data
+        def zeros(self, shape) -> None: return [0] * (shape if isinstance(shape, int) else shape[0])
+        def dot(self, a, b) -> None: return sum(x*y for x, y in zip(a, b))
     np = NumpyFallback()
 
 from typing import Dict, List, Optional, Any, Tuple, Set
@@ -66,10 +67,11 @@ try:
 except ImportError:
     PYDANTIC_AVAILABLE = False
     class BaseModel:
-        def __init__(self, **kwargs):
+    """BaseModel: class implementation"""
+        def __init__(self, **kwargs) -> None:
             for key, value in kwargs.items():
                 setattr(self, key, value)
-    def Field(*args, **kwargs): return None
+    def Field(*args, **kwargs) -> None: return None
 
 # Optional sklearn imports with fallbacks
 try:
@@ -80,19 +82,23 @@ try:
 except ImportError:
     SKLEARN_AVAILABLE = False
     class IsolationForest:
-        def fit(self, X): pass
-        def predict(self, X): return [0] * len(X)
-        def decision_function(self, X): return [0] * len(X)
+    """IsolationForest: class implementation"""
+        def fit(self, X) -> None: pass
+        def predict(self, X) -> None: return [0] * len(X)
+        def decision_function(self, X) -> None: return [0] * len(X)
     class RandomForestClassifier:
-        def fit(self, X, y): pass
-        def predict(self, X): return [0] * len(X)
-        def predict_proba(self, X): return [[0.5, 0.5]] * len(X)
+    """RandomForestClassifier: class implementation"""
+        def fit(self, X, y) -> None: pass
+        def predict(self, X) -> None: return [0] * len(X)
+        def predict_proba(self, X) -> None: return [[0.5, 0.5]] * len(X)
     class DBSCAN:
-        def fit(self, X): pass
-        def fit_predict(self, X): return [0] * len(X)
+    """DBSCAN: class implementation"""
+        def fit(self, X) -> None: pass
+        def fit_predict(self, X) -> None: return [0] * len(X)
     class StandardScaler:
-        def fit(self, X): pass
-        def transform(self, X): return X
+    """StandardScaler: class implementation"""
+        def fit(self, X) -> None: pass
+        def transform(self, X) -> None: return X
 
 # Optional TensorFlow imports with fallbacks
 try:
@@ -102,17 +108,21 @@ try:
 except ImportError:
     TENSORFLOW_AVAILABLE = False
     class Sequential:
-        def __init__(self): pass
-        def add(self, layer): pass
-        def compile(self, **kwargs): pass
-        def fit(self, *args, **kwargs): pass
-        def predict(self, X): return [[0.5]] * len(X)
+    """Sequential: class implementation"""
+        def __init__(self) -> None: pass
+        def add(self, layer) -> None: pass
+        def compile(self, **kwargs) -> None: pass
+        def fit(self, *args, **kwargs) -> None: pass
+        def predict(self, X) -> None: return [[0.5]] * len(X)
     class LSTM:
-        def __init__(self, *args, **kwargs): pass
+    """LSTM: class implementation"""
+        def __init__(self, *args, **kwargs) -> None: pass
     class Dense:
-        def __init__(self, *args, **kwargs): pass
+    """Dense: class implementation"""
+        def __init__(self, *args, **kwargs) -> None: pass
     class Dropout:
-        def __init__(self, *args, **kwargs): pass
+    """Dropout: class implementation"""
+        def __init__(self, *args, **kwargs) -> None: pass
 
 # Optional NetworkX with fallback
 try:
@@ -121,26 +131,28 @@ try:
 except ImportError:
     NETWORKX_AVAILABLE = False
     class NetworkXFallback:
+    """NetworkXFallback: class implementation"""
         class Graph:
-            def __init__(self): 
+    """Graph: class implementation"""
+            def __init__(self) -> None: 
                 self.nodes = []
                 self.edges = []
-            def add_node(self, node): 
+            def add_node(self, node) -> None: 
                 if node not in self.nodes:
                     self.nodes.append(node)
-            def add_edge(self, u, v): 
+            def add_edge(self, u, v) -> None: 
                 self.edges.append((u, v))
-            def nodes(self): 
+            def nodes(self) -> None: 
                 return self.nodes
-            def edges(self): 
+            def edges(self) -> None: 
                 return self.edges
-        def Graph(self): 
+        def Graph(self) -> None: 
             return self.Graph()
-        def degree_centrality(self, G): 
+        def degree_centrality(self, G) -> None: 
             return {node: 0.5 for node in G.nodes}
-        def betweenness_centrality(self, G): 
+        def betweenness_centrality(self, G) -> None: 
             return {node: 0.5 for node in G.nodes}
-        def connected_components(self, G): 
+        def connected_components(self, G) -> None: 
             return [set(G.nodes)]
     nx = NetworkXFallback()
 
@@ -224,7 +236,7 @@ class IntelligentSurveillanceEngine:
     """
 Ultra-advanced AI surveillance and threat intelligence system."""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """
 Initialize the intelligent surveillance engine."""
         self.config = config
@@ -254,7 +266,7 @@ Initialize the intelligent surveillance engine."""
         
         logger.info("Intelligent Surveillance Engine initialized")
 
-    async def initialize(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    async def initialize(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         """Initialize surveillance engine with dependencies."""
         self.redis_client = redis_client
         self.db_session = db_session
@@ -270,7 +282,7 @@ Initialize the intelligent surveillance engine."""
         
         logger.info("Intelligent Surveillance Engine fully initialized")
 
-    async def _initialize_ai_models(self):
+    async def _initialize_ai_models(self) -> None:
         """Initialize and load AI models for surveillance."""
         try:
             # Initialize anomaly detection model
@@ -369,7 +381,7 @@ Initialize the intelligent surveillance engine."""
             logger.error(f"Failed to start intelligent surveillance: {e}")
             raise
 
-    async def _start_behavioral_analysis(self, surveillance_id: str, content_fingerprint: str):
+    async def _start_behavioral_analysis(self, surveillance_id -> None: str, content_fingerprint -> None: str) -> None:
         """Start behavioral pattern analysis for content."""
         try:
             while True:
@@ -701,10 +713,10 @@ Detect platform hopping behavior."""
 
     async def _trigger_threat_response(
         self,
-        surveillance_id: str,
-        patterns: Dict[str, Any],
-        anomalies: List[Dict[str, Any]]
-    ):
+        surveillance_id -> None: str,
+        patterns -> None: Dict[str, Any],
+        anomalies -> None: List[Dict[str, Any]]
+    ) -> None:
         """Trigger automated threat response."""
         try:
             threat_response = {
@@ -737,7 +749,7 @@ Detect platform hopping behavior."""
         except Exception as e:
             logger.error(f"Failed to trigger threat response: {e}")
 
-    async def _start_predictive_monitoring(self, surveillance_id: str, config: Dict[str, Any]):
+    async def _start_predictive_monitoring(self, surveillance_id -> None: str, config -> None: Dict[str, Any]) -> None:
         """Start predictive threat monitoring."""
         try:
             while True:
@@ -895,7 +907,7 @@ Detect platform hopping behavior."""
             logger.error(f"Failed to predict threat probability: {e}")
             return {}
 
-    async def _preemptive_threat_response(self, surveillance_id: str, prediction: Dict[str, Any]):
+    async def _preemptive_threat_response(self, surveillance_id -> None: str, prediction -> None: Dict[str, Any]) -> None:
         """Execute preemptive response to high-probability threats."""
         try:
             response_data = {
@@ -931,7 +943,7 @@ Detect platform hopping behavior."""
         except Exception as e:
             logger.error(f"Failed to execute preemptive threat response: {e}")
 
-    async def _start_cross_platform_correlation(self, surveillance_id: str):
+    async def _start_cross_platform_correlation(self, surveillance_id -> None: str) -> None:
         """Start cross-platform intelligence correlation."""
         try:
             while True:
@@ -1202,7 +1214,7 @@ Detect platform hopping behavior."""
             logger.error(f"Failed to calculate coordination probability: {e}")
             return 0.0
 
-    async def _handle_coordinated_attack(self, surveillance_id: str, correlations: Dict[str, Any]):
+    async def _handle_coordinated_attack(self, surveillance_id -> None: str, correlations -> None: Dict[str, Any]) -> None:
         """Handle detected coordinated attack."""
         try:
             response_data = {
@@ -1410,7 +1422,7 @@ Detect platform hopping behavior."""
             logger.error(f"Failed to stop intelligent surveillance: {e}")
             return {"error": str(e)}
 
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Shutdown the intelligent surveillance engine."""
         logger.info("Shutting down Intelligent Surveillance Engine...")
         

@@ -147,7 +147,7 @@ class LifetimeValueAnalytics:
     - Cohort-based LTV tracking
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.customer_transactions: List[CustomerTransaction] = []
         self.customer_profiles: Dict[str, CustomerProfile] = {}
         self.analysis_cache: Dict[str, LTVAnalysisResult] = {}
@@ -157,7 +157,7 @@ class LifetimeValueAnalytics:
             CustomerSegment.LOW_VALUE: 20.0
         }
         
-    async def add_transactions(self, transactions: List[CustomerTransaction]):
+    async def add_transactions(self, transactions -> None: List[CustomerTransaction]) -> None:
         """Add customer transaction data"""
         for transaction in transactions:
             self.customer_transactions.append(transaction)
@@ -167,7 +167,7 @@ class LifetimeValueAnalytics:
             
         logger.info(f"Added {len(transactions)} transactions for LTV analysis")
         
-    async def _update_customer_profile(self, transaction: CustomerTransaction):
+    async def _update_customer_profile(self, transaction -> None: CustomerTransaction) -> None:
         """Update or create customer profile based on transaction"""
         customer_id = transaction.customer_id
         
@@ -211,7 +211,7 @@ class LifetimeValueAnalytics:
         # Update customer segment
         await self._update_customer_segment(profile)
         
-    async def _update_customer_segment(self, profile: CustomerProfile):
+    async def _update_customer_segment(self, profile -> None: CustomerProfile) -> None:
         """Update customer segment based on behavior and value"""
         # Calculate recency (days since last purchase)
         days_since_last = (datetime.now(timezone.utc) - profile.last_transaction_date).days
@@ -317,7 +317,7 @@ class LifetimeValueAnalytics:
         logger.info(f"LTV analysis completed: {total_customers} customers, avg LTV ${avg_ltv:.2f}")
         return result
         
-    async def _calculate_customer_ltv(self, model: LTVModel):
+    async def _calculate_customer_ltv(self, model -> None: LTVModel) -> None:
         """Calculate LTV for all customers based on selected model"""
         for profile in self.customer_profiles.values():
             if model == LTVModel.HISTORICAL:
@@ -794,7 +794,7 @@ class LifetimeValueAnalytics:
             raise
 
 # Usage example
-async def example_usage():
+async def example_usage() -> None:
     """Example usage of LifetimeValueAnalytics"""
     analytics = LifetimeValueAnalytics()
     

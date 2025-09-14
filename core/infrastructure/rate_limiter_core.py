@@ -1,3 +1,8 @@
+"""
+Rate Limiter Core module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Ainflue Core Infrastructure - Advanced Rate Limiter Engine
@@ -77,7 +82,7 @@ class RateLimitRule:
     priority: int = 100
     description: str = ""
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.burst_capacity == 0:
             self.burst_capacity = self.requests_per_window
 
@@ -107,7 +112,7 @@ class RateLimitMetrics:
 class TokenBucket:
     """Token bucket implementation for rate limiting"""
     
-    def __init__(self, capacity: int, refill_rate: float, redis_client: Optional[redis.Redis] = None):
+    def __init__(self, capacity -> None: int, refill_rate -> None: float, redis_client -> None: Optional[redis.Redis] = None) -> None:
         self.capacity = capacity
         self.refill_rate = refill_rate  # tokens per second
         self.redis_client = redis_client
@@ -183,7 +188,7 @@ class TokenBucket:
 class SlidingWindowCounter:
     """Sliding window counter implementation"""
     
-    def __init__(self, window_seconds: int, max_requests: int, redis_client: Optional[redis.Redis] = None):
+    def __init__(self, window_seconds -> None: int, max_requests -> None: int, redis_client -> None: Optional[redis.Redis] = None) -> None:
         self.window_seconds = window_seconds
         self.max_requests = max_requests
         self.redis_client = redis_client
@@ -258,7 +263,7 @@ class SlidingWindowCounter:
 class AdaptiveRateLimiter:
     """Adaptive rate limiter that adjusts based on system load"""
     
-    def __init__(self, base_limit: int, window_seconds: int):
+    def __init__(self, base_limit -> None: int, window_seconds -> None: int) -> None:
         self.base_limit = base_limit
         self.window_seconds = window_seconds
         self.current_multiplier = 1.0
@@ -266,7 +271,7 @@ class AdaptiveRateLimiter:
         self.error_count = 0
         self.success_count = 0
         
-    def adjust_limit(self, cpu_usage: float, memory_usage: float, error_rate: float):
+    def adjust_limit(self, cpu_usage -> None: float, memory_usage -> None: float, error_rate -> None: float) -> None:
         """Adjust rate limit based on system metrics"""
         current_time = time.time()
         if current_time - self.last_adjustment < 30:  # Adjust max every 30 seconds
@@ -295,7 +300,7 @@ class AdaptiveRateLimiter:
 class RateLimiterCore:
     """Advanced enterprise rate limiter core"""
     
-    def __init__(self, level: str = "enterprise"):
+    def __init__(self, level -> None: str = "enterprise") -> None:
         self.level = level
         self.rules: Dict[str, RateLimitRule] = {}
         self.buckets: Dict[str, TokenBucket] = {}
@@ -361,7 +366,7 @@ class RateLimiterCore:
             logger.error(f"❌ Failed to initialize RateLimiterCore: {e}")
             return False
     
-    async def _setup_redis(self):
+    async def _setup_redis(self) -> None:
         """Setup Redis connection for distributed rate limiting"""
         try:
             # This would be configured from environment variables
@@ -372,7 +377,7 @@ class RateLimiterCore:
             logger.warning(f"Redis setup failed, using local rate limiting: {e}")
             self.redis_client = None
     
-    async def _load_default_rules(self):
+    async def _load_default_rules(self) -> None:
         """Load default rate limiting rules"""
         default_rules = [
             RateLimitRule(
@@ -547,7 +552,7 @@ class RateLimiterCore:
             # For other algorithms, use a portion of the window
             return rule.window_seconds / 4
     
-    async def _update_metrics(self, allowed: bool, rule_name: str):
+    async def _update_metrics(self, allowed -> None: bool, rule_name -> None: str) -> None:
         """Update rate limiting metrics"""
         self.metrics.total_requests += 1
         if not allowed:
@@ -558,7 +563,7 @@ class RateLimiterCore:
             self.metrics.block_rate = self.metrics.blocked_requests / self.metrics.total_requests
             self.metrics.hit_rate = (self.metrics.total_requests - self.metrics.blocked_requests) / self.metrics.total_requests
     
-    async def _cleanup_task(self):
+    async def _cleanup_task(self) -> None:
         """Background cleanup task"""
         while True:
             try:
@@ -567,13 +572,13 @@ class RateLimiterCore:
             except Exception as e:
                 logger.error(f"Cleanup task error: {e}")
     
-    async def _cleanup_expired_buckets(self):
+    async def _cleanup_expired_buckets(self) -> None:
         """Clean up expired buckets and windows"""
         # This would clean up local storage
         # For distributed storage, Redis handles expiration
         pass
     
-    async def _metrics_task(self):
+    async def _metrics_task(self) -> None:
         """Background metrics collection task"""
         while True:
             try:

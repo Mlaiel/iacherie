@@ -56,7 +56,7 @@ class SimilarityResult:
 class BaseSimilarityAlgorithm(ABC):
     """Abstract base class for similarity algorithms."""
     
-    def __init__(self, name: str, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, name -> None: str, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize similarity algorithm.
         
@@ -120,7 +120,7 @@ class BaseSimilarityAlgorithm(ABC):
 class CosineSimilarityAlgorithm(BaseSimilarityAlgorithm):
     """Cosine similarity algorithm with GPU optimization."""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         super().__init__("cosine", config)
     
     async def calculate_similarity(
@@ -245,7 +245,7 @@ class CosineSimilarityAlgorithm(BaseSimilarityAlgorithm):
 class EuclideanSimilarityAlgorithm(BaseSimilarityAlgorithm):
     """Euclidean distance similarity algorithm."""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         super().__init__("euclidean", config)
         self.max_distance = self.config.get('max_distance', 1000.0)
     
@@ -340,7 +340,7 @@ class EuclideanSimilarityAlgorithm(BaseSimilarityAlgorithm):
 class DotProductSimilarityAlgorithm(BaseSimilarityAlgorithm):
     """Dot product similarity algorithm."""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         super().__init__("dot_product", config)
         self.normalize = self.config.get('normalize', True)
     
@@ -437,7 +437,7 @@ class DotProductSimilarityAlgorithm(BaseSimilarityAlgorithm):
 class MultiModalFusionEngine:
     """Fusion engine for multi-modal similarity scoring."""
     
-    def __init__(self, fusion_weights: Optional[Dict[str, float]] = None):
+    def __init__(self, fusion_weights -> None: Optional[Dict[str, float]] = None) -> None:
         """
         Initialize fusion engine.
         
@@ -569,7 +569,7 @@ class SimilarityEngine:
     - Semantic boosting with NLP
     """
     
-    def __init__(self, storage: Any, config: Any):
+    def __init__(self, storage -> None: Any, config -> None: Any) -> None:
         """
         Initialize similarity engine.
         

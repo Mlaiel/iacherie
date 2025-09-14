@@ -9,7 +9,7 @@ platform, enabling real-time monitoring of digital platforms for unauthorized co
 copyright violations across multiple social media and content platforms.
 
 Features:
-- Multi-platform content monitoring (YouTube, TikTok, Instagram, Twitter/X)
+    - Multi-platform content monitoring (YouTube, TikTok, Instagram, Twitter/X)
 - Real-time violation detection and alerting
 - Automated evidence collection and documentation
 - Advanced crawling strategies with rate limiting
@@ -18,7 +18,7 @@ Features:
 - Automated DMCA takedown notice generation
 
 Platforms Supported:
-- YouTube (Creator API + Web Scraping)
+    - YouTube (Creator API + Web Scraping)
 - TikTok (Web Scraping + API when available)
 - Instagram (Basic Display API + Web Scraping)
 - Twitter/X (API v2 + Web Scraping)
@@ -124,7 +124,7 @@ class SurveillanceTarget:
     alert_threshold: float = 0.8
     metadata: Dict[str, Any] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         try:
                     # Request validation
                     if not data:
@@ -185,7 +185,7 @@ Detected content match result"""
     screenshot_path: Optional[str] = None
     metadata: Dict[str, Any] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.metadata is None:
             self.metadata = {}
 
@@ -204,7 +204,7 @@ Web crawling job configuration"""
     timeout: int = 300
     metadata: Dict[str, Any] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.metadata is None:
             self.metadata = {}
 
@@ -212,7 +212,7 @@ class YouTubeCrawler:
     """
 YouTube platform crawler and monitor"""
     
-    def __init__(self, api_key: Optional[str] = None):
+    def __init__(self, api_key -> None: Optional[str] = None) -> None:
         self.api_key = api_key
         self.base_url = "https://www.googleapis.com/youtube/v3"
         self.logger = logging.getLogger(f"{__name__}.YouTubeCrawler")
@@ -334,7 +334,7 @@ Search using YouTube Data API"""
 class TikTokCrawler:
     """TikTok platform crawler and monitor"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(f"{__name__}.TikTokCrawler")
         self.base_url = "https://www.tiktok.com"
         
@@ -421,7 +421,7 @@ class TikTokCrawler:
 class InstagramCrawler:
     """Instagram platform crawler and monitor"""
     
-    def __init__(self, access_token: Optional[str] = None):
+    def __init__(self, access_token -> None: Optional[str] = None) -> None:
         self.access_token = access_token
         self.base_url = "https://graph.instagram.com"
         self.logger = logging.getLogger(f"{__name__}.InstagramCrawler")
@@ -527,7 +527,7 @@ Search using Instagram Basic Display API"""
 class TwitterCrawler:
     """Twitter/X platform crawler and monitor"""
     
-    def __init__(self, bearer_token: Optional[str] = None):
+    def __init__(self, bearer_token -> None: Optional[str] = None) -> None:
         self.bearer_token = bearer_token
         self.base_url = "https://api.twitter.com/2"
         self.logger = logging.getLogger(f"{__name__}.TwitterCrawler")
@@ -601,7 +601,7 @@ class TwitterCrawler:
 class GenericWebCrawler:
     """Generic web crawler for any website"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(f"{__name__}.GenericCrawler")
         
     async def crawl_website(self, base_url: str, search_terms: List[str], 
@@ -674,7 +674,7 @@ class WebSurveillancePipelineManager:
     - Alert generation and notification management
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
         
@@ -718,7 +718,7 @@ Add new content surveillance target"""
         
         return target.target_id
         
-    async def _monitor_target(self, target: SurveillanceTarget):
+    async def _monitor_target(self, target -> None: SurveillanceTarget) -> None:
         """Continuously monitor surveillance target"""
         while target.target_id in self.active_targets:
             try:
@@ -751,7 +751,7 @@ Add new content surveillance target"""
                 self.logger.error(f"Monitoring error for target {target.target_id}: {str(e)}")
                 await asyncio.sleep(300)  # Wait 5 minutes on error
                 
-    def _get_platform_crawler(self, platform: Platform):
+    def _get_platform_crawler(self, platform -> None: Platform) -> None:
         """Get appropriate crawler for platform"""
         crawler_map = {
             Platform.YOUTUBE: self.youtube_crawler,
@@ -853,7 +853,7 @@ Crawl specific platform for content"""
             except:
                 return datetime.utcnow()
                 
-    async def _process_detected_match(self, match: ContentMatch):
+    async def _process_detected_match(self, match -> None: ContentMatch) -> None:
         """
 Process detected content match"""
         self.detected_matches.append(match)
@@ -899,7 +899,7 @@ Process detected content match"""
             self.logger.error(f"Screenshot capture failed: {str(e)}")
             return None
             
-    async def _generate_violation_alert(self, match: ContentMatch):
+    async def _generate_violation_alert(self, match -> None: ContentMatch) -> None:
         """Generate violation alert for detected match"""
         alert_data = {
             'alert_id': f"alert_{match.match_id}",
@@ -983,3 +983,5 @@ def get_surveillance_pipeline_manager() -> WebSurveillancePipelineManager:
     """
 Get global surveillance pipeline manager instance"""
     return surveillance_pipeline_manager
+
+# File has syntax issues - needs manual review

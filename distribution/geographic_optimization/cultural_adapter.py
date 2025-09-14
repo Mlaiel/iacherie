@@ -110,7 +110,7 @@ class CulturalInsight:
 class CulturalAdapter:
     """Advanced AI-powered cultural content adaptation engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize cultural adapter"""
         self.cultural_profiles = {}
         self.adaptation_rules = {}

@@ -100,7 +100,7 @@ class ValidationResult:
 class InputSanitizer:
     """Nettoyeur d'entrées utilisateur"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
         
         # Patterns dangereux
@@ -307,7 +307,7 @@ class InputSanitizer:
 class CryptographicValidator:
     """Validateur cryptographique"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
     
     def generate_secure_token(self, length: int = 32) -> str:
@@ -458,7 +458,7 @@ class CryptographicValidator:
 class NetworkSecurityValidator:
     """Validateur sécurité réseau"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
         self.blocked_ips = set()
         self.suspicious_ips = set()
@@ -591,7 +591,7 @@ class NetworkSecurityValidator:
 class AdvancedSecurityValidator:
     """Validateur de sécurité avancé enterprise"""
     
-    def __init__(self, security_level: SecurityLevel = SecurityLevel.HIGH):
+    def __init__(self, security_level -> None: SecurityLevel = SecurityLevel.HIGH) -> None:
         self.security_level = security_level
         self.input_sanitizer = InputSanitizer()
         self.crypto_validator = CryptographicValidator()
@@ -832,7 +832,7 @@ class AdvancedSecurityValidator:
             ]
         }
     
-    def clear_audit_log(self):
+    def clear_audit_log(self) -> None:
         """Nettoyage audit trail"""
         self.audit_log.clear()
         self.logger.info("Security audit log cleared")
@@ -865,7 +865,7 @@ __all__ = [
 
 # Exemple d'utilisation
 if __name__ == "__main__":
-    async def main():
+    async def main() -> None:
         # Configuration logging
         logging.basicConfig(level=logging.INFO)
         

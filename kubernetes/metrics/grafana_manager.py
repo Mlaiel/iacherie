@@ -74,7 +74,7 @@ class GrafanaManager:
     - Multi-tenant dashboard isolation
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.base_url = settings.GRAFANA_URL
         self.api_key = settings.GRAFANA_API_KEY
         self.organization_id = settings.GRAFANA_ORG_ID
@@ -84,7 +84,7 @@ class GrafanaManager:
         self._dashboard_templates = {}
         self._initialize_templates()
         
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         """
 Async context manager entry"""
         self.session = aiohttp.ClientSession(
@@ -95,7 +95,7 @@ Async context manager entry"""
         )
         return self
         
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         """
 Async context manager exit"""
         if self.session:

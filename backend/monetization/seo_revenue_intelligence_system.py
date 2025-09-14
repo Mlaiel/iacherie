@@ -252,7 +252,7 @@ class SEORevenueIntelligenceSystem:
     Architecture enterprise pour optimisation revenus via SEO
     """
     
-    def __init__(self, db_session: Session, redis_client: redis.Redis):
+    def __init__(self, db_session -> None: Session, redis_client -> None: redis.Redis) -> None:
         self.db = db_session
         self.redis = redis_client
         self.logger = logging.getLogger(__name__)
@@ -279,7 +279,7 @@ class SEORevenueIntelligenceSystem:
         self.traffic_monetizer = OrganicTrafficMonetizer(db_session, redis_client)
         self.performance_analyzer = SEOPerformanceRevenueAnalyzer(db_session, redis_client)
     
-    def _initialize_ml_models(self):
+    def _initialize_ml_models(self) -> None:
         """Initialiser les modèles ML pour SEO"""
         try:
             # Modèle de prédiction de ranking
@@ -813,7 +813,7 @@ class SEORevenueIntelligenceSystem:
 class KeywordMonetizationEngine:
     """Moteur de monétisation des mots-clés"""
     
-    def __init__(self, db_session: Session, redis_client: redis.Redis):
+    def __init__(self, db_session -> None: Session, redis_client -> None: redis.Redis) -> None:
         self.db = db_session
         self.redis = redis_client
         self.logger = logging.getLogger(__name__)
@@ -858,7 +858,7 @@ class KeywordMonetizationEngine:
 class ContentSEORevenueTracker:
     """Tracker spécialisé pour revenus SEO du contenu"""
     
-    def __init__(self, db_session: Session, redis_client: redis.Redis):
+    def __init__(self, db_session -> None: Session, redis_client -> None: redis.Redis) -> None:
         self.db = db_session
         self.redis = redis_client
         self.logger = logging.getLogger(__name__)
@@ -904,7 +904,7 @@ class ContentSEORevenueTracker:
 class OrganicTrafficMonetizer:
     """Monétiseur de trafic organique"""
     
-    def __init__(self, db_session: Session, redis_client: redis.Redis):
+    def __init__(self, db_session -> None: Session, redis_client -> None: redis.Redis) -> None:
         self.db = db_session
         self.redis = redis_client
         self.logger = logging.getLogger(__name__)
@@ -941,7 +941,7 @@ class OrganicTrafficMonetizer:
 class SEOPerformanceRevenueAnalyzer:
     """Analyseur de performance SEO-revenue"""
     
-    def __init__(self, db_session: Session, redis_client: redis.Redis):
+    def __init__(self, db_session -> None: Session, redis_client -> None: redis.Redis) -> None:
         self.db = db_session
         self.redis = redis_client
         self.logger = logging.getLogger(__name__)

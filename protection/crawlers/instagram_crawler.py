@@ -93,7 +93,7 @@ class InstagramAPIClient:
     """
 Instagram Graph API client for business accounts."""
     
-    def __init__(self, access_token: str, app_id: str):
+    def __init__(self, access_token -> None: str, app_id -> None: str) -> None:
         """
 Initialize Instagram API client."""
         self.access_token = access_token
@@ -221,7 +221,7 @@ class InstagramSeleniumCrawler:
     """
 Selenium-based Instagram crawler for public content."""
     
-    def __init__(self, headless: bool = True, proxy: Optional[str] = None):
+    def __init__(self, headless -> None: bool = True, proxy -> None: Optional[str] = None) -> None:
         """
 Initialize Instagram Selenium crawler."""
         self.headless = headless
@@ -265,7 +265,7 @@ Initialize Instagram Selenium crawler."""
             logger.error(f"Failed to setup Chrome driver for Instagram: {e}")
             raise
     
-    async def _rate_limit(self):
+    async def _rate_limit(self) -> None:
         """Apply rate limiting between requests."""
         current_time = time.time()
         elapsed = current_time - self.last_request_time
@@ -463,7 +463,7 @@ Scrape detailed information from Instagram post page."""
             logger.error(f"Error scraping Instagram post details: {e}")
             return None
     
-    def close(self):
+    def close(self) -> None:
         """Close Selenium driver."""
         if self.driver:
             self.driver.quit()
@@ -483,7 +483,7 @@ class InstagramCrawler(BasePlatformCrawler):
     - Media content extraction and analysis
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """
 Initialize Instagram crawler."""
         super().__init__("instagram", config)
@@ -677,10 +677,10 @@ Initialize Instagram crawler."""
     
     async def _continuous_hashtag_monitor(
         self,
-        hashtag: str,
-        callback_func: callable,
-        interval_minutes: int
-    ):
+        hashtag -> None: str,
+        callback_func -> None: callable,
+        interval_minutes -> None: int
+    ) -> None:
         """Continuous hashtag monitoring loop."""
         logger.info(f"Starting continuous monitoring for hashtag {hashtag}")
         
@@ -727,7 +727,7 @@ Get crawler statistics."""
         
         return stats
     
-    def cleanup(self):
+    def cleanup(self) -> None:
         """Cleanup crawler resources."""
         if self.selenium_crawler:
             self.selenium_crawler.close()

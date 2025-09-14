@@ -1,4 +1,6 @@
 """Serialization - Data Serializers and Formatters
+import asyncio
+
 Consolidated serialization functionality for API data transformation.
 
 This module consolidates serialization from:
@@ -57,6 +59,7 @@ class BaseSerializationModel(BaseModel):
     """Base model for serialization with common fields"""
     
     class Config:
+    """Config: class implementation"""
         json_encoders = {
             datetime: lambda v: v.isoformat(),
             date: lambda v: v.isoformat(),
@@ -177,7 +180,7 @@ class PerformanceReportSerializer(BaseSerializationModel):
 class SerializationService:
     """Main serialization service"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.default_format = SerializationFormat.JSON
         self.compression_enabled = True
     
@@ -271,7 +274,7 @@ class SerializationService:
         output.seek(0)
         return output.read()
     
-    def _dict_to_xml(self, data: Dict[str, Any], parent: ET.Element):
+    def _dict_to_xml(self, data -> None: Dict[str, Any], parent -> None: ET.Element) -> None:
         """Convert dictionary to XML elements"""
         for key, value in data.items():
             element = ET.SubElement(parent, str(key))
@@ -328,7 +331,7 @@ class SerializationService:
 class ResponseBuilder:
     """Builder for creating standardized API responses"""
     
-    def __init__(self, serialization_service: SerializationService = None):
+    def __init__(self, serialization_service -> None: SerializationService = None) -> None:
         self.serializer = serialization_service or SerializationService()
     
     def success_response(
@@ -419,7 +422,7 @@ class ResponseBuilder:
     ) -> StreamingResponse:
         """Create file download response"""
         
-        def generate():
+        def generate() -> None:
             yield content
         
         return StreamingResponse(
@@ -475,7 +478,7 @@ class ImageMetadataSerializer(BaseSerializationModel):
 class HighPerformanceSerializer:
     """Enterprise high-performance serializer with optimizations"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.compression_engines = {
             CompressionType.GZIP: self._gzip_compress,
             CompressionType.BROTLI: self._brotli_compress,
@@ -625,7 +628,7 @@ class HighPerformanceSerializer:
 class MultiFormatBatchSerializer:
     """Batch serializer for handling multiple formats efficiently"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.high_perf_serializer = HighPerformanceSerializer()
         self.batch_processor = BatchProcessor()
     
@@ -682,7 +685,7 @@ class MultiFormatBatchSerializer:
 class SerializationPerformanceMonitor:
     """Monitor serialization performance and optimize accordingly"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.performance_stats = {
             "cache_hits": 0,
             "cache_misses": 0,
@@ -691,11 +694,11 @@ class SerializationPerformanceMonitor:
             "compression_stats": {}
         }
     
-    async def record_cache_hit(self, cache_key: str):
+    async def record_cache_hit(self, cache_key -> None: str) -> None:
         """Record cache hit for performance tracking"""
         self.performance_stats["cache_hits"] += 1
     
-    async def record_serialization(self, result: Dict[str, Any]):
+    async def record_serialization(self, result -> None: Dict[str, Any]) -> None:
         """Record serialization performance metrics"""
         self.performance_stats["total_serializations"] += 1
         self.performance_stats["cache_misses"] += 1

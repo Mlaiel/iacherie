@@ -51,7 +51,7 @@ class RevenueMilestone:
 class RevenueMilestoneEngine:
     """Enterprise Revenue Milestone Detection and Notification Engine"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize the Revenue Milestone Engine"""
         self.config = config or {}
         self.logger = logging.getLogger(__name__)

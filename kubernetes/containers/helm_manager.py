@@ -114,7 +114,7 @@ class HelmChartManager:
     """
 Professional Helm chart manager"""
     
-    def __init__(self, charts_path: str = "/app/charts", config_path: str = "/app/config/helm"):
+    def __init__(self, charts_path -> None: str = "/app/charts", config_path -> None: str = "/app/config/helm") -> None:
         self.charts_path = Path(charts_path)
         self.config_path = Path(config_path)
         self.repositories = {}

@@ -74,7 +74,7 @@ class HAProxyFrontend:
 class HAProxyConfigGenerator:
     """Generate HAProxy configurations"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.global_config = {
             'daemon': True,
             'maxconn': 4096,
@@ -255,7 +255,7 @@ Generate global configuration section"""
 class HAProxyManager:
     """Enterprise HAProxy Load Balancer Manager"""
     
-    def __init__(self, config_file: str = "/etc/haproxy/haproxy.cfg"):
+    def __init__(self, config_file -> None: str = "/etc/haproxy/haproxy.cfg") -> None:
         self.config_file = Path(config_file)
         self.config_dir = self.config_file.parent
         self.config_generator = HAProxyConfigGenerator()

@@ -221,7 +221,7 @@ class ModelInterface(ABC):
 class HuggingFaceModel(ModelInterface):
     """Hugging Face model implementation"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.model = None
         self.tokenizer = None
         self.pipeline = None
@@ -301,7 +301,7 @@ class HuggingFaceModel(ModelInterface):
 class CustomModel(ModelInterface):
     """Custom model implementation"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.model = None
         self.metadata = None
         
@@ -367,7 +367,7 @@ class CustomModel(ModelInterface):
 class ModelManager:
     """Manages AI models and their lifecycle"""
     
-    def __init__(self, max_models: int = 10):
+    def __init__(self, max_models -> None: int = 10) -> None:
         self.max_models = max_models
         self.models: Dict[str, ModelInterface] = {}
         self.metadata: Dict[str, ModelMetadata] = {}
@@ -497,7 +497,7 @@ class ModelManager:
             # Default to custom for unsupported frameworks
             return CustomModel()
             
-    async def _unload_least_used_model(self):
+    async def _unload_least_used_model(self) -> None:
         """Unload the least used model"""
         if not self.models:
             return
@@ -510,7 +510,7 @@ class ModelManager:
         
         await self.unload_model(least_used_id)
         
-    def _update_percentiles(self, model_id: str):
+    def _update_percentiles(self, model_id -> None: str) -> None:
         """Update latency percentiles"""
         if model_id not in self.latency_history:
             return
@@ -553,7 +553,7 @@ class ModelManager:
 class RequestQueue:
     """Priority queue for inference requests"""
     
-    def __init__(self, maxsize: int = 1000):
+    def __init__(self, maxsize -> None: int = 1000) -> None:
         self.maxsize = maxsize
         self.requests: Dict[str, InferenceRequest] = {}
         self.priority_queue: List[str] = []  # request_ids sorted by priority
@@ -610,7 +610,7 @@ class RequestQueue:
 class AIInferenceService:
     """Real-time AI Inference and Prediction Service"""
     
-    def __init__(self, name: str = "ai_inference_service"):
+    def __init__(self, name -> None: str = "ai_inference_service") -> None:
         self.name = name
         self.model_manager = ModelManager()
         self.request_queue = RequestQueue()
@@ -628,7 +628,7 @@ class AIInferenceService:
             'models_loaded': 0
         }
         
-    async def start(self):
+    async def start(self) -> None:
         """Start AI inference service"""
         self.running = True
         
@@ -642,7 +642,7 @@ class AIInferenceService:
         
         logger.info(f"Started AI inference service: {self.name}")
         
-    async def stop(self):
+    async def stop(self) -> None:
         """Stop AI inference service"""
         self.running = False
         
@@ -750,7 +750,7 @@ class AIInferenceService:
             logger.error(f"Error cancelling inference request: {str(e)}")
             return False
             
-    async def _worker(self, worker_name: str):
+    async def _worker(self, worker_name -> None: str) -> None:
         """Worker to process inference requests"""
         logger.info(f"Started inference worker: {worker_name}")
         
@@ -814,7 +814,7 @@ class AIInferenceService:
                 
         logger.info(f"Stopped inference worker: {worker_name}")
         
-    async def _send_callback(self, request: InferenceRequest):
+    async def _send_callback(self, request -> None: InferenceRequest) -> None:
         """Send callback notification"""
         try:
             import aiohttp
@@ -837,7 +837,7 @@ class AIInferenceService:
         except Exception as e:
             logger.error(f"Error sending callback for request {request.id}: {str(e)}")
             
-    async def _cleanup_completed_requests(self):
+    async def _cleanup_completed_requests(self) -> None:
         """Cleanup old completed requests"""
         while self.running:
             try:

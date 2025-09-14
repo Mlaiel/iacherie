@@ -61,7 +61,7 @@ class ProtectionConfig:
     blockchain_network: str = "ethereum"
     legal_api_endpoints: Dict[str, str] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.legal_api_endpoints is None:
             self.legal_api_endpoints = {
                 "copyright_check": "https://api.copyright.gov/check",
@@ -83,7 +83,7 @@ class ContentRights:
     license_type: str = "all_rights_reserved"
     blockchain_hash: Optional[str] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.territory is None:
             self.territory = ["worldwide"]
         if self.usage_permissions is None:
@@ -149,7 +149,7 @@ class EnterpriseProtectionManager:
     - Real-time monitoring and alerts
     """
     
-    def __init__(self, config: Optional[ProtectionConfig] = None):
+    def __init__(self, config -> None: Optional[ProtectionConfig] = None) -> None:
         self.config = config or ProtectionConfig()
         self.logger = logging.getLogger(__name__)
         self.executor = ThreadPoolExecutor(max_workers=4)
@@ -192,7 +192,7 @@ class EnterpriseProtectionManager:
             ]
         }
     
-    def _init_encryption(self):
+    def _init_encryption(self) -> None:
         """Initialize encryption for sensitive data"""
         # In production: Load from secure key management system
         password = b"ainflue_protection_key_2025"
@@ -206,7 +206,7 @@ class EnterpriseProtectionManager:
         key = kdf.derive(password)
         self.cipher_suite = Fernet(Fernet.generate_key())
     
-    async def initialize_redis(self):
+    async def initialize_redis(self) -> None:
         """Initialize Redis connection for caching and state management"""
         try:
             self.redis_client = redis.from_url(self.config.redis_url)
@@ -276,7 +276,7 @@ class EnterpriseProtectionManager:
             self.logger.error(f"Failed to start protection workflow: {e}")
             raise WorkflowError(f"Workflow initialization failed: {e}")
 
-    async def _execute_workflow(self, workflow: ProtectionWorkflow):
+    async def _execute_workflow(self, workflow -> None: ProtectionWorkflow) -> None:
         """Execute protection workflow stages"""
         try:
             while workflow.stages_pending:
@@ -579,7 +579,7 @@ class EnterpriseProtectionManager:
 
     async def _calculate_file_hash(self, file_path: Union[str, Path]) -> str:
         """Calculate SHA-256 hash of file"""
-        def _hash_file():
+        def _hash_file() -> None:
             hasher = hashlib.sha256()
             with open(file_path, 'rb') as f:
                 for chunk in iter(lambda: f.read(4096), b""):
@@ -714,7 +714,7 @@ class EnterpriseProtectionManager:
 class RightsValidator:
     """Legacy rights validation interface"""
     
-    def __init__(self, protection_manager: EnterpriseProtectionManager):
+    def __init__(self, protection_manager -> None: EnterpriseProtectionManager) -> None:
         self.manager = protection_manager
     
     async def validate_rights(
@@ -733,7 +733,7 @@ class RightsValidator:
 class CopyrightComplianceChecker:
     """Legacy copyright compliance interface"""
     
-    def __init__(self, protection_manager: EnterpriseProtectionManager):
+    def __init__(self, protection_manager -> None: EnterpriseProtectionManager) -> None:
         self.manager = protection_manager
     
     async def check_compliance(self, content_id: str) -> ComplianceReport:

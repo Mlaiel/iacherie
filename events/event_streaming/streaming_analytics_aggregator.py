@@ -108,12 +108,12 @@ class AlertRule:
 class AggregationWindow:
     """Manages aggregation windows and computations"""
     
-    def __init__(self, spec: WindowSpec):
+    def __init__(self, spec -> None: WindowSpec) -> None:
         self.spec = spec
         self.events: List[Tuple[datetime, Dict[str, Any]]] = []
         self.watermark = datetime.min.replace(tzinfo=timezone.utc)
         
-    def add_event(self, event_time: datetime, event_data: Dict[str, Any]):
+    def add_event(self, event_time -> None: datetime, event_data -> None: Dict[str, Any]) -> None:
         """Add event to window"""
         self.events.append((event_time, event_data))
         
@@ -124,7 +124,7 @@ class AggregationWindow:
         cutoff_time = self.watermark - self.spec.allowed_lateness
         self.events = [(t, d) for t, d in self.events if t >= cutoff_time]
     
-    def update_watermark(self, new_watermark: datetime):
+    def update_watermark(self, new_watermark -> None: datetime) -> None:
         """Update watermark and trigger window computations"""
         if new_watermark > self.watermark:
             self.watermark = new_watermark
@@ -295,7 +295,7 @@ class AggregationComputer:
 class CreatorPerformanceAggregator:
     """Aggregator for creator performance metrics"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.window = AggregationWindow(WindowSpec(
             window_type=WindowType.SLIDING,
             size=timedelta(hours=1),
@@ -360,7 +360,7 @@ class CreatorPerformanceAggregator:
 class PlatformBusinessAggregator:
     """Aggregator for platform business metrics"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.revenue_window = AggregationWindow(WindowSpec(
             window_type=WindowType.TUMBLING,
             size=timedelta(hours=1)
@@ -468,7 +468,7 @@ class PlatformBusinessAggregator:
 class TrendingDetectionAggregator:
     """Aggregator for detecting trending content and creators"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.short_term_window = AggregationWindow(WindowSpec(
             window_type=WindowType.SLIDING,
             size=timedelta(minutes=30),
@@ -624,12 +624,12 @@ class TrendingDetectionAggregator:
 class AlertManager:
     """Manages alerts based on aggregation results"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.alert_rules: List[AlertRule] = []
         self.alert_history: deque = deque(maxlen=1000)
         self.last_alert_times: Dict[str, datetime] = {}
         
-    def add_alert_rule(self, rule: AlertRule):
+    def add_alert_rule(self, rule -> None: AlertRule) -> None:
         """Add alert rule"""
         self.alert_rules.append(rule)
         logger.info(f"Added alert rule: {rule.rule_name}")
@@ -713,7 +713,7 @@ class AlertManager:
 class StreamingAnalyticsAggregator:
     """Main streaming analytics aggregator for Ainflue platform"""
     
-    def __init__(self, metrics_collector=None):
+    def __init__(self, metrics_collector=None) -> None:
         self.metrics_collector = metrics_collector
         self.creator_aggregator = CreatorPerformanceAggregator()
         self.platform_aggregator = PlatformBusinessAggregator()
@@ -725,7 +725,7 @@ class StreamingAnalyticsAggregator:
         # Setup default alert rules
         self._setup_default_alerts()
     
-    async def start(self):
+    async def start(self) -> None:
         """Start the streaming analytics aggregator"""
         try:
             logger.info("Starting Streaming Analytics Aggregator")
@@ -739,7 +739,7 @@ class StreamingAnalyticsAggregator:
             logger.error(f"Failed to start streaming analytics aggregator: {e}")
             raise
     
-    async def stop(self):
+    async def stop(self) -> None:
         """Stop the aggregator"""
         try:
             logger.info("Stopping Streaming Analytics Aggregator")
@@ -757,7 +757,7 @@ class StreamingAnalyticsAggregator:
             logger.error(f"Error stopping streaming analytics aggregator: {e}")
             raise
     
-    def _setup_default_alerts(self):
+    def _setup_default_alerts(self) -> None:
         """Setup default alert rules for Ainflue platform"""
         try:
             # High revenue alert
@@ -899,7 +899,7 @@ class StreamingAnalyticsAggregator:
             logger.error(f"Error processing engagement event: {e}")
             return {"error": str(e)}
     
-    async def _aggregator_loop(self):
+    async def _aggregator_loop(self) -> None:
         """Main aggregator monitoring loop"""
         try:
             while not self._shutdown_event.is_set():
@@ -912,7 +912,7 @@ class StreamingAnalyticsAggregator:
         except Exception as e:
             logger.error(f"Error in aggregator loop: {e}")
     
-    async def _perform_maintenance(self):
+    async def _perform_maintenance(self) -> None:
         """Perform routine maintenance tasks"""
         try:
             # Log system status

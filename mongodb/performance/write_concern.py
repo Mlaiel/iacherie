@@ -52,7 +52,7 @@ class WriteMetrics:
 class WriteConcernOptimizer:
     """Advanced write concern optimizer with adaptive strategies."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize write concern optimizer."""
         self._metrics = WriteMetrics()
         self._latency_samples: List[float] = []

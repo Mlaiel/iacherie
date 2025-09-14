@@ -20,6 +20,7 @@ from decimal import Decimal
 logger = logging.getLogger(__name__)
 
 class RevenueStrategy(str, Enum):
+    """RevenueStrategy class implementation"""
     SUBSCRIPTION = "subscription"
     FREEMIUM = "freemium"
     PAY_PER_VIEW = "pay_per_view"
@@ -28,6 +29,7 @@ class RevenueStrategy(str, Enum):
 
 @dataclass
 class RevenueMetrics:
+    """RevenueMetrics: class implementation"""
     total_revenue: Decimal = Decimal("0.00")
     monthly_recurring_revenue: Decimal = Decimal("0.00")
     average_revenue_per_user: Decimal = Decimal("0.00")
@@ -36,7 +38,8 @@ class RevenueMetrics:
     lifetime_value: Decimal = Decimal("0.00")
 
 class RevenueOptimizationCore:
-    def __init__(self, level: str = "enterprise"):
+    """RevenueOptimizationCore: class implementation"""
+    def __init__(self, level -> None: str = "enterprise") -> None:
         self.level = level
         self.metrics = RevenueMetrics()
         self.strategies: Dict[str, RevenueStrategy] = {}

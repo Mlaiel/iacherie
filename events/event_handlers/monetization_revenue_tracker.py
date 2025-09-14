@@ -78,7 +78,7 @@ class RevenueTransaction:
     processed_at: Optional[datetime] = None
     metadata: Dict[str, Any] = None
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.metadata is None:
             self.metadata = {}
         if self.created_at is None:
@@ -98,7 +98,7 @@ class RevenueShare:
     created_at: datetime
     distributed_at: Optional[datetime] = None
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.created_at is None:
             self.created_at = datetime.utcnow()
 
@@ -148,7 +148,7 @@ class MonetizationRevenueTracker(BaseEventHandler):
                  analytics_engine=None,
                  pricing_optimizer=None,
                  tax_calculator=None,
-                 audit_service=None):
+                 audit_service=None) -> None:
         super().__init__()
         self.payment_processor = payment_processor
         self.analytics_engine = analytics_engine

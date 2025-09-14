@@ -1,3 +1,8 @@
+"""
+Saga Visualization Dashboard module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """Saga Visualization Dashboard - Interactive Monitoring Interface
 ================================================================
@@ -87,7 +92,7 @@ class VisualizationData:
 class SagaVisualizationDashboard:
     """Main dashboard for saga visualization"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.active_visualizations: Dict[str, VisualizationData] = {}
         self.visualization_cache: Dict[str, Any] = {}
         self.dashboard_config: Dict[str, Any] = self._default_dashboard_config()
@@ -562,7 +567,7 @@ class SagaVisualizationDashboard:
         """Get dashboard configuration"""
         return self.dashboard_config.copy()
     
-    async def update_dashboard_config(self, config_updates: Dict[str, Any]):
+    async def update_dashboard_config(self, config_updates -> None: Dict[str, Any]) -> None:
         """Update dashboard configuration"""
         self.dashboard_config.update(config_updates)
         logger.info("Dashboard configuration updated")

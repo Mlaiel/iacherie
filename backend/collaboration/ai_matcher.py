@@ -133,7 +133,7 @@ class MatchAnalysis:
 class AIMatcher:
     """AI-powered creator matching engine"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.matching_algorithm = self.config.get('matching_algorithm', 'hybrid_ml')
         self.min_compatibility_score = self.config.get('min_compatibility_score', 0.6)

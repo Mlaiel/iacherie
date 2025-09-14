@@ -118,7 +118,7 @@ class RoutingDecision:
 class ResourceMonitor:
     """Monitor system and model instance resources"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.monitoring_interval = 10  # seconds
         self.resource_history: Dict[str, deque] = defaultdict(lambda: deque(maxlen=100))
         self.monitoring_active = False
@@ -204,7 +204,7 @@ class ResourceMonitor:
 class ModelRouter:
     """Intelligent model routing system"""
     
-    def __init__(self, routing_strategy: RoutingStrategy = RoutingStrategy.PERFORMANCE_BASED):
+    def __init__(self, routing_strategy -> None: RoutingStrategy = RoutingStrategy.PERFORMANCE_BASED) -> None:
         self.routing_strategy = routing_strategy
         self.routing_history: List[RoutingDecision] = []
         self.creator_affinity_cache: Dict[str, str] = {}  # creator_id -> preferred_instance
@@ -381,7 +381,7 @@ class ModelRouter:
 class AutoScaler:
     """Automatic model instance scaling"""
     
-    def __init__(self, scaling_policy: ScalingPolicy = ScalingPolicy.HYBRID):
+    def __init__(self, scaling_policy -> None: ScalingPolicy = ScalingPolicy.HYBRID) -> None:
         self.scaling_policy = scaling_policy
         self.scaling_decisions: List[Dict[str, Any]] = []
         self.cooldown_period = 60  # seconds
@@ -572,7 +572,7 @@ class AutoScaler:
 class ModelServingOrchestrator:
     """Main model serving orchestration system"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.config = config or {}
         
         # Core components
@@ -1083,7 +1083,7 @@ class ModelServingOrchestrator:
             return {'error': str(e)}
 
 # Example usage and testing
-async def main():
+async def main() -> None:
     """Test model serving orchestrator"""
     try:
         # Initialize orchestrator

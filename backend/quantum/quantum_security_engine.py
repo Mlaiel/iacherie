@@ -283,7 +283,7 @@ class QuantumSecurityEngine:
     ✅ Audit et reporting sécurité
     """
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.config = config or {}
         self.cryptography_processors: Dict[EncryptionAlgorithm, CryptographyProcessor] = {}
         self.threat_detectors: Dict[str, ThreatDetector] = {}
@@ -878,15 +878,16 @@ class QuantumSecurityEngine:
     # MÉTHODES PRIVÉES - CRYPTOGRAPHY
     # ========================================
     
-    async def _get_or_create_cryptography_processor(self, algorithm: EncryptionAlgorithm):
+    async def _get_or_create_cryptography_processor(self, algorithm -> None: EncryptionAlgorithm) -> None:
         """Récupération ou création processeur cryptographique"""
         if algorithm not in self.cryptography_processors:
             self.cryptography_processors[algorithm] = await self._create_cryptography_processor(algorithm)
         return self.cryptography_processors[algorithm]
     
-    async def _create_cryptography_processor(self, algorithm: EncryptionAlgorithm):
+    async def _create_cryptography_processor(self, algorithm -> None: EncryptionAlgorithm) -> None:
         """Création processeur cryptographique"""
         class MockCryptographyProcessor(CryptographyProcessor):
+    """MockCryptographyProcessor class implementation"""
             async def encrypt_data(self, request: EncryptionRequest) -> EncryptionResult:
                 # Simulation chiffrement
                 if isinstance(request.data, str):
@@ -963,15 +964,16 @@ class QuantumSecurityEngine:
     # MÉTHODES PRIVÉES - THREAT DETECTION
     # ========================================
     
-    async def _get_or_create_threat_detector(self, detector_type: str):
+    async def _get_or_create_threat_detector(self, detector_type -> None: str) -> None:
         """Récupération ou création détecteur menaces"""
         if detector_type not in self.threat_detectors:
             self.threat_detectors[detector_type] = await self._create_threat_detector(detector_type)
         return self.threat_detectors[detector_type]
     
-    async def _create_threat_detector(self, detector_type: str):
+    async def _create_threat_detector(self, detector_type -> None: str) -> None:
         """Création détecteur menaces"""
         class MockThreatDetector(ThreatDetector):
+    """MockThreatDetector class implementation"""
             async def analyze_threat(self, request: ThreatAnalysisRequest) -> ThreatAnalysisResult:
                 detected_threats = []
                 
@@ -1035,15 +1037,16 @@ class QuantumSecurityEngine:
     # MÉTHODES PRIVÉES - COMPLIANCE
     # ========================================
     
-    async def _get_or_create_compliance_validator(self, framework: ComplianceFramework):
+    async def _get_or_create_compliance_validator(self, framework -> None: ComplianceFramework) -> None:
         """Récupération ou création validateur conformité"""
         if framework not in self.compliance_validators:
             self.compliance_validators[framework] = await self._create_compliance_validator(framework)
         return self.compliance_validators[framework]
     
-    async def _create_compliance_validator(self, framework: ComplianceFramework):
+    async def _create_compliance_validator(self, framework -> None: ComplianceFramework) -> None:
         """Création validateur conformité"""
         class MockComplianceValidator(ComplianceValidator):
+    """MockComplianceValidator class implementation"""
             async def validate_compliance(self, request: ComplianceAuditRequest) -> Dict[str, Any]:
                 compliance_score = np.random.uniform(0.7, 0.95)
                 
@@ -1071,15 +1074,16 @@ class QuantumSecurityEngine:
     # MÉTHODES PRIVÉES - PRIVACY
     # ========================================
     
-    async def _get_or_create_privacy_protector(self, privacy_level: PrivacyLevel):
+    async def _get_or_create_privacy_protector(self, privacy_level -> None: PrivacyLevel) -> None:
         """Récupération ou création protecteur confidentialité"""
         if privacy_level not in self.privacy_protectors:
             self.privacy_protectors[privacy_level] = await self._create_privacy_protector(privacy_level)
         return self.privacy_protectors[privacy_level]
     
-    async def _create_privacy_protector(self, privacy_level: PrivacyLevel):
+    async def _create_privacy_protector(self, privacy_level -> None: PrivacyLevel) -> None:
         """Création protecteur confidentialité"""
         class MockPrivacyProtector(PrivacyProtector):
+    """MockPrivacyProtector class implementation"""
             async def protect_privacy(self, data: Dict[str, Any], privacy_level: PrivacyLevel) -> Dict[str, Any]:
                 protected_data = data.copy()
                 
@@ -1112,15 +1116,16 @@ class QuantumSecurityEngine:
     # MÉTHODES PRIVÉES - ACCESS CONTROL
     # ========================================
     
-    async def _get_or_create_access_controller(self, controller_type: str):
+    async def _get_or_create_access_controller(self, controller_type -> None: str) -> None:
         """Récupération ou création contrôleur accès"""
         if controller_type not in self.access_controllers:
             self.access_controllers[controller_type] = await self._create_access_controller(controller_type)
         return self.access_controllers[controller_type]
     
-    async def _create_access_controller(self, controller_type: str):
+    async def _create_access_controller(self, controller_type -> None: str) -> None:
         """Création contrôleur accès"""
         class MockAccessController(AccessController):
+    """MockAccessController class implementation"""
             async def validate_access(self, user_id: str, resource_id: str, action: str) -> bool:
                 # Simulation validation accès
                 return np.random.random() > 0.1  # 90% chance accès accordé
@@ -1135,7 +1140,7 @@ class QuantumSecurityEngine:
     # MÉTHODES UTILITAIRES
     # ========================================
     
-    def _initialize_default_security_policies(self):
+    def _initialize_default_security_policies(self) -> None:
         """Initialisation politiques sécurité par défaut"""
         self.security_policies = {
             "password_policy": {
@@ -1178,7 +1183,7 @@ class QuantumSecurityEngine:
         risk_score = (auth_score + access_score + threat_score + (1 - compliance_score)) / 4
         return min(1.0, max(0.0, risk_score))
     
-    async def _log_security_event(self, request: SecurityRequest, result: Dict[str, Any]):
+    async def _log_security_event(self, request -> None: SecurityRequest, result -> None: Dict[str, Any]) -> None:
         """Enregistrement événement sécurité"""
         event = {
             "event_id": str(uuid.uuid4()),

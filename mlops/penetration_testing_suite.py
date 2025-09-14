@@ -1,3 +1,8 @@
+"""
+Penetration Testing Suite module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 🚀 Penetration Testing Suite - Enterprise MLOps Platform
@@ -112,7 +117,7 @@ class PenTestConfig:
 class MLSecurityTester:
     """Testeur de sécurité ML spécialisé"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.adversarial_patterns = [
             "admin", "root", "test", "demo", "../", "../../",
             "<script>", "' OR 1=1", "DROP TABLE", "UNION SELECT",
@@ -644,7 +649,7 @@ class InfrastructureSecurityTester:
 class PenetrationTestingSuite:
     """Suite complète de penetration testing pour sécurité ML"""
     
-    def __init__(self, config: PenTestConfig):
+    def __init__(self, config -> None: PenTestConfig) -> None:
         self.config = config
         self.ml_tester = MLSecurityTester()
         self.web_tester = WebSecurityTester()
@@ -939,7 +944,7 @@ def create_penetration_testing_suite(config: Dict[str, Any]) -> PenetrationTesti
     return PenetrationTestingSuite(pentest_config)
 
 # Exemple d'utilisation
-async def main():
+async def main() -> None:
     """Exemple d'utilisation de la suite de penetration testing"""
     
     # Configuration

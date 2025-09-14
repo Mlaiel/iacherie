@@ -58,7 +58,7 @@ class AgentRegistry:
     - 18 Technical Agents (infrastructure, monitoring, security)
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._agents: Dict[str, Any] = {}
         self._categories: Dict[AgentCategory, Any] = {}
         self._agent_info: Dict[str, AgentInfo] = {}
@@ -67,7 +67,7 @@ class AgentRegistry:
         # Initialize agent collections
         self._initialize_agents()
     
-    def _initialize_agents(self):
+    def _initialize_agents(self) -> None:
         """Initialize all agent categories"""
         try:
             # Initialize agent collections
@@ -87,7 +87,7 @@ class AgentRegistry:
             logger.error(f"❌ Failed to initialize agent registry: {e}")
             raise
     
-    def _register_core_business_agents(self):
+    def _register_core_business_agents(self) -> None:
         """Register core business agents"""
         core_agents = [
             ("ContentStrategistAgent", "Strategic content planning and optimization"),
@@ -121,7 +121,7 @@ class AgentRegistry:
                 capabilities=["strategic_planning", "business_optimization", "analytics"]
             )
     
-    def _register_content_agents(self):
+    def _register_content_agents(self) -> None:
         """Register content processing agents"""
         content_agents = [
             ("MusicProducerAgent", "AI-powered music production and composition"),
@@ -150,7 +150,7 @@ class AgentRegistry:
                 capabilities=["content_creation", "media_processing", "optimization"]
             )
     
-    def _register_technical_agents(self):
+    def _register_technical_agents(self) -> None:
         """Register technical infrastructure agents"""
         technical_agents = [
             ("SystemMonitorAgent", "Comprehensive system monitoring"),

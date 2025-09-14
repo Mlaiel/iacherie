@@ -71,7 +71,7 @@ class CoreHealthChecker:
     Provides comprehensive health checking for essential application
     components including FastAPI app, system resources, and core services.
     """
-    def __init__(self, app: FastAPI, config: Dict[str, Any]):
+    def __init__(self, app -> None: FastAPI, config -> None: Dict[str, Any]) -> None:
         """
         Initialize core health checker
         

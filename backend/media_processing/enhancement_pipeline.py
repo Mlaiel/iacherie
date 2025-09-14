@@ -1,3 +1,8 @@
+"""
+Enhancement Pipeline module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """🚀 Enhancement Pipeline - AI Content Enhancement & Quality Optimization Engine
 ================================================================================
@@ -138,7 +143,7 @@ class EnhancementResult:
 class SRResNet(nn.Module):
     """Super-Resolution ResNet for image enhancement"""
     
-    def __init__(self, scale_factor=2, num_channels=3, num_features=64, num_blocks=16):
+    def __init__(self, scale_factor=2, num_channels=3, num_features=64, num_blocks=16) -> None:
         super(SRResNet, self).__init__()
         self.scale_factor = scale_factor
         
@@ -167,7 +172,7 @@ class SRResNet(nn.Module):
         # Final convolution
         self.conv_final = nn.Conv2d(num_features, num_channels, kernel_size=9, padding=4)
     
-    def _make_res_block(self, num_features):
+    def _make_res_block(self, num_features) -> None:
         """Create residual block"""
         return nn.Sequential(
             nn.Conv2d(num_features, num_features, kernel_size=3, padding=1),
@@ -177,7 +182,7 @@ class SRResNet(nn.Module):
             nn.BatchNorm2d(num_features)
         )
     
-    def forward(self, x):
+    def forward(self, x) -> None:
         """Forward pass"""
         # Initial features
         out = self.relu1(self.conv1(x))
@@ -203,7 +208,7 @@ class SRResNet(nn.Module):
 class DenoisingAutoEncoder(nn.Module):
     """Denoising autoencoder for noise reduction"""
     
-    def __init__(self, num_channels=3, base_features=64):
+    def __init__(self, num_channels=3, base_features=64) -> None:
         super(DenoisingAutoEncoder, self).__init__()
         
         # Encoder
@@ -246,7 +251,7 @@ class DenoisingAutoEncoder(nn.Module):
             nn.Sigmoid()
         )
     
-    def forward(self, x):
+    def forward(self, x) -> None:
         """Forward pass"""
         encoded = self.encoder(x)
         decoded = self.decoder(encoded)
@@ -259,11 +264,11 @@ class DenoisingAutoEncoder(nn.Module):
 class QualityAssessor:
     """Intelligent quality assessment engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.perceptual_model = None
         self.device = "cuda" if torch.cuda.is_available() and _AI_AVAILABLE else "cpu"
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize quality assessment models"""
         try:
             if _AI_AVAILABLE:
@@ -538,12 +543,12 @@ class QualityAssessor:
 class ImageEnhancer:
     """Advanced image enhancement engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.sr_model = None
         self.denoising_model = None
         self.device = "cuda" if torch.cuda.is_available() and _AI_AVAILABLE else "cpu"
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize enhancement models"""
         try:
             if _AI_AVAILABLE:
@@ -809,10 +814,10 @@ class ImageEnhancer:
 class AudioEnhancer:
     """Advanced audio enhancement engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.initialized = False
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize audio enhancement"""
         self.initialized = True
         logger.info("Audio enhancer initialized successfully")
@@ -911,7 +916,7 @@ class AudioEnhancer:
 class EnhancementPipeline:
     """Main enhancement pipeline orchestrator"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize enhancement pipeline"""
         self.config = config or self._get_default_config()
         
@@ -950,7 +955,7 @@ class EnhancementPipeline:
             'cache_enabled': True
         }
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize all enhancement components"""
         if self._initialized:
             return
@@ -1157,7 +1162,7 @@ class EnhancementPipeline:
             'initialized': self._initialized
         }
     
-    async def cleanup(self):
+    async def cleanup(self) -> None:
         """Cleanup resources"""
         # Clear any cached models or data
         self._initialized = False

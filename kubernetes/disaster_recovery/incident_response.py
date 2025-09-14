@@ -134,7 +134,7 @@ class IncidentResponseSystem:
     - Integration with failover and business continuity systems
     - Post-incident analysis and learning
     """
-    def __init__(self, config: Config):
+    def __init__(self, config -> None: Config) -> None:
         self.config = config
         self.logger = logging.getLogger(__name__)
         self.db_manager = DatabaseManager(config)
@@ -172,7 +172,7 @@ class IncidentResponseSystem:
         self._initialize_core_incident_rules()
         self._initialize_response_actions()
 
-    def _initialize_core_incident_rules(self):
+    def _initialize_core_incident_rules(self) -> None:
         """
 Initialize core incident detection rules"""
         core_rules = [
@@ -303,7 +303,7 @@ Initialize core incident detection rules"""
             
             self.incident_rules[rule_config['rule_id']] = incident_rule
 
-    def _initialize_response_actions(self):
+    def _initialize_response_actions(self) -> None:
         """
 Initialize automated response actions"""
         response_actions = [
@@ -425,7 +425,7 @@ Initialize automated response actions"""
             self.logger.error(f"Failed to register incident rule: {e}")
             raise
 
-    async def _monitor_incident_rule(self, rule: IncidentRule):
+    async def _monitor_incident_rule(self, rule -> None: IncidentRule) -> None:
         """Monitor incident detection rule"""
         rule_id = rule.rule_id
         
@@ -532,7 +532,7 @@ Initialize automated response actions"""
             self.logger.error(f"Failed to create incident: {e}")
             raise
 
-    async def _handle_incident_workflow(self, incident: Incident):
+    async def _handle_incident_workflow(self, incident -> None: Incident) -> None:
         """Handle complete incident response workflow"""
         try:
             # Update incident status
@@ -554,7 +554,7 @@ Initialize automated response actions"""
         except Exception as e:
             self.logger.error(f"Incident workflow failed for {incident.incident_id}: {e}")
 
-    async def _execute_automated_response(self, incident: Incident):
+    async def _execute_automated_response(self, incident -> None: Incident) -> None:
         """Execute automated response actions for incident"""
         try:
             # Find matching rule for response procedures
@@ -685,7 +685,7 @@ Initialize automated response actions"""
                 'metrics': self.incident_metrics.copy()
             }
 
-    def _update_incident_metrics(self, incident: Incident):
+    def _update_incident_metrics(self, incident -> None: Incident) -> None:
         """
 Update incident response metrics"""
         self.incident_metrics['total_incidents'] += 1

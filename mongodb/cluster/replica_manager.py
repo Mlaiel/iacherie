@@ -31,7 +31,7 @@ logger = logging.getLogger(__name__)
 class ReplicaManager:
     """Enterprise-grade replica set management system."""
     
-    def __init__(self, connection_string: str, replica_set_name: str):
+    def __init__(self, connection_string -> None: str, replica_set_name -> None: str) -> None:
         """Initialize replica manager."""
         if not MONGODB_AVAILABLE:
             raise ImportError("PyMongo is required for replica set management")
@@ -267,7 +267,7 @@ class ReplicaManager:
             if 'client' in locals():
                 client.close()
     
-    async def _wait_for_primary_election(self, client: MongoClient, timeout: int = 120):
+    async def _wait_for_primary_election(self, client -> None: MongoClient, timeout -> None: int = 120) -> None:
         """Wait for primary election to complete."""
         start_time = datetime.now()
         while (datetime.now() - start_time).seconds < timeout:

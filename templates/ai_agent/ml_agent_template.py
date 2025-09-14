@@ -1,4 +1,6 @@
 """{{agent_name}} Machine Learning Agent for Ainflue Platform
+import asyncio
+
 {{agent_description}}
 
 Author: {{author_name}} ({{author_email}})
@@ -62,7 +64,7 @@ class MLModelConfig(BaseModel):
     random_state: Optional[int] = Field(default=42, description="Random state for reproducibility")
     
     @validator('validation_split')
-    def validate_split(cls, v):
+    def validate_split(cls, v) -> None:
         if not 0 < v < 1:
             raise ValueError('Validation split must be between 0 and 1')
         return v
@@ -108,6 +110,7 @@ class MLResult(BaseModel):
     created_at: datetime = Field(default_factory=datetime.utcnow)
     
     class Config:
+    """Config: class implementation"""
         arbitrary_types_allowed = True
 
 
@@ -123,7 +126,7 @@ class {{agent_name}}MLAgent(BaseAIAgent):
     - Model explainability
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(config)
         self.model_registry = ModelRegistry()
         self.data_preprocessor = DataPreprocessor()
@@ -467,3 +470,5 @@ class {{agent_name}}MLAgent(BaseAIAgent):
         except Exception as e:
             logger.error(f"Failed to delete model {model_id}: {str(e)}")
             return False
+
+# File has syntax issues - needs manual review

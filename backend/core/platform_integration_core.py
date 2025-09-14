@@ -107,7 +107,7 @@ class MultiPlatformIntegrationFramework:
     with intelligent routing, load balancing, and failure recovery.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize the Multi-Platform Integration Framework"""
         self.config = config or {}
         self.platforms: Dict[str, PlatformConfiguration] = {}
@@ -144,7 +144,7 @@ class MultiPlatformIntegrationFramework:
             self.logger.error(f"Failed to register platform {platform_config.platform_name}: {e}")
             return False
     
-    def _initialize_rate_limiter(self, platform_config: PlatformConfiguration):
+    def _initialize_rate_limiter(self, platform_config -> None: PlatformConfiguration) -> None:
         """Initialize rate limiter for platform"""
         
         rate_limits = platform_config.rate_limits
@@ -155,7 +155,7 @@ class MultiPlatformIntegrationFramework:
             'last_reset': datetime.now()
         }
     
-    async def _create_platform_session(self, platform_config: PlatformConfiguration):
+    async def _create_platform_session(self, platform_config -> None: PlatformConfiguration) -> None:
         """Create HTTP session for platform"""
         
         # Configure session with authentication
@@ -351,7 +351,7 @@ class MultiPlatformIntegrationFramework:
             self.logger.warning(f"Failed to parse response: {e}")
             return await response.text()
     
-    def _update_metrics(self, platform_id: str, success: bool, response_time: float):
+    def _update_metrics(self, platform_id -> None: str, success -> None: bool, response_time -> None: float) -> None:
         """Update platform metrics"""
         
         if platform_id not in self.metrics:
@@ -403,7 +403,7 @@ class MultiPlatformIntegrationFramework:
             }
         }
     
-    async def cleanup(self):
+    async def cleanup(self) -> None:
         """Cleanup resources"""
         
         for session in self.session_pool.values():
@@ -421,7 +421,7 @@ class APIGatewayManager:
     and comprehensive API lifecycle management.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize the API Gateway Manager"""
         self.config = config or {}
         self.routes: Dict[str, Dict[str, Any]] = {}
@@ -595,7 +595,7 @@ class APIGatewayManager:
         
         return cached_item
     
-    def _cache_response(self, cache_key: str, response: Dict[str, Any]):
+    def _cache_response(self, cache_key -> None: str, response -> None: Dict[str, Any]) -> None:
         """Cache response"""
         
         if len(self.cache) > self.config.get('max_cache_size', 1000):
@@ -617,7 +617,7 @@ class CrossPlatformSynchronizer:
     across multiple platforms with conflict resolution and recovery.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize the Cross-Platform Synchronizer"""
         self.config = config or {}
         self.sync_jobs: Dict[str, Dict[str, Any]] = {}
@@ -756,7 +756,7 @@ class PlatformIntegrationCore:
     across the IA Influencer Agent platform with enterprise-grade capabilities.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize the Platform Integration Core"""
         self.config = config or {}
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
@@ -788,7 +788,7 @@ class PlatformIntegrationCore:
             self.logger.error(f"Platform Integration Core initialization failed: {e}")
             return False
     
-    async def _initialize_default_platforms(self):
+    async def _initialize_default_platforms(self) -> None:
         """Initialize default platform configurations"""
         
         # Example default platforms
@@ -831,7 +831,7 @@ class PlatformIntegrationCore:
             'platform_statuses': platform_statuses
         }
     
-    async def cleanup(self):
+    async def cleanup(self) -> None:
         """Cleanup resources"""
         await self.integration_framework.cleanup()
 

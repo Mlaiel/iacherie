@@ -99,7 +99,7 @@ class PartitioningOptimizationManager:
     - Automated maintenance and archival
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._partitions: Dict[str, PartitionInfo] = {}
         self._partitioning_rules: List[PartitioningRule] = []
         self._optimization_history: List[Dict[str, Any]] = []
@@ -119,7 +119,7 @@ class PartitioningOptimizationManager:
         # Initialize Ainflue business partitioning rules
         self._initialize_business_rules()
     
-    def _initialize_business_rules(self):
+    def _initialize_business_rules(self) -> None:
         """Initialize Ainflue-specific partitioning rules"""
         
         # Content events - partition by time and content type
@@ -189,7 +189,7 @@ class PartitioningOptimizationManager:
         )
         self._partitioning_rules.append(system_rule)
     
-    async def initialize(self, backend_connections: Dict[str, Any]):
+    async def initialize(self, backend_connections -> None: Dict[str, Any]) -> None:
         """Initialize the partitioning optimization manager"""
         
         self._backend_connections = backend_connections
@@ -205,7 +205,7 @@ class PartitioningOptimizationManager:
         self._is_initialized = True
         logger.info("Partitioning Optimization Manager initialized successfully")
     
-    async def _discover_existing_partitions(self):
+    async def _discover_existing_partitions(self) -> None:
         """Discover existing partitions across backends"""
         
         # PostgreSQL partition discovery
@@ -220,7 +220,7 @@ class PartitioningOptimizationManager:
         if 'elasticsearch' in self._backend_connections:
             await self._discover_elasticsearch_partitions()
     
-    async def _discover_postgresql_partitions(self):
+    async def _discover_postgresql_partitions(self) -> None:
         """Discover PostgreSQL table partitions"""
         
         try:
@@ -268,7 +268,7 @@ class PartitioningOptimizationManager:
         except Exception as e:
             logger.error(f"Failed to discover PostgreSQL partitions: {e}")
     
-    async def _discover_mongodb_partitions(self):
+    async def _discover_mongodb_partitions(self) -> None:
         """Discover MongoDB collection shards/partitions"""
         
         try:
@@ -301,7 +301,7 @@ class PartitioningOptimizationManager:
         except Exception as e:
             logger.error(f"Failed to discover MongoDB partitions: {e}")
     
-    async def _discover_elasticsearch_partitions(self):
+    async def _discover_elasticsearch_partitions(self) -> None:
         """Discover Elasticsearch indices"""
         
         try:
@@ -448,8 +448,8 @@ class PartitioningOptimizationManager:
             logger.error(f"Failed to create partition {partition_name}: {e}")
             return False
     
-    async def _create_physical_partition(self, partition_name: str, 
-                                       rule: PartitioningRule):
+    async def _create_physical_partition(self, partition_name -> None: str, 
+                                       rule -> None: PartitioningRule) -> None:
         """Create physical partition in storage backends"""
         
         # PostgreSQL table partition creation
@@ -464,8 +464,8 @@ class PartitioningOptimizationManager:
         if 'elasticsearch' in self._backend_connections:
             await self._create_elasticsearch_index(partition_name, rule)
     
-    async def _create_postgresql_partition(self, partition_name: str, 
-                                         rule: PartitioningRule):
+    async def _create_postgresql_partition(self, partition_name -> None: str, 
+                                         rule -> None: PartitioningRule) -> None:
         """Create PostgreSQL table partition"""
         
         try:
@@ -506,8 +506,8 @@ class PartitioningOptimizationManager:
             logger.error(f"Failed to create PostgreSQL partition {partition_name}: {e}")
             raise
     
-    async def _create_mongodb_collection(self, partition_name: str, 
-                                       rule: PartitioningRule):
+    async def _create_mongodb_collection(self, partition_name -> None: str, 
+                                       rule -> None: PartitioningRule) -> None:
         """Create MongoDB collection with appropriate indexes"""
         
         try:
@@ -525,8 +525,8 @@ class PartitioningOptimizationManager:
             logger.error(f"Failed to create MongoDB collection {partition_name}: {e}")
             raise
     
-    async def _create_elasticsearch_index(self, partition_name: str, 
-                                        rule: PartitioningRule):
+    async def _create_elasticsearch_index(self, partition_name -> None: str, 
+                                        rule -> None: PartitioningRule) -> None:
         """Create Elasticsearch index with appropriate mapping"""
         
         try:
@@ -619,8 +619,8 @@ class PartitioningOptimizationManager:
         
         return recommendations
     
-    async def _apply_optimization(self, partition_name: str,
-                                optimization: OptimizationRecommendation):
+    async def _apply_optimization(self, partition_name -> None: str,
+                                optimization -> None: OptimizationRecommendation) -> None:
         """Apply optimization recommendation"""
         
         try:
@@ -636,7 +636,7 @@ class PartitioningOptimizationManager:
         except Exception as e:
             logger.error(f"Failed to apply optimization to {partition_name}: {e}")
     
-    async def _archive_partition(self, partition_name: str):
+    async def _archive_partition(self, partition_name -> None: str) -> None:
         """Archive partition to cold storage"""
         
         if partition_name in self._partitions:
@@ -647,7 +647,7 @@ class PartitioningOptimizationManager:
             # In real implementation, move data to archive storage
             logger.info(f"Archived partition {partition_name}")
     
-    async def _compress_partition(self, partition_name: str):
+    async def _compress_partition(self, partition_name -> None: str) -> None:
         """Compress partition for storage efficiency"""
         
         if partition_name in self._partitions:
@@ -660,7 +660,7 @@ class PartitioningOptimizationManager:
             
             logger.info(f"Compressed partition {partition_name}")
     
-    async def _reindex_partition(self, partition_name: str):
+    async def _reindex_partition(self, partition_name -> None: str) -> None:
         """Reindex partition for performance"""
         
         if partition_name in self._partitions:
@@ -710,7 +710,7 @@ class PartitioningOptimizationManager:
             'last_optimization': datetime.utcnow().isoformat()
         }
     
-    async def _partition_monitoring_task(self):
+    async def _partition_monitoring_task(self) -> None:
         """Background task for partition monitoring"""
         
         while self._is_initialized:
@@ -721,7 +721,7 @@ class PartitioningOptimizationManager:
                 logger.error(f"Partition monitoring task error: {e}")
                 await asyncio.sleep(300)  # 5 minutes retry
     
-    async def _monitor_partition_performance(self):
+    async def _monitor_partition_performance(self) -> None:
         """Monitor partition performance and update metrics"""
         
         for partition_name, partition in self._partitions.items():
@@ -738,7 +738,7 @@ class PartitioningOptimizationManager:
             except Exception as e:
                 logger.error(f"Failed to monitor partition {partition_name}: {e}")
     
-    async def _optimization_task(self):
+    async def _optimization_task(self) -> None:
         """Background task for automatic optimization"""
         
         while self._is_initialized:
@@ -749,7 +749,7 @@ class PartitioningOptimizationManager:
                 logger.error(f"Optimization task error: {e}")
                 await asyncio.sleep(3600)  # 1 hour retry
     
-    async def _perform_automatic_optimization(self):
+    async def _perform_automatic_optimization(self) -> None:
         """Perform automatic optimization across all partitions"""
         
         optimization_count = 0
@@ -775,7 +775,7 @@ class PartitioningOptimizationManager:
         if optimization_count > 0:
             logger.info(f"Completed automatic optimization: {optimization_count} optimizations applied")
     
-    async def _maintenance_task(self):
+    async def _maintenance_task(self) -> None:
         """Background task for partition maintenance"""
         
         while self._is_initialized:
@@ -786,7 +786,7 @@ class PartitioningOptimizationManager:
                 logger.error(f"Maintenance task error: {e}")
                 await asyncio.sleep(3600)
     
-    async def _perform_maintenance(self):
+    async def _perform_maintenance(self) -> None:
         """Perform routine maintenance tasks"""
         
         # Clean up old partitions
@@ -798,7 +798,7 @@ class PartitioningOptimizationManager:
         # Check for partition creation needs
         await self._check_partition_creation_needs()
     
-    async def _cleanup_old_partitions(self):
+    async def _cleanup_old_partitions(self) -> None:
         """Clean up old partitions based on retention policies"""
         
         current_time = datetime.utcnow()
@@ -818,7 +818,7 @@ class PartitioningOptimizationManager:
                     partition.status = PartitionStatus.SCHEDULED_FOR_DELETION
                     logger.warning(f"Partition {partition_name} exceeds retention but requires manual deletion")
     
-    async def _update_partition_statistics(self):
+    async def _update_partition_statistics(self) -> None:
         """Update partition statistics"""
         
         for partition_name, partition in self._partitions.items():
@@ -829,7 +829,7 @@ class PartitioningOptimizationManager:
             except Exception as e:
                 logger.error(f"Failed to update statistics for {partition_name}: {e}")
     
-    async def _check_partition_creation_needs(self):
+    async def _check_partition_creation_needs(self) -> None:
         """Check if new partitions need to be created"""
         
         # This would analyze upcoming needs and pre-create partitions

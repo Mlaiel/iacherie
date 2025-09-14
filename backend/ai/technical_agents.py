@@ -65,7 +65,7 @@ class TechnicalAgents:
     18. Performance - Performance optimization
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._monitoring_intervals = {
             'system': 60,      # seconds
             'security': 300,   # 5 minutes

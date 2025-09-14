@@ -18,7 +18,7 @@ logger = logging.getLogger(__name__)
 class UserAnalytics:
     """User behavior analytics engine."""
     
-    def __init__(self, pipeline_builder: Optional[PipelineBuilder] = None):
+    def __init__(self, pipeline_builder -> None: Optional[PipelineBuilder] = None) -> None:
         """Initialize user analytics."""
         self.pipeline_builder = pipeline_builder or get_pipeline_builder()
     

@@ -137,7 +137,7 @@ class ComplianceConfigs:
     - Automated compliance checking
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.platform_policies: Dict[str, List[PlatformPolicy]] = {}
         self.compliance_rules: Dict[str, ComplianceRule] = {}
         self.data_handling_rules: Dict[str, DataHandlingRule] = {}
@@ -166,7 +166,7 @@ class ComplianceConfigs:
             "legal_contact": "legal@ainflue.com"
         }
         
-    def _load_default_configurations(self):
+    def _load_default_configurations(self) -> None:
         """Load default compliance configurations"""
         
         # Platform policies
@@ -692,7 +692,7 @@ class ComplianceConfigs:
             "global_settings": self.global_settings
         }
         
-    def export_config(self, output_path: str):
+    def export_config(self, output_path -> None: str) -> None:
         """Export configuration to JSON file"""
         config_data = {
             "global_settings": self.global_settings,

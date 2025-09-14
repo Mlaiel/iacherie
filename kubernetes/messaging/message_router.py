@@ -10,7 +10,7 @@ Legal action will be taken against violators.
 Contact: mlaiel@live.de for licensing inquiries.
 
 Team Specialties:
-- Lead Dev IA + Backend Senior + ML Engineer + DBA + DevOps 
+    - Lead Dev IA + Backend Senior + ML Engineer + DBA + DevOps 
 - Audio Processing + Security + Microservices + IA Prompt Engineering
 """
 
@@ -184,6 +184,7 @@ Transform message before routing"""
 
 
 class MessageFilter(ABC):
+    """MessageFilter class implementation"""
         try:
             logger.info(f"Executing __init__")
             
@@ -245,7 +246,7 @@ Add content processing metadata"""
 class PriorityFilter(MessageFilter):
     """Filter messages based on priority"""
     
-    def __init__(self, min_priority: MessagePriority):
+    def __init__(self, min_priority -> None: MessagePriority) -> None:
         self.min_priority = min_priority
         
     async def filter(self, message: Message) -> bool:
@@ -266,7 +267,7 @@ class MessageRouter:
     Enterprise message routing and orchestration system
     Handles intelligent routing across multiple messaging protocols
     """
-    def __init__(self):
+    def __init__(self) -> None:
         self.routes: Dict[MessageType, List[RouteConfig]] = {}
         self.handlers: Dict[str, MessageHandler] = {}
         self.transformers: Dict[str, MessageTransformer] = {}
@@ -747,3 +748,5 @@ Reprocess dead letter messages"""
             "protocols": list(self.protocols.keys()),
             "export_timestamp": time.time()
         }
+
+# File has syntax issues - needs manual review

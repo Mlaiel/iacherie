@@ -41,7 +41,7 @@ class DatabaseManager:
     """
 Gestionnaire de base de données enterprise pour le rights tracking"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.engine = None
         self.async_session_factory = None
@@ -112,7 +112,7 @@ Initialise le gestionnaire de base de données"""
             return False
     
     @asynccontextmanager
-    async def get_session(self):
+    async def get_session(self) -> None:
         """Context manager pour les sessions de base de données"""
         async with self.async_session_factory() as session:
             try:
@@ -873,7 +873,7 @@ Initialise le gestionnaire de base de données"""
     # CACHE OPERATIONS
     # =================================================================
     
-    async def _cache_content_metadata(self, content_metadata: ContentMetadata):
+    async def _cache_content_metadata(self, content_metadata -> None: ContentMetadata) -> None:
         """Met en cache les métadonnées de contenu"""
         if not self.redis_client:
             return
@@ -914,7 +914,7 @@ Initialise le gestionnaire de base de données"""
         
         return None
     
-    async def _cache_rights_holder(self, rights_holder: RightsHolder):
+    async def _cache_rights_holder(self, rights_holder -> None: RightsHolder) -> None:
         """Met en cache un détenteur de droits"""
         if not self.redis_client:
             return
@@ -955,7 +955,7 @@ Initialise le gestionnaire de base de données"""
         
         return None
     
-    async def invalidate_cache(self, pattern: str):
+    async def invalidate_cache(self, pattern -> None: str) -> None:
         """Invalide les entrées de cache selon un pattern"""
         if not self.redis_client:
             return
@@ -1099,7 +1099,7 @@ Vérifie la santé de la base de données"""
             logger.error(f"Erreur statistiques base de données: {e}")
             return {'error': str(e)}
     
-    async def cleanup_old_data(self, retention_days: int = 365):
+    async def cleanup_old_data(self, retention_days -> None: int = 365) -> None:
         """Nettoie les anciennes données selon la politique de rétention"""
         try:
             cutoff_date = datetime.utcnow() - timedelta(days=retention_days)
@@ -1135,7 +1135,7 @@ Vérifie la santé de la base de données"""
             logger.error(f"Erreur nettoyage données anciennes: {e}")
             return {}
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Arrêt propre du gestionnaire de base de données"""
         try:
             if self.redis_client:

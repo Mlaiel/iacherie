@@ -81,7 +81,7 @@ class CCPAConsumerRequest:
 class CCPAComplianceManager:
     """CCPA compliance management for Ainflue platform"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.ccpa_requirements = self._initialize_ccpa_requirements()
         self.data_disclosures = {}
         self.consumer_requests = {}

@@ -82,7 +82,7 @@ class SocialContent:
 class BaseSocialConnector:
     """Base class for all social media connectors"""
     
-    def __init__(self, platform: SocialPlatform, api_credentials: Dict[str, str]):
+    def __init__(self, platform -> None: SocialPlatform, api_credentials -> None: Dict[str, str]) -> None:
         self.platform = platform
         self.credentials = api_credentials
         self.session = None
@@ -107,7 +107,7 @@ class BaseSocialConnector:
 class InstagramConnector(BaseSocialConnector):
     """Instagram Business API connector"""
     
-    def __init__(self, api_credentials: Dict[str, str]):
+    def __init__(self, api_credentials -> None: Dict[str, str]) -> None:
         super().__init__(SocialPlatform.INSTAGRAM, api_credentials)
         self.graph_api_base = "https://graph.facebook.com/v18.0"
     
@@ -175,7 +175,7 @@ class InstagramConnector(BaseSocialConnector):
 class TikTokConnector(BaseSocialConnector):
     """TikTok for Business API connector"""
     
-    def __init__(self, api_credentials: Dict[str, str]):
+    def __init__(self, api_credentials -> None: Dict[str, str]) -> None:
         super().__init__(SocialPlatform.TIKTOK, api_credentials)
         self.api_base = "https://business-api.tiktok.com/open_api/v1.3"
     
@@ -204,7 +204,7 @@ class TikTokConnector(BaseSocialConnector):
 class YouTubeConnector(BaseSocialConnector):
     """YouTube Data API v3 connector"""
     
-    def __init__(self, api_credentials: Dict[str, str]):
+    def __init__(self, api_credentials -> None: Dict[str, str]) -> None:
         super().__init__(SocialPlatform.YOUTUBE, api_credentials)
         self.api_base = "https://www.googleapis.com/youtube/v3"
     
@@ -238,7 +238,7 @@ class YouTubeConnector(BaseSocialConnector):
 class TwitterConnector(BaseSocialConnector):
     """Twitter API v2 connector"""
     
-    def __init__(self, api_credentials: Dict[str, str]):
+    def __init__(self, api_credentials -> None: Dict[str, str]) -> None:
         super().__init__(SocialPlatform.TWITTER, api_credentials)
         self.api_base = "https://api.twitter.com/2"
     
@@ -276,7 +276,7 @@ class TwitterConnector(BaseSocialConnector):
 class LinkedInConnector(BaseSocialConnector):
     """LinkedIn Marketing API connector"""
     
-    def __init__(self, api_credentials: Dict[str, str]):
+    def __init__(self, api_credentials -> None: Dict[str, str]) -> None:
         super().__init__(SocialPlatform.LINKEDIN, api_credentials)
         self.api_base = "https://api.linkedin.com/v2"
     
@@ -314,7 +314,7 @@ class LinkedInConnector(BaseSocialConnector):
 class SocialMediaConnectors:
     """Consolidated manager for all social media platform connectors"""
     
-    def __init__(self, credentials: Dict[str, Dict[str, str]]):
+    def __init__(self, credentials -> None: Dict[str, Dict[str, str]]) -> None:
         """
         Initialize all social media connectors
         
@@ -434,7 +434,7 @@ class SocialMediaConnectors:
 class FacebookConnector(BaseSocialConnector):
     """Facebook Business API connector with advanced features"""
     
-    def __init__(self, api_credentials: Dict[str, str]):
+    def __init__(self, api_credentials -> None: Dict[str, str]) -> None:
         super().__init__(SocialPlatform.FACEBOOK, api_credentials)
         self.graph_api_base = "https://graph.facebook.com/v18.0"
     
@@ -454,7 +454,7 @@ class FacebookConnector(BaseSocialConnector):
 class SnapchatConnector(BaseSocialConnector):
     """Snapchat Marketing API connector"""
     
-    def __init__(self, api_credentials: Dict[str, str]):
+    def __init__(self, api_credentials -> None: Dict[str, str]) -> None:
         super().__init__(SocialPlatform.SNAPCHAT, api_credentials)
         self.api_base = "https://adsapi.snapchat.com/v1"
     
@@ -474,7 +474,7 @@ class SnapchatConnector(BaseSocialConnector):
 class PinterestConnector(BaseSocialConnector):
     """Pinterest API v5 connector"""
     
-    def __init__(self, api_credentials: Dict[str, str]):
+    def __init__(self, api_credentials -> None: Dict[str, str]) -> None:
         super().__init__(SocialPlatform.PINTEREST, api_credentials)
         self.api_base = "https://api.pinterest.com/v5"
     
@@ -494,7 +494,7 @@ class PinterestConnector(BaseSocialConnector):
 class ThreadsConnector(BaseSocialConnector):
     """Meta Threads API connector"""
     
-    def __init__(self, api_credentials: Dict[str, str]):
+    def __init__(self, api_credentials -> None: Dict[str, str]) -> None:
         super().__init__(SocialPlatform.THREADS, api_credentials)
         self.api_base = "https://graph.threads.net/v1"
     
@@ -514,7 +514,7 @@ class ThreadsConnector(BaseSocialConnector):
 class BeRealConnector(BaseSocialConnector):
     """BeReal API connector"""
     
-    def __init__(self, api_credentials: Dict[str, str]):
+    def __init__(self, api_credentials -> None: Dict[str, str]) -> None:
         super().__init__(SocialPlatform.BEREAL, api_credentials)
         self.api_base = "https://mobile.bereal.com/api"
     
@@ -534,7 +534,7 @@ class BeRealConnector(BaseSocialConnector):
 class MastodonConnector(BaseSocialConnector):
     """Mastodon ActivityPub connector"""
     
-    def __init__(self, api_credentials: Dict[str, str]):
+    def __init__(self, api_credentials -> None: Dict[str, str]) -> None:
         super().__init__(SocialPlatform.MASTODON, api_credentials)
         self.instance_url = api_credentials.get("instance_url", "https://mastodon.social")
         self.api_base = f"{self.instance_url}/api/v1"
@@ -555,7 +555,7 @@ class MastodonConnector(BaseSocialConnector):
 class BlueSkyConnector(BaseSocialConnector):
     """BlueSky AT Protocol connector"""
     
-    def __init__(self, api_credentials: Dict[str, str]):
+    def __init__(self, api_credentials -> None: Dict[str, str]) -> None:
         super().__init__(SocialPlatform.BLUESKY, api_credentials)
         self.api_base = "https://bsky.social/xrpc"
     
@@ -575,7 +575,7 @@ class BlueSkyConnector(BaseSocialConnector):
 class NostrConnector(BaseSocialConnector):
     """Nostr protocol connector"""
     
-    def __init__(self, api_credentials: Dict[str, str]):
+    def __init__(self, api_credentials -> None: Dict[str, str]) -> None:
         super().__init__(SocialPlatform.NOSTR, api_credentials)
         self.relays = api_credentials.get("relays", ["wss://relay.nostr.info"])
     
@@ -595,7 +595,7 @@ class NostrConnector(BaseSocialConnector):
 class WeiboConnector(BaseSocialConnector):
     """Sina Weibo API connector"""
     
-    def __init__(self, api_credentials: Dict[str, str]):
+    def __init__(self, api_credentials -> None: Dict[str, str]) -> None:
         super().__init__(SocialPlatform.WEIBO, api_credentials)
         self.api_base = "https://api.weibo.com/2"
     
@@ -615,7 +615,7 @@ class WeiboConnector(BaseSocialConnector):
 class LineConnector(BaseSocialConnector):
     """LINE Messaging API connector"""
     
-    def __init__(self, api_credentials: Dict[str, str]):
+    def __init__(self, api_credentials -> None: Dict[str, str]) -> None:
         super().__init__(SocialPlatform.LINE, api_credentials)
         self.api_base = "https://api.line.me/v2"
     
@@ -635,7 +635,7 @@ class LineConnector(BaseSocialConnector):
 class KakaoTalkConnector(BaseSocialConnector):
     """KakaoTalk API connector"""
     
-    def __init__(self, api_credentials: Dict[str, str]):
+    def __init__(self, api_credentials -> None: Dict[str, str]) -> None:
         super().__init__(SocialPlatform.KAKAOTALK, api_credentials)
         self.api_base = "https://kapi.kakao.com"
     
@@ -655,7 +655,7 @@ class KakaoTalkConnector(BaseSocialConnector):
 class VKConnector(BaseSocialConnector):
     """VKontakte API connector"""
     
-    def __init__(self, api_credentials: Dict[str, str]):
+    def __init__(self, api_credentials -> None: Dict[str, str]) -> None:
         super().__init__(SocialPlatform.VK, api_credentials)
         self.api_base = "https://api.vk.com/method"
     
@@ -675,7 +675,7 @@ class VKConnector(BaseSocialConnector):
 class DiscordConnector(BaseSocialConnector):
     """Discord Bot API connector"""
     
-    def __init__(self, api_credentials: Dict[str, str]):
+    def __init__(self, api_credentials -> None: Dict[str, str]) -> None:
         super().__init__(SocialPlatform.DISCORD, api_credentials)
         self.api_base = "https://discord.com/api/v10"
     
@@ -695,7 +695,7 @@ class DiscordConnector(BaseSocialConnector):
 class TelegramConnector(BaseSocialConnector):
     """Telegram Bot API connector"""
     
-    def __init__(self, api_credentials: Dict[str, str]):
+    def __init__(self, api_credentials -> None: Dict[str, str]) -> None:
         super().__init__(SocialPlatform.TELEGRAM, api_credentials)
         self.api_base = f"https://api.telegram.org/bot{api_credentials.get('bot_token')}"
     
@@ -715,7 +715,7 @@ class TelegramConnector(BaseSocialConnector):
 class RedditConnector(BaseSocialConnector):
     """Reddit API connector"""
     
-    def __init__(self, api_credentials: Dict[str, str]):
+    def __init__(self, api_credentials -> None: Dict[str, str]) -> None:
         super().__init__(SocialPlatform.REDDIT, api_credentials)
         self.api_base = "https://oauth.reddit.com"
     
@@ -735,7 +735,7 @@ class RedditConnector(BaseSocialConnector):
 class WhatsAppBusinessConnector(BaseSocialConnector):
     """WhatsApp Business API connector"""
     
-    def __init__(self, api_credentials: Dict[str, str]):
+    def __init__(self, api_credentials -> None: Dict[str, str]) -> None:
         super().__init__(SocialPlatform.WHATSAPP_BUSINESS, api_credentials)
         self.api_base = "https://graph.facebook.com/v18.0"
     
@@ -755,7 +755,7 @@ class WhatsAppBusinessConnector(BaseSocialConnector):
 class VimeoConnector(BaseSocialConnector):
     """Vimeo API connector"""
     
-    def __init__(self, api_credentials: Dict[str, str]):
+    def __init__(self, api_credentials -> None: Dict[str, str]) -> None:
         super().__init__(SocialPlatform.VIMEO, api_credentials)
         self.api_base = "https://api.vimeo.com"
     
@@ -775,7 +775,7 @@ class VimeoConnector(BaseSocialConnector):
 class DailymotionConnector(BaseSocialConnector):
     """Dailymotion API connector"""
     
-    def __init__(self, api_credentials: Dict[str, str]):
+    def __init__(self, api_credentials -> None: Dict[str, str]) -> None:
         super().__init__(SocialPlatform.DAILYMOTION, api_credentials)
         self.api_base = "https://www.dailymotion.com/api"
     
@@ -795,7 +795,7 @@ class DailymotionConnector(BaseSocialConnector):
 class TwitchConnector(BaseSocialConnector):
     """Twitch API connector"""
     
-    def __init__(self, api_credentials: Dict[str, str]):
+    def __init__(self, api_credentials -> None: Dict[str, str]) -> None:
         super().__init__(SocialPlatform.TWITCH, api_credentials)
         self.api_base = "https://api.twitch.tv/helix"
     
@@ -815,7 +815,7 @@ class TwitchConnector(BaseSocialConnector):
 class MediumConnector(BaseSocialConnector):
     """Medium API connector"""
     
-    def __init__(self, api_credentials: Dict[str, str]):
+    def __init__(self, api_credentials -> None: Dict[str, str]) -> None:
         super().__init__(SocialPlatform.MEDIUM, api_credentials)
         self.api_base = "https://api.medium.com/v1"
     
@@ -835,7 +835,7 @@ class MediumConnector(BaseSocialConnector):
 class ClubhouseConnector(BaseSocialConnector):
     """Clubhouse API connector"""
     
-    def __init__(self, api_credentials: Dict[str, str]):
+    def __init__(self, api_credentials -> None: Dict[str, str]) -> None:
         super().__init__(SocialPlatform.CLUBHOUSE, api_credentials)
         self.api_base = "https://www.clubhouseapi.com/api"
     

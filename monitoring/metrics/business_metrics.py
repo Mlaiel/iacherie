@@ -124,7 +124,7 @@ class EnhancedBusinessMetric:
     source_system: str = "ainflue_platform"
     collection_method: str = "real_time"
     
-    def add_prediction(self, prediction_type: str, predicted_value: float, confidence: float):
+    def add_prediction(self, prediction_type -> None: str, predicted_value -> None: float, confidence -> None: float) -> None:
         """Add AI prediction to metric."""
         self.ai_predictions[prediction_type] = {
             "predicted_value": predicted_value,
@@ -132,7 +132,7 @@ class EnhancedBusinessMetric:
             "prediction_time": datetime.utcnow().isoformat()
         }
     
-    def add_correlation(self, factor_name: str, correlation_strength: float):
+    def add_correlation(self, factor_name -> None: str, correlation_strength -> None: float) -> None:
         """Add correlation factor."""
         self.correlation_factors[factor_name] = correlation_strength
     
@@ -166,7 +166,7 @@ class BusinessMetricSeries:
     anomaly_detection: Dict[str, Any] = field(default_factory=dict)
     forecasting: Dict[str, Any] = field(default_factory=dict)
     
-    def add_data_point(self, metric: EnhancedBusinessMetric):
+    def add_data_point(self, metric -> None: EnhancedBusinessMetric) -> None:
         """Add data point to series."""
         self.data_points.append(metric)
         self.data_points.sort(key=lambda x: x.timestamp)
@@ -179,7 +179,7 @@ class BusinessMetricSeries:
         self._update_trend_analysis()
         self._detect_anomalies()
     
-    def _update_trend_analysis(self):
+    def _update_trend_analysis(self) -> None:
         """Update trend analysis."""
         if len(self.data_points) < 3:
             return
@@ -204,7 +204,7 @@ class BusinessMetricSeries:
                 "last_updated": datetime.utcnow().isoformat()
             }
     
-    def _detect_anomalies(self):
+    def _detect_anomalies(self) -> None:
         """Detect anomalies in the time series."""
         if len(self.data_points) < 10:
             return
@@ -291,7 +291,7 @@ class BusinessMetricsCollector:
     - Custom business rules
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """
 Initialize business metrics collector"""
         self.config = config or {}
@@ -967,10 +967,10 @@ Initialize business metrics collector"""
 class MetricCorrelationEngine:
     """Engine for analyzing correlations between metrics."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.correlations: Dict[str, Dict[str, float]] = {}
     
-    def update_correlations(self, metric: EnhancedBusinessMetric, metric_series: Dict[str, BusinessMetricSeries]):
+    def update_correlations(self, metric -> None: EnhancedBusinessMetric, metric_series -> None: Dict[str, BusinessMetricSeries]) -> None:
         """Update correlation matrix with new metric."""
         # Simplified correlation update
         metric_key = f"{metric.name}_{metric.metric_type.value}"
@@ -1171,10 +1171,10 @@ class BusinessPredictionEngine:
 class MetricAlertingEngine:
     """Engine for generating alerts based on metrics."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.active_alerts: List[Dict[str, Any]] = []
     
-    def check_metric_alerts(self, metric: EnhancedBusinessMetric, kpi_targets: Dict[str, float]):
+    def check_metric_alerts(self, metric -> None: EnhancedBusinessMetric, kpi_targets -> None: Dict[str, float]) -> None:
         """Check if metric triggers any alerts."""
         alerts = []
         

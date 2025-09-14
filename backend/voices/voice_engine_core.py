@@ -177,7 +177,7 @@ class ProcessingResult:
 class VoiceBank:
     """Voice bank management system"""
     
-    def __init__(self, bank_path: str = "/data/voices/bank"):
+    def __init__(self, bank_path -> None: str = "/data/voices/bank") -> None:
         """Initialize voice bank"""
         self.bank_path = Path(bank_path)
         self.voices = {}
@@ -312,7 +312,7 @@ class VoiceBank:
             logger.error(f"Failed to generate voice fingerprint: {e}")
             return ""
     
-    async def _save_voice_index(self):
+    async def _save_voice_index(self) -> None:
         """Save voice index to storage"""
         try:
             index_path = self.bank_path / "voice_index.json"
@@ -347,7 +347,7 @@ class VoiceBank:
 class VoiceBankManager:
     """Advanced voice bank management"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize voice bank manager"""
         self.voice_bank = VoiceBank()
         self.analytics = {}
@@ -355,7 +355,7 @@ class VoiceBankManager:
         
         logger.info("🎤 Voice Bank Manager initialized")
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize voice bank manager"""
         try:
             await self.voice_bank.load_voice_bank()
@@ -413,7 +413,7 @@ class VoiceBankManager:
             logger.error(f"Failed to recommend voices: {e}")
             return []
     
-    async def _load_analytics_data(self):
+    async def _load_analytics_data(self) -> None:
         """Load voice analytics data"""
         try:
             # Load from cache or database
@@ -469,7 +469,7 @@ class VoiceBankManager:
 class AccentGenerator:
     """Advanced accent generation system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize accent generator"""
         self.accent_models = {}
         self.accent_patterns = {}
@@ -526,7 +526,7 @@ class AccentGenerator:
             logger.error(f"Failed to analyze accent: {e}")
             return AccentType.AMERICAN
     
-    async def _load_accent_models(self):
+    async def _load_accent_models(self) -> None:
         """Load accent transformation models"""
         try:
             # Load pre-trained accent models
@@ -617,7 +617,7 @@ class AccentGenerator:
 class MultiFormatVoiceProcessor:
     """Multi-format voice processing system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize multi-format processor"""
         self.supported_formats = [format.value for format in VoiceFormat]
         self.processing_pipelines = {}
@@ -720,7 +720,7 @@ class MultiFormatVoiceProcessor:
 class VoiceFormatConverter:
     """Advanced voice format conversion system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize format converter"""
         self.conversion_matrices = {}
         self.quality_profiles = {}
@@ -787,7 +787,7 @@ class VoiceFormatConverter:
 class VoiceQualityOptimizer:
     """Voice quality optimization system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize quality optimizer"""
         self.optimization_algorithms = {}
         self.quality_metrics = {}
@@ -834,7 +834,7 @@ class VoiceQualityOptimizer:
 class VoiceEngineCore:
     """Unified voice engine core system"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         """Initialize voice engine core"""
         self.config = config or {}
         self.voice_bank = VoiceBank()
@@ -846,7 +846,7 @@ class VoiceEngineCore:
         
         logger.info("🎤 Voice Engine Core initialized")
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize voice engine core"""
         try:
             await self.bank_manager.initialize()

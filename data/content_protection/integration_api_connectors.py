@@ -123,7 +123,7 @@ class APIResponse:
 class IntegrationAPIConnectors:
     """Unified API integration system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.redis_client = None
         self.mongo_client = None
         self.external_connectors = ExternalAPIConnectors()
@@ -406,7 +406,7 @@ class IntegrationAPIConnectors:
         """Get service connection"""
         return self.active_connections.get(service_name)
     
-    async def _store_integration_config(self, config: Dict[str, Any]):
+    async def _store_integration_config(self, config -> None: Dict[str, Any]) -> None:
         """Store integration configuration"""
         try:
             if self.mongo_client:
@@ -416,7 +416,7 @@ class IntegrationAPIConnectors:
         except Exception as e:
             logger.error(f"Failed to store integration config: {e}")
     
-    async def _store_webhook_config(self, config: WebhookConfig):
+    async def _store_webhook_config(self, config -> None: WebhookConfig) -> None:
         """Store webhook configuration"""
         try:
             if self.mongo_client:
@@ -428,10 +428,10 @@ class IntegrationAPIConnectors:
     
     async def _store_webhook_event(
         self, 
-        source_service: str, 
-        event_data: Dict[str, Any], 
-        processing_result: Dict[str, Any]
-    ):
+        source_service -> None: str, 
+        event_data -> None: Dict[str, Any], 
+        processing_result -> None: Dict[str, Any]
+    ) -> None:
         """Store webhook event record"""
         try:
             if self.mongo_client:
@@ -449,7 +449,7 @@ class IntegrationAPIConnectors:
         except Exception as e:
             logger.error(f"Failed to store webhook event: {e}")
     
-    async def _update_usage_stats(self, service_name: str, success: bool):
+    async def _update_usage_stats(self, service_name -> None: str, success -> None: bool) -> None:
         """Update service usage statistics"""
         try:
             if self.mongo_client:
@@ -504,7 +504,7 @@ class IntegrationAPIConnectors:
                 "last_check": None
             }
     
-    async def _setup_webhook_handlers(self):
+    async def _setup_webhook_handlers(self) -> None:
         """Setup webhook event handlers"""
         self.webhook_handlers = {
             "dmca_response": self._handle_dmca_response,

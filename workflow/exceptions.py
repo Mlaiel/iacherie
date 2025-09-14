@@ -1,5 +1,7 @@
 """Comprehensive exception handling for workflow management system.
 
+import logging
+
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 IA-Influencer Project. All rights reserved.
 Licensed under proprietary license - reproduction forbidden without written authorization.
@@ -60,12 +62,12 @@ class WorkflowException(Exception):
     
     def __init__(
         self,
-        message: str,
-        error_code: WorkflowErrorCode = None,
-        workflow_id: str = None,
-        context: Dict[str, Any] = None,
-        cause: Exception = None
-    ):
+        message -> None: str,
+        error_code -> None: WorkflowErrorCode = None,
+        workflow_id -> None: str = None,
+        context -> None: Dict[str, Any] = None,
+        cause -> None: Exception = None
+    ) -> None:
         super().__init__(message)
         self.message = message
         self.error_code = error_code
@@ -104,13 +106,13 @@ class PipelineException(WorkflowException):
     
     def __init__(
         self,
-        message: str,
-        error_code: WorkflowErrorCode = None,
-        pipeline_id: str = None,
-        step_name: str = None,
-        step_error: str = None,
+        message -> None: str,
+        error_code -> None: WorkflowErrorCode = None,
+        pipeline_id -> None: str = None,
+        step_name -> None: str = None,
+        step_error -> None: str = None,
         **kwargs
-    ):
+    ) -> None:
         super().__init__(message, error_code, **kwargs)
         self.pipeline_id = pipeline_id
         self.step_name = step_name
@@ -131,12 +133,12 @@ class PipelineStepException(PipelineException):
     
     def __init__(
         self,
-        message: str,
-        step_name: str,
-        retry_attempt: int = 0,
-        max_retries: int = 3,
+        message -> None: str,
+        step_name -> None: str,
+        retry_attempt -> None: int = 0,
+        max_retries -> None: int = 3,
         **kwargs
-    ):
+    ) -> None:
         super().__init__(message, step_name=step_name, **kwargs)
         self.retry_attempt = retry_attempt
         self.max_retries = max_retries
@@ -157,11 +159,11 @@ class PipelineDependencyException(PipelineException):
     
     def __init__(
         self,
-        message: str,
-        circular_dependencies: List[str] = None,
-        missing_dependencies: List[str] = None,
+        message -> None: str,
+        circular_dependencies -> None: List[str] = None,
+        missing_dependencies -> None: List[str] = None,
         **kwargs
-    ):
+    ) -> None:
         super().__init__(message, error_code=WorkflowErrorCode.PIPELINE_DEPENDENCY_ERROR, **kwargs)
         self.circular_dependencies = circular_dependencies or []
         self.missing_dependencies = missing_dependencies or []
@@ -180,12 +182,12 @@ class SchedulingException(WorkflowException):
     
     def __init__(
         self,
-        message: str,
-        error_code: WorkflowErrorCode = None,
-        task_id: str = None,
-        schedule_expression: str = None,
+        message -> None: str,
+        error_code -> None: WorkflowErrorCode = None,
+        task_id -> None: str = None,
+        schedule_expression -> None: str = None,
         **kwargs
-    ):
+    ) -> None:
         super().__init__(message, error_code, **kwargs)
         self.task_id = task_id
         self.schedule_expression = schedule_expression
@@ -202,7 +204,7 @@ class SchedulingException(WorkflowException):
 class ScheduleCronException(SchedulingException):
     """Exception for invalid cron expressions."""
     
-    def __init__(self, message: str, cron_expression: str, **kwargs):
+    def __init__(self, message -> None: str, cron_expression -> None: str, **kwargs) -> None:
         super().__init__(
             message, 
             error_code=WorkflowErrorCode.SCHEDULE_INVALID_CRON,
@@ -218,10 +220,10 @@ Exception for scheduling conflicts."""
     
     def __init__(
         self,
-        message: str,
-        conflicting_tasks: List[str] = None,
+        message -> None: str,
+        conflicting_tasks -> None: List[str] = None,
         **kwargs
-    ):
+    ) -> None:
         super().__init__(message, error_code=WorkflowErrorCode.SCHEDULE_CONFLICT, **kwargs)
         self.conflicting_tasks = conflicting_tasks or []
     
@@ -238,12 +240,12 @@ class StateException(WorkflowException):
     
     def __init__(
         self,
-        message: str,
-        error_code: WorkflowErrorCode = None,
-        state_id: str = None,
-        state_version: int = None,
+        message -> None: str,
+        error_code -> None: WorkflowErrorCode = None,
+        state_id -> None: str = None,
+        state_version -> None: int = None,
         **kwargs
-    ):
+    ) -> None:
         super().__init__(message, error_code, **kwargs)
         self.state_id = state_id
         self.state_version = state_version
@@ -262,11 +264,11 @@ class StateLockException(StateException):
     
     def __init__(
         self,
-        message: str,
-        lock_holder: str = None,
-        lock_timeout: float = None,
+        message -> None: str,
+        lock_holder -> None: str = None,
+        lock_timeout -> None: float = None,
         **kwargs
-    ):
+    ) -> None:
         super().__init__(message, error_code=WorkflowErrorCode.STATE_LOCK_TIMEOUT, **kwargs)
         self.lock_holder = lock_holder
         self.lock_timeout = lock_timeout
@@ -285,11 +287,11 @@ class StateCorruptionException(StateException):
     
     def __init__(
         self,
-        message: str,
-        corruption_details: Dict[str, Any] = None,
-        recovery_possible: bool = False,
+        message -> None: str,
+        corruption_details -> None: Dict[str, Any] = None,
+        recovery_possible -> None: bool = False,
         **kwargs
-    ):
+    ) -> None:
         super().__init__(message, error_code=WorkflowErrorCode.STATE_CORRUPTION, **kwargs)
         self.corruption_details = corruption_details or {}
         self.recovery_possible = recovery_possible
@@ -308,12 +310,12 @@ class AutomationException(WorkflowException):
     
     def __init__(
         self,
-        message: str,
-        error_code: WorkflowErrorCode = None,
-        automation_rule_id: str = None,
-        trigger_data: Dict[str, Any] = None,
+        message -> None: str,
+        error_code -> None: WorkflowErrorCode = None,
+        automation_rule_id -> None: str = None,
+        trigger_data -> None: Dict[str, Any] = None,
         **kwargs
-    ):
+    ) -> None:
         super().__init__(message, error_code, **kwargs)
         self.automation_rule_id = automation_rule_id
         self.trigger_data = trigger_data or {}
@@ -332,11 +334,11 @@ class AutomationTriggerException(AutomationException):
     
     def __init__(
         self,
-        message: str,
-        trigger_type: str = None,
-        trigger_conditions: List[str] = None,
+        message -> None: str,
+        trigger_type -> None: str = None,
+        trigger_conditions -> None: List[str] = None,
         **kwargs
-    ):
+    ) -> None:
         super().__init__(message, error_code=WorkflowErrorCode.AUTOMATION_TRIGGER_FAILED, **kwargs)
         self.trigger_type = trigger_type
         self.trigger_conditions = trigger_conditions or []
@@ -355,12 +357,12 @@ class ResourceException(WorkflowException):
     
     def __init__(
         self,
-        message: str,
-        error_code: WorkflowErrorCode = None,
-        resource_type: str = None,
-        resource_id: str = None,
+        message -> None: str,
+        error_code -> None: WorkflowErrorCode = None,
+        resource_type -> None: str = None,
+        resource_id -> None: str = None,
         **kwargs
-    ):
+    ) -> None:
         super().__init__(message, error_code, **kwargs)
         self.resource_type = resource_type
         self.resource_id = resource_id
@@ -379,11 +381,11 @@ class ResourceQuotaException(ResourceException):
     
     def __init__(
         self,
-        message: str,
-        current_usage: int = None,
-        quota_limit: int = None,
+        message -> None: str,
+        current_usage -> None: int = None,
+        quota_limit -> None: int = None,
         **kwargs
-    ):
+    ) -> None:
         super().__init__(message, error_code=WorkflowErrorCode.RESOURCE_QUOTA_EXCEEDED, **kwargs)
         self.current_usage = current_usage
         self.quota_limit = quota_limit
@@ -427,10 +429,10 @@ def create_workflow_exception(
 
 
 def handle_workflow_exception(
-    exception: WorkflowException,
+    exception -> None: WorkflowException,
     logger=None,
     metrics_collector=None
-):
+) -> None:
     """Standard exception handler for workflow exceptions."""
     if logger:
         logger.error(

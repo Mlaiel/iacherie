@@ -1,3 +1,8 @@
+"""
+Accessibility Compliance module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 🛡️ Accessibility Compliance Module - WCAG, ADA & Universal Design Compliance Engine
@@ -133,7 +138,7 @@ class AccessibilityAuditReport:
 class WCAGComplianceValidator:
     """Validateur de conformité WCAG enterprise"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.logger = logging.getLogger(__name__)
         self.encryption_manager = EncryptionManager()
@@ -321,7 +326,7 @@ class WCAGComplianceValidator:
 class ADAComplianceVerifier:
     """Vérificateur de conformité ADA enterprise"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.logger = logging.getLogger(__name__)
         self.section_508_rules = self._load_section_508_rules()
@@ -409,7 +414,7 @@ class ADAComplianceVerifier:
 class AccessibilityAuditAutomator:
     """Automatiseur d'audit d'accessibilité enterprise"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.logger = logging.getLogger(__name__)
         self.wcag_validator = WCAGComplianceValidator(config)
@@ -600,7 +605,7 @@ class AccessibilityAuditAutomator:
 class InclusiveDesignCompliance:
     """Compliance design inclusif enterprise"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.logger = logging.getLogger(__name__)
         
@@ -679,7 +684,7 @@ class InclusiveDesignCompliance:
 class AccessibilityComplianceEngine:
     """Moteur principal de conformité d'accessibilité enterprise"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
         
@@ -695,7 +700,7 @@ class AccessibilityComplianceEngine:
         # Configuration par défaut
         self._setup_default_config()
     
-    def _setup_default_config(self):
+    def _setup_default_config(self) -> None:
         """Configuration par défaut du moteur"""
         default_config = {
             'wcag_version': '2.2',
@@ -1102,7 +1107,7 @@ class AccessibilityComplianceEngine:
 class MultiLanguageAccessibility:
     """Gestionnaire d'accessibilité multi-langues"""
     
-    def __init__(self, supported_languages: List[str]):
+    def __init__(self, supported_languages -> None: List[str]) -> None:
         self.supported_languages = supported_languages
         self.logger = logging.getLogger(__name__)
     
@@ -1141,7 +1146,7 @@ class MultiLanguageAccessibility:
 class DisabilityRightsCompliance:
     """Gestionnaire de conformité aux droits des personnes handicapées"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.logger = logging.getLogger(__name__)
         
@@ -1196,7 +1201,7 @@ class DisabilityRightsCompliance:
 class UniversalDesignValidator:
     """Validateur de design universel"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.logger = logging.getLogger(__name__)
         

@@ -135,7 +135,7 @@ class SEOAPIGateway:
     gestion de l'authentification, du rate limiting et du monitoring.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialise la passerelle API SEO
         
@@ -197,7 +197,7 @@ class SEOAPIGateway:
         
         self.logger.info("SEO API Gateway initialisé avec succès")
     
-    def _initialize_default_endpoints(self):
+    def _initialize_default_endpoints(self) -> None:
         """Initialise les endpoints par défaut"""
         
         # Endpoints d'analyse
@@ -342,7 +342,7 @@ class SEOAPIGateway:
             examples={}
         ))
     
-    def register_endpoint(self, endpoint: SEOEndpoint):
+    def register_endpoint(self, endpoint -> None: SEOEndpoint) -> None:
         """
         Enregistre un nouvel endpoint
         
@@ -624,7 +624,7 @@ class SEOAPIGateway:
         
         return None
     
-    async def _cache_response(self, cache_key: str, response: APIResponse):
+    async def _cache_response(self, cache_key -> None: str, response -> None: APIResponse) -> None:
         """Met en cache une réponse"""
         if self.active_config["enable_caching"]:
             self.response_cache[cache_key] = {
@@ -818,7 +818,7 @@ class SEOAPIGateway:
             request_id=request_id
         )
     
-    def _update_metrics(self, endpoint_id: str, event_type: str, response_time: Optional[float] = None):
+    def _update_metrics(self, endpoint_id -> None: str, event_type -> None: str, response_time -> None: Optional[float] = None) -> None:
         """Met à jour les métriques de l'endpoint"""
         if endpoint_id not in self.api_metrics:
             return

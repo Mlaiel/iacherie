@@ -134,7 +134,7 @@ class RecoveryPlanner:
     - Recovery simulation and testing framework
     - Real-time recovery execution monitoring
     """
-    def __init__(self, config: Config):
+    def __init__(self, config -> None: Config) -> None:
         self.config = config
         self.logger = logging.getLogger(__name__)
         self.db_manager = DatabaseManager(config)
@@ -427,7 +427,7 @@ Initialize recovery validation frameworks"""
             self.logger.error(f"Failed to execute recovery: {e}")
             raise
 
-    async def _execute_recovery_procedure(self, execution: RecoveryExecution, execution_mode: str):
+    async def _execute_recovery_procedure(self, execution -> None: RecoveryExecution, execution_mode -> None: str) -> None:
         """Execute the complete recovery procedure"""
         try:
             scenario = self.disaster_scenarios[execution.scenario_id]
@@ -469,7 +469,7 @@ Initialize recovery validation frameworks"""
             self._update_recovery_metrics(execution, False)
             self.logger.error(f"Recovery {execution.execution_id} failed: {e}")
 
-    async def _execute_recovery_steps(self, execution: RecoveryExecution, scenario: DisasterScenario):
+    async def _execute_recovery_steps(self, execution -> None: RecoveryExecution, scenario -> None: DisasterScenario) -> None:
         """Execute recovery steps in optimal sequence"""
         # Get recovery sequence based on dependencies
         recovery_sequence = self._calculate_recovery_sequence(scenario.recovery_plans)
@@ -625,7 +625,7 @@ Get comprehensive recovery planning and execution metrics"""
             }
         }
 
-    def _update_dependency_graph(self, recovery_plan: ServiceRecoveryPlan):
+    def _update_dependency_graph(self, recovery_plan -> None: ServiceRecoveryPlan) -> None:
         """
 Update service dependency graph"""
         service_name = recovery_plan.service_name
@@ -638,7 +638,7 @@ Update service dependency graph"""
         for dependency in recovery_plan.dependencies:
             self.dependency_graph.add_edge(dependency, service_name)
 
-    def _update_recovery_metrics(self, execution: RecoveryExecution, success: bool):
+    def _update_recovery_metrics(self, execution -> None: RecoveryExecution, success -> None: bool) -> None:
         """
 Update recovery performance metrics"""
         self.recovery_metrics['total_recoveries'] += 1

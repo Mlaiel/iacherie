@@ -1,3 +1,8 @@
+"""
+Setup module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """Setup script for IA Influencer Agent Pipeline Management System
 
@@ -17,7 +22,7 @@ this_directory = Path(__file__).parent
 long_description = (this_directory / "README.md").read_text(encoding='utf-8')
 
 # Read requirements
-def read_requirements():
+def read_requirements() -> None:
     """Read requirements from requirements.txt"""
     requirements_path = this_directory / "requirements.txt"
     if requirements_path.exists():
@@ -195,7 +200,7 @@ setup(
 )
 
 # Post-install message
-def print_post_install_message():
+def print_post_install_message() -> None:
     """Print post-installation message"""
     message = """╔══════════════════════════════════════════════════════════════════════════════╗
 ║                                                                              ║

@@ -144,7 +144,7 @@ Calculate file checksum."""
     
     @staticmethod
     @contextmanager
-    def temp_file(suffix: str = '', prefix: str = 'fingerprint_'):
+    def temp_file(suffix -> None: str = '', prefix -> None: str = 'fingerprint_') -> None:
         """Create temporary file context manager."""
         fd, temp_path = tempfile.mkstemp(suffix=suffix, prefix=prefix)
         try:
@@ -319,7 +319,7 @@ Performance optimization utilities."""
         """
 Decorator to measure function execution time."""
         @wraps(func)
-        def wrapper(*args, **kwargs):
+        def wrapper(*args, **kwargs) -> None:
             start_time = time.time()
             result = wrapper(*args, **kwargs)
             end_time = time.time()
@@ -335,7 +335,7 @@ Decorator to measure function execution time."""
         return [items[i:i + batch_size] for i in range(0, len(items), batch_size)]
     
     @staticmethod
-    def optimize_numpy_operations():
+    def optimize_numpy_operations() -> None:
         try:
             logger.info(f"Executing optimize_numpy_operations")
             
@@ -354,7 +354,7 @@ class VectorDatabase:
     """
 FAISS-based vector database for efficient similarity search."""
     
-    def __init__(self, dimension: int, index_type: str = 'IndexFlatIP'):
+    def __init__(self, dimension -> None: int, index_type -> None: str = 'IndexFlatIP') -> None:
         self.dimension = dimension
         self.index_type = index_type
         self.index = self._create_index()
@@ -376,7 +376,7 @@ Create FAISS index based on type."""
         else:
             raise ValueError(f"Unsupported index type: {self.index_type}")
     
-    def add_vector(self, vector: np.ndarray, fingerprint_id: str, metadata: Dict[str, Any] = None):
+    def add_vector(self, vector -> None: np.ndarray, fingerprint_id -> None: str, metadata -> None: Dict[str, Any] = None) -> None:
         """Add vector to the database."""
         if vector.shape[0] != self.dimension:
             raise ValueError(f"Vector dimension {vector.shape[0]} != {self.dimension}")
@@ -423,7 +423,7 @@ Create FAISS index based on type."""
         
         return results
     
-    def save(self, filepath: str):
+    def save(self, filepath -> None: str) -> None:
         """Save index to disk."""
         faiss.write_index(self.index, filepath)
         
@@ -437,7 +437,7 @@ Create FAISS index based on type."""
                 'index_type': self.index_type
             }, f)
     
-    def load(self, filepath: str):
+    def load(self, filepath -> None: str) -> None:
         """
 Load index from disk."""
         self.index = faiss.read_index(filepath)
@@ -498,25 +498,25 @@ Configuration management for fingerprinting system."""
         }
     }
     
-    def __init__(self, config_path: Optional[str] = None):
+    def __init__(self, config_path -> None: Optional[str] = None) -> None:
         self.config = self.DEFAULT_CONFIG.copy()
         if config_path and os.path.exists(config_path):
             self.load_config(config_path)
     
-    def load_config(self, config_path: str):
+    def load_config(self, config_path -> None: str) -> None:
         """
 Load configuration from file."""
         with open(config_path, 'r') as f:
             user_config = json.load(f)
             self._merge_config(self.config, user_config)
     
-    def save_config(self, config_path: str):
+    def save_config(self, config_path -> None: str) -> None:
         """
 Save configuration to file."""
         with open(config_path, 'w') as f:
             json.dump(self.config, f, indent=2)
     
-    def _merge_config(self, base_config: Dict, user_config: Dict):
+    def _merge_config(self, base_config -> None: Dict, user_config -> None: Dict) -> None:
         """
 Recursively merge user config into base config."""
         for key, value in user_config.items():
@@ -543,7 +543,7 @@ class CacheManager:
     """
 Intelligent caching system for fingerprinting operations."""
     
-    def __init__(self, max_size: int = 1000, ttl_seconds: int = 3600):
+    def __init__(self, max_size -> None: int = 1000, ttl_seconds -> None: int = 3600) -> None:
         self.max_size = max_size
         self.ttl_seconds = ttl_seconds
         self.cache = {}
@@ -565,7 +565,7 @@ Get value from cache."""
         self.access_times[key] = time.time()
         return self.cache[key]
     
-    def set(self, key: str, value: Any):
+    def set(self, key -> None: str, value -> None: Any) -> None:
         """
 Set value in cache."""
         # Remove oldest if at capacity
@@ -577,14 +577,14 @@ Set value in cache."""
         self.access_times[key] = current_time
         self.creation_times[key] = current_time
     
-    def _remove(self, key: str):
+    def _remove(self, key -> None: str) -> None:
         """
 Remove key from cache."""
         self.cache.pop(key, None)
         self.access_times.pop(key, None)
         self.creation_times.pop(key, None)
     
-    def _evict_lru(self):
+    def _evict_lru(self) -> None:
         """
 Evict least recently used item."""
         if not self.access_times:
@@ -593,7 +593,7 @@ Evict least recently used item."""
         lru_key = min(self.access_times, key=self.access_times.get)
         self._remove(lru_key)
     
-    def clear(self):
+    def clear(self) -> None:
         """
 Clear all cache."""
         self.cache.clear()
@@ -602,12 +602,12 @@ Clear all cache."""
 
 # Utility decorators and functions
 
-def retry_on_failure(max_retries: int = 3, delay: float = 1.0, exponential_backoff: bool = True):
+def retry_on_failure(max_retries -> None: int = 3, delay -> None: float = 1.0, exponential_backoff -> None: bool = True) -> None:
     """
 Decorator to retry function on failure."""
     def decorator(func: Callable) -> Callable:
         @wraps(func)
-        def wrapper(*args, **kwargs):
+        def wrapper(*args, **kwargs) -> None:
             last_exception = None
             
             for attempt in range(max_retries + 1):
@@ -642,7 +642,7 @@ def get_optimal_batch_size(content_type: ContentType, available_memory_gb: float
     
     return int(base_size * memory_factor)
 
-def setup_gpu_environment():
+def setup_gpu_environment() -> None:
     """
 Setup optimal GPU environment for fingerprinting."""
     if torch.cuda.is_available():

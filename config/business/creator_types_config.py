@@ -1,4 +1,6 @@
 """
+import logging
+
 Creator Types Configuration - Enterprise Configuration Management
 Enterprise configuration for creator type definitions and specialized settings
 
@@ -16,7 +18,8 @@ try:
 except ImportError:
     # Fallback for environments without pydantic_settings
     class BaseSettings:
-        def __init__(self, **kwargs):
+    """BaseSettings: class implementation"""
+        def __init__(self, **kwargs) -> None:
             for key, value in kwargs.items():
                 setattr(self, key, value)
 
@@ -127,7 +130,7 @@ class CreatorTypeMetrics:
 class CreatorTypesSettings:
     """Creator types configuration settings"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         # Creator Type Definitions
         self.creator_types = {
             "musicians": {

@@ -129,7 +129,7 @@ class ConvergenceAnalysis:
 class TrendAnalyzer:
     """Analyzes trends in training metrics."""
     
-    def __init__(self, window_size: int = 10):
+    def __init__(self, window_size -> None: int = 10) -> None:
         self.window_size = window_size
     
     def analyze_trend(self, values: List[float]) -> Dict[str, float]:
@@ -234,12 +234,12 @@ class TrendAnalyzer:
 class OverfittingDetector:
     """Detects overfitting patterns in training."""
     
-    def __init__(self, config: ConvergenceConfig):
+    def __init__(self, config -> None: ConvergenceConfig) -> None:
         self.config = config
         self.train_losses = deque(maxlen=100)
         self.val_losses = deque(maxlen=100)
         
-    def add_point(self, train_loss: float, val_loss: Optional[float]):
+    def add_point(self, train_loss -> None: float, val_loss -> None: Optional[float]) -> None:
         """Add a new data point."""
         self.train_losses.append(train_loss)
         if val_loss is not None:
@@ -288,7 +288,7 @@ class OverfittingDetector:
 class CreatorConvergenceProfiler:
     """Profiles convergence patterns for different creator types."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.creator_profiles = defaultdict(lambda: {
             'typical_convergence_epochs': [],
             'best_stopping_criteria': [],
@@ -298,10 +298,10 @@ class CreatorConvergenceProfiler:
     
     def update_profile(
         self,
-        creator_id: str,
-        creator_type: str,
-        analysis: ConvergenceAnalysis
-    ):
+        creator_id -> None: str,
+        creator_type -> None: str,
+        analysis -> None: ConvergenceAnalysis
+    ) -> None:
         """Update creator convergence profile."""
         profile = self.creator_profiles[creator_type]
         
@@ -376,7 +376,7 @@ class CreatorConvergenceProfiler:
 class EarlyStoppingManager:
     """Manages early stopping decisions with multiple criteria."""
     
-    def __init__(self, config: ConvergenceConfig):
+    def __init__(self, config -> None: ConvergenceConfig) -> None:
         self.config = config
         self.best_score = float('inf')
         self.best_epoch = 0
@@ -475,7 +475,7 @@ class EarlyStoppingManager:
 class ModelConvergenceAnalyzer:
     """Main convergence analyzer for ML models."""
     
-    def __init__(self, config: Optional[ConvergenceConfig] = None):
+    def __init__(self, config -> None: Optional[ConvergenceConfig] = None) -> None:
         self.config = config or ConvergenceConfig()
         
         # Components
@@ -494,14 +494,14 @@ class ModelConvergenceAnalyzer:
         
         logger.info("Initialized ModelConvergenceAnalyzer")
     
-    async def start_analysis(self):
+    async def start_analysis(self) -> None:
         """Start convergence analysis."""
         self.analysis_active = True
         self.convergence_history.clear()
         self.analysis_history.clear()
         logger.info("Started convergence analysis")
     
-    async def stop_analysis(self):
+    async def stop_analysis(self) -> None:
         """Stop convergence analysis."""
         self.analysis_active = False
         logger.info("Stopped convergence analysis")
@@ -788,7 +788,7 @@ class ModelConvergenceAnalyzer:
             latest_point.epoch, latest_point, model
         )
     
-    async def create_convergence_plots(self, save_dir: Optional[Path] = None):
+    async def create_convergence_plots(self, save_dir -> None: Optional[Path] = None) -> None:
         """Create convergence visualization plots."""
         if not self.config.save_convergence_plots or not self.convergence_history:
             return
@@ -906,7 +906,7 @@ def create_convergence_analyzer(
 
 
 # Example usage for Ainflue creators
-async def example_convergence_analysis():
+async def example_convergence_analysis() -> None:
     """Example of convergence analysis for creator training."""
     
     # Create convergence analyzer

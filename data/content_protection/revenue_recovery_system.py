@@ -194,7 +194,7 @@ class MonetizationOpportunity:
 class RevenueRecoverySystem:
     """Revenue recovery and monetization optimization system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.redis_client = None
         self.mongo_client = None
         self.impact_calculator = RevenueImpactCalculator()
@@ -505,7 +505,7 @@ class RevenueRecoverySystem:
             raise HTTPException(status_code=500, detail=f"Revenue report generation failed: {e}")
     
     # Internal helper methods
-    async def _store_revenue_impact(self, impact: RevenueImpact):
+    async def _store_revenue_impact(self, impact -> None: RevenueImpact) -> None:
         """Store revenue impact assessment"""
         try:
             if self.mongo_client:
@@ -640,7 +640,7 @@ class RevenueRecoverySystem:
             "requires_manual_review": True
         }
     
-    async def _store_recovery_actions(self, actions: List[RecoveryAction]):
+    async def _store_recovery_actions(self, actions -> None: List[RecoveryAction]) -> None:
         """Store recovery actions"""
         try:
             if self.mongo_client:
@@ -678,7 +678,7 @@ class RevenueRecoverySystem:
         
         return None
     
-    async def _update_recovery_action(self, action: RecoveryAction):
+    async def _update_recovery_action(self, action -> None: RecoveryAction) -> None:
         """Update recovery action"""
         try:
             if self.mongo_client:
@@ -727,7 +727,7 @@ class RevenueRecoverySystem:
             reverse=True
         )
     
-    async def _store_monetization_opportunities(self, opportunities: List[MonetizationOpportunity]):
+    async def _store_monetization_opportunities(self, opportunities -> None: List[MonetizationOpportunity]) -> None:
         """Store monetization opportunities"""
         try:
             if self.mongo_client:
@@ -755,7 +755,7 @@ class RevenueRecoverySystem:
         
         return True
     
-    async def _store_revenue_stream(self, stream: RevenueStream):
+    async def _store_revenue_stream(self, stream -> None: RevenueStream) -> None:
         """Store revenue stream"""
         try:
             if self.mongo_client:
@@ -790,7 +790,7 @@ class RevenueRecoverySystem:
         
         return None
     
-    async def _update_revenue_stream(self, stream: RevenueStream):
+    async def _update_revenue_stream(self, stream -> None: RevenueStream) -> None:
         """Update revenue stream"""
         try:
             if self.mongo_client:
@@ -1007,7 +1007,7 @@ class MonetizationOptimizer:
 class PaymentProcessor:
     """Multi-method payment processing"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.stripe_client = None
         self.paypal_client = None
         
@@ -1111,7 +1111,7 @@ class PaymentProcessor:
 class RevenueMLPredictor:
     """ML-based revenue prediction"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.model = None
         
     async def initialize(self) -> bool:

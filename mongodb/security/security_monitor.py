@@ -54,7 +54,7 @@ class SecurityAlert:
 class SecurityMonitor:
     """Real-time security monitoring system."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize security monitor."""
         self._running = False
         self._monitor_thread = None
@@ -78,7 +78,7 @@ class SecurityMonitor:
         
         self.start_monitoring()
     
-    def start_monitoring(self):
+    def start_monitoring(self) -> None:
         """Start security monitoring."""
         if not self._running:
             self._running = True
@@ -86,7 +86,7 @@ class SecurityMonitor:
             self._monitor_thread.start()
             logger.info("Security monitoring started")
     
-    def stop_monitoring(self):
+    def stop_monitoring(self) -> None:
         """Stop security monitoring."""
         if self._running:
             self._running = False
@@ -94,7 +94,7 @@ class SecurityMonitor:
                 self._monitor_thread.join(timeout=5)
             logger.info("Security monitoring stopped")
     
-    def _monitor_loop(self):
+    def _monitor_loop(self) -> None:
         """Main monitoring loop."""
         while self._running:
             try:
@@ -105,8 +105,8 @@ class SecurityMonitor:
                 logger.error(f"Error in security monitoring loop: {e}")
                 time.sleep(60)  # Wait longer on error
     
-    def record_login_attempt(self, user_id: str, source_ip: str, success: bool,
-                           user_agent: str = None, details: Dict[str, Any] = None):
+    def record_login_attempt(self, user_id -> None: str, source_ip -> None: str, success -> None: bool,
+                           user_agent -> None: str = None, details -> None: Dict[str, Any] = None) -> None:
         """Record login attempt for monitoring."""
         timestamp = datetime.utcnow()
         
@@ -128,9 +128,9 @@ class SecurityMonitor:
         }
         self._user_activity[user_id].append(activity)
     
-    def record_database_operation(self, user_id: str, operation: str, collection: str,
-                                query: Dict[str, Any] = None, result_size_bytes: int = None,
-                                execution_time_ms: float = None, source_ip: str = None):
+    def record_database_operation(self, user_id -> None: str, operation -> None: str, collection -> None: str,
+                                query -> None: Dict[str, Any] = None, result_size_bytes -> None: int = None,
+                                execution_time_ms -> None: float = None, source_ip -> None: str = None) -> None:
         """Record database operation for monitoring."""
         timestamp = datetime.utcnow()
         
@@ -153,12 +153,12 @@ class SecurityMonitor:
         self._check_suspicious_query_patterns(user_id)
         self._check_mass_data_access(user_id, result_size_bytes)
     
-    def _check_threats(self):
+    def _check_threats(self) -> None:
         """Check for various security threats."""
         # This method is called periodically to check for threats
         pass  # Individual threat checks are called from specific events
     
-    def _check_brute_force_attack(self, source_ip: str):
+    def _check_brute_force_attack(self, source_ip -> None: str) -> None:
         """Check for brute force login attacks."""
         now = datetime.utcnow()
         window_start = now - timedelta(minutes=self._thresholds['failed_login_window_minutes'])
@@ -182,7 +182,7 @@ class SecurityMonitor:
                 }
             )
     
-    def _check_suspicious_query_patterns(self, user_id: str):
+    def _check_suspicious_query_patterns(self, user_id -> None: str) -> None:
         """Check for suspicious query patterns."""
         if user_id not in self._query_patterns:
             return
@@ -225,7 +225,7 @@ class SecurityMonitor:
                 }
             )
     
-    def _check_mass_data_access(self, user_id: str, result_size_bytes: int):
+    def _check_mass_data_access(self, user_id -> None: str, result_size_bytes -> None: int) -> None:
         """Check for mass data access attempts."""
         if not result_size_bytes:
             return
@@ -253,9 +253,9 @@ class SecurityMonitor:
         keys = sorted(query.keys())
         return f"keys:{':'.join(keys)}"
     
-    def _create_alert(self, threat_type: ThreatType, threat_level: ThreatLevel,
-                     description: str, source_ip: str = None, user_id: str = None,
-                     details: Dict[str, Any] = None):
+    def _create_alert(self, threat_type -> None: ThreatType, threat_level -> None: ThreatLevel,
+                     description -> None: str, source_ip -> None: str = None, user_id -> None: str = None,
+                     details -> None: Dict[str, Any] = None) -> None:
         """Create security alert."""
         alert_id = f"{threat_type.value}_{int(datetime.utcnow().timestamp())}"
         
@@ -289,7 +289,7 @@ class SecurityMonitor:
         
         logger.log(log_level, f"SECURITY ALERT: {description}")
     
-    def _cleanup_old_data(self):
+    def _cleanup_old_data(self) -> None:
         """Clean up old monitoring data."""
         cutoff_time = datetime.utcnow() - timedelta(hours=24)
         
@@ -322,7 +322,7 @@ class SecurityMonitor:
         # Reset daily data access counters
         self._data_access_volume.clear()
     
-    def add_alert_handler(self, handler: Callable[[SecurityAlert], None]):
+    def add_alert_handler(self, handler -> None: Callable[[SecurityAlert], None]) -> None:
         """Add alert handler function."""
         self._alert_handlers.append(handler)
     

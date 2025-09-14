@@ -124,7 +124,7 @@ class ComplianceRule:
 class LicensingEngine:
     """Advanced licensing management engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.license_templates = {}
         self.active_licenses = {}
         self.royalty_rates = {}
@@ -134,7 +134,7 @@ class LicensingEngine:
         
         logger.info("Licensing Engine initialized")
 
-    def _initialize_license_templates(self):
+    def _initialize_license_templates(self) -> None:
         """Initialize standard license templates"""
         self.license_templates = {
             LicenseType.EXCLUSIVE.value: {
@@ -369,7 +369,7 @@ class LicensingEngine:
 class UsageTracker:
     """Advanced usage tracking system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.usage_records = {}
         self.tracking_rules = {}
         self.compliance_validators = {}
@@ -489,7 +489,7 @@ class UsageTracker:
 class ComplianceManager:
     """Legal compliance management system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.compliance_rules = {}
         self.audit_logs = {}
         self.violation_alerts = {}
@@ -499,7 +499,7 @@ class ComplianceManager:
         
         logger.info("Compliance Manager initialized")
 
-    def _initialize_compliance_rules(self):
+    def _initialize_compliance_rules(self) -> None:
         """Initialize standard compliance rules"""
         self.compliance_rules = {
             ComplianceRegion.EU_GDPR.value: {
@@ -685,7 +685,7 @@ class ComplianceManager:
 class RightsManagementCore:
     """Main Rights Management Core System"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.version = "2.1.0"
         self.licensing_engine = LicensingEngine()
         self.usage_tracker = UsageTracker()

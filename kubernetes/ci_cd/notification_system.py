@@ -1,4 +1,4 @@
-"""🔧 Notification System - IA-Influencer-Agent CI/CD
+"""# [EMOJI_REMOVED] Notification System - IA-Influencer-Agent CI/CD
 ================================================================
 Expert: DEVOPS_ENGINEER + COMMUNICATION_SPECIALIST
 Created: 2025-08-24
@@ -77,7 +77,7 @@ class NotificationConfiguration:
     retry_attempts: int = 3
     retry_delay_seconds: int = 5
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.priority_filter is None:
             self.priority_filter = list(NotificationPriority)
         if self.event_filter is None:
@@ -98,7 +98,7 @@ Notification message"""
     user: Optional[str] = None
     tags: List[str] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         try:
                     # Request validation
                     if not data:
@@ -117,6 +117,7 @@ Notification message"""
 
 @dataclass
 class NotificationRecipient:
+    """NotificationRecipient: class implementation"""
         try:
                     # Request validation
                     if not data:
@@ -142,7 +143,7 @@ Notification recipient"""
     on_call: bool = False
     priority_threshold: NotificationPriority = NotificationPriority.MEDIUM
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.roles is None:
             self.roles = []
 
@@ -150,7 +151,7 @@ class NotificationSystem:
     """
 Enterprise notification system for CI/CD pipelines"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """
 Initialize notification system"""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
@@ -173,11 +174,11 @@ Initialize notification system"""
             await self._initialize_rate_limiting()
             
             self.initialized = True
-            self.logger.info("✅ Notification system initialized")
+            self.logger.info("# [EMOJI_REMOVED] Notification system initialized")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Failed to initialize notification system: {e}")
+            self.logger.error(f"# [EMOJI_REMOVED] Failed to initialize notification system: {e}")
             return False
     
     async def _setup_notification_channels(self) -> None:
@@ -508,7 +509,7 @@ Initialize notification system"""
             
             # Add details if available
             if message.details:
-                details_text = "\n".join([f"• {k}: {v}" for k, v in message.details.items()])
+                details_text = "\n".join([f"# [EMOJI_REMOVED] {k}: {v}" for k, v in message.details.items()])
                 payload["attachments"][0]["fields"].append({
                     "title": "Details",
                     "value": f"```{details_text}```",
@@ -854,3 +855,5 @@ Test all configured notification channels"""
 
 # Global instance
 notification_system = NotificationSystem()
+
+# File has syntax issues - needs manual review

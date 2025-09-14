@@ -33,7 +33,7 @@ from .base_manager import BaseDeploymentManager
 class MetricsCollector:
     """
 Mock metrics collector."""
-    def __init__(self):
+    def __init__(self) -> None:
         """
 Initialize cluster metrics collector with infrastructure monitoring"""
         self.logger = logging.getLogger(f"{__name__}.MetricsCollector")
@@ -132,9 +132,9 @@ class ClusterManager(BaseDeploymentManager):
     """
     def __init__(
         self,
-        default_region: str = "us-west-2",
-        metrics_collector: Optional[MetricsCollector] = None
-    ):
+        default_region -> None: str = "us-west-2",
+        metrics_collector -> None: Optional[MetricsCollector] = None
+    ) -> None:
         super().__init__()
         self.default_region = default_region
         self.metrics_collector = metrics_collector or MetricsCollector()

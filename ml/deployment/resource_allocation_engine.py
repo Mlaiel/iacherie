@@ -127,7 +127,7 @@ class ResourceAllocation:
 class ResourceAllocationEngine:
     """Enterprise Resource Allocation Engine"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         
         # Resource tracking
@@ -166,7 +166,7 @@ class ResourceAllocationEngine:
         
         logger.info("⚡ Resource Allocation Engine initialized")
     
-    def _initialize_resource_nodes(self):
+    def _initialize_resource_nodes(self) -> None:
         """Initialize default resource nodes"""
         nodes = [
             # AWS Nodes
@@ -651,7 +651,7 @@ class ResourceAllocationEngine:
             logger.error(f"❌ Error getting resource utilization: {e}")
             return {}
     
-    async def _update_allocation_metrics(self, allocation_time: float, success: bool):
+    async def _update_allocation_metrics(self, allocation_time -> None: float, success -> None: bool) -> None:
         """Update allocation metrics"""
         try:
             self.allocation_metrics['total_allocations'] += 1
@@ -682,7 +682,7 @@ class ResourceAllocationEngine:
 resource_allocator = ResourceAllocationEngine()
 
 
-async def main():
+async def main() -> None:
     """Test the Resource Allocation Engine"""
     engine = ResourceAllocationEngine()
     

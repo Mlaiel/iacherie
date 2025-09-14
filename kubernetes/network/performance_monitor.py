@@ -122,10 +122,10 @@ class NetworkPerformanceMonitor:
     
     def __init__(
         self,
-        database_url: str,
-        redis_url: str = "redis://localhost:6379",
-        monitoring_interval: int = 60
-    ):
+        database_url -> None: str,
+        redis_url -> None: str = "redis -> None://localhost -> None:6379",
+        monitoring_interval -> None: int = 60
+    ) -> None:
         self.database_url = database_url
         self.redis_url = redis_url
         self.monitoring_interval = monitoring_interval

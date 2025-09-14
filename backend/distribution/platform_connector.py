@@ -144,7 +144,7 @@ class BasePlatformConnector:
     for authentication, rate limiting, and API communication.
     """
     
-    def __init__(self, platform: PlatformType, credentials: PlatformCredentials):
+    def __init__(self, platform -> None: PlatformType, credentials -> None: PlatformCredentials) -> None:
         """Initialize base platform connector."""
         self.platform = platform
         self.credentials = credentials
@@ -391,7 +391,7 @@ class BasePlatformConnector:
         # This would be implemented by each platform connector
         raise NotImplementedError("Subclasses must implement get_user_profile")
     
-    async def close(self):
+    async def close(self) -> None:
         """Close the connector and cleanup resources."""
         if self.session:
             await self.session.close()
@@ -401,7 +401,7 @@ class BasePlatformConnector:
 class YouTubeConnector(BasePlatformConnector):
     """YouTube API connector."""
     
-    def __init__(self, credentials: PlatformCredentials):
+    def __init__(self, credentials -> None: PlatformCredentials) -> None:
         super().__init__(PlatformType.YOUTUBE, credentials)
         self.rate_limit = RateLimitInfo(requests_per_hour=10000, requests_per_day=1000000)
     
@@ -479,7 +479,7 @@ class YouTubeConnector(BasePlatformConnector):
 class InstagramConnector(BasePlatformConnector):
     """Instagram API connector."""
     
-    def __init__(self, credentials: PlatformCredentials):
+    def __init__(self, credentials -> None: PlatformCredentials) -> None:
         super().__init__(PlatformType.INSTAGRAM, credentials)
         self.rate_limit = RateLimitInfo(requests_per_hour=200, requests_per_day=4800)
     
@@ -545,7 +545,7 @@ class InstagramConnector(BasePlatformConnector):
 class TikTokConnector(BasePlatformConnector):
     """TikTok API connector."""
     
-    def __init__(self, credentials: PlatformCredentials):
+    def __init__(self, credentials -> None: PlatformCredentials) -> None:
         super().__init__(PlatformType.TIKTOK, credentials)
         self.rate_limit = RateLimitInfo(requests_per_hour=100, requests_per_day=1000)
     
@@ -593,7 +593,7 @@ class TikTokConnector(BasePlatformConnector):
 class SpotifyConnector(BasePlatformConnector):
     """Spotify API connector."""
     
-    def __init__(self, credentials: PlatformCredentials):
+    def __init__(self, credentials -> None: PlatformCredentials) -> None:
         super().__init__(PlatformType.SPOTIFY, credentials)
         self.rate_limit = RateLimitInfo(requests_per_hour=1000, requests_per_day=10000)
     
@@ -634,7 +634,7 @@ class SpotifyConnector(BasePlatformConnector):
 class TwitterConnector(BasePlatformConnector):
     """Twitter API connector."""
     
-    def __init__(self, credentials: PlatformCredentials):
+    def __init__(self, credentials -> None: PlatformCredentials) -> None:
         super().__init__(PlatformType.TWITTER, credentials)
         self.rate_limit = RateLimitInfo(requests_per_hour=300, requests_per_day=3000)
     
@@ -711,7 +711,7 @@ class PlatformManager:
     Manager for handling multiple platform connectors.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize platform manager."""
         self.logger = logging.getLogger(f"{__name__}.PlatformManager")
         self.connectors: Dict[PlatformType, BasePlatformConnector] = {}
@@ -780,7 +780,7 @@ class PlatformManager:
         
         return statuses
     
-    async def cleanup(self):
+    async def cleanup(self) -> None:
         """Cleanup all connections."""
         for connector in self.connectors.values():
             await connector.close()
@@ -808,7 +808,7 @@ class PlatformConnector:
     platform management system for easier integration.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize platform connector."""
         self.logger = logging.getLogger(f"{__name__}.PlatformConnector")
         self._manager: Optional[PlatformManager] = None

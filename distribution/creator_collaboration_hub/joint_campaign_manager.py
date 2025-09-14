@@ -147,10 +147,10 @@ class JointCampaignManager:
     """Enterprise joint campaign management system"""
     
     def __init__(self,
-                 max_campaign_participants: int = 10,
-                 min_campaign_duration_days: int = 1,
-                 max_campaign_duration_days: int = 90,
-                 auto_optimization_enabled: bool = True):
+                 max_campaign_participants -> None: int = 10,
+                 min_campaign_duration_days -> None: int = 1,
+                 max_campaign_duration_days -> None: int = 90,
+                 auto_optimization_enabled -> None: bool = True) -> None:
         self.max_campaign_participants = max_campaign_participants
         self.min_campaign_duration_days = min_campaign_duration_days
         self.max_campaign_duration_days = max_campaign_duration_days
@@ -328,7 +328,7 @@ class JointCampaignManager:
             self.logger.error(f"Failed to create joint campaign: {e}")
             raise
     
-    async def _validate_campaign_config(self, config: Dict[str, Any]):
+    async def _validate_campaign_config(self, config -> None: Dict[str, Any]) -> None:
         """Validate campaign configuration"""
         required_fields = ["name", "type", "description", "start_date", "end_date"]
         
@@ -1000,7 +1000,7 @@ class JointCampaignManager:
         """Get campaign manager performance statistics"""
         return self.manager_stats.copy()
     
-    def _update_manager_stats(self, action: str, participants: List[CreatorParticipant]):
+    def _update_manager_stats(self, action -> None: str, participants -> None: List[CreatorParticipant]) -> None:
         """Update manager performance statistics"""
         
         if action == "campaign_created":

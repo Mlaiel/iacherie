@@ -19,8 +19,8 @@ logger = logging.getLogger(__name__)
 class PredictionCache:
     """High-performance cache for AI model predictions."""
     
-    def __init__(self, client: MongoClient, database_name: str, 
-                 default_ttl_hours: int = 24):
+    def __init__(self, client -> None: MongoClient, database_name -> None: str, 
+                 default_ttl_hours -> None: int = 24) -> None:
         """Initialize prediction cache.
         
         Args:

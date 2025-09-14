@@ -130,7 +130,7 @@ class DetectionResult:
 class ContentDetectionEngine:
     """Main content detection and analysis engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.fingerprint_engine = FingerprintMatchingEngine()
         self.similarity_engine = SimilarityAnalysisEngine()
         self.violation_detector = ViolationDetectionSystem()
@@ -453,7 +453,7 @@ class ContentDetectionEngine:
 class FingerprintMatchingEngine:
     """Advanced fingerprinting system for multi-modal content"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.algorithms: Dict[str, Any] = {}
         self.fingerprint_cache: Dict[str, ContentFingerprint] = {}
         
@@ -734,7 +734,7 @@ class FingerprintMatchingEngine:
 class SimilarityAnalysisEngine:
     """Advanced similarity analysis with multiple algorithms"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.similarity_algorithms: Dict[str, Any] = {}
         self.similarity_cache: Dict[str, float] = {}
         
@@ -939,7 +939,7 @@ class SimilarityAnalysisEngine:
 class ViolationDetectionSystem:
     """Automated violation detection and classification"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.violation_rules: Dict[str, Any] = {}
         self.legal_thresholds: Dict[str, float] = {}
         
@@ -1141,7 +1141,7 @@ class ViolationDetectionSystem:
 class MetadataExtractionEngine:
     """Advanced metadata extraction for all content types"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.extractors: Dict[ContentType, Any] = {}
         
     async def initialize(self) -> None:
@@ -1268,7 +1268,7 @@ class MetadataExtractionEngine:
 class ContentClassificationEngine:
     """AI-powered content classification system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.classifiers: Dict[str, Any] = {}
         self.categories: Dict[str, List[str]] = {}
         
@@ -1478,7 +1478,7 @@ __all__ = [
 
 if __name__ == "__main__":
     # Example usage
-    async def main():
+    async def main() -> None:
         # Create and initialize detection engine
         engine = await create_detection_engine()
         

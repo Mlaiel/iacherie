@@ -1,5 +1,7 @@
 """Engagement Optimization Events Module
 
+import logging
+
 Advanced engagement optimization and personalization for multi-format content creators.
 Provides ML-driven engagement strategies, personalization engines, and optimization algorithms.
 
@@ -158,7 +160,7 @@ class EngagementOptimizationEventHandler(BaseEventHandler):
     """
 Handles engagement optimization events with ML-driven insights"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
         self.cache_manager = CacheManager()
         self.db_manager = DatabaseManager()
@@ -296,7 +298,7 @@ Calculate the potential for engagement optimization"""
 class EngagementOptimizer:
     """Core engagement optimization engine using ML algorithms"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.db_manager = DatabaseManager()
         self.regressor = RandomForestRegressor(n_estimators=100, random_state=42)
         self.classifier = GradientBoostingClassifier(n_estimators=100, random_state=42)
@@ -470,7 +472,7 @@ Optimize content posting timing"""
 class EngagementStrategyEngine:
     """Creates comprehensive engagement strategies"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         try:
             logger.info(f"Executing __init__")
             
@@ -517,7 +519,7 @@ class EngagementPredictionEngine:
     """
 Predicts engagement outcomes for optimization strategies"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.engagement_predictor = EngagementOptimizer()
         self.db_manager = DatabaseManager()
         
@@ -552,7 +554,7 @@ class EngagementPersonalizationEngine:
     """
 Personalizes engagement strategies based on audience segments"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.db_manager = DatabaseManager()
         self.personalizer = EngagementPersonalizer()
         self.kmeans = KMeans(n_clusters=5, random_state=42)

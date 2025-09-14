@@ -68,7 +68,7 @@ class AudioFingerprinting:
     Détection de similarité et protection copyright.
     """
     
-    def __init__(self, config: Optional[Dict] = None):
+    def __init__(self, config -> None: Optional[Dict] = None) -> None:
         """Initialise le système de fingerprinting audio."""
         self.config = config or {}
         self.fingerprint_database: Dict[str, AudioFingerprint] = {}

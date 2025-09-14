@@ -148,7 +148,7 @@ class OptimizationResult:
 class ContentAnalyzer:
     """Deep content analysis engine"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.logger = logging.getLogger(f"{__name__}.ContentAnalyzer")
         self.config = config or {}
         
@@ -165,7 +165,7 @@ class ContentAnalyzer:
         # Initialize AI models if available
         self._initialize_ai_models()
     
-    def _initialize_ai_models(self):
+    def _initialize_ai_models(self) -> None:
         """Initialize AI models for content analysis"""
         try:
             if TORCH_AVAILABLE:
@@ -1039,7 +1039,7 @@ class AIContentOptimizer:
     and automated improvements using AI algorithms and 53 agents integration.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.logger = logging.getLogger(f"{__name__}.AIContentOptimizer")
         self.config = config or {}
         
@@ -1307,10 +1307,10 @@ class AIContentOptimizer:
     
     def _update_optimization_stats(
         self,
-        result: OptimizationResult,
-        content_type: ContentType,
-        platform: PlatformTarget
-    ):
+        result -> None: OptimizationResult,
+        content_type -> None: ContentType,
+        platform -> None: PlatformTarget
+    ) -> None:
         """Update optimization statistics"""
         self.optimization_stats['total_optimizations'] += 1
         

@@ -1,3 +1,8 @@
+"""
+Invalidation Cascade Engine module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
@@ -113,7 +118,7 @@ class InvalidationCascadeEngine:
     **Microservices**: Coordination invalidation multi-services
     """
     
-    def __init__(self, redis_pool, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, redis_pool, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.redis_pool = redis_pool
         self.config = config or self._get_default_config()
         
@@ -164,7 +169,7 @@ class InvalidationCascadeEngine:
             }
         }
     
-    async def start_processor(self):
+    async def start_processor(self) -> None:
         """**Backend Senior**: Démarrage processeur invalidation"""
         if self.batch_processor_task and not self.batch_processor_task.done():
             logger.warning("⚠️ Processeur déjà en cours")
@@ -173,7 +178,7 @@ class InvalidationCascadeEngine:
         self.batch_processor_task = asyncio.create_task(self._batch_processor_loop())
         logger.info("🚀 Processeur invalidation démarré")
     
-    async def stop_processor(self):
+    async def stop_processor(self) -> None:
         """**Backend Senior**: Arrêt processeur invalidation"""
         if self.batch_processor_task:
             self.batch_processor_task.cancel()
@@ -184,7 +189,7 @@ class InvalidationCascadeEngine:
         
         logger.info("🛑 Processeur invalidation arrêté")
     
-    async def _batch_processor_loop(self):
+    async def _batch_processor_loop(self) -> None:
         """**Backend Senior**: Boucle traitement batch invalidations"""
         batch = []
         last_batch_time = time.time()
@@ -214,7 +219,7 @@ class InvalidationCascadeEngine:
                 logger.error(f"❌ Erreur processeur batch: {e}")
                 await asyncio.sleep(1)
     
-    def add_dependency_rule(self, rule: DependencyRule):
+    def add_dependency_rule(self, rule -> None: DependencyRule) -> None:
         """**DBA**: Ajout règle de dépendance"""
         rule_id = hashlib.md5(f"{rule.source_pattern}:{','.join(rule.dependent_patterns)}".encode()).hexdigest()
         self.dependency_rules[rule_id] = rule
@@ -224,7 +229,7 @@ class InvalidationCascadeEngine:
         
         logger.info(f"📋 Règle dépendance ajoutée: {rule.source_pattern} -> {rule.dependent_patterns}")
     
-    def _update_dependency_graph(self, rule: DependencyRule):
+    def _update_dependency_graph(self, rule -> None: DependencyRule) -> None:
         """**DBA**: Mise à jour graphe dépendances"""
         source = rule.source_pattern
         
@@ -245,7 +250,7 @@ class InvalidationCascadeEngine:
                 cycles = list(nx.simple_cycles(self.dependency_graph))
                 logger.warning(f"⚠️ Cycles détectés dans dépendances: {cycles}")
     
-    def add_tag_mapping(self, tag: str, keys: List[str]):
+    def add_tag_mapping(self, tag -> None: str, keys -> None: List[str]) -> None:
         """**Backend Senior**: Ajout mapping tags-clés"""
         for key in keys:
             self.tag_mappings[tag].add(key)
@@ -253,7 +258,7 @@ class InvalidationCascadeEngine:
         
         logger.debug(f"🏷️ Tag mapping ajouté: {tag} -> {len(keys)} clés")
     
-    def remove_tag_mapping(self, tag: str, keys: Optional[List[str]] = None):
+    def remove_tag_mapping(self, tag -> None: str, keys -> None: Optional[List[str]] = None) -> None:
         """**Backend Senior**: Suppression mapping tags"""
         if keys:
             for key in keys:
@@ -361,7 +366,7 @@ class InvalidationCascadeEngine:
         logger.info(f"🏷️ Invalidation tag programmée: {tag} ({len(tagged_keys)} clés)")
         return event_id
     
-    async def _process_invalidation_batch(self, events: List[InvalidationEvent]):
+    async def _process_invalidation_batch(self, events -> None: List[InvalidationEvent]) -> None:
         """**Backend Senior**: Traitement batch événements invalidation"""
         if not events:
             return
@@ -384,12 +389,12 @@ class InvalidationCascadeEngine:
             else:
                 await self._process_default_invalidations(strategy_events)
     
-    async def _process_immediate_invalidations(self, events: List[InvalidationEvent]):
+    async def _process_immediate_invalidations(self, events -> None: List[InvalidationEvent]) -> None:
         """**Backend Senior**: Traitement invalidations immédiates"""
         for event in events:
             await self._execute_single_invalidation(event)
     
-    async def _process_batch_invalidations(self, events: List[InvalidationEvent]):
+    async def _process_batch_invalidations(self, events -> None: List[InvalidationEvent]) -> None:
         """**Backend Senior**: Traitement invalidations batch optimisé"""
         
         # Consolidation des clés à invalider
@@ -414,7 +419,7 @@ class InvalidationCascadeEngine:
             event.affected_keys = list(final_keys)
             await self._update_event_metrics(event)
     
-    async def _process_smart_invalidations(self, events: List[InvalidationEvent]):
+    async def _process_smart_invalidations(self, events -> None: List[InvalidationEvent]) -> None:
         """**Lead Dev IA**: Traitement invalidations intelligentes**"""
         
         # Analyse intelligent des événements
@@ -469,12 +474,12 @@ class InvalidationCascadeEngine:
         
         return True
     
-    async def _process_default_invalidations(self, events: List[InvalidationEvent]):
+    async def _process_default_invalidations(self, events -> None: List[InvalidationEvent]) -> None:
         """**Backend Senior**: Traitement invalidations par défaut"""
         for event in events:
             await self._execute_single_invalidation(event)
     
-    async def _execute_single_invalidation(self, event: InvalidationEvent):
+    async def _execute_single_invalidation(self, event -> None: InvalidationEvent) -> None:
         """**Backend Senior**: Exécution invalidation individuelle"""
         start_time = time.time()
         
@@ -671,7 +676,7 @@ class InvalidationCascadeEngine:
             logger.error(f"❌ Erreur vérification fraîcheur: {e}")
             return False
     
-    async def _notify_invalidation_listeners(self, event: InvalidationEvent):
+    async def _notify_invalidation_listeners(self, event -> None: InvalidationEvent) -> None:
         """**Microservices**: Notification listeners invalidation"""
         
         # Notification listeners génériques
@@ -695,12 +700,12 @@ class InvalidationCascadeEngine:
                 except Exception as e:
                     logger.error(f"❌ Erreur listener spécifique {key}: {e}")
     
-    def register_invalidation_listener(self, key_pattern: str, listener: Callable):
+    def register_invalidation_listener(self, key_pattern -> None: str, listener -> None: Callable) -> None:
         """**Microservices**: Enregistrement listener invalidation"""
         self.invalidation_listeners[key_pattern].append(listener)
         logger.info(f"👂 Listener invalidation enregistré: {key_pattern}")
     
-    async def _update_event_metrics(self, event: InvalidationEvent):
+    async def _update_event_metrics(self, event -> None: InvalidationEvent) -> None:
         """**DevOps**: Mise à jour métriques événement"""
         
         self.metrics.total_events += 1
@@ -798,19 +803,20 @@ class InvalidationCascadeEngine:
         }
 
 # Factory function
-async def create_invalidation_cascade_engine(redis_pool, config: Optional[Dict[str, Any]] = None):
+async def create_invalidation_cascade_engine(redis_pool, config -> None: Optional[Dict[str, Any]] = None) -> None:
     """**Lead Dev IA**: Factory création moteur invalidation cascade"""
     engine = InvalidationCascadeEngine(redis_pool, config)
     await engine.start_processor()
     return engine
 
 if __name__ == "__main__":
-    async def demo():
+    async def demo() -> None:
         """Démonstration Invalidation Cascade Engine"""
         
         # Configuration Redis simulée
         class MockRedisPool:
-            def get_connection(self):
+    """MockRedisPool: class implementation"""
+            def get_connection(self) -> None:
                 from unittest.mock import AsyncMock
                 mock = AsyncMock()
                 mock.delete.return_value = 5

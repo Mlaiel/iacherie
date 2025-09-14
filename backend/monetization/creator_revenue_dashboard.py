@@ -137,7 +137,7 @@ class CreatorRevenueDashboard:
     and optimization recommendations.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the creator revenue dashboard."""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self.dashboard_data: Dict[str, Dict[str, Any]] = {}
@@ -229,12 +229,12 @@ class CreatorRevenueDashboard:
             self.logger.error(f"Failed to initialize CreatorRevenueDashboard: {e}")
             return False
     
-    async def _load_dashboard_data(self):
+    async def _load_dashboard_data(self) -> None:
         """Load existing dashboard data from storage."""
         # In production, this would load from database
         self.logger.info("Loading dashboard data...")
     
-    async def _initialize_real_time_metrics(self):
+    async def _initialize_real_time_metrics(self) -> None:
         """Initialize real-time metrics tracking."""
         self.logger.info("Initializing real-time metrics...")
     
@@ -1042,7 +1042,7 @@ class CreatorRevenueDashboard:
             self.logger.error(f"Failed to update goal progress: {e}")
             return False
     
-    async def _create_goal_achievement_alert(self, creator_id: str, goal: GoalTracker):
+    async def _create_goal_achievement_alert(self, creator_id -> None: str, goal -> None: GoalTracker) -> None:
         """Create alert for goal achievement."""
         alert = DashboardAlert(
             alert_id=str(uuid4()),

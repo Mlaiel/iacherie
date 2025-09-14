@@ -1,4 +1,4 @@
-"""🔧 Container Registry Manager - IA-Influencer-Agent CI/CD
+"""# [EMOJI_REMOVED] Container Registry Manager - IA-Influencer-Agent CI/CD
 ================================================================
 Expert: DEVOPS_ENGINEER + CONTAINER_SPECIALIST  
 Created: 2025-08-24
@@ -76,7 +76,7 @@ class ContainerConfiguration:
     multi_arch: bool = True
     architectures: List[str] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.build_args is None:
             self.build_args = {}
         if self.labels is None:
@@ -114,7 +114,7 @@ class ContainerRegistryManager:
     """
 Enterprise container registry management system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """
 Initialize container registry manager"""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
@@ -140,11 +140,11 @@ Initialize container registry manager"""
             await self._initialize_security_scanning()
             
             self.initialized = True
-            self.logger.info("✅ Container registry manager initialized")
+            self.logger.info("# [EMOJI_REMOVED] Container registry manager initialized")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Failed to initialize container registry manager: {e}")
+            self.logger.error(f"# [EMOJI_REMOVED] Failed to initialize container registry manager: {e}")
             return False
     
     async def _load_registry_configurations(self) -> None:
@@ -347,11 +347,11 @@ Initialize container registry manager"""
                     f"Image size ({image_size_mb:.1f}MB) exceeds limit ({config.size_limit_mb}MB)"
                 )
             
-            self.logger.info(f"✅ Image built successfully: {image.id[:12]} ({image_size_mb:.1f}MB)")
+            self.logger.info(f"# [EMOJI_REMOVED] Image built successfully: {image.id[:12]} ({image_size_mb:.1f}MB)")
             return True, image.id
             
         except Exception as e:
-            self.logger.error(f"❌ Failed to build image {config_name}: {e}")
+            self.logger.error(f"# [EMOJI_REMOVED] Failed to build image {config_name}: {e}")
             return False, str(e)
     
     async def push_image(
@@ -388,11 +388,11 @@ Initialize container registry manager"""
                 }
             )
             
-            self.logger.info(f"✅ Image pushed successfully: {full_image_name}")
+            self.logger.info(f"# [EMOJI_REMOVED] Image pushed successfully: {full_image_name}")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Failed to push image {config_name}: {e}")
+            self.logger.error(f"# [EMOJI_REMOVED] Failed to push image {config_name}: {e}")
             return False
     
     async def scan_image_security(
@@ -438,12 +438,12 @@ Initialize container registry manager"""
             self.scan_history.append(scan_result)
             
             self.logger.info(
-                f"✅ Security scan completed: {scan_result.total_vulnerabilities} vulnerabilities found"
+                f"# [EMOJI_REMOVED] Security scan completed: {scan_result.total_vulnerabilities} vulnerabilities found"
             )
             return scan_result
             
         except Exception as e:
-            self.logger.error(f"❌ Failed to scan image {config_name}: {e}")
+            self.logger.error(f"# [EMOJI_REMOVED] Failed to scan image {config_name}: {e}")
             raise
     
     async def _simulate_security_scan(self, image_type: ImageType) -> Dict[SecurityLevel, int]:
@@ -508,10 +508,10 @@ Generate mock CVE identifiers"""
                 registry=registry.registry_url
             )
             
-            self.logger.info(f"✅ Authenticated with registry: {registry.registry_type.value}")
+            self.logger.info(f"# [EMOJI_REMOVED] Authenticated with registry: {registry.registry_type.value}")
             
         except Exception as e:
-            self.logger.error(f"❌ Failed to authenticate with registry: {e}")
+            self.logger.error(f"# [EMOJI_REMOVED] Failed to authenticate with registry: {e}")
             raise
     
     async def cleanup_images(
@@ -555,13 +555,13 @@ Generate mock CVE identifiers"""
                     self.logger.warning(f"Failed to cleanup images for {config_name}: {e}")
             
             self.logger.info(
-                f"✅ Cleanup completed: {cleanup_stats['removed']} images removed, "
+                f"# [EMOJI_REMOVED] Cleanup completed: {cleanup_stats['removed']} images removed, "
                 f"{cleanup_stats['size_freed_mb']:.1f}MB freed"
             )
             return cleanup_stats
             
         except Exception as e:
-            self.logger.error(f"❌ Failed to cleanup images: {e}")
+            self.logger.error(f"# [EMOJI_REMOVED] Failed to cleanup images: {e}")
             return {"removed": 0, "size_freed_mb": 0}
     
     async def get_registry_status(self) -> Dict[RegistryType, Dict[str, Any]]:
@@ -651,3 +651,5 @@ Generate mock CVE identifiers"""
 
 # Global instance
 container_registry_manager = ContainerRegistryManager()
+
+# File has syntax issues - needs manual review

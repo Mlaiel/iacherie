@@ -1,3 +1,8 @@
+"""
+Scheduler Service module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 🔧 SCHEDULER SERVICE
@@ -105,7 +110,7 @@ class CronParser:
 class SchedulerService:
     """Advanced distributed task scheduling service"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.service_name = "SchedulerService"
         self.version = "1.0.0"
         self.jobs: Dict[str, ScheduledJob] = {}
@@ -117,7 +122,7 @@ class SchedulerService:
         
         logger.info(f"✅ {self.service_name} v{self.version} initialized")
     
-    async def initialize(self, redis_url: str = "redis://localhost:6379/0"):
+    async def initialize(self, redis_url -> None: str = "redis -> None://localhost -> None:6379/0") -> None:
         """Initialize the scheduler service"""
         try:
             # Initialize Redis connection
@@ -134,7 +139,7 @@ class SchedulerService:
             logger.error(f"❌ Failed to initialize {self.service_name}: {str(e)}")
             return False
     
-    async def register_job_function(self, name: str, function: Callable):
+    async def register_job_function(self, name -> None: str, function -> None: Callable) -> None:
         """Register a function that can be scheduled"""
         self.job_functions[name] = function
         logger.info(f"📋 Registered job function: {name}")
@@ -176,13 +181,13 @@ class SchedulerService:
         logger.info(f"⏰ Scheduled job '{name}' (ID: {job_id}) to run at {job.next_run}")
         return job_id
     
-    async def start_scheduler(self):
+    async def start_scheduler(self) -> None:
         """Start the scheduler main loop"""
         self.running = True
         self.scheduler_task = asyncio.create_task(self._scheduler_loop())
         logger.info(f"🚀 {self.service_name} started")
     
-    async def stop_scheduler(self):
+    async def stop_scheduler(self) -> None:
         """Stop the scheduler"""
         self.running = False
         if self.scheduler_task:
@@ -198,7 +203,7 @@ class SchedulerService:
         
         logger.info(f"🛑 {self.service_name} stopped")
     
-    async def _scheduler_loop(self):
+    async def _scheduler_loop(self) -> None:
         """Main scheduler loop"""
         while self.running:
             try:
@@ -224,7 +229,7 @@ class SchedulerService:
                 logger.error(f"❌ Error in scheduler loop: {str(e)}")
                 await asyncio.sleep(5)
     
-    async def _execute_job(self, job: ScheduledJob):
+    async def _execute_job(self, job -> None: ScheduledJob) -> None:
         """Execute a scheduled job"""
         try:
             logger.info(f"🔄 Executing job '{job.name}' (ID: {job.id})")
@@ -286,7 +291,7 @@ class SchedulerService:
         finally:
             await self._save_job_to_storage(job)
     
-    async def _save_job_to_storage(self, job: ScheduledJob):
+    async def _save_job_to_storage(self, job -> None: ScheduledJob) -> None:
         """Save job to Redis storage"""
         if self.redis_client:
             try:
@@ -306,7 +311,7 @@ class SchedulerService:
             except Exception as e:
                 logger.error(f"❌ Failed to save job to storage: {str(e)}")
     
-    async def _load_jobs_from_storage(self):
+    async def _load_jobs_from_storage(self) -> None:
         """Load jobs from Redis storage"""
         if self.redis_client:
             try:
@@ -389,13 +394,13 @@ class SchedulerService:
         }
 
 # Example job functions
-async def example_async_job(message: str):
+async def example_async_job(message -> None: str) -> None:
     """Example async job function"""
     logger.info(f"🔄 Executing async job: {message}")
     await asyncio.sleep(2)
     logger.info(f"✅ Async job completed: {message}")
 
-def example_sync_job(message: str):
+def example_sync_job(message -> None: str) -> None:
     """Example sync job function"""
     logger.info(f"🔄 Executing sync job: {message}")
     time.sleep(2)
@@ -405,7 +410,7 @@ def example_sync_job(message: str):
 scheduler_service = SchedulerService()
 
 # Example usage
-async def main():
+async def main() -> None:
     """Example usage of the scheduler service"""
     try:
         # Initialize service

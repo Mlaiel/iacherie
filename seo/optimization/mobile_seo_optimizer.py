@@ -53,7 +53,7 @@ class MobileSEOOptimizer:
     Provides mobile-first indexing optimization and mobile user experience improvements
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.mobile_ranking_factors = self._initialize_mobile_ranking_factors()
         self.viewport_configurations = self._load_viewport_configurations()
         self.touch_target_guidelines = self._load_touch_guidelines()

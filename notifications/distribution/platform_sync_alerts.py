@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 class PlatformSyncAlerts:
     """Multi-platform synchronization alert system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         logger.info("Platform sync alerts initialized")
     
     async def notify_sync_completed(self, user_id: str, content_id: str, 

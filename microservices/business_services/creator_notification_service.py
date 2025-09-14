@@ -137,7 +137,7 @@ class CreatorNotificationService:
     scheduling, and comprehensive analytics for creator engagement.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.templates: Dict[str, NotificationTemplate] = {}
         self.preferences: Dict[str, CreatorPreferences] = {}
         self.delivery_queue: List[NotificationRequest] = []
@@ -150,7 +150,7 @@ class CreatorNotificationService:
         
         logger.info("CreatorNotificationService initialized successfully")
     
-    def _initialize_templates(self):
+    def _initialize_templates(self) -> None:
         """Initialize default notification templates."""
         templates = [
             NotificationTemplate(
@@ -410,7 +410,7 @@ class CreatorNotificationService:
         
         return True
     
-    def _update_rate_limit(self, creator_id: str, channel: NotificationChannel):
+    def _update_rate_limit(self, creator_id -> None: str, channel -> None: NotificationChannel) -> None:
         """Update rate limit counter for creator and channel."""
         if creator_id not in self.rate_limits:
             self.rate_limits[creator_id] = {}
@@ -465,7 +465,7 @@ class CreatorNotificationService:
         logger.info(f"Bulk notification sent to {len(creator_ids)} creators")
         return results
     
-    async def process_scheduled_notifications(self):
+    async def process_scheduled_notifications(self) -> None:
         """Process notifications scheduled for delivery."""
         current_time = datetime.now()
         ready_notifications = []
@@ -561,7 +561,7 @@ def get_creator_notification_service() -> CreatorNotificationService:
 
 
 # Example usage and testing
-async def example_usage():
+async def example_usage() -> None:
     """Example usage of Creator Notification Service."""
     service = get_creator_notification_service()
     

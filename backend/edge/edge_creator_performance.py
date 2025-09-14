@@ -368,7 +368,7 @@ class MultiFormatPerformanceEngine:
 class EdgeCreatorPerformance:
     """Optimisation Performance Créateurs Edge."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         # Optimiseurs spécialisés
         self.musician_optimizer = MusicianPerformanceOptimizer()
         self.blogger_accelerator = BloggerContentAccelerator()
@@ -531,7 +531,7 @@ class EdgeCreatorPerformance:
             profiles = [p for p in profiles if p.creator_type == creator_type]
         
         # Tri par score de performance (moyenne des métriques)
-        def calculate_performance_score(profile):
+        def calculate_performance_score(profile) -> None:
             metrics = profile.performance_metrics
             if not metrics:
                 return 0.0
@@ -551,7 +551,7 @@ class EdgeCreatorPerformance:
         
         return leaderboard
     
-    async def _update_performance_stats(self, optimization_result: Dict[str, Any]):
+    async def _update_performance_stats(self, optimization_result -> None: Dict[str, Any]) -> None:
         """Met à jour les statistiques de performance."""
         self.performance_stats["total_optimizations"] += 1
         
@@ -590,7 +590,7 @@ class EdgeCreatorPerformance:
             "optimization_cache_size": len(self.optimization_cache)
         }
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Arrête le système d'optimisation performance."""
         logger.info("Shutting down EdgeCreatorPerformance")
 

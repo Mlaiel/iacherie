@@ -35,6 +35,7 @@ router = APIRouter(prefix="/api/v1/seo", tags=["SEO Orchestrator"])
 # ============ ENUMS ============
 
 class PlatformType(str, Enum):
+    """PlatformType class implementation"""
     MUSIC_STREAMING = "music_streaming"
     VIDEO_PLATFORM = "video_platform"
     SOCIAL_MEDIA = "social_media"
@@ -45,6 +46,7 @@ class PlatformType(str, Enum):
     CONTENT_AGGREGATOR = "content_aggregator"
 
 class ContentType(str, Enum):
+    """ContentType class implementation"""
     AUDIO_TRACK = "audio_track"
     VIDEO_CONTENT = "video_content"
     PODCAST_EPISODE = "podcast_episode"
@@ -55,6 +57,7 @@ class ContentType(str, Enum):
     PLAYLIST = "playlist"
 
 class SEOStrategy(str, Enum):
+    """SEOStrategy class implementation"""
     AGGRESSIVE_GROWTH = "aggressive_growth"
     BALANCED_OPTIMIZATION = "balanced_optimization"
     LONG_TAIL_FOCUS = "long_tail_focus"
@@ -65,6 +68,7 @@ class SEOStrategy(str, Enum):
     VIRAL_OPTIMIZATION = "viral_optimization"
 
 class KeywordDifficulty(str, Enum):
+    """KeywordDifficulty class implementation"""
     VERY_EASY = "very_easy"
     EASY = "easy"
     MEDIUM = "medium"
@@ -72,6 +76,7 @@ class KeywordDifficulty(str, Enum):
     VERY_HARD = "very_hard"
 
 class RankingStatus(str, Enum):
+    """RankingStatus class implementation"""
     TOP_3 = "top_3"
     TOP_10 = "top_10"
     TOP_50 = "top_50"
@@ -81,6 +86,7 @@ class RankingStatus(str, Enum):
 # ============ PYDANTIC MODELS ============
 
 class ContentOptimizationRequest(BaseModel):
+    """ContentOptimizationRequest class implementation"""
     content_id: str = Field(..., description="Content identifier")
     content_type: ContentType = Field(..., description="Type of content")
     platforms: List[str] = Field(..., description="Target platforms")
@@ -93,6 +99,7 @@ class ContentOptimizationRequest(BaseModel):
     budget_priority: str = Field(default="medium", description="Budget priority level")
 
 class KeywordResearchRequest(BaseModel):
+    """KeywordResearchRequest class implementation"""
     seed_keywords: List[str] = Field(..., description="Initial seed keywords")
     content_category: str = Field(..., description="Content category")
     target_platforms: List[str] = Field(..., description="Target platforms")
@@ -104,6 +111,7 @@ class KeywordResearchRequest(BaseModel):
     include_trending: bool = Field(default=True, description="Include trending keywords")
 
 class RankingTrackingRequest(BaseModel):
+    """RankingTrackingRequest class implementation"""
     content_ids: List[str] = Field(..., description="Content IDs to track")
     keywords: List[str] = Field(..., description="Keywords to track rankings for")
     platforms: List[str] = Field(..., description="Platforms to monitor")
@@ -112,6 +120,7 @@ class RankingTrackingRequest(BaseModel):
     alert_thresholds: Dict[str, Any] = Field(default={}, description="Alert thresholds")
 
 class CompetitorAnalysisRequest(BaseModel):
+    """CompetitorAnalysisRequest class implementation"""
     competitor_profiles: List[str] = Field(..., description="Competitor profile IDs")
     analysis_depth: str = Field(default="comprehensive", description="Analysis depth level")
     platforms: List[str] = Field(..., description="Platforms to analyze")
@@ -121,6 +130,7 @@ class CompetitorAnalysisRequest(BaseModel):
     include_backlinks: bool = Field(default=True, description="Include backlink analysis")
 
 class MetaGenerationRequest(BaseModel):
+    """MetaGenerationRequest class implementation"""
     content_title: str = Field(..., description="Content title")
     content_description: str = Field(..., description="Content description")
     content_type: ContentType = Field(..., description="Content type")
@@ -131,6 +141,7 @@ class MetaGenerationRequest(BaseModel):
     character_limits: Dict[str, int] = Field(default={}, description="Platform character limits")
 
 class LinkBuildingRequest(BaseModel):
+    """LinkBuildingRequest class implementation"""
     content_url: str = Field(..., description="Content URL for link building")
     target_keywords: List[str] = Field(..., description="Target keywords")
     outreach_strategy: str = Field(..., description="Outreach strategy")
@@ -143,7 +154,7 @@ class LinkBuildingRequest(BaseModel):
 class KeywordIntelligenceEngine:
     """AI-powered keyword research and analysis engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.keyword_database = {}
         self.trending_keywords = {}
         self.competitor_keywords = {}
@@ -435,7 +446,7 @@ class KeywordIntelligenceEngine:
 class ContentOptimizationEngine:
     """AI-powered content optimization for multiple platforms"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.optimization_rules = {}
         self.platform_requirements = {}
     
@@ -805,7 +816,7 @@ class ContentOptimizationEngine:
 class RankingTrackingEngine:
     """Advanced ranking tracking and monitoring system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.tracking_data = {}
         self.alert_thresholds = {}
     
@@ -1073,7 +1084,7 @@ ranking_engine = RankingTrackingEngine()
 # ============ API ENDPOINTS ============
 
 @router.post("/keywords/research")
-async def research_keywords(request: KeywordResearchRequest):
+async def research_keywords(request -> None: KeywordResearchRequest) -> None:
     """
     Conduct comprehensive keyword research with AI insights
     
@@ -1094,7 +1105,7 @@ async def research_keywords(request: KeywordResearchRequest):
         raise HTTPException(status_code=500, detail=str(e))
 
 @router.post("/content/optimize")
-async def optimize_content(request: ContentOptimizationRequest):
+async def optimize_content(request -> None: ContentOptimizationRequest) -> None:
     """
     Optimize content for multiple platforms with AI recommendations
     
@@ -1115,7 +1126,7 @@ async def optimize_content(request: ContentOptimizationRequest):
         raise HTTPException(status_code=500, detail=str(e))
 
 @router.post("/rankings/track")
-async def track_rankings(request: RankingTrackingRequest):
+async def track_rankings(request -> None: RankingTrackingRequest) -> None:
     """
     Track content rankings across platforms and keywords
     
@@ -1136,7 +1147,7 @@ async def track_rankings(request: RankingTrackingRequest):
         raise HTTPException(status_code=500, detail=str(e))
 
 @router.get("/analytics/seo-performance/{content_id}")
-async def get_seo_performance_analytics(content_id: str, timeframe_days: int = 30):
+async def get_seo_performance_analytics(content_id -> None: str, timeframe_days -> None: int = 30) -> None:
     """Get comprehensive SEO performance analytics for content"""
     try:
         analytics = {
@@ -1187,7 +1198,7 @@ async def get_seo_performance_analytics(content_id: str, timeframe_days: int = 3
         raise HTTPException(status_code=500, detail=str(e))
 
 @router.get("/platforms/seo-requirements")
-async def get_platform_seo_requirements():
+async def get_platform_seo_requirements() -> None:
     """Get SEO requirements and best practices for all supported platforms"""
     try:
         platform_requirements = {

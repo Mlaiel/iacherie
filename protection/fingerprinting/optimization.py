@@ -106,7 +106,7 @@ class GPUAccelerator:
     """
 GPU acceleration utilities for fingerprinting operations."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.available = TORCH_AVAILABLE and torch.cuda.is_available()
         self.device_count = torch.cuda.device_count() if self.available else 0
         self.current_device = 0
@@ -115,7 +115,7 @@ GPU acceleration utilities for fingerprinting operations."""
         if self.available:
             self._initialize_gpu()
     
-    def _initialize_gpu(self):
+    def _initialize_gpu(self) -> None:
         """
 Initialize GPU environment for optimal performance."""
         try:
@@ -198,7 +198,7 @@ Perform batched GPU operations for efficiency."""
         
         return results
     
-    def clear_cache(self):
+    def clear_cache(self) -> None:
         """
 Clear GPU memory cache."""
         if self.available:
@@ -209,7 +209,7 @@ class IntelligentCache:
     """
 Intelligent caching system with LRU eviction and compression."""
     
-    def __init__(self, max_size_mb: int = 1024, compression: bool = True):
+    def __init__(self, max_size_mb -> None: int = 1024, compression -> None: bool = True) -> None:
         self.max_size_bytes = max_size_mb * 1024 * 1024
         self.compression = compression
         self.cache = OrderedDict()
@@ -280,7 +280,7 @@ Get item from cache."""
             self.misses += 1
             return None
     
-    def put(self, key: str, value: Any, ttl_seconds: int = 3600):
+    def put(self, key -> None: str, value -> None: Any, ttl_seconds -> None: int = 3600) -> None:
         """Put item in cache."""
         cache_key = self._generate_key(key)
         serialized_value = self._serialize(value)
@@ -296,7 +296,7 @@ Get item from cache."""
                 except:
                     pass
     
-    def _put_local(self, cache_key: str, serialized_value: bytes):
+    def _put_local(self, cache_key -> None: str, serialized_value -> None: bytes) -> None:
         """Put item in local cache with LRU eviction."""
         value_size = len(serialized_value)
         
@@ -320,7 +320,7 @@ Get item from cache."""
         self.size_tracker[cache_key] = value_size
         self.current_size += value_size
     
-    def clear(self):
+    def clear(self) -> None:
         """
 Clear all cache."""
         with self.lock:
@@ -354,12 +354,12 @@ class MemoryManager:
     """
 Advanced memory management and optimization."""
     
-    def __init__(self, memory_limit_gb: Optional[float] = None):
+    def __init__(self, memory_limit_gb -> None: Optional[float] = None) -> None:
         self.memory_limit_bytes = (memory_limit_gb * 1024**3) if memory_limit_gb else None
         self.allocations = {}
         self.peak_usage = 0
         
-    def track_allocation(self, name: str, size_bytes: int):
+    def track_allocation(self, name -> None: str, size_bytes -> None: int) -> None:
         """
 Track memory allocation."""
         self.allocations[name] = size_bytes
@@ -373,7 +373,7 @@ Track memory allocation."""
             logger.warning(f"Memory usage approaching limit: {total_usage / 1024**3:.2f}GB")
             self._trigger_cleanup()
     
-    def _trigger_cleanup(self):
+    def _trigger_cleanup(self) -> None:
         """Trigger memory cleanup when approaching limits."""
         # Force garbage collection
         gc.collect()
@@ -400,7 +400,7 @@ class ProcessingPipeline:
     """
 Optimized processing pipeline with intelligent batching."""
     
-    def __init__(self, config: OptimizationConfig):
+    def __init__(self, config -> None: OptimizationConfig) -> None:
         self.config = config
         self.gpu_accelerator = GPUAccelerator()
         self.cache = IntelligentCache(config.cache_size_mb, config.enable_compression)
@@ -415,17 +415,17 @@ Optimized processing pipeline with intelligent batching."""
         self.thread_pool = None
         self.process_pool = None
         
-    def add_preprocessor(self, func: Callable):
+    def add_preprocessor(self, func -> None: Callable) -> None:
         """
 Add preprocessing function to pipeline."""
         self.preprocessors.append(func)
     
-    def add_processor(self, func: Callable):
+    def add_processor(self, func -> None: Callable) -> None:
         """
 Add main processing function to pipeline."""
         self.processors.append(func)
     
-    def add_postprocessor(self, func: Callable):
+    def add_postprocessor(self, func -> None: Callable) -> None:
         """
 Add postprocessing function to pipeline."""
         self.postprocessors.append(func)
@@ -538,7 +538,7 @@ Process batch of items through optimized pipeline."""
             
             return results
     
-    def cleanup(self):
+    def cleanup(self) -> None:
         """
 Cleanup pipeline resources."""
         if self.thread_pool:
@@ -562,7 +562,7 @@ class PerformanceOptimizer:
     - Real-time performance monitoring and adjustment
     """
     
-    def __init__(self, config: OptimizationConfig = None):
+    def __init__(self, config -> None: OptimizationConfig = None) -> None:
         self.config = config or OptimizationConfig()
         
         # Core components
@@ -666,7 +666,7 @@ class PerformanceOptimizer:
 Wrap function with performance optimizations."""
         
         @wraps(func)
-        async def optimized_wrapper(*args, **kwargs):
+        async def optimized_wrapper(*args, **kwargs) -> None:
             start_time = time.time()
             
             # Generate cache key
@@ -707,7 +707,7 @@ Wrap function with performance optimizations."""
         
         return optimized_wrapper
     
-    async def _gpu_optimized_execution(self, func: Callable, *args, **kwargs):
+    async def _gpu_optimized_execution(self, func -> None: Callable, *args, **kwargs) -> None:
         """Execute function with GPU optimizations."""
         device = self.gpu_accelerator.get_optimal_device()
         
@@ -731,7 +731,7 @@ Wrap function with performance optimizations."""
             
             return result
     
-    async def _cpu_optimized_execution(self, func: Callable, *args, **kwargs):
+    async def _cpu_optimized_execution(self, func -> None: Callable, *args, **kwargs) -> None:
         """
 Execute function with CPU optimizations."""
         loop = asyncio.get_event_loop()
@@ -796,7 +796,7 @@ Generate optimization recommendations based on performance."""
         
         return recommendations
     
-    async def cleanup(self):
+    async def cleanup(self) -> None:
         """Clean up optimization resources."""
         self.pipeline.cleanup()
         self.gpu_accelerator.clear_cache()

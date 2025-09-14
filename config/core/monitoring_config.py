@@ -43,7 +43,7 @@ class MetricType(str, Enum):
 class MonitoringConfiguration:
     """Monitoring configuration"""
     
-    def __init__(self, level: MonitoringLevel = MonitoringLevel.ENTERPRISE):
+    def __init__(self, level -> None: MonitoringLevel = MonitoringLevel.ENTERPRISE) -> None:
         self.level = level
         self.metrics_config = self._get_metrics_config()
         self.alerting_config = self._get_alerting_config()

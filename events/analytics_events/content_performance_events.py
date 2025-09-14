@@ -1,5 +1,7 @@
 """Content Performance Events Module
 
+import logging
+
 Advanced content performance tracking and optimization for multi-format creators.
 Provides real-time content analytics, performance prediction, and optimization recommendations.
 
@@ -139,7 +141,7 @@ class ContentPerformanceEventHandler(BaseEventHandler):
     """
 Handles content performance events with advanced analytics"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
         self.cache_manager = CacheManager()
         self.db_manager = DatabaseManager()
@@ -323,7 +325,7 @@ class ContentPerformanceTracker:
     """
 Tracks comprehensive content performance metrics"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.cache_manager = CacheManager()
         self.db_manager = DatabaseManager()
         self.performance_calculator = PerformanceCalculator()
@@ -425,7 +427,7 @@ class ContentAnalyticsEngine:
     """
 Advanced content analytics using AI"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.content_analyzer = ContentAnalyzer()
         self.nlp_pipeline = pipeline("sentiment-analysis")
         self.content_classifier = pipeline("text-classification")
@@ -494,7 +496,7 @@ class ContentOptimizationEngine:
     """
 Optimizes content performance using ML"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.db_manager = DatabaseManager()
         self.content_predictor = ContentPredictor()
         self.optimization_models = {}
@@ -580,7 +582,7 @@ Optimize title and description based on high performers"""
 class ContentTrendPredictor:
     """Predicts content trends and viral potential"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.db_manager = DatabaseManager()
         self.trend_detector = TrendDetector()
         self.prediction_model = ContentPredictor()

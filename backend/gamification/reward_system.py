@@ -241,7 +241,7 @@ class UnifiedRewardSystem:
     and specialized gaming rewards with intelligent distribution.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.user_rewards: Dict[str, List[Reward]] = {}
         self.user_stats: Dict[str, UserRewardStats] = {}
@@ -257,7 +257,7 @@ class UnifiedRewardSystem:
         self._initialize_currency_rates()
         logger.info("💰 Unified Reward System initialized")
     
-    def _initialize_reward_templates(self):
+    def _initialize_reward_templates(self) -> None:
         """Initialize reward templates for both platform and gaming."""
         
         # Platform Reward Templates
@@ -319,7 +319,7 @@ class UnifiedRewardSystem:
             }
         })
     
-    def _initialize_currency_rates(self):
+    def _initialize_currency_rates(self) -> None:
         """Initialize exchange rates between currencies."""
         self.currency_rates = {
             # Platform currencies (base rate: 1 credit = 1.0)
@@ -589,7 +589,7 @@ class UnifiedRewardSystem:
             logger.error(f"Error claiming reward: {e}")
             return {"success": False, "message": str(e)}
     
-    async def _update_user_stats(self, user_id: str, rewards: List[Reward], total_value: Decimal):
+    async def _update_user_stats(self, user_id -> None: str, rewards -> None: List[Reward], total_value -> None: Decimal) -> None:
         """Update comprehensive user reward statistics."""
         try:
             stats = self.user_stats[user_id]

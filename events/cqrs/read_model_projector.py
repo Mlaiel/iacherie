@@ -132,7 +132,7 @@ class ProjectionMetrics:
 class EventProjector:
     """Base class for event projectors"""
     
-    def __init__(self, projection_definition: ProjectionDefinition):
+    def __init__(self, projection_definition -> None: ProjectionDefinition) -> None:
         self.projection_definition = projection_definition
         self.schema = projection_definition.read_model_schema
     
@@ -166,7 +166,7 @@ class EventProjector:
 class ReadModelStore:
     """Abstract read model storage interface"""
     
-    def __init__(self, store_config: Dict[str, Any]):
+    def __init__(self, store_config -> None: Dict[str, Any]) -> None:
         self.store_config = store_config
         self.store_type = ReadModelType(store_config.get("type", "document"))
     
@@ -204,7 +204,7 @@ class ReadModelStore:
 class InMemoryReadModelStore(ReadModelStore):
     """In-memory read model store for testing/development"""
     
-    def __init__(self, store_config: Dict[str, Any]):
+    def __init__(self, store_config -> None: Dict[str, Any]) -> None:
         super().__init__(store_config)
         self._data: Dict[str, Dict[str, Dict[str, Any]]] = defaultdict(dict)
         self._metadata: Dict[str, Dict[str, Dict[str, Any]]] = defaultdict(dict)
@@ -257,7 +257,7 @@ class InMemoryReadModelStore(ReadModelStore):
 class ConflictResolver:
     """Resolve conflicts in read model updates"""
     
-    def __init__(self, strategy: str = "last_writer_wins"):
+    def __init__(self, strategy -> None: str = "last_writer_wins") -> None:
         self.strategy = strategy
     
     async def resolve_conflict(self, existing_data: Dict[str, Any], 
@@ -311,7 +311,7 @@ class ConflictResolver:
 class CheckpointManager:
     """Manage projection checkpoints"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._checkpoints: Dict[str, ProjectionCheckpoint] = {}
         self._checkpoint_store: Optional[ReadModelStore] = None
     
@@ -382,7 +382,7 @@ class CheckpointManager:
 class EnterpriseReadModelProjector:
     """Enterprise read model projector with advanced features"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._projections: Dict[str, ProjectionDefinition] = {}
         self._projectors: Dict[str, EventProjector] = {}
         self._read_model_stores: Dict[str, ReadModelStore] = {}
@@ -672,7 +672,7 @@ class EnterpriseReadModelProjector:
             if projection_def.parallel_processing:
                 semaphore = asyncio.Semaphore(projection_def.max_parallel_workers)
                 
-                async def process_with_semaphore(event):
+                async def process_with_semaphore(event) -> None:
                     async with semaphore:
                         await self._process_single_event(projection_id, event, store)
                 

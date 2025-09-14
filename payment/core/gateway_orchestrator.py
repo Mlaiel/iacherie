@@ -141,7 +141,7 @@ class BusinessRule:
 class PaymentGatewayOrchestrator:
     """Enterprise orchestrator for payment workflows"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.redis_client = None
         self.workflow_definitions: Dict[str, WorkflowDefinition] = {}
@@ -165,7 +165,7 @@ class PaymentGatewayOrchestrator:
             'step_performance': defaultdict(list)
         }
         
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize the orchestrator"""
         try:
             # Initialize Redis connection
@@ -196,7 +196,7 @@ class PaymentGatewayOrchestrator:
             logger.error(f"Failed to initialize Payment Gateway Orchestrator: {e}")
             raise
     
-    async def _load_configuration(self):
+    async def _load_configuration(self) -> None:
         """Load existing configuration from storage"""
         try:
             # Load workflow definitions
@@ -253,7 +253,7 @@ class PaymentGatewayOrchestrator:
         except Exception as e:
             logger.error(f"Failed to load orchestrator configuration: {e}")
     
-    async def _register_default_step_functions(self):
+    async def _register_default_step_functions(self) -> None:
         """Register default step functions"""
         try:
             # Payment processing steps
@@ -292,7 +292,7 @@ class PaymentGatewayOrchestrator:
         except Exception as e:
             logger.error(f"Failed to register step functions: {e}")
     
-    async def _initialize_default_workflows(self):
+    async def _initialize_default_workflows(self) -> None:
         """Initialize default workflow definitions"""
         try:
             # Simple Payment Workflow
@@ -483,7 +483,7 @@ class PaymentGatewayOrchestrator:
             logger.error(f"Failed to execute workflow: {e}")
             raise
     
-    async def _execute_workflow_steps(self, execution: WorkflowExecution):
+    async def _execute_workflow_steps(self, execution -> None: WorkflowExecution) -> None:
         """Execute workflow steps"""
         try:
             workflow_def = execution.workflow_definition
@@ -544,7 +544,7 @@ class PaymentGatewayOrchestrator:
             execution.error_details = str(e)
             execution.completed_at = datetime.now()
     
-    async def _execute_step(self, execution: WorkflowExecution, step: WorkflowStep):
+    async def _execute_step(self, execution -> None: WorkflowExecution, step -> None: WorkflowStep) -> None:
         """Execute individual workflow step"""
         try:
             step.status = StepStatus.EXECUTING
@@ -611,7 +611,7 @@ class PaymentGatewayOrchestrator:
                 execution.failed_steps.remove(step.step_id)
                 await self._execute_step(execution, step)
     
-    async def _handle_workflow_failure(self, execution: WorkflowExecution, failed_steps: List[WorkflowStep]):
+    async def _handle_workflow_failure(self, execution -> None: WorkflowExecution, failed_steps -> None: List[WorkflowStep]) -> None:
         """Handle workflow failure and compensation"""
         try:
             execution.status = WorkflowStatus.FAILED
@@ -627,7 +627,7 @@ class PaymentGatewayOrchestrator:
         except Exception as e:
             logger.error(f"Error handling workflow failure: {e}")
     
-    async def _compensate_workflow(self, execution: WorkflowExecution):
+    async def _compensate_workflow(self, execution -> None: WorkflowExecution) -> None:
         """Compensate completed steps in reverse order"""
         try:
             # Find steps that need compensation (completed steps with compensation functions)
@@ -678,7 +678,7 @@ class PaymentGatewayOrchestrator:
             dependencies[step.step_id] = step.depends_on
         return dependencies
     
-    async def _apply_business_rules(self, execution: WorkflowExecution):
+    async def _apply_business_rules(self, execution -> None: WorkflowExecution) -> None:
         """Apply business rules to workflow execution"""
         try:
             workflow_type = execution.workflow_definition.workflow_type
@@ -960,7 +960,7 @@ class PaymentGatewayOrchestrator:
             logger.error(f"Failed to cancel execution: {e}")
             return False
     
-    async def _monitor_active_executions(self):
+    async def _monitor_active_executions(self) -> None:
         """Monitor active executions for timeouts"""
         while True:
             try:
@@ -992,7 +992,7 @@ class PaymentGatewayOrchestrator:
                 logger.error(f"Error in execution monitoring: {e}")
                 await asyncio.sleep(60)
     
-    async def _cleanup_completed_workflows(self):
+    async def _cleanup_completed_workflows(self) -> None:
         """Clean up completed workflow executions"""
         while True:
             try:
@@ -1018,7 +1018,7 @@ class PaymentGatewayOrchestrator:
                 logger.error(f"Error in workflow cleanup: {e}")
                 await asyncio.sleep(3600)
     
-    async def _cleanup_execution(self, execution_id: str, delay_hours: int = 1):
+    async def _cleanup_execution(self, execution_id -> None: str, delay_hours -> None: int = 1) -> None:
         """Clean up specific execution after delay"""
         await asyncio.sleep(delay_hours * 3600)
         if execution_id in self.active_executions:
@@ -1026,7 +1026,7 @@ class PaymentGatewayOrchestrator:
             if execution.status not in [WorkflowStatus.IN_PROGRESS]:
                 del self.active_executions[execution_id]
     
-    async def _collect_performance_metrics(self):
+    async def _collect_performance_metrics(self) -> None:
         """Collect performance metrics"""
         while True:
             try:
@@ -1070,7 +1070,7 @@ class PaymentGatewayOrchestrator:
             logger.error(f"Failed to get orchestrator status: {e}")
             return {'error': str(e)}
     
-    async def _save_workflow_definitions(self):
+    async def _save_workflow_definitions(self) -> None:
         """Save workflow definitions to storage"""
         try:
             workflows_dict = {}
@@ -1112,7 +1112,7 @@ class PaymentGatewayOrchestrator:
         except Exception as e:
             logger.error(f"Failed to save workflow definitions: {e}")
     
-    async def close(self):
+    async def close(self) -> None:
         """Close the orchestrator and cleanup resources"""
         try:
             if self.redis_client:

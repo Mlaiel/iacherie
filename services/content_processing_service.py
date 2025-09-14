@@ -160,7 +160,7 @@ class ContentValidator(ABC):
 class SafetyValidator(ContentValidator):
     """Content safety and appropriateness validator"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.profanity_filter = self._load_profanity_filter()
         self.toxicity_threshold = 0.8
         self.adult_content_threshold = 0.7
@@ -312,7 +312,7 @@ class SafetyValidator(ContentValidator):
 class QualityValidator(ContentValidator):
     """Content quality and technical standards validator"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.min_resolution = {"width": 480, "height": 320}
         self.min_audio_bitrate = 128
         self.max_file_size = 100 * 1024 * 1024  # 100MB
@@ -455,7 +455,7 @@ class QualityValidator(ContentValidator):
 class ComplianceValidator(ContentValidator):
     """Content compliance and legal requirements validator"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.copyright_patterns = self._load_copyright_patterns()
         self.restricted_content_rules = self._load_compliance_rules()
     
@@ -570,7 +570,7 @@ class ComplianceValidator(ContentValidator):
 class ContentProcessor:
     """Content processor for specific content types"""
     
-    def __init__(self, content_type: ContentType):
+    def __init__(self, content_type -> None: ContentType) -> None:
         self.content_type = content_type
         self.processing_capabilities = self._initialize_capabilities()
     
@@ -734,7 +734,7 @@ class ContentProcessor:
 class ContentProcessingOrchestrator:
     """Central orchestrator for content processing operations"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.validators = {
             "safety": SafetyValidator(),
             "quality": QualityValidator(),
@@ -755,7 +755,7 @@ class ContentProcessingOrchestrator:
         
         return request.request_id
     
-    async def _process_content_request(self, request: ContentProcessingRequest):
+    async def _process_content_request(self, request -> None: ContentProcessingRequest) -> None:
         """Process content request"""
         try:
             start_time = datetime.utcnow()
@@ -913,7 +913,7 @@ class ContentProcessingOrchestrator:
         
         return self.processors[content_type]
     
-    async def _send_callback(self, callback_url: str, result: ContentProcessingResult):
+    async def _send_callback(self, callback_url -> None: str, result -> None: ContentProcessingResult) -> None:
         """Send processing result to callback URL"""
         # Simulate callback sending
         # In real implementation, would make HTTP POST request

@@ -314,7 +314,7 @@ class PlatformConnectionModel(Base):
         Index('idx_platform_health_sync', 'health_score', 'last_sync_at'),
     )
     
-    def __repr__(self):
+    def __repr__(self) -> None:
         return f"<PlatformConnectionModel(id={self.id}, platform={self.platform.value}, status={self.api_status.value})>"
 
 
@@ -466,7 +466,7 @@ class IntegrationConfigModel(Base):
         Index('idx_config_default_template', 'is_default_config', 'is_template'),
     )
     
-    def __repr__(self):
+    def __repr__(self) -> None:
         return f"<IntegrationConfigModel(id={self.id}, name='{self.config_name}', type={self.config_type})>"
 
 
@@ -615,7 +615,7 @@ class SyncStatusModel(Base):
         Index('idx_sync_scheduled_priority', 'scheduled_at', 'is_priority'),
     )
     
-    def __repr__(self):
+    def __repr__(self) -> None:
         return f"<SyncStatusModel(id={self.id}, status={self.sync_status.value}, type={self.sync_type})>"
 
 
@@ -718,7 +718,7 @@ class APIEndpointModel(Base):
         Index('idx_endpoint_method_url', 'http_method', 'endpoint_url'),
     )
     
-    def __repr__(self):
+    def __repr__(self) -> None:
         return f"<APIEndpointModel(id={self.id}, name='{self.endpoint_name}', method={self.http_method})>"
 
 

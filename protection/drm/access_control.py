@@ -150,7 +150,7 @@ class AccessController:
     - Quantum-resistant encryption standards
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """
 Initialize the Access Controller."""
         self.config = config

@@ -1,3 +1,8 @@
+"""
+Model Performance Monitor module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 🚀 Model Performance Monitor - Enterprise MLOps Platform
@@ -137,7 +142,7 @@ class Alert:
 class StatisticalDriftDetector:
     """Détecteur de drift statistique avancé"""
     
-    def __init__(self, sensitivity: float = 0.05):
+    def __init__(self, sensitivity -> None: float = 0.05) -> None:
         self.sensitivity = sensitivity  # Seuil p-value
         
     def detect_data_drift(
@@ -348,7 +353,7 @@ class StatisticalDriftDetector:
 class PerformanceAnalyzer:
     """Analyseur de performance avancé"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.baseline_cache: Dict[str, PerformanceBenchmark] = {}
         
     def create_baseline(
@@ -540,7 +545,7 @@ class PerformanceAnalyzer:
 class ModelPerformanceMonitor:
     """Monitor principal de performance de modèles avec drift detection avancé"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.drift_detector = StatisticalDriftDetector(
             sensitivity=config.get('drift_sensitivity', 0.05)
@@ -553,7 +558,7 @@ class ModelPerformanceMonitor:
         self.monitoring_models: Dict[str, Dict[str, Any]] = {}
         self.is_running = False
         
-    async def start(self):
+    async def start(self) -> None:
         """Démarre le monitoring de performance"""
         try:
             logger.info("Démarrage du monitor de performance de modèles")
@@ -572,18 +577,18 @@ class ModelPerformanceMonitor:
             logger.error(f"Erreur démarrage monitor: {e}")
             raise
     
-    async def stop(self):
+    async def stop(self) -> None:
         """Arrête le monitoring"""
         logger.info("Arrêt du monitor de performance")
         self.is_running = False
     
     def register_model(
         self,
-        model_id: str,
-        model_type: ModelType,
-        baseline_data: Dict[str, np.ndarray],
-        metadata: Optional[Dict[str, Any]] = None
-    ):
+        model_id -> None: str,
+        model_type -> None: ModelType,
+        baseline_data -> None: Dict[str, np.ndarray],
+        metadata -> None: Optional[Dict[str, Any]] = None
+    ) -> None:
         """Enregistre un modèle pour monitoring"""
         
         # Création de la baseline de performance
@@ -608,12 +613,12 @@ class ModelPerformanceMonitor:
     
     async def submit_inference_data(
         self,
-        model_id: str,
-        predictions: np.ndarray,
-        targets: Optional[np.ndarray] = None,
-        features: Optional[np.ndarray] = None,
-        metadata: Optional[Dict[str, Any]] = None
-    ):
+        model_id -> None: str,
+        predictions -> None: np.ndarray,
+        targets -> None: Optional[np.ndarray] = None,
+        features -> None: Optional[np.ndarray] = None,
+        metadata -> None: Optional[Dict[str, Any]] = None
+    ) -> None:
         """Soumet des données d'inférence pour analyse"""
         
         if model_id not in self.monitoring_models:
@@ -663,11 +668,11 @@ class ModelPerformanceMonitor:
     
     async def _detect_drift_async(
         self,
-        model_id: str,
-        current_features: np.ndarray,
-        current_predictions: np.ndarray,
-        current_targets: Optional[np.ndarray]
-    ):
+        model_id -> None: str,
+        current_features -> None: np.ndarray,
+        current_predictions -> None: np.ndarray,
+        current_targets -> None: Optional[np.ndarray]
+    ) -> None:
         """Détection de drift asynchrone"""
         try:
             model_info = self.monitoring_models[model_id]
@@ -718,7 +723,7 @@ class ModelPerformanceMonitor:
         except Exception as e:
             logger.error(f"Erreur détection drift pour {model_id}: {e}")
     
-    async def _generate_drift_alert(self, drift_result: DriftDetectionResult):
+    async def _generate_drift_alert(self, drift_result -> None: DriftDetectionResult) -> None:
         """Génère une alerte de drift"""
         alert_id = f"drift-{drift_result.model_id}-{int(drift_result.timestamp.timestamp())}"
         
@@ -747,18 +752,18 @@ class ModelPerformanceMonitor:
         self.active_alerts[alert_id] = alert
         logger.warning(f"Alerte drift générée: {alert_id}")
     
-    def add_alert_rule(self, rule: AlertRule):
+    def add_alert_rule(self, rule -> None: AlertRule) -> None:
         """Ajoute une règle d'alerte"""
         self.alert_rules[rule.rule_id] = rule
         logger.info(f"Règle d'alerte ajoutée: {rule.rule_id}")
     
-    def remove_alert_rule(self, rule_id: str):
+    def remove_alert_rule(self, rule_id -> None: str) -> None:
         """Supprime une règle d'alerte"""
         if rule_id in self.alert_rules:
             del self.alert_rules[rule_id]
             logger.info(f"Règle d'alerte supprimée: {rule_id}")
     
-    async def _drift_detection_loop(self):
+    async def _drift_detection_loop(self) -> None:
         """Boucle de détection de drift"""
         while self.is_running:
             try:
@@ -770,7 +775,7 @@ class ModelPerformanceMonitor:
                 logger.error(f"Erreur loop drift detection: {e}")
                 await asyncio.sleep(300)
     
-    async def _performance_analysis_loop(self):
+    async def _performance_analysis_loop(self) -> None:
         """Boucle d'analyse de performance"""
         while self.is_running:
             try:
@@ -796,9 +801,9 @@ class ModelPerformanceMonitor:
     
     async def _analyze_model_performance(
         self,
-        model_id: str,
-        recent_metrics: List[ModelMetrics]
-    ):
+        model_id -> None: str,
+        recent_metrics -> None: List[ModelMetrics]
+    ) -> None:
         """Analyse la performance d'un modèle"""
         try:
             if not recent_metrics:
@@ -846,7 +851,7 @@ class ModelPerformanceMonitor:
         else:
             return False
     
-    async def _generate_performance_alert(self, rule: AlertRule, current_value: float):
+    async def _generate_performance_alert(self, rule -> None: AlertRule, current_value -> None: float) -> None:
         """Génère une alerte de performance"""
         
         alert_id = f"perf-{rule.rule_id}-{int(datetime.now().timestamp())}"
@@ -869,7 +874,7 @@ class ModelPerformanceMonitor:
         self.active_alerts[alert_id] = alert
         logger.warning(f"Alerte performance générée: {alert_id}")
     
-    async def _alert_processor(self):
+    async def _alert_processor(self) -> None:
         """Processeur d'alertes"""
         while self.is_running:
             try:
@@ -884,7 +889,7 @@ class ModelPerformanceMonitor:
                 logger.error(f"Erreur processeur alertes: {e}")
                 await asyncio.sleep(60)
     
-    async def _process_alert(self, alert: Alert):
+    async def _process_alert(self, alert -> None: Alert) -> None:
         """Traite une alerte"""
         try:
             # En production, ceci enverrait des notifications
@@ -901,7 +906,7 @@ class ModelPerformanceMonitor:
         except Exception as e:
             logger.error(f"Erreur traitement alerte {alert.alert_id}: {e}")
     
-    async def _metrics_cleanup(self):
+    async def _metrics_cleanup(self) -> None:
         """Nettoyage périodique des métriques"""
         while self.is_running:
             try:
@@ -1138,7 +1143,7 @@ def create_model_performance_monitor(config: Dict[str, Any]) -> ModelPerformance
     return ModelPerformanceMonitor(config)
 
 # Exemple d'utilisation
-async def main():
+async def main() -> None:
     """Exemple d'utilisation du monitor de performance"""
     
     # Configuration

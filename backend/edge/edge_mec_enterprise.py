@@ -181,7 +181,7 @@ class UserActivity:
 class ContextAwarenessEngine:
     """Moteur de conscience contextuelle."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.context_cache = {}
         self.activity_history = deque(maxlen=1000)
         self.context_rules = {}
@@ -290,7 +290,7 @@ class MobilityPrediction:
 class MobilityPredictionAI:
     """IA de prédiction de mobilité."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.location_history = defaultdict(list)
         self.movement_patterns = defaultdict(list)
         self.prediction_models = {}
@@ -459,7 +459,7 @@ class HandoverRequest:
 class HandoverController:
     """Contrôleur de handover."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.active_handovers = {}
         self.handover_history = deque(maxlen=1000)
         self.policies = {}
@@ -576,11 +576,11 @@ class HandoverController:
         await asyncio.sleep(0.1)
         return True
     
-    async def _release_source_connection(self, source_edge: str, device_id: str):
+    async def _release_source_connection(self, source_edge -> None: str, device_id -> None: str) -> None:
         """Libère la connexion source."""
         await asyncio.sleep(0.05)
     
-    async def _restore_session_state(self, request: HandoverRequest):
+    async def _restore_session_state(self, request -> None: HandoverRequest) -> None:
         """Restaure l'état de session."""
         await asyncio.sleep(0.1)
     
@@ -590,7 +590,7 @@ class HandoverController:
             return False
         return True
     
-    def _update_handover_metrics(self, success: bool):
+    def _update_handover_metrics(self, success -> None: bool) -> None:
         """Met à jour les métriques de handover."""
         if success:
             # Update success rate (exponential moving average)
@@ -634,7 +634,7 @@ class SessionInfo:
 class SessionContinuityManager:
     """Gestionnaire de continuité de session."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.active_sessions = {}
         self.session_checkpoints = {}
         self.recovery_policies = {}
@@ -743,7 +743,7 @@ class SessionContinuityManager:
 class ProximityDetector:
     """Détecteur de proximité."""
     
-    def __init__(self, detection_radius: float = 100.0):  # meters
+    def __init__(self, detection_radius -> None: float = 100.0) -> None:  # meters
         self.detection_radius = detection_radius
         self.proximity_cache = {}
     
@@ -786,7 +786,7 @@ class ProximityDetector:
 class LocationServices:
     """Services de géolocalisation."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.location_cache = {}
         self.geofences = {}
     
@@ -794,14 +794,14 @@ class LocationServices:
         """Récupère la localisation d'un appareil."""
         return self.location_cache.get(device_id)
     
-    async def update_location(self, device_id: str, location: LocationData):
+    async def update_location(self, device_id -> None: str, location -> None: LocationData) -> None:
         """Met à jour la localisation d'un appareil."""
         self.location_cache[device_id] = location
         
         # Check geofences
         await self._check_geofences(device_id, location)
     
-    async def _check_geofences(self, device_id: str, location: LocationData):
+    async def _check_geofences(self, device_id -> None: str, location -> None: LocationData) -> None:
         """Vérifie les geofences."""
         # Implementation for geofence checking
         pass
@@ -814,7 +814,7 @@ class LocationServices:
 class EdgeMECEnterprise:
     """Mobile Edge Computing Enterprise consolidé."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         # Device management
         self.devices: Dict[str, MobileDevice] = {}
         self.device_sessions: Dict[str, Dict[str, Any]] = {}
@@ -844,7 +844,7 @@ class EdgeMECEnterprise:
         logger.info(f"Registered device: {device.device_id}")
         return True
     
-    async def update_device_status(self, device_id: str, status: DeviceStatus):
+    async def update_device_status(self, device_id -> None: str, status -> None: DeviceStatus) -> None:
         """Met à jour le statut d'un appareil."""
         if device_id in self.devices:
             self.devices[device_id].status = status
@@ -930,7 +930,7 @@ class EdgeMECEnterprise:
         return await self.session_manager.migrate_session(session_id, target_edge)
     
     # Location Intelligence
-    async def update_device_location(self, device_id: str, location: LocationData):
+    async def update_device_location(self, device_id -> None: str, location -> None: LocationData) -> None:
         """Met à jour la localisation d'un appareil."""
         if device_id in self.devices:
             self.devices[device_id].location = location
@@ -1025,7 +1025,7 @@ class EdgeMECEnterprise:
         
         return self.performance_metrics
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Arrête le système MEC."""
         logger.info("Shutting down EdgeMECEnterprise")
 

@@ -125,7 +125,7 @@ class Experiment:
 class HyperparameterOptimizer:
     """Hyperparameter optimization strategies"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.optimization_history: Dict[str, List[Dict[str, Any]]] = {}
     
     async def suggest_hyperparameters(
@@ -329,7 +329,7 @@ class ExperimentTrackingSystem:
     Comprehensive experiment tracking system for ML research
     """
     
-    def __init__(self, storage_path: str = "./experiments", use_mlflow: bool = True):
+    def __init__(self, storage_path -> None: str = "./experiments", use_mlflow -> None: bool = True) -> None:
         self.storage_path = Path(storage_path)
         self.storage_path.mkdir(exist_ok=True)
         self.experiments: Dict[str, Experiment] = {}
@@ -795,7 +795,7 @@ class ExperimentTrackingSystem:
             logger.error(f"Error persisting experiment: {str(e)}")
 
 # Usage Example
-async def main():
+async def main() -> None:
     """Example usage of ExperimentTrackingSystem"""
     system = ExperimentTrackingSystem()
     

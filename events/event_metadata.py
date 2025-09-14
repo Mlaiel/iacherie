@@ -115,9 +115,9 @@ class EventMetadataManager:
     """Advanced event metadata management system"""
     
     def __init__(self,
-                 auto_collect_system: bool = True,
-                 auto_collect_performance: bool = True,
-                 enable_tracing: bool = True):
+                 auto_collect_system -> None: bool = True,
+                 auto_collect_performance -> None: bool = True,
+                 enable_tracing -> None: bool = True) -> None:
         """Initialize metadata manager
         
         Args:

@@ -71,7 +71,7 @@ class CloudCostOptimizer:
     AI processing, and monetization workflows.
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """
 Initialize cloud cost optimizer"""
         self.config = config
@@ -81,7 +81,7 @@ Initialize cloud cost optimizer"""
         self.optimization_rules = self._load_optimization_rules()
         self.creator_patterns = self._load_creator_usage_patterns()
         
-    async def initialize_clients(self):
+    async def initialize_clients(self) -> None:
         """
 Initialize cloud provider clients"""
         try:
@@ -652,7 +652,7 @@ Implement selected optimization strategy"""
         
         return results
     
-    async def _apply_single_optimization(self, optimization: str):
+    async def _apply_single_optimization(self, optimization -> None: str) -> None:
         """Apply a single optimization"""
         # Implementation for specific optimization steps
         logger.info(f"Applying optimization: {optimization}")

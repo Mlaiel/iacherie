@@ -1,4 +1,6 @@
 """Enterprise Content Models
+import logging
+
 =========================
 
 Core content, user, and analytics models for IA Influencer Agent platform.
@@ -294,7 +296,7 @@ class ContentModel(Base):
         Index('idx_content_views_trending', 'view_count', 'is_trending'),
     )
     
-    def __repr__(self):
+    def __repr__(self) -> None:
         return f"<ContentModel(id={self.id}, title='{self.title[:50]}', type={self.content_type.value})>"
 
 
@@ -428,7 +430,7 @@ class UserModel(Base):
         Index('idx_user_active_login', 'is_active', 'last_login_at'),
     )
     
-    def __repr__(self):
+    def __repr__(self) -> None:
         return f"<UserModel(id={self.id}, username='{self.username}', type={self.user_type.value})>"
 
 
@@ -532,7 +534,7 @@ class AnalyticsModel(Base):
         Index('idx_analytics_type_category', 'analytics_type', 'metric_category'),
     )
     
-    def __repr__(self):
+    def __repr__(self) -> None:
         return f"<AnalyticsModel(id={self.id}, metric='{self.metric_name}', value={self.value})>"
 
 

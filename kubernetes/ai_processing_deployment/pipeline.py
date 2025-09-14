@@ -124,7 +124,7 @@ class ProcessingPipeline:
     vector embeddings, and similarity analysis for content protection.
     """
     
-    def __init__(self, config: PipelineConfig):
+    def __init__(self, config -> None: PipelineConfig) -> None:
         """
 Initialize processing pipeline."""
         self.config = config
@@ -137,7 +137,7 @@ Initialize processing pipeline."""
         # Initialize stage processors
         self._initialize_stage_processors()
     
-    def _initialize_models(self):
+    def _initialize_models(self) -> None:
         """
 Initialize AI models for different content types."""
         try:
@@ -163,7 +163,7 @@ Initialize AI models for different content types."""
             logger.error(f"Failed to initialize AI models: {e}")
             raise
     
-    def _initialize_stage_processors(self):
+    def _initialize_stage_processors(self) -> None:
         """Initialize stage-specific processors."""
         self.stage_processors = {
             PipelineStage.PREPROCESSING: self._preprocess_content,

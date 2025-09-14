@@ -204,7 +204,7 @@ class AnalyticsMetrics(Base):
 class TransactionFlowAnalyzer:
     """Analyzes transaction flows and patterns"""
     
-    def __init__(self, db_session: AsyncSession, redis_client: aioredis.Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: aioredis.Redis) -> None:
         self.db = db_session
         self.redis = redis_client
         self.flow_cache = {}
@@ -402,7 +402,7 @@ class TransactionFlowAnalyzer:
 class WalletBehaviorAnalyzer:
     """Analyzes wallet behavior patterns and classifications"""
     
-    def __init__(self, db_session: AsyncSession, redis_client: aioredis.Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: aioredis.Redis) -> None:
         self.db = db_session
         self.redis = redis_client
         
@@ -861,7 +861,7 @@ class WalletBehaviorAnalyzer:
 class GasOptimizationAnalytics:
     """Advanced gas usage analytics and optimization"""
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client -> None: aioredis.Redis) -> None:
         self.redis = redis_client
         
     async def analyze_gas_patterns(self, timeframe: AnalyticsTimeframe = AnalyticsTimeframe.DAILY) -> GasAnalytics:
@@ -1080,7 +1080,7 @@ class GasOptimizationAnalytics:
 class RevenueAnalyticsTracker:
     """Comprehensive revenue tracking and analytics"""
     
-    def __init__(self, db_session: AsyncSession, redis_client: aioredis.Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: aioredis.Redis) -> None:
         self.db = db_session
         self.redis = redis_client
         
@@ -1179,7 +1179,7 @@ class RevenueAnalyticsTracker:
 class AnalyticsTracker:
     """Main blockchain analytics coordination system"""
     
-    def __init__(self, db_session: AsyncSession, redis_client: aioredis.Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: aioredis.Redis) -> None:
         self.db = db_session
         self.redis = redis_client
         
@@ -1309,7 +1309,7 @@ class AnalyticsTracker:
 class ChainAnalytics:
     """High-level blockchain analytics interface"""
     
-    def __init__(self, db_session: AsyncSession, redis_client: aioredis.Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: aioredis.Redis) -> None:
         self.tracker = AnalyticsTracker(db_session, redis_client)
     
     async def get_real_time_metrics(self) -> Dict[str, Any]:

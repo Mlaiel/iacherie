@@ -98,7 +98,7 @@ class IntegrityResult:
 class WatermarkIntegrityChecker:
     """Enterprise watermark integrity monitoring system."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.watermark_database = {}
         self.integrity_cache = {}
         self.attack_detectors = {}

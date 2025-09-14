@@ -1,3 +1,8 @@
+"""
+  Init   module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
@@ -42,7 +47,7 @@ DESKTOP_CONFIG = {
     'DESKTOP_ENV': os.getenv('DESKTOP_ENV', 'development'),
 }
 
-def initialize_desktop_environment():
+def initialize_desktop_environment() -> None:
     """Initialize desktop scripts environment"""
     logger.info("🚀 Initializing Ainflue Desktop Scripts Environment")
     logger.info(f"📁 Scripts Directory: {DESKTOP_CONFIG['SCRIPTS_DIR']}")
@@ -55,11 +60,11 @@ def initialize_desktop_environment():
     
     return DESKTOP_CONFIG
 
-def get_script_path(script_name):
+def get_script_path(script_name) -> None:
     """Get full path to a desktop script"""
     return SCRIPTS_DIR / script_name
 
-def validate_script_permissions():
+def validate_script_permissions() -> None:
     """Validate that all scripts have proper permissions"""
     scripts = SCRIPTS_DIR.glob('*.sh')
     for script in scripts:

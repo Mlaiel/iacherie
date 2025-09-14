@@ -135,7 +135,7 @@ class SESTemplate:
 class AWSIntegration:
     """Main AWS integration for Ainflue platform."""
     
-    def __init__(self, credentials: AWSCredentials):
+    def __init__(self, credentials -> None: AWSCredentials) -> None:
         self.credentials = credentials
         self.region = credentials.region.value
         
@@ -744,7 +744,7 @@ class AWSIntegration:
             logger.error(f"Failed to get CloudWatch metrics: {str(e)}")
             return []
     
-    async def cleanup(self):
+    async def cleanup(self) -> None:
         """Cleanup AWS resources."""
         try:
             # Clear caches
@@ -757,7 +757,7 @@ class AWSIntegration:
 
 
 # Example usage
-async def main():
+async def main() -> None:
     """Example usage of AWS integration."""
     credentials = AWSCredentials(
         access_key_id="your-access-key-id",

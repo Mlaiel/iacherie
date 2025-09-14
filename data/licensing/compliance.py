@@ -1,4 +1,6 @@
 """Compliance Engine
+import asyncio
+
 ================
 
 Advanced legal compliance monitoring and validation system
@@ -55,10 +57,10 @@ class ComplianceEngine:
     
     def __init__(
         self,
-        repository: LicensingRepository = None,
-        legal_validator: LegalValidator = None,
-        territory_validator: TerritoryValidator = None
-    ):
+        repository -> None: LicensingRepository = None,
+        legal_validator -> None: LegalValidator = None,
+        territory_validator -> None: TerritoryValidator = None
+    ) -> None:
         """
 Initialize compliance engine with validators"""
         self.repository = repository or LicensingRepository()

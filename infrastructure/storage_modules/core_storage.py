@@ -49,7 +49,7 @@ class BackupConfig:
 class StorageManager:
     """Unified storage management interface"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.pv_manager = PersistentVolumeManager()
         self.backup_manager = BackupManager()
         self.object_storage_manager = ObjectStorageManager()
@@ -58,7 +58,7 @@ class StorageManager:
 class PersistentVolumeManager:
     """Kubernetes persistent volume management"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.volumes = {}
         self.logger = logging.getLogger(__name__)
     
@@ -126,7 +126,7 @@ class PersistentVolumeManager:
 class BackupManager:
     """Backup and recovery management"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.backup_jobs = {}
         self.logger = logging.getLogger(__name__)
     
@@ -183,7 +183,7 @@ class BackupManager:
 class ObjectStorageManager:
     """Object storage management (S3, GCS, Azure Blob)"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.buckets = {}
         self.logger = logging.getLogger(__name__)
     
@@ -254,7 +254,7 @@ class ObjectStorageManager:
 class StorageClassManager:
     """Storage class management"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.storage_classes = {}
         self.logger = logging.getLogger(__name__)
     

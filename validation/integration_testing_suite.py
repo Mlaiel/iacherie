@@ -1,3 +1,8 @@
+"""
+Integration Testing Suite module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 🏆 INTEGRATION TESTING SUITE - ENTERPRISE VALIDATION FINALE
@@ -74,7 +79,7 @@ class ComprehensiveAssessment:
 class EnterpiseMultiExpertValidator:
     """🎖️ VALIDATEUR MULTI-EXPERT ENTERPRISE"""
     
-    def __init__(self, target_url: str = "http://localhost:8000"):
+    def __init__(self, target_url -> None: str = "http -> None://localhost -> None:8000") -> None:
         self.target_url = target_url.rstrip('/')
         self.assessment_timestamp = datetime.now()
         self.results: List[IntegrationTestResult] = []

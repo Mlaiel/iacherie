@@ -119,7 +119,7 @@ class CreatorProfile:
 class CreatorWorkflowService:
     """Enterprise creator workflow orchestration and automation service."""
     
-    def __init__(self, config_path: Optional[str] = None):
+    def __init__(self, config_path -> None: Optional[str] = None) -> None:
         """Initialize the creator workflow service.
         
         Args:
@@ -1311,7 +1311,7 @@ class CreatorWorkflowService:
 
 
 # Example usage and testing
-async def main():
+async def main() -> None:
     """Example usage of the CreatorWorkflowService."""
     # Initialize service
     service = CreatorWorkflowService()

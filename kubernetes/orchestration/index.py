@@ -57,7 +57,7 @@ class OrchestrationPlatform:
     Provides enterprise-grade container orchestration, deployment management,
     and infrastructure automation capabilities.
     """
-    def __init__(self):
+    def __init__(self) -> None:
         """
 Initialize orchestration platform."""
         self.initialized = False
@@ -461,7 +461,7 @@ Initialize orchestration platform."""
             return False
 
 
-async def main():
+async def main() -> None:
     """Main entry point for orchestration platform."""
     try:
         logger.info("Starting IA Influencer Agent Orchestration Platform")

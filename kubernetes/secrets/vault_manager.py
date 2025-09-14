@@ -38,17 +38,17 @@ class VaultManager:
     
     def __init__(
         self,
-        vault_url: str = None,
-        vault_token: str = None,
-        auth_method: str = "token",
-        namespace: str = None,
-        verify_ssl: bool = True,
-        ca_cert: str = None,
-        client_cert: str = None,
-        client_key: str = None,
-        timeout: int = 30,
-        max_retries: int = 3
-    ):
+        vault_url -> None: str = None,
+        vault_token -> None: str = None,
+        auth_method -> None: str = "token",
+        namespace -> None: str = None,
+        verify_ssl -> None: bool = True,
+        ca_cert -> None: str = None,
+        client_cert -> None: str = None,
+        client_key -> None: str = None,
+        timeout -> None: int = 30,
+        max_retries -> None: int = 3
+    ) -> None:
         """
         Initialize Vault manager with enterprise configuration.
         
@@ -690,7 +690,7 @@ class VaultManager:
 class VaultHealthChecker:
     """Health checker for Vault cluster monitoring."""
     
-    def __init__(self, vault_manager: VaultManager):
+    def __init__(self, vault_manager -> None: VaultManager) -> None:
         try:
             logger.info(f"Executing __init__")
             
@@ -759,7 +759,7 @@ class InfluencerVaultManager(VaultManager):
     - Content fingerprinting services
     """
     
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs) -> None:
         super().__init__(**kwargs)
         self.influencer_secrets_path = "ia-influencer"
         self.api_credentials_path = f"{self.influencer_secrets_path}/apis"

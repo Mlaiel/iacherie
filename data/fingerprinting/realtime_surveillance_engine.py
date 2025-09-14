@@ -183,7 +183,7 @@ class SurveillanceMetrics:
 class Platform35PlusMonitor:
     """Moniteur pour 35+ plateformes avec APIs et scraping intelligent."""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.logger = logging.getLogger(__name__)
         
@@ -608,7 +608,7 @@ class Platform35PlusMonitor:
             self.logger.warning(f"⚠️ Erreur rate limit {platform_id}: {str(e)}")
             return True  # Permissive en cas d'erreur
     
-    async def _update_platform_metrics(self, platform_id: str, scan_time: float, violations_count: int):
+    async def _update_platform_metrics(self, platform_id -> None: str, scan_time -> None: float, violations_count -> None: int) -> None:
         """Met à jour les métriques de performance d'une plateforme."""
         try:
             if platform_id not in self.performance_metrics:
@@ -662,7 +662,7 @@ class Platform35PlusMonitor:
 class AlertManagementSystem:
     """Système de gestion et priorisation des alertes."""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.logger = logging.getLogger(__name__)
         
@@ -769,7 +769,7 @@ class AlertManagementSystem:
             self.logger.error(f"❌ Erreur traitement alerte: {str(e)}")
             return False
     
-    async def _send_immediate_notifications(self, alert: ViolationAlert, routing_rule: Dict[str, Any]):
+    async def _send_immediate_notifications(self, alert -> None: ViolationAlert, routing_rule -> None: Dict[str, Any]) -> None:
         """Envoie notifications immédiates selon les canaux configurés."""
         try:
             channels = routing_rule['notification_channels']
@@ -807,27 +807,27 @@ class AlertManagementSystem:
         except Exception as e:
             self.logger.error(f"❌ Erreur envoi notifications: {str(e)}")
     
-    async def _send_email_notification(self, notification_data: Dict[str, Any]):
+    async def _send_email_notification(self, notification_data -> None: Dict[str, Any]) -> None:
         """Envoie notification par email."""
         # Placeholder - implémentation dépendante du service email
         self.logger.info(f"📧 Email envoyé pour alerte {notification_data['alert_id']}")
     
-    async def _send_sms_notification(self, notification_data: Dict[str, Any]):
+    async def _send_sms_notification(self, notification_data -> None: Dict[str, Any]) -> None:
         """Envoie notification par SMS."""
         # Placeholder - implémentation dépendante du service SMS
         self.logger.info(f"📱 SMS envoyé pour alerte {notification_data['alert_id']}")
     
-    async def _send_webhook_notification(self, notification_data: Dict[str, Any]):
+    async def _send_webhook_notification(self, notification_data -> None: Dict[str, Any]) -> None:
         """Envoie notification par webhook."""
         # Placeholder - implémentation webhook
         self.logger.info(f"🔗 Webhook envoyé pour alerte {notification_data['alert_id']}")
     
-    async def _update_dashboard_alert(self, notification_data: Dict[str, Any]):
+    async def _update_dashboard_alert(self, notification_data -> None: Dict[str, Any]) -> None:
         """Met à jour le dashboard avec la nouvelle alerte.""" 
         # Placeholder - mise à jour dashboard temps réel
         self.logger.info(f"📊 Dashboard mis à jour pour alerte {notification_data['alert_id']}")
     
-    async def _schedule_escalation(self, alert: ViolationAlert, delay: int):
+    async def _schedule_escalation(self, alert -> None: ViolationAlert, delay -> None: int) -> None:
         """Planifie l'escalade d'une alerte."""
         try:
             await asyncio.sleep(delay)
@@ -839,7 +839,7 @@ class AlertManagementSystem:
         except Exception as e:
             self.logger.error(f"❌ Erreur escalade {alert.alert_id}: {str(e)}")
     
-    async def _escalate_alert(self, alert: ViolationAlert):
+    async def _escalate_alert(self, alert -> None: ViolationAlert) -> None:
         """Escalade une alerte non résolue."""
         try:
             # Augmentation sévérité
@@ -858,7 +858,7 @@ class AlertManagementSystem:
         except Exception as e:
             self.logger.error(f"❌ Erreur escalade alerte: {str(e)}")
     
-    def _update_alert_metrics(self, alert: ViolationAlert):
+    def _update_alert_metrics(self, alert -> None: ViolationAlert) -> None:
         """Met à jour les métriques d'alertes."""
         try:
             self.alert_metrics['total_alerts'] += 1
@@ -921,8 +921,8 @@ class ConsolidatedRealtimeSurveillanceEngine:
     des violations et gestion intelligente des alertes.
     """
     
-    def __init__(self, db_session: Any = None, redis_client: Any = None, 
-                 config: Optional[Dict[str, Any]] = None):
+    def __init__(self, db_session -> None: Any = None, redis_client -> None: Any = None, 
+                 config -> None: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialise le moteur de surveillance temps réel.
         
@@ -1046,7 +1046,7 @@ class ConsolidatedRealtimeSurveillanceEngine:
         except Exception as e:
             self.logger.error(f"❌ Erreur arrêt surveillance: {str(e)}")
     
-    async def _continuous_platform_monitoring(self, platform_id: str, fingerprints: List[Dict[str, Any]]):
+    async def _continuous_platform_monitoring(self, platform_id -> None: str, fingerprints -> None: List[Dict[str, Any]]) -> None:
         """Surveillance continue d'une plateforme."""
         try:
             platform_config = self.platform_monitor.platforms[platform_id]
@@ -1075,7 +1075,7 @@ class ConsolidatedRealtimeSurveillanceEngine:
         except Exception as e:
             self.logger.error(f"❌ Erreur fatale surveillance {platform_id}: {str(e)}")
     
-    async def _continuous_alert_processing(self):
+    async def _continuous_alert_processing(self) -> None:
         """Traitement continu des alertes."""
         try:
             while self.monitoring_active:
@@ -1095,7 +1095,7 @@ class ConsolidatedRealtimeSurveillanceEngine:
         except asyncio.CancelledError:
             self.logger.info("🛑 Traitement alertes annulé")
     
-    async def _continuous_metrics_update(self):
+    async def _continuous_metrics_update(self) -> None:
         """Mise à jour continue des métriques."""
         try:
             while self.monitoring_active:

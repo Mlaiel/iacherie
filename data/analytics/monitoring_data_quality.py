@@ -312,7 +312,7 @@ class MonitoringDataQualityEngine:
     Orchestrates all monitoring, quality assurance, and real-time analytics
     """
     
-    def __init__(self, db_session: AsyncSession, redis_client: Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: Redis) -> None:
         self.db_session = db_session
         self.redis_client = redis_client
         self.logger = logging.getLogger(__name__)
@@ -503,7 +503,7 @@ class RealTimeAnalyticsEngine:
     Real-time analytics processing and monitoring
     """
     
-    def __init__(self, db_session: AsyncSession, redis_client: Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: Redis) -> None:
         self.db_session = db_session
         self.redis_client = redis_client
         self.logger = logging.getLogger(__name__)
@@ -595,7 +595,7 @@ class DataQualityValidator:
     Advanced data quality validation and assessment
     """
     
-    def __init__(self, db_session: AsyncSession, redis_client: Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: Redis) -> None:
         self.db_session = db_session
         self.redis_client = redis_client
         self.logger = logging.getLogger(__name__)
@@ -821,7 +821,7 @@ class AnomalyDetectionEngine:
     ML-powered anomaly detection for various data streams
     """
     
-    def __init__(self, db_session: AsyncSession, redis_client: Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: Redis) -> None:
         self.db_session = db_session
         self.redis_client = redis_client
         self.logger = logging.getLogger(__name__)
@@ -1053,7 +1053,7 @@ class PerformanceMonitor:
     System performance monitoring and analysis
     """
     
-    def __init__(self, db_session: AsyncSession, redis_client: Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: Redis) -> None:
         self.db_session = db_session
         self.redis_client = redis_client
         self.logger = logging.getLogger(__name__)
@@ -1124,7 +1124,7 @@ class SecurityAuditEngine:
     Security monitoring and audit engine
     """
     
-    def __init__(self, db_session: AsyncSession, redis_client: Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: Redis) -> None:
         self.db_session = db_session
         self.redis_client = redis_client
         self.logger = logging.getLogger(__name__)
@@ -1235,7 +1235,7 @@ class ComplianceMonitor:
     Compliance monitoring for various standards
     """
     
-    def __init__(self, db_session: AsyncSession, redis_client: Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: Redis) -> None:
         self.db_session = db_session
         self.redis_client = redis_client
         self.logger = logging.getLogger(__name__)
@@ -1329,7 +1329,7 @@ class AlertSystemEngine:
     Intelligent alert system with escalation and auto-resolution
     """
     
-    def __init__(self, db_session: AsyncSession, redis_client: Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: Redis) -> None:
         self.db_session = db_session
         self.redis_client = redis_client
         self.logger = logging.getLogger(__name__)
@@ -1391,7 +1391,7 @@ class DataEnrichmentEngine:
     Automated data enrichment and cleansing
     """
     
-    def __init__(self, db_session: AsyncSession, redis_client: Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: Redis) -> None:
         self.db_session = db_session
         self.redis_client = redis_client
         self.logger = logging.getLogger(__name__)
@@ -1445,7 +1445,7 @@ class ReportGenerationEngine:
     Automated report generation for various stakeholders
     """
     
-    def __init__(self, db_session: AsyncSession, redis_client: Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: Redis) -> None:
         self.db_session = db_session
         self.redis_client = redis_client
         self.logger = logging.getLogger(__name__)
@@ -1584,7 +1584,7 @@ class BackupRecoveryManager:
     Data backup and recovery management
     """
     
-    def __init__(self, db_session: AsyncSession, redis_client: Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: Redis) -> None:
         self.db_session = db_session
         self.redis_client = redis_client
         self.logger = logging.getLogger(__name__)

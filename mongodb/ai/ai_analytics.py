@@ -158,7 +158,7 @@ class AnalyticsReport:
 class AdvancedAnalyticsEngine:
     """Enterprise-grade analytics engine with AI-driven decision making"""
     
-    def __init__(self, database: AsyncIOMotorDatabase):
+    def __init__(self, database -> None: AsyncIOMotorDatabase) -> None:
         """Initialize the advanced analytics engine"""
         self.db = database
         self.insights_collection = database.get_collection("ai_insights")
@@ -876,7 +876,7 @@ class AdvancedAnalyticsEngine:
 class AIAnalytics(AdvancedAnalyticsEngine):
     """Enhanced AI Analytics with comprehensive analytics-driven decision making"""
     
-    def __init__(self, database: AsyncIOMotorDatabase):
+    def __init__(self, database -> None: AsyncIOMotorDatabase) -> None:
         """Initialize enhanced AI analytics with decision support"""
         super().__init__(database)
         logger.info("🎉 AI Analytics initialized - ANALYTICS-DRIVEN DECISION MAKING COMPLETE")

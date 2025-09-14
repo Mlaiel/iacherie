@@ -113,7 +113,7 @@ class CachePrediction:
 class AIPoweredCacheEngine:
     """Moteur de cache alimenté par IA."""
     
-    def __init__(self, max_size: int = 10**9):  # 1GB par défaut
+    def __init__(self, max_size -> None: int = 10**9) -> None:  # 1GB par défaut
         self.max_size = max_size
         self.current_size = 0
         self.cache_items: Dict[str, CacheItem] = {}
@@ -136,7 +136,7 @@ class AIPoweredCacheEngine:
         
         self._initialize_ai_models()
     
-    def _initialize_ai_models(self):
+    def _initialize_ai_models(self) -> None:
         """Initialise les modèles IA de prédiction."""
         # TODO: Implémentation modèles ML réels
         logger.info("AI cache prediction models initialized")
@@ -322,7 +322,7 @@ class AIPoweredCacheEngine:
         
         return peak_hours.get(current_hour, 1.0)
     
-    async def _update_popularity_score(self, key: str):
+    async def _update_popularity_score(self, key -> None: str) -> None:
         """Met à jour le score de popularité d'un élément."""
         if key not in self.cache_items:
             return
@@ -346,7 +346,7 @@ class AIPoweredCacheEngine:
         
         self.popularity_tracker[key] = item.popularity_score
     
-    async def _ensure_space(self, required_size: int):
+    async def _ensure_space(self, required_size -> None: int) -> None:
         """Assure l'espace nécessaire en évictant intelligemment."""
         while self.current_size + required_size > self.max_size:
             # Sélection item à évincer (priorité faible popularité)
@@ -377,7 +377,7 @@ class AIPoweredCacheEngine:
         
         return candidates[0][0] if candidates else None
     
-    async def _evict_item(self, key: str):
+    async def _evict_item(self, key -> None: str) -> None:
         """Évince un élément du cache."""
         if key in self.cache_items:
             item = self.cache_items[key]
@@ -387,7 +387,7 @@ class AIPoweredCacheEngine:
             
             logger.debug(f"Cache evicted key: {key}")
     
-    async def _trigger_predictive_loading(self, missed_key: str, creator_id: str):
+    async def _trigger_predictive_loading(self, missed_key -> None: str, creator_id -> None: str) -> None:
         """Déclenche le chargement prédictif de contenu."""
         try:
             # Prédiction contenu connexe
@@ -439,13 +439,13 @@ class ContentPattern:
 class PredictiveContentLoader:
     """Chargeur prédictif de contenu."""
     
-    def __init__(self, cache_engine: AIPoweredCacheEngine):
+    def __init__(self, cache_engine -> None: AIPoweredCacheEngine) -> None:
         self.cache_engine = cache_engine
         self.access_patterns: Dict[str, List[ContentPattern]] = defaultdict(list)
         self.prediction_queue: asyncio.Queue = asyncio.Queue()
         self.is_running = False
         
-    async def start_predictor(self):
+    async def start_predictor(self) -> None:
         """Démarre le processeur de prédictions."""
         self.is_running = True
         
@@ -460,7 +460,7 @@ class PredictiveContentLoader:
             except Exception as e:
                 logger.error(f"Prediction processor error: {e}")
     
-    async def analyze_access_pattern(self, user_id: str, accessed_content: str):
+    async def analyze_access_pattern(self, user_id -> None: str, accessed_content -> None: str) -> None:
         """Analyse les patterns d'accès utilisateur."""
         try:
             # TODO: Analyse pattern et mise à jour modèles prédictifs
@@ -479,7 +479,7 @@ class PredictiveContentLoader:
             logger.error(f"Content prediction error: {e}")
             return []
     
-    async def _process_prediction(self, task: Dict[str, Any]):
+    async def _process_prediction(self, task -> None: Dict[str, Any]) -> None:
         """Traite une tâche de prédiction."""
         try:
             # TODO: Implémentation traitement prédiction
@@ -518,7 +518,7 @@ class InvalidationRule:
 class IntelligentCacheInvalidator:
     """Invalidateur de cache intelligent."""
     
-    def __init__(self, cache_engine: AIPoweredCacheEngine):
+    def __init__(self, cache_engine -> None: AIPoweredCacheEngine) -> None:
         self.cache_engine = cache_engine
         self.invalidation_rules: Dict[str, InvalidationRule] = {}
         self.dependency_graph: Dict[str, Set[str]] = defaultdict(set)
@@ -526,7 +526,7 @@ class IntelligentCacheInvalidator:
         
         self._initialize_default_rules()
     
-    def _initialize_default_rules(self):
+    def _initialize_default_rules(self) -> None:
         """Initialise les règles d'invalidation par défaut."""
         # Règle contenu modifié
         content_update_rule = InvalidationRule(
@@ -551,11 +551,11 @@ class IntelligentCacheInvalidator:
             "profile_update": profile_update_rule
         })
     
-    async def add_dependency(self, parent_key: str, child_key: str):
+    async def add_dependency(self, parent_key -> None: str, child_key -> None: str) -> None:
         """Ajoute une dépendance entre éléments de cache."""
         self.dependency_graph[parent_key].add(child_key)
     
-    async def trigger_invalidation(self, trigger: str, context: Dict[str, Any]):
+    async def trigger_invalidation(self, trigger -> None: str, context -> None: Dict[str, Any]) -> None:
         """Déclenche l'invalidation intelligente."""
         try:
             # Recherche règles applicables
@@ -570,7 +570,7 @@ class IntelligentCacheInvalidator:
         except Exception as e:
             logger.error(f"Invalidation trigger error: {e}")
     
-    async def _apply_invalidation_rule(self, rule: InvalidationRule, context: Dict[str, Any]):
+    async def _apply_invalidation_rule(self, rule -> None: InvalidationRule, context -> None: Dict[str, Any]) -> None:
         """Applique une règle d'invalidation."""
         try:
             if rule.strategy == InvalidationStrategy.IMMEDIATE:
@@ -585,7 +585,7 @@ class IntelligentCacheInvalidator:
         except Exception as e:
             logger.error(f"Rule application error: {e}")
     
-    async def _immediate_invalidation(self, rule: InvalidationRule, context: Dict[str, Any]):
+    async def _immediate_invalidation(self, rule -> None: InvalidationRule, context -> None: Dict[str, Any]) -> None:
         """Invalidation immédiate."""
         for pattern in rule.affected_patterns:
             keys_to_invalidate = await self._find_matching_keys(pattern, context)
@@ -595,7 +595,7 @@ class IntelligentCacheInvalidator:
                     await self.cache_engine._evict_item(key)
                     logger.debug(f"Immediately invalidated: {key}")
     
-    async def _lazy_invalidation(self, rule: InvalidationRule, context: Dict[str, Any]):
+    async def _lazy_invalidation(self, rule -> None: InvalidationRule, context -> None: Dict[str, Any]) -> None:
         """Invalidation paresseuse (TTL court)."""
         for pattern in rule.affected_patterns:
             keys_to_invalidate = await self._find_matching_keys(pattern, context)
@@ -606,7 +606,7 @@ class IntelligentCacheInvalidator:
                     item.ttl = timedelta(minutes=1)  # TTL court
                     logger.debug(f"Lazily invalidated: {key}")
     
-    async def _batch_invalidation(self, rule: InvalidationRule, context: Dict[str, Any]):
+    async def _batch_invalidation(self, rule -> None: InvalidationRule, context -> None: Dict[str, Any]) -> None:
         """Invalidation par lot."""
         # Ajouter à la queue pour traitement batch
         await self.invalidation_queue.put({
@@ -615,7 +615,7 @@ class IntelligentCacheInvalidator:
             "timestamp": datetime.now()
         })
     
-    async def _dependency_invalidation(self, rule: InvalidationRule, context: Dict[str, Any]):
+    async def _dependency_invalidation(self, rule -> None: InvalidationRule, context -> None: Dict[str, Any]) -> None:
         """Invalidation basée sur les dépendances."""
         parent_key = context.get("key")
         if parent_key and parent_key in self.dependency_graph:
@@ -664,14 +664,14 @@ class CacheTier:
 class MultiTierCacheOptimizer:
     """Optimiseur de cache multi-niveaux."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.tiers: Dict[str, CacheTier] = {}
         self.tier_hierarchy: List[str] = []
         self.migration_queue: asyncio.Queue = asyncio.Queue()
         
         self._initialize_default_tiers()
     
-    def _initialize_default_tiers(self):
+    def _initialize_default_tiers(self) -> None:
         """Initialise les niveaux de cache par défaut."""
         # L1: Cache mémoire ultra-rapide
         l1_tier = CacheTier(
@@ -763,7 +763,7 @@ class MultiTierCacheOptimizer:
         
         return None
     
-    async def _consider_promotion(self, key: str, current_tier_id: str, data: Any):
+    async def _consider_promotion(self, key -> None: str, current_tier_id -> None: str, data -> None: Any) -> None:
         """Considère la promotion vers un niveau supérieur."""
         current_index = self.tier_hierarchy.index(current_tier_id)
         
@@ -807,7 +807,7 @@ class PopularityFeatures:
 class ContentPopularityPredictor:
     """Prédicteur de popularité de contenu."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.ml_models = {
             "popularity_regressor": None,
             "engagement_classifier": None,
@@ -825,7 +825,7 @@ class ContentPopularityPredictor:
         
         self._initialize_models()
     
-    def _initialize_models(self):
+    def _initialize_models(self) -> None:
         """Initialise les modèles de prédiction."""
         # TODO: Chargement modèles ML pré-entraînés
         logger.info("Popularity prediction models initialized")
@@ -911,14 +911,14 @@ class GeographicRegion:
 class GeographicCacheDistributor:
     """Distributeur de cache géographique."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.regions: Dict[str, GeographicRegion] = {}
         self.region_caches: Dict[str, AIPoweredCacheEngine] = {}
         self.user_locations: Dict[str, str] = {}  # user_id -> region_id
         
         self._initialize_regions()
     
-    def _initialize_regions(self):
+    def _initialize_regions(self) -> None:
         """Initialise les régions géographiques."""
         # Régions principales (simulation)
         regions = [
@@ -1015,7 +1015,7 @@ class GeographicCacheDistributor:
         
         return target_regions
     
-    async def _replicate_to_region(self, key: str, data: Any, target_region: str):
+    async def _replicate_to_region(self, key -> None: str, data -> None: Any, target_region -> None: str) -> None:
         """Réplique le contenu vers une région."""
         try:
             if target_region in self.region_caches:
@@ -1035,7 +1035,7 @@ class GeographicCacheDistributor:
 class EdgeCacheIntelligence:
     """Orchestrateur principal du cache intelligent edge."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         # Composants principaux
         self.ai_cache_engine = AIPoweredCacheEngine()
         self.predictive_loader = PredictiveContentLoader(self.ai_cache_engine)
@@ -1122,7 +1122,7 @@ class EdgeCacheIntelligence:
             logger.error(f"Content storage error: {e}")
             return False
     
-    async def invalidate_content(self, trigger: str, context: Dict[str, Any]):
+    async def invalidate_content(self, trigger -> None: str, context -> None: Dict[str, Any]) -> None:
         """Interface unifiée pour invalidation de contenu."""
         try:
             await self.invalidator.trigger_invalidation(trigger, context)

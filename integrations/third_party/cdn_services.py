@@ -153,7 +153,7 @@ class CDNServicesIntegration:
     - Streaming media optimization
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize CDN Services Integration"""
         
         # CDN provider configurations
@@ -903,7 +903,7 @@ class CDNServicesIntegration:
 class CDNConnectorBase:
     """Base class for CDN provider connectors"""
     
-    def __init__(self, configuration: CDNConfiguration):
+    def __init__(self, configuration -> None: CDNConfiguration) -> None:
         self.config = configuration
         self.session = None
 
@@ -947,7 +947,7 @@ class CDNConnectorBase:
 class CloudflareConnector(CDNConnectorBase):
     """Cloudflare CDN connector"""
     
-    def __init__(self, configuration: CDNConfiguration):
+    def __init__(self, configuration -> None: CDNConfiguration) -> None:
         super().__init__(configuration)
         self.base_url = "https://api.cloudflare.com/client/v4"
 
@@ -1062,7 +1062,7 @@ class CloudflareConnector(CDNConnectorBase):
 class CloudFrontConnector(CDNConnectorBase):
     """AWS CloudFront connector"""
     
-    def __init__(self, configuration: CDNConfiguration):
+    def __init__(self, configuration -> None: CDNConfiguration) -> None:
         super().__init__(configuration)
         self.base_url = "https://cloudfront.amazonaws.com"
 
@@ -1119,7 +1119,7 @@ class CloudFrontConnector(CDNConnectorBase):
 class AzureCDNConnector(CDNConnectorBase):
     """Azure CDN connector"""
     
-    def __init__(self, configuration: CDNConfiguration):
+    def __init__(self, configuration -> None: CDNConfiguration) -> None:
         super().__init__(configuration)
         self.base_url = "https://management.azure.com"
 
@@ -1176,7 +1176,7 @@ class AzureCDNConnector(CDNConnectorBase):
 class GoogleCloudCDNConnector(CDNConnectorBase):
     """Google Cloud CDN connector"""
     
-    def __init__(self, configuration: CDNConfiguration):
+    def __init__(self, configuration -> None: CDNConfiguration) -> None:
         super().__init__(configuration)
         self.base_url = "https://www.googleapis.com/compute/v1"
 
@@ -1233,7 +1233,7 @@ class GoogleCloudCDNConnector(CDNConnectorBase):
 class KeyCDNConnector(CDNConnectorBase):
     """KeyCDN connector"""
     
-    def __init__(self, configuration: CDNConfiguration):
+    def __init__(self, configuration -> None: CDNConfiguration) -> None:
         super().__init__(configuration)
         self.base_url = "https://api.keycdn.com"
 
@@ -1288,7 +1288,7 @@ class KeyCDNConnector(CDNConnectorBase):
         return {"success": True, "policies_applied": len(policies)}
 
 # Example usage and testing
-async def main():
+async def main() -> None:
     """Example usage of CDN Services Integration"""
     
     # Initialize CDN service

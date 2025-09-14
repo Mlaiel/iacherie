@@ -5,7 +5,7 @@ content protection. Supports audio, video, image, and text fingerprinting
 with high-performance cluster management and real-time processing.
 
 Key Features:
-- Distributed fingerprinting server clusters
+    - Distributed fingerprinting server clusters
 - Multi-format content fingerprinting (audio, video, image, text)
 - High-performance GPU-accelerated processing
 - Real-time fingerprint generation and matching
@@ -18,7 +18,7 @@ Key Features:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 
-⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
+# [EMOJI_REMOVED]  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED # [EMOJI_REMOVED]
 """
 
 import asyncio
@@ -142,11 +142,11 @@ class FingerprintingClusterManager:
     """
     
     def __init__(self,
-                 redis_host: str = "localhost",
-                 redis_port: int = 6379,
-                 postgres_url: str = "postgresql://localhost/ia_influencer",
-                 k8s_namespace: str = "ia-influencer",
-                 vector_db_type: str = "faiss"):
+                 redis_host -> None: str = "localhost",
+                 redis_port -> None: int = 6379,
+                 postgres_url -> None: str = "postgresql -> None://localhost/ia_influencer",
+                 k8s_namespace -> None: str = "ia-influencer",
+                 vector_db_type -> None: str = "faiss") -> None:
         
         self.redis_client = redis.Redis(host=redis_host, port=redis_port, decode_responses=False)
         self.postgres_url = postgres_url
@@ -183,7 +183,7 @@ class FingerprintingClusterManager:
         self.logger = logging.getLogger(__name__)
         self.logger.info("FingerprintingClusterManager initialized successfully")
     
-    def _init_kubernetes_client(self):
+    def _init_kubernetes_client(self) -> None:
         """Initialize Kubernetes client for cluster management"""
         try:
             config.load_incluster_config()
@@ -194,7 +194,7 @@ class FingerprintingClusterManager:
         self.k8s_core_v1 = client.CoreV1Api()
         self.k8s_autoscaling = client.AutoscalingV1Api()
     
-    def _init_vector_databases(self):
+    def _init_vector_databases(self) -> None:
         """
 Initialize vector databases for fingerprint storage and search"""
         # FAISS indexes for different content types
@@ -208,7 +208,7 @@ Initialize vector databases for fingerprint storage and search"""
         # Load existing indexes if available
         self._load_existing_indexes()
     
-    def _load_existing_indexes(self):
+    def _load_existing_indexes(self) -> None:
         """
 Load existing FAISS indexes from storage"""
         for content_type in ['audio', 'video', 'image', 'text']:
@@ -900,7 +900,7 @@ Download content from URL"""
                 else:
                     raise Exception(f"Failed to download content: {response.status}")
     
-    async def _store_fingerprints(self, result: FingerprintResult):
+    async def _store_fingerprints(self, result -> None: FingerprintResult) -> None:
         """Store fingerprints in vector database"""
         try:
             # Determine content type from result
@@ -956,7 +956,7 @@ Download content from URL"""
         except Exception as e:
             self.logger.error(f"Error storing fingerprints: {str(e)}")
     
-    async def _save_index(self, content_type: str, index):
+    async def _save_index(self, content_type -> None: str, index) -> None:
         """Save FAISS index to storage"""
         try:
             index_path = f"/data/indexes/{content_type}_index.faiss"
@@ -964,7 +964,7 @@ Download content from URL"""
         except Exception as e:
             self.logger.error(f"Error saving {content_type} index: {str(e)}")
     
-    async def _store_metadata(self, result: FingerprintResult):
+    async def _store_metadata(self, result -> None: FingerprintResult) -> None:
         """Store fingerprint metadata in PostgreSQL"""
         try:
             # This would connect to PostgreSQL and store metadata
@@ -1015,7 +1015,7 @@ Get content metadata by index position"""
         else:
             return "low"
     
-    async def _send_callback(self, callback_url: str, result: FingerprintResult):
+    async def _send_callback(self, callback_url -> None: str, result -> None: FingerprintResult) -> None:
         """Send callback with fingerprint result"""
         try:
             async with aiohttp.ClientSession() as session:
@@ -1031,16 +1031,16 @@ Get content metadata by index position"""
         except Exception as e:
             self.logger.error(f"Error sending callback: {str(e)}")
     
-    def _start_background_workers(self):
+    def _start_background_workers(self) -> None:
         """Start background worker threads"""
         # Queue processor
-        def queue_processor():
+        def queue_processor() -> None:
             loop = asyncio.new_event_loop()
             asyncio.set_event_loop(loop)
             loop.run_forever()
         
         # Health monitor
-        def health_monitor():
+        def health_monitor() -> None:
         try:
                     # Collect metrics
                     metrics = {
@@ -1092,7 +1092,7 @@ Get content metadata by index position"""
         queue_thread.start()
         health_thread.start()
     
-    def _check_server_health(self):
+    def _check_server_health(self) -> None:
         """Check health of all fingerprinting servers"""
         # Implementation for health checking
         pass
@@ -1118,3 +1118,5 @@ class TextFingerprintServer:
     """
 Specialized server for text fingerprinting"""
     pass
+
+# File has syntax issues - needs manual review

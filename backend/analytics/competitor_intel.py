@@ -29,7 +29,7 @@ import statistics
 import random
 
 
-def percentile(data, percent):
+def percentile(data, percent) -> None:
     """Calculate percentile of a dataset"""
     if not data:
         return 0
@@ -191,8 +191,8 @@ class CompetitorIntelligence:
     """
     
     def __init__(self, 
-                 analysis_ttl: int = 86400,  # 24 hours
-                 update_frequency: int = 3600):  # 1 hour
+                 analysis_ttl -> None: int = 86400,  # 24 hours
+                 update_frequency -> None: int = 3600) -> None:  # 1 hour
         """
         Initialize Competitor Intelligence Engine
         

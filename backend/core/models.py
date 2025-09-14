@@ -1,4 +1,6 @@
 """🎯 Consolidated Models - IA Influencer Agent Platform Enterprise
+import logging
+
 ================================================================
 Module: backend/core/models.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -51,7 +53,7 @@ except ImportError:
 class BaseModel:
     """Base model with common fields and functionality"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
         self.id = str(uuid.uuid4())
         self.created_at = datetime.now(timezone.utc)
@@ -70,7 +72,7 @@ class BaseModel:
                     result[key] = value
         return result
     
-    def update_timestamp(self):
+    def update_timestamp(self) -> None:
         """Update the updated_at timestamp"""
         self.updated_at = datetime.now(timezone.utc)
 
@@ -223,7 +225,7 @@ class UserModel(BaseModel):
     analytics, subscription management, and content creator features.
     """
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__()
     
     # Primary identification
@@ -287,7 +289,7 @@ class UserModel(BaseModel):
 class InfluencerModel(BaseModel):
     """Influencer-specific data model"""
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__()
     
     user_id: str = ""
@@ -306,7 +308,7 @@ class InfluencerModel(BaseModel):
 class PersonalityModel(BaseModel):
     """Personality traits and AI persona model"""
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__()
     
     user_id: str = ""
@@ -330,7 +332,7 @@ class ContentModel(BaseModel):
     with AI protection and monetization
     """
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__()
     
     # Basic content information
@@ -492,7 +494,7 @@ class SubscriptionModel(BaseModel):
 class PaymentModel(BaseModel):
     """Payment processing model"""
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__()
     
     user_id: str = ""
@@ -639,7 +641,7 @@ class RatingModel(BaseModel):
 class AnalyticsModel(BaseModel):
     """Comprehensive analytics data model"""
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__()
     
     entity_id: str = ""  # user, content, etc.
@@ -740,7 +742,7 @@ class LocationModel(BaseModel):
 class CollaborationModel(BaseModel):
     """Collaboration management model"""
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__()
     
     initiator_id: str = ""
@@ -1676,7 +1678,7 @@ MODEL_REGISTRY = {
 }
 
 
-def get_model(model_name: str):
+def get_model(model_name -> None: str) -> None:
     """Get model class by name"""
     return MODEL_REGISTRY.get(model_name.lower())
 
@@ -1686,7 +1688,7 @@ def list_available_models() -> List[str]:
     return list(MODEL_REGISTRY.keys())
 
 
-def create_model(model_name: str, **kwargs):
+def create_model(model_name -> None: str, **kwargs) -> None:
     """Create a model instance by name"""
     model_class = get_model(model_name)
     if model_class:

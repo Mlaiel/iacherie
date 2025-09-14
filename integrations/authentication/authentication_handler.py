@@ -118,7 +118,7 @@ class AuthenticationHandler:
     supporting multiple authentication methods and automatic token refresh.
     """
     
-    def __init__(self, encryption_key: Optional[str] = None):
+    def __init__(self, encryption_key -> None: Optional[str] = None) -> None:
         """Initialize authentication handler."""
         self.logger = logging.getLogger(__name__)
         
@@ -622,7 +622,7 @@ class AuthenticationHandler:
         """Start automatic token refresh task."""
         config = self.auth_configs[integration_name]
         
-        async def refresh_loop():
+        async def refresh_loop() -> None:
             while True:
                 try:
                     # Calculate sleep time

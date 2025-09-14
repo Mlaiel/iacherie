@@ -1,3 +1,8 @@
+"""
+Service Discovery Engine module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
@@ -137,7 +142,7 @@ class ServiceDiscoveryEngine:
     creator affinity routing, and ML-aware service orchestration.
     """
     
-    def __init__(self, config: Optional[ServiceDiscoveryConfig] = None):
+    def __init__(self, config -> None: Optional[ServiceDiscoveryConfig] = None) -> None:
         """Initialize service discovery engine."""
         self.config = config or ServiceDiscoveryConfig()
         self.services: Dict[str, ServiceInstance] = {}
@@ -621,7 +626,7 @@ class ServiceDiscoveryEngine:
         
         return True
     
-    async def _start_health_monitoring(self):
+    async def _start_health_monitoring(self) -> None:
         """Start health monitoring background task."""
         logger.info("💓 Starting health monitoring")
         
@@ -643,7 +648,7 @@ class ServiceDiscoveryEngine:
                 logger.error(f"Error in health monitoring: {e}")
                 await asyncio.sleep(5)
     
-    async def _perform_health_check(self, service_id: str):
+    async def _perform_health_check(self, service_id -> None: str) -> None:
         """Perform health check for a service."""
         if service_id not in self.services:
             return
@@ -721,7 +726,7 @@ class ServiceDiscoveryEngine:
         # Store health check result
         self.health_checks[service_id].append(health_check)
     
-    async def _start_service_cleanup(self):
+    async def _start_service_cleanup(self) -> None:
         """Start service cleanup background task."""
         logger.info("🧹 Starting service cleanup")
         
@@ -756,7 +761,7 @@ class ServiceDiscoveryEngine:
                 logger.error(f"Error in service cleanup: {e}")
                 await asyncio.sleep(10)
     
-    async def _start_performance_tracking(self):
+    async def _start_performance_tracking(self) -> None:
         """Start performance tracking background task."""
         logger.info("📊 Starting performance tracking")
         
@@ -784,7 +789,7 @@ class ServiceDiscoveryEngine:
                 logger.error(f"Error in performance tracking: {e}")
                 await asyncio.sleep(30)
     
-    def _initialize_load_balancing_state(self, service_id: str):
+    def _initialize_load_balancing_state(self, service_id -> None: str) -> None:
         """Initialize load balancing state for a service."""
         service = self.services[service_id]
         service_name = service.service_name
@@ -796,7 +801,7 @@ class ServiceDiscoveryEngine:
                 "consistent_hash_ring": []
             }
     
-    async def _notify_event_handlers(self, event_type: str, service: ServiceInstance):
+    async def _notify_event_handlers(self, event_type -> None: str, service -> None: ServiceInstance) -> None:
         """Notify registered event handlers."""
         handlers = self.event_handlers.get(event_type, [])
         
@@ -809,7 +814,7 @@ class ServiceDiscoveryEngine:
             except Exception as e:
                 logger.error(f"Error in event handler for {event_type}: {e}")
     
-    def register_event_handler(self, event_type: str, handler: Callable):
+    def register_event_handler(self, event_type -> None: str, handler -> None: Callable) -> None:
         """Register event handler for service events."""
         self.event_handlers[event_type].append(handler)
         logger.info(f"📢 Event handler registered for: {event_type}")
@@ -992,7 +997,7 @@ __all__ = ['ServiceDiscoveryEngine', 'ServiceStatus', 'ServiceType', 'LoadBalanc
 
 if __name__ == "__main__":
     # Test the service discovery engine
-    async def test_service_discovery_engine():
+    async def test_service_discovery_engine() -> None:
         engine = ServiceDiscoveryEngine()
         
         print("🌐 Testing Service Discovery Engine:")

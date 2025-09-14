@@ -507,7 +507,7 @@ class PlatformAlgorithm(Base):
 # EXPORT FUNCTIONS
 # ================================
 
-def get_seo_multiplatform_models():
+def get_seo_multiplatform_models() -> None:
     """Get all SEO and multi-platform models."""
     return [
         SEOOptimization,
@@ -520,7 +520,7 @@ def get_seo_multiplatform_models():
     ]
 
 
-def create_seo_multiplatform_tables(engine):
+def create_seo_multiplatform_tables(engine) -> None:
     """Create all SEO and multi-platform tables."""
     try:
         Base.metadata.create_all(engine, tables=[model.__table__ for model in get_seo_multiplatform_models()])

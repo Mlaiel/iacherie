@@ -115,7 +115,7 @@ class InsightReport:
 class PatternRecognitionEngine:
     """🔬 ML ENGINEER - Advanced pattern recognition and analysis"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.pattern_library = {}
         self.anomaly_thresholds = {}
         self.trend_algorithms = {
@@ -297,7 +297,7 @@ class PatternRecognitionEngine:
 class BusinessIntelligenceEngine:
     """💼 BUSINESS ANALYST - Business intelligence and strategic analysis"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.business_rules = {}
         self.kpi_definitions = {}
         self.benchmarks = {}
@@ -579,7 +579,7 @@ class BusinessIntelligenceEngine:
 class PredictiveAnalyticsEngine:
     """🤖 IA PROMPT ENGINEER - AI-powered predictive analytics and forecasting"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.prediction_models = {}
         self.forecast_algorithms = {
             "linear": self._linear_forecast,
@@ -837,7 +837,7 @@ class InsightGenerationEngine:
     pattern recognition, and business intelligence to generate actionable insights.
     """
     
-    def __init__(self, config_path: Optional[str] = None):
+    def __init__(self, config_path -> None: Optional[str] = None) -> None:
         self.config = self._load_config(config_path)
         self.pattern_engine = PatternRecognitionEngine()
         self.business_engine = BusinessIntelligenceEngine()
@@ -1312,7 +1312,7 @@ class InsightGenerationEngine:
 
 # Example usage and testing
 if __name__ == "__main__":
-    async def test_insight_generation():
+    async def test_insight_generation() -> None:
         """Test insight generation engine"""
         
         # Initialize insight generation engine

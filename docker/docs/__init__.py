@@ -1,3 +1,8 @@
+"""
+  Init   module
+Enterprise implementation for Ainflue platform
+"""
+
 # Docker Documentation Module
 # Advanced documentation system for Ainflue Docker infrastructure
 # Author: Fahed Mlaiel (mlaiel@live.de)

@@ -63,6 +63,7 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class RevenueStream(Enum):
+    """RevenueStream class implementation"""
     STREAMING_ROYALTIES = "streaming_royalties"
     SYNC_LICENSING = "sync_licensing"
     MERCHANDISE = "merchandise"
@@ -75,6 +76,7 @@ class RevenueStream(Enum):
     LICENSING_FEES = "licensing_fees"
 
 class RevenueMetric(Base):
+    """RevenueMetric class implementation"""
     __tablename__ = 'revenue_metrics'
     
     id = Column(String, primary_key=True)
@@ -89,6 +91,7 @@ class RevenueMetric(Base):
     metadata = Column(JSON)
 
 class RevenueOptimization(Base):
+    """RevenueOptimization class implementation"""
     __tablename__ = 'revenue_optimizations'
     
     id = Column(String, primary_key=True)
@@ -104,6 +107,7 @@ class RevenueOptimization(Base):
 
 @dataclass
 class RevenueAnalysis:
+    """RevenueAnalysis: class implementation"""
     total_revenue: Decimal
     revenue_growth: float
     revenue_streams: Dict[str, Decimal]
@@ -115,6 +119,7 @@ class RevenueAnalysis:
 
 @dataclass
 class OptimizationStrategy:
+    """OptimizationStrategy: class implementation"""
     strategy_type: str
     description: str
     expected_revenue_increase: float
@@ -128,7 +133,7 @@ class RevenueIntelligenceEngine:
     Enterprise-grade revenue intelligence engine for content monetization optimization
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.currency_base = config.get('currency_base', 'USD')
         self.prediction_horizon = config.get('prediction_horizon', 90)  # days
@@ -155,7 +160,7 @@ class RevenueIntelligenceEngine:
         
         logger.info("Revenue Intelligence Engine initialized")
     
-    def _init_database(self):
+    def _init_database(self) -> None:
         """Initialize database for revenue data"""
         try:
             db_url = self.config.get('database_url', 'sqlite:///revenue_intelligence.db')
@@ -167,7 +172,7 @@ class RevenueIntelligenceEngine:
             logger.error(f"Database initialization failed: {str(e)}")
             raise
     
-    def _init_redis(self):
+    def _init_redis(self) -> None:
         """Initialize Redis for caching revenue data"""
         try:
             redis_config = self.config.get('redis', {})
@@ -183,7 +188,7 @@ class RevenueIntelligenceEngine:
             logger.warning(f"Redis initialization failed: {str(e)}")
             self.redis_client = None
     
-    def _init_ml_models(self):
+    def _init_ml_models(self) -> None:
         """Initialize machine learning models for revenue prediction"""
         try:
             # Revenue prediction models
@@ -871,7 +876,7 @@ class RevenueIntelligenceEngine:
             revenue_forecast={}
         )
     
-    async def _cache_revenue_analysis(self, creator_id: str, analysis: RevenueAnalysis):
+    async def _cache_revenue_analysis(self, creator_id -> None: str, analysis -> None: RevenueAnalysis) -> None:
         """
 Cache revenue analysis results"""
         try:
@@ -890,11 +895,11 @@ Cache revenue analysis results"""
     # Placeholder implementations for complex optimization strategies
     # These would be fully implemented in production
     
-    async def _get_creator_data(self, creator_id: str):
+    async def _get_creator_data(self, creator_id -> None: str) -> None:
         """Get comprehensive creator data"""
         return {'id': creator_id, 'type': 'musician'}
     
-    async def _generate_platform_diversification_strategy(self, creator_data, revenue_analysis):
+    async def _generate_platform_diversification_strategy(self, creator_data, revenue_analysis) -> None:
         """
 Generate platform diversification strategy"""
         return OptimizationStrategy(
@@ -907,7 +912,7 @@ Generate platform diversification strategy"""
             action_items=["Research platform requirements", "Create platform-specific content"]
         )
     
-    async def _generate_content_monetization_strategy(self, creator_data, revenue_analysis):
+    async def _generate_content_monetization_strategy(self, creator_data, revenue_analysis) -> None:
         """Generate content monetization strategy"""
         return OptimizationStrategy(
             strategy_type="content_monetization",
@@ -919,7 +924,7 @@ Generate platform diversification strategy"""
             action_items=["Analyze top performing content", "Replicate successful formats"]
         )
     
-    async def _generate_audience_expansion_strategy(self, creator_data, revenue_analysis):
+    async def _generate_audience_expansion_strategy(self, creator_data, revenue_analysis) -> None:
         """Generate audience expansion strategy"""
         return OptimizationStrategy(
             strategy_type="audience_expansion",
@@ -931,21 +936,21 @@ Generate platform diversification strategy"""
             action_items=["Market research", "Targeted content creation", "Cross-platform promotion"]
         )
     
-    async def _generate_diversification_strategy(self, creator_data, revenue_analysis):
+    async def _generate_diversification_strategy(self, creator_data, revenue_analysis) -> None:
         """Generate revenue stream diversification strategy"""
         return None  # Would be implemented based on specific needs
     
-    async def _generate_pricing_optimization_strategy(self, creator_data, revenue_analysis):
+    async def _generate_pricing_optimization_strategy(self, creator_data, revenue_analysis) -> None:
         """
 Generate pricing optimization strategy"""
         return None  # Would be implemented for creators with direct sales
     
-    async def _generate_partnership_strategy(self, creator_data, revenue_analysis):
+    async def _generate_partnership_strategy(self, creator_data, revenue_analysis) -> None:
         """
 Generate partnership strategy"""
         return None  # Would be implemented for brand partnerships
     
-    async def _store_optimization_strategies(self, creator_id: str, strategies: List[OptimizationStrategy]):
+    async def _store_optimization_strategies(self, creator_id -> None: str, strategies -> None: List[OptimizationStrategy]) -> None:
         try:
             logger.info(f"Executing _store_optimization_strategies")
             
@@ -960,27 +965,27 @@ Generate partnership strategy"""
         except Exception as e:
             logger.error(f"_store_optimization_strategies failed: {e}")
             raise
-    async def _get_content_info(self, content_id: str):
+    async def _get_content_info(self, content_id -> None: str) -> None:
         """
 Get content information"""
         return {'title': 'Sample Content', 'type': 'audio', 'created_at': '2025-01-01'}
     
-    async def _calculate_content_performance_score(self, content_id: str, revenue: float):
+    async def _calculate_content_performance_score(self, content_id -> None: str, revenue -> None: float) -> None:
         """
 Calculate content performance score"""
         return min(10.0, revenue / 100)  # Simple scoring
     
-    async def _identify_content_monetization_gaps(self, creator_id: str):
+    async def _identify_content_monetization_gaps(self, creator_id -> None: str) -> None:
         """
 Identify content monetization gaps"""
         return []
     
-    async def _identify_pricing_opportunities(self, revenue_data: List[Dict[str, Any]]):
+    async def _identify_pricing_opportunities(self, revenue_data -> None: List[Dict[str, Any]]) -> None:
         """
 Identify pricing optimization opportunities"""
         return []
     
-    async def _get_top_platform(self, platform_performance: Dict[str, Dict[str, Any]]):
+    async def _get_top_platform(self, platform_performance -> None: Dict[str, Dict[str, Any]]) -> None:
         """
 Get top performing platform"""
         if not platform_performance:
@@ -992,7 +997,7 @@ Get top performing platform"""
         )
         return top_platform[0]
     
-    async def _generate_revenue_visualizations(self, revenue_analysis: RevenueAnalysis):
+    async def _generate_revenue_visualizations(self, revenue_analysis -> None: RevenueAnalysis) -> None:
         """Generate revenue visualization data"""
         return {
             'revenue_streams_chart': 'base64_encoded_chart_data',
@@ -1000,7 +1005,7 @@ Get top performing platform"""
             'platform_performance_chart': 'base64_encoded_chart_data'
         }
     
-    async def _generate_competitive_analysis(self, creator_id: str):
+    async def _generate_competitive_analysis(self, creator_id -> None: str) -> None:
         """
 Generate competitive analysis"""
         return {'status': 'not_available', 'reason': 'insufficient_market_data'}

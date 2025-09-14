@@ -1,3 +1,8 @@
+"""
+Pool Monitoring module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """Pool Monitoring - Real-time Monitoring and Analytics System
 ==============================================================
@@ -90,14 +95,14 @@ class PoolHealthStatus:
 class MetricsCollector:
     """Collects and stores metrics from database pools"""
     
-    def __init__(self, retention_hours: int = 24):
+    def __init__(self, retention_hours -> None: int = 24) -> None:
         self.retention_hours = retention_hours
         self._metrics: List[MetricPoint] = []
         self._aggregated_metrics: Dict[str, List[float]] = {}
         
         logger.info("📊 Metrics collector initialized")
 
-    def record_metric(self, pool_id: str, metric_type: MetricType, value: float, labels: Dict[str, str] = None):
+    def record_metric(self, pool_id -> None: str, metric_type -> None: MetricType, value -> None: float, labels -> None: Dict[str, str] = None) -> None:
         """Record a new metric point"""
         metric = MetricPoint(
             timestamp=datetime.now(timezone.utc),
@@ -163,7 +168,7 @@ class MetricsCollector:
 class AlertManager:
     """Manages alerts and alert rules"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.alert_rules: Dict[str, AlertRule] = {}
         self.active_alerts: Dict[str, Alert] = {}
         self.alert_history: List[Alert] = []
@@ -174,7 +179,7 @@ class AlertManager:
         
         logger.info("🚨 Alert manager initialized")
 
-    def _create_default_rules(self):
+    def _create_default_rules(self) -> None:
         """Create default alert rules"""
         default_rules = [
             AlertRule(
@@ -214,18 +219,18 @@ class AlertManager:
         for rule in default_rules:
             self.alert_rules[rule.rule_id] = rule
 
-    def add_alert_rule(self, rule: AlertRule):
+    def add_alert_rule(self, rule -> None: AlertRule) -> None:
         """Add a new alert rule"""
         self.alert_rules[rule.rule_id] = rule
         logger.info(f"✅ Alert rule added: {rule.rule_id}")
 
-    def remove_alert_rule(self, rule_id: str):
+    def remove_alert_rule(self, rule_id -> None: str) -> None:
         """Remove an alert rule"""
         if rule_id in self.alert_rules:
             del self.alert_rules[rule_id]
             logger.info(f"✅ Alert rule removed: {rule_id}")
 
-    def evaluate_alerts(self, metrics: List[MetricPoint]):
+    def evaluate_alerts(self, metrics -> None: List[MetricPoint]) -> None:
         """Evaluate all alert rules against current metrics"""
         for metric in metrics:
             for rule in self.alert_rules.values():
@@ -295,7 +300,7 @@ class AlertManager:
             logger.warning(f"⚠️ Unknown operator: {operator}")
             return False
 
-    def acknowledge_alert(self, alert_id: str, acknowledged_by: str):
+    def acknowledge_alert(self, alert_id -> None: str, acknowledged_by -> None: str) -> None:
         """Acknowledge an active alert"""
         if alert_id in self.active_alerts:
             alert = self.active_alerts[alert_id]
@@ -304,14 +309,14 @@ class AlertManager:
             alert.acknowledged_at = datetime.now(timezone.utc)
             logger.info(f"✅ Alert acknowledged: {alert_id} by {acknowledged_by}")
 
-    def add_alert_callback(self, callback: Callable[[Alert], None]):
+    def add_alert_callback(self, callback -> None: Callable[[Alert], None]) -> None:
         """Add callback for alert notifications"""
         self.alert_callbacks.append(callback)
 
 class PoolMonitoringManager:
     """Central monitoring manager for all database pools"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.metrics_collector = MetricsCollector()
         self.alert_manager = AlertManager()
         self.pool_health_status: Dict[str, PoolHealthStatus] = {}
@@ -325,7 +330,7 @@ class PoolMonitoringManager:
         
         logger.info("📊 Pool Monitoring Manager initialized")
 
-    def _log_alert(self, alert: Alert):
+    def _log_alert(self, alert -> None: Alert) -> None:
         """Default alert logging callback"""
         severity_emoji = {
             AlertSeverity.INFO: "ℹ️",
@@ -337,7 +342,7 @@ class PoolMonitoringManager:
         emoji = severity_emoji.get(alert.severity, "❗")
         logger.warning(f"{emoji} {alert.severity.value.upper()}: {alert.message}")
 
-    async def start_monitoring(self):
+    async def start_monitoring(self) -> None:
         """Start continuous monitoring"""
         if self._monitoring_task and not self._monitoring_task.done():
             logger.warning("Monitoring already running")
@@ -346,7 +351,7 @@ class PoolMonitoringManager:
         self._monitoring_task = asyncio.create_task(self._monitoring_loop())
         logger.info("🔄 Pool monitoring started")
 
-    async def stop_monitoring(self):
+    async def stop_monitoring(self) -> None:
         """Stop continuous monitoring"""
         if self._monitoring_task:
             self._monitoring_task.cancel()
@@ -357,7 +362,7 @@ class PoolMonitoringManager:
             self._monitoring_task = None
             logger.info("⏹️ Pool monitoring stopped")
 
-    async def _monitoring_loop(self):
+    async def _monitoring_loop(self) -> None:
         """Main monitoring loop"""
         while True:
             try:
@@ -376,7 +381,7 @@ class PoolMonitoringManager:
             except Exception as e:
                 logger.error(f"❌ Monitoring loop error: {e}")
 
-    async def _collect_metrics(self):
+    async def _collect_metrics(self) -> None:
         """Collect metrics from all pools"""
         # This would normally collect from actual pools
         # For now, simulate some metrics
@@ -403,7 +408,7 @@ class PoolMonitoringManager:
                 pool_id, MetricType.ERROR_RATE, error_rate
             )
 
-    async def _evaluate_alerts(self):
+    async def _evaluate_alerts(self) -> None:
         """Evaluate alert rules"""
         # Get recent metrics
         recent_metrics = self.metrics_collector.get_metrics(hours_back=0.1)  # Last 6 minutes
@@ -411,7 +416,7 @@ class PoolMonitoringManager:
         # Evaluate alerts
         self.alert_manager.evaluate_alerts(recent_metrics)
 
-    async def _update_health_status(self):
+    async def _update_health_status(self) -> None:
         """Update health status for all pools"""
         # Get list of pools from recent metrics
         recent_metrics = self.metrics_collector.get_metrics(hours_back=0.5)

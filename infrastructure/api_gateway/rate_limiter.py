@@ -76,7 +76,7 @@ class RateLimiter:
     - Distributed rate limiting support
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.rate_limit_rules = {}
         self.rate_limit_storage = {}  # In-memory storage (would use Redis in production)
         self.rate_limit_violations = {}
@@ -492,7 +492,7 @@ class RateLimiter:
             }
         }
     
-    async def _track_violation(self, key: str, limit: int, window_seconds: int):
+    async def _track_violation(self, key -> None: str, limit -> None: int, window_seconds -> None: int) -> None:
         """Track rate limit violations for analysis"""
         
         violation_key = f"violations:{key}"
@@ -516,7 +516,7 @@ class RateLimiter:
             if v['timestamp'] > cutoff_time
         ]
     
-    def _update_average_response_time(self, response_time_ms: float):
+    def _update_average_response_time(self, response_time_ms -> None: float) -> None:
         """Update average response time metric"""
         current_avg = self.metrics['average_response_time_ms']
         total_requests = self.metrics['total_requests']
@@ -660,7 +660,7 @@ class RateLimiter:
         
         return status
     
-    async def cleanup_expired_entries(self):
+    async def cleanup_expired_entries(self) -> None:
         """Clean up expired rate limit entries"""
         
         current_time = time.time()
@@ -686,7 +686,7 @@ class RateLimiter:
         if expired_keys:
             logger.info(f"Cleaned up {len(expired_keys)} expired rate limit entries")
     
-    async def start_cleanup_task(self):
+    async def start_cleanup_task(self) -> None:
         """Start background cleanup task"""
         
         while True:

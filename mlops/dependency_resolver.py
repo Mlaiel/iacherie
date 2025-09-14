@@ -93,7 +93,7 @@ class DependencyResolver:
     Provides intelligent conflict resolution and environment consistency
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.resolution_cache: Dict[str, List[ResolvedDependency]] = {}
         self.version_cache: Dict[str, List[str]] = {}
         self.conflict_history: List[Dict[str, Any]] = []
@@ -474,7 +474,7 @@ class DependencyResolver:
         
         return resolved
 
-    async def _validate_resolution(self, resolved_deps: List[ResolvedDependency]):
+    async def _validate_resolution(self, resolved_deps -> None: List[ResolvedDependency]) -> None:
         """Validate that the resolution is consistent"""
         # Check for duplicate packages
         package_names = [dep.name for dep in resolved_deps]
@@ -631,7 +631,7 @@ class DependencyManager:
     High-level dependency management for MLOps environments
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.resolver = DependencyResolver()
         self.environments: Dict[str, Dict[str, Any]] = {}
         
@@ -739,7 +739,7 @@ def create_dependency_manager() -> DependencyManager:
 
 # Example usage
 if __name__ == "__main__":
-    async def main():
+    async def main() -> None:
         # Create dependency manager
         manager = create_dependency_manager()
         

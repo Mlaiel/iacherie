@@ -6,7 +6,7 @@ Implements enterprise-grade security scanning, compliance monitoring,
 vulnerability assessment, and continuous security validation.
 
 Features:
-- Infrastructure security scanning
+    - Infrastructure security scanning
 - Application security testing
 - Database security assessment
 - API security validation
@@ -170,7 +170,7 @@ class ComprehensiveSecurityAuditor:
     including infrastructure, applications, databases, APIs, and compliance.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """
 Initialize the security auditor with configuration."""
         self.config = config or {}
@@ -265,7 +265,7 @@ Initialize the security auditor with configuration."""
             self.logger.error(f"Security audit failed: {str(e)}")
             raise
     
-    async def _execute_parallel_audit(self, scope: List[str]):
+    async def _execute_parallel_audit(self, scope -> None: List[str]) -> None:
         """Execute audit components in parallel for faster completion."""
         tasks = []
         
@@ -296,7 +296,7 @@ Initialize the security auditor with configuration."""
         except asyncio.TimeoutError:
             self.logger.warning("Security audit timed out, partial results available")
     
-    async def _execute_sequential_audit(self, scope: List[str]):
+    async def _execute_sequential_audit(self, scope -> None: List[str]) -> None:
         """Execute audit components sequentially."""
         if "infrastructure" in scope and self.audit_config['infrastructure_scan']:
             await self._audit_infrastructure()
@@ -316,7 +316,7 @@ Initialize the security auditor with configuration."""
         if "compliance" in scope and self.audit_config['compliance_check']:
             await self._audit_compliance()
     
-    async def _audit_infrastructure(self):
+    async def _audit_infrastructure(self) -> None:
         """Audit infrastructure security."""
         self.logger.info("Starting infrastructure security audit")
         
@@ -340,7 +340,7 @@ Initialize the security auditor with configuration."""
                 "infrastructure_scanner"
             )
     
-    async def _check_system_hardening(self):
+    async def _check_system_hardening(self) -> None:
         try:
             logger.info(f"Executing _check_system_hardening")
             
@@ -370,7 +370,7 @@ Initialize the security auditor with configuration."""
             except Exception as e:
                 self.logger.warning(f"Hardening check {check['name']} failed: {str(e)}")
     
-    async def _check_ssl_tls_configuration(self):
+    async def _check_ssl_tls_configuration(self) -> None:
         """Check SSL/TLS configuration security."""
         # Check certificate validity and configuration
         domains_to_check = [
@@ -423,7 +423,7 @@ Initialize the security auditor with configuration."""
             except Exception as e:
                 self.logger.warning(f"SSL check for {domain} failed: {str(e)}")
     
-    async def _audit_application(self):
+    async def _audit_application(self) -> None:
         """Audit application security."""
         self.logger.info("Starting application security audit")
         
@@ -446,7 +446,7 @@ Initialize the security auditor with configuration."""
         except Exception as e:
             self.logger.error(f"Application audit error: {str(e)}")
     
-    async def _audit_database(self):
+    async def _audit_database(self) -> None:
         """Audit database security."""
         self.logger.info("Starting database security audit")
         
@@ -466,7 +466,7 @@ Initialize the security auditor with configuration."""
         except Exception as e:
             self.logger.error(f"Database audit error: {str(e)}")
     
-    async def _audit_api(self):
+    async def _audit_api(self) -> None:
         """Audit API security."""
         self.logger.info("Starting API security audit")
         
@@ -489,7 +489,7 @@ Initialize the security auditor with configuration."""
         except Exception as e:
             self.logger.error(f"API audit error: {str(e)}")
     
-    async def _audit_dependencies(self):
+    async def _audit_dependencies(self) -> None:
         """Audit dependency security."""
         self.logger.info("Starting dependency security audit")
         
@@ -509,7 +509,7 @@ Initialize the security auditor with configuration."""
         except Exception as e:
             self.logger.error(f"Dependency audit error: {str(e)}")
     
-    async def _audit_compliance(self):
+    async def _audit_compliance(self) -> None:
         """Audit compliance with various standards."""
         self.logger.info("Starting compliance audit")
         
@@ -605,16 +605,16 @@ Assess GDPR compliance."""
     
     def _add_finding(
         self,
-        finding_id: str,
-        title: str,
-        description: str,
-        severity: SecurityLevel,
-        category: AuditCategory,
-        component: str,
-        evidence: Optional[Dict[str, Any]] = None,
-        remediation: Optional[str] = None,
-        cve_references: Optional[List[str]] = None
-    ):
+        finding_id -> None: str,
+        title -> None: str,
+        description -> None: str,
+        severity -> None: SecurityLevel,
+        category -> None: AuditCategory,
+        component -> None: str,
+        evidence -> None: Optional[Dict[str, Any]] = None,
+        remediation -> None: Optional[str] = None,
+        cve_references -> None: Optional[List[str]] = None
+    ) -> None:
         """Add a security finding to the audit results."""
         finding = SecurityFinding(
             id=finding_id,
@@ -830,7 +830,7 @@ Check if SSH root login is disabled."""
         except Exception as e:
             logger.error(f"_check_ssh_password_auth failed: {e}")
             raise
-    async def _perform_static_analysis(self):
+    async def _perform_static_analysis(self) -> None:
         """Perform static code analysis for security vulnerabilities."""
         logger.info("Performing static code analysis")
         # This would integrate with tools like bandit, semgrep, etc.
@@ -844,7 +844,7 @@ Check if SSH root login is disabled."""
             recommendation="Continue regular static analysis scans"
         ))
     
-    async def _scan_application_dependencies(self):
+    async def _scan_application_dependencies(self) -> None:
         """Scan application dependencies for known vulnerabilities."""
         logger.info("Scanning application dependencies")
         # This would integrate with tools like safety, snyk, etc.
@@ -857,7 +857,7 @@ Check if SSH root login is disabled."""
             recommendation="Keep dependencies updated and monitor advisories"
         ))
     
-    async def _review_application_configuration(self):
+    async def _review_application_configuration(self) -> None:
         """Review application configuration for security issues."""
         logger.info("Reviewing application configuration")
         # Check for common configuration issues
@@ -880,7 +880,7 @@ Check if SSH root login is disabled."""
                 recommendation="Review and fix configuration issues"
             ))
     
-    async def _check_input_validation(self):
+    async def _check_input_validation(self) -> None:
         """Check input validation implementations."""
         logger.info("Checking input validation")
         self.findings.append(SecurityFinding(
@@ -892,7 +892,7 @@ Check if SSH root login is disabled."""
             recommendation="Implement comprehensive input validation for all user inputs"
         ))
     
-    async def _check_auth_implementation(self):
+    async def _check_auth_implementation(self) -> None:
         """Check authentication implementation."""
         logger.info("Checking authentication implementation")
         self.findings.append(SecurityFinding(
@@ -904,7 +904,7 @@ Check if SSH root login is disabled."""
             recommendation="Implement strong authentication with MFA where appropriate"
         ))
     
-    async def _check_database_configuration(self):
+    async def _check_database_configuration(self) -> None:
         """Check database configuration security."""
         logger.info("Checking database configuration")
         # This would check actual database settings
@@ -917,7 +917,7 @@ Check if SSH root login is disabled."""
             recommendation="Ensure encryption at rest and in transit"
         ))
     
-    async def _audit_database_access_control(self):
+    async def _audit_database_access_control(self) -> None:
         """Audit database access control mechanisms."""
         logger.info("Auditing database access control")
         self.findings.append(SecurityFinding(
@@ -929,7 +929,7 @@ Check if SSH root login is disabled."""
             recommendation="Follow principle of least privilege for database access"
         ))
     
-    async def _check_database_encryption(self):
+    async def _check_database_encryption(self) -> None:
         """Check database encryption status."""
         logger.info("Checking database encryption")
         self.findings.append(SecurityFinding(
@@ -941,7 +941,7 @@ Check if SSH root login is disabled."""
             recommendation="Ensure all sensitive data is encrypted"
         ))
     
-    async def _check_backup_security(self):
+    async def _check_backup_security(self) -> None:
         """Check backup security measures."""
         logger.info("Checking backup security")
         self.findings.append(SecurityFinding(
@@ -953,7 +953,7 @@ Check if SSH root login is disabled."""
             recommendation="Encrypt backups and test recovery procedures"
         ))
     
-    async def _check_api_authentication(self):
+    async def _check_api_authentication(self) -> None:
         """Check API authentication mechanisms."""
         logger.info("Checking API authentication")
         self.findings.append(SecurityFinding(
@@ -965,7 +965,7 @@ Check if SSH root login is disabled."""
             recommendation="Implement strong API authentication and authorization"
         ))
     
-    async def _check_api_rate_limiting(self):
+    async def _check_api_rate_limiting(self) -> None:
         """Check API rate limiting implementation."""
         logger.info("Checking API rate limiting")
         self.findings.append(SecurityFinding(
@@ -977,7 +977,7 @@ Check if SSH root login is disabled."""
             recommendation="Implement appropriate rate limiting for all API endpoints"
         ))
     
-    async def _check_api_input_validation(self):
+    async def _check_api_input_validation(self) -> None:
         """Check API input validation."""
         logger.info("Checking API input validation")
         self.findings.append(SecurityFinding(
@@ -989,7 +989,7 @@ Check if SSH root login is disabled."""
             recommendation="Validate and sanitize all API inputs"
         ))
     
-    async def _check_api_error_handling(self):
+    async def _check_api_error_handling(self) -> None:
         """Check API error handling security."""
         logger.info("Checking API error handling")
         self.findings.append(SecurityFinding(
@@ -1001,7 +1001,7 @@ Check if SSH root login is disabled."""
             recommendation="Implement secure error handling that doesn't leak sensitive information"
         ))
     
-    async def _check_cors_configuration(self):
+    async def _check_cors_configuration(self) -> None:
         """Check CORS configuration."""
         logger.info("Checking CORS configuration")
         self.findings.append(SecurityFinding(
@@ -1013,7 +1013,7 @@ Check if SSH root login is disabled."""
             recommendation="Configure CORS policies appropriately for your use case"
         ))
     
-    async def _scan_python_dependencies(self):
+    async def _scan_python_dependencies(self) -> None:
         """Scan Python dependencies for vulnerabilities."""
         logger.info("Scanning Python dependencies")
         # This would use tools like safety, pip-audit, etc.
@@ -1026,7 +1026,7 @@ Check if SSH root login is disabled."""
             recommendation="Keep Python packages updated and monitor security advisories"
         ))
     
-    async def _scan_javascript_dependencies(self):
+    async def _scan_javascript_dependencies(self) -> None:
         """Scan JavaScript dependencies for vulnerabilities."""
         logger.info("Scanning JavaScript dependencies")
         # This would use tools like npm audit, yarn audit, etc.
@@ -1039,7 +1039,7 @@ Check if SSH root login is disabled."""
             recommendation="Keep npm/yarn packages updated and use audit tools"
         ))
     
-    async def _scan_system_packages(self):
+    async def _scan_system_packages(self) -> None:
         """Scan system packages for vulnerabilities."""
         logger.info("Scanning system packages")
         self.findings.append(SecurityFinding(
@@ -1051,7 +1051,7 @@ Check if SSH root login is disabled."""
             recommendation="Keep system packages updated with security patches"
         ))
     
-    async def _scan_docker_images(self):
+    async def _scan_docker_images(self) -> None:
         """Scan Docker images for vulnerabilities."""
         logger.info("Scanning Docker images")
         # This would integrate with tools like Trivy, Clair, etc.
@@ -1064,7 +1064,7 @@ Check if SSH root login is disabled."""
             recommendation="Use minimal base images and scan regularly"
         ))
     
-    async def _check_firewall_configuration(self):
+    async def _check_firewall_configuration(self) -> None:
         """Check firewall configuration."""
         logger.info("Checking firewall configuration")
         self.findings.append(SecurityFinding(
@@ -1075,7 +1075,7 @@ Check if SSH root login is disabled."""
             impact="Proper network access control",
             recommendation="Implement defense-in-depth network security"
         ))
-    async def _check_service_security(self):
+    async def _check_service_security(self) -> None:
         """Check service-level security configurations."""
         logger.info("Checking service security configurations")
         self.findings.append(SecurityFinding(
@@ -1087,7 +1087,7 @@ Check if SSH root login is disabled."""
             recommendation="Implement service mesh security and mutual TLS"
         ))
     
-    async def _check_file_permissions(self):
+    async def _check_file_permissions(self) -> None:
         """Check file system permissions and access controls."""
         logger.info("Checking file system permissions")
         # This would check actual file permissions in production
@@ -1100,7 +1100,7 @@ Check if SSH root login is disabled."""
             recommendation="Follow principle of least privilege for file access"
         ))
     
-    async def _check_network_security(self):
+    async def _check_network_security(self) -> None:
         """Check network security configurations."""
         logger.info("Checking network security configurations")
         self.findings.append(SecurityFinding(
@@ -1113,15 +1113,15 @@ Check if SSH root login is disabled."""
         ))
     
     # GDPR compliance checks
-    async def _check_data_encryption(self): 
+    async def _check_data_encryption(self) -> None: 
         return {"compliant": True, "requirement_id": "ART32", "title": "Data Encryption", "description": "Data encryption implemented"}
-    async def _check_consent_mechanisms(self): 
+    async def _check_consent_mechanisms(self) -> None: 
         return {"compliant": True, "requirement_id": "ART7", "title": "Consent Mechanisms", "description": "Consent mechanisms in place"}
-    async def _check_data_retention_policies(self): 
+    async def _check_data_retention_policies(self) -> None: 
         return {"compliant": True, "requirement_id": "ART5", "title": "Data Retention", "description": "Data retention policies defined"}
-    async def _check_right_to_be_forgotten(self): 
+    async def _check_right_to_be_forgotten(self) -> None: 
         return {"compliant": False, "requirement_id": "ART17", "title": "Right to Erasure", "description": "Right to be forgotten not fully implemented"}
-    async def _check_data_portability(self): 
+    async def _check_data_portability(self) -> None: 
         try:
             logger.info(f"Executing _check_data_encryption")
             
@@ -1280,11 +1280,11 @@ Check if SSH root login is disabled."""
         except Exception as e:
             logger.error(f"_check_data_encryption failed: {e}")
             raise
-    async def _check_privacy_by_design(self): 
+    async def _check_privacy_by_design(self) -> None: 
         return {"compliant": True, "requirement_id": "ART25", "title": "Privacy by Design", "description": "Privacy by design principles followed"}
-    async def _check_data_processing_agreements(self): 
+    async def _check_data_processing_agreements(self) -> None: 
         return {"compliant": True, "requirement_id": "ART28", "title": "Processing Agreements", "description": "Data processing agreements in place"}
-    async def _check_breach_notification_procedures(self): 
+    async def _check_breach_notification_procedures(self) -> None: 
         return {"compliant": True, "requirement_id": "ART33", "title": "Breach Notification", "description": "Breach notification procedures defined"}
         try:
             logger.info(f"Executing __init__")
@@ -1301,7 +1301,7 @@ Check if SSH root login is disabled."""
             logger.error(f"__init__ failed: {e}")
             raise
         return {"compliant": False, "requirement_id": "ART35", "title": "Privacy Impact Assessment", "description": "PIA not conducted for all processing activities"}
-    async def _check_data_protection_officer(self): 
+    async def _check_data_protection_officer(self) -> None: 
         return {"compliant": True, "requirement_id": "ART37", "title": "Data Protection Officer", "description": "DPO appointed and contactable"}
     
     async def _assess_soc2_compliance(self) -> ComplianceAssessment:
@@ -1365,6 +1365,7 @@ Check if SSH root login is disabled."""
 
 # Additional scanner classes (simplified for brevity)
 class InfrastructureSecurityScanner:
+    """InfrastructureSecurityScanner: class implementation"""
         try:
             logger.info(f"Executing __init__")
             
@@ -1391,7 +1392,7 @@ class InfrastructureSecurityScanner:
 class InfrastructureSecurityScanner:
     """Infrastructure security scanner."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
     
     async def scan(self) -> List[SecurityIssue]:
@@ -1425,7 +1426,7 @@ class ApplicationSecurityScanner:
     """
 Application security scanner."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
     
     async def scan(self) -> List[SecurityIssue]:
@@ -1459,7 +1460,7 @@ class DatabaseSecurityScanner:
     """
 Database security scanner."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
     
     async def scan(self) -> List[SecurityIssue]:
@@ -1493,7 +1494,7 @@ class APISecurityScanner:
     """
 API security scanner."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
     
     async def scan(self) -> List[SecurityIssue]:
@@ -1527,7 +1528,7 @@ class DependencySecurityScanner:
     """
 Dependency security scanner."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
     
     async def scan(self) -> List[SecurityIssue]:
@@ -1561,7 +1562,7 @@ class ComplianceScanner:
     """
 Compliance scanner."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
     
     async def scan(self) -> List[SecurityIssue]:
@@ -1732,4 +1733,6 @@ def export_audit_report(report: SecurityAuditReport, format: str = "json") -> st
                    "\n".join([f"[{issue.severity.value.upper()}] {issue.title}: {issue.description}" 
                              for issue in report.issues])
     else:
-        raise ValueError(f"Unsupported export format: {format}")
+        raise ValueError(f"Unsupported export format: {format}")}
+
+# File has syntax issues - needs manual review

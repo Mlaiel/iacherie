@@ -1,3 +1,8 @@
+"""
+Platform Gateway Manager module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Platform Gateway Manager - Platform Core Enterprise Architecture
@@ -142,7 +147,7 @@ class PlatformGatewayManager:
     load balancing, authentication, and rate limiting
     """
     
-    def __init__(self, gateway_type: GatewayType = GatewayType.NGINX_PLUS):
+    def __init__(self, gateway_type -> None: GatewayType = GatewayType.NGINX_PLUS) -> None:
         self.gateway_type = gateway_type
         self.routes: Dict[str, RouteConfiguration] = {}
         self.rate_limit_rules: Dict[str, RateLimitRule] = {}
@@ -589,7 +594,7 @@ class PlatformGatewayManager:
             'headers': {'Content-Type': 'application/json'}
         }
     
-    def _update_request_metrics(self, status_code: int):
+    def _update_request_metrics(self, status_code -> None: int) -> None:
         """Update request metrics"""
         self.metrics.total_requests += 1
         
@@ -625,7 +630,7 @@ class PlatformGatewayManager:
 # EXAMPLE USAGE AND TESTING
 # ============================================================================
 
-async def example_gateway_management():
+async def example_gateway_management() -> None:
     """Example usage of PlatformGatewayManager"""
     try:
         # Initialize gateway manager

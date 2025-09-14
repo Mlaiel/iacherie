@@ -110,13 +110,13 @@ class CreateTransactionRequest(BaseModel):
     metadata: Optional[Dict[str, Any]] = Field(default_factory=dict)
 
     @validator('amount')
-    def validate_amount(cls, v):
+    def validate_amount(cls, v) -> None:
         if v <= 0:
             raise ValueError('Amount must be positive')
         return v
 
     @validator('currency')
-    def validate_currency(cls, v):
+    def validate_currency(cls, v) -> None:
         if len(v) != 3:
             raise ValueError('Currency must be a 3-letter code')
         return v.upper()
@@ -168,7 +168,7 @@ class {{service_class_name}}(BaseService):
     - Payment gateway integration
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
         self.name = "{{service_name}}"
         self.version = "{{service_version}}"
@@ -191,7 +191,7 @@ class {{service_class_name}}(BaseService):
             SubscriptionTier.CUSTOM: Decimal('0.05')   # 5%
         }
 
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize service with dependencies"""
         try:
             await super().initialize()
@@ -215,7 +215,7 @@ class {{service_class_name}}(BaseService):
             logger.error(f"Failed to initialize {self.name} service: {e}")
             raise ServiceException(f"Service initialization failed: {e}")
 
-    async def _initialize_payment_providers(self):
+    async def _initialize_payment_providers(self) -> None:
         """Initialize payment provider clients"""
         try:
             # Initialize Stripe
@@ -973,10 +973,10 @@ class {{service_class_name}}(BaseService):
 
     async def _update_creator_revenue_stats(
         self,
-        creator_id: str,
-        amount: Decimal,
-        session: AsyncSession
-    ):
+        creator_id -> None: str,
+        amount -> None: Decimal,
+        session -> None: AsyncSession
+    ) -> None:
         """Update creator revenue statistics"""
         try:
             # This would update creator statistics
@@ -987,10 +987,10 @@ class {{service_class_name}}(BaseService):
 
     async def _update_creator_balance(
         self,
-        creator_id: str,
-        amount_delta: Decimal,
-        session: AsyncSession
-    ):
+        creator_id -> None: str,
+        amount_delta -> None: Decimal,
+        session -> None: AsyncSession
+    ) -> None:
         """Update creator balance"""
         try:
             # This would update creator balance
@@ -999,7 +999,7 @@ class {{service_class_name}}(BaseService):
         except Exception as e:
             logger.error(f"Failed to update creator balance: {e}")
 
-    async def _send_transaction_notification(self, transaction: Transaction):
+    async def _send_transaction_notification(self, transaction -> None: Transaction) -> None:
         """Send transaction notification"""
         try:
             # Implement notification logic
@@ -1007,7 +1007,7 @@ class {{service_class_name}}(BaseService):
         except Exception as e:
             logger.error(f"Failed to send transaction notification: {e}")
 
-    async def _send_payout_notification(self, payout: Payout):
+    async def _send_payout_notification(self, payout -> None: Payout) -> None:
         """Send payout notification"""
         try:
             # Implement notification logic
@@ -1041,7 +1041,7 @@ class {{service_class_name}}(BaseService):
                 "timestamp": datetime.utcnow().isoformat()
             }
 
-    async def cleanup(self):
+    async def cleanup(self) -> None:
         """Cleanup service resources"""
         try:
             if self.redis_client:
@@ -1059,7 +1059,7 @@ class {{service_class_name}}(BaseService):
 
 # Example usage and testing
 if __name__ == "__main__":
-    async def main():
+    async def main() -> None:
         service = {{service_class_name}}()
         await service.initialize()
         
@@ -1088,3 +1088,5 @@ if __name__ == "__main__":
             await service.cleanup()
 
     asyncio.run(main())
+
+# File has syntax issues - needs manual review

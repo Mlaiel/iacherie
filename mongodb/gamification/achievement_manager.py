@@ -72,7 +72,7 @@ class UserAchievement:
 class AchievementManager:
     """Enterprise-grade achievement management system."""
     
-    def __init__(self, client: MongoClient, database_name: str):
+    def __init__(self, client -> None: MongoClient, database_name -> None: str) -> None:
         """Initialize achievement manager."""
         if not MONGODB_AVAILABLE:
             raise ImportError("PyMongo is required for achievement management")
@@ -93,7 +93,7 @@ class AchievementManager:
         # Initialize default achievements
         self._ensure_default_achievements()
     
-    def _ensure_default_achievements(self):
+    def _ensure_default_achievements(self) -> None:
         """Ensure default achievements exist."""
         default_achievements = [
             Achievement(

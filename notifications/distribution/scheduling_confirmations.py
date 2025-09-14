@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 class SchedulingConfirmations:
     """Content scheduling confirmation system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         logger.info("Scheduling confirmations initialized")
     
     async def notify_schedule_confirmed(self, user_id: str, content_id: str, 

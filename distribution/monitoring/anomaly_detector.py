@@ -74,7 +74,7 @@ class AnomalyPattern:
     enabled: bool = True
     created_at: datetime = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.created_at is None:
             self.created_at = datetime.now(timezone.utc)
     
@@ -101,7 +101,7 @@ class AnomalyAlert(BaseModel):
     action_taken: Optional[str] = Field(None, description="Action taken")
     
     @validator('detected_at', 'resolved_at')
-    def validate_timestamps(cls, v):
+    def validate_timestamps(cls, v) -> None:
         if isinstance(v, str):
             return datetime.fromisoformat(v.replace('Z', '+00:00'))
         return v
@@ -110,15 +110,15 @@ class AnomalyAlert(BaseModel):
 class MetricHistory:
     """Time series data storage for metrics"""
     
-    def __init__(self, metric_name: str, max_history: int = 10000):
+    def __init__(self, metric_name -> None: str, max_history -> None: int = 10000) -> None:
         self.metric_name = metric_name
         self.max_history = max_history
         self.timestamps: List[datetime] = []
         self.values: List[float] = []
         self.metadata: List[Dict[str, Any]] = []
         
-    def add_value(self, value: float, timestamp: Optional[datetime] = None, 
-                 metadata: Optional[Dict[str, Any]] = None):
+    def add_value(self, value -> None: float, timestamp -> None: Optional[datetime] = None, 
+                 metadata -> None: Optional[Dict[str, Any]] = None) -> None:
         """Add a new metric value"""
         if timestamp is None:
             timestamp = datetime.now(timezone.utc)
@@ -172,7 +172,7 @@ class AnomalyDetector:
     Uses multiple detection methods and machine learning for accurate anomaly detection
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.patterns: Dict[str, AnomalyPattern] = {}
         self.metric_histories: Dict[str, MetricHistory] = {}
         self.active_alerts: Dict[str, AnomalyAlert] = {}
@@ -202,7 +202,7 @@ class AnomalyDetector:
             logger.error(f"Failed to initialize anomaly detector: {e}")
             return False
             
-    def _initialize_default_patterns(self):
+    def _initialize_default_patterns(self) -> None:
         """Initialize default anomaly detection patterns"""
         default_patterns = [
             AnomalyPattern(
@@ -268,19 +268,19 @@ class AnomalyDetector:
             
         logger.info(f"Initialized {len(default_patterns)} default detection patterns")
         
-    async def start_monitoring(self):
+    async def start_monitoring(self) -> None:
         """Start anomaly monitoring"""
         if not self.monitoring_active:
             self.monitoring_active = True
             asyncio.create_task(self._monitoring_loop())
             logger.info("Anomaly monitoring started")
             
-    async def stop_monitoring(self):
+    async def stop_monitoring(self) -> None:
         """Stop anomaly monitoring"""
         self.monitoring_active = False
         logger.info("Anomaly monitoring stopped")
         
-    async def _monitoring_loop(self):
+    async def _monitoring_loop(self) -> None:
         """Main monitoring loop"""
         while self.monitoring_active:
             try:
@@ -297,7 +297,7 @@ class AnomalyDetector:
                 logger.error(f"Anomaly monitoring error: {e}")
                 await asyncio.sleep(300)  # Wait 5 minutes on error
                 
-    async def _run_detection_cycle(self):
+    async def _run_detection_cycle(self) -> None:
         """Run anomaly detection on all monitored metrics"""
         for metric_name, history in self.metric_histories.items():
             # Get relevant patterns for this metric
@@ -609,7 +609,7 @@ class AnomalyDetector:
         else:
             return AnomalySeverity.LOW
             
-    async def _handle_anomaly(self, anomaly: AnomalyAlert):
+    async def _handle_anomaly(self, anomaly -> None: AnomalyAlert) -> None:
         """Handle detected anomaly"""
         try:
             # Check for duplicate alerts
@@ -652,7 +652,7 @@ class AnomalyDetector:
         except Exception as e:
             logger.error(f"Anomaly handling error: {e}")
             
-    async def _cleanup_resolved_alerts(self):
+    async def _cleanup_resolved_alerts(self) -> None:
         """Clean up alerts that have been resolved"""
         cutoff_time = datetime.now(timezone.utc) - timedelta(hours=24)
         
@@ -667,9 +667,9 @@ class AnomalyDetector:
         if alerts_to_remove:
             logger.debug(f"Cleaned up {len(alerts_to_remove)} resolved alerts")
             
-    async def add_metric_value(self, metric_name: str, value: float, 
-                             timestamp: Optional[datetime] = None,
-                             metadata: Optional[Dict[str, Any]] = None):
+    async def add_metric_value(self, metric_name -> None: str, value -> None: float, 
+                             timestamp -> None: Optional[datetime] = None,
+                             metadata -> None: Optional[Dict[str, Any]] = None) -> None:
         """
         Add a new metric value for anomaly detection
         
@@ -728,11 +728,11 @@ class AnomalyDetector:
             logger.error(f"Failed to remove detection pattern: {e}")
             return False
             
-    def add_alert_handler(self, handler: Callable[[AnomalyAlert], None]):
+    def add_alert_handler(self, handler -> None: Callable[[AnomalyAlert], None]) -> None:
         """Add alert handler function"""
         self.alert_handlers.append(handler)
         
-    def remove_alert_handler(self, handler: Callable[[AnomalyAlert], None]):
+    def remove_alert_handler(self, handler -> None: Callable[[AnomalyAlert], None]) -> None:
         """Remove alert handler function"""
         if handler in self.alert_handlers:
             self.alert_handlers.remove(handler)

@@ -108,7 +108,7 @@ class BackupSchedule:
     next_backup: Optional[datetime] = None
     created_at: datetime = field(default_factory=datetime.utcnow)
     
-    def calculate_next_backup(self):
+    def calculate_next_backup(self) -> None:
         """Calculate next backup time"""
         if self.last_backup:
             self.next_backup = self.last_backup + timedelta(hours=self.frequency_hours)
@@ -247,7 +247,7 @@ class RecoveryJob:
 class BackupEngine:
     """Core backup execution engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.active_backups = set()
         self.backup_metrics = defaultdict(int)
         
@@ -503,7 +503,7 @@ class BackupEngine:
 class RecoveryEngine:
     """Data recovery engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.active_recoveries = set()
         
     async def execute_recovery(self, recovery_job: RecoveryJob, backup_record: BackupRecord) -> Dict[str, Any]:
@@ -654,7 +654,7 @@ class DataBackupService:
     💡 AI Prompt: Intelligent backup recommendations, recovery insights, and automated policy generation
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.backup_schedules: Dict[str, BackupSchedule] = {}
         self.backup_records: Dict[str, BackupRecord] = {}
         self.recovery_jobs: Dict[str, RecoveryJob] = {}
@@ -671,7 +671,7 @@ class DataBackupService:
         
         logger.info("DataBackupService initialized successfully")
     
-    def _initialize_default_schedules(self):
+    def _initialize_default_schedules(self) -> None:
         """Initialize default backup schedules"""
         default_schedules = [
             BackupSchedule(
@@ -722,7 +722,7 @@ class DataBackupService:
             schedule.calculate_next_backup()
             self.backup_schedules[schedule.id] = schedule
     
-    async def _run_scheduler(self):
+    async def _run_scheduler(self) -> None:
         """Background scheduler for automated backups"""
         while True:
             try:
@@ -732,7 +732,7 @@ class DataBackupService:
                 logger.error(f"Error in backup scheduler: {str(e)}")
                 await asyncio.sleep(300)  # Wait 5 minutes on error
     
-    async def _check_due_backups(self):
+    async def _check_due_backups(self) -> None:
         """Check for due backups and execute them"""
         for schedule in self.backup_schedules.values():
             if schedule.is_due():
@@ -741,7 +741,7 @@ class DataBackupService:
                 except Exception as e:
                     logger.error(f"Error executing scheduled backup {schedule.id}: {str(e)}")
     
-    async def _execute_scheduled_backup(self, schedule: BackupSchedule):
+    async def _execute_scheduled_backup(self, schedule -> None: BackupSchedule) -> None:
         """Execute a scheduled backup"""
         try:
             # Create backup record
@@ -1096,7 +1096,7 @@ class DataBackupService:
 
 
 # Example usage and testing
-async def main():
+async def main() -> None:
     """Example usage of the DataBackupService"""
     service = DataBackupService()
     

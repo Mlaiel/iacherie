@@ -173,11 +173,11 @@ class EnterpriseAudioEngine:
     
     def __init__(
         self,
-        workspace_path: str,
-        model_cache_size: int = 5,
-        max_concurrent_jobs: int = 4,
-        enable_gpu_acceleration: bool = True
-    ):
+        workspace_path -> None: str,
+        model_cache_size -> None: int = 5,
+        max_concurrent_jobs -> None: int = 4,
+        enable_gpu_acceleration -> None: bool = True
+    ) -> None:
         """Initialize Enterprise Audio Engine
         
         Args:

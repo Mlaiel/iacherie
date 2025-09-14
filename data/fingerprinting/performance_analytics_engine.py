@@ -222,7 +222,7 @@ class BusinessMetrics:
 class QualityAssessmentEngine:
     """Moteur d'évaluation qualité avancé."""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.logger = logging.getLogger(__name__)
         
@@ -630,7 +630,7 @@ class QualityAssessmentEngine:
 class BenchmarkingEngine:
     """Moteur de benchmarking et comparaison industrie."""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.logger = logging.getLogger(__name__)
         
@@ -914,7 +914,7 @@ class BenchmarkingEngine:
 class OptimizationRecommendationEngine:
     """Moteur de recommandations d'optimisation basé sur l'IA."""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.logger = logging.getLogger(__name__)
         
@@ -1111,8 +1111,8 @@ class ConsolidatedPerformanceAnalyticsEngine:
     et analytics business pour une vue complète des performances.
     """
     
-    def __init__(self, db_session: Any = None, redis_client: Any = None,
-                 config: Optional[Dict[str, Any]] = None):
+    def __init__(self, db_session -> None: Any = None, redis_client -> None: Any = None,
+                 config -> None: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialise le moteur d'analytics de performance.
         
@@ -1348,7 +1348,7 @@ class ConsolidatedPerformanceAnalyticsEngine:
             self.logger.warning(f"⚠️ Erreur calcul impact business: {str(e)}")
             return {'error': str(e)}
     
-    async def _load_historical_metrics(self):
+    async def _load_historical_metrics(self) -> None:
         """Charge les métriques historiques."""
         # Simulation - à implémenter avec vraie base de données
         pass

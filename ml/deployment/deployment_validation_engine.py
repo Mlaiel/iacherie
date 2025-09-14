@@ -126,7 +126,7 @@ class DeploymentValidationReport:
 class HealthCheckValidator:
     """🛡️ BACKEND SENIOR - Comprehensive health check validation"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.health_check_endpoints = {
             "basic": "/health",
             "readiness": "/ready",
@@ -214,7 +214,7 @@ class HealthCheckValidator:
 class PerformanceValidator:
     """⚡ DEVOPS - Performance validation and regression detection"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.performance_thresholds = {
             "response_time_ms": 100,
             "throughput_rps": 1000,
@@ -326,7 +326,7 @@ class PerformanceValidator:
 class SecurityValidator:
     """🔐 SÉCURITÉ - Security validation and compliance checks"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.security_checks = {
             "tls_enabled": self._check_tls_configuration,
             "authentication": self._check_authentication,
@@ -461,7 +461,7 @@ class SecurityValidator:
 class SmokeTestValidator:
     """🧪 DEVOPS - Comprehensive smoke testing validation"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.smoke_tests = {
             "basic_inference": self._test_basic_inference,
             "batch_inference": self._test_batch_inference,
@@ -624,7 +624,7 @@ class SmokeTestValidator:
 class RollbackManager:
     """🔄 DEVOPS - Automated rollback management"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.rollback_triggers = {
             "critical_failure": 0,  # Any critical failure triggers rollback
             "high_failure_rate": 3,  # 3+ high severity failures
@@ -737,7 +737,7 @@ class DeploymentValidationEngine:
     meet all quality, performance, and security standards before going live.
     """
     
-    def __init__(self, config_path: Optional[str] = None):
+    def __init__(self, config_path -> None: Optional[str] = None) -> None:
         self.config = self._load_config(config_path)
         self.health_validator = HealthCheckValidator()
         self.performance_validator = PerformanceValidator()
@@ -1060,7 +1060,7 @@ class DeploymentValidationEngine:
 
 # Example usage and testing
 if __name__ == "__main__":
-    async def test_deployment_validation():
+    async def test_deployment_validation() -> None:
         """Test deployment validation engine"""
         # Initialize validation engine
         validator = DeploymentValidationEngine()

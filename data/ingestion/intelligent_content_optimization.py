@@ -155,7 +155,7 @@ class ContentOptimizationEngine:
     - A/B testing suggestions
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the Content Optimization Engine"""
         self.logger = logging.getLogger(__name__)
         self.initialized = False
@@ -206,7 +206,7 @@ class ContentOptimizationEngine:
             'average_processing_time': 0.0
         }
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize optimization models and engines"""
         try:
             self.logger.info("Initializing Content Optimization Engine...")
@@ -224,7 +224,7 @@ class ContentOptimizationEngine:
             self.logger.error(f"Engine initialization failed: {e}")
             raise OptimizationError(f"Engine initialization failed: {str(e)}")
     
-    async def _initialize_ai_models(self):
+    async def _initialize_ai_models(self) -> None:
         """Initialize AI models for optimization"""
         try:
             # Text generation models
@@ -249,7 +249,7 @@ class ContentOptimizationEngine:
             self.logger.warning(f"AI model loading failed: {e}")
             self.models = {}
     
-    async def _initialize_optimization_engines(self):
+    async def _initialize_optimization_engines(self) -> None:
         """Initialize specialized optimization engines"""
         # Initialize optimization components
         self.title_optimizer = TitleOptimizationEngine()
@@ -709,7 +709,7 @@ class ContentOptimizationEngine:
         except:
             return 0.5
     
-    async def _update_metrics(self, processing_time: float, success: bool):
+    async def _update_metrics(self, processing_time -> None: float, success -> None: bool) -> None:
         """Update performance metrics"""
         self.optimization_metrics['total_optimizations'] += 1
         
@@ -744,7 +744,7 @@ class ContentOptimizationEngine:
 class TitleOptimizationEngine:
     """Specialized engine for title optimization"""
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize title optimization"""
         self.templates = {
             ContentCategory.ENTERTAINMENT: [
@@ -808,7 +808,7 @@ class TitleOptimizationEngine:
 class ThumbnailOptimizationEngine:
     """Specialized engine for thumbnail optimization"""
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize thumbnail optimization"""
         pass
     
@@ -847,7 +847,7 @@ class ThumbnailOptimizationEngine:
 class HashtagOptimizationEngine:
     """Specialized engine for hashtag optimization"""
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize hashtag optimization"""
         self.trending_hashtags = {
             ContentCategory.ENTERTAINMENT: ['#viral', '#trending', '#funny', '#entertainment'],
@@ -904,7 +904,7 @@ class HashtagOptimizationEngine:
 class TimingOptimizationEngine:
     """Specialized engine for timing optimization"""
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize timing optimization"""
         pass
     
@@ -948,7 +948,7 @@ class TimingOptimizationEngine:
 class PerformanceOptimizationEngine:
     """Specialized engine for performance optimization"""
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize performance optimization"""
         pass
     

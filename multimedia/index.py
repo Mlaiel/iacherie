@@ -42,7 +42,7 @@ class MultimediaIndex:
     Provides unified access to all multimedia processing capabilities
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the multimedia processing index
         
@@ -75,7 +75,7 @@ class MultimediaIndex:
         # Initialize components
         asyncio.create_task(self._initialize_components())
     
-    async def _initialize_components(self):
+    async def _initialize_components(self) -> None:
         """
 Initialize all multimedia processing components"""
         try:
@@ -112,7 +112,7 @@ Initialize all multimedia processing components"""
             logger.error(f"Failed to initialize multimedia components: {str(e)}")
             raise
     
-    async def _preload_ai_models(self):
+    async def _preload_ai_models(self) -> None:
         """Preload AI models for faster processing"""
         try:
             logger.info("Preloading AI models...")

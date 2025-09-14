@@ -100,7 +100,7 @@ class AIProcessingDeployment:
     for multi-format content processing with enterprise features.
     """
     
-    def __init__(self, config: ProcessingConfig):
+    def __init__(self, config -> None: ProcessingConfig) -> None:
         """
 Initialize AI processing deployment."""
         self.config = config
@@ -113,7 +113,7 @@ Initialize AI processing deployment."""
         self.active_tasks: Dict[str, ProcessingTask] = {}
         self._initialize_infrastructure()
     
-    def _initialize_infrastructure(self):
+    def _initialize_infrastructure(self) -> None:
         """
 Initialize infrastructure components."""
         try:
@@ -195,7 +195,7 @@ Initialize infrastructure components."""
             logger.error(f"Failed to load model {model_type}: {e}")
             return False
     
-    def _load_audio_model(self, model_path: str, config: Dict[str, Any]):
+    def _load_audio_model(self, model_path -> None: str, config -> None: Dict[str, Any]) -> None:
         """Load audio fingerprinting model."""
         import librosa
         import essentia.standard as es
@@ -213,7 +213,7 @@ Initialize infrastructure components."""
             'n_mfcc': config.get('n_mfcc', 13)
         }
     
-    def _load_video_model(self, model_path: str, config: Dict[str, Any]):
+    def _load_video_model(self, model_path -> None: str, config -> None: Dict[str, Any]) -> None:
         """
 Load video fingerprinting model."""
         import cv2
@@ -227,7 +227,7 @@ Load video fingerprinting model."""
             'resize_dims': config.get('resize_dims', (224, 224))
         }
     
-    def _load_image_model(self, model_path: str, config: Dict[str, Any]):
+    def _load_image_model(self, model_path -> None: str, config -> None: Dict[str, Any]) -> None:
         """
 Load image fingerprinting model."""
         from transformers import CLIPProcessor, CLIPModel
@@ -245,7 +245,7 @@ Load image fingerprinting model."""
             'similarity_threshold': config.get('similarity_threshold', 0.85)
         }
     
-    def _load_text_model(self, model_path: str, config: Dict[str, Any]):
+    def _load_text_model(self, model_path -> None: str, config -> None: Dict[str, Any]) -> None:
         """Load text fingerprinting model."""
         from transformers import AutoModel, AutoTokenizer
         from sentence_transformers import SentenceTransformer
@@ -419,7 +419,7 @@ Load image fingerprinting model."""
             logger.error(f"Failed to get deployment metrics: {e}")
             return {}
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Gracefully shutdown AI processing deployment."""
         try:
             logger.info("Shutting down AI processing deployment")

@@ -121,7 +121,7 @@ class CounterNotice:
 class TakedownAutomationMonitor:
     """Enterprise takedown automation monitoring system."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.takedown_requests = {}
         self.platform_clients = {}
         self.evidence_storage = {}
@@ -129,7 +129,7 @@ class TakedownAutomationMonitor:
         self.processing_queue = asyncio.Queue()
         self.counter_notices = {}
         
-    async def initialize_platform_clients(self, platform_configs: Dict[Platform, Dict[str, Any]]):
+    async def initialize_platform_clients(self, platform_configs -> None: Dict[Platform, Dict[str, Any]]) -> None:
         """Initialize platform API clients for takedown automation."""
         
         for platform, config in platform_configs.items():
@@ -239,7 +239,7 @@ class TakedownAutomationMonitor:
         deadline_hours = base_hours * multiplier
         return datetime.now() + timedelta(hours=deadline_hours)
     
-    async def process_takedown_queue(self):
+    async def process_takedown_queue(self) -> None:
         """Process pending takedown requests."""
         
         while True:
@@ -263,7 +263,7 @@ class TakedownAutomationMonitor:
                 logger.error(f"Error processing takedown queue: {str(e)}")
                 await asyncio.sleep(5)
     
-    async def _process_takedown_request(self, request_id: str):
+    async def _process_takedown_request(self, request_id -> None: str) -> None:
         """Process individual takedown request."""
         start_time = time.time()
         
@@ -715,8 +715,8 @@ class TakedownAutomationMonitor:
             logger.error(f"Counter-notice handling failed: {str(e)}")
             raise
     
-    async def _notify_complainant_of_counter(self, takedown_request: TakedownRequest,
-                                           counter_notice: CounterNotice):
+    async def _notify_complainant_of_counter(self, takedown_request -> None: TakedownRequest,
+                                           counter_notice -> None: CounterNotice) -> None:
         """Notify original complainant of counter-notice."""
         
         notification = {
@@ -732,7 +732,7 @@ class TakedownAutomationMonitor:
         # In real implementation, would send email notification
         logger.info(f"Counter-notice notification prepared for {takedown_request.complainant_email}")
     
-    async def check_takedown_deadlines(self):
+    async def check_takedown_deadlines(self) -> None:
         """Check for takedown requests approaching deadlines."""
         
         current_time = datetime.now()
@@ -762,7 +762,7 @@ class TakedownAutomationMonitor:
             'checked_at': current_time.isoformat()
         }
     
-    async def _handle_overdue_request(self, takedown_request: TakedownRequest):
+    async def _handle_overdue_request(self, takedown_request -> None: TakedownRequest) -> None:
         """Handle overdue takedown request."""
         
         takedown_request.status = TakedownStatus.FAILED
@@ -777,7 +777,7 @@ class TakedownAutomationMonitor:
         
         logger.warning(f"Takedown request exceeded deadline: {takedown_request.request_id}")
     
-    async def _send_deadline_warning(self, takedown_request: TakedownRequest):
+    async def _send_deadline_warning(self, takedown_request -> None: TakedownRequest) -> None:
         """Send deadline warning for takedown request."""
         
         warning = {

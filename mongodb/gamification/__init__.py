@@ -36,7 +36,7 @@ class UserAchievement:
 class GamificationManager:
     """Comprehensive gamification system for the Ainflue platform."""
     
-    def __init__(self, client: MongoClient, database_name: str):
+    def __init__(self, client -> None: MongoClient, database_name -> None: str) -> None:
         """Initialize gamification manager."""
         self.client = client
         self.database = client[database_name]

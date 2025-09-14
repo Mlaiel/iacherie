@@ -108,7 +108,7 @@ class TechnicalAlertManager:
     - API performance monitoring
     """
     
-    def __init__(self, alert_manager: IntelligentAlertManager):
+    def __init__(self, alert_manager -> None: IntelligentAlertManager) -> None:
         """
 Initialize technical alert manager"""
         self.alert_manager = alert_manager
@@ -147,7 +147,7 @@ Initialize technical alert manager"""
         self._initialize_technical_rules()
         logger.info("TechnicalAlertManager initialized")
     
-    def _initialize_technical_rules(self):
+    def _initialize_technical_rules(self) -> None:
         """Initialize technical alert rules"""
         
         # Infrastructure Alerts
@@ -534,7 +534,7 @@ Initialize technical alert manager"""
             logger.error(f"Error calculating performance degradation: {e}")
             return 0.0
     
-    async def _update_service_baselines(self, metrics: TechnicalMetrics):
+    async def _update_service_baselines(self, metrics -> None: TechnicalMetrics) -> None:
         """Update service performance baselines"""
         try:
             service_name = metrics.service_name

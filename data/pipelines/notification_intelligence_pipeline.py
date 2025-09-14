@@ -107,7 +107,7 @@ class UserPreferenceEngine:
     AI-powered user preference learning and optimization system
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.user_preferences = {}
         self.learning_models = {}
         self.analytics_tracker = AnalyticsTracker()
@@ -448,7 +448,7 @@ class MultiChannelNotificationEngine:
     Multi-channel notification delivery system with intelligent routing
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.channel_providers = {}
         self.delivery_queue = asyncio.Queue()
         self.delivery_workers = []
@@ -728,7 +728,7 @@ class NotificationIntelligencePipeline:
     Main notification intelligence pipeline coordinating all notification systems
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.preference_engine = UserPreferenceEngine()
         self.delivery_engine = MultiChannelNotificationEngine()
         self.cache_manager = CacheManager()
@@ -987,7 +987,7 @@ class NotificationTemplateEngine:
     Template engine for generating personalized notification content
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.templates = {}
         
     async def initialize(self) -> None:

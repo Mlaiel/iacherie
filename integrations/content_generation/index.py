@@ -29,7 +29,7 @@ CONTENT_GENERATION_CONFIG = {
     }
 }
 
-def get_content_generator():
+def get_content_generator() -> None:
     """Factory pour créer le gestionnaire principal de génération."""
     return {
         'orchestrator': AIContentOrchestrator(),

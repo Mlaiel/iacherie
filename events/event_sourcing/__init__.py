@@ -1,5 +1,7 @@
 """IA Influencer Agent - Event Sourcing Module
 
+import asyncio
+
 Enterprise-grade event sourcing implementation for the IA Influencer Agent Platform.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -54,7 +56,7 @@ class EventStoreInterface(ABC):
 class AggregateRoot:
     """Base class for all aggregates in event sourcing"""
     
-    def __init__(self, aggregate_id: str):
+    def __init__(self, aggregate_id -> None: str) -> None:
         self.aggregate_id = aggregate_id
         self.aggregate_type = self.__class__.__name__
         self.version = 0
@@ -64,17 +66,17 @@ class AggregateRoot:
         """Get all uncommitted events"""
         return self.uncommitted_events.copy()
     
-    def apply_event(self, event: DomainEvent):
+    def apply_event(self, event -> None: DomainEvent) -> None:
         """Apply an event to the aggregate"""
         self._apply_event(event)
         self.version = event.event_version
         self.uncommitted_events.append(event)
     
-    def mark_events_as_committed(self):
+    def mark_events_as_committed(self) -> None:
         """Mark all uncommitted events as committed"""
         self.uncommitted_events.clear()
     
-    def _apply_event(self, event: DomainEvent):
+    def _apply_event(self, event -> None: DomainEvent) -> None:
         """Apply event to aggregate state - to be implemented by subclasses"""
         pass
 
@@ -82,7 +84,7 @@ class AggregateRoot:
 class EventStore(EventStoreInterface):
     """Basic in-memory event store implementation"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.events: Dict[str, List[DomainEvent]] = {}
     
     async def save_events(self, aggregate_id: str, events: List[DomainEvent], 
@@ -117,10 +119,10 @@ class EventStore(EventStoreInterface):
 class EventRepository:
     """Repository for managing aggregates with event sourcing"""
     
-    def __init__(self, event_store: EventStoreInterface):
+    def __init__(self, event_store -> None: EventStoreInterface) -> None:
         self.event_store = event_store
     
-    async def save_aggregate(self, aggregate: AggregateRoot):
+    async def save_aggregate(self, aggregate -> None: AggregateRoot) -> None:
         """Save aggregate changes as events"""
         uncommitted_events = aggregate.get_uncommitted_events()
         if uncommitted_events:
@@ -131,7 +133,7 @@ class EventRepository:
             )
             aggregate.mark_events_as_committed()
     
-    async def get_aggregate(self, aggregate_id: str, aggregate_type):
+    async def get_aggregate(self, aggregate_id -> None: str, aggregate_type) -> None:
         """Recreate aggregate from events"""
         events = await self.event_store.get_events(aggregate_id)
         

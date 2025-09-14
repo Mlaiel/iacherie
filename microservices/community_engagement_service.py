@@ -1,4 +1,6 @@
 """
+import logging
+
 🤝 Community Engagement Service - Advanced Community Building and Interaction Management
 ========================================================================================
 
@@ -32,6 +34,7 @@ logger = structlog.get_logger(__name__)
 
 @dataclass
 class Community:
+    """Community: class implementation"""
     community_id: str
     name: str
     description: str
@@ -42,6 +45,7 @@ class Community:
 
 @dataclass
 class CommunityEvent:
+    """CommunityEvent: class implementation"""
     event_id: str
     community_id: str
     title: str
@@ -50,12 +54,13 @@ class CommunityEvent:
     scheduled_at: datetime
 
 class CommunityEngagementService:
-    def __init__(self, redis_url: str = "redis://localhost:6379"):
+    """CommunityEngagementService: class implementation"""
+    def __init__(self, redis_url -> None: str = "redis -> None://localhost -> None:6379") -> None:
         self.redis_client = None
         self.redis_url = redis_url
         logger.info("Community Engagement Service initialized")
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         self.redis_client = redis.from_url(self.redis_url, decode_responses=True)
         await self.redis_client.ping()
         logger.info("Community Engagement Service fully initialized")
@@ -377,7 +382,7 @@ async def create_community_engagement_service(config: Dict[str, Any] = None) -> 
 
 if __name__ == "__main__":
     """🤝 Community Engagement Service Demo"""
-    async def demo():
+    async def demo() -> None:
         service = await create_community_engagement_service()
         
         # Create community

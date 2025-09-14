@@ -222,7 +222,7 @@ class ProtectionPerformanceEngine:
     cost analysis, and optimization recommendations.
     """
     
-    def __init__(self, retention_days: int = 365):
+    def __init__(self, retention_days -> None: int = 365) -> None:
         """Initialize the Protection Performance Engine"""
         self.retention_days = retention_days
         self.protection_cases: Dict[str, ProtectionCase] = {}
@@ -441,7 +441,7 @@ class ProtectionPerformanceEngine:
             logger.error(f"❌ Failed to track protection metrics: {e}")
             return False
     
-    async def _update_threat_intelligence(self, case: ProtectionCase):
+    async def _update_threat_intelligence(self, case -> None: ProtectionCase) -> None:
         """Update threat intelligence database"""
         try:
             # Update platform threat patterns

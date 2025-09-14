@@ -75,7 +75,7 @@ class DataLossPrevention:
     - 🤖 IA Prompt Engineer: Intelligent alerts + automated compliance + smart workflows
     """
     
-    def __init__(self, redis_client=None, db_pool=None):
+    def __init__(self, redis_client=None, db_pool=None) -> None:
         self.redis_client = redis_client
         self.db_pool = db_pool
         self.anomaly_detector = IsolationForest(contamination=0.1, random_state=42)
@@ -94,7 +94,7 @@ class DataLossPrevention:
         
         logger.info("🏆 Data Loss Prevention initialized with multi-role expertise")
     
-    def _initialize_ml_models(self):
+    def _initialize_ml_models(self) -> None:
         """🧠 ML Engineer: Initialize ML models for anomaly detection"""
         try:
             sample_data = np.random.rand(1000, 10)

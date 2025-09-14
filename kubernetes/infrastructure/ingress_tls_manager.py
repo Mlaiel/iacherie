@@ -56,7 +56,7 @@ class IngressConfig:
 class IngressTLSManager:
     """Manages Ingress Controller with automatic TLS"""
     
-    def __init__(self, config: IngressConfig):
+    def __init__(self, config -> None: IngressConfig) -> None:
         try:
             logger.info(f"Executing __init__")
             
@@ -574,7 +574,7 @@ class IngressTLSManager:
         
         return manifests
     
-    def save_manifests_to_files(self, output_dir: str = "./k8s-manifests/ingress-tls"):
+    def save_manifests_to_files(self, output_dir -> None: str = "./k8s-manifests/ingress-tls") -> None:
         """Save all ingress and TLS manifests to files"""
         import os
         os.makedirs(output_dir, exist_ok=True)

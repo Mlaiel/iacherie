@@ -116,7 +116,7 @@ class NotificationConfig:
 class AnomalyDetector:
     """ML-based anomaly detection for alerts"""
     
-    def __init__(self, window_size: int = 100):
+    def __init__(self, window_size -> None: int = 100) -> None:
         self.window_size = window_size
         self.metric_history: Dict[str, deque] = defaultdict(lambda: deque(maxlen=window_size))
         self.isolation_forest = IsolationForest(contamination=0.1, random_state=42)
@@ -276,7 +276,7 @@ class IntelligentAlertingSystem:
     Intelligent alerting system with ML-powered anomaly detection
     """
     
-    def __init__(self, config_path: Optional[str] = None):
+    def __init__(self, config_path -> None: Optional[str] = None) -> None:
         self.alert_rules: Dict[str, AlertRule] = {}
         self.notification_configs: Dict[NotificationChannel, NotificationConfig] = {}
         self.active_alerts: Dict[str, Alert] = {}
@@ -622,7 +622,7 @@ class IntelligentAlertingSystem:
             logger.error(f"Error loading config: {str(e)}")
 
 # Usage Example
-async def main():
+async def main() -> None:
     """Example usage of IntelligentAlertingSystem"""
     system = IntelligentAlertingSystem()
     

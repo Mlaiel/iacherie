@@ -445,7 +445,7 @@ class CrawlingMonitoringConfigManager:
     piracy detection, automated actions, and alerting systems.
     """
     
-    def __init__(self, config_path: Optional[str] = None):
+    def __init__(self, config_path -> None: Optional[str] = None) -> None:
         """
 Initialize crawling monitoring configuration manager"""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")

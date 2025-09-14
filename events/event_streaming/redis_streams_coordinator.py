@@ -130,10 +130,10 @@ class RedisStreamConsumer:
     """Individual Redis stream consumer"""
     
     def __init__(self, 
-                 redis_client: Any, 
-                 config: ConsumerGroupConfig,
-                 message_handler: Callable[[RedisStreamMessage], bool],
-                 metrics_collector=None):
+                 redis_client -> None: Any, 
+                 config -> None: ConsumerGroupConfig,
+                 message_handler -> None: Callable[[RedisStreamMessage], bool],
+                 metrics_collector=None) -> None:
         self.redis = redis_client
         self.config = config
         self.message_handler = message_handler
@@ -145,7 +145,7 @@ class RedisStreamConsumer:
         self._pause_event.set()  # Start unpaused
         self.metrics = ConsumerGroupMetrics(group_name=config.group_name)
         
-    async def start(self):
+    async def start(self) -> None:
         """Start the consumer"""
         try:
             if self.state != ConsumerGroupState.STOPPED:
@@ -173,7 +173,7 @@ class RedisStreamConsumer:
             logger.error(f"Failed to start Redis consumer {self.config.consumer_name}: {e}")
             raise
     
-    async def stop(self):
+    async def stop(self) -> None:
         """Stop the consumer gracefully"""
         try:
             if self.state == ConsumerGroupState.STOPPED:
@@ -201,7 +201,7 @@ class RedisStreamConsumer:
             logger.error(f"Error stopping Redis consumer {self.config.consumer_name}: {e}")
             raise
     
-    async def pause(self):
+    async def pause(self) -> None:
         """Pause the consumer"""
         if self.state == ConsumerGroupState.ACTIVE:
             self.state = ConsumerGroupState.PAUSED
@@ -209,7 +209,7 @@ class RedisStreamConsumer:
             self._pause_event.clear()
             logger.info(f"Redis consumer {self.config.consumer_name} paused")
     
-    async def resume(self):
+    async def resume(self) -> None:
         """Resume the consumer"""
         if self.state == ConsumerGroupState.PAUSED:
             self.state = ConsumerGroupState.ACTIVE
@@ -217,7 +217,7 @@ class RedisStreamConsumer:
             self._pause_event.set()
             logger.info(f"Redis consumer {self.config.consumer_name} resumed")
     
-    async def _ensure_consumer_groups(self):
+    async def _ensure_consumer_groups(self) -> None:
         """Ensure consumer groups exist for all streams"""
         try:
             for stream in self.config.streams:
@@ -240,7 +240,7 @@ class RedisStreamConsumer:
             logger.error(f"Error ensuring consumer groups: {e}")
             raise
     
-    async def _consumer_loop(self):
+    async def _consumer_loop(self) -> None:
         """Main consumer loop"""
         try:
             while not self._shutdown_event.is_set():
@@ -293,7 +293,7 @@ class RedisStreamConsumer:
             logger.error(f"Error reading from streams: {e}")
             return None
     
-    async def _process_stream_data(self, stream_data: List):
+    async def _process_stream_data(self, stream_data -> None: List) -> None:
         """Process received stream data"""
         try:
             for stream_name, messages in stream_data:
@@ -326,7 +326,7 @@ class RedisStreamConsumer:
             logger.error(f"Error processing stream data: {e}")
             raise
     
-    async def _process_single_message(self, message: RedisStreamMessage):
+    async def _process_single_message(self, message -> None: RedisStreamMessage) -> None:
         """Process a single message"""
         try:
             start_time = time.time()
@@ -373,7 +373,7 @@ class RedisStreamConsumer:
             if self.metrics_collector:
                 self.metrics_collector.increment_counter("redis_message_processing_errors")
     
-    async def _acknowledge_message(self, message: RedisStreamMessage):
+    async def _acknowledge_message(self, message -> None: RedisStreamMessage) -> None:
         """Acknowledge a processed message"""
         try:
             await self.redis.xack(
@@ -386,7 +386,7 @@ class RedisStreamConsumer:
         except Exception as e:
             logger.error(f"Error acknowledging message {message.message_id}: {e}")
     
-    async def _process_pending_messages(self):
+    async def _process_pending_messages(self) -> None:
         """Process pending messages that may have failed previously"""
         try:
             for stream in self.config.streams:
@@ -449,7 +449,7 @@ class RedisStreamConsumer:
 class RedisStreamsCoordinator:
     """Coordinates Redis Streams for high-frequency Ainflue events"""
     
-    def __init__(self, redis_client: Any, metrics_collector=None):
+    def __init__(self, redis_client -> None: Any, metrics_collector=None) -> None:
         self.redis = redis_client
         self.metrics_collector = metrics_collector
         self.consumers: Dict[str, RedisStreamConsumer] = {}
@@ -458,7 +458,7 @@ class RedisStreamsCoordinator:
         self._shutdown_event = asyncio.Event()
         self._backup_producers: Dict[str, Callable] = {}  # For Kafka backup
         
-    async def start(self):
+    async def start(self) -> None:
         """Start the Redis streams coordinator"""
         try:
             logger.info("Starting Redis Streams Coordinator")
@@ -475,7 +475,7 @@ class RedisStreamsCoordinator:
             logger.error(f"Failed to start Redis streams coordinator: {e}")
             raise
     
-    async def stop(self):
+    async def stop(self) -> None:
         """Stop the coordinator"""
         try:
             logger.info("Stopping Redis Streams Coordinator")
@@ -497,7 +497,7 @@ class RedisStreamsCoordinator:
             logger.error(f"Error stopping Redis streams coordinator: {e}")
             raise
     
-    async def _setup_default_streams(self):
+    async def _setup_default_streams(self) -> None:
         """Setup default Redis streams for Ainflue"""
         try:
             # Create default streams
@@ -563,7 +563,7 @@ class RedisStreamsCoordinator:
             logger.error(f"Error creating Redis consumer {consumer_name}: {e}")
             raise
     
-    async def remove_consumer(self, consumer_name: str):
+    async def remove_consumer(self, consumer_name -> None: str) -> None:
         """Remove a Redis stream consumer"""
         try:
             if consumer_name not in self.consumers:
@@ -625,7 +625,7 @@ class RedisStreamsCoordinator:
                 self.metrics_collector.increment_counter("redis_publish_errors")
             raise
     
-    async def _backup_to_kafka(self, stream_name: str, event_data: Dict[str, Any]):
+    async def _backup_to_kafka(self, stream_name -> None: str, event_data -> None: Dict[str, Any]) -> None:
         """Backup Redis stream message to Kafka for durability"""
         try:
             if stream_name in self._backup_producers:
@@ -640,7 +640,7 @@ class RedisStreamsCoordinator:
             if self.metrics_collector:
                 self.metrics_collector.increment_counter("redis_kafka_backup_errors")
     
-    async def trim_streams(self):
+    async def trim_streams(self) -> None:
         """Trim streams to manage memory usage"""
         try:
             for stream_name, metrics in self.stream_metrics.items():
@@ -660,7 +660,7 @@ class RedisStreamsCoordinator:
         except Exception as e:
             logger.error(f"Error in stream trimming: {e}")
     
-    async def _coordinator_loop(self):
+    async def _coordinator_loop(self) -> None:
         """Main coordinator monitoring loop"""
         try:
             while not self._shutdown_event.is_set():
@@ -679,7 +679,7 @@ class RedisStreamsCoordinator:
         except Exception as e:
             logger.error(f"Error in coordinator loop: {e}")
     
-    async def _update_stream_metrics(self):
+    async def _update_stream_metrics(self) -> None:
         """Update metrics for all streams"""
         try:
             for stream_name, metrics in self.stream_metrics.items():
@@ -704,7 +704,7 @@ class RedisStreamsCoordinator:
         except Exception as e:
             logger.error(f"Error updating stream metrics: {e}")
     
-    async def _monitor_consumer_health(self):
+    async def _monitor_consumer_health(self) -> None:
         """Monitor health of all consumers"""
         try:
             for consumer_name, consumer in self.consumers.items():

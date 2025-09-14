@@ -145,7 +145,7 @@ class ContentLifecycle:
 class TrendAnalyzer:
     """Main trend analysis engine"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.logger = logger.getChild(self.__class__.__name__)
         
@@ -493,7 +493,7 @@ class TrendAnalyzer:
             self.logger.error(f"Lifecycle phase determination failed: {e}")
             return "introduction"
     
-    async def _predict_phase_durations(self, lifecycle: ContentLifecycle, content_data: Dict[str, Any]):
+    async def _predict_phase_durations(self, lifecycle -> None: ContentLifecycle, content_data -> None: Dict[str, Any]) -> None:
         """Predict lifecycle phase durations"""
         try:
             content_type = content_data.get('content_type', 'video')
@@ -521,7 +521,7 @@ class TrendAnalyzer:
         except Exception as e:
             self.logger.error(f"Phase duration prediction failed: {e}")
     
-    async def _calculate_lifecycle_metrics(self, lifecycle: ContentLifecycle, content_data: Dict[str, Any]):
+    async def _calculate_lifecycle_metrics(self, lifecycle -> None: ContentLifecycle, content_data -> None: Dict[str, Any]) -> None:
         """Calculate lifecycle performance metrics"""
         try:
             # Calculate total lifecycle value (simplified)
@@ -548,7 +548,7 @@ class TrendAnalyzer:
 class ViralityPredictor:
     """Viral content prediction engine"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.logger = logger.getChild(self.__class__.__name__)
         
@@ -795,7 +795,7 @@ class ViralityPredictor:
             self.logger.error(f"Engagement velocity calculation failed: {e}")
             return 0.5
     
-    async def _generate_viral_predictions(self, prediction: ViralityPrediction, content_data: Dict[str, Any]):
+    async def _generate_viral_predictions(self, prediction -> None: ViralityPrediction, content_data -> None: Dict[str, Any]) -> None:
         """Generate specific viral predictions"""
         try:
             # Time to viral prediction
@@ -833,7 +833,7 @@ class ViralityPredictor:
         except Exception as e:
             self.logger.error(f"Viral prediction generation failed: {e}")
     
-    async def _generate_viral_recommendations(self, prediction: ViralityPrediction, content_data: Dict[str, Any]):
+    async def _generate_viral_recommendations(self, prediction -> None: ViralityPrediction, content_data -> None: Dict[str, Any]) -> None:
         """Generate optimization recommendations"""
         try:
             recommendations = []
@@ -874,7 +874,7 @@ class ViralityPredictor:
 class ContentTrendEngine:
     """Main content trend analysis engine combining all components"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.logger = logger.getChild(self.__class__.__name__)
         

@@ -35,14 +35,14 @@ class AIFingerprintingEvent(BaseEvent):
     """Event triggered when AI generates content fingerprint"""
     
     def __init__(self,
-                 content_id: str,
-                 fingerprint_type: str,
-                 algorithm: str,
-                 fingerprint_data: Dict[str, Any],
-                 confidence_score: float,
-                 processing_time: Optional[float] = None,
-                 metadata: Optional[Dict[str, Any]] = None,
-                 **kwargs):
+                 content_id -> None: str,
+                 fingerprint_type -> None: str,
+                 algorithm -> None: str,
+                 fingerprint_data -> None: Dict[str, Any],
+                 confidence_score -> None: float,
+                 processing_time -> None: Optional[float] = None,
+                 metadata -> None: Optional[Dict[str, Any]] = None,
+                 **kwargs) -> None:
         data = {
             'content_id': content_id,
             'fingerprint_type': fingerprint_type,
@@ -67,14 +67,14 @@ class AIAnalysisEvent(BaseEvent):
     """Event triggered when AI analyzes content"""
     
     def __init__(self,
-                 content_id: str,
-                 analysis_type: str,
-                 analysis_results: Dict[str, Any],
-                 confidence_scores: Dict[str, float],
-                 detected_features: List[str],
-                 processing_duration: Optional[float] = None,
-                 metadata: Optional[Dict[str, Any]] = None,
-                 **kwargs):
+                 content_id -> None: str,
+                 analysis_type -> None: str,
+                 analysis_results -> None: Dict[str, Any],
+                 confidence_scores -> None: Dict[str, float],
+                 detected_features -> None: List[str],
+                 processing_duration -> None: Optional[float] = None,
+                 metadata -> None: Optional[Dict[str, Any]] = None,
+                 **kwargs) -> None:
         data = {
             'content_id': content_id,
             'analysis_type': analysis_type,
@@ -99,13 +99,13 @@ class AIClassificationEvent(BaseEvent):
     """Event triggered when AI classifies content"""
     
     def __init__(self,
-                 content_id: str,
-                 classification_model: str,
-                 predicted_categories: List[Dict[str, Any]],
-                 confidence_threshold: float,
-                 model_version: str,
-                 metadata: Optional[Dict[str, Any]] = None,
-                 **kwargs):
+                 content_id -> None: str,
+                 classification_model -> None: str,
+                 predicted_categories -> None: List[Dict[str, Any]],
+                 confidence_threshold -> None: float,
+                 model_version -> None: str,
+                 metadata -> None: Optional[Dict[str, Any]] = None,
+                 **kwargs) -> None:
         data = {
             'content_id': content_id,
             'classification_model': classification_model,
@@ -129,13 +129,13 @@ class AIEnhancementEvent(BaseEvent):
     """Event triggered when AI enhances content quality"""
     
     def __init__(self,
-                 content_id: str,
-                 enhancement_type: str,
-                 enhancement_config: Dict[str, Any],
-                 quality_metrics: Dict[str, float],
-                 enhancement_results: Dict[str, Any],
-                 metadata: Optional[Dict[str, Any]] = None,
-                 **kwargs):
+                 content_id -> None: str,
+                 enhancement_type -> None: str,
+                 enhancement_config -> None: Dict[str, Any],
+                 quality_metrics -> None: Dict[str, float],
+                 enhancement_results -> None: Dict[str, Any],
+                 metadata -> None: Optional[Dict[str, Any]] = None,
+                 **kwargs) -> None:
         data = {
             'content_id': content_id,
             'enhancement_type': enhancement_type,
@@ -159,14 +159,14 @@ class AIDetectionEvent(BaseEvent):
     """Event triggered when AI detects violations or issues"""
     
     def __init__(self,
-                 content_id: str,
-                 detection_type: str,
-                 detected_issues: List[Dict[str, Any]],
-                 severity_level: str,
-                 action_required: bool,
-                 detection_confidence: float,
-                 metadata: Optional[Dict[str, Any]] = None,
-                 **kwargs):
+                 content_id -> None: str,
+                 detection_type -> None: str,
+                 detected_issues -> None: List[Dict[str, Any]],
+                 severity_level -> None: str,
+                 action_required -> None: bool,
+                 detection_confidence -> None: float,
+                 metadata -> None: Optional[Dict[str, Any]] = None,
+                 **kwargs) -> None:
         data = {
             'content_id': content_id,
             'detection_type': detection_type,
@@ -199,13 +199,13 @@ class AIRecommendationEvent(BaseEvent):
     """Event triggered when AI generates recommendations"""
     
     def __init__(self,
-                 content_id: str,
-                 recommendation_type: str,
-                 recommendations: List[Dict[str, Any]],
-                 recommendation_scores: Dict[str, float],
-                 reasoning: Optional[str] = None,
-                 metadata: Optional[Dict[str, Any]] = None,
-                 **kwargs):
+                 content_id -> None: str,
+                 recommendation_type -> None: str,
+                 recommendations -> None: List[Dict[str, Any]],
+                 recommendation_scores -> None: Dict[str, float],
+                 reasoning -> None: Optional[str] = None,
+                 metadata -> None: Optional[Dict[str, Any]] = None,
+                 **kwargs) -> None:
         data = {
             'content_id': content_id,
             'recommendation_type': recommendation_type,
@@ -229,14 +229,14 @@ class AIModelUpdateEvent(BaseEvent):
     """Event triggered when AI models are updated or retrained"""
     
     def __init__(self,
-                 model_id: str,
-                 model_type: str,
-                 version: str,
-                 update_type: str,
-                 performance_metrics: Dict[str, float],
-                 training_data_size: Optional[int] = None,
-                 metadata: Optional[Dict[str, Any]] = None,
-                 **kwargs):
+                 model_id -> None: str,
+                 model_type -> None: str,
+                 version -> None: str,
+                 update_type -> None: str,
+                 performance_metrics -> None: Dict[str, float],
+                 training_data_size -> None: Optional[int] = None,
+                 metadata -> None: Optional[Dict[str, Any]] = None,
+                 **kwargs) -> None:
         data = {
             'model_id': model_id,
             'model_type': model_type,
@@ -261,14 +261,14 @@ class AIProcessingFailedEvent(BaseEvent):
     """Event triggered when AI processing fails"""
     
     def __init__(self,
-                 content_id: str,
-                 processing_type: AIProcessingType,
-                 error_code: str,
-                 error_message: str,
-                 retry_count: int,
-                 max_retries: int,
-                 metadata: Optional[Dict[str, Any]] = None,
-                 **kwargs):
+                 content_id -> None: str,
+                 processing_type -> None: AIProcessingType,
+                 error_code -> None: str,
+                 error_message -> None: str,
+                 retry_count -> None: int,
+                 max_retries -> None: int,
+                 metadata -> None: Optional[Dict[str, Any]] = None,
+                 **kwargs) -> None:
         data = {
             'content_id': content_id,
             'processing_type': processing_type.value,

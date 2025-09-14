@@ -183,7 +183,7 @@ class RevenueOptimizationEngine:
     - Multi-stream revenue optimization
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the Revenue Optimization Engine"""
         self.logger = logging.getLogger(__name__)
         self.initialized = False
@@ -332,7 +332,7 @@ class RevenueOptimizationEngine:
             }
         }
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize the revenue optimization engine and components"""
         try:
             self.logger.info("Initializing Revenue Optimization Engine...")
@@ -347,7 +347,7 @@ class RevenueOptimizationEngine:
             self.logger.error(f"Engine initialization failed: {e}")
             raise RevenueError(f"Engine initialization failed: {str(e)}")
     
-    async def _initialize_optimization_components(self):
+    async def _initialize_optimization_components(self) -> None:
         """Initialize revenue optimization component engines"""
         await self.monetization_analyzer.initialize()
         await self.audience_valuator.initialize()
@@ -508,9 +508,9 @@ class RevenueOptimizationEngine:
         
         return metrics
     
-    async def _apply_optimization_results(self, result: RevenueOptimizationResult,
-                                        optimization_results: Dict[str, Any],
-                                        request: RevenueOptimizationRequest):
+    async def _apply_optimization_results(self, result -> None: RevenueOptimizationResult,
+                                        optimization_results -> None: Dict[str, Any],
+                                        request -> None: RevenueOptimizationRequest) -> None:
         """Apply optimization results to the main result"""
         # Apply monetization analysis
         if 'monetization' in optimization_results and optimization_results['monetization'].get('status') != 'failed':
@@ -884,8 +884,8 @@ class RevenueOptimizationEngine:
         
         return plan
     
-    async def _update_metrics(self, processing_time: float, success: bool, 
-                            result: Optional[RevenueOptimizationResult]):
+    async def _update_metrics(self, processing_time -> None: float, success -> None: bool, 
+                            result -> None: Optional[RevenueOptimizationResult]) -> None:
         """Update performance metrics"""
         self.optimization_metrics['total_optimizations'] += 1
         
@@ -942,7 +942,7 @@ class RevenueOptimizationEngine:
 class MonetizationStrategyAnalyzer:
     """Specialized engine for monetization strategy analysis"""
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize monetization analyzer"""
         pass
     
@@ -992,7 +992,7 @@ class MonetizationStrategyAnalyzer:
 class AudienceValueEngine:
     """Specialized engine for audience value analysis"""
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize audience value analyzer"""
         pass
     
@@ -1046,7 +1046,7 @@ class AudienceValueEngine:
 class ROIOptimizationEngine:
     """Specialized engine for ROI optimization"""
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize ROI optimizer"""
         pass
     
@@ -1084,7 +1084,7 @@ class ROIOptimizationEngine:
 class RevenueForecaster:
     """Specialized engine for revenue forecasting"""
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize revenue forecaster"""
         pass
     
@@ -1128,7 +1128,7 @@ class RevenueForecaster:
 class OpportunityIdentificationEngine:
     """Specialized engine for opportunity identification"""
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize opportunity identifier"""
         pass
     

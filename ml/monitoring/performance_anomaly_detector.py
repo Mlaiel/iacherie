@@ -135,7 +135,7 @@ class DetectorConfig:
 class PerformanceAnomalyDetector:
     """🔐 Détecteur d'anomalies de performance avec analyse de sécurité"""
     
-    def __init__(self, config: DetectorConfig):
+    def __init__(self, config -> None: DetectorConfig) -> None:
         self.config = config
         self.detector_id = str(uuid.uuid4())
         self.metrics_history: List[PerformanceMetric] = []
@@ -147,7 +147,7 @@ class PerformanceAnomalyDetector:
         
         logger.info(f"Performance Anomaly Detector initialized: {self.detector_id}")
     
-    def _initialize_ml_models(self):
+    def _initialize_ml_models(self) -> None:
         """Initialise les modèles ML pour détection d'anomalies"""
         if not ML_AVAILABLE:
             logger.warning("ML models not available, using statistical methods only")
@@ -172,7 +172,7 @@ class PerformanceAnomalyDetector:
         except Exception as e:
             logger.error(f"Error initializing ML models: {e}")
     
-    async def add_metric(self, metric: PerformanceMetric):
+    async def add_metric(self, metric -> None: PerformanceMetric) -> None:
         """Ajoute une métrique et détecte les anomalies"""
         try:
             self.metrics_history.append(metric)
@@ -199,7 +199,7 @@ class PerformanceAnomalyDetector:
             logger.error(f"Error adding metric: {e}")
             raise
     
-    async def _detect_anomalies(self, metric: PerformanceMetric):
+    async def _detect_anomalies(self, metric -> None: PerformanceMetric) -> None:
         """Détecte les anomalies pour une métrique"""
         try:
             # Obtenir l'historique pour cette métrique
@@ -475,7 +475,7 @@ class PerformanceAnomalyDetector:
         else:
             return AnomalySeverity.LOW
     
-    async def _process_anomaly(self, anomaly: AnomalyDetection):
+    async def _process_anomaly(self, anomaly -> None: AnomalyDetection) -> None:
         """Traite une anomalie détectée"""
         try:
             # Ajouter des implications de sécurité si métrique sensible
@@ -498,7 +498,7 @@ class PerformanceAnomalyDetector:
         except Exception as e:
             logger.error(f"Error processing anomaly: {e}")
     
-    async def _analyze_security_implications(self, anomaly: AnomalyDetection):
+    async def _analyze_security_implications(self, anomaly -> None: AnomalyDetection) -> None:
         """Analyse les implications de sécurité"""
         try:
             if anomaly.metric_name in self.config.security_sensitive_metrics:
@@ -579,7 +579,7 @@ class PerformanceAnomalyDetector:
         
         return actions
     
-    async def _analyze_patterns(self):
+    async def _analyze_patterns(self) -> None:
         """Analyse les patterns d'anomalies"""
         try:
             # Analyser les anomalies des dernières 24h
@@ -605,7 +605,7 @@ class PerformanceAnomalyDetector:
         except Exception as e:
             logger.error(f"Error analyzing patterns: {e}")
     
-    async def _create_anomaly_pattern(self, pattern_key: str, anomalies: List[AnomalyDetection]):
+    async def _create_anomaly_pattern(self, pattern_key -> None: str, anomalies -> None: List[AnomalyDetection]) -> None:
         """Crée un pattern d'anomalie"""
         try:
             # Calculer les caractéristiques du pattern
@@ -660,7 +660,7 @@ class PerformanceAnomalyDetector:
         except Exception as e:
             logger.error(f"Error creating anomaly pattern: {e}")
     
-    async def _update_ml_models(self):
+    async def _update_ml_models(self) -> None:
         """Met à jour les modèles ML avec nouvelles données"""
         try:
             if not ML_AVAILABLE or len(self.metrics_history) < 100:
@@ -811,7 +811,7 @@ def create_anomaly_detector(
     )
     return PerformanceAnomalyDetector(config)
 
-async def demo_anomaly_detector():
+async def demo_anomaly_detector() -> None:
     """Démo du détecteur d'anomalies"""
     detector = create_anomaly_detector()
     

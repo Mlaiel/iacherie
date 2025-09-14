@@ -108,7 +108,7 @@ class VectorDatabaseManager:
     and provides comprehensive analytics for content protection decisions.
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """
 Initialize the complete vector database system"""
         self.config = config
@@ -138,7 +138,7 @@ Initialize the complete vector database system"""
         
         self.logger.info("VectorDatabaseManager initialized")
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize all vector database components"""
         try:
             start_time = time.time()
@@ -161,7 +161,7 @@ Initialize the complete vector database system"""
             self.logger.error(f"Vector database initialization failed: {e}")
             raise
     
-    async def _initialize_core_components(self):
+    async def _initialize_core_components(self) -> None:
         """Initialize core vector database components"""
         # Initialize embedding service
         embedding_config = self.config.get('embeddings', {})
@@ -181,7 +181,7 @@ Initialize the complete vector database system"""
         
         self.logger.debug("Core components initialized")
     
-    async def _initialize_advanced_components(self):
+    async def _initialize_advanced_components(self) -> None:
         """Initialize advanced components for enterprise features"""
         # Initialize query executor with optimization and caching
         query_config = self.config.get('query_engine', {})
@@ -202,7 +202,7 @@ Initialize the complete vector database system"""
         
         self.logger.debug("Advanced components initialized")
     
-    async def _start_background_services(self):
+    async def _start_background_services(self) -> None:
         """Start background services for monitoring and optimization"""
         if self.analytics_engine:
             await self.analytics_engine.start_analytics()
@@ -216,7 +216,7 @@ Initialize the complete vector database system"""
         self.is_running = True
         self.logger.debug("Background services started")
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Gracefully shutdown all components"""
         try:
             self.is_running = False

@@ -38,7 +38,7 @@ class ImageCompressionConfig:
 class ImageCompressionEngine:
     """High-performance image compression with next-gen formats."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the image compression engine."""
         self.supported_formats = list(ImageFormat)
         self.compression_profiles = self._load_compression_profiles()

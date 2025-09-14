@@ -119,7 +119,7 @@ class MultiProviderPaymentGateway:
     for different payment scenarios and requirements.
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """Initialize multi-provider payment gateway"""
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -132,7 +132,7 @@ class MultiProviderPaymentGateway:
         self.transactions = {}
         self.escrow_transactions = {}
         
-    def _initialize_processors(self):
+    def _initialize_processors(self) -> None:
         """Initialize all payment processors"""
         try:
             # Stripe Connect for marketplace payments
@@ -498,7 +498,7 @@ class MultiProviderPaymentGateway:
             self.logger.error(f"Failed to get provider status: {e}")
             return {"error": str(e)}
     
-    def _validate_payment_request(self, request: PaymentRequest):
+    def _validate_payment_request(self, request -> None: PaymentRequest) -> None:
         """Validate payment request"""
         if request.amount <= 0:
             raise ValueError("Payment amount must be positive")

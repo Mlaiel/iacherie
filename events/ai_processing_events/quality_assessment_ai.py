@@ -131,7 +131,7 @@ class QualityAssessmentResult:
 class QualityAssessmentAI(BaseEventHandler):
     """AI-powered content quality assessment system"""
     
-    def __init__(self, max_workers: int = 4):
+    def __init__(self, max_workers -> None: int = 4) -> None:
         super().__init__()
         self.executor = ThreadPoolExecutor(max_workers=max_workers)
         self.request_queue = asyncio.Queue(maxsize=1000)
@@ -152,7 +152,7 @@ class QualityAssessmentAI(BaseEventHandler):
         
         logger.info("Quality Assessment AI initialized")
     
-    async def start_assessor(self):
+    async def start_assessor(self) -> None:
         """Start the quality assessment system"""
         self.is_running = True
         
@@ -162,7 +162,7 @@ class QualityAssessmentAI(BaseEventHandler):
         
         logger.info("Quality Assessment AI started")
     
-    async def stop_assessor(self):
+    async def stop_assessor(self) -> None:
         """Stop the quality assessment system"""
         self.is_running = False
         self.executor.shutdown(wait=True)
@@ -473,7 +473,7 @@ class QualityAssessmentAI(BaseEventHandler):
         
         return strengths
     
-    async def _worker_loop(self, worker_id: str):
+    async def _worker_loop(self, worker_id -> None: str) -> None:
         """Worker loop for processing quality assessment requests"""
         logger.info(f"Quality worker {worker_id} started")
         

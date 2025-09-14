@@ -98,7 +98,7 @@ class MonetizationManager:
     Orchestrates all monetization components and provides unified interface.
     """
     
-    def __init__(self, config: Optional[MonetizationConfig] = None):
+    def __init__(self, config -> None: Optional[MonetizationConfig] = None) -> None:
         self.config = config or MonetizationConfig()
         
         # Initialize core components

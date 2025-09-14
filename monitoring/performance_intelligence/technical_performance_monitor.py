@@ -1,4 +1,4 @@
-"""⚡ Technical Performance Monitor - System Performance, Errors & Uptime
+"""# [EMOJI_REMOVED] Technical Performance Monitor - System Performance, Errors & Uptime
 ======================================================================
 
 Advanced technical performance monitoring system for tracking system performance,
@@ -17,8 +17,9 @@ try:
 except ImportError:
     # Fallback for environments without psutil
     class MockPsutil:
+    """MockPsutil: class implementation"""
         @staticmethod
-        def cpu_percent(interval=1):
+        def cpu_percent(interval=1) -> None:
             """Mock CPU percentage implementation"""
             import random
             import time
@@ -27,40 +28,43 @@ except ImportError:
             # Return realistic CPU usage between 10-90%
             return 10 + (random.random() * 80)
         @staticmethod
-        def virtual_memory():
+        def virtual_memory() -> None:
             class Memory:
+    """Memory: class implementation"""
                 percent = 65.0 + 15.0 * __import__('random').random()
             return Memory()
         
         @staticmethod
-        def disk_usage(path):
+        def disk_usage(path) -> None:
             class Disk:
+    """Disk: class implementation"""
                 total = 1000000000000  # 1TB
                 used = 600000000000    # 600GB
             return Disk()
         
         @staticmethod
-        def net_io_counters():
+        def net_io_counters() -> None:
             class Network:
+    """Network: class implementation"""
                 bytes_sent = 1000000000
                 bytes_recv = 2000000000
             return Network()
         
         @staticmethod
-        def disk_io_counters():
+        def disk_io_counters() -> None:
         try:
             logger.info(f"Executing net_connections")
             
             # Implementation for net_connections
         @staticmethod
-        def pids():
+        def pids() -> None:
             """Mock process IDs list"""
             import random
             # Return list of mock PIDs
             return [1000 + i + random.randint(0, 100) for i in range(10, 25)]
             
         @staticmethod  
-        def num_threads():
+        def num_threads() -> None:
             """Mock number of threads"""
             import random
             # Return realistic thread count 
@@ -106,30 +110,32 @@ except ImportError:
             return Network()
         
         @staticmethod
-        def disk_io_counters():
+        def disk_io_counters() -> None:
             class DiskIO:
+    """DiskIO: class implementation"""
                 read_bytes = 500000000
                 write_bytes = 300000000
             return DiskIO()
         
         @staticmethod
-        def getloadavg():
+        def getloadavg() -> None:
             return (1.5, 1.2, 1.0)
         
         @staticmethod
-        def net_connections():
+        def net_connections() -> None:
             return [f"conn_{i}" for i in range(150)]
         
         @staticmethod
-        def pids():
+        def pids() -> None:
             return [i for i in range(200)]
         
         @staticmethod
-        def process_iter(attrs=None):
+        def process_iter(attrs=None) -> None:
             class Process:
-                def info(self):
+    """Process: class implementation"""
+                def info(self) -> None:
                     return {'num_threads': 4}
-                def num_threads(self):
+                def num_threads(self) -> None:
                     return 4
             return [Process() for _ in range(50)]
     
@@ -305,7 +311,7 @@ class TechnicalPerformanceMonitor:
     and comprehensive infrastructure health metrics.
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(self.__class__.__name__)
         self.performance_cache = {}
         self.error_cache = {}
@@ -2623,3 +2629,5 @@ Update component status based on error"""
             
         except Exception as e:
             self.logger.error(f"Failed to send SMS alert: {e}")
+
+# File has syntax issues - needs manual review

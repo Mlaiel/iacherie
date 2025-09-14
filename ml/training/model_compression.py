@@ -132,7 +132,7 @@ class NASCompressionResult:
 class AdvancedPruningEngine:
     """🔬 ML ENGINEER - Advanced neural network pruning strategies"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.pruning_methods = {
             CompressionTechnique.MAGNITUDE_PRUNING: self._magnitude_pruning,
             CompressionTechnique.GRADIENT_PRUNING: self._gradient_pruning,
@@ -247,7 +247,7 @@ class AdvancedPruningEngine:
 class AdvancedQuantizationEngine:
     """🛡️ BACKEND SENIOR - Enterprise quantization strategies"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.quantization_schemes = {
             "int8": self._int8_quantization,
             "int4": self._int4_quantization,
@@ -322,7 +322,7 @@ class AdvancedQuantizationEngine:
 class KnowledgeDistillationEngine:
     """🎖️ LEAD DEV IA - Advanced knowledge distillation orchestration"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.distillation_strategies = {
             "vanilla": self._vanilla_distillation,
             "progressive": self._progressive_distillation,
@@ -401,7 +401,7 @@ class KnowledgeDistillationEngine:
 class NeuralArchitectureSearchEngine:
     """🔬 ML ENGINEER - Neural Architecture Search with compression optimization"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.search_space = self._define_compression_aware_search_space()
         self.evolutionary_population = []
         self.pareto_front = []
@@ -477,7 +477,7 @@ class AdvancedModelCompressionResearcher:
     Orchestrates multiple compression techniques with creator-specific optimization.
     """
     
-    def __init__(self, config_path: Optional[str] = None):
+    def __init__(self, config_path -> None: Optional[str] = None) -> None:
         self.config = self._load_config(config_path)
         self.pruning_engine = AdvancedPruningEngine()
         self.quantization_engine = AdvancedQuantizationEngine()
@@ -780,7 +780,7 @@ class AdvancedModelCompressionResearcher:
 
 # Example usage and testing
 if __name__ == "__main__":
-    async def test_advanced_compression():
+    async def test_advanced_compression() -> None:
         """Test advanced model compression"""
         # Create a simple test model
         model = nn.Sequential(

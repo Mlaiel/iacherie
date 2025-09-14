@@ -49,7 +49,7 @@ class CompressionTask:
     dependencies: List[str] = field(default_factory=list)
     metadata: Dict[str, Any] = field(default_factory=dict)
     
-    def __lt__(self, other):
+    def __lt__(self, other) -> None:
         """Enable priority queue ordering."""
         return self.priority.value > other.priority.value
 
@@ -66,11 +66,11 @@ class CompressionScheduler:
     
     def __init__(
         self,
-        max_cpu_cores: int = 4,
-        max_memory_mb: int = 8192,
-        has_gpu: bool = False,
-        max_concurrent_tasks: int = 3
-    ):
+        max_cpu_cores -> None: int = 4,
+        max_memory_mb -> None: int = 8192,
+        has_gpu -> None: bool = False,
+        max_concurrent_tasks -> None: int = 3
+    ) -> None:
         """Initialize the compression scheduler."""
         self.max_cpu_cores = max_cpu_cores
         self.max_memory_mb = max_memory_mb
@@ -196,7 +196,7 @@ class CompressionScheduler:
         
         return estimated_duration, memory_req, cpu_req, gpu_req
     
-    async def start_scheduler(self):
+    async def start_scheduler(self) -> None:
         """Start the task scheduler."""
         if self.scheduler_running:
             return
@@ -212,7 +212,7 @@ class CompressionScheduler:
                 logger.error(f"Scheduler error: {e}")
                 await asyncio.sleep(5.0)
     
-    async def _process_queue(self):
+    async def _process_queue(self) -> None:
         """Process tasks in the queue based on available resources."""
         if not self.task_queue:
             return
@@ -276,7 +276,7 @@ class CompressionScheduler:
         
         return True
     
-    async def _start_task(self, task: CompressionTask):
+    async def _start_task(self, task -> None: CompressionTask) -> None:
         """Start executing a compression task."""
         # Reserve resources
         self.resource_usage.cpu_cores_used += task.cpu_requirement
@@ -297,7 +297,7 @@ class CompressionScheduler:
         # Execute task asynchronously
         asyncio.create_task(self._execute_task(task))
     
-    async def _execute_task(self, task: CompressionTask):
+    async def _execute_task(self, task -> None: CompressionTask) -> None:
         """Execute a compression task."""
         try:
             # Simulate task execution
@@ -343,7 +343,7 @@ class CompressionScheduler:
                 self.resource_usage.gpu_in_use = False
             self.resource_usage.active_tasks -= 1
     
-    async def _cleanup_completed_tasks(self):
+    async def _cleanup_completed_tasks(self) -> None:
         """Clean up completed tasks from active tasks."""
         completed_task_ids = []
         
@@ -434,7 +434,7 @@ class CompressionScheduler:
         # Cannot cancel running tasks in this simulation
         return False
     
-    async def stop_scheduler(self):
+    async def stop_scheduler(self) -> None:
         """Stop the task scheduler."""
         self.scheduler_running = False
         logger.info("Stopping compression scheduler")
@@ -443,7 +443,7 @@ class CompressionScheduler:
         while self.active_tasks:
             await asyncio.sleep(1.0)
     
-    def optimize_queue(self):
+    def optimize_queue(self) -> None:
         """Optimize task queue order based on deadlines and priorities."""
         # Re-prioritize tasks with approaching deadlines
         current_time = datetime.now()

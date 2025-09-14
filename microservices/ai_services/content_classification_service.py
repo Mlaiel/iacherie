@@ -162,7 +162,7 @@ class ContentClassificationService:
     hierarchical categorization, safety filtering, and automated tagging.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.classifications: Dict[str, ContentClassification] = {}
         self.classification_models: Dict[ClassificationModel, Any] = {}
         self.category_hierarchies: Dict[str, Dict[CategoryLevel, Set[str]]] = {}
@@ -180,7 +180,7 @@ class ContentClassificationService:
         
         logger.info("ContentClassificationService initialized successfully")
     
-    def _initialize_classification_models(self):
+    def _initialize_classification_models(self) -> None:
         """Initialize classification models and their configurations."""
         self.classification_models = {
             ClassificationModel.VISUAL_CLASSIFIER: {
@@ -239,7 +239,7 @@ class ContentClassificationService:
             }
         }
     
-    def _initialize_category_hierarchies(self):
+    def _initialize_category_hierarchies(self) -> None:
         """Initialize hierarchical category structures."""
         self.category_hierarchies = {
             "entertainment": {
@@ -287,7 +287,7 @@ class ContentClassificationService:
             }
         }
     
-    def _initialize_tag_vocabularies(self):
+    def _initialize_tag_vocabularies(self) -> None:
         """Initialize tag vocabularies for different domains."""
         self.tag_vocabularies = {
             "general": {
@@ -317,7 +317,7 @@ class ContentClassificationService:
             }
         }
     
-    def _initialize_safety_rules(self):
+    def _initialize_safety_rules(self) -> None:
         """Initialize content safety classification rules."""
         self.safety_rules = [
             {
@@ -357,7 +357,7 @@ class ContentClassificationService:
             }
         ]
     
-    def _initialize_classification_templates(self):
+    def _initialize_classification_templates(self) -> None:
         """Initialize classification templates for different content types."""
         self.classification_templates = {
             ContentType.IMAGE: {
@@ -1270,7 +1270,7 @@ def get_content_classification_service() -> ContentClassificationService:
 
 
 # Example usage and testing
-async def example_usage():
+async def example_usage() -> None:
     """Example usage of Content Classification Service."""
     service = get_content_classification_service()
     

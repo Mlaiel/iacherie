@@ -48,7 +48,7 @@ class Alert:
 class ClusterMonitor:
     """Enterprise-grade MongoDB cluster monitoring system."""
     
-    def __init__(self, connection_string: str, replica_set_name: str):
+    def __init__(self, connection_string -> None: str, replica_set_name -> None: str) -> None:
         """Initialize cluster monitor."""
         if not MONGODB_AVAILABLE:
             raise ImportError("PyMongo is required for cluster monitoring")
@@ -75,7 +75,7 @@ class ClusterMonitor:
         self.metrics_history = []
         self.max_history_size = 1000
     
-    async def start_monitoring(self):
+    async def start_monitoring(self) -> None:
         """Start continuous cluster monitoring."""
         self.monitoring_active = True
         logger.info("Starting cluster monitoring")
@@ -88,16 +88,16 @@ class ClusterMonitor:
                 logger.error(f"Error in monitoring loop: {e}")
                 await asyncio.sleep(self.check_interval)
     
-    def stop_monitoring(self):
+    def stop_monitoring(self) -> None:
         """Stop cluster monitoring."""
         self.monitoring_active = False
         logger.info("Stopped cluster monitoring")
     
-    def add_alert_handler(self, handler: Callable[[Alert], None]):
+    def add_alert_handler(self, handler -> None: Callable[[Alert], None]) -> None:
         """Add alert handler function."""
         self.alert_handlers.append(handler)
     
-    async def _perform_health_checks(self):
+    async def _perform_health_checks(self) -> None:
         """Perform comprehensive cluster health checks."""
         try:
             if not self.client:
@@ -128,7 +128,7 @@ class ClusterMonitor:
                 None
             )
     
-    async def _check_replication_lag(self, status: Dict[str, Any]):
+    async def _check_replication_lag(self, status -> None: Dict[str, Any]) -> None:
         """Check replication lag across the cluster."""
         max_lag = self._calculate_max_lag(status)
         
@@ -139,7 +139,7 @@ class ClusterMonitor:
                 None
             )
     
-    async def _check_oplog_size(self):
+    async def _check_oplog_size(self) -> None:
         """Check oplog size and retention."""
         try:
             oplog_stats = self.client.local.oplog.rs.stats()
@@ -161,7 +161,7 @@ class ClusterMonitor:
         except Exception as e:
             logger.debug(f"Could not check oplog size: {e}")
     
-    async def _check_node_health(self, status: Dict[str, Any]):
+    async def _check_node_health(self, status -> None: Dict[str, Any]) -> None:
         """Check health of individual nodes."""
         for member in status.get("members", []):
             node_name = member.get("name")
@@ -183,7 +183,7 @@ class ClusterMonitor:
                     node_name
                 )
     
-    async def _check_connections(self):
+    async def _check_connections(self) -> None:
         """Check connection usage."""
         try:
             server_status = self.client.admin.command("serverStatus")
@@ -206,7 +206,7 @@ class ClusterMonitor:
         except Exception as e:
             logger.debug(f"Could not check connections: {e}")
     
-    async def _check_disk_space(self):
+    async def _check_disk_space(self) -> None:
         """Check disk space usage."""
         try:
             # This would typically require additional system monitoring
@@ -219,7 +219,7 @@ class ClusterMonitor:
         except Exception as e:
             logger.debug(f"Could not check disk space: {e}")
     
-    async def _create_alert(self, severity: AlertSeverity, message: str, node_id: Optional[str]):
+    async def _create_alert(self, severity -> None: AlertSeverity, message -> None: str, node_id -> None: Optional[str]) -> None:
         """Create and process a new alert."""
         alert = Alert(
             alert_id=f"alert_{int(datetime.now().timestamp())}",
@@ -308,7 +308,7 @@ class ClusterMonitor:
         
         return max_lag
     
-    def _store_metrics(self, cluster_status: ClusterStatus):
+    def _store_metrics(self, cluster_status -> None: ClusterStatus) -> None:
         """Store cluster metrics for historical analysis."""
         metrics = {
             "timestamp": datetime.now(),
@@ -325,7 +325,7 @@ class ClusterMonitor:
         if len(self.metrics_history) > self.max_history_size:
             self.metrics_history = self.metrics_history[-self.max_history_size:]
     
-    def _update_cluster_state(self, cluster_status: ClusterStatus):
+    def _update_cluster_state(self, cluster_status -> None: ClusterStatus) -> None:
         """Update overall cluster state based on current status."""
         if cluster_status.state == ClusterState.CRITICAL:
             logger.critical(f"Cluster in CRITICAL state: {cluster_status.cluster_id}")
@@ -414,7 +414,7 @@ class ClusterMonitor:
         else:
             raise ValueError(f"Unsupported export format: {format}")
     
-    def close(self):
+    def close(self) -> None:
         """Close monitoring connections."""
         self.stop_monitoring()
         if self.client:

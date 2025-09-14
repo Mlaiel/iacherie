@@ -1,3 +1,8 @@
+"""
+Block Storage Configuration module
+Enterprise implementation for Ainflue platform
+"""
+
 # Ainflue Infrastructure Module - Block Storage Configuration
 # =========================================================
 # 
@@ -61,7 +66,7 @@ class BlockStorageConfig:
 class BlockStorageManager:
     """Enterprise block storage management for multi-cloud environments"""
     
-    def __init__(self, config: BlockStorageConfig):
+    def __init__(self, config -> None: BlockStorageConfig) -> None:
         """Initialize block storage manager
         
         Args:
@@ -91,7 +96,7 @@ class BlockStorageManager:
             
         return logger
     
-    def _initialize_cloud_clients(self):
+    def _initialize_cloud_clients(self) -> None:
         """Initialize cloud provider clients"""
         try:
             if self.config.cloud_provider.lower() == 'aws':
@@ -277,7 +282,7 @@ class BlockStorageManager:
             self.logger.error(f"Failed to create EBS volume {volume_config.name}: {e}")
             raise
     
-    async def _wait_for_ebs_volume_available(self, volume_id: str, timeout: int = 300):
+    async def _wait_for_ebs_volume_available(self, volume_id -> None: str, timeout -> None: int = 300) -> None:
         """Wait for EBS volume to become available"""
         import time
         start_time = time.time()
@@ -409,7 +414,7 @@ class BlockStorageManager:
         import os
         return os.getenv('GOOGLE_CLOUD_PROJECT', 'ainflue-platform')
     
-    def _wait_for_gcp_operation(self, operation, project: str, zone: str = None):
+    def _wait_for_gcp_operation(self, operation, project -> None: str, zone -> None: str = None) -> None:
         """Wait for GCP operation to complete"""
         import time
         time.sleep(10)  # Simplified wait - implement proper polling in production
@@ -577,7 +582,7 @@ class BlockStorageManager:
             self.logger.error(f"Failed to attach EBS volume {volume_id}: {e}")
             return False
     
-    async def _wait_for_ebs_attachment(self, volume_id: str, instance_id: str, timeout: int = 300):
+    async def _wait_for_ebs_attachment(self, volume_id -> None: str, instance_id -> None: str, timeout -> None: int = 300) -> None:
         """Wait for EBS volume attachment to complete"""
         import time
         start_time = time.time()
@@ -648,7 +653,7 @@ class BlockStorageManager:
             self.logger.error(f"Failed to resize EBS volume {volume_id}: {e}")
             return False
     
-    async def _wait_for_ebs_modification(self, volume_id: str, timeout: int = 600):
+    async def _wait_for_ebs_modification(self, volume_id -> None: str, timeout -> None: int = 600) -> None:
         """Wait for EBS volume modification to complete"""
         import time
         start_time = time.time()
@@ -704,12 +709,12 @@ class BlockStorageManager:
             self.logger.error(f"Failed to setup backup policy: {e}")
             return False
     
-    async def _setup_aws_backup_policy(self, volume_config: VolumeConfig):
+    async def _setup_aws_backup_policy(self, volume_config -> None: VolumeConfig) -> None:
         """Setup AWS backup policy using DLM"""
         # AWS Data Lifecycle Manager policy implementation
         pass
     
-    async def _setup_gcp_backup_policy(self, volume_config: VolumeConfig):
+    async def _setup_gcp_backup_policy(self, volume_config -> None: VolumeConfig) -> None:
         """Setup GCP backup policy using snapshot schedules"""
         # GCP snapshot schedule implementation
         pass
@@ -780,12 +785,12 @@ class BlockStorageManager:
             self.logger.error(f"Failed to get EBS metrics for {volume_id}: {e}")
             return {}
     
-    def _get_start_time(self):
+    def _get_start_time(self) -> None:
         """Get start time for metrics (24 hours ago)"""
         from datetime import datetime, timedelta
         return datetime.utcnow() - timedelta(hours=24)
     
-    def _get_end_time(self):
+    def _get_end_time(self) -> None:
         """Get end time for metrics (now)"""
         from datetime import datetime
         return datetime.utcnow()
@@ -799,7 +804,7 @@ class BlockStorageManager:
 class AinflueBlockStorageOrchestrator:
     """High-level block storage orchestration for Ainflue platform"""
     
-    def __init__(self, environment: str = "production"):
+    def __init__(self, environment -> None: str = "production") -> None:
         """Initialize block storage orchestrator
         
         Args:
@@ -878,7 +883,7 @@ class AinflueBlockStorageOrchestrator:
 
 if __name__ == "__main__":
     # Example usage
-    async def main():
+    async def main() -> None:
         orchestrator = AinflueBlockStorageOrchestrator(environment="production")
         
         # Provision standard volumes

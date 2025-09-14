@@ -1,7 +1,14 @@
+"""
+Audit Config module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 """Ainflue Audit Configuration Module
+import asyncio
+
 ===================================
 
 Enterprise-grade audit configuration for the Ainflue platform.
@@ -427,7 +434,7 @@ class RealTimeMonitoringConfig:
 class AuditConfiguration:
     """Main audit configuration manager"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize audit configuration"""
         # Audit components
         self.logging_config = AuditLoggingConfig()

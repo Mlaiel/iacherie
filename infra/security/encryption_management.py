@@ -1,3 +1,8 @@
+"""
+Encryption Management module
+Enterprise implementation for Ainflue platform
+"""
+
 # Ainflue Infrastructure Module
 # =============================
 # 
@@ -97,7 +102,7 @@ class EncryptionManager:
     data encryption/decryption, and compliance with security standards.
     """
     
-    def __init__(self, key_store_path: str = "/opt/ainflue/security/keystore"):
+    def __init__(self, key_store_path -> None: str = "/opt/ainflue/security/keystore") -> None:
         self.key_store_path = Path(key_store_path)
         self.key_store_path.mkdir(parents=True, exist_ok=True)
         self.logger = self._setup_logging()
@@ -130,7 +135,7 @@ class EncryptionManager:
         
         return logger
     
-    def _initialize_master_key(self):
+    def _initialize_master_key(self) -> None:
         """Initialize or load master encryption key"""
         master_key_file = self.key_store_path / ".master_key"
         
@@ -151,7 +156,7 @@ class EncryptionManager:
         
         self.master_cipher = Fernet(self.master_key)
     
-    def _load_keys(self):
+    def _load_keys(self) -> None:
         """Load encryption keys from keystore"""
         try:
             keys_index_file = self.key_store_path / "keys_index.json"
@@ -176,7 +181,7 @@ class EncryptionManager:
         except Exception as e:
             self.logger.error(f"Failed to load keys: {str(e)}")
     
-    def _save_keys_index(self):
+    def _save_keys_index(self) -> None:
         """Save keys index to file"""
         try:
             keys_data = []

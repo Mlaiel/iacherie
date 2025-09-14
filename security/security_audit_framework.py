@@ -1,4 +1,7 @@
 """Comprehensive Security Audit Framework
+import logging
+from datetime import datetime
+
 Complete security audit implementation for infrastructure and application security.
 
 Author: AI Assistant
@@ -84,7 +87,7 @@ class SecurityAuditor:
     """
 Comprehensive security auditor"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.findings = []
         self.audit_start_time = None
         self.audit_end_time = None
@@ -96,7 +99,7 @@ Comprehensive security auditor"""
         audit_id = f"audit_{int(self.audit_start_time.timestamp())}"
         return audit_id
     
-    def add_finding(self, finding: SecurityFinding):
+    def add_finding(self, finding -> None: SecurityFinding) -> None:
         """Add a security finding to the audit"""
         self.findings.append(finding)
     
@@ -597,7 +600,7 @@ Comprehensive security auditor"""
         
         return compliance_status
     
-    def export_report_json(self, report: AuditReport, filename: str):
+    def export_report_json(self, report -> None: AuditReport, filename -> None: str) -> None:
         """Export audit report as JSON"""
         report_dict = {
             "audit_id": report.audit_id,
@@ -670,7 +673,7 @@ KEY RECOMMENDATIONS:
         return summary
 
 
-def run_security_audit_cli():
+def run_security_audit_cli() -> None:
     """
 Command-line interface for running security audit"""
     auditor = SecurityAuditor()

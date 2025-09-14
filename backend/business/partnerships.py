@@ -101,7 +101,7 @@ class Partnership:
 class PartnershipLifecycleManager:
     """Advanced partnership lifecycle management system."""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize partnership lifecycle manager."""
         self.config = config or {}
         self.partnerships: Dict[str, Partnership] = {}
@@ -322,7 +322,7 @@ class PartnershipLifecycleManager:
 class BrandCollaborationOrchestrator:
     """Advanced brand collaboration orchestration system."""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize brand collaboration orchestrator."""
         self.config = config or {}
         self.active_campaigns: Dict[str, Dict[str, Any]] = {}
@@ -486,7 +486,7 @@ class BrandCollaborationOrchestrator:
 class InfluencerBrandMatcher:
     """AI-powered influencer-brand matching system."""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize influencer-brand matcher."""
         self.config = config or {}
         self.matching_algorithms = {
@@ -671,7 +671,7 @@ class InfluencerBrandMatcher:
 class PartnershipPerformanceAnalyzer:
     """Partnership performance analytics and optimization system."""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize partnership performance analyzer."""
         self.config = config or {}
         self.performance_data: Dict[str, List[Dict[str, Any]]] = defaultdict(list)

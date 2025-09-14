@@ -114,7 +114,7 @@ class ProcessAutomation:
     automation across content, monetization, and collaboration workflows.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the process automation engine."""
         self.automation_rules: Dict[str, AutomationRule] = {}
         self.executions: Dict[str, AutomationExecution] = {}
@@ -125,7 +125,7 @@ class ProcessAutomation:
         self._register_default_handlers()
         self._load_default_rules()
     
-    def _register_default_handlers(self):
+    def _register_default_handlers(self) -> None:
         """Register default action handlers."""
         self.action_handlers.update({
             ActionType.WORKFLOW_START: self._handle_workflow_start,
@@ -140,7 +140,7 @@ class ProcessAutomation:
             ActionType.OPTIMIZATION_RUN: self._handle_optimization_run
         })
     
-    def _load_default_rules(self):
+    def _load_default_rules(self) -> None:
         """Load default automation rules."""
         # Content protection automation
         content_protection_rule = AutomationRule(

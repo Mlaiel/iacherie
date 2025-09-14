@@ -107,7 +107,7 @@ class DatabaseDeployment:
 class DeploymentConfiguration:
     """Enterprise deployment configuration management"""
     
-    def __init__(self, level: str = "enterprise"):
+    def __init__(self, level -> None: str = "enterprise") -> None:
         self.level = level
         self.environment = DeploymentEnvironment.PRODUCTION
         self.strategy = DeploymentStrategy.ROLLING_UPDATE
@@ -136,7 +136,7 @@ class DeploymentConfiguration:
         self._configure_monitoring()
         self._configure_security()
     
-    def _configure_services(self):
+    def _configure_services(self) -> None:
         """Configure service deployments"""
         self.services = {
             "api-gateway": ServiceConfiguration(
@@ -215,7 +215,7 @@ class DeploymentConfiguration:
             )
         }
     
-    def _configure_infrastructure(self):
+    def _configure_infrastructure(self) -> None:
         """Configure infrastructure components"""
         self.infrastructure = {
             "databases": {
@@ -285,7 +285,7 @@ class DeploymentConfiguration:
             }
         }
     
-    def _configure_deployment_strategies(self):
+    def _configure_deployment_strategies(self) -> None:
         """Configure deployment strategy settings"""
         self.deployment_strategies = {
             DeploymentStrategy.ROLLING_UPDATE: {
@@ -320,7 +320,7 @@ class DeploymentConfiguration:
             }
         }
     
-    def _configure_monitoring(self):
+    def _configure_monitoring(self) -> None:
         """Configure monitoring and observability"""
         self.monitoring_config = {
             "prometheus": {
@@ -382,7 +382,7 @@ class DeploymentConfiguration:
             }
         }
     
-    def _configure_security(self):
+    def _configure_security(self) -> None:
         """Configure security settings"""
         self.security_config = {
             "network_policies": {

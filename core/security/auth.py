@@ -1,4 +1,6 @@
 """
+import logging
+
 Core Authentication Components for Ainflue Platform
 Provides user authentication, session management, and authorization
 """
@@ -15,7 +17,7 @@ logger = get_logger("auth")
 class User:
     """User model for authentication"""
     
-    def __init__(self, user_id: str, email: str, username: str, roles: Optional[List[str]] = None):
+    def __init__(self, user_id -> None: str, email -> None: str, username -> None: str, roles -> None: Optional[List[str]] = None) -> None:
         self.user_id = user_id
         self.email = email
         self.username = username
@@ -57,7 +59,7 @@ class User:
 class AuthenticationManager:
     """Manages user authentication and sessions"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.security_manager = SecurityManager()
         self.token_manager = TokenManager()
         self.logger = get_logger("auth_manager")
@@ -193,7 +195,7 @@ class AuthenticationManager:
 class AuthorizationManager:
     """Manages user permissions and role-based access control"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = get_logger("authz_manager")
         self.permissions: Dict[str, List[str]] = {
             "admin": ["*"],  # Admin has all permissions

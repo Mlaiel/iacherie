@@ -51,7 +51,7 @@ class RateLimitEnforcer:
     Supports multiple rate limit strategies and intelligent enforcement
     """
     
-    def __init__(self, redis_client: redis.Redis):
+    def __init__(self, redis_client -> None: redis.Redis) -> None:
         self.redis = redis_client
         self.default_rules = self._get_default_rules()
         self.whitelist_cache = {}
@@ -221,7 +221,7 @@ class RateLimitEnforcer:
         results = await pipe.execute()
         return results[0]
     
-    async def _apply_penalty(self, identifier: str, limit_type: RateLimitType, duration: int):
+    async def _apply_penalty(self, identifier -> None: str, limit_type -> None: RateLimitType, duration -> None: int) -> None:
         """Apply penalty for rate limit violation"""
         penalty_key = f"penalty:{identifier}:{limit_type.value}"
         await self.redis.setex(penalty_key, duration, "1")
@@ -229,7 +229,7 @@ class RateLimitEnforcer:
         # Log penalty application
         await self._log_rate_limit_violation(identifier, limit_type, duration)
     
-    async def _log_rate_limit_violation(self, identifier: str, limit_type: RateLimitType, duration: int):
+    async def _log_rate_limit_violation(self, identifier -> None: str, limit_type -> None: RateLimitType, duration -> None: int) -> None:
         """Log rate limit violation for monitoring"""
         violation_data = {
             "identifier": identifier,
@@ -269,7 +269,7 @@ class RateLimitEnforcer:
         
         return bool(is_blacklisted)
     
-    async def add_to_whitelist(self, identifier: str, ttl: Optional[int] = None):
+    async def add_to_whitelist(self, identifier -> None: str, ttl -> None: Optional[int] = None) -> None:
         """Add identifier to whitelist"""
         whitelist_key = f"whitelist:{identifier}"
         if ttl:
@@ -279,19 +279,19 @@ class RateLimitEnforcer:
         
         self.whitelist_cache[identifier] = True
     
-    async def add_to_blacklist(self, identifier: str, ttl: int = 86400):
+    async def add_to_blacklist(self, identifier -> None: str, ttl -> None: int = 86400) -> None:
         """Add identifier to blacklist"""
         blacklist_key = f"blacklist:{identifier}"
         await self.redis.setex(blacklist_key, ttl, "1")
         self.blacklist_cache[identifier] = True
     
-    async def remove_from_whitelist(self, identifier: str):
+    async def remove_from_whitelist(self, identifier -> None: str) -> None:
         """Remove identifier from whitelist"""
         whitelist_key = f"whitelist:{identifier}"
         await self.redis.delete(whitelist_key)
         self.whitelist_cache.pop(identifier, None)
     
-    async def remove_from_blacklist(self, identifier: str):
+    async def remove_from_blacklist(self, identifier -> None: str) -> None:
         """Remove identifier from blacklist"""
         blacklist_key = f"blacklist:{identifier}"
         await self.redis.delete(blacklist_key)
@@ -333,7 +333,7 @@ class RateLimitEnforcer:
             "is_blacklisted": await self._is_blacklisted(identifier)
         }
     
-    async def clear_rate_limits(self, identifier: str, limit_type: Optional[RateLimitType] = None):
+    async def clear_rate_limits(self, identifier -> None: str, limit_type -> None: Optional[RateLimitType] = None) -> None:
         """Clear rate limits for identifier"""
         pattern = f"rate_limit:{identifier}:"
         if limit_type:
@@ -357,11 +357,11 @@ class RateLimitEnforcer:
     
     async def create_custom_rule(
         self,
-        identifier: str,
-        limit_type: RateLimitType,
-        rule: RateLimitRule,
-        ttl: int = 3600
-    ):
+        identifier -> None: str,
+        limit_type -> None: RateLimitType,
+        rule -> None: RateLimitRule,
+        ttl -> None: int = 3600
+    ) -> None:
         """Create custom rate limit rule for specific identifier"""
         rule_key = f"custom_rule:{identifier}:{limit_type.value}"
         rule_data = {
@@ -375,7 +375,7 @@ class RateLimitEnforcer:
         
         await self.redis.setex(rule_key, ttl, json.dumps(rule_data))
     
-    async def apply_adaptive_limits(self, identifier: str):
+    async def apply_adaptive_limits(self, identifier -> None: str) -> None:
         """Apply adaptive rate limits based on historical behavior"""
         # Analyze historical patterns
         violation_history = await self._get_violation_history(identifier)
@@ -415,7 +415,7 @@ class RateLimitEnforcer:
         
         return max(0.0, base_score - critical_penalty)
     
-    async def _apply_trust_multiplier(self, identifier: str, multiplier: float):
+    async def _apply_trust_multiplier(self, identifier -> None: str, multiplier -> None: float) -> None:
         """Apply trust-based multiplier to rate limits"""
         for limit_type in RateLimitType:
             base_rule = self.default_rules[limit_type]
@@ -434,10 +434,10 @@ class RateLimitMiddleware:
     FastAPI middleware for automatic rate limiting
     """
     
-    def __init__(self, enforcer: RateLimitEnforcer):
+    def __init__(self, enforcer -> None: RateLimitEnforcer) -> None:
         self.enforcer = enforcer
     
-    async def __call__(self, request, call_next):
+    async def __call__(self, request, call_next) -> None:
         """Process request with rate limiting"""
         # Extract identifier from request
         identifier = self._extract_identifier(request)
@@ -487,7 +487,7 @@ class RateLimitMiddleware:
         else:
             return RateLimitType.API_CALLS
     
-    def _create_rate_limit_response(self, result: RateLimitResult):
+    def _create_rate_limit_response(self, result -> None: RateLimitResult) -> None:
         """Create rate limit exceeded response"""
         from fastapi.responses import JSONResponse
         
@@ -507,7 +507,7 @@ class RateLimitMiddleware:
             }
         )
     
-    def _add_rate_limit_headers(self, response, result: RateLimitResult):
+    def _add_rate_limit_headers(self, response, result -> None: RateLimitResult) -> None:
         """Add rate limit headers to successful response"""
         response.headers["X-RateLimit-Limit"] = str(result.limit)
         response.headers["X-RateLimit-Remaining"] = str(max(0, result.limit - result.current_count))

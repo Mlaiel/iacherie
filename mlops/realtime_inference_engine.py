@@ -1,3 +1,8 @@
+"""
+Realtime Inference Engine module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 ⚡ Real-Time Inference Engine - Enterprise MLOps Platform
@@ -104,9 +109,9 @@ class InferenceCache:
     """Cache intelligent pour inférence temps réel"""
     
     def __init__(self, 
-                 max_size: int = 10000,
-                 strategy: CacheStrategy = CacheStrategy.ADAPTIVE,
-                 ttl_seconds: int = 300):
+                 max_size -> None: int = 10000,
+                 strategy -> None: CacheStrategy = CacheStrategy.ADAPTIVE,
+                 ttl_seconds -> None: int = 300) -> None:
         self.max_size = max_size
         self.strategy = strategy
         self.ttl_seconds = ttl_seconds
@@ -164,7 +169,7 @@ class InferenceCache:
                 self.cache_stats["misses"] += 1
                 return None
     
-    def put(self, request: InferenceRequest, value: Any):
+    def put(self, request -> None: InferenceRequest, value -> None: Any) -> None:
         """Stockage dans le cache"""
         if not request.cache_enabled:
             return
@@ -183,7 +188,7 @@ class InferenceCache:
             
             self.cache_stats["size"] = len(self.cache)
     
-    def _evict_one(self):
+    def _evict_one(self) -> None:
         """Éviction d'un élément selon la stratégie"""
         if not self.cache:
             return
@@ -219,7 +224,7 @@ class InferenceCache:
                 key_to_evict = self.access_order.popleft()
                 self._evict_key(key_to_evict)
     
-    def _evict_key(self, key: str):
+    def _evict_key(self, key -> None: str) -> None:
         """Éviction d'une clé spécifique"""
         if key in self.cache:
             del self.cache[key]
@@ -259,10 +264,10 @@ class RealTimeInferenceEngine:
     """
     
     def __init__(self,
-                 cache_size: int = 10000,
-                 max_concurrent_requests: int = 100,
-                 model_warm_pool_size: int = 3,
-                 storage_path: str = "/tmp/realtime_inference"):
+                 cache_size -> None: int = 10000,
+                 max_concurrent_requests -> None: int = 100,
+                 model_warm_pool_size -> None: int = 3,
+                 storage_path -> None: str = "/tmp/realtime_inference") -> None:
         
         self.cache = InferenceCache(max_size=cache_size)
         self.max_concurrent_requests = max_concurrent_requests
@@ -360,9 +365,9 @@ class RealTimeInferenceEngine:
         
         logger.info("⚡ RealTimeInferenceEngine initialized for <50ms latency processing")
     
-    def _start_processing_workers(self):
+    def _start_processing_workers(self) -> None:
         """Démarrage des workers de traitement par priorité"""
-        async def priority_worker(priority: int):
+        async def priority_worker(priority -> None: int) -> None:
             """Worker pour une priorité donnée"""
             queue = self.request_queues[priority]
             
@@ -415,7 +420,7 @@ class RealTimeInferenceEngine:
             logger.error(f"❌ Error registering model {model_id}: {e}")
             return False
     
-    async def _warm_up_model_pool(self, endpoint_key: str, model_loader: Callable):
+    async def _warm_up_model_pool(self, endpoint_key -> None: str, model_loader -> None: Callable) -> None:
         """Pré-chargement du pool de modèles"""
         try:
             endpoint = self.model_endpoints[endpoint_key]
@@ -572,7 +577,7 @@ class RealTimeInferenceEngine:
             processing_path="simulation"
         )
     
-    async def _process_request_internal(self, request: InferenceRequest):
+    async def _process_request_internal(self, request -> None: InferenceRequest) -> None:
         """Traitement interne d'une requête"""
         start_time = time.time()
         
@@ -658,7 +663,7 @@ class RealTimeInferenceEngine:
             logger.error(f"❌ Error getting model instance: {e}")
             raise
     
-    async def _return_model_instance(self, endpoint_key: str, instance: Any):
+    async def _return_model_instance(self, endpoint_key -> None: str, instance -> None: Any) -> None:
         """Retour d'une instance au pool"""
         try:
             pool = self.model_pools.get(endpoint_key, [])
@@ -768,7 +773,7 @@ class RealTimeInferenceEngine:
             logger.error(f"❌ Postprocessing error: {e}")
             return result
     
-    def _update_latency_stats(self, latency_ms: float):
+    def _update_latency_stats(self, latency_ms -> None: float) -> None:
         """Mise à jour des statistiques de latence"""
         try:
             self.latency_history.append(latency_ms)
@@ -792,7 +797,7 @@ class RealTimeInferenceEngine:
         except Exception as e:
             logger.error(f"❌ Error updating latency stats: {e}")
     
-    async def _trigger_latency_callbacks(self, request: InferenceRequest, latency_ms: float):
+    async def _trigger_latency_callbacks(self, request -> None: InferenceRequest, latency_ms -> None: float) -> None:
         """Déclenchement des callbacks de latence"""
         for callback in self.latency_callbacks:
             try:
@@ -863,17 +868,17 @@ class RealTimeInferenceEngine:
                 "timestamp": datetime.now().isoformat()
             }
     
-    def add_latency_callback(self, callback: Callable):
+    def add_latency_callback(self, callback -> None: Callable) -> None:
         """Ajouter un callback de latence"""
         self.latency_callbacks.append(callback)
         logger.info(f"📈 Latency callback added. Total: {len(self.latency_callbacks)}")
     
-    def add_error_callback(self, callback: Callable):
+    def add_error_callback(self, callback -> None: Callable) -> None:
         """Ajouter un callback d'erreur"""
         self.error_callbacks.append(callback)
         logger.info(f"❌ Error callback added. Total: {len(self.error_callbacks)}")
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Arrêt propre de l'engine"""
         try:
             logger.info("🛑 Shutting down RealTimeInferenceEngine...")
@@ -892,7 +897,7 @@ class RealTimeInferenceEngine:
 
 
 # Exemple d'utilisation pour démonstration
-async def main():
+async def main() -> None:
     """Démonstration des capacités du RealTimeInferenceEngine"""
     
     engine = RealTimeInferenceEngine(
@@ -902,11 +907,11 @@ async def main():
     )
     
     # Callbacks de démonstration
-    async def latency_alert(request: InferenceRequest, latency_ms: float):
+    async def latency_alert(request -> None: InferenceRequest, latency_ms -> None: float) -> None:
         config = engine.creator_configs[request.creator_type]
         print(f"🚨 HIGH LATENCY: {latency_ms:.1f}ms > {config['max_latency_ms']}ms for {request.creator_type.value}")
     
-    async def error_handler(request: InferenceRequest, error: str):
+    async def error_handler(request -> None: InferenceRequest, error -> None: str) -> None:
         print(f"❌ INFERENCE ERROR: {error} for request {request.request_id}")
     
     engine.add_latency_callback(latency_alert)
@@ -937,7 +942,7 @@ async def main():
     ]
     
     # Modèle loader simulé
-    def dummy_model_loader():
+    def dummy_model_loader() -> None:
         time.sleep(0.1)  # Simulation du chargement
         return {"loaded": True, "timestamp": time.time()}
     

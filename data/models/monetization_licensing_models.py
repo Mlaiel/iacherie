@@ -311,7 +311,7 @@ class RevenueModel(Base):
         Index('idx_revenue_country_tax', 'country', 'tax_jurisdiction'),
     )
     
-    def __repr__(self):
+    def __repr__(self) -> None:
         return f"<RevenueModel(id={self.id}, amount={self.gross_amount} {self.currency}, source={self.revenue_source.value})>"
 
 
@@ -469,7 +469,7 @@ class LicensingModel(Base):
         Index('idx_license_revenue_exclusive', 'total_revenue_generated', 'exclusive'),
     )
     
-    def __repr__(self):
+    def __repr__(self) -> None:
         return f"<LicensingModel(id={self.id}, type={self.license_type.value}, price={self.base_price} {self.currency})>"
 
 

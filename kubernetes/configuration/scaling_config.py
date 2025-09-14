@@ -163,7 +163,7 @@ class ScalingConfigManager:
     - Scaling event tracking and analytics
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """
 Initialize scaling configuration manager"""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")

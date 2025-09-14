@@ -31,6 +31,7 @@ router = APIRouter(
 # ========================================
 
 class AchievementType(str, Enum):
+    """AchievementType class implementation"""
     CONTENT_MILESTONE = "content_milestone"
     REVENUE_MILESTONE = "revenue_milestone"
     ENGAGEMENT_MILESTONE = "engagement_milestone"
@@ -41,6 +42,7 @@ class AchievementType(str, Enum):
     STREAK_MILESTONE = "streak_milestone"
 
 class BadgeRarity(str, Enum):
+    """BadgeRarity class implementation"""
     COMMON = "common"
     UNCOMMON = "uncommon"
     RARE = "rare"
@@ -49,6 +51,7 @@ class BadgeRarity(str, Enum):
     MYTHIC = "mythic"
 
 class LeaderboardType(str, Enum):
+    """LeaderboardType class implementation"""
     POINTS = "points"
     REVENUE = "revenue"
     CONTENT_QUALITY = "content_quality"
@@ -58,6 +61,7 @@ class LeaderboardType(str, Enum):
     PLATFORM_REACH = "platform_reach"
 
 class ChallengeType(str, Enum):
+    """ChallengeType class implementation"""
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -66,12 +70,14 @@ class ChallengeType(str, Enum):
     COMMUNITY = "community"
 
 class ChallengeStatus(str, Enum):
+    """ChallengeStatus class implementation"""
     ACTIVE = "active"
     COMPLETED = "completed"
     FAILED = "failed"
     EXPIRED = "expired"
 
 class RewardType(str, Enum):
+    """RewardType class implementation"""
     POINTS = "points"
     BADGE = "badge"
     NFT = "nft"
@@ -82,6 +88,7 @@ class RewardType(str, Enum):
     MONETARY = "monetary"
 
 class TierLevel(str, Enum):
+    """TierLevel class implementation"""
     BRONZE = "bronze"
     SILVER = "silver"
     GOLD = "gold"
@@ -95,6 +102,7 @@ class TierLevel(str, Enum):
 # ========================================
 
 class GamificationProfile(BaseModel):
+    """GamificationProfile class implementation"""
     user_id: str
     total_points: int = Field(default=0, ge=0)
     level: int = Field(default=1, ge=1)
@@ -112,6 +120,7 @@ class GamificationProfile(BaseModel):
     created_at: datetime = Field(default_factory=datetime.utcnow)
 
 class Achievement(BaseModel):
+    """Achievement class implementation"""
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     name: str = Field(..., min_length=1, max_length=100)
     description: str = Field(..., min_length=1, max_length=500)
@@ -128,6 +137,7 @@ class Achievement(BaseModel):
     created_at: datetime = Field(default_factory=datetime.utcnow)
 
 class Badge(BaseModel):
+    """Badge class implementation"""
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     name: str = Field(..., min_length=1, max_length=100)
     description: str = Field(..., min_length=1, max_length=500)
@@ -142,6 +152,7 @@ class Badge(BaseModel):
     created_at: datetime = Field(default_factory=datetime.utcnow)
 
 class UserBadge(BaseModel):
+    """UserBadge class implementation"""
     user_id: str
     badge_id: str
     earned_at: datetime = Field(default_factory=datetime.utcnow)
@@ -151,6 +162,7 @@ class UserBadge(BaseModel):
     metadata: Dict[str, Any] = Field(default_factory=dict)
 
 class LeaderboardEntry(BaseModel):
+    """LeaderboardEntry class implementation"""
     user_id: str
     username: str
     avatar_url: Optional[str] = None
@@ -163,6 +175,7 @@ class LeaderboardEntry(BaseModel):
     last_updated: datetime = Field(default_factory=datetime.utcnow)
 
 class Challenge(BaseModel):
+    """Challenge class implementation"""
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     name: str = Field(..., min_length=1, max_length=100)
     description: str = Field(..., min_length=1, max_length=1000)
@@ -182,6 +195,7 @@ class Challenge(BaseModel):
     created_at: datetime = Field(default_factory=datetime.utcnow)
 
 class UserChallenge(BaseModel):
+    """UserChallenge class implementation"""
     user_id: str
     challenge_id: str
     status: ChallengeStatus = Field(default=ChallengeStatus.ACTIVE)
@@ -194,6 +208,7 @@ class UserChallenge(BaseModel):
     metadata: Dict[str, Any] = Field(default_factory=dict)
 
 class Reward(BaseModel):
+    """Reward class implementation"""
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     name: str = Field(..., min_length=1, max_length=100)
     description: str = Field(..., min_length=1, max_length=500)
@@ -211,6 +226,7 @@ class Reward(BaseModel):
     created_at: datetime = Field(default_factory=datetime.utcnow)
 
 class UserReward(BaseModel):
+    """UserReward class implementation"""
     user_id: str
     reward_id: str
     claimed_at: datetime = Field(default_factory=datetime.utcnow)
@@ -219,6 +235,7 @@ class UserReward(BaseModel):
     metadata: Dict[str, Any] = Field(default_factory=dict)
 
 class PointsTransaction(BaseModel):
+    """PointsTransaction class implementation"""
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     user_id: str
     amount: int = Field(..., description="Points amount (positive for earn, negative for spend)")
@@ -229,6 +246,7 @@ class PointsTransaction(BaseModel):
     created_at: datetime = Field(default_factory=datetime.utcnow)
 
 class GameAction(BaseModel):
+    """GameAction class implementation"""
     action_type: str = Field(..., description="Type of action performed")
     action_data: Dict[str, Any] = Field(default_factory=dict)
     context: Optional[str] = None
@@ -943,17 +961,17 @@ async def get_points_transactions(
 # BACKGROUND TASKS
 # ========================================
 
-async def process_gamification_action(user_id: str, action: GameAction):
+async def process_gamification_action(user_id -> None: str, action -> None: GameAction) -> None:
     """Process gamification action in background"""
     await asyncio.sleep(2)
     print(f"Processed gamification action {action.action_type} for user {user_id}")
 
-async def initialize_user_challenge(user_id: str, challenge_id: str):
+async def initialize_user_challenge(user_id -> None: str, challenge_id -> None: str) -> None:
     """Initialize user challenge progress"""
     await asyncio.sleep(1)
     print(f"Initialized challenge {challenge_id} for user {user_id}")
 
-async def process_reward_claim(user_id: str, reward_id: str):
+async def process_reward_claim(user_id -> None: str, reward_id -> None: str) -> None:
     """Process reward claim"""
     await asyncio.sleep(3)
     print(f"Processed reward claim {reward_id} for user {user_id}")

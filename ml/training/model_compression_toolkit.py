@@ -99,7 +99,7 @@ class CompressionResults:
 class BasePruner(ABC):
     """Abstract base class for pruning methods."""
     
-    def __init__(self, config: CompressionConfig):
+    def __init__(self, config -> None: CompressionConfig) -> None:
         self.config = config
         
     @abstractmethod
@@ -184,16 +184,16 @@ class MagnitudePruner(BasePruner):
 class GradientBasedPruner(BasePruner):
     """Gradient-based pruning implementation."""
     
-    def __init__(self, config: CompressionConfig):
+    def __init__(self, config -> None: CompressionConfig) -> None:
         super().__init__(config)
         self.gradient_scores = {}
     
     async def compute_gradient_scores(
         self,
-        model: nn.Module,
-        dataloader: torch.utils.data.DataLoader,
-        criterion: nn.Module
-    ):
+        model -> None: nn.Module,
+        dataloader -> None: torch.utils.data.DataLoader,
+        criterion -> None: nn.Module
+    ) -> None:
         """Compute gradient-based importance scores."""
         model.train()
         self.gradient_scores = {}
@@ -262,15 +262,15 @@ class GradientBasedPruner(BasePruner):
 class FisherInformationPruner(BasePruner):
     """Fisher Information-based pruning."""
     
-    def __init__(self, config: CompressionConfig):
+    def __init__(self, config -> None: CompressionConfig) -> None:
         super().__init__(config)
         self.fisher_scores = {}
     
     async def compute_fisher_information(
         self,
-        model: nn.Module,
-        dataloader: torch.utils.data.DataLoader
-    ):
+        model -> None: nn.Module,
+        dataloader -> None: torch.utils.data.DataLoader
+    ) -> None:
         """Compute Fisher Information scores."""
         model.eval()
         self.fisher_scores = {}
@@ -346,7 +346,7 @@ class FisherInformationPruner(BasePruner):
 class ModelQuantizer:
     """Model quantization implementation."""
     
-    def __init__(self, config: CompressionConfig):
+    def __init__(self, config -> None: CompressionConfig) -> None:
         self.config = config
         
     async def dynamic_quantization(self, model: nn.Module) -> nn.Module:
@@ -446,7 +446,7 @@ class ModelQuantizer:
 class KnowledgeDistillationTrainer:
     """Knowledge distillation implementation."""
     
-    def __init__(self, config: CompressionConfig):
+    def __init__(self, config -> None: CompressionConfig) -> None:
         self.config = config
         
     async def distill_knowledge(
@@ -560,7 +560,7 @@ class KnowledgeDistillationTrainer:
 class LowRankApproximation:
     """Low-rank approximation for model compression."""
     
-    def __init__(self, config: CompressionConfig):
+    def __init__(self, config -> None: CompressionConfig) -> None:
         self.config = config
         
     async def apply_svd_compression(
@@ -579,7 +579,7 @@ class LowRankApproximation:
         
         return compressed_model
     
-    def _compress_linear_layer(self, layer: nn.Linear, rank_ratio: float):
+    def _compress_linear_layer(self, layer -> None: nn.Linear, rank_ratio -> None: float) -> None:
         """Compress linear layer using SVD."""
         weight = layer.weight.data
         U, S, V = torch.svd(weight)
@@ -596,7 +596,7 @@ class LowRankApproximation:
         compressed_weight = U_truncated @ torch.diag(S_truncated) @ V_truncated.T
         layer.weight.data = compressed_weight
     
-    def _compress_conv_layer(self, layer: nn.Conv2d, rank_ratio: float):
+    def _compress_conv_layer(self, layer -> None: nn.Conv2d, rank_ratio -> None: float) -> None:
         """Compress convolutional layer using SVD."""
         weight = layer.weight.data
         out_ch, in_ch, h, w = weight.shape
@@ -623,7 +623,7 @@ class LowRankApproximation:
 class ModelCompressionToolkit:
     """Comprehensive model compression toolkit."""
     
-    def __init__(self, config: Optional[CompressionConfig] = None):
+    def __init__(self, config -> None: Optional[CompressionConfig] = None) -> None:
         self.config = config or CompressionConfig()
         
         # Initialize compression components
@@ -925,7 +925,7 @@ def create_compression_toolkit(
 
 
 # Example usage for Ainflue creators
-async def example_model_compression():
+async def example_model_compression() -> None:
     """Example of model compression for creator-specific models."""
     
     # Create compression toolkit

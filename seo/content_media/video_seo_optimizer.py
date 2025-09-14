@@ -140,7 +140,7 @@ class VideoSEOConfig:
 class VideoSEOOptimizer:
     """Advanced video SEO optimization engine."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the Video SEO Optimizer."""
         self.speech_recognizer = None
         self.image_classifier = None
@@ -153,7 +153,7 @@ class VideoSEOOptimizer:
         # Video analysis cache
         self.analysis_cache = {}
         
-    def _setup_video_tools(self):
+    def _setup_video_tools(self) -> None:
         """Setup video processing tools."""
         try:
             # Setup speech recognition

@@ -176,7 +176,7 @@ class PerformancePrediction:
 class DistributionIntelligenceHub:
     """Central distribution intelligence and decision-making system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         # Core data stores
         self.insights: List[IntelligenceInsight] = []
         self.decisions: List[AutomatedDecision] = []
@@ -756,7 +756,7 @@ class DistributionIntelligenceHub:
                 
         return None
         
-    async def _execute_automated_decision(self, decision: AutomatedDecision):
+    async def _execute_automated_decision(self, decision -> None: AutomatedDecision) -> None:
         """Execute an automated decision"""
         try:
             # Simulate decision execution

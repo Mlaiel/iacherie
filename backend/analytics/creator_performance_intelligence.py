@@ -212,7 +212,7 @@ class CreatorPerformanceIntelligence:
     recommendations, and competitive benchmarking.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the Creator Performance Intelligence Engine"""
         self.creator_profiles: Dict[str, CreatorProfile] = {}
         self.performance_data: Dict[str, List[PerformanceData]] = defaultdict(list)
@@ -1324,7 +1324,7 @@ class CreatorPerformanceIntelligence:
             }
             
             # Calculate percentiles
-            def calculate_percentile(value, benchmark_list):
+            def calculate_percentile(value, benchmark_list) -> None:
                 if not benchmark_list:
                     return 50.0
                 sorted_list = sorted(benchmark_list)

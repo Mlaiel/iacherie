@@ -1,3 +1,8 @@
+"""
+Cluster Manager module
+Enterprise implementation for Ainflue platform
+"""
+
 # Ainflue Infrastructure Module
 # =============================
 # 
@@ -95,7 +100,7 @@ class KubernetesClusterManager:
     monitoring, and auto-scaling capabilities.
     """
     
-    def __init__(self, region: str = "us-west-2"):
+    def __init__(self, region -> None: str = "us-west-2") -> None:
         """
         Initialize Kubernetes cluster manager.
         

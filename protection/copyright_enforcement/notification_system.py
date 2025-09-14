@@ -175,7 +175,7 @@ class AdvancedNotificationEngine:
     """
 Ultra-advanced notification and communication engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.settings = get_settings()
         self.cache_manager = CacheManager()
         
@@ -957,7 +957,7 @@ class EscalationManager:
     """
 Automated escalation management for notifications"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.notification_engine = AdvancedNotificationEngine()
         self.escalation_rules = {}
     

@@ -126,7 +126,7 @@ class CryptoPaymentConfig:
 class MonetizationBusinessSettings:
     """Monetization business logic configuration settings"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         # Payment Gateway Configurations
         self.payment_gateways = {
             PaymentGateway.STRIPE: PaymentGatewayConfig(

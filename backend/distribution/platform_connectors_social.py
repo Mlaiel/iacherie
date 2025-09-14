@@ -133,7 +133,7 @@ class SocialAnalytics:
 class BaseSocialConnector:
     """Base class for social platform connectors."""
     
-    def __init__(self, platform: SocialPlatformType, credentials: Dict[str, Any]):
+    def __init__(self, platform -> None: SocialPlatformType, credentials -> None: Dict[str, Any]) -> None:
         self.platform = platform
         self.credentials = credentials
         self.session: Optional[aiohttp.ClientSession] = None
@@ -199,7 +199,7 @@ class BaseSocialConnector:
         
         return self.rate_limit_remaining > 0
     
-    async def cleanup(self):
+    async def cleanup(self) -> None:
         """Cleanup resources."""
         if self.session:
             await self.session.close()
@@ -208,7 +208,7 @@ class BaseSocialConnector:
 class YouTubeConnector(BaseSocialConnector):
     """YouTube platform connector with Content ID and monetization features."""
     
-    def __init__(self, credentials: Dict[str, Any]):
+    def __init__(self, credentials -> None: Dict[str, Any]) -> None:
         super().__init__(SocialPlatformType.YOUTUBE, credentials)
         self.api_key = credentials.get("api_key")
         self.client_id = credentials.get("client_id")
@@ -488,7 +488,7 @@ class YouTubeConnector(BaseSocialConnector):
 class InstagramConnector(BaseSocialConnector):
     """Instagram Business API connector with Stories and Reels support."""
     
-    def __init__(self, credentials: Dict[str, Any]):
+    def __init__(self, credentials -> None: Dict[str, Any]) -> None:
         super().__init__(SocialPlatformType.INSTAGRAM, credentials)
         self.access_token = credentials.get("access_token")
         self.user_id = credentials.get("user_id")
@@ -697,7 +697,7 @@ class InstagramConnector(BaseSocialConnector):
 class TikTokConnector(BaseSocialConnector):
     """TikTok Creator API connector with advanced analytics."""
     
-    def __init__(self, credentials: Dict[str, Any]):
+    def __init__(self, credentials -> None: Dict[str, Any]) -> None:
         super().__init__(SocialPlatformType.TIKTOK, credentials)
         self.access_token = credentials.get("access_token")
         self.refresh_token = credentials.get("refresh_token")
@@ -894,7 +894,7 @@ class TikTokConnector(BaseSocialConnector):
 class SocialPlatformManager:
     """Manager for all social platform connectors."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.connectors: Dict[SocialPlatformType, BaseSocialConnector] = {}
         self.logger = logging.getLogger(f"{__name__}.SocialPlatformManager")
     
@@ -1010,7 +1010,7 @@ class SocialPlatformManager:
         
         return results
     
-    async def cleanup(self):
+    async def cleanup(self) -> None:
         """Cleanup all connectors."""
         cleanup_tasks = [connector.cleanup() for connector in self.connectors.values()]
         if cleanup_tasks:

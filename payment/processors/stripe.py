@@ -76,7 +76,7 @@ class StripeConnectProcessor:
     application fees, and Connect account management.
     """
     
-    def __init__(self, api_key: str, webhook_secret: str, connect_enabled: bool = True):
+    def __init__(self, api_key -> None: str, webhook_secret -> None: str, connect_enabled -> None: bool = True) -> None:
         """
 Initialize Stripe Connect processor"""
         self.api_key = api_key

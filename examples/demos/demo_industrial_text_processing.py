@@ -86,7 +86,7 @@ de la médecine à l'éducation en passant par le divertissement.
 """
 }
 
-async def demo_industrial_text_processing():
+async def demo_industrial_text_processing() -> None:
     """
 Main demonstration function"""
     
@@ -139,7 +139,7 @@ Main demonstration function"""
         logger.error(f"❌ Demo error: {e}")
         await demo_fallback_showcase()
 
-async def demo_language_detection(engine):
+async def demo_language_detection(engine) -> None:
     """Demonstrate 644 languages detection capability"""
     
     logger.info("\n" + "=" * 60)
@@ -174,7 +174,7 @@ async def demo_language_detection(engine):
         except Exception as e:
             logger.warning(f"   ⚠️  {lang_name} detection failed: {e}")
 
-async def demo_contextual_embeddings(engine):
+async def demo_contextual_embeddings(engine) -> None:
     """Demonstrate contextual BERT/RoBERTa embeddings"""
     
     logger.info("\n" + "=" * 60)
@@ -211,7 +211,7 @@ async def demo_contextual_embeddings(engine):
     except Exception as e:
         logger.warning(f"   ⚠️  Embeddings generation failed: {e}")
 
-async def demo_plagiarism_detection(engine):
+async def demo_plagiarism_detection(engine) -> None:
     """Demonstrate semantic plagiarism detection"""
     
     logger.info("\n" + "=" * 60)
@@ -258,7 +258,7 @@ async def demo_plagiarism_detection(engine):
     except Exception as e:
         logger.warning(f"   ⚠️  Plagiarism detection failed: {e}")
 
-async def demo_authorship_analysis(engine):
+async def demo_authorship_analysis(engine) -> None:
     """Demonstrate advanced authorship analysis"""
     
     logger.info("\n" + "=" * 60)
@@ -308,7 +308,7 @@ async def demo_authorship_analysis(engine):
     except Exception as e:
         logger.warning(f"   ⚠️  Authorship analysis failed: {e}")
 
-async def demo_multilingual_processing(engine):
+async def demo_multilingual_processing(engine) -> None:
     """Demonstrate multilingual processing capabilities"""
     
     logger.info("\n" + "=" * 60)
@@ -348,7 +348,7 @@ async def demo_multilingual_processing(engine):
     except Exception as e:
         logger.warning(f"   ⚠️  Multilingual processing failed: {e}")
 
-async def demo_batch_processing(engine):
+async def demo_batch_processing(engine) -> None:
     """Demonstrate high-performance batch processing"""
     
     logger.info("\n" + "=" * 60)
@@ -387,7 +387,7 @@ async def demo_batch_processing(engine):
     except Exception as e:
         logger.warning(f"   ⚠️  Batch processing failed: {e}")
 
-def demo_performance_metrics(engine):
+def demo_performance_metrics(engine) -> None:
     """Demonstrate performance metrics collection"""
     
     logger.info("\n" + "=" * 60)
@@ -434,7 +434,7 @@ def demo_performance_metrics(engine):
     except Exception as e:
         logger.warning(f"   ⚠️  Metrics collection failed: {e}")
 
-async def demo_fallback_showcase():
+async def demo_fallback_showcase() -> None:
     """Fallback demonstration when full setup is not available"""
     
     logger.info("\n" + "=" * 60)
@@ -474,7 +474,7 @@ async def demo_fallback_showcase():
     logger.info("   - Enterprise-grade scalability")
     logger.info("   - Advanced caching and optimization")
 
-def create_demo_summary():
+def create_demo_summary() -> None:
     """Create a summary of the demonstration"""
     
     summary = {

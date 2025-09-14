@@ -149,7 +149,7 @@ class ConflictResolver:
     """
 Resolve conflicts in multi-master replication"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.ConflictResolver")
         
@@ -273,7 +273,7 @@ class ReplicationManager:
     """
 Main replication coordination manager"""
     
-    def __init__(self, vector_store, config: Dict[str, Any]):
+    def __init__(self, vector_store, config -> None: Dict[str, Any]) -> None:
         self.vector_store = vector_store
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.ReplicationManager")
@@ -306,7 +306,7 @@ Main replication coordination manager"""
         # Initialize cluster
         self._initialize_cluster()
     
-    def _initialize_cluster(self):
+    def _initialize_cluster(self) -> None:
         """Initialize replication cluster configuration"""
         try:
             # Load node configurations
@@ -327,7 +327,7 @@ Main replication coordination manager"""
         except Exception as e:
             self.logger.error(f"Cluster initialization failed: {e}")
     
-    async def start_replication(self):
+    async def start_replication(self) -> None:
         """Start background replication tasks"""
         try:
             if self.sync_task is None:
@@ -341,7 +341,7 @@ Main replication coordination manager"""
         except Exception as e:
             self.logger.error(f"Failed to start replication: {e}")
     
-    async def stop_replication(self):
+    async def stop_replication(self) -> None:
         """Stop background replication tasks"""
         try:
             if self.sync_task:
@@ -477,7 +477,7 @@ Main replication coordination manager"""
             self.logger.error(f"Sync with {node_id} failed: {e}")
             return False
     
-    async def _sync_loop(self):
+    async def _sync_loop(self) -> None:
         """Background synchronization loop"""
         while True:
             try:
@@ -505,7 +505,7 @@ Main replication coordination manager"""
                 self.logger.error(f"Sync loop error: {e}")
                 await asyncio.sleep(self.sync_interval)
     
-    async def _heartbeat_loop(self):
+    async def _heartbeat_loop(self) -> None:
         """Background heartbeat monitoring loop"""
         while True:
             try:
@@ -563,7 +563,7 @@ Main replication coordination manager"""
             self.logger.error(f"Failed to send operation to {node.node_id}: {e}")
             return False
     
-    async def _cleanup_old_operations(self):
+    async def _cleanup_old_operations(self) -> None:
         """Clean up old completed operations"""
         try:
             current_time = time.time()

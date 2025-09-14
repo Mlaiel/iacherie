@@ -49,26 +49,27 @@ else:
     NDArray = Any  # Fallback when numpy not available
     # Create mock numpy for basic compatibility
     class MockNumpy:
+    """MockNumpy: class implementation"""
         @staticmethod
-        def histogram(*args, **kwargs):
+        def histogram(*args, **kwargs) -> None:
             return [], []
         @staticmethod
-        def concatenate(*args, **kwargs):
+        def concatenate(*args, **kwargs) -> None:
             return []
         @staticmethod
-        def sum(*args, **kwargs):
+        def sum(*args, **kwargs) -> None:
             return 0
         @staticmethod
-        def where(*args, **kwargs):
+        def where(*args, **kwargs) -> None:
             return []
         @staticmethod
-        def log(*args, **kwargs):
+        def log(*args, **kwargs) -> None:
             return 0
         @staticmethod
-        def unique(*args, **kwargs):
+        def unique(*args, **kwargs) -> None:
             return []
         @staticmethod
-        def arange(*args, **kwargs):
+        def arange(*args, **kwargs) -> None:
             return []
     np = MockNumpy()
 
@@ -79,9 +80,10 @@ else:
     DataFrame = Any  # Fallback when pandas not available
     # Create mock pandas for basic compatibility
     class MockPandas:
+    """MockPandas: class implementation"""
         DataFrame = Any
         @staticmethod
-        def DataFrame(*args, **kwargs):
+        def DataFrame(*args, **kwargs) -> None:
             return {}
     pd = MockPandas()
 
@@ -155,7 +157,7 @@ class DriftDetector(ABC):
 class KolmogorovSmirnovDriftDetector(DriftDetector):
     """Kolmogorov-Smirnov test for drift detection"""
     
-    def __init__(self, significance_level: float = 0.05):
+    def __init__(self, significance_level -> None: float = 0.05) -> None:
         self.significance_level = significance_level
     
     def detect_drift(self, baseline_data: NDArray, current_data: NDArray) -> Tuple[bool, float, Dict]:
@@ -184,7 +186,7 @@ class KolmogorovSmirnovDriftDetector(DriftDetector):
 class PSIDriftDetector(DriftDetector):
     """Population Stability Index (PSI) for drift detection"""
     
-    def __init__(self, bins: int = 10, threshold: float = 0.1):
+    def __init__(self, bins -> None: int = 10, threshold -> None: float = 0.1) -> None:
         self.bins = bins
         self.threshold = threshold
     
@@ -230,7 +232,7 @@ class PSIDriftDetector(DriftDetector):
 class JensenShannonDriftDetector(DriftDetector):
     """Jensen-Shannon divergence for drift detection"""
     
-    def __init__(self, bins: int = 10, threshold: float = 0.1):
+    def __init__(self, bins -> None: int = 10, threshold -> None: float = 0.1) -> None:
         self.bins = bins
         self.threshold = threshold
     
@@ -276,20 +278,20 @@ class JensenShannonDriftDetector(DriftDetector):
 class ModelPerformanceMonitor:
     """Monitor model performance metrics"""
     
-    def __init__(self, model_name: str, model_version: str):
+    def __init__(self, model_name -> None: str, model_version -> None: str) -> None:
         self.model_name = model_name
         self.model_version = model_version
         self.metrics_history: List[Dict] = []
         self.baseline_metrics: Optional[Dict] = None
         self.monitoring_metrics: List[MonitoringMetric] = []
         
-    def set_baseline_metrics(self, metrics: Dict[str, float]):
+    def set_baseline_metrics(self, metrics -> None: Dict[str, float]) -> None:
         """Set baseline performance metrics"""
         self.baseline_metrics = metrics.copy()
         self.baseline_metrics["timestamp"] = datetime.now()
         logger.info(f"Set baseline metrics for {self.model_name} v{self.model_version}: {metrics}")
     
-    def add_monitoring_metric(self, metric: MonitoringMetric):
+    def add_monitoring_metric(self, metric -> None: MonitoringMetric) -> None:
         """Add a metric to monitor"""
         self.monitoring_metrics.append(metric)
         logger.info(f"Added monitoring metric: {metric.name}")
@@ -435,7 +437,7 @@ class ModelPerformanceMonitor:
 class DataDriftMonitor:
     """Monitor data drift for model inputs"""
     
-    def __init__(self, model_name: str, feature_names: List[str]):
+    def __init__(self, model_name -> None: str, feature_names -> None: List[str]) -> None:
         self.model_name = model_name
         self.feature_names = feature_names
         self.baseline_data: Optional[DataFrame] = None
@@ -447,12 +449,12 @@ class DataDriftMonitor:
         self.drift_detectors["psi"] = PSIDriftDetector()
         self.drift_detectors["js_divergence"] = JensenShannonDriftDetector()
     
-    def set_baseline_data(self, data: DataFrame):
+    def set_baseline_data(self, data -> None: DataFrame) -> None:
         """Set baseline data for drift detection"""
         self.baseline_data = data[self.feature_names].copy()
         logger.info(f"Set baseline data for {self.model_name}: {self.baseline_data.shape}")
     
-    def add_drift_detector(self, name: str, detector: DriftDetector):
+    def add_drift_detector(self, name -> None: str, detector -> None: DriftDetector) -> None:
         """Add a custom drift detector"""
         self.drift_detectors[name] = detector
         logger.info(f"Added drift detector: {name}")
@@ -598,7 +600,7 @@ class DataDriftMonitor:
 class ComprehensiveModelMonitor:
     """Comprehensive monitoring combining performance and drift detection"""
     
-    def __init__(self, model_name: str, model_version: str, feature_names: List[str]):
+    def __init__(self, model_name -> None: str, model_version -> None: str, feature_names -> None: List[str]) -> None:
         self.model_name = model_name
         self.model_version = model_version
         self.performance_monitor = ModelPerformanceMonitor(model_name, model_version)
@@ -607,10 +609,10 @@ class ComprehensiveModelMonitor:
         
     def setup_monitoring(
         self,
-        baseline_data: DataFrame,
-        baseline_metrics: Dict[str, float],
-        monitoring_metrics: List[MonitoringMetric]
-    ):
+        baseline_data -> None: DataFrame,
+        baseline_metrics -> None: Dict[str, float],
+        monitoring_metrics -> None: List[MonitoringMetric]
+    ) -> None:
         """Setup comprehensive monitoring"""
         # Setup data drift monitoring
         self.data_drift_monitor.set_baseline_data(baseline_data)

@@ -45,7 +45,7 @@ class ContainerPlatformManager:
     Central orchestration point for all container operations.
     """
     
-    def __init__(self, config_path: str = "/app/config/containers"):
+    def __init__(self, config_path -> None: str = "/app/config/containers") -> None:
         self.config_path = Path(config_path)
         self.initialized = False
         
@@ -168,7 +168,7 @@ class ContainerPlatformManager:
             self.logger.error(f"❌ Failed to initialize container platform: {e}")
             return False
     
-    async def _setup_ia_influencer_configurations(self):
+    async def _setup_ia_influencer_configurations(self) -> None:
         """Setup specific configurations for IA-Influencer platform."""
         try:
             # Setup service definitions for IA-Influencer components
@@ -721,7 +721,7 @@ if __name__ == "__main__":
     # CLI interface for container platform management
     import sys
     
-    async def main():
+    async def main() -> None:
         if len(sys.argv) < 2:
             print("Usage: python index.py [deploy|status|shutdown]")
             return

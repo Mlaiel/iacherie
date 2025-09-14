@@ -160,11 +160,11 @@ class AudioFingerprinter:
     """
     
     def __init__(self, 
-                 sample_rate: int = 22050,
-                 hop_length: int = 512,
-                 n_fft: int = 2048,
-                 n_mels: int = 128,
-                 max_workers: int = 4):
+                 sample_rate -> None: int = 22050,
+                 hop_length -> None: int = 512,
+                 n_fft -> None: int = 2048,
+                 n_mels -> None: int = 128,
+                 max_workers -> None: int = 4) -> None:
         """Initialize enterprise audio fingerprinter"""
         self.logger = logging.getLogger(self.__class__.__name__)
         self.sample_rate = sample_rate
@@ -810,7 +810,7 @@ class ContentMatcher:
     detecting similar or identical content.
     """
     
-    def __init__(self, similarity_threshold: float = 0.85):
+    def __init__(self, similarity_threshold -> None: float = 0.85) -> None:
         """Initialize content matcher"""
         self.logger = logging.getLogger(self.__class__.__name__)
         self.similarity_threshold = similarity_threshold
@@ -975,8 +975,8 @@ class CopyrightDetector:
     """
     
     def __init__(self, 
-                 fingerprinter: AudioFingerprinter,
-                 matcher: ContentMatcher):
+                 fingerprinter -> None: AudioFingerprinter,
+                 matcher -> None: ContentMatcher) -> None:
         """Initialize copyright detector"""
         self.logger = logging.getLogger(self.__class__.__name__)
         self.fingerprinter = fingerprinter
@@ -1061,7 +1061,7 @@ class FingerprintDatabase:
     audio fingerprints for content identification.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize fingerprint database"""
         self.logger = logging.getLogger(self.__class__.__name__)
         self.fingerprints: Dict[str, FingerprintRecord] = {}
@@ -1172,7 +1172,7 @@ class SimilarityEngine:
     or transformed versions of audio content.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize similarity engine"""
         self.logger = logging.getLogger(self.__class__.__name__)
     
@@ -1219,8 +1219,8 @@ class DuplicateDetector:
     """
     
     def __init__(self, 
-                 fingerprinter: AudioFingerprinter,
-                 database: FingerprintDatabase):
+                 fingerprinter -> None: AudioFingerprinter,
+                 database -> None: FingerprintDatabase) -> None:
         """Initialize duplicate detector"""
         self.logger = logging.getLogger(self.__class__.__name__)
         self.fingerprinter = fingerprinter
@@ -1308,7 +1308,7 @@ class DuplicateDetector:
         visited = set()
         groups = []
         
-        def dfs(node, group):
+        def dfs(node, group) -> None:
             if node in visited:
                 return
             visited.add(node)
@@ -1334,7 +1334,7 @@ class PerceptualHashGenerator:
     to significant changes.
     """
     
-    def __init__(self, hash_size: int = 64):
+    def __init__(self, hash_size -> None: int = 64) -> None:
         """Initialize perceptual hash generator"""
         self.logger = logging.getLogger(self.__class__.__name__)
         self.hash_size = hash_size
@@ -1407,7 +1407,7 @@ class FingerprintMatchingEngine:
     with support for fuzzy matching, time alignment, and confidence scoring.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize fingerprint matching engine"""
         self.logger = logging.getLogger(self.__class__.__name__)
     
@@ -1441,7 +1441,7 @@ class EnterpriseContentIdentificationSystem:
     and real-time monitoring for enterprise copyright protection.
     """
     
-    def __init__(self, sample_rate: int = 44100):
+    def __init__(self, sample_rate -> None: int = 44100) -> None:
         """Initialize enterprise content identification system"""
         self.logger = logging.getLogger(self.__class__.__name__)
         self.sample_rate = sample_rate
@@ -1881,7 +1881,7 @@ class BlockchainRightsManager:
     and automated licensing through smart contracts.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize blockchain rights manager"""
         self.logger = logging.getLogger(self.__class__.__name__)
         
@@ -1920,7 +1920,7 @@ class RealTimeContentMonitor:
     detection and real-time content identification.
     """
     
-    def __init__(self, sample_rate: int = 44100, monitoring_window_ms: int = 5000):
+    def __init__(self, sample_rate -> None: int = 44100, monitoring_window_ms -> None: int = 5000) -> None:
         """Initialize real-time content monitor"""
         self.logger = logging.getLogger(self.__class__.__name__)
         self.sample_rate = sample_rate
@@ -1937,12 +1937,12 @@ class RealTimeContentMonitor:
         
         self.logger.info(f"RealTimeContentMonitor initialized - Window: {monitoring_window_ms}ms")
     
-    def start_monitoring(self):
+    def start_monitoring(self) -> None:
         """Start real-time monitoring"""
         self.monitoring_active = True
         self.logger.info("Real-time content monitoring started")
     
-    def stop_monitoring(self):
+    def stop_monitoring(self) -> None:
         """Stop real-time monitoring"""
         self.monitoring_active = False
         self.logger.info("Real-time content monitoring stopped")
@@ -1997,7 +1997,7 @@ class RealTimeContentMonitor:
         
         return alert_info
     
-    def add_alert_callback(self, callback_func):
+    def add_alert_callback(self, callback_func) -> None:
         """Add callback function for content alerts"""
         self.alert_callbacks.append(callback_func)
 
@@ -2009,7 +2009,7 @@ class RightsManagementDatabase:
     and ownership information with advanced search capabilities.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize rights management database"""
         self.logger = logging.getLogger(self.__class__.__name__)
         

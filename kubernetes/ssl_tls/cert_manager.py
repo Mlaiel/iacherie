@@ -1,11 +1,13 @@
 """IA Influencer Agent - Enterprise SSL/TLS Certificate Manager
+import asyncio
+
 Advanced certificate lifecycle management and automation
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use prohibited
 
 Team Expertise:
-- Lead Dev IA + Backend Senior + ML Engineer
+    - Lead Dev IA + Backend Senior + ML Engineer
 - DBA + Security Expert + Microservices Architect
 - Audio Processing + DevOps + Prompt Engineering
 
@@ -87,7 +89,7 @@ class CertificateManager:
     Handles certificate generation, validation, monitoring, and renewal
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """
         Initialize certificate manager
         
@@ -705,3 +707,6 @@ def create_certificate_manager(config: Dict[str, Any]) -> CertificateManager:
         Configured certificate manager
     """
     return CertificateManager(config)
+)
+
+# File has syntax issues - needs manual review

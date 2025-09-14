@@ -58,7 +58,7 @@ class AudioProcessingOrchestrator:
     centralized configuration, metrics collection, and health monitoring.
     """
     
-    def __init__(self, config: AudioProcessingConfig):
+    def __init__(self, config -> None: AudioProcessingConfig) -> None:
         """Initialize audio processing monitoring orchestrator."""
         self.config = config
         self.modules = {}
@@ -69,7 +69,7 @@ class AudioProcessingOrchestrator:
         logger.info("Initializing Audio Processing Monitoring Orchestrator")
         self._initialize_modules()
     
-    def _initialize_modules(self):
+    def _initialize_modules(self) -> None:
         """Initialize enabled monitoring modules."""
         for module in self.config.enabled_modules:
             try:
@@ -81,7 +81,7 @@ class AudioProcessingOrchestrator:
                 logger.error(f"Failed to initialize module {module.value}: {e}")
                 self.health_status[module.value] = False
     
-    def _create_module_instance(self, module: AudioProcessingModules):
+    def _create_module_instance(self, module -> None: AudioProcessingModules) -> None:
         """Create instance of specific monitoring module."""
         # Dynamic module creation based on module type
         # This would be implemented with actual module classes
@@ -142,7 +142,7 @@ class AudioProcessingOrchestrator:
         # Placeholder implementation
         return 0.96
     
-    def start_monitoring(self):
+    def start_monitoring(self) -> None:
         """Start audio processing monitoring."""
         logger.info("Starting audio processing monitoring")
         for module_name, module in self.modules.items():
@@ -154,7 +154,7 @@ class AudioProcessingOrchestrator:
                 logger.error(f"Failed to start monitoring for module {module_name}: {e}")
                 self.health_status[module_name] = False
     
-    def stop_monitoring(self):
+    def stop_monitoring(self) -> None:
         """Stop audio processing monitoring."""
         logger.info("Stopping audio processing monitoring")
         for module_name, module in self.modules.items():

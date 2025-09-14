@@ -150,7 +150,7 @@ class DistributedCache:
 class L1MemoryCache(Generic[T]):
     """Cache mémoire L1 haute performance"""
     
-    def __init__(self, max_size: int = 1000, ttl_seconds: Optional[int] = None):
+    def __init__(self, max_size -> None: int = 1000, ttl_seconds -> None: Optional[int] = None) -> None:
         self.max_size = max_size
         self.ttl_seconds = ttl_seconds
         self._cache: OrderedDict[str, CacheEntry[T]] = OrderedDict()
@@ -263,7 +263,7 @@ class L1MemoryCache(Generic[T]):
 class CacheManager:
     """Gestionnaire principal de cache"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         self.l1_cache = L1MemoryCache(max_size=10000, ttl_seconds=3600)
@@ -540,7 +540,7 @@ class CacheManager:
 class CacheOptimization:
     """Optimisation de cache"""
     
-    def __init__(self, cache_manager: CacheManager):
+    def __init__(self, cache_manager -> None: CacheManager) -> None:
         self.cache_manager = cache_manager
         self.optimization_models = {}
         self.access_patterns = {}
@@ -603,7 +603,7 @@ class CacheOptimization:
 class CacheManagerService:
     """Service principal de gestion de cache"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         self.cache_manager = CacheManager(redis_client, db_session)

@@ -78,7 +78,7 @@ class AutomatedFeatureEngineering:
     - Incremental feature learning and adaptation
     """
     
-    def __init__(self, feature_cache_dir: str = "feature_cache/"):
+    def __init__(self, feature_cache_dir -> None: str = "feature_cache/") -> None:
         self.logger = logging.getLogger(__name__)
         self.feature_cache_dir = Path(feature_cache_dir)
         self.feature_cache_dir.mkdir(exist_ok=True, parents=True)
@@ -588,7 +588,7 @@ class AutomatedFeatureEngineering:
         return features
 
 # Example usage and testing
-async def main():
+async def main() -> None:
     """Example usage of AutomatedFeatureEngineering."""
     engineer = AutomatedFeatureEngineering()
     

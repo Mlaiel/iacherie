@@ -1,3 +1,8 @@
+"""
+Setup module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """Environment Setup Utility - IA Influencer Agent
 ===============================================
@@ -59,7 +64,7 @@ class EnvironmentSetupManager:
     - Performance optimization
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.coordinator = EnvironmentCoordinator()
         self.setup_results: Dict[str, Any] = {}
         
@@ -471,7 +476,7 @@ Generate next steps recommendations"""
         return datetime.now().isoformat()
 
 
-async def main():
+async def main() -> None:
     """
 Main setup function"""
     parser = argparse.ArgumentParser(description='IA Influencer Agent Environment Setup')

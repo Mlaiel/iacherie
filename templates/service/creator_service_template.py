@@ -87,13 +87,13 @@ class CreatorRequest(BaseModel):
     metadata: Dict[str, Any] = Field(default_factory=dict)
 
     @validator('username')
-    def validate_username(cls, v):
+    def validate_username(cls, v) -> None:
         if not v.replace('_', '').replace('-', '').isalnum():
             raise ValueError('Username can only contain letters, numbers, hyphens, and underscores')
         return v.lower()
 
     @validator('specialties')
-    def validate_specialties(cls, v):
+    def validate_specialties(cls, v) -> None:
         if len(v) > 10:
             raise ValueError('Maximum 10 specialties allowed')
         return v
@@ -181,10 +181,10 @@ class {{service_class_name}}(BaseService):
     
     def __init__(
         self,
-        name: str = "{{service_name}}",
-        config: Optional[CreatorConfig] = None,
+        name -> None: str = "{{service_name}}",
+        config -> None: Optional[CreatorConfig] = None,
         **kwargs
-    ):
+    ) -> None:
         super().__init__(name=name, **kwargs)
         self.config = config or CreatorConfig()
         
@@ -919,3 +919,5 @@ class {{service_class_name}}(BaseService):
                 "pagination"
             ]
         }
+
+# File has syntax issues - needs manual review

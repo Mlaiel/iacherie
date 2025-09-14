@@ -111,7 +111,7 @@ Performance metric definition and data"""
     labels: Dict[str, str] = field(default_factory=dict)
     thresholds: Dict[str, float] = field(default_factory=dict)
     
-    def add_point(self, value: float, labels: Dict[str, str] = None, metadata: Dict[str, Any] = None):
+    def add_point(self, value -> None: float, labels -> None: Dict[str, str] = None, metadata -> None: Dict[str, Any] = None) -> None:
         """
 Add a data point to the metric"""
         point = MetricPoint(
@@ -181,7 +181,7 @@ class PerformanceMonitor:
     recommendations for storage performance.
     """
     
-    def __init__(self, prometheus_port: int = 8000):
+    def __init__(self, prometheus_port -> None: int = 8000) -> None:
         """
         Initialize PerformanceMonitor.
         
@@ -228,7 +228,7 @@ class PerformanceMonitor:
         # Start monitoring
         self._start_monitoring()
     
-    def _initialize_core_metrics(self):
+    def _initialize_core_metrics(self) -> None:
         """
 Initialize core performance metrics"""
         core_metrics = [
@@ -297,7 +297,7 @@ Initialize core performance metrics"""
             self.metrics[metric.name] = metric
             self.logger.info(f"Initialized metric: {metric.name}")
     
-    def _start_prometheus_server(self):
+    def _start_prometheus_server(self) -> None:
         """Start Prometheus metrics server"""
         try:
             start_http_server(self.prometheus_port)
@@ -305,7 +305,7 @@ Initialize core performance metrics"""
         except Exception as e:
             self.logger.error(f"Failed to start Prometheus server: {str(e)}")
     
-    def _start_monitoring(self):
+    def _start_monitoring(self) -> None:
         """Start background monitoring tasks"""
         if self.monitoring_enabled:
             # Start metric collection
@@ -325,9 +325,9 @@ Initialize core performance metrics"""
             task4 = asyncio.create_task(self._cleanup_old_metrics())
             self.monitoring_tasks.append(task4)
     
-    def record_operation(self, operation_type: str, duration_ms: float, 
-                        success: bool, provider: str = None, 
-                        metadata: Dict[str, Any] = None):
+    def record_operation(self, operation_type -> None: str, duration_ms -> None: float, 
+                        success -> None: bool, provider -> None: str = None, 
+                        metadata -> None: Dict[str, Any] = None) -> None:
         """
         Record a storage operation for monitoring.
         
@@ -366,9 +366,9 @@ Initialize core performance metrics"""
         except Exception as e:
             self.logger.error(f"Error recording operation: {str(e)}")
     
-    def record_custom_metric(self, metric_name: str, value: float,
-                           labels: Dict[str, str] = None,
-                           metadata: Dict[str, Any] = None):
+    def record_custom_metric(self, metric_name -> None: str, value -> None: float,
+                           labels -> None: Dict[str, str] = None,
+                           metadata -> None: Dict[str, Any] = None) -> None:
         """
         Record a custom metric value.
         
@@ -387,7 +387,7 @@ Initialize core performance metrics"""
         except Exception as e:
             self.logger.error(f"Error recording custom metric: {str(e)}")
     
-    def add_alert(self, alert: PerformanceAlert):
+    def add_alert(self, alert -> None: PerformanceAlert) -> None:
         """
         Add a performance alert.
         
@@ -581,7 +581,7 @@ Initialize core performance metrics"""
             self.logger.error(f"Error predicting metric {metric_name}: {str(e)}")
             return None
     
-    async def _collect_system_metrics(self):
+    async def _collect_system_metrics(self) -> None:
         """Background task to collect system metrics"""
         while self.monitoring_enabled:
             try:
@@ -605,7 +605,7 @@ Initialize core performance metrics"""
                 self.logger.error(f"Error collecting system metrics: {str(e)}")
                 await asyncio.sleep(self.collection_interval)
     
-    async def _process_alerts(self):
+    async def _process_alerts(self) -> None:
         """Background task to process alerts"""
         while self.monitoring_enabled:
             try:
@@ -618,7 +618,7 @@ Initialize core performance metrics"""
                 self.logger.error(f"Error processing alerts: {str(e)}")
                 await asyncio.sleep(30)
     
-    async def _check_alert_condition(self, alert: PerformanceAlert):
+    async def _check_alert_condition(self, alert -> None: PerformanceAlert) -> None:
         """Check if alert condition is met"""
         try:
             if alert.metric_name not in self.metrics:
@@ -666,7 +666,7 @@ Initialize core performance metrics"""
         except Exception as e:
             self.logger.error(f"Error checking alert condition: {str(e)}")
     
-    async def _send_alert_notification(self, alert: PerformanceAlert, current_value: float):
+    async def _send_alert_notification(self, alert -> None: PerformanceAlert, current_value -> None: float) -> None:
         """Send alert notification (placeholder for integration)"""
         notification = {
             'alert_id': alert.id,
@@ -681,7 +681,7 @@ Initialize core performance metrics"""
         # Log notification (in production, would send to external systems)
         self.logger.info(f"Alert notification: {json.dumps(notification, indent=2)}")
     
-    async def _update_prediction_models(self):
+    async def _update_prediction_models(self) -> None:
         """Background task to update prediction models"""
         while self.monitoring_enabled:
             try:
@@ -696,7 +696,7 @@ Initialize core performance metrics"""
                 self.logger.error(f"Error updating prediction models: {str(e)}")
                 await asyncio.sleep(self.model_update_interval)
     
-    async def _cleanup_old_metrics(self):
+    async def _cleanup_old_metrics(self) -> None:
         """Background task to cleanup old metric data"""
         while self.monitoring_enabled:
             try:
@@ -714,7 +714,7 @@ Initialize core performance metrics"""
                 self.logger.error(f"Error in metric cleanup: {str(e)}")
                 await asyncio.sleep(3600)
     
-    def _update_error_rate(self, success: bool, labels: Dict[str, str]):
+    def _update_error_rate(self, success -> None: bool, labels -> None: Dict[str, str]) -> None:
         """Update error rate metrics"""
         # Simple moving average for error rate
         error_rate_metric = 'storage_error_rate_percent'
@@ -730,7 +730,7 @@ Initialize core performance metrics"""
                 max(0.0, min(100.0, new_error_rate)), labels
             )
     
-    def _update_throughput_counter(self, operation_type: str, provider: str):
+    def _update_throughput_counter(self, operation_type -> None: str, provider -> None: str) -> None:
         """
 Update throughput metrics"""
         throughput_metric = 'storage_operations_per_second'

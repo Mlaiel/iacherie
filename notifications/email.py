@@ -1,5 +1,8 @@
 """Email notification service using SendGrid or SMTP."""
 
+import asyncio
+import logging
+
 import os
 from typing import Dict, List, Optional
 from datetime import datetime
@@ -11,7 +14,8 @@ from email import encoders
 
 
 class EmailNotifier:
-    def __init__(self, provider: str = "smtp"):
+    """EmailNotifier: class implementation"""
+    def __init__(self, provider -> None: str = "smtp") -> None:
         try:
             logger.info(f"Executing __init__")
             
@@ -179,7 +183,7 @@ class EmailNotifier:
                 "attempted_at": datetime.utcnow().isoformat()
             }
 
-    def _add_attachment(self, msg: MIMEMultipart, attachment_info: Dict):
+    def _add_attachment(self, msg -> None: MIMEMultipart, attachment_info -> None: Dict) -> None:
         """Add attachment to email message."""
         try:
             filename = attachment_info.get("filename", "attachment")

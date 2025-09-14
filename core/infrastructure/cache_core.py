@@ -77,7 +77,7 @@ class CacheMetrics:
 class CacheCore:
     """Enterprise cache core management system"""
     
-    def __init__(self, config: Optional[CacheConfig] = None, level: str = "enterprise"):
+    def __init__(self, config -> None: Optional[CacheConfig] = None, level -> None: str = "enterprise") -> None:
         """Initialize cache core"""
         self.config = config or CacheConfig()
         self.level = level
@@ -341,7 +341,7 @@ class CacheCore:
         
         return cache_item["value"]
     
-    def _set_in_memory(self, key: str, value: Any, ttl: int):
+    def _set_in_memory(self, key -> None: str, value -> None: Any, ttl -> None: int) -> None:
         """Set value in memory cache"""
         # Check memory limits
         if len(self.memory_cache) >= self.config.max_memory_items:
@@ -357,7 +357,7 @@ class CacheCore:
         self.memory_access_times[key] = time.time()
         self.memory_access_counts[key] = 1
     
-    def _evict_memory_items(self):
+    def _evict_memory_items(self) -> None:
         """Evict items from memory cache based on strategy"""
         if not self.memory_cache:
             return
@@ -417,7 +417,7 @@ class CacheCore:
             logger.error(f"Deserialization error: {str(e)}")
             return value
     
-    def _update_access_time(self, start_time: float):
+    def _update_access_time(self, start_time -> None: float) -> None:
         """Update average access time metric"""
         access_time = time.time() - start_time
         total_operations = self.metrics.hits + self.metrics.misses
@@ -450,7 +450,7 @@ class CacheCore:
             logger.error(f"Cache health check failed: {str(e)}")
             return False
     
-    async def _health_monitor_loop(self):
+    async def _health_monitor_loop(self) -> None:
         """Health monitoring loop"""
         while not self._shutdown_event.is_set():
             try:

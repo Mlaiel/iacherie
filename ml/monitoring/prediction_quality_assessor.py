@@ -82,7 +82,7 @@ class PredictionQualityAssessor:
     - Feedback integration and learning
     """
     
-    def __init__(self, assessment_config: Dict[str, Any] = None, cache_dir: str = "quality_cache/"):
+    def __init__(self, assessment_config -> None: Dict[str, Any] = None, cache_dir -> None: str = "quality_cache/") -> None:
         self.logger = logging.getLogger(__name__)
         self.cache_dir = Path(cache_dir)
         self.cache_dir.mkdir(exist_ok=True, parents=True)
@@ -558,7 +558,7 @@ class PredictionQualityAssessor:
         return [p for p in predictions if start_time <= p.timestamp <= end_time]
 
 # Example usage and testing
-async def main():
+async def main() -> None:
     """Example usage of PredictionQualityAssessor."""
     assessor = PredictionQualityAssessor()
     

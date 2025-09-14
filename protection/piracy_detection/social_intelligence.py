@@ -213,7 +213,7 @@ class SocialNetworkIntelligence:
     - Community detection and behavioral pattern analysis
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """
 Initialize the social network intelligence engine."""
         self.config = config or {}
@@ -810,7 +810,7 @@ Initialize the social network intelligence engine."""
             'sentiment_std': statistics.stdev(sentiment_scores) if total > 1 else 0.0
         }
     
-    async def _create_authenticity_detector(self):
+    async def _create_authenticity_detector(self) -> None:
         """
 Create custom authenticity detection model."""
         # Placeholder for custom authenticity detection implementation

@@ -1,19 +1,19 @@
-"""🚀 Event Bus System - IA Influencer Agent Platform Enterprise
+"""# [EMOJI_REMOVED] Event Bus System - IA Influencer Agent Platform Enterprise
 ===========================================================
 Module: backend/platform_core/communication/event_bus.py
 Author: Fahed Mlaiel (mlaiel@live.de)
 ===========================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-(c) 2025 Fahed Mlaiel. Tous droits réservés.
+# [EMOJI_REMOVED]  PROPRI# [EMOJI_REMOVED]T# [EMOJI_REMOVED] INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL # [EMOJI_REMOVED]
+(c) 2025 Fahed Mlaiel. Tous droits r# [EMOJI_REMOVED]serv# [EMOJI_REMOVED]s.
 Contact: mlaiel@live.de
 
-🎯 BUS D'ÉVÉNEMENTS DISTRIBUÉ
-Système de communication événementielle enterprise
+# [EMOJI_REMOVED] BUS D'# [EMOJI_REMOVED]V# [EMOJI_REMOVED]NEMENTS DISTRIBU# [EMOJI_REMOVED]
+Syst# [EMOJI_REMOVED]me de communication # [EMOJI_REMOVED]v# [EMOJI_REMOVED]nementielle enterprise
 - Publish/Subscribe pattern avec persistence
 - Event sourcing et replay automatique
 - Dead letter handling et retry intelligent
-- Monitoring temps réel et analytics avancées
+- Monitoring temps r# [EMOJI_REMOVED]el et analytics avanc# [EMOJI_REMOVED]es
 """
 
 import asyncio
@@ -35,7 +35,7 @@ logger = logging.getLogger(__name__)
 
 class EventPriority(Enum):
     """
-Priorités des événements"""
+Priorit# [EMOJI_REMOVED]s des # [EMOJI_REMOVED]v# [EMOJI_REMOVED]nements"""
 
     LOW = 1
     NORMAL = 3
@@ -43,7 +43,7 @@ Priorités des événements"""
     CRITICAL = 10
 
 class EventStatus(Enum):
-    """États des événements"""
+    """# [EMOJI_REMOVED]tats des # [EMOJI_REMOVED]v# [EMOJI_REMOVED]nements"""
 
     PENDING = "pending"
     PUBLISHED = "published"
@@ -53,7 +53,7 @@ class EventStatus(Enum):
 
 @dataclass
 class Event:
-    """Événement du système"""
+    """# [EMOJI_REMOVED]v# [EMOJI_REMOVED]nement du syst# [EMOJI_REMOVED]me"""
     event_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     event_type: str = ""
     source: str = ""
@@ -64,7 +64,7 @@ class Event:
     scheduled_at: Optional[datetime] = None
     expires_at: Optional[datetime] = None
     correlation_id: Optional[str] = None
-    causation_id: Optional[str] = None  # Event qui a causé celui-ci
+    causation_id: Optional[str] = None  # Event qui a caus# [EMOJI_REMOVED] celui-ci
     aggregate_id: Optional[str] = None
     aggregate_version: int = 1
     status: EventStatus = EventStatus.PENDING
@@ -72,7 +72,7 @@ class Event:
     max_retries: int = 3
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convertit l'événement en dictionnaire"""
+        """Convertit l'# [EMOJI_REMOVED]v# [EMOJI_REMOVED]nement en dictionnaire"""
         data = asdict(self)
         # Convertir les dates et enums
         for key, value in data.items():
@@ -85,7 +85,7 @@ class Event:
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'Event':
         """
-Crée un événement depuis un dictionnaire"""
+Cr# [EMOJI_REMOVED]e un # [EMOJI_REMOVED]v# [EMOJI_REMOVED]nement depuis un dictionnaire"""
         # Convertir les dates
         for date_field in ['created_at', 'scheduled_at', 'expires_at']:
             if data.get(date_field):
@@ -102,10 +102,10 @@ Crée un événement depuis un dictionnaire"""
 @dataclass
 class EventSubscription:
     """
-Abonnement à des événements"""
+Abonnement # [EMOJI_REMOVED] des # [EMOJI_REMOVED]v# [EMOJI_REMOVED]nements"""
     subscription_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     subscriber_id: str = ""
-    event_patterns: List[str] = field(default_factory=list)  # Patterns d'événements
+    event_patterns: List[str] = field(default_factory=list)  # Patterns d'# [EMOJI_REMOVED]v# [EMOJI_REMOVED]nements
     handler: Optional[Callable] = None
     filters: Dict[str, Any] = field(default_factory=dict)
     options: Dict[str, Any] = field(default_factory=dict)
@@ -113,11 +113,11 @@ Abonnement à des événements"""
     active: bool = True
     
     def matches_event(self, event: Event) -> bool:
-        """Vérifie si l'événement correspond à l'abonnement"""
+        """V# [EMOJI_REMOVED]rifie si l'# [EMOJI_REMOVED]v# [EMOJI_REMOVED]nement correspond # [EMOJI_REMOVED] l'abonnement"""
         if not self.active:
             return False
             
-        # Vérifier les patterns
+        # V# [EMOJI_REMOVED]rifier les patterns
         if self.event_patterns:
             matches_pattern = any(
                 self._matches_pattern(pattern, event.event_type)
@@ -126,7 +126,7 @@ Abonnement à des événements"""
             if not matches_pattern:
                 return False
                 
-        # Vérifier les filtres
+        # V# [EMOJI_REMOVED]rifier les filtres
         for filter_key, filter_value in self.filters.items():
             if filter_key == "source":
                 if event.source != filter_value:
@@ -141,7 +141,7 @@ Abonnement à des événements"""
         return True
         
     def _matches_pattern(self, pattern: str, event_type: str) -> bool:
-        """Vérifie si un type d'événement correspond au pattern"""
+        """V# [EMOJI_REMOVED]rifie si un type d'# [EMOJI_REMOVED]v# [EMOJI_REMOVED]nement correspond au pattern"""
         if pattern == "*":
             return True
         if pattern.endswith("*"):
@@ -151,13 +151,13 @@ Abonnement à des événements"""
         return pattern == event_type
 
 class EventHandler:
-    """Gestionnaire d'événements avec métadonnées"""
+    """Gestionnaire d'# [EMOJI_REMOVED]v# [EMOJI_REMOVED]nements avec m# [EMOJI_REMOVED]tadonn# [EMOJI_REMOVED]es"""
     
     def __init__(self, 
-                 handler_func: Callable,
-                 event_patterns: List[str],
-                 filters: Optional[Dict[str, Any]] = None,
-                 options: Optional[Dict[str, Any]] = None):
+                 handler_func -> None: Callable,
+                 event_patterns -> None: List[str],
+                 filters -> None: Optional[Dict[str, Any]] = None,
+                 options -> None: Optional[Dict[str, Any]] = None) -> None:
         self.handler_func = handler_func
         self.event_patterns = event_patterns
         self.filters = filters or {}
@@ -170,49 +170,49 @@ class EventHandler:
         
     async def handle(self, event: Event) -> bool:
         """
-Exécute le handler pour un événement"""
+Ex# [EMOJI_REMOVED]cute le handler pour un # [EMOJI_REMOVED]v# [EMOJI_REMOVED]nement"""
         try:
             if self.is_async:
                 result = await self.handler_func(event)
             else:
                 result = self.handler_func(event)
                 
-            return result is not False  # None ou True = succès
+            return result is not False  # None ou True = succ# [EMOJI_REMOVED]s
             
         except Exception as e:
             logger.error(f"Erreur dans handler {self.handler_id}: {e}")
             return False
 
 class EventBus:
-    """Bus d'événements distribué"""
+    """Bus d'# [EMOJI_REMOVED]v# [EMOJI_REMOVED]nements distribu# [EMOJI_REMOVED]"""
     
     def __init__(self, 
-                 redis_client: aioredis.Redis,
-                 namespace: str = "events"):
+                 redis_client -> None: aioredis.Redis,
+                 namespace -> None: str = "events") -> None:
         self.redis_client = redis_client
         self.namespace = namespace
         self.subscriptions: Dict[str, EventSubscription] = {}
         self.handlers: Dict[str, EventHandler] = {}
         
-        # Clés Redis
+        # Cl# [EMOJI_REMOVED]s Redis
         self.events_stream = f"{namespace}:events"
         self.dead_letter_stream = f"{namespace}:dlq"
         self.subscriptions_key = f"{namespace}:subscriptions"
         
-        # Contrôle
+        # Contr# [EMOJI_REMOVED]le
         self._running = False
         self._processor_task: Optional[asyncio.Task] = None
         self._consumer_group = f"{namespace}:processors"
         self._consumer_name = f"processor-{uuid.uuid4().hex[:8]}"
         
-        # Métriques
+        # M# [EMOJI_REMOVED]triques
         self.events_published = 0
         self.events_processed = 0
         self.events_failed = 0
         self.start_time = datetime.utcnow()
         
-    async def start(self):
-        """Démarre le bus d'événements avec support enterprise"""
+    async def start(self) -> None:
+        """D# [EMOJI_REMOVED]marre le bus d'# [EMOJI_REMOVED]v# [EMOJI_REMOVED]nements avec support enterprise"""
         try:
             logger.info("Starting Enterprise Event Bus...")
             
@@ -264,7 +264,7 @@ class EventBus:
             # Reset start time for metrics
             self.start_time = datetime.utcnow()
             
-            logger.info("✅ Enterprise Event Bus started successfully")
+            logger.info("# [EMOJI_REMOVED] Enterprise Event Bus started successfully")
             logger.info(f"  - Consumer Group: {self._consumer_group}")
             logger.info(f"  - Consumer Name: {self._consumer_name}")
             logger.info(f"  - Stream: {self.events_stream}")
@@ -274,12 +274,12 @@ class EventBus:
             await self._perform_startup_health_check()
             
         except Exception as e:
-            logger.error(f"❌ Failed to start Event Bus: {e}")
+            logger.error(f"# [EMOJI_REMOVED] Failed to start Event Bus: {e}")
             self._running = False
             raise
     
-    async def stop(self):
-        """Arrête le bus d'événements avec nettoyage graceful"""
+    async def stop(self) -> None:
+        """Arr# [EMOJI_REMOVED]te le bus d'# [EMOJI_REMOVED]v# [EMOJI_REMOVED]nements avec nettoyage graceful"""
         try:
             logger.info("Stopping Enterprise Event Bus...")
             
@@ -327,7 +327,7 @@ class EventBus:
             
             # Log final metrics
             uptime = datetime.utcnow() - self.start_time
-            logger.info("📊 Event Bus Final Metrics:")
+            logger.info("# [EMOJI_REMOVED] Event Bus Final Metrics:")
             logger.info(f"  - Uptime: {uptime}")
             logger.info(f"  - Events Published: {self.events_published}")
             logger.info(f"  - Events Processed: {self.events_processed}")
@@ -340,13 +340,13 @@ class EventBus:
                 success_rate = ((self.events_processed - self.events_failed) / self.events_processed) * 100
                 logger.info(f"  - Success Rate: {success_rate:.2f}%")
             
-            logger.info("✅ Enterprise Event Bus stopped successfully")
+            logger.info("# [EMOJI_REMOVED] Enterprise Event Bus stopped successfully")
             
         except Exception as e:
-            logger.error(f"❌ Error stopping Event Bus: {e}")
+            logger.error(f"# [EMOJI_REMOVED] Error stopping Event Bus: {e}")
             raise
     
-    async def _perform_startup_health_check(self):
+    async def _perform_startup_health_check(self) -> None:
         """Perform health check after startup"""
         try:
             # Test Redis connection
@@ -360,13 +360,13 @@ class EventBus:
                 metadata={"health_check": True}
             )
             
-            logger.info(f"✅ Health check passed - Test event: {test_event_id}")
+            logger.info(f"# [EMOJI_REMOVED] Health check passed - Test event: {test_event_id}")
             
         except Exception as e:
-            logger.error(f"❌ Health check failed: {e}")
+            logger.error(f"# [EMOJI_REMOVED] Health check failed: {e}")
             raise
     
-    async def _process_scheduled_events(self):
+    async def _process_scheduled_events(self) -> None:
         """Process scheduled events that are ready"""
         logger.info("Started scheduled events processor")
         
@@ -390,7 +390,7 @@ class EventBus:
         
         logger.info("Scheduled events processor stopped")
     
-    async def _process_dead_letter_queue(self):
+    async def _process_dead_letter_queue(self) -> None:
         """Process dead letter queue for retry logic"""
         logger.info("Started dead letter queue processor")
         
@@ -432,7 +432,7 @@ class EventBus:
         
         logger.info("Dead letter queue processor stopped")
     
-    async def _collect_metrics(self):
+    async def _collect_metrics(self) -> None:
         """Collect and log metrics periodically"""
         logger.info("Started metrics collector")
         
@@ -475,7 +475,7 @@ class EventBus:
         
         logger.info("Metrics collector stopped")
     
-    async def _process_dead_letter_message(self, stream_name: str, message_id: str, fields: Dict):
+    async def _process_dead_letter_message(self, stream_name -> None: str, message_id -> None: str, fields -> None: Dict) -> None:
         """Process a message from dead letter queue"""
         try:
             # Simplified dead letter processing
@@ -508,7 +508,7 @@ class EventBus:
             aggregate_id=aggregate_id
         )
         
-        # Gestion du délai
+        # Gestion du d# [EMOJI_REMOVED]lai
         if delay:
             event.scheduled_at = datetime.utcnow() + timedelta(seconds=delay)
             
@@ -522,14 +522,14 @@ class EventBus:
         await self.redis_client.xadd(
             self.events_stream,
             fields={"event": event_data},
-            maxlen=100000,  # Limite de rétention
+            maxlen=100000,  # Limite de r# [EMOJI_REMOVED]tention
             approximate=True
         )
         
         event.status = EventStatus.PUBLISHED
         self.events_published += 1
         
-        logger.debug(f"Événement publié: {event_type} ({event.event_id})")
+        logger.debug(f"# [EMOJI_REMOVED]v# [EMOJI_REMOVED]nement publi# [EMOJI_REMOVED]: {event_type} ({event.event_id})")
         return event.event_id
         
     async def subscribe(self, 
@@ -538,7 +538,7 @@ class EventBus:
                        subscriber_id: Optional[str] = None,
                        filters: Optional[Dict[str, Any]] = None,
                        options: Optional[Dict[str, Any]] = None) -> str:
-        """S'abonne à des événements"""
+        """S'abonne # [EMOJI_REMOVED] des # [EMOJI_REMOVED]v# [EMOJI_REMOVED]nements"""
         
         subscriber_id = subscriber_id or f"subscriber-{uuid.uuid4().hex[:8]}"
         
@@ -550,7 +550,7 @@ class EventBus:
             options=options or {}
         )
         
-        # Créer le handler
+        # Cr# [EMOJI_REMOVED]er le handler
         event_handler = EventHandler(
             handler_func=handler,
             event_patterns=event_patterns,
@@ -561,23 +561,23 @@ class EventBus:
         self.subscriptions[subscription.subscription_id] = subscription
         self.handlers[subscription.subscription_id] = event_handler
         
-        logger.info(f"Abonnement créé: {event_patterns} ({subscription.subscription_id})")
+        logger.info(f"Abonnement cr# [EMOJI_REMOVED]: {event_patterns} ({subscription.subscription_id})")
         return subscription.subscription_id
         
-    async def unsubscribe(self, subscription_id: str):
-        """Se désabonne d'événements"""
+    async def unsubscribe(self, subscription_id -> None: str) -> None:
+        """Se d# [EMOJI_REMOVED]sabonne d'# [EMOJI_REMOVED]v# [EMOJI_REMOVED]nements"""
         if subscription_id in self.subscriptions:
             del self.subscriptions[subscription_id]
         if subscription_id in self.handlers:
             del self.handlers[subscription_id]
             
-        logger.info(f"Désabonnement: {subscription_id}")
+        logger.info(f"D# [EMOJI_REMOVED]sabonnement: {subscription_id}")
         
-    async def _process_events(self):
-        """Boucle de traitement des événements"""
+    async def _process_events(self) -> None:
+        """Boucle de traitement des # [EMOJI_REMOVED]v# [EMOJI_REMOVED]nements"""
         while self._running:
             try:
-                # Lire les événements du stream
+                # Lire les # [EMOJI_REMOVED]v# [EMOJI_REMOVED]nements du stream
                 result = await self.redis_client.xreadgroup(
                     self._consumer_group,
                     self._consumer_name,
@@ -598,22 +598,22 @@ class EventBus:
             except asyncio.CancelledError:
                 break
             except Exception as e:
-                logger.error(f"Erreur dans le processeur d'événements: {e}")
+                logger.error(f"Erreur dans le processeur d'# [EMOJI_REMOVED]v# [EMOJI_REMOVED]nements: {e}")
                 await asyncio.sleep(1)
                 
-    async def _process_event_message(self, stream_name: str, message_id: str, fields: Dict):
-        """Traite un message d'événement"""
+    async def _process_event_message(self, stream_name -> None: str, message_id -> None: str, fields -> None: Dict) -> None:
+        """Traite un message d'# [EMOJI_REMOVED]v# [EMOJI_REMOVED]nement"""
         try:
             event_data = json.loads(fields[b"event"])
             event = Event.from_dict(event_data)
             
-            # Vérifier l'expiration
+            # V# [EMOJI_REMOVED]rifier l'expiration
             if event.expires_at and datetime.utcnow() > event.expires_at:
                 await self._ack_message(message_id)
-                logger.debug(f"Événement expiré ignoré: {event.event_id}")
+                logger.debug(f"# [EMOJI_REMOVED]v# [EMOJI_REMOVED]nement expir# [EMOJI_REMOVED] ignor# [EMOJI_REMOVED]: {event.event_id}")
                 return
                 
-            # Vérifier la planification
+            # V# [EMOJI_REMOVED]rifier la planification
             if event.scheduled_at and datetime.utcnow() < event.scheduled_at:
                 # Republier pour plus tard
                 delay = (event.scheduled_at - datetime.utcnow()).total_seconds()
@@ -630,7 +630,7 @@ class EventBus:
                 await self._ack_message(message_id)
                 return
                 
-            # Distribuer aux abonnés
+            # Distribuer aux abonn# [EMOJI_REMOVED]s
             delivered = await self._distribute_event(event)
             
             if delivered:
@@ -640,7 +640,7 @@ class EventBus:
                 event.status = EventStatus.FAILED
                 self.events_failed += 1
                 
-                # Gérer les retries
+                # G# [EMOJI_REMOVED]rer les retries
                 if event.retry_count < event.max_retries:
                     event.retry_count += 1
                     retry_delay = 2 ** event.retry_count  # Backoff exponentiel
@@ -662,10 +662,10 @@ class EventBus:
             await self._ack_message(message_id)
             
         except Exception as e:
-            logger.error(f"Erreur lors du traitement de l'événement {message_id}: {e}")
+            logger.error(f"Erreur lors du traitement de l'# [EMOJI_REMOVED]v# [EMOJI_REMOVED]nement {message_id}: {e}")
             
     async def _distribute_event(self, event: Event) -> bool:
-        """Distribue un événement aux abonnés correspondants"""
+        """Distribue un # [EMOJI_REMOVED]v# [EMOJI_REMOVED]nement aux abonn# [EMOJI_REMOVED]s correspondants"""
         delivered = False
         
         for subscription_id, subscription in self.subscriptions.items():
@@ -677,14 +677,14 @@ class EventBus:
                         if success:
                             delivered = True
                         else:
-                            logger.warning(f"Handler {subscription_id} a échoué pour {event.event_id}")
+                            logger.warning(f"Handler {subscription_id} a # [EMOJI_REMOVED]chou# [EMOJI_REMOVED] pour {event.event_id}")
                     except Exception as e:
                         logger.error(f"Erreur dans handler {subscription_id}: {e}")
                         
         return delivered
         
-    async def _ack_message(self, message_id: str):
-        """Acknowledge un message traité"""
+    async def _ack_message(self, message_id -> None: str) -> None:
+        """Acknowledge un message trait# [EMOJI_REMOVED]"""
         try:
             await self.redis_client.xack(
                 self.events_stream, 
@@ -694,8 +694,8 @@ class EventBus:
         except Exception as e:
             logger.error(f"Erreur lors de l'ack du message {message_id}: {e}")
             
-    async def _send_to_dlq(self, event: Event):
-        """Envoie un événement en Dead Letter Queue"""
+    async def _send_to_dlq(self, event -> None: Event) -> None:
+        """Envoie un # [EMOJI_REMOVED]v# [EMOJI_REMOVED]nement en Dead Letter Queue"""
         event.status = EventStatus.DEAD_LETTER
         dlq_data = event.to_dict()
         dlq_data["dlq_timestamp"] = datetime.utcnow().isoformat()
@@ -707,14 +707,14 @@ class EventBus:
             approximate=True
         )
         
-        logger.warning(f"Événement envoyé en DLQ: {event.event_id}")
+        logger.warning(f"# [EMOJI_REMOVED]v# [EMOJI_REMOVED]nement envoy# [EMOJI_REMOVED] en DLQ: {event.event_id}")
         
     async def replay_events(self, 
                            from_timestamp: datetime,
                            to_timestamp: Optional[datetime] = None,
                            event_types: Optional[List[str]] = None,
                            aggregate_id: Optional[str] = None) -> int:
-        """Rejoue des événements depuis l'historique"""
+        """Rejoue des # [EMOJI_REMOVED]v# [EMOJI_REMOVED]nements depuis l'historique"""
         replayed = 0
         
         # Convertir les timestamps en IDs Redis
@@ -722,7 +722,7 @@ class EventBus:
         to_id = "+" if not to_timestamp else str(int(to_timestamp.timestamp() * 1000)) + "-0"
         
         try:
-            # Lire les événements dans la plage
+            # Lire les # [EMOJI_REMOVED]v# [EMOJI_REMOVED]nements dans la plage
             result = await self.redis_client.xrange(
                 self.events_stream,
                 min=from_id,
@@ -734,7 +734,7 @@ class EventBus:
                     event_data = json.loads(fields[b"event"])
                     event = Event.from_dict(event_data)
                     
-                    # Filtrer par type d'événement
+                    # Filtrer par type d'# [EMOJI_REMOVED]v# [EMOJI_REMOVED]nement
                     if event_types and event.event_type not in event_types:
                         continue
                         
@@ -742,7 +742,7 @@ class EventBus:
                     if aggregate_id and event.aggregate_id != aggregate_id:
                         continue
                         
-                    # Republier l'événement
+                    # Republier l'# [EMOJI_REMOVED]v# [EMOJI_REMOVED]nement
                     await self.publish(
                         event_type=event.event_type,
                         data=event.data,
@@ -756,22 +756,22 @@ class EventBus:
                     replayed += 1
                     
                 except Exception as e:
-                    logger.error(f"Erreur lors du replay de l'événement {message_id}: {e}")
+                    logger.error(f"Erreur lors du replay de l'# [EMOJI_REMOVED]v# [EMOJI_REMOVED]nement {message_id}: {e}")
                     
         except Exception as e:
-            logger.error(f"Erreur lors du replay d'événements: {e}")
+            logger.error(f"Erreur lors du replay d'# [EMOJI_REMOVED]v# [EMOJI_REMOVED]nements: {e}")
             
-        logger.info(f"Replay terminé: {replayed} événements rejoués")
+        logger.info(f"Replay termin# [EMOJI_REMOVED]: {replayed} # [EMOJI_REMOVED]v# [EMOJI_REMOVED]nements rejou# [EMOJI_REMOVED]s")
         return replayed
         
     async def get_event_history(self, 
                                aggregate_id: str,
                                from_version: int = 1) -> List[Event]:
-        """Récupère l'historique d'événements pour un agrégat"""
+        """R# [EMOJI_REMOVED]cup# [EMOJI_REMOVED]re l'historique d'# [EMOJI_REMOVED]v# [EMOJI_REMOVED]nements pour un agr# [EMOJI_REMOVED]gat"""
         events = []
         
         try:
-            # Lire tous les événements du stream
+            # Lire tous les # [EMOJI_REMOVED]v# [EMOJI_REMOVED]nements du stream
             result = await self.redis_client.xrange(self.events_stream)
             
             for message_id, fields in result:
@@ -784,17 +784,17 @@ class EventBus:
                         events.append(event)
                         
                 except Exception as e:
-                    logger.error(f"Erreur lors de la lecture de l'événement {message_id}: {e}")
+                    logger.error(f"Erreur lors de la lecture de l'# [EMOJI_REMOVED]v# [EMOJI_REMOVED]nement {message_id}: {e}")
                     
         except Exception as e:
-            logger.error(f"Erreur lors de la récupération de l'historique: {e}")
+            logger.error(f"Erreur lors de la r# [EMOJI_REMOVED]cup# [EMOJI_REMOVED]ration de l'historique: {e}")
             
         # Trier par version
         events.sort(key=lambda e: e.aggregate_version)
         return events
         
     def get_stats(self) -> Dict[str, Any]:
-        """Retourne les statistiques du bus d'événements"""
+        """Retourne les statistiques du bus d'# [EMOJI_REMOVED]v# [EMOJI_REMOVED]nements"""
         uptime = (datetime.utcnow() - self.start_time).total_seconds()
         
         return {
@@ -816,4 +816,6 @@ class EventBus:
                 }
                 for sub_id, sub in self.subscriptions.items()
             }
-        }
+        })
+
+# File has syntax issues - needs manual review

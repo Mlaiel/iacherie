@@ -23,12 +23,14 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class ShardStatus(Enum):
+    """ShardStatus class implementation"""
     ACTIVE = "active"
     INACTIVE = "inactive"
     MIGRATING = "migrating"
     MAINTENANCE = "maintenance"
 
 class PerformanceLevel(Enum):
+    """PerformanceLevel class implementation"""
     EXCELLENT = "excellent"
     GOOD = "good"
     FAIR = "fair"
@@ -199,10 +201,10 @@ class DisasterRecoveryAutomation(Base):
     created_at = Column(DateTime(timezone=True), default=datetime.utcnow)
     updated_at = Column(DateTime(timezone=True), default=datetime.utcnow, onupdate=datetime.utcnow)
 
-def get_infrastructure_performance_models():
+def get_infrastructure_performance_models() -> None:
     return [DatabaseSharding, QueryPerformanceTuning, ConnectionLoadBalancing, DatabaseHealthMonitoring, AutomaticScaling, DisasterRecoveryAutomation]
 
-def create_infrastructure_performance_tables(engine):
+def create_infrastructure_performance_tables(engine) -> None:
     try:
         Base.metadata.create_all(engine, tables=[model.__table__ for model in get_infrastructure_performance_models()])
         logger.info("Successfully created infrastructure performance tables")

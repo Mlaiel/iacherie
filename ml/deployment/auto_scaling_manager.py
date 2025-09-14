@@ -149,7 +149,7 @@ class AutoScalingManager:
     - Real-time performance monitoring and optimization
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize auto-scaling manager"""
         self.config = config or {}
         
@@ -181,7 +181,7 @@ class AutoScalingManager:
         
         logger.info("📈 Auto-Scaling Manager initialized with intelligent ML scaling")
 
-    def _initialize_default_rules(self):
+    def _initialize_default_rules(self) -> None:
         """Initialize default scaling rules"""
         
         # CPU-based scaling
@@ -571,7 +571,7 @@ class AutoScalingManager:
             logger.error(f"📈 Scaling action failed: {str(e)}")
             return False
 
-    async def _analyze_workload_patterns(self, metrics: Dict[str, float]):
+    async def _analyze_workload_patterns(self, metrics -> None: Dict[str, float]) -> None:
         """Analyze and update workload patterns"""
         
         current_time = datetime.utcnow()
@@ -697,7 +697,7 @@ class AutoScalingManager:
         
         return hour_factor * weekday_factor
 
-    async def _optimize_costs(self, metrics: Dict[str, float]):
+    async def _optimize_costs(self, metrics -> None: Dict[str, float]) -> None:
         """Perform cost optimization analysis"""
         
         # Check if we're exceeding budget
@@ -813,12 +813,12 @@ class AutoScalingManager:
             }
         }
 
-    async def add_scaling_rule(self, rule: ScalingRule):
+    async def add_scaling_rule(self, rule -> None: ScalingRule) -> None:
         """Add custom scaling rule"""
         self.scaling_rules[rule.rule_id] = rule
         logger.info(f"📈 Added scaling rule: {rule.name}")
 
-    async def update_scaling_policy(self, policy: ScalingPolicy):
+    async def update_scaling_policy(self, policy -> None: ScalingPolicy) -> None:
         """Update scaling policy"""
         old_policy = self.scaling_policy
         self.scaling_policy = policy

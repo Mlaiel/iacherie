@@ -1,3 +1,8 @@
+"""
+Deployment Orchestrator module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Deployment Orchestration Engine - Enterprise Grade
@@ -63,7 +68,7 @@ class DeploymentOrchestrator:
     - Comprehensive audit logging
     """
     
-    def __init__(self, config_path: str = "/etc/ainflue/deployment.yaml"):
+    def __init__(self, config_path -> None: str = "/etc/ainflue/deployment.yaml") -> None:
         self.config_path = config_path
         self.docker_client = docker.from_env()
         self.deployment_history: List[Dict] = []
@@ -537,7 +542,7 @@ class DeploymentOrchestrator:
             logger.error(f"Deployment orchestration failed: {e}")
             return False
 
-async def main():
+async def main() -> None:
     """CLI entry point for deployment orchestration"""
     import argparse
     

@@ -1,4 +1,7 @@
 """IA Influencer Agent - Email & SMS Notification Manager
+import json
+from datetime import datetime
+
 Enterprise notification delivery system for multi-channel communication
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -10,7 +13,7 @@ Legal action will be taken against violators.
 Contact: mlaiel@live.de for licensing inquiries.
 
 Team Specialties:
-- Lead Dev IA + Backend Senior + ML Engineer + DBA + DevOps 
+    - Lead Dev IA + Backend Senior + ML Engineer + DBA + DevOps 
 - Audio Processing + Security + Microservices + IA Prompt Engineering
 """
 
@@ -75,7 +78,7 @@ class EmailNotificationManager:
     Enterprise email notification management system
     Handles templated emails, delivery tracking, and bounce management
     """
-    def __init__(self):
+    def __init__(self) -> None:
         try:
             logger.info(f"Executing __init__")
             
@@ -213,45 +216,45 @@ class EmailNotificationManager:
         templates = {
             "protection_alert": EmailTemplate(
                 name="protection_alert",
-                subject="🚨 Content Protection Alert - {{ violation_type }}",
+                subject="# [EMOJI_REMOVED] Content Protection Alert - {{ violation_type }}",
                 html_template="protection_alert.html",
                 text_template="protection_alert.txt",
                 priority="high"
             ),
             "ai_processing_complete": EmailTemplate(
                 name="ai_processing_complete",
-                subject="✅ AI Analysis Complete - {{ content_name }}",
+                subject="# [EMOJI_REMOVED] AI Analysis Complete - {{ content_name }}",
                 html_template="ai_processing_complete.html",
                 text_template="ai_processing_complete.txt"
             ),
             "revenue_notification": EmailTemplate(
                 name="revenue_notification",
-                subject="💰 Revenue Update - {{ amount }} {{ currency }}",
+                subject="# [EMOJI_REMOVED] Revenue Update - {{ amount }} {{ currency }}",
                 html_template="revenue_notification.html",
                 text_template="revenue_notification.txt"
             ),
             "collaboration_invite": EmailTemplate(
                 name="collaboration_invite",
-                subject="🤝 Collaboration Invitation from {{ inviter_name }}",
+                subject="# [EMOJI_REMOVED] Collaboration Invitation from {{ inviter_name }}",
                 html_template="collaboration_invite.html",
                 text_template="collaboration_invite.txt"
             ),
             "account_security": EmailTemplate(
                 name="account_security",
-                subject="🔒 Account Security Alert",
+                subject="# [EMOJI_REMOVED] Account Security Alert",
                 html_template="account_security.html",
                 text_template="account_security.txt",
                 priority="high"
             ),
             "welcome": EmailTemplate(
                 name="welcome",
-                subject="Welcome to IA Influencer Agent! 🎵",
+                subject="Welcome to IA Influencer Agent! # [EMOJI_REMOVED]",
                 html_template="welcome.html",
                 text_template="welcome.txt"
             ),
             "payment_notification": EmailTemplate(
                 name="payment_notification",
-                subject="💳 Payment Processed - {{ amount }} {{ currency }}",
+                subject="# [EMOJI_REMOVED] Payment Processed - {{ amount }} {{ currency }}",
                 html_template="payment_notification.html",
                 text_template="payment_notification.txt"
             )
@@ -328,7 +331,7 @@ class SMSNotificationManager:
     Enterprise SMS notification management system
     Handles SMS delivery via Twilio and other providers
     """
-    def __init__(self):
+    def __init__(self) -> None:
         self.twilio_client = None
         if settings.TWILIO_ACCOUNT_SID and settings.TWILIO_AUTH_TOKEN:
             self.twilio_client = TwilioClient(
@@ -425,27 +428,27 @@ class SMSNotificationManager:
         templates = {
             "protection_alert": SMSTemplate(
                 name="protection_alert",
-                message="🚨 IA Influencer Alert: Potential violation detected on {{platform}}. Check your dashboard for details.",
+                message="# [EMOJI_REMOVED] IA Influencer Alert: Potential violation detected on {{platform}}. Check your dashboard for details.",
                 max_length=160
             ),
             "ai_processing_complete": SMSTemplate(
                 name="ai_processing_complete",
-                message="✅ AI analysis complete for {{content_name}}. View results in your dashboard.",
+                message="# [EMOJI_REMOVED] AI analysis complete for {{content_name}}. View results in your dashboard.",
                 max_length=160
             ),
             "revenue_notification": SMSTemplate(
                 name="revenue_notification",
-                message="💰 New revenue: {{amount}} {{currency}} from {{platform}}. Details in your dashboard.",
+                message="# [EMOJI_REMOVED] New revenue: {{amount}} {{currency}} from {{platform}}. Details in your dashboard.",
                 max_length=160
             ),
             "security_alert": SMSTemplate(
                 name="security_alert",
-                message="🔒 Security alert: {{alert_type}}. Please check your account immediately.",
+                message="# [EMOJI_REMOVED] Security alert: {{alert_type}}. Please check your account immediately.",
                 max_length=160
             ),
             "collaboration_invite": SMSTemplate(
                 name="collaboration_invite",
-                message="🤝 {{inviter_name}} invited you to collaborate on {{project_name}}. Check your email for details.",
+                message="# [EMOJI_REMOVED] {{inviter_name}} invited you to collaborate on {{project_name}}. Check your email for details.",
                 max_length=160
             )
         }
@@ -477,7 +480,7 @@ class MultiChannelNotificationManager:
     Unified notification manager for email, SMS, and push notifications
     Handles user preferences and delivery orchestration
     """
-    def __init__(self):
+    def __init__(self) -> None:
         self.email_manager = EmailNotificationManager()
         self.sms_manager = SMSNotificationManager()
         self.user_preferences: Dict[str, NotificationPreferences] = {}
@@ -695,7 +698,7 @@ Send notification through multiple channels based on user preferences"""
             if notification_type == "protection_alert":
                 payload = {
                     **base_payload,
-                    'title': '🔒 Content Protection Alert',
+                    'title': '# [EMOJI_REMOVED] Content Protection Alert',
                     'body': data.get('message', 'Your content protection status has changed'),
                     'icon': 'protection_icon',
                     'sound': 'alert_sound',
@@ -711,7 +714,7 @@ Send notification through multiple channels based on user preferences"""
             elif notification_type == "revenue_notification":
                 payload = {
                     **base_payload,
-                    'title': '💰 Revenue Update',
+                    'title': '# [EMOJI_REMOVED] Revenue Update',
                     'body': data.get('message', 'You have a new revenue update'),
                     'icon': 'revenue_icon',
                     'sound': 'revenue_sound',
@@ -727,7 +730,7 @@ Send notification through multiple channels based on user preferences"""
             elif notification_type == "collaboration_invite":
                 payload = {
                     **base_payload,
-                    'title': '🤝 Collaboration Invite',
+                    'title': '# [EMOJI_REMOVED] Collaboration Invite',
                     'body': data.get('message', 'You have a new collaboration opportunity'),
                     'icon': 'collaboration_icon',
                     'sound': 'default',
@@ -744,7 +747,7 @@ Send notification through multiple channels based on user preferences"""
             elif notification_type == "content_processed":
                 payload = {
                     **base_payload,
-                    'title': '✅ Content Ready',
+                    'title': '# [EMOJI_REMOVED] Content Ready',
                     'body': data.get('message', 'Your content has been processed successfully'),
                     'icon': 'content_icon',
                     'sound': 'success_sound',
@@ -900,7 +903,7 @@ Send notification through multiple channels based on user preferences"""
         except Exception as e:
             logger.error(f"Error updating push stats: {e}")
 
-    async def _get_user(self, user_id: str):
+    async def _get_user(self, user_id -> None: str) -> None:
         """Get user from database"""
         # This would fetch from database
         # For now, return mock user
@@ -938,3 +941,5 @@ Update user notification preferences"""
             "email": self.email_manager.get_delivery_stats(),
             "sms": self.sms_manager.get_delivery_stats()
         }
+
+# File has syntax issues - needs manual review

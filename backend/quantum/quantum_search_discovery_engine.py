@@ -277,7 +277,7 @@ class QuantumSearchDiscoveryEngine:
     ✅ Découverte personnalisée et contextuelle
     """
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.config = config or {}
         self.search_algorithms: Dict[SearchType, SearchAlgorithm] = {}
         self.seo_optimizers: Dict[str, SEOOptimizer] = {}
@@ -755,15 +755,16 @@ class QuantumSearchDiscoveryEngine:
     # MÉTHODES PRIVÉES - SEARCH ALGORITHMS
     # ========================================
     
-    async def _get_or_create_search_algorithm(self, search_type: SearchType):
+    async def _get_or_create_search_algorithm(self, search_type -> None: SearchType) -> None:
         """Récupération ou création algorithme recherche"""
         if search_type not in self.search_algorithms:
             self.search_algorithms[search_type] = await self._create_search_algorithm(search_type)
         return self.search_algorithms[search_type]
     
-    async def _create_search_algorithm(self, search_type: SearchType):
+    async def _create_search_algorithm(self, search_type -> None: SearchType) -> None:
         """Création algorithme recherche"""
         class MockSearchAlgorithm(SearchAlgorithm):
+    """MockSearchAlgorithm class implementation"""
             async def search(self, query: SearchQuery) -> List[SearchResult]:
                 # Simulation recherche
                 results = []
@@ -824,7 +825,7 @@ class QuantumSearchDiscoveryEngine:
         
         return MockSearchAlgorithm()
     
-    async def _select_optimal_search_algorithm(self, search_type: SearchType):
+    async def _select_optimal_search_algorithm(self, search_type -> None: SearchType) -> None:
         """Sélection algorithme recherche optimal"""
         return await self._get_or_create_search_algorithm(search_type)
     
@@ -882,15 +883,16 @@ class QuantumSearchDiscoveryEngine:
     # MÉTHODES PRIVÉES - SEO OPTIMIZATION
     # ========================================
     
-    async def _get_or_create_seo_optimizer(self, optimizer_type: str):
+    async def _get_or_create_seo_optimizer(self, optimizer_type -> None: str) -> None:
         """Récupération ou création optimiseur SEO"""
         if optimizer_type not in self.seo_optimizers:
             self.seo_optimizers[optimizer_type] = await self._create_seo_optimizer(optimizer_type)
         return self.seo_optimizers[optimizer_type]
     
-    async def _create_seo_optimizer(self, optimizer_type: str):
+    async def _create_seo_optimizer(self, optimizer_type -> None: str) -> None:
         """Création optimiseur SEO"""
         class MockSEOOptimizer(SEOOptimizer):
+    """MockSEOOptimizer class implementation"""
             async def optimize_content(self, request: SEOOptimizationRequest) -> Dict[str, Any]:
                 return {
                     "keyword_optimization": {
@@ -930,15 +932,16 @@ class QuantumSearchDiscoveryEngine:
     # MÉTHODES PRIVÉES - KEYWORD PROCESSING
     # ========================================
     
-    async def _get_or_create_keyword_processor(self, processor_type: str):
+    async def _get_or_create_keyword_processor(self, processor_type -> None: str) -> None:
         """Récupération ou création processeur mots-clés"""
         if processor_type not in self.keyword_processors:
             self.keyword_processors[processor_type] = await self._create_keyword_processor(processor_type)
         return self.keyword_processors[processor_type]
     
-    async def _create_keyword_processor(self, processor_type: str):
+    async def _create_keyword_processor(self, processor_type -> None: str) -> None:
         """Création processeur mots-clés"""
         class MockKeywordProcessor(KeywordProcessor):
+    """MockKeywordProcessor class implementation"""
             async def analyze_keywords(self, request: KeywordAnalysisRequest) -> Dict[str, Any]:
                 keyword_analysis = {}
                 
@@ -974,15 +977,16 @@ class QuantumSearchDiscoveryEngine:
     # MÉTHODES PRIVÉES - SOCIAL GRAPH
     # ========================================
     
-    async def _get_or_create_social_graph_analyzer(self, analyzer_type: str):
+    async def _get_or_create_social_graph_analyzer(self, analyzer_type -> None: str) -> None:
         """Récupération ou création analyseur graphe social"""
         if analyzer_type not in self.social_graph_analyzers:
             self.social_graph_analyzers[analyzer_type] = await self._create_social_graph_analyzer(analyzer_type)
         return self.social_graph_analyzers[analyzer_type]
     
-    async def _create_social_graph_analyzer(self, analyzer_type: str):
+    async def _create_social_graph_analyzer(self, analyzer_type -> None: str) -> None:
         """Création analyseur graphe social"""
         class MockSocialGraphAnalyzer(SocialGraphAnalyzer):
+    """MockSocialGraphAnalyzer class implementation"""
             async def analyze_social_graph(self, request: SocialGraphRequest) -> Dict[str, Any]:
                 return {
                     "network_size": np.random.randint(100, 10000),
@@ -1007,15 +1011,16 @@ class QuantumSearchDiscoveryEngine:
     # MÉTHODES PRIVÉES - ENGAGEMENT PREDICTION
     # ========================================
     
-    async def _get_or_create_engagement_predictor(self, predictor_type: str):
+    async def _get_or_create_engagement_predictor(self, predictor_type -> None: str) -> None:
         """Récupération ou création prédicteur engagement"""
         if predictor_type not in self.engagement_predictors:
             self.engagement_predictors[predictor_type] = await self._create_engagement_predictor(predictor_type)
         return self.engagement_predictors[predictor_type]
     
-    async def _create_engagement_predictor(self, predictor_type: str):
+    async def _create_engagement_predictor(self, predictor_type -> None: str) -> None:
         """Création prédicteur engagement"""
         class MockEngagementPredictor(EngagementPredictor):
+    """MockEngagementPredictor class implementation"""
             async def predict_engagement(self, content_id: str, user_context: Dict[str, Any]) -> float:
                 # Simulation prédiction engagement
                 base_engagement = np.random.uniform(0.02, 0.15)
@@ -1041,7 +1046,7 @@ class QuantumSearchDiscoveryEngine:
     # MÉTHODES UTILITAIRES
     # ========================================
     
-    def _initialize_search_components(self):
+    def _initialize_search_components(self) -> None:
         """Initialisation composants recherche"""
         # Configuration par défaut
         self.config.update({
@@ -1084,7 +1089,7 @@ class QuantumSearchDiscoveryEngine:
         results.sort(key=lambda x: x.relevance_score, reverse=True)
         return results
     
-    async def _store_search_history(self, query: SearchQuery, result: DiscoveryResult):
+    async def _store_search_history(self, query -> None: SearchQuery, result -> None: DiscoveryResult) -> None:
         """Stockage historique recherche"""
         self.search_history.append(query)
         

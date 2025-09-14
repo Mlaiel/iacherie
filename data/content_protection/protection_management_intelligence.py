@@ -130,7 +130,7 @@ class BaseProtectionEngine(ABC):
 class ProtectionManagementIntelligence:
     """Enterprise protection management with AI orchestration"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.redis_client = None
         self.db_client = None
         self.mongo_client = None
@@ -401,7 +401,7 @@ class ProtectionManagementIntelligence:
 class ContentProtectionOrchestrator:
     """Global protection orchestration system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.active_monitors: Dict[str, List[str]] = {}
     
     async def initialize(self) -> bool:
@@ -443,7 +443,7 @@ class ContentProtectionOrchestrator:
 class ThreatIntelligenceEngine:
     """AI-powered threat intelligence and prediction"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.threat_model = None
         self.active_threats: Dict[str, ThreatIntelligenceReport] = {}
     
@@ -488,7 +488,7 @@ class ThreatIntelligenceEngine:
 class ComplianceValidationSystem:
     """Automated compliance validation system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.compliance_rules = {}
         self.active_validations: Dict[str, Dict[str, Any]] = {}
     
@@ -549,6 +549,7 @@ class ProtectionEngineFactory:
 
 # Placeholder engine implementations
 class AudioProtectionEngine(BaseProtectionEngine):
+    """AudioProtectionEngine class implementation"""
     async def initialize(self) -> bool:
         return True
     
@@ -560,6 +561,7 @@ class AudioProtectionEngine(BaseProtectionEngine):
 
 
 class VideoProtectionEngine(BaseProtectionEngine):
+    """VideoProtectionEngine class implementation"""
     async def initialize(self) -> bool:
         return True
     
@@ -571,6 +573,7 @@ class VideoProtectionEngine(BaseProtectionEngine):
 
 
 class ImageProtectionEngine(BaseProtectionEngine):
+    """ImageProtectionEngine class implementation"""
     async def initialize(self) -> bool:
         return True
     
@@ -582,6 +585,7 @@ class ImageProtectionEngine(BaseProtectionEngine):
 
 
 class TextProtectionEngine(BaseProtectionEngine):
+    """TextProtectionEngine class implementation"""
     async def initialize(self) -> bool:
         return True
     
@@ -593,6 +597,7 @@ class TextProtectionEngine(BaseProtectionEngine):
 
 
 class MultimediaProtectionEngine(BaseProtectionEngine):
+    """MultimediaProtectionEngine class implementation"""
     async def initialize(self) -> bool:
         return True
     

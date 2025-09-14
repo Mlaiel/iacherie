@@ -141,7 +141,7 @@ class VaultClient:
     Gère l'authentification, les secrets et les opérations sécurisées
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or get_settings()
         self.logger = get_logger(f"{__name__}.VaultClient")
         
@@ -170,7 +170,7 @@ class VaultClient:
         self._setup_ssl_context()
         self._initialize_session()
     
-    def _setup_ssl_context(self):
+    def _setup_ssl_context(self) -> None:
         """Configure le contexte SSL pour Vault"""
         try:
             if not self.verify_ssl:
@@ -194,7 +194,7 @@ class VaultClient:
             self.logger.error(f"Failed to setup SSL context: {e}")
             raise
     
-    async def _initialize_session(self):
+    async def _initialize_session(self) -> None:
         """Initialise la session HTTP asynchrone"""
         try:
             connector = aiohttp.TCPConnector(
@@ -225,7 +225,7 @@ class VaultClient:
             self.logger.error(f"❌ Failed to initialize Vault session: {e}")
             raise
     
-    async def _authenticate(self):
+    async def _authenticate(self) -> None:
         """Authentification automatique selon la méthode configurée"""
         try:
             if self.auth_method == AuthMethod.TOKEN:
@@ -245,7 +245,7 @@ class VaultClient:
             self.logger.error(f"❌ Vault authentication failed: {e}")
             raise
     
-    async def _auth_with_token(self):
+    async def _auth_with_token(self) -> None:
         """Authentification par token"""
         try:
             token = self.config.get('vault_token', os.getenv('VAULT_TOKEN'))
@@ -278,7 +278,7 @@ class VaultClient:
             self.logger.error(f"Token authentication failed: {e}")
             raise
     
-    async def _auth_with_approle(self):
+    async def _auth_with_approle(self) -> None:
         """Authentification par AppRole"""
         try:
             if not self.role_id or not self.secret_id:
@@ -318,7 +318,7 @@ class VaultClient:
             self.logger.error(f"AppRole authentication failed: {e}")
             raise
     
-    async def _auth_with_aws(self):
+    async def _auth_with_aws(self) -> None:
         """Authentification AWS IAM"""
         try:
             # Récupération métadonnées EC2
@@ -382,7 +382,7 @@ class VaultClient:
             self.logger.error(f"AWS authentication failed: {e}")
             raise
     
-    async def _auth_with_kubernetes(self):
+    async def _auth_with_kubernetes(self) -> None:
         """Authentification Kubernetes service account"""
         try:
             # Lecture du token de service account
@@ -428,7 +428,7 @@ class VaultClient:
             self.logger.error(f"Kubernetes authentication failed: {e}")
             raise
     
-    async def _ensure_authenticated(self):
+    async def _ensure_authenticated(self) -> None:
         """S'assure que l'authentification est valide"""
         try:
             if not self.vault_token:
@@ -866,7 +866,7 @@ class VaultClient:
             self.logger.error(f"Token renewal failed: {e}")
             return False
     
-    async def close(self):
+    async def close(self) -> None:
         """Ferme proprement la connexion Vault"""
         try:
             if self.session:

@@ -90,7 +90,7 @@ class NotificationPreference:
     digest_frequency: str = "daily"  # never, hourly, daily, weekly
     max_notifications_per_hour: int = 10
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         try:
                     # Request validation
                     if not data:
@@ -155,7 +155,7 @@ class UniversalNotification:
     delivery_status: Dict[str, str] = field(default_factory=dict)  # channel -> status
     delivery_times: Dict[str, datetime] = field(default_factory=dict)  # channel -> delivered_at
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if not self.id:
             self.id = str(uuid.uuid4())
         if self.target_channels is None:
@@ -164,6 +164,7 @@ class UniversalNotification:
 
 @dataclass 
 class DeliveryResult:
+    """DeliveryResult: class implementation"""
         try:
             logger.info(f"Executing success_rate")
             
@@ -217,7 +218,7 @@ Comprehensive delivery result across all channels."""
 
 class NotificationOrchestrator:
     """Enterprise notification orchestration service with intelligent delivery and comprehensive analytics."""
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
         self.metrics = MetricsCollector()
         
@@ -374,7 +375,7 @@ Send notification across all applicable channels with intelligent routing."""
             # Process batch concurrently
             semaphore = asyncio.Semaphore(self.max_concurrent_deliveries)
             
-            async def send_single_notification(notification):
+            async def send_single_notification(notification) -> None:
                 async with semaphore:
                     return await self.send_notification(notification)
             
@@ -558,9 +559,9 @@ Get comprehensive notifications summary for a user."""
 
     async def _apply_intelligent_timing(
         self,
-        notification: UniversalNotification,
-        prefs: NotificationPreference
-    ):
+        notification -> None: UniversalNotification,
+        prefs -> None: NotificationPreference
+    ) -> None:
         """
 Apply AI-powered intelligent timing."""
         if notification.user_id in self.optimal_send_times:
@@ -578,7 +579,7 @@ Apply AI-powered intelligent timing."""
                 notification.scheduled_at = scheduled_time
                 notification.delivery_strategy = DeliveryStrategy.SCHEDULED
 
-    async def _schedule_notification(self, notification: UniversalNotification):
+    async def _schedule_notification(self, notification -> None: UniversalNotification) -> None:
         """
 Schedule notification for later delivery."""
         self.notification_queue.append(notification)
@@ -607,9 +608,9 @@ Check if notification can be delivered now based on rate limits and quiet hours.
 
     async def _prepare_channel_content(
         self,
-        notification: UniversalNotification,
-        prefs: NotificationPreference
-    ):
+        notification -> None: UniversalNotification,
+        prefs -> None: NotificationPreference
+    ) -> None:
         """
 Prepare personalized content for each channel."""
         if notification.template_id:
@@ -808,7 +809,7 @@ Prepare personalized content for each channel."""
             channel_results={"status": "delayed", "reason": "Rate limited or quiet hours"}
         )
 
-    async def _schedule_for_later(self, notification: UniversalNotification, prefs: NotificationPreference):
+    async def _schedule_for_later(self, notification -> None: UniversalNotification, prefs -> None: NotificationPreference) -> None:
         """Schedule notification for later delivery."""
         # Simple scheduling logic - would be more sophisticated in production
         delay_minutes = 60  # Default 1 hour delay
@@ -980,10 +981,10 @@ Prepare personalized content for each channel."""
                     return {"status": "error", "message": str(e)}
     async def _handle_delivery_fallbacks(
         self,
-        notification: UniversalNotification,
-        result: DeliveryResult,
-        prefs: NotificationPreference
-    ):
+        notification -> None: UniversalNotification,
+        result -> None: DeliveryResult,
+        prefs -> None: NotificationPreference
+    ) -> None:
         """
 Handle fallback delivery for failed channels."""
         failed_channels = [ch for ch, res in result.channel_results.items() if res.get("status") == "failed"]
@@ -999,7 +1000,7 @@ Handle fallback delivery for failed channels."""
             except Exception as e:
                 self.logger.error(f"Fallback delivery failed: {notification.id} -> {str(e)}")
 
-    async def _track_delivery_metrics(self, result: DeliveryResult):
+    async def _track_delivery_metrics(self, result -> None: DeliveryResult) -> None:
         """Track comprehensive delivery metrics."""
         await self.metrics.increment(
             "notifications_sent_total",
@@ -1076,3 +1077,5 @@ Handle fallback delivery for failed channels."""
 
     async def _calculate_optimal_send_times(self, user_id: str, engagement_data: Dict[str, Any]) -> List[int]:
         return [9, 12, 18]  # 9 AM, 12 PM, 6 PM
+
+# File has syntax issues - needs manual review

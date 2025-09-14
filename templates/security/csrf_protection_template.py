@@ -148,7 +148,7 @@ class CSRFTokenStorage(ABC):
 class MemoryCSRFTokenStorage(CSRFTokenStorage):
     """In-memory CSRF token storage"""
     
-    def __init__(self, max_tokens: int = 10000):
+    def __init__(self, max_tokens -> None: int = 10000) -> None:
         self.tokens = {}
         self.max_tokens = max_tokens
     
@@ -211,7 +211,7 @@ class MemoryCSRFTokenStorage(CSRFTokenStorage):
 class CSRFTokenGenerator:
     """CSRF token generator with cryptographic security"""
     
-    def __init__(self, secret_key: str = None):
+    def __init__(self, secret_key -> None: str = None) -> None:
         self.secret_key = secret_key or secrets.token_urlsafe(32)
         self.algorithm = "sha256"
     
@@ -290,8 +290,8 @@ class CSRFTokenGenerator:
 class CSRFProtection:
     """🛡️ Enterprise CSRF Protection Framework"""
     
-    def __init__(self, config: CSRFConfig = None, 
-                 token_storage: CSRFTokenStorage = None):
+    def __init__(self, config -> None: CSRFConfig = None, 
+                 token_storage -> None: CSRFTokenStorage = None) -> None:
         """Initialize CSRF Protection"""
         self.config = config or CSRFConfig()
         self.token_storage = token_storage or MemoryCSRFTokenStorage()
@@ -316,7 +316,7 @@ class CSRFProtection:
         
         logger.info(f"🛡️ CSRF Protection initialized with {self.config.protection_level.value} level")
     
-    async def start(self):
+    async def start(self) -> None:
         """Start CSRF protection service"""
         logger.info("Starting CSRF Protection service")
         
@@ -332,7 +332,7 @@ class CSRFProtection:
         
         logger.info("✅ CSRF Protection service started")
     
-    async def stop(self):
+    async def stop(self) -> None:
         """Stop CSRF protection service"""
         logger.info("Stopping CSRF Protection service")
         
@@ -687,8 +687,8 @@ class CSRFProtection:
             recommendations=recommendations
         )
     
-    async def _log_validation_failure(self, result: CSRFValidationResult, 
-                                    request_data: Dict[str, Any]):
+    async def _log_validation_failure(self, result -> None: CSRFValidationResult, 
+                                    request_data -> None: Dict[str, Any]) -> None:
         """Log CSRF validation failure"""
         
         threat = CSRFThreatDetection(
@@ -719,7 +719,7 @@ class CSRFProtection:
         else:
             logger.warning(f"CSRF validation failure: {threat.description}")
     
-    async def _token_cleanup_loop(self):
+    async def _token_cleanup_loop(self) -> None:
         """Background task to clean up expired tokens"""
         while self.is_running:
             try:
@@ -732,7 +732,7 @@ class CSRFProtection:
             except Exception as e:
                 logger.error(f"Token cleanup error: {str(e)}")
     
-    async def _threat_monitoring_loop(self):
+    async def _threat_monitoring_loop(self) -> None:
         """Background task for threat monitoring"""
         while self.is_running:
             try:
@@ -808,7 +808,7 @@ class CSRFProtection:
         }
 
 # Usage Example and Template Testing
-async def main():
+async def main() -> None:
     """Example usage of CSRF Protection Template"""
     
     # Create CSRF configuration

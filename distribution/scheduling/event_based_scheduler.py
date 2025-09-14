@@ -74,7 +74,7 @@ class EventTrigger:
     enabled: bool = True
     created_at: datetime = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.created_at is None:
             self.created_at = datetime.now(timezone.utc)
     
@@ -99,7 +99,7 @@ class EventData(BaseModel):
     
     @field_validator('expires_at')
     @classmethod
-    def validate_expires_at(cls, v):
+    def validate_expires_at(cls, v) -> None:
         if isinstance(v, str):
             return datetime.fromisoformat(v.replace('Z', '+00:00'))
         return v
@@ -120,7 +120,7 @@ class ScheduledTask(BaseModel):
     
     @field_validator('scheduled_time', 'new_scheduled_time')
     @classmethod
-    def validate_times(cls, v):
+    def validate_times(cls, v) -> None:
         if isinstance(v, str):
             return datetime.fromisoformat(v.replace('Z', '+00:00'))
         return v
@@ -132,7 +132,7 @@ class EventBasedScheduler:
     Monitors external events and adjusts publishing schedules accordingly
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.triggers: Dict[str, EventTrigger] = {}
         self.active_events: Dict[str, EventData] = {}
         self.scheduled_tasks: Dict[str, ScheduledTask] = {}
@@ -162,7 +162,7 @@ class EventBasedScheduler:
             logger.error(f"Failed to initialize event scheduler: {e}")
             return False
             
-    async def _load_default_triggers(self):
+    async def _load_default_triggers(self) -> None:
         """Load default event triggers"""
         default_triggers = [
             EventTrigger(
@@ -216,7 +216,7 @@ class EventBasedScheduler:
             
         logger.info(f"Loaded {len(default_triggers)} default triggers")
         
-    async def start_monitoring(self):
+    async def start_monitoring(self) -> None:
         """Start event monitoring in background"""
         if not self.monitoring_active:
             self.monitoring_active = True
@@ -224,12 +224,12 @@ class EventBasedScheduler:
             asyncio.create_task(self._task_executor_loop())
             logger.info("Event monitoring started")
             
-    async def stop_monitoring(self):
+    async def stop_monitoring(self) -> None:
         """Stop event monitoring"""
         self.monitoring_active = False
         logger.info("Event monitoring stopped")
         
-    async def _event_monitor_loop(self):
+    async def _event_monitor_loop(self) -> None:
         """Main event monitoring loop"""
         while self.monitoring_active:
             try:
@@ -251,7 +251,7 @@ class EventBasedScheduler:
                 logger.error(f"Event monitoring error: {e}")
                 await asyncio.sleep(300)  # Wait 5 minutes on error
                 
-    async def _task_executor_loop(self):
+    async def _task_executor_loop(self) -> None:
         """Execute scheduled tasks based on events"""
         while self.monitoring_active:
             try:
@@ -274,7 +274,7 @@ class EventBasedScheduler:
                 logger.error(f"Task execution error: {e}")
                 await asyncio.sleep(60)
                 
-    async def _check_viral_opportunities(self):
+    async def _check_viral_opportunities(self) -> None:
         """Check for viral content opportunities"""
         try:
             # This would integrate with viral prediction systems
@@ -306,7 +306,7 @@ class EventBasedScheduler:
         # This would integrate with the viral prediction engine
         return []
         
-    async def _check_trending_topics(self):
+    async def _check_trending_topics(self) -> None:
         """Check for trending topics relevant to content"""
         try:
             # This would integrate with trending topic APIs
@@ -335,7 +335,7 @@ class EventBasedScheduler:
         # This would integrate with platform APIs or trend analysis
         return []
         
-    async def _check_audience_peaks(self):
+    async def _check_audience_peaks(self) -> None:
         """Check for audience activity peaks"""
         try:
             # This would integrate with audience analytics
@@ -365,7 +365,7 @@ class EventBasedScheduler:
         # This would integrate with analytics systems
         return []
         
-    async def _check_competitor_activity(self):
+    async def _check_competitor_activity(self) -> None:
         """Check for significant competitor activity"""
         try:
             # This would integrate with competitor monitoring
@@ -394,7 +394,7 @@ class EventBasedScheduler:
         # This would integrate with competitor analysis systems
         return []
         
-    async def _check_platform_changes(self):
+    async def _check_platform_changes(self) -> None:
         """Check for platform algorithm or feature changes"""
         try:
             # This would integrate with platform monitoring systems
@@ -422,7 +422,7 @@ class EventBasedScheduler:
         # This would integrate with platform monitoring
         return []
         
-    async def _check_external_events(self):
+    async def _check_external_events(self) -> None:
         """Check for external events (news, weather, etc.)"""
         try:
             # This would integrate with news APIs, weather APIs, etc.
@@ -453,7 +453,7 @@ class EventBasedScheduler:
         # This would integrate with news APIs, weather APIs, etc.
         return []
         
-    async def process_event(self, event: EventData):
+    async def process_event(self, event -> None: EventData) -> None:
         """
         Process a detected event and take appropriate scheduling actions
         
@@ -569,7 +569,7 @@ class EventBasedScheduler:
                 
         return True
         
-    async def _execute_trigger(self, event: EventData, trigger: EventTrigger):
+    async def _execute_trigger(self, event -> None: EventData, trigger -> None: EventTrigger) -> None:
         """Execute a trigger action"""
         try:
             action = trigger.action
@@ -592,13 +592,13 @@ class EventBasedScheduler:
         except Exception as e:
             logger.error(f"Trigger execution error: {e}")
             
-    async def _publish_immediately(self, event: EventData, trigger: EventTrigger):
+    async def _publish_immediately(self, event -> None: EventData, trigger -> None: EventTrigger) -> None:
         """Publish content immediately"""
         # Find content ready for immediate publication
         # This would integrate with the content management system
         logger.info(f"Publishing immediately due to {event.event_type.value}")
         
-    async def _reschedule_optimal(self, event: EventData, trigger: EventTrigger):
+    async def _reschedule_optimal(self, event -> None: EventData, trigger -> None: EventTrigger) -> None:
         """Reschedule content to optimal time"""
         # Find scheduled content and reschedule to capitalize on event
         optimal_time = await self._calculate_optimal_time(event)
@@ -623,23 +623,23 @@ class EventBasedScheduler:
             response_time = self.response_times[event.priority]
             return now + timedelta(seconds=response_time)
             
-    async def _boost_existing_content(self, event: EventData, trigger: EventTrigger):
+    async def _boost_existing_content(self, event -> None: EventData, trigger -> None: EventTrigger) -> None:
         """Boost existing content that's relevant to event"""
         logger.info(f"Boosting existing content for {event.event_type.value}")
         
-    async def _create_reactive_content(self, event: EventData, trigger: EventTrigger):
+    async def _create_reactive_content(self, event -> None: EventData, trigger -> None: EventTrigger) -> None:
         """Create reactive content based on event"""
         logger.info(f"Creating reactive content for {event.event_type.value}")
         
-    async def _pause_publications(self, event: EventData, trigger: EventTrigger):
+    async def _pause_publications(self, event -> None: EventData, trigger -> None: EventTrigger) -> None:
         """Pause scheduled publications"""
         logger.info(f"Pausing publications due to {event.event_type.value}")
         
-    async def _notify_creator(self, event: EventData, trigger: EventTrigger):
+    async def _notify_creator(self, event -> None: EventData, trigger -> None: EventTrigger) -> None:
         """Notify creator about the event"""
         logger.info(f"Notifying creator about {event.event_type.value}")
         
-    async def _execute_task(self, task: ScheduledTask):
+    async def _execute_task(self, task -> None: ScheduledTask) -> None:
         """Execute a scheduled task"""
         try:
             task.status = "executing"
@@ -655,7 +655,7 @@ class EventBasedScheduler:
             logger.error(f"Task execution error: {e}")
             task.status = "failed"
             
-    async def _cleanup_expired_events(self):
+    async def _cleanup_expired_events(self) -> None:
         """Clean up expired events"""
         now = datetime.now(timezone.utc)
         expired_events = [

@@ -100,7 +100,7 @@ class ContentDistributionTracker:
     engagement tracking, performance analytics, and optimization insights.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.distributions: Dict[str, ContentDistribution] = {}
         self.engagement_data: List[EngagementData] = []
         self.analytics_cache: Dict[str, DistributionAnalytics] = {}
@@ -110,7 +110,7 @@ class ContentDistributionTracker:
         self._initialize_distribution_rules()
         logger.info("Content Distribution Tracker initialized")
     
-    def _initialize_platform_capabilities(self):
+    def _initialize_platform_capabilities(self) -> None:
         """Initialize platform-specific capabilities and limits"""
         self.platform_capabilities = {
             'youtube': {
@@ -155,7 +155,7 @@ class ContentDistributionTracker:
             }
         }
     
-    def _initialize_distribution_rules(self):
+    def _initialize_distribution_rules(self) -> None:
         """Initialize content distribution rules"""
         self.distribution_rules = {
             'auto_optimize_format': True,
@@ -255,7 +255,7 @@ class ContentDistributionTracker:
         
         return valid_platforms
     
-    async def _process_distribution(self, distribution_id: str):
+    async def _process_distribution(self, distribution_id -> None: str) -> None:
         """Process content distribution to platforms"""
         try:
             distribution = self.distributions[distribution_id]
@@ -308,7 +308,7 @@ class ContentDistributionTracker:
         content_hash = hash(distribution.content_id + platform) % 1000000
         return f"{base_url}{content_hash}"
     
-    async def _start_engagement_tracking(self, distribution_id: str):
+    async def _start_engagement_tracking(self, distribution_id -> None: str) -> None:
         """Start tracking engagement for distributed content"""
         distribution = self.distributions[distribution_id]
         
@@ -356,7 +356,7 @@ class ContentDistributionTracker:
         
         return metrics
     
-    async def _calculate_distribution_analytics(self, distribution_id: str):
+    async def _calculate_distribution_analytics(self, distribution_id -> None: str) -> None:
         """Calculate comprehensive analytics for distribution"""
         distribution = self.distributions[distribution_id]
         content_id = distribution.content_id

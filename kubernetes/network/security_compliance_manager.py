@@ -129,10 +129,10 @@ class NetworkSecurityComplianceManager:
     
     def __init__(
         self,
-        database_url: str,
-        redis_url: str = "redis://localhost:6379",
-        threat_intelligence_feeds: Optional[List[str]] = None
-    ):
+        database_url -> None: str,
+        redis_url -> None: str = "redis -> None://localhost -> None:6379",
+        threat_intelligence_feeds -> None: Optional[List[str]] = None
+    ) -> None:
         self.database_url = database_url
         self.redis_url = redis_url
         self.threat_intelligence_feeds = threat_intelligence_feeds or []
@@ -641,7 +641,7 @@ Check GDPR compliance violations"""
                 await asyncio.sleep(3600)
 
 
-async def main():
+async def main() -> None:
     """Demo of Network Security & Compliance Manager"""
     
     # Initialize security manager

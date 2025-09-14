@@ -156,7 +156,7 @@ class PlatformSEOEngine:
     - Synchronisation multi-comptes
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialise le moteur SEO multi-plateforme"""
         self.config = config or {}
         self.session: Optional[aiohttp.ClientSession] = None
@@ -904,7 +904,7 @@ class PlatformSEOEngine:
 class HashtagIntelligenceEngine:
     """Moteur intelligent de génération de hashtags"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.trending_hashtags: Dict[Platform, List[str]] = {}
         self.hashtag_performance: Dict[str, Dict[str, float]] = {}
     
@@ -972,7 +972,7 @@ class HashtagIntelligenceEngine:
 class SemanticSearchOptimization:
     """Semantic search optimization"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.config = config or {}
     
     async def optimize_for_semantic_search(

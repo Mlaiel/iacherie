@@ -1,3 +1,8 @@
+"""
+Cloud Platform Manager module
+Enterprise implementation for Ainflue platform
+"""
+
 # Ainflue Infrastructure Module
 # =============================
 # 
@@ -73,7 +78,7 @@ class CloudPlatformManager:
     with enterprise-grade security, monitoring, and deployment capabilities.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize cloud platform manager."""
         self.config = config or {}
         self.providers: Dict[CloudProvider, Any] = {}
@@ -84,7 +89,7 @@ class CloudPlatformManager:
         
         logger.info("CloudPlatformManager initialized")
     
-    async def initialize_providers(self, provider_configs: Dict[CloudProvider, Dict[str, Any]]):
+    async def initialize_providers(self, provider_configs -> None: Dict[CloudProvider, Dict[str, Any]]) -> None:
         """Initialize cloud providers with configurations."""
         try:
             for provider, config in provider_configs.items():
@@ -160,7 +165,7 @@ class CloudPlatformManager:
             logger.error(f"Deployment {deployment_id} failed: {str(e)}")
             raise
     
-    async def _deploy_to_provider(self, deployment_id: str, provider: CloudProvider, config: DeploymentConfig):
+    async def _deploy_to_provider(self, deployment_id -> None: str, provider -> None: CloudProvider, config -> None: DeploymentConfig) -> None:
         """Deploy infrastructure to a specific cloud provider."""
         try:
             self._log_deployment(deployment_id, f"Starting deployment to {provider.value}")
@@ -328,7 +333,7 @@ class CloudPlatformManager:
         
         return alerts
     
-    def _log_deployment(self, deployment_id: str, message: str):
+    def _log_deployment(self, deployment_id -> None: str, message -> None: str) -> None:
         """Log deployment message."""
         if deployment_id in self.deployments:
             self.deployments[deployment_id]["logs"].append({

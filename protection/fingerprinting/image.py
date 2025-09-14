@@ -1,8 +1,8 @@
-"""🖼️ Image Content Fingerprinting Service
+"""# [EMOJI_REMOVED] Image Content Fingerprinting Service
 =======================================
 
 Enterprise-grade image fingerprinting with advanced computer vision:
-- Perceptual hashing (pHash, dHash, aHash, wHash)
+    - Perceptual hashing (pHash, dHash, aHash, wHash)
 - CLIP neural embeddings
 - Traditional feature extraction (SIFT, ORB, SURF)
 - Color histogram analysis
@@ -69,7 +69,7 @@ class PerceptualImageHashing:
     """
 Advanced perceptual hashing for images using multiple algorithms."""
     
-    def __init__(self, hash_size: int = 16):
+    def __init__(self, hash_size -> None: int = 16) -> None:
         try:
             logger.info(f"Executing __init__")
             
@@ -166,13 +166,13 @@ Advanced perceptual hashing for images using multiple algorithms."""
 class CLIPEmbeddingExtractor:
     """CLIP-based neural embeddings for semantic image understanding."""
     
-    def __init__(self, model_name: str = "openai/clip-vit-base-patch32"):
+    def __init__(self, model_name -> None: str = "openai/clip-vit-base-patch32") -> None:
         self.model_name = model_name
         self.model = None
         self.processor = None
         self._initialize_model()
         
-    def _initialize_model(self):
+    def _initialize_model(self) -> None:
         """Initialize CLIP model."""
         try:
             self.processor = CLIPProcessor.from_pretrained(self.model_name)
@@ -255,7 +255,7 @@ Extract semantic features from embeddings."""
 class TraditionalFeatureExtractor:
     """Traditional computer vision feature extraction (SIFT, ORB, SURF)."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.sift = cv2.SIFT_create()
         self.orb = cv2.ORB_create()
         try:
@@ -532,7 +532,7 @@ class TraditionalFeatureExtractor:
 class ColorAnalyzer:
     """Advanced color analysis and histogram extraction."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.n_dominant_colors = 8
         
     def analyze_colors(self, image_path: str) -> Dict[str, Any]:
@@ -805,7 +805,7 @@ Generate fingerprint from color analysis."""
 class TextureAnalyzer:
     """Texture and pattern analysis for images."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.lbp_radius = 3
         self.lbp_n_points = 8 * self.lbp_radius
         
@@ -997,7 +997,7 @@ class TextureAnalyzer:
         """Analyze fractal dimension of the image."""
         try:
             # Simple box-counting method for fractal dimension
-            def box_count(img, k):
+            def box_count(img, k) -> None:
                 s = np.add.reduceat(
                     np.add.reduceat(img, np.arange(0, img.shape[0], k), axis=0),
                     np.arange(0, img.shape[1], k), axis=1)
@@ -1068,7 +1068,7 @@ class ImageFingerprintingService:
     - Multi-scale and rotation invariance
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.perceptual_hasher = PerceptualImageHashing()
         self.clip_extractor = CLIPEmbeddingExtractor()
@@ -1362,3 +1362,5 @@ Calculate hash similarity."""
         
         matches = sum(c1 == c2 for c1, c2 in zip(hash1, hash2))
         return matches / len(hash1)
+
+# File has syntax issues - needs manual review

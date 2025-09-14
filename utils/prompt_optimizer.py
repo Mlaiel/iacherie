@@ -68,7 +68,7 @@ class PromptOptimizer:
     - Context injection
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize prompt optimizer"""
         self.templates: Dict[str, PromptTemplate] = {}
         self.optimization_rules = self._load_optimization_rules()

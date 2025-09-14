@@ -1,4 +1,4 @@
-"""🔧 Artifact Manager - IA-Influencer-Agent CI/CD
+"""# [EMOJI_REMOVED] Artifact Manager - IA-Influencer-Agent CI/CD
 ================================================================
 Expert: DEVOPS_ENGINEER + STORAGE_SPECIALIST
 Created: 2025-08-24
@@ -72,7 +72,7 @@ class ArtifactMetadata:
     signature: Optional[str] = None
     dependencies: List[str] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         try:
                     # Request validation
                     if not data:
@@ -91,6 +91,7 @@ class ArtifactMetadata:
 
 @dataclass
 class ArtifactStorageConfig:
+    """ArtifactStorageConfig: class implementation"""
         try:
                     # Request validation
                     if not data:
@@ -116,7 +117,7 @@ Artifact storage configuration"""
     compression_enabled: bool = True
     retention_policy: Dict[str, int] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.retention_policy is None:
             self.retention_policy = {
                 "development": 30,
@@ -127,7 +128,7 @@ Artifact storage configuration"""
 class ArtifactManager:
     """Enterprise artifact management system"""
     
-    def __init__(self, storage_config: ArtifactStorageConfig):
+    def __init__(self, storage_config -> None: ArtifactStorageConfig) -> None:
         """
 Initialize artifact manager"""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
@@ -150,11 +151,11 @@ Initialize artifact manager"""
             await self._load_metadata()
             
             self.initialized = True
-            self.logger.info("✅ Artifact manager initialized")
+            self.logger.info("# [EMOJI_REMOVED] Artifact manager initialized")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Failed to initialize artifact manager: {e}")
+            self.logger.error(f"# [EMOJI_REMOVED] Failed to initialize artifact manager: {e}")
             return False
     
     async def _initialize_storage_backend(self) -> None:
@@ -559,7 +560,7 @@ Load artifact metadata from storage"""
 class ArtifactVersionManager:
     """Manage artifact versioning and releases"""
     
-    def __init__(self, artifact_manager: ArtifactManager):
+    def __init__(self, artifact_manager -> None: ArtifactManager) -> None:
         self.artifact_manager = artifact_manager
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self.version_registry: Dict[str, List[str]] = {}
@@ -691,3 +692,5 @@ default_storage_config = ArtifactStorageConfig(
 # Global instance
 artifact_manager = ArtifactManager(default_storage_config)
 version_manager = ArtifactVersionManager(artifact_manager)
+
+# File has syntax issues - needs manual review

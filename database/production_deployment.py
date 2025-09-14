@@ -1,3 +1,8 @@
+"""
+Production Deployment module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """Database Production Deployment Script
 =========================================
@@ -49,7 +54,7 @@ logger = logging.getLogger(__name__)
 class ProductionDatabaseDeployment:
     """Orchestrates complete production database deployment"""
     
-    def __init__(self, config_file: Optional[str] = None):
+    def __init__(self, config_file -> None: Optional[str] = None) -> None:
         self.config = self._load_config(config_file)
         self.deployment_results = {}
         self.start_time = datetime.utcnow()
@@ -814,7 +819,7 @@ class ProductionDatabaseDeployment:
         except Exception as e:
             logger.warning(f"Cleanup failed: {e}")
 
-async def main():
+async def main() -> None:
     """Main deployment function"""
     parser = argparse.ArgumentParser(description="Deploy Ainflue production database")
     parser.add_argument("--config", help="Configuration file path", default=None)

@@ -1,5 +1,12 @@
+"""
+Content Creator Workflow Showcase module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
+import logging
+
 Content Creator Workflow Showcase - Examples Enterprise Ultra Avancée
 ====================================================================
 
@@ -38,7 +45,7 @@ class WorkflowMetrics:
     performance_score: float
     timestamp: datetime = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.timestamp is None:
             self.timestamp = datetime.now()
 
@@ -50,7 +57,7 @@ class ValidationResult:
     compliance_score: float
     recommendations: List[str] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.recommendations is None:
             self.recommendations = []
 
@@ -69,7 +76,7 @@ class WorkflowDemonstrationResult:
 class RealTimeMetricsCollector:
     """Collecteur métriques temps réel pour démonstrations"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.metrics_history: List[WorkflowMetrics] = []
         self.start_time = time.time()
     
@@ -107,7 +114,7 @@ class RealTimeMetricsCollector:
 class BusinessLogicValidator:
     """Validateur logique business pour examples"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.business_rules = {
             "upload_sequence": ["content_validation", "format_optimization", "metadata_extraction"],
             "ai_processing": ["rights_detection", "quality_enhancement", "protection_measures"],
@@ -175,7 +182,7 @@ class BusinessLogicValidator:
 class PerformanceMonitor:
     """Moniteur performance pour benchmarks"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.benchmarks = {}
         self.performance_data = []
     
@@ -196,7 +203,7 @@ class ContentCreatorWorkflowShowcase:
     Multi-format avec intégrations end-to-end et métriques temps réel
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.metrics_collector = RealTimeMetricsCollector()
         self.business_validator = BusinessLogicValidator()
         self.performance_monitor = PerformanceMonitor()
@@ -733,7 +740,7 @@ class ContentCreatorWorkflowShowcase:
         }
 
 
-async def run_content_creator_showcase():
+async def run_content_creator_showcase() -> None:
     """Exécution démonstrations workflows créateurs"""
     
     print("🚀 CONTENT CREATOR WORKFLOW SHOWCASE - EXAMPLES ENTERPRISE")

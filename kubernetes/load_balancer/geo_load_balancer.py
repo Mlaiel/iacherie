@@ -7,7 +7,7 @@ global regions with latency optimization and regional compliance.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ WARNING: This code is proprietary and confidential.
+# [EMOJI_REMOVED] WARNING: This code is proprietary and confidential.
 Unauthorized copying, distribution, or use without explicit written
 permission from Fahed Mlaiel is strictly prohibited and may result
 in legal action.
@@ -58,7 +58,7 @@ Geographic region configuration for load balancing"""
     preferred_cdn: Optional[str] = None
     timezone: str = "UTC"
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         try:
                     # Request validation
                     if not data:
@@ -105,7 +105,7 @@ class ServerEndpoint:
     ssl_enabled: bool = True
     compliance_certifications: List[str] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.compliance_certifications is None:
             self.compliance_certifications = []
 
@@ -137,10 +137,10 @@ class GeographicLoadBalancer:
     
     def __init__(
         self,
-        geoip_database_path: str = "/opt/geoip/GeoLite2-City.mmdb",
-        redis_client: Optional[redis.Redis] = None,
-        config_file: Optional[str] = None
-    ):
+        geoip_database_path -> None: str = "/opt/geoip/GeoLite2-City.mmdb",
+        redis_client -> None: Optional[redis.Redis] = None,
+        config_file -> None: Optional[str] = None
+    ) -> None:
         self.geoip_database_path = geoip_database_path
         self.redis_client = redis_client
         self.config_file = config_file
@@ -814,7 +814,7 @@ Calculate score based on server latency"""
             
             self._monitoring_active = True
             
-            async def monitor_latency():
+            async def monitor_latency() -> None:
                 while self._monitoring_active:
                     try:
                         await self._measure_all_server_latencies()
@@ -900,7 +900,7 @@ Calculate score based on server latency"""
     async def _start_health_monitoring(self) -> None:
         """Start health monitoring for all servers"""
         try:
-            async def monitor_health():
+            async def monitor_health() -> None:
                 while self._monitoring_active:
                     try:
                         await self._check_all_server_health()
@@ -1144,3 +1144,5 @@ async def route_ai_agent_request(
     except Exception as e:
         logger.error(f"Failed to route AI agent request: {e}")
         return None
+
+# File has syntax issues - needs manual review

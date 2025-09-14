@@ -1,5 +1,7 @@
 """Add monetization enterprise tables
 
+import logging
+
 Revision ID: 001_add_monetization_tables
 Revises: 
 Create Date: 2025-09-07 02:00:00.000000

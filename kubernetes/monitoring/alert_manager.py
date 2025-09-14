@@ -105,11 +105,11 @@ class AlertManager:
     
     def __init__(
         self,
-        redis_client: Optional[aioredis.Redis] = None,
-        correlation_window: int = 300,  # 5 minutes
-        cleanup_interval: int = 3600,   # 1 hour
-        max_alert_age: int = 604800     # 7 days
-    ):
+        redis_client -> None: Optional[aioredis.Redis] = None,
+        correlation_window -> None: int = 300,  # 5 minutes
+        cleanup_interval -> None: int = 3600,   # 1 hour
+        max_alert_age -> None: int = 604800     # 7 days
+    ) -> None:
         self.redis_client = redis_client
         self.correlation_window = correlation_window
         self.cleanup_interval = cleanup_interval
@@ -139,7 +139,7 @@ class AlertManager:
         # Register default notification channels
         self._register_default_channels()
         
-    def _register_default_channels(self):
+    def _register_default_channels(self) -> None:
         try:
             logger.info(f"Executing _register_default_channels")
             
@@ -163,7 +163,7 @@ class AlertManager:
             }
         ))
         
-    async def start_processing(self):
+    async def start_processing(self) -> None:
         """Start alert processing"""
         if self._processing:
             logger.warning("Alert processing already running")
@@ -178,7 +178,7 @@ class AlertManager:
         
         logger.info("Alert processing started")
         
-    async def stop_processing(self):
+    async def stop_processing(self) -> None:
         """Stop alert processing"""
         self._processing = False
         
@@ -201,7 +201,7 @@ class AlertManager:
         
         logger.info("Alert processing stopped")
         
-    async def _processing_loop(self):
+    async def _processing_loop(self) -> None:
         """Main alert processing loop"""
         while self._processing:
             try:
@@ -216,7 +216,7 @@ class AlertManager:
                 logger.error(f"Error in alert processing loop: {e}")
                 await asyncio.sleep(5)
                 
-    async def _cleanup_loop(self):
+    async def _cleanup_loop(self) -> None:
         """Cleanup loop for old alerts and maintenance"""
         while self._processing:
             try:
@@ -359,7 +359,7 @@ class AlertManager:
         logger.info(f"Silence rule created: {silence_id}")
         return silence_id
         
-    async def _process_pending_alerts(self):
+    async def _process_pending_alerts(self) -> None:
         """Process pending alerts from queue"""
         if not self.redis_client:
             return
@@ -383,7 +383,7 @@ class AlertManager:
         except Exception as e:
             logger.error(f"Error processing pending alerts: {e}")
             
-    async def _send_notifications(self, alert_id: str):
+    async def _send_notifications(self, alert_id -> None: str) -> None:
         """Send notifications for an alert"""
         if alert_id not in self._active_alerts:
             return
@@ -414,7 +414,7 @@ class AlertManager:
             except Exception as e:
                 logger.error(f"Error sending alert to channel {channel_name}: {e}")
                 
-    async def _send_to_channel(self, alert: Alert, channel: NotificationChannel):
+    async def _send_to_channel(self, alert -> None: Alert, channel -> None: NotificationChannel) -> None:
         """Send alert to specific notification channel"""
         if channel.type == "email":
             await self._send_email_notification(alert, channel)
@@ -427,7 +427,7 @@ class AlertManager:
         else:
             logger.warning(f"Unknown channel type: {channel.type}")
             
-    async def _send_email_notification(self, alert: Alert, channel: NotificationChannel):
+    async def _send_email_notification(self, alert -> None: Alert, channel -> None: NotificationChannel) -> None:
         """Send email notification"""
         config = channel.config
         
@@ -475,7 +475,7 @@ class AlertManager:
         # In production, use async email library like aiosmtplib
         logger.info(f"Email notification sent for alert: {alert.id}")
         
-    async def _send_slack_notification(self, alert: Alert, channel: NotificationChannel):
+    async def _send_slack_notification(self, alert -> None: Alert, channel -> None: NotificationChannel) -> None:
         """Send Slack notification"""
         config = channel.config
         
@@ -519,7 +519,7 @@ class AlertManager:
                 else:
                     logger.error(f"Failed to send Slack notification: {response.status}")
                     
-    async def _send_webhook_notification(self, alert: Alert, channel: NotificationChannel):
+    async def _send_webhook_notification(self, alert -> None: Alert, channel -> None: NotificationChannel) -> None:
         """Send webhook notification"""
         config = channel.config
         
@@ -545,12 +545,12 @@ class AlertManager:
                 else:
                     logger.error(f"Failed to send webhook notification: {response.status}")
                     
-    async def _send_telegram_notification(self, alert: Alert, channel: NotificationChannel):
+    async def _send_telegram_notification(self, alert -> None: Alert, channel -> None: NotificationChannel) -> None:
         """Send Telegram notification"""
         config = channel.config
         
         # Format message for Telegram
-        message = f"🚨 *{alert.severity.value.upper()}*: {alert.name}\n\n"
+        message = f"# [EMOJI_REMOVED] *{alert.severity.value.upper()}*: {alert.name}\n\n"
         message += f"*Message:* {alert.message}\n"
         message += f"*Source:* {alert.source}\n"
         message += f"*Time:* {alert.timestamp.strftime('%Y-%m-%d %H:%M:%S')}\n"
@@ -558,7 +558,7 @@ class AlertManager:
         if alert.labels:
             message += "\n*Labels:*\n"
             for key, value in alert.labels.items():
-                message += f"• {key}: {value}\n"
+                message += f"# [EMOJI_REMOVED] {key}: {value}\n"
                 
         payload = {
             "chat_id": config["chat_id"],
@@ -636,13 +636,13 @@ Check if alert matches silence rule"""
             
         return False
         
-    def _update_rate_limit(self, alert: Alert, channel_name: str):
+    def _update_rate_limit(self, alert -> None: Alert, channel_name -> None: str) -> None:
         """Update rate limit counter"""
         key = f"{alert.name}:{alert.source}"
         if key in self._rate_limits:
             self._rate_limits[key]["count"] += 1
             
-    async def _check_escalations(self):
+    async def _check_escalations(self) -> None:
         """Check and process alert escalations"""
         for rule in self._escalation_rules:
             if not rule.enabled:
@@ -675,7 +675,7 @@ Check if alert matches escalation conditions"""
                     
         return True
         
-    async def _escalate_alert(self, alert: Alert, rule: EscalationRule):
+    async def _escalate_alert(self, alert -> None: Alert, rule -> None: EscalationRule) -> None:
         """Escalate an alert"""
         logger.info(f"Escalating alert {alert.id} via rule {rule.name}")
         
@@ -688,12 +688,12 @@ Check if alert matches escalation conditions"""
                 except Exception as e:
                     logger.error(f"Error escalating to channel {channel_name}: {e}")
                     
-    async def _process_correlations(self):
+    async def _process_correlations(self) -> None:
         """Process alert correlations"""
         # Implement correlation logic based on time windows and patterns
         pass
         
-    async def _cleanup_old_alerts(self):
+    async def _cleanup_old_alerts(self) -> None:
         """
 Clean up old resolved alerts"""
         cutoff = datetime.utcnow() - timedelta(seconds=self.max_alert_age)
@@ -706,7 +706,7 @@ Clean up old resolved alerts"""
         
         logger.debug(f"Cleaned up old alerts, history size: {len(self._alert_history)}")
         
-    async def _cleanup_expired_silences(self):
+    async def _cleanup_expired_silences(self) -> None:
         """Clean up expired silence rules"""
         now = datetime.utcnow()
         active_silences = []
@@ -719,7 +719,7 @@ Clean up old resolved alerts"""
                 
         self._silence_rules = active_silences
         
-    async def _load_state(self):
+    async def _load_state(self) -> None:
         """Load state from Redis"""
         if not self.redis_client:
             return
@@ -741,7 +741,7 @@ Clean up old resolved alerts"""
         except Exception as e:
             logger.error(f"Error loading state from Redis: {e}")
             
-    async def _save_state(self):
+    async def _save_state(self) -> None:
         """Save state to Redis"""
         if not self.redis_client:
             return
@@ -775,12 +775,12 @@ Clean up old resolved alerts"""
             logger.error(f"Error saving state to Redis: {e}")
             
     # Public interface methods
-    def register_channel(self, channel: NotificationChannel):
+    def register_channel(self, channel -> None: NotificationChannel) -> None:
         """Register a notification channel"""
         self._notification_channels[channel.name] = channel
         logger.info(f"Registered notification channel: {channel.name}")
         
-    def register_escalation_rule(self, rule: EscalationRule):
+    def register_escalation_rule(self, rule -> None: EscalationRule) -> None:
         """Register an escalation rule"""
         self._escalation_rules.append(rule)
         logger.info(f"Registered escalation rule: {rule.name}")
@@ -820,3 +820,5 @@ Clean up old resolved alerts"""
             "escalation_rules": len(self._escalation_rules),
             "silence_rules": len(self._silence_rules)
         }
+
+# File has syntax issues - needs manual review

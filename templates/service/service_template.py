@@ -1,4 +1,6 @@
 """{{service_name}} Service for Ainflue Platform
+import asyncio
+
 {{service_description}}
 
 Author: {{author_name}} ({{author_email}})
@@ -52,7 +54,7 @@ class I{{service_name}}Service(ABC):
 class {{service_name}}Service(I{{service_name}}Service):
     """{{service_name}} service implementation"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
     async def process(self, request: {{service_name}}Request) -> {{service_name}}Response:
@@ -119,3 +121,5 @@ async def create_{{service_name_lower}}_service() -> {{service_name}}Service:
     "author": "{{author_name}}",
     "created": "{{created_date}}"
 }
+
+# File has syntax issues - needs manual review

@@ -78,7 +78,7 @@ class ReadabilityOptimizationResult:
 class ReadabilityOptimizer:
     """Advanced readability optimization engine."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the Readability Optimizer."""
         self.nlp_model = None
         self.word_replacements = self._load_word_replacements()
@@ -94,7 +94,7 @@ class ReadabilityOptimizer:
         except:
             pass
     
-    def _load_models(self):
+    def _load_models(self) -> None:
         """Load NLP models for readability analysis."""
         try:
             # Load spaCy model
@@ -285,7 +285,7 @@ class ReadabilityOptimizer:
             "monitoring": "watching"
         }
     
-    def _load_complex_words(self):
+    def _load_complex_words(self) -> None:
         """Load list of complex words to identify."""
         # Complex words that typically have simpler alternatives
         complex_word_list = [
@@ -614,7 +614,7 @@ class ReadabilityOptimizer:
                 # Case-insensitive replacement
                 pattern = r'\b' + re.escape(complex_word) + r'\b'
                 
-                def replace_func(match):
+                def replace_func(match) -> None:
                     original = match.group()
                     replacement = simple_word
                     
@@ -853,7 +853,7 @@ class ReadabilityOptimizer:
                 if complex_term in simplified_content.lower():
                     pattern = r'\b' + re.escape(complex_term) + r'\b'
                     
-                    def replace_func(match):
+                    def replace_func(match) -> None:
                         original = match.group()
                         replacement = simple_term
                         

@@ -145,7 +145,7 @@ class AutoScalingConfig:
     energy_efficiency_target: float = 0.85
     replicas: int = 3
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.supported_resource_types is None:
             self.supported_resource_types = [
                 ResourceType.CPU,
@@ -184,7 +184,7 @@ class AutoScalingManager:
     - Cooling and energy cost optimization
     """
     
-    def __init__(self, namespace: str = "ia-auto-scaling"):
+    def __init__(self, namespace -> None: str = "ia-auto-scaling") -> None:
         """
         Initialize auto-scaling manager
         
@@ -305,7 +305,8 @@ class AutoScalingManager:
         """Initialize deep learning model for complex scaling patterns"""
         try:
             class DeepScalingModel(nn.Module):
-                def __init__(self, input_dim=50, hidden_dim=128):
+    """DeepScalingModel class implementation"""
+                def __init__(self, input_dim=50, hidden_dim=128) -> None:
                     super().__init__()
                     self.lstm = nn.LSTM(input_dim, hidden_dim, batch_first=True, num_layers=2)
                     self.attention = nn.MultiheadAttention(hidden_dim, num_heads=8)
@@ -318,7 +319,7 @@ class AutoScalingManager:
                         nn.Linear(32, 5)  # 5 resource types
                     )
                 
-                def forward(self, x):
+                def forward(self, x) -> None:
                     lstm_out, _ = self.lstm(x)
                     attn_out, _ = self.attention(lstm_out, lstm_out, lstm_out)
                     return self.fc_layers(attn_out[:, -1, :])  # Use last timestep

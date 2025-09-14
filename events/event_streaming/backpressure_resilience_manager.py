@@ -96,7 +96,7 @@ class ResilienceConfig:
 class PressureGauge:
     """Measures system pressure based on multiple metrics"""
     
-    def __init__(self, config: ResilienceConfig):
+    def __init__(self, config -> None: ResilienceConfig) -> None:
         self.config = config
         self.metrics_history: deque = deque(maxlen=100)
         
@@ -167,7 +167,7 @@ class PressureGauge:
 class CircuitBreaker:
     """Circuit breaker for protecting downstream systems"""
     
-    def __init__(self, config: ResilienceConfig):
+    def __init__(self, config -> None: ResilienceConfig) -> None:
         self.config = config
         self.state = CircuitState.CLOSED
         self.failure_count = 0
@@ -208,7 +208,7 @@ class CircuitBreaker:
             return time_since_failure.total_seconds() >= self.config.circuit_timeout_seconds
         return True
     
-    async def _on_success(self):
+    async def _on_success(self) -> None:
         """Handle successful operation"""
         if self.state == CircuitState.HALF_OPEN:
             self.state = CircuitState.CLOSED
@@ -216,7 +216,7 @@ class CircuitBreaker:
         self.failure_count = 0
         self.half_open_calls = 0
     
-    async def _on_failure(self):
+    async def _on_failure(self) -> None:
         """Handle failed operation"""
         self.failure_count += 1
         self.last_failure_time = datetime.now(timezone.utc)
@@ -238,7 +238,7 @@ class CircuitBreakerOpenError(Exception):
 class AdaptiveBatchProcessor:
     """Adaptive batch processing to handle backpressure"""
     
-    def __init__(self, config: ResilienceConfig):
+    def __init__(self, config -> None: ResilienceConfig) -> None:
         self.config = config
         self.current_batch_size = 100
         self.min_batch_size = 10
@@ -285,7 +285,7 @@ class AdaptiveBatchProcessor:
             logger.error(f"Error in adaptive batch processing: {e}")
             return []
     
-    async def _record_batch_performance(self, batch_size: int, processing_time: float, success: bool):
+    async def _record_batch_performance(self, batch_size -> None: int, processing_time -> None: float, success -> None: bool) -> None:
         """Record batch processing performance"""
         self.batch_performance_history.append({
             "batch_size": batch_size,
@@ -294,7 +294,7 @@ class AdaptiveBatchProcessor:
             "timestamp": datetime.now(timezone.utc)
         })
     
-    async def _adapt_batch_size(self):
+    async def _adapt_batch_size(self) -> None:
         """Adapt batch size based on recent performance"""
         try:
             if len(self.batch_performance_history) < 5:
@@ -333,7 +333,7 @@ class AdaptiveBatchProcessor:
 class LoadShedder:
     """Load shedding to drop events under extreme pressure"""
     
-    def __init__(self, config: ResilienceConfig):
+    def __init__(self, config -> None: ResilienceConfig) -> None:
         self.config = config
         self.drop_rates_by_priority = {
             "low": 0.8,     # Drop 80% of low priority events
@@ -396,7 +396,7 @@ class LoadShedder:
 class BackpressureResilienceManager:
     """Main backpressure and resilience manager for Ainflue streaming platform"""
     
-    def __init__(self, config: ResilienceConfig = None, metrics_collector=None):
+    def __init__(self, config -> None: ResilienceConfig = None, metrics_collector=None) -> None:
         self.config = config or ResilienceConfig()
         self.metrics_collector = metrics_collector
         self.current_metrics = BackpressureMetrics()
@@ -419,7 +419,7 @@ class BackpressureResilienceManager:
         self._manager_task: Optional[asyncio.Task] = None
         self._shutdown_event = asyncio.Event()
         
-    async def start(self):
+    async def start(self) -> None:
         """Start the backpressure resilience manager"""
         try:
             logger.info("Starting Backpressure Resilience Manager")
@@ -433,7 +433,7 @@ class BackpressureResilienceManager:
             logger.error(f"Failed to start backpressure resilience manager: {e}")
             raise
     
-    async def stop(self):
+    async def stop(self) -> None:
         """Stop the resilience manager"""
         try:
             logger.info("Stopping Backpressure Resilience Manager")
@@ -555,7 +555,7 @@ class BackpressureResilienceManager:
         await asyncio.sleep(0.001 * len(batch))
         return batch
     
-    async def _update_metrics(self):
+    async def _update_metrics(self) -> None:
         """Update current backpressure metrics"""
         try:
             # Calculate buffer utilization
@@ -580,7 +580,7 @@ class BackpressureResilienceManager:
         except Exception as e:
             logger.error(f"Error updating metrics: {e}")
     
-    async def _update_system_state(self, pressure_level: float):
+    async def _update_system_state(self, pressure_level -> None: float) -> None:
         """Update system state based on pressure level"""
         try:
             previous_state = self.system_state
@@ -611,7 +611,7 @@ class BackpressureResilienceManager:
         except Exception as e:
             logger.error(f"Error updating system state: {e}")
     
-    async def _manager_loop(self):
+    async def _manager_loop(self) -> None:
         """Main manager monitoring loop"""
         try:
             while not self._shutdown_event.is_set():

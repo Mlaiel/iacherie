@@ -130,7 +130,7 @@ class PayPalPayoutManager:
     - 🤖 IA Prompt Engineer: Intelligent notifications + automated status updates + smart insights
     """
     
-    def __init__(self, paypal_config: Dict[str, str], redis_client=None, db_pool=None):
+    def __init__(self, paypal_config -> None: Dict[str, str], redis_client=None, db_pool=None) -> None:
         """Initialize PayPal Payout Manager with enterprise features"""
         self.paypal_config = paypal_config
         self.redis_client = redis_client
@@ -188,7 +188,7 @@ class PayPalPayoutManager:
         
         logger.info("🏆 PayPal Payout Manager initialized with multi-role expertise")
     
-    def _initialize_ml_models(self):
+    def _initialize_ml_models(self) -> None:
         """🧠 ML Engineer: Initialize ML models for payout optimization"""
         try:
             # Generate sample training data for demonstration
@@ -846,7 +846,7 @@ class PayPalPayoutManager:
                 errors=[str(e)]
             )
     
-    async def _store_payout_batch(self, payout_batch: PayoutBatch):
+    async def _store_payout_batch(self, payout_batch -> None: PayoutBatch) -> None:
         """🗄️ DBA: Store payout batch in database"""
         try:
             if self.db_pool:
@@ -869,7 +869,7 @@ class PayPalPayoutManager:
         except Exception as e:
             logger.warning(f"⚠️ Payout batch storage failed: {str(e)}")
     
-    async def _store_payout_result(self, payout_result: PayoutResult):
+    async def _store_payout_result(self, payout_result -> None: PayoutResult) -> None:
         """🗄️ DBA: Store payout result in database"""
         try:
             if self.db_pool:
@@ -897,9 +897,9 @@ class PayPalPayoutManager:
     
     async def _send_payout_notifications(
         self,
-        payout_batch: PayoutBatch,
-        payout_result: PayoutResult
-    ):
+        payout_batch -> None: PayoutBatch,
+        payout_result -> None: PayoutResult
+    ) -> None:
         """
         🤖 IA Prompt Engineer: Send intelligent payout notifications
         """

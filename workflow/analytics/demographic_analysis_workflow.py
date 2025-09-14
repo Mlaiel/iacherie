@@ -12,6 +12,7 @@ from datetime import datetime
 
 @dataclass
 class Demographic_analysisMetrics:
+    """Demographic_analysisMetrics: class implementation"""
     analysis_score: float = 0.0
     accuracy: float = 0.0
     insights_generated: int = 0
@@ -19,6 +20,7 @@ class Demographic_analysisMetrics:
 
 @dataclass
 class Demographic_analysisResult:
+    """Demographic_analysisResult: class implementation"""
     user_id: str
     metrics: Demographic_analysisMetrics
     insights: List[str]

@@ -121,7 +121,7 @@ class PaymentSystemConfig:
     database_url: str = "postgresql://localhost:5432/payments"
     redis_url: str = "redis://localhost:6379"
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.supported_currencies is None:
             self.supported_currencies = ["USD", "EUR", "GBP", "CAD", "AUD", "BTC", "ETH", "USDC"]
         if self.crypto_networks is None:
@@ -238,7 +238,7 @@ class EnterprisePaymentSystem:
     - Real-time payment analytics
     """
     
-    def __init__(self, config: Optional[PaymentSystemConfig] = None):
+    def __init__(self, config -> None: Optional[PaymentSystemConfig] = None) -> None:
         self.config = config or PaymentSystemConfig()
         self.logger = logging.getLogger(__name__)
         self.executor = ThreadPoolExecutor(max_workers=8)
@@ -263,7 +263,7 @@ class EnterprisePaymentSystem:
         # Fraud detection
         self.fraud_detection_enabled = self.config.enable_fraud_detection
         
-    def _init_encryption(self):
+    def _init_encryption(self) -> None:
         """Initialize encryption for sensitive data"""
         try:
             if self.config.encryption_key:
@@ -278,7 +278,7 @@ class EnterprisePaymentSystem:
             self.logger.error(f"Encryption initialization failed: {e}")
             raise PaymentSystemError(f"Failed to initialize encryption: {e}")
 
-    def _init_payment_gateways(self):
+    def _init_payment_gateways(self) -> None:
         """Initialize payment gateway clients"""
         try:
             self.gateways = {}
@@ -308,7 +308,7 @@ class EnterprisePaymentSystem:
         except Exception as e:
             self.logger.error(f"Payment gateways initialization failed: {e}")
 
-    def _init_crypto_handlers(self):
+    def _init_crypto_handlers(self) -> None:
         """Initialize cryptocurrency handlers"""
         try:
             self.crypto_handlers = {}
@@ -333,7 +333,7 @@ class EnterprisePaymentSystem:
         except Exception as e:
             self.logger.error(f"Crypto handlers initialization failed: {e}")
 
-    def _init_tax_calculators(self):
+    def _init_tax_calculators(self) -> None:
         """Initialize tax calculation systems"""
         try:
             self.tax_calculators = {
@@ -359,7 +359,7 @@ class EnterprisePaymentSystem:
         except Exception as e:
             self.logger.error(f"Tax calculators initialization failed: {e}")
 
-    async def initialize_connections(self):
+    async def initialize_connections(self) -> None:
         """Initialize database and Redis connections"""
         try:
             # Initialize Redis
@@ -480,11 +480,11 @@ class EnterprisePaymentSystem:
 
     async def _validate_payment_parameters(
         self,
-        user_id: str,
-        amount: Decimal,
-        currency: str,
-        payment_method: PaymentMethod
-    ):
+        user_id -> None: str,
+        amount -> None: Decimal,
+        currency -> None: str,
+        payment_method -> None: PaymentMethod
+    ) -> None:
         """Validate payment parameters"""
         try:
             # Validate amount
@@ -507,10 +507,10 @@ class EnterprisePaymentSystem:
 
     async def _check_fraud_indicators(
         self,
-        user_id: str,
-        amount: Decimal,
-        payment_method: PaymentMethod
-    ):
+        user_id -> None: str,
+        amount -> None: Decimal,
+        payment_method -> None: PaymentMethod
+    ) -> None:
         """Check for fraud indicators"""
         try:
             fraud_score = 0
@@ -1071,7 +1071,7 @@ class EnterprisePaymentSystem:
             self.logger.error(f"Plan pricing lookup failed: {e}")
             return {'amount': Decimal('0.00'), 'currency': 'USD', 'features': []}
 
-    async def _schedule_subscription_billing(self, subscription: SubscriptionModel):
+    async def _schedule_subscription_billing(self, subscription -> None: SubscriptionModel) -> None:
         """Schedule subscription billing"""
         try:
             # In production: use task queue (Celery, RQ, etc.)
@@ -1190,7 +1190,7 @@ class EnterprisePaymentSystem:
         )
 
     # Database Operations
-    async def _store_transaction(self, transaction: PaymentTransaction):
+    async def _store_transaction(self, transaction -> None: PaymentTransaction) -> None:
         """Store transaction in database"""
         try:
             if self.db_pool:
@@ -1212,7 +1212,7 @@ class EnterprisePaymentSystem:
         except Exception as e:
             self.logger.error(f"Transaction storage failed: {e}")
 
-    async def _store_tax_calculation(self, tax_calc: TaxCalculation):
+    async def _store_tax_calculation(self, tax_calc -> None: TaxCalculation) -> None:
         """Store tax calculation in database"""
         try:
             if self.db_pool:
@@ -1231,7 +1231,7 @@ class EnterprisePaymentSystem:
         except Exception as e:
             self.logger.error(f"Tax calculation storage failed: {e}")
 
-    async def _store_crypto_wallet(self, wallet: CryptoWallet):
+    async def _store_crypto_wallet(self, wallet -> None: CryptoWallet) -> None:
         """Store crypto wallet in database"""
         try:
             if self.db_pool:
@@ -1250,7 +1250,7 @@ class EnterprisePaymentSystem:
         except Exception as e:
             self.logger.error(f"Crypto wallet storage failed: {e}")
 
-    async def _store_subscription(self, subscription: SubscriptionModel):
+    async def _store_subscription(self, subscription -> None: SubscriptionModel) -> None:
         """Store subscription in database"""
         try:
             if self.db_pool:
@@ -1280,7 +1280,7 @@ class EnterprisePaymentSystem:
         except Exception:
             return []
 
-    async def _send_payment_notifications(self, transaction: PaymentTransaction):
+    async def _send_payment_notifications(self, transaction -> None: PaymentTransaction) -> None:
         """Send payment notifications"""
         try:
             # Mock notification system
@@ -1305,7 +1305,7 @@ class EnterprisePaymentSystem:
 class PaymentProcessor:
     """Legacy payment processor interface"""
     
-    def __init__(self, system: EnterprisePaymentSystem):
+    def __init__(self, system -> None: EnterprisePaymentSystem) -> None:
         self.system = system
     
     async def process_payment(self, payment_data: Dict[str, Any]) -> Dict[str, Any]:
@@ -1321,7 +1321,7 @@ class PaymentProcessor:
 class CryptoWalletLegacy:
     """Legacy crypto wallet interface"""
     
-    def __init__(self, system: EnterprisePaymentSystem):
+    def __init__(self, system -> None: EnterprisePaymentSystem) -> None:
         self.system = system
     
     async def create_wallet(self, user_id: str, network: str) -> Dict[str, Any]:
@@ -1335,7 +1335,7 @@ class CryptoWalletLegacy:
 class TaxCalculatorLegacy:
     """Legacy tax calculator interface"""
     
-    def __init__(self, system: EnterprisePaymentSystem):
+    def __init__(self, system -> None: EnterprisePaymentSystem) -> None:
         self.system = system
     
     async def calculate_tax(self, amount: float, region: str) -> Dict[str, Any]:
@@ -1348,7 +1348,7 @@ class TaxCalculatorLegacy:
 class SubscriptionEngineLegacy:
     """Legacy subscription engine interface"""
     
-    def __init__(self, system: EnterprisePaymentSystem):
+    def __init__(self, system -> None: EnterprisePaymentSystem) -> None:
         self.system = system
     
     async def create_subscription(self, subscription_data: Dict[str, Any]) -> Dict[str, Any]:

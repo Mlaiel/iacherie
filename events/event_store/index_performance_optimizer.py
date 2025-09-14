@@ -141,7 +141,7 @@ class IndexPerformanceOptimizer:
     - Cost-benefit analysis for optimizations
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._indexes: Dict[str, IndexInfo] = {}
         self._query_patterns: Dict[str, QueryPattern] = {}
         self._recommendations: Dict[str, OptimizationRecommendation] = {}
@@ -165,7 +165,7 @@ class IndexPerformanceOptimizer:
         # Initialize Ainflue business index patterns
         self._initialize_business_patterns()
     
-    def _initialize_business_patterns(self):
+    def _initialize_business_patterns(self) -> None:
         """Initialize Ainflue-specific index optimization patterns"""
         
         # Content events optimization patterns
@@ -251,7 +251,7 @@ class IndexPerformanceOptimizer:
             }
         }
     
-    async def initialize(self, backend_connections: Dict[str, Any]):
+    async def initialize(self, backend_connections -> None: Dict[str, Any]) -> None:
         """Initialize the index performance optimizer"""
         
         self._backend_connections = backend_connections
@@ -273,7 +273,7 @@ class IndexPerformanceOptimizer:
         self._is_initialized = True
         logger.info("Index Performance Optimizer initialized successfully")
     
-    async def _discover_existing_indexes(self):
+    async def _discover_existing_indexes(self) -> None:
         """Discover existing indexes across all backends"""
         
         # PostgreSQL indexes
@@ -288,7 +288,7 @@ class IndexPerformanceOptimizer:
         if 'elasticsearch' in self._backend_connections:
             await self._discover_elasticsearch_indexes()
     
-    async def _discover_postgresql_indexes(self):
+    async def _discover_postgresql_indexes(self) -> None:
         """Discover PostgreSQL indexes"""
         
         try:
@@ -340,7 +340,7 @@ class IndexPerformanceOptimizer:
         except Exception as e:
             logger.error(f"Failed to discover PostgreSQL indexes: {e}")
     
-    async def _discover_mongodb_indexes(self):
+    async def _discover_mongodb_indexes(self) -> None:
         """Discover MongoDB indexes"""
         
         try:
@@ -381,7 +381,7 @@ class IndexPerformanceOptimizer:
         except Exception as e:
             logger.error(f"Failed to discover MongoDB indexes: {e}")
     
-    async def _discover_elasticsearch_indexes(self):
+    async def _discover_elasticsearch_indexes(self) -> None:
         """Discover Elasticsearch indexes"""
         
         try:
@@ -431,7 +431,7 @@ class IndexPerformanceOptimizer:
         else:
             return IndexStatus.ACTIVE
     
-    async def _analyze_query_patterns(self):
+    async def _analyze_query_patterns(self) -> None:
         """Analyze query patterns to identify optimization opportunities"""
         
         try:
@@ -485,7 +485,7 @@ class IndexPerformanceOptimizer:
         except Exception as e:
             logger.error(f"Failed to analyze query patterns: {e}")
     
-    async def _establish_performance_baselines(self):
+    async def _establish_performance_baselines(self) -> None:
         """Establish performance baselines for optimization comparison"""
         
         try:
@@ -575,7 +575,7 @@ class IndexPerformanceOptimizer:
         
         return analysis_result
     
-    async def _analyze_single_index(self, index: IndexInfo):
+    async def _analyze_single_index(self, index -> None: IndexInfo) -> None:
         """Analyze performance of a single index"""
         
         # Update last analyzed timestamp
@@ -879,7 +879,7 @@ class IndexPerformanceOptimizer:
         
         return result
     
-    async def _execute_create_index(self, recommendation: OptimizationRecommendation):
+    async def _execute_create_index(self, recommendation -> None: OptimizationRecommendation) -> None:
         """Execute index creation"""
         
         for sql_command in recommendation.sql_commands:
@@ -906,7 +906,7 @@ class IndexPerformanceOptimizer:
                 
                 self._indexes[index_name] = new_index
     
-    async def _execute_drop_index(self, recommendation: OptimizationRecommendation):
+    async def _execute_drop_index(self, recommendation -> None: OptimizationRecommendation) -> None:
         """Execute index drop"""
         
         for sql_command in recommendation.sql_commands:
@@ -918,7 +918,7 @@ class IndexPerformanceOptimizer:
             if recommendation.target_index and recommendation.target_index in self._indexes:
                 del self._indexes[recommendation.target_index]
     
-    async def _execute_rebuild_index(self, recommendation: OptimizationRecommendation):
+    async def _execute_rebuild_index(self, recommendation -> None: OptimizationRecommendation) -> None:
         """Execute index rebuild"""
         
         if recommendation.target_index:
@@ -1002,7 +1002,7 @@ class IndexPerformanceOptimizer:
             'timestamp': datetime.utcnow().isoformat()
         }
     
-    async def _analysis_task(self):
+    async def _analysis_task(self) -> None:
         """Background task for periodic analysis"""
         
         while self._is_initialized:
@@ -1013,7 +1013,7 @@ class IndexPerformanceOptimizer:
                 logger.error(f"Analysis task error: {e}")
                 await asyncio.sleep(3600)  # 1 hour retry
     
-    async def _perform_periodic_analysis(self):
+    async def _perform_periodic_analysis(self) -> None:
         """Perform periodic analysis and generate recommendations"""
         
         # Analyze current index performance
@@ -1024,7 +1024,7 @@ class IndexPerformanceOptimizer:
         
         logger.info(f"Periodic analysis completed: {len(recommendations)} recommendations generated")
     
-    async def _optimization_task(self):
+    async def _optimization_task(self) -> None:
         """Background task for automatic optimization execution"""
         
         while self._is_initialized:
@@ -1035,7 +1035,7 @@ class IndexPerformanceOptimizer:
                 logger.error(f"Optimization task error: {e}")
                 await asyncio.sleep(3600)
     
-    async def _execute_automatic_optimizations(self):
+    async def _execute_automatic_optimizations(self) -> None:
         """Execute automatic optimizations during maintenance windows"""
         
         current_hour = datetime.utcnow().hour
@@ -1064,7 +1064,7 @@ class IndexPerformanceOptimizer:
                 except Exception as e:
                     logger.error(f"Automatic optimization error: {e}")
     
-    async def _maintenance_task(self):
+    async def _maintenance_task(self) -> None:
         """Background task for index maintenance"""
         
         while self._is_initialized:
@@ -1075,7 +1075,7 @@ class IndexPerformanceOptimizer:
                 logger.error(f"Maintenance task error: {e}")
                 await asyncio.sleep(24 * 3600)  # Daily retry
     
-    async def _perform_index_maintenance(self):
+    async def _perform_index_maintenance(self) -> None:
         """Perform routine index maintenance"""
         
         # Update index statistics

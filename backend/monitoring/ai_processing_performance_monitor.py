@@ -200,7 +200,7 @@ class AIProcessingPerformanceMonitor:
     analytics, optimization tracking, and performance insights for AI models.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.processing_metrics: Dict[str, List[AIProcessingMetrics]] = defaultdict(list)
         self.model_profiles: Dict[str, AIModelPerformanceProfile] = {}
         self.optimization_recommendations: Dict[str, AIProcessingOptimizationRecommendations] = {}
@@ -504,7 +504,7 @@ class AIProcessingPerformanceMonitor:
             platform=processing_data.get("platform", "default")
         )
     
-    async def _analyze_performance_compliance(self, metrics: AIProcessingMetrics):
+    async def _analyze_performance_compliance(self, metrics -> None: AIProcessingMetrics) -> None:
         """Analyze performance against defined thresholds"""
         compliance_issues = []
         
@@ -524,7 +524,7 @@ class AIProcessingPerformanceMonitor:
             logger.warning(f"Performance compliance issues detected: {compliance_issues}")
             # In production, this would trigger alerts
     
-    async def _update_model_profile(self, metrics: AIProcessingMetrics):
+    async def _update_model_profile(self, metrics -> None: AIProcessingMetrics) -> None:
         """Update model performance profile with new metrics"""
         model_key = f"{metrics.model_type.value}_{metrics.model_version}"
         
@@ -597,9 +597,9 @@ class AIProcessingPerformanceMonitor:
     
     async def _generate_optimization_recommendations(
         self, 
-        model_key: str, 
-        metrics: AIProcessingMetrics
-    ):
+        model_key -> None: str, 
+        metrics -> None: AIProcessingMetrics
+    ) -> None:
         """Generate optimization recommendations based on performance analysis"""
         recommendations = AIProcessingOptimizationRecommendations(model_id=model_key)
         
@@ -930,7 +930,7 @@ class AIProcessingPerformanceMonitor:
         
         return results
     
-    async def _record_optimization_attempt(self, model_key: str, results: Dict[str, Any]):
+    async def _record_optimization_attempt(self, model_key -> None: str, results -> None: Dict[str, Any]) -> None:
         """Record optimization attempt for tracking"""
         # In production, this would be stored in a database
         logger.info(f"Optimization applied to {model_key}: {results['optimizations_applied']}")

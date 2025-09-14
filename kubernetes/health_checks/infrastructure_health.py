@@ -58,7 +58,7 @@ class InfrastructureHealthChecker:
     Monitors all infrastructure components including containers,
     load balancers, storage, networking, and observability systems.
     """
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """
         Initialize infrastructure health checker
         

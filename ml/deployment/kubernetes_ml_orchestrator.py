@@ -160,11 +160,11 @@ class KubernetesMLOrchestrator:
     """Orchestrateur Kubernetes pour ML enterprise"""
     
     def __init__(self,
-                 kubeconfig_path: Optional[str] = None,
-                 default_namespace: str = "ml-models",
-                 enable_istio: bool = True,
-                 enable_prometheus: bool = True,
-                 enable_grafana: bool = True):
+                 kubeconfig_path -> None: Optional[str] = None,
+                 default_namespace -> None: str = "ml-models",
+                 enable_istio -> None: bool = True,
+                 enable_prometheus -> None: bool = True,
+                 enable_grafana -> None: bool = True) -> None:
         
         self.kubeconfig_path = kubeconfig_path
         self.default_namespace = default_namespace
@@ -210,7 +210,7 @@ class KubernetesMLOrchestrator:
         
         self._initialize_templates()
     
-    def _initialize_templates(self):
+    def _initialize_templates(self) -> None:
         """Initialise les templates Kubernetes"""
         
         # Template de déploiement
@@ -320,7 +320,7 @@ class KubernetesMLOrchestrator:
             }
         }
     
-    async def start(self):
+    async def start(self) -> None:
         """Démarre l'orchestrateur"""
         try:
             self.is_running = True
@@ -343,7 +343,7 @@ class KubernetesMLOrchestrator:
             logger.error(f"Erreur démarrage orchestrateur Kubernetes: {e}")
             raise
     
-    async def stop(self):
+    async def stop(self) -> None:
         """Arrête l'orchestrateur"""
         try:
             logger.info("Arrêt orchestrateur Kubernetes...")
@@ -356,7 +356,7 @@ class KubernetesMLOrchestrator:
         except Exception as e:
             logger.error(f"Erreur arrêt orchestrateur Kubernetes: {e}")
     
-    async def _initialize_kubernetes_clients(self):
+    async def _initialize_kubernetes_clients(self) -> None:
         """Initialise les clients Kubernetes"""
         try:
             # En production, on utiliserait la vraie librairie kubernetes
@@ -378,7 +378,7 @@ class KubernetesMLOrchestrator:
             logger.error(f"Erreur initialisation clients Kubernetes: {e}")
             raise
     
-    async def _ensure_namespaces(self):
+    async def _ensure_namespaces(self) -> None:
         """S'assure que les namespaces existent"""
         try:
             namespaces_to_create = [
@@ -825,7 +825,7 @@ class KubernetesMLOrchestrator:
             logger.error(f"Erreur application manifests: {e}")
             return False
     
-    async def _wait_for_deployment_ready(self, deployment: MLModelDeployment, timeout: int = 300):
+    async def _wait_for_deployment_ready(self, deployment -> None: MLModelDeployment, timeout -> None: int = 300) -> None:
         """Attend que le déploiement soit prêt"""
         
         start_time = time.time()
@@ -1065,22 +1065,22 @@ class KubernetesMLOrchestrator:
         await asyncio.sleep(2)
         return True  # Toujours succès en simulation
     
-    async def _switch_service_to_green(self, deployment: MLModelDeployment):
+    async def _switch_service_to_green(self, deployment -> None: MLModelDeployment) -> None:
         """Switche le service vers la version green"""
         logger.info(f"Switching service to green for {deployment.deployment_id}")
         await asyncio.sleep(1)
     
-    async def _cleanup_blue_deployment(self, deployment: MLModelDeployment):
+    async def _cleanup_blue_deployment(self, deployment -> None: MLModelDeployment) -> None:
         """Nettoie le déploiement blue"""
         logger.info(f"Cleaning up blue deployment for {deployment.deployment_id}")
         await asyncio.sleep(1)
     
-    async def _cleanup_green_deployment(self, deployment: MLModelDeployment):
+    async def _cleanup_green_deployment(self, deployment -> None: MLModelDeployment) -> None:
         """Nettoie le déploiement green"""
         logger.info(f"Cleaning up green deployment for {deployment.deployment_id}")
         await asyncio.sleep(1)
     
-    async def _deploy_canary_version(self, deployment: MLModelDeployment, new_image: str, traffic_percentage: int):
+    async def _deploy_canary_version(self, deployment -> None: MLModelDeployment, new_image -> None: str, traffic_percentage -> None: int) -> None:
         """Déploie la version canary"""
         logger.info(f"Deploying canary version for {deployment.deployment_id} with {traffic_percentage}% traffic")
         await asyncio.sleep(2)
@@ -1091,24 +1091,24 @@ class KubernetesMLOrchestrator:
         await asyncio.sleep(1)
         return True  # Simulation: toujours en bonne santé
     
-    async def _update_canary_traffic(self, deployment: MLModelDeployment, percentage: int):
+    async def _update_canary_traffic(self, deployment -> None: MLModelDeployment, percentage -> None: int) -> None:
         """Met à jour le pourcentage de traffic canary"""
         logger.info(f"Updating canary traffic to {percentage}% for {deployment.deployment_id}")
         await asyncio.sleep(1)
     
-    async def _rollback_canary(self, deployment: MLModelDeployment):
+    async def _rollback_canary(self, deployment -> None: MLModelDeployment) -> None:
         """Rollback du canary"""
         logger.info(f"Rolling back canary for {deployment.deployment_id}")
         await asyncio.sleep(1)
     
-    async def _finalize_canary(self, deployment: MLModelDeployment):
+    async def _finalize_canary(self, deployment -> None: MLModelDeployment) -> None:
         """Finalise le canary deployment"""
         logger.info(f"Finalizing canary for {deployment.deployment_id}")
         await asyncio.sleep(1)
     
     # Boucles de monitoring
     
-    async def _monitoring_loop(self):
+    async def _monitoring_loop(self) -> None:
         """Boucle de monitoring"""
         while self.is_running:
             try:
@@ -1126,7 +1126,7 @@ class KubernetesMLOrchestrator:
             except Exception as e:
                 logger.error(f"Erreur boucle monitoring: {e}")
     
-    async def _health_check_loop(self):
+    async def _health_check_loop(self) -> None:
         """Boucle de health check"""
         while self.is_running:
             try:
@@ -1143,7 +1143,7 @@ class KubernetesMLOrchestrator:
             except Exception as e:
                 logger.error(f"Erreur boucle health check: {e}")
     
-    async def _metrics_collection_loop(self):
+    async def _metrics_collection_loop(self) -> None:
         """Boucle de collecte de métriques"""
         while self.is_running:
             try:
@@ -1204,15 +1204,15 @@ class KubernetesMLOrchestrator:
         """Récupère les métriques d'orchestration"""
         return self.orchestration_metrics.copy()
     
-    def add_deployment_callback(self, callback: callable):
+    def add_deployment_callback(self, callback -> None: callable) -> None:
         """Ajoute un callback de déploiement"""
         self.deployment_callbacks.append(callback)
     
-    def add_scaling_callback(self, callback: callable):
+    def add_scaling_callback(self, callback -> None: callable) -> None:
         """Ajoute un callback de scaling"""
         self.scaling_callbacks.append(callback)
     
-    def add_error_callback(self, callback: callable):
+    def add_error_callback(self, callback -> None: callable) -> None:
         """Ajoute un callback d'erreur"""
         self.error_callbacks.append(callback)
     
@@ -1233,7 +1233,7 @@ class KubernetesMLOrchestrator:
 
 
 # Exemple d'utilisation
-async def example_usage():
+async def example_usage() -> None:
     """Exemple d'utilisation de l'orchestrateur Kubernetes"""
     
     # Créer l'orchestrateur
@@ -1282,10 +1282,10 @@ async def example_usage():
         )
         
         # Callbacks
-        async def deployment_callback(deployment, action):
+        async def deployment_callback(deployment, action) -> None:
             print(f"Déploiement {deployment.deployment_id} - Action: {action}")
         
-        async def scaling_callback(deployment, old_replicas, new_replicas):
+        async def scaling_callback(deployment, old_replicas, new_replicas) -> None:
             print(f"Scaling {deployment.deployment_id}: {old_replicas} -> {new_replicas}")
         
         orchestrator.add_deployment_callback(deployment_callback)

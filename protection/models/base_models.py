@@ -21,7 +21,7 @@ class BaseModel(ABC):
     created_at: datetime = field(default_factory=datetime.utcnow)
     updated_at: Optional[datetime] = None
     
-    def update_timestamp(self):
+    def update_timestamp(self) -> None:
         """Update the updated_at timestamp"""
         self.updated_at = datetime.utcnow()
 
@@ -32,7 +32,7 @@ class TimestampedModel(BaseModel):
     last_accessed: Optional[datetime] = None
     expires_at: Optional[datetime] = None
     
-    def access(self):
+    def access(self) -> None:
         """Mark as accessed"""
         self.last_accessed = datetime.utcnow()
     
@@ -50,7 +50,7 @@ class AuditableModel(TimestampedModel):
     metadata: Dict[str, Any] = field(default_factory=dict)
     audit_trail: list = field(default_factory=list)
     
-    def add_audit_entry(self, action: str, user: str, details: Dict[str, Any] = None):
+    def add_audit_entry(self, action -> None: str, user -> None: str, details -> None: Dict[str, Any] = None) -> None:
         """Add an audit trail entry"""
         entry = {
             "timestamp": datetime.utcnow(),

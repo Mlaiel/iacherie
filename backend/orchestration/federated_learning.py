@@ -112,7 +112,7 @@ class FederatedMetrics:
 class FederatedClient:
     """Federated learning client"""
     
-    def __init__(self, client_id: str, data_size: int = 1000):
+    def __init__(self, client_id -> None: str, data_size -> None: int = 1000) -> None:
         self.client_id = client_id
         self.data_size = data_size
         self.status = ClientStatus.OFFLINE
@@ -215,7 +215,7 @@ class FederatedClient:
 class FederatedServer:
     """Federated learning server"""
     
-    def __init__(self, server_id: str, privacy_config: PrivacyConfig):
+    def __init__(self, server_id -> None: str, privacy_config -> None: PrivacyConfig) -> None:
         self.server_id = server_id
         self.privacy_config = privacy_config
         self.global_model_weights: Dict[str, np.ndarray] = {}
@@ -230,7 +230,7 @@ class FederatedServer:
         
         logger.info(f"FederatedServer {server_id} initialized")
     
-    def _initialize_global_model(self):
+    def _initialize_global_model(self) -> None:
         """Initialize global model weights"""
         # Simulate a simple neural network structure
         self.global_model_weights = {
@@ -573,7 +573,7 @@ class FederatedServer:
 class PrivacyPreservingLearning:
     """Advanced privacy-preserving learning mechanisms"""
     
-    def __init__(self, privacy_config: PrivacyConfig):
+    def __init__(self, privacy_config -> None: PrivacyConfig) -> None:
         self.privacy_config = privacy_config
         self.privacy_accountant = {
             'total_epsilon_used': 0.0,
@@ -638,7 +638,7 @@ class PrivacyPreservingLearning:
 class FederatedOrchestrator:
     """Main orchestrator for federated learning"""
     
-    def __init__(self, privacy_config: PrivacyConfig):
+    def __init__(self, privacy_config -> None: PrivacyConfig) -> None:
         self.privacy_config = privacy_config
         self.servers: Dict[str, FederatedServer] = {}
         self.privacy_engine = PrivacyPreservingLearning(privacy_config)

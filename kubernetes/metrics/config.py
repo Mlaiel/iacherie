@@ -1,4 +1,6 @@
 """IA Influencer Agent - Metrics Configuration
+import json
+
 Enterprise-grade metrics configuration and settings
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -82,7 +84,7 @@ class MetricsConfiguration:
     Centralized metrics configuration manager
     """
     
-    def __init__(self, environment: MetricsEnvironment = MetricsEnvironment.PRODUCTION):
+    def __init__(self, environment -> None: MetricsEnvironment = MetricsEnvironment.PRODUCTION) -> None:
         self.environment = environment
         self._load_configuration()
     

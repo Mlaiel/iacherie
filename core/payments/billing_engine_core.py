@@ -159,7 +159,7 @@ class BillingMetrics:
 class BillingEngineCore:
     """Enterprise billing engine core management system"""
     
-    def __init__(self, level: str = "enterprise"):
+    def __init__(self, level -> None: str = "enterprise") -> None:
         """Initialize billing engine core"""
         self.level = level
         self.metrics = BillingMetrics()
@@ -207,7 +207,7 @@ class BillingEngineCore:
             logger.error(f"❌ Billing engine initialization failed: {str(e)}")
             return False
     
-    async def _create_default_plans(self):
+    async def _create_default_plans(self) -> None:
         """Create default billing plans"""
         default_plans = [
             BillingPlan(
@@ -540,7 +540,7 @@ class BillingEngineCore:
             logger.error(f"Subscription cancellation failed: {str(e)}")
             return False
     
-    async def _billing_processor_loop(self):
+    async def _billing_processor_loop(self) -> None:
         """Background billing processor"""
         while not self._shutdown_event.is_set():
             try:
@@ -561,7 +561,7 @@ class BillingEngineCore:
                 logger.error(f"Billing processor error: {str(e)}")
                 await asyncio.sleep(1800)  # Wait 30 minutes on error
     
-    async def _process_pending_invoices(self):
+    async def _process_pending_invoices(self) -> None:
         """Process pending invoices"""
         current_time = datetime.utcnow()
         
@@ -570,7 +570,7 @@ class BillingEngineCore:
                 invoice.status = InvoiceStatus.OVERDUE
                 self.metrics.invoices_overdue += 1
     
-    async def _check_subscription_renewals(self):
+    async def _check_subscription_renewals(self) -> None:
         """Check for subscription renewals"""
         current_time = datetime.utcnow()
         
@@ -615,7 +615,7 @@ class BillingEngineCore:
             logger.error(f"Subscription renewal failed: {str(e)}")
             return False
     
-    async def _update_billing_metrics(self):
+    async def _update_billing_metrics(self) -> None:
         """Update billing metrics"""
         try:
             # Calculate MRR and ARR
@@ -656,7 +656,7 @@ class BillingEngineCore:
             logger.error(f"Billing engine health check failed: {str(e)}")
             return False
     
-    async def _health_monitor_loop(self):
+    async def _health_monitor_loop(self) -> None:
         """Health monitoring loop"""
         while not self._shutdown_event.is_set():
             try:

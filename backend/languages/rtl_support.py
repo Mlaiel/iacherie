@@ -112,7 +112,7 @@ class RTLProcessor:
     with comprehensive layout and styling adaptation
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize RTL processor"""
         self.config = config or {}
         self.rtl_languages = self._load_rtl_language_data()
@@ -576,7 +576,7 @@ class RTLProcessor:
         
         return rtl_count / len(bidi_analysis) if bidi_analysis else 0.0
     
-    async def _update_processing_stats(self, result: RTLProcessingResult):
+    async def _update_processing_stats(self, result -> None: RTLProcessingResult) -> None:
         """Update processing statistics"""
         self.processing_stats["total_processed"] += 1
         

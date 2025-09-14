@@ -110,7 +110,7 @@ class UnifiedAnalyticsDashboard:
     Provides comprehensive KPI tracking, alerting, and performance insights.
     """
 
-    def __init__(self, user_tracker=None, revenue_tracker=None, tech_monitor=None, ai_tracker=None):
+    def __init__(self, user_tracker=None, revenue_tracker=None, tech_monitor=None, ai_tracker=None) -> None:
         self.logger = logging.getLogger(self.__class__.__name__)
         
         # Use provided instances or create new ones

@@ -147,9 +147,9 @@ class ModelDriftDetector:
     """Détecteur de drift de modèles enterprise"""
     
     def __init__(self,
-                 config: DriftDetectionConfig,
-                 enable_adaptive_thresholds: bool = True,
-                 enable_automatic_adaptation: bool = False):
+                 config -> None: DriftDetectionConfig,
+                 enable_adaptive_thresholds -> None: bool = True,
+                 enable_automatic_adaptation -> None: bool = False) -> None:
         
         self.config = config
         self.enable_adaptive_thresholds = enable_adaptive_thresholds
@@ -187,7 +187,7 @@ class ModelDriftDetector:
             "adaptation_actions_triggered": 0
         }
     
-    async def start(self):
+    async def start(self) -> None:
         """Démarre le détecteur de drift"""
         try:
             self.is_running = True
@@ -207,7 +207,7 @@ class ModelDriftDetector:
             logger.error(f"Erreur démarrage détecteur de drift: {e}")
             raise
     
-    async def stop(self):
+    async def stop(self) -> None:
         """Arrête le détecteur de drift"""
         try:
             logger.info("Arrêt détecteur de drift...")
@@ -1017,7 +1017,7 @@ class ModelDriftDetector:
     
     # Boucles de traitement
     
-    async def _detection_loop(self):
+    async def _detection_loop(self) -> None:
         """Boucle de détection périodique"""
         while self.is_running:
             try:
@@ -1035,7 +1035,7 @@ class ModelDriftDetector:
             except Exception as e:
                 logger.error(f"Erreur boucle détection: {e}")
     
-    async def _monitoring_loop(self):
+    async def _monitoring_loop(self) -> None:
         """Boucle de monitoring"""
         while self.is_running:
             try:
@@ -1053,7 +1053,7 @@ class ModelDriftDetector:
             except Exception as e:
                 logger.error(f"Erreur boucle monitoring: {e}")
     
-    async def _adaptation_loop(self):
+    async def _adaptation_loop(self) -> None:
         """Boucle d'adaptation automatique"""
         if not self.enable_automatic_adaptation:
             return
@@ -1079,7 +1079,7 @@ class ModelDriftDetector:
             except Exception as e:
                 logger.error(f"Erreur boucle adaptation: {e}")
     
-    async def _threshold_adaptation_loop(self):
+    async def _threshold_adaptation_loop(self) -> None:
         """Boucle d'adaptation des seuils"""
         while self.is_running:
             try:
@@ -1092,7 +1092,7 @@ class ModelDriftDetector:
             except Exception as e:
                 logger.error(f"Erreur adaptation seuils: {e}")
     
-    async def _trigger_adaptation_action(self, model_id: str, action: AdaptationAction):
+    async def _trigger_adaptation_action(self, model_id -> None: str, action -> None: AdaptationAction) -> None:
         """Déclenche une action d'adaptation"""
         try:
             logger.info(f"Déclenchement action d'adaptation {action.value} pour {model_id}")
@@ -1109,7 +1109,7 @@ class ModelDriftDetector:
         except Exception as e:
             logger.error(f"Erreur déclenchement action adaptation: {e}")
     
-    async def _adapt_thresholds(self, model_id: str):
+    async def _adapt_thresholds(self, model_id -> None: str) -> None:
         """Adapte les seuils de détection"""
         try:
             # Analyser l'historique des détections
@@ -1140,15 +1140,15 @@ class ModelDriftDetector:
         """Récupère les métriques de détection"""
         return self.detection_metrics.copy()
     
-    def add_drift_callback(self, callback: Callable[[DriftDetectionResult], None]):
+    def add_drift_callback(self, callback -> None: Callable[[DriftDetectionResult], None]) -> None:
         """Ajoute un callback de drift"""
         self.drift_callbacks.append(callback)
     
-    def add_adaptation_callback(self, callback: Callable[[str, AdaptationAction], None]):
+    def add_adaptation_callback(self, callback -> None: Callable[[str, AdaptationAction], None]) -> None:
         """Ajoute un callback d'adaptation"""
         self.adaptation_callbacks.append(callback)
     
-    def add_alert_callback(self, callback: Callable[[DriftDetectionResult], None]):
+    def add_alert_callback(self, callback -> None: Callable[[DriftDetectionResult], None]) -> None:
         """Ajoute un callback d'alerte"""
         self.alert_callbacks.append(callback)
     
@@ -1164,7 +1164,7 @@ class ModelDriftDetector:
 
 
 # Exemple d'utilisation
-async def example_usage():
+async def example_usage() -> None:
     """Exemple d'utilisation du détecteur de drift"""
     
     from sklearn.ensemble import RandomForestClassifier
@@ -1195,11 +1195,11 @@ async def example_usage():
     detector = ModelDriftDetector(config, enable_automatic_adaptation=True)
     
     # Callbacks
-    async def drift_callback(result: DriftDetectionResult):
+    async def drift_callback(result -> None: DriftDetectionResult) -> None:
         print(f"Drift détecté: {result.model_id} - Sévérité: {result.severity.value}")
         print(f"Features affectées: {len([f for f in result.affected_features if f.is_drift_detected])}")
     
-    async def adaptation_callback(model_id: str, action: AdaptationAction):
+    async def adaptation_callback(model_id -> None: str, action -> None: AdaptationAction) -> None:
         print(f"Action d'adaptation: {action.value} pour {model_id}")
     
     detector.add_drift_callback(drift_callback)

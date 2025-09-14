@@ -1,3 +1,8 @@
+"""
+Ml Model Cache Engine module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
@@ -138,7 +143,7 @@ class MLModelCacheEngine:
     - Alertes proactives dégradation modèles
     """
     
-    def __init__(self, redis_pool, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, redis_pool, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.redis_pool = redis_pool
         self.config = config or {}
         
@@ -642,11 +647,11 @@ class MLModelCacheEngine:
     
     async def _cache_inference_result(
         self,
-        input_hash: str,
-        model_id: str,
-        result: Any,
-        inference_time: float
-    ):
+        input_hash -> None: str,
+        model_id -> None: str,
+        result -> None: Any,
+        inference_time -> None: float
+    ) -> None:
         """**Backend Senior**: Cache résultat inférence avec gestion TTL"""
         try:
             metadata = self.model_registry.get(model_id)
@@ -678,7 +683,7 @@ class MLModelCacheEngine:
         except Exception as e:
             logger.error(f"❌ Erreur cache inférence: {e}")
     
-    async def _ensure_memory_capacity(self):
+    async def _ensure_memory_capacity(self) -> None:
         """**Backend Senior**: Gestion capacité cache mémoire avec éviction intelligente"""
         if len(self.memory_cache) >= self.max_memory_models:
             # Éviction basée sur score composite
@@ -707,7 +712,7 @@ class MLModelCacheEngine:
         """**Backend Senior**: Génération clé cache consistante"""
         return f"ml_model:{model_id}:{version}"
     
-    async def _cache_model_redis(self, cache_entry: CacheEntry):
+    async def _cache_model_redis(self, cache_entry -> None: CacheEntry) -> None:
         """**Backend Senior**: Cache modèle Redis avec compression"""
         try:
             async with self.redis_pool.get_connection() as redis_conn:
@@ -765,7 +770,7 @@ class MLModelCacheEngine:
             logger.error(f"❌ Erreur récupération Redis: {e}")
             return None
     
-    async def _cache_inference_redis(self, input_hash: str, inference_entry: InferenceCache):
+    async def _cache_inference_redis(self, input_hash -> None: str, inference_entry -> None: InferenceCache) -> None:
         """**Backend Senior**: Cache inférence Redis"""
         try:
             async with self.redis_pool.get_connection() as redis_conn:
@@ -788,7 +793,7 @@ class MLModelCacheEngine:
         except Exception as e:
             logger.error(f"❌ Erreur cache inférence Redis: {e}")
     
-    async def _persist_model_metadata(self, metadata: ModelMetadata):
+    async def _persist_model_metadata(self, metadata -> None: ModelMetadata) -> None:
         """**DevOps**: Persistance métadonnées modèle"""
         try:
             async with self.redis_pool.get_connection() as redis_conn:
@@ -806,7 +811,7 @@ class MLModelCacheEngine:
         except Exception as e:
             logger.error(f"❌ Erreur persistance métadonnées: {e}")
     
-    async def _background_loader(self):
+    async def _background_loader(self) -> None:
         """**DevOps**: Chargeur de modèles en arrière-plan"""
         while True:
             try:
@@ -821,7 +826,7 @@ class MLModelCacheEngine:
             except Exception as e:
                 logger.error(f"❌ Erreur background loader: {e}")
     
-    async def _cache_maintenance_loop(self):
+    async def _cache_maintenance_loop(self) -> None:
         """**DevOps**: Maintenance cache périodique"""
         while True:
             try:
@@ -849,7 +854,7 @@ class MLModelCacheEngine:
             except Exception as e:
                 logger.error(f"❌ Erreur maintenance cache: {e}")
     
-    async def _performance_monitoring_loop(self):
+    async def _performance_monitoring_loop(self) -> None:
         """**DevOps**: Monitoring performance continu"""
         while True:
             try:
@@ -869,7 +874,7 @@ class MLModelCacheEngine:
             except Exception as e:
                 logger.error(f"❌ Erreur monitoring performance: {e}")
     
-    async def _update_model_metrics(self):
+    async def _update_model_metrics(self) -> None:
         """**DevOps**: Mise à jour métriques modèles"""
         for model_id, metadata in self.model_registry.items():
             try:
@@ -947,7 +952,7 @@ class MLModelCacheEngine:
             stats[metadata.model_type.value] += 1
         return dict(stats)
     
-    async def invalidate_model(self, model_id: str):
+    async def invalidate_model(self, model_id -> None: str) -> None:
         """**ML Engineer**: Invalidation modèle et cache associé"""
         try:
             # Suppression cache mémoire
@@ -978,17 +983,18 @@ class MLModelCacheEngine:
             logger.error(f"❌ Erreur invalidation modèle {model_id}: {e}")
 
 # Factory function
-async def create_ml_model_cache_engine(redis_pool, config: Optional[Dict[str, Any]] = None):
+async def create_ml_model_cache_engine(redis_pool, config -> None: Optional[Dict[str, Any]] = None) -> None:
     """**Lead Dev IA**: Factory création moteur cache ML"""
     return MLModelCacheEngine(redis_pool, config)
 
 if __name__ == "__main__":
-    async def demo():
+    async def demo() -> None:
         """Démonstration ML Model Cache Engine"""
         
         # Configuration Redis simulée
         class MockRedisPool:
-            def get_connection(self):
+    """MockRedisPool: class implementation"""
+            def get_connection(self) -> None:
                 from unittest.mock import AsyncMock
                 return AsyncMock()
         

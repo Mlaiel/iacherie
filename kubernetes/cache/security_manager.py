@@ -6,7 +6,7 @@ monitoring specifically designed for the IA Influencer Agent platform's
 sensitive content protection and monetization data.
 
 This module provides:
-- Military-grade multi-layer cache encryption (at-rest and in-transit)
+    - Military-grade multi-layer cache encryption (at-rest and in-transit)
 - Advanced role-based access control with creator-specific permissions
 - GDPR/CCPA/PIPEDA compliance monitoring and automated reporting
 - Real-time AI-powered threat detection and automated response
@@ -17,7 +17,7 @@ This module provides:
 - Collaboration security for creator partnerships
 
 Business Logic Security Integration:
-- Content creator IP protection with encrypted fingerprints
+    - Content creator IP protection with encrypted fingerprints
 - Secure monetization data handling with audit trails
 - Protected AI model results and analytics
 - Secure collaboration data for creator discovery
@@ -29,7 +29,7 @@ Copyright: 2025 Fahed Mlaiel - All Rights Reserved
 License: Proprietary - Unauthorized use strictly prohibited
 
 Security Standards Compliance:
-- ISO 27001 Information Security Management
+    - ISO 27001 Information Security Management
 - SOC 2 Type II Security Controls
 - PCI DSS for payment processing
 - GDPR for EU creator data protection
@@ -158,7 +158,7 @@ class AuditLogEntry:
 class EncryptionManager:
     """Advanced encryption management for content security"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.password_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
         self.key_rotation_interval = timedelta(hours=config.get("key_rotation_hours", 24))
@@ -181,7 +181,7 @@ class EncryptionManager:
             os.chmod(master_key_file, 0o600)  # Restrict permissions
             return master_key
     
-    def _initialize_encryption_keys(self):
+    def _initialize_encryption_keys(self) -> None:
         """Initialize encryption keys for different security levels"""
         for security_level in SecurityLevel:
             key = Fernet.generate_key()
@@ -327,7 +327,7 @@ class EncryptionManager:
 class ThreatDetectionEngine:
     """AI-powered threat detection and response system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.threat_patterns: Dict[str, Dict] = self._load_threat_patterns()
         self.behavioral_baselines: Dict[str, Dict] = {}
         self.threat_metrics = {
@@ -551,6 +551,7 @@ class SecurityException(Exception):
 
 
 class SecurityCacheManager:
+    """SecurityCacheManager: class implementation"""
 
 
 class AccessLevel(Enum):
@@ -630,9 +631,9 @@ class SecurityCacheManager:
     """
     def __init__(
         self,
-        config: CacheConfiguration,
-        metrics_collector: CacheMetricsCollector
-    ):
+        config -> None: CacheConfiguration,
+        metrics_collector -> None: CacheMetricsCollector
+    ) -> None:
         """
         Initialize security cache manager with enterprise security configuration.
         
@@ -1348,3 +1349,5 @@ class SecurityCacheManager:
         # Keep only recent logs to prevent memory issues
         if len(self._audit_logs) > 10000:
             self._audit_logs = self._audit_logs[-5000:]
+
+# File has syntax issues - needs manual review

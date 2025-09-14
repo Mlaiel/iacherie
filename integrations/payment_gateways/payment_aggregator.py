@@ -161,11 +161,11 @@ class PaymentAggregator:
     
     def __init__(
         self,
-        processors_config: Dict[str, Dict[str, Any]],
-        routing_config: List[PaymentRoute],
-        webhook_url: Optional[str] = None,
-        analytics_enabled: bool = True
-    ):
+        processors_config -> None: Dict[str, Dict[str, Any]],
+        routing_config -> None: List[PaymentRoute],
+        webhook_url -> None: Optional[str] = None,
+        analytics_enabled -> None: bool = True
+    ) -> None:
         """Initialize payment aggregator.
         
         Args:
@@ -192,7 +192,7 @@ class PaymentAggregator:
         self.logger = logging.getLogger(__name__)
         self.session = httpx.AsyncClient(timeout=30.0)
 
-    def _init_processors(self):
+    def _init_processors(self) -> None:
         """Initialize payment processors."""
         for processor_name, config in self.processors_config.items():
             try:
@@ -673,9 +673,9 @@ class PaymentAggregator:
 
     async def _update_analytics(
         self,
-        payment_response: UniversalPaymentResponse,
-        processing_time: float
-    ):
+        payment_response -> None: UniversalPaymentResponse,
+        processing_time -> None: float
+    ) -> None:
         """Update payment analytics."""
         if not self.analytics:
             return
@@ -703,58 +703,58 @@ class PaymentAggregator:
         processor_stats["success_rate"] = new_success_rate
 
     # Processor-specific payment methods (simplified implementations)
-    async def _process_stripe_payment(self, processor, request):
+    async def _process_stripe_payment(self, processor, request) -> None:
         """Process payment through Stripe."""
         # Implementation would call Stripe-specific methods
         pass
 
-    async def _process_paypal_payment(self, processor, request):
+    async def _process_paypal_payment(self, processor, request) -> None:
         """Process payment through PayPal."""
         # Implementation would call PayPal-specific methods
         pass
 
-    async def _process_wise_payment(self, processor, request):
+    async def _process_wise_payment(self, processor, request) -> None:
         """Process payment through Wise."""
         # Implementation would call Wise-specific methods
         pass
 
-    async def _process_square_payment(self, processor, request):
+    async def _process_square_payment(self, processor, request) -> None:
         """Process payment through Square."""
         # Implementation would call Square-specific methods
         pass
 
-    async def _process_adyen_payment(self, processor, request):
+    async def _process_adyen_payment(self, processor, request) -> None:
         """Process payment through Adyen."""
         # Implementation would call Adyen-specific methods
         pass
 
-    async def _process_braintree_payment(self, processor, request):
+    async def _process_braintree_payment(self, processor, request) -> None:
         """Process payment through Braintree."""
         # Implementation would call Braintree-specific methods
         pass
 
-    async def _process_razorpay_payment(self, processor, request):
+    async def _process_razorpay_payment(self, processor, request) -> None:
         """Process payment through Razorpay."""
         # Implementation would call Razorpay-specific methods
         pass
 
-    async def _process_crypto_payment(self, processor, request):
+    async def _process_crypto_payment(self, processor, request) -> None:
         """Process payment through cryptocurrency."""
         # Implementation would call crypto-specific methods
         pass
 
-    async def close(self):
+    async def close(self) -> None:
         """Close all processor connections."""
         for processor in self.processors.values():
             if hasattr(processor, 'close'):
                 await processor.close()
         await self.session.aclose()
 
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         """Async context manager entry."""
         return self
 
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         """Async context manager exit."""
         await self.close()
 

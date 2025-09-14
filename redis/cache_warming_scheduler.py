@@ -1,3 +1,8 @@
+"""
+Cache Warming Scheduler module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
@@ -109,7 +114,7 @@ class CacheWarmingScheduler:
     **DevOps**: Automation planification et monitoring opérationnel
     """
     
-    def __init__(self, redis_pool, cache_policy_engine=None, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, redis_pool, cache_policy_engine=None, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.redis_pool = redis_pool
         self.cache_policy_engine = cache_policy_engine
         self.config = config or self._get_default_config()
@@ -165,7 +170,7 @@ class CacheWarmingScheduler:
             }
         }
     
-    async def initialize_ml_model(self):
+    async def initialize_ml_model(self) -> None:
         """**ML Engineer**: Initialisation modèle ML prédiction"""
         try:
             self.ml_model = RandomForestRegressor(
@@ -185,7 +190,7 @@ class CacheWarmingScheduler:
         except Exception as e:
             logger.error(f"❌ Erreur initialisation ML préchauffage: {e}")
     
-    async def _train_prediction_model(self):
+    async def _train_prediction_model(self) -> None:
         """**ML Engineer**: Entraînement modèle prédiction patterns"""
         try:
             # Génération données d'entraînement simulées
@@ -241,7 +246,7 @@ class CacheWarmingScheduler:
         weekday_pattern = 0.7 if day in [1, 2, 3, 4] else 0.5  # Lun-Jeu
         return weekday_pattern + weekend_boost
     
-    async def start_scheduler(self):
+    async def start_scheduler(self) -> None:
         """**DevOps**: Démarrage planificateur automatique"""
         if self.scheduler_running:
             logger.warning("⚠️ Planificateur déjà en cours")
@@ -255,7 +260,7 @@ class CacheWarmingScheduler:
         
         logger.info("🚀 Planificateur préchauffage démarré")
     
-    async def stop_scheduler(self):
+    async def stop_scheduler(self) -> None:
         """**DevOps**: Arrêt planificateur"""
         self.scheduler_running = False
         
@@ -268,7 +273,7 @@ class CacheWarmingScheduler:
         
         logger.info("🛑 Planificateur préchauffage arrêté")
     
-    async def _scheduler_loop(self):
+    async def _scheduler_loop(self) -> None:
         """**DevOps**: Boucle principale planificateur"""
         while self.scheduler_running:
             try:
@@ -292,7 +297,7 @@ class CacheWarmingScheduler:
                 logger.error(f"❌ Erreur boucle planificateur: {e}")
                 await asyncio.sleep(30)
     
-    async def _load_scheduled_tasks(self):
+    async def _load_scheduled_tasks(self) -> None:
         """**Backend Senior**: Chargement tâches planifiées depuis config"""
         schedules = self.config.get('schedules', {})
         
@@ -327,7 +332,7 @@ class CacheWarmingScheduler:
             logger.error(f"❌ Erreur parsing cron '{cron_expr}': {e}")
             return None
     
-    async def _check_scheduled_tasks(self):
+    async def _check_scheduled_tasks(self) -> None:
         """**DevOps**: Vérification et déclenchement tâches planifiées"""
         current_time = datetime.now(timezone.utc)
         
@@ -344,7 +349,7 @@ class CacheWarmingScheduler:
                     else:
                         del self.scheduled_tasks[task_id]
     
-    async def _detect_warming_needs(self):
+    async def _detect_warming_needs(self) -> None:
         """**Lead Dev IA**: Détection intelligente besoins préchauffage"""
         try:
             # Collecte métriques actuelles
@@ -417,7 +422,7 @@ class CacheWarmingScheduler:
             logger.error(f"❌ Erreur prédiction ML warming: {e}")
             return 0.0
     
-    async def _check_threshold_triggers(self, metrics: Dict[str, Any]):
+    async def _check_threshold_triggers(self, metrics -> None: Dict[str, Any]) -> None:
         """**Backend Senior**: Vérification seuils déclenchement"""
         triggers = self.config.get('triggers', {})
         
@@ -437,7 +442,7 @@ class CacheWarmingScheduler:
                 f"Pic de trafic: {metrics['traffic']['current_load']:.1f}x"
             )
     
-    async def _create_predictive_warming_task(self, metrics: Dict[str, Any], probability: float):
+    async def _create_predictive_warming_task(self, metrics -> None: Dict[str, Any], probability -> None: float) -> None:
         """**Lead Dev IA**: Création tâche préchauffage prédictive"""
         task_id = f"predictive_{int(time.time())}"
         
@@ -462,7 +467,7 @@ class CacheWarmingScheduler:
         await self._queue_warming_task(warming_task)
         logger.info(f"🤖 Tâche prédictive créée: {task_id} (prob: {probability:.2f})")
     
-    async def _create_threshold_warming_task(self, trigger: WarmingTrigger, priority: WarmingPriority, reason: str):
+    async def _create_threshold_warming_task(self, trigger -> None: WarmingTrigger, priority -> None: WarmingPriority, reason -> None: str) -> None:
         """**Backend Senior**: Création tâche warming seuil**"""
         task_id = f"threshold_{trigger.value}_{int(time.time())}"
         
@@ -497,14 +502,14 @@ class CacheWarmingScheduler:
         else:
             return "*:cache:*"  # Pattern général
     
-    async def _queue_warming_task(self, task: WarmingTask):
+    async def _queue_warming_task(self, task -> None: WarmingTask) -> None:
         """**Backend Senior**: Mise en file d'attente tâche warming"""
         self.warming_tasks[task.task_id] = task
         self.metrics.total_tasks += 1
         
         logger.debug(f"📝 Tâche warming ajoutée: {task.task_id}")
     
-    async def _execute_pending_tasks(self):
+    async def _execute_pending_tasks(self) -> None:
         """**DevOps**: Exécution tâches en attente"""
         if len(self.active_warmings) >= self.config.get('max_concurrent_warmings', 5):
             return  # Limite concurrence
@@ -533,7 +538,7 @@ class CacheWarmingScheduler:
         for task in pending_tasks[:self.config.get('max_concurrent_warmings', 5) - len(self.active_warmings)]:
             asyncio.create_task(self._execute_warming_task(task))
     
-    async def _execute_warming_task(self, task: WarmingTask):
+    async def _execute_warming_task(self, task -> None: WarmingTask) -> None:
         """**Backend Senior**: Exécution tâche préchauffage"""
         task_id = task.task_id
         self.active_warmings.add(task_id)
@@ -728,7 +733,7 @@ class CacheWarmingScheduler:
         
         return warming_data
     
-    def register_data_source(self, source_name: str, source_function: Callable):
+    def register_data_source(self, source_name -> None: str, source_function -> None: Callable) -> None:
         """**Lead Dev IA**: Enregistrement source données personnalisée"""
         self.data_sources[source_name] = source_function
         logger.info(f"📊 Source données enregistrée: {source_name}")
@@ -760,7 +765,7 @@ class CacheWarmingScheduler:
         logger.info(f"📝 Tâche warming manuelle créée: {task_id}")
         return task_id
     
-    async def _cleanup_completed_tasks(self):
+    async def _cleanup_completed_tasks(self) -> None:
         """**DevOps**: Nettoyage tâches terminées"""
         current_time = datetime.now(timezone.utc)
         cutoff_time = current_time - timedelta(hours=24)  # Garder 24h
@@ -831,8 +836,8 @@ class CacheWarmingScheduler:
 async def create_cache_warming_scheduler(
     redis_pool, 
     cache_policy_engine=None, 
-    config: Optional[Dict[str, Any]] = None
-):
+    config -> None: Optional[Dict[str, Any]] = None
+) -> None:
     """**Lead Dev IA**: Factory création planificateur warming"""
     scheduler = CacheWarmingScheduler(redis_pool, cache_policy_engine, config)
     
@@ -842,12 +847,13 @@ async def create_cache_warming_scheduler(
     return scheduler
 
 if __name__ == "__main__":
-    async def demo():
+    async def demo() -> None:
         """Démonstration Cache Warming Scheduler"""
         
         # Configuration Redis simulée
         class MockRedisPool:
-            def get_connection(self):
+    """MockRedisPool: class implementation"""
+            def get_connection(self) -> None:
                 from unittest.mock import AsyncMock
                 mock = AsyncMock()
                 mock.setex.return_value = True

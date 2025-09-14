@@ -116,7 +116,7 @@ class Synapse:
     last_update_time: float = 0.0
     spike_history: deque = field(default_factory=lambda: deque(maxlen=1000))
     
-    def update_weight(self, delta_weight: float, max_weight: float = 10.0):
+    def update_weight(self, delta_weight -> None: float, max_weight -> None: float = 10.0) -> None:
         """Update synaptic weight"""
         self.weight = np.clip(self.weight + delta_weight, -max_weight, max_weight)
         self.last_update_time = time.time()
@@ -136,7 +136,7 @@ class Synapse:
 class SpikingNeuron:
     """Spiking neuron implementation"""
     
-    def __init__(self, neuron_id: str, config: NeuromorphicConfig):
+    def __init__(self, neuron_id -> None: str, config -> None: NeuromorphicConfig) -> None:
         self.neuron_id = neuron_id
         self.config = config
         
@@ -277,7 +277,7 @@ class SpikingNeuron:
 class NeuralPlasticity:
     """Synaptic plasticity implementation"""
     
-    def __init__(self, config: NeuromorphicConfig):
+    def __init__(self, config -> None: NeuromorphicConfig) -> None:
         self.config = config
         self.plasticity_rules = {
             PlasticityType.STDP: self._stdp_rule,
@@ -368,7 +368,7 @@ class NeuralPlasticity:
 class SynapticComputing:
     """Synaptic computing and connectivity management"""
     
-    def __init__(self, config: NeuromorphicConfig):
+    def __init__(self, config -> None: NeuromorphicConfig) -> None:
         self.config = config
         self.synapses: Dict[Tuple[str, str], Synapse] = {}
         self.connectivity_matrix: Dict[str, List[str]] = defaultdict(list)
@@ -435,8 +435,8 @@ class SynapticComputing:
         
         return postsynaptic_inputs
     
-    async def update_synapses(self, pre_spike_events: List[SpikeEvent], 
-                            post_spike_events: List[SpikeEvent]):
+    async def update_synapses(self, pre_spike_events -> None: List[SpikeEvent], 
+                            post_spike_events -> None: List[SpikeEvent]) -> None:
         """Update all synapses based on spike events"""
         for pre_spike in pre_spike_events:
             for post_spike in post_spike_events:
@@ -469,7 +469,7 @@ class SynapticComputing:
 class SpikeNetworkOrchestrator:
     """Orchestrator for spike-based neural networks"""
     
-    def __init__(self, config: NeuromorphicConfig):
+    def __init__(self, config -> None: NeuromorphicConfig) -> None:
         self.config = config
         self.neurons: Dict[str, SpikingNeuron] = {}
         self.synaptic_computer = SynapticComputing(config)
@@ -560,7 +560,7 @@ class SpikeNetworkOrchestrator:
         self.simulation_time += dt
         return spike_events
     
-    async def run_simulation(self, duration_ms: float, dt: float = None):
+    async def run_simulation(self, duration_ms -> None: float, dt -> None: float = None) -> None:
         """Run network simulation for specified duration"""
         dt = dt or self.config.time_step_ms / 1000.0
         steps = int(duration_ms / (dt * 1000))
@@ -583,7 +583,7 @@ class SpikeNetworkOrchestrator:
         
         logger.info("Simulation completed")
     
-    def stop_simulation(self):
+    def stop_simulation(self) -> None:
         """Stop running simulation"""
         self.is_running = False
     
@@ -616,7 +616,7 @@ class SpikeNetworkOrchestrator:
 class BrainInspiredCompute:
     """Brain-inspired computing algorithms and patterns"""
     
-    def __init__(self, config: NeuromorphicConfig):
+    def __init__(self, config -> None: NeuromorphicConfig) -> None:
         self.config = config
         self.memory_networks: Dict[str, Any] = {}
         self.attention_mechanisms: Dict[str, Any] = {}
@@ -763,7 +763,7 @@ class BrainInspiredCompute:
         
         return dot_product / (norm1 * norm2)
     
-    async def _forget_oldest_pattern(self, network_id: str):
+    async def _forget_oldest_pattern(self, network_id -> None: str) -> None:
         """Forget oldest pattern in memory network"""
         memory_network = self.memory_networks[network_id]
         
@@ -786,7 +786,7 @@ class BrainInspiredCompute:
 class NeuromorphicProcessor:
     """Main neuromorphic processor orchestrating all components"""
     
-    def __init__(self, config: NeuromorphicConfig):
+    def __init__(self, config -> None: NeuromorphicConfig) -> None:
         self.config = config
         self.spike_orchestrator = SpikeNetworkOrchestrator(config)
         self.brain_computer = BrainInspiredCompute(config)

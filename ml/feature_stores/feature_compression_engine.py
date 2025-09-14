@@ -160,7 +160,7 @@ class LZ4Compressor(BaseCompressor):
 class ZstdCompressor(BaseCompressor):
     """Compresseur Zstandard (équilibré)"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.compressor = zstd.ZstdCompressor()
         self.decompressor = zstd.ZstdDecompressor()
     
@@ -281,11 +281,11 @@ class FeatureCompressionEngine:
     
     def __init__(
         self,
-        default_algorithm: CompressionAlgorithm = CompressionAlgorithm.ZSTD,
-        enable_adaptive: bool = True,
-        benchmark_interval: int = 100,  # Benchmark tous les 100 compressions
-        enable_analytics: bool = True
-    ):
+        default_algorithm -> None: CompressionAlgorithm = CompressionAlgorithm.ZSTD,
+        enable_adaptive -> None: bool = True,
+        benchmark_interval -> None: int = 100,  # Benchmark tous les 100 compressions
+        enable_analytics -> None: bool = True
+    ) -> None:
         self.default_algorithm = default_algorithm
         self.enable_adaptive = enable_adaptive
         self.benchmark_interval = benchmark_interval
@@ -575,9 +575,9 @@ class FeatureCompressionEngine:
     
     async def _update_compression_stats(
         self,
-        result: CompressionResult,
-        creator_type: Optional[str]
-    ):
+        result -> None: CompressionResult,
+        creator_type -> None: Optional[str]
+    ) -> None:
         """Mettre à jour les statistiques"""
         
         self.stats.total_features += 1
@@ -619,7 +619,7 @@ class FeatureCompressionEngine:
         if len(self.compression_history) > 1000:
             self.compression_history = self.compression_history[-1000:]
     
-    async def _run_adaptive_benchmark(self, sample_data: bytes):
+    async def _run_adaptive_benchmark(self, sample_data -> None: bytes) -> None:
         """Lancer un benchmark adaptatif"""
         
         if not self.enable_adaptive:
@@ -744,7 +744,7 @@ class FeatureCompressionEngine:
         return recommendations
 
 # Usage Example
-async def main():
+async def main() -> None:
     """Exemple d'utilisation du Feature Compression Engine"""
     
     engine = FeatureCompressionEngine(

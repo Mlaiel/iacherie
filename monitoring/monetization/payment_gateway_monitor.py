@@ -129,7 +129,7 @@ class GatewayHealthMetrics:
 class PaymentGatewayMonitor:
     """Enterprise payment gateway monitoring system."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.gateway_configs = {}
         self.transaction_history = {}
         self.health_metrics = {}
@@ -137,7 +137,7 @@ class PaymentGatewayMonitor:
         self.monitoring_active = {}
         self.session_pool = {}
         
-    async def initialize_gateways(self, configs: Dict[PaymentGateway, GatewayConfig]):
+    async def initialize_gateways(self, configs -> None: Dict[PaymentGateway, GatewayConfig]) -> None:
         """Initialize payment gateway configurations."""
         
         for gateway, config in configs.items():
@@ -174,7 +174,7 @@ class PaymentGatewayMonitor:
             except Exception as e:
                 logger.error(f"Failed to initialize gateway {gateway.value}: {str(e)}")
     
-    async def _monitor_gateway_health(self, gateway: PaymentGateway):
+    async def _monitor_gateway_health(self, gateway -> None: PaymentGateway) -> None:
         """Monitor individual gateway health."""
         
         while self.monitoring_active.get(gateway, False):
@@ -284,7 +284,7 @@ class PaymentGatewayMonitor:
                 'Content-Type': 'application/json'
             }
     
-    async def _update_health_metrics(self, gateway: PaymentGateway, health_result: Dict[str, Any]):
+    async def _update_health_metrics(self, gateway -> None: PaymentGateway, health_result -> None: Dict[str, Any]) -> None:
         """Update gateway health metrics."""
         
         metrics = self.health_metrics[gateway]
@@ -320,7 +320,7 @@ class PaymentGatewayMonitor:
             (metrics.uptime_percentage + metrics.success_rate) / 2
         )
     
-    async def _check_gateway_alerts(self, gateway: PaymentGateway):
+    async def _check_gateway_alerts(self, gateway -> None: PaymentGateway) -> None:
         """Check for gateway alerts and issues."""
         
         metrics = self.health_metrics[gateway]

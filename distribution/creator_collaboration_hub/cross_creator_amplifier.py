@@ -77,7 +77,7 @@ class AmplificationResult:
 class CrossCreatorAmplifier:
     """Advanced cross-creator amplification and audience expansion system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize cross-creator amplifier"""
         self.active_amplifications = {}
         self.amplification_templates = self._init_amplification_templates()
@@ -745,7 +745,7 @@ class CrossCreatorAmplifier:
     async def _launch_amplification_campaign(self, plan: AmplificationPlan, mode: str) -> Dict[str, Any]:
         return {'launch_successful': True, 'initial_metrics': {'reach': 10000, 'engagement': 500}}
     
-    async def _monitor_and_optimize_amplification(self, amplification_id: str):
+    async def _monitor_and_optimize_amplification(self, amplification_id -> None: str) -> None:
         """Monitor and optimize amplification in real-time"""
         while amplification_id in self.active_amplifications:
             try:

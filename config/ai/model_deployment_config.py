@@ -46,7 +46,7 @@ class ServingFramework(str, Enum):
 class ModelDeploymentConfiguration:
     """Model deployment configuration"""
     
-    def __init__(self, level: DeploymentLevel = DeploymentLevel.ENTERPRISE):
+    def __init__(self, level -> None: DeploymentLevel = DeploymentLevel.ENTERPRISE) -> None:
         self.level = level
         self.serving_config = self._get_serving_config()
         self.scaling_config = self._get_scaling_config()

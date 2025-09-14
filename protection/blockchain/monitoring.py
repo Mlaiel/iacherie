@@ -83,7 +83,7 @@ class MetricsCollector:
     """
 Collects and aggregates blockchain metrics"""
     
-    def __init__(self, retention_hours: int = 24):
+    def __init__(self, retention_hours -> None: int = 24) -> None:
         self.metrics: Dict[str, deque] = defaultdict(lambda: deque(maxlen=10000))
         self.retention_hours = retention_hours
         self.last_cleanup = datetime.utcnow()
@@ -92,7 +92,7 @@ Collects and aggregates blockchain metrics"""
         self.counters: Dict[str, int] = defaultdict(int)
         self.timers: Dict[str, List[float]] = defaultdict(list)
         
-    def record_metric(self, metric: Metric):
+    def record_metric(self, metric -> None: Metric) -> None:
         """
 Record a metric data point"""
         self.metrics[metric.name].append(metric)
@@ -107,7 +107,7 @@ Record a metric data point"""
         if (datetime.utcnow() - self.last_cleanup).total_seconds() > 3600:
             self._cleanup_old_metrics()
     
-    def increment_counter(self, name: str, value: float = 1, labels: Dict[str, str] = None):
+    def increment_counter(self, name -> None: str, value -> None: float = 1, labels -> None: Dict[str, str] = None) -> None:
         """
 Increment a counter metric"""
         metric = Metric(
@@ -119,7 +119,7 @@ Increment a counter metric"""
         )
         self.record_metric(metric)
     
-    def set_gauge(self, name: str, value: float, labels: Dict[str, str] = None):
+    def set_gauge(self, name -> None: str, value -> None: float, labels -> None: Dict[str, str] = None) -> None:
         """
 Set a gauge metric value"""
         metric = Metric(
@@ -131,7 +131,7 @@ Set a gauge metric value"""
         )
         self.record_metric(metric)
     
-    def record_timer(self, name: str, duration: float, labels: Dict[str, str] = None):
+    def record_timer(self, name -> None: str, duration -> None: float, labels -> None: Dict[str, str] = None) -> None:
         """
 Record a timer metric"""
         metric = Metric(
@@ -175,7 +175,7 @@ Get statistical summary of a metric"""
             }
         }
     
-    def _cleanup_old_metrics(self):
+    def _cleanup_old_metrics(self) -> None:
         """
 Remove metrics older than retention period"""
         cutoff_time = datetime.utcnow() - timedelta(hours=self.retention_hours)
@@ -192,17 +192,17 @@ class PerformanceTimer:
     """
 Context manager for timing operations"""
     
-    def __init__(self, collector: MetricsCollector, metric_name: str, labels: Dict[str, str] = None):
+    def __init__(self, collector -> None: MetricsCollector, metric_name -> None: str, labels -> None: Dict[str, str] = None) -> None:
         self.collector = collector
         self.metric_name = metric_name
         self.labels = labels or {}
         self.start_time = None
     
-    def __enter__(self):
+    def __enter__(self) -> None:
         self.start_time = time.time()
         return self
     
-    def __exit__(self, exc_type, exc_val, exc_tb):
+    def __exit__(self, exc_type, exc_val, exc_tb) -> None:
         try:
             logger.info(f"Executing __exit__")
             
@@ -238,24 +238,24 @@ class AlertManager:
     """
 Manages alerts and notifications"""
     
-    def __init__(self, metrics_collector: MetricsCollector):
+    def __init__(self, metrics_collector -> None: MetricsCollector) -> None:
         self.metrics_collector = metrics_collector
         self.alerts: Dict[str, Alert] = {}
         self.alert_handlers: List[Callable] = []
         self.check_interval = 60  # seconds
         self.running = False
     
-    def add_alert(self, alert: Alert):
+    def add_alert(self, alert -> None: Alert) -> None:
         """
 Add an alert definition"""
         self.alerts[alert.name] = alert
         logger.info(f"Alert added: {alert.name}")
     
-    def add_alert_handler(self, handler: Callable[[Alert, float], None]):
+    def add_alert_handler(self, handler -> None: Callable[[Alert, float], None]) -> None:
         """Add an alert handler function"""
         self.alert_handlers.append(handler)
     
-    async def start_monitoring(self):
+    async def start_monitoring(self) -> None:
         """
 Start alert monitoring loop"""
         self.running = True
@@ -269,12 +269,12 @@ Start alert monitoring loop"""
                 logger.error(f"Alert monitoring error: {e}")
                 await asyncio.sleep(30)
     
-    def stop_monitoring(self):
+    def stop_monitoring(self) -> None:
         """Stop alert monitoring"""
         self.running = False
         logger.info("Alert monitoring stopped")
     
-    async def _check_alerts(self):
+    async def _check_alerts(self) -> None:
         """Check all alerts against current metrics"""
         for alert_name, alert in self.alerts.items():
             if not alert.enabled:
@@ -338,7 +338,7 @@ class BlockchainMonitor:
     """
 Main monitoring service for blockchain operations"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.metrics_collector = MetricsCollector()
         self.alert_manager = AlertManager(self.metrics_collector)
         self.initialized = False
@@ -349,7 +349,7 @@ Main monitoring service for blockchain operations"""
         # Setup default alert handlers
         self._setup_alert_handlers()
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """
 Initialize monitoring service"""
         try:
@@ -364,7 +364,7 @@ Initialize monitoring service"""
             logger.error(f"Failed to initialize monitoring: {e}")
             return False
     
-    def _setup_default_alerts(self):
+    def _setup_default_alerts(self) -> None:
         """Setup default alerts for blockchain operations"""
         alerts = [
             Alert(
@@ -407,12 +407,12 @@ Initialize monitoring service"""
         for alert in alerts:
             self.alert_manager.add_alert(alert)
     
-    def _setup_alert_handlers(self):
+    def _setup_alert_handlers(self) -> None:
         """Setup alert notification handlers"""
         self.alert_manager.add_alert_handler(self._log_alert)
         # Add additional handlers for Slack, email, etc.
     
-    async def _log_alert(self, alert: Alert, value: float):
+    async def _log_alert(self, alert -> None: Alert, value -> None: float) -> None:
         """
 Log alert to system logger"""
         log_level = {
@@ -429,7 +429,7 @@ Log alert to system logger"""
         )
     
     # Metric recording methods
-    def record_transaction_success(self, network: str, tx_hash: str, gas_used: int, duration: float):
+    def record_transaction_success(self, network -> None: str, tx_hash -> None: str, gas_used -> None: int, duration -> None: float) -> None:
         """Record successful transaction"""
         labels = {'network': network, 'status': 'success'}
         
@@ -437,7 +437,7 @@ Log alert to system logger"""
         self.metrics_collector.record_timer('transaction_duration', duration, labels=labels)
         self.metrics_collector.set_gauge('gas_used', gas_used, labels=labels)
     
-    def record_transaction_failure(self, network: str, error: str, duration: float):
+    def record_transaction_failure(self, network -> None: str, error -> None: str, duration -> None: float) -> None:
         """
 Record failed transaction"""
         labels = {'network': network, 'status': 'failed', 'error': error}
@@ -446,19 +446,19 @@ Record failed transaction"""
         self.metrics_collector.increment_counter('transaction_failures', labels=labels)
         self.metrics_collector.record_timer('transaction_duration', duration, labels=labels)
     
-    def record_gas_price(self, network: str, gas_price_gwei: float):
+    def record_gas_price(self, network -> None: str, gas_price_gwei -> None: float) -> None:
         """
 Record current gas price"""
         labels = {'network': network}
         self.metrics_collector.set_gauge('gas_price_gwei', gas_price_gwei, labels=labels)
     
-    def record_wallet_balance(self, network: str, address: str, balance: float):
+    def record_wallet_balance(self, network -> None: str, address -> None: str, balance -> None: float) -> None:
         """
 Record wallet balance"""
         labels = {'network': network, 'address': address}
         self.metrics_collector.set_gauge('wallet_balance', balance, labels=labels)
     
-    def record_nft_operation(self, operation: str, success: bool, duration: float):
+    def record_nft_operation(self, operation -> None: str, success -> None: bool, duration -> None: float) -> None:
         """
 Record NFT operation metrics"""
         labels = {'operation': operation, 'success': str(success)}
@@ -466,7 +466,7 @@ Record NFT operation metrics"""
         self.metrics_collector.increment_counter('nft_operations_total', labels=labels)
         self.metrics_collector.record_timer('nft_operation_duration', duration, labels=labels)
     
-    def record_defi_operation(self, protocol: str, operation: str, amount: float, success: bool):
+    def record_defi_operation(self, protocol -> None: str, operation -> None: str, amount -> None: float, success -> None: bool) -> None:
         """
 Record DeFi operation metrics"""
         labels = {'protocol': protocol, 'operation': operation, 'success': str(success)}
@@ -474,7 +474,7 @@ Record DeFi operation metrics"""
         self.metrics_collector.increment_counter('defi_operations_total', labels=labels)
         self.metrics_collector.set_gauge('defi_amount', amount, labels=labels)
     
-    def record_storage_operation(self, network: str, operation: str, size_bytes: int, success: bool):
+    def record_storage_operation(self, network -> None: str, operation -> None: str, size_bytes -> None: int, success -> None: bool) -> None:
         """
 Record distributed storage operation"""
         labels = {'network': network, 'operation': operation, 'success': str(success)}
@@ -533,7 +533,7 @@ Get comprehensive monitoring report"""
 Get a timer context manager for measuring operations"""
         return PerformanceTimer(self.metrics_collector, metric_name, labels)
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """
 Shutdown monitoring service"""
         try:

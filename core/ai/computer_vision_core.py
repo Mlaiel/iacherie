@@ -167,7 +167,7 @@ class VisualAnalysisResult:
 class VisionModel(ABC):
     """Abstract vision model interface"""
     
-    def __init__(self, name: str, model_type: str):
+    def __init__(self, name -> None: str, model_type -> None: str) -> None:
         self.name = name
         self.model_type = model_type
         self.loaded = False
@@ -192,7 +192,7 @@ class VisionModel(ABC):
 class ObjectDetectionModel(VisionModel):
     """Object detection model"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__("ObjectDetector", "object_detection")
         self.supported_analysis_types = {AnalysisType.OBJECT_DETECTION}
         self.classes = [
@@ -278,7 +278,7 @@ class ObjectDetectionModel(VisionModel):
 class FaceDetectionModel(VisionModel):
     """Face detection and recognition model"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__("FaceDetector", "face_detection")
         self.supported_analysis_types = {
             AnalysisType.FACE_DETECTION, 
@@ -357,7 +357,7 @@ class FaceDetectionModel(VisionModel):
 class ContentModerationModel(VisionModel):
     """Content moderation model"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__("ContentModerator", "content_moderation")
         self.supported_analysis_types = {
             AnalysisType.CONTENT_MODERATION,
@@ -436,7 +436,7 @@ class ContentModerationModel(VisionModel):
 class SceneClassificationModel(VisionModel):
     """Scene classification model"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__("SceneClassifier", "scene_classification")
         self.supported_analysis_types = {AnalysisType.SCENE_CLASSIFICATION}
         self.scene_classes = [
@@ -540,7 +540,7 @@ class ImageProcessor:
 class ComputerVisionCore:
     """Core computer vision system"""
     
-    def __init__(self, level: str = "enterprise"):
+    def __init__(self, level -> None: str = "enterprise") -> None:
         self.level = level
         self.models: Dict[str, VisionModel] = {}
         self.analysis_queue: List[VisualAnalysisRequest] = []
@@ -646,7 +646,7 @@ class ComputerVisionCore:
             logger.error(f"Health check failed: {str(e)}")
             return False
     
-    def _initialize_models(self):
+    def _initialize_models(self) -> None:
         """Initialize vision models"""
         self.models = {
             'object_detection': ObjectDetectionModel(),
@@ -655,7 +655,7 @@ class ComputerVisionCore:
             'scene_classification': SceneClassificationModel()
         }
     
-    async def _vision_processor(self, worker_id: str):
+    async def _vision_processor(self, worker_id -> None: str) -> None:
         """Background vision processor"""
         while self.is_running:
             try:
@@ -673,7 +673,7 @@ class ComputerVisionCore:
                 logger.error(f"Vision processor {worker_id} error: {str(e)}")
                 await asyncio.sleep(1)
     
-    async def _process_analysis_request(self, request: VisualAnalysisRequest):
+    async def _process_analysis_request(self, request -> None: VisualAnalysisRequest) -> None:
         """Process visual analysis request"""
         try:
             start_time = time.time()
@@ -733,8 +733,8 @@ class ComputerVisionCore:
             
             logger.error(f"Analysis failed for request {request.id}: {str(e)}")
     
-    async def _perform_analysis(self, image_data: np.ndarray, analysis_type: AnalysisType,
-                              options: Dict[str, Any], result: VisualAnalysisResult):
+    async def _perform_analysis(self, image_data -> None: np.ndarray, analysis_type -> None: AnalysisType,
+                              options -> None: Dict[str, Any], result -> None: VisualAnalysisResult) -> None:
         """Perform specific analysis type"""
         try:
             # Find suitable model

@@ -149,7 +149,7 @@ class UserSession(BaseModel):
 class JWTManager:
     """JWT token management for authentication"""
     
-    def __init__(self, secret_key: str, algorithm: str = "HS256"):
+    def __init__(self, secret_key -> None: str, algorithm -> None: str = "HS256") -> None:
         self.secret_key = secret_key
         self.algorithm = algorithm
         self.access_token_expire = timedelta(hours=1)
@@ -218,7 +218,7 @@ class JWTManager:
 class OAuth2Manager:
     """OAuth2 provider integration manager"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.providers = {
             # Core Platforms
             AuthProvider.GOOGLE: self._google_config,
@@ -664,7 +664,7 @@ class OAuth2Manager:
 class SessionManager:
     """Distributed session management with Redis"""
     
-    def __init__(self, redis_client: redis.Redis):
+    def __init__(self, redis_client -> None: redis.Redis) -> None:
         self.redis = redis_client
         self.session_expire = timedelta(hours=24)
     
@@ -729,7 +729,7 @@ class SessionManager:
 class MFAManager:
     """Multi-factor authentication manager"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.totp_issuer = "IA Influencer Agent"
     
     def generate_totp_secret(self, user_email: str) -> str:
@@ -778,7 +778,7 @@ class MFAManager:
 class BiometricAuthManager:
     """Biometric authentication manager for face, voice, fingerprint recognition"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.supported_types = [BiometricType.FACE, BiometricType.VOICE, BiometricType.FINGERPRINT]
         self.confidence_threshold = 0.85
         self.max_attempts = 3
@@ -899,7 +899,7 @@ class BiometricAuthManager:
 class HardwareSecurityManager:
     """Enterprise hardware security key manager with YubiKey/FIDO2 support"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.supported_protocols = ["FIDO2", "U2F", "OTP", "PIV", "OATH"]
         self.key_registry = {}  # Would be database in production
     
@@ -975,7 +975,7 @@ class HardwareSecurityManager:
 class DistributedSessionManager:
     """Enterprise distributed session management with Redis clustering"""
     
-    def __init__(self, redis_cluster_urls: List[str] = None):
+    def __init__(self, redis_cluster_urls -> None: List[str] = None) -> None:
         self.redis_cluster_urls = redis_cluster_urls or ["redis://localhost:6379"]
         self.session_timeout = 24 * 60 * 60  # 24 hours
         self.max_sessions_per_user = 10
@@ -1064,7 +1064,7 @@ class DistributedSessionManager:
 class EnterpriseAuthenticationService:
     """Enhanced authentication service with enterprise features"""
     
-    def __init__(self, jwt_secret: str, redis_cluster: Optional[List[str]] = None):
+    def __init__(self, jwt_secret -> None: str, redis_cluster -> None: Optional[List[str]] = None) -> None:
         self.jwt_manager = JWTManager(jwt_secret)
         self.oauth2_manager = OAuth2Manager()
         self.mfa_manager = MFAManager()
@@ -1274,7 +1274,7 @@ class EnterpriseAuthenticationService:
 class PasswordManager:
     """Password hashing and validation manager"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.rounds = 12
         self.min_length = 8
         self.max_length = 128
@@ -1318,7 +1318,7 @@ class PasswordManager:
 class AuthenticationService:
     """Main authentication service consolidating all auth functionality"""
     
-    def __init__(self, secret_key: str, redis_client: redis.Redis):
+    def __init__(self, secret_key -> None: str, redis_client -> None: redis.Redis) -> None:
         self.jwt_manager = JWTManager(secret_key)
         self.oauth2_manager = OAuth2Manager()
         self.session_manager = SessionManager(redis_client)

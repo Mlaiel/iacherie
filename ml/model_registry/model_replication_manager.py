@@ -102,7 +102,7 @@ class ReplicationMetrics:
 class ModelReplicationManager:
     """Enterprise Model Replication Manager"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.nodes: Dict[str, ReplicationNode] = {}
         self.replication_configs: Dict[str, ReplicationConfig] = {}
@@ -466,13 +466,13 @@ class ModelReplicationManager:
             logger.error(f"❌ Error selecting source node: {e}")
             return None
     
-    async def _start_replication_sync(self, model_id: str):
+    async def _start_replication_sync(self, model_id -> None: str) -> None:
         """Start background replication sync task"""
         try:
             if model_id in self.sync_tasks:
                 self.sync_tasks[model_id].cancel()
             
-            async def sync_loop():
+            async def sync_loop() -> None:
                 config = self.replication_configs[model_id]
                 while config.enabled:
                     try:
@@ -493,10 +493,10 @@ class ModelReplicationManager:
         except Exception as e:
             logger.error(f"❌ Error starting sync task for {model_id}: {e}")
     
-    async def _start_health_check(self, node_id: str):
+    async def _start_health_check(self, node_id -> None: str) -> None:
         """Start health check for node"""
         try:
-            async def health_check_loop():
+            async def health_check_loop() -> None:
                 while node_id in self.nodes:
                     try:
                         node = self.nodes[node_id]
@@ -523,7 +523,7 @@ class ModelReplicationManager:
         except Exception as e:
             logger.error(f"❌ Error starting health check for {node_id}: {e}")
     
-    async def _resolve_by_timestamp(self, model_id: str, conflicted_nodes: List[str]):
+    async def _resolve_by_timestamp(self, model_id -> None: str, conflicted_nodes -> None: List[str]) -> None:
         """Resolve conflicts by timestamp (latest wins)"""
         try:
             latest_node = None
@@ -543,7 +543,7 @@ class ModelReplicationManager:
         except Exception as e:
             logger.error(f"❌ Error resolving by timestamp: {e}")
     
-    async def _resolve_by_priority(self, model_id: str, conflicted_nodes: List[str]):
+    async def _resolve_by_priority(self, model_id -> None: str, conflicted_nodes -> None: List[str]) -> None:
         """Resolve conflicts by node priority"""
         try:
             highest_priority_node = None
@@ -563,7 +563,7 @@ class ModelReplicationManager:
         except Exception as e:
             logger.error(f"❌ Error resolving by priority: {e}")
     
-    async def _queue_manual_resolution(self, model_id: str, conflicted_nodes: List[str]):
+    async def _queue_manual_resolution(self, model_id -> None: str, conflicted_nodes -> None: List[str]) -> None:
         """Queue conflict for manual resolution"""
         try:
             # In practice, this would notify administrators
@@ -581,11 +581,11 @@ class ModelReplicationManager:
     
     async def _record_replication_metrics(
         self,
-        model_id: str,
-        source_node: str,
-        target_nodes: List[str],
-        results: Dict[str, bool]
-    ):
+        model_id -> None: str,
+        source_node -> None: str,
+        target_nodes -> None: List[str],
+        results -> None: Dict[str, bool]
+    ) -> None:
         """Record replication metrics"""
         try:
             success_count = sum(1 for success in results.values() if success)
@@ -651,7 +651,7 @@ class ModelReplicationManager:
 replication_manager = ModelReplicationManager()
 
 
-async def main():
+async def main() -> None:
     """Test the Model Replication Manager"""
     manager = ModelReplicationManager()
     

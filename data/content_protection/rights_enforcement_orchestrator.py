@@ -55,7 +55,7 @@ class EnforcementAction(Enum):
 class RightsEnforcementOrchestrator:
     """Advanced digital rights enforcement system with blockchain integration"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.redis_client = None
         self.mongo_client = None
         self.blockchain_security = BlockchainSecurityInfrastructure()
@@ -81,7 +81,7 @@ class RightsEnforcementOrchestrator:
             logger.error(f"Failed to initialize Rights Enforcement Orchestrator: {e}")
             return False
     
-    async def _initialize_database(self):
+    async def _initialize_database(self) -> None:
         """Initialize database collections and indexes"""
         try:
             if self.mongo_client:
@@ -318,7 +318,7 @@ class RightsEnforcementOrchestrator:
         
         return monitoring_config
     
-    async def _store_enforcement_record(self, enforcement_result: Dict[str, Any]):
+    async def _store_enforcement_record(self, enforcement_result -> None: Dict[str, Any]) -> None:
         """Store enforcement record in database"""
         try:
             if self.mongo_client:
@@ -340,7 +340,7 @@ class RightsEnforcementOrchestrator:
         except Exception as e:
             logger.error(f"Failed to store enforcement record: {e}")
     
-    async def _send_enforcement_notifications(self, enforcement_result: Dict[str, Any]):
+    async def _send_enforcement_notifications(self, enforcement_result -> None: Dict[str, Any]) -> None:
         """Send notifications about rights enforcement"""
         notifications = [
             {
@@ -422,19 +422,19 @@ class RightsEnforcementOrchestrator:
             logger.error(f"Failed to revoke rights enforcement: {e}")
             raise HTTPException(status_code=500, detail=f"Revocation failed: {e}")
     
-    async def _deactivate_smart_contracts(self, enforcement_record: Dict[str, Any]):
+    async def _deactivate_smart_contracts(self, enforcement_record -> None: Dict[str, Any]) -> None:
         """Deactivate smart contracts"""
         contracts = enforcement_record.get("smart_contracts", {}).get("contracts", {})
         for contract_name, contract_info in contracts.items():
             await self.blockchain_security.deactivate_contract(contract_info["address"])
             logger.info(f"Deactivated smart contract: {contract_name}")
     
-    async def _stop_monitoring(self, monitoring_config: Dict[str, Any]):
+    async def _stop_monitoring(self, monitoring_config -> None: Dict[str, Any]) -> None:
         """Stop rights monitoring"""
         monitoring_id = monitoring_config.get("monitoring_id")
         logger.info(f"Stopped monitoring for: {monitoring_id}")
     
-    async def _update_enforcement_record(self, enforcement_record: Dict[str, Any]):
+    async def _update_enforcement_record(self, enforcement_record -> None: Dict[str, Any]) -> None:
         """Update enforcement record in database"""
         try:
             if self.mongo_client:
@@ -451,7 +451,7 @@ class RightsEnforcementOrchestrator:
 class BlockchainSecurityInfrastructure:
     """Advanced blockchain-based security with multi-network support"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.supported_networks = {
             "ethereum": {"rpc_url": "https://mainnet.infura.io", "chain_id": 1},
             "polygon": {"rpc_url": "https://polygon-rpc.com", "chain_id": 137},
@@ -475,7 +475,7 @@ class BlockchainSecurityInfrastructure:
             logger.error(f"Blockchain initialization failed: {e}")
             return False
     
-    async def _load_contract_templates(self):
+    async def _load_contract_templates(self) -> None:
         """Load smart contract templates"""
         self.contract_templates = {
             "ownership_verification": {
@@ -513,7 +513,7 @@ class BlockchainSecurityInfrastructure:
             }
         }
     
-    async def _initialize_network_connections(self):
+    async def _initialize_network_connections(self) -> None:
         """Initialize connections to blockchain networks"""
         for network_name, network_config in self.supported_networks.items():
             try:
@@ -591,7 +591,7 @@ class BlockchainSecurityInfrastructure:
         base_hash = hashlib.sha256(json.dumps(transaction_data, sort_keys=True).encode()).hexdigest()
         return f"0x{base_hash[:64]}"
     
-    async def _store_proof_distributed(self, proof_document: Dict[str, Any]):
+    async def _store_proof_distributed(self, proof_document -> None: Dict[str, Any]) -> None:
         """Store proof in distributed storage systems"""
         # IPFS storage simulation
         ipfs_hash = f"Qm{proof_document['proof_id'][:44]}"
@@ -677,7 +677,7 @@ class BlockchainSecurityInfrastructure:
             logger.error(f"Contract deployment failed: {e}")
             raise HTTPException(status_code=500, detail=f"Contract deployment failed: {e}")
     
-    async def deactivate_contract(self, contract_address: str):
+    async def deactivate_contract(self, contract_address -> None: str) -> None:
         """Deactivate smart contract"""
         if contract_address in self.deployed_contracts:
             self.deployed_contracts[contract_address]["status"] = "deactivated"
@@ -705,7 +705,7 @@ class BlockchainSecurityInfrastructure:
 class DigitalRightsManager:
     """Advanced digital rights management with comprehensive features"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.rights_database = {}
         self.licensing_agreements = {}
         self.rights_templates = {}
@@ -722,7 +722,7 @@ class DigitalRightsManager:
             logger.error(f"Rights manager initialization failed: {e}")
             return False
     
-    async def _load_rights_templates(self):
+    async def _load_rights_templates(self) -> None:
         """Load standard rights templates"""
         self.rights_templates = {
             "full_copyright": {
@@ -747,7 +747,7 @@ class DigitalRightsManager:
             }
         }
     
-    async def _initialize_rights_database(self):
+    async def _initialize_rights_database(self) -> None:
         """Initialize rights database structure"""
         self.rights_database = {
             "owners": {},

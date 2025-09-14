@@ -24,7 +24,7 @@ class OptimizationTarget:
 class CompressionOptimizationEngine:
     """Advanced optimization engine for compression parameters."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the optimization engine."""
         self.optimization_algorithms = {
             "genetic": self._genetic_algorithm,

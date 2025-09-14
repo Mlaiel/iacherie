@@ -626,8 +626,8 @@ class CreatorContentPerformanceEngine:
     - Real-time Metrics
     """
     
-    def __init__(self, db_session: AsyncSession, redis_client: Redis,
-                 storage_manager: Optional[Any] = None, vector_db: Optional[Any] = None):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: Redis,
+                 storage_manager -> None: Optional[Any] = None, vector_db -> None: Optional[Any] = None) -> None:
         """
         Initialize Creator Content Performance Engine
         
@@ -662,7 +662,7 @@ class CreatorContentPerformanceEngine:
         
         self._initialize_engines()
     
-    def _initialize_engines(self):
+    def _initialize_engines(self) -> None:
         """Initialize analysis engines"""
         try:
             self.content_analyzer = ContentAnalyzer()
@@ -1042,7 +1042,7 @@ class CreatorContentPerformanceEngine:
         except Exception:
             return None
     
-    async def _cache_data(self, cache_key: str, data: Any, ttl: int):
+    async def _cache_data(self, cache_key -> None: str, data -> None: Any, ttl -> None: int) -> None:
         """Cache data with TTL"""
         try:
             self.redis.setex(cache_key, ttl, json.dumps(data, default=str))
@@ -1103,7 +1103,7 @@ class CreatorContentPerformanceEngine:
 class ContentAnalyzer:
     """Content analysis engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
     
     async def analyze_content_quality(self, content_data: Dict[str, Any]) -> float:
@@ -1114,7 +1114,7 @@ class ContentAnalyzer:
 class BehaviorAnalyzer:
     """User behavior analysis engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
     
     async def detect_behavior_patterns(self, user_data: Dict[str, Any]) -> Dict[str, Any]:
@@ -1125,7 +1125,7 @@ class BehaviorAnalyzer:
 class PerformanceOptimizer:
     """Performance optimization engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
     
     async def generate_optimization_suggestions(self, metrics: Dict[str, Any]) -> List[str]:

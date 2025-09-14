@@ -125,8 +125,8 @@ class ViralPredictor:
     """
     
     def __init__(self, 
-                 prediction_ttl: int = 7200,  # 2 hours
-                 trend_window: int = 168):     # 7 days
+                 prediction_ttl -> None: int = 7200,  # 2 hours
+                 trend_window -> None: int = 168) -> None:     # 7 days
         """
         Initialize Viral Predictor
         

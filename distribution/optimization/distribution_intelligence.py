@@ -1,3 +1,8 @@
+"""
+Distribution Intelligence module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """Distribution Intelligence Engine
 
@@ -109,7 +114,7 @@ class DistributionIntelligence:
     - Cross-platform optimization strategies
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize the distribution intelligence engine"""
         self.config = config or {}
         self.platform_data: Dict[str, PlatformPerformance] = {}

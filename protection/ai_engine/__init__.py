@@ -132,7 +132,7 @@ class EnterpriseAIProtectionEngine:
     - Enterprise-grade monitoring and observability
     """
     
-    def __init__(self, config: AIEngineConfig):
+    def __init__(self, config -> None: AIEngineConfig) -> None:
         self.config = config
         self.status = EngineStatus.INITIALIZING
         self.session_id = f"ai_engine_{int(time.time())}"
@@ -160,7 +160,7 @@ class EnterpriseAIProtectionEngine:
         self.status = EngineStatus.READY
         logger.info(f"Enterprise AI Protection Engine initialized - Session: {self.session_id}")
         
-    def _initialize_ai_engines(self):
+    def _initialize_ai_engines(self) -> None:
         """Initialize all AI engine components with advanced configuration"""
         try:
             # Core AI Intelligence Components
@@ -188,9 +188,9 @@ class EnterpriseAIProtectionEngine:
             self.status = EngineStatus.FAILED
             raise
     
-    def _start_health_monitoring(self):
+    def _start_health_monitoring(self) -> None:
         """Start background health monitoring thread"""
-        def health_monitor():
+        def health_monitor() -> None:
             try:
                 # Collect metrics
                 metrics = {
@@ -223,7 +223,7 @@ class EnterpriseAIProtectionEngine:
         health_thread = threading.Thread(target=health_monitor, daemon=True)
         health_thread.start()
     
-    def _check_engine_health(self):
+    def _check_engine_health(self) -> None:
         """Comprehensive health check of all engine components"""
         try:
             # Check Redis connectivity
@@ -243,7 +243,7 @@ class EnterpriseAIProtectionEngine:
             self.status = EngineStatus.DEGRADED
     
     @asynccontextmanager
-    async def request_context(self, operation: str):
+    async def request_context(self, operation -> None: str) -> None:
         """Context manager for tracking and monitoring requests"""
         self.active_requests += 1
         start_time = time.time()
@@ -369,7 +369,7 @@ class EnterpriseAIProtectionEngine:
                 logger.error(f"Comprehensive content analysis failed: {str(e)}")
                 raise
     
-    async def _cache_analysis_results(self, analysis_id: str, results: Dict[str, Any]):
+    async def _cache_analysis_results(self, analysis_id -> None: str, results -> None: Dict[str, Any]) -> None:
         """Cache analysis results in Redis for performance optimization"""
         try:
             cache_key = f"analysis_results:{analysis_id}"
@@ -476,7 +476,7 @@ class EnterpriseAIProtectionEngine:
             }
         }
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """
 Graceful shutdown of all engine components"""
         try:

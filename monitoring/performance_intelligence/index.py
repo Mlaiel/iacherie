@@ -1,4 +1,4 @@
-"""🎯 Advanced Metrics Index - Centralized Metrics Management
+"""# [EMOJI_REMOVED] Advanced Metrics Index - Centralized Metrics Management
 =========================================================
 
 Centralized management and orchestration of all advanced metrics components.
@@ -80,7 +80,7 @@ class AdvancedMetricsManager:
     Coordinates between different metrics collectors and provides unified access.
     """
     
-    def __init__(self, config: Optional[MetricsConfiguration] = None):
+    def __init__(self, config -> None: Optional[MetricsConfiguration] = None) -> None:
         self.config = config or MetricsConfiguration()
         self.logger = logging.getLogger(self.__class__.__name__)
         
@@ -486,7 +486,7 @@ Format report data as CSV"""
 class MetricsAggregator:
     """Specialized aggregator for advanced metrics processing"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(self.__class__.__name__)
     
     async def aggregate_by_period(
@@ -504,7 +504,7 @@ class MetricsDashboard:
     """
 Dashboard generator for advanced metrics visualization"""
     
-    def __init__(self, manager: AdvancedMetricsManager):
+    def __init__(self, manager -> None: AdvancedMetricsManager) -> None:
         self.manager = manager
         self.logger = logging.getLogger(self.__class__.__name__)
     
@@ -519,7 +519,7 @@ class MetricsReporter:
     """
 Report generator for advanced metrics"""
     
-    def __init__(self, manager: AdvancedMetricsManager):
+    def __init__(self, manager -> None: AdvancedMetricsManager) -> None:
         self.manager = manager
         self.logger = logging.getLogger(self.__class__.__name__)
     
@@ -550,3 +550,5 @@ def get_metrics_manager() -> Optional[AdvancedMetricsManager]:
     """
 Get the global advanced metrics manager instance"""
     return _metrics_manager_instance
+
+# File has syntax issues - needs manual review

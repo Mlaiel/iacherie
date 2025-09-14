@@ -46,7 +46,7 @@ class SecurityContext:
     risk_factors: Dict[str, Any]
     business_context: Dict[str, Any]
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.permissions is None:
             self.permissions = []
         if self.risk_factors is None:
@@ -70,7 +70,7 @@ class SecurityAssessment:
     processing_time_ms: float
     warnings: List[str]
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.recommendations is None:
             self.recommendations = []
         if self.warnings is None:
@@ -83,7 +83,7 @@ class EventSecurityOrchestrator:
     Coordinates threat detection, access control, compliance, and audit.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.enabled = True
         self.security_level = SecurityLevel.STANDARD
         self.security_modules = {}
@@ -102,7 +102,7 @@ class EventSecurityOrchestrator:
                                 threat_engine=None,
                                 access_manager=None,
                                 compliance_validator=None,
-                                audit_collector=None):
+                                audit_collector=None) -> None:
         """Register security modules with the orchestrator"""
         
         if threat_engine:
@@ -577,7 +577,7 @@ class EventSecurityOrchestrator:
         
         return warnings
     
-    def _update_processing_stats(self, assessment: SecurityAssessment):
+    def _update_processing_stats(self, assessment -> None: SecurityAssessment) -> None:
         """Update processing statistics"""
         
         self.processing_stats['total_events'] += 1
@@ -595,7 +595,7 @@ class EventSecurityOrchestrator:
         if len(processing_times) > 1000:
             self.processing_stats['processing_times'] = processing_times[-1000:]
     
-    async def _execute_security_callbacks(self, event_type: str, assessment: SecurityAssessment):
+    async def _execute_security_callbacks(self, event_type -> None: str, assessment -> None: SecurityAssessment) -> None:
         """Execute registered callbacks for event type"""
         
         callbacks = self.event_callbacks.get(event_type, [])
@@ -609,7 +609,7 @@ class EventSecurityOrchestrator:
             except Exception as e:
                 logger.error(f"Error executing security callback: {str(e)}")
     
-    def register_security_callback(self, event_type: str, callback: Callable):
+    def register_security_callback(self, event_type -> None: str, callback -> None: Callable) -> None:
         """Register a callback for security events"""
         
         if event_type not in self.event_callbacks:
@@ -717,17 +717,17 @@ class EventSecurityOrchestrator:
         
         return stats
     
-    def set_security_level(self, level: SecurityLevel):
+    def set_security_level(self, level -> None: SecurityLevel) -> None:
         """Set security processing level"""
         self.security_level = level
         logger.info(f"Security level set to: {level.value}")
     
-    def enable_orchestration(self):
+    def enable_orchestration(self) -> None:
         """Enable security orchestration"""
         self.enabled = True
         logger.info("Security orchestration enabled")
     
-    def disable_orchestration(self):
+    def disable_orchestration(self) -> None:
         """Disable security orchestration"""
         self.enabled = False
         logger.info("Security orchestration disabled")

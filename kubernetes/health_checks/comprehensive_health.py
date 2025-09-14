@@ -60,7 +60,7 @@ class ComprehensiveHealthChecker:
     Coordinates health checking across all platform subsystems and provides
     unified health reporting, alerting, and diagnostic capabilities.
     """
-    def __init__(self, config: Dict[str, Any], app=None):
+    def __init__(self, config -> None: Dict[str, Any], app=None) -> None:
         """
         Initialize comprehensive health checker
         
@@ -352,7 +352,7 @@ class ComprehensiveHealthChecker:
         
         return recommendations[:8]  # Limit to top 8 recommendations
 
-    def _update_health_history(self, summary: PlatformHealthSummary):
+    def _update_health_history(self, summary -> None: PlatformHealthSummary) -> None:
         """Update health check history for trend analysis"""
         history_entry = {
             "timestamp": summary.last_check_timestamp,
@@ -520,7 +520,7 @@ class ComprehensiveHealthChecker:
             "timestamp": datetime.utcnow().isoformat()
         }
 
-    async def cleanup_resources(self):
+    async def cleanup_resources(self) -> None:
         """Clean up health checker resources"""
         try:
             await self.database_checker.cleanup_connections()

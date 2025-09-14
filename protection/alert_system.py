@@ -1,4 +1,6 @@
 """Alert System for Content Protection
+import logging
+
 Real-time alert management and notification system.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -18,11 +20,11 @@ class AlertSystem:
     """
 Advanced alert system for content protection violations"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.alert_channels = ["email", "push", "webhook"]
         self.severity_levels = ["low", "medium", "high", "critical"]
     
-    async def send_violation_alert(self, user_id: str, violation_data: Dict[str, Any]):
+    async def send_violation_alert(self, user_id -> None: str, violation_data -> None: Dict[str, Any]) -> None:
         """Send alert for content protection violation"""
         try:
             # Determine alert severity
@@ -84,8 +86,8 @@ Advanced alert system for content protection violations"""
             "immediate_alerts": True
         }
     
-    async def _send_alert_via_channel(self, channel: str, user_id: str, 
-                                    message: Dict[str, Any], severity: str):
+    async def _send_alert_via_channel(self, channel -> None: str, user_id -> None: str, 
+                                    message -> None: Dict[str, Any], severity -> None: str) -> None:
         """Send alert through specific channel"""
         try:
             if channel == "email":
@@ -98,23 +100,23 @@ Advanced alert system for content protection violations"""
         except Exception as e:
             logger.error(f"Failed to send alert via {channel}: {str(e)}")
     
-    async def _send_email_alert(self, user_id: str, message: Dict[str, Any]):
+    async def _send_email_alert(self, user_id -> None: str, message -> None: Dict[str, Any]) -> None:
         """Send email alert"""
         # Implementation would integrate with email service
         logger.info(f"Email alert would be sent to user {user_id}")
     
-    async def _send_push_alert(self, user_id: str, message: Dict[str, Any]):
+    async def _send_push_alert(self, user_id -> None: str, message -> None: Dict[str, Any]) -> None:
         """Send push notification"""
         # Implementation would integrate with push notification service
         logger.info(f"Push alert would be sent to user {user_id}")
     
-    async def _send_webhook_alert(self, user_id: str, message: Dict[str, Any]):
+    async def _send_webhook_alert(self, user_id -> None: str, message -> None: Dict[str, Any]) -> None:
         """Send webhook alert"""
         # Implementation would call user's webhook URL
         logger.info(f"Webhook alert would be sent to user {user_id}")
     
-    async def _store_alert(self, user_id: str, violation_data: Dict[str, Any], 
-                         message: Dict[str, Any], severity: str):
+    async def _store_alert(self, user_id -> None: str, violation_data -> None: Dict[str, Any], 
+                         message -> None: Dict[str, Any], severity -> None: str) -> None:
         """Store alert in database"""
         try:
             async with database_manager.get_postgres_session() as session:

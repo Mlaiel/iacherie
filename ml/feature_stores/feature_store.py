@@ -119,12 +119,12 @@ class FeatureStore(ABC):
 class SQLiteFeatureStore(FeatureStore):
     """SQLite-based feature store implementation"""
     
-    def __init__(self, db_path: str = "feature_store.db"):
+    def __init__(self, db_path -> None: str = "feature_store.db") -> None:
         self.db_path = db_path
         self.conn = None
         self._initialize_db()
     
-    def _initialize_db(self):
+    def _initialize_db(self) -> None:
         """Initialize the SQLite database"""
         self.conn = sqlite3.connect(self.db_path, check_same_thread=False)
         
@@ -415,7 +415,7 @@ class SQLiteFeatureStore(FeatureStore):
             logger.error(f"Error reading features: {str(e)}")
             return pd.DataFrame()
     
-    def close(self):
+    def close(self) -> None:
         """Close the database connection"""
         if self.conn:
             self.conn.close()
@@ -424,7 +424,7 @@ class SQLiteFeatureStore(FeatureStore):
 class FeatureTransformation:
     """Feature transformation pipeline"""
     
-    def __init__(self, name: str, description: str):
+    def __init__(self, name -> None: str, description -> None: str) -> None:
         """
         Initialise le pipeline de transformation de features pour créateurs
         
@@ -483,7 +483,7 @@ class FeatureTransformation:
         
         logger.info(f"Initialized FeatureTransformationPipeline '{self.name}' for creator type: {self.creator_type}")
     
-    def _init_default_transformations(self):
+    def _init_default_transformations(self) -> None:
         """Initialise les transformations par défaut selon le type de créateur"""
         config = self.creator_configs[self.creator_type]
         
@@ -531,39 +531,39 @@ class FeatureTransformation:
                 "Audience demographic and behavior feature extraction"
             )
     
-    def _normalize_audio(self, audio_data):
+    def _normalize_audio(self, audio_data) -> None:
         """Normalisation audio pour musiciens"""
         # Implémentation de normalisation audio
         return {"normalized_audio": "processed", "peak_level": -3.0}
     
-    def _extract_spectral_features(self, audio_data):
+    def _extract_spectral_features(self, audio_data) -> None:
         """Extraction de features spectrales"""
         return {"mfcc": [1.2, 0.8, -0.3], "chroma": [0.9, 0.1], "spectral_contrast": [0.7]}
     
-    def _clean_text(self, text_data):
+    def _clean_text(self, text_data) -> None:
         """Nettoyage de texte pour bloggers"""
         return {"cleaned_text": "processed", "word_count": 500}
     
-    def _extract_seo_features(self, text_data):
+    def _extract_seo_features(self, text_data) -> None:
         """Extraction de features SEO"""
         return {"keyword_density": 0.02, "readability_score": 85, "heading_structure": True}
     
-    def _resize_and_normalize_image(self, image_data):
+    def _resize_and_normalize_image(self, image_data) -> None:
         """Preprocessing d'image pour photographes"""
         return {"resized_image": "224x224", "normalized": True}
     
-    def _extract_aesthetic_features(self, image_data):
+    def _extract_aesthetic_features(self, image_data) -> None:
         """Extraction de features esthétiques"""
         return {"composition_score": 0.85, "color_harmony": 0.92, "style": "portrait"}
     
-    def _normalize_engagement_metrics(self, engagement_data):
+    def _normalize_engagement_metrics(self, engagement_data) -> None:
         """Normalisation des métriques d'engagement"""
         return {"normalized_likes": 0.75, "engagement_rate": 0.045}
     
-    def _extract_audience_features(self, audience_data):
+    def _extract_audience_features(self, audience_data) -> None:
         """Extraction de features d'audience"""
         return {"age_range": "25-34", "gender_ratio": 0.6, "top_interests": ["fashion", "travel"]}
-    def add_transformation(self, func: Callable, description: str = ""):
+    def add_transformation(self, func -> None: Callable, description -> None: str = "") -> None:
         """Add a transformation function"""
         func._description = description
         self.transformations.append(func)
@@ -602,7 +602,7 @@ class FeatureTransformation:
 class FeatureValidator:
     """Feature validation engine for enterprise ML feature quality assurance"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """
         Initialise le validateur de features avec règles spécifiques aux créateurs
         """
@@ -868,7 +868,7 @@ class FeatureValidator:
         return len(interests) >= 3  # Au moins 3 catégories d'intérêt
         self.validation_rules: Dict[str, List[Callable]] = {}
     
-    def add_rule(self, feature_name: str, rule_func: Callable, description: str = ""):
+    def add_rule(self, feature_name -> None: str, rule_func -> None: Callable, description -> None: str = "") -> None:
         """Add a validation rule for a feature"""
         if feature_name not in self.validation_rules:
             self.validation_rules[feature_name] = []
@@ -918,16 +918,16 @@ class FeatureValidator:
 class FeatureLineage:
     """Track feature lineage and dependencies"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.lineage_graph: Dict[str, Dict] = {}
     
     def add_feature_dependency(
         self,
-        feature_name: str,
-        source_features: List[str],
-        transformation: str,
-        metadata: Optional[Dict] = None
-    ):
+        feature_name -> None: str,
+        source_features -> None: List[str],
+        transformation -> None: str,
+        metadata -> None: Optional[Dict] = None
+    ) -> None:
         """Add feature dependency information"""
         self.lineage_graph[feature_name] = {
             "source_features": source_features,
@@ -991,14 +991,14 @@ class FeatureLineage:
 class AdvancedFeatureStore:
     """Advanced feature store with transformations, validation, and lineage"""
     
-    def __init__(self, base_store: FeatureStore):
+    def __init__(self, base_store -> None: FeatureStore) -> None:
         self.base_store = base_store
         self.transformations: Dict[str, FeatureTransformation] = {}
         self.validator = FeatureValidator()
         self.lineage = FeatureLineage()
         self.feature_stats: Dict[str, Dict] = {}
     
-    def register_transformation(self, transformation: FeatureTransformation):
+    def register_transformation(self, transformation -> None: FeatureTransformation) -> None:
         """Register a feature transformation"""
         self.transformations[transformation.name] = transformation
         logger.info(f"Registered transformation: {transformation.name}")
@@ -1069,7 +1069,7 @@ class AdvancedFeatureStore:
         """Get feature statistics"""
         return self.feature_stats.get(feature_group_name)
     
-    def _calculate_feature_stats(self, feature_group_name: str, df: pd.DataFrame):
+    def _calculate_feature_stats(self, feature_group_name -> None: str, df -> None: pd.DataFrame) -> None:
         """Calculate and store feature statistics"""
         stats = {}
         
@@ -1138,6 +1138,6 @@ class AdvancedFeatureStore:
         
         return catalog
     
-    def close(self):
+    def close(self) -> None:
         """Close the feature store"""
         self.base_store.close()

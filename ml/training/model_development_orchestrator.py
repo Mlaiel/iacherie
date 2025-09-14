@@ -153,11 +153,11 @@ class ModelDevelopmentOrchestrator:
     """Orchestrateur de développement de modèles enterprise"""
     
     def __init__(self,
-                 max_concurrent_experiments: int = 5,
-                 max_concurrent_runs: int = 10,
-                 models_directory: str = "./models",
-                 experiments_directory: str = "./experiments",
-                 mlflow_tracking_uri: str = "sqlite:///mlflow.db"):
+                 max_concurrent_experiments -> None: int = 5,
+                 max_concurrent_runs -> None: int = 10,
+                 models_directory -> None: str = "./models",
+                 experiments_directory -> None: str = "./experiments",
+                 mlflow_tracking_uri -> None: str = "sqlite -> None:///mlflow.db") -> None:
         
         self.max_concurrent_experiments = max_concurrent_experiments
         self.max_concurrent_runs = max_concurrent_runs
@@ -235,7 +235,7 @@ class ModelDevelopmentOrchestrator:
         self.evaluation_callbacks: List[Callable] = []
         self.error_callbacks: List[Callable] = []
     
-    def _initialize_mlflow(self):
+    def _initialize_mlflow(self) -> None:
         """Initialise MLflow"""
         try:
             mlflow.set_tracking_uri(self.mlflow_tracking_uri)
@@ -244,7 +244,7 @@ class ModelDevelopmentOrchestrator:
         except Exception as e:
             logger.error(f"Erreur initialisation MLflow: {e}")
     
-    async def start(self):
+    async def start(self) -> None:
         """Démarre l'orchestrateur"""
         try:
             self.is_running = True
@@ -260,7 +260,7 @@ class ModelDevelopmentOrchestrator:
             logger.error(f"Erreur démarrage orchestrateur: {e}")
             raise
     
-    async def stop(self):
+    async def stop(self) -> None:
         """Arrête l'orchestrateur"""
         try:
             logger.info("Arrêt orchestrateur de développement...")
@@ -322,7 +322,7 @@ class ModelDevelopmentOrchestrator:
             logger.error(f"Erreur création expérimentation {config.experiment_id}: {e}")
             return False
     
-    async def _validate_model_candidate(self, candidate: ModelCandidate):
+    async def _validate_model_candidate(self, candidate -> None: ModelCandidate) -> None:
         """Valide un candidat de modèle"""
         if isinstance(candidate.model_class, str):
             if candidate.model_class not in self.builtin_models:
@@ -360,11 +360,11 @@ class ModelDevelopmentOrchestrator:
             return False
     
     async def _run_experiment(self,
-                             experiment_id: str,
-                             X_train: np.ndarray,
-                             y_train: np.ndarray,
-                             X_test: Optional[np.ndarray] = None,
-                             y_test: Optional[np.ndarray] = None):
+                             experiment_id -> None: str,
+                             X_train -> None: np.ndarray,
+                             y_train -> None: np.ndarray,
+                             X_test -> None: Optional[np.ndarray] = None,
+                             y_test -> None: Optional[np.ndarray] = None) -> None:
         """Exécute une expérimentation complète"""
         
         config = self.experiments[experiment_id]
@@ -564,7 +564,7 @@ class ModelDevelopmentOrchestrator:
             
             raise
     
-    def _create_model_instance(self, candidate: ModelCandidate):
+    def _create_model_instance(self, candidate -> None: ModelCandidate) -> None:
         """Crée une instance de modèle"""
         if isinstance(candidate.model_class, str):
             model_class = self.builtin_models[candidate.model_class]
@@ -672,7 +672,7 @@ class ModelDevelopmentOrchestrator:
         
         return cv_scores
     
-    async def _analyze_experiment_results(self, experiment_id: str, completed_runs: List[TrainingRun]):
+    async def _analyze_experiment_results(self, experiment_id -> None: str, completed_runs -> None: List[TrainingRun]) -> None:
         """Analyse les résultats d'une expérimentation"""
         
         config = self.experiments[experiment_id]
@@ -726,7 +726,7 @@ class ModelDevelopmentOrchestrator:
         
         return best_run
     
-    async def _save_best_model(self, experiment_id: str, best_run: TrainingRun):
+    async def _save_best_model(self, experiment_id -> None: str, best_run -> None: TrainingRun) -> None:
         """Sauvegarde le meilleur modèle"""
         try:
             if not best_run.model_path or not Path(best_run.model_path).exists():
@@ -807,7 +807,7 @@ class ModelDevelopmentOrchestrator:
     
     # Boucles de maintenance
     
-    async def _monitoring_loop(self):
+    async def _monitoring_loop(self) -> None:
         """Boucle de monitoring"""
         while self.is_running:
             try:
@@ -832,7 +832,7 @@ class ModelDevelopmentOrchestrator:
             except Exception as e:
                 logger.error(f"Erreur boucle monitoring: {e}")
     
-    async def _cleanup_loop(self):
+    async def _cleanup_loop(self) -> None:
         """Boucle de nettoyage"""
         while self.is_running:
             try:
@@ -888,19 +888,19 @@ class ModelDevelopmentOrchestrator:
         """Récupère les métriques de développement"""
         return self.development_metrics.copy()
     
-    def add_experiment_callback(self, callback: Callable):
+    def add_experiment_callback(self, callback -> None: Callable) -> None:
         """Ajoute un callback d'expérimentation"""
         self.experiment_callbacks.append(callback)
     
-    def add_run_callback(self, callback: Callable):
+    def add_run_callback(self, callback -> None: Callable) -> None:
         """Ajoute un callback de run"""
         self.run_callbacks.append(callback)
     
-    def add_evaluation_callback(self, callback: Callable):
+    def add_evaluation_callback(self, callback -> None: Callable) -> None:
         """Ajoute un callback d'évaluation"""
         self.evaluation_callbacks.append(callback)
     
-    def add_error_callback(self, callback: Callable):
+    def add_error_callback(self, callback -> None: Callable) -> None:
         """Ajoute un callback d'erreur"""
         self.error_callbacks.append(callback)
     
@@ -955,7 +955,7 @@ class DevelopmentOrchestratorFactory:
 
 
 # Exemple d'utilisation
-async def example_usage():
+async def example_usage() -> None:
     """Exemple d'utilisation de l'orchestrateur"""
     
     from sklearn.datasets import make_classification, make_regression
@@ -1028,13 +1028,13 @@ async def example_usage():
         print(f"Expérimentation créée avec {len(candidates)} candidats")
         
         # Callbacks
-        async def experiment_callback(exp_id, runs, best_run):
+        async def experiment_callback(exp_id, runs, best_run) -> None:
             print(f"Expérimentation {exp_id} terminée")
             if best_run:
                 print(f"Meilleur modèle: {best_run.candidate_id}")
                 print(f"Accuracy: {best_run.metrics.get('accuracy', 'N/A')}")
         
-        async def run_callback(run):
+        async def run_callback(run) -> None:
             print(f"Run {run.candidate_id} terminé - "
                   f"Accuracy: {run.metrics.get('accuracy', 'N/A')}")
         

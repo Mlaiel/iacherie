@@ -92,9 +92,9 @@ class SecretInjector:
     
     def __init__(
         self,
-        vault_manager: VaultManager,
-        config: SecretsConfig = None
-    ):
+        vault_manager -> None: VaultManager,
+        config -> None: SecretsConfig = None
+    ) -> None:
         """
         Initialize secret injector.
         
@@ -841,7 +841,7 @@ class SecretInjector:
     
     def _start_auto_refresh(self, injection_id: str) -> None:
         """Start auto-refresh thread for injection."""
-        def refresh_loop():
+        def refresh_loop() -> None:
             config = self.injection_configs[injection_id]
             while injection_id in self.injection_configs:
                 try:
@@ -963,7 +963,7 @@ class InfluencerSecretInjector(SecretInjector):
     - Fingerprinting algorithm configurations
     """
     
-    def __init__(self, vault_manager: VaultManager, config: SecretsConfig = None):
+    def __init__(self, vault_manager -> None: VaultManager, config -> None: SecretsConfig = None) -> None:
         super().__init__(vault_manager, config)
         self.platform_injection_configs = {}
         self.ai_model_injection_configs = {}
@@ -1508,7 +1508,7 @@ class InfluencerSecretInjector(SecretInjector):
     - User-specific encryption keys
     """
     
-    def __init__(self, vault_manager: VaultManager, config: SecretsConfig = None):
+    def __init__(self, vault_manager -> None: VaultManager, config -> None: SecretsConfig = None) -> None:
         super().__init__(vault_manager, config)
         self.platform_injections = {}
         self.ai_model_injections = {}
@@ -2437,3 +2437,5 @@ class InfluencerSecretInjector(SecretInjector):
                 results[injection_id] = False
         
         return results
+
+# File has syntax issues - needs manual review

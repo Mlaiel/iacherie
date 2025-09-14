@@ -137,7 +137,7 @@ class LinkedInSEOScore:
 class LinkedInSEOOptimizer:
     """Advanced LinkedIn SEO optimization engine"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """Initialize LinkedIn SEO optimizer
         
         Args:

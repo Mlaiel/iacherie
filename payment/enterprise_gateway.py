@@ -55,7 +55,7 @@ class EnterprisePaymentGateway:
     components for complete payment processing, security, and analytics.
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """Initialize enterprise payment gateway"""
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -90,7 +90,7 @@ class EnterprisePaymentGateway:
             last_updated=datetime.now()
         )
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize all gateway components"""
         try:
             self.logger.info("Initializing Enterprise Payment Gateway...")
@@ -119,7 +119,7 @@ class EnterprisePaymentGateway:
             self.logger.error(f"Failed to initialize Enterprise Payment Gateway: {e}")
             raise
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Shutdown all gateway components"""
         try:
             self.logger.info("Shutting down Enterprise Payment Gateway...")
@@ -420,7 +420,7 @@ class EnterprisePaymentGateway:
                 'timestamp': datetime.now().isoformat()
             }
     
-    async def _initialize_providers(self):
+    async def _initialize_providers(self) -> None:
         """Initialize payment providers"""
         # Get provider configurations
         active_providers = await self.configuration_manager.get_active_providers()
@@ -436,7 +436,7 @@ class EnterprisePaymentGateway:
                 # Provider initialization would happen here
                 self.gateway_status.active_providers.append(provider_name)
     
-    async def _update_gateway_status(self):
+    async def _update_gateway_status(self) -> None:
         """Update overall gateway status"""
         try:
             # Get health from all providers

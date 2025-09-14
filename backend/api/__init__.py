@@ -1,4 +1,7 @@
 """Backend API Module - Consolidated API Framework
+import asyncio
+from typing import Dict, List, Optional, Union, Tuple
+
 All API functionality consolidated into 12 modules for the Ainflue platform.
 
 This module consolidates 285+ API files into 12 focused modules:
@@ -131,7 +134,7 @@ from .public import (
 class EnterpriseRouterManager:
     """Enterprise router management with advanced features"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.registered_routers = {}
         self.router_health = {}
         self.performance_metrics = {}
@@ -140,11 +143,11 @@ class EnterpriseRouterManager:
     
     def register_router(
         self,
-        name: str,
+        name -> None: str,
         router,
-        health_check_endpoint: str = None,
-        priority: int = 1
-    ):
+        health_check_endpoint -> None: str = None,
+        priority -> None: int = 1
+    ) -> None:
         """Register a router with the management system"""
         self.registered_routers[name] = {
             "router": router,
@@ -214,7 +217,7 @@ class EnterpriseRouterManager:
 class RouterLoadBalancer:
     """Load balancer for API routers"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.routing_strategy = "round_robin"
         self.current_index = 0
     
@@ -234,7 +237,7 @@ class RouterLoadBalancer:
 class RouterCircuitBreaker:
     """Circuit breaker for router fault tolerance"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.circuit_states = {}  # router_name -> state
         self.failure_thresholds = {"failure_count": 5, "timeout_ms": 5000}
     
@@ -243,13 +246,13 @@ class RouterCircuitBreaker:
         state = self.circuit_states.get(router_name, {"state": "closed", "failures": 0})
         return state["state"] == "open"
     
-    async def record_success(self, router_name: str):
+    async def record_success(self, router_name -> None: str) -> None:
         """Record successful router operation"""
         if router_name in self.circuit_states:
             self.circuit_states[router_name]["failures"] = 0
             self.circuit_states[router_name]["state"] = "closed"
     
-    async def record_failure(self, router_name: str):
+    async def record_failure(self, router_name -> None: str) -> None:
         """Record failed router operation"""
         if router_name not in self.circuit_states:
             self.circuit_states[router_name] = {"state": "closed", "failures": 0}
@@ -267,7 +270,7 @@ class RouterCircuitBreaker:
 class APIHealthCheckSystem:
     """Comprehensive health check system for all API components"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.health_checkers = {
             "database": DatabaseHealthChecker(),
             "cache": CacheHealthChecker(),

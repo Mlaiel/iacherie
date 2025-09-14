@@ -48,7 +48,7 @@ class PlatformContentSurveillance:
     Concrete implementation of content surveillance for various platforms
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
         self.session: Optional[aiohttp.ClientSession] = None
@@ -77,7 +77,7 @@ class PlatformContentSurveillance:
             }
         }
     
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         """Async context manager entry"""
         self.session = aiohttp.ClientSession(
             timeout=aiohttp.ClientTimeout(total=30),
@@ -87,7 +87,7 @@ class PlatformContentSurveillance:
         )
         return self
     
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         """Async context manager exit"""
         if self.session:
             await self.session.close()

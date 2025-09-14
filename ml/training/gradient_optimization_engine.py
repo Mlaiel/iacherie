@@ -96,7 +96,7 @@ class CreatorOptimizationProfile:
 class LookaheadOptimizer(Optimizer):
     """Lookahead optimizer wrapper."""
     
-    def __init__(self, base_optimizer: Optimizer, k: int = 5, alpha: float = 0.5):
+    def __init__(self, base_optimizer -> None: Optimizer, k -> None: int = 5, alpha -> None: float = 0.5) -> None:
         self.base_optimizer = base_optimizer
         self.k = k
         self.alpha = alpha
@@ -108,7 +108,7 @@ class LookaheadOptimizer(Optimizer):
             for p in group['params']:
                 self.slow_weights[p] = p.data.clone()
     
-    def step(self, closure=None):
+    def step(self, closure=None) -> None:
         """Perform optimization step."""
         loss = self.base_optimizer.step(closure)
         self.step_count += 1
@@ -123,17 +123,17 @@ class LookaheadOptimizer(Optimizer):
         
         return loss
     
-    def zero_grad(self):
+    def zero_grad(self) -> None:
         """Zero gradients."""
         self.base_optimizer.zero_grad()
     
     @property
-    def param_groups(self):
+    def param_groups(self) -> None:
         """Get parameter groups."""
         return self.base_optimizer.param_groups
     
     @property
-    def state(self):
+    def state(self) -> None:
         """Get optimizer state."""
         return self.base_optimizer.state
 
@@ -145,7 +145,7 @@ class LionOptimizer(Optimizer):
         defaults = dict(lr=lr, betas=betas, weight_decay=weight_decay)
         super().__init__(params, defaults)
     
-    def step(self, closure=None):
+    def step(self, closure=None) -> None:
         """Perform optimization step."""
         loss = None
         if closure is not None:
@@ -239,7 +239,7 @@ class CreatorAdaptiveOptimizer(Optimizer):
         
         return (adjusted_beta1, adjusted_beta2)
     
-    def step(self, closure=None):
+    def step(self, closure=None) -> None:
         """Perform optimization step."""
         loss = None
         if closure is not None:
@@ -290,7 +290,7 @@ class CreatorAdaptiveOptimizer(Optimizer):
 class GradientClipper:
     """Advanced gradient clipping utilities."""
     
-    def __init__(self, max_norm: float = 1.0, norm_type: float = 2.0):
+    def __init__(self, max_norm -> None: float = 1.0, norm_type -> None: float = 2.0) -> None:
         self.max_norm = max_norm
         self.norm_type = norm_type
         self.gradient_history = []
@@ -360,10 +360,10 @@ class LearningRateScheduler:
     
     def __init__(
         self,
-        optimizer: Optimizer,
-        config: OptimizationConfig,
-        creator_profile: Optional[CreatorOptimizationProfile] = None
-    ):
+        optimizer -> None: Optimizer,
+        config -> None: OptimizationConfig,
+        creator_profile -> None: Optional[CreatorOptimizationProfile] = None
+    ) -> None:
         self.optimizer = optimizer
         self.config = config
         self.creator_profile = creator_profile
@@ -374,7 +374,7 @@ class LearningRateScheduler:
         # Initialize scheduler
         self.scheduler = self._create_scheduler()
     
-    def _create_scheduler(self):
+    def _create_scheduler(self) -> None:
         """Create appropriate scheduler based on configuration."""
         if self.config.scheduler_type == "cosine_annealing":
             return optim.lr_scheduler.CosineAnnealingLR(
@@ -404,7 +404,7 @@ class LearningRateScheduler:
         else:
             return None
     
-    def step(self, metric: Optional[float] = None):
+    def step(self, metric -> None: Optional[float] = None) -> None:
         """Step the learning rate scheduler."""
         self.step_count += 1
         
@@ -422,13 +422,13 @@ class LearningRateScheduler:
         if self.creator_profile and self.config.creator_adaptive:
             self._apply_creator_adjustments(metric)
     
-    def _apply_warmup(self):
+    def _apply_warmup(self) -> None:
         """Apply learning rate warmup."""
         warmup_lr = self.config.learning_rate * (self.step_count / self.config.warmup_epochs)
         for param_group in self.optimizer.param_groups:
             param_group['lr'] = warmup_lr
     
-    def _apply_creator_adjustments(self, metric: Optional[float]):
+    def _apply_creator_adjustments(self, metric -> None: Optional[float]) -> None:
         """Apply creator-specific learning rate adjustments."""
         if metric is None:
             return
@@ -457,7 +457,7 @@ class LearningRateScheduler:
 class GradientOptimizationEngine:
     """Comprehensive gradient optimization engine."""
     
-    def __init__(self, config: OptimizationConfig):
+    def __init__(self, config -> None: OptimizationConfig) -> None:
         self.config = config
         self.optimizers: Dict[str, Optimizer] = {}
         self.schedulers: Dict[str, LearningRateScheduler] = {}
@@ -713,10 +713,10 @@ class GradientOptimizationEngine:
     
     async def optimize_for_creator(
         self,
-        optimizer_id: str,
-        creator_profile: CreatorOptimizationProfile,
-        performance_history: List[float]
-    ):
+        optimizer_id -> None: str,
+        creator_profile -> None: CreatorOptimizationProfile,
+        performance_history -> None: List[float]
+    ) -> None:
         """Optimize optimization strategy for specific creator."""
         if optimizer_id not in self.optimizers:
             return
@@ -824,7 +824,7 @@ def create_creator_profile(
 
 
 # Example usage for Ainflue creators
-async def example_gradient_optimization():
+async def example_gradient_optimization() -> None:
     """Example of gradient optimization for creator models."""
     
     # Create optimization engine

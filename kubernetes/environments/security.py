@@ -204,7 +204,7 @@ class SecurityEnvironmentManager:
     - Security audit and reporting
     """
     
-    def __init__(self, security_level: SecurityLevel = SecurityLevel.PRODUCTION, config_path: Optional[str] = None):
+    def __init__(self, security_level -> None: SecurityLevel = SecurityLevel.PRODUCTION, config_path -> None: Optional[str] = None) -> None:
         self.security_level = security_level
         self.config_path = config_path or f"./security/{security_level.value}_config.yml"
         self.environment = "security"
@@ -588,7 +588,7 @@ class SecurityEnvironmentManager:
         }
     
     # Private helper methods
-    def _apply_security_level_config(self):
+    def _apply_security_level_config(self) -> None:
         """
 Apply security level-specific configurations"""
         if self.security_level == SecurityLevel.HIGH_SECURITY:

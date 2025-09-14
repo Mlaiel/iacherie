@@ -161,7 +161,7 @@ class SEOIntelligenceEngine:
     and multi-platform content discoverability enhancement.
     """
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
         
@@ -212,7 +212,7 @@ class SEOIntelligenceEngine:
         # Initialize ML models
         self._ml_models_initialized = False
     
-    def _initialize_redis(self):
+    def _initialize_redis(self) -> None:
         """Initialize Redis connection"""
         try:
             redis_host = self.config.get("redis_host", "localhost")
@@ -225,7 +225,7 @@ class SEOIntelligenceEngine:
         except Exception as e:
             self.logger.warning(f"Redis connection failed: {e}")
     
-    async def _initialize_ml_models(self):
+    async def _initialize_ml_models(self) -> None:
         """Initialize ML models for SEO optimization"""
         try:
             if self._ml_models_initialized:
@@ -1350,7 +1350,7 @@ class SEOIntelligenceEngine:
         }
     
     # Redis caching methods
-    async def _cache_seo_analysis(self, analysis: ContentSEOAnalysis):
+    async def _cache_seo_analysis(self, analysis -> None: ContentSEOAnalysis) -> None:
         """Cache SEO analysis in Redis"""
         if self.redis_client:
             try:
@@ -1367,7 +1367,7 @@ class SEOIntelligenceEngine:
             except Exception as e:
                 self.logger.error(f"Redis cache error: {e}")
     
-    async def _cache_keyword_research(self, keywords: List[KeywordData]):
+    async def _cache_keyword_research(self, keywords -> None: List[KeywordData]) -> None:
         """Cache keyword research results in Redis"""
         if self.redis_client:
             try:
@@ -1384,7 +1384,7 @@ class SEOIntelligenceEngine:
             except Exception as e:
                 self.logger.error(f"Redis cache error: {e}")
     
-    async def _cache_seo_campaign(self, campaign: SEOCampaign):
+    async def _cache_seo_campaign(self, campaign -> None: SEOCampaign) -> None:
         """Cache SEO campaign in Redis"""
         if self.redis_client:
             try:
@@ -1459,7 +1459,7 @@ class GlobalSEOIntelligenceEcosystem:
     - SEO ROI optimization
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
         self.global_seo_engine = None
         self.ai_seo_optimizer = None
@@ -1470,113 +1470,113 @@ class GlobalSEOIntelligenceEcosystem:
     # === ENRICHISSEMENTS MASSIFS ===
     
     # 1. GLOBAL SEO ANALYTICS
-    async def setup_global_seo_analytics(self):
+    async def setup_global_seo_analytics(self) -> None:
         """Setup global SEO analytics"""
         await self.configure_100_plus_search_engines()
         await self.setup_regional_seo_optimization()
         await self.configure_644_languages_seo_tracking()
         await self.setup_cultural_seo_adaptation()
     
-    async def configure_100_plus_search_engines(self):
+    async def configure_100_plus_search_engines(self) -> None:
         """Configure 100+ search engines"""
         self.logger.info("🌍 Setting up 100+ search engines analytics...")
         # 100+ search engines implementation
     
-    async def setup_regional_seo_optimization(self):
+    async def setup_regional_seo_optimization(self) -> None:
         """Setup regional SEO optimization"""
         self.logger.info("🗺️ Setting up regional SEO optimization...")
         # Regional SEO optimization implementation
     
-    async def configure_644_languages_seo_tracking(self):
+    async def configure_644_languages_seo_tracking(self) -> None:
         """Configure 644 languages SEO tracking"""
         self.logger.info("🌐 Setting up 644 languages SEO tracking...")
         # 644 languages SEO tracking implementation
     
-    async def setup_cultural_seo_adaptation(self):
+    async def setup_cultural_seo_adaptation(self) -> None:
         """Setup cultural SEO adaptation"""
         self.logger.info("🎭 Setting up cultural SEO adaptation...")
         # Cultural SEO adaptation implementation
     
     # 2. AI SEO OPTIMIZATION
-    async def setup_ai_seo_optimization(self):
+    async def setup_ai_seo_optimization(self) -> None:
         """Setup AI SEO optimization"""
         await self.deploy_keyword_optimization_ai()
         await self.setup_content_optimization_models()
         await self.configure_ranking_prediction_ai()
         await self.setup_seo_strategy_automation()
     
-    async def deploy_keyword_optimization_ai(self):
+    async def deploy_keyword_optimization_ai(self) -> None:
         """Deploy keyword optimization AI"""
         self.logger.info("🤖 Deploying keyword optimization AI...")
         # Keyword optimization AI implementation
     
-    async def setup_content_optimization_models(self):
+    async def setup_content_optimization_models(self) -> None:
         """Setup content optimization models"""
         self.logger.info("📝 Setting up content optimization models...")
         # Content optimization models implementation
     
-    async def configure_ranking_prediction_ai(self):
+    async def configure_ranking_prediction_ai(self) -> None:
         """Configure ranking prediction AI"""
         self.logger.info("📈 Setting up ranking prediction AI...")
         # Ranking prediction AI implementation
     
-    async def setup_seo_strategy_automation(self):
+    async def setup_seo_strategy_automation(self) -> None:
         """Setup SEO strategy automation"""
         self.logger.info("⚙️ Setting up SEO strategy automation...")
         # SEO strategy automation implementation
     
     # 3. NEXT-GENERATION SEO
-    async def setup_nextgen_seo_analytics(self):
+    async def setup_nextgen_seo_analytics(self) -> None:
         """Setup next-generation SEO analytics"""
         await self.configure_voice_search_analytics()
         await self.setup_visual_search_optimization()
         await self.configure_ai_answer_optimization()
         await self.setup_featured_snippet_analytics()
     
-    async def configure_voice_search_analytics(self):
+    async def configure_voice_search_analytics(self) -> None:
         """Configure voice search analytics"""
         self.logger.info("🎤 Setting up voice search analytics...")
         # Voice search analytics implementation
     
-    async def setup_visual_search_optimization(self):
+    async def setup_visual_search_optimization(self) -> None:
         """Setup visual search optimization"""
         self.logger.info("👁️ Setting up visual search optimization...")
         # Visual search optimization implementation
     
-    async def configure_ai_answer_optimization(self):
+    async def configure_ai_answer_optimization(self) -> None:
         """Configure AI answer optimization"""
         self.logger.info("💡 Setting up AI answer optimization...")
         # AI answer optimization implementation
     
-    async def setup_featured_snippet_analytics(self):
+    async def setup_featured_snippet_analytics(self) -> None:
         """Setup featured snippet analytics"""
         self.logger.info("⭐ Setting up featured snippet analytics...")
         # Featured snippet analytics implementation
     
     # 4. COMPETITIVE SEO INTELLIGENCE
-    async def setup_competitive_seo_intelligence(self):
+    async def setup_competitive_seo_intelligence(self) -> None:
         """Setup competitive SEO intelligence"""
         await self.configure_competitor_analysis_automation()
         await self.setup_market_gap_identification()
         await self.configure_seo_opportunity_discovery()
         await self.setup_competitive_advantage_analytics()
     
-    async def configure_competitor_analysis_automation(self):
+    async def configure_competitor_analysis_automation(self) -> None:
         """Configure competitor analysis automation"""
         self.logger.info("🕵️ Setting up competitor analysis automation...")
         # Competitor analysis automation implementation
     
-    async def setup_market_gap_identification(self):
+    async def setup_market_gap_identification(self) -> None:
         """Setup market gap identification"""
         self.logger.info("🔍 Setting up market gap identification...")
         # Market gap identification implementation
     
-    async def configure_seo_opportunity_discovery(self):
+    async def configure_seo_opportunity_discovery(self) -> None:
         """Configure SEO opportunity discovery"""
         self.logger.info("💎 Setting up SEO opportunity discovery...")
         # SEO opportunity discovery implementation
     
-    async def setup_competitive_advantage_analytics(self):
+    async def setup_competitive_advantage_analytics(self) -> None:
         """Setup competitive advantage analytics"""
         self.logger.info("🏆 Setting up competitive advantage analytics...")
         # Competitive advantage analytics implementation

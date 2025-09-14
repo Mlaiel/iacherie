@@ -200,7 +200,7 @@ class ContentProtectionHandler(BaseEventHandler):
     copyright registration, watermarking, and usage monitoring.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
         self.fingerprint_engine = FingerprintEngine()
         self.copyright_manager = CopyrightManager()
@@ -236,7 +236,7 @@ class ContentProtectionHandler(BaseEventHandler):
             }
         }
     
-    def _initialize_protection_algorithms(self):
+    def _initialize_protection_algorithms(self) -> None:
         """
 Initialize protection and fingerprinting algorithms"""
         try:
@@ -256,7 +256,7 @@ Initialize protection and fingerprinting algorithms"""
             logger.error(f"Error initializing protection algorithms: {str(e)}")
             raise
     
-    def _generate_protection_keys(self):
+    def _generate_protection_keys(self) -> None:
         """Generate cryptographic keys for content protection"""
         try:
             # Generate RSA key pair for watermarking and signatures

@@ -1,3 +1,8 @@
+"""
+Tenant Security Manager module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Tenant Security Manager - Enterprise Security Component
@@ -146,7 +151,7 @@ class TenantSecurityManager:
     compliance monitoring with enterprise-grade security standards.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.tenant_policies: Dict[str, TenantSecurityPolicy] = {}
         self.tenant_users: Dict[str, Dict[str, TenantUser]] = defaultdict(dict)
         self.tenant_roles: Dict[str, Dict[str, TenantRole]] = defaultdict(dict)
@@ -742,7 +747,7 @@ def create_tenant_security_manager() -> TenantSecurityManager:
 
 
 # Example usage
-async def main():
+async def main() -> None:
     """Example usage of Tenant Security Manager"""
     security_manager = create_tenant_security_manager()
     

@@ -16,6 +16,7 @@ from enum import Enum
 logger = logging.getLogger(__name__)
 
 class FraudType(Enum):
+    """FraudType class implementation"""
     PAYMENT_FRAUD = "payment_fraud"
     IDENTITY_THEFT = "identity_theft"
     ACCOUNT_TAKEOVER = "account_takeover"
@@ -24,6 +25,7 @@ class FraudType(Enum):
 
 @dataclass
 class FraudAlert:
+    """FraudAlert: class implementation"""
     alert_id: str
     user_id: str
     fraud_type: FraudType
@@ -35,7 +37,7 @@ class FraudAlert:
 class FraudDetectionNotifications:
     """Enterprise fraud detection and notification system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.alerts: List[FraudAlert] = []
         logger.info("Fraud detection notifications initialized")
     
@@ -62,7 +64,7 @@ class FraudDetectionNotifications:
             logger.error(f"Error sending fraud alert: {str(e)}")
             return False
     
-    async def _send_fraud_alert(self, alert: FraudAlert):
+    async def _send_fraud_alert(self, alert -> None: FraudAlert) -> None:
         """Send fraud detection alert"""
         notification_data = {
             "title": "🚨 Fraud Detection Alert",

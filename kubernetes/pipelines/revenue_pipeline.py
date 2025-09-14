@@ -9,7 +9,7 @@ IA Influencer Agent platform, enabling automated revenue tracking, claim process
 payment distribution workflows.
 
 Features:
-- Automated revenue tracking across platforms
+    - Automated revenue tracking across platforms
 - AI-powered revenue loss calculation
 - Automated claim and recovery processes
 - Multi-platform monetization workflows
@@ -129,8 +129,8 @@ class RevenueRecoveryPipelineManager:
     - Cross-platform monetization optimization
     """
     
-    def __init__(self, base_pipeline_manager: AdvancedPipelineManager,
-                 storage_path: Optional[Path] = None):
+    def __init__(self, base_pipeline_manager -> None: AdvancedPipelineManager,
+                 storage_path -> None: Optional[Path] = None) -> None:
         self.base_manager = base_pipeline_manager
         self.storage_path = storage_path or Path(__file__).parent / "revenue_data"
         self.logger = logging.getLogger(__name__)
@@ -149,7 +149,7 @@ class RevenueRecoveryPipelineManager:
         # Register revenue-specific pipeline templates
         self._register_revenue_pipelines()
         
-    def _register_revenue_pipelines(self):
+    def _register_revenue_pipelines(self) -> None:
         """Register revenue recovery and monetization pipeline configurations"""
         # Revenue tracking pipeline
         revenue_tracking_config = PipelineConfig(
@@ -622,3 +622,5 @@ def get_revenue_pipeline_manager(base_manager: AdvancedPipelineManager) -> Reven
     if revenue_pipeline_manager is None:
         revenue_pipeline_manager = RevenueRecoveryPipelineManager(base_manager)
     return revenue_pipeline_manager
+
+# File has syntax issues - needs manual review

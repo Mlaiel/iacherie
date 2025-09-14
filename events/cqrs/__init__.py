@@ -1,4 +1,6 @@
 """🚀 Enterprise CQRS Module - Complete Architecture
+import asyncio
+
 ===================================================
 Module: events/cqrs/__init__.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -264,7 +266,7 @@ def get_cqrs_architecture_info() -> dict:
     }
 
 
-def setup_default_cqrs_infrastructure():
+def setup_default_cqrs_infrastructure() -> None:
     """Setup default CQRS infrastructure with recommended configuration"""
     
     # Initialize core buses
@@ -309,7 +311,7 @@ def setup_default_cqrs_infrastructure():
     }
 
 
-async def shutdown_cqrs_infrastructure():
+async def shutdown_cqrs_infrastructure() -> None:
     """Gracefully shutdown all CQRS components"""
     
     # Shutdown components in reverse dependency order

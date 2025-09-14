@@ -81,7 +81,7 @@ class InferenceCacheManager:
     - Performance monitoring and analytics
     """
     
-    def __init__(self, cache_config: Dict[str, Any] = None):
+    def __init__(self, cache_config -> None: Dict[str, Any] = None) -> None:
         self.logger = logging.getLogger(__name__)
         self.config = cache_config or self._get_default_config()
         
@@ -530,7 +530,7 @@ class InferenceCacheManager:
         return np.mean(similarity_scores) if similarity_scores else 0.0
 
 # Example usage and testing
-async def main():
+async def main() -> None:
     """Example usage of InferenceCacheManager."""
     cache_manager = InferenceCacheManager()
     

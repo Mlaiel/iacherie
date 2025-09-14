@@ -74,7 +74,7 @@ class ActivityItem:
     timestamp: Optional[float] = None
     metadata: Dict[str, Any] = field(default_factory=dict)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.timestamp is None:
             self.timestamp = datetime.now().timestamp()
 
@@ -92,7 +92,7 @@ class UserPresence:
     cursor_position: Optional[Dict[str, float]] = None
     active_tools: List[str] = field(default_factory=list)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.last_seen is None:
             self.last_seen = datetime.now().timestamp()
 
@@ -140,7 +140,7 @@ class DashboardLayout:
 class CollaborationDashboard:
     """Professional real-time collaboration dashboard system"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize collaboration dashboard"""
         self.config = config or {}
         self.dashboard_layouts: Dict[str, DashboardLayout] = {}
@@ -155,7 +155,7 @@ class CollaborationDashboard:
         # Initialize default widgets
         self._initialize_default_widgets()
     
-    def _initialize_default_widgets(self):
+    def _initialize_default_widgets(self) -> None:
         """Initialize default widget configurations"""
         self.default_layout = DashboardLayout(
             widgets=[
@@ -611,9 +611,9 @@ class CollaborationDashboard:
     
     async def _broadcast_presence_update(
         self,
-        user_id: str,
-        presence: UserPresence
-    ):
+        user_id -> None: str,
+        presence -> None: UserPresence
+    ) -> None:
         """Broadcast presence update to connected users"""
         try:
             # TODO: Implement WebSocket broadcasting
@@ -624,8 +624,8 @@ class CollaborationDashboard:
     
     async def _broadcast_activity_update(
         self,
-        activity: ActivityItem
-    ):
+        activity -> None: ActivityItem
+    ) -> None:
         """Broadcast activity update to connected users"""
         try:
             # TODO: Implement WebSocket broadcasting

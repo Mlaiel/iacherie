@@ -117,7 +117,7 @@ class AudienceBehaviorAnalyzer:
     - Journey mapping and optimization
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize audience behavior analyzer."""
         self.config = config or {}
         self.user_profiles: Dict[str, UserBehaviorProfile] = {}
@@ -663,9 +663,9 @@ class AudienceBehaviorAnalyzer:
     # Analytics and insights methods
     async def _calculate_segment_analytics(
         self,
-        segmentation: Dict[UserSegment, List[str]],
-        user_activities: Dict[str, List[Dict[str, Any]]]
-    ):
+        segmentation -> None: Dict[UserSegment, List[str]],
+        user_activities -> None: Dict[str, List[Dict[str, Any]]]
+    ) -> None:
         """Calculate analytics for each user segment."""
         for segment, user_ids in segmentation.items():
             if not user_ids:

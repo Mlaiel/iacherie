@@ -75,7 +75,7 @@ class AudioMetrics:
 class SpectrogramAnalyzer:
     """Advanced spectrogram analysis and visualization"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.logger = logger.getChild(self.__class__.__name__)
         
@@ -140,7 +140,7 @@ class SpectrogramAnalyzer:
 class AudioAnalyzer:
     """Comprehensive audio analysis engine"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.logger = logger.getChild(self.__class__.__name__)
         self.spectrogram_analyzer = SpectrogramAnalyzer(config)

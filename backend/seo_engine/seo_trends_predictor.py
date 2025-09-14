@@ -147,7 +147,7 @@ class SEOTrendsPredictor:
     analyse saisonnière et détection d'opportunités émergentes.
     """
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         """Initialize SEO trends predictor"""
         self.config = config or {}
         self.trends_database = defaultdict(list)
@@ -782,7 +782,7 @@ class SEOTrendsPredictor:
         
         return statistics.mean(confidence_values) if confidence_values else 0.0
     
-    async def _store_analysis_results(self, result: TrendAnalysisResult):
+    async def _store_analysis_results(self, result -> None: TrendAnalysisResult) -> None:
         """Stocker les résultats pour l'apprentissage"""
         # Stocker pour améliorer les prédictions futures
         for trend in result.analyzed_trends:
@@ -947,7 +947,7 @@ class TrendAnalyzer:
     de détection de patterns et scoring d'opportunités.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.pattern_detectors = {}
         self.scoring_algorithms = {}
         

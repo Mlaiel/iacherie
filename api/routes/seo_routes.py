@@ -31,6 +31,7 @@ router = APIRouter(
 # ========================================
 
 class KeywordDifficulty(str, Enum):
+    """KeywordDifficulty class implementation"""
     VERY_EASY = "very_easy"
     EASY = "easy"
     MEDIUM = "medium"
@@ -38,6 +39,7 @@ class KeywordDifficulty(str, Enum):
     VERY_HARD = "very_hard"
 
 class SearchEngine(str, Enum):
+    """SearchEngine class implementation"""
     GOOGLE = "google"
     BING = "bing"
     YOUTUBE = "youtube"
@@ -47,6 +49,7 @@ class SearchEngine(str, Enum):
     TWITTER = "twitter"
 
 class ContentType(str, Enum):
+    """ContentType class implementation"""
     BLOG_POST = "blog_post"
     VIDEO = "video"
     AUDIO = "audio"
@@ -56,6 +59,7 @@ class ContentType(str, Enum):
     LANDING_PAGE = "landing_page"
 
 class OptimizationStatus(str, Enum):
+    """OptimizationStatus class implementation"""
     NOT_OPTIMIZED = "not_optimized"
     IN_PROGRESS = "in_progress"
     OPTIMIZED = "optimized"
@@ -63,6 +67,7 @@ class OptimizationStatus(str, Enum):
     OVER_OPTIMIZED = "over_optimized"
 
 class RankingTrend(str, Enum):
+    """RankingTrend class implementation"""
     UP = "up"
     DOWN = "down"
     STABLE = "stable"
@@ -73,6 +78,7 @@ class RankingTrend(str, Enum):
 # ========================================
 
 class KeywordData(BaseModel):
+    """KeywordData class implementation"""
     keyword: str = Field(..., min_length=1, max_length=200)
     search_volume: int = Field(..., ge=0)
     difficulty: KeywordDifficulty
@@ -85,6 +91,7 @@ class KeywordData(BaseModel):
     long_tail_variants: List[str] = Field(default_factory=list)
 
 class KeywordResearch(BaseModel):
+    """KeywordResearch class implementation"""
     query: str = Field(..., min_length=1, max_length=500)
     search_engine: SearchEngine = Field(default=SearchEngine.GOOGLE)
     location: str = Field(default="US", description="Target location")
@@ -95,6 +102,7 @@ class KeywordResearch(BaseModel):
     include_long_tail: bool = Field(default=True)
 
 class KeywordResearchResponse(BaseModel):
+    """KeywordResearchResponse class implementation"""
     query: str
     total_keywords: int
     primary_keywords: List[KeywordData]
@@ -106,6 +114,7 @@ class KeywordResearchResponse(BaseModel):
     generated_at: datetime = Field(default_factory=datetime.utcnow)
 
 class ContentOptimization(BaseModel):
+    """ContentOptimization class implementation"""
     content_id: str
     title: str = Field(..., min_length=1, max_length=200)
     description: str = Field(..., min_length=1, max_length=2000)
@@ -117,6 +126,7 @@ class ContentOptimization(BaseModel):
     language: str = Field(default="en")
 
 class SEOAnalysis(BaseModel):
+    """SEOAnalysis class implementation"""
     content_id: str
     overall_score: float = Field(..., ge=0.0, le=100.0)
     optimization_status: OptimizationStatus
@@ -131,6 +141,7 @@ class SEOAnalysis(BaseModel):
     analyzed_at: datetime = Field(default_factory=datetime.utcnow)
 
 class SEORecommendation(BaseModel):
+    """SEORecommendation class implementation"""
     type: str = Field(..., description="Type of recommendation")
     priority: str = Field(..., pattern="^(high|medium|low)$")
     title: str = Field(..., min_length=1, max_length=100)
@@ -141,6 +152,7 @@ class SEORecommendation(BaseModel):
     expected_improvement: Dict[str, float] = Field(default_factory=dict)
 
 class RankingData(BaseModel):
+    """RankingData class implementation"""
     keyword: str
     search_engine: SearchEngine
     current_position: Optional[int] = None
@@ -157,6 +169,7 @@ class RankingData(BaseModel):
     last_updated: datetime = Field(default_factory=datetime.utcnow)
 
 class CompetitorAnalysis(BaseModel):
+    """CompetitorAnalysis class implementation"""
     competitor_domain: str
     competitor_name: Optional[str] = None
     domain_authority: float = Field(..., ge=0.0, le=100.0)
@@ -169,6 +182,7 @@ class CompetitorAnalysis(BaseModel):
     analyzed_at: datetime = Field(default_factory=datetime.utcnow)
 
 class SEOStrategy(BaseModel):
+    """SEOStrategy class implementation"""
     strategy_id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     name: str = Field(..., min_length=1, max_length=100)
     description: str = Field(..., min_length=1, max_length=1000)
@@ -182,6 +196,7 @@ class SEOStrategy(BaseModel):
     updated_at: datetime = Field(default_factory=datetime.utcnow)
 
 class MetaTagsOptimization(BaseModel):
+    """MetaTagsOptimization class implementation"""
     title: str = Field(..., min_length=1, max_length=60)
     description: str = Field(..., min_length=1, max_length=160)
     keywords: List[str] = Field(..., max_items=10)
@@ -999,22 +1014,22 @@ async def get_seo_recommendations(
 # BACKGROUND TASKS
 # ========================================
 
-async def perform_deep_keyword_research(research_request: KeywordResearch, user_id: str):
+async def perform_deep_keyword_research(research_request -> None: KeywordResearch, user_id -> None: str) -> None:
     """Perform comprehensive keyword research in background"""
     await asyncio.sleep(30)  # Simulate research time
     print(f"Completed keyword research for {research_request.query} for user {user_id}")
 
-async def perform_content_optimization(optimization_request: ContentOptimization, user_id: str):
+async def perform_content_optimization(optimization_request -> None: ContentOptimization, user_id -> None: str) -> None:
     """Perform AI content optimization in background"""
     await asyncio.sleep(45)  # Simulate optimization time
     print(f"Completed content optimization for {optimization_request.content_id} for user {user_id}")
 
-async def setup_keyword_tracking(keywords: List[str], search_engine: SearchEngine, location: str, user_id: str):
+async def setup_keyword_tracking(keywords -> None: List[str], search_engine -> None: SearchEngine, location -> None: str, user_id -> None: str) -> None:
     """Setup keyword ranking tracking"""
     await asyncio.sleep(10)
     print(f"Setup tracking for {len(keywords)} keywords for user {user_id}")
 
-async def perform_competitor_analysis(competitor_domain: str, user_id: str):
+async def perform_competitor_analysis(competitor_domain -> None: str, user_id -> None: str) -> None:
     """Perform comprehensive competitor analysis"""
     await asyncio.sleep(60)  # Simulate analysis time
     print(f"Completed competitor analysis for {competitor_domain} for user {user_id}")

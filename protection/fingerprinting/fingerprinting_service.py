@@ -118,7 +118,7 @@ class FingerprintingService:
     - Unified storage and retrieval
     """
     
-    def __init__(self, config: Dict[str, Any], vector_db=None):
+    def __init__(self, config -> None: Dict[str, Any], vector_db=None) -> None:
         """
         Initialize the unified fingerprinting service.
         

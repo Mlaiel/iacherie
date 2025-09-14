@@ -150,9 +150,9 @@ class AutomatedLicensingProcessor:
     
     def __init__(
         self,
-        blockchain_config: Optional[Dict[str, Any]] = None,
-        payment_processors: Optional[Dict[str, Any]] = None
-    ):
+        blockchain_config -> None: Optional[Dict[str, Any]] = None,
+        payment_processors -> None: Optional[Dict[str, Any]] = None
+    ) -> None:
         """
 Initialize automated licensing processor"""
         self.blockchain_config = blockchain_config or {}

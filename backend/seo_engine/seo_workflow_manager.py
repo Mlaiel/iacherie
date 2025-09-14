@@ -148,7 +148,7 @@ class SEOWorkflowManager:
     gestion d'erreurs, monitoring et optimisation automatique.
     """
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         """Initialize SEO workflow manager"""
         self.config = config or {}
         
@@ -184,7 +184,7 @@ class SEOWorkflowManager:
         
         logger.info("🔄 SEO Workflow Manager initialized")
     
-    async def start(self):
+    async def start(self) -> None:
         """Démarrer le gestionnaire de workflows"""
         if self.is_running:
             logger.warning("Workflow manager already running")
@@ -216,7 +216,7 @@ class SEOWorkflowManager:
         
         logger.info("🚀 SEO Workflow Manager started")
     
-    async def stop(self):
+    async def stop(self) -> None:
         """Arrêter le gestionnaire de workflows"""
         if not self.is_running:
             return
@@ -237,7 +237,7 @@ class SEOWorkflowManager:
         
         logger.info("🛑 SEO Workflow Manager stopped")
     
-    async def register_workflow(self, workflow_def: WorkflowDefinition):
+    async def register_workflow(self, workflow_def -> None: WorkflowDefinition) -> None:
         """Enregistrer un workflow"""
         # Valider la définition du workflow
         await self._validate_workflow_definition(workflow_def)
@@ -374,7 +374,7 @@ class SEOWorkflowManager:
     
     # === MÉTHODES PRIVÉES ===
     
-    async def _execute_workflow_async(self, execution: WorkflowExecution):
+    async def _execute_workflow_async(self, execution -> None: WorkflowExecution) -> None:
         """Exécuter un workflow de manière asynchrone"""
         try:
             workflow_def = self.workflow_definitions[execution.workflow_id]
@@ -421,9 +421,9 @@ class SEOWorkflowManager:
     
     async def _execute_tasks_with_dependencies(
         self, 
-        execution: WorkflowExecution,
-        dependency_graph: Dict[str, List[str]]
-    ):
+        execution -> None: WorkflowExecution,
+        dependency_graph -> None: Dict[str, List[str]]
+    ) -> None:
         """Exécuter les tâches selon leurs dépendances"""
         workflow_def = self.workflow_definitions[execution.workflow_id]
         task_dict = {task.task_id: task for task in workflow_def.tasks}
@@ -486,10 +486,10 @@ class SEOWorkflowManager:
     
     async def _execute_single_task(
         self, 
-        task_def: TaskDefinition,
-        task_execution: TaskExecution,
-        workflow_execution: WorkflowExecution
-    ):
+        task_def -> None: TaskDefinition,
+        task_execution -> None: TaskExecution,
+        workflow_execution -> None: WorkflowExecution
+    ) -> None:
         """Exécuter une tâche unique"""
         try:
             task_execution.status = TaskStatus.RUNNING
@@ -578,9 +578,9 @@ class SEOWorkflowManager:
         
         return graph
     
-    async def _validate_dependency_graph(self, graph: Dict[str, List[str]]):
+    async def _validate_dependency_graph(self, graph -> None: Dict[str, List[str]]) -> None:
         """Valider le graphe de dépendances (pas de cycles)"""
-        def has_cycle(node, visited, rec_stack):
+        def has_cycle(node, visited, rec_stack) -> None:
             visited[node] = True
             rec_stack[node] = True
             
@@ -602,7 +602,7 @@ class SEOWorkflowManager:
                 if has_cycle(node, visited, rec_stack):
                     raise ValueError(f"Circular dependency detected in workflow")
     
-    async def _validate_workflow_definition(self, workflow_def: WorkflowDefinition):
+    async def _validate_workflow_definition(self, workflow_def -> None: WorkflowDefinition) -> None:
         """Valider la définition d'un workflow"""
         # Vérifier l'unicité des IDs de tâches
         task_ids = [task.task_id for task in workflow_def.tasks]
@@ -615,7 +615,7 @@ class SEOWorkflowManager:
                 if dep not in task_ids:
                     raise ValueError(f"Unknown dependency: {dep} for task {task.task_id}")
     
-    async def _setup_workflow_schedule(self, workflow_def: WorkflowDefinition):
+    async def _setup_workflow_schedule(self, workflow_def -> None: WorkflowDefinition) -> None:
         """Configurer la planification d'un workflow"""
         schedule = workflow_def.schedule
         if not schedule:
@@ -629,7 +629,7 @@ class SEOWorkflowManager:
             "next_execution": await self._calculate_next_execution(schedule_config)
         }
     
-    async def _setup_workflow_trigger(self, workflow_id: str, trigger: Dict[str, Any]):
+    async def _setup_workflow_trigger(self, workflow_id -> None: str, trigger -> None: Dict[str, Any]) -> None:
         """Configurer un trigger de workflow"""
         trigger_type = trigger.get("type")
         
@@ -639,7 +639,7 @@ class SEOWorkflowManager:
             threshold = trigger.get("threshold")
             condition = trigger.get("condition", "greater_than")
             
-            async def metric_trigger(metric_value):
+            async def metric_trigger(metric_value) -> None:
                 if condition == "greater_than" and metric_value > threshold:
                     await self.execute_workflow(workflow_id, triggered_by=f"metric_trigger_{metric_name}")
                 elif condition == "less_than" and metric_value < threshold:
@@ -664,7 +664,7 @@ class SEOWorkflowManager:
         
         return None
     
-    async def _task_worker(self, priority: TaskPriority):
+    async def _task_worker(self, priority -> None: TaskPriority) -> None:
         """Worker pour traiter les tâches d'une priorité donnée"""
         queue = self.task_queues[priority]
         
@@ -682,7 +682,7 @@ class SEOWorkflowManager:
             except Exception as e:
                 logger.error(f"Task worker error for priority {priority.value}: {e}")
     
-    async def _scheduler_worker(self):
+    async def _scheduler_worker(self) -> None:
         """Worker pour la planification des workflows"""
         while self.is_running:
             try:
@@ -710,7 +710,7 @@ class SEOWorkflowManager:
                 logger.error(f"Scheduler worker error: {e}")
                 await asyncio.sleep(60)
     
-    async def _monitoring_worker(self):
+    async def _monitoring_worker(self) -> None:
         """Worker pour le monitoring des exécutions"""
         while self.is_running:
             try:
@@ -730,12 +730,12 @@ class SEOWorkflowManager:
                 logger.error(f"Monitoring worker error: {e}")
                 await asyncio.sleep(300)
     
-    async def _process_task_item(self, task_item: Dict[str, Any]):
+    async def _process_task_item(self, task_item -> None: Dict[str, Any]) -> None:
         """Traiter un élément de tâche"""
         # Implémentation du traitement des tâches
         logger.debug(f"Processing task item: {task_item}")
     
-    async def _cleanup_old_executions(self):
+    async def _cleanup_old_executions(self) -> None:
         """Nettoyer les anciennes exécutions"""
         cutoff_time = datetime.utcnow() - timedelta(seconds=self.workflow_cleanup_interval)
         
@@ -752,7 +752,7 @@ class SEOWorkflowManager:
         if to_remove:
             logger.info(f"🧹 Cleaned up {len(to_remove)} old workflow executions")
     
-    async def _check_execution_timeouts(self):
+    async def _check_execution_timeouts(self) -> None:
         """Vérifier les timeouts d'exécution"""
         now = datetime.utcnow()
         
@@ -767,7 +767,7 @@ class SEOWorkflowManager:
                         logger.warning(f"⏰ Workflow execution timeout: {execution_id}")
                         await self.cancel_execution(execution_id)
     
-    async def _update_performance_metrics(self):
+    async def _update_performance_metrics(self) -> None:
         """Mettre à jour les métriques de performance"""
         # Calculer les métriques actuelles
         active_count = len(self.active_executions)
@@ -777,7 +777,7 @@ class SEOWorkflowManager:
         self.performance_stats["total_executions"] = total_executions
         self.performance_stats["last_update"] = datetime.utcnow().isoformat()
     
-    async def _record_execution_metrics(self, execution: WorkflowExecution):
+    async def _record_execution_metrics(self, execution -> None: WorkflowExecution) -> None:
         """Enregistrer les métriques d'exécution"""
         if execution.start_time and execution.end_time:
             duration = (execution.end_time - execution.start_time).total_seconds()
@@ -801,7 +801,7 @@ class TaskScheduler:
     optimisation des ressources et scheduling adaptatif.
     """
     
-    def __init__(self, workflow_manager: SEOWorkflowManager):
+    def __init__(self, workflow_manager -> None: SEOWorkflowManager) -> None:
         self.workflow_manager = workflow_manager
         self.scheduled_tasks: Dict[str, Dict[str, Any]] = {}
         self.recurring_tasks: Dict[str, Dict[str, Any]] = {}
@@ -863,7 +863,7 @@ class WorkflowOrchestrator:
     gestion des dépendances inter-workflows et optimisation.
     """
     
-    def __init__(self, workflow_manager: SEOWorkflowManager):
+    def __init__(self, workflow_manager -> None: SEOWorkflowManager) -> None:
         self.workflow_manager = workflow_manager
         self.orchestration_rules: Dict[str, List[Dict[str, Any]]] = {}
         

@@ -1,4 +1,6 @@
 """Enterprise Database Performance Monitor
+import logging
+
 Advanced database performance monitoring, optimization and alerting system
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -163,7 +165,7 @@ class DatabasePerformanceMonitor:
     - Automated performance tuning recommendations
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = get_logger(__name__)
         self.db_config = get_database_settings()
         self.monitoring_config = get_monitoring_settings()
@@ -1347,7 +1349,7 @@ class DatabasePerformanceMonitor:
     - Optimization recommendations
     """
     
-    def __init__(self, monitoring_interval: int = 30):
+    def __init__(self, monitoring_interval -> None: int = 30) -> None:
         self.logger = get_logger(__name__)
         self.config = get_database_settings()
         self.db_manager = get_postgresql_manager()

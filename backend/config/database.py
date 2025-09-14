@@ -119,9 +119,9 @@ class RedisConfig:
     """
     
     def __init__(self, 
-                 deployment_type: RedisDeploymentType = RedisDeploymentType.STANDALONE,
-                 environment: str = "development",
-                 workload_type: RedisWorkloadType = RedisWorkloadType.CACHE):
+                 deployment_type -> None: RedisDeploymentType = RedisDeploymentType.STANDALONE,
+                 environment -> None: str = "development",
+                 workload_type -> None: RedisWorkloadType = RedisWorkloadType.CACHE) -> None:
         
         self.deployment_type = deployment_type
         self.environment = environment
@@ -214,7 +214,7 @@ class RedisConfig:
             logger.error(f"Failed to create Redis client: {e}")
             raise
     
-    def optimize_cluster_performance(self):
+    def optimize_cluster_performance(self) -> None:
         """Optimize Redis cluster for high performance"""
         if not REDIS_AVAILABLE:
             logger.warning("Redis is not available - skipping cluster optimization")
@@ -238,7 +238,7 @@ class ElasticsearchConfig:
     max_retries: int = 3
     
     @classmethod
-    def from_env(cls):
+    def from_env(cls) -> None:
         """Create config from environment variables"""
         return cls(
             hosts=os.getenv("ELASTICSEARCH_HOSTS", "localhost:9200").split(","),
@@ -260,7 +260,7 @@ class MongoDBConfig:
     server_selection_timeout: int = 30000
     
     @classmethod
-    def from_env(cls):
+    def from_env(cls) -> None:
         """Create config from environment variables"""
         return cls(
             connection_string=os.getenv("MONGODB_CONNECTION_STRING", "mongodb://localhost:27017"),
@@ -285,7 +285,7 @@ class PostgreSQLConfig:
     pool_recycle: int = 3600
     
     @classmethod
-    def from_env(cls):
+    def from_env(cls) -> None:
         """Create config from environment variables"""
         return cls(
             host=os.getenv("DATABASE_HOST", "localhost"),

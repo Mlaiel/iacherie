@@ -262,7 +262,7 @@ class ComplianceReport:
     generated_by: str = ""
     approved_by: str = ""
     
-    def calculate_compliance_score(self):
+    def calculate_compliance_score(self) -> None:
         """Calculate overall compliance score"""
         if self.total_requirements > 0:
             base_score = (self.compliant_requirements / self.total_requirements) * 100
@@ -311,7 +311,7 @@ class ComplianceReport:
 class ComplianceMonitor:
     """Real-time compliance monitoring"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.monitoring_rules = {}
         self.active_monitors = set()
         
@@ -482,7 +482,7 @@ class ComplianceMonitor:
 class RiskAssessment:
     """Compliance risk assessment engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.risk_models = {}
         
     async def assess_compliance_risk(self, organization_data: Dict[str, Any]) -> Dict[str, Any]:
@@ -657,7 +657,7 @@ class ComplianceReportingService:
     💡 AI Prompt: Intelligent compliance recommendations, regulatory guidance, and automated report generation
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.compliance_requirements: Dict[str, List[ComplianceRequirement]] = defaultdict(list)
         self.violations: List[ComplianceViolation] = []
         self.audit_trails: List[AuditTrail] = []
@@ -671,7 +671,7 @@ class ComplianceReportingService:
         
         logger.info("ComplianceReportingService initialized successfully")
     
-    def _initialize_compliance_requirements(self):
+    def _initialize_compliance_requirements(self) -> None:
         """Initialize default compliance requirements"""
         # GDPR Requirements
         gdpr_requirements = [
@@ -1265,7 +1265,7 @@ class ComplianceReportingService:
 
 
 # Example usage and testing
-async def main():
+async def main() -> None:
     """Example usage of the ComplianceReportingService"""
     service = ComplianceReportingService()
     

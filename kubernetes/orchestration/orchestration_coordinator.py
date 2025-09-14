@@ -90,10 +90,10 @@ class OrchestrationCoordinator(BaseDeploymentManager):
     """
     def __init__(
         self,
-        default_region: str = "us-west-2",
-        enable_multi_cluster: bool = True,
-        enable_service_mesh: bool = True
-    ):
+        default_region -> None: str = "us-west-2",
+        enable_multi_cluster -> None: bool = True,
+        enable_service_mesh -> None: bool = True
+    ) -> None:
         super().__init__()
         self.default_region = default_region
         self.enable_multi_cluster = enable_multi_cluster

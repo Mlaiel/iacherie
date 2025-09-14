@@ -83,13 +83,13 @@ class CallResult(Generic[T]):
 
 class CircuitBreakerException(Exception):
     """Circuit breaker specific exception"""
-    def __init__(self, message: str, state: CircuitState):
+    def __init__(self, message -> None: str, state -> None: CircuitState) -> None:
         super().__init__(message)
         self.state = state
 
 class CircuitOpenException(CircuitBreakerException):
     """Exception when circuit is open"""
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__("Circuit breaker is OPEN", CircuitState.OPEN)
 
 class FallbackHandler(ABC, Generic[T]):
@@ -109,7 +109,7 @@ class DefaultFallbackHandler(FallbackHandler[T]):
 class CircuitBreaker:
     """Circuit breaker implementation"""
     
-    def __init__(self, name: str, config: Optional[CircuitBreakerConfig] = None):
+    def __init__(self, name -> None: str, config -> None: Optional[CircuitBreakerConfig] = None) -> None:
         self.name = name
         self.config = config or CircuitBreakerConfig()
         self.state = CircuitState.CLOSED
@@ -122,7 +122,7 @@ class CircuitBreaker:
         
         logger.info(f"Circuit breaker '{name}' initialized")
     
-    def set_fallback_handler(self, handler: FallbackHandler):
+    def set_fallback_handler(self, handler -> None: FallbackHandler) -> None:
         """Set fallback handler"""
         self.fallback_handler = handler
     
@@ -266,7 +266,7 @@ class CircuitBreaker:
         """Check if we should attempt to reset circuit"""
         return time.time() - self.last_failure_time >= self.config.recovery_timeout
     
-    def _transition_to_open(self):
+    def _transition_to_open(self) -> None:
         """Transition circuit to open state"""
         old_state = self.state
         self.state = CircuitState.OPEN
@@ -276,7 +276,7 @@ class CircuitBreaker:
         
         logger.warning(f"Circuit breaker '{self.name}' opened - {old_state} -> {self.state}")
     
-    def _transition_to_half_open(self):
+    def _transition_to_half_open(self) -> None:
         """Transition circuit to half-open state"""
         old_state = self.state
         self.state = CircuitState.HALF_OPEN
@@ -287,7 +287,7 @@ class CircuitBreaker:
         
         logger.info(f"Circuit breaker '{self.name}' half-opened - {old_state} -> {self.state}")
     
-    def _transition_to_closed(self):
+    def _transition_to_closed(self) -> None:
         """Transition circuit to closed state"""
         old_state = self.state
         self.state = CircuitState.CLOSED
@@ -298,7 +298,7 @@ class CircuitBreaker:
         
         logger.info(f"Circuit breaker '{self.name}' closed - {old_state} -> {self.state}")
     
-    def _record_success(self, execution_time: float):
+    def _record_success(self, execution_time -> None: float) -> None:
         """Record successful execution"""
         self.metrics.successful_requests += 1
         self.metrics.consecutive_successes += 1
@@ -315,7 +315,7 @@ class CircuitBreaker:
         # Update failure rate
         self._update_failure_rate()
     
-    def _record_failure(self, failure_type: FailureType):
+    def _record_failure(self, failure_type -> None: FailureType) -> None:
         """Record failed execution"""
         self.metrics.failed_requests += 1
         self.metrics.consecutive_failures += 1
@@ -329,7 +329,7 @@ class CircuitBreaker:
         # Update failure rate
         self._update_failure_rate()
     
-    def _update_failure_rate(self):
+    def _update_failure_rate(self) -> None:
         """Update current failure rate"""
         if self.metrics.total_requests > 0:
             self.metrics.current_failure_rate = (
@@ -345,7 +345,7 @@ class CircuitBreaker:
         else:
             return FailureType.EXCEPTION
     
-    def reset(self):
+    def reset(self) -> None:
         """Reset circuit breaker state"""
         with self.lock:
             self.state = CircuitState.CLOSED
@@ -356,12 +356,12 @@ class CircuitBreaker:
         
         logger.info(f"Circuit breaker '{self.name}' reset")
     
-    def force_open(self):
+    def force_open(self) -> None:
         """Force circuit to open state"""
         with self.lock:
             self._transition_to_open()
     
-    def force_close(self):
+    def force_close(self) -> None:
         """Force circuit to closed state"""
         with self.lock:
             self._transition_to_closed()
@@ -384,7 +384,7 @@ class CircuitBreaker:
 class CircuitBreakerCore:
     """Core circuit breaker management system"""
     
-    def __init__(self, level: str = "enterprise"):
+    def __init__(self, level -> None: str = "enterprise") -> None:
         self.level = level
         self.circuit_breakers: Dict[str, CircuitBreaker] = {}
         self.global_config = CircuitBreakerConfig()
@@ -464,7 +464,7 @@ class CircuitBreakerCore:
             logger.error(f"Health check failed: {str(e)}")
             return False
     
-    async def _monitor_circuits(self):
+    async def _monitor_circuits(self) -> None:
         """Monitor circuit breaker states"""
         while self.is_running:
             try:
@@ -476,7 +476,7 @@ class CircuitBreakerCore:
                 logger.error(f"Circuit monitoring error: {str(e)}")
                 await asyncio.sleep(30)
     
-    async def _update_global_metrics(self):
+    async def _update_global_metrics(self) -> None:
         """Update global metrics"""
         total_calls = 0
         successful_calls = 0
@@ -551,7 +551,7 @@ class CircuitBreakerCore:
             return True
         return False
     
-    def reset_all_circuit_breakers(self):
+    def reset_all_circuit_breakers(self) -> None:
         """Reset all circuit breakers"""
         for circuit in self.circuit_breakers.values():
             circuit.reset()

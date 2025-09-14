@@ -1,5 +1,12 @@
+"""
+Model Api Generator module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
+import logging
+
 🚀 **Model API Generator - Enterprise ML API Automation**
 
 **Author:** Fahed Mlaiel (mlaiel@live.de) - Lead Dev IA  
@@ -98,7 +105,7 @@ class ModelAPIGenerator:
     - Performance monitoring integration
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.mlflow_client = mlflow.tracking.MlflowClient()
         self.template_env = Environment(
@@ -680,7 +687,7 @@ class ModelAPIGenerator:
         return output_paths
 
 # Usage example
-async def main():
+async def main() -> None:
     """Example usage of ModelAPIGenerator"""
     config = {
         'base_url': 'https://api.ainflue.com',

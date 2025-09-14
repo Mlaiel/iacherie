@@ -66,7 +66,7 @@ class SlowQueryStats:
 class SlowQueryAnalyzer:
     """Advanced slow query analyzer with pattern detection and optimization recommendations."""
     
-    def __init__(self, threshold_ms: float = 100, max_queries: int = 10000):
+    def __init__(self, threshold_ms -> None: float = 100, max_queries -> None: int = 10000) -> None:
         """Initialize slow query analyzer.
         
         Args:

@@ -76,7 +76,7 @@ if SECURITY_MANAGER_AVAILABLE:
     __all__.append("security_manager")
 
 # Module status
-def get_module_status():
+def get_module_status() -> None:
     """Get the status of database module components"""
     return {
         "connection": CONNECTION_AVAILABLE,
@@ -92,7 +92,7 @@ def get_module_status():
     }
 
 # Initialize database if all components are available
-def initialize():
+def initialize() -> None:
     """Initialize the database module"""
     core_available = all([CONNECTION_AVAILABLE, MODELS_AVAILABLE, MIGRATIONS_AVAILABLE, CRUD_AVAILABLE])
     enterprise_available = all([DATABASE_OPERATIONS_AVAILABLE, SCHEMA_MANAGER_AVAILABLE, 

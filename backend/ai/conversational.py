@@ -76,7 +76,7 @@ class ConversationalAI:
     - Monetization assistance
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.conversations: Dict[str, ConversationContext] = {}
         self.active_sessions = 0
         self.logger = logging.getLogger(__name__)
@@ -223,7 +223,7 @@ class ConversationalAI:
 class AIInteractionEngine:
     """Advanced AI interaction processing engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.conversation_ai = ConversationalAI()
         
     async def process_interaction(

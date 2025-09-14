@@ -131,7 +131,7 @@ class MLRevenuePredictor:
     """
 Machine learning revenue prediction engine."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.models: Dict[str, Any] = {}
         self.feature_scalers: Dict[str, Any] = {}
         self.training_data: List[Dict[str, Any]] = []
@@ -372,7 +372,7 @@ Analyze impact of different features on prediction."""
 class MarketAnalyzer:
     """Advanced market analysis engine."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.market_data_cache: Dict[str, MarketAnalysis] = {}
         self.trend_indicators: Dict[str, float] = {}
     
@@ -589,7 +589,7 @@ class RevenueOptimizationEngine:
     """
 Main revenue optimization engine combining ML and market analysis."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.ml_predictor = MLRevenuePredictor()
         self.market_analyzer = MarketAnalyzer()
         self.optimization_history: List[RevenueOptimizationResult] = []

@@ -114,7 +114,7 @@ class DMCAAutomationSystem:
     Ultra-advanced DMCA automation and management system
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.notices = []
         self.responses = []
@@ -195,7 +195,7 @@ class DMCAAutomationSystem:
         
         logger.info("DMCA Automation System initialized")
     
-    def _initialize_legal_templates(self):
+    def _initialize_legal_templates(self) -> None:
         """Initialize legal document templates"""
         try:
             # DMCA Takedown Notice Template
@@ -308,7 +308,7 @@ Sincerely,
             logger.error(f"Failed to initialize legal templates: {str(e)}")
             raise
     
-    def _initialize_platform_handlers(self):
+    def _initialize_platform_handlers(self) -> None:
         """Initialize platform-specific submission handlers"""
         try:
             # Platform submission handlers would be initialized here

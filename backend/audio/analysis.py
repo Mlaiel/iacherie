@@ -103,11 +103,11 @@ class SpectralAnalyzer:
     """
     
     def __init__(self, 
-                 sample_rate: int = 44100,
-                 frame_size: int = 2048,
-                 hop_length: int = 512,
-                 window_type: WindowType = WindowType.HANN,
-                 n_fft: Optional[int] = None):
+                 sample_rate -> None: int = 44100,
+                 frame_size -> None: int = 2048,
+                 hop_length -> None: int = 512,
+                 window_type -> None: WindowType = WindowType.HANN,
+                 n_fft -> None: Optional[int] = None) -> None:
         """Initialize spectral analyzer with advanced configuration"""
         self.logger = logging.getLogger(self.__class__.__name__)
         self.sample_rate = sample_rate
@@ -336,10 +336,10 @@ class MelodyExtractor:
     """
     
     def __init__(self, 
-                 sample_rate: int = 44100,
-                 frame_length: int = 2048,
-                 hop_length: int = 512,
-                 method: MelodyExtractionMethod = MelodyExtractionMethod.PYIN):
+                 sample_rate -> None: int = 44100,
+                 frame_length -> None: int = 2048,
+                 hop_length -> None: int = 512,
+                 method -> None: MelodyExtractionMethod = MelodyExtractionMethod.PYIN) -> None:
         """Initialize melody extractor"""
         self.logger = logging.getLogger(self.__class__.__name__)
         self.sample_rate = sample_rate
@@ -437,7 +437,7 @@ class MelodyExtractor:
 class RhythmAnalyzer:
     """🥁 Professional Rhythm & Tempo Analysis Engine"""
     
-    def __init__(self, sample_rate: int = 44100, hop_length: int = 512):
+    def __init__(self, sample_rate -> None: int = 44100, hop_length -> None: int = 512) -> None:
         """Initialize rhythm analyzer"""
         self.logger = logging.getLogger(self.__class__.__name__)
         self.sample_rate = sample_rate
@@ -492,7 +492,7 @@ class RhythmAnalyzer:
 class AudioQualityAssessment:
     """🎯 Professional Audio Quality Assessment Engine"""
     
-    def __init__(self, sample_rate: int = 44100):
+    def __init__(self, sample_rate -> None: int = 44100) -> None:
         """Initialize quality assessment engine"""
         self.logger = logging.getLogger(self.__class__.__name__)
         self.sample_rate = sample_rate
@@ -600,7 +600,7 @@ class AudioQualityAssessment:
 class GenreClassifier:
     """🎼 AI-Powered Music Genre Classification - Enterprise 1000+ Genres Support"""
     
-    def __init__(self, sample_rate: int = 44100):
+    def __init__(self, sample_rate -> None: int = 44100) -> None:
         """Initialize enterprise genre classifier"""
         self.logger = logging.getLogger(self.__class__.__name__)
         self.sample_rate = sample_rate
@@ -1423,7 +1423,7 @@ class GenreClassifier:
 class InstrumentIdentifier:
     """🎺 AI-Powered Musical Instrument Recognition"""
     
-    def __init__(self, sample_rate: int = 44100):
+    def __init__(self, sample_rate -> None: int = 44100) -> None:
         """Initialize instrument identifier"""
         self.logger = logging.getLogger(self.__class__.__name__)
         self.sample_rate = sample_rate
@@ -1485,7 +1485,7 @@ class InstrumentIdentifier:
 class VoiceActivityDetector:
     """🎤 Advanced Voice Activity Detection"""
     
-    def __init__(self, sample_rate: int = 44100, frame_length: int = 2048):
+    def __init__(self, sample_rate -> None: int = 44100, frame_length -> None: int = 2048) -> None:
         """Initialize voice activity detector"""
         self.logger = logging.getLogger(self.__class__.__name__)
         self.sample_rate = sample_rate
@@ -1584,7 +1584,7 @@ class VoiceActivityDetector:
 class AudioMetadataExtractor:
     """📊 Comprehensive Audio Metadata Extraction"""
     
-    def __init__(self, sample_rate: int = 44100):
+    def __init__(self, sample_rate -> None: int = 44100) -> None:
         """Initialize metadata extractor"""
         self.logger = logging.getLogger(self.__class__.__name__)
         self.sample_rate = sample_rate
@@ -1655,7 +1655,7 @@ class AudioMetadataExtractor:
 class HarmonicAnalyzer:
     """🎼 Advanced Harmonic Content Analysis"""
     
-    def __init__(self, sample_rate: int = 44100):
+    def __init__(self, sample_rate -> None: int = 44100) -> None:
         """Initialize harmonic analyzer"""
         self.logger = logging.getLogger(self.__class__.__name__)
         self.sample_rate = sample_rate
@@ -1710,7 +1710,7 @@ class HarmonicAnalyzer:
 class TempoDetector:
     """🥁 Professional Tempo Detection & Beat Tracking"""
     
-    def __init__(self, sample_rate: int = 44100):
+    def __init__(self, sample_rate -> None: int = 44100) -> None:
         """Initialize tempo detector"""
         self.logger = logging.getLogger(self.__class__.__name__)
         self.sample_rate = sample_rate
@@ -1792,7 +1792,7 @@ class TempoDetector:
 class KeyDetector:
     """🎹 Musical Key Detection & Tonal Analysis"""
     
-    def __init__(self, sample_rate: int = 44100):
+    def __init__(self, sample_rate -> None: int = 44100) -> None:
         """Initialize key detector"""
         self.logger = logging.getLogger(self.__class__.__name__)
         self.sample_rate = sample_rate
@@ -1868,7 +1868,7 @@ class KeyDetector:
 class MoodAnalyzer:
     """😊 AI-Powered Music Mood & Emotion Analysis"""
     
-    def __init__(self, sample_rate: int = 44100):
+    def __init__(self, sample_rate -> None: int = 44100) -> None:
         """Initialize mood analyzer"""
         self.logger = logging.getLogger(self.__class__.__name__)
         self.sample_rate = sample_rate
@@ -2019,7 +2019,7 @@ class MusicIntelligenceEngine:
     comprehensive audio content analysis and music information retrieval.
     """
     
-    def __init__(self, sample_rate: int = 44100):
+    def __init__(self, sample_rate -> None: int = 44100) -> None:
         """Initialize music intelligence engine"""
         self.logger = logging.getLogger(self.__class__.__name__)
         self.sample_rate = sample_rate
@@ -2332,7 +2332,7 @@ class AudioSimilarityEngine:
     and recommendation systems using perceptual audio features.
     """
     
-    def __init__(self, sample_rate: int = 44100):
+    def __init__(self, sample_rate -> None: int = 44100) -> None:
         """Initialize audio similarity engine"""
         self.logger = logging.getLogger(self.__class__.__name__)
         self.sample_rate = sample_rate

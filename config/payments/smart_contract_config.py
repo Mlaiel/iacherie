@@ -1,7 +1,14 @@
+"""
+Smart Contract Config module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 """Ainflue Smart Contract Configuration Module
+import asyncio
+
 ============================================
 
 Enterprise-grade smart contract configuration for the Ainflue platform.
@@ -607,7 +614,7 @@ class ContractGovernanceConfig:
 class SmartContractConfiguration:
     """Main smart contract configuration manager"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize smart contract configuration"""
         # Configuration components
         self.interaction_config = ContractInteractionConfig()
@@ -679,7 +686,7 @@ class SmartContractConfiguration:
         # Initialize default templates
         self._initialize_default_templates()
     
-    def _initialize_default_templates(self):
+    def _initialize_default_templates(self) -> None:
         """Initialize default contract templates"""
         
         # ERC20 Token Template

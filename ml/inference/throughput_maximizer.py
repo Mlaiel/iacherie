@@ -87,7 +87,7 @@ class ThroughputMetrics:
 class IntelligentBatcher:
     """🔬 ML ENGINEER - Intelligent request batching system"""
     
-    def __init__(self, config: ThroughputConfig):
+    def __init__(self, config -> None: ThroughputConfig) -> None:
         self.config = config
         self.pending_requests = queue.Queue()
         self.batch_queue = queue.Queue()
@@ -213,7 +213,7 @@ class IntelligentBatcher:
 class ConnectionPoolManager:
     """🛡️ BACKEND SENIOR - Advanced connection pool management"""
     
-    def __init__(self, config: ThroughputConfig):
+    def __init__(self, config -> None: ThroughputConfig) -> None:
         self.config = config
         self.connection_pool = queue.Queue(maxsize=config.connection_pool_size)
         self.active_connections = {}
@@ -310,7 +310,7 @@ class ConnectionPoolManager:
 class ParallelProcessor:
     """⚙️ DEVOPS - Parallel processing optimization"""
     
-    def __init__(self, config: ThroughputConfig):
+    def __init__(self, config -> None: ThroughputConfig) -> None:
         self.config = config
         self.executor = concurrent.futures.ThreadPoolExecutor(
             max_workers=config.max_concurrent_requests
@@ -372,7 +372,7 @@ class ThroughputMaximizer:
     with intelligent batching, connection pooling, and parallel processing.
     """
     
-    def __init__(self, config: ThroughputConfig):
+    def __init__(self, config -> None: ThroughputConfig) -> None:
         self.config = config
         self.batcher = IntelligentBatcher(config)
         self.connection_pool = ConnectionPoolManager(config)
@@ -648,7 +648,7 @@ class ThroughputMaximizer:
 class AdaptiveOptimizer:
     """🔬 ML ENGINEER - Adaptive optimization system"""
     
-    def __init__(self, config: ThroughputConfig):
+    def __init__(self, config -> None: ThroughputConfig) -> None:
         self.config = config
         self.optimization_history = []
         self.current_performance = 0.0
@@ -701,7 +701,7 @@ class AdaptiveOptimizer:
 
 # Example usage and testing
 if __name__ == "__main__":
-    async def test_throughput_maximizer():
+    async def test_throughput_maximizer() -> None:
         """Test throughput maximizer"""
         
         # Create configuration

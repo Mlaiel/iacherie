@@ -106,7 +106,7 @@ class MonitoringTarget:
 class ContainerMonitoringManager:
     """Professional container monitoring manager"""
     
-    def __init__(self, config_path: str = "/app/config/monitoring"):
+    def __init__(self, config_path -> None: str = "/app/config/monitoring") -> None:
         self.config_path = Path(config_path)
         self.docker_client = None
         self.k8s_client = None
@@ -1089,7 +1089,7 @@ class ContainerMonitoringManager:
 class MetricsCollector:
     """Specialized metrics collector for IA-Influencer services"""
     
-    def __init__(self, monitoring_manager: ContainerMonitoringManager):
+    def __init__(self, monitoring_manager -> None: ContainerMonitoringManager) -> None:
         self.monitoring_manager = monitoring_manager
         self.custom_metrics = {}
         self.collection_tasks = {}
@@ -1222,7 +1222,7 @@ class MetricsCollector:
 class AlertManager:
     """Professional alert manager for IA-Influencer platform"""
     
-    def __init__(self, monitoring_manager: ContainerMonitoringManager):
+    def __init__(self, monitoring_manager -> None: ContainerMonitoringManager) -> None:
         self.monitoring_manager = monitoring_manager
         self.notification_channels = {}
         self.alert_history = {}

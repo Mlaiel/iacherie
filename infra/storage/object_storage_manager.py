@@ -1,3 +1,8 @@
+"""
+Object Storage Manager module
+Enterprise implementation for Ainflue platform
+"""
+
 # Ainflue Infrastructure Module
 # =============================
 # 
@@ -87,7 +92,7 @@ class ObjectStorageManager:
     policies, encryption, versioning, and multi-cloud abstraction.
     """
     
-    def __init__(self, region: str = "us-west-2"):
+    def __init__(self, region -> None: str = "us-west-2") -> None:
         """
         Initialize object storage manager.
         

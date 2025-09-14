@@ -77,7 +77,7 @@ class ConfigurationManager:
     components in the IA Influencer Agent platform.
     """
     
-    def __init__(self, config_dir: str = "/etc/ia-influencer/load-balancer"):
+    def __init__(self, config_dir -> None: str = "/etc/ia-influencer/load-balancer") -> None:
         self.config_dir = Path(config_dir)
         self.templates_dir = self.config_dir / "templates"
         self.schemas_dir = self.config_dir / "schemas"

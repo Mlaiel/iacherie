@@ -154,13 +154,13 @@ class MidjourneyIntegration:
     
     def __init__(
         self,
-        api_token: str,
-        server_id: str,
-        channel_id: str,
-        base_url: str = "https://api.midjourney.com/v1",
-        timeout: int = 300,  # 5 minutes for image generation
-        max_retries: int = 3
-    ):
+        api_token -> None: str,
+        server_id -> None: str,
+        channel_id -> None: str,
+        base_url -> None: str = "https -> None://api.midjourney.com/v1",
+        timeout -> None: int = 300,  # 5 minutes for image generation
+        max_retries -> None: int = 3
+    ) -> None:
         self.api_token = api_token
         self.server_id = server_id
         self.channel_id = channel_id
@@ -177,16 +177,16 @@ class MidjourneyIntegration:
         
         logger.info("Midjourney integration initialized")
     
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         """Async context manager entry."""
         await self._ensure_session()
         return self
     
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         """Async context manager exit."""
         await self.close()
     
-    async def _ensure_session(self):
+    async def _ensure_session(self) -> None:
         """Ensure HTTP session is available."""
         if self.session is None or self.session.closed:
             headers = {
@@ -200,7 +200,7 @@ class MidjourneyIntegration:
                 timeout=aiohttp.ClientTimeout(total=self.timeout)
             )
     
-    async def close(self):
+    async def close(self) -> None:
         """Close HTTP session."""
         if self.session and not self.session.closed:
             await self.session.close()
@@ -647,7 +647,7 @@ async def quick_image_generation(
 
 if __name__ == "__main__":
     # Example usage
-    async def main():
+    async def main() -> None:
         import os
         api_token = os.getenv("MIDJOURNEY_API_TOKEN")
         server_id = os.getenv("MIDJOURNEY_SERVER_ID")

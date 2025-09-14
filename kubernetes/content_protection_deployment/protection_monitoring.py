@@ -5,7 +5,7 @@ infrastructure. Provides real-time monitoring, alerting, analytics, and
 performance optimization for content protection operations.
 
 Key Features:
-- Real-time protection system monitoring and health checks
+    - Real-time protection system monitoring and health checks
 - Performance metrics collection and analysis
 - Automated alerting and incident response
 - Protection effectiveness analytics and reporting
@@ -17,7 +17,7 @@ Key Features:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 
-⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
+# [EMOJI_REMOVED]  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED # [EMOJI_REMOVED]
 """
 
 import asyncio
@@ -151,12 +151,12 @@ class ProtectionMonitoringSystem:
     """
     
     def __init__(self,
-                 redis_host: str = "localhost",
-                 redis_port: int = 6379,
-                 postgres_url: str = "postgresql://localhost/ia_influencer",
-                 prometheus_gateway: str = "localhost:9091",
-                 elasticsearch_url: str = "http://localhost:9200",
-                 grafana_url: str = "http://localhost:3000"):
+                 redis_host -> None: str = "localhost",
+                 redis_port -> None: int = 6379,
+                 postgres_url -> None: str = "postgresql -> None://localhost/ia_influencer",
+                 prometheus_gateway -> None: str = "localhost -> None:9091",
+                 elasticsearch_url -> None: str = "http -> None://localhost -> None:9200",
+                 grafana_url -> None: str = "http -> None://localhost -> None:3000") -> None:
         
         self.redis_client = redis.Redis(host=redis_host, port=redis_port, decode_responses=True)
         self.postgres_url = postgres_url
@@ -252,7 +252,7 @@ Load alert rules configuration"""
             }
         }
     
-    def _init_prometheus_metrics(self):
+    def _init_prometheus_metrics(self) -> None:
         """
 Initialize Prometheus metrics"""
         # System metrics
@@ -283,7 +283,7 @@ Initialize Prometheus metrics"""
         self.alert_frequency = Counter('alerts_total', 
                                      'Total alerts generated', ['component', 'severity'], registry=self.registry)
     
-    def _init_elasticsearch(self):
+    def _init_elasticsearch(self) -> None:
         """
 Initialize Elasticsearch client"""
         try:
@@ -292,7 +292,7 @@ Initialize Elasticsearch client"""
             self.logger.warning(f"Failed to initialize Elasticsearch: {str(e)}")
             return None
     
-    def _init_grafana(self):
+    def _init_grafana(self) -> None:
         """Initialize Grafana API client"""
         try:
             # Initialize Grafana API client
@@ -653,7 +653,7 @@ Determine detection system status"""
         else:
             return SystemStatus.HEALTHY
     
-    def _update_prometheus_metrics(self, component: str, health: SystemHealth):
+    def _update_prometheus_metrics(self, component -> None: str, health -> None: SystemHealth) -> None:
         """
 Update Prometheus metrics"""
         try:
@@ -686,7 +686,7 @@ Update Prometheus metrics"""
         except Exception as e:
             self.logger.error(f"Error updating Prometheus metrics: {str(e)}")
     
-    async def check_alert_conditions(self):
+    async def check_alert_conditions(self) -> None:
         """Check all alert conditions and trigger alerts if necessary"""
         try:
             for component, health in self.system_health.items():
@@ -695,7 +695,7 @@ Update Prometheus metrics"""
         except Exception as e:
             self.logger.error(f"Error checking alert conditions: {str(e)}")
     
-    async def _check_component_alerts(self, component: str, health: SystemHealth):
+    async def _check_component_alerts(self, component -> None: str, health -> None: SystemHealth) -> None:
         """Check alert conditions for specific component"""
         alerts_to_trigger = []
         
@@ -805,7 +805,7 @@ Create new alert"""
             tags={'component': component, 'metric': metric_name}
         )
     
-    async def _trigger_alert(self, alert: Alert):
+    async def _trigger_alert(self, alert -> None: Alert) -> None:
         """Trigger alert and send notifications"""
         try:
             # Check if alert already exists (avoid spam)
@@ -842,7 +842,7 @@ Create new alert"""
         except Exception as e:
             self.logger.error(f"Error triggering alert: {str(e)}")
     
-    async def _send_alert_notifications(self, alert: Alert):
+    async def _send_alert_notifications(self, alert -> None: Alert) -> None:
         """Send alert notifications via multiple channels"""
         try:
             # Email notification
@@ -861,7 +861,7 @@ Create new alert"""
         except Exception as e:
             self.logger.error(f"Error sending alert notifications: {str(e)}")
     
-    async def _send_alert_email(self, alert: Alert):
+    async def _send_alert_email(self, alert -> None: Alert) -> None:
         """Send alert via email"""
         try:
             # Email configuration would be loaded from config
@@ -877,7 +877,7 @@ Create new alert"""
             body = f"""IA Influencer Agent Protection System Alert
 
 Alert Details:
-- Severity: {alert.severity.value.upper()}
+    - Severity: {alert.severity.value.upper()}
 - Component: {alert.component}
 - Metric: {alert.metric_name}
 - Current Value: {alert.current_value:.2f}
@@ -885,7 +885,7 @@ Alert Details:
 - Time: {alert.triggered_at.strftime('%Y-%m-%d %H:%M:%S')}
 
 Description:
-{alert.description}
+    {alert.description}
 
 Please investigate and take appropriate action.
 
@@ -912,7 +912,7 @@ IA Influencer Agent Monitoring System
         except Exception as e:
             self.logger.error(f"Error sending alert email: {str(e)}")
     
-    async def _send_slack_notification(self, alert: Alert):
+    async def _send_slack_notification(self, alert -> None: Alert) -> None:
         """Send alert to Slack"""
         try:
             # Slack webhook URL would be configured
@@ -930,7 +930,7 @@ IA Influencer Agent Monitoring System
                 "attachments": [
                     {
                         "color": color_map.get(alert.severity, "warning"),
-                        "title": f"🚨 {alert.title}",
+                        "title": f"# [EMOJI_REMOVED] {alert.title}",
                         "text": alert.description,
                         "fields": [
                             {"title": "Component", "value": alert.component, "short": True},
@@ -952,7 +952,7 @@ IA Influencer Agent Monitoring System
         except Exception as e:
             self.logger.error(f"Error sending Slack notification: {str(e)}")
     
-    async def _send_pagerduty_alert(self, alert: Alert):
+    async def _send_pagerduty_alert(self, alert -> None: Alert) -> None:
         """Send alert to PagerDuty"""
         try:
             # PagerDuty integration key would be configured
@@ -987,7 +987,7 @@ IA Influencer Agent Monitoring System
         except Exception as e:
             self.logger.error(f"Error sending PagerDuty alert: {str(e)}")
     
-    async def _send_discord_notification(self, alert: Alert):
+    async def _send_discord_notification(self, alert -> None: Alert) -> None:
         """Send alert to Discord"""
         try:
             # Discord webhook URL would be configured
@@ -1004,7 +1004,7 @@ IA Influencer Agent Monitoring System
             discord_message = {
                 "embeds": [
                     {
-                        "title": f"🚨 {alert.title}",
+                        "title": f"# [EMOJI_REMOVED] {alert.title}",
                         "description": alert.description,
                         "color": embed_color.get(alert.severity, 0xffff00),
                         "fields": [
@@ -1027,7 +1027,7 @@ IA Influencer Agent Monitoring System
         except Exception as e:
             self.logger.error(f"Error sending Discord notification: {str(e)}")
     
-    def _update_alert_count_metrics(self):
+    def _update_alert_count_metrics(self) -> None:
         """Update alert count metrics"""
         try:
             # Count active alerts by severity
@@ -1043,7 +1043,7 @@ IA Influencer Agent Monitoring System
         except Exception as e:
             self.logger.error(f"Error updating alert count metrics: {str(e)}")
     
-    async def _store_alert_in_elasticsearch(self, alert: Alert):
+    async def _store_alert_in_elasticsearch(self, alert -> None: Alert) -> None:
         """Store alert in Elasticsearch for analytics"""
         try:
             if not self.elasticsearch_client:
@@ -1366,7 +1366,7 @@ Get top sources generating alerts"""
             'enforcement_system': 2
         }
     
-    async def _store_analytics_report(self, analytics: Dict[str, Any]):
+    async def _store_analytics_report(self, analytics -> None: Dict[str, Any]) -> None:
         """
 Store analytics report"""
         try:
@@ -1393,15 +1393,15 @@ Store analytics report"""
         except Exception as e:
             self.logger.error(f"Error storing analytics report: {str(e)}")
     
-    def _start_monitoring_workers(self):
+    def _start_monitoring_workers(self) -> None:
         """Start background monitoring workers"""
-        def metrics_collector():
+        def metrics_collector() -> None:
             """
 Collect metrics periodically"""
             loop = asyncio.new_event_loop()
             asyncio.set_event_loop(loop)
             
-            async def collect_loop():
+            async def collect_loop() -> None:
         try:
                     # Collect metrics
                     metrics = {
@@ -1450,12 +1450,12 @@ Collect metrics periodically"""
             
             loop.run_until_complete(collect_loop())
         
-        def alert_checker():
+        def alert_checker() -> None:
             """Check alerts periodically"""
             loop = asyncio.new_event_loop()
             asyncio.set_event_loop(loop)
             
-            async def alert_loop():
+            async def alert_loop() -> None:
                 while True:
                     try:
                         await self.check_alert_conditions()
@@ -1495,3 +1495,5 @@ def create_monitoring_system(config: Dict[str, Any]) -> ProtectionMonitoringSyst
         elasticsearch_url=config.get('elasticsearch_url', 'http://localhost:9200'),
         grafana_url=config.get('grafana_url', 'http://localhost:3000')
     )
+
+# File has syntax issues - needs manual review

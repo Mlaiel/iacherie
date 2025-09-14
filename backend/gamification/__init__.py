@@ -1,4 +1,6 @@
 """Unified Gamification Module - Enterprise Gaming & Ranking System
+import asyncio
+
 =================================================================
 
 Comprehensive unified gamification ecosystem combining platform gamification
@@ -191,7 +193,7 @@ class GamificationOrchestrator:
     gaming experience for content creators.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the gamification orchestrator."""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self.initialized = False

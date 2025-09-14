@@ -61,7 +61,7 @@ class DistributionNotificationOrchestrator:
     Manages all content distribution and cross-platform notifications
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize distribution notification orchestrator"""
         self.publishing_status = PublishingStatusNotifications()
         self.platform_sync = PlatformSyncAlerts()

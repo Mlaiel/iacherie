@@ -1,3 +1,8 @@
+"""
+Watermark Processor module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """🔒 Watermark Processor - Advanced Content Watermarking System
 ===============================================================================
@@ -144,7 +149,7 @@ class WatermarkConfig:
 class WatermarkProcessor:
     """Enterprise content watermarking system with multi-modal support"""
     
-    def __init__(self, config: WatermarkConfig = None):
+    def __init__(self, config -> None: WatermarkConfig = None) -> None:
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self.config = config or WatermarkConfig()
         

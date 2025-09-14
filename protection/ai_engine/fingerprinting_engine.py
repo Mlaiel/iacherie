@@ -64,6 +64,7 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class ContentFingerprint(Base):
+    """ContentFingerprint class implementation"""
     __tablename__ = 'content_fingerprints'
     
     id = Column(String, primary_key=True)
@@ -81,7 +82,7 @@ class ContentFingerprintEngine:
     Enterprise-grade content fingerprinting engine for robust content identification
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.similarity_thresholds = config.get('similarity_thresholds', {
             'audio_chromaprint': 0.85,
@@ -132,7 +133,7 @@ class ContentFingerprintEngine:
         
         logger.info("Content Fingerprinting Engine initialized")
     
-    def _init_database(self):
+    def _init_database(self) -> None:
         """Initialize SQLite database for fingerprint storage"""
         try:
             db_path = self.config.get('database_path', 'fingerprints.db')
@@ -144,7 +145,7 @@ class ContentFingerprintEngine:
             logger.error(f"Database initialization failed: {str(e)}")
             raise
     
-    def _init_redis(self):
+    def _init_redis(self) -> None:
         """Initialize Redis cache for fast fingerprint lookup"""
         try:
             redis_config = self.config.get('redis', {})
@@ -1124,7 +1125,7 @@ class ContentFingerprintEngine:
             logger.error(f"Cross-modal fingerprint generation failed: {str(e)}")
             return None
     
-    async def _store_fingerprint(self, content_id: str, content_type: str, fingerprint_type: str, fingerprint_data: Dict[str, Any]):
+    async def _store_fingerprint(self, content_id -> None: str, content_type -> None: str, fingerprint_type -> None: str, fingerprint_data -> None: Dict[str, Any]) -> None:
         """Store fingerprint in database"""
         try:
             session = self.Session()

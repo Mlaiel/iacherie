@@ -133,7 +133,7 @@ class PrivacyConfig:
 class DifferentialPrivacyManager:
     """Differential privacy manager for federated learning"""
     
-    def __init__(self, epsilon: float, delta: float):
+    def __init__(self, epsilon -> None: float, delta -> None: float) -> None:
         self.epsilon = epsilon
         self.delta = delta
         self.privacy_budget_used = 0.0
@@ -168,7 +168,7 @@ class DifferentialPrivacyManager:
 class SecureAggregationProtocol:
     """Secure aggregation protocol for federated learning"""
     
-    def __init__(self, threshold: int = 3):
+    def __init__(self, threshold -> None: int = 3) -> None:
         self.threshold = threshold
         self.client_keys = {}
         self.shared_secrets = {}
@@ -266,7 +266,7 @@ class SecureAggregationProtocol:
 class FederatedLearningEngine:
     """Advanced federated learning engine for creator platforms"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize federated learning engine"""
         self.config = config or {}
         
@@ -1043,7 +1043,7 @@ def get_federation_engine() -> FederatedLearningEngine:
     return _federation_engine_instance
 
 # Test and validation functions
-async def test_federated_learning_engine():
+async def test_federated_learning_engine() -> None:
     """Test federated learning engine functionality"""
     engine = FederatedLearningEngine({
         'max_clients': 100,

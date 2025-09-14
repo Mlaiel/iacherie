@@ -226,7 +226,7 @@ class QuantumConfigManager:
     ✅ Configuration security compliance
     """
     
-    def __init__(self, config_path: Optional[str] = None, environment: Optional[QuantumEnvironment] = None):
+    def __init__(self, config_path -> None: Optional[str] = None, environment -> None: Optional[QuantumEnvironment] = None) -> None:
         self.config_path = config_path or os.getenv("QUANTUM_CONFIG_PATH", "/workspaces/Ainflue/config/quantum")
         self.environment = environment or self._detect_environment()
         self.master_config: Optional[QuantumMasterConfig] = None
@@ -238,7 +238,7 @@ class QuantumConfigManager:
         
         logger.info(f"⚙️ Quantum Config Manager initialized for environment: {self.environment.value}")
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialisation complète du gestionnaire configuration"""
         try:
             # Détection et validation environnement
@@ -747,7 +747,7 @@ class QuantumConfigManager:
         }
         return env_mapping.get(env_var, QuantumEnvironment.DEVELOPMENT)
     
-    async def _validate_environment(self):
+    async def _validate_environment(self) -> None:
         """Validation environnement"""
         logger.info(f"🔍 Validating quantum environment: {self.environment.value}")
         # Validation spécifique à l'environnement
@@ -840,7 +840,7 @@ class QuantumConfigManager:
         
         return False
     
-    async def _notify_configuration_watchers(self, config: QuantumMasterConfig):
+    async def _notify_configuration_watchers(self, config -> None: QuantumMasterConfig) -> None:
         """Notification des watchers de configuration"""
         for watcher in self.config_watchers:
             try:
@@ -871,7 +871,7 @@ class QuantumConfigManager:
             logger.error(f"❌ Failed to export configuration: {e}")
             raise
     
-    async def import_configuration(self, config_data: str, format: str = "yaml", validate: bool = True):
+    async def import_configuration(self, config_data -> None: str, format -> None: str = "yaml", validate -> None: bool = True) -> None:
         """Import configuration depuis données"""
         try:
             if format.lower() == "yaml":
@@ -896,11 +896,11 @@ class QuantumConfigManager:
             logger.error(f"❌ Failed to import configuration: {e}")
             raise
     
-    def add_configuration_watcher(self, watcher: Callable):
+    def add_configuration_watcher(self, watcher -> None: Callable) -> None:
         """Ajout watcher pour changements configuration"""
         self.config_watchers.append(watcher)
     
-    def remove_configuration_watcher(self, watcher: Callable):
+    def remove_configuration_watcher(self, watcher -> None: Callable) -> None:
         """Suppression watcher"""
         if watcher in self.config_watchers:
             self.config_watchers.remove(watcher)

@@ -57,7 +57,7 @@ class ChunkInfo:
 class ShardManager:
     """Enterprise-grade MongoDB sharding management system."""
     
-    def __init__(self, mongos_connection_string: str, config_server_string: str):
+    def __init__(self, mongos_connection_string -> None: str, config_server_string -> None: str) -> None:
         """Initialize shard manager."""
         if not MONGODB_AVAILABLE:
             raise ImportError("PyMongo is required for shard management")
@@ -67,7 +67,7 @@ class ShardManager:
         self.mongos_client = None
         self.config_client = None
         
-    def connect(self):
+    def connect(self) -> None:
         """Establish connections to mongos and config servers."""
         try:
             self.mongos_client = MongoClient(self.mongos_connection)
@@ -414,7 +414,7 @@ class ShardManager:
         except:
             return {}
     
-    def _create_initial_chunks(self, namespace: str, shard_key: Dict[str, int]):
+    def _create_initial_chunks(self, namespace -> None: str, shard_key -> None: Dict[str, int]) -> None:
         """Create initial chunks for better distribution."""
         try:
             # This would implement pre-splitting logic based on shard key type
@@ -428,7 +428,7 @@ class ShardManager:
         # Simplified estimation - in production, this would use collection stats
         return 64  # Default chunk size estimate
     
-    def close(self):
+    def close(self) -> None:
         """Close database connections."""
         if self.mongos_client:
             self.mongos_client.close()

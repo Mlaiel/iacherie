@@ -89,7 +89,7 @@ class AnalyticsNotificationsOrchestrator:
     Gère l'ensemble du système de notifications analytics pour Ainflue
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialise l'orchestrateur analytics notifications"""
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
@@ -111,7 +111,7 @@ class AnalyticsNotificationsOrchestrator:
         
         self.logger.info("AnalyticsNotificationsOrchestrator initialisé avec succès")
 
-    def _initialize_analytics_engines(self):
+    def _initialize_analytics_engines(self) -> None:
         """Initialise tous les engines analytics"""
         try:
             # Core Analytics Engines
@@ -545,10 +545,10 @@ class AnalyticsNotificationsOrchestrator:
 
     async def _update_metrics(
         self,
-        context: AnalyticsNotificationContext,
-        delivery_result: Dict[str, Any],
-        processing_time: float
-    ):
+        context -> None: AnalyticsNotificationContext,
+        delivery_result -> None: Dict[str, Any],
+        processing_time -> None: float
+    ) -> None:
         """Met à jour les métriques de performance"""
         self.notification_metrics['total_sent'] += 1
         

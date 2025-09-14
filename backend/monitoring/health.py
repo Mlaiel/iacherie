@@ -29,13 +29,15 @@ except ImportError:
     HAS_PSUTIL = False
     # Create dummy psutil functions for when not available
     class DummyPsutil:
+    """DummyPsutil: class implementation"""
         @staticmethod
-        def cpu_percent(interval=1):
+        def cpu_percent(interval=1) -> None:
             return 45.0
         
         @staticmethod
-        def virtual_memory():
+        def virtual_memory() -> None:
             class Memory:
+    """Memory: class implementation"""
                 percent = 67.0
                 available = 8 * 1024**3  # 8GB
                 total = 16 * 1024**3     # 16GB
@@ -45,16 +47,18 @@ except ImportError:
             return Memory()
         
         @staticmethod
-        def disk_usage(path):
+        def disk_usage(path) -> None:
             class Disk:
+    """Disk: class implementation"""
                 total = 500 * 1024**3    # 500GB
                 used = 250 * 1024**3     # 250GB  
                 free = 250 * 1024**3     # 250GB
             return Disk()
         
         @staticmethod
-        def net_io_counters():
+        def net_io_counters() -> None:
             class Network:
+    """Network: class implementation"""
                 bytes_sent = 1024**6     # 1MB
                 bytes_recv = 2 * 1024**6 # 2MB
                 packets_sent = 1000
@@ -64,8 +68,9 @@ except ImportError:
             return Network()
         
         @staticmethod
-        def disk_io_counters():
+        def disk_io_counters() -> None:
             class DiskIO:
+    """DiskIO: class implementation"""
                 read_bytes = 1024**7     # 10MB
                 write_bytes = 1024**6    # 1MB
                 read_time = 100
@@ -143,9 +148,9 @@ class CircuitBreaker:
     """Circuit breaker implementation for service health"""
     
     def __init__(self, 
-                 failure_threshold: int = 5,
-                 timeout_seconds: int = 60,
-                 success_threshold: int = 3):
+                 failure_threshold -> None: int = 5,
+                 timeout_seconds -> None: int = 60,
+                 success_threshold -> None: int = 3) -> None:
         self.failure_threshold = failure_threshold
         self.timeout_seconds = timeout_seconds
         self.success_threshold = success_threshold
@@ -204,11 +209,11 @@ class CircuitBreaker:
 class HealthCheckRegistry:
     """Registry for health check functions"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.checks: Dict[str, Callable] = {}
         self.circuit_breakers: Dict[str, CircuitBreaker] = {}
     
-    def register(self, name: str, check_func: Callable, use_circuit_breaker: bool = True):
+    def register(self, name -> None: str, check_func -> None: Callable, use_circuit_breaker -> None: bool = True) -> None:
         """Register a health check function"""
         self.checks[name] = check_func
         if use_circuit_breaker:
@@ -283,14 +288,14 @@ class HealthCheckRegistry:
 class SLAMonitor:
     """SLA monitoring and compliance tracking"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.targets: Dict[str, SLATarget] = {}
         self.measurements: Dict[str, deque] = defaultdict(lambda: deque(maxlen=1000))
         
         # Initialize default SLA targets
         self._initialize_default_targets()
     
-    def _initialize_default_targets(self):
+    def _initialize_default_targets(self) -> None:
         """Initialize default SLA targets"""
         default_targets = [
             SLATarget(
@@ -330,7 +335,7 @@ class SLAMonitor:
         for target in default_targets:
             self.targets[target.name] = target
     
-    def record_measurement(self, target_name: str, value: float):
+    def record_measurement(self, target_name -> None: str, value -> None: float) -> None:
         """Record a measurement for SLA tracking"""
         if target_name in self.targets:
             self.measurements[target_name].append({
@@ -418,7 +423,7 @@ class UnifiedHealthManager:
     Unified health monitoring system that consolidates all health checking functionality
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.registry = HealthCheckRegistry()
         self.sla_monitor = SLAMonitor()
         
@@ -434,7 +439,7 @@ class UnifiedHealthManager:
         # Register default health checks
         self._register_default_checks()
     
-    def _register_default_checks(self):
+    def _register_default_checks(self) -> None:
         """Register default health checks"""
         # System health checks
         self.registry.register("system_cpu", self._check_system_cpu)
@@ -452,7 +457,7 @@ class UnifiedHealthManager:
         self.registry.register("external_payment", self._check_payment_service)
         self.registry.register("external_email", self._check_email_service)
     
-    async def start_monitoring(self, interval: int = 30):
+    async def start_monitoring(self, interval -> None: int = 30) -> None:
         """Start continuous health monitoring"""
         self.monitoring_active = True
         self.check_interval = interval
@@ -466,7 +471,7 @@ class UnifiedHealthManager:
                 logger.error(f"Error in health monitoring loop: {e}")
                 await asyncio.sleep(interval)
     
-    async def stop_monitoring(self):
+    async def stop_monitoring(self) -> None:
         """Stop health monitoring"""
         self.monitoring_active = False
         logger.info("Stopped health monitoring")
@@ -501,7 +506,7 @@ class UnifiedHealthManager:
         logger.debug(f"Completed health checks: {len(results)} checks")
         return results
     
-    def _update_service_metrics(self, service_name: str, check_result: HealthCheck):
+    def _update_service_metrics(self, service_name -> None: str, check_result -> None: HealthCheck) -> None:
         """Update service health metrics"""
         if service_name not in self.service_metrics:
             self.service_metrics[service_name] = ServiceHealthMetrics(
@@ -536,7 +541,7 @@ class UnifiedHealthManager:
         
         metrics.status = check_result.status
     
-    def _record_sla_measurements(self, check_result: HealthCheck):
+    def _record_sla_measurements(self, check_result -> None: HealthCheck) -> None:
         """Record measurements for SLA monitoring"""
         # Record response time
         if check_result.response_time_ms > 0:
@@ -935,12 +940,12 @@ health_manager = UnifiedHealthManager()
 
 
 # Convenience functions for external use
-async def start_health_monitoring(interval: int = 30):
+async def start_health_monitoring(interval -> None: int = 30) -> None:
     """Start the global health monitoring"""
     await health_manager.start_monitoring(interval)
 
 
-async def stop_health_monitoring():
+async def stop_health_monitoring() -> None:
     """Stop the global health monitoring"""
     await health_manager.stop_monitoring()
 

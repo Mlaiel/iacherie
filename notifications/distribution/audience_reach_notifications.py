@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 class AudienceReachNotifications:
     """Audience reach milestone notification system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         logger.info("Audience reach notifications initialized")
     
     async def notify_reach_milestone(self, user_id: str, content_id: str, 

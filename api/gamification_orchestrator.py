@@ -34,6 +34,7 @@ router = APIRouter(prefix="/api/v1/gamification", tags=["Gamification Engine"])
 # ============ ENUMS ============
 
 class AchievementType(str, Enum):
+    """AchievementType class implementation"""
     CONTENT_CREATION = "content_creation"
     AUDIENCE_GROWTH = "audience_growth"
     ENGAGEMENT_MILESTONE = "engagement_milestone"
@@ -46,6 +47,7 @@ class AchievementType(str, Enum):
     TECHNICAL_MASTERY = "technical_mastery"
 
 class BadgeRarity(str, Enum):
+    """BadgeRarity class implementation"""
     COMMON = "common"
     RARE = "rare"
     EPIC = "epic"
@@ -53,6 +55,7 @@ class BadgeRarity(str, Enum):
     MYTHICAL = "mythical"
 
 class LeaderboardCategory(str, Enum):
+    """LeaderboardCategory class implementation"""
     OVERALL_PERFORMANCE = "overall_performance"
     CONTENT_QUALITY = "content_quality"
     AUDIENCE_ENGAGEMENT = "audience_engagement"
@@ -63,6 +66,7 @@ class LeaderboardCategory(str, Enum):
     INNOVATION_INDEX = "innovation_index"
 
 class RewardType(str, Enum):
+    """RewardType class implementation"""
     POINTS = "points"
     CRYPTOCURRENCY = "cryptocurrency"
     PLATFORM_CREDITS = "platform_credits"
@@ -73,6 +77,7 @@ class RewardType(str, Enum):
     PLATFORM_BOOST = "platform_boost"
 
 class ChallengeType(str, Enum):
+    """ChallengeType class implementation"""
     DAILY_TASK = "daily_task"
     WEEKLY_GOAL = "weekly_goal"
     MONTHLY_MISSION = "monthly_mission"
@@ -85,6 +90,7 @@ class ChallengeType(str, Enum):
 # ============ PYDANTIC MODELS ============
 
 class PointsTransaction(BaseModel):
+    """PointsTransaction class implementation"""
     user_id: str = Field(..., description="User identifier")
     points_amount: int = Field(..., description="Points amount (positive for earning, negative for spending)")
     transaction_type: str = Field(..., description="Type of transaction")
@@ -93,6 +99,7 @@ class PointsTransaction(BaseModel):
     multiplier: float = Field(default=1.0, description="Points multiplier applied")
 
 class AchievementUnlock(BaseModel):
+    """AchievementUnlock class implementation"""
     user_id: str = Field(..., description="User identifier")
     achievement_id: str = Field(..., description="Achievement identifier")
     achievement_type: AchievementType = Field(..., description="Type of achievement")
@@ -100,12 +107,14 @@ class AchievementUnlock(BaseModel):
     force_unlock: bool = Field(default=False, description="Force unlock achievement")
 
 class BadgeRequest(BaseModel):
+    """BadgeRequest class implementation"""
     user_id: str = Field(..., description="User identifier")
     badge_category: str = Field(..., description="Badge category")
     performance_metrics: Dict[str, Any] = Field(..., description="Performance metrics")
     verification_data: Optional[Dict[str, Any]] = Field(default=None, description="Verification data")
 
 class LeaderboardQuery(BaseModel):
+    """LeaderboardQuery class implementation"""
     category: LeaderboardCategory = Field(..., description="Leaderboard category")
     time_period: str = Field(default="monthly", description="Time period (daily, weekly, monthly, all_time)")
     region: Optional[str] = Field(default=None, description="Geographic region filter")
@@ -114,6 +123,7 @@ class LeaderboardQuery(BaseModel):
     include_stats: bool = Field(default=True, description="Include detailed statistics")
 
 class RewardDistribution(BaseModel):
+    """RewardDistribution class implementation"""
     user_id: str = Field(..., description="User identifier")
     reward_type: RewardType = Field(..., description="Type of reward")
     reward_value: Union[int, Decimal, str] = Field(..., description="Reward value")
@@ -122,6 +132,7 @@ class RewardDistribution(BaseModel):
     metadata: Optional[Dict[str, Any]] = Field(default=None, description="Reward metadata")
 
 class ChallengeCreation(BaseModel):
+    """ChallengeCreation class implementation"""
     challenge_type: ChallengeType = Field(..., description="Type of challenge")
     title: str = Field(..., description="Challenge title")
     description: str = Field(..., description="Challenge description")
@@ -132,6 +143,7 @@ class ChallengeCreation(BaseModel):
     target_audience: Optional[List[str]] = Field(default=None, description="Target audience segments")
 
 class EngagementMetrics(BaseModel):
+    """EngagementMetrics class implementation"""
     user_id: str = Field(..., description="User identifier")
     activity_data: Dict[str, Any] = Field(..., description="User activity data")
     performance_metrics: Dict[str, Any] = Field(..., description="Performance metrics")
@@ -143,7 +155,7 @@ class EngagementMetrics(BaseModel):
 class AdvancedPointsEngine:
     """Dynamic points system with intelligent scoring algorithms"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.base_point_values = {
             "content_upload": 100,
             "content_view": 1,
@@ -283,7 +295,7 @@ class AdvancedPointsEngine:
 class AchievementEngine:
     """Advanced achievement tracking with intelligent progression"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.achievement_definitions = self._load_achievement_definitions()
         self.user_progress = {}
     
@@ -438,7 +450,7 @@ class AchievementEngine:
 class LeaderboardEngine:
     """Dynamic leaderboard system with real-time rankings"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.ranking_algorithms = {}
         self.leaderboard_cache = {}
     
@@ -597,7 +609,7 @@ class LeaderboardEngine:
 class RewardDistributionEngine:
     """Intelligent reward distribution with multiple reward types"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.reward_pools = {}
         self.distribution_algorithms = {}
     
@@ -715,7 +727,7 @@ reward_engine = RewardDistributionEngine()
 # ============ API ENDPOINTS ============
 
 @router.post("/points/calculate")
-async def calculate_points(transaction: PointsTransaction):
+async def calculate_points(transaction -> None: PointsTransaction) -> None:
     """
     Calculate and award points with intelligent algorithms
     
@@ -736,7 +748,7 @@ async def calculate_points(transaction: PointsTransaction):
         raise HTTPException(status_code=500, detail=str(e))
 
 @router.post("/achievements/check-progress")
-async def check_achievement_progress(unlock_request: AchievementUnlock):
+async def check_achievement_progress(unlock_request -> None: AchievementUnlock) -> None:
     """
     Check achievement progress and unlock if requirements are met
     
@@ -757,7 +769,7 @@ async def check_achievement_progress(unlock_request: AchievementUnlock):
         raise HTTPException(status_code=500, detail=str(e))
 
 @router.post("/leaderboards/generate")
-async def generate_leaderboard(query: LeaderboardQuery):
+async def generate_leaderboard(query -> None: LeaderboardQuery) -> None:
     """
     Generate dynamic leaderboards with real-time rankings
     
@@ -778,7 +790,7 @@ async def generate_leaderboard(query: LeaderboardQuery):
         raise HTTPException(status_code=500, detail=str(e))
 
 @router.post("/rewards/distribute")
-async def distribute_reward(reward_request: RewardDistribution):
+async def distribute_reward(reward_request -> None: RewardDistribution) -> None:
     """
     Distribute rewards with intelligent allocation algorithms
     
@@ -799,7 +811,7 @@ async def distribute_reward(reward_request: RewardDistribution):
         raise HTTPException(status_code=500, detail=str(e))
 
 @router.get("/analytics/engagement-insights/{user_id}")
-async def get_engagement_insights(user_id: str, period_days: int = 30):
+async def get_engagement_insights(user_id -> None: str, period_days -> None: int = 30) -> None:
     """Get comprehensive engagement analytics and gamification insights"""
     try:
         insights = {
@@ -858,7 +870,7 @@ async def get_engagement_insights(user_id: str, period_days: int = 30):
         raise HTTPException(status_code=500, detail=str(e))
 
 @router.get("/challenges/active")
-async def get_active_challenges(user_id: Optional[str] = None, challenge_type: Optional[str] = None):
+async def get_active_challenges(user_id -> None: Optional[str] = None, challenge_type -> None: Optional[str] = None) -> None:
     """Get list of active challenges with participation status"""
     try:
         challenges = [

@@ -42,7 +42,7 @@ class ContentItem:
     created_at: datetime = None
     updated_at: datetime = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.metadata is None:
             self.metadata = {}
         if self.tags is None:

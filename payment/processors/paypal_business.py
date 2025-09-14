@@ -97,11 +97,11 @@ class PayPalBusinessProcessor:
     
     def __init__(
         self,
-        client_id: str,
-        client_secret: str,
-        environment: PayPalEnvironment = PayPalEnvironment.SANDBOX,
-        webhook_id: Optional[str] = None
-    ):
+        client_id -> None: str,
+        client_secret -> None: str,
+        environment -> None: PayPalEnvironment = PayPalEnvironment.SANDBOX,
+        webhook_id -> None: Optional[str] = None
+    ) -> None:
         """
 Initialize PayPal Business processor"""
         self.client_id = client_id

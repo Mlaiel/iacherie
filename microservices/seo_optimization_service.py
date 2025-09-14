@@ -144,7 +144,7 @@ class SEORequest(BaseModel):
 class KeywordResearch:
     """Keyword research and analysis engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.keyword_database = self._initialize_keyword_database()
         self.trend_data = self._initialize_trend_data()
         
@@ -309,7 +309,7 @@ class KeywordResearch:
 class ContentOptimizer:
     """Content optimization engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.platform_rules = self._initialize_platform_rules()
         
     def _initialize_platform_rules(self) -> Dict[ContentPlatform, Dict[str, Any]]:
@@ -685,7 +685,7 @@ class CompetitorAnalyzer:
 class SEOOptimizationEngine:
     """Main SEO optimization engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.keyword_researcher = KeywordResearch()
         self.content_optimizer = ContentOptimizer()
         self.competitor_analyzer = CompetitorAnalyzer()

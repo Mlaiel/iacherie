@@ -66,7 +66,7 @@ class TechnicalSEOAudit:
 class TechnicalSEOWorkflow:
     """AI-powered technical SEO workflow"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.metrics_collector = MetricsCollector()
         self.cache_manager = CacheManager()
         self.audit_history: List[TechnicalSEOAudit] = []
@@ -422,7 +422,7 @@ class TechnicalSEOWorkflow:
         
         return recommendations
     
-    async def _cache_audit_result(self, audit: TechnicalSEOAudit):
+    async def _cache_audit_result(self, audit -> None: TechnicalSEOAudit) -> None:
         """Cache audit result for quick access"""
         cache_key = f"technical_audit_{audit.audit_id}"
         await self.cache_manager.set(cache_key, audit, ttl=3600)  # Cache for 1 hour

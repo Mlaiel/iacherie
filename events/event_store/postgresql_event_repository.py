@@ -64,7 +64,7 @@ class PostgreSQLEventRepository(IEventStoreBackend):
     - Business-critical events requiring ACID compliance
     """
     
-    def __init__(self, connection_config: Dict[str, Any]):
+    def __init__(self, connection_config -> None: Dict[str, Any]) -> None:
         if not ASYNCPG_AVAILABLE:
             raise ImportError("asyncpg not available. Install with: pip install asyncpg")
         
@@ -80,7 +80,7 @@ class PostgreSQLEventRepository(IEventStoreBackend):
             'queries_executed': 0
         }
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize PostgreSQL connection pool and schema"""
         try:
             # Create connection pool with optimized settings
@@ -112,7 +112,7 @@ class PostgreSQLEventRepository(IEventStoreBackend):
             logger.error(f"Failed to initialize PostgreSQL repository: {e}")
             raise
     
-    async def _initialize_schema(self):
+    async def _initialize_schema(self) -> None:
         """Initialize optimized database schema for Ainflue events"""
         
         async with self.pool.acquire() as conn:
@@ -197,7 +197,7 @@ class PostgreSQLEventRepository(IEventStoreBackend):
                 )
             """)
     
-    async def _create_business_indexes(self, conn: Connection):
+    async def _create_business_indexes(self, conn -> None: Connection) -> None:
         """Create specialized indexes for Ainflue business query patterns"""
         
         # Content lifecycle events index
@@ -267,7 +267,7 @@ class PostgreSQLEventRepository(IEventStoreBackend):
             WHERE correlation_id IS NOT NULL OR causation_id IS NOT NULL
         """)
     
-    async def _initialize_partitioning(self):
+    async def _initialize_partitioning(self) -> None:
         """Initialize automatic table partitioning"""
         
         async with self.pool.acquire() as conn:
@@ -693,7 +693,7 @@ class PostgreSQLEventRepository(IEventStoreBackend):
             # In production, implement proper streaming with LISTEN/NOTIFY
             await asyncio.sleep(config.max_wait_time)
     
-    async def _handle_notification(self, connection, pid, channel, payload):
+    async def _handle_notification(self, connection, pid, channel, payload) -> None:
         """Handle PostgreSQL notification for real-time streaming"""
         # Implementation for real-time event notifications
         pass
@@ -777,7 +777,7 @@ class PostgreSQLEventRepository(IEventStoreBackend):
             'timestamp': datetime.utcnow().isoformat()
         }
     
-    async def close(self):
+    async def close(self) -> None:
         """Close repository and cleanup resources"""
         if self.pool:
             await self.pool.close()

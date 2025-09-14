@@ -83,7 +83,7 @@ class ModelComparisonAnalyzer:
     - Performance regression detection
     """
     
-    def __init__(self, comparison_cache_dir: str = "comparison_cache/"):
+    def __init__(self, comparison_cache_dir -> None: str = "comparison_cache/") -> None:
         self.logger = logging.getLogger(__name__)
         self.comparison_cache_dir = Path(comparison_cache_dir)
         self.comparison_cache_dir.mkdir(exist_ok=True, parents=True)
@@ -576,7 +576,7 @@ class ModelComparisonAnalyzer:
         }
 
 # Example usage and testing
-async def main():
+async def main() -> None:
     """Example usage of ModelComparisonAnalyzer."""
     analyzer = ModelComparisonAnalyzer()
     

@@ -142,7 +142,7 @@ class InternationalCopyrightManager:
     jurisdictions with treaty compliance and automated registration.
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """
 Initialize international copyright manager."""
         self.config = config
@@ -168,7 +168,7 @@ Initialize international copyright manager."""
         
         self.logger.info("International Copyright Manager initialized successfully")
 
-    def _load_territorial_data(self):
+    def _load_territorial_data(self) -> None:
         """Load territorial copyright data for all countries."""
         self.territorial_rights = {}
         
@@ -230,7 +230,7 @@ Initialize international copyright manager."""
             territory = TerritorialRights(**territory_data)
             self.territorial_rights[territory.territory_id] = territory
 
-    def _load_treaty_information(self):
+    def _load_treaty_information(self) -> None:
         """
 Load international treaty information."""
         self.treaty_database = {
@@ -262,7 +262,7 @@ Load international treaty information."""
             }
         }
 
-    def _load_collective_societies(self):
+    def _load_collective_societies(self) -> None:
         """
 Load collective management organizations data."""
         self.collective_societies = {
@@ -289,7 +289,7 @@ Load collective management organizations data."""
             }
         }
 
-    def _initialize_registration_apis(self):
+    def _initialize_registration_apis(self) -> None:
         """
 Initialize API connections for copyright registration services."""
         # Note: In production, these would be real API connections
@@ -756,7 +756,7 @@ Generate compliance recommendations."""
         
         return recommendations
 
-    def _update_copyright_metrics(self, registration_results: Dict[str, Any]):
+    def _update_copyright_metrics(self, registration_results -> None: Dict[str, Any]) -> None:
         """Update copyright registration metrics."""
         successful_registrations = sum(
             1 for result in registration_results.values()

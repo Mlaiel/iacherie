@@ -94,7 +94,7 @@ class GDPRComplianceManager:
     """
 Enterprise GDPR compliance manager with automation"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logger
         self.encryption_enabled = settings.ENCRYPTION_ENABLED
         self.data_retention_days = settings.GDPR_DATA_RETENTION_DAYS

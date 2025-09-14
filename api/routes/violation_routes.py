@@ -1,4 +1,6 @@
 """
+import asyncio
+
 Violation Detection Routes
 """
 
@@ -8,7 +10,7 @@ from typing import List, Dict, Any
 router = APIRouter()
 
 @router.get("/")
-async def get_violations():
+async def get_violations() -> None:
     """Get all detected violations"""
     violations = [
         {
@@ -35,7 +37,7 @@ async def get_violations():
     return {"violations": violations, "total": len(violations)}
 
 @router.get("/{violation_id}")
-async def get_violation_details(violation_id: str):
+async def get_violation_details(violation_id -> None: str) -> None:
     """Get violation details"""
     return {
         "id": violation_id,

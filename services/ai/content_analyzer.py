@@ -16,10 +16,10 @@ logger = logging.getLogger(__name__)
 class ContentAnalyzer:
     """AI-powered content analyzer"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.initialized = False
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize the content analyzer"""
         if not self.initialized:
             # Initialize AI models here

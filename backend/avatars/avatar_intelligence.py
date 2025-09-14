@@ -132,7 +132,7 @@ class InteractionMemory:
 class EmotionalIntelligence:
     """Intelligence émotionnelle adaptative"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
         self.emotional_history: List[EmotionalState] = []
         self.emotion_patterns: Dict[str, List[EmotionalState]] = {}
@@ -238,13 +238,13 @@ class EmotionalIntelligence:
 class BehaviorEngine:
     """Moteur comportements dynamiques"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
         self.behavior_patterns: Dict[str, BehaviorPattern] = {}
         self.active_behaviors: List[str] = []
         self._initialize_default_behaviors()
     
-    def _initialize_default_behaviors(self):
+    def _initialize_default_behaviors(self) -> None:
         """Initialisation des comportements par défaut"""
         default_behaviors = [
             BehaviorPattern(
@@ -367,7 +367,7 @@ class BehaviorEngine:
 class InteractionManager:
     """Gestion interactions utilisateur"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
         self.interaction_history: List[InteractionMemory] = []
         self.user_profiles: Dict[str, Dict[str, Any]] = {}
@@ -493,7 +493,7 @@ class InteractionManager:
 class AvatarPersonality:
     """Personnalité et comportements IA"""
     
-    def __init__(self, personality_profile: Optional[PersonalityProfile] = None):
+    def __init__(self, personality_profile -> None: Optional[PersonalityProfile] = None) -> None:
         self.logger = logging.getLogger(__name__)
         self.personality = personality_profile or self._create_default_personality()
         self.emotional_intelligence = EmotionalIntelligence()

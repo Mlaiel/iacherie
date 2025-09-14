@@ -100,7 +100,7 @@ class ModelWeight:
 class PredictionAggregator:
     """Enterprise Prediction Aggregation System"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         
         # Model management
@@ -799,7 +799,7 @@ class PredictionAggregator:
         else:
             return ModelPerformance.DISABLED
     
-    async def _update_metrics(self, ensemble_prediction: EnsemblePrediction):
+    async def _update_metrics(self, ensemble_prediction -> None: EnsemblePrediction) -> None:
         """Update aggregation metrics"""
         try:
             self.aggregation_metrics['total_predictions'] += 1
@@ -838,7 +838,7 @@ class PredictionAggregator:
 prediction_aggregator = PredictionAggregator()
 
 
-async def main():
+async def main() -> None:
     """Test the Prediction Aggregator"""
     aggregator = PredictionAggregator()
     

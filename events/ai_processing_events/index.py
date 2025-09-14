@@ -1,5 +1,7 @@
 """AI Processing Events Module Index
 
+import asyncio
+
 Main entry point for the AI Processing Events module providing easy access
 to all event handlers and processing pipelines.
 
@@ -47,7 +49,7 @@ class AIProcessingEventsManager:
     including handler initialization, pipeline execution, and system monitoring.
     """
     
-    def __init__(self, ai_engine: Any):
+    def __init__(self, ai_engine -> None: Any) -> None:
         """
 Initialize the events manager with AI engine"""
         self.ai_engine = ai_engine
@@ -69,7 +71,7 @@ Initialize the events manager with AI engine"""
         
         logger.info("AI Processing Events Manager initialized successfully")
     
-    def _initialize_handlers(self):
+    def _initialize_handlers(self) -> None:
         """Initialize all event handlers"""
         try:
             self.handlers = {
@@ -86,7 +88,7 @@ Initialize the events manager with AI engine"""
             logger.error(f"Failed to initialize handlers: {e}")
             raise
     
-    def _initialize_pipeline(self):
+    def _initialize_pipeline(self) -> None:
         """Initialize the processing pipeline"""
         try:
             self.pipeline = create_event_processing_pipeline(self.ai_engine)
@@ -192,7 +194,7 @@ Initialize the events manager with AI engine"""
             stage_configurations=options.get('stage_configs', {})
         )
     
-    def _update_processing_stats(self, success: bool, processing_time: float):
+    def _update_processing_stats(self, success -> None: bool, processing_time -> None: float) -> None:
         """Update processing statistics"""
         self.processing_stats['total_events_processed'] += 1
         
@@ -310,7 +312,7 @@ Get detailed statistics from all handlers"""
         
         return stats
     
-    async def cleanup(self):
+    async def cleanup(self) -> None:
         """
 Cleanup all handlers and resources"""
         logger.info("Starting cleanup of AI Processing Events Manager")

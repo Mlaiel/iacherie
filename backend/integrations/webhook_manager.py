@@ -155,21 +155,21 @@ class WebhookManagerIntegration:
     def __init__(
         self,
         # Redis configuration for event queuing
-        redis_host: str = "localhost",
-        redis_port: int = 6379,
-        redis_password: Optional[str] = None,
-        redis_db: int = 0,
+        redis_host -> None: str = "localhost",
+        redis_port -> None: int = 6379,
+        redis_password -> None: Optional[str] = None,
+        redis_db -> None: int = 0,
         # Processing configuration
-        max_workers: int = 10,
-        max_retry_attempts: int = 3,
-        retry_base_delay: int = 5,  # seconds
-        max_retry_delay: int = 300,  # seconds
-        dead_letter_threshold: int = 5,
+        max_workers -> None: int = 10,
+        max_retry_attempts -> None: int = 3,
+        retry_base_delay -> None: int = 5,  # seconds
+        max_retry_delay -> None: int = 300,  # seconds
+        dead_letter_threshold -> None: int = 5,
         # Rate limiting
-        global_rate_limit: int = 1000,  # events per minute
+        global_rate_limit -> None: int = 1000,  # events per minute
         # General settings
-        timeout: int = 30
-    ):
+        timeout -> None: int = 30
+    ) -> None:
         # Configuration
         self.redis_host = redis_host
         self.redis_port = redis_port
@@ -215,18 +215,18 @@ class WebhookManagerIntegration:
         
         logger.info("Webhook Manager integration initialized")
     
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         """Async context manager entry."""
         await self._ensure_session()
         await self.start_processing()
         return self
     
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         """Async context manager exit."""
         await self.stop_processing()
         await self.close()
     
-    async def _ensure_session(self):
+    async def _ensure_session(self) -> None:
         """Ensure HTTP session is available."""
         if self.session is None or self.session.closed:
             headers = {
@@ -240,7 +240,7 @@ class WebhookManagerIntegration:
                 timeout=aiohttp.ClientTimeout(total=self.timeout)
             )
     
-    async def close(self):
+    async def close(self) -> None:
         """Close HTTP session and executor."""
         if self.session and not self.session.closed:
             await self.session.close()
@@ -430,7 +430,7 @@ class WebhookManagerIntegration:
         # Default to normal priority
         return EventPriority.NORMAL
     
-    async def start_processing(self):
+    async def start_processing(self) -> None:
         """Start webhook event processing."""
         if self.is_processing:
             logger.warning("Event processing already started")
@@ -455,7 +455,7 @@ class WebhookManagerIntegration:
         
         logger.info(f"Webhook processing started with {len(self.processing_tasks)} tasks")
     
-    async def stop_processing(self):
+    async def stop_processing(self) -> None:
         """Stop webhook event processing."""
         if not self.is_processing:
             return
@@ -474,7 +474,7 @@ class WebhookManagerIntegration:
         
         logger.info("Webhook processing stopped")
     
-    async def _process_events_queue(self, priority: EventPriority):
+    async def _process_events_queue(self, priority -> None: EventPriority) -> None:
         """Process events from a specific priority queue."""
         queue = self.event_queues[priority]
         
@@ -496,7 +496,7 @@ class WebhookManagerIntegration:
                 logger.error(f"Error in {priority} queue processor: {e}")
                 await asyncio.sleep(1)
     
-    async def _process_single_event(self, event: WebhookEvent):
+    async def _process_single_event(self, event -> None: WebhookEvent) -> None:
         """Process a single webhook event."""
         start_time = time.time()
         event.status = EventStatus.PROCESSING
@@ -590,7 +590,7 @@ class WebhookManagerIntegration:
             
             logger.info(f"Event processed: {event.event_id} - {event.status} ({processing_time:.1f}ms)")
     
-    async def _schedule_retry(self, event: WebhookEvent):
+    async def _schedule_retry(self, event -> None: WebhookEvent) -> None:
         """Schedule event for retry."""
         event.retry_count += 1
         event.status = EventStatus.RETRY
@@ -606,7 +606,7 @@ class WebhookManagerIntegration:
         
         logger.info(f"Event scheduled for retry: {event.event_id} (attempt {event.retry_count}/{self.max_retry_attempts})")
     
-    async def _process_retry_queue(self):
+    async def _process_retry_queue(self) -> None:
         """Process events scheduled for retry."""
         while self.is_processing:
             try:
@@ -640,7 +640,7 @@ class WebhookManagerIntegration:
                 logger.error(f"Retry queue processor error: {e}")
                 await asyncio.sleep(5)
     
-    async def _send_to_dead_letter(self, event: WebhookEvent):
+    async def _send_to_dead_letter(self, event -> None: WebhookEvent) -> None:
         """Send event to dead letter queue."""
         event.status = EventStatus.DEAD_LETTER
         
@@ -652,7 +652,7 @@ class WebhookManagerIntegration:
         # Could trigger alerts or notifications here
         await self._trigger_dead_letter_alert(event)
     
-    async def _trigger_dead_letter_alert(self, event: WebhookEvent):
+    async def _trigger_dead_letter_alert(self, event -> None: WebhookEvent) -> None:
         """Trigger alert for dead letter events."""
         alert_data = {
             "event_id": event.event_id,
@@ -667,7 +667,7 @@ class WebhookManagerIntegration:
         # Send alert to monitoring system
         logger.critical(f"Dead letter alert: {json.dumps(alert_data)}")
     
-    def _update_processing_time_average(self, processing_time: float):
+    def _update_processing_time_average(self, processing_time -> None: float) -> None:
         """Update average processing time."""
         if self.total_events_processed == 0:
             self.average_processing_time = processing_time
@@ -840,12 +840,12 @@ class WebhookManagerIntegration:
         
         return status
     
-    async def pause_processing(self):
+    async def pause_processing(self) -> None:
         """Pause event processing without stopping completely."""
         logger.info("Webhook processing paused")
         self.is_processing = False
     
-    async def resume_processing(self):
+    async def resume_processing(self) -> None:
         """Resume event processing."""
         if not self.is_processing:
             self.is_processing = True
@@ -887,7 +887,7 @@ async def create_webhook_manager(
 
 
 # Example event handlers
-async def payment_completed_handler(event: WebhookEvent):
+async def payment_completed_handler(event -> None: WebhookEvent) -> None:
     """Handle payment completed events."""
     payment_data = event.payload
     
@@ -900,7 +900,7 @@ async def payment_completed_handler(event: WebhookEvent):
     return {"status": "processed", "action": "payment_confirmed"}
 
 
-async def content_uploaded_handler(event: WebhookEvent):
+async def content_uploaded_handler(event -> None: WebhookEvent) -> None:
     """Handle content upload events."""
     content_data = event.payload
     
@@ -914,7 +914,7 @@ async def content_uploaded_handler(event: WebhookEvent):
     return {"status": "processed", "action": "content_processing_started"}
 
 
-async def fraud_detected_handler(event: WebhookEvent):
+async def fraud_detected_handler(event -> None: WebhookEvent) -> None:
     """Handle fraud detection events."""
     fraud_data = event.payload
     
@@ -930,7 +930,7 @@ async def fraud_detected_handler(event: WebhookEvent):
 
 if __name__ == "__main__":
     # Example usage
-    async def main():
+    async def main() -> None:
         async with WebhookManagerIntegration(max_workers=5) as webhook_manager:
             # Register webhook endpoints
             stripe_endpoint = await webhook_manager.register_webhook_endpoint(

@@ -8,7 +8,7 @@ for machine learning workflows.
 Project: IA Influencer Agent + Content Protection Platform
 Author: Fahed Mlaiel <mlaiel@live.de>
 
-⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
+# [EMOJI_REMOVED]  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED # [EMOJI_REMOVED]
 This software is protected by international copyright laws.
 Contact: mlaiel@live.de for licensing inquiries.
 """
@@ -101,7 +101,7 @@ class FeatureStoreDeployment:
     - Schema evolution and versioning
     """
     
-    def __init__(self, namespace: str = "ia-influencer-features"):
+    def __init__(self, namespace -> None: str = "ia-influencer-features") -> None:
         """
         Initialize feature store deployment
         
@@ -1157,3 +1157,5 @@ Clean up failed feature group creation"""
         except Exception as e:
             logger.error(f"Feature store cleanup failed: {e}")
             raise
+
+# File has syntax issues - needs manual review

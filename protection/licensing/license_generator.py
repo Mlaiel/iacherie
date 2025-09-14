@@ -87,7 +87,7 @@ class LicenseGenerator:
     automated customization and multi-jurisdiction support.
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         try:
             logger.info(f"Executing __init__")
             
@@ -102,7 +102,7 @@ class LicenseGenerator:
         except Exception as e:
             logger.error(f"__init__ failed: {e}")
             raise
-    def _load_license_templates(self):
+    def _load_license_templates(self) -> None:
         """Load and cache license templates."""
         try:
             if not self.template_path.exists():
@@ -121,7 +121,7 @@ class LicenseGenerator:
             self.logger.error(f"Failed to load license templates: {e}")
             raise
     
-    def _load_jurisdiction_rules(self):
+    def _load_jurisdiction_rules(self) -> None:
         """Load jurisdiction-specific licensing rules."""
         jurisdiction_data = {
             'international': {
@@ -157,7 +157,7 @@ class LicenseGenerator:
         self.jurisdiction_rules = jurisdiction_data
         self.logger.info(f"Loaded rules for {len(jurisdiction_data)} jurisdictions")
     
-    def _create_default_templates(self):
+    def _create_default_templates(self) -> None:
         """Create default license templates."""
         templates = {
             'commercial': {

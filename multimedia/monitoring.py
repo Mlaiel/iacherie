@@ -1,4 +1,6 @@
 """Monitoring Module
+import asyncio
+
 Professional monitoring functionality for multimedia processing.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -25,14 +27,14 @@ class MonitoringResult:
     data: Dict[str, Any] = None
     error_message: Optional[str] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.data is None:
             self.data = {}
 
 class MonitoringManager:
     """Main monitoring manager class"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logger
         self.config = {}
     
@@ -63,7 +65,7 @@ class ContentMonitor(MonitoringManager):
 class YouTubeCrawler:
     """YouTube content crawler"""
     
-    def __init__(self, api_key: str):
+    def __init__(self, api_key -> None: str) -> None:
         self.api_key = api_key
     
     async def crawl_videos(self, query: str) -> List[Dict[str, Any]]:
@@ -73,7 +75,7 @@ class YouTubeCrawler:
 class InstagramCrawler:
     """Instagram content crawler"""
     
-    def __init__(self, access_token: str):
+    def __init__(self, access_token -> None: str) -> None:
         self.access_token = access_token
     
     async def crawl_posts(self, hashtag: str) -> List[Dict[str, Any]]:
@@ -83,7 +85,7 @@ class InstagramCrawler:
 class TikTokCrawler:
     """TikTok content crawler"""
     
-    def __init__(self, api_key: str):
+    def __init__(self, api_key -> None: str) -> None:
         self.api_key = api_key
     
     async def crawl_videos(self, hashtag: str) -> List[Dict[str, Any]]:
@@ -91,6 +93,7 @@ class TikTokCrawler:
         return [{"id": "789", "description": "Sample TikTok", "views": 5000}]
 
 class ViolationType:
+    """ViolationType: class implementation"""
     COPYRIGHT = "copyright"
     TRADEMARK = "trademark"
     CONTENT_POLICY = "content_policy"
@@ -102,7 +105,7 @@ class MonitoringConfig:
     check_interval: int = 3600  # seconds
     enable_alerts: bool = True
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.platforms is None:
             self.platforms = ["youtube", "instagram", "tiktok"]
 
@@ -115,7 +118,7 @@ class ViolationAlert:
     severity: str = "medium"
     timestamp: datetime = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.timestamp is None:
             self.timestamp = datetime.now()
 
@@ -128,6 +131,6 @@ class SearchResult:
     url: str = ""
     metadata: Dict[str, Any] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.metadata is None:
             self.metadata = {}

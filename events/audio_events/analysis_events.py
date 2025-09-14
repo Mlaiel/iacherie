@@ -73,7 +73,7 @@ class AudioAnalysisStartedEvent(BaseEvent):
     estimated_duration: float
     analysis_metadata: Dict[str, Any] = field(default_factory=dict)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.analysis.started",
             data={
@@ -102,7 +102,7 @@ class AudioAnalysisProgressEvent(BaseEvent):
     analyses_remaining: List[str]
     estimated_time_remaining: float
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.analysis.progress",
             data={
@@ -132,7 +132,7 @@ class AudioAnalysisCompletedEvent(BaseEvent):
     insights_generated: List[str]
     analysis_metadata: Dict[str, Any] = field(default_factory=dict)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.analysis.completed",
             data={
@@ -162,7 +162,7 @@ class AudioAnalysisFailedEvent(BaseEvent):
     partial_results: Dict[str, Any] = field(default_factory=dict)
     retry_suggested: bool = True
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.analysis.failed",
             data={
@@ -193,7 +193,7 @@ class AudioGenreDetectionEvent(BaseEvent):
     genre_characteristics: Dict[str, Any]
     detection_metadata: Dict[str, Any] = field(default_factory=dict)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.analysis.genre_detection",
             data={
@@ -224,7 +224,7 @@ class AudioMoodAnalysisEvent(BaseEvent):
     mood_tags: List[str]
     analysis_metadata: Dict[str, Any] = field(default_factory=dict)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.analysis.mood_analysis",
             data={
@@ -255,7 +255,7 @@ class AudioBPMDetectionEvent(BaseEvent):
     time_signature: Optional[str] = None
     detection_metadata: Dict[str, Any] = field(default_factory=dict)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.analysis.bpm_detection",
             data={
@@ -286,7 +286,7 @@ class AudioKeyDetectionEvent(BaseEvent):
     key_changes: List[Dict[str, Any]]
     detection_metadata: Dict[str, Any] = field(default_factory=dict)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.analysis.key_detection",
             data={
@@ -318,7 +318,7 @@ class AudioSentimentAnalysisEvent(BaseEvent):
     sentiment_timeline: List[Dict[str, Any]]
     analysis_metadata: Dict[str, Any] = field(default_factory=dict)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.analysis.sentiment_analysis",
             data={
@@ -351,7 +351,7 @@ class AudioEmotionDetectionEvent(BaseEvent):
     emotion_timeline: List[Dict[str, Any]]
     detection_metadata: Dict[str, Any] = field(default_factory=dict)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.analysis.emotion_detection",
             data={
@@ -383,7 +383,7 @@ class AudioInstrumentRecognitionEvent(BaseEvent):
     temporal_presence: Dict[str, List[Dict[str, Any]]]
     recognition_metadata: Dict[str, Any] = field(default_factory=dict)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.analysis.instrument_recognition",
             data={
@@ -415,7 +415,7 @@ class AudioLoudnessAnalysisEvent(BaseEvent):
     compliance_standards: Dict[str, bool]
     analysis_metadata: Dict[str, Any] = field(default_factory=dict)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.analysis.loudness_analysis",
             data={
@@ -449,7 +449,7 @@ class AudioSpectralAnalysisEvent(BaseEvent):
     noise_characteristics: Dict[str, Any]
     analysis_metadata: Dict[str, Any] = field(default_factory=dict)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.analysis.spectral_analysis",
             data={

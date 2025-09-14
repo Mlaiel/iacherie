@@ -145,7 +145,7 @@ class EngagementMetrics:
 class BasePlatformCrawler(ABC):
     """Abstract base class for platform crawlers"""
     
-    def __init__(self, config: CrawlerConfiguration):
+    def __init__(self, config -> None: CrawlerConfiguration) -> None:
         self.config = config
         self.platform = config.platform
         self.session_manager = None
@@ -214,7 +214,7 @@ class BasePlatformCrawler(ABC):
 class YouTubeCrawler(BasePlatformCrawler):
     """YouTube Data API v3 + Selenium hybrid crawler"""
     
-    def __init__(self, config: CrawlerConfiguration):
+    def __init__(self, config -> None: CrawlerConfiguration) -> None:
         super().__init__(config)
         self.api_key = config.api_credentials.get('api_key')
         self.base_url = "https://www.googleapis.com/youtube/v3"
@@ -386,7 +386,7 @@ class YouTubeCrawler(BasePlatformCrawler):
 class InstagramCrawler(BasePlatformCrawler):
     """Instagram Graph API + web scraping crawler"""
     
-    def __init__(self, config: CrawlerConfiguration):
+    def __init__(self, config -> None: CrawlerConfiguration) -> None:
         super().__init__(config)
         self.access_token = config.api_credentials.get('access_token')
         self.base_url = "https://graph.instagram.com"
@@ -528,7 +528,7 @@ class InstagramCrawler(BasePlatformCrawler):
 class TwitterCrawler(BasePlatformCrawler):
     """Twitter API v2 + real-time streaming crawler"""
     
-    def __init__(self, config: CrawlerConfiguration):
+    def __init__(self, config -> None: CrawlerConfiguration) -> None:
         super().__init__(config)
         self.bearer_token = config.api_credentials.get('bearer_token')
         self.base_url = "https://api.twitter.com/2"
@@ -683,7 +683,7 @@ class TwitterCrawler(BasePlatformCrawler):
 class LinkedInCrawler(BasePlatformCrawler):
     """LinkedIn API + professional networks crawler"""
     
-    def __init__(self, config: CrawlerConfiguration):
+    def __init__(self, config -> None: CrawlerConfiguration) -> None:
         super().__init__(config)
         self.access_token = config.api_credentials.get('access_token')
         self.base_url = "https://api.linkedin.com/v2"
@@ -818,7 +818,7 @@ class LinkedInCrawler(BasePlatformCrawler):
 class SocialMediaCrawlerManager:
     """Unified manager for all social media platform crawlers"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.crawlers: Dict[SocialPlatform, BasePlatformCrawler] = {}
         self.configurations: Dict[SocialPlatform, CrawlerConfiguration] = {}
         self.engagement_tracker = EngagementMetricsTracker()
@@ -1143,7 +1143,7 @@ class SocialMediaCrawlerManager:
 class EngagementMetricsTracker:
     """Track and analyze engagement metrics across platforms"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.metrics_history: Dict[str, List[EngagementMetrics]] = {}
         self.trending_scores: Dict[str, float] = {}
         
@@ -1196,7 +1196,7 @@ class EngagementMetricsTracker:
 class TrendingContentDetector:
     """Detect and analyze trending content patterns"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.trending_patterns: Dict[str, Any] = {}
         self.viral_thresholds: Dict[SocialPlatform, Dict[str, int]] = {}
         
@@ -1337,7 +1337,7 @@ __all__ = [
 
 if __name__ == "__main__":
     # Example usage
-    async def main():
+    async def main() -> None:
         # Create and initialize social media manager
         manager = await create_social_media_manager()
         

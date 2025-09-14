@@ -1,4 +1,6 @@
 """
+import logging
+
 Comprehensive Integration Tests - Distribution Module
 ===================================================
 
@@ -28,12 +30,12 @@ class TestConfig:
     stress_test_enabled: bool = False
 
 @pytest.fixture
-def test_config():
+def test_config() -> None:
     """Test configuration fixture"""
     return TestConfig()
 
 @pytest.fixture
-async def mock_platform_apis():
+async def mock_platform_apis() -> None:
     """Mock platform API responses"""
     with patch('aiohttp.ClientSession') as mock_session:
         mock_response = AsyncMock()
@@ -50,7 +52,7 @@ async def mock_platform_apis():
         yield mock_session
 
 @pytest.fixture
-async def mock_redis():
+async def mock_redis() -> None:
     """Mock Redis client"""
     with patch('aioredis.from_url') as mock_redis:
         mock_client = AsyncMock()
@@ -65,7 +67,7 @@ class TestViralOptimizationIntegration:
     """Integration tests for viral optimization module"""
     
     @pytest.mark.asyncio
-    async def test_viral_prediction_pipeline(self, test_config, mock_platform_apis):
+    async def test_viral_prediction_pipeline(self, test_config, mock_platform_apis) -> None:
         """Test complete viral prediction pipeline"""
         try:
             # Import viral optimization module
@@ -113,7 +115,7 @@ class TestViralOptimizationIntegration:
             pytest.skip("Viral optimization module not available")
     
     @pytest.mark.asyncio
-    async def test_trend_analysis_integration(self, test_config):
+    async def test_trend_analysis_integration(self, test_config) -> None:
         """Test trend analysis integration"""
         try:
             from distribution.viral_optimization import trend_analyzer
@@ -145,7 +147,7 @@ class TestAudienceIntelligenceIntegration:
     """Integration tests for audience intelligence module"""
     
     @pytest.mark.asyncio
-    async def test_audience_profiling_pipeline(self, test_config, mock_redis):
+    async def test_audience_profiling_pipeline(self, test_config, mock_redis) -> None:
         """Test complete audience profiling pipeline"""
         try:
             from distribution.audience_intelligence import audience_profiler
@@ -196,7 +198,7 @@ class TestContentAmplificationIntegration:
     """Integration tests for content amplification module"""
     
     @pytest.mark.asyncio
-    async def test_amplification_strategy_pipeline(self, test_config, mock_platform_apis):
+    async def test_amplification_strategy_pipeline(self, test_config, mock_platform_apis) -> None:
         """Test complete amplification strategy pipeline"""
         try:
             from distribution.content_amplification import amplification_engine
@@ -243,7 +245,7 @@ class TestPlatformOptimizationIntegration:
     """Integration tests for platform optimization module"""
     
     @pytest.mark.asyncio
-    async def test_multi_platform_optimization(self, test_config, mock_platform_apis):
+    async def test_multi_platform_optimization(self, test_config, mock_platform_apis) -> None:
         """Test multi-platform optimization pipeline"""
         try:
             from distribution.platform_optimization import platform_analyzer
@@ -283,7 +285,7 @@ class TestRealTimeOptimizationIntegration:
     """Integration tests for real-time optimization module"""
     
     @pytest.mark.asyncio
-    async def test_real_time_monitoring_pipeline(self, test_config, mock_redis):
+    async def test_real_time_monitoring_pipeline(self, test_config, mock_redis) -> None:
         """Test real-time monitoring and optimization pipeline"""
         try:
             from distribution.real_time_optimization import live_performance_monitor
@@ -335,7 +337,7 @@ class TestCreatorCollaborationIntegration:
     """Integration tests for creator collaboration module"""
     
     @pytest.mark.asyncio
-    async def test_collaboration_matching_pipeline(self, test_config, mock_redis):
+    async def test_collaboration_matching_pipeline(self, test_config, mock_redis) -> None:
         """Test creator collaboration matching pipeline"""
         try:
             from distribution.creator_collaboration_hub import collaboration_matcher
@@ -401,7 +403,7 @@ class TestCrisisManagementIntegration:
     """Integration tests for crisis management module"""
     
     @pytest.mark.asyncio
-    async def test_crisis_detection_pipeline(self, test_config, mock_platform_apis):
+    async def test_crisis_detection_pipeline(self, test_config, mock_platform_apis) -> None:
         """Test crisis detection and response pipeline"""
         try:
             from distribution.crisis_management import crisis_detector
@@ -465,7 +467,7 @@ class TestSecurityIntegration:
     """Integration tests for security modules"""
     
     @pytest.mark.asyncio
-    async def test_security_pipeline(self, test_config):
+    async def test_security_pipeline(self, test_config) -> None:
         """Test complete security pipeline"""
         try:
             from distribution.security import threat_detector, audit_logger
@@ -527,7 +529,7 @@ class TestPerformanceIntegration:
     """Performance integration tests"""
     
     @pytest.mark.asyncio
-    async def test_performance_monitoring(self, test_config):
+    async def test_performance_monitoring(self, test_config) -> None:
         """Test performance monitoring integration"""
         if not test_config.performance_test_enabled:
             pytest.skip("Performance tests disabled")
@@ -567,7 +569,7 @@ class TestPerformanceIntegration:
             pytest.skip("Performance tracker module not available")
 
 @pytest.mark.asyncio
-async def test_end_to_end_distribution_pipeline(test_config, mock_platform_apis, mock_redis):
+async def test_end_to_end_distribution_pipeline(test_config, mock_platform_apis, mock_redis) -> None:
     """Complete end-to-end distribution pipeline test"""
     
     # Test content creation and distribution
@@ -646,7 +648,7 @@ async def test_end_to_end_distribution_pipeline(test_config, mock_platform_apis,
 class TestDistributionModuleBasics:
     """Basic validation tests for distribution module components"""
     
-    def test_distribution_imports(self):
+    def test_distribution_imports(self) -> None:
         """Test that core distribution modules import successfully"""
         try:
             import distribution
@@ -659,7 +661,7 @@ class TestDistributionModuleBasics:
         except ImportError as e:
             pytest.fail(f"Core distribution imports failed: {e}")
     
-    def test_crisis_management_imports(self):
+    def test_crisis_management_imports(self) -> None:
         """Test crisis management module imports"""
         try:
             from distribution.crisis_management import sentiment_monitor
@@ -669,7 +671,7 @@ class TestDistributionModuleBasics:
         except ImportError as e:
             pytest.fail(f"Crisis management imports failed: {e}")
     
-    def test_real_time_optimization_imports(self):
+    def test_real_time_optimization_imports(self) -> None:
         """Test real-time optimization module imports"""
         try:
             from distribution.real_time_optimization import live_performance_monitor
@@ -677,7 +679,7 @@ class TestDistributionModuleBasics:
         except ImportError as e:
             pytest.fail(f"Real-time optimization imports failed: {e}")
     
-    def test_content_amplification_imports(self):
+    def test_content_amplification_imports(self) -> None:
         """Test content amplification module imports"""
         try:
             from distribution.content_amplification import amplification_engine
@@ -685,7 +687,7 @@ class TestDistributionModuleBasics:
         except ImportError as e:
             pytest.fail(f"Content amplification imports failed: {e}")
 
-    def test_platform_connectors_basic(self):
+    def test_platform_connectors_basic(self) -> None:
         """Test platform connectors basic functionality"""
         try:
             from distribution.platform_connectors import PlatformConnectorManager, SocialPlatform

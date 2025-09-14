@@ -77,7 +77,7 @@ class SecurityAuditLog:
 class EnterpriseMLSecurityScanner:
     """🔒 Scanner de sécurité ML Enterprise"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.vulnerabilities: List[SecurityVulnerability] = []
         self.audit_logs: List[SecurityAuditLog] = []
         self.encryption_key = self._generate_encryption_key()
@@ -380,7 +380,7 @@ class EnterpriseMLSecurityScanner:
         return recommendations[:10]  # Top 10 recommendations
 
 # Utilitaire d'exécution
-async def main():
+async def main() -> None:
     """🚀 Démarrage security scan enterprise"""
     scanner = EnterpriseMLSecurityScanner()
     

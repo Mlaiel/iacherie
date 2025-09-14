@@ -91,7 +91,7 @@ class DataPrivacyMonitor:
     - Automated privacy reporting
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize data privacy monitor.
         
         Args:
@@ -124,7 +124,7 @@ class DataPrivacyMonitor:
         # Initialize monitoring components
         self._initialize_privacy_monitor()
     
-    def _initialize_privacy_monitor(self):
+    def _initialize_privacy_monitor(self) -> None:
         """Initialize privacy monitoring components."""
         self.logger.info("🛡️ Initializing Data Privacy Monitor...")
         
@@ -345,7 +345,7 @@ class DataPrivacyMonitor:
         else:
             return PrivacyRegulation.GDPR  # Default to strictest regulation
     
-    async def _detect_privacy_violations(self, event: PrivacyEvent):
+    async def _detect_privacy_violations(self, event -> None: PrivacyEvent) -> None:
         """Detect potential privacy violations."""
         violations = []
         
@@ -387,7 +387,7 @@ class DataPrivacyMonitor:
         for violation in violations:
             self.logger.warning(f"🚨 Privacy violation detected: {violation.violation_id}")
     
-    async def _send_privacy_alert(self, event: PrivacyEvent):
+    async def _send_privacy_alert(self, event -> None: PrivacyEvent) -> None:
         """Send real-time privacy alert."""
         alert_message = {
             "alert_type": "privacy_risk",
@@ -471,7 +471,7 @@ class DataPrivacyMonitor:
         
         return True
     
-    async def _trigger_data_deletion(self, user_id: str, data_categories: List[DataCategory] = None):
+    async def _trigger_data_deletion(self, user_id -> None: str, data_categories -> None: List[DataCategory] = None) -> None:
         """Trigger data deletion workflows for consent withdrawal."""
         deletion_request = {
             'user_id': user_id,
@@ -681,7 +681,7 @@ class DataPrivacyMonitor:
 class AnonymizationValidator:
     """Validator for data anonymization quality."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
     
     async def validate_k_anonymity(self, dataset: pd.DataFrame, k: int = 5) -> bool:
@@ -723,7 +723,7 @@ class AnonymizationValidator:
 class ConsentManager:
     """Manager for user consent tracking and validation."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
         self.consent_storage = {}
     
@@ -763,7 +763,7 @@ class ConsentManager:
 
 
 # Example usage and testing
-async def main():
+async def main() -> None:
     """Test data privacy monitor functionality."""
     # Initialize monitor
     config = {

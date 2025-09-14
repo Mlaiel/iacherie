@@ -53,7 +53,7 @@ class TopologyConfig:
 class TopologyManager:
     """Enterprise-grade MongoDB topology management system."""
     
-    def __init__(self, connection_string: str):
+    def __init__(self, connection_string -> None: str) -> None:
         """Initialize topology manager."""
         if not MONGODB_AVAILABLE:
             raise ImportError("PyMongo is required for topology management")
@@ -412,10 +412,12 @@ class TopologyManager:
         
         return summary
     
-    def close(self):
+    def close(self) -> None:
         """Close topology manager connections."""
         if self.client:
             self.client.close()
 
 # Export the main class
 __all__ = ['TopologyManager', 'TopologyConfig', 'TopologyType', 'TopologyNode']
+
+# File has syntax issues - needs manual review

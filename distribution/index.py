@@ -1,4 +1,6 @@
 """
+import asyncio
+
 Distribution Service Entry Point - Main Distribution Hub
 ======================================================
 
@@ -41,7 +43,7 @@ distribution_router.include_router(audience_router)
 distribution_router.include_router(platform_optimization_router)
 
 @distribution_router.get("/health")
-async def distribution_health():
+async def distribution_health() -> None:
     """Distribution service main health check"""
     return {
         "status": "healthy",
@@ -59,7 +61,7 @@ async def distribution_health():
     }
 
 @distribution_router.get("/status")
-async def distribution_status():
+async def distribution_status() -> None:
     """Get comprehensive distribution system status"""
     return {
         "distribution_system": "operational",
@@ -69,7 +71,7 @@ async def distribution_status():
     }
 
 @distribution_router.get("/")
-async def distribution_info():
+async def distribution_info() -> None:
     """Distribution system information"""
     return {
         "service": "Ainflue Distribution System",

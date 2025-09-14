@@ -134,7 +134,7 @@ class GatewayConfig:
 class StripeGateway:
     """Stripe payment gateway integration"""
     
-    def __init__(self, config: GatewayConfig):
+    def __init__(self, config -> None: GatewayConfig) -> None:
         self.config = config
         self.api_base = "https://api.stripe.com/v1"
         self.supported_methods = [
@@ -300,7 +300,7 @@ class StripeGateway:
 class PayPalGateway:
     """PayPal payment gateway integration"""
     
-    def __init__(self, config: GatewayConfig):
+    def __init__(self, config -> None: GatewayConfig) -> None:
         self.config = config
         self.api_base = "https://api.paypal.com" if config.environment == "production" else "https://api.sandbox.paypal.com"
         self.supported_methods = [
@@ -379,7 +379,7 @@ class PayPalGateway:
 class WiseGateway:
     """Wise (formerly TransferWise) gateway for international transfers"""
     
-    def __init__(self, config: GatewayConfig):
+    def __init__(self, config -> None: GatewayConfig) -> None:
         self.config = config
         self.api_base = "https://api.wise.com"
         self.supported_methods = [
@@ -466,7 +466,7 @@ class WiseGateway:
 class FraudDetection:
     """Advanced fraud detection system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.risk_rules = {}
         self.blocked_entities = set()
         self.whitelist = set()
@@ -476,7 +476,7 @@ class FraudDetection:
         
         logger.info("Fraud Detection initialized")
 
-    def _initialize_risk_rules(self):
+    def _initialize_risk_rules(self) -> None:
         """Initialize fraud detection rules"""
         self.risk_rules = {
             "velocity_check": {
@@ -710,7 +710,7 @@ class FraudDetection:
 class PaymentGatewayCore:
     """Main Payment Gateway Core System"""
     
-    def __init__(self, level: str = "enterprise"):
+    def __init__(self, level -> None: str = "enterprise") -> None:
         self.version = "2.1.0"
         self.level = level
         self.gateways = {}
@@ -724,7 +724,7 @@ class PaymentGatewayCore:
         
         logger.info("Payment Gateway Core initialized")
 
-    def _initialize_gateways(self):
+    def _initialize_gateways(self) -> None:
         """Initialize payment gateway configurations"""
         # Mock gateway configurations
         gateway_configs = {

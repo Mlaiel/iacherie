@@ -151,7 +151,7 @@ class AdvancedEvidenceCollector:
     legal compliance, and blockchain verification capabilities.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
         self.forensic_analyzer = AdvancedForensicAnalyzer()
         self.blockchain_recorder = BlockchainRecorder()
@@ -176,7 +176,7 @@ class AdvancedEvidenceCollector:
         # Redis for caching
         self.redis_client = None
         
-    async def initialize(self):
+    async def initialize(self) -> None:
         """
 Initialize evidence collection engine"""
         await self.forensic_analyzer.initialize()
@@ -766,7 +766,7 @@ Initialize evidence collection engine"""
             self.logger.error(f"Integrity verification failed: {str(e)}")
             return False
     
-    async def _record_evidence_in_blockchain(self, metadata: EvidenceMetadata):
+    async def _record_evidence_in_blockchain(self, metadata -> None: EvidenceMetadata) -> None:
         """Record evidence existence and hashes in blockchain"""
         try:
             blockchain_data = {
@@ -803,7 +803,7 @@ Initialize evidence collection engine"""
     
     # Background maintenance tasks
     
-    async def _evidence_maintenance_worker(self):
+    async def _evidence_maintenance_worker(self) -> None:
         """Background worker for evidence maintenance"""
         while True:
             try:
@@ -812,7 +812,7 @@ Initialize evidence collection engine"""
             except Exception as e:
                 self.logger.error(f"Evidence maintenance error: {str(e)}")
     
-    async def _integrity_verification_worker(self):
+    async def _integrity_verification_worker(self) -> None:
         """Background worker for periodic integrity verification"""
         while True:
             try:
@@ -821,7 +821,7 @@ Initialize evidence collection engine"""
             except Exception as e:
                 self.logger.error(f"Integrity verification error: {str(e)}")
     
-    async def _retention_policy_worker(self):
+    async def _retention_policy_worker(self) -> None:
         """Background worker for retention policy enforcement"""
         while True:
             try:
@@ -830,7 +830,7 @@ Initialize evidence collection engine"""
             except Exception as e:
                 self.logger.error(f"Retention policy error: {str(e)}")
     
-    async def _perform_maintenance(self):
+    async def _perform_maintenance(self) -> None:
         """Perform regular maintenance tasks"""
         # Cleanup temporary files
         temp_files = list(self.evidence_storage_path.glob("*.tmp"))
@@ -841,7 +841,7 @@ Initialize evidence collection engine"""
         # Update evidence registry
         await self._save_evidence_registry()
     
-    async def _verify_all_evidence_integrity(self):
+    async def _verify_all_evidence_integrity(self) -> None:
         """Verify integrity of all stored evidence"""
         for evidence_id, metadata in self.evidence_registry.items():
             if metadata.file_size_bytes > 0:  # Only verify files that should exist
@@ -853,7 +853,7 @@ Initialize evidence collection engine"""
                     if not integrity_ok:
                         self.logger.warning(f"Integrity verification failed for evidence {evidence_id}")
     
-    async def _enforce_retention_policies(self):
+    async def _enforce_retention_policies(self) -> None:
         """Enforce evidence retention policies"""
         cutoff_date = datetime.now(timezone.utc) - timedelta(days=self.retention_days)
         
@@ -868,7 +868,7 @@ Initialize evidence collection engine"""
         for evidence_id in expired_evidence:
             await self._archive_evidence(evidence_id)
     
-    async def _archive_evidence(self, evidence_id: str):
+    async def _archive_evidence(self, evidence_id -> None: str) -> None:
         """Archive expired evidence"""
         try:
             metadata = self.evidence_registry.get(evidence_id)
@@ -897,7 +897,7 @@ Initialize evidence collection engine"""
         except Exception as e:
             self.logger.error(f"Evidence archival failed for {evidence_id}: {str(e)}")
     
-    async def _load_evidence_registry(self):
+    async def _load_evidence_registry(self) -> None:
         """Load evidence registry from storage"""
         try:
             registry_file = self.evidence_storage_path / "evidence_registry.json"
@@ -913,7 +913,7 @@ Initialize evidence collection engine"""
         except Exception as e:
             self.logger.error(f"Failed to load evidence registry: {str(e)}")
     
-    async def _save_evidence_registry(self):
+    async def _save_evidence_registry(self) -> None:
         """Save evidence registry to storage"""
         try:
             registry_file = self.evidence_storage_path / "evidence_registry.json"

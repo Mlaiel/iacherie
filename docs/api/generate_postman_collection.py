@@ -1,3 +1,8 @@
+"""
+Generate Postman Collection module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Postman Collection Generator for Ainflue API
@@ -19,7 +24,7 @@ from typing import Dict, List, Any, Optional
 class PostmanCollectionGenerator:
     """Generate Postman collections from OpenAPI specifications."""
     
-    def __init__(self, openapi_spec_path: str):
+    def __init__(self, openapi_spec_path -> None: str) -> None:
         """Initialize with OpenAPI specification file."""
         self.openapi_spec_path = openapi_spec_path
         self.spec = self._load_openapi_spec()
@@ -613,7 +618,7 @@ Generated on: {datetime.now().isoformat()}
         return environment
 
 
-def main():
+def main() -> None:
     """Generate Postman collection and environment files."""
     import os
     

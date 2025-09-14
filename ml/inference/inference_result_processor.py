@@ -1,3 +1,8 @@
+"""
+Inference Result Processor module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 🚀 **Inference Result Processor - Enterprise ML Output Optimization**
@@ -91,7 +96,7 @@ class InferenceResultProcessor:
     - Comprehensive error handling and recovery
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.logger = logging.getLogger(__name__)
         
@@ -132,7 +137,7 @@ class InferenceResultProcessor:
         # Initialize default rules
         self._initialize_default_rules()
     
-    def _initialize_default_rules(self):
+    def _initialize_default_rules(self) -> None:
         """Initialize default processing rules"""
         
         # Musician-specific rules
@@ -730,7 +735,7 @@ class InferenceResultProcessor:
     async def _format_xml(self, result: Dict[str, Any], context: ProcessingContext) -> str:
         """Format as XML"""
         # Simple XML formatting
-        def dict_to_xml(data, root_name="result"):
+        def dict_to_xml(data, root_name="result") -> None:
             xml_str = f"<{root_name}>"
             for key, value in data.items():
                 if isinstance(value, dict):
@@ -864,7 +869,7 @@ class InferenceResultProcessor:
         cached_at = datetime.fromisoformat(cached_entry['cached_at'])
         return datetime.utcnow() - cached_at < self.cache_ttl
     
-    def _cleanup_cache(self):
+    def _cleanup_cache(self) -> None:
         """Remove expired cache entries"""
         current_time = datetime.utcnow()
         expired_keys = []
@@ -878,7 +883,7 @@ class InferenceResultProcessor:
             del self.result_cache[key]
 
 # Usage example
-async def main():
+async def main() -> None:
     """Example usage of InferenceResultProcessor"""
     config = {
         'cache_ttl_minutes': 30

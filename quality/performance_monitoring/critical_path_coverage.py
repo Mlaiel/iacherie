@@ -1,3 +1,8 @@
+"""
+Critical Path Coverage module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Critical Path Coverage Analysis Engine for Ainflue Platform
@@ -153,7 +158,7 @@ class CriticalPathCoverageAnalyzer:
     - Statistical analysis of path importance
     """
     
-    def __init__(self, config_path: Optional[str] = None):
+    def __init__(self, config_path -> None: Optional[str] = None) -> None:
         """Initialize critical path coverage analyzer."""
         self.logger = self._setup_logging()
         self.config = self._load_config(config_path)
@@ -799,7 +804,7 @@ class PathDetector:
     and business logic flows.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize path detector."""
         self.logger = logging.getLogger("PathDetector")
         
@@ -1106,7 +1111,7 @@ class PathDetector:
     def _prioritize_paths(self, paths: List[CodePath], config: Dict[str, Any]) -> List[CodePath]:
         """Prioritize detected paths based on importance."""
         # Sort by business criticality and impact
-        def priority_key(path):
+        def priority_key(path) -> None:
             criticality_weight = {
                 BusinessCriticality.CRITICAL: 5,
                 BusinessCriticality.HIGH: 4,
@@ -1133,7 +1138,7 @@ class CoverageMapper:
     and scalable data processing.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize coverage mapper."""
         self.logger = logging.getLogger("CoverageMapper")
         
@@ -1194,7 +1199,7 @@ class MLImpactAssessor:
     and intelligent optimization recommendations.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize ML impact assessor."""
         self.logger = logging.getLogger("MLImpactAssessor")
         self.scaler = StandardScaler()
@@ -1335,7 +1340,7 @@ class BusinessImpactAnalyzer:
     and provides risk assessments.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize business impact analyzer."""
         self.logger = logging.getLogger("BusinessImpactAnalyzer")
         
@@ -1439,7 +1444,7 @@ if __name__ == "__main__":
     # Example usage
     import asyncio
     
-    async def main():
+    async def main() -> None:
         """Example critical path coverage analysis execution."""
         
         # Initialize analyzer

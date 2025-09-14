@@ -1,4 +1,6 @@
 """
+import asyncio
+
 Service Mesh Manager
 Enterprise service mesh management for Ainflue infrastructure
 
@@ -23,7 +25,7 @@ class ServiceMeshManager:
     - Creator workflow service orchestration
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize service mesh manager"""
         self.active_meshes = {}
         self.service_registry = {}

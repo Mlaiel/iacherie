@@ -16,7 +16,8 @@ try:
 except ImportError:
     # Fallback for environments without pydantic_settings
     class BaseSettings:
-        def __init__(self, **kwargs):
+    """BaseSettings: class implementation"""
+        def __init__(self, **kwargs) -> None:
             for key, value in kwargs.items():
                 setattr(self, key, value)
 
@@ -108,7 +109,7 @@ class CollaborationWorkflow:
 class CollaborationBusinessSettings:
     """Collaboration business configuration settings"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         # Collaboration Templates
         self.collaboration_templates = {
             "music_collaboration": CollaborationTemplate(

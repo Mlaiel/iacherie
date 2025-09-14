@@ -143,7 +143,7 @@ Real-time alert infrastructure specification"""
 class EmailAlertChannel:
     """Email alert delivery channel"""
     
-    def __init__(self, config: Dict[str, str]):
+    def __init__(self, config -> None: Dict[str, str]) -> None:
         try:
             logger.info(f"Executing __init__")
             
@@ -253,7 +253,7 @@ Format metadata as HTML"""
 class WebhookAlertChannel:
     """Webhook alert delivery channel"""
     
-    def __init__(self, config: Dict[str, str]):
+    def __init__(self, config -> None: Dict[str, str]) -> None:
         self.webhook_urls = config.get("webhook_urls", [])
         self.auth_headers = config.get("auth_headers", {})
         self.timeout = int(config.get("timeout", "30"))
@@ -310,12 +310,12 @@ class WebhookAlertChannel:
 class WebSocketAlertChannel:
     """WebSocket alert delivery channel"""
     
-    def __init__(self, port: int = 8765):
+    def __init__(self, port -> None: int = 8765) -> None:
         self.port = port
         self.clients = set()
         self.server = None
         
-    async def start_server(self):
+    async def start_server(self) -> None:
         """
 Start WebSocket server"""
         self.server = await websockets.serve(
@@ -323,7 +323,7 @@ Start WebSocket server"""
         )
         logger.info(f"WebSocket alert server started on port {self.port}")
         
-    async def handle_client(self, websocket, path):
+    async def handle_client(self, websocket, path) -> None:
         """Handle WebSocket client connection"""
         self.clients.add(websocket)
         try:
@@ -379,7 +379,7 @@ Send alert via WebSocket to all connected clients"""
 class SlackAlertChannel:
     """Slack alert delivery channel"""
     
-    def __init__(self, config: Dict[str, str]):
+    def __init__(self, config -> None: Dict[str, str]) -> None:
         self.webhook_url = config.get("webhook_url")
         self.bot_token = config.get("bot_token")
         self.default_channel = config.get("default_channel", "#alerts")
@@ -462,7 +462,7 @@ class RealTimeAlertInfrastructureManager:
     escalation rules, acknowledgment workflows, and intelligent alert routing.
     """
     
-    def __init__(self, spec: AlertInfrastructureSpec):
+    def __init__(self, spec -> None: AlertInfrastructureSpec) -> None:
         self.spec = spec
         self.redis_client = None
         self.alert_rules: Dict[str, AlertRule] = {}
@@ -709,7 +709,7 @@ Get alert system statistics"""
 
     # Private helper methods
     
-    def _initialize_channels(self):
+    def _initialize_channels(self) -> None:
         """Initialize alert delivery channels"""
         if self.spec.email_config:
             self.channels[AlertChannel.EMAIL] = EmailAlertChannel(self.spec.email_config)

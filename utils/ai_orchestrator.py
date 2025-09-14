@@ -84,7 +84,7 @@ class AIOrchestrator:
     - Rate limiting and quota management
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize AI orchestrator"""
         self.providers: Dict[AIProvider, Dict[str, Any]] = {}
         self.request_queue: List[AIRequest] = []
@@ -117,7 +117,7 @@ class AIOrchestrator:
         
         logger.info("AIOrchestrator initialized with enterprise capabilities")
     
-    def _initialize_providers(self):
+    def _initialize_providers(self) -> None:
         """Initialize AI provider configurations"""
         # OpenAI configuration
         self.providers[AIProvider.OPENAI] = {
@@ -492,7 +492,7 @@ class AIOrchestrator:
         
         return 0.0
     
-    def _update_provider_stats(self, provider: AIProvider, response: AIResponse):
+    def _update_provider_stats(self, provider -> None: AIProvider, response -> None: AIResponse) -> None:
         """Update provider performance statistics"""
         stats = self.provider_stats[provider]
         

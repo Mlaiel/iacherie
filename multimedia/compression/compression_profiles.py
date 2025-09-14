@@ -44,7 +44,7 @@ class CompressionProfile:
 class CompressionProfileManager:
     """Manager for compression profiles and platform optimizations."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the profile manager."""
         self.profiles = self._load_default_profiles()
         self.custom_profiles = {}

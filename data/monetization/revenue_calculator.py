@@ -199,8 +199,8 @@ class RevenueCalculator:
     real-time optimization and compliance management.
     """
     
-    def __init__(self, db_session: AsyncSession, redis_client: Redis, 
-                 content_analytics=None):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: Redis, 
+                 content_analytics=None) -> None:
         """
         Initialize Revenue Calculator.
         

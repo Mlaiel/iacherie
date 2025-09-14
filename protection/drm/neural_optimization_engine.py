@@ -92,7 +92,7 @@ class NeuralDRMModel(nn.Module):
     - Security: Threat detection layers
     """
     
-    def __init__(self, input_size: int, hidden_size: int = 512, num_layers: int = 6):
+    def __init__(self, input_size -> None: int, hidden_size -> None: int = 512, num_layers -> None: int = 6) -> None:
         super(NeuralDRMModel, self).__init__()
         
         # Lead Dev IA: Advanced neural architecture
@@ -173,7 +173,7 @@ class NeuralOptimizationEngine:
     - IA Prompt Engineer: AI prompt optimization
     """
     
-    def __init__(self, config: NeuralOptimizationConfig):
+    def __init__(self, config -> None: NeuralOptimizationConfig) -> None:
         self.config = config
         self.device = torch.device('cuda' if torch.cuda.is_available() and config.gpu_acceleration else 'cpu')
         
@@ -646,16 +646,16 @@ class NeuralOptimizationEngine:
             return {'error': str(e)}
     
     # Placeholder methods for comprehensive implementation
-    async def _load_pretrained_weights(self): pass
-    async def _log_decision_metrics(self, decision_result: Dict[str, Any], context: Dict[str, Any]): pass
-    async def _trigger_security_review(self, decision_result: Dict[str, Any], context: Dict[str, Any]): pass
-    async def _update_performance_metrics(self, decision_result: Dict[str, Any]): pass
-    async def _optimize_decision_prompts(self, decision_result: Dict[str, Any], context: Dict[str, Any]): pass
-    async def _optimize_neural_parameters(self): pass
-    async def _evaluate_model_performance(self): pass
-    async def _optimize_resource_allocation(self): pass
-    async def _train_neural_model(self): pass
-    async def _check_neural_security(self): pass
+    async def _load_pretrained_weights(self) -> None: pass
+    async def _log_decision_metrics(self, decision_result -> None: Dict[str, Any], context -> None: Dict[str, Any]) -> None: pass
+    async def _trigger_security_review(self, decision_result -> None: Dict[str, Any], context -> None: Dict[str, Any]) -> None: pass
+    async def _update_performance_metrics(self, decision_result -> None: Dict[str, Any]) -> None: pass
+    async def _optimize_decision_prompts(self, decision_result -> None: Dict[str, Any], context -> None: Dict[str, Any]) -> None: pass
+    async def _optimize_neural_parameters(self) -> None: pass
+    async def _evaluate_model_performance(self) -> None: pass
+    async def _optimize_resource_allocation(self) -> None: pass
+    async def _train_neural_model(self) -> None: pass
+    async def _check_neural_security(self) -> None: pass
 
 # Export classes
 __all__ = [

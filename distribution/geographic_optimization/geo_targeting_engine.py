@@ -105,7 +105,7 @@ class AdvancedGeoTargetingEngine:
     - Language and currency localization
     """
 
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.config = config or {}
         self.geographic_database = {}
         self.cultural_profiles = {}
@@ -119,7 +119,7 @@ class AdvancedGeoTargetingEngine:
         # Geocoding service
         self.geocoder = Nominatim(user_agent="ainflue_geo_targeting")
 
-    def _initialize_geographic_database(self):
+    def _initialize_geographic_database(self) -> None:
         """Initialize comprehensive geographic database"""
         
         # Major markets with detailed profiles
@@ -297,7 +297,7 @@ class AdvancedGeoTargetingEngine:
             
             self.geographic_database[country_code] = target
 
-    def _initialize_cultural_profiles(self):
+    def _initialize_cultural_profiles(self) -> None:
         """Initialize cultural profiles based on Hofstede's dimensions"""
         
         # Cultural dimension scores (0-1 scale)

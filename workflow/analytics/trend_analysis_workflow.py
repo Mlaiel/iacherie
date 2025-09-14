@@ -14,6 +14,7 @@ from datetime import datetime
 
 @dataclass
 class TrendMetrics:
+    """TrendMetrics: class implementation"""
     trend_id: str
     trend_strength: float = 0.0
     growth_rate: float = 0.0
@@ -23,6 +24,7 @@ class TrendMetrics:
 
 @dataclass
 class TrendInsights:
+    """TrendInsights: class implementation"""
     user_id: str
     trending_topics: List[str]
     trend_metrics: List[TrendMetrics]
@@ -87,6 +89,7 @@ class TrendAnalysisWorkflow:
 # Competitive Intelligence Workflow
 @dataclass
 class CompetitorMetrics:
+    """CompetitorMetrics: class implementation"""
     competitor_id: str
     engagement_rate: float = 0.0
     growth_rate: float = 0.0
@@ -96,6 +99,7 @@ class CompetitorMetrics:
 
 @dataclass
 class MarketAnalysis:
+    """MarketAnalysis: class implementation"""
     user_id: str
     market_position: str
     competitor_metrics: List[CompetitorMetrics]

@@ -1,4 +1,6 @@
 """⚖️ Ultra-Industrial DMCA Automation & Legal Enforcement Orchestration
+from typing import Dict, List, Optional, Union, Tuple
+
 ====================================================================
 
 Enterprise-grade automated legal enforcement system for comprehensive digital

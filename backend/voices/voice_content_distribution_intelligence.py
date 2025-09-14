@@ -216,7 +216,7 @@ class Achievement:
 class VoiceSEOOptimizer:
     """Voice SEO optimization and search intelligence"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize SEO optimizer"""
         self.seo_profiles = {}
         self.keyword_database = {}
@@ -458,7 +458,7 @@ class VoiceSEOOptimizer:
         score = (avg_density * 0.3) + ((100 - avg_ranking) * 0.4) + (accessibility_score * 0.3)
         return min(score, 100.0)
     
-    async def _store_seo_analysis(self, analysis: SEOAnalysis):
+    async def _store_seo_analysis(self, analysis -> None: SEOAnalysis) -> None:
         """Store SEO analysis"""
         # Implementation would store in database
         pass
@@ -523,7 +523,7 @@ class VoiceSEOOptimizer:
 class VoiceGamificationEngine:
     """Voice gamification engine and mechanics"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize gamification engine"""
         self.user_profiles = {}
         self.achievements = {}
@@ -763,10 +763,10 @@ class VoiceGamificationEngine:
     
     async def _update_skill_progression(
         self,
-        profile: GamificationProfile,
-        action: GamificationAction,
-        action_data: Dict[str, Any]
-    ):
+        profile -> None: GamificationProfile,
+        action -> None: GamificationAction,
+        action_data -> None: Dict[str, Any]
+    ) -> None:
         """Update skill progression based on action"""
         skill_mapping = {
             GamificationAction.CONTENT_CREATION: ["content_creation", "voice_quality"],
@@ -814,7 +814,7 @@ class VoiceGamificationEngine:
         
         return updates
     
-    async def _award_starter_achievements(self, creator_id: str):
+    async def _award_starter_achievements(self, creator_id -> None: str) -> None:
         """Award starter achievements"""
         profile = self.user_profiles[creator_id]
         profile.achievements.append("welcome_aboard")
@@ -823,7 +823,7 @@ class VoiceGamificationEngine:
 class VoiceCollaborationHub:
     """Voice collaboration hub and networking"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize collaboration hub"""
         self.collaboration_requests = {}
         self.active_collaborations = {}
@@ -965,7 +965,7 @@ class VoiceCollaborationHub:
             }
         ]
     
-    async def _notify_collaboration_request(self, request: CollaborationRequest):
+    async def _notify_collaboration_request(self, request -> None: CollaborationRequest) -> None:
         """Notify target creator of collaboration request"""
         # Implementation would send notification
         pass
@@ -973,7 +973,7 @@ class VoiceCollaborationHub:
 class VoiceDistributionEngine:
     """Voice distribution engine and platform management"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize distribution engine"""
         self.platform_profiles = {}
         self.distribution_queues = {}
@@ -1117,7 +1117,7 @@ class VoiceDistributionEngine:
 class VoiceContentDistributionIntelligence:
     """Main voice content and distribution intelligence system"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         """Initialize content and distribution intelligence"""
         self.config = config or {}
         self.seo_optimizer = VoiceSEOOptimizer()

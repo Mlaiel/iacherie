@@ -139,7 +139,7 @@ class SecurityProfile:
 class AntiDetectionSystem:
     """Main anti-detection system orchestrator"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.proxy_manager = ProxyRotationManager()
         self.user_agent_engine = UserAgentRotationEngine()
         self.rate_limiter = RateLimitingIntelligence()
@@ -441,7 +441,7 @@ class AntiDetectionSystem:
         try:
             self._monitoring_active = True
             
-            async def monitoring_loop():
+            async def monitoring_loop() -> None:
                 while self._monitoring_active:
                     try:
                         await self._monitor_active_sessions()
@@ -497,7 +497,7 @@ class AntiDetectionSystem:
 class ProxyRotationManager:
     """Advanced proxy rotation and management system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.proxy_pools: Dict[ProxyType, List[ProxyConfiguration]] = {}
         self.active_proxies: Dict[str, ProxyConfiguration] = {}
         self.proxy_performance: Dict[str, Dict] = {}
@@ -701,7 +701,7 @@ class ProxyRotationManager:
 class UserAgentRotationEngine:
     """Advanced user agent rotation and browser fingerprint management"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.user_agent_profiles: List[UserAgentProfile] = []
         self.current_profile_index: int = 0
         self.browser_capabilities: Dict[BrowserType, Dict] = {}
@@ -851,7 +851,7 @@ class UserAgentRotationEngine:
 class RateLimitingIntelligence:
     """Intelligent rate limiting system with adaptive algorithms"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.session_limits: Dict[str, Dict] = {}
         self.global_limits: Dict[str, int] = {
             'requests_per_minute': 100,
@@ -964,7 +964,7 @@ class RateLimitingIntelligence:
 class CaptchaSolvingEngine:
     """CAPTCHA detection and solving system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.captcha_services: Dict[str, Dict] = {}
         self.captcha_cache: Dict[str, str] = {}
         self.success_rates: Dict[str, float] = {}
@@ -1083,7 +1083,7 @@ class CaptchaSolvingEngine:
 class SessionManager:
     """Advanced session management with persistence and recovery"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.active_sessions: Dict[str, Dict] = {}
         self.session_storage: Dict[str, str] = {}
         self.session_cookies: Dict[str, Dict] = {}
@@ -1150,7 +1150,7 @@ class SessionManager:
 class SecurityComplianceEngine:
     """Legal compliance and security policy enforcement"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.compliance_rules: Dict[str, Dict] = {}
         self.legal_restrictions: Dict[str, List] = {}
         self.audit_log: List[Dict] = []
@@ -1315,7 +1315,7 @@ __all__ = [
 
 if __name__ == "__main__":
     # Example usage
-    async def main():
+    async def main() -> None:
         # Create and initialize security system
         security_system = await create_security_system()
         

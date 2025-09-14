@@ -119,7 +119,7 @@ class QuantumCircuit:
     circuit_depth: int = 0
     estimated_runtime: float = 0.0  # microseconds
     
-    def add_gate(self, gate: QuantumGate, qubits: List[int], parameters: Optional[List[float]] = None):
+    def add_gate(self, gate -> None: QuantumGate, qubits -> None: List[int], parameters -> None: Optional[List[float]] = None) -> None:
         """Add quantum gate to circuit"""
         gate_operation = {
             'gate': gate.value,
@@ -178,7 +178,7 @@ class QuantumVectorEmbedding(BaseModel):
     created_at: datetime = Field(default_factory=datetime.utcnow)
     
     @validator('quantum_amplitudes')
-    def validate_quantum_amplitudes(cls, v, values):
+    def validate_quantum_amplitudes(cls, v, values) -> None:
         # Verify normalization (sum of |amplitude|^2 should be 1)
         total_probability = sum(abs(amp)**2 for amp in v)
         if not (0.99 <= total_probability <= 1.01):  # Allow small numerical errors
@@ -189,7 +189,7 @@ class QuantumVectorEmbedding(BaseModel):
 class QuantumVectorProcessor:
     """⚛️ Ultra-sophisticated quantum vector processing engine"""
     
-    def __init__(self, quantum_config: Dict[str, Any]):
+    def __init__(self, quantum_config -> None: Dict[str, Any]) -> None:
         self.config = quantum_config
         self.quantum_circuits = {}
         self.quantum_states = {}
@@ -215,7 +215,7 @@ class QuantumVectorProcessor:
         
         logger.info("⚛️ Quantum Vector Processor initialized with multi-expert architecture")
     
-    def _initialize_quantum_infrastructure(self):
+    def _initialize_quantum_infrastructure(self) -> None:
         """🏗️ Backend Senior: Setup distributed quantum processing infrastructure"""
         try:
             # Initialize quantum simulators
@@ -233,7 +233,7 @@ class QuantumVectorProcessor:
             logger.error(f"❌ Quantum infrastructure initialization failed: {e}")
             raise
     
-    def _setup_quantum_simulators(self):
+    def _setup_quantum_simulators(self) -> None:
         """⚛️ Setup quantum simulation backends"""
         
         # Statevector simulator for exact quantum states
@@ -270,7 +270,7 @@ class QuantumVectorProcessor:
         
         logger.info("✅ Quantum simulators configured")
     
-    def _setup_quantum_algorithms(self):
+    def _setup_quantum_algorithms(self) -> None:
         """🤖 ML Engineer: Configure quantum algorithms for vector processing"""
         
         # Quantum similarity algorithm
@@ -313,7 +313,7 @@ class QuantumVectorProcessor:
         
         logger.info("✅ Quantum algorithms configured")
     
-    def _setup_quantum_error_correction(self):
+    def _setup_quantum_error_correction(self) -> None:
         """🔒 Sécurité: Setup quantum error correction and decoherence mitigation"""
         
         self.error_correction = {

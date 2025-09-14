@@ -170,7 +170,7 @@ class KeywordTrendAnalysis:
 class KeywordPerformanceAnalyzer:
     """Main keyword performance analysis system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.keyword_metrics: Dict[str, List[KeywordMetrics]] = defaultdict(list)
         self.opportunities: List[KeywordOpportunity] = []
         self.competitor_analyses: List[CompetitorKeywordAnalysis] = []

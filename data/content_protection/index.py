@@ -99,7 +99,7 @@ class ContentProtectionService:
     multi-format content protection across platforms.
     """
     
-    def __init__(self, config: ServiceConfig):
+    def __init__(self, config -> None: ServiceConfig) -> None:
         """
         Initialize ContentProtectionService.
         
@@ -172,7 +172,7 @@ class ContentProtectionService:
             self.logger.error(f"Error initializing service: {str(e)}")
             return False
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Shutdown the content protection service"""
         try:
             self.logger.info("Shutting down Enterprise Content Protection Service...")
@@ -447,7 +447,7 @@ class ContentProtectionService:
     
     # Private helper methods
     
-    async def _start_realtime_monitoring(self):
+    async def _start_realtime_monitoring(self) -> None:
         """Start real-time monitoring tasks"""
         try:
             # Start violation monitoring task
@@ -463,7 +463,7 @@ class ContentProtectionService:
         except Exception as e:
             self.logger.error(f"Error starting real-time monitoring: {str(e)}")
     
-    async def _realtime_violation_monitor(self):
+    async def _realtime_violation_monitor(self) -> None:
         """Real-time violation monitoring loop"""
         while True:
             try:
@@ -494,7 +494,7 @@ class ContentProtectionService:
                 self.logger.error(f"Error in real-time violation monitoring: {str(e)}")
                 await asyncio.sleep(300)  # 5 minutes before retry
     
-    async def _realtime_revenue_monitor(self):
+    async def _realtime_revenue_monitor(self) -> None:
         """Real-time revenue monitoring loop"""
         while True:
             try:
@@ -543,7 +543,7 @@ Batch content list into smaller chunks"""
         for i in range(0, len(content_list), batch_size):
             yield content_list[i:i + batch_size]
     
-    async def _handle_realtime_violations(self, content_id: str, violations: List[ViolationAlert]):
+    async def _handle_realtime_violations(self, content_id -> None: str, violations -> None: List[ViolationAlert]) -> None:
         """
 Handle violations detected in real-time"""
         for violation in violations:

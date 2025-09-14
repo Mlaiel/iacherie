@@ -69,9 +69,9 @@ class EventLifecycle:
     """
     
     def __init__(self, 
-                 default_retention_days: int = 90,
-                 archive_after_days: int = 30,
-                 enable_auto_cleanup: bool = True):
+                 default_retention_days -> None: int = 90,
+                 archive_after_days -> None: int = 30,
+                 enable_auto_cleanup -> None: bool = True) -> None:
         self.default_retention_days = default_retention_days
         self.archive_after_days = archive_after_days
         self.enable_auto_cleanup = enable_auto_cleanup
@@ -487,9 +487,9 @@ class EventLifecycle:
             logger.error(f"Validation rule '{rule.name}' failed: {e}")
             return False
     
-    def _start_cleanup_task(self):
+    def _start_cleanup_task(self) -> None:
         """Start automatic cleanup background task"""
-        async def cleanup_loop():
+        async def cleanup_loop() -> None:
             while True:
                 try:
                     await asyncio.sleep(3600)  # Run hourly
@@ -500,7 +500,7 @@ class EventLifecycle:
         self._cleanup_task = asyncio.create_task(cleanup_loop())
         logger.info("Automatic cleanup task started")
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Shutdown lifecycle manager and cleanup tasks"""
         if self._cleanup_task:
             self._cleanup_task.cancel()

@@ -98,7 +98,7 @@ class CryptographicSecurityEngine:
     Advanced cryptographic security for legal evidence protection
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.master_key = self._generate_master_key()
         self.rsa_private_key = self._generate_rsa_keypair()
         self.rsa_public_key = self.rsa_private_key.public_key()
@@ -123,7 +123,7 @@ class CryptographicSecurityEngine:
         )
         return kdf.derive(password)
 
-    def _generate_rsa_keypair(self):
+    def _generate_rsa_keypair(self) -> None:
         """Generate RSA-4096 keypair for digital signatures."""
         private_key = rsa.generate_private_key(
             public_exponent=65537,
@@ -131,7 +131,7 @@ class CryptographicSecurityEngine:
         )
         return private_key
 
-    def _initialize_integrity_validators(self):
+    def _initialize_integrity_validators(self) -> None:
         """Initialize integrity validation methods."""
         self.integrity_validators = {
             IntegrityLevel.BASIC: self._validate_basic_integrity,
@@ -228,7 +228,7 @@ class MerkleTreeEngine:
     Merkle tree implementation for efficient evidence verification
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.trees = {}
         logger.info("🌳 Merkle Tree Engine initialized")
 
@@ -312,7 +312,7 @@ class AudioEvidenceProcessor:
     Specialized processor for audio evidence preservation
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.audio_fingerprints = {}
         self.spectral_signatures = {}
         logger.info("🎵 Audio Evidence Processor initialized")
@@ -375,7 +375,7 @@ class BlockchainLegalRegistry:
     Blockchain-based legal evidence registry with AI-powered validation
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.blockchain = []
         self.pending_evidence = []
         self.crypto_engine = CryptographicSecurityEngine()
@@ -419,7 +419,7 @@ class BlockchainLegalRegistry:
         conn.commit()
         return conn
 
-    def _create_genesis_block(self):
+    def _create_genesis_block(self) -> None:
         """Create the genesis block for the blockchain."""
         genesis_block = BlockchainBlock(
             index=0,
@@ -637,7 +637,7 @@ class BlockchainLegalRegistry:
         
         return True
 
-    async def _store_evidence_in_db(self, evidence: LegalEvidence):
+    async def _store_evidence_in_db(self, evidence -> None: LegalEvidence) -> None:
         """Store evidence metadata in database."""
         self.db_connection.execute('''
             INSERT INTO evidence_registry 
@@ -652,7 +652,7 @@ class BlockchainLegalRegistry:
         ))
         self.db_connection.commit()
 
-    async def _store_block_in_db(self, block: BlockchainBlock):
+    async def _store_block_in_db(self, block -> None: BlockchainBlock) -> None:
         """Store block metadata in database."""
         self.db_connection.execute('''
             INSERT INTO blockchain_blocks 
@@ -671,7 +671,7 @@ class BlockchainLegalRegistry:
         
         self.db_connection.commit()
 
-async def demonstrate_blockchain_evidence_system():
+async def demonstrate_blockchain_evidence_system() -> None:
     """
     🎯 DEMONSTRATION OF ALL EXPERT ROLES IN BLOCKCHAIN SYSTEM:
     Comprehensive demonstration of blockchain legal evidence preservation

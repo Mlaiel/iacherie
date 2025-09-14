@@ -237,12 +237,12 @@ class AbstractTokenStore(ABC):
 class RedisTokenStore(AbstractTokenStore):
     """Redis-based token store implementation"""
     
-    def __init__(self, config: JWTConfig):
+    def __init__(self, config -> None: JWTConfig) -> None:
         self.config = config
         self.redis = None
         self.logger = logging.getLogger(__name__)
     
-    async def connect(self):
+    async def connect(self) -> None:
         """Connect to Redis"""
         self.redis = redis.Redis(
             host=self.config.redis_host,
@@ -253,7 +253,7 @@ class RedisTokenStore(AbstractTokenStore):
         )
         await self.redis.ping()
     
-    async def disconnect(self):
+    async def disconnect(self) -> None:
         """Disconnect from Redis"""
         if self.redis:
             await self.redis.close()
@@ -422,7 +422,7 @@ class JWTKeyManager:
 class JWTValidator:
     """JWT token validator"""
     
-    def __init__(self, config: JWTConfig, token_store: AbstractTokenStore):
+    def __init__(self, config -> None: JWTConfig, token_store -> None: AbstractTokenStore) -> None:
         self.config = config
         self.token_store = token_store
         self.logger = logging.getLogger(__name__)
@@ -587,19 +587,19 @@ class JWTValidator:
 class JWTMiddleware:
     """JWT middleware for FastAPI"""
     
-    def __init__(self, config: JWTConfig):
+    def __init__(self, config -> None: JWTConfig) -> None:
         self.config = config
         self.token_store = RedisTokenStore(config)
         self.validator = JWTValidator(config, self.token_store)
         self.security = HTTPBearer(auto_error=False)
         self.logger = logging.getLogger(__name__)
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize middleware"""
         await self.token_store.connect()
         self.logger.info("JWT middleware initialized")
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Shutdown middleware"""
         await self.token_store.disconnect()
     
@@ -672,11 +672,11 @@ class JWTMiddleware:
     
     async def _log_auth_event(
         self,
-        request: Request,
-        user_id: Optional[str],
-        success: bool,
-        error: Optional[str]
-    ):
+        request -> None: Request,
+        user_id -> None: Optional[str],
+        success -> None: bool,
+        error -> None: Optional[str]
+    ) -> None:
         """Log authentication event"""
         if not self.config.enable_audit_logging:
             return
@@ -700,7 +700,7 @@ class JWTMiddleware:
 class JWTTokenGenerator:
     """JWT token generator"""
     
-    def __init__(self, config: JWTConfig):
+    def __init__(self, config -> None: JWTConfig) -> None:
         self.config = config
         self.logger = logging.getLogger(__name__)
         self._key = self._prepare_signing_key()
@@ -775,10 +775,10 @@ class JWTTokenGenerator:
 
 
 # Utility functions and decorators
-def require_permissions(*required_permissions: str):
+def require_permissions(*required_permissions -> None: str) -> None:
     """Decorator to require specific permissions"""
-    def decorator(func: Callable):
-        async def wrapper(*args, **kwargs):
+    def decorator(func -> None: Callable) -> None:
+        async def wrapper(*args, **kwargs) -> None:
             # Get JWT claims from request state
             request = kwargs.get('request') or (args[0] if args else None)
             if not hasattr(request.state, 'jwt_claims'):
@@ -801,10 +801,10 @@ def require_permissions(*required_permissions: str):
     return decorator
 
 
-def require_roles(*required_roles: str):
+def require_roles(*required_roles -> None: str) -> None:
     """Decorator to require specific roles"""
-    def decorator(func: Callable):
-        async def wrapper(*args, **kwargs):
+    def decorator(func -> None: Callable) -> None:
+        async def wrapper(*args, **kwargs) -> None:
             # Get JWT claims from request state
             request = kwargs.get('request') or (args[0] if args else None)
             if not hasattr(request.state, 'jwt_claims'):
@@ -828,7 +828,7 @@ def require_roles(*required_roles: str):
 
 
 # Usage example
-async def main():
+async def main() -> None:
     """Example usage of JWT middleware"""
     
     # Generate key pair for RS256

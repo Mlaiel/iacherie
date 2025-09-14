@@ -100,27 +100,27 @@ Progress tracking for batch operations."""
 class ResourceMonitor:
     """Real-time resource monitoring for batch processing."""
     
-    def __init__(self, update_interval: float = 1.0):
+    def __init__(self, update_interval -> None: float = 1.0) -> None:
         self.update_interval = update_interval
         self.monitoring = False
         self.stats_history = []
         self.max_history = 1000
         
-    def start_monitoring(self):
+    def start_monitoring(self) -> None:
         """
 Start resource monitoring in background thread."""
         self.monitoring = True
         self.monitor_thread = threading.Thread(target=self._monitor_loop, daemon=True)
         self.monitor_thread.start()
         
-    def stop_monitoring(self):
+    def stop_monitoring(self) -> None:
         """
 Stop resource monitoring."""
         self.monitoring = False
         if hasattr(self, 'monitor_thread'):
             self.monitor_thread.join(timeout=2.0)
     
-    def _monitor_loop(self):
+    def _monitor_loop(self) -> None:
         """
 Main monitoring loop."""
         while self.monitoring:
@@ -178,7 +178,7 @@ class AdaptiveBatchSizer:
     """
 Intelligent batch size optimization based on system performance."""
     
-    def __init__(self, initial_size: int = 32, min_size: int = 1, max_size: int = 256):
+    def __init__(self, initial_size -> None: int = 32, min_size -> None: int = 1, max_size -> None: int = 256) -> None:
         self.current_size = initial_size
         self.min_size = min_size
         self.max_size = max_size
@@ -254,7 +254,7 @@ class BatchProcessor:
     - Multi-modal content type support
     """
     
-    def __init__(self, config: BatchConfig, fingerprinting_service: FingerprintingService):
+    def __init__(self, config -> None: BatchConfig, fingerprinting_service -> None: FingerprintingService) -> None:
         self.config = config
         self.fingerprinting_service = fingerprinting_service
         
@@ -282,7 +282,7 @@ class BatchProcessor:
         
         logger.info("Batch processor initialized with enterprise configuration")
     
-    async def start(self):
+    async def start(self) -> None:
         """Start the batch processing system."""
         if self.is_running:
             logger.warning("Batch processor already running")
@@ -313,7 +313,7 @@ class BatchProcessor:
             await self.shutdown()
             raise BatchProcessingError(f"Startup failed: {e}")
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Gracefully shutdown the batch processing system."""
         logger.info("Shutting down batch processing system...")
         
@@ -415,7 +415,7 @@ class BatchProcessor:
         
         return job_id
     
-    async def _process_job(self, job_id: str, tasks: List[ProcessingTask]):
+    async def _process_job(self, job_id -> None: str, tasks -> None: List[ProcessingTask]) -> None:
         """Process a batch job with intelligent resource management."""
         job = self.active_jobs.get(job_id)
         if not job:
@@ -548,7 +548,7 @@ class BatchProcessor:
                 logger.error(f"Task {task.task_id} failed after {task.attempts} attempts: {e}")
                 return None
     
-    async def _save_checkpoint(self, job_id: str):
+    async def _save_checkpoint(self, job_id -> None: str) -> None:
         """Save job progress checkpoint."""
         job = self.active_jobs.get(job_id)
         if not job:

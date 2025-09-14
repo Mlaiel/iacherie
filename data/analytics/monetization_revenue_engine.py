@@ -249,7 +249,7 @@ class RevenueStream:
     tax_rate: Decimal = Decimal("0.0")
     net_amount: Decimal = field(init=False)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         """Calculate net amount after commission and taxes"""
         commission = self.amount * (self.commission_rate / 100)
         tax = (self.amount - commission) * (self.tax_rate / 100)
@@ -314,7 +314,7 @@ class MonetizationRevenueEngine:
     Handles all aspects of revenue optimization and financial intelligence
     """
     
-    def __init__(self, db_session: AsyncSession, redis_client: Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: Redis) -> None:
         self.db_session = db_session
         self.redis_client = redis_client
         self.logger = logging.getLogger(__name__)
@@ -413,7 +413,7 @@ class RevenueStreamAnalyzer:
     Analyzes and categorizes revenue streams
     """
     
-    def __init__(self, db_session: AsyncSession, redis_client: Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: Redis) -> None:
         self.db_session = db_session
         self.redis_client = redis_client
         self.logger = logging.getLogger(__name__)
@@ -461,7 +461,7 @@ class ROICalculationEngine:
     Advanced ROI calculation and investment analysis
     """
     
-    def __init__(self, db_session: AsyncSession, redis_client: Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: Redis) -> None:
         self.db_session = db_session
         self.redis_client = redis_client
         self.logger = logging.getLogger(__name__)
@@ -588,7 +588,7 @@ class PricingOptimizationEngine:
     Dynamic pricing optimization with AI-driven recommendations
     """
     
-    def __init__(self, db_session: AsyncSession, redis_client: Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: Redis) -> None:
         self.db_session = db_session
         self.redis_client = redis_client
         self.logger = logging.getLogger(__name__)
@@ -657,7 +657,7 @@ class RevenueForecasting:
     AI-powered revenue forecasting with machine learning
     """
     
-    def __init__(self, db_session: AsyncSession, redis_client: Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: Redis) -> None:
         self.db_session = db_session
         self.redis_client = redis_client
         self.logger = logging.getLogger(__name__)
@@ -744,7 +744,7 @@ class TaxOptimizationEngine:
     Tax optimization and compliance management
     """
     
-    def __init__(self, db_session: AsyncSession, redis_client: Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: Redis) -> None:
         self.db_session = db_session
         self.redis_client = redis_client
         self.logger = logging.getLogger(__name__)
@@ -831,7 +831,7 @@ class CurrencyConversionEngine:
     Real-time currency conversion with crypto support
     """
     
-    def __init__(self, db_session: AsyncSession, redis_client: Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: Redis) -> None:
         self.db_session = db_session
         self.redis_client = redis_client
         self.logger = logging.getLogger(__name__)

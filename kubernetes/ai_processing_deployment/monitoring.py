@@ -202,7 +202,7 @@ class MetricsCollector:
     with intelligent sampling and aggregation.
     """
     
-    def __init__(self, collection_interval: int = 60):
+    def __init__(self, collection_interval -> None: int = 60) -> None:
         """
 Initialize metrics collector."""
         self.collection_interval = collection_interval
@@ -211,7 +211,7 @@ Initialize metrics collector."""
         self.collection_tasks: List[asyncio.Task] = []
         self.is_collecting = False
         
-    async def start_collection(self):
+    async def start_collection(self) -> None:
         """
 Start metrics collection."""
         if self.is_collecting:
@@ -231,7 +231,7 @@ Start metrics collection."""
         
         logger.info("Metrics collection started")
     
-    async def stop_collection(self):
+    async def stop_collection(self) -> None:
         """Stop metrics collection."""
         self.is_collecting = False
         
@@ -244,7 +244,7 @@ Start metrics collection."""
         
         logger.info("Metrics collection stopped")
     
-    async def _collect_system_metrics(self):
+    async def _collect_system_metrics(self) -> None:
         """Collect system-level metrics continuously."""
         last_network_stats = psutil.net_io_counters()
         last_disk_stats = psutil.disk_io_counters()
@@ -314,7 +314,7 @@ Start metrics collection."""
                 logger.error(f"System metrics collection error: {e}")
                 await asyncio.sleep(self.collection_interval)
     
-    async def _collect_application_metrics(self):
+    async def _collect_application_metrics(self) -> None:
         """Collect application-specific metrics."""
         while self.is_collecting:
             try:
@@ -329,7 +329,7 @@ Start metrics collection."""
                 logger.error(f"Application metrics collection error: {e}")
                 await asyncio.sleep(self.collection_interval)
     
-    def register_custom_metric(self, metric_def: MetricDefinition):
+    def register_custom_metric(self, metric_def -> None: MetricDefinition) -> None:
         """Register custom metric for collection."""
         self.custom_metrics[metric_def.name] = metric_def
         logger.info(f"Registered custom metric: {metric_def.name}")
@@ -369,7 +369,7 @@ class AlertManager:
     notification routing, and alert correlation.
     """
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         """
 Initialize alert manager."""
         self.config = config or {}
@@ -380,7 +380,7 @@ Initialize alert manager."""
         self.evaluation_tasks: List[asyncio.Task] = []
         self.is_active = False
         
-    async def start_alerting(self):
+    async def start_alerting(self) -> None:
         """
 Start alert evaluation and notification system."""
         if self.is_active:
@@ -395,7 +395,7 @@ Start alert evaluation and notification system."""
         
         logger.info("Alert manager started")
     
-    async def stop_alerting(self):
+    async def stop_alerting(self) -> None:
         """Stop alert evaluation and notification system."""
         self.is_active = False
         
@@ -408,23 +408,23 @@ Start alert evaluation and notification system."""
         
         logger.info("Alert manager stopped")
     
-    def add_alert_rule(self, rule: AlertRule):
+    def add_alert_rule(self, rule -> None: AlertRule) -> None:
         """Add new alert rule."""
         self.alert_rules[rule.rule_id] = rule
         logger.info(f"Added alert rule: {rule.name}")
     
-    def remove_alert_rule(self, rule_id: str):
+    def remove_alert_rule(self, rule_id -> None: str) -> None:
         """Remove alert rule."""
         if rule_id in self.alert_rules:
             del self.alert_rules[rule_id]
             logger.info(f"Removed alert rule: {rule_id}")
     
-    def add_notification_channel(self, channel_name: str, channel_config: Dict[str, Any]):
+    def add_notification_channel(self, channel_name -> None: str, channel_config -> None: Dict[str, Any]) -> None:
         """Add notification channel configuration."""
         self.notification_channels[channel_name] = channel_config
         logger.info(f"Added notification channel: {channel_name}")
     
-    async def _evaluate_alerts(self):
+    async def _evaluate_alerts(self) -> None:
         """Continuously evaluate alert rules."""
         while self.is_active:
             try:
@@ -483,7 +483,7 @@ Evaluate alert condition."""
             logger.warning(f"Unknown condition: {condition}")
             return False
     
-    async def _handle_alert_trigger(self, rule: AlertRule, value: float, timestamp: datetime):
+    async def _handle_alert_trigger(self, rule -> None: AlertRule, value -> None: float, timestamp -> None: datetime) -> None:
         """Handle alert trigger."""
         # Check if alert is already active (avoid duplicate alerts)
         if rule.rule_id in self.active_alerts:
@@ -511,7 +511,7 @@ Evaluate alert condition."""
         
         logger.warning(f"Alert triggered: {rule.name} - {alert_event.message}")
     
-    async def _handle_alert_resolution(self, rule_id: str, timestamp: datetime):
+    async def _handle_alert_resolution(self, rule_id -> None: str, timestamp -> None: datetime) -> None:
         """Handle alert resolution."""
         if rule_id in self.active_alerts:
             alert_event = self.active_alerts[rule_id]
@@ -526,7 +526,7 @@ Evaluate alert condition."""
             
             logger.info(f"Alert resolved: {alert_event.alert_name}")
     
-    async def _send_alert_notification(self, alert: AlertEvent, rule: AlertRule):
+    async def _send_alert_notification(self, alert -> None: AlertEvent, rule -> None: AlertRule) -> None:
         """Send alert notification through configured channels."""
         if not rule.notification_channels:
             return
@@ -539,7 +539,7 @@ Evaluate alert condition."""
                 except Exception as e:
                     logger.error(f"Failed to send alert to channel {channel_name}: {e}")
     
-    async def _send_resolution_notification(self, alert: AlertEvent):
+    async def _send_resolution_notification(self, alert -> None: AlertEvent) -> None:
         """Send alert resolution notification."""
         # Find the rule to get notification channels
         rule = self.alert_rules.get(alert.rule_id)
@@ -554,7 +554,7 @@ Evaluate alert condition."""
                 except Exception as e:
                     logger.error(f"Failed to send resolution to channel {channel_name}: {e}")
     
-    async def _send_to_channel(self, channel_name: str, alert: AlertEvent, notification_type: str):
+    async def _send_to_channel(self, channel_name -> None: str, alert -> None: AlertEvent, notification_type -> None: str) -> None:
         """Send notification to specific channel."""
         channel_config = self.notification_channels[channel_name]
         channel_type = channel_config.get('type')
@@ -568,7 +568,7 @@ Evaluate alert condition."""
         else:
             logger.warning(f"Unknown notification channel type: {channel_type}")
     
-    async def _send_email_notification(self, config: Dict[str, Any], alert: AlertEvent, notification_type: str):
+    async def _send_email_notification(self, config -> None: Dict[str, Any], alert -> None: AlertEvent, notification_type -> None: str) -> None:
         """Send email notification."""
         try:
             # Prepare email
@@ -594,7 +594,7 @@ Duration: {alert.duration_seconds:.2f} seconds
         except Exception as e:
             logger.error(f"Email notification failed: {e}")
     
-    async def _send_webhook_notification(self, config: Dict[str, Any], alert: AlertEvent, notification_type: str):
+    async def _send_webhook_notification(self, config -> None: Dict[str, Any], alert -> None: AlertEvent, notification_type -> None: str) -> None:
         """Send webhook notification."""
         try:
             webhook_url = config.get('url')
@@ -630,7 +630,7 @@ Duration: {alert.duration_seconds:.2f} seconds
         except Exception as e:
             logger.error(f"Webhook notification failed: {e}")
     
-    async def _send_slack_notification(self, config: Dict[str, Any], alert: AlertEvent, notification_type: str):
+    async def _send_slack_notification(self, config -> None: Dict[str, Any], alert -> None: AlertEvent, notification_type -> None: str) -> None:
         """Send Slack notification."""
         try:
             webhook_url = config.get('webhook_url')
@@ -689,7 +689,7 @@ class HealthMonitor:
     with automated health checks and status reporting.
     """
     
-    def __init__(self, check_interval: int = 300):
+    def __init__(self, check_interval -> None: int = 300) -> None:
         """
 Initialize health monitor."""
         self.check_interval = check_interval
@@ -698,7 +698,7 @@ Initialize health monitor."""
         self.check_tasks: List[asyncio.Task] = []
         self.is_monitoring = False
         
-    async def start_monitoring(self):
+    async def start_monitoring(self) -> None:
         """
 Start health monitoring."""
         if self.is_monitoring:
@@ -713,7 +713,7 @@ Start health monitoring."""
         
         logger.info("Health monitoring started")
     
-    async def stop_monitoring(self):
+    async def stop_monitoring(self) -> None:
         """Stop health monitoring."""
         self.is_monitoring = False
         
@@ -726,12 +726,12 @@ Start health monitoring."""
         
         logger.info("Health monitoring stopped")
     
-    def register_health_check(self, component: str, check_function: Callable):
+    def register_health_check(self, component -> None: str, check_function -> None: Callable) -> None:
         """Register health check function for component."""
         self.health_checks[component] = check_function
         logger.info(f"Registered health check for component: {component}")
     
-    async def _run_health_checks(self):
+    async def _run_health_checks(self) -> None:
         """Run all health checks periodically."""
         while self.is_monitoring:
             try:
@@ -869,7 +869,7 @@ class MonitoringSystem:
     alerting, health monitoring, and performance analysis.
     """
     
-    def __init__(self, config: ProcessingConfig):
+    def __init__(self, config -> None: ProcessingConfig) -> None:
         """
 Initialize monitoring system."""
         self.config = config
@@ -879,7 +879,7 @@ Initialize monitoring system."""
         self.state = MonitoringState.INITIALIZING
         self.prometheus_server = None
         
-    async def initialize(self):
+    async def initialize(self) -> None:
         """
 Initialize monitoring system."""
         try:
@@ -902,7 +902,7 @@ Initialize monitoring system."""
             self.state = MonitoringState.DEGRADED
             raise
     
-    async def start(self):
+    async def start(self) -> None:
         """Start all monitoring components."""
         try:
             # Start metrics collection
@@ -920,7 +920,7 @@ Initialize monitoring system."""
             logger.error(f"Failed to start monitoring system: {e}")
             raise
     
-    async def stop(self):
+    async def stop(self) -> None:
         """Stop all monitoring components."""
         try:
             # Stop health monitoring
@@ -938,7 +938,7 @@ Initialize monitoring system."""
         except Exception as e:
             logger.error(f"Error stopping monitoring system: {e}")
     
-    async def _setup_default_alert_rules(self):
+    async def _setup_default_alert_rules(self) -> None:
         """Setup default alert rules."""
         default_rules = [
             AlertRule(
@@ -979,10 +979,10 @@ Initialize monitoring system."""
         for rule in default_rules:
             self.alert_manager.add_alert_rule(rule)
     
-    async def _setup_default_health_checks(self):
+    async def _setup_default_health_checks(self) -> None:
         """Setup default health checks."""
         # System health check
-        async def system_health_check():
+        async def system_health_check() -> None:
             cpu_usage = psutil.cpu_percent()
             memory_usage = psutil.virtual_memory().percent
             

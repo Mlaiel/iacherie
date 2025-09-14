@@ -73,7 +73,7 @@ class PlatformInsights:
 class EnterpriseMonitoringOrchestrator:
     """Master orchestrator for Ainflue platform monitoring."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize enterprise monitoring orchestrator."""
         self.start_time = datetime.now()
         self.component_health: Dict[ComponentType, ComponentHealth] = {}
@@ -85,7 +85,7 @@ class EnterpriseMonitoringOrchestrator:
         logger.info("Initializing Enterprise Monitoring Orchestrator")
         self._initialize_monitoring_modules()
     
-    def _initialize_monitoring_modules(self):
+    def _initialize_monitoring_modules(self) -> None:
         """Initialize all monitoring modules."""
         try:
             # Initialize component health tracking
@@ -647,12 +647,12 @@ class EnterpriseMonitoringOrchestrator:
                 "status": "dashboard_generation_failed"
             }
     
-    def add_alert_handler(self, handler: callable):
+    def add_alert_handler(self, handler -> None: callable) -> None:
         """Add alert handler for enterprise notifications."""
         self.alert_handlers.append(handler)
         logger.info(f"Added enterprise alert handler: {handler.__name__}")
     
-    async def start_continuous_monitoring(self):
+    async def start_continuous_monitoring(self) -> None:
         """Start continuous monitoring with periodic health checks."""
         logger.info("Starting continuous enterprise monitoring")
         
@@ -690,21 +690,21 @@ enterprise_orchestrator = EnterpriseMonitoringOrchestrator()
 
 
 # Convenience functions for external access
-async def get_platform_status():
+async def get_platform_status() -> None:
     """Get current platform status."""
     return await enterprise_orchestrator.get_platform_health()
 
 
-async def get_enterprise_insights():
+async def get_enterprise_insights() -> None:
     """Get AI-powered enterprise insights."""
     return await enterprise_orchestrator.get_ai_insights()
 
 
-async def get_dashboard_data():
+async def get_dashboard_data() -> None:
     """Get enterprise dashboard data."""
     return await enterprise_orchestrator.generate_enterprise_dashboard_data()
 
 
-def add_enterprise_alert_handler(handler: callable):
+def add_enterprise_alert_handler(handler -> None: callable) -> None:
     """Add enterprise alert handler."""
     enterprise_orchestrator.add_alert_handler(handler)

@@ -26,7 +26,7 @@ import sqlparse
 class SanitizationConfig:
     """Configuration for sanitization rules."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         # HTML sanitization settings
         self.allowed_html_tags = [
             'p', 'br', 'strong', 'em', 'ul', 'ol', 'li', 'a', 'img', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'
@@ -89,9 +89,9 @@ class SanitizationConfig:
 class SanitizationResult:
     """Result container for sanitization operations."""
     
-    def __init__(self, original_value: Any, sanitized_value: Any, 
-                 is_safe: bool, warnings: List[str] = None, 
-                 threats_detected: List[str] = None):
+    def __init__(self, original_value -> None: Any, sanitized_value -> None: Any, 
+                 is_safe -> None: bool, warnings -> None: List[str] = None, 
+                 threats_detected -> None: List[str] = None) -> None:
         self.original_value = original_value
         self.sanitized_value = sanitized_value
         self.is_safe = is_safe
@@ -125,7 +125,7 @@ class InputSanitizer:
     - Threat detection and logging
     """
     
-    def __init__(self, config: SanitizationConfig = None, strict_mode: bool = True):
+    def __init__(self, config -> None: SanitizationConfig = None, strict_mode -> None: bool = True) -> None:
         self.config = config or SanitizationConfig()
         self.strict_mode = strict_mode
         self.logger = logging.getLogger(__name__)
@@ -374,7 +374,7 @@ class InputSanitizer:
             data = json.loads(json_input)
             
             # Check nesting depth
-            def check_depth(obj, current_depth=0):
+            def check_depth(obj, current_depth=0) -> None:
                 if current_depth > max_depth:
                     threats_detected.append(f"JSON nesting too deep: {current_depth}")
                     return
@@ -389,7 +389,7 @@ class InputSanitizer:
             check_depth(data)
             
             # Check for large arrays/objects
-            def check_size(obj):
+            def check_size(obj) -> None:
                 if isinstance(obj, dict) and len(obj) > 1000:
                     warnings.append(f"Large object with {len(obj)} keys")
                 elif isinstance(obj, list) and len(obj) > 10000:

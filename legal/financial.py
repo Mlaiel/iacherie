@@ -155,7 +155,7 @@ class FinancialTransaction:
 class EnterpriseFinancialComplianceEngine:
     """Enterprise financial compliance with multi-role expertise"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.aml_monitor = AntiMoneyLaunderingCompliance()
         self.kyc_processor = KYCProcessor()
         self.sanctions_screener = SanctionsScreener()
@@ -296,7 +296,7 @@ class EnterpriseFinancialComplianceEngine:
 class AntiMoneyLaunderingCompliance:
     """AML compliance framework with advanced pattern detection"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.transaction_patterns = {}
         self.suspicious_indicators = {}
         
@@ -360,7 +360,7 @@ class AntiMoneyLaunderingCompliance:
 class KYCProcessor:
     """Know Your Customer processing system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.verification_providers = {}
         self.document_analyzers = {}
         
@@ -420,7 +420,7 @@ class KYCProcessor:
 class SanctionsScreener:
     """Sanctions screening against OFAC and international lists"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.sanctions_lists = {}
         self.screening_algorithms = {}
         
@@ -467,7 +467,7 @@ class SanctionsScreener:
 class MLFinancialRiskAnalyzer:
     """ML-powered financial risk analysis (ML Engineer expertise)"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.risk_models = {}
         self.anomaly_detectors = {}
         
@@ -556,7 +556,7 @@ class MLFinancialRiskAnalyzer:
 class AudioFinancialSpecialist:
     """Audio industry financial compliance specialist (Audio Engineer expertise)"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.royalty_calculators = {}
         self.audio_compliance_rules = {}
         
@@ -627,7 +627,7 @@ class AudioFinancialSpecialist:
 class RegulatoryReporter:
     """Automated regulatory reporting system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.reporting_templates = {}
         self.filing_systems = {}
         

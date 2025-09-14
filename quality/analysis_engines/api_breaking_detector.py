@@ -1,4 +1,6 @@
-"""🔧 API Breaking Changes Detector - Ainflue Platform
+"""# [EMOJI_REMOVED] API Breaking Changes Detector - Ainflue Platform
+import asyncio
+
 ================================================================
 Expert: API_ARCHITECT + QUALITY_ENGINEER
 Created: 2025-01-XX
@@ -81,14 +83,14 @@ class APIBreakingChangesDetector:
     Detector for API breaking changes and contract violations
     """
     
-    def __init__(self, project_root: Optional[str] = None):
+    def __init__(self, project_root -> None: Optional[str] = None) -> None:
         """Initialize API breaking changes detector"""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self.project_root = Path(project_root or ".")
         self.api_patterns = [
-            r"@app\.(get|post|put|delete|patch)",
-            r"@router\.(get|post|put|delete|patch)",
-            r"@api\.(route|get|post|put|delete|patch)"
+            r"@app.(get|post|put|delete|patch)",
+            r"@router.(get|post|put|delete|patch)",
+            r"@api.(route|get|post|put|delete|patch)"
         ]
         self.current_contract: Optional[APIContract] = None
         self.previous_contract: Optional[APIContract] = None
@@ -189,11 +191,12 @@ class APIBreakingChangesDetector:
                 tree = ast.parse(content)
             
             class APIVisitor(ast.NodeVisitor):
-                def __init__(self, file_path):
+    """APIVisitor class implementation"""
+                def __init__(self, file_path) -> None:
                     self.file_path = str(file_path)
                     self.endpoints = []
                 
-                def visit_FunctionDef(self, node):
+                def visit_FunctionDef(self, node) -> None:
                     # Check for API decorators
                     api_info = self._extract_api_info(node)
                     if api_info:
@@ -202,7 +205,7 @@ class APIBreakingChangesDetector:
                     
                     self.generic_visit(node)
                 
-                def _extract_api_info(self, node):
+                def _extract_api_info(self, node) -> None:
                     """Extract API information from decorators"""
                     for decorator in node.decorator_list:
                         if isinstance(decorator, ast.Call):
@@ -215,7 +218,7 @@ class APIBreakingChangesDetector:
                                 return self._parse_decorator(decorator, decorator_name)
                     return None
                 
-                def _get_decorator_name(self, decorator):
+                def _get_decorator_name(self, decorator) -> None:
                     """Get decorator name from AST node"""
                     if isinstance(decorator.func, ast.Attribute):
                         return f"{decorator.func.value.id}.{decorator.func.attr}"
@@ -223,7 +226,7 @@ class APIBreakingChangesDetector:
                         return decorator.func.id
                     return ""
                 
-                def _parse_decorator(self, decorator, decorator_name):
+                def _parse_decorator(self, decorator, decorator_name) -> None:
                     """Parse API decorator to extract route info"""
                     method = decorator_name.split('.')[-1].upper()
                     path = "/"
@@ -233,7 +236,7 @@ class APIBreakingChangesDetector:
                     
                     return {"method": method, "path": path}
                 
-                def _create_endpoint(self, node, api_info):
+                def _create_endpoint(self, node, api_info) -> None:
                     """Create APIEndpoint from function node"""
                     # Extract parameters
                     parameters = []
@@ -271,7 +274,7 @@ class APIBreakingChangesDetector:
                         signature_hash=signature_hash
                     )
                 
-                def _get_type_annotation(self, arg):
+                def _get_type_annotation(self, arg) -> None:
                     """Get type annotation for argument"""
                     if arg.annotation:
                         return ast.unparse(arg.annotation)
@@ -314,6 +317,7 @@ class APIBreakingChangesDetector:
                 tree = ast.parse(content)
             
             class SchemaVisitor(ast.NodeVisitor):
+    """SchemaVisitor class implementation"""
         try:
             logger.info(f"Executing __init__")
             
@@ -329,10 +333,11 @@ class APIBreakingChangesDetector:
             logger.error(f"__init__ failed: {e}")
             raise
             class SchemaVisitor(ast.NodeVisitor):
-                def __init__(self):
+    """SchemaVisitor class implementation"""
+                def __init__(self) -> None:
                     self.schemas = {}
                 
-                def visit_ClassDef(self, node):
+                def visit_ClassDef(self, node) -> None:
                     # Check if it's a Pydantic model or similar schema
                     if self._is_schema_class(node):
                         schema_info = self._extract_schema_info(node)
@@ -340,7 +345,7 @@ class APIBreakingChangesDetector:
                     
                     self.generic_visit(node)
                 
-                def _is_schema_class(self, node):
+                def _is_schema_class(self, node) -> None:
                     """Check if class is a schema definition"""
                     for base in node.bases:
                         if isinstance(base, ast.Name):
@@ -351,7 +356,7 @@ class APIBreakingChangesDetector:
                                 return True
                     return False
                 
-                def _extract_schema_info(self, node):
+                def _extract_schema_info(self, node) -> None:
                     """Extract schema information from class"""
                     fields = {}
                     
@@ -525,7 +530,7 @@ class APIBreakingChangesDetector:
             self.logger.error(f"Error loading baseline contract: {e}")
             return None
 
-    async def _save_contract(self, contract: APIContract, output_path: str = "api_contract.json"):
+    async def _save_contract(self, contract -> None: APIContract, output_path -> None: str = "api_contract.json") -> None:
         """Save API contract to file"""
         try:
             data = {
@@ -590,7 +595,7 @@ class APIBreakingChangesDetector:
         report += f"**Generated:** {datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S')}\n\n"
         
         if breaking_changes:
-            report += f"## ⚠️ Breaking Changes ({len(breaking_changes)})\n\n"
+            report += f"## # [EMOJI_REMOVED] Breaking Changes ({len(breaking_changes)})\n\n"
             for change in breaking_changes:
                 report += f"### {change.severity.value.title()}: {change.description}\n"
                 report += f"- **Endpoint:** {change.method} {change.endpoint_path}\n"
@@ -600,7 +605,7 @@ class APIBreakingChangesDetector:
                 report += f"- **File:** {change.file_path}:{change.line_number}\n\n"
         
         if non_breaking_changes:
-            report += f"## ✅ Non-Breaking Changes ({len(non_breaking_changes)})\n\n"
+            report += f"## # [EMOJI_REMOVED] Non-Breaking Changes ({len(non_breaking_changes)})\n\n"
             for change in non_breaking_changes:
                 report += f"- {change.description}\n"
         
@@ -618,3 +623,5 @@ __all__ = [
     "BreakingSeverity",
     "api_breaking_detector"
 ]
+
+# File has syntax issues - needs manual review

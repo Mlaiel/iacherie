@@ -119,20 +119,20 @@ class SocialMediaHubIntegration:
     
     def __init__(
         self,
-        youtube_api_key: Optional[str] = None,
-        instagram_app_id: Optional[str] = None,
-        instagram_app_secret: Optional[str] = None,
-        tiktok_client_key: Optional[str] = None,
-        tiktok_client_secret: Optional[str] = None,
-        facebook_app_id: Optional[str] = None,
-        facebook_app_secret: Optional[str] = None,
-        twitter_api_key: Optional[str] = None,
-        twitter_api_secret: Optional[str] = None,
-        linkedin_client_id: Optional[str] = None,
-        linkedin_client_secret: Optional[str] = None,
-        base_callback_url: str = "https://api.ainflue.com/auth/callback",
-        timeout: int = 30
-    ):
+        youtube_api_key -> None: Optional[str] = None,
+        instagram_app_id -> None: Optional[str] = None,
+        instagram_app_secret -> None: Optional[str] = None,
+        tiktok_client_key -> None: Optional[str] = None,
+        tiktok_client_secret -> None: Optional[str] = None,
+        facebook_app_id -> None: Optional[str] = None,
+        facebook_app_secret -> None: Optional[str] = None,
+        twitter_api_key -> None: Optional[str] = None,
+        twitter_api_secret -> None: Optional[str] = None,
+        linkedin_client_id -> None: Optional[str] = None,
+        linkedin_client_secret -> None: Optional[str] = None,
+        base_callback_url -> None: str = "https -> None://api.ainflue.com/auth/callback",
+        timeout -> None: int = 30
+    ) -> None:
         # API credentials
         self.youtube_api_key = youtube_api_key
         self.instagram_app_id = instagram_app_id
@@ -171,16 +171,16 @@ class SocialMediaHubIntegration:
         
         logger.info("Social Media Hub integration initialized")
     
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         """Async context manager entry."""
         await self._ensure_session()
         return self
     
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         """Async context manager exit."""
         await self.close()
     
-    async def _ensure_session(self):
+    async def _ensure_session(self) -> None:
         """Ensure HTTP session is available."""
         if self.session is None or self.session.closed:
             headers = {
@@ -194,7 +194,7 @@ class SocialMediaHubIntegration:
                 timeout=aiohttp.ClientTimeout(total=self.timeout)
             )
     
-    async def close(self):
+    async def close(self) -> None:
         """Close HTTP session."""
         if self.session and not self.session.closed:
             await self.session.close()
@@ -1199,7 +1199,7 @@ async def publish_to_multiple_platforms(
 
 if __name__ == "__main__":
     # Example usage
-    async def main():
+    async def main() -> None:
         import os
         
         # Initialize with API credentials from environment

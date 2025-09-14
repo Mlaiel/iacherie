@@ -1,4 +1,6 @@
 """Professional Content Distribution and Monetization Engine
+import asyncio
+
 Advanced multi-platform content distribution with AI-powered monetization optimization.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -27,7 +29,7 @@ class DistributionResult:
     url: Optional[str] = None
     metrics: Dict[str, Any] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.metrics is None:
             self.metrics = {}
 
@@ -41,7 +43,7 @@ class MonetizationConfig:
 class ContentDistributor:
     """Main content distributor class"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.platforms = []
         self.logger = logger
     
@@ -72,7 +74,7 @@ class ContentDistributor:
 class MonetizationEngine:
     """Monetization engine for content"""
     
-    def __init__(self, config: MonetizationConfig):
+    def __init__(self, config -> None: MonetizationConfig) -> None:
         self.config = config
         self.logger = logger
     
@@ -101,7 +103,7 @@ class MonetizationEngine:
 class YouTubeIntegration:
     """YouTube platform integration"""
     
-    def __init__(self, api_key: str):
+    def __init__(self, api_key -> None: str) -> None:
         self.api_key = api_key
     
     async def upload_video(self, video_path: Path, metadata: Dict[str, Any]) -> str:
@@ -112,7 +114,7 @@ class YouTubeIntegration:
 class InstagramIntegration:
     """Instagram platform integration"""
     
-    def __init__(self, access_token: str):
+    def __init__(self, access_token -> None: str) -> None:
         self.access_token = access_token
     
     async def upload_content(self, content_path: Path, caption: str) -> str:
@@ -122,17 +124,20 @@ class InstagramIntegration:
 
 # Enums and types
 class PlatformType:
+    """PlatformType: class implementation"""
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     FACEBOOK = "facebook"
 
 class ContentType:
+    """ContentType: class implementation"""
     VIDEO = "video"
     IMAGE = "image"
     AUDIO = "audio"
 
 class MonetizationModel:
+    """MonetizationModel: class implementation"""
     ADS = "ads"
     SUBSCRIPTION = "subscription"
     PAY_PER_VIEW = "pay_per_view"
@@ -145,7 +150,7 @@ class DistributionConfig:
     schedule_time: Optional[datetime] = None
     auto_optimize: bool = True
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.platforms is None:
             self.platforms = []
 
@@ -157,6 +162,6 @@ class RevenueData:
     period_start: Optional[datetime] = None
     period_end: Optional[datetime] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.platform_breakdown is None:
             self.platform_breakdown = {}

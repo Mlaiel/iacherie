@@ -80,7 +80,7 @@ class SEOInsight:
 class AdvancedSEOAnalytics:
     """Advanced SEO Analytics Engine with AI-powered insights"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.config = config or {}
         self.metrics_cache = {}
         self.insights_history = []

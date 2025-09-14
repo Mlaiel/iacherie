@@ -1,3 +1,8 @@
+"""
+Search Engines module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Ainflue Platform - Search Engines Integration Module
@@ -133,13 +138,13 @@ class KeywordData:
 class GoogleSearchConsoleAPI:
     """Google Search Console API integration"""
     
-    def __init__(self, api_key: str, property_url: str):
+    def __init__(self, api_key -> None: str, property_url -> None: str) -> None:
         self.api_key = api_key
         self.property_url = property_url
         self.base_url = "https://searchconsole.googleapis.com/webmasters/v3"
         self.session = None
         
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         self.session = aiohttp.ClientSession(
             headers={
                 "Authorization": f"Bearer {self.api_key}",
@@ -149,7 +154,7 @@ class GoogleSearchConsoleAPI:
         )
         return self
         
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         if self.session:
             await self.session.close()
             
@@ -215,19 +220,19 @@ class GoogleSearchConsoleAPI:
 class GoogleCustomSearchAPI:
     """Google Custom Search API integration"""
     
-    def __init__(self, api_key: str, search_engine_id: str):
+    def __init__(self, api_key -> None: str, search_engine_id -> None: str) -> None:
         self.api_key = api_key
         self.search_engine_id = search_engine_id
         self.base_url = "https://customsearch.googleapis.com/customsearch/v1"
         self.session = None
         
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         self.session = aiohttp.ClientSession(
             timeout=aiohttp.ClientTimeout(total=30)
         )
         return self
         
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         if self.session:
             await self.session.close()
             
@@ -311,7 +316,7 @@ class GoogleCustomSearchAPI:
 class BingSearchAPI:
     """Microsoft Bing Search API integration"""
     
-    def __init__(self, api_key: str):
+    def __init__(self, api_key -> None: str) -> None:
         self.api_key = api_key
         self.base_urls = {
             SearchType.WEB: "https://api.bing.microsoft.com/v7.0/search",
@@ -321,7 +326,7 @@ class BingSearchAPI:
         }
         self.session = None
         
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         self.session = aiohttp.ClientSession(
             headers={
                 "Ocp-Apim-Subscription-Key": self.api_key
@@ -330,7 +335,7 @@ class BingSearchAPI:
         )
         return self
         
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         if self.session:
             await self.session.close()
             
@@ -417,18 +422,18 @@ class BingSearchAPI:
 class SEMrushAPI:
     """SEMrush API for keyword research and competitor analysis"""
     
-    def __init__(self, api_key: str):
+    def __init__(self, api_key -> None: str) -> None:
         self.api_key = api_key
         self.base_url = "https://api.semrush.com/"
         self.session = None
         
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         self.session = aiohttp.ClientSession(
             timeout=aiohttp.ClientTimeout(total=45)
         )
         return self
         
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         if self.session:
             await self.session.close()
             
@@ -550,7 +555,7 @@ class SEMrushAPI:
 class RankingMonitor:
     """Monitor search engine rankings for keywords"""
     
-    def __init__(self, search_apis: Dict[str, Any]):
+    def __init__(self, search_apis -> None: Dict[str, Any]) -> None:
         self.search_apis = search_apis
         self.tracking_data = {}
         
@@ -697,14 +702,14 @@ class RankingMonitor:
 class SearchEngineManager:
     """Main manager for all search engine integrations"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.search_apis = {}
         self.semrush_api = None
         self.ranking_monitor = None
         self._initialize_apis()
         
-    def _initialize_apis(self):
+    def _initialize_apis(self) -> None:
         """Initialize search engine APIs"""
         try:
             # Google Custom Search
@@ -948,7 +953,7 @@ if __name__ == "__main__":
     # Test the search engines integration
     import asyncio
     
-    async def test_search_engines():
+    async def test_search_engines() -> None:
         """Test search engines functionality"""
         
         test_topic = "AI content creation"

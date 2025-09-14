@@ -291,7 +291,7 @@ class GovernanceIssue:
 class DataClassifier:
     """AI-powered data classification engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.classification_rules = {}
         self.sensitivity_patterns = {}
         
@@ -378,7 +378,7 @@ class DataClassifier:
             'password', 'secret', 'token', 'key', 'email', 'phone', 'address'
         ]
         
-        def check_field(field_name: str, field_info: Any):
+        def check_field(field_name -> None: str, field_info -> None: Any) -> None:
             field_lower = field_name.lower()
             if any(pattern in field_lower for pattern in sensitive_patterns):
                 sensitive_fields.append(field_name)
@@ -399,7 +399,7 @@ class DataClassifier:
 class DataQualityEngine:
     """Data quality assessment and monitoring"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.quality_rules = {}
         self.quality_thresholds = {}
         
@@ -557,10 +557,10 @@ class DataQualityEngine:
 class LineageTracker:
     """Data lineage tracking and analysis"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.lineage_graph = defaultdict(list)
         
-    def add_lineage_relationship(self, lineage: DataLineage):
+    def add_lineage_relationship(self, lineage -> None: DataLineage) -> None:
         """Add lineage relationship to graph"""
         if lineage.direction in [LineageDirection.DOWNSTREAM, LineageDirection.BIDIRECTIONAL]:
             self.lineage_graph[lineage.source_asset_id].append({
@@ -634,7 +634,7 @@ class DataGovernanceService:
     💡 AI Prompt: Intelligent governance recommendations, policy insights, and automated compliance guidance
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.data_assets: Dict[str, DataAsset] = {}
         self.governance_policies: Dict[str, GovernancePolicy] = {}
         self.data_lineages: Dict[str, DataLineage] = {}
@@ -650,7 +650,7 @@ class DataGovernanceService:
         
         logger.info("DataGovernanceService initialized successfully")
     
-    def _initialize_default_policies(self):
+    def _initialize_default_policies(self) -> None:
         """Initialize default governance policies"""
         default_policies = [
             GovernancePolicy(
@@ -1212,7 +1212,7 @@ class DataGovernanceService:
 
 
 # Example usage and testing
-async def main():
+async def main() -> None:
     """Example usage of the DataGovernanceService"""
     service = DataGovernanceService()
     

@@ -104,7 +104,7 @@ class DisasterRecovery:
     - Real-time monitoring and alerting
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.dr_targets = {}
         self.backup_policies = {}
         self.recovery_procedures = {}
@@ -1292,10 +1292,10 @@ class DisasterRecovery:
     
     async def _execute_immediate_response(
         self, 
-        disaster_type: DisasterType,
-        affected_services: List[str],
-        recovery_execution: Dict[str, Any]
-    ):
+        disaster_type -> None: DisasterType,
+        affected_services -> None: List[str],
+        recovery_execution -> None: Dict[str, Any]
+    ) -> None:
         """Execute immediate response actions"""
         
         # Implement immediate response logic
@@ -1326,7 +1326,7 @@ class DisasterRecovery:
                 'status': 'completed'
             })
     
-    async def _execute_service_recovery(self, affected_services: List[str], recovery_execution: Dict[str, Any]):
+    async def _execute_service_recovery(self, affected_services -> None: List[str], recovery_execution -> None: Dict[str, Any]) -> None:
         """Execute service-specific recovery procedures"""
         
         for service in affected_services:
@@ -1347,7 +1347,7 @@ class DisasterRecovery:
                         'status': 'completed'
                     })
     
-    async def _validate_recovery_success(self, recovery_execution: Dict[str, Any]):
+    async def _validate_recovery_success(self, recovery_execution -> None: Dict[str, Any]) -> None:
         """Validate that recovery was successful"""
         
         validation_checks = [
@@ -1364,7 +1364,7 @@ class DisasterRecovery:
                 'status': 'completed'
             })
     
-    async def _execute_post_recovery_actions(self, recovery_execution: Dict[str, Any]):
+    async def _execute_post_recovery_actions(self, recovery_execution -> None: Dict[str, Any]) -> None:
         """Execute post-recovery actions"""
         
         post_actions = [
@@ -1391,7 +1391,7 @@ class DisasterRecoveryTestingFramework:
     - DR infrastructure verification
     """
     
-    def __init__(self, dr_system: DisasterRecovery):
+    def __init__(self, dr_system -> None: DisasterRecovery) -> None:
         self.dr_system = dr_system
         self.logger = logging.getLogger(__name__)
         self.test_results = []
@@ -1864,7 +1864,7 @@ class DisasterRecoveryTestingFramework:
 
 # Example usage
 if __name__ == "__main__":
-    async def main():
+    async def main() -> None:
         # Initialize disaster recovery system
         dr_system = DisasterRecovery()
         

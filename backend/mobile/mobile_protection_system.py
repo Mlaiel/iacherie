@@ -243,7 +243,7 @@ class MobileAlertResult:
 class MobileProtectionSystem:
     """Unified mobile protection system consolidating fingerprinting, watermarking, orchestration, and monitoring"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         """Initialize mobile protection system with comprehensive capabilities"""
         self.config = config or {}
         self.fingerprint_engine = MobileFingerprintEngine(self.config)
@@ -447,7 +447,7 @@ class MobileProtectionSystem:
         
         return sum(protection_factors) if protection_factors else 0.0
     
-    def _update_protection_metrics(self, protection_result: MobileProtectionResult):
+    def _update_protection_metrics(self, protection_result -> None: MobileProtectionResult) -> None:
         """Update protection system metrics"""
         current_success_rate = self.protection_metrics["success_rate"]
         total_protections = self.protection_metrics["protections_applied"]
@@ -548,7 +548,7 @@ class MobileProtectionSystem:
         
         return violations
     
-    async def _process_violation(self, violation: MobileViolationEvent):
+    async def _process_violation(self, violation -> None: MobileViolationEvent) -> None:
         """Process detected violation"""
         # Store violation in history
         if violation.content_id not in self.violation_history:
@@ -570,7 +570,7 @@ class MobileProtectionSystem:
 class MobileFingerprintEngine:
     """Mobile fingerprint engine with advanced content fingerprinting"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.fingerprint_cache = {}
         
@@ -665,7 +665,7 @@ class MobileFingerprintEngine:
 class MobileWatermarkProcessor:
     """Mobile watermark processor with robust watermarking"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.watermark_cache = {}
         
@@ -750,7 +750,7 @@ class MobileWatermarkProcessor:
 class MobileProtectionOrchestrator:
     """Mobile protection orchestrator for workflow coordination"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.orchestration_workflows = {}
         
@@ -838,7 +838,7 @@ class MobileProtectionOrchestrator:
 class MobileViolationAlertSystem:
     """Mobile violation alert system with real-time monitoring"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.alert_history = {}
         self.monitoring_sessions = {}

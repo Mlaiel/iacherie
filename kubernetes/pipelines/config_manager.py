@@ -72,7 +72,7 @@ class PipelineConfigManager:
     - Version control and rollback capabilities
     """
     
-    def __init__(self, config_dir: Optional[Path] = None):
+    def __init__(self, config_dir -> None: Optional[Path] = None) -> None:
         self.config_dir = config_dir or Path(__file__).parent / "configs"
         self.templates_dir = self.config_dir / "templates"
         self.environments_dir = self.config_dir / "environments"
@@ -87,7 +87,7 @@ class PipelineConfigManager:
         
         self._load_configurations()
         
-    def _ensure_directories(self):
+    def _ensure_directories(self) -> None:
         """Ensure all required directories exist"""
         directories = [
             self.config_dir,
@@ -100,13 +100,13 @@ class PipelineConfigManager:
         for directory in directories:
             directory.mkdir(parents=True, exist_ok=True)
             
-    def _load_configurations(self):
+    def _load_configurations(self) -> None:
         """Load all configuration files"""
         self._load_environment_configs()
         self._load_pipeline_templates()
         self._generate_default_configs()
         
-    def _load_environment_configs(self):
+    def _load_environment_configs(self) -> None:
         """
 Load environment configuration files"""
         for env_file in self.environments_dir.glob("*.yaml"):
@@ -131,7 +131,7 @@ Load environment configuration files"""
             except Exception as e:
                 self.logger.error(f"Failed to load environment config {env_file}: {str(e)}")
                 
-    def _load_pipeline_templates(self):
+    def _load_pipeline_templates(self) -> None:
         """Load pipeline template files"""
         for template_file in self.templates_dir.glob("*.yaml"):
             try:
@@ -154,7 +154,7 @@ Load environment configuration files"""
             except Exception as e:
                 self.logger.error(f"Failed to load pipeline template {template_file}: {str(e)}")
                 
-    def _generate_default_configs(self):
+    def _generate_default_configs(self) -> None:
         """Generate default configuration files if they don't exist"""
         # Generate default environment configs
         default_environments = {

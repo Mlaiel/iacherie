@@ -91,7 +91,7 @@ class CreatorProfile:
 class AudioAugmentationEngine:
     """Advanced audio augmentation for musician content."""
     
-    def __init__(self, config: AugmentationConfig):
+    def __init__(self, config -> None: AugmentationConfig) -> None:
         self.config = config
         self.sample_rate = 44100
         
@@ -281,7 +281,7 @@ class AudioAugmentationEngine:
 class ImageAugmentationEngine:
     """Advanced image augmentation for photographer and visual content."""
     
-    def __init__(self, config: AugmentationConfig):
+    def __init__(self, config -> None: AugmentationConfig) -> None:
         self.config = config
         
     async def augment_image(
@@ -501,7 +501,7 @@ class ImageAugmentationEngine:
 class VideoAugmentationEngine:
     """Advanced video augmentation for content creators."""
     
-    def __init__(self, config: AugmentationConfig):
+    def __init__(self, config -> None: AugmentationConfig) -> None:
         self.config = config
         
     async def augment_video(
@@ -599,7 +599,7 @@ class VideoAugmentationEngine:
 class TextAugmentationEngine:
     """Advanced text augmentation for blogger and social media content."""
     
-    def __init__(self, config: AugmentationConfig):
+    def __init__(self, config -> None: AugmentationConfig) -> None:
         self.config = config
         self.synonyms_dict = self._load_synonyms()
         self.emojis = ["😊", "🎉", "💪", "🔥", "✨", "💯", "👌", "🚀", "💡", "🎯"]
@@ -808,7 +808,7 @@ class TextAugmentationEngine:
 class AdvancedAugmentationEngine:
     """Advanced augmentation techniques including mixup, cutmix, and adversarial."""
     
-    def __init__(self, config: AugmentationConfig):
+    def __init__(self, config -> None: AugmentationConfig) -> None:
         self.config = config
         
     async def apply_mixup(
@@ -879,7 +879,7 @@ class AdvancedAugmentationEngine:
 class DataAugmentationEngine:
     """Comprehensive data augmentation engine for all content types."""
     
-    def __init__(self, config: Optional[AugmentationConfig] = None):
+    def __init__(self, config -> None: Optional[AugmentationConfig] = None) -> None:
         self.config = config or AugmentationConfig()
         
         # Initialize specialized engines
@@ -1013,7 +1013,7 @@ def create_augmentation_engine(
 
 
 # Example usage for Ainflue creators
-async def example_creator_augmentation():
+async def example_creator_augmentation() -> None:
     """Example of data augmentation for different creator types."""
     
     # Create augmentation engine

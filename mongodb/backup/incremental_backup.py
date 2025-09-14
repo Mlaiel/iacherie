@@ -32,7 +32,7 @@ class IncrementalBackupMetadata:
 class IncrementalBackup:
     """Advanced incremental backup using MongoDB oplog and change streams."""
     
-    def __init__(self, client: MongoClient, config: Dict[str, Any] = None):
+    def __init__(self, client -> None: MongoClient, config -> None: Dict[str, Any] = None) -> None:
         """Initialize incremental backup system.
         
         Args:

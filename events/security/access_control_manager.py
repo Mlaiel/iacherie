@@ -35,10 +35,10 @@ class Permission:
     description: str
     required_role_level: int = 1  # 1=basic, 2=premium, 3=enterprise, 4=admin
     
-    def __hash__(self):
+    def __hash__(self) -> None:
         return hash(self.name)
     
-    def __eq__(self, other):
+    def __eq__(self, other) -> None:
         if isinstance(other, Permission):
             return self.name == other.name
         return self.name == other
@@ -53,7 +53,7 @@ class BusinessRole:
     context: Dict[str, Any] = None
     expires_at: Optional[datetime] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.context is None:
             self.context = {}
 
@@ -95,7 +95,7 @@ class AccessControlManager:
     Provides RBAC with dynamic business context awareness.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.enabled = True
         self.permissions_registry = self._initialize_permissions_registry()
         self.business_roles = self._initialize_business_roles()
@@ -803,10 +803,10 @@ class AccessControlManager:
         )
     
     def _store_authorization_history(self,
-                                   user_id: str,
-                                   event_type: str,
-                                   result: AuthorizationResult,
-                                   business_context: Dict[str, Any]):
+                                   user_id -> None: str,
+                                   event_type -> None: str,
+                                   result -> None: AuthorizationResult,
+                                   business_context -> None: Dict[str, Any]) -> None:
         """Store authorization history for audit and analysis"""
         
         self.authorization_history.append({
@@ -824,7 +824,7 @@ class AccessControlManager:
         if len(self.authorization_history) > 10000:
             self.authorization_history = self.authorization_history[-10000:]
     
-    def add_user_role(self, user_id: str, role_name: str):
+    def add_user_role(self, user_id -> None: str, role_name -> None: str) -> None:
         """Add a role to a user"""
         
         if role_name in self.business_roles:
@@ -837,7 +837,7 @@ class AccessControlManager:
         else:
             logger.warning(f"Unknown role: {role_name}")
     
-    def remove_user_role(self, user_id: str, role_name: str):
+    def remove_user_role(self, user_id -> None: str, role_name -> None: str) -> None:
         """Remove a role from a user"""
         
         if user_id in self.user_roles:
@@ -864,12 +864,12 @@ class AccessControlManager:
         
         return permissions
     
-    def enable_access_control(self):
+    def enable_access_control(self) -> None:
         """Enable access control"""
         self.enabled = True
         logger.info("Access control enabled")
     
-    def disable_access_control(self):
+    def disable_access_control(self) -> None:
         """Disable access control"""
         self.enabled = False
         logger.info("Access control disabled")

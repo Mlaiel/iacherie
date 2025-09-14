@@ -163,7 +163,7 @@ class ModelTestSuite:
 class ModelAccuracyTester:
     """🔬 ML ENGINEER - Model accuracy and quality testing"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.test_datasets = {}
         self.benchmark_scores = {}
         
@@ -302,7 +302,7 @@ class ModelAccuracyTester:
 class ModelPerformanceTester:
     """⚙️ DEVOPS - Model performance and scalability testing"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.performance_baselines = {}
         
     async def test_model_performance(self, model: nn.Module, test_config: TestConfig) -> TestResult:
@@ -453,7 +453,7 @@ class ModelPerformanceTester:
 class ABTestingFramework:
     """🧪 DEVOPS - Advanced A/B testing framework for model comparison"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.active_tests = {}
         self.test_history = []
         
@@ -634,7 +634,7 @@ class ABTestingFramework:
 class ModelBiasTester:
     """🔐 SÉCURITÉ - Model bias and fairness testing"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.bias_metrics = {}
         
     async def test_model_bias(self, model: nn.Module, test_data: Dict[str, Any],
@@ -774,7 +774,7 @@ class ModelTestingFramework:
     A/B testing capabilities, and automated validation pipelines.
     """
     
-    def __init__(self, config_path: Optional[str] = None):
+    def __init__(self, config_path -> None: Optional[str] = None) -> None:
         self.config = self._load_config(config_path)
         self.accuracy_tester = ModelAccuracyTester()
         self.performance_tester = ModelPerformanceTester()
@@ -1219,7 +1219,7 @@ class ModelTestingFramework:
 
 # Example usage and testing
 if __name__ == "__main__":
-    async def test_model_testing_framework():
+    async def test_model_testing_framework() -> None:
         """Test the model testing framework"""
         # Create a simple test model
         model = nn.Sequential(

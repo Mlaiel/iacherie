@@ -1,3 +1,8 @@
+"""
+Api Contract Tester module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 API Contract Testing Module - Ainflue Quality Platform
@@ -56,7 +61,7 @@ class APIContract:
 class ContractValidator:
     """Validates API responses against contract schemas."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.schema_cache = {}
     
     def validate_response_schema(self, response_data: Dict, schema: Dict) -> List[str]:
@@ -98,7 +103,7 @@ class APIContractTester:
     Demonstrates Backend Senior + Microservices + DBA expertise.
     """
     
-    def __init__(self, config_path: Optional[str] = None):
+    def __init__(self, config_path -> None: Optional[str] = None) -> None:
         self.config = self._load_config(config_path)
         self.validator = ContractValidator()
         self.test_results: List[ContractTestResult] = []
@@ -264,7 +269,7 @@ class APIContractTester:
             # Execute tests with concurrency control
             semaphore = asyncio.Semaphore(self.config['parallel_tests'])
             
-            async def bounded_test(task):
+            async def bounded_test(task) -> None:
                 async with semaphore:
                     return await task
             
@@ -279,7 +284,7 @@ class APIContractTester:
         # Generate report
         return self._generate_report()
     
-    def _update_metrics(self):
+    def _update_metrics(self) -> None:
         """Update test execution metrics."""
         if not self.test_results:
             return
@@ -364,20 +369,20 @@ class APIContractTester:
         
         return report
     
-    async def save_report(self, report: Dict[str, Any], output_path: str = "contract_test_report.json"):
+    async def save_report(self, report -> None: Dict[str, Any], output_path -> None: str = "contract_test_report.json") -> None:
         """Save test report to file."""
         with open(output_path, 'w') as f:
             json.dump(report, f, indent=2, default=str)
         logger.info(f"Contract test report saved to: {output_path}")
     
-    async def cleanup(self):
+    async def cleanup(self) -> None:
         """Cleanup resources."""
         if self.session:
             await self.session.close()
 
 
 # CLI Interface
-async def main():
+async def main() -> None:
     """Main CLI interface for contract testing."""
     import argparse
     

@@ -1,3 +1,8 @@
+"""
+Performance Monitoring module
+Enterprise implementation for Ainflue platform
+"""
+
 # Ainflue Infrastructure Module
 # =============================
 # 
@@ -90,7 +95,7 @@ class PerformanceAlert:
 class SystemMonitor:
     """Monitors system-level performance metrics"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.process = psutil.Process()
         self.monitoring = False
         self.metrics_history = deque(maxlen=1000)
@@ -223,14 +228,14 @@ class SystemMonitor:
 class ApplicationMonitor:
     """Monitors application-specific performance metrics"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.request_times = deque(maxlen=1000)
         self.error_count = 0
         self.request_count = 0
         self.connection_count = 0
         self.last_reset = datetime.utcnow()
     
-    def record_request(self, response_time: float, status_code: int):
+    def record_request(self, response_time -> None: float, status_code -> None: int) -> None:
         """Record HTTP request metrics"""
         self.request_times.append(response_time)
         self.request_count += 1
@@ -238,7 +243,7 @@ class ApplicationMonitor:
         if status_code >= 400:
             self.error_count += 1
     
-    def record_connection(self, is_new: bool = True):
+    def record_connection(self, is_new -> None: bool = True) -> None:
         """Record connection metrics"""
         if is_new:
             self.connection_count += 1
@@ -333,7 +338,7 @@ class ApplicationMonitor:
         except:
             return 0
     
-    def reset_counters(self):
+    def reset_counters(self) -> None:
         """Reset counters for next measurement period"""
         self.request_count = 0
         self.error_count = 0
@@ -342,12 +347,12 @@ class ApplicationMonitor:
 class KubernetesMonitor:
     """Monitors Kubernetes cluster performance"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.v1 = None
         self.metrics_v1beta1 = None
         self._initialize_k8s_client()
     
-    def _initialize_k8s_client(self):
+    def _initialize_k8s_client(self) -> None:
         """Initialize Kubernetes client"""
         try:
             config.load_incluster_config()
@@ -499,7 +504,7 @@ class KubernetesMonitor:
 class PerformanceAlertManager:
     """Manages performance alerts and thresholds"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.thresholds = {
             'cpu_percent': {'warning': 70, 'critical': 90},
             'memory_percent': {'warning': 80, 'critical': 95},
@@ -511,7 +516,7 @@ class PerformanceAlertManager:
         self.active_alerts = {}
         self.alert_history = deque(maxlen=1000)
     
-    def set_threshold(self, metric_name: str, warning: float, critical: float):
+    def set_threshold(self, metric_name -> None: str, warning -> None: float, critical -> None: float) -> None:
         """Set alert thresholds for a metric"""
         self.thresholds[metric_name] = {
             'warning': warning,
@@ -602,8 +607,8 @@ class PerformanceAlertManager:
         
         return alerts
     
-    async def _check_resolved_alerts(self, system_metrics: SystemResource,
-                                   app_metrics: ApplicationMetrics, current_time: datetime):
+    async def _check_resolved_alerts(self, system_metrics -> None: SystemResource,
+                                   app_metrics -> None: ApplicationMetrics, current_time -> None: datetime) -> None:
         """Check if any active alerts should be resolved"""
         current_values = {}
         
@@ -671,7 +676,7 @@ class PerformanceAlertManager:
 class PerformanceMonitoringEngine:
     """Main performance monitoring engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.system_monitor = SystemMonitor()
         self.app_monitor = ApplicationMonitor()
         self.k8s_monitor = KubernetesMonitor()
@@ -680,7 +685,7 @@ class PerformanceMonitoringEngine:
         self.metrics_storage = deque(maxlen=10000)
         self.collection_interval = 30  # seconds
     
-    async def start_monitoring(self):
+    async def start_monitoring(self) -> None:
         """Start performance monitoring"""
         self.monitoring = True
         logger.info("Starting Ainflue Performance Monitoring Engine")
@@ -693,12 +698,12 @@ class PerformanceMonitoringEngine:
         
         await asyncio.gather(*monitoring_tasks)
     
-    def stop_monitoring(self):
+    def stop_monitoring(self) -> None:
         """Stop performance monitoring"""
         self.monitoring = False
         logger.info("Stopping performance monitoring")
     
-    async def _monitoring_loop(self):
+    async def _monitoring_loop(self) -> None:
         """Main monitoring loop"""
         while self.monitoring:
             try:
@@ -734,7 +739,7 @@ class PerformanceMonitoringEngine:
                 logger.error(f"Error in monitoring loop: {e}")
                 await asyncio.sleep(self.collection_interval)
     
-    async def _alert_checking_loop(self):
+    async def _alert_checking_loop(self) -> None:
         """Alert checking loop"""
         while self.monitoring:
             try:
@@ -757,7 +762,7 @@ class PerformanceMonitoringEngine:
                 logger.error(f"Error in alert checking loop: {e}")
                 await asyncio.sleep(60)
     
-    async def _cleanup_loop(self):
+    async def _cleanup_loop(self) -> None:
         """Cleanup old data"""
         while self.monitoring:
             try:
@@ -785,7 +790,7 @@ class PerformanceMonitoringEngine:
                 logger.error(f"Error in cleanup loop: {e}")
                 await asyncio.sleep(3600)
     
-    async def _handle_new_alert(self, alert: PerformanceAlert):
+    async def _handle_new_alert(self, alert -> None: PerformanceAlert) -> None:
         """Handle new performance alert"""
         # This would integrate with notification systems
         logger.warning(f"Performance Alert [{alert.severity.upper()}]: {alert.message}")
@@ -916,7 +921,7 @@ class PerformanceMonitoringEngine:
         
         return ""
 
-async def main():
+async def main() -> None:
     """Main function for testing"""
     engine = PerformanceMonitoringEngine()
     

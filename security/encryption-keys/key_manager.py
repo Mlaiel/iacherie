@@ -1,3 +1,8 @@
+"""
+Key Manager module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Encryption Key Management System
@@ -68,7 +73,7 @@ class EncryptionKeyManager:
     with support for multiple encryption algorithms and compliance requirements.
     """
     
-    def __init__(self, config_path: Optional[str] = None):
+    def __init__(self, config_path -> None: Optional[str] = None) -> None:
         """Initialize the key manager."""
         self.config_path = config_path or "key-management-config.yaml"
         self.config = self._load_config()
@@ -102,7 +107,7 @@ class EncryptionKeyManager:
             }
         }
     
-    def _setup_logging(self):
+    def _setup_logging(self) -> None:
         """Setup secure logging."""
         logging.basicConfig(
             level=logging.INFO,
@@ -216,7 +221,7 @@ class EncryptionKeyManager:
             logger.error(f"Failed to rotate key {key_id}: {e}")
             return False
     
-    def _archive_key(self, key_id: str, key_data: bytes):
+    def _archive_key(self, key_id -> None: str, key_data -> None: bytes) -> None:
         """Archive old key for historical decryption."""
         archive_id = f"{key_id}_archived_{int(datetime.utcnow().timestamp())}"
         # In production, this would go to secure archive storage
@@ -426,7 +431,7 @@ class EncryptionKeyManager:
         return report
 
 
-def main():
+def main() -> None:
     """Example usage of the key manager."""
     key_manager = EncryptionKeyManager()
     

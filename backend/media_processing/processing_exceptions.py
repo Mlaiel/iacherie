@@ -1,5 +1,12 @@
+"""
+Processing Exceptions module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """🎯 Processing Exceptions - Centralized Error Handling System
+import asyncio
+
 ================================================================================
 Module: backend/media_processing/processing_exceptions.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -58,14 +65,14 @@ class MediaProcessingError(Exception):
     
     def __init__(
         self,
-        message: str,
-        error_code: str = "MEDIA_PROC_ERROR",
-        severity: ErrorSeverity = ErrorSeverity.MEDIUM,
-        category: ErrorCategory = ErrorCategory.PROCESSING,
-        context: Optional[Dict[str, Any]] = None,
-        cause: Optional[Exception] = None,
-        user_message: Optional[str] = None
-    ):
+        message -> None: str,
+        error_code -> None: str = "MEDIA_PROC_ERROR",
+        severity -> None: ErrorSeverity = ErrorSeverity.MEDIUM,
+        category -> None: ErrorCategory = ErrorCategory.PROCESSING,
+        context -> None: Optional[Dict[str, Any]] = None,
+        cause -> None: Optional[Exception] = None,
+        user_message -> None: Optional[str] = None
+    ) -> None:
         super().__init__(message)
         
         self.message = message
@@ -81,7 +88,7 @@ class MediaProcessingError(Exception):
         # Log the error with structured logging
         self._log_error()
     
-    def _log_error(self):
+    def _log_error(self) -> None:
         """Log error with structured information"""
         logger.error(
             "Media processing error occurred",
@@ -127,7 +134,7 @@ class MediaProcessingError(Exception):
 class AIProcessingError(MediaProcessingError):
     """Base class for AI/ML processing errors"""
     
-    def __init__(self, message: str, **kwargs):
+    def __init__(self, message -> None: str, **kwargs) -> None:
         kwargs.setdefault('error_code', 'AI_PROC_ERROR')
         kwargs.setdefault('category', ErrorCategory.AI_MODEL)
         super().__init__(message, **kwargs)
@@ -135,7 +142,7 @@ class AIProcessingError(MediaProcessingError):
 class ModelLoadError(AIProcessingError):
     """Error loading AI models"""
     
-    def __init__(self, model_name: str, model_path: str, cause: Exception, **kwargs):
+    def __init__(self, model_name -> None: str, model_path -> None: str, cause -> None: Exception, **kwargs) -> None:
         message = f"Failed to load AI model '{model_name}' from path '{model_path}'"
         kwargs.update({
             'error_code': 'MODEL_LOAD_ERROR',
@@ -149,7 +156,7 @@ class ModelLoadError(AIProcessingError):
 class ModelInferenceError(AIProcessingError):
     """Error during AI model inference"""
     
-    def __init__(self, model_name: str, input_shape: tuple, cause: Exception, **kwargs):
+    def __init__(self, model_name -> None: str, input_shape -> None: tuple, cause -> None: Exception, **kwargs) -> None:
         message = f"Model '{model_name}' inference failed for input shape {input_shape}"
         kwargs.update({
             'error_code': 'MODEL_INFERENCE_ERROR',
@@ -163,7 +170,7 @@ class ModelInferenceError(AIProcessingError):
 class MultimodalProcessingError(AIProcessingError):
     """Error in cross-modal processing"""
     
-    def __init__(self, modalities: List[str], processing_mode: str, cause: Exception, **kwargs):
+    def __init__(self, modalities -> None: List[str], processing_mode -> None: str, cause -> None: Exception, **kwargs) -> None:
         message = f"Multimodal processing failed for modalities {modalities} in mode '{processing_mode}'"
         kwargs.update({
             'error_code': 'MULTIMODAL_ERROR',
@@ -181,7 +188,7 @@ class MultimodalProcessingError(AIProcessingError):
 class ContentProcessingError(MediaProcessingError):
     """Base class for content processing errors"""
     
-    def __init__(self, message: str, **kwargs):
+    def __init__(self, message -> None: str, **kwargs) -> None:
         kwargs.setdefault('error_code', 'CONTENT_PROC_ERROR')
         kwargs.setdefault('category', ErrorCategory.PROCESSING)
         super().__init__(message, **kwargs)
@@ -189,7 +196,7 @@ class ContentProcessingError(MediaProcessingError):
 class UnsupportedFormatError(ContentProcessingError):
     """Unsupported content format error"""
     
-    def __init__(self, file_format: str, supported_formats: List[str], **kwargs):
+    def __init__(self, file_format -> None: str, supported_formats -> None: List[str], **kwargs) -> None:
         message = f"Unsupported format '{file_format}'. Supported: {supported_formats}"
         kwargs.update({
             'error_code': 'UNSUPPORTED_FORMAT',
@@ -202,7 +209,7 @@ class UnsupportedFormatError(ContentProcessingError):
 class FileCorruptionError(ContentProcessingError):
     """File corruption or invalid content error"""
     
-    def __init__(self, file_path: str, corruption_type: str, **kwargs):
+    def __init__(self, file_path -> None: str, corruption_type -> None: str, **kwargs) -> None:
         message = f"File corruption detected in '{file_path}': {corruption_type}"
         kwargs.update({
             'error_code': 'FILE_CORRUPTION',
@@ -215,7 +222,7 @@ class FileCorruptionError(ContentProcessingError):
 class ProcessingTimeoutError(ContentProcessingError):
     """Processing timeout error"""
     
-    def __init__(self, operation: str, timeout_seconds: int, **kwargs):
+    def __init__(self, operation -> None: str, timeout_seconds -> None: int, **kwargs) -> None:
         message = f"Operation '{operation}' timed out after {timeout_seconds} seconds"
         kwargs.update({
             'error_code': 'PROCESSING_TIMEOUT',
@@ -232,7 +239,7 @@ class ProcessingTimeoutError(ContentProcessingError):
 class ProtectionError(MediaProcessingError):
     """Base class for content protection errors"""
     
-    def __init__(self, message: str, **kwargs):
+    def __init__(self, message -> None: str, **kwargs) -> None:
         kwargs.setdefault('error_code', 'PROTECTION_ERROR')
         kwargs.setdefault('category', ErrorCategory.SECURITY)
         super().__init__(message, **kwargs)
@@ -240,7 +247,7 @@ class ProtectionError(MediaProcessingError):
 class WatermarkError(ProtectionError):
     """Error in watermarking operations"""
     
-    def __init__(self, operation: str, content_type: str, cause: Exception, **kwargs):
+    def __init__(self, operation -> None: str, content_type -> None: str, cause -> None: Exception, **kwargs) -> None:
         message = f"Watermark {operation} failed for {content_type} content"
         kwargs.update({
             'error_code': 'WATERMARK_ERROR',
@@ -254,7 +261,7 @@ class WatermarkError(ProtectionError):
 class FingerprintGenerationError(ProtectionError):
     """Error generating content fingerprints"""
     
-    def __init__(self, content_type: str, algorithm: str, cause: Exception, **kwargs):
+    def __init__(self, content_type -> None: str, algorithm -> None: str, cause -> None: Exception, **kwargs) -> None:
         message = f"Fingerprint generation failed for {content_type} using {algorithm}"
         kwargs.update({
             'error_code': 'FINGERPRINT_ERROR',
@@ -268,7 +275,7 @@ class FingerprintGenerationError(ProtectionError):
 class BlockchainRegistrationError(ProtectionError):
     """Error registering content on blockchain"""
     
-    def __init__(self, blockchain_network: str, transaction_hash: str, cause: Exception, **kwargs):
+    def __init__(self, blockchain_network -> None: str, transaction_hash -> None: str, cause -> None: Exception, **kwargs) -> None:
         message = f"Blockchain registration failed on {blockchain_network}, tx: {transaction_hash}"
         kwargs.update({
             'error_code': 'BLOCKCHAIN_ERROR',
@@ -286,7 +293,7 @@ class BlockchainRegistrationError(ProtectionError):
 class DatabaseError(MediaProcessingError):
     """Database operation errors"""
     
-    def __init__(self, message: str, **kwargs):
+    def __init__(self, message -> None: str, **kwargs) -> None:
         kwargs.setdefault('error_code', 'DATABASE_ERROR')
         kwargs.setdefault('category', ErrorCategory.DATABASE)
         kwargs.setdefault('severity', ErrorSeverity.HIGH)
@@ -295,7 +302,7 @@ class DatabaseError(MediaProcessingError):
 class PerformanceError(MediaProcessingError):
     """Performance-related errors"""
     
-    def __init__(self, message: str, **kwargs):
+    def __init__(self, message -> None: str, **kwargs) -> None:
         kwargs.setdefault('error_code', 'PERFORMANCE_ERROR')
         kwargs.setdefault('category', ErrorCategory.PERFORMANCE)
         kwargs.setdefault('severity', ErrorSeverity.MEDIUM)
@@ -308,7 +315,7 @@ class PerformanceError(MediaProcessingError):
 class ValidationError(MediaProcessingError):
     """Input validation errors"""
     
-    def __init__(self, field: str, value: Any, constraint: str, **kwargs):
+    def __init__(self, field -> None: str, value -> None: Any, constraint -> None: str, **kwargs) -> None:
         message = f"Validation failed for field '{field}' with value '{value}': {constraint}"
         kwargs.update({
             'error_code': 'VALIDATION_ERROR',
@@ -326,7 +333,7 @@ class ValidationError(MediaProcessingError):
 class BusinessLogicError(MediaProcessingError):
     """Business rule violation errors"""
     
-    def __init__(self, rule: str, violation: str, **kwargs):
+    def __init__(self, rule -> None: str, violation -> None: str, **kwargs) -> None:
         message = f"Business rule violation: {rule} - {violation}"
         kwargs.update({
             'error_code': 'BUSINESS_LOGIC_ERROR',
@@ -401,11 +408,11 @@ class ErrorHandler:
     
     @staticmethod
     def log_performance_issue(
-        operation: str,
-        duration_ms: int,
-        threshold_ms: int,
-        context: Optional[Dict[str, Any]] = None
-    ):
+        operation -> None: str,
+        duration_ms -> None: int,
+        threshold_ms -> None: int,
+        context -> None: Optional[Dict[str, Any]] = None
+    ) -> None:
         """Log performance issues when operations exceed thresholds"""
         if duration_ms > threshold_ms:
             logger.warning(
@@ -425,11 +432,11 @@ from typing import Callable, TypeVar
 
 T = TypeVar('T')
 
-def handle_processing_errors(operation_name: str):
+def handle_processing_errors(operation_name -> None: str) -> None:
     """Decorator to automatically handle and convert exceptions"""
     def decorator(func: Callable[..., T]) -> Callable[..., T]:
         @wraps(func)
-        async def async_wrapper(*args, **kwargs):
+        async def async_wrapper(*args, **kwargs) -> None:
             try:
                 return await func(*args, **kwargs)
             except MediaProcessingError:
@@ -443,7 +450,7 @@ def handle_processing_errors(operation_name: str):
                 raise ErrorHandler.handle_exception(e, operation_name, context)
         
         @wraps(func)
-        def sync_wrapper(*args, **kwargs):
+        def sync_wrapper(*args, **kwargs) -> None:
             try:
                 return func(*args, **kwargs)
             except MediaProcessingError:
@@ -471,12 +478,12 @@ def handle_processing_errors(operation_name: str):
 class ErrorMetrics:
     """Error metrics collection for monitoring"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.error_counts = {}
         self.severity_counts = {}
         self.category_counts = {}
     
-    def record_error(self, error: MediaProcessingError):
+    def record_error(self, error -> None: MediaProcessingError) -> None:
         """Record error for metrics collection"""
         # Count by error code
         self.error_counts[error.error_code] = self.error_counts.get(error.error_code, 0) + 1

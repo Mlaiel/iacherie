@@ -65,7 +65,7 @@ Administrative user management schema."""
     timezone: str = Field(default="UTC")
     
     @validator('admin_role')
-    def validate_admin_role(cls, v):
+    def validate_admin_role(cls, v) -> None:
         """Validate admin role."""
         allowed_roles = {
             "super_admin", "system_admin", "user_admin", "content_moderator",
@@ -127,7 +127,7 @@ class SystemConfiguration(UUIDSchema, TimestampSchema, AuditSchema):
     production_value: Optional[Any] = None
     
     @validator('config_category')
-    def validate_config_category(cls, v):
+    def validate_config_category(cls, v) -> None:
         """Validate configuration category."""
         allowed_categories = {
             "authentication", "security", "database", "storage", "api_limits",
@@ -188,7 +188,7 @@ class AuditLog(UUIDSchema, TimestampSchema):
     resolution_notes: Optional[str] = None
     
     @validator('event_type')
-    def validate_event_type(cls, v):
+    def validate_event_type(cls, v) -> None:
         """Validate event type."""
         allowed_types = {
             "authentication", "authorization", "data_access", "data_modification",
@@ -250,7 +250,7 @@ class UserManagement(UUIDSchema, TimestampSchema, AuditSchema):
     review_date: Optional[datetime] = None
     
     @validator('action_type')
-    def validate_action_type(cls, v):
+    def validate_action_type(cls, v) -> None:
         """Validate action type."""
         allowed_types = {
             "account_creation", "account_modification", "account_suspension",
@@ -307,7 +307,7 @@ class SystemHealth(UUIDSchema, TimestampSchema):
     resource_exhaustion_prediction: Optional[datetime] = None
     
     @validator('health_status')
-    def validate_health_status(cls, v):
+    def validate_health_status(cls, v) -> None:
         """Validate health status."""
         allowed_statuses = {"healthy", "warning", "critical", "maintenance", "degraded", "outage"}
         if v not in allowed_statuses:
@@ -370,7 +370,7 @@ class BackupConfiguration(UUIDSchema, TimestampSchema, AuditSchema):
     geographic_replication: bool = Field(default=False)
     
     @validator('backup_type')
-    def validate_backup_type(cls, v):
+    def validate_backup_type(cls, v) -> None:
         """Validate backup type."""
         allowed_types = {
             "full_backup", "incremental_backup", "differential_backup",
@@ -437,7 +437,7 @@ class ComplianceReport(UUIDSchema, TimestampSchema, AuditSchema):
     continuous_monitoring: bool = Field(default=True)
     
     @validator('compliance_framework')
-    def validate_compliance_framework(cls, v):
+    def validate_compliance_framework(cls, v) -> None:
         """Validate compliance framework."""
         allowed_frameworks = {
             "GDPR", "CCPA", "HIPAA", "SOX", "PCI_DSS", "ISO_27001",
@@ -496,7 +496,7 @@ class PlatformSettings(UUIDSchema, TimestampSchema, AuditSchema):
     success_metrics: List[str] = Field(default_factory=list)
     
     @validator('setting_category')
-    def validate_setting_category(cls, v):
+    def validate_setting_category(cls, v) -> None:
         """Validate setting category."""
         allowed_categories = {
             "user_experience", "security", "performance", "monetization",

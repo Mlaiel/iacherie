@@ -163,7 +163,7 @@ class CollaborationROICalculator:
     - Attribution modeling
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.investments: Dict[str, List[Investment]] = defaultdict(list)
         self.revenues: Dict[str, List[Revenue]] = defaultdict(list)
@@ -232,7 +232,7 @@ class CollaborationROICalculator:
             }
         }
 
-    def _initialize_ml_models(self):
+    def _initialize_ml_models(self) -> None:
         """Initialize ML models for ROI prediction."""
         try:
             self.ml_models = {
@@ -1148,7 +1148,7 @@ class CollaborationROICalculator:
         
         return np.mean(factors)
 
-    def _update_calculation_metrics(self, calculation_time: float, roi_percentage: float):
+    def _update_calculation_metrics(self, calculation_time -> None: float, roi_percentage -> None: float) -> None:
         """Update calculation performance metrics."""
         self.metrics['total_calculations'] += 1
         
@@ -1250,7 +1250,7 @@ class CollaborationROICalculator:
 
 # Example usage and testing
 if __name__ == "__main__":
-    async def test_roi_calculator():
+    async def test_roi_calculator() -> None:
         """Test ROI calculator functionality."""
         calculator = CollaborationROICalculator()
         

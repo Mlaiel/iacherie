@@ -115,7 +115,7 @@ class ErrorHandler:
     and automated alerting for all third-party integration failures.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize error handler."""
         self.logger = logging.getLogger(__name__)
         

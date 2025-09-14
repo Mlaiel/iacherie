@@ -182,7 +182,7 @@ class VideoStreamingAnalytics:
 class BaseVideoConnector:
     """Base class for video platform connectors."""
     
-    def __init__(self, platform: VideoPlatformType, credentials: Dict[str, Any]):
+    def __init__(self, platform -> None: VideoPlatformType, credentials -> None: Dict[str, Any]) -> None:
         self.platform = platform
         self.credentials = credentials
         self.session: Optional[aiohttp.ClientSession] = None
@@ -287,7 +287,7 @@ class BaseVideoConnector:
             content_id=content_id
         )
     
-    async def close(self):
+    async def close(self) -> None:
         """Close the connector and cleanup resources."""
         if self.session:
             await self.session.close()
@@ -296,7 +296,7 @@ class BaseVideoConnector:
 class VimeoConnector(BaseVideoConnector):
     """Vimeo API connector with Pro features."""
     
-    def __init__(self, credentials: Dict[str, Any]):
+    def __init__(self, credentials -> None: Dict[str, Any]) -> None:
         super().__init__(VideoPlatformType.VIMEO, credentials)
         self.api_base = "https://api.vimeo.com"
     
@@ -361,7 +361,7 @@ class VimeoConnector(BaseVideoConnector):
 class DailymotionConnector(BaseVideoConnector):
     """Dailymotion API connector with European market focus."""
     
-    def __init__(self, credentials: Dict[str, Any]):
+    def __init__(self, credentials -> None: Dict[str, Any]) -> None:
         super().__init__(VideoPlatformType.DAILYMOTION, credentials)
         self.api_base = "https://www.dailymotion.com/api"
     
@@ -390,7 +390,7 @@ class DailymotionConnector(BaseVideoConnector):
 class TwitchConnector(BaseVideoConnector):
     """Twitch API connector with streaming and monetization."""
     
-    def __init__(self, credentials: Dict[str, Any]):
+    def __init__(self, credentials -> None: Dict[str, Any]) -> None:
         super().__init__(VideoPlatformType.TWITCH, credentials)
         self.api_base = "https://api.twitch.tv/helix"
     
@@ -457,7 +457,7 @@ class TwitchConnector(BaseVideoConnector):
 class LiveStreamingConnector(BaseVideoConnector):
     """Multi-platform live streaming connector."""
     
-    def __init__(self, credentials: Dict[str, Any]):
+    def __init__(self, credentials -> None: Dict[str, Any]) -> None:
         super().__init__(VideoPlatformType.LIVE_STREAMING, credentials)
         self.active_streams: Dict[str, Dict[str, Any]] = {}
     
@@ -510,7 +510,7 @@ class LiveStreamingConnector(BaseVideoConnector):
 class VideoPlatformManager:
     """Manager for all video platform connectors."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.connectors: Dict[VideoPlatformType, BaseVideoConnector] = {}
         self.logger = logging.getLogger(f"{__name__}.manager")
     
@@ -589,7 +589,7 @@ class VideoPlatformManager:
         """Get list of connected platforms."""
         return list(self.connectors.keys())
     
-    async def close_all(self):
+    async def close_all(self) -> None:
         """Close all connectors."""
         for connector in self.connectors.values():
             await connector.close()

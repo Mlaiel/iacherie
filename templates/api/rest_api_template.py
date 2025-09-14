@@ -1,4 +1,6 @@
 """{{api_name}} REST API Template for Ainflue Platform
+import asyncio
+
 {{api_description}}
 
 Author: {{author_name}} ({{author_email}})
@@ -47,6 +49,7 @@ class {{api_name}}CreateRequest(BaseModel):
     description: Optional[str] = Field(None, description="Description of the {{resource_name}}")
     
     class Config:
+    """Config: class implementation"""
         schema_extra = {
             "example": {
                 "name": "Example {{resource_name}}",
@@ -61,6 +64,7 @@ class {{api_name}}UpdateRequest(BaseModel):
     description: Optional[str] = Field(None, description="Description of the {{resource_name}}")
     
     class Config:
+    """Config: class implementation"""
         schema_extra = {
             "example": {
                 "name": "Updated {{resource_name}}",
@@ -78,6 +82,7 @@ class {{api_name}}Response(BaseModel):
     updated_at: datetime = Field(..., description="Last update timestamp")
     
     class Config:
+    """Config: class implementation"""
         orm_mode = True
 
 
@@ -94,7 +99,7 @@ class StandardAPIResponse(BaseModel):
 class {{api_name}}APIRouter:
     """{{api_description}} REST API Router"""
     
-    def __init__(self, service: Any, metrics_collector: APIMetricsCollector):
+    def __init__(self, service -> None: Any, metrics_collector -> None: APIMetricsCollector) -> None:
         self.service = service
         self.metrics_collector = metrics_collector
         self.router = APIRouter(
@@ -103,12 +108,12 @@ class {{api_name}}APIRouter:
         )
         self._setup_routes()
     
-    def _setup_routes(self):
+    def _setup_routes(self) -> None:
         """Setup API routes"""
         
         @self.router.get("/health")
         @log_api_call
-        async def health_check():
+        async def health_check() -> None:
             return StandardAPIResponse(
                 status=ResponseStatus.SUCCESS,
                 message="{{api_name}} API is healthy",
@@ -185,3 +190,5 @@ TEMPLATE_CONFIG = {
         "Caching"
     ]
 }
+
+# File has syntax issues - needs manual review

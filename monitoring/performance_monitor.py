@@ -50,7 +50,7 @@ class PerformanceMonitor:
     Tracks detailed metrics per endpoint for optimization
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.metrics_store: List[EndpointMetrics] = deque(maxlen=100000)
         self.endpoint_stats: Dict[str, List[float]] = defaultdict(list)
         self.real_time_metrics: Dict[str, Any] = {}
@@ -74,7 +74,7 @@ class PerformanceMonitor:
         
         return logger
     
-    def setup_prometheus_metrics(self):
+    def setup_prometheus_metrics(self) -> None:
         """Setup Prometheus metrics for monitoring"""
         self.request_duration = Histogram(
             'ainflue_request_duration_seconds',
@@ -109,15 +109,15 @@ class PerformanceMonitor:
         )
     
     def record_request(self, 
-                      endpoint: str,
-                      method: str,
-                      response_time_ms: float,
-                      status_code: int,
-                      request_size: int = 0,
-                      response_size: int = 0,
-                      user_id: Optional[str] = None,
-                      user_agent: Optional[str] = None,
-                      ip_address: Optional[str] = None):
+                      endpoint -> None: str,
+                      method -> None: str,
+                      response_time_ms -> None: float,
+                      status_code -> None: int,
+                      request_size -> None: int = 0,
+                      response_size -> None: int = 0,
+                      user_id -> None: Optional[str] = None,
+                      user_agent -> None: Optional[str] = None,
+                      ip_address -> None: Optional[str] = None) -> None:
         """Record metrics for a single request"""
         
         metric = EndpointMetrics(
@@ -380,7 +380,7 @@ class PerformanceMonitor:
 performance_monitor = PerformanceMonitor()
 
 # Middleware function for FastAPI
-def performance_middleware(request, call_next):
+def performance_middleware(request, call_next) -> None:
     """FastAPI middleware to automatically track performance"""
     start_time = time.time()
     

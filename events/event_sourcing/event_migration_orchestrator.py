@@ -138,7 +138,7 @@ class EventMigrationResult:
 class MigrationValidator:
     """Validates migration results"""
     
-    def __init__(self, versioning_engine: EventVersioningEngine):
+    def __init__(self, versioning_engine -> None: EventVersioningEngine) -> None:
         self.versioning_engine = versioning_engine
     
     async def validate_migrated_event(self, original: DomainEvent, 
@@ -166,7 +166,7 @@ class MigrationValidator:
 class MigrationBackup:
     """Manages migration backups for rollback"""
     
-    def __init__(self, backup_store: EventStoreInterface):
+    def __init__(self, backup_store -> None: EventStoreInterface) -> None:
         self.backup_store = backup_store
         self.backups: Dict[str, List[DomainEvent]] = {}
     
@@ -215,10 +215,10 @@ class MigrationBackup:
 class SequentialMigrationExecutor:
     """Sequential migration executor"""
     
-    def __init__(self, config: MigrationConfig, 
-                 versioning_engine: EventVersioningEngine,
-                 validator: MigrationValidator,
-                 backup: MigrationBackup):
+    def __init__(self, config -> None: MigrationConfig, 
+                 versioning_engine -> None: EventVersioningEngine,
+                 validator -> None: MigrationValidator,
+                 backup -> None: MigrationBackup) -> None:
         self.config = config
         self.versioning_engine = versioning_engine
         self.validator = validator
@@ -291,10 +291,10 @@ class SequentialMigrationExecutor:
 class BatchMigrationExecutor:
     """Batch migration executor"""
     
-    def __init__(self, config: MigrationConfig,
-                 versioning_engine: EventVersioningEngine,
-                 validator: MigrationValidator,
-                 backup: MigrationBackup):
+    def __init__(self, config -> None: MigrationConfig,
+                 versioning_engine -> None: EventVersioningEngine,
+                 validator -> None: MigrationValidator,
+                 backup -> None: MigrationBackup) -> None:
         self.config = config
         self.versioning_engine = versioning_engine
         self.validator = validator
@@ -378,10 +378,10 @@ class BatchMigrationExecutor:
 class ParallelMigrationExecutor:
     """Parallel migration executor"""
     
-    def __init__(self, config: MigrationConfig,
-                 versioning_engine: EventVersioningEngine,
-                 validator: MigrationValidator,
-                 backup: MigrationBackup):
+    def __init__(self, config -> None: MigrationConfig,
+                 versioning_engine -> None: EventVersioningEngine,
+                 validator -> None: MigrationValidator,
+                 backup -> None: MigrationBackup) -> None:
         self.config = config
         self.versioning_engine = versioning_engine
         self.validator = validator
@@ -459,9 +459,9 @@ class ParallelMigrationExecutor:
 class EventMigrationOrchestrator:
     """Enterprise event migration orchestrator"""
     
-    def __init__(self, event_store: EventStoreInterface,
-                 backup_store: EventStoreInterface,
-                 versioning_engine: EventVersioningEngine):
+    def __init__(self, event_store -> None: EventStoreInterface,
+                 backup_store -> None: EventStoreInterface,
+                 versioning_engine -> None: EventVersioningEngine) -> None:
         self.event_store = event_store
         self.backup_store = backup_store
         self.versioning_engine = versioning_engine
@@ -710,7 +710,7 @@ class EventMigrationOrchestrator:
         
         return filtered_events
     
-    def _create_executor(self, config: MigrationConfig):
+    def _create_executor(self, config -> None: MigrationConfig) -> None:
         """Create appropriate migration executor"""
         if config.strategy == MigrationStrategy.SEQUENTIAL:
             return SequentialMigrationExecutor(config, self.versioning_engine, self.validator, self.backup)

@@ -54,7 +54,7 @@ class TaskMetadata:
 class FisherInformationEstimator:
     """Estimates Fisher Information Matrix for EWC."""
     
-    def __init__(self, model: nn.Module, device: str = "cuda"):
+    def __init__(self, model -> None: nn.Module, device -> None: str = "cuda") -> None:
         self.model = model
         self.device = device
         
@@ -107,13 +107,13 @@ class FisherInformationEstimator:
 class ExperienceReplayBuffer:
     """Experience replay buffer for continual learning."""
     
-    def __init__(self, capacity: int, creator_balanced: bool = True):
+    def __init__(self, capacity -> None: int, creator_balanced -> None: bool = True) -> None:
         self.capacity = capacity
         self.creator_balanced = creator_balanced
         self.buffer = []
         self.creator_counts = {}
         
-    def add(self, experience: Dict[str, Any]):
+    def add(self, experience -> None: Dict[str, Any]) -> None:
         """Add experience to buffer with creator balancing."""
         creator_type = experience.get('creator_type', 'unknown')
         
@@ -127,7 +127,7 @@ class ExperienceReplayBuffer:
         self.buffer.append(experience)
         self.creator_counts[creator_type] = self.creator_counts.get(creator_type, 0) + 1
         
-    def _remove_balanced(self):
+    def _remove_balanced(self) -> None:
         """Remove sample to maintain creator balance."""
         if not self.creator_counts:
             return
@@ -163,7 +163,7 @@ class ExperienceReplayBuffer:
 class ProgressiveNeuralNetwork:
     """Progressive Neural Network for continual learning."""
     
-    def __init__(self, base_model: nn.Module, expansion_factor: float = 1.5):
+    def __init__(self, base_model -> None: nn.Module, expansion_factor -> None: float = 1.5) -> None:
         self.base_model = base_model
         self.expansion_factor = expansion_factor
         self.columns = [base_model]
@@ -190,7 +190,7 @@ class ProgressiveNeuralNetwork:
         
         return new_column
     
-    def _expand_column_capacity(self, model: nn.Module, task_metadata: TaskMetadata):
+    def _expand_column_capacity(self, model -> None: nn.Module, task_metadata -> None: TaskMetadata) -> None:
         """Expand model capacity based on task complexity."""
         complexity_factor = self._estimate_task_complexity(task_metadata)
         
@@ -268,12 +268,12 @@ class KnowledgeDistillationTrainer:
     
     def __init__(
         self,
-        teacher_model: nn.Module,
-        student_model: nn.Module,
-        temperature: float = 4.0,
-        alpha: float = 0.7,
-        device: str = "cuda"
-    ):
+        teacher_model -> None: nn.Module,
+        student_model -> None: nn.Module,
+        temperature -> None: float = 4.0,
+        alpha -> None: float = 0.7,
+        device -> None: str = "cuda"
+    ) -> None:
         self.teacher_model = teacher_model
         self.student_model = student_model
         self.temperature = temperature
@@ -351,7 +351,7 @@ class KnowledgeDistillationTrainer:
 class ContinualLearningEngine:
     """Advanced continual learning engine for creator content adaptation."""
     
-    def __init__(self, config: ContinualLearningConfig):
+    def __init__(self, config -> None: ContinualLearningConfig) -> None:
         self.config = config
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         
@@ -376,7 +376,7 @@ class ContinualLearningEngine:
         
         logger.info(f"Initialized ContinualLearningEngine with method: {config.method}")
     
-    async def initialize_model(self, model: nn.Module, task_metadata: TaskMetadata):
+    async def initialize_model(self, model -> None: nn.Module, task_metadata -> None: TaskMetadata) -> None:
         """Initialize continual learning with base model."""
         self.current_model = model.to(self.device)
         self.fisher_estimator = FisherInformationEstimator(self.current_model, str(self.device))
@@ -824,16 +824,16 @@ class ContinualLearningEngine:
         
         return forgetting
     
-    async def _store_optimal_parameters(self):
+    async def _store_optimal_parameters(self) -> None:
         """Store current parameters as optimal for current task."""
         for name, param in self.current_model.named_parameters():
             self.optimal_parameters[name] = param.data.clone()
     
     async def _update_replay_buffer(
         self,
-        dataloader: torch.utils.data.DataLoader,
-        task_metadata: TaskMetadata
-    ):
+        dataloader -> None: torch.utils.data.DataLoader,
+        task_metadata -> None: TaskMetadata
+    ) -> None:
         """Update replay buffer with new task data."""
         for batch_idx, (data, target) in enumerate(dataloader):
             if batch_idx > 10:  # Limit samples for efficiency
@@ -850,7 +850,7 @@ class ContinualLearningEngine:
                 }
                 self.replay_buffer.add(experience)
     
-    async def save_checkpoint(self, checkpoint_path: Path):
+    async def save_checkpoint(self, checkpoint_path -> None: Path) -> None:
         """Save continual learning checkpoint."""
         checkpoint = {
             'config': self.config.__dict__,
@@ -869,7 +869,7 @@ class ContinualLearningEngine:
         torch.save(checkpoint, checkpoint_path)
         logger.info(f"Saved continual learning checkpoint to {checkpoint_path}")
     
-    async def load_checkpoint(self, checkpoint_path: Path):
+    async def load_checkpoint(self, checkpoint_path -> None: Path) -> None:
         """Load continual learning checkpoint."""
         checkpoint = torch.load(checkpoint_path, map_location=self.device)
         
@@ -926,7 +926,7 @@ def create_continual_learning_engine(
 
 
 # Example usage for Ainflue creators
-async def example_creator_continual_learning():
+async def example_creator_continual_learning() -> None:
     """Example of continual learning for creator content adaptation."""
     
     # Create continual learning engine

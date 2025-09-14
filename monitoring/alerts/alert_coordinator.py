@@ -62,7 +62,7 @@ class AlertCoordinator:
     - Provides unified reporting and dashboards
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """
 Initialize the unified alert coordinator"""
         # Initialize core alert manager

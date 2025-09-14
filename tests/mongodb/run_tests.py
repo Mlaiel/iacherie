@@ -1,3 +1,8 @@
+"""
+Run Tests module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """MongoDB Test Runner
 ===================
@@ -24,12 +29,12 @@ sys.path.insert(0, str(project_root))
 class MongoDBTestRunner:
     """MongoDB test runner with comprehensive reporting."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.test_dir = Path(__file__).parent
         self.report_dir = self.test_dir / "reports"
         self.report_dir.mkdir(exist_ok=True)
     
-    def run_tests(self, test_type="all", verbose=False, coverage=False):
+    def run_tests(self, test_type="all", verbose=False, coverage=False) -> None:
         """Run MongoDB tests with specified options."""
         print("🚀 Starting MongoDB Test Suite")
         print("=" * 50)
@@ -82,7 +87,7 @@ class MongoDBTestRunner:
             print(f"❌ Error running tests: {e}")
             return False
     
-    def _process_test_results(self, result, duration, test_type):
+    def _process_test_results(self, result, duration, test_type) -> None:
         """Process and report test results."""
         print("\n📊 Test Results")
         print("=" * 50)
@@ -120,7 +125,7 @@ class MongoDBTestRunner:
                     if line.strip():
                         print(f"  {line}")
     
-    def _extract_test_stats(self, output_lines):
+    def _extract_test_stats(self, output_lines) -> None:
         """Extract test statistics from pytest output."""
         stats = {}
         
@@ -142,7 +147,7 @@ class MongoDBTestRunner:
         
         return stats
     
-    def _save_detailed_report(self, result, duration, test_type, stats):
+    def _save_detailed_report(self, result, duration, test_type, stats) -> None:
         """Save detailed test report to file."""
         report = {
             "timestamp": datetime.now().isoformat(),
@@ -161,7 +166,7 @@ class MongoDBTestRunner:
         
         print(f"\n📋 Detailed report saved to: {report_file}")
     
-    def run_performance_benchmarks(self):
+    def run_performance_benchmarks(self) -> None:
         """Run performance benchmark tests."""
         print("\n🏃‍♂️ Running Performance Benchmarks")
         print("=" * 50)
@@ -215,7 +220,7 @@ class MongoDBTestRunner:
         
         return all(r["passed"] for r in results.values())
     
-    def run_security_audit(self):
+    def run_security_audit(self) -> None:
         """Run security-focused tests."""
         print("\n🔒 Running Security Audit")
         print("=" * 50)
@@ -268,7 +273,7 @@ class MongoDBTestRunner:
         
         return security_report["overall_status"] == "SECURE"
     
-    def generate_coverage_report(self):
+    def generate_coverage_report(self) -> None:
         """Generate test coverage report."""
         print("\n📊 Generating Coverage Report")
         print("=" * 50)
@@ -294,7 +299,7 @@ class MongoDBTestRunner:
         
         return result.returncode == 0
 
-def main():
+def main() -> None:
     """Main test runner entry point."""
     parser = argparse.ArgumentParser(description="MongoDB Test Runner")
     parser.add_argument(

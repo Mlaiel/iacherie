@@ -98,7 +98,7 @@ class PlatformHealthMonitor:
     - Health trends and historical analysis
     """
 
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.config = config or {}
         self.health_checks = {}
         self.service_health = {}
@@ -124,14 +124,14 @@ class PlatformHealthMonitor:
         # Start monitoring
         asyncio.create_task(self._start_monitoring())
 
-    async def _get_http_session(self):
+    async def _get_http_session(self) -> None:
         """Get or create HTTP session"""
         if self.http_session is None:
             timeout = aiohttp.ClientTimeout(total=30)
             self.http_session = aiohttp.ClientSession(timeout=timeout)
         return self.http_session
 
-    def _initialize_default_checks(self):
+    def _initialize_default_checks(self) -> None:
         """Initialize default health checks"""
         
         # System resource checks
@@ -251,7 +251,7 @@ class PlatformHealthMonitor:
             logger.error(f"Error adding health check {name}: {e}")
             return False
 
-    async def _start_monitoring(self):
+    async def _start_monitoring(self) -> None:
         """Start continuous health monitoring"""
         
         logger.info("Starting platform health monitoring")
@@ -281,7 +281,7 @@ class PlatformHealthMonitor:
                 logger.error(f"Error in health monitoring loop: {e}")
                 await asyncio.sleep(self.check_interval)
 
-    async def _run_all_health_checks(self):
+    async def _run_all_health_checks(self) -> None:
         """Run all enabled health checks"""
         
         tasks = []
@@ -299,7 +299,7 @@ class PlatformHealthMonitor:
         if tasks:
             await asyncio.gather(*tasks, return_exceptions=True)
 
-    async def _run_single_health_check(self, check_name: str):
+    async def _run_single_health_check(self, check_name -> None: str) -> None:
         """Run a single health check"""
         
         try:
@@ -714,7 +714,7 @@ class PlatformHealthMonitor:
             return self.service_health.get(check_name)
         return None
 
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Gracefully shutdown health monitor"""
         
         logger.info("Shutting down platform health monitor...")

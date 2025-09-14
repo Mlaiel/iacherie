@@ -1,5 +1,7 @@
 """Timing Oracle - Optimal Timing Prediction Engine
 
+import asyncio
+
 Predicts optimal timing for content publication across platforms using
 AI-powered analysis of audience behavior and platform algorithms.
 
@@ -45,7 +47,7 @@ class PlatformTiming:
 class TimingOracle:
     """Optimal timing prediction and analysis engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize timing oracle"""
         self.timing_models = self._load_timing_models()
         self.platform_patterns = self._load_platform_patterns()

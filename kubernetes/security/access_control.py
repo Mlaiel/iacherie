@@ -141,12 +141,12 @@ class PermissionManager:
     Advanced permission management system
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.permissions: Dict[str, Permission] = {}
         self._setup_default_permissions()
         logger.info("Permission manager initialized")
     
-    def _setup_default_permissions(self):
+    def _setup_default_permissions(self) -> None:
         """Setup default system permissions"""
         default_permissions = [
             # Deployment permissions
@@ -410,14 +410,14 @@ class RoleBasedSecurity:
     Role-based access control (RBAC) system
     """
     
-    def __init__(self, permission_manager: PermissionManager):
+    def __init__(self, permission_manager -> None: PermissionManager) -> None:
         self.permission_manager = permission_manager
         self.roles: Dict[str, Role] = {}
         self.users: Dict[str, User] = {}
         self._setup_default_roles()
         logger.info("Role-based security system initialized")
     
-    def _setup_default_roles(self):
+    def _setup_default_roles(self) -> None:
         """Setup default system roles"""
         # Get default permissions
         permissions = self.permission_manager.permissions
@@ -789,10 +789,10 @@ class DeploymentAccessControl:
     
     def __init__(
         self,
-        redis_url: str = "redis://localhost:6379",
-        jwt_secret: str = "your-secret-key",
-        session_timeout: int = 3600
-    ):
+        redis_url -> None: str = "redis -> None://localhost -> None:6379",
+        jwt_secret -> None: str = "your-secret-key",
+        session_timeout -> None: int = 3600
+    ) -> None:
         self.permission_manager = PermissionManager()
         self.rbac = RoleBasedSecurity(self.permission_manager)
         
@@ -811,7 +811,7 @@ class DeploymentAccessControl:
         
         logger.info("Deployment access control initialized")
     
-    async def initialize_redis_pool(self):
+    async def initialize_redis_pool(self) -> None:
         """Initialize Redis connection pool"""
         try:
             self._redis_pool = aioredis.ConnectionPool.from_url(self.redis_url)
@@ -1051,7 +1051,7 @@ Verify password against hash"""
             logger.error(f"Failed to logout session: {e}")
             return False
     
-    async def cleanup_expired_sessions(self):
+    async def cleanup_expired_sessions(self) -> None:
         """Cleanup expired sessions"""
         try:
             current_time = datetime.utcnow()
@@ -1122,3 +1122,5 @@ Verify password against hash"""
         except Exception as e:
             logger.error(f"Failed to get access summary: {e}")
             return {'error': str(e)}
+
+# File has syntax issues - needs manual review

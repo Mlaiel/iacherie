@@ -76,7 +76,7 @@ class AdaptationResult:
 class AdaptiveOptimizer:
     """AI-powered adaptive optimization engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize adaptive optimizer"""
         self.active_strategies = {}
         self.optimization_history = {}
@@ -420,7 +420,7 @@ class AdaptiveOptimizer:
             performance_history=[]
         )
     
-    async def _establish_performance_baseline(self, content_id: str):
+    async def _establish_performance_baseline(self, content_id -> None: str) -> None:
         """Establish baseline performance metrics"""
         # Placeholder - would collect initial performance data
         self.performance_baselines[content_id] = {
@@ -589,7 +589,7 @@ class AdaptiveOptimizer:
         
         return learning_updates
     
-    async def _update_adaptive_strategies(self, content_id: str, learning_updates: Dict[str, Any]):
+    async def _update_adaptive_strategies(self, content_id -> None: str, learning_updates -> None: Dict[str, Any]) -> None:
         """Update adaptive strategies based on learning"""
         strategies = self.active_strategies.get(content_id, [])
         
@@ -641,7 +641,7 @@ class AdaptiveOptimizer:
         
         return next_check
     
-    async def _store_optimization_history(self, content_id: str, result: AdaptationResult):
+    async def _store_optimization_history(self, content_id -> None: str, result -> None: AdaptationResult) -> None:
         """Store optimization result in history"""
         if content_id not in self.optimization_history:
             self.optimization_history[content_id] = []

@@ -33,7 +33,7 @@ class SchemaImplementation:
 class SchemaMarkupWorkflow:
     """AI-powered schema markup workflow"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.metrics_collector = MetricsCollector()
         
     async def implement_schema_markup(

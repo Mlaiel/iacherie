@@ -1,6 +1,9 @@
 """Rolling Updater"""
+import asyncio
+
 import logging
 logger = logging.getLogger(__name__)
 class RollingUpdater:
-    def __init__(self): logger.info("Rolling updater initialized")
-    async def rolling_update(self, config): return {'status': 'updated'}
+    """RollingUpdater: class implementation"""
+    def __init__(self) -> None: logger.info("Rolling updater initialized")
+    async def rolling_update(self, config) -> None: return {'status': 'updated'}

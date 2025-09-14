@@ -95,7 +95,7 @@ class SurfingResult:
 class TrendSurfingEngine:
     """Real-time trend detection and automatic surfing system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize trend surfing engine"""
         self.active_trends = {}
         self.surfing_strategies = {}
@@ -415,7 +415,7 @@ class TrendSurfingEngine:
             return {}
     
     # Private helper methods
-    async def _trend_detection_loop(self):
+    async def _trend_detection_loop(self) -> None:
         """Main trend detection loop"""
         while self.surfing_active:
             try:
@@ -434,7 +434,7 @@ class TrendSurfingEngine:
                 logger.error(f"Error in trend detection loop: {str(e)}")
                 await asyncio.sleep(600)  # Wait longer on error
     
-    async def _init_platform_connector(self, platform: str):
+    async def _init_platform_connector(self, platform -> None: str) -> None:
         """Initialize connector for specific platform"""
         # Placeholder - would initialize actual platform API connectors
         self.platform_connectors[platform] = {
@@ -732,12 +732,12 @@ class TrendSurfingEngine:
         
         return min(1.0, base_probability + adaptation_bonus - competition_penalty)
     
-    async def _store_surfing_result(self, result: SurfingResult):
+    async def _store_surfing_result(self, result -> None: SurfingResult) -> None:
         """Store surfing result for analysis"""
         # Placeholder - would store in database
         logger.info(f"Stored surfing result: {result.surfing_id}")
     
-    async def _measure_surfing_impact(self, result: SurfingResult):
+    async def _measure_surfing_impact(self, result -> None: SurfingResult) -> None:
         """Measure actual impact of surfing action"""
         # Placeholder - would measure actual performance after surfing
         await asyncio.sleep(3600)  # Wait 1 hour
@@ -783,7 +783,7 @@ class TrendSurfingEngine:
         """Score timing optimization quality"""
         return 0.85
     
-    async def _cleanup_old_trends(self):
+    async def _cleanup_old_trends(self) -> None:
         """Clean up old and expired trends"""
         current_time = datetime.utcnow()
         expired_trends = []

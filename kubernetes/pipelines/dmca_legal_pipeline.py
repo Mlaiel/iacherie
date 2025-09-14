@@ -9,7 +9,7 @@ for the IA Influencer Agent platform, enabling creators to protect their intelle
 through automated legal processes and compliance workflows.
 
 Features:
-- Automated DMCA takedown notice generation
+    - Automated DMCA takedown notice generation
 - Multi-platform legal compliance integration
 - Evidence collection and documentation
 - Legal template management and customization
@@ -19,7 +19,7 @@ Features:
 - Integration with legal service providers
 
 Legal Frameworks Supported:
-- DMCA (Digital Millennium Copyright Act) - USA
+    - DMCA (Digital Millennium Copyright Act) - USA
 - Copyright Directive - European Union
 - Copyright Act - Canada, Australia
 - Safe Harbor provisions compliance
@@ -115,7 +115,7 @@ Copyright infringement evidence"""
     creation_metadata: Dict[str, Any] = None
     fingerprint_hash: Optional[str] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.ownership_proof_documents is None:
             self.ownership_proof_documents = []
         if self.creation_metadata is None:
@@ -136,7 +136,7 @@ Infringing content information"""
     similarity_score: float = 0.0
     metadata: Dict[str, Any] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         try:
                     # Request validation
                     if not data:
@@ -171,7 +171,7 @@ DMCA takedown request"""
     platform_response: Optional[str] = None
     tracking_number: Optional[str] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.created_at is None:
             self.created_at = datetime.utcnow()
         if self.additional_claims is None:
@@ -179,6 +179,7 @@ DMCA takedown request"""
 
 @dataclass
 class LegalTemplate:
+    """LegalTemplate: class implementation"""
         try:
                     # Request validation
                     if not data:
@@ -204,14 +205,14 @@ Legal document template"""
     version: str = "1.0"
     last_updated: datetime = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.last_updated is None:
             self.last_updated = datetime.utcnow()
 
 class DMCATemplateGenerator:
     """DMCA takedown notice template generator"""
     
-    def __init__(self, templates_dir: Optional[Path] = None):
+    def __init__(self, templates_dir -> None: Optional[Path] = None) -> None:
         self.templates_dir = templates_dir or Path(__file__).parent / "legal_templates"
         self.templates_dir.mkdir(exist_ok=True)
         self.logger = logging.getLogger(f"{__name__}.TemplateGenerator")
@@ -225,7 +226,7 @@ class DMCATemplateGenerator:
         # Initialize default templates
         self._create_default_templates()
         
-    def _create_default_templates(self):
+    def _create_default_templates(self) -> None:
         """Create default legal templates"""
         templates = {
             "dmca_standard.html": self._get_dmca_standard_template(),
@@ -258,7 +259,7 @@ class DMCATemplateGenerator:
 <body>
     <div class="header">
         <h1>DMCA TAKEDOWN NOTICE</h1>
-        <p>Digital Millennium Copyright Act, 17 U.S.C. § 512</p>
+        <p>Digital Millennium Copyright Act, 17 U.S.C. # [EMOJI_REMOVED] 512</p>
     </div>
     
     <div class="section">
@@ -329,7 +330,7 @@ class DMCATemplateGenerator:
     </div>
     
     <div class="section">
-        <p><em>This notice is served pursuant to the Digital Millennium Copyright Act (DMCA), 17 U.S.C. § 512(c)(3).</em></p>
+        <p><em>This notice is served pursuant to the Digital Millennium Copyright Act (DMCA), 17 U.S.C. # [EMOJI_REMOVED] 512(c)(3).</em></p>
     </div>
 </body>
 </html>
@@ -346,35 +347,35 @@ Date: {{ current_date }}
 Reference: YouTube Copyright Complaint
 
 COPYRIGHT OWNER INFORMATION:
-Name: {{ owner.name }}
+    Name: {{ owner.name }}
 Email: {{ owner.email }}
 Phone: {{ owner.phone }}
 Address: {{ owner.address }}
 
 ORIGINAL COPYRIGHTED WORK:
-Title: {{ evidence.original_work_title }}
+    Title: {{ evidence.original_work_title }}
 URL: {{ evidence.original_work_url }}
 Description: Original copyrighted content created and owned by {{ owner.name }}
 
 INFRINGING YOUTUBE VIDEO:
-Video URL: {{ infringing.infringing_url }}
+    Video URL: {{ infringing.infringing_url }}
 Video Title: {{ infringing.content_title }}
 Channel Name: {{ infringing.uploader_name }}
 Detected: {{ infringing.detected_date.strftime('%Y-%m-%d') }}
 
 {% if additional_claims %}
 ADDITIONAL INFRINGING VIDEOS:
-{% for claim in additional_claims %}
+    {% for claim in additional_claims %}
 - {{ claim.infringing_url }}
 {% endfor %}
 {% endif %}
 
 SWORN STATEMENTS:
-- I have a good faith belief that use of the copyrighted materials described above is not authorized by the copyright owner, its agent, or the law.
+    - I have a good faith belief that use of the copyrighted materials described above is not authorized by the copyright owner, its agent, or the law.
 - I swear, under penalty of perjury, that the information in this notification is accurate and that I am the copyright owner or authorized to act on behalf of the copyright owner.
 
 REQUESTED ACTION:
-Please remove or disable access to the infringing material identified above.
+    Please remove or disable access to the infringing material identified above.
 
 Electronic Signature: {{ owner.name }}
 Date: {{ current_date }}
@@ -392,30 +393,30 @@ Report Type: Copyright Infringement
 Date: {{ current_date }}
 
 REPORTING PARTY INFORMATION:
-Name: {{ owner.name }}
+    Name: {{ owner.name }}
 Email: {{ owner.email }}
 Phone: {{ owner.phone }}
 Country: {{ owner.address.split(',')[-1].strip() if ',' in owner.address else 'Not specified' }}
 
 ORIGINAL COPYRIGHTED WORK:
-Content Title: {{ evidence.original_work_title }}
+    Content Title: {{ evidence.original_work_title }}
 Original Location: {{ evidence.original_work_url }}
 Creation Date: {{ evidence.original_creation_date.strftime('%Y-%m-%d') }}
 Rights Owned: Full copyright ownership
 
 INFRINGING INSTAGRAM CONTENT:
-Post URL: {{ infringing.infringing_url }}
+    Post URL: {{ infringing.infringing_url }}
 Account Username: {{ infringing.uploader_name }}
 Content Description: {{ infringing.content_title }}
 
 INFRINGEMENT DESCRIPTION:
-The reported content uses my copyrighted material without permission. This constitutes copyright infringement under applicable laws.
+    The reported content uses my copyrighted material without permission. This constitutes copyright infringement under applicable laws.
 
 GOOD FAITH STATEMENT:
-I have a good faith belief that the reported use is not authorized by the copyright owner, its agent, or the law.
+    I have a good faith belief that the reported use is not authorized by the copyright owner, its agent, or the law.
 
 ACCURACY STATEMENT:
-I confirm that the information provided is accurate and I am authorized to act on behalf of the copyright owner.
+    I confirm that the information provided is accurate and I am authorized to act on behalf of the copyright owner.
 
 Contact for Questions: {{ owner.email }}
 
@@ -435,32 +436,32 @@ Date: {{ current_date }}
 Case Reference: {{ notice_id }}
 
 CLAIMANT INFORMATION:
-Full Name: {{ owner.name }}
+    Full Name: {{ owner.name }}
 Email Address: {{ owner.email }}
 Phone Number: {{ owner.phone }}
 Physical Address: {{ owner.address }}
 
 ORIGINAL COPYRIGHTED WORK:
-Work Title: {{ evidence.original_work_title }}
+    Work Title: {{ evidence.original_work_title }}
 Original URL: {{ evidence.original_work_url }}
 Copyright Basis: Original authorship
 
 INFRINGING TIKTOK CONTENT:
-Video URL: {{ infringing.infringing_url }}
+    Video URL: {{ infringing.infringing_url }}
 Username: {{ infringing.uploader_name }}
 Video Description: {{ infringing.content_title }}
 Date Detected: {{ infringing.detected_date.strftime('%Y-%m-%d') }}
 
 INFRINGEMENT DETAILS:
-The TikTok video identified above contains my copyrighted content without authorization, constituting copyright infringement.
+    The TikTok video identified above contains my copyrighted content without authorization, constituting copyright infringement.
 
 SWORN DECLARATIONS:
-1. I have a good faith belief that the use is not authorized
+    1. I have a good faith belief that the use is not authorized
 2. This notification is accurate to the best of my knowledge
 3. I am the copyright owner or authorized representative
 
 REQUESTED ACTION:
-Remove or disable access to the infringing content
+    Remove or disable access to the infringing content
 
 Digital Signature: {{ owner.name }}
 Date: {{ current_date }}
@@ -480,36 +481,36 @@ Reference: {{ notice_id }}
 PURSUANT TO: Directive (EU) 2019/790 on copyright and related rights in the Digital Single Market
 
 RIGHTS HOLDER INFORMATION:
-Name: {{ owner.name }}
+    Name: {{ owner.name }}
 Email: {{ owner.email }}
 Address: {{ owner.address }}
 {% if owner.company %}Company: {{ owner.company }}{% endif %}
 
 COPYRIGHTED WORK:
-Title: {{ evidence.original_work_title }}
+    Title: {{ evidence.original_work_title }}
 Creation Date: {{ evidence.original_creation_date.strftime('%Y-%m-%d') }}
 Location: {{ evidence.original_work_url }}
 Nature of Rights: {{ evidence.creation_metadata.get('rights_type', 'Copyright') }}
 
 INFRINGING CONTENT:
-Platform: {{ infringing.platform }}
+    Platform: {{ infringing.platform }}
 URL: {{ infringing.infringing_url }}
 Title: {{ infringing.content_title }}
 Uploader: {{ infringing.uploader_name }}
 
 LEGAL BASIS:
-This notice is served under Articles 17 and 21 of Directive (EU) 2019/790, requiring platforms to take appropriate and proportionate measures to ensure copyright protection.
+    This notice is served under Articles 17 and 21 of Directive (EU) 2019/790, requiring platforms to take appropriate and proportionate measures to ensure copyright protection.
 
 REQUESTED MEASURES:
-1. Immediate removal of infringing content
+    1. Immediate removal of infringing content
 2. Prevention of future uploads of the same content
 3. Notification to the uploader regarding the removal
 
 GOOD FAITH STATEMENT:
-I declare in good faith that the use of the work is not authorized by the rights holder.
+    I declare in good faith that the use of the work is not authorized by the rights holder.
 
 ACCURACY DECLARATION:
-I confirm the accuracy of this notification and my authority to act on behalf of the rights holder.
+    I confirm the accuracy of this notification and my authority to act on behalf of the rights holder.
 
 Signature: {{ owner.name }}
 Date: {{ current_date }}
@@ -526,31 +527,31 @@ Date: {{ current_date }}
 Re: Counter-Notice for Original DMCA Notice #{{ original_notice_id }}
 
 ORIGINAL RIGHTS HOLDER:
-Name: {{ owner.name }}
+    Name: {{ owner.name }}
 Email: {{ owner.email }}
 
 COUNTER-NOTICE DETAILS:
-Received: {{ counter_notice_date }}
+    Received: {{ counter_notice_date }}
 Claimant: {{ counter_claimant_name }}
 Content: {{ content_description }}
 
 RESPONSE TO COUNTER-NOTICE:
-After careful review of the counter-notice, I maintain that the original DMCA takedown notice was valid and accurate. The content in question clearly infringes my copyright for the following reasons:
+    After careful review of the counter-notice, I maintain that the original DMCA takedown notice was valid and accurate. The content in question clearly infringes my copyright for the following reasons:
 
 1. Substantial similarity to my original work
 2. Lack of authorization for use
 3. {{ specific_infringement_details }}
 
 EVIDENCE REAFFIRMATION:
-- Original work: {{ evidence.original_work_url }}
+    - Original work: {{ evidence.original_work_url }}
 - Creation date: {{ evidence.original_creation_date.strftime('%Y-%m-%d') }}
 - Copyright ownership: {{ evidence.copyright_registration if evidence.copyright_registration else 'Demonstrated through creation metadata' }}
 
 LEGAL ACTION NOTICE:
-I hereby notify {{ counter_claimant_name }} that I intend to pursue legal action to protect my copyright interests. This serves as formal notice that continued infringement will result in federal court proceedings.
+    I hereby notify {{ counter_claimant_name }} that I intend to pursue legal action to protect my copyright interests. This serves as formal notice that continued infringement will result in federal court proceedings.
 
 CONTACT INFORMATION:
-{{ owner.name }}
+    {{ owner.name }}
 {{ owner.email }}
 {{ owner.phone }}
 
@@ -609,7 +610,7 @@ class PlatformSubmissionManager:
     """
 Platform-specific takedown submission manager"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.logger = logging.getLogger(f"{__name__}.SubmissionManager")
         
@@ -712,7 +713,7 @@ Submit takedown notice via email"""
                 'error': str(e)
             }
             
-    async def _attach_evidence_file(self, msg: MIMEMultipart, file_path: str):
+    async def _attach_evidence_file(self, msg -> None: MIMEMultipart, file_path -> None: str) -> None:
         """Attach evidence file to email"""
         try:
             async with aiofiles.open(file_path, 'rb') as f:
@@ -796,7 +797,7 @@ class DMCALegalPipelineManager:
     - Legal template management and customization
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
         
@@ -913,9 +914,9 @@ Create new DMCA takedown request"""
             'final': False
         }
         
-    async def update_request_status(self, request_id: str, status: TakedownStatus,
-                                  platform_response: Optional[str] = None,
-                                  tracking_number: Optional[str] = None):
+    async def update_request_status(self, request_id -> None: str, status -> None: TakedownStatus,
+                                  platform_response -> None: Optional[str] = None,
+                                  tracking_number -> None: Optional[str] = None) -> None:
         """
 Update status of takedown request"""
         if request_id not in self.active_requests:
@@ -1040,3 +1041,5 @@ def get_dmca_pipeline_manager() -> DMCALegalPipelineManager:
     """
 Get global DMCA legal pipeline manager instance"""
     return dmca_legal_pipeline_manager
+
+# File has syntax issues - needs manual review

@@ -89,7 +89,7 @@ class DistributionJob:
     status: DistributionStatus = DistributionStatus.PENDING
     created_at: datetime = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.created_at is None:
             self.created_at = datetime.now()
 
@@ -101,7 +101,7 @@ class DistributionOrchestrator:
     analytics aggregation, and cross-platform synchronization.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.platform_configs = self._initialize_platform_configs()
         self.services = self._initialize_services()
         self.active_jobs = {}
@@ -355,10 +355,10 @@ class DistributionOrchestrator:
     
     async def _schedule_publication(
         self, 
-        job: DistributionJob, 
-        adapted_content: Dict[PlatformType, str],
-        optimized_metadata: Dict[PlatformType, ContentMetadata]
-    ):
+        job -> None: DistributionJob, 
+        adapted_content -> None: Dict[PlatformType, str],
+        optimized_metadata -> None: Dict[PlatformType, ContentMetadata]
+    ) -> None:
         """Schedule content publication"""
         try:
             async with aiohttp.ClientSession() as session:
@@ -494,7 +494,7 @@ async def health_check() -> Dict[str, str]:
 
 if __name__ == "__main__":
     # Example usage
-    async def main():
+    async def main() -> None:
         # Create a test distribution job
         metadata = ContentMetadata(
             title="Test Music Track",

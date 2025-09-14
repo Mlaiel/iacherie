@@ -1,3 +1,8 @@
+"""
+Final Validation module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Legal Module Comprehensive Validation Script
@@ -30,7 +35,7 @@ from datetime import datetime
 class LegalFrameworkValidator:
     """Enterprise-grade validation system for legal framework completeness"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.validation_results = {}
         self.expert_roles_validated = {}
         self.performance_metrics = {}
@@ -393,7 +398,7 @@ class LegalFrameworkValidator:
         
         return report
 
-def main():
+def main() -> None:
     """Main validation execution"""
     print("🚀 Starting Legal Framework Comprehensive Validation...")
     print("=" * 60)

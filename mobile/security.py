@@ -31,7 +31,7 @@ try:
     from core.security import generate_secure_token
 except ImportError:
     # Fallback for standalone operation
-    def get_logger(name: str):
+    def get_logger(name -> None: str) -> None:
         try:
                     # Request validation
                     if not data:
@@ -57,10 +57,10 @@ except ImportError:
                 except Exception as e:
                     logger.error(f"API handler get_logger failed: {e}")
                     return {"status": "error", "message": str(e)}
-    def get_settings():
+    def get_settings() -> None:
         return {"secret_key": "mobile_security_key"}
     
-    def generate_secure_token():
+    def generate_secure_token() -> None:
         return secrets.token_urlsafe(32)
 
 
@@ -84,6 +84,7 @@ class BiometricType(Enum):
 
 @dataclass
 class DeviceSecurityProfile:
+    """DeviceSecurityProfile: class implementation"""
         try:
                     # Request validation
                     if not data:
@@ -119,6 +120,7 @@ class DeviceSecurityProfile:
 
 @dataclass
 class DeviceSecurityProfile:
+    """DeviceSecurityProfile: class implementation"""
         try:
                     # Request validation
                     if not data:
@@ -149,7 +151,7 @@ class DeviceSecurityProfile:
     security_patches_current: bool = True
     app_integrity_verified: bool = True
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if isinstance(self.security_level, str):
             self.security_level = SecurityLevel(self.security_level)
 
@@ -168,7 +170,7 @@ Biometric authentication data."""
     usage_count: int = 0
     is_active: bool = True
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if isinstance(self.biometric_type, str):
             self.biometric_type = BiometricType(self.biometric_type)
 
@@ -187,7 +189,7 @@ Security event logging."""
     timestamp: datetime
     resolved: bool = False
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if isinstance(self.severity, str):
             self.severity = SecurityLevel(self.severity)
 
@@ -196,7 +198,7 @@ class MobileEncryptionManager:
     """
 Professional mobile encryption management."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = get_logger("mobile.encryption_manager")
         self.settings = get_settings()
     
@@ -279,7 +281,7 @@ class BiometricAuthManager:
     """
 Professional biometric authentication management."""
     
-    def __init__(self, encryption_manager: MobileEncryptionManager):
+    def __init__(self, encryption_manager -> None: MobileEncryptionManager) -> None:
         self.logger = get_logger("mobile.biometric_auth")
         self.encryption_manager = encryption_manager
         self.biometric_data: Dict[str, BiometricData] = {}
@@ -387,7 +389,7 @@ Professional biometric authentication management."""
 class DeviceIntegrityChecker:
     """Professional device integrity and security validation."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = get_logger("mobile.device_integrity")
         self.known_rooting_indicators = [
             "/system/app/Superuser.apk",
@@ -502,7 +504,7 @@ class DeviceIntegrityChecker:
 class MobileSecurityManager:
     """Comprehensive mobile security management system."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = get_logger("mobile.security_manager")
         self.encryption_manager = MobileEncryptionManager()
         self.biometric_manager = BiometricAuthManager(self.encryption_manager)
@@ -676,13 +678,13 @@ class MobileSecurityManager:
     
     async def _log_security_event(
         self,
-        device_id: str,
-        user_id: Optional[str],
-        event_type: str,
-        severity: SecurityLevel,
-        description: str,
-        metadata: Dict[str, Any]
-    ):
+        device_id -> None: str,
+        user_id -> None: Optional[str],
+        event_type -> None: str,
+        severity -> None: SecurityLevel,
+        description -> None: str,
+        metadata -> None: Dict[str, Any]
+    ) -> None:
         """Log security event."""
         
         event = SecurityEvent(
@@ -778,7 +780,7 @@ Get biometric auth manager instance."""
 if __name__ == "__main__":
     import asyncio
     
-    async def test_mobile_security():
+    async def test_mobile_security() -> None:
         """Test mobile security functionality."""
         
         # Test security manager
@@ -823,3 +825,5 @@ if __name__ == "__main__":
     
     # Run tests
     asyncio.run(test_mobile_security())
+
+# File has syntax issues - needs manual review

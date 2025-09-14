@@ -1,5 +1,7 @@
 """Event Correlation Analyzer - Cross-Services for Ainflue Events
 
+import asyncio
+
 Advanced event correlation analyzer for identifying patterns, dependencies,
 and business relationships across Ainflue services and workflows.
 
@@ -69,7 +71,7 @@ class EventCorrelationAnalyzer:
     Identifies patterns, dependencies, and business relationships in event streams
     """
     
-    def __init__(self, correlation_window_hours: int = 24):
+    def __init__(self, correlation_window_hours -> None: int = 24) -> None:
         self.correlation_window_hours = correlation_window_hours
         self.event_buffer: deque = deque(maxlen=10000)
         self.correlation_rules = self._initialize_correlation_rules()

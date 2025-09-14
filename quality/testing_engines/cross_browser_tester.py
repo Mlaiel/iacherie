@@ -1,3 +1,8 @@
+"""
+Cross Browser Tester module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Cross-Browser Testing Framework for Ainflue Platform
@@ -121,7 +126,7 @@ class CrossBrowserTester:
     - Performance optimization
     """
     
-    def __init__(self, config_path: Optional[str] = None):
+    def __init__(self, config_path -> None: Optional[str] = None) -> None:
         """Initialize cross-browser testing framework."""
         self.logger = self._setup_logging()
         self.config = self._load_config(config_path)
@@ -553,7 +558,7 @@ class CompatibilityAIAnalyzer:
     and intelligent test case optimization.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize AI analyzer."""
         self.logger = logging.getLogger("CompatibilityAIAnalyzer")
         self.model_scaler = StandardScaler()
@@ -805,7 +810,7 @@ if __name__ == "__main__":
     # Example usage
     import asyncio
     
-    async def main():
+    async def main() -> None:
         """Example cross-browser testing execution."""
         
         # Initialize tester

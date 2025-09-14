@@ -193,7 +193,7 @@ class EnterpriseCreatorRevenueManager:
     - Multi-platform revenue aggregation
     """
     
-    def __init__(self, config: Optional[RevenueConfig] = None):
+    def __init__(self, config -> None: Optional[RevenueConfig] = None) -> None:
         self.config = config or RevenueConfig()
         self.logger = logging.getLogger(__name__)
         self.executor = ThreadPoolExecutor(max_workers=8)
@@ -213,7 +213,7 @@ class EnterpriseCreatorRevenueManager:
         self.pending_transactions = []
         self.pending_payouts = []
         
-    def _init_encryption(self):
+    def _init_encryption(self) -> None:
         """Initialize encryption for sensitive financial data"""
         try:
             # In production: Use secure key management
@@ -224,7 +224,7 @@ class EnterpriseCreatorRevenueManager:
             self.logger.error(f"Encryption initialization failed: {e}")
             raise RevenueManagementError(f"Security initialization failed: {e}")
 
-    def _init_ml_models(self):
+    def _init_ml_models(self) -> None:
         """Initialize ML models for revenue prediction and optimization"""
         try:
             self.ml_models = {
@@ -251,7 +251,7 @@ class EnterpriseCreatorRevenueManager:
             self.logger.warning(f"ML models initialization failed: {e}")
             self.ml_models = {}
 
-    def _init_fraud_detection(self):
+    def _init_fraud_detection(self) -> None:
         """Initialize fraud detection system"""
         try:
             self.fraud_detection = {
@@ -268,7 +268,7 @@ class EnterpriseCreatorRevenueManager:
         except Exception as e:
             self.logger.warning(f"Fraud detection initialization failed: {e}")
 
-    async def initialize_connections(self):
+    async def initialize_connections(self) -> None:
         """Initialize database and Redis connections"""
         try:
             # Initialize Redis connection
@@ -418,7 +418,7 @@ class EnterpriseCreatorRevenueManager:
             platforms=['youtube', 'instagram', 'tiktok']
         )
 
-    async def _store_transaction(self, transaction: RevenueTransaction):
+    async def _store_transaction(self, transaction -> None: RevenueTransaction) -> None:
         """Store transaction in database"""
         try:
             if self.db_pool:
@@ -447,7 +447,7 @@ class EnterpriseCreatorRevenueManager:
             self.logger.error(f"Failed to store transaction: {e}")
             raise RevenueManagementError(f"Transaction storage failed: {e}")
 
-    async def _update_real_time_analytics(self, creator_id: str, transaction: RevenueTransaction):
+    async def _update_real_time_analytics(self, creator_id -> None: str, transaction -> None: RevenueTransaction) -> None:
         """Update real-time analytics for creator"""
         try:
             if not self.redis_client:
@@ -487,7 +487,7 @@ class EnterpriseCreatorRevenueManager:
         except Exception as e:
             self.logger.warning(f"Real-time analytics update failed: {e}")
 
-    async def _check_payout_eligibility(self, creator_id: str):
+    async def _check_payout_eligibility(self, creator_id -> None: str) -> None:
         """Check if creator is eligible for automatic payout"""
         try:
             # Get pending revenue balance
@@ -623,10 +623,10 @@ class EnterpriseCreatorRevenueManager:
 
     async def _validate_payout_request(
         self,
-        creator_id: str,
-        amount: Decimal,
-        payment_method: Optional[PaymentMethod]
-    ):
+        creator_id -> None: str,
+        amount -> None: Decimal,
+        payment_method -> None: Optional[PaymentMethod]
+    ) -> None:
         """Validate payout request parameters"""
         # Check minimum amount
         if amount < self.config.min_payout_threshold:
@@ -755,7 +755,7 @@ class EnterpriseCreatorRevenueManager:
             self.logger.warning(f"Fraud risk assessment failed: {e}")
             return 0.0
 
-    async def _store_payout_request(self, payout_request: PayoutRequest):
+    async def _store_payout_request(self, payout_request -> None: PayoutRequest) -> None:
         """Store payout request in database"""
         try:
             if self.db_pool:
@@ -784,7 +784,7 @@ class EnterpriseCreatorRevenueManager:
             self.logger.error(f"Failed to store payout request: {e}")
             raise PayoutError(f"Payout storage failed: {e}")
 
-    async def _process_payout(self, payout_request: PayoutRequest):
+    async def _process_payout(self, payout_request -> None: PayoutRequest) -> None:
         """Process payout through payment gateway"""
         try:
             # Update status to processing
@@ -813,7 +813,7 @@ class EnterpriseCreatorRevenueManager:
             await self._update_payout_status(payout_request)
             self.logger.error(f"Payout processing failed: {e}")
 
-    async def _update_payout_status(self, payout_request: PayoutRequest):
+    async def _update_payout_status(self, payout_request -> None: PayoutRequest) -> None:
         """Update payout status in database"""
         try:
             if self.db_pool:
@@ -1163,7 +1163,7 @@ class EnterpriseCreatorRevenueManager:
 class CreatorMonetizationOrchestrator:
     """Legacy interface for creator monetization"""
     
-    def __init__(self, revenue_manager: EnterpriseCreatorRevenueManager):
+    def __init__(self, revenue_manager -> None: EnterpriseCreatorRevenueManager) -> None:
         self.revenue_manager = revenue_manager
     
     async def process_creator_revenue(
@@ -1184,7 +1184,7 @@ class CreatorMonetizationOrchestrator:
 class CreatorPayoutOrchestrator:
     """Legacy interface for creator payouts"""
     
-    def __init__(self, revenue_manager: EnterpriseCreatorRevenueManager):
+    def __init__(self, revenue_manager -> None: EnterpriseCreatorRevenueManager) -> None:
         self.revenue_manager = revenue_manager
     
     async def initiate_payout(

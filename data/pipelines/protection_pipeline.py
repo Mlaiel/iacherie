@@ -1,4 +1,6 @@
 """Protection Pipeline for AI-Powered Content Rights Management
+from pathlib import Path
+
 ===========================================================
 
 Professional content protection system with AI fingerprinting, violation detection,
@@ -90,7 +92,7 @@ class FingerprintingEngine:
     Advanced AI-powered fingerprinting engine for multi-format content protection
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.audio_fingerprinter = AudioFingerprinter()
         self.video_fingerprinter = VideoFingerprinter()
         self.image_fingerprinter = ImageFingerprinter()
@@ -647,7 +649,7 @@ class ProtectionPipeline:
     monitoring, violation detection, and automated takedown processes
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.fingerprinting_engine = FingerprintingEngine()
         self.platform_crawler = PlatformCrawler()
         self.storage_manager = StorageManager()
@@ -930,7 +932,7 @@ class ProtectionPipeline:
         except Exception as e:
             raise ProtectionError(f"Monitoring initiation failed: {str(e)}")
 
-    async def _schedule_protection_scans(self, fingerprint_id: str):
+    async def _schedule_protection_scans(self, fingerprint_id -> None: str) -> None:
         """Schedule comprehensive protection scanning tasks"""
         try:
             # Schedule platform-specific scans
@@ -1182,7 +1184,7 @@ class ProtectionPipeline:
         
         return None
 
-    async def _save_violation_alert(self, violation_data: Dict[str, Any]):
+    async def _save_violation_alert(self, violation_data -> None: Dict[str, Any]) -> None:
         """Save violation alert to database with comprehensive metadata"""
         async with AsyncDatabaseSession() as session:
             violation_alert = ViolationAlert(

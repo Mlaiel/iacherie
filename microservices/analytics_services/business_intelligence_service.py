@@ -36,6 +36,7 @@ logging.basicConfig(
 logger = logging.getLogger("BusinessIntelligenceService")
 
 class ReportType(str, Enum):
+    """ReportType class implementation"""
     EXECUTIVE_SUMMARY = "executive_summary"
     PERFORMANCE_DASHBOARD = "performance_dashboard"
     FINANCIAL_REPORT = "financial_report"
@@ -46,6 +47,7 @@ class ReportType(str, Enum):
     PREDICTIVE_INSIGHTS = "predictive_insights"
 
 class MetricType(str, Enum):
+    """MetricType class implementation"""
     COUNT = "count"
     SUM = "sum"
     AVERAGE = "average"
@@ -55,6 +57,7 @@ class MetricType(str, Enum):
     CONVERSION_RATE = "conversion_rate"
 
 class TimeGranularity(str, Enum):
+    """TimeGranularity class implementation"""
     MINUTE = "minute"
     HOUR = "hour"
     DAY = "day"
@@ -64,6 +67,7 @@ class TimeGranularity(str, Enum):
     YEAR = "year"
 
 class AlertSeverity(str, Enum):
+    """AlertSeverity class implementation"""
     INFO = "info"
     WARNING = "warning"
     CRITICAL = "critical"
@@ -165,7 +169,7 @@ class BusinessIntelligenceService:
     - **Backend Senior**: Scalable enterprise architecture
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.metrics: Dict[str, MetricDefinitionModel] = {}
         self.reports: Dict[str, ReportModel] = {}
         self.dashboards: Dict[str, DashboardModel] = {}
@@ -183,7 +187,7 @@ class BusinessIntelligenceService:
         
         logger.info("📊 Business Intelligence Service initialized")
     
-    def _initialize_default_metrics(self):
+    def _initialize_default_metrics(self) -> None:
         """Initialize default business metrics"""
         default_metrics = [
             {
@@ -240,7 +244,7 @@ class BusinessIntelligenceService:
             metric = MetricDefinitionModel(**metric_data)
             self.metrics[metric.id] = metric
     
-    def _initialize_default_reports(self):
+    def _initialize_default_reports(self) -> None:
         """Initialize default report templates"""
         default_reports = [
             {
@@ -273,7 +277,7 @@ class BusinessIntelligenceService:
             report = ReportModel(**report_data)
             self.reports[report.id] = report
     
-    def _initialize_default_dashboards(self):
+    def _initialize_default_dashboards(self) -> None:
         """Initialize default dashboard templates"""
         default_dashboards = [
             {
@@ -325,7 +329,7 @@ class BusinessIntelligenceService:
             dashboard = DashboardModel(**dashboard_data)
             self.dashboards[dashboard.id] = dashboard
     
-    def _initialize_prediction_models(self):
+    def _initialize_prediction_models(self) -> None:
         """Initialize predictive analytics models"""
         self.prediction_models = {
             "user_growth": self._user_growth_prediction,
@@ -1269,17 +1273,17 @@ class BusinessIntelligenceService:
         
         return insights
     
-    async def _start_metric_calculation(self, metric_id: str):
+    async def _start_metric_calculation(self, metric_id -> None: str) -> None:
         """Start real-time calculation for metric"""
         # This would typically set up real-time data streams
         logger.info(f"📊 Started real-time calculation for metric: {metric_id}")
     
-    async def _initialize_dashboard_feeds(self, dashboard_id: str):
+    async def _initialize_dashboard_feeds(self, dashboard_id -> None: str) -> None:
         """Initialize real-time data feeds for dashboard"""
         # This would set up WebSocket connections or polling for real-time updates
         logger.info(f"📊 Initialized real-time feeds for dashboard: {dashboard_id}")
     
-    async def _start_alert_monitoring(self, alert_id: str):
+    async def _start_alert_monitoring(self, alert_id -> None: str) -> None:
         """Start monitoring for alert conditions"""
         # This would set up real-time monitoring for alert conditions
         logger.info(f"🚨 Started monitoring for alert: {alert_id}")
@@ -1333,52 +1337,52 @@ app = FastAPI(title="Business Intelligence Service", version="1.0.0")
 service = BusinessIntelligenceService()
 
 @app.post("/metrics/create")
-async def create_metric(metric: MetricDefinitionModel):
+async def create_metric(metric -> None: MetricDefinitionModel) -> None:
     """Create new business metric"""
     return await service.create_metric(metric)
 
 @app.post("/metrics/{metric_id}/calculate")
-async def calculate_metric(metric_id: str, time_range: Dict[str, Any] = None, filters: Dict[str, Any] = None):
+async def calculate_metric(metric_id -> None: str, time_range -> None: Dict[str, Any] = None, filters -> None: Dict[str, Any] = None) -> None:
     """Calculate metric value"""
     return await service.calculate_metric(metric_id, time_range, filters)
 
 @app.post("/reports/{report_id}/generate")
-async def generate_report(report_id: str, custom_params: Dict[str, Any] = None):
+async def generate_report(report_id -> None: str, custom_params -> None: Dict[str, Any] = None) -> None:
     """Generate business intelligence report"""
     return await service.generate_report(report_id, custom_params)
 
 @app.post("/dashboards/create")
-async def create_dashboard(dashboard: DashboardModel):
+async def create_dashboard(dashboard -> None: DashboardModel) -> None:
     """Create new BI dashboard"""
     return await service.create_dashboard(dashboard)
 
 @app.get("/dashboards/{dashboard_id}/data")
-async def get_dashboard_data(dashboard_id: str, user_id: str = None):
+async def get_dashboard_data(dashboard_id -> None: str, user_id -> None: str = None) -> None:
     """Get real-time dashboard data"""
     return await service.get_dashboard_data(dashboard_id, user_id)
 
 @app.post("/analytics/query")
-async def execute_analytics_query(query: AnalyticsQueryModel):
+async def execute_analytics_query(query -> None: AnalyticsQueryModel) -> None:
     """Execute advanced analytics query"""
     return await service.execute_analytics_query(query)
 
 @app.post("/alerts/create")
-async def create_alert(alert: AlertModel):
+async def create_alert(alert -> None: AlertModel) -> None:
     """Create new metric alert"""
     return await service.create_alert(alert)
 
 @app.get("/insights/predictive/{model_type}")
-async def get_predictive_insights(model_type: str, prediction_days: int = 30):
+async def get_predictive_insights(model_type -> None: str, prediction_days -> None: int = 30) -> None:
     """Get predictive analytics insights"""
     return await service.get_predictive_insights(model_type, prediction_days)
 
 @app.get("/metrics")
-async def get_metrics():
+async def get_metrics() -> None:
     """Get BI service metrics"""
     return await service.get_bi_metrics()
 
 @app.get("/health")
-async def health_check():
+async def health_check() -> None:
     """Service health check"""
     return {
         "service": "BusinessIntelligenceService",

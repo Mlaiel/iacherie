@@ -85,7 +85,7 @@ class EventTypeMetadata:
 class EventRegistry:
     """Central registry for event types and schemas"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize event registry"""
         self.schemas: Dict[str, EventSchema] = {}
         self.metadata: Dict[str, EventTypeMetadata] = {}

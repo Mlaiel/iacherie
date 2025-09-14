@@ -175,7 +175,7 @@ class SecurityAudit:
 class StreamingContentProtection:
     """Streaming content protection system"""
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client -> None: aioredis.Redis) -> None:
         self.redis = redis_client
         self.encryption_keys = {}
         self.protection_policies = {}
@@ -290,7 +290,7 @@ class StreamingContentProtection:
 class DRMStreamingController:
     """DRM streaming controller"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         self.drm_systems = {}
@@ -381,7 +381,7 @@ class DRMStreamingController:
 class StreamingRightsValidator:
     """Streaming rights validation system"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         self.rights_database = {}
@@ -457,7 +457,7 @@ class StreamingRightsValidator:
 class SecurityMonitoring:
     """Security monitoring and threat detection"""
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client -> None: aioredis.Redis) -> None:
         self.redis = redis_client
         self.threat_patterns = {}
         self.security_rules = {}
@@ -523,7 +523,7 @@ class SecurityMonitoring:
 class ThreatDetection:
     """Advanced threat detection system"""
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client -> None: aioredis.Redis) -> None:
         self.redis = redis_client
         self.ml_models = {}
         self.threat_signatures = {}
@@ -578,7 +578,7 @@ class ThreatDetection:
 class StreamingSecurityGuardian:
     """Unified streaming security guardian - Main service class"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         

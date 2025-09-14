@@ -120,7 +120,7 @@ ENTERPRISE_CONFIG = {
     'logging_level': 'INFO'
 }
 
-def get_module_info():
+def get_module_info() -> None:
     """Get comprehensive module information"""
     return {
         'name': 'Multimedia Formats',

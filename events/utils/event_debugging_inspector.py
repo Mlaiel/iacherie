@@ -60,7 +60,7 @@ class EventDebuggingInspector:
     Provides detailed tracing, performance analysis, and error diagnostics
     """
     
-    def __init__(self, max_traces: int = 5000):
+    def __init__(self, max_traces -> None: int = 5000) -> None:
         self.max_traces = max_traces
         self.debug_traces: deque = deque(maxlen=max_traces)
         self.active_sessions: Dict[str, Dict[str, Any]] = {}
@@ -96,10 +96,10 @@ class EventDebuggingInspector:
         logger.debug(f"Started inspection session {session_id} for event {event_data.get('event_id')}")
         return session_id
     
-    async def add_trace(self, session_id: str, component: str, operation: str,
-                       success: bool = True, duration_ms: Optional[float] = None,
-                       metadata: Optional[Dict[str, Any]] = None,
-                       error_info: Optional[str] = None):
+    async def add_trace(self, session_id -> None: str, component -> None: str, operation -> None: str,
+                       success -> None: bool = True, duration_ms -> None: Optional[float] = None,
+                       metadata -> None: Optional[Dict[str, Any]] = None,
+                       error_info -> None: Optional[str] = None) -> None:
         """Add a debug trace to inspection session"""
         
         if session_id not in self.active_sessions:
@@ -377,7 +377,7 @@ class EventDebuggingInspector:
         
         return await self.end_inspection_session(session_id)
     
-    async def _simulate_processor_execution(self, processor_name: str):
+    async def _simulate_processor_execution(self, processor_name -> None: str) -> None:
         """Simulate processor execution for demonstration"""
         
         # Simulate different execution times and potential failures

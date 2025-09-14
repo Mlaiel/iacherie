@@ -199,7 +199,7 @@ class LicensingAnalyticsDashboard:
     - Integration with external BI platforms
     """
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         """Initialize the Licensing Analytics Dashboard."""
         self.config = config or {}
         self.dashboards: Dict[str, Dashboard] = {}

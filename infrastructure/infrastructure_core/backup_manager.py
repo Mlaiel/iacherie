@@ -78,7 +78,7 @@ class BackupManager:
     - AI model and training data backup
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.backup_policies = {}
         self.backup_jobs = {}
         self.storage_backends = {}

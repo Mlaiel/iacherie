@@ -89,7 +89,7 @@ class ContentAnalysis:
 class MultimediaProtectionEngine:
     """Unified multimedia protection system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.redis_client = None
         self.mongo_client = None
         self.content_analyzer = ContentAnalyzer()
@@ -245,7 +245,7 @@ class MultimediaProtectionEngine:
         }
         return protection_measures
     
-    async def _store_protection_record(self, record: Dict[str, Any]):
+    async def _store_protection_record(self, record -> None: Dict[str, Any]) -> None:
         """Store protection record"""
         try:
             if self.mongo_client:

@@ -26,7 +26,7 @@ COLLABORATION_CONFIG = {
     'reputation_factors': ['quality', 'reliability', 'engagement', 'revenue']
 }
 
-def get_collaboration_manager():
+def get_collaboration_manager() -> None:
     """Factory pour créer le gestionnaire principal de collaboration."""
     return {
         'matching': AIMatchingEngine(),

@@ -55,18 +55,18 @@ except ImportError:
 from .platform_connectors import SocialPlatform, ContentFormat
 
 
-def safe_mean(values):
+def safe_mean(values) -> None:
     """Calculate mean safely without numpy"""
     if not values:
         return 0.0
     return sum(values) / len(values)
 
-def safe_random_uniform(low, high):
+def safe_random_uniform(low, high) -> None:
     """Generate random uniform value without numpy"""
     import random
     return random.uniform(low, high)
 
-def safe_sqrt(value):
+def safe_sqrt(value) -> None:
     """Calculate square root safely"""
     import math
     return math.sqrt(max(0, value))
@@ -318,7 +318,7 @@ class FormatAdapter:
         }
     }
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.temp_dir = Path(tempfile.mkdtemp())
         self.adaptation_cache: Dict[str, ContentVariant] = {}
         self.quality_presets = self._initialize_quality_presets()
@@ -881,17 +881,17 @@ class FormatAdapter:
         # Find closest sample rate
         return min(target_sample_rates, key=lambda x: abs(source_sample_rate - x))
     
-    def _adjust_video_aspect_ratio(self, clip, target_aspect_ratio: AspectRatio):
+    def _adjust_video_aspect_ratio(self, clip, target_aspect_ratio -> None: AspectRatio) -> None:
         """Adjust video to target aspect ratio"""
         # Implementation would use moviepy to crop/pad video
         return clip
     
-    def _enhance_video_quality(self, clip):
+    def _enhance_video_quality(self, clip) -> None:
         """Enhance video quality"""
         # Implementation would apply video filters
         return clip
     
-    def _add_watermark(self, clip, watermark_text: str):
+    def _add_watermark(self, clip, watermark_text -> None: str) -> None:
         """Add watermark to video"""
         # Implementation would add text overlay
         return clip
@@ -974,7 +974,7 @@ class FormatAdapter:
             logger.error(f"Statistics generation failed: {str(e)}")
             return {}
     
-    def clear_cache(self):
+    def clear_cache(self) -> None:
         """Clear adaptation cache and temporary files"""
         try:
             # Remove temporary files
@@ -989,7 +989,7 @@ class FormatAdapter:
         except Exception as e:
             logger.error(f"Cache clearing failed: {str(e)}")
     
-    def __del__(self):
+    def __del__(self) -> None:
         """Cleanup temporary files"""
         try:
             self.clear_cache()

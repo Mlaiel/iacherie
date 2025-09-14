@@ -142,7 +142,7 @@ class PlatformStatus:
 class PlatformHealthChecker:
     """Monitors platform health and availability"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.endpoints: Dict[str, List[PlatformEndpoint]] = {}
         self.health_history: Dict[str, List[HealthCheck]] = {}
         self._setup_platform_endpoints()
@@ -359,7 +359,7 @@ class PlatformHealthChecker:
 class PerformanceMonitor:
     """Monitors platform performance metrics"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.metrics_history: Dict[str, List[PerformanceMetric]] = {}
         self.thresholds: Dict[str, Dict[MetricType, float]] = {}
         self._setup_default_thresholds()
@@ -471,7 +471,7 @@ class PerformanceMonitor:
 class AlertManager:
     """Manages monitoring alerts and notifications"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.active_alerts: Dict[str, List[Alert]] = {}
         self.alert_history: List[Alert] = []
         self.alert_rules: Dict[str, Callable] = {}
@@ -726,7 +726,7 @@ class PlatformMonitoringService:
     - Custom threshold configuration
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.health_checker = PlatformHealthChecker()
         self.performance_monitor = PerformanceMonitor()

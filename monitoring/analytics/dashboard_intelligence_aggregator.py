@@ -127,7 +127,7 @@ class DashboardIntelligenceAggregator:
     - Predictive dashboard optimization
     """
     
-    def __init__(self, db_url: str, redis_url: str = None):
+    def __init__(self, db_url -> None: str, redis_url -> None: str = None) -> None:
         """Initialize dashboard intelligence aggregator"""
         self.db_url = db_url
         self.redis_url = redis_url
@@ -462,7 +462,7 @@ class DashboardIntelligenceAggregator:
             data_queue = asyncio.Queue()
             
             # Start background task for real-time updates
-            async def stream_updates():
+            async def stream_updates() -> None:
                 while True:
                     try:
                         # Generate current dashboard data
@@ -1040,7 +1040,7 @@ class DashboardIntelligenceAggregator:
         """Start background refresh task for dashboard"""
         config = self.dashboard_configs[dashboard_id]
         
-        async def refresh_loop():
+        async def refresh_loop() -> None:
             while True:
                 try:
                     # Pre-generate dashboard data
@@ -1217,7 +1217,7 @@ class DashboardIntelligenceAggregator:
         ]
 
 # Usage example
-async def main():
+async def main() -> None:
     """Test the dashboard intelligence aggregator"""
     try:
         # Initialize aggregator

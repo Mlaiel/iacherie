@@ -1,3 +1,8 @@
+"""
+Index module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """IA Influencer Agent - Complete Pipeline Management System Entry Point
 Enterprise-Grade Pipeline System with Advanced Content Protection & Monetization
@@ -53,7 +58,7 @@ except ImportError as e:
     print("pip install -r requirements.txt")
     sys.exit(1)
 
-def display_banner():
+def display_banner() -> None:
     """Display the IA Influencer Agent banner"""
     banner = """╔══════════════════════════════════════════════════════════════════════════════╗
 ║                                                                              ║
@@ -106,7 +111,7 @@ def display_banner():
 """
     print(banner)
 
-def check_dependencies():
+def check_dependencies() -> None:
     """
 Check if required dependencies are available"""
     required_packages = [
@@ -129,7 +134,7 @@ Check if required dependencies are available"""
     
     return True
 
-def show_system_info():
+def show_system_info() -> None:
     """Display system information"""
     python_version = f"{sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}"
     
@@ -141,7 +146,7 @@ def show_system_info():
        • Pipeline Module: {current_dir}
     """)
 
-def main_entry():
+def main_entry() -> None:
     """
 Main entry point with enhanced error handling and information"""
     

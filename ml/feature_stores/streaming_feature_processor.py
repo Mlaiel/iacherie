@@ -1,3 +1,8 @@
+"""
+Streaming Feature Processor module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 🔄 Streaming Feature Processor - Real-Time ML Feature Engineering
@@ -174,7 +179,7 @@ class StreamingFeatureProcessor:
     - Integration with feature store
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize the streaming feature processor."""
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
@@ -341,7 +346,7 @@ class StreamingFeatureProcessor:
             self.logger.error(f"Failed to ingest data point: {e}")
             return False
     
-    async def _process_stream(self, source: StreamSource):
+    async def _process_stream(self, source -> None: StreamSource) -> None:
         """Process streaming data from a specific source."""
         try:
             while self.is_running:
@@ -365,7 +370,7 @@ class StreamingFeatureProcessor:
         except Exception as e:
             self.logger.error(f"Stream processing error for {source.value}: {e}")
     
-    async def _process_data_batch(self, batch: List[StreamingDataPoint]):
+    async def _process_data_batch(self, batch -> None: List[StreamingDataPoint]) -> None:
         """Process a batch of streaming data points."""
         try:
             processing_start = time.time()
@@ -380,7 +385,7 @@ class StreamingFeatureProcessor:
         except Exception as e:
             self.logger.error(f"Batch processing failed: {e}")
     
-    async def _process_single_data_point(self, data_point: StreamingDataPoint):
+    async def _process_single_data_point(self, data_point -> None: StreamingDataPoint) -> None:
         """Process a single streaming data point."""
         try:
             # Extract features from data point
@@ -398,11 +403,11 @@ class StreamingFeatureProcessor:
             self.logger.error(f"Single data point processing failed: {e}")
     
     async def _add_to_window(self, 
-                           feature_name: str,
-                           timestamp: float,
-                           value: Any,
-                           creator_id: Optional[str],
-                           config: StreamingFeatureConfig):
+                           feature_name -> None: str,
+                           timestamp -> None: float,
+                           value -> None: Any,
+                           creator_id -> None: Optional[str],
+                           config -> None: StreamingFeatureConfig) -> None:
         """Add data point to appropriate time window."""
         try:
             # Create window key
@@ -546,8 +551,8 @@ class StreamingFeatureProcessor:
             return False
     
     async def _process_window(self, 
-                            window: FeatureWindow, 
-                            config: StreamingFeatureConfig):
+                            window -> None: FeatureWindow, 
+                            config -> None: StreamingFeatureConfig) -> None:
         """Process a complete time window."""
         try:
             processing_start = time.time()
@@ -656,8 +661,8 @@ class StreamingFeatureProcessor:
             return 0.0
     
     async def _apply_creator_processing(self, 
-                                      window: FeatureWindow, 
-                                      config: StreamingFeatureConfig):
+                                      window -> None: FeatureWindow, 
+                                      config -> None: StreamingFeatureConfig) -> None:
         """Apply creator-specific processing to window."""
         try:
             creator_id = window.creator_id
@@ -699,8 +704,8 @@ class StreamingFeatureProcessor:
             return "generic"
     
     async def _apply_creator_transformations(self, 
-                                           window: FeatureWindow, 
-                                           creator_type: str):
+                                           window -> None: FeatureWindow, 
+                                           creator_type -> None: str) -> None:
         """Apply creator-specific feature transformations."""
         try:
             if creator_type == "musician":
@@ -730,7 +735,7 @@ class StreamingFeatureProcessor:
         except Exception as e:
             self.logger.error(f"Creator transformations failed: {e}")
     
-    async def _normalize_by_time_patterns(self, window: FeatureWindow, pattern_type: str):
+    async def _normalize_by_time_patterns(self, window -> None: FeatureWindow, pattern_type -> None: str) -> None:
         """Normalize features by time-of-day patterns."""
         try:
             # Simplified time pattern normalization
@@ -753,17 +758,17 @@ class StreamingFeatureProcessor:
         except Exception as e:
             self.logger.error(f"Time pattern normalization failed: {e}")
     
-    async def _apply_content_length_scaling(self, window: FeatureWindow):
+    async def _apply_content_length_scaling(self, window -> None: FeatureWindow) -> None:
         """Apply content length-based scaling for blog metrics."""
         # Simplified implementation
         pass
     
-    async def _apply_seasonal_adjustment(self, window: FeatureWindow):
+    async def _apply_seasonal_adjustment(self, window -> None: FeatureWindow) -> None:
         """Apply seasonal adjustments for photography metrics."""
         # Simplified implementation
         pass
     
-    async def _normalize_cross_platform(self, window: FeatureWindow):
+    async def _normalize_cross_platform(self, window -> None: FeatureWindow) -> None:
         """Normalize influencer metrics across platforms."""
         # Simplified implementation
         pass
@@ -800,7 +805,7 @@ class StreamingFeatureProcessor:
             self.logger.error(f"Quality calculation failed: {e}")
             return 0.5
     
-    async def _manage_windows(self):
+    async def _manage_windows(self) -> None:
         """Manage active windows and cleanup completed ones."""
         try:
             while self.is_running:
@@ -830,7 +835,7 @@ class StreamingFeatureProcessor:
         except Exception as e:
             self.logger.error(f"Window management error: {e}")
     
-    async def _collect_metrics(self):
+    async def _collect_metrics(self) -> None:
         """Collect and update performance metrics."""
         try:
             while self.is_running:
@@ -849,7 +854,7 @@ class StreamingFeatureProcessor:
         except Exception as e:
             self.logger.error(f"Metrics collection error: {e}")
     
-    def _update_latency_metrics(self, latency_ms: float):
+    def _update_latency_metrics(self, latency_ms -> None: float) -> None:
         """Update latency tracking metrics."""
         try:
             current_avg = self.performance_metrics["avg_processing_latency_ms"]
@@ -864,7 +869,7 @@ class StreamingFeatureProcessor:
             self.logger.error(f"Latency metrics update failed: {e}")
     
     # Feature-specific processors
-    async def _process_engagement_rate(self, feature: ProcessedFeature):
+    async def _process_engagement_rate(self, feature -> None: ProcessedFeature) -> None:
         """Process engagement rate feature."""
         try:
             # Apply engagement-specific transformations
@@ -884,7 +889,7 @@ class StreamingFeatureProcessor:
         except Exception as e:
             self.logger.error(f"Engagement rate processing failed: {e}")
     
-    async def _process_content_velocity(self, feature: ProcessedFeature):
+    async def _process_content_velocity(self, feature -> None: ProcessedFeature) -> None:
         """Process content velocity feature."""
         try:
             # Velocity-specific processing
@@ -893,7 +898,7 @@ class StreamingFeatureProcessor:
         except Exception as e:
             self.logger.error(f"Content velocity processing failed: {e}")
     
-    async def _process_audience_interaction(self, feature: ProcessedFeature):
+    async def _process_audience_interaction(self, feature -> None: ProcessedFeature) -> None:
         """Process audience interaction feature."""
         try:
             # Interaction-specific processing
@@ -902,7 +907,7 @@ class StreamingFeatureProcessor:
         except Exception as e:
             self.logger.error(f"Audience interaction processing failed: {e}")
     
-    async def _process_trending_score(self, feature: ProcessedFeature):
+    async def _process_trending_score(self, feature -> None: ProcessedFeature) -> None:
         """Process trending score feature."""
         try:
             # Trending-specific processing
@@ -911,7 +916,7 @@ class StreamingFeatureProcessor:
         except Exception as e:
             self.logger.error(f"Trending score processing failed: {e}")
     
-    async def _process_monetization_signals(self, feature: ProcessedFeature):
+    async def _process_monetization_signals(self, feature -> None: ProcessedFeature) -> None:
         """Process monetization signals feature."""
         try:
             # Monetization-specific processing
@@ -920,7 +925,7 @@ class StreamingFeatureProcessor:
         except Exception as e:
             self.logger.error(f"Monetization signals processing failed: {e}")
     
-    async def _default_feature_processor(self, feature: ProcessedFeature):
+    async def _default_feature_processor(self, feature -> None: ProcessedFeature) -> None:
         """Default feature processor for unknown features."""
         try:
             feature.processing_pipeline.append("default_processor")

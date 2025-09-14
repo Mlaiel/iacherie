@@ -106,7 +106,7 @@ class PerformanceOptimizer:
     load balancing infrastructure.
     """
     
-    def __init__(self, optimization_type: OptimizationType = OptimizationType.BALANCED):
+    def __init__(self, optimization_type -> None: OptimizationType = OptimizationType.BALANCED) -> None:
         self.optimization_type = optimization_type
         
         # Performance monitoring

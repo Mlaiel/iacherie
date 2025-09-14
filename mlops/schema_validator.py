@@ -1,3 +1,8 @@
+"""
+Schema Validator module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 🗃️ Schema Validator - Enterprise MLOps Platform
@@ -138,8 +143,8 @@ class SchemaValidator:
     """
     
     def __init__(self,
-                 db_path: str = "/tmp/schema_validator.db",
-                 max_versions_history: int = 50):
+                 db_path -> None: str = "/tmp/schema_validator.db",
+                 max_versions_history -> None: int = 50) -> None:
         self.db_path = db_path
         self.max_versions_history = max_versions_history
         
@@ -193,7 +198,7 @@ class SchemaValidator:
         self._load_predefined_schemas()
         logger.info("🗃️ SchemaValidator initialized for enterprise data governance")
     
-    def _setup_database(self):
+    def _setup_database(self) -> None:
         """Initialisation de la base de données"""
         try:
             with sqlite3.connect(self.db_path) as conn:
@@ -263,7 +268,7 @@ class SchemaValidator:
             logger.error(f"❌ Database setup error: {e}")
             raise
     
-    def _load_predefined_schemas(self):
+    def _load_predefined_schemas(self) -> None:
         """Chargement des schémas prédéfinis pour les créateurs"""
         try:
             # Schéma pour métadonnées audio des musiciens
@@ -482,7 +487,7 @@ class SchemaValidator:
             )
             return result
     
-    async def _validate_basic_structure(self, schema: TableSchema, result: ValidationResult):
+    async def _validate_basic_structure(self, schema -> None: TableSchema, result -> None: ValidationResult) -> None:
         """Validation de la structure de base"""
         try:
             # Vérification du nom de table
@@ -517,7 +522,7 @@ class SchemaValidator:
         except Exception as e:
             result.errors.append(f"Basic structure validation error: {str(e)}")
     
-    async def _validate_column_definition(self, col_name: str, col_def: ColumnDefinition, result: ValidationResult):
+    async def _validate_column_definition(self, col_name -> None: str, col_def -> None: ColumnDefinition, result -> None: ValidationResult) -> None:
         """Validation d'une définition de colonne"""
         try:
             # Vérification du nom de colonne
@@ -558,7 +563,7 @@ class SchemaValidator:
         constraint_upper = constraint.upper()
         return any(vc in constraint_upper for vc in valid_constraints)
     
-    async def _validate_creator_specific(self, schema: TableSchema, result: ValidationResult):
+    async def _validate_creator_specific(self, schema -> None: TableSchema, result -> None: ValidationResult) -> None:
         """Validation spécifique au type de créateur"""
         try:
             if not schema.creator_type or schema.creator_type not in self.creator_validation_rules:
@@ -596,7 +601,7 @@ class SchemaValidator:
         except Exception as e:
             result.errors.append(f"Creator-specific validation error: {str(e)}")
     
-    async def _validate_constraints(self, schema: TableSchema, result: ValidationResult):
+    async def _validate_constraints(self, schema -> None: TableSchema, result -> None: ValidationResult) -> None:
         """Validation des contraintes"""
         try:
             # Vérification des contraintes de table
@@ -632,7 +637,7 @@ class SchemaValidator:
         constraint_upper = constraint.upper()
         return any(vtc in constraint_upper for vtc in valid_table_constraints)
     
-    async def _validate_performance_implications(self, schema: TableSchema, result: ValidationResult):
+    async def _validate_performance_implications(self, schema -> None: TableSchema, result -> None: ValidationResult) -> None:
         """Validation des implications de performance"""
         try:
             # Vérification du nombre d'index
@@ -695,7 +700,7 @@ class SchemaValidator:
         
         return total_size
     
-    async def _validate_security_requirements(self, schema: TableSchema, result: ValidationResult):
+    async def _validate_security_requirements(self, schema -> None: TableSchema, result -> None: ValidationResult) -> None:
         """Validation des exigences de sécurité"""
         try:
             # Vérification des colonnes sensibles
@@ -725,7 +730,7 @@ class SchemaValidator:
         except Exception as e:
             result.errors.append(f"Security validation error: {str(e)}")
     
-    async def _validate_compatibility(self, schema: TableSchema, result: ValidationResult):
+    async def _validate_compatibility(self, schema -> None: TableSchema, result -> None: ValidationResult) -> None:
         """Validation de la compatibilité avec le schéma existant"""
         try:
             existing_schema = self.current_schemas[schema.table_name]
@@ -951,7 +956,7 @@ class SchemaValidator:
             logger.error(f"❌ Error generating cache key: {e}")
             return f"error_{schema.table_name}_{datetime.now().timestamp()}"
     
-    async def _save_schema_to_db(self, schema: TableSchema):
+    async def _save_schema_to_db(self, schema -> None: TableSchema) -> None:
         """Sauvegarde d'un schéma en base"""
         try:
             schema_json = {
@@ -993,7 +998,7 @@ class SchemaValidator:
         except Exception as e:
             logger.error(f"❌ Error saving schema to DB: {e}")
     
-    async def _save_validation_result(self, schema: TableSchema, result: ValidationResult):
+    async def _save_validation_result(self, schema -> None: TableSchema, result -> None: ValidationResult) -> None:
         """Sauvegarde d'un résultat de validation"""
         try:
             validation_id = f"val_{schema.table_name}_{int(datetime.now().timestamp())}"
@@ -1055,25 +1060,25 @@ class SchemaValidator:
             logger.error(f"❌ Error generating validation report: {e}")
             return {"error": str(e)}
     
-    def add_validation_callback(self, callback: Callable):
+    def add_validation_callback(self, callback -> None: Callable) -> None:
         """Ajouter un callback de validation"""
         self.validation_callbacks.append(callback)
         logger.info(f"📋 Validation callback added. Total: {len(self.validation_callbacks)}")
     
-    def add_change_callback(self, callback: Callable):
+    def add_change_callback(self, callback -> None: Callable) -> None:
         """Ajouter un callback de changement"""
         self.change_callbacks.append(callback)
         logger.info(f"🔄 Change callback added. Total: {len(self.change_callbacks)}")
 
 
 # Exemple d'utilisation pour démonstration
-async def main():
+async def main() -> None:
     """Démonstration des capacités du SchemaValidator"""
     
     validator = SchemaValidator()
     
     # Callbacks de démonstration
-    async def validation_callback(schema: TableSchema, result: ValidationResult):
+    async def validation_callback(schema -> None: TableSchema, result -> None: ValidationResult) -> None:
         status = "✅ VALID" if result.is_valid else "❌ INVALID"
         print(f"📋 VALIDATION: {schema.table_name} - {status}")
         if result.errors:

@@ -70,7 +70,7 @@ class ServiceEndpoint:
         """Get full URL for endpoint"""
         return f"{self.scheme}://{self.host}:{self.port}{self.path}"
 
-    def __hash__(self):
+    def __hash__(self) -> None:
         return hash((self.host, self.port, self.scheme, self.path))
 
 @dataclass
@@ -113,12 +113,12 @@ class DiscoveryMetrics:
 class ServiceWatcher:
     """Service change watcher"""
     
-    def __init__(self, service_name: str, callback: Callable[[List[ServiceRegistration]], None]):
+    def __init__(self, service_name -> None: str, callback -> None: Callable[[List[ServiceRegistration]], None]) -> None:
         self.service_name = service_name
         self.callback = callback
         self.last_services: List[ServiceRegistration] = []
 
-    async def notify(self, services: List[ServiceRegistration]):
+    async def notify(self, services -> None: List[ServiceRegistration]) -> None:
         """Notify of service changes"""
         if services != self.last_services:
             try:
@@ -127,7 +127,7 @@ class ServiceWatcher:
             except Exception as e:
                 logger.error(f"Service watcher callback error: {str(e)}")
 
-    async def _run_callback(self, services: List[ServiceRegistration]):
+    async def _run_callback(self, services -> None: List[ServiceRegistration]) -> None:
         """Run callback (handle both sync and async)"""
         if asyncio.iscoroutinefunction(self.callback):
             await self.callback(services)
@@ -137,7 +137,7 @@ class ServiceWatcher:
 class ServiceDiscoveryCore:
     """Enterprise service discovery system"""
     
-    def __init__(self, level: str = "enterprise", backend: DiscoveryBackend = DiscoveryBackend.MEMORY):
+    def __init__(self, level -> None: str = "enterprise", backend -> None: DiscoveryBackend = DiscoveryBackend.MEMORY) -> None:
         """Initialize service discovery core"""
         self.level = level
         self.backend = backend
@@ -179,7 +179,7 @@ class ServiceDiscoveryCore:
         
         logger.info(f"🔍 Service Discovery Core initialized - Backend: {backend.value}")
 
-    def _initialize_backend(self):
+    def _initialize_backend(self) -> None:
         """Initialize discovery backend"""
         try:
             if self.backend == DiscoveryBackend.CONSUL and CONSUL_AVAILABLE:
@@ -194,7 +194,7 @@ class ServiceDiscoveryCore:
             logger.error(f"Failed to initialize backend {self.backend.value}: {str(e)}")
             self.backend = DiscoveryBackend.MEMORY
 
-    def _initialize_consul(self):
+    def _initialize_consul(self) -> None:
         """Initialize Consul backend"""
         if not CONSUL_AVAILABLE:
             raise ImportError("Consul library not available")
@@ -205,7 +205,7 @@ class ServiceDiscoveryCore:
         )
         logger.info("✅ Consul backend initialized")
 
-    def _initialize_etcd(self):
+    def _initialize_etcd(self) -> None:
         """Initialize etcd backend"""
         if not ETCD_AVAILABLE:
             raise ImportError("etcd3 library not available")
@@ -216,7 +216,7 @@ class ServiceDiscoveryCore:
         )
         logger.info("✅ etcd backend initialized")
 
-    def _start_health_checking(self):
+    def _start_health_checking(self) -> None:
         """Start health check background task"""
         if self._health_check_task and not self._health_check_task.done():
             return
@@ -224,7 +224,7 @@ class ServiceDiscoveryCore:
         self._health_check_task = asyncio.create_task(self._health_check_loop())
         logger.info("❤️ Health checking started")
 
-    async def _health_check_loop(self):
+    async def _health_check_loop(self) -> None:
         """Health check background loop"""
         while not self._shutdown_event.is_set():
             try:
@@ -236,14 +236,14 @@ class ServiceDiscoveryCore:
                 logger.error(f"Health check loop error: {str(e)}")
                 await asyncio.sleep(60)  # Wait longer on error
 
-    async def _perform_health_checks(self):
+    async def _perform_health_checks(self) -> None:
         """Perform health checks on all services"""
         async with self._lock:
             for service_id, service in self.services.items():
                 if service.health_check_url:
                     await self._check_service_health(service)
 
-    async def _check_service_health(self, service: ServiceRegistration):
+    async def _check_service_health(self, service -> None: ServiceRegistration) -> None:
         """Check health of a specific service"""
         try:
             import aiohttp
@@ -267,7 +267,7 @@ class ServiceDiscoveryCore:
             await self._update_service_status(service.service_id, ServiceStatus.UNHEALTHY)
             self.metrics.failed_health_checks += 1
 
-    async def _simple_health_check(self, service: ServiceRegistration):
+    async def _simple_health_check(self, service -> None: ServiceRegistration) -> None:
         """Simple TCP health check without aiohttp"""
         try:
             for endpoint in service.endpoints:
@@ -325,7 +325,7 @@ class ServiceDiscoveryCore:
         logger.info(f"📝 Registered service {service_name} with ID {service_id}")
         return service_id
 
-    async def _register_with_backend(self, service: ServiceRegistration):
+    async def _register_with_backend(self, service -> None: ServiceRegistration) -> None:
         """Register service with external backend"""
         try:
             if self.backend == DiscoveryBackend.CONSUL and self.consul_client:
@@ -336,7 +336,7 @@ class ServiceDiscoveryCore:
         except Exception as e:
             logger.error(f"Failed to register with backend: {str(e)}")
 
-    async def _register_with_consul(self, service: ServiceRegistration):
+    async def _register_with_consul(self, service -> None: ServiceRegistration) -> None:
         """Register with Consul"""
         if not self.consul_client:
             return
@@ -362,7 +362,7 @@ class ServiceDiscoveryCore:
                 meta=service.metadata
             )
 
-    async def _register_with_etcd(self, service: ServiceRegistration):
+    async def _register_with_etcd(self, service -> None: ServiceRegistration) -> None:
         """Register with etcd"""
         if not self.etcd_client:
             return
@@ -389,7 +389,7 @@ class ServiceDiscoveryCore:
         # Set with TTL
         self.etcd_client.put(key, value, lease=self.etcd_client.lease(service.ttl_seconds))
 
-    async def deregister_service(self, service_id: str):
+    async def deregister_service(self, service_id -> None: str) -> None:
         """Deregister a service"""
         
         async with self._lock:
@@ -414,7 +414,7 @@ class ServiceDiscoveryCore:
         
         logger.info(f"🗑️ Deregistered service {service.service_name} with ID {service_id}")
 
-    async def _deregister_with_backend(self, service: ServiceRegistration):
+    async def _deregister_with_backend(self, service -> None: ServiceRegistration) -> None:
         """Deregister service from external backend"""
         try:
             if self.backend == DiscoveryBackend.CONSUL and self.consul_client:
@@ -475,7 +475,7 @@ class ServiceDiscoveryCore:
         
         return endpoints
 
-    async def _update_service_status(self, service_id: str, status: ServiceStatus):
+    async def _update_service_status(self, service_id -> None: str, status -> None: ServiceStatus) -> None:
         """Update service status"""
         async with self._lock:
             if service_id in self.services:
@@ -494,7 +494,7 @@ class ServiceDiscoveryCore:
                         if old_status == ServiceStatus.HEALTHY:
                             self.metrics.healthy_services -= 1
 
-    async def heartbeat(self, service_id: str):
+    async def heartbeat(self, service_id -> None: str) -> None:
         """Send heartbeat for service"""
         async with self._lock:
             if service_id in self.services:
@@ -508,13 +508,13 @@ class ServiceDiscoveryCore:
         logger.debug(f"👁️ Added watcher for {service_name}")
         return watcher
 
-    def remove_watcher(self, watcher: ServiceWatcher):
+    def remove_watcher(self, watcher -> None: ServiceWatcher) -> None:
         """Remove service watcher"""
         if watcher in self.watchers:
             self.watchers.remove(watcher)
             logger.debug(f"👁️ Removed watcher for {watcher.service_name}")
 
-    async def _notify_watchers(self, service_name: str):
+    async def _notify_watchers(self, service_name -> None: str) -> None:
         """Notify watchers of service changes"""
         query = ServiceQuery(service_name=service_name, healthy_only=False)
         services = await self.discover_services(query)
@@ -523,7 +523,7 @@ class ServiceDiscoveryCore:
             if watcher.service_name == service_name:
                 await watcher.notify(services)
 
-    async def cleanup_expired_services(self):
+    async def cleanup_expired_services(self) -> None:
         """Clean up expired services"""
         current_time = datetime.utcnow()
         expired_services = []
@@ -586,7 +586,7 @@ class ServiceDiscoveryCore:
             logger.error(f"Service discovery health check failed: {str(e)}")
             return False
 
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Shutdown service discovery"""
         logger.info("🛑 Shutting down service discovery")
         

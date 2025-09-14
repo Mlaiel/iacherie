@@ -201,7 +201,7 @@ class ContentPerformanceAnalyzer(IAnalyticsProvider):
     Analyzes engagement patterns, content quality, and optimization opportunities.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._performance_data: Dict[str, ContentPerformance] = {}
         self._metrics_history: Dict[str, List[AnalyticsMetric]] = defaultdict(list)
         self._real_time_buffer: deque = deque(maxlen=1000)
@@ -227,7 +227,7 @@ class ContentPerformanceAnalyzer(IAnalyticsProvider):
             logger.error(f"❌ Failed to collect metric: {e}")
             return False
     
-    async def _update_content_performance(self, metric: AnalyticsMetric):
+    async def _update_content_performance(self, metric -> None: AnalyticsMetric) -> None:
         """Update content performance data."""
         content_id = metric.content_id
         
@@ -266,7 +266,7 @@ class ContentPerformanceAnalyzer(IAnalyticsProvider):
         
         performance.last_updated = datetime.now(timezone.utc)
     
-    async def _calculate_derived_metrics(self, performance: ContentPerformance):
+    async def _calculate_derived_metrics(self, performance -> None: ContentPerformance) -> None:
         """Calculate derived performance metrics."""
         # Engagement rate
         if performance.impressions > 0:
@@ -489,7 +489,7 @@ class AudienceIntelligenceAnalyzer:
     Advanced audience analytics with AI-powered segmentation and behavior analysis.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._audience_data: Dict[str, AudienceInsight] = {}
         self._engagement_patterns: Dict[str, List[Dict[str, Any]]] = defaultdict(list)
         
@@ -575,12 +575,12 @@ class DatabaseAnalyticsManager:
     analytics, insights, and optimization recommendations for content creators.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.performance_analyzer = ContentPerformanceAnalyzer()
         self.audience_analyzer = AudienceIntelligenceAnalyzer()
         self._analytics_tasks: List[asyncio.Task] = []
         
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize analytics manager."""
         logger.info("📊 Initializing Enterprise Database Analytics Manager...")
         
@@ -591,7 +591,7 @@ class DatabaseAnalyticsManager:
         
         logger.info("✅ Enterprise Database Analytics Manager initialized")
     
-    async def _real_time_analytics_processor(self):
+    async def _real_time_analytics_processor(self) -> None:
         """Process real-time analytics data."""
         while True:
             try:
@@ -672,7 +672,7 @@ class DatabaseAnalyticsManager:
             logger.error(f"❌ Failed to generate analytics dashboard: {e}")
             return {"error": str(e)}
     
-    async def close(self):
+    async def close(self) -> None:
         """Close analytics manager."""
         logger.info("🔌 Closing Database Analytics Manager...")
         

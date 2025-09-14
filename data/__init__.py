@@ -29,7 +29,7 @@ logger = logging.getLogger(__name__)
 _loaded_modules = []
 _failed_modules = []
 
-def _safe_import(module_name):
+def _safe_import(module_name) -> None:
     """Safely import a module with error handling"""
     try:
         module = __import__(f"data.{module_name}", fromlist=[module_name])

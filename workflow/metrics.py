@@ -60,11 +60,11 @@ Context manager for timing operations."""
     tags: Dict[str, str] = field(default_factory=dict)
     metrics_collector: 'WorkflowMetrics' = None
     
-    def __enter__(self):
+    def __enter__(self) -> None:
         self.start_time = time.time()
         return self
     
-    def __exit__(self, exc_type, exc_val, exc_tb):
+    def __exit__(self, exc_type, exc_val, exc_tb) -> None:
         self.end_time = time.time()
         duration = self.end_time - self.start_time
         
@@ -80,7 +80,7 @@ class WorkflowMetrics:
     """
 Comprehensive metrics collection for workflow operations."""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.config = config or {}
         
         # Storage for metrics
@@ -110,7 +110,7 @@ Comprehensive metrics collection for workflow operations."""
         # Logger
         self.logger = logging.getLogger("workflow.metrics")
     
-    def increment(self, metric_name: str, value: int = 1, tags: Dict[str, str] = None):
+    def increment(self, metric_name -> None: str, value -> None: int = 1, tags -> None: Dict[str, str] = None) -> None:
         """Increment a counter metric."""
         with self._lock:
             key = self._build_metric_key(metric_name, tags)
@@ -123,12 +123,12 @@ Comprehensive metrics collection for workflow operations."""
                 tags=tags or {}
             ))
     
-    def decrement(self, metric_name: str, value: int = 1, tags: Dict[str, str] = None):
+    def decrement(self, metric_name -> None: str, value -> None: int = 1, tags -> None: Dict[str, str] = None) -> None:
         """
 Decrement a counter metric."""
         self.increment(metric_name, -value, tags)
     
-    def set_gauge(self, metric_name: str, value: Union[int, float], tags: Dict[str, str] = None):
+    def set_gauge(self, metric_name -> None: str, value -> None: Union[int, float], tags -> None: Dict[str, str] = None) -> None:
         """
 Set a gauge metric value."""
         with self._lock:
@@ -142,7 +142,7 @@ Set a gauge metric value."""
                 tags=tags or {}
             ))
     
-    def record_histogram(self, metric_name: str, value: Union[int, float], tags: Dict[str, str] = None):
+    def record_histogram(self, metric_name -> None: str, value -> None: Union[int, float], tags -> None: Dict[str, str] = None) -> None:
         """
 Record a value in a histogram."""
         with self._lock:
@@ -160,7 +160,7 @@ Record a value in a histogram."""
                 tags=tags or {}
             ))
     
-    def record_timer(self, metric_name: str, duration: float, tags: Dict[str, str] = None):
+    def record_timer(self, metric_name -> None: str, duration -> None: float, tags -> None: Dict[str, str] = None) -> None:
         """
 Record a timer metric."""
         with self._lock:
@@ -187,7 +187,7 @@ Create a timer context manager."""
             metrics_collector=self
         )
     
-    def record_workflow_execution(self, workflow_id: str, success: bool, duration: float, **kwargs):
+    def record_workflow_execution(self, workflow_id -> None: str, success -> None: bool, duration -> None: float, **kwargs) -> None:
         """
 Record workflow execution metrics."""
         tags = {
@@ -204,7 +204,7 @@ Record workflow execution metrics."""
         else:
             self.increment("workflow.executions.failure", tags=tags)
     
-    def record_pipeline_execution(self, pipeline_id: str, success: bool, duration: float, **kwargs):
+    def record_pipeline_execution(self, pipeline_id -> None: str, success -> None: bool, duration -> None: float, **kwargs) -> None:
         """Record pipeline execution metrics."""
         tags = {
             "pipeline_id": pipeline_id,
@@ -227,7 +227,7 @@ Record workflow execution metrics."""
         self.record_histogram("pipeline.steps.executed", steps_executed, tags=tags)
         self.record_histogram("pipeline.steps.failed", steps_failed, tags=tags)
     
-    def record_step_execution(self, pipeline_id: str, step_name: str, success: bool, duration: float, **kwargs):
+    def record_step_execution(self, pipeline_id -> None: str, step_name -> None: str, success -> None: bool, duration -> None: float, **kwargs) -> None:
         """Record pipeline step execution metrics."""
         tags = {
             "pipeline_id": pipeline_id,
@@ -250,7 +250,7 @@ Record workflow execution metrics."""
                 error_tags["error_type"] = type(error).__name__ if isinstance(error, Exception) else "unknown"
                 self.increment("pipeline.step.errors", tags=error_tags)
     
-    def record_scheduler_activity(self, task_id: str, activity: str, **kwargs):
+    def record_scheduler_activity(self, task_id -> None: str, activity -> None: str, **kwargs) -> None:
         """Record scheduler activity metrics."""
         tags = {
             "task_id": task_id,
@@ -271,7 +271,7 @@ Record workflow execution metrics."""
             else:
                 self.increment("scheduler.task.executions.failure", tags=tags)
     
-    def record_automation_trigger(self, rule_id: str, trigger_type: str, success: bool, **kwargs):
+    def record_automation_trigger(self, rule_id -> None: str, trigger_type -> None: str, success -> None: bool, **kwargs) -> None:
         """Record automation trigger metrics."""
         tags = {
             "rule_id": rule_id,
@@ -287,7 +287,7 @@ Record workflow execution metrics."""
         else:
             self.increment("automation.triggers.failure", tags=tags)
     
-    def record_state_operation(self, state_id: str, operation: str, duration: float, **kwargs):
+    def record_state_operation(self, state_id -> None: str, operation -> None: str, duration -> None: float, **kwargs) -> None:
         """Record state management operation metrics."""
         tags = {
             "state_id": state_id,
@@ -304,7 +304,7 @@ Record workflow execution metrics."""
         else:
             self.increment(f"state.{operation}.failure", tags=tags)
     
-    def record_resource_usage(self, resource_type: str, usage: Union[int, float], **kwargs):
+    def record_resource_usage(self, resource_type -> None: str, usage -> None: Union[int, float], **kwargs) -> None:
         """Record resource usage metrics."""
         tags = {
             "resource_type": resource_type
@@ -413,7 +413,7 @@ Record workflow execution metrics."""
         else:
             raise ValueError(f"Unsupported export format: {format_type}")
     
-    def clear_metrics(self, metric_type: str = None):
+    def clear_metrics(self, metric_type -> None: str = None) -> None:
         """Clear metrics data."""
         with self._lock:
             if metric_type is None or metric_type == "all":
@@ -431,7 +431,7 @@ Record workflow execution metrics."""
             elif metric_type == "timers":
                 self.timers.clear()
     
-    def cleanup_old_metrics(self):
+    def cleanup_old_metrics(self) -> None:
         """Remove old metrics beyond retention period."""
         with self._lock:
             cutoff_time = datetime.utcnow() - self.retention_period
@@ -442,7 +442,7 @@ Record workflow execution metrics."""
                     if metric.timestamp > cutoff_time
                 ]
     
-    async def start_background_tasks(self):
+    async def start_background_tasks(self) -> None:
         """
 Start background metric aggregation and cleanup tasks."""
         if self.enable_aggregation:
@@ -450,7 +450,7 @@ Start background metric aggregation and cleanup tasks."""
         
         asyncio.create_task(self._cleanup_task())
     
-    async def _aggregation_task(self):
+    async def _aggregation_task(self) -> None:
         """
 Background task for metric aggregation."""
         while True:
@@ -460,7 +460,7 @@ Background task for metric aggregation."""
             except Exception as e:
                 self.logger.error(f"Error in metric aggregation task: {e}")
     
-    async def _cleanup_task(self):
+    async def _cleanup_task(self) -> None:
         """Background task for metric cleanup."""
         while True:
             try:
@@ -469,7 +469,7 @@ Background task for metric aggregation."""
             except Exception as e:
                 self.logger.error(f"Error in metric cleanup task: {e}")
     
-    def _aggregate_metrics(self):
+    def _aggregate_metrics(self) -> None:
         """Aggregate metrics over time window."""
         with self._lock:
             now = datetime.utcnow()
@@ -506,7 +506,7 @@ Calculate aggregate statistics for metrics."""
             "timestamp": datetime.utcnow().isoformat()
         }
     
-    def _store_metric(self, metric: Metric):
+    def _store_metric(self, metric -> None: Metric) -> None:
         """Store individual metric."""
         self.metrics_storage[metric.name].append(metric)
         

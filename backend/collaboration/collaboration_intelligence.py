@@ -216,7 +216,7 @@ class CollaborationIntelligenceEngine:
     - Intelligence prédictive en temps réel
     """
     
-    def __init__(self, db_session=None, redis_client=None):
+    def __init__(self, db_session=None, redis_client=None) -> None:
         self.db_session = db_session
         self.redis_client = redis_client
         self.ai_models = {}
@@ -229,7 +229,7 @@ class CollaborationIntelligenceEngine:
         # Initialiser l'engine d'intelligence
         self._initialize_intelligence_engine()
     
-    def _initialize_intelligence_engine(self):
+    def _initialize_intelligence_engine(self) -> None:
         """Initialise le moteur d'intelligence"""
         # Créer les modèles d'IA par défaut
         self._create_default_ai_models()
@@ -240,7 +240,7 @@ class CollaborationIntelligenceEngine:
         # Configurer les pipelines de recommandations
         self._configure_recommendation_pipelines()
     
-    def _create_default_ai_models(self):
+    def _create_default_ai_models(self) -> None:
         """Crée les modèles d'IA par défaut"""
         default_models = [
             {
@@ -294,7 +294,7 @@ class CollaborationIntelligenceEngine:
             model = AIModel(**model_config)
             self.ai_models[model.id] = model
     
-    def _initialize_learning_systems(self):
+    def _initialize_learning_systems(self) -> None:
         """Initialise les systèmes d'apprentissage"""
         self.learning_systems = {
             'supervised_learning': {
@@ -317,7 +317,7 @@ class CollaborationIntelligenceEngine:
             }
         }
     
-    def _configure_recommendation_pipelines(self):
+    def _configure_recommendation_pipelines(self) -> None:
         """Configure les pipelines de recommandations"""
         self.recommendation_pipelines = {
             RecommendationType.COLLABORATION_MATCH: {
@@ -626,7 +626,7 @@ class PredictiveAnalyticsEngine:
     - Calibration automatique de modèles
     """
     
-    def __init__(self, intelligence_engine):
+    def __init__(self, intelligence_engine) -> None:
         self.intelligence_engine = intelligence_engine
         self.prediction_pipelines = {}
         self.scenario_models = {}
@@ -726,7 +726,7 @@ class BehavioralAnalyticsEngine:
     - Recommandations basées sur psychologie
     """
     
-    def __init__(self, intelligence_engine):
+    def __init__(self, intelligence_engine) -> None:
         self.intelligence_engine = intelligence_engine
         self.behavioral_models = {}
         self.personality_analyzers = {}

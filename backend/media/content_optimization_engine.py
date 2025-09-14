@@ -194,7 +194,7 @@ class OptimizationResult:
 class SEOOptimizer:
     """Advanced SEO optimization and metadata generation"""
     
-    def __init__(self, config: OptimizationConfig):
+    def __init__(self, config -> None: OptimizationConfig) -> None:
         self.config = config
         self.keyword_research_cache = {}
         self.schema_templates = {}
@@ -204,7 +204,7 @@ class SEOOptimizer:
         
         logger.info("🔍 SEO Optimizer initialized")
     
-    def _initialize_nlp_models(self):
+    def _initialize_nlp_models(self) -> None:
         """Initialize NLP models for content analysis"""
         try:
             # Would initialize actual models in production
@@ -381,7 +381,7 @@ class SEOOptimizer:
 class SocialMediaOptimizer:
     """Platform-specific social media optimization"""
     
-    def __init__(self, config: OptimizationConfig):
+    def __init__(self, config -> None: OptimizationConfig) -> None:
         self.config = config
         self.platform_specs = self._initialize_platform_specs()
         self.hashtag_research_cache = {}
@@ -697,7 +697,7 @@ class SocialMediaOptimizer:
 class QualityOptimizer:
     """Content quality assessment and optimization"""
     
-    def __init__(self, config: OptimizationConfig):
+    def __init__(self, config -> None: OptimizationConfig) -> None:
         self.config = config
         self.quality_models = {}
         
@@ -912,7 +912,7 @@ class QualityOptimizer:
 class ContentOptimizationEngine:
     """Main content optimization engine orchestrating all optimization components"""
     
-    def __init__(self, config: Optional[OptimizationConfig] = None):
+    def __init__(self, config -> None: Optional[OptimizationConfig] = None) -> None:
         """Initialize content optimization engine"""
         self.config = config or OptimizationConfig(
             target_platforms=[OptimizationPlatform.GOOGLE, OptimizationPlatform.INSTAGRAM],
@@ -1234,21 +1234,21 @@ class ContentOptimizationEngine:
 # Backward compatibility classes for existing imports
 class SEOMetadataOptimizer_Legacy:
     """Legacy wrapper for SEO optimizer"""
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs) -> None:
         config = OptimizationConfig()
         self.optimizer = SEOOptimizer(config)
 
 
 class SocialMediaOptimizer_Legacy:
     """Legacy wrapper for social media optimizer"""
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs) -> None:
         config = OptimizationConfig()
         self.optimizer = SocialMediaOptimizer(config)
 
 
 class MediaQualityOptimizer_Legacy:
     """Legacy wrapper for quality optimizer"""
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs) -> None:
         config = OptimizationConfig()
         self.optimizer = QualityOptimizer(config)
 

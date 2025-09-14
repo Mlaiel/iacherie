@@ -130,7 +130,7 @@ class CompatibilityScore:
 class AIMatchmaker:
     """Moteur de matching IA principal"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         self.vectorizer = TfidfVectorizer(max_features=1000, stop_words='english')
@@ -375,7 +375,7 @@ class AIMatchmaker:
 class MatchingAlgorithm:
     """Algorithmes de matching avancés"""
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client -> None: aioredis.Redis) -> None:
         self.redis = redis_client
         self.similarity_cache = {}
         
@@ -516,7 +516,7 @@ class MatchingAlgorithm:
 class IntelligentMatching:
     """Système de matching intelligent avec apprentissage"""
     
-    def __init__(self, ai_matchmaker: AIMatchmaker, algorithm: MatchingAlgorithm):
+    def __init__(self, ai_matchmaker -> None: AIMatchmaker, algorithm -> None: MatchingAlgorithm) -> None:
         self.ai_matchmaker = ai_matchmaker
         self.algorithm = algorithm
         self.learning_data = []
@@ -592,7 +592,7 @@ class IntelligentMatching:
 class MatchingIntelligenceService:
     """Service principal de matching intelligent"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         self.ai_matchmaker = AIMatchmaker(redis_client, db_session)

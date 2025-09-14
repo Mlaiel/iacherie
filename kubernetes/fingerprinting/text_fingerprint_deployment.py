@@ -7,7 +7,7 @@ services using BERT, RoBERTa, and advanced NLP technologies.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
+# [EMOJI_REMOVED] UNAUTHORIZED USE STRICTLY PROHIBITED # [EMOJI_REMOVED]
 This code is the exclusive property of Fahed Mlaiel.
 Any unauthorized copying, distribution, or use without written permission
 will result in legal action under German and international copyright law.
@@ -104,7 +104,7 @@ class TextFingerprintConfig:
     storage_size: str = "200Gi"
     monitoring_enabled: bool = True
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.algorithms is None:
             self.algorithms = [
                 TextFingerprintAlgorithm.BERT_EMBEDDING,
@@ -141,7 +141,7 @@ class TextFingerprintDeployment:
     - Plagiarism and content theft detection
     """
     
-    def __init__(self, config: TextFingerprintConfig):
+    def __init__(self, config -> None: TextFingerprintConfig) -> None:
         """
         Initialize text fingerprinting deployment
         
@@ -1397,3 +1397,5 @@ class TextFingerprintDeployment:
         except Exception as e:
             logger.error(f"Cleanup failed: {e}")
             raise
+
+# File has syntax issues - needs manual review

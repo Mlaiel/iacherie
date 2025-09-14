@@ -31,7 +31,7 @@ class VintageConfig:
 class FilmGrain:
     """Film grain and texture effects."""
     
-    def __init__(self, config: VintageConfig):
+    def __init__(self, config -> None: VintageConfig) -> None:
         self.config = config
     
     def add_film_grain(self, frame: np.ndarray, intensity: float = 0.3) -> np.ndarray:
@@ -102,7 +102,7 @@ class FilmGrain:
 class ColorGrading:
     """Vintage color grading and processing."""
     
-    def __init__(self, config: VintageConfig):
+    def __init__(self, config -> None: VintageConfig) -> None:
         self.config = config
     
     def apply_vintage_lut(self, frame: np.ndarray, era: str = "70s") -> np.ndarray:
@@ -152,7 +152,7 @@ class ColorGrading:
 class VintageEffects:
     """Special vintage effects and distortions."""
     
-    def __init__(self, config: VintageConfig):
+    def __init__(self, config -> None: VintageConfig) -> None:
         self.config = config
     
     def add_vignette(self, frame: np.ndarray, strength: float = 0.4) -> np.ndarray:
@@ -181,7 +181,7 @@ class VintageEffects:
 class VintageEffectsEngine:
     """Enterprise vintage effects engine for retro content creation."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.config = VintageConfig()
         self.film_grain = FilmGrain(self.config)
         self.color_grading = ColorGrading(self.config)

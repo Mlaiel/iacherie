@@ -133,7 +133,7 @@ class MessageHandler(ABC):
 class InMemoryQueue:
     """In-memory message queue implementation"""
     
-    def __init__(self, name: str, queue_type: QueueType = QueueType.FIFO):
+    def __init__(self, name -> None: str, queue_type -> None: QueueType = QueueType.FIFO) -> None:
         self.name = name
         self.queue_type = queue_type
         self.messages = deque()
@@ -194,7 +194,7 @@ class InMemoryQueue:
             logger.error(f"Failed to dequeue message: {str(e)}")
             return None
     
-    def _process_delayed_messages(self):
+    def _process_delayed_messages(self) -> None:
         """Move ready delayed messages to main queue"""
         now = datetime.utcnow()
         ready_messages = []
@@ -249,7 +249,7 @@ class InMemoryQueue:
 class MessageQueueCore:
     """Core message queue management system"""
     
-    def __init__(self, level: str = "enterprise"):
+    def __init__(self, level -> None: str = "enterprise") -> None:
         self.level = level
         self.queues: Dict[str, InMemoryQueue] = {}
         self.handlers: Dict[str, List[MessageHandler]] = defaultdict(list)
@@ -407,7 +407,7 @@ class MessageQueueCore:
             logger.error(f"Failed to unsubscribe from topic {topic}: {str(e)}")
             return False
     
-    async def _queue_worker(self, queue_name: str):
+    async def _queue_worker(self, queue_name -> None: str) -> None:
         """Worker process for queue messages"""
         queue = self.queues[queue_name]
         

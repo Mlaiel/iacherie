@@ -138,7 +138,7 @@ class StripeDisputeManager:
     intelligent response strategies.
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.stripe_client = stripe
         self.ml_models = {}
@@ -161,7 +161,7 @@ class StripeDisputeManager:
         # ⚙️ DevOps: Initialize monitoring
         self._initialize_monitoring()
     
-    def _initialize_ml_models(self):
+    def _initialize_ml_models(self) -> None:
         """🤖 Lead Dev IA: Initialize ML models for dispute optimization"""
         try:
             # Win rate prediction model
@@ -189,14 +189,14 @@ class StripeDisputeManager:
         except Exception as e:
             logger.error(f"❌ Failed to initialize ML models: {e}")
     
-    def _initialize_security(self):
+    def _initialize_security(self) -> None:
         """🔒 Security: Initialize security components"""
         self.webhook_secret = self.config.get('stripe_webhook_secret')
         self.evidence_encryption_key = self.config.get('evidence_encryption_key')
         self.max_evidence_size_mb = int(self.config.get('max_evidence_size_mb', 25))
         logger.info("✅ Security components initialized")
     
-    def _initialize_evidence_templates(self):
+    def _initialize_evidence_templates(self) -> None:
         """🤖 IA Prompt Engineer: Initialize evidence templates"""
         self.evidence_templates = {
             DisputeReason.FRAUDULENT: {
@@ -245,7 +245,7 @@ class StripeDisputeManager:
         }
         logger.info("✅ Evidence templates initialized")
     
-    def _initialize_monitoring(self):
+    def _initialize_monitoring(self) -> None:
         """⚙️ DevOps: Initialize monitoring and metrics"""
         self.metrics = {
             'total_disputes': 0,
@@ -1160,8 +1160,8 @@ Customer received full licensed rights to the audio content as agreed.
             }
     
     async def _update_ml_models_with_outcome(
-        self, dispute: Dispute, won: bool
-    ):
+        self, dispute -> None: Dispute, won -> None: bool
+    ) -> None:
         """🤖 Lead Dev IA: Update ML models with dispute outcome"""
         
         try:
@@ -1192,8 +1192,8 @@ Customer received full licensed rights to the audio content as agreed.
             logger.error(f"❌ ML model update failed: {e}")
     
     async def _trigger_dispute_notifications(
-        self, dispute: Dispute, event_type: str
-    ):
+        self, dispute -> None: Dispute, event_type -> None: str
+    ) -> None:
         """🔧 Microservices: Trigger dispute-related notifications"""
         
         try:
@@ -1216,7 +1216,7 @@ Customer received full licensed rights to the audio content as agreed.
         except Exception as e:
             logger.error(f"❌ Dispute notification failed: {e}")
     
-    async def _update_dispute_metrics(self):
+    async def _update_dispute_metrics(self) -> None:
         """⚙️ DevOps: Update dispute-related metrics"""
         
         self.metrics['total_disputes'] = len(self.disputes)
@@ -1310,7 +1310,7 @@ Customer received full licensed rights to the audio content as agreed.
 
 
 # 🎖️ MULTI-ROLE EXPERT VALIDATION
-async def validate_multi_role_implementation():
+async def validate_multi_role_implementation() -> None:
     """Comprehensive validation of all 9 expert roles implementation"""
     
     print("🎖️ STRIPE DISPUTE MANAGER - MULTI-ROLE EXPERT VALIDATION")

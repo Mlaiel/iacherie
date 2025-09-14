@@ -57,7 +57,7 @@ Pipeline configuration request model"""
     notifications: Optional[Dict[str, Any]] = Field({}, description="Notification settings")
     
     @validator('environment')
-    def validate_environment(cls, v):
+    def validate_environment(cls, v) -> None:
         try:
             Environment(v)
             return v
@@ -65,7 +65,7 @@ Pipeline configuration request model"""
             raise ValueError(f"Invalid environment: {v}")
             
     @validator('pipeline_type')
-    def validate_pipeline_type(cls, v):
+    def validate_pipeline_type(cls, v) -> None:
         try:
             PipelineType(v)
             return v
@@ -129,13 +129,13 @@ class PipelineAPIManager:
     """
     
     def __init__(self, 
-                 pipeline_manager: AdvancedPipelineManager,
-                 config_manager: PipelineConfigManager,
-                 notification_manager: NotificationManager,
-                 monitoring_manager: PipelineMonitoringManager,
-                 security_manager: PipelineSecurityManager,
-                 host: str = "0.0.0.0",
-                 port: int = 8080):
+                 pipeline_manager -> None: AdvancedPipelineManager,
+                 config_manager -> None: PipelineConfigManager,
+                 notification_manager -> None: NotificationManager,
+                 monitoring_manager -> None: PipelineMonitoringManager,
+                 security_manager -> None: PipelineSecurityManager,
+                 host -> None: str = "0.0.0.0",
+                 port -> None: int = 8080) -> None:
         
         if not FASTAPI_AVAILABLE:
             raise ImportError("FastAPI is required for API functionality")
@@ -171,12 +171,12 @@ class PipelineAPIManager:
         # Register routes
         self._register_routes()
         
-    def _register_routes(self):
+    def _register_routes(self) -> None:
         """Register all API routes"""
         
         # Health check endpoint
         @self.app.get("/health")
-        async def health_check():
+        async def health_check() -> None:
             """Health check endpoint"""
             return {
                 "status": "healthy",
@@ -520,7 +520,7 @@ class PipelineAPIManager:
             current_user: dict = Depends(get_current_user)
         ):
             """Stream real-time execution logs"""
-            async def generate_logs():
+            async def generate_logs() -> None:
                 while True:
                     details = self.pipeline_manager.get_execution_details(execution_id)
                     if details:
@@ -578,7 +578,7 @@ class PipelineAPIManager:
                 self.logger.error(f"Failed to get system stats: {str(e)}")
                 raise HTTPException(status_code=500, detail=str(e))
                 
-    def run_server(self):
+    def run_server(self) -> None:
         """Run the API server"""
         self.logger.info(f"Starting Pipeline API server on {self.host}:{self.port}")
         uvicorn.run(
@@ -588,7 +588,7 @@ class PipelineAPIManager:
             log_level="info"
         )
         
-    def get_app(self):
+    def get_app(self) -> None:
         """Get FastAPI application instance"""
         return self.app
 

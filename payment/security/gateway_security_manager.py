@@ -118,7 +118,7 @@ class SecurityIncident:
 class GatewaySecurityManager:
     """Enterprise security manager for payment gateway"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.redis_client = None
         self.master_key = None
@@ -143,7 +143,7 @@ class GatewaySecurityManager:
             "maintain_information_security": False
         }
         
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize the security manager"""
         try:
             # Initialize Redis connection
@@ -169,7 +169,7 @@ class GatewaySecurityManager:
             logger.error(f"Failed to initialize Gateway Security Manager: {e}")
             raise
     
-    async def _initialize_master_key(self):
+    async def _initialize_master_key(self) -> None:
         """Initialize or load the master encryption key"""
         try:
             # Try to load existing master key
@@ -192,7 +192,7 @@ class GatewaySecurityManager:
             logger.error(f"Failed to initialize master key: {e}")
             raise
     
-    async def _load_encryption_keys(self):
+    async def _load_encryption_keys(self) -> None:
         """Load existing encryption keys from storage"""
         try:
             key_data = await self.redis_client.get("gateway:security:encryption_keys")
@@ -216,7 +216,7 @@ class GatewaySecurityManager:
         except Exception as e:
             logger.error(f"Failed to load encryption keys: {e}")
     
-    async def _initialize_pci_compliance(self):
+    async def _initialize_pci_compliance(self) -> None:
         """Initialize PCI DSS compliance monitoring"""
         try:
             # Load compliance status from storage
@@ -434,7 +434,7 @@ class GatewaySecurityManager:
             logger.error(f"Failed to validate token: {e}")
             return False
     
-    async def rotate_encryption_keys(self):
+    async def rotate_encryption_keys(self) -> None:
         """Rotate all encryption keys"""
         try:
             rotated_count = 0
@@ -518,7 +518,7 @@ class GatewaySecurityManager:
             logger.error(f"Failed to scan vulnerabilities: {e}")
             raise
     
-    async def _monitor_pci_compliance(self):
+    async def _monitor_pci_compliance(self) -> None:
         """Monitor PCI DSS compliance requirements"""
         try:
             # This would integrate with actual PCI compliance monitoring
@@ -546,11 +546,11 @@ class GatewaySecurityManager:
     
     async def _log_security_event(
         self,
-        event_type: SecurityEvent,
-        severity: SecurityLevel,
-        description: str,
-        metadata: Dict[str, Any] = None
-    ):
+        event_type -> None: SecurityEvent,
+        severity -> None: SecurityLevel,
+        description -> None: str,
+        metadata -> None: Dict[str, Any] = None
+    ) -> None:
         """Log a security event"""
         try:
             incident = SecurityIncident(
@@ -585,7 +585,7 @@ class GatewaySecurityManager:
         except Exception as e:
             logger.error(f"Failed to log security event: {e}")
     
-    async def _save_encryption_keys(self):
+    async def _save_encryption_keys(self) -> None:
         """Save encryption keys to storage"""
         try:
             keys_dict = {}
@@ -610,7 +610,7 @@ class GatewaySecurityManager:
         except Exception as e:
             logger.error(f"Failed to save encryption keys: {e}")
     
-    async def _save_active_tokens(self):
+    async def _save_active_tokens(self) -> None:
         """Save active tokens to storage"""
         try:
             tokens_dict = {}
@@ -684,7 +684,7 @@ class GatewaySecurityManager:
             logger.error(f"Failed to get security status: {e}")
             return {"error": str(e)}
     
-    async def cleanup_expired_items(self):
+    async def cleanup_expired_items(self) -> None:
         """Clean up expired keys and tokens"""
         try:
             cleaned_count = 0
@@ -709,7 +709,7 @@ class GatewaySecurityManager:
         except Exception as e:
             logger.error(f"Failed to cleanup expired items: {e}")
     
-    async def close(self):
+    async def close(self) -> None:
         """Close the security manager and cleanup resources"""
         try:
             if self.redis_client:

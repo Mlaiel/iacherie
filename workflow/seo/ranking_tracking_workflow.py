@@ -53,7 +53,7 @@ class RankingReport:
 class RankingTrackingWorkflow:
     """AI-powered ranking tracking workflow"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.metrics_collector = MetricsCollector()
         self.cache_manager = CacheManager()
         self.ranking_history: Dict[str, List[KeywordRanking]] = {}
@@ -222,18 +222,18 @@ class RankingTrackingWorkflow:
         visibility_score = total_weighted_score / total_weight if total_weight > 0 else 0
         return min(visibility_score, 1.0)
     
-    async def _cache_ranking_report(self, report: RankingReport):
+    async def _cache_ranking_report(self, report -> None: RankingReport) -> None:
         """Cache ranking report for quick access"""
         cache_key = f"ranking_report_{report.report_id}"
         await self.cache_manager.set(cache_key, report, ttl=3600)  # Cache for 1 hour
     
-    async def add_tracking_keywords(self, keywords: List[str]):
+    async def add_tracking_keywords(self, keywords -> None: List[str]) -> None:
         """Add keywords to tracking list"""
         new_keywords = [kw for kw in keywords if kw not in self.tracking_keywords]
         self.tracking_keywords.extend(new_keywords)
         logger.info(f"Added {len(new_keywords)} new keywords to tracking")
     
-    async def remove_tracking_keywords(self, keywords: List[str]):
+    async def remove_tracking_keywords(self, keywords -> None: List[str]) -> None:
         """Remove keywords from tracking list"""
         removed_count = 0
         for keyword in keywords:

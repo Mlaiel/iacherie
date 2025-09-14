@@ -76,7 +76,7 @@ class EvidenceMetadata:
     verification_status: str = "unverified"
     quality_score: float = 0.0
     
-    def add_custody_entry(self, entry: str):
+    def add_custody_entry(self, entry -> None: str) -> None:
         """Add chain of custody entry"""
         self.chain_of_custody.append(f"{datetime.utcnow().isoformat()}: {entry}")
 
@@ -128,7 +128,7 @@ Complete evidence package for a case"""
     verification_status: str = "pending"
     legal_admissibility: bool = False
     
-    def add_evidence(self, item: EvidenceItem):
+    def add_evidence(self, item -> None: EvidenceItem) -> None:
         """Add evidence item to package"""
         self.evidence_items.append(item)
         self.total_items = len(self.evidence_items)
@@ -150,7 +150,7 @@ Calculate hash of entire evidence package"""
 class ScreenshotCollector:
     """Automated screenshot collection service"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.browser_path = self.config.get('browser_path')
         self.headless = self.config.get('headless', True)
@@ -259,7 +259,7 @@ class ScreenshotCollector:
 class MetadataCollector:
     """Metadata and technical information collector"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.include_headers = self.config.get('include_headers', True)
         self.include_social_tags = self.config.get('include_social_tags', True)
@@ -412,7 +412,7 @@ Collect metadata from URL"""
 class TimestampCollector:
     """Timestamp and chronological evidence collector"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.blockchain_enabled = self.config.get('blockchain_enabled', False)
         self.archive_enabled = self.config.get('archive_enabled', True)
@@ -494,7 +494,7 @@ class TimestampCollector:
 class FingerprintCollector:
     """Content fingerprint evidence collector"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         try:
             logger.info(f"Executing __init__")
             
@@ -595,7 +595,7 @@ class EvidenceCollectionService:
     """
 Main service for collecting and managing evidence"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         
         # Initialize collectors
@@ -686,7 +686,7 @@ Main service for collecting and managing evidence"""
             logger.error(f"Error in evidence collection for case {case_id}: {e}")
             raise
     
-    async def _collect_screenshot_evidence(self, package: EvidencePackage, url: str):
+    async def _collect_screenshot_evidence(self, package -> None: EvidencePackage, url -> None: str) -> None:
         """Collect screenshot evidence"""
         try:
             evidence = await self.screenshot_collector.capture_screenshot(
@@ -699,7 +699,7 @@ Main service for collecting and managing evidence"""
         except Exception as e:
             logger.error(f"Error collecting screenshot evidence: {e}")
     
-    async def _collect_metadata_evidence(self, package: EvidencePackage, url: str):
+    async def _collect_metadata_evidence(self, package -> None: EvidencePackage, url -> None: str) -> None:
         """Collect metadata evidence"""
         try:
             evidence = await self.metadata_collector.collect_metadata(
@@ -711,7 +711,7 @@ Main service for collecting and managing evidence"""
         except Exception as e:
             logger.error(f"Error collecting metadata evidence: {e}")
     
-    async def _collect_timestamp_evidence(self, package: EvidencePackage):
+    async def _collect_timestamp_evidence(self, package -> None: EvidencePackage) -> None:
         """Collect timestamp evidence"""
         try:
             # Create timestamp for the violation URL content
@@ -764,7 +764,7 @@ Main service for collecting and managing evidence"""
             logger.error(f"Error adding fingerprint evidence to case {case_id}: {e}")
             return False
     
-    async def _verify_evidence_package(self, package: EvidencePackage):
+    async def _verify_evidence_package(self, package -> None: EvidencePackage) -> None:
         """Verify evidence package integrity and quality"""
         try:
             verification_checks = {
@@ -809,7 +809,7 @@ Main service for collecting and managing evidence"""
             logger.error(f"Error verifying evidence package: {e}")
             package.verification_status = "error"
     
-    async def _save_evidence_package(self, package: EvidencePackage):
+    async def _save_evidence_package(self, package -> None: EvidencePackage) -> None:
         """Save evidence package to persistent storage"""
         try:
             case_dir = self.storage_path / package.case_id
@@ -946,7 +946,7 @@ Main service for collecting and managing evidence"""
             logger.error(f"Error retrieving evidence package for case {case_id}: {e}")
             return None
     
-    async def cleanup_expired_evidence(self):
+    async def cleanup_expired_evidence(self) -> None:
         """Clean up expired evidence packages"""
         try:
             cutoff_date = datetime.utcnow() - timedelta(days=self.evidence_retention_days)
@@ -1014,7 +1014,7 @@ Main service for collecting and managing evidence"""
             logger.error(f"Error getting collection statistics: {e}")
             return {}
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Shutdown evidence collection service"""
         try:
             # Save all active packages

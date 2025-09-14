@@ -203,7 +203,7 @@ class AdvancedMatchingService:
     - Graph database for complex relationships
     """
     
-    def __init__(self, config: Optional[Dict] = None):
+    def __init__(self, config -> None: Optional[Dict] = None) -> None:
         """Initialize the advanced matching service"""
         self.config = config or {}
         
@@ -228,7 +228,7 @@ class AdvancedMatchingService:
         
         logger.info("Advanced IA Matching Service initialized")
     
-    async def initialize_models(self):
+    async def initialize_models(self) -> None:
         """Initialize ML models for advanced matching"""
         try:
             # Initialize compatibility scoring model
@@ -1093,14 +1093,14 @@ class AdvancedMatchingService:
 class CompatibilityNeuralNetwork(nn.Module):
     """Neural network for compatibility scoring"""
     
-    def __init__(self, input_size: int = 100):
+    def __init__(self, input_size -> None: int = 100) -> None:
         super().__init__()
         self.fc1 = nn.Linear(input_size, 64)
         self.fc2 = nn.Linear(64, 32)
         self.fc3 = nn.Linear(32, 1)
         self.dropout = nn.Dropout(0.2)
         
-    def forward(self, x):
+    def forward(self, x) -> None:
         x = F.relu(self.fc1(x))
         x = self.dropout(x)
         x = F.relu(self.fc2(x))
@@ -1112,7 +1112,7 @@ class CompatibilityNeuralNetwork(nn.Module):
 class CollaborationSuccessEnsemble:
     """Ensemble model for collaboration success prediction"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.rf_model = RandomForestRegressor(n_estimators=100, random_state=42)
         self.gb_model = GradientBoostingRegressor(n_estimators=100, random_state=42)
         self.mlp_model = MLPRegressor(hidden_layer_sizes=(50, 25), random_state=42)
@@ -1137,7 +1137,7 @@ class CollaborationSuccessEnsemble:
 class MusicalStyleAnalyzer:
     """Advanced musical style analysis system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.style_categories = {
             'energy': ['high', 'medium', 'low'],
             'tempo': ['fast', 'medium', 'slow'],

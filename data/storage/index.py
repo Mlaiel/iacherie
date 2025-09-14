@@ -95,7 +95,7 @@ Unified storage operation result"""
     error_message: Optional[str] = None
     warnings: List[str] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.storage_locations is None:
             self.storage_locations = []
         if self.warnings is None:
@@ -129,7 +129,7 @@ Configuration for storage index orchestrator"""
     backup_tiers: List[BackupTier] = None
     backup_retention_days: int = 90
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.allowed_content_types is None:
             self.allowed_content_types = [
                 ContentType.AUDIO, ContentType.VIDEO, 
@@ -150,7 +150,7 @@ class StorageIndex:
     and reliability.
     """
     
-    def __init__(self, config: StorageIndexConfig):
+    def __init__(self, config -> None: StorageIndexConfig) -> None:
         """
         Initialize StorageIndex with comprehensive configuration.
         
@@ -182,7 +182,7 @@ class StorageIndex:
         
         self.logger.info("🎯 StorageIndex initialized with unified orchestration")
     
-    def _initialize_managers(self):
+    def _initialize_managers(self) -> None:
         """Initialize all storage managers"""
         try:
             base_path = Path(self.config.storage_base_path)

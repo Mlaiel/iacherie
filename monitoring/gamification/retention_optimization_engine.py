@@ -112,7 +112,7 @@ class RetentionOptimizationEngine:
     - ROI optimization
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize retention optimization engine"""
         self.config = config or {}
         self.user_profiles: Dict[str, UserRetentionProfile] = {}
@@ -133,7 +133,7 @@ class RetentionOptimizationEngine:
         self._initialize_retention_engine()
         logger.info("Retention Optimization Engine initialized")
     
-    def _initialize_retention_engine(self):
+    def _initialize_retention_engine(self) -> None:
         """Initialize retention engine components"""
         try:
             # Setup retention strategies
@@ -151,7 +151,7 @@ class RetentionOptimizationEngine:
             logger.error(f"Failed to initialize retention engine: {e}")
             raise
     
-    def _setup_retention_strategies(self):
+    def _setup_retention_strategies(self) -> None:
         """Setup retention intervention strategies"""
         self.retention_strategies = {
             InterventionType.GAMIFICATION: {
@@ -186,7 +186,7 @@ class RetentionOptimizationEngine:
             }
         }
     
-    def _initialize_ml_models(self):
+    def _initialize_ml_models(self) -> None:
         """Initialize ML models for retention prediction"""
         try:
             # Generate sample training data for initial model
@@ -200,7 +200,7 @@ class RetentionOptimizationEngine:
         except Exception as e:
             logger.error(f"Failed to initialize ML models: {e}")
     
-    def _setup_retention_metrics(self):
+    def _setup_retention_metrics(self) -> None:
         """Setup retention metrics tracking"""
         self.metric_thresholds = {
             "healthy_retention_rate": 0.85,
@@ -285,7 +285,7 @@ class RetentionOptimizationEngine:
         
         return self.user_profiles[user_id]
     
-    async def _update_profile_with_activity(self, profile: UserRetentionProfile, activity_data: Dict[str, Any]):
+    async def _update_profile_with_activity(self, profile -> None: UserRetentionProfile, activity_data -> None: Dict[str, Any]) -> None:
         """Update retention profile with recent activity"""
         current_time = datetime.now()
         
@@ -907,7 +907,7 @@ class RetentionOptimizationEngine:
         
         return sample_data
     
-    def _train_models(self, training_data: List[Dict[str, Any]]):
+    def _train_models(self, training_data -> None: List[Dict[str, Any]]) -> None:
         """Train ML models with provided data"""
         try:
             # Prepare training data
@@ -958,7 +958,7 @@ class RetentionOptimizationEngine:
 
 # Example usage and testing
 if __name__ == "__main__":
-    async def test_retention_optimization():
+    async def test_retention_optimization() -> None:
         """Test retention optimization functionality"""
         engine = RetentionOptimizationEngine()
         

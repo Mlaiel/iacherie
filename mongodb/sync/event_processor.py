@@ -60,7 +60,7 @@ class ProcessingMetrics:
 class EventProcessor:
     """Enterprise-grade MongoDB event processing system."""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize event processor."""
         self.config = config or {}
         self.processing_rules: List[ProcessingRule] = []
@@ -99,7 +99,7 @@ class EventProcessor:
         # Initialize default rules
         self._initialize_default_rules()
     
-    def _initialize_default_rules(self):
+    def _initialize_default_rules(self) -> None:
         """Initialize default processing rules."""
         # High priority for critical operations
         critical_rule = ProcessingRule(
@@ -130,12 +130,12 @@ class EventProcessor:
         
         self.processing_rules.extend([critical_rule, update_rule, metadata_rule])
     
-    def add_processing_rule(self, rule: ProcessingRule):
+    def add_processing_rule(self, rule -> None: ProcessingRule) -> None:
         """Add a new processing rule."""
         self.processing_rules.append(rule)
         logger.info(f"Added processing rule: {rule.name}")
     
-    def register_handler(self, event_type: str, handler: Callable):
+    def register_handler(self, event_type -> None: str, handler -> None: Callable) -> None:
         """Register an event handler for a specific event type."""
         self.event_handlers[event_type] = handler
         logger.info(f"Registered handler for event type: {event_type}")
@@ -232,7 +232,7 @@ class EventProcessor:
         
         return True
     
-    def _queue_for_priority_processing(self, event: SyncEvent, priority: EventPriority):
+    def _queue_for_priority_processing(self, event -> None: SyncEvent, priority -> None: EventPriority) -> None:
         """Queue event for priority-based processing."""
         try:
             priority_item = (priority.value, time.time(), event)
@@ -241,7 +241,7 @@ class EventProcessor:
             logger.warning(f"Priority queue full, sending event {event.event_id} to dead letter queue")
             self._send_to_dead_letter_queue(event, "Priority queue full")
     
-    def _queue_for_fifo_processing(self, event: SyncEvent):
+    def _queue_for_fifo_processing(self, event -> None: SyncEvent) -> None:
         """Queue event for FIFO processing."""
         try:
             self.fifo_queue.put(event, timeout=1)
@@ -249,7 +249,7 @@ class EventProcessor:
             logger.warning(f"FIFO queue full, sending event {event.event_id} to dead letter queue")
             self._send_to_dead_letter_queue(event, "FIFO queue full")
     
-    def _queue_for_batch_processing(self, event: SyncEvent):
+    def _queue_for_batch_processing(self, event -> None: SyncEvent) -> None:
         """Queue event for batch processing."""
         try:
             self.batch_queue.put(event, timeout=1)
@@ -295,7 +295,7 @@ class EventProcessor:
         logger.info(f"Processing event: {event.operation_type} on {event.collection}")
         return True
     
-    def start_processing_threads(self, num_threads: Optional[int] = None):
+    def start_processing_threads(self, num_threads -> None: Optional[int] = None) -> None:
         """Start background processing threads."""
         if num_threads is None:
             num_threads = self.max_processing_threads
@@ -337,7 +337,7 @@ class EventProcessor:
         
         logger.info(f"Started {num_threads + 2} processing threads")
     
-    def _priority_processor(self, processor_name: str):
+    def _priority_processor(self, processor_name -> None: str) -> None:
         """Process events from priority queue."""
         logger.info(f"Priority processor started: {processor_name}")
         
@@ -358,7 +358,7 @@ class EventProcessor:
         
         logger.info(f"Priority processor stopped: {processor_name}")
     
-    def _fifo_processor(self, processor_name: str):
+    def _fifo_processor(self, processor_name -> None: str) -> None:
         """Process events from FIFO queue."""
         logger.info(f"FIFO processor started: {processor_name}")
         
@@ -379,7 +379,7 @@ class EventProcessor:
         
         logger.info(f"FIFO processor stopped: {processor_name}")
     
-    def _batch_processor(self, processor_name: str):
+    def _batch_processor(self, processor_name -> None: str) -> None:
         """Process events in batches."""
         logger.info(f"Batch processor started: {processor_name}")
         
@@ -414,7 +414,7 @@ class EventProcessor:
         
         logger.info(f"Batch processor stopped: {processor_name}")
     
-    def _process_event_batch(self, events: List[SyncEvent]):
+    def _process_event_batch(self, events -> None: List[SyncEvent]) -> None:
         """Process a batch of events."""
         logger.info(f"Processing batch of {len(events)} events")
         
@@ -472,7 +472,7 @@ class EventProcessor:
         logger.info(f"Processing batch of {len(events)} events")
         return True
     
-    def _metrics_collector(self, collector_name: str):
+    def _metrics_collector(self, collector_name -> None: str) -> None:
         """Collect and update processing metrics."""
         logger.info(f"Metrics collector started: {collector_name}")
         
@@ -499,7 +499,7 @@ class EventProcessor:
         
         logger.info(f"Metrics collector stopped: {collector_name}")
     
-    def _update_processing_metrics(self, processing_time_ms: float, success: bool):
+    def _update_processing_metrics(self, processing_time_ms -> None: float, success -> None: bool) -> None:
         """Update processing metrics."""
         if success:
             self.metrics.processed_events += 1
@@ -515,7 +515,7 @@ class EventProcessor:
                 (current_avg * (total_successful - 1) + processing_time_ms) / total_successful
             )
     
-    def _send_to_dead_letter_queue(self, event: SyncEvent, reason: str):
+    def _send_to_dead_letter_queue(self, event -> None: SyncEvent, reason -> None: str) -> None:
         """Send event to dead letter queue."""
         try:
             event.status = 'dead_letter'
@@ -594,7 +594,7 @@ class EventProcessor:
         
         return False
     
-    def shutdown(self):
+    def shutdown(self) -> None:
         """Shutdown event processor."""
         logger.info("Shutting down event processor")
         

@@ -75,6 +75,7 @@ class CelerySettings(BaseSettings):
         return f"redis://{self.broker_host}:{self.broker_port}/{self.result_backend_db}"
     
     class Config:
+    """Config: class implementation"""
         env_file = ".env"
         extra = "allow"
 
@@ -115,7 +116,7 @@ def get_celery_config() -> dict:
     }
 
 
-def create_celery_app(app_name: str = "ainflue"):
+def create_celery_app(app_name -> None: str = "ainflue") -> None:
     """Create and configure Celery application"""
     try:
         from celery import Celery
@@ -136,7 +137,7 @@ celery_settings = CelerySettings()
 class CeleryConfiguration:
     """Celery configuration manager for Ainflue platform"""
     
-    def __init__(self, level: str = "enterprise"):
+    def __init__(self, level -> None: str = "enterprise") -> None:
         self.level = level
         self.settings = celery_settings
         
@@ -144,7 +145,7 @@ class CeleryConfiguration:
         """Get Celery configuration"""
         return get_celery_config()
     
-    def create_app(self):
+    def create_app(self) -> None:
         """Create Celery app"""
         return create_celery_app()
 

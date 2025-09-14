@@ -141,7 +141,7 @@ class BusinessImpactAnalysis:
 class CostTracker:
     """🗄️ DBA - Comprehensive cost tracking system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.cost_items: List[CostItem] = []
         self.cost_categories = defaultdict(float)
         self.model_costs = defaultdict(float)
@@ -246,7 +246,7 @@ class CostTracker:
 class RevenueTracker:
     """💼 BUSINESS ANALYST - Revenue tracking and attribution system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.revenue_items: List[RevenueItem] = []
         self.revenue_streams = defaultdict(float)
         self.model_revenue = defaultdict(float)
@@ -340,7 +340,7 @@ class RevenueTracker:
 class ROIAnalyzer:
     """🔬 ML ENGINEER - Advanced ROI analysis and calculation engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.cost_tracker = CostTracker()
         self.revenue_tracker = RevenueTracker()
         self.analysis_history: List[BusinessImpactAnalysis] = []
@@ -768,7 +768,7 @@ class ROIAnalyzer:
 
 # Example usage and testing
 if __name__ == "__main__":
-    async def test_roi_calculator():
+    async def test_roi_calculator() -> None:
         """Test ROI calculator"""
         
         # Initialize ROI analyzer

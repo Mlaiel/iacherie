@@ -69,7 +69,7 @@ class RevenueOptimization:
 class RealTimeRevenueOptimizer:
     """Optimiseur revenus temps réel."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.revenue_models = {}
         self.optimization_history = defaultdict(list)
         self.performance_metrics = {
@@ -214,7 +214,7 @@ class RealTimeRevenueOptimizer:
 class AdPlacementIntelligence:
     """Intelligence placement publicités."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.placement_history = defaultdict(list)
         self.performance_data = defaultdict(list)
         self.optimal_placements = {}
@@ -288,7 +288,7 @@ class AdPlacementIntelligence:
 class SubscriptionOptimizer:
     """Optimiseur abonnements."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.pricing_models = {}
         self.churn_predictors = {}
         self.retention_strategies = {}
@@ -347,7 +347,7 @@ class SubscriptionOptimizer:
 class CreatorEarningsMaximizer:
     """Maximiseur gains créateurs."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.earning_patterns = defaultdict(list)
         self.optimization_strategies = {}
     
@@ -475,7 +475,7 @@ class CreatorEarningsMaximizer:
 class EdgeMonetizationOptimizer:
     """Optimiseur Monétisation Edge."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.revenue_optimizer = RealTimeRevenueOptimizer()
         self.ad_intelligence = AdPlacementIntelligence()
         self.subscription_optimizer = SubscriptionOptimizer()
@@ -577,7 +577,7 @@ class EdgeMonetizationOptimizer:
             "average_revenue_increase": self.monetization_stats["average_revenue_increase"]
         }
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Arrête l'optimiseur de monétisation."""
         logger.info("Shutting down EdgeMonetizationOptimizer")
 

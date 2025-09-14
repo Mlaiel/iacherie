@@ -85,7 +85,7 @@ class RevenueTransaction:
     net_amount: Decimal = Decimal('0.00')
     metadata: Dict[str, Any] = field(default_factory=dict)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         """Calculate net amount after fees."""
         if self.net_amount == Decimal('0.00'):
             self.net_amount = self.amount - self.fees
@@ -138,7 +138,7 @@ class RevenueAnalyticsWorkflow:
     and revenue stream analysis with advanced insights and recommendations.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize revenue analytics workflow."""
         self.transaction_data = defaultdict(list)
         self.platform_fees = {

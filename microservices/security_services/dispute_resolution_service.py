@@ -1,3 +1,8 @@
+"""
+Dispute Resolution Service module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 ⚖️ DISPUTE RESOLUTION SERVICE
@@ -225,7 +230,7 @@ class DisputeResolutionService:
     evidence analysis, and outcome prediction for collaborative projects.
     """
     
-    def __init__(self, redis_url: str = "redis://localhost:6379"):
+    def __init__(self, redis_url -> None: str = "redis -> None://localhost -> None:6379") -> None:
         self.redis_url = redis_url
         self.redis_client = None
         self.dispute_cache = {}
@@ -1487,7 +1492,7 @@ class DisputeResolutionService:
             logger.error(f"❌ Error stopping service: {str(e)}")
 
 # Example usage and testing
-async def main():
+async def main() -> None:
     """Example usage of DisputeResolutionService"""
     service = DisputeResolutionService()
     

@@ -1,4 +1,6 @@
 """Protection Engine - Main Content Protection System
+import asyncio
+
 ===================================================
 
 Main protection engine that provides unified access to all
@@ -25,7 +27,7 @@ class ProtectionEngine:
     Main Protection Engine that coordinates all content protection operations
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize Protection Engine"""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         

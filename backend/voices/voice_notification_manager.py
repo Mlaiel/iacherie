@@ -118,7 +118,7 @@ class Notification:
 class NotificationEngine:
     """Core notification processing engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize notification engine"""
         self.templates = {}
         self.recipients = {}
@@ -213,7 +213,7 @@ class NotificationEngine:
             logger.error(f"Failed to send notification: {e}")
             raise
     
-    async def _notification_processor(self):
+    async def _notification_processor(self) -> None:
         """Background notification processor"""
         while True:
             try:
@@ -237,7 +237,7 @@ class NotificationEngine:
                 logger.error(f"Notification processor error: {e}")
                 await asyncio.sleep(1)
     
-    async def _process_notification(self, notification: Notification):
+    async def _process_notification(self, notification -> None: Notification) -> None:
         """Process individual notification"""
         try:
             # Check recipient preferences
@@ -284,7 +284,7 @@ class NotificationEngine:
             notification.error_message = str(e)
             logger.error(f"Failed to process notification {notification.notification_id}: {e}")
     
-    async def _initialize_delivery_handlers(self):
+    async def _initialize_delivery_handlers(self) -> None:
         """Initialize delivery channel handlers"""
         try:
             # Email handler
@@ -499,7 +499,7 @@ class NotificationEngine:
 class AlertSystem:
     """System alert management"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize alert system"""
         self.alert_rules = {}
         self.active_alerts = {}
@@ -537,9 +537,9 @@ class AlertSystem:
     
     async def trigger_alert(
         self,
-        rule_id: str,
-        context: Dict[str, Any]
-    ):
+        rule_id -> None: str,
+        context -> None: Dict[str, Any]
+    ) -> None:
         """Trigger system alert"""
         try:
             rule = self.alert_rules.get(rule_id)
@@ -566,7 +566,7 @@ class AlertSystem:
 class AlertManagement:
     """Alert management system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize alert management"""
         self.notification_rules = {}
         self.alert_history = {}
@@ -576,7 +576,7 @@ class AlertManagement:
 class UserNotifications:
     """User notification management"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize user notifications"""
         self.user_preferences = {}
         self.notification_history = {}
@@ -585,9 +585,9 @@ class UserNotifications:
     
     async def update_user_preferences(
         self,
-        user_id: str,
-        preferences: Dict[str, Any]
-    ):
+        user_id -> None: str,
+        preferences -> None: Dict[str, Any]
+    ) -> None:
         """Update user notification preferences"""
         try:
             self.user_preferences[user_id] = {
@@ -604,7 +604,7 @@ class UserNotifications:
 class RealTimeNotifications:
     """Real-time notification delivery"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize real-time notifications"""
         self.websocket_server = None
         self.connection_pool = {}
@@ -614,7 +614,7 @@ class RealTimeNotifications:
 class NotificationDelivery:
     """Notification delivery management"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize notification delivery"""
         self.delivery_queue = asyncio.Queue()
         self.delivery_workers = []
@@ -624,7 +624,7 @@ class NotificationDelivery:
 class NotificationAnalytics:
     """Notification analytics and insights"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize notification analytics"""
         self.delivery_metrics = {}
         self.engagement_metrics = {}
@@ -635,7 +635,7 @@ class NotificationAnalytics:
 class VoiceNotificationManager:
     """Main voice notification manager"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         """Initialize voice notification manager"""
         self.config = config or {}
         self.notification_engine = NotificationEngine()
@@ -675,7 +675,7 @@ class VoiceNotificationManager:
             logger.error(f"Failed to send voice notification: {e}")
             raise
     
-    async def _initialize_standard_templates(self):
+    async def _initialize_standard_templates(self) -> None:
         """Initialize standard notification templates"""
         try:
             # Voice processing complete template

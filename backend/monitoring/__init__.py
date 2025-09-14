@@ -1,4 +1,6 @@
 """Backend Monitoring Module
+import asyncio
+
 =========================
 
 Unified monitoring and observability system for the Ainflue platform.
@@ -520,7 +522,7 @@ __author__ = "Fahed Mlaiel <mlaiel@live.de>"
 __description__ = "Unified monitoring system - consolidates 60+ files into 12 focused modules"
 
 # Quick start functions for convenience
-async def start_all_monitoring(config: dict = None):
+async def start_all_monitoring(config -> None: dict = None) -> None:
     """Start all monitoring components"""
     try:
         # Start metrics collection
@@ -544,7 +546,7 @@ async def start_all_monitoring(config: dict = None):
         return False
 
 
-async def stop_all_monitoring():
+async def stop_all_monitoring() -> None:
     """Stop all monitoring components"""
     try:
         await stop_metrics_collection()
@@ -560,7 +562,7 @@ async def stop_all_monitoring():
         return False
 
 
-def get_monitoring_status():
+def get_monitoring_status() -> None:
     """Get status of all monitoring components"""
     return {
         "metrics": get_system_summary(),

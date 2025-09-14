@@ -152,7 +152,7 @@ class SafetyMetricsRecord(Base):
 class AdultContentFilter:
     """Advanced adult content detection and filtering"""
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client -> None: aioredis.Redis) -> None:
         self.redis = redis_client
         self.nsfw_keywords = self._load_nsfw_keywords()
         self.adult_patterns = self._compile_adult_patterns()
@@ -296,7 +296,7 @@ class AdultContentFilter:
 class NSFWDetector:
     """NSFW (Not Safe For Work) content detection"""
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client -> None: aioredis.Redis) -> None:
         self.redis = redis_client
         
     async def detect_nsfw_content(self, content: str, content_type: ContentType) -> Dict[str, Any]:
@@ -351,7 +351,7 @@ class NSFWDetector:
 class ContentClassifier:
     """Multi-category content classification"""
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client -> None: aioredis.Redis) -> None:
         self.redis = redis_client
         self.classification_models = self._load_classification_models()
         
@@ -410,7 +410,7 @@ class ContentClassifier:
 class CategoryAnalyzer:
     """Advanced category analysis and tagging"""
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client -> None: aioredis.Redis) -> None:
         self.redis = redis_client
         
     async def analyze_categories(self, content: str) -> Dict[str, Any]:
@@ -531,7 +531,7 @@ class CategoryAnalyzer:
 class CyberbullyingDetector:
     """Advanced cyberbullying detection system"""
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client -> None: aioredis.Redis) -> None:
         self.redis = redis_client
         self.bullying_patterns = self._load_bullying_patterns()
         
@@ -641,7 +641,7 @@ class CyberbullyingDetector:
 class HarassmentPredictor:
     """ML-based harassment prediction system"""
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client -> None: aioredis.Redis) -> None:
         self.redis = redis_client
         
     async def predict_harassment_risk(self, content: str, user_history: Dict[str, Any] = None) -> Dict[str, Any]:
@@ -742,7 +742,7 @@ class HarassmentPredictor:
 class DrugContentDetector:
     """Drug and substance abuse content detection"""
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client -> None: aioredis.Redis) -> None:
         self.redis = redis_client
         self.drug_keywords = self._load_drug_keywords()
         
@@ -819,7 +819,7 @@ class DrugContentDetector:
 class SubstanceAnalyzer:
     """Advanced substance abuse content analysis"""
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client -> None: aioredis.Redis) -> None:
         self.redis = redis_client
         
     async def analyze_substance_content(self, content: str) -> Dict[str, Any]:
@@ -912,7 +912,7 @@ class SubstanceAnalyzer:
 class HateSpeechDetector:
     """Advanced hate speech detection system"""
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client -> None: aioredis.Redis) -> None:
         self.redis = redis_client
         self.hate_speech_models = self._load_hate_speech_models()
         
@@ -1021,7 +1021,7 @@ class HateSpeechDetector:
 class ToxicityAnalyzer:
     """Advanced toxicity analysis system"""
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client -> None: aioredis.Redis) -> None:
         self.redis = redis_client
         
     async def analyze_toxicity(self, content: str) -> Dict[str, Any]:
@@ -1131,7 +1131,7 @@ class ToxicityAnalyzer:
 class ContentSafetySuite:
     """Main content safety suite orchestrator"""
     
-    def __init__(self, db_session: AsyncSession, redis_client: aioredis.Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: aioredis.Redis) -> None:
         self.db = db_session
         self.redis = redis_client
         

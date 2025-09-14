@@ -97,7 +97,7 @@ class AIDeploymentManager:
     - Disaster recovery
     """
     
-    def __init__(self, base_namespace: str = "ia-influencer-ai"):
+    def __init__(self, base_namespace -> None: str = "ia-influencer-ai") -> None:
         """
         Initialize AI deployment manager
         
@@ -510,24 +510,24 @@ ai_deployment_manager = AIDeploymentManager()
 
 
 # Convenience functions for easy access
-async def deploy_ai_infrastructure():
+async def deploy_ai_infrastructure() -> None:
     """Deploy complete AI infrastructure"""
     return await ai_deployment_manager.deploy_complete_ai_infrastructure()
 
 
-async def get_ai_status():
+async def get_ai_status() -> None:
     """
 Get global AI deployment status"""
     return await ai_deployment_manager.get_deployment_status()
 
 
-async def get_ai_metrics():
+async def get_ai_metrics() -> None:
     """
 Get comprehensive AI metrics"""
     return await ai_deployment_manager.get_deployment_metrics()
 
 
-async def cleanup_ai_infrastructure():
+async def cleanup_ai_infrastructure() -> None:
     """
 Clean up all AI infrastructure"""
     return await ai_deployment_manager.cleanup_all_deployments()

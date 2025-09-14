@@ -110,7 +110,7 @@ class CorrelationAnalysis:
 class CrossFeatureCorrelationAnalyzer:
     """Enterprise Cross Feature Correlation Analyzer"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         
         # Configuration
@@ -852,7 +852,7 @@ class CrossFeatureCorrelationAnalyzer:
             logger.error(f"❌ Error analyzing creator patterns: {e}")
             return {}
     
-    async def _update_metrics(self, analysis: CorrelationAnalysis):
+    async def _update_metrics(self, analysis -> None: CorrelationAnalysis) -> None:
         """Update analysis metrics"""
         try:
             self.analysis_metrics['total_analyses'] += 1
@@ -882,7 +882,7 @@ class CrossFeatureCorrelationAnalyzer:
 correlation_analyzer = CrossFeatureCorrelationAnalyzer()
 
 
-async def main():
+async def main() -> None:
     """Test the Cross Feature Correlation Analyzer"""
     analyzer = CrossFeatureCorrelationAnalyzer()
     

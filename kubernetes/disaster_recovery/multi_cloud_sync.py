@@ -147,11 +147,11 @@ class CloudStorageAdapter:
     """
 Abstract base class for cloud storage adapters"""
     
-    def __init__(self, endpoint: CloudEndpoint):
+    def __init__(self, endpoint -> None: CloudEndpoint) -> None:
         self.endpoint = endpoint
         self.client = None
         
-    async def initialize(self):
+    async def initialize(self) -> None:
         try:
             logger.info(f"Executing initialize")
             
@@ -201,7 +201,7 @@ Abstract base class for cloud storage adapters"""
 class AWSStorageAdapter(CloudStorageAdapter):
     """AWS S3 storage adapter"""
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """
 Initialize AWS S3 client"""
         try:
@@ -290,7 +290,7 @@ Initialize AWS S3 client"""
 class GCPStorageAdapter(CloudStorageAdapter):
     """Google Cloud Storage adapter"""
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """
 Initialize GCP Storage client"""
         try:
@@ -328,7 +328,7 @@ Initialize GCP Storage client"""
 class AzureStorageAdapter(CloudStorageAdapter):
     """Azure Blob Storage adapter"""
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """
 Initialize Azure Blob Storage client"""
         try:
@@ -359,7 +359,7 @@ class MultiCloudSyncManager:
     - Cross-cloud resource orchestration and optimization
     - Comprehensive monitoring and alerting system
     """
-    def __init__(self, config: Config):
+    def __init__(self, config -> None: Config) -> None:
         self.config = config
         self.logger = logging.getLogger(__name__)
         self.db_manager = DatabaseManager(config)
@@ -400,7 +400,7 @@ class MultiCloudSyncManager:
         
         self._initialize_default_policies()
 
-    async def initialize(self):
+    async def initialize(self) -> None:
         """
 Initialize multi-cloud sync manager"""
         try:
@@ -422,7 +422,7 @@ Initialize multi-cloud sync manager"""
             self.logger.error(f"Failed to initialize multi-cloud sync manager: {e}")
             raise
 
-    async def _load_cloud_endpoints(self):
+    async def _load_cloud_endpoints(self) -> None:
         """Load cloud endpoint configurations"""
         try:
             # AWS endpoints
@@ -476,7 +476,7 @@ Initialize multi-cloud sync manager"""
             self.logger.error(f"Failed to load cloud endpoints: {e}")
             raise
 
-    async def _initialize_storage_adapters(self):
+    async def _initialize_storage_adapters(self) -> None:
         """Initialize storage adapters for each endpoint"""
         for endpoint_id, endpoint in self.cloud_endpoints.items():
             try:
@@ -499,7 +499,7 @@ Initialize multi-cloud sync manager"""
             except Exception as e:
                 self.logger.error(f"Error initializing adapter for {endpoint_id}: {e}")
 
-    def _initialize_default_policies(self):
+    def _initialize_default_policies(self) -> None:
         """Initialize default synchronization policies"""
         default_policies = [
             {
@@ -661,7 +661,7 @@ Calculate SHA-256 checksum of file"""
             self.logger.error(f"Failed to calculate checksum for {file_path}: {e}")
             return ""
 
-    async def _process_sync_queue(self):
+    async def _process_sync_queue(self) -> None:
         """Process synchronization operation queue"""
         while True:
             try:
@@ -675,7 +675,7 @@ Calculate SHA-256 checksum of file"""
                 self.logger.error(f"Error processing sync queue: {e}")
                 await asyncio.sleep(5)
 
-    async def _execute_sync_operation(self, operation: SyncOperation):
+    async def _execute_sync_operation(self, operation -> None: SyncOperation) -> None:
         """Execute individual sync operation"""
         try:
             operation.status = 'in_progress'
@@ -841,8 +841,8 @@ Calculate SHA-256 checksum of file"""
             self.logger.error(f"Failed to check for conflicts: {e}")
             return None
 
-    async def _handle_conflict(self, operation: SyncOperation, target_endpoint: str, 
-                             conflict_info: Dict[str, Any]):
+    async def _handle_conflict(self, operation -> None: SyncOperation, target_endpoint -> None: str, 
+                             conflict_info -> None: Dict[str, Any]) -> None:
         """Handle detected conflict"""
         try:
             policy = self.sync_policies.get(operation.policy_id)
@@ -933,8 +933,8 @@ Verify upload integrity by checking metadata"""
             self.logger.error(f"Failed to verify upload integrity: {e}")
             return False
 
-    async def _update_sync_metrics(self, operation: SyncOperation, sync_time: float, 
-                                 successful_targets: List[str]):
+    async def _update_sync_metrics(self, operation -> None: SyncOperation, sync_time -> None: float, 
+                                 successful_targets -> None: List[str]) -> None:
         """Update synchronization metrics"""
         try:
             self.sync_metrics['total_operations'] += 1

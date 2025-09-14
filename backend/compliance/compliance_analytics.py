@@ -192,7 +192,7 @@ class ComplianceForecastRecord(Base):
 class MetricsCollector:
     """Compliance metrics collection and aggregation"""
     
-    def __init__(self, db_session: AsyncSession, redis_client: aioredis.Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: aioredis.Redis) -> None:
         self.db = db_session
         self.redis = redis_client
         
@@ -325,7 +325,7 @@ class MetricsCollector:
 class TrendAnalyzer:
     """Advanced trend analysis for compliance metrics"""
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client -> None: aioredis.Redis) -> None:
         self.redis = redis_client
         
     async def analyze_compliance_trends(self, 
@@ -527,7 +527,7 @@ class TrendAnalyzer:
 class PredictiveModeler:
     """Predictive modeling for compliance forecasting"""
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client -> None: aioredis.Redis) -> None:
         self.redis = redis_client
         
     async def build_predictive_model(self, 
@@ -944,7 +944,7 @@ class PredictiveModeler:
 class ComplianceAnalytics:
     """Main compliance analytics and intelligence engine"""
     
-    def __init__(self, db_session: AsyncSession, redis_client: aioredis.Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: aioredis.Redis) -> None:
         self.db = db_session
         self.redis = redis_client
         

@@ -131,7 +131,7 @@ class CompetitionEngagementAnalyzer:
     - Tournament balancing
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize competition engagement analyzer"""
         self.config = config or {}
         self.competitions: Dict[str, Competition] = {}
@@ -153,7 +153,7 @@ class CompetitionEngagementAnalyzer:
         self._initialize_competition_analyzer()
         logger.info("Competition Engagement Analyzer initialized")
     
-    def _initialize_competition_analyzer(self):
+    def _initialize_competition_analyzer(self) -> None:
         """Initialize competition analysis system"""
         try:
             # Setup engagement pattern detection
@@ -171,7 +171,7 @@ class CompetitionEngagementAnalyzer:
             logger.error(f"Failed to initialize competition analyzer: {e}")
             raise
     
-    def _setup_pattern_detection(self):
+    def _setup_pattern_detection(self) -> None:
         """Setup engagement pattern detection algorithms"""
         self.pattern_indicators = {
             "submission_frequency": {"weight": 0.25, "threshold": 2.0},
@@ -182,7 +182,7 @@ class CompetitionEngagementAnalyzer:
             "competitive_behavior": {"weight": 0.10, "threshold": 0.6}
         }
     
-    def _setup_competitive_analytics(self):
+    def _setup_competitive_analytics(self) -> None:
         """Setup competitive dynamics analytics"""
         self.competitive_metrics = {
             "rivalry_intensity": 0.0,
@@ -192,7 +192,7 @@ class CompetitionEngagementAnalyzer:
             "competitive_balance": 0.0
         }
     
-    def _initialize_social_network(self):
+    def _initialize_social_network(self) -> None:
         """Initialize social network analysis"""
         self.network_metrics = {
             "degree_centrality": {},
@@ -260,7 +260,7 @@ class CompetitionEngagementAnalyzer:
             logger.error(f"Failed to analyze competition engagement for {competition_id}: {e}")
             return {"error": str(e)}
     
-    async def _update_real_time_engagement(self, competition_id: str, data: Dict[str, Any]):
+    async def _update_real_time_engagement(self, competition_id -> None: str, data -> None: Dict[str, Any]) -> None:
         """Update real-time engagement data"""
         user_id = data.get("user_id")
         engagement_type = data.get("engagement_type", "interaction")
@@ -1046,7 +1046,7 @@ class CompetitionEngagementAnalyzer:
 
 # Example usage and testing
 if __name__ == "__main__":
-    async def test_competition_engagement():
+    async def test_competition_engagement() -> None:
         """Test competition engagement analysis functionality"""
         analyzer = CompetitionEngagementAnalyzer()
         

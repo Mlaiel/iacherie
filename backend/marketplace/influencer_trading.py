@@ -213,7 +213,7 @@ class MarketOrder:
 class RiskAssessment:
     """Risk assessment engine for trading"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         """Initialize risk assessment"""
         self.config = config or {}
         self.risk_thresholds = {
@@ -303,7 +303,7 @@ class RiskAssessment:
 class MarketMaker:
     """Market making engine for liquidity provision"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         """Initialize market maker"""
         self.config = config or {}
         self.spread_percentage = Decimal(str(self.config.get('spread_percentage', '2.0')))
@@ -367,7 +367,7 @@ class MarketMaker:
 class InfluencerTradingEngine:
     """Core influencer trading engine"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         """Initialize trading engine"""
         self.config = config or {}
         

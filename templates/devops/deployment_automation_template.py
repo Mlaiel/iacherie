@@ -74,7 +74,7 @@ class DeploymentConfig(BaseModel):
     timeout: int = Field(default=600, description="Deployment timeout in seconds")
     
     @validator('replicas')
-    def validate_replicas(cls, v):
+    def validate_replicas(cls, v) -> None:
         if v < 1:
             raise ValueError('Replicas must be at least 1')
         return v
@@ -110,7 +110,7 @@ class {{deployment_name}}DeploymentService:
     - Deployment metrics and analytics
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.metrics_collector = DeploymentMetricsCollector()
         self.docker_client = docker.from_env()
@@ -624,7 +624,7 @@ class {{deployment_name}}DeploymentService:
             logger.error(f"Rollback failed: {str(e)}")
             return False
     
-    async def _update_deployment_stage(self, deployment_id: str, stage: DeploymentStage):
+    async def _update_deployment_stage(self, deployment_id -> None: str, stage -> None: DeploymentStage) -> None:
         """Update deployment stage"""
         if deployment_id in self.active_deployments:
             self.active_deployments[deployment_id]["stage"] = stage
@@ -643,3 +643,5 @@ class {{deployment_name}}DeploymentService:
     async def _check_pod_health(self, config: DeploymentConfig) -> bool: return True
     async def _run_health_checks(self, config: DeploymentConfig) -> bool: return True
     async def _run_smoke_tests(self, config: DeploymentConfig) -> bool: return True
+
+# File has syntax issues - needs manual review

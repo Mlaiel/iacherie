@@ -1,3 +1,8 @@
+"""
+Audio Format Validator module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Audio Format Validator - Ainflue Audio Platform
@@ -139,7 +144,7 @@ class AudioFormatValidator:
     Professional audio format validation and quality assurance system
     """
     
-    def __init__(self, config_path: Optional[str] = None):
+    def __init__(self, config_path -> None: Optional[str] = None) -> None:
         self.config_path = Path(config_path) if config_path else Path("config/audio_validation.yaml")
         self.config = self._load_config()
         self.database_path = Path("data/audio_validation.db")
@@ -191,7 +196,7 @@ class AudioFormatValidator:
         
         return default_config
 
-    def _initialize_database(self):
+    def _initialize_database(self) -> None:
         """Initialize SQLite database for validation history"""
         self.database_path.parent.mkdir(parents=True, exist_ok=True)
         
@@ -230,7 +235,7 @@ class AudioFormatValidator:
                 )
             """)
 
-    def _load_quality_standards(self):
+    def _load_quality_standards(self) -> None:
         """Load audio quality standards"""
         self.quality_standards = {
             AudioStandard.BROADCAST: {
@@ -745,7 +750,7 @@ class AudioFormatValidator:
         
         return recommendations
 
-    async def _store_validation_result(self, result: ValidationResult):
+    async def _store_validation_result(self, result -> None: ValidationResult) -> None:
         """Store validation result in database"""
         try:
             with sqlite3.connect(self.database_path) as conn:
@@ -890,22 +895,22 @@ class AudioFormatValidator:
 audio_format_validator = AudioFormatValidator()
 
 # Convenience functions
-async def validate_audio(file_path: str, standard: Optional[str] = None):
+async def validate_audio(file_path -> None: str, standard -> None: Optional[str] = None) -> None:
     """Validate audio file"""
     audio_standard = AudioStandard(standard) if standard else None
     return await audio_format_validator.validate_audio_file(file_path, audio_standard)
 
-async def validate_audio_directory(directory_path: str, recursive: bool = True):
+async def validate_audio_directory(directory_path -> None: str, recursive -> None: bool = True) -> None:
     """Validate all audio files in directory"""
     return await audio_format_validator.validate_directory(directory_path, recursive)
 
-async def check_broadcast_compliance(file_path: str):
+async def check_broadcast_compliance(file_path -> None: str) -> None:
     """Check broadcast standard compliance"""
     return await audio_format_validator.validate_audio_file(file_path, AudioStandard.BROADCAST)
 
 if __name__ == "__main__":
     # Example usage
-    async def main():
+    async def main() -> None:
         file_path = "sample_audio.wav"
         result = await validate_audio(file_path, "broadcast")
         print(f"Validation Status: {result.status.value}")

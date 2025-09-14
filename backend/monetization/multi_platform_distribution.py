@@ -21,6 +21,7 @@ from typing import Dict, List, Optional, Any
 import redis.asyncio as redis
 
 class Platform(Enum):
+    """Platform class implementation"""
     YOUTUBE = "youtube"
     SPOTIFY = "spotify"
     TIKTOK = "tiktok"
@@ -31,6 +32,7 @@ class Platform(Enum):
     PATREON = "patreon"
 
 class DistributionStatus(Enum):
+    """DistributionStatus class implementation"""
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -39,6 +41,7 @@ class DistributionStatus(Enum):
 
 @dataclass
 class PlatformConfig:
+    """PlatformConfig: class implementation"""
     platform: Platform
     api_key: str
     api_secret: str
@@ -49,6 +52,7 @@ class PlatformConfig:
 
 @dataclass
 class DistributionResult:
+    """DistributionResult: class implementation"""
     distribution_id: str
     platform: Platform
     content_id: str
@@ -62,7 +66,7 @@ class DistributionResult:
 class MultiPlatformDistributionEngine:
     """Multi-platform distribution and revenue synchronization system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
         self.redis_client = None
         

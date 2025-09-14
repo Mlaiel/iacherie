@@ -73,7 +73,7 @@ class CircuitBreaker:
     and provide automatic recovery for third-party integrations.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize circuit breaker."""
         self.logger = logging.getLogger(__name__)
         

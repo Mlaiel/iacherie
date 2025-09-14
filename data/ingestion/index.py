@@ -93,7 +93,7 @@ class DataIngestionFacade:
     system including content processing, streaming, validation, and AI analysis.
     """
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         """Initialize the data ingestion facade"""
         self.logger = logging.getLogger(__name__)
         self.config = config or {}
@@ -118,7 +118,7 @@ class DataIngestionFacade:
             'last_operation': None
         }
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize all ingestion components"""
         try:
             self.logger.info("Initializing data ingestion system")
@@ -136,7 +136,7 @@ class DataIngestionFacade:
             self.logger.error(f"Initialization failed: {str(e)}")
             raise
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Shutdown all ingestion components"""
         try:
             self.logger.info("Shutting down data ingestion system")

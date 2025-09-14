@@ -1,3 +1,8 @@
+"""
+Content Classifier module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """🔍 Content Classifier - AI Classification & Metadata Extraction Engine
 ================================================================================
@@ -166,13 +171,13 @@ class ContentAnalysisResult:
 class ImageClassifier:
     """Specialized image content classifier"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.clip_model = None
         self.clip_processor = None
         self.image_classifier = None
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize image classification models"""
         if not _AI_AVAILABLE:
             logger.warning("AI libraries not available, using fallback classification")
@@ -345,11 +350,11 @@ class ImageClassifier:
 class AudioClassifier:
     """Specialized audio content classifier"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.audio_classifier = None
         self.emotion_classifier = None
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize audio classification models"""
         try:
             if _AI_AVAILABLE:
@@ -552,12 +557,12 @@ class AudioClassifier:
 class TextClassifier:
     """Specialized text content classifier"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.sentiment_classifier = None
         self.nlp_model = None
         self.text_classifier = None
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize text classification models"""
         try:
             if _AI_AVAILABLE:
@@ -812,11 +817,11 @@ class TextClassifier:
 class MetadataExtractor:
     """Intelligent metadata extraction engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.nlp_model = None
         self.keyword_extractor = None
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize metadata extraction models"""
         try:
             if _AI_AVAILABLE:
@@ -1284,7 +1289,7 @@ class MetadataExtractor:
 class ContentClassifier:
     """Main content classification and metadata extraction engine"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize content classifier"""
         self.config = config or self._get_default_config()
         
@@ -1329,7 +1334,7 @@ class ContentClassifier:
             'max_entities': 50
         }
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize all classifiers"""
         if self._initialized:
             return
@@ -1553,7 +1558,7 @@ class ContentClassifier:
             'initialized': self._initialized
         }
     
-    async def cleanup(self):
+    async def cleanup(self) -> None:
         """Cleanup resources"""
         # Clear cache
         self.classification_cache.clear()

@@ -250,7 +250,7 @@ class ContentIngestionManager:
     security validation, and intelligent routing across the IA Influencer Agent platform.
     """
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         """Initialize the content ingestion manager"""
         self.logger = logging.getLogger(__name__)
         self.config = config or {}
@@ -428,8 +428,8 @@ class ContentIngestionManager:
     
     # Private processing methods
     
-    async def _validate_content(self, content_data: Union[bytes, str], 
-                              filename: str, result: IngestionResult):
+    async def _validate_content(self, content_data -> None: Union[bytes, str], 
+                              filename -> None: str, result -> None: IngestionResult) -> None:
         """Validate content before processing"""
         try:
             # Basic validation
@@ -446,8 +446,8 @@ class ContentIngestionManager:
         except Exception as e:
             raise ValidationError(f"Content validation failed: {str(e)}")
     
-    async def _process_content_format(self, content_data: Union[bytes, str],
-                                    filename: str, result: IngestionResult):
+    async def _process_content_format(self, content_data -> None: Union[bytes, str],
+                                    filename -> None: str, result -> None: IngestionResult) -> None:
         """Process content based on format"""
         try:
             file_ext = Path(filename).suffix.lower().strip('.')
@@ -474,8 +474,8 @@ class ContentIngestionManager:
             self.logger.warning(f"Format processing warning: {str(e)}")
             result.warnings.append(f"Format processing: {str(e)}")
     
-    async def _analyze_content_ai(self, content_data: Union[bytes, str],
-                                filename: str, result: IngestionResult):
+    async def _analyze_content_ai(self, content_data -> None: Union[bytes, str],
+                                filename -> None: str, result -> None: IngestionResult) -> None:
         """AI-powered content analysis"""
         try:
             # Placeholder for AI analysis integration
@@ -500,7 +500,7 @@ class ContentIngestionManager:
             self.logger.warning(f"AI analysis warning: {str(e)}")
             result.warnings.append(f"AI analysis: {str(e)}")
     
-    async def _assess_content_quality(self, result: IngestionResult):
+    async def _assess_content_quality(self, result -> None: IngestionResult) -> None:
         """Assess content quality"""
         try:
             # Basic quality assessment logic
@@ -534,8 +534,8 @@ class ContentIngestionManager:
             self.logger.warning(f"Quality assessment warning: {str(e)}")
             result.warnings.append(f"Quality assessment: {str(e)}")
     
-    async def _validate_content_security(self, content_data: Union[bytes, str],
-                                       result: IngestionResult):
+    async def _validate_content_security(self, content_data -> None: Union[bytes, str],
+                                       result -> None: IngestionResult) -> None:
         """Validate content security"""
         try:
             security_assessment = SecurityAssessment()
@@ -561,7 +561,7 @@ class ContentIngestionManager:
             self.logger.warning(f"Security validation warning: {str(e)}")
             result.warnings.append(f"Security validation: {str(e)}")
     
-    async def _generate_content_metadata(self, filename: str, result: IngestionResult):
+    async def _generate_content_metadata(self, filename -> None: str, result -> None: IngestionResult) -> None:
         """Generate content ID and final metadata"""
         try:
             # Generate unique content ID
@@ -589,7 +589,7 @@ class WorkflowOrchestrator:
     error recovery, and intelligent routing across enterprise content processing.
     """
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         """Initialize workflow orchestrator"""
         self.logger = logging.getLogger(__name__)
         self.config = config or {}
@@ -601,7 +601,7 @@ class WorkflowOrchestrator:
         # Default workflow configurations
         self._initialize_default_workflows()
     
-    def _initialize_default_workflows(self):
+    def _initialize_default_workflows(self) -> None:
         """Initialize default workflow configurations"""
         try:
             # Standard content processing workflow
@@ -702,7 +702,7 @@ class WorkflowOrchestrator:
             if execution.execution_id in self._active_workflows:
                 del self._active_workflows[execution.execution_id]
     
-    async def register_workflow(self, workflow_config: WorkflowConfiguration):
+    async def register_workflow(self, workflow_config -> None: WorkflowConfiguration) -> None:
         """Register a new workflow configuration"""
         try:
             self._workflow_registry[workflow_config.name] = workflow_config
@@ -738,8 +738,8 @@ class WorkflowOrchestrator:
     
     # Private execution methods
     
-    async def _execute_sequential_workflow(self, execution: WorkflowExecution, 
-                                         context: Dict[str, Any]):
+    async def _execute_sequential_workflow(self, execution -> None: WorkflowExecution, 
+                                         context -> None: Dict[str, Any]) -> None:
         """Execute workflow stages sequentially"""
         for stage_config in execution.workflow_config.stages:
             if not stage_config.enabled:
@@ -771,8 +771,8 @@ class WorkflowOrchestrator:
                 if execution.workflow_config.failure_handling == "stop":
                     raise WorkflowError(error_msg)
     
-    async def _execute_parallel_workflow(self, execution: WorkflowExecution,
-                                       context: Dict[str, Any]):
+    async def _execute_parallel_workflow(self, execution -> None: WorkflowExecution,
+                                       context -> None: Dict[str, Any]) -> None:
         """Execute workflow stages in parallel where possible"""
         # Group stages by dependencies
         parallel_groups = self._group_stages_by_dependencies(
@@ -803,8 +803,8 @@ class WorkflowOrchestrator:
                     execution.error_messages.append(error_msg)
                     execution.failed_stages.append(stage_config.stage)
     
-    async def _execute_conditional_workflow(self, execution: WorkflowExecution,
-                                          context: Dict[str, Any]):
+    async def _execute_conditional_workflow(self, execution -> None: WorkflowExecution,
+                                          context -> None: Dict[str, Any]) -> None:
         """Execute workflow with conditional logic"""
         # Simplified conditional execution
         for stage_config in execution.workflow_config.stages:
@@ -830,8 +830,8 @@ class WorkflowOrchestrator:
                     execution.error_messages.append(error_msg)
                     execution.failed_stages.append(stage_config.stage)
     
-    async def _execute_adaptive_workflow(self, execution: WorkflowExecution,
-                                       context: Dict[str, Any]):
+    async def _execute_adaptive_workflow(self, execution -> None: WorkflowExecution,
+                                       context -> None: Dict[str, Any]) -> None:
         """Execute workflow with adaptive optimization"""
         # Adaptive execution adjusts based on performance and results
         # This is a simplified implementation
@@ -897,7 +897,7 @@ class DataIngestionOrchestrator:
     orchestration, monitoring, and intelligent routing capabilities.
     """
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         """Initialize data ingestion orchestrator"""
         self.logger = logging.getLogger(__name__)
         self.config = config or {}

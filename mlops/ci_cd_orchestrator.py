@@ -153,12 +153,12 @@ class CICDOrchestrator:
     
     def __init__(
         self,
-        project_name: str,
-        git_repository: str,
-        container_registry: str,
-        kubernetes_cluster: str,
-        notification_webhook: Optional[str] = None
-    ):
+        project_name -> None: str,
+        git_repository -> None: str,
+        container_registry -> None: str,
+        kubernetes_cluster -> None: str,
+        notification_webhook -> None: Optional[str] = None
+    ) -> None:
         """Initialize CI/CD Orchestrator
         
         Args:

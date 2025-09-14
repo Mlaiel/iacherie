@@ -93,7 +93,7 @@ class CircuitBreakerInstance:
     """
 Individual circuit breaker instance"""
     
-    def __init__(self, config: CircuitBreakerConfig):
+    def __init__(self, config -> None: CircuitBreakerConfig) -> None:
         self.config = config
         self.state = CircuitState.CLOSED
         self.failure_count = 0
@@ -421,7 +421,7 @@ class CircuitBreaker:
     """
 Enterprise Circuit Breaker Manager for Load Balancer"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.circuit_breakers: Dict[str, CircuitBreakerInstance] = {}
         self.global_callbacks: List[Callable] = []
         self.lock = threading.RLock()

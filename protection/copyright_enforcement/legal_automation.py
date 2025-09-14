@@ -100,7 +100,7 @@ Legal case creation request"""
 class EvidenceCollector:
     """Advanced evidence collection and preservation system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.storage = S3Storage()
         self.settings = get_settings()
         
@@ -376,7 +376,7 @@ class EvidenceCollector:
 class CaseTracker:
     """Legal case progress tracking and management"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         try:
             logger.info(f"Executing __init__")
             
@@ -575,7 +575,7 @@ class LegalActionManager:
     """
 Manages legal actions and workflows"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.case_tracker = CaseTracker()
         self.evidence_collector = EvidenceCollector()
         self.email_service = EmailService()

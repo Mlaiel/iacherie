@@ -93,12 +93,12 @@ Twitter API v2 client with comprehensive features."""
     
     def __init__(
         self,
-        bearer_token: str,
-        api_key: Optional[str] = None,
-        api_secret: Optional[str] = None,
-        access_token: Optional[str] = None,
-        access_token_secret: Optional[str] = None
-    ):
+        bearer_token -> None: str,
+        api_key -> None: Optional[str] = None,
+        api_secret -> None: Optional[str] = None,
+        access_token -> None: Optional[str] = None,
+        access_token_secret -> None: Optional[str] = None
+    ) -> None:
         """
 Initialize Twitter API client."""
         self.bearer_token = bearer_token
@@ -405,7 +405,7 @@ class TwitterCrawler(BasePlatformCrawler):
     - Advanced search and filtering capabilities
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """
 Initialize Twitter crawler."""
         super().__init__("twitter", config)
@@ -661,10 +661,10 @@ Initialize Twitter crawler."""
     
     async def _continuous_keyword_monitor(
         self,
-        query: str,
-        callback_func: callable,
-        filters: Optional[Dict[str, Any]] = None
-    ):
+        query -> None: str,
+        callback_func -> None: callable,
+        filters -> None: Optional[Dict[str, Any]] = None
+    ) -> None:
         """Continuous keyword monitoring loop."""
         logger.info(f"Starting continuous monitoring for query: {query}")
         
@@ -747,7 +747,7 @@ Get crawler statistics."""
             "max_results_per_search": self.max_results_per_search
         }
     
-    def cleanup(self):
+    def cleanup(self) -> None:
         """Cleanup crawler resources."""
         # Cancel monitoring tasks
         for task in self.monitoring_tasks.values():

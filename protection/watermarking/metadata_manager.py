@@ -5,8 +5,8 @@ Developed by: Fahed Mlaiel (mlaiel@live.de)
 Team Expertise: Lead AI Developer + Senior Backend + ML Engineer + DBA + Security Expert + 
                Microservices Architect + Audio Engineer + DevOps + AI Prompt Engineer
 
-⚠️ INTELLECTUAL PROPERTY WARNING:
-This watermark metadata system, concept, and all associated code are the exclusive intellectual 
+# [EMOJI_REMOVED] INTELLECTUAL PROPERTY WARNING:
+    This watermark metadata system, concept, and all associated code are the exclusive intellectual 
 property of Fahed Mlaiel. Any unauthorized use, copying, modification, or distribution 
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is strictly 
 prohibited and will result in legal action.
@@ -164,7 +164,7 @@ Content licensing information"""
     license_expiry: Optional[datetime] = None
     custom_terms: Optional[str] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         try:
                     # Request validation
                     if not data:
@@ -248,7 +248,7 @@ Content tracking and monitoring information"""
     revenue_tracked: float = 0.0
     last_verification: Optional[datetime] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.platforms_detected is None:
             self.platforms_detected = []
         if self.geographic_usage is None:
@@ -307,7 +307,7 @@ Complete watermark metadata package"""
     watermarked_file_path: Optional[str] = None
     backup_file_path: Optional[str] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.tags is None:
             self.tags = []
         if self.custom_fields is None:
@@ -366,7 +366,7 @@ Create metadata from dictionary"""
         
         return cls(**data)
     
-    def update_status(self, new_status: WatermarkStatus, notes: Optional[str] = None):
+    def update_status(self, new_status -> None: WatermarkStatus, notes -> None: Optional[str] = None) -> None:
         """
 Update status with timestamp"""
         self.status = new_status
@@ -377,7 +377,7 @@ Update status with timestamp"""
             else:
                 self.notes = f"{datetime.now().isoformat()}: {notes}"
     
-    def add_detection(self, platform: str, location: Optional[str] = None):
+    def add_detection(self, platform -> None: str, location -> None: Optional[str] = None) -> None:
         """Add detection event"""
         self.tracking_info.detection_count += 1
         self.tracking_info.last_detection = datetime.now(timezone.utc)
@@ -393,7 +393,7 @@ Update status with timestamp"""
         
         self.updated_at = datetime.now(timezone.utc)
     
-    def add_revenue(self, amount: float, currency: str = "USD"):
+    def add_revenue(self, amount -> None: float, currency -> None: str = "USD") -> None:
         """Add revenue tracking"""
         self.tracking_info.revenue_tracked += amount
         self.updated_at = datetime.now(timezone.utc)
@@ -427,7 +427,7 @@ class MetadataEncryption:
     """
 Encryption service for sensitive metadata"""
     
-    def __init__(self, encryption_key: Optional[bytes] = None):
+    def __init__(self, encryption_key -> None: Optional[bytes] = None) -> None:
         if not CRYPTO_AVAILABLE:
             logger.warning("Cryptography library not available - encryption disabled")
             self.encryption_enabled = False
@@ -482,9 +482,9 @@ class WatermarkMetadataManager:
     """
     
     def __init__(self, 
-                 storage_path: Optional[str] = None,
-                 encryption_enabled: bool = True,
-                 encryption_key: Optional[bytes] = None):
+                 storage_path -> None: Optional[str] = None,
+                 encryption_enabled -> None: bool = True,
+                 encryption_key -> None: Optional[bytes] = None) -> None:
         self.storage_path = Path(storage_path) if storage_path else Path.cwd() / 'watermark_metadata'
         self.storage_path.mkdir(parents=True, exist_ok=True)
         
@@ -495,7 +495,7 @@ class WatermarkMetadataManager:
         # Initialize index
         self._load_index()
     
-    def _load_index(self):
+    def _load_index(self) -> None:
         """
 Load metadata index"""
         try:
@@ -508,7 +508,7 @@ Load metadata index"""
             logger.error(f"Error loading metadata index: {e}")
             self.index = {}
     
-    def _save_index(self):
+    def _save_index(self) -> None:
         """Save metadata index"""
         try:
             with open(self.index_file, 'w', encoding='utf-8') as f:
@@ -979,3 +979,5 @@ __all__ = [
     'create_standard_licensing_info',
     'create_metadata_manager'
 ]
+
+# File has syntax issues - needs manual review

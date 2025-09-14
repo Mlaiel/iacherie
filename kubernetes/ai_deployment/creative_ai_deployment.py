@@ -129,7 +129,7 @@ class CreativeAIConfig:
     metadata_embedding: bool = True
     rights_management: bool = True
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if not self.genre_preferences:
             if self.ai_type == CreativeAIType.MUSIC_GENERATION:
                 self.genre_preferences = ["pop", "electronic", "ambient"]
@@ -165,7 +165,7 @@ class CreativeAIDeployment:
     - Performance optimization for creative workflows
     """
     
-    def __init__(self, namespace: str = "ia-influencer-creative-ai"):
+    def __init__(self, namespace -> None: str = "ia-influencer-creative-ai") -> None:
         """
         Initialize creative AI deployment
         

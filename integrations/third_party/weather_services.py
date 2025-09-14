@@ -1,3 +1,8 @@
+"""
+Weather Services module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Ainflue Platform - Weather Services Integration Module
@@ -149,19 +154,19 @@ class WeatherResponse(BaseModel):
 class OpenWeatherMapAPI:
     """OpenWeatherMap API integration"""
     
-    def __init__(self, api_key: str):
+    def __init__(self, api_key -> None: str) -> None:
         self.api_key = api_key
         self.base_url = "https://api.openweathermap.org/data/2.5"
         self.onecall_url = "https://api.openweathermap.org/data/3.0/onecall"
         self.session = None
         
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         self.session = aiohttp.ClientSession(
             timeout=aiohttp.ClientTimeout(total=30)
         )
         return self
         
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         if self.session:
             await self.session.close()
             
@@ -447,18 +452,18 @@ class OpenWeatherMapAPI:
 class WeatherAPIService:
     """WeatherAPI.com integration"""
     
-    def __init__(self, api_key: str):
+    def __init__(self, api_key -> None: str) -> None:
         self.api_key = api_key
         self.base_url = "https://api.weatherapi.com/v1"
         self.session = None
         
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         self.session = aiohttp.ClientSession(
             timeout=aiohttp.ClientTimeout(total=30)
         )
         return self
         
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         if self.session:
             await self.session.close()
             
@@ -680,7 +685,7 @@ class WeatherAPIService:
 class WeatherContentOptimizer:
     """Optimize content based on weather conditions"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.weather_content_mapping = {
             WeatherCondition.CLEAR: {
                 "mood": "bright and energetic",
@@ -903,13 +908,13 @@ class WeatherContentOptimizer:
 class WeatherServicesManager:
     """Main manager for all weather services"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.providers = {}
         self.content_optimizer = WeatherContentOptimizer()
         self._initialize_providers()
         
-    def _initialize_providers(self):
+    def _initialize_providers(self) -> None:
         """Initialize weather providers"""
         try:
             # OpenWeatherMap
@@ -1298,7 +1303,7 @@ if __name__ == "__main__":
     # Test the weather services integration
     import asyncio
     
-    async def test_weather_services():
+    async def test_weather_services() -> None:
         """Test weather services functionality"""
         
         test_location = "London, UK"

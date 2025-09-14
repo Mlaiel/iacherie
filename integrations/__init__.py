@@ -1,4 +1,6 @@
 """
+from typing import Dict, List, Optional, Union, Tuple
+
 Integrations Module - Ainflue Enterprise
 ========================================
 

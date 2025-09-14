@@ -1,7 +1,7 @@
 """GraphQL API Client for Ainflue SDK
 
 Multi-expert implementation:
-- Backend Senior: Robust GraphQL client architecture with query optimization
+    - Backend Senior: Robust GraphQL client architecture with query optimization
 - Lead Dev IA: Intelligent query caching and optimization strategies
 - DBA: Optimized query structure and data fetching patterns
 - DevOps: Monitoring and metrics for GraphQL operations
@@ -56,7 +56,7 @@ class QueryMetrics:
             return 0.0
         return (self.successful_queries / self.total_queries) * 100
     
-    def update_response_time(self, response_time: float):
+    def update_response_time(self, response_time -> None: float) -> None:
         """Update average response time"""
         self.total_response_time += response_time
         if self.total_queries > 0:
@@ -83,7 +83,7 @@ class GraphQLQuery(BaseModel):
 class QueryOptimizer:
     """GraphQL query optimization (DBA + Lead Dev IA expertise)"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.field_frequency = {}  # Track field usage frequency
         self.query_patterns = {}   # Common query patterns
         self.optimization_rules = self._load_optimization_rules()
@@ -190,7 +190,7 @@ class QueryOptimizer:
 class QueryCache:
     """Intelligent query caching (Lead Dev IA expertise)"""
     
-    def __init__(self, max_size: int = 1000, default_ttl: int = 300):
+    def __init__(self, max_size -> None: int = 1000, default_ttl -> None: int = 300) -> None:
         self.cache = {}
         self.access_times = {}
         self.max_size = max_size
@@ -213,7 +213,7 @@ class QueryCache:
         
         return cached_item["data"]
     
-    def set(self, query_hash: str, data: Dict[str, Any], ttl: Optional[int] = None):
+    def set(self, query_hash -> None: str, data -> None: Dict[str, Any], ttl -> None: Optional[int] = None) -> None:
         """Cache query result with intelligent eviction"""
         # Use provided TTL or default
         cache_ttl = ttl or self.default_ttl
@@ -232,7 +232,7 @@ class QueryCache:
         }
         self.access_times[query_hash] = datetime.now()
     
-    def _evict_lru(self):
+    def _evict_lru(self) -> None:
         """Evict least recently used items"""
         if not self.access_times:
             return
@@ -241,12 +241,12 @@ class QueryCache:
         lru_hash = min(self.access_times.keys(), key=lambda k: self.access_times[k])
         self._remove(lru_hash)
     
-    def _remove(self, query_hash: str):
+    def _remove(self, query_hash -> None: str) -> None:
         """Remove item from cache"""
         self.cache.pop(query_hash, None)
         self.access_times.pop(query_hash, None)
     
-    def clear(self):
+    def clear(self) -> None:
         """Clear all cached items"""
         self.cache.clear()
         self.access_times.clear()
@@ -275,7 +275,7 @@ class QueryCache:
 class QueryValidator:
     """GraphQL query validation (Security expertise)"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.max_query_depth = 10
         self.max_field_count = 100
         self.max_alias_count = 50
@@ -340,7 +340,7 @@ class QueryValidator:
         fields = re.findall(r'\b[a-zA-Z_][a-zA-Z0-9_]*\s*(?:\(|{|\s)', cleaned)
         return len(fields)
     
-    def _validate_variables(self, variables: Dict[str, Any]):
+    def _validate_variables(self, variables -> None: Dict[str, Any]) -> None:
         """Validate query variables"""
         for key, value in variables.items():
             # Check variable name
@@ -357,10 +357,10 @@ class GraphQLClient:
     """Main GraphQL client with multi-expert architecture"""
     
     def __init__(self, 
-                 endpoint: str,
-                 auth_manager: AuthenticationManager,
-                 enable_caching: bool = True,
-                 enable_optimization: bool = True):
+                 endpoint -> None: str,
+                 auth_manager -> None: AuthenticationManager,
+                 enable_caching -> None: bool = True,
+                 enable_optimization -> None: bool = True) -> None:
         self.endpoint = endpoint
         self.auth_manager = auth_manager
         self.logger = logging.getLogger(__name__)
@@ -378,12 +378,12 @@ class GraphQLClient:
         self.timeout = 30.0
         self.max_retries = 3
     
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         """Async context manager entry"""
         self.http_client = httpx.AsyncClient(timeout=self.timeout)
         return self
     
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         """Async context manager exit"""
         if self.http_client:
             await self.http_client.aclose()
@@ -585,7 +585,7 @@ class GraphQLClient:
         
         return metrics_data
     
-    def clear_cache(self):
+    def clear_cache(self) -> None:
         """Clear query cache"""
         if self.cache:
             self.cache.clear()
@@ -635,7 +635,7 @@ class GraphQLQueryBuilder:
 
 
 # Example usage
-async def example_graphql_usage():
+async def example_graphql_usage() -> None:
     """Example usage of GraphQL client"""
     from .auth_manager import AuthenticationManager
     
@@ -676,4 +676,6 @@ async def example_graphql_usage():
 
 if __name__ == "__main__":
     # Run example
-    asyncio.run(example_graphql_usage())
+    asyncio.run(example_graphql_usage())))}}
+
+# File has syntax issues - needs manual review

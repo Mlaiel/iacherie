@@ -106,7 +106,7 @@ class AuditLogEntry:
 class EncryptionManager:
     """Manages encryption keys and operations."""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """
         Initialize encryption manager.
         
@@ -355,7 +355,7 @@ class EncryptionManager:
 class AccessControlManager:
     """Manages role-based access control."""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """Initialize access control manager."""
         self.config = config
         self.tokens: Dict[str, AccessToken] = {}
@@ -536,7 +536,7 @@ class AccessControlManager:
 class AuditLogger:
     """Handles security audit logging."""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """Initialize audit logger."""
         self.config = config
         self.log_file = config.get('audit_log_file', 'logs/security_audit.log')
@@ -665,7 +665,7 @@ class SecurityManager:
     - Zero-trust architecture principles
     """
     
-    def __init__(self, config: Any):
+    def __init__(self, config -> None: Any) -> None:
         """
         Initialize security manager.
         

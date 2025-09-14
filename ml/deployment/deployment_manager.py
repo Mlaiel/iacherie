@@ -111,7 +111,7 @@ class ModelDeploymentManager:
     """
 Gestionnaire de déploiement de modèles"""
     
-    def __init__(self, k8s_namespace: str = "ml-models"):
+    def __init__(self, k8s_namespace -> None: str = "ml-models") -> None:
         self.k8s_namespace = k8s_namespace
         self.deployments: Dict[str, DeploymentInfo] = {}
         self.performance_history: Dict[str, List[PerformanceMetrics]] = {}
@@ -167,7 +167,7 @@ Gestionnaire de déploiement de modèles"""
                 self.deployments[deployment_id].status = DeploymentStatus.FAILED
             raise
     
-    async def _simulate_deployment(self, deployment_info: DeploymentInfo):
+    async def _simulate_deployment(self, deployment_info -> None: DeploymentInfo) -> None:
         """Simule un déploiement pour l'exemple"""
         
         try:
@@ -265,7 +265,8 @@ from urllib.parse import urlparse, parse_qs
 import threading
 
 class ModelHandler(http.server.SimpleHTTPRequestHandler):
-    def do_GET(self):
+    """ModelHandler class implementation"""
+    def do_GET(self) -> None:
         if self.path == '/health':
             self.send_response(200)
             self.send_header('Content-type', 'application/json')
@@ -276,7 +277,7 @@ class ModelHandler(http.server.SimpleHTTPRequestHandler):
             self.send_response(404)
             self.end_headers()
     
-    def do_POST(self):
+    def do_POST(self) -> None:
         if self.path == '/predict':
             content_length = int(self.headers['Content-Length'])
             post_data = self.rfile.read(content_length)
@@ -636,7 +637,7 @@ Gestionnaire pour développement local"""
 
 
 # Exemple d'utilisation
-async def example_usage():
+async def example_usage() -> None:
     """
 Exemple d'utilisation du gestionnaire de déploiement"""
     

@@ -223,7 +223,7 @@ class TLSConfigManager:
         "DES-CBC3-SHA"
     ]
     
-    def __init__(self, config_path: Optional[Path] = None):
+    def __init__(self, config_path -> None: Optional[Path] = None) -> None:
         """
         Initialize TLS configuration manager
         

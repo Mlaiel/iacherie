@@ -38,18 +38,18 @@ except ImportError:
 from .platform_connectors import SocialPlatform
 
 
-def safe_mean(values):
+def safe_mean(values) -> None:
     """Calculate mean safely without numpy"""
     if not values:
         return 0.0
     return sum(values) / len(values)
 
-def safe_random_uniform(low, high):
+def safe_random_uniform(low, high) -> None:
     """Generate random uniform value without numpy"""
     import random
     return random.uniform(low, high)
 
-def safe_sqrt(value):
+def safe_sqrt(value) -> None:
     """Calculate square root safely"""
     import math
     return math.sqrt(max(0, value))
@@ -198,7 +198,7 @@ class HashtagOptimizer:
         }
     }
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.session: Optional[aiohttp.ClientSession] = None
         self.hashtag_database: Dict[str, HashtagData] = {}
         self.trending_cache: Dict[SocialPlatform, TrendingHashtags] = {}
@@ -209,17 +209,17 @@ class HashtagOptimizer:
         # Initialize common hashtag database
         self._initialize_hashtag_database()
     
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         """Async context manager entry"""
         self.session = aiohttp.ClientSession()
         return self
     
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         """Async context manager exit"""
         if self.session and not self.session.closed:
             await self.session.close()
     
-    def _initialize_hashtag_database(self):
+    def _initialize_hashtag_database(self) -> None:
         """Initialize hashtag database with common tags"""
         common_hashtags = {
             # General engagement hashtags
@@ -808,11 +808,11 @@ class HashtagOptimizer:
     
     async def analyze_hashtag_performance(
         self,
-        hashtags: List[str],
-        platform: SocialPlatform,
-        content_id: str,
-        metrics: Dict[str, Any]
-    ):
+        hashtags -> None: List[str],
+        platform -> None: SocialPlatform,
+        content_id -> None: str,
+        metrics -> None: Dict[str, Any]
+    ) -> None:
         """Analyze and store hashtag performance data"""
         try:
             performance_data = {
@@ -1062,7 +1062,7 @@ class HashtagOptimizer:
             logger.error(f"Hashtag report generation failed: {str(e)}")
             return {"error": str(e)}
     
-    def clear_cache(self):
+    def clear_cache(self) -> None:
         """Clear hashtag caches"""
         self.trending_cache.clear()
         logger.info("Hashtag optimizer caches cleared")

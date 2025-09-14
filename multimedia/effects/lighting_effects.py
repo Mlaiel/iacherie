@@ -41,7 +41,7 @@ class LightingConfig:
 class VolumetricLighting:
     """Volumetric lighting effects (god rays, fog beams)."""
     
-    def __init__(self, config: LightingConfig):
+    def __init__(self, config -> None: LightingConfig) -> None:
         self.config = config
     
     def create_god_rays(
@@ -126,7 +126,7 @@ class VolumetricLighting:
 class DynamicLighting:
     """Dynamic lighting effects that change over time."""
     
-    def __init__(self, config: LightingConfig):
+    def __init__(self, config -> None: LightingConfig) -> None:
         self.config = config
     
     def flickering_light(
@@ -218,7 +218,7 @@ class DynamicLighting:
 class ColorTemperature:
     """Color temperature and mood lighting effects."""
     
-    def __init__(self, config: LightingConfig):
+    def __init__(self, config -> None: LightingConfig) -> None:
         self.config = config
     
     def apply_color_temperature(self, frame: np.ndarray, temperature: float) -> np.ndarray:
@@ -272,7 +272,7 @@ class ColorTemperature:
 class AdvancedEffects:
     """Advanced lighting effects and post-processing."""
     
-    def __init__(self, config: LightingConfig):
+    def __init__(self, config -> None: LightingConfig) -> None:
         self.config = config
     
     def lens_flare_effect(
@@ -357,7 +357,7 @@ class AdvancedEffects:
 class LightingEffectsEngine:
     """Enterprise lighting effects engine for professional cinematic enhancement."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.config = LightingConfig()
         self.volumetric = VolumetricLighting(self.config)
         self.dynamic = DynamicLighting(self.config)

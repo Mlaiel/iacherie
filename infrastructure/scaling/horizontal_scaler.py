@@ -1,6 +1,9 @@
 """Horizontal Scaler"""
+import asyncio
+
 import logging
 logger = logging.getLogger(__name__)
 class HorizontalScaler:
-    def __init__(self): logger.info("Horizontal scaler initialized")
-    async def scale_horizontal(self, config): return {'status': 'scaled'}
+    """HorizontalScaler: class implementation"""
+    def __init__(self) -> None: logger.info("Horizontal scaler initialized")
+    async def scale_horizontal(self, config) -> None: return {'status': 'scaled'}

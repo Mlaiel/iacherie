@@ -178,23 +178,23 @@ class AudioPlatformsIntegration:
     def __init__(
         self,
         # Spotify credentials
-        spotify_client_id: Optional[str] = None,
-        spotify_client_secret: Optional[str] = None,
-        spotify_refresh_token: Optional[str] = None,
+        spotify_client_id -> None: Optional[str] = None,
+        spotify_client_secret -> None: Optional[str] = None,
+        spotify_refresh_token -> None: Optional[str] = None,
         # Apple Music credentials
-        apple_music_team_id: Optional[str] = None,
-        apple_music_key_id: Optional[str] = None,
-        apple_music_private_key: Optional[str] = None,
+        apple_music_team_id -> None: Optional[str] = None,
+        apple_music_key_id -> None: Optional[str] = None,
+        apple_music_private_key -> None: Optional[str] = None,
         # SoundCloud credentials
-        soundcloud_client_id: Optional[str] = None,
-        soundcloud_client_secret: Optional[str] = None,
-        soundcloud_access_token: Optional[str] = None,
+        soundcloud_client_id -> None: Optional[str] = None,
+        soundcloud_client_secret -> None: Optional[str] = None,
+        soundcloud_access_token -> None: Optional[str] = None,
         # YouTube Music credentials
-        youtube_api_key: Optional[str] = None,
-        youtube_channel_id: Optional[str] = None,
+        youtube_api_key -> None: Optional[str] = None,
+        youtube_channel_id -> None: Optional[str] = None,
         # General settings
-        timeout: int = 30
-    ):
+        timeout -> None: int = 30
+    ) -> None:
         # Credentials storage
         self.spotify_client_id = spotify_client_id
         self.spotify_client_secret = spotify_client_secret
@@ -245,16 +245,16 @@ class AudioPlatformsIntegration:
         
         logger.info("Audio Platforms integration initialized")
     
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         """Async context manager entry."""
         await self._ensure_session()
         return self
     
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         """Async context manager exit."""
         await self.close()
     
-    async def _ensure_session(self):
+    async def _ensure_session(self) -> None:
         """Ensure HTTP session is available."""
         if self.session is None or self.session.closed:
             headers = {
@@ -268,7 +268,7 @@ class AudioPlatformsIntegration:
                 timeout=aiohttp.ClientTimeout(total=self.timeout)
             )
     
-    async def close(self):
+    async def close(self) -> None:
         """Close HTTP session."""
         if self.session and not self.session.closed:
             await self.session.close()
@@ -1154,7 +1154,7 @@ async def track_multi_platform_performance(
 
 if __name__ == "__main__":
     # Example usage
-    async def main():
+    async def main() -> None:
         import os
         
         async with AudioPlatformsIntegration(

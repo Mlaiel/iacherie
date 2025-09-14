@@ -58,7 +58,7 @@ class ProgressionResult:
 class ProgressionSystemWorkflow:
     """AI-powered progression system workflow"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.metrics_collector = MetricsCollector()
         self.cache_manager = CacheManager()
         self.user_progressions: Dict[str, UserLevel] = {}
@@ -317,7 +317,7 @@ class ProgressionSystemWorkflow:
         
         return recommendations[:3]  # Return top 3 recommendations
     
-    async def _cache_progression(self, user_level: UserLevel):
+    async def _cache_progression(self, user_level -> None: UserLevel) -> None:
         """Cache user progression data"""
         cache_key = f"user_level_{user_level.user_id}"
         await self.cache_manager.set(cache_key, user_level, ttl=3600)

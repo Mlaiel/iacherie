@@ -8,7 +8,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
 Ultra-advanced dashboard engine for real-time alert visualization, business intelligence,
 executive reporting, and interactive analytics for content protection operations.
-Business Logic: Alert data → visualization → business insights → decision support → action
+Business Logic: Alert data # [EMOJI_REMOVED] visualization # [EMOJI_REMOVED] business insights # [EMOJI_REMOVED] decision support # [EMOJI_REMOVED] action
 """
 
 import asyncio
@@ -128,7 +128,7 @@ class AdvancedDashboardEngine:
     business intelligence, and interactive analytics capabilities.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
         self.alert_manager = AlertManager()
         self.threat_intelligence = AdvancedThreatIntelligenceEngine()
@@ -150,7 +150,7 @@ class AdvancedDashboardEngine:
         # Dash application
         self.dash_app = None
         
-    async def initialize(self):
+    async def initialize(self) -> None:
         """
 Initialize dashboard engine"""
         await self.alert_manager.initialize()
@@ -548,7 +548,7 @@ Initialize dashboard engine"""
     
     # Private helper methods
     
-    async def _initialize_dash_app(self):
+    async def _initialize_dash_app(self) -> None:
         """Initialize Dash web application"""
         try:
             self.dash_app = dash.Dash(
@@ -566,7 +566,7 @@ Initialize dashboard engine"""
         except Exception as e:
             self.logger.error(f"Dash app initialization failed: {str(e)}")
     
-    async def _create_dash_layout(self):
+    async def _create_dash_layout(self) -> None:
         """Create main Dash layout"""
         return dbc.Container([
             dbc.Row([
@@ -601,14 +601,14 @@ Initialize dashboard engine"""
             )
         ], fluid=True)
     
-    async def _register_dash_callbacks(self):
+    async def _register_dash_callbacks(self) -> None:
         """Register Dash callbacks"""
         @self.dash_app.callback(
             Output('tab-content', 'children'),
             [Input('main-tabs', 'value'),
              Input('interval-component', 'n_intervals')]
         )
-        def render_tab_content(active_tab, n_intervals):
+        def render_tab_content(active_tab, n_intervals) -> None:
             if active_tab == "overview":
                 return self._create_overview_tab()
             elif active_tab == "threat-intel":
@@ -619,7 +619,7 @@ Initialize dashboard engine"""
                 return self._create_compliance_tab()
             return html.Div("Select a tab")
     
-    def _create_overview_tab(self):
+    def _create_overview_tab(self) -> None:
         """Create overview tab content"""
         return dbc.Row([
             dbc.Col([
@@ -640,7 +640,7 @@ Initialize dashboard engine"""
             ], width=6)
         ])
     
-    def _create_threat_intel_tab(self):
+    def _create_threat_intel_tab(self) -> None:
         """Create threat intelligence tab content"""
         return dbc.Row([
             dbc.Col([
@@ -649,7 +649,7 @@ Initialize dashboard engine"""
             ])
         ])
     
-    def _create_business_intel_tab(self):
+    def _create_business_intel_tab(self) -> None:
         """Create business intelligence tab content"""
         return dbc.Row([
             dbc.Col([
@@ -658,7 +658,7 @@ Initialize dashboard engine"""
             ])
         ])
     
-    def _create_compliance_tab(self):
+    def _create_compliance_tab(self) -> None:
         """Create compliance tab content"""
         return dbc.Row([
             dbc.Col([
@@ -667,7 +667,7 @@ Initialize dashboard engine"""
             ])
         ])
     
-    async def _load_default_layouts(self):
+    async def _load_default_layouts(self) -> None:
         """Load default dashboard layouts"""
         # Executive dashboard
         exec_layout = DashboardLayout(
@@ -984,7 +984,7 @@ Create default chart configuration"""
     
     # Background tasks
     
-    async def _real_time_data_collector(self):
+    async def _real_time_data_collector(self) -> None:
         """
 Background task to collect real-time data"""
         while True:
@@ -1000,7 +1000,7 @@ Background task to collect real-time data"""
                 self.logger.error(f"Real-time data collection error: {str(e)}")
                 await asyncio.sleep(60)
     
-    async def _metrics_aggregator(self):
+    async def _metrics_aggregator(self) -> None:
         """Background task to aggregate metrics"""
         while True:
             try:
@@ -1011,7 +1011,7 @@ Background task to collect real-time data"""
             except Exception as e:
                 self.logger.error(f"Metrics aggregation error: {str(e)}")
     
-    async def _cache_manager(self):
+    async def _cache_manager(self) -> None:
         """Background task to manage cache"""
         while True:
             try:
@@ -1074,7 +1074,7 @@ Get alert resolution metrics"""
     
     # Additional utility methods would be implemented here...
     
-    async def _aggregate_metrics(self):
+    async def _aggregate_metrics(self) -> None:
         try:
             logger.info(f"Executing _aggregate_metrics")
             
@@ -1100,7 +1100,7 @@ Get alert resolution metrics"""
         except Exception as e:
             logger.error(f"_aggregate_metrics failed: {e}")
             raise
-    async def _clean_expired_cache(self):
+    async def _clean_expired_cache(self) -> None:
         """
 Clean expired cache entries"""
         pass
@@ -1120,3 +1120,5 @@ __all__ = [
     "DashboardType",
     "VisualizationType"
 ]
+
+# File has syntax issues - needs manual review

@@ -33,7 +33,7 @@ from .base_manager import BaseDeploymentManager
 class VulnerabilityScanner:
     """
 Mock vulnerability scanner."""
-    def __init__(self):
+    def __init__(self) -> None:
         """
 Initialize vulnerability scanner with security databases"""
         self.logger = logging.getLogger(f"{__name__}.VulnerabilityScanner")
@@ -44,14 +44,14 @@ Initialize vulnerability scanner with security databases"""
         self.last_db_update = None
         self.logger.info("VulnerabilityScanner initialized with security databases")
     
-    async def scan_image(self, image_id: str, name: str, tag: str):
+    async def scan_image(self, image_id -> None: str, name -> None: str, tag -> None: str) -> None:
         """Mock scan returning empty vulnerabilities."""
         return []
 
 class MetricsCollector:
     """
 Mock metrics collector."""
-    def __init__(self):
+    def __init__(self) -> None:
         """
 Initialize metrics collector with monitoring endpoints"""
         self.logger = logging.getLogger(f"{__name__}.MetricsCollector")
@@ -167,9 +167,9 @@ class ContainerRegistryManager(BaseDeploymentManager):
     """
     def __init__(
         self,
-        vulnerability_scanner: Optional[VulnerabilityScanner] = None,
-        metrics_collector: Optional[MetricsCollector] = None
-    ):
+        vulnerability_scanner -> None: Optional[VulnerabilityScanner] = None,
+        metrics_collector -> None: Optional[MetricsCollector] = None
+    ) -> None:
         super().__init__()
         self.vulnerability_scanner = vulnerability_scanner or VulnerabilityScanner()
         self.metrics_collector = metrics_collector or MetricsCollector()

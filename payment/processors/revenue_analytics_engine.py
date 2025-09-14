@@ -180,9 +180,9 @@ class RevenueAnalyticsEngine:
     """
 
     def __init__(self,
-                 database_url: str,
-                 redis_url: str,
-                 ml_models_path: str = "ml_models/revenue_analytics"):
+                 database_url -> None: str,
+                 redis_url -> None: str,
+                 ml_models_path -> None: str = "ml_models/revenue_analytics") -> None:
         """Initialize Revenue Analytics Engine"""
         self.database_url = database_url
         self.redis_url = redis_url

@@ -77,7 +77,7 @@ class BaseCloudManager:
     """
 Base class for cloud infrastructure management"""
     
-    def __init__(self, config: InfrastructureConfig):
+    def __init__(self, config -> None: InfrastructureConfig) -> None:
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self.resource_tracker = {}
@@ -113,7 +113,7 @@ class AWSInfrastructureManager(BaseCloudManager):
     """
 AWS-specific infrastructure management"""
     
-    def __init__(self, config: InfrastructureConfig, credentials: Dict[str, str]):
+    def __init__(self, config -> None: InfrastructureConfig, credentials -> None: Dict[str, str]) -> None:
         super().__init__(config)
         self.session = boto3.Session(
             aws_access_key_id=credentials.get('access_key'),
@@ -666,7 +666,7 @@ Provision complete AWS infrastructure for IA Influencer platform"""
             self.logger.error(f"Security configuration failed: {str(e)}")
             raise
     
-    async def _wait_for_cluster_active(self, cluster_name: str, max_wait: int = 1800):
+    async def _wait_for_cluster_active(self, cluster_name -> None: str, max_wait -> None: int = 1800) -> None:
         """Wait for EKS cluster to become active"""
         start_time = time.time()
         while time.time() - start_time < max_wait:
@@ -861,7 +861,7 @@ Provision complete AWS infrastructure for IA Influencer platform"""
             'connection_string': 'mongodb+srv://cluster-url.mongodb.net/'
         }
     
-    async def _rollback_failed_resources(self):
+    async def _rollback_failed_resources(self) -> None:
         try:
             logger.info(f"Executing _rollback_failed_resources")
             
@@ -948,7 +948,7 @@ Provision complete AWS infrastructure for IA Influencer platform"""
 class GCPInfrastructureManager(BaseCloudManager):
     """Google Cloud Platform infrastructure management"""
     
-    def __init__(self, config: InfrastructureConfig, project_id: str, credentials_path: str):
+    def __init__(self, config -> None: InfrastructureConfig, project_id -> None: str, credentials_path -> None: str) -> None:
         super().__init__(config)
         self.project_id = project_id
         self.credentials_path = credentials_path
@@ -999,8 +999,8 @@ Provision complete GCP infrastructure for IA Influencer platform"""
 class AzureInfrastructureManager(BaseCloudManager):
     """Microsoft Azure infrastructure management"""
     
-    def __init__(self, config: InfrastructureConfig, subscription_id: str, 
-                 resource_group: str, credentials: DefaultAzureCredential):
+    def __init__(self, config -> None: InfrastructureConfig, subscription_id -> None: str, 
+                 resource_group -> None: str, credentials -> None: DefaultAzureCredential) -> None:
         super().__init__(config)
         self.subscription_id = subscription_id
         self.resource_group = resource_group
@@ -1056,8 +1056,8 @@ Provision complete Azure infrastructure for IA Influencer platform"""
 class MultiCloudInfrastructureManager:
     """Multi-cloud infrastructure orchestrator for hybrid deployments"""
     
-    def __init__(self, aws_config: InfrastructureConfig, gcp_config: InfrastructureConfig, 
-                 azure_config: InfrastructureConfig):
+    def __init__(self, aws_config -> None: InfrastructureConfig, gcp_config -> None: InfrastructureConfig, 
+                 azure_config -> None: InfrastructureConfig) -> None:
         self.aws_manager = None
         self.gcp_manager = None  
         self.azure_manager = None

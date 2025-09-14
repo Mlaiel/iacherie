@@ -64,11 +64,11 @@ class AutoscalingConfig:
 class ClusterAutoscalerManager:
     """Manages cluster autoscaling configuration"""
     
-    def __init__(self, config: AutoscalingConfig):
+    def __init__(self, config -> None: AutoscalingConfig) -> None:
         self.config = config
         self._initialize_default_node_pools()
     
-    def _initialize_default_node_pools(self):
+    def _initialize_default_node_pools(self) -> None:
         """Initialize default node pools if none provided"""
         if not self.config.node_pools:
             self.config.node_pools = self._create_default_node_pools()
@@ -673,7 +673,7 @@ class ClusterAutoscalerManager:
         
         return manifests
     
-    def save_manifests_to_files(self, output_dir: str = "./k8s-manifests/cluster-autoscaler"):
+    def save_manifests_to_files(self, output_dir -> None: str = "./k8s-manifests/cluster-autoscaler") -> None:
         """Save all cluster autoscaler manifests to files"""
         import os
         os.makedirs(output_dir, exist_ok=True)

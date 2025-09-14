@@ -1,6 +1,9 @@
 """Log Aggregator"""
+import asyncio
+
 import logging
 logger = logging.getLogger(__name__)
 class LogAggregator:
-    def __init__(self): logger.info("Log aggregator initialized")
-    async def aggregate_logs(self, config): return {'status': 'aggregating'}
+    """LogAggregator: class implementation"""
+    def __init__(self) -> None: logger.info("Log aggregator initialized")
+    async def aggregate_logs(self, config) -> None: return {'status': 'aggregating'}

@@ -1,4 +1,6 @@
 """
+import asyncio
+
 Security Validation Module
 Ensures OWASP Top 10, PCI DSS, GDPR, SOC 2 compliance and penetration testing readiness
 """
@@ -33,7 +35,7 @@ class SecurityCheck:
 class SecurityValidator:
     """Validates security compliance requirements"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.checks: List[SecurityCheck] = []
         self.last_scan: Optional[datetime] = None
     

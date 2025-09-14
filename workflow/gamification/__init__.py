@@ -104,7 +104,7 @@ class GamificationResult:
 class GamificationOrchestrator:
     """Advanced gamification workflow orchestration engine for Ainflue Platform."""
     
-    def __init__(self, config: Optional[GamificationConfig] = None):
+    def __init__(self, config -> None: Optional[GamificationConfig] = None) -> None:
         """Initialize the gamification workflow orchestrator.
         
         Args:

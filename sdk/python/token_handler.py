@@ -36,7 +36,7 @@ class TokenInfo:
     scope: Optional[List[str]] = None
     issued_at: datetime = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.issued_at is None:
             self.issued_at = datetime.utcnow()
         
@@ -101,7 +101,7 @@ class TokenRefreshStrategy(ABC):
 class JWTRefreshStrategy(TokenRefreshStrategy):
     """JWT token refresh strategy"""
     
-    def __init__(self, refresh_endpoint: str, client_id: str, client_secret: str):
+    def __init__(self, refresh_endpoint -> None: str, client_id -> None: str, client_secret -> None: str) -> None:
         self.refresh_endpoint = refresh_endpoint
         self.client_id = client_id
         self.client_secret = client_secret
@@ -162,7 +162,7 @@ class APIKeyRefreshStrategy(TokenRefreshStrategy):
 class TokenMetrics:
     """Token usage metrics (DevOps expertise)"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.refresh_count = 0
         self.refresh_failures = 0
         self.last_refresh_time: Optional[datetime] = None
@@ -171,12 +171,12 @@ class TokenMetrics:
         self.concurrent_refreshes = 0
         self._lock = threading.Lock()
     
-    def record_refresh_start(self):
+    def record_refresh_start(self) -> None:
         """Record start of token refresh"""
         with self._lock:
             self.concurrent_refreshes += 1
     
-    def record_refresh_success(self, duration: float, token_lifespan: Optional[float] = None):
+    def record_refresh_success(self, duration -> None: float, token_lifespan -> None: Optional[float] = None) -> None:
         """Record successful token refresh"""
         with self._lock:
             self.refresh_count += 1
@@ -190,7 +190,7 @@ class TokenMetrics:
                 if len(self.token_lifespan_stats) > 100:
                     self.token_lifespan_stats.pop(0)
     
-    def record_refresh_failure(self):
+    def record_refresh_failure(self) -> None:
         """Record failed token refresh"""
         with self._lock:
             self.refresh_failures += 1
@@ -233,11 +233,11 @@ class TokenHandler:
     
     def __init__(
         self,
-        refresh_strategy: TokenRefreshStrategy,
-        auto_refresh: bool = True,
-        refresh_buffer_seconds: int = 300,
-        max_concurrent_refreshes: int = 1
-    ):
+        refresh_strategy -> None: TokenRefreshStrategy,
+        auto_refresh -> None: bool = True,
+        refresh_buffer_seconds -> None: int = 300,
+        max_concurrent_refreshes -> None: int = 1
+    ) -> None:
         self.refresh_strategy = refresh_strategy
         self.auto_refresh = auto_refresh
         self.refresh_buffer_seconds = refresh_buffer_seconds
@@ -265,12 +265,12 @@ class TokenHandler:
         self._monitor_task: Optional[asyncio.Task] = None
         self._is_running = False
     
-    def add_event_callback(self, event: str, callback: Callable):
+    def add_event_callback(self, event -> None: str, callback -> None: Callable) -> None:
         """Add callback for token events"""
         if event in self._event_callbacks:
             self._event_callbacks[event].append(callback)
     
-    def _notify_event(self, event: str, data: Dict[str, Any]):
+    def _notify_event(self, event -> None: str, data -> None: Dict[str, Any]) -> None:
         """Notify event callbacks"""
         if event in self._event_callbacks:
             for callback in self._event_callbacks[event]:
@@ -282,7 +282,7 @@ class TokenHandler:
                 except Exception as e:
                     self.logger.warning(f"Event callback error for {event}: {str(e)}")
     
-    def set_token(self, token_info: TokenInfo):
+    def set_token(self, token_info -> None: TokenInfo) -> None:
         """Set current token"""
         with self._sync_lock:
             old_token = self._current_token
@@ -399,7 +399,7 @@ class TokenHandler:
                 
                 return None
     
-    def start_monitoring(self):
+    def start_monitoring(self) -> None:
         """Start background token monitoring"""
         if self._is_running:
             return
@@ -408,7 +408,7 @@ class TokenHandler:
         self._monitor_task = asyncio.create_task(self._monitor_loop())
         self.logger.info("Token monitoring started")
     
-    def stop_monitoring(self):
+    def stop_monitoring(self) -> None:
         """Stop background token monitoring"""
         self._is_running = False
         
@@ -417,7 +417,7 @@ class TokenHandler:
         
         self.logger.info("Token monitoring stopped")
     
-    async def _monitor_loop(self):
+    async def _monitor_loop(self) -> None:
         """Background monitoring loop"""
         try:
             while self._is_running:
@@ -491,12 +491,12 @@ class TokenHandler:
             'should_refresh': self.refresh_strategy.should_refresh(token) if self.auto_refresh else False
         }
     
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         """Async context manager entry"""
         self.start_monitoring()
         return self
     
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         """Async context manager exit"""
         self.stop_monitoring()
 

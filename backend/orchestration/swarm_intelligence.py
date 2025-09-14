@@ -122,8 +122,8 @@ class AgentState:
 class SwarmAgent:
     """Individual agent in the swarm"""
     
-    def __init__(self, agent_id: str, initial_position: np.ndarray, 
-                 role: AgentRole = AgentRole.WORKER):
+    def __init__(self, agent_id -> None: str, initial_position -> None: np.ndarray, 
+                 role -> None: AgentRole = AgentRole.WORKER) -> None:
         self.agent_id = agent_id
         self.state = AgentState(
             agent_id=agent_id,
@@ -138,7 +138,7 @@ class SwarmAgent:
         
         logger.debug(f"Created swarm agent {agent_id} with role {role.value}")
     
-    async def update_position(self, dt: float, forces: np.ndarray):
+    async def update_position(self, dt -> None: float, forces -> None: np.ndarray) -> None:
         """Update agent position based on forces"""
         # Update velocity with forces
         self.state.velocity += forces * dt
@@ -221,7 +221,7 @@ class SwarmAgent:
                 'status': 'received'
             }
     
-    def update_fitness(self, fitness_function: Callable[[np.ndarray], float]):
+    def update_fitness(self, fitness_function -> None: Callable[[np.ndarray], float]) -> None:
         """Update agent fitness"""
         self.state.fitness = fitness_function(self.state.position)
         
@@ -230,11 +230,11 @@ class SwarmAgent:
             self.local_best_fitness = self.state.fitness
             self.local_best_position = self.state.position.copy()
     
-    def add_connection(self, other_agent_id: str):
+    def add_connection(self, other_agent_id -> None: str) -> None:
         """Add connection to another agent"""
         self.state.connections.add(other_agent_id)
     
-    def remove_connection(self, other_agent_id: str):
+    def remove_connection(self, other_agent_id -> None: str) -> None:
         """Remove connection to another agent"""
         self.state.connections.discard(other_agent_id)
     
@@ -253,7 +253,7 @@ class SwarmAgent:
 class CollectiveIntelligence:
     """Collective intelligence algorithms for swarm"""
     
-    def __init__(self, config: SwarmConfig):
+    def __init__(self, config -> None: SwarmConfig) -> None:
         self.config = config
         self.collective_memory: Dict[str, Any] = {}
         self.consensus_history: List[Dict[str, Any]] = []
@@ -492,7 +492,7 @@ class CollectiveIntelligence:
 class EmergentBehavior:
     """Emergent behavior patterns in swarm"""
     
-    def __init__(self, config: SwarmConfig):
+    def __init__(self, config -> None: SwarmConfig) -> None:
         self.config = config
         self.behavior_patterns: Dict[str, Any] = {}
         self.emergence_history: List[Dict[str, Any]] = []
@@ -701,7 +701,7 @@ class EmergentBehavior:
 class DistributedDecisionEngine:
     """Distributed decision making engine"""
     
-    def __init__(self, config: SwarmConfig):
+    def __init__(self, config -> None: SwarmConfig) -> None:
         self.config = config
         self.pending_decisions: Dict[str, Dict[str, Any]] = {}
         self.completed_decisions: List[Dict[str, Any]] = []
@@ -932,7 +932,7 @@ class DistributedDecisionEngine:
 class SwarmOrchestrator:
     """Main orchestrator for swarm intelligence"""
     
-    def __init__(self, config: SwarmConfig):
+    def __init__(self, config -> None: SwarmConfig) -> None:
         self.config = config
         self.agents: Dict[str, SwarmAgent] = {}
         self.collective_intelligence = CollectiveIntelligence(config)
@@ -978,7 +978,7 @@ class SwarmOrchestrator:
         logger.info(f"Initialized swarm with {len(agent_ids)} agents")
         return agent_ids
     
-    async def _establish_initial_connections(self):
+    async def _establish_initial_connections(self) -> None:
         """Establish initial connections between agents"""
         agent_list = list(self.agents.values())
         
@@ -1045,7 +1045,7 @@ class SwarmOrchestrator:
         logger.info(f"Swarm simulation completed after {simulation_results['steps_completed']} steps")
         return simulation_results
     
-    async def _update_swarm_step(self, dt: float):
+    async def _update_swarm_step(self, dt -> None: float) -> None:
         """Update one simulation step for all agents"""
         agent_list = list(self.agents.values())
         
@@ -1183,7 +1183,7 @@ class SwarmOrchestrator:
         
         return result
     
-    def stop_simulation(self):
+    def stop_simulation(self) -> None:
         """Stop running simulation"""
         self.is_running = False
     

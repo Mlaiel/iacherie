@@ -136,7 +136,7 @@ class HypothesisValidationFramework:
     - Automated research validation reports
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize hypothesis validation framework.
         
         Args:
@@ -804,7 +804,7 @@ class HypothesisValidationFramework:
 
 
 # Example usage and testing
-async def main():
+async def main() -> None:
     """Test hypothesis validation framework."""
     # Initialize framework
     config = {

@@ -107,7 +107,7 @@ class TrainingJob:
 class ModelTrainer:
     """Core model training and fine-tuning engine"""
     
-    def __init__(self, models_directory: str = "./models", logs_directory: str = "./logs"):
+    def __init__(self, models_directory -> None: str = "./models", logs_directory -> None: str = "./logs") -> None:
         self.models_directory = Path(models_directory)
         self.logs_directory = Path(logs_directory)
         self.models_directory.mkdir(exist_ok=True)
@@ -172,7 +172,7 @@ class ModelTrainer:
             logger.error(f"Training job {job_id} failed: {e}")
             return False
     
-    async def _initialize_training_environment(self, job: TrainingJob):
+    async def _initialize_training_environment(self, job -> None: TrainingJob) -> None:
         """Initialize training environment"""
         config = job.config
         
@@ -193,7 +193,7 @@ class ModelTrainer:
         
         logger.info(f"Training environment initialized for job {job.job_id}")
     
-    async def _initialize_model(self, job: TrainingJob):
+    async def _initialize_model(self, job -> None: TrainingJob) -> None:
         """Initialize model based on type"""
         model_type = job.config.model_type
         
@@ -208,32 +208,32 @@ class ModelTrainer:
         else:
             await self._initialize_generic_model(job)
     
-    async def _initialize_nlp_model(self, job: TrainingJob):
+    async def _initialize_nlp_model(self, job -> None: TrainingJob) -> None:
         """Initialize NLP model"""
         # Placeholder for NLP model initialization
         logger.info(f"Initializing NLP model for job {job.job_id}")
     
-    async def _initialize_conversation_model(self, job: TrainingJob):
+    async def _initialize_conversation_model(self, job -> None: TrainingJob) -> None:
         """Initialize conversation model"""
         # Placeholder for conversation model initialization
         logger.info(f"Initializing conversation model for job {job.job_id}")
     
-    async def _initialize_sentiment_model(self, job: TrainingJob):
+    async def _initialize_sentiment_model(self, job -> None: TrainingJob) -> None:
         """Initialize sentiment model"""
         # Placeholder for sentiment model initialization
         logger.info(f"Initializing sentiment model for job {job.job_id}")
     
-    async def _initialize_intent_classifier(self, job: TrainingJob):
+    async def _initialize_intent_classifier(self, job -> None: TrainingJob) -> None:
         """Initialize intent classifier"""
         # Placeholder for intent classifier initialization
         logger.info(f"Initializing intent classifier for job {job.job_id}")
     
-    async def _initialize_generic_model(self, job: TrainingJob):
+    async def _initialize_generic_model(self, job -> None: TrainingJob) -> None:
         """Initialize generic model"""
         # Placeholder for generic model initialization
         logger.info(f"Initializing generic model for job {job.job_id}")
     
-    async def _run_training_loop(self, job: TrainingJob):
+    async def _run_training_loop(self, job -> None: TrainingJob) -> None:
         """Run training loop"""
         config = job.config
         
@@ -321,7 +321,7 @@ class ModelTrainer:
         
         return current_val_loss > best_val_loss * 1.01  # 1% tolerance
     
-    async def _save_model_checkpoint(self, job: TrainingJob, epoch: int):
+    async def _save_model_checkpoint(self, job -> None: TrainingJob, epoch -> None: int) -> None:
         """Save model checkpoint"""
         if job.model_path:
             checkpoint_path = Path(job.model_path) / f"checkpoint_epoch_{epoch}.pkl"
@@ -397,7 +397,7 @@ class ModelTrainer:
 class FineTuningManager:
     """Manages model fine-tuning operations"""
     
-    def __init__(self, trainer: ModelTrainer):
+    def __init__(self, trainer -> None: ModelTrainer) -> None:
         self.trainer = trainer
         self.fine_tuning_jobs: Dict[str, TrainingJob] = {}
     
@@ -451,7 +451,7 @@ class FineTuningManager:
 class ModelOptimizer:
     """Optimizes trained models for performance"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.optimization_cache: Dict[str, Dict[str, Any]] = {}
     
     async def optimize_model(self, model_path: str, optimization_type: str = "performance") -> Dict[str, Any]:

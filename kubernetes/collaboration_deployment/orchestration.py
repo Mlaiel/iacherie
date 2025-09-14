@@ -168,10 +168,10 @@ class CollaborationOrchestrator:
     """
     def __init__(
         self,
-        config: Any,
-        platform: OrchestrationPlatform = OrchestrationPlatform.KUBERNETES,
-        runtime: ContainerRuntime = ContainerRuntime.DOCKER
-    ):
+        config -> None: Any,
+        platform -> None: OrchestrationPlatform = OrchestrationPlatform.KUBERNETES,
+        runtime -> None: ContainerRuntime = ContainerRuntime.DOCKER
+    ) -> None:
         """
 Initialize the collaboration orchestrator."""
         self.config = config
@@ -834,7 +834,7 @@ class CollaborationOrchestrator:
     collaboration-related microservices in the platform.
     """
     
-    def __init__(self, deployment_config):
+    def __init__(self, deployment_config) -> None:
         """
 Initialize collaboration orchestrator."""
         self.deployment_config = deployment_config

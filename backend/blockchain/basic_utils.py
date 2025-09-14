@@ -81,7 +81,7 @@ class SmartContract:
 class BlockchainManager:
     """Basic blockchain operations manager"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.networks = {
             BlockchainNetwork.ETHEREUM: BlockchainConfig(
                 network=BlockchainNetwork.ETHEREUM,
@@ -252,7 +252,7 @@ class BlockchainManager:
 class CryptocurrencyManager:
     """Cryptocurrency payment management"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.supported_currencies = {
             "ETH": {"name": "Ethereum", "decimals": 18},
             "MATIC": {"name": "Polygon", "decimals": 18},
@@ -301,7 +301,7 @@ class CryptocurrencyManager:
 class SmartContractManager:
     """Smart contract deployment and interaction"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.deployed_contracts: Dict[str, SmartContract] = {}
     
     async def deploy_content_protection_contract(

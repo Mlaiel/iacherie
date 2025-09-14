@@ -98,7 +98,7 @@ class CloudSecurityManager:
     and automated remediation across multiple cloud providers.
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize cloud security manager."""
         self.logger = logging.getLogger(__name__)
         
@@ -136,7 +136,7 @@ class CloudSecurityManager:
             self.logger.error(f"Failed to generate encryption key: {e}")
             raise
 
-    def _initialize_default_policies(self):
+    def _initialize_default_policies(self) -> None:
         """Initialize default security policies."""
         try:
             default_policies = [
@@ -754,7 +754,7 @@ class CloudSecurityManager:
             self.logger.error(f"Compliance score calculation failed: {e}")
             return 0.0
 
-    async def _trigger_auto_remediation(self, violations: List[SecurityViolation]):
+    async def _trigger_auto_remediation(self, violations -> None: List[SecurityViolation]) -> None:
         """Trigger auto-remediation for applicable violations."""
         try:
             auto_remediation_count = 0
@@ -953,7 +953,7 @@ class CloudSecurityManager:
 
 # Example usage and testing
 if __name__ == "__main__":
-    async def main():
+    async def main() -> None:
         # Initialize security manager
         security_manager = CloudSecurityManager()
         

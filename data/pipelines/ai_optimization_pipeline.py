@@ -93,7 +93,7 @@ class ModelOptimizationEngine:
     Advanced machine learning model optimization engine
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.cache_manager = CacheManager()
         self.notification_manager = NotificationManager()
         self.optimization_history = {}
@@ -153,7 +153,7 @@ class ModelOptimizationEngine:
         """
         Optimize model hyperparameters using Optuna
         """
-        def objective(trial):
+        def objective(trial) -> None:
             # Define hyperparameter search space based on model type
             if model_type == ModelType.CONTENT_ANALYSIS:
                 learning_rate = trial.suggest_float('learning_rate', 1e-5, 1e-2, log=True)
@@ -250,7 +250,7 @@ class PerformanceTuningEngine:
     System performance tuning for AI pipeline optimization
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.resource_monitor = ResourceMonitor()
         self.performance_metrics = {}
     
@@ -365,7 +365,7 @@ class ResourceOptimizationEngine:
     Intelligent resource allocation and optimization
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.resource_allocations = {}
         self.optimization_history = []
     
@@ -489,7 +489,7 @@ class ResourceMonitor:
     Real-time resource monitoring and alerting
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.monitoring_active = False
         self.alerts = []
     
@@ -518,7 +518,7 @@ class AIOptimizationPipeline:
     Main AI optimization pipeline coordinating all optimization engines
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.model_optimizer = ModelOptimizationEngine()
         self.performance_tuner = PerformanceTuningEngine()
         self.resource_optimizer = ResourceOptimizationEngine()

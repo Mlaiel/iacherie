@@ -68,7 +68,7 @@ class LanguageOpportunity:
 class LanguageOptimizer:
     """Advanced multi-language content optimization engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize language optimizer"""
         self.language_data = {}
         self.market_intelligence = {}

@@ -56,7 +56,7 @@ class HealthChecker:
     Implements comprehensive health monitoring for all system components
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize health checker"""
         self.checks: Dict[str, HealthCheck] = {}
         self.results: Dict[str, List[HealthResult]] = {}
@@ -81,7 +81,7 @@ class HealthChecker:
         
         logger.info("HealthChecker initialized")
     
-    def _register_default_checks(self):
+    def _register_default_checks(self) -> None:
         """Register default system health checks"""
         
         # Database connectivity check
@@ -284,7 +284,7 @@ class HealthChecker:
                 duration=duration
             )
     
-    def register_check(self, health_check: HealthCheck):
+    def register_check(self, health_check -> None: HealthCheck) -> None:
         """Register a new health check"""
         self.checks[health_check.name] = health_check
         self.results[health_check.name] = []
@@ -344,7 +344,7 @@ class HealthChecker:
             self.results[check_name].append(result)
             return result
     
-    async def start_monitoring(self):
+    async def start_monitoring(self) -> None:
         """Start continuous health monitoring"""
         self.is_running = True
         logger.info("Starting health monitoring")
@@ -355,7 +355,7 @@ class HealthChecker:
                 self._run_periodic_check(check_name, check)
             )
     
-    async def _run_periodic_check(self, check_name: str, check: HealthCheck):
+    async def _run_periodic_check(self, check_name -> None: str, check -> None: HealthCheck) -> None:
         """Run a health check periodically"""
         while self.is_running:
             try:
@@ -367,7 +367,7 @@ class HealthChecker:
             
             await asyncio.sleep(check.interval)
     
-    def stop_monitoring(self):
+    def stop_monitoring(self) -> None:
         """Stop health monitoring"""
         self.is_running = False
         

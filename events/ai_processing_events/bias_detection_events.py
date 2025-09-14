@@ -174,7 +174,7 @@ class BiasDetectionResult:
 class BiasDetectionEvents(BaseEventHandler):
     """AI-powered bias detection and mitigation system"""
     
-    def __init__(self, max_workers: int = 4):
+    def __init__(self, max_workers -> None: int = 4) -> None:
         super().__init__()
         self.executor = ThreadPoolExecutor(max_workers=max_workers)
         self.request_queue = asyncio.Queue(maxsize=1000)
@@ -206,7 +206,7 @@ class BiasDetectionEvents(BaseEventHandler):
         
         logger.info("Bias Detection Events initialized")
     
-    async def start_detector(self):
+    async def start_detector(self) -> None:
         """Start the bias detection system"""
         self.is_running = True
         
@@ -216,7 +216,7 @@ class BiasDetectionEvents(BaseEventHandler):
         
         logger.info("Bias Detection Events started")
     
-    async def stop_detector(self):
+    async def stop_detector(self) -> None:
         """Stop the bias detection system"""
         self.is_running = False
         self.executor.shutdown(wait=True)
@@ -563,7 +563,7 @@ class BiasDetectionEvents(BaseEventHandler):
         
         return patterns
     
-    async def _worker_loop(self, worker_id: str):
+    async def _worker_loop(self, worker_id -> None: str) -> None:
         """Worker loop for processing bias detection requests"""
         logger.info(f"Bias detection worker {worker_id} started")
         

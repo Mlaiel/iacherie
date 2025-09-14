@@ -141,7 +141,7 @@ class AuditTrail:
     """
 Advanced audit trail and compliance logging system."""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """
 Initialize audit trail system."""
         self.config = config
@@ -946,7 +946,7 @@ Send security notification for critical events."""
         else:
             return 'terms_violations'
     
-    async def _persist_security_metrics(self):
+    async def _persist_security_metrics(self) -> None:
         """
 Persist security metrics to storage"""
         try:
@@ -955,7 +955,7 @@ Persist security metrics to storage"""
         except Exception as e:
             logger.debug(f"Failed to persist security metrics: {str(e)}")
     
-    async def _persist_violation_metrics(self):
+    async def _persist_violation_metrics(self) -> None:
         """Persist violation metrics to storage"""
         try:
             if hasattr(self, 'storage_client'):
@@ -963,7 +963,7 @@ Persist security metrics to storage"""
         except Exception as e:
             logger.debug(f"Failed to persist violation metrics: {str(e)}")
     
-    async def _create_security_alert(self, user_id: str, alert_type: str, alert_data: dict):
+    async def _create_security_alert(self, user_id -> None: str, alert_type -> None: str, alert_data -> None: dict) -> None:
         """Create security alert for excessive failed access"""
         try:
             if hasattr(self, 'alert_client'):

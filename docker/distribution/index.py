@@ -15,6 +15,7 @@ from enum import Enum
 logger = logging.getLogger(__name__)
 
 class Platform(Enum):
+    """Platform class implementation"""
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -26,6 +27,7 @@ class Platform(Enum):
     PINTEREST = "pinterest"
 
 class ContentType(Enum):
+    """ContentType class implementation"""
     VIDEO = "video"
     AUDIO = "audio" 
     IMAGE = "image"
@@ -46,14 +48,14 @@ class DistributionJob:
 class DistributionOrchestrator:
     """Main orchestrator for content distribution across platforms"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.active_jobs: Dict[str, DistributionJob] = {}
         self.platform_connectors = {}
         self.scheduler = None
         self.format_adapter = None
         self.analytics_aggregator = None
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize all distribution services"""
         logger.info("Initializing Distribution Orchestrator...")
         
@@ -71,7 +73,7 @@ class DistributionOrchestrator:
         
         logger.info("Distribution Orchestrator initialized successfully")
     
-    async def _initialize_platform_connectors(self):
+    async def _initialize_platform_connectors(self) -> None:
         """Initialize connections to all supported platforms"""
         from .platform_connectors import (
             YoutubeConnector, InstagramConnector, TiktokConnector,
@@ -99,21 +101,21 @@ class DistributionOrchestrator:
             except Exception as e:
                 logger.error(f"❌ Failed to initialize {platform.value}: {e}")
     
-    async def _initialize_scheduler(self):
+    async def _initialize_scheduler(self) -> None:
         """Initialize publication scheduler"""
         from .publication_scheduler import PublicationScheduler
         self.scheduler = PublicationScheduler()
         await self.scheduler.initialize()
         logger.info("✅ Publication scheduler initialized")
     
-    async def _initialize_format_adapter(self):
+    async def _initialize_format_adapter(self) -> None:
         """Initialize format adapter"""
         from .format_adapter import FormatAdapter
         self.format_adapter = FormatAdapter()
         await self.format_adapter.initialize()
         logger.info("✅ Format adapter initialized")
     
-    async def _initialize_analytics_aggregator(self):
+    async def _initialize_analytics_aggregator(self) -> None:
         """Initialize analytics aggregator"""
         from .analytics_aggregator import AnalyticsAggregator
         self.analytics_aggregator = AnalyticsAggregator()
@@ -137,7 +139,7 @@ class DistributionOrchestrator:
         
         return job_id
     
-    async def _execute_distribution_job(self, job_id: str, job: DistributionJob):
+    async def _execute_distribution_job(self, job_id -> None: str, job -> None: DistributionJob) -> None:
         """Execute a distribution job"""
         logger.info(f"🎯 Executing distribution job {job_id}")
         
@@ -203,7 +205,7 @@ class DistributionOrchestrator:
             start_date, end_date
         )
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Gracefully shutdown all services"""
         logger.info("Shutting down Distribution Orchestrator...")
         
@@ -228,11 +230,11 @@ class DistributionOrchestrator:
 # Global orchestrator instance
 distribution_orchestrator = DistributionOrchestrator()
 
-async def initialize_distribution_services():
+async def initialize_distribution_services() -> None:
     """Initialize distribution services"""
     await distribution_orchestrator.initialize()
 
-async def shutdown_distribution_services():
+async def shutdown_distribution_services() -> None:
     """Shutdown distribution services"""
     await distribution_orchestrator.shutdown()
 

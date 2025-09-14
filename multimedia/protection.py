@@ -1,4 +1,6 @@
 """Protection Module
+import asyncio
+
 Professional protection functionality for multimedia processing.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -25,14 +27,14 @@ class ProtectionResult:
     data: Dict[str, Any] = None
     error_message: Optional[str] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.data is None:
             self.data = {}
 
 class ProtectionManager:
     """Main protection manager class"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logger
         self.config = {}
     
@@ -75,7 +77,7 @@ class ContentProtector(ProtectionManager):
 class WatermarkEngine:
     """Apply watermarks to content"""
     
-    def __init__(self, config: WatermarkConfig):
+    def __init__(self, config -> None: WatermarkConfig) -> None:
         self.config = config
     
     async def apply_watermark(self, content_path: Path, output_path: Path) -> bool:
@@ -89,7 +91,7 @@ class WatermarkEngine:
 class FingerprintGenerator:
     """Generate content fingerprints"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.algorithm = "perceptual_hash"
     
     async def generate_fingerprint(self, content_path: Path) -> str:

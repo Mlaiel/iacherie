@@ -47,13 +47,14 @@ try:
 except ImportError:
     NUMPY_AVAILABLE = False
     class NumpyFallback:
-        def mean(self, data): return sum(data) / len(data) if data else 0
-        def std(self, data):
+    """NumpyFallback: class implementation"""
+        def mean(self, data) -> None: return sum(data) / len(data) if data else 0
+        def std(self, data) -> None:
             if not data: return 0
             mean_val = self.mean(data)
             return (sum((x - mean_val) ** 2 for x in data) / len(data)) ** 0.5
-        def array(self, data): return data
-        def zeros(self, shape): return [0] * (shape if isinstance(shape, int) else shape[0])
+        def array(self, data) -> None: return data
+        def zeros(self, shape) -> None: return [0] * (shape if isinstance(shape, int) else shape[0])
     np = NumpyFallback()
 
 # Handle matplotlib/plotly specific imports
@@ -65,16 +66,18 @@ if MATPLOTLIB_AVAILABLE:
     except ImportError:
         PDF_BACKEND_AVAILABLE = False
         class PdfPages:
-            def __init__(self, *args, **kwargs): pass
-            def __enter__(self): return self
-            def __exit__(self, *args): pass
+    """PdfPages: class implementation"""
+            def __init__(self, *args, **kwargs) -> None: pass
+            def __enter__(self) -> None: return self
+            def __exit__(self, *args) -> None: pass
 else:
     plt = matplotlib.pyplot
     PDF_BACKEND_AVAILABLE = False
     class PdfPages:
-        def __init__(self, *args, **kwargs): pass
-        def __enter__(self): return self
-        def __exit__(self, *args): pass
+    """PdfPages: class implementation"""
+        def __init__(self, *args, **kwargs) -> None: pass
+        def __enter__(self) -> None: return self
+        def __exit__(self, *args) -> None: pass
 
 if SEABORN_AVAILABLE:
     import seaborn as sns
@@ -90,13 +93,13 @@ if PLOTLY_AVAILABLE:
     except ImportError:
         PLOTLY_EXPRESS_AVAILABLE = False
         px = None
-        def make_subplots(*args, **kwargs):
+        def make_subplots(*args, **kwargs) -> None:
             return plotly.graph_objects.Figure()
 else:
     go = plotly.graph_objects
     px = None
     PLOTLY_EXPRESS_AVAILABLE = False
-    def make_subplots(*args, **kwargs):
+    def make_subplots(*args, **kwargs) -> None:
         return plotly.graph_objects.Figure()
 
 # Optional pydantic with fallback
@@ -106,10 +109,11 @@ try:
 except ImportError:
     PYDANTIC_AVAILABLE = False
     class BaseModel:
-        def __init__(self, **kwargs):
+    """BaseModel: class implementation"""
+        def __init__(self, **kwargs) -> None:
             for key, value in kwargs.items():
                 setattr(self, key, value)
-    def Field(*args, **kwargs): return None
+    def Field(*args, **kwargs) -> None: return None
 
 # Optional jinja2 with fallback
 try:
@@ -118,9 +122,10 @@ try:
 except ImportError:
     JINJA2_AVAILABLE = False
     class Template:
-        def __init__(self, template_string):
+    """Template: class implementation"""
+        def __init__(self, template_string) -> None:
             self.template = template_string
-        def render(self, **kwargs):
+        def render(self, **kwargs) -> None:
             return self.template
 
 # Optional aiofiles with fallback
@@ -130,8 +135,9 @@ try:
 except ImportError:
     AIOFILES_AVAILABLE = False
     class AioFilesFallback:
+    """AioFilesFallback: class implementation"""
         @staticmethod
-        def open(file, mode='r', **kwargs):
+        def open(file, mode='r', **kwargs) -> None:
             return open(file, mode, **kwargs)
     aiofiles = AioFilesFallback()
 
@@ -247,10 +253,10 @@ class ReportGenerator:
     
     def __init__(
         self,
-        config: Dict[str, Any],
-        analytics: MonitoringAnalytics,
-        performance_optimizer: PerformanceOptimizer
-    ):
+        config -> None: Dict[str, Any],
+        analytics -> None: MonitoringAnalytics,
+        performance_optimizer -> None: PerformanceOptimizer
+    ) -> None:
         """
 Initialize report generator."""
         self.config = config
@@ -909,7 +915,7 @@ Generate Excel report with multiple sheets."""
         file_path = self.output_directory / f"{report_id}.json"
         
         # Convert datetime objects to ISO format strings
-        def convert_datetime(obj):
+        def convert_datetime(obj) -> None:
             try:
                 logger.info(f"Executing convert_datetime")
                 

@@ -162,16 +162,16 @@ RELATIONSHIP_MAPPINGS = {
     'fingerprint_protection': 'One fingerprint can trigger multiple protection alerts'
 }
 
-def get_model_by_table_name(table_name: str):
+def get_model_by_table_name(table_name -> None: str) -> None:
     """Get model class by table name"""
     return MODEL_REGISTRY.get(table_name)
 
-def get_all_models():
+def get_all_models() -> None:
     """
 Get all registered models"""
     return list(MODEL_REGISTRY.values())
 
-def get_model_relationships():
+def get_model_relationships() -> None:
     """
 Get model relationship information"""
     return RELATIONSHIP_MAPPINGS

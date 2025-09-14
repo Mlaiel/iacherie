@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 class DistributionAnalyticsDigest:
     """Distribution analytics digest and reporting system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         logger.info("Distribution analytics digest initialized")
     
     async def generate_distribution_digest(self, user_id: str, content_id: str, 
@@ -52,7 +52,7 @@ class DistributionAnalyticsDigest:
             logger.error(f"Error generating distribution digest: {str(e)}")
             return {}
     
-    async def _send_digest_notification(self, user_id: str, digest: Dict[str, Any]):
+    async def _send_digest_notification(self, user_id -> None: str, digest -> None: Dict[str, Any]) -> None:
         """Send distribution digest notification"""
         notification_data = {
             "title": "📊 Distribution Analytics Digest",

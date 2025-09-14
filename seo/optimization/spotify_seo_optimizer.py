@@ -146,7 +146,7 @@ class SpotifySEOScore:
 class SpotifySEOOptimizer:
     """Advanced Spotify SEO optimization engine"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """Initialize Spotify SEO optimizer
         
         Args:

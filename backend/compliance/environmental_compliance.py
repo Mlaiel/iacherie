@@ -1,3 +1,8 @@
+"""
+Environmental Compliance module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 🌱 Environmental Compliance Module - Carbon Footprint & Sustainability Compliance Engine
@@ -130,7 +135,7 @@ class SustainabilityAssessment:
 class CarbonFootprintCompliance:
     """Gestionnaire de conformité empreinte carbone enterprise"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.logger = logging.getLogger(__name__)
         self.encryption_manager = EncryptionManager()
@@ -316,7 +321,7 @@ class CarbonFootprintCompliance:
 class EnergyEfficiencyMonitor:
     """Moniteur d'efficacité énergétique enterprise"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.logger = logging.getLogger(__name__)
         self.performance_monitor = PerformanceMonitor()
@@ -426,7 +431,7 @@ class EnergyEfficiencyMonitor:
 class SustainableDevelopmentCompliance:
     """Gestionnaire de conformité développement durable enterprise"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.logger = logging.getLogger(__name__)
         
@@ -558,7 +563,7 @@ class SustainableDevelopmentCompliance:
 class EnvironmentalImpactAssessor:
     """Évaluateur d'impact environnemental enterprise"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.logger = logging.getLogger(__name__)
         self.predictive_analytics = PredictiveAnalytics()
@@ -671,7 +676,7 @@ class EnvironmentalImpactAssessor:
 class EnvironmentalComplianceEngine:
     """Moteur principal de conformité environnementale enterprise"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
         
@@ -684,7 +689,7 @@ class EnvironmentalComplianceEngine:
         # Configuration par défaut
         self._setup_default_config()
     
-    def _setup_default_config(self):
+    def _setup_default_config(self) -> None:
         """Configuration par défaut du moteur"""
         default_config = {
             'reporting_standards': ['GRI', 'TCFD', 'SASB'],
@@ -937,7 +942,7 @@ class EnvironmentalComplianceEngine:
 class GreenTechnologyValidator:
     """Validateur de technologies vertes"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.logger = logging.getLogger(__name__)
         
@@ -956,7 +961,7 @@ class GreenTechnologyValidator:
 class SustainabilityReporter:
     """Générateur de rapports de durabilité"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.logger = logging.getLogger(__name__)
         
@@ -985,7 +990,7 @@ class SustainabilityReporter:
 class EnvironmentalRegulationCompliance:
     """Gestionnaire de conformité réglementaire environnementale"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.logger = logging.getLogger(__name__)
         

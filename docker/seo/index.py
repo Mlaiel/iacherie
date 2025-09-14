@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 class SEOServicesOrchestrator:
     """Main orchestrator for Docker SEO services"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.services_status = {}
         self.active_services = []
         
@@ -103,7 +103,7 @@ class SEOServicesOrchestrator:
 if __name__ == "__main__":
     orchestrator = SEOServicesOrchestrator()
     
-    async def main():
+    async def main() -> None:
         result = await orchestrator.initialize_services()
         print(f"SEO services initialization: {result}")
         

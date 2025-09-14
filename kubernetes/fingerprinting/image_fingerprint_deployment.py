@@ -91,7 +91,7 @@ class ImageFingerprintConfig:
     persistence_enabled: bool = True
     monitoring_enabled: bool = True
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.algorithms is None:
             self.algorithms = [
                 ImageHashingAlgorithm.PERCEPTUAL,
@@ -120,7 +120,7 @@ class ImageFingerprintDeployment:
     - Comprehensive monitoring and metrics
     """
     
-    def __init__(self, config: ImageFingerprintConfig):
+    def __init__(self, config -> None: ImageFingerprintConfig) -> None:
         """
         Initialize image fingerprinting deployment
         

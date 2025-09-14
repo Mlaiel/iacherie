@@ -144,7 +144,7 @@ class ModelBiasDetector:
     - Ethical AI recommendations
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize bias detector with advanced ML algorithms"""
         self.config = config or {}
         self.bias_history: List[BiasAssessment] = []

@@ -81,7 +81,7 @@ class CacheStats:
 class LRUCache:
     """LRU (Least Recently Used) cache implementation."""
     
-    def __init__(self, max_size: int, ttl_seconds: Optional[int] = None):
+    def __init__(self, max_size -> None: int, ttl_seconds -> None: Optional[int] = None) -> None:
         """
         Initialize LRU cache.
         
@@ -212,7 +212,7 @@ class LRUCache:
 class LFUCache:
     """LFU (Least Frequently Used) cache implementation."""
     
-    def __init__(self, max_size: int, ttl_seconds: Optional[int] = None):
+    def __init__(self, max_size -> None: int, ttl_seconds -> None: Optional[int] = None) -> None:
         """Initialize LFU cache."""
         self.max_size = max_size
         self.ttl_seconds = ttl_seconds
@@ -377,7 +377,7 @@ class LFUCache:
 class DiskCache:
     """Disk-based cache for large objects."""
     
-    def __init__(self, cache_dir: str, max_size_mb: int = 1000):
+    def __init__(self, cache_dir -> None: str, max_size_mb -> None: int = 1000) -> None:
         """Initialize disk cache."""
         self.cache_dir = Path(cache_dir)
         self.cache_dir.mkdir(parents=True, exist_ok=True)
@@ -598,7 +598,7 @@ class CacheManager:
     - Distributed cache support
     """
     
-    def __init__(self, config: Any):
+    def __init__(self, config -> None: Any) -> None:
         """
         Initialize cache manager.
         

@@ -130,7 +130,7 @@ class VideoInferenceResult:
 class TemporalConvNet(nn.Module):
     """Réseau convolutionnel temporel pour analyse vidéo"""
     
-    def __init__(self, input_channels: int, num_channels: List[int], kernel_size: int = 3):
+    def __init__(self, input_channels -> None: int, num_channels -> None: List[int], kernel_size -> None: int = 3) -> None:
         super().__init__()
         
         layers = []
@@ -153,13 +153,13 @@ class TemporalConvNet(nn.Module):
         
         self.network = nn.Sequential(*layers)
         
-    def forward(self, x):
+    def forward(self, x) -> None:
         return self.network(x)
 
 class VideoSceneClassifier(nn.Module):
     """Classificateur de scènes vidéo"""
     
-    def __init__(self, feature_dim: int = 2048, num_scenes: int = 7):
+    def __init__(self, feature_dim -> None: int = 2048, num_scenes -> None: int = 7) -> None:
         super().__init__()
         
         self.feature_extractor = nn.Sequential(
@@ -182,7 +182,7 @@ class VideoSceneClassifier(nn.Module):
             nn.Softmax(dim=-1)
         )
         
-    def forward(self, features):
+    def forward(self, features) -> None:
         # features shape: [batch_size, sequence_length, feature_dim]
         batch_size, seq_len, _ = features.shape
         
@@ -270,7 +270,7 @@ class VideoInferenceProcessor:
         self.total_processing_time = 0.0
         self.average_fps_processed = 0.0
         
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialise le processeur"""
         try:
             # Scene classifier
@@ -893,7 +893,7 @@ class VideoInferenceProcessor:
         }
 
 # Usage example
-async def demo_video_inference():
+async def demo_video_inference() -> None:
     """Démo du processeur d'inférence vidéo"""
     processor = VideoInferenceProcessor()
     await processor.initialize()

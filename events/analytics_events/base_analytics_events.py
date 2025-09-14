@@ -119,7 +119,7 @@ Base analytics event model with validation"""
         arbitrary_types_allowed = True
     
     @validator('timestamp', pre=True)
-    def validate_timestamp(cls, v):
+    def validate_timestamp(cls, v) -> None:
         """
 Validate and normalize timestamp"""
         if isinstance(v, str):
@@ -131,7 +131,7 @@ Validate and normalize timestamp"""
         return datetime.now(timezone.utc)
     
     @validator('data')
-    def validate_data(cls, v):
+    def validate_data(cls, v) -> None:
         """
 Validate event data"""
         if not isinstance(v, dict):
@@ -183,10 +183,10 @@ class BaseAnalyticsEventHandler(ABC):
 Abstract base class for analytics event handlers"""
     
     def __init__(self, 
-                 name: str,
-                 db_session: Optional[AsyncSession] = None,
-                 redis_client: Optional[aioredis.Redis] = None,
-                 config: Optional[Dict[str, Any]] = None):
+                 name -> None: str,
+                 db_session -> None: Optional[AsyncSession] = None,
+                 redis_client -> None: Optional[aioredis.Redis] = None,
+                 config -> None: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize base analytics event handler
         
@@ -413,7 +413,7 @@ Cache processing result"""
 class EventProcessor:
     """High-level event processor that coordinates multiple handlers"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """
 Initialize event processor"""
         self.handlers: Dict[str, BaseAnalyticsEventHandler] = {}

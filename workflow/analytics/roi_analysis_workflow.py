@@ -12,6 +12,7 @@ from datetime import datetime
 
 @dataclass
 class Roi_analysisMetrics:
+    """Roi_analysisMetrics: class implementation"""
     analysis_score: float = 0.0
     accuracy: float = 0.0
     insights_generated: int = 0
@@ -19,6 +20,7 @@ class Roi_analysisMetrics:
 
 @dataclass
 class Roi_analysisResult:
+    """Roi_analysisResult: class implementation"""
     user_id: str
     metrics: Roi_analysisMetrics
     insights: List[str]

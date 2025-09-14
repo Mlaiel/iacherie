@@ -98,7 +98,7 @@ class RevenueOptimizationWorkflow:
     """
 Workflow system for revenue optimization and monetization."""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.config = config or {}
         self.logger = logging.getLogger("workflow.revenue")
         
@@ -147,9 +147,9 @@ Workflow system for revenue optimization and monetization."""
     
     async def _add_revenue_optimization_steps(
         self,
-        pipeline: IntelligentContentPipeline,
-        optimization_config: Dict[str, Any]
-    ):
+        pipeline -> None: IntelligentContentPipeline,
+        optimization_config -> None: Dict[str, Any]
+    ) -> None:
         """Add revenue optimization workflow steps."""
         
         # Step 1: Content performance analysis

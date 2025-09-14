@@ -112,7 +112,7 @@ class EntitySEOConfig:
 class EntityExtractionSEO:
     """Advanced entity extraction and SEO optimization engine."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the Entity Extraction SEO engine."""
         self.nlp_models = {}
         self.entity_classifier = None
@@ -148,7 +148,7 @@ class EntityExtractionSEO:
             EntityType.MISC: 0.3
         }
     
-    def _load_models(self):
+    def _load_models(self) -> None:
         """Load NLP models for entity extraction."""
         try:
             # Load spaCy models for different languages
@@ -204,7 +204,7 @@ class EntityExtractionSEO:
             EntityType.MISC: "Thing"
         }
     
-    def _add_custom_entity_patterns(self):
+    def _add_custom_entity_patterns(self) -> None:
         """Add custom entity patterns to matcher."""
         try:
             if not self.entity_matcher:

@@ -149,7 +149,7 @@ class ConcurrencyMetrics:
 class ConflictDetector:
     """Detects concurrency conflicts"""
     
-    def __init__(self, event_store: EventStoreInterface):
+    def __init__(self, event_store -> None: EventStoreInterface) -> None:
         self.event_store = event_store
     
     async def detect_version_conflict(self, aggregate_id: str, 
@@ -227,7 +227,7 @@ class ConflictDetector:
 class ConflictResolver:
     """Resolves concurrency conflicts"""
     
-    def __init__(self, event_store: EventStoreInterface):
+    def __init__(self, event_store -> None: EventStoreInterface) -> None:
         self.event_store = event_store
         self.custom_resolvers: Dict[str, Callable] = {}
     
@@ -381,7 +381,7 @@ class ConflictResolver:
 class DistributedLockManager:
     """Manages distributed locks for concurrency control"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.locks: Dict[str, LockInfo] = {}
         self.lock_waiters: Dict[str, List[asyncio.Event]] = {}
         self.lock_timeout_tasks: Dict[str, asyncio.Task] = {}
@@ -590,7 +590,7 @@ class DistributedLockManager:
 class OptimisticConcurrencyManager:
     """Enterprise optimistic concurrency manager"""
     
-    def __init__(self, event_store: EventStoreInterface):
+    def __init__(self, event_store -> None: EventStoreInterface) -> None:
         self.event_store = event_store
         self.conflict_detector = ConflictDetector(event_store)
         self.conflict_resolver = ConflictResolver(event_store)

@@ -120,8 +120,8 @@ class DistributedStorageManager:
     failover, load balancing, and performance optimization.
     """
     
-    def __init__(self, storage_managers: Dict[StorageProvider, StorageManager],
-                 distribution_config: DistributionConfig):
+    def __init__(self, storage_managers -> None: Dict[StorageProvider, StorageManager],
+                 distribution_config -> None: DistributionConfig) -> None:
         """
         Initialize DistributedStorageManager.
         
@@ -158,7 +158,7 @@ class DistributedStorageManager:
         # Initialize monitoring
         self._start_monitoring()
     
-    def _start_monitoring(self):
+    def _start_monitoring(self) -> None:
         """
 Start background monitoring tasks"""
         if self.monitoring_enabled:
@@ -693,7 +693,7 @@ Select optimal provider for file retrieval"""
         # Select provider with best current performance
         return await self._get_best_performing_provider(all_providers) or all_providers[0]
     
-    async def _monitor_provider_health(self):
+    async def _monitor_provider_health(self) -> None:
         """
 Background task to monitor provider health"""
         while self.monitoring_enabled:
@@ -707,7 +707,7 @@ Background task to monitor provider health"""
                 self.logger.error(f"Error in health monitoring: {str(e)}")
                 await asyncio.sleep(self.monitoring_interval)
     
-    async def _check_provider_health(self, provider: StorageProvider):
+    async def _check_provider_health(self, provider -> None: StorageProvider) -> None:
         """Check health of specific provider"""
         try:
             start_time = time.time()
@@ -751,7 +751,7 @@ Background task to monitor provider health"""
                 self.provider_metrics[provider].health_status = ProviderHealth.UNHEALTHY
                 self.provider_metrics[provider].last_updated = datetime.utcnow()
     
-    async def _monitor_performance(self):
+    async def _monitor_performance(self) -> None:
         """Background task to monitor performance metrics"""
         while self.monitoring_enabled:
             try:
@@ -767,7 +767,7 @@ Background task to monitor provider health"""
                 self.logger.error(f"Error in performance monitoring: {str(e)}")
                 await asyncio.sleep(300)
     
-    async def _optimize_load_balancing(self):
+    async def _optimize_load_balancing(self) -> None:
         """Background task to optimize load balancing"""
         while self.monitoring_enabled:
             try:
@@ -792,7 +792,7 @@ Background task to monitor provider health"""
     
     # Additional helper methods
     
-    async def _update_access_patterns(self, file_hash: str, provider: StorageProvider):
+    async def _update_access_patterns(self, file_hash -> None: str, provider -> None: StorageProvider) -> None:
         """Update access patterns for optimization"""
         if file_hash not in self.access_patterns:
             self.access_patterns[file_hash] = {
@@ -808,7 +808,7 @@ Background task to monitor provider health"""
         provider_key = provider.value
         pattern['provider_usage'][provider_key] = pattern['provider_usage'].get(provider_key, 0) + 1
     
-    async def _update_hot_cold_files(self):
+    async def _update_hot_cold_files(self) -> None:
         """
 Update hot and cold file classifications"""
         now = datetime.utcnow()
@@ -826,7 +826,7 @@ Update hot and cold file classifications"""
             if days_since_access >= threshold_cold_days:
                 self.cold_files.add(file_hash)
     
-    async def _optimize_storage_tiers(self):
+    async def _optimize_storage_tiers(self) -> None:
         """
 Optimize storage tiers based on access patterns"""
         # Move cold files to cheaper storage tiers

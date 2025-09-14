@@ -112,7 +112,7 @@ class TrendAlert:
 class TrendAnalyzer:
     """Enterprise trend analyzer for ML performance and business metrics"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.metric_data: Dict[str, deque] = defaultdict(lambda: deque(maxlen=10000))
         self.trend_analyses: Dict[str, TrendAnalysis] = {}
@@ -508,17 +508,17 @@ class TrendAnalyzer:
             logger.error(f"Failed to get trend alerts: {e}")
             return []
     
-    async def _setup_trend_monitoring(self):
+    async def _setup_trend_monitoring(self) -> None:
         """Setup continuous trend monitoring"""
         asyncio.create_task(self._continuous_trend_monitoring())
     
-    async def _setup_seasonal_detection(self):
+    async def _setup_seasonal_detection(self) -> None:
         """Setup seasonal pattern detection"""
         asyncio.create_task(self._continuous_seasonal_detection())
     
-    async def _setup_alert_system(self):
+    async def _setup_alert_system(self) -> None:
         """Setup trend alert system"""
-        async def default_alert_handler(alert: TrendAlert):
+        async def default_alert_handler(alert -> None: TrendAlert) -> None:
             logger.warning(f"Trend Alert: {alert.message} (Severity: {alert.severity})")
         
         self.alert_handlers.append(default_alert_handler)
@@ -1022,7 +1022,7 @@ class TrendAnalyzer:
             logger.error(f"Prediction combination error: {e}")
             return linear_preds
     
-    async def _analyze_real_time_trend(self, metric_name: str):
+    async def _analyze_real_time_trend(self, metric_name -> None: str) -> None:
         """Analyze trend in real-time as new data arrives"""
         try:
             # Quick trend analysis on recent data
@@ -1035,7 +1035,7 @@ class TrendAnalyzer:
         except Exception as e:
             logger.error(f"Real-time trend analysis error: {e}")
     
-    async def _check_trend_alerts(self, analysis: TrendAnalysis):
+    async def _check_trend_alerts(self, analysis -> None: TrendAnalysis) -> None:
         """Check if trend analysis should trigger alerts"""
         try:
             alerts_to_create = []
@@ -1132,7 +1132,7 @@ class TrendAnalyzer:
             logger.error(f"Creator-specific recommendations error: {e}")
             return []
     
-    async def _continuous_trend_monitoring(self):
+    async def _continuous_trend_monitoring(self) -> None:
         """Continuous background trend monitoring"""
         while True:
             try:
@@ -1146,7 +1146,7 @@ class TrendAnalyzer:
             except Exception as e:
                 logger.error(f"Continuous trend monitoring error: {e}")
     
-    async def _continuous_seasonal_detection(self):
+    async def _continuous_seasonal_detection(self) -> None:
         """Continuous seasonal pattern detection"""
         while True:
             try:
@@ -1162,7 +1162,7 @@ class TrendAnalyzer:
 
 
 # Example usage and testing
-async def main():
+async def main() -> None:
     """Example usage of Trend Analyzer"""
     analyzer = TrendAnalyzer()
     

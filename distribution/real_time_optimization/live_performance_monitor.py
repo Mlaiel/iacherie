@@ -61,7 +61,7 @@ class PerformanceAlert:
 class LivePerformanceMonitor:
     """Real-time content performance monitoring system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize live performance monitor"""
         self.monitoring_active = False
         self.monitored_content = {}
@@ -286,7 +286,7 @@ class LivePerformanceMonitor:
             return {}
     
     # Private methods for monitoring operations
-    async def _monitoring_loop(self):
+    async def _monitoring_loop(self) -> None:
         """Main monitoring loop"""
         while self.monitoring_active:
             try:
@@ -402,7 +402,7 @@ class LivePerformanceMonitor:
         else:
             return "normal"
     
-    async def _store_metrics_history(self, metrics: PerformanceMetrics):
+    async def _store_metrics_history(self, metrics -> None: PerformanceMetrics) -> None:
         """Store metrics in history for trend analysis"""
         content_id = metrics.content_id
         if content_id not in self.performance_history:
@@ -529,7 +529,7 @@ class LivePerformanceMonitor:
             }
         ]
     
-    async def _handle_critical_alert(self, alert: PerformanceAlert):
+    async def _handle_critical_alert(self, alert -> None: PerformanceAlert) -> None:
         """Handle critical alerts with immediate action"""
         logger.critical(f"Critical alert: {alert.message}")
         # Would trigger emergency response protocols

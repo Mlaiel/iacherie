@@ -151,7 +151,7 @@ class AudioUpsampler:
     techniques for professional audio production.
     """
     
-    def __init__(self, target_sample_rate: int = 48000):
+    def __init__(self, target_sample_rate -> None: int = 48000) -> None:
         """Initialize audio upsampler"""
         self.logger = logging.getLogger(self.__class__.__name__)
         self.target_sample_rate = target_sample_rate
@@ -214,7 +214,7 @@ class NoiseSuppressionEngine:
     and adaptive noise suppression for crystal-clear audio.
     """
     
-    def __init__(self, sample_rate: int = 44100):
+    def __init__(self, sample_rate -> None: int = 44100) -> None:
         """Initialize noise suppression engine"""
         self.logger = logging.getLogger(self.__class__.__name__)
         self.sample_rate = sample_rate
@@ -303,7 +303,7 @@ class DynamicRangeProcessor:
     professional audio mastering and broadcast standards.
     """
     
-    def __init__(self, sample_rate: int = 44100):
+    def __init__(self, sample_rate -> None: int = 44100) -> None:
         """Initialize dynamic range processor"""
         self.logger = logging.getLogger(self.__class__.__name__)
         self.sample_rate = sample_rate
@@ -384,7 +384,7 @@ class StereoWidener:
     immersive audio experience.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize stereo widener"""
         self.logger = logging.getLogger(self.__class__.__name__)
     
@@ -484,7 +484,7 @@ class BassEnhancer:
     psychoacoustic bass reinforcement techniques.
     """
     
-    def __init__(self, sample_rate: int = 44100):
+    def __init__(self, sample_rate -> None: int = 44100) -> None:
         """Initialize bass enhancer"""
         self.logger = logging.getLogger(self.__class__.__name__)
         self.sample_rate = sample_rate
@@ -546,7 +546,7 @@ class VocalEnhancer:
     and professional vocal production.
     """
     
-    def __init__(self, sample_rate: int = 44100):
+    def __init__(self, sample_rate -> None: int = 44100) -> None:
         """Initialize vocal enhancer"""
         self.logger = logging.getLogger(self.__class__.__name__)
         self.sample_rate = sample_rate
@@ -704,7 +704,7 @@ class AudioRestorer:
     using spectral repair and intelligent restoration algorithms.
     """
     
-    def __init__(self, sample_rate: int = 44100):
+    def __init__(self, sample_rate -> None: int = 44100) -> None:
         """Initialize audio restorer"""
         self.logger = logging.getLogger(self.__class__.__name__)
         self.sample_rate = sample_rate
@@ -864,7 +864,7 @@ class QualityEnhancer:
     for optimal audio quality and professional production standards.
     """
     
-    def __init__(self, sample_rate: int = 44100):
+    def __init__(self, sample_rate -> None: int = 44100) -> None:
         """Initialize quality enhancer"""
         self.logger = logging.getLogger(self.__class__.__name__)
         self.sample_rate = sample_rate
@@ -1090,7 +1090,7 @@ class ProfessionalMasteringSuite:
     multi-format optimization, and professional-grade audio finalization for commercial release.
     """
     
-    def __init__(self, target_lufs: float = -14.0, sample_rate: int = 44100):
+    def __init__(self, target_lufs -> None: float = -14.0, sample_rate -> None: int = 44100) -> None:
         """Initialize enterprise professional mastering suite"""
         self.logger = logging.getLogger(self.__class__.__name__)
         self.target_lufs = target_lufs
@@ -2000,7 +2000,7 @@ class LoudnessLimiter:
     for broadcast-compliant audio processing.
     """
     
-    def __init__(self, sample_rate: int = 44100, lookahead_ms: float = 5.0):
+    def __init__(self, sample_rate -> None: int = 44100, lookahead_ms -> None: float = 5.0) -> None:
         """Initialize loudness limiter"""
         self.logger = logging.getLogger(self.__class__.__name__)
         self.sample_rate = sample_rate
@@ -2090,7 +2090,7 @@ class BroadcastStandardsValidator:
     including EBU R128, ATSC A/85, and streaming platform requirements.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize broadcast standards validator"""
         self.logger = logging.getLogger(self.__class__.__name__)
         

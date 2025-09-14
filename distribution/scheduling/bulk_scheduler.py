@@ -101,7 +101,7 @@ class BulkScheduler:
     - Analytics and reporting
     """
     
-    def __init__(self, default_timezone: str = "UTC"):
+    def __init__(self, default_timezone -> None: str = "UTC") -> None:
         """
         Initialize bulk scheduler
         
@@ -687,8 +687,8 @@ class BulkScheduler:
             logger.error(f"Error importing from CSV: {str(e)}")
             raise
     
-    async def export_schedule_to_csv(self, scheduled_slots: Dict[str, List[SchedulingSlot]], 
-                                   output_path: str):
+    async def export_schedule_to_csv(self, scheduled_slots -> None: Dict[str, List[SchedulingSlot]], 
+                                   output_path -> None: str) -> None:
         """Export scheduled content to CSV"""
         try:
             rows = []
@@ -716,7 +716,7 @@ class BulkScheduler:
             raise
 
 # Usage example
-async def main():
+async def main() -> None:
     """Example usage of BulkScheduler"""
     scheduler = BulkScheduler()
     

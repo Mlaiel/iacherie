@@ -170,7 +170,7 @@ class DeploymentRecorder(BaseComponent):
     and historical data management for deployment automation workflows
     in the IA Influencer Agent platform.
     """
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         super().__init__()
         self.config = config
         self.logger = logging.getLogger(__name__)

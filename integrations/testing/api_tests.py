@@ -20,7 +20,7 @@ logger = logging.getLogger(__name__)
 class APITests:
     """API testing framework."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.test_results: List[TestResult] = []
         
     async def run_api_tests(self) -> Dict[str, Any]:

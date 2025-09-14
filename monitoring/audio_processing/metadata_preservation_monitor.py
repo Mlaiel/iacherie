@@ -84,7 +84,7 @@ class MetadataPreservationMonitor:
     - Compliance with industry standards
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.preservation_reports: List[MetadataPreservationReport] = []
         self.critical_fields = self._define_critical_fields()
@@ -132,7 +132,7 @@ class MetadataPreservationMonitor:
             }
         }
     
-    def _initialize_preservation_rules(self):
+    def _initialize_preservation_rules(self) -> None:
         """Initialize metadata preservation rules."""
         self.preservation_rules = {
             'always_preserve': self.critical_fields,
@@ -376,7 +376,7 @@ class MetadataPreservationMonitor:
         
         return preserved_critical, len(critical_fields)
     
-    async def _check_preservation_quality(self, report: MetadataPreservationReport):
+    async def _check_preservation_quality(self, report -> None: MetadataPreservationReport) -> None:
         """Check preservation quality and alert if needed."""
         min_score = self.preservation_rules['quality_thresholds']['minimum_preservation_score']
         min_critical_rate = self.preservation_rules['quality_thresholds']['critical_field_preservation_rate']

@@ -1,5 +1,7 @@
 """Cross Platform Events Module
 
+import logging
+
 Advanced cross-platform analytics and unification for multi-format content creators.
 Provides comprehensive platform synchronization, unified analytics, and optimization.
 
@@ -179,7 +181,7 @@ class CrossPlatformEventHandler(BaseEventHandler):
     """
 Handles cross-platform events with advanced unification"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
         self.cache_manager = CacheManager()
         self.db_manager = DatabaseManager()
@@ -324,7 +326,7 @@ class CrossPlatformTracker:
     """
 Tracks performance and metrics across multiple platforms"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.db_manager = DatabaseManager()
         self.cache_manager = CacheManager()
         self.metrics_calculator = MetricsCalculator()
@@ -453,7 +455,7 @@ class PlatformUnificationEngine:
     """
 Unifies data and metrics across multiple platforms"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.db_manager = DatabaseManager()
         self.content_unifier = ContentUnificationEngine()
         self.scaler = StandardScaler()
@@ -592,7 +594,7 @@ class CrossPlatformAnalyzer:
     """
 Analyzes correlations and patterns across platforms"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         try:
             logger.info(f"Executing __init__")
             
@@ -673,7 +675,7 @@ Get historical data for correlation analysis"""
 class PlatformSyncEngine:
     """Synchronizes content and data across platforms"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.db_manager = DatabaseManager()
         self.api_clients = {}  # Platform API clients
         

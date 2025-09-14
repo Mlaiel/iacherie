@@ -81,7 +81,7 @@ class ConversionMetrics:
 class OptimalPathFinder:
     """AI-powered optimal conversion path finder"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         # Conversion capabilities matrix
         self.conversion_matrix = self._build_conversion_matrix()
         
@@ -604,7 +604,7 @@ class OptimalPathFinder:
 class ConversionMatrix:
     """Main conversion matrix interface"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.path_finder = OptimalPathFinder()
         self.audio_processor = AudioFormatProcessor()
         self.video_processor = VideoFormatProcessor()
@@ -700,8 +700,8 @@ class ConversionMatrix:
             'image': 'jpeg'
         })
     
-    def update_performance_metrics(self, source_format: str, target_format: str,
-                                 actual_metrics: ConversionMetrics):
+    def update_performance_metrics(self, source_format -> None: str, target_format -> None: str,
+                                 actual_metrics -> None: ConversionMetrics) -> None:
         """Update performance metrics based on actual conversion results"""
         metric_key = f"{source_format}_to_{target_format}"
         self.path_finder.performance_metrics[metric_key] = actual_metrics

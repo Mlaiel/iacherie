@@ -48,7 +48,7 @@ class TestResult:
 class DockerTestOrchestrator:
     """Main orchestrator for Docker testing infrastructure"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.docker_client = docker.from_env()
         self.test_results: List[TestResult] = []
         
@@ -261,7 +261,7 @@ class DockerTestOrchestrator:
         }
 
 # Main execution
-async def main():
+async def main() -> None:
     """Main testing orchestrator entry point"""
     orchestrator = DockerTestOrchestrator()
     

@@ -33,13 +33,15 @@ except ImportError:
     HAS_PSUTIL = False
     # Create dummy psutil for when not available
     class DummyPsutil:
+    """DummyPsutil: class implementation"""
         @staticmethod
-        def cpu_percent(interval=1):
+        def cpu_percent(interval=1) -> None:
             return 45.0
         
         @staticmethod
-        def virtual_memory():
+        def virtual_memory() -> None:
             class Memory:
+    """Memory: class implementation"""
                 percent = 67.0
                 available = 8 * 1024**3  # 8GB
                 total = 16 * 1024**3     # 16GB
@@ -49,16 +51,18 @@ except ImportError:
             return Memory()
         
         @staticmethod
-        def disk_usage(path):
+        def disk_usage(path) -> None:
             class Disk:
+    """Disk: class implementation"""
                 total = 500 * 1024**3    # 500GB
                 used = 250 * 1024**3     # 250GB  
                 free = 250 * 1024**3     # 250GB
             return Disk()
         
         @staticmethod
-        def net_io_counters():
+        def net_io_counters() -> None:
             class Network:
+    """Network: class implementation"""
                 bytes_sent = 1024**6     # 1MB
                 bytes_recv = 2 * 1024**6 # 2MB
                 packets_sent = 1000
@@ -68,8 +72,9 @@ except ImportError:
             return Network()
         
         @staticmethod
-        def disk_io_counters():
+        def disk_io_counters() -> None:
             class DiskIO:
+    """DiskIO: class implementation"""
                 read_bytes = 1024**7     # 10MB
                 write_bytes = 1024**6    # 1MB
                 read_time = 100
@@ -77,21 +82,22 @@ except ImportError:
             return DiskIO()
             
         @staticmethod
-        def cpu_count():
+        def cpu_count() -> None:
             return 4
             
         @staticmethod
-        def cpu_freq():
+        def cpu_freq() -> None:
             class CPUFreq:
+    """CPUFreq: class implementation"""
                 current = 2800
                 min = 1200
                 max = 3600
-                def _asdict(self):
+                def _asdict(self) -> None:
                     return {"current": self.current, "min": self.min, "max": self.max}
             return CPUFreq()
             
         @staticmethod
-        def getloadavg():
+        def getloadavg() -> None:
             return (1.2, 1.1, 1.0)
     
     psutil = DummyPsutil()
@@ -160,13 +166,13 @@ class CapacityForecast:
 class FunctionProfiler:
     """Function-level performance profiler"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.profiles: Dict[str, cProfile.Profile] = {}
         self.active_profiles: Dict[str, datetime] = {}
         self.completed_profiles: List[PerformanceProfile] = []
     
     @contextmanager
-    def profile_function(self, name: str):
+    def profile_function(self, name -> None: str) -> None:
         """Context manager for profiling functions"""
         profile_id = f"{name}_{int(time.time())}"
         profiler = cProfile.Profile()
@@ -189,12 +195,12 @@ class FunctionProfiler:
     
     def _process_profile_results(
         self,
-        profile_id: str,
-        name: str,
-        profiler: cProfile.Profile,
-        start_time: datetime,
-        end_time: datetime
-    ):
+        profile_id -> None: str,
+        name -> None: str,
+        profiler -> None: cProfile.Profile,
+        start_time -> None: datetime,
+        end_time -> None: datetime
+    ) -> None:
         """Process profile results and extract insights"""
         
         # Create stats object
@@ -257,14 +263,14 @@ class FunctionProfiler:
 class ResourceMonitor:
     """System resource monitoring"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.usage_history: Dict[ResourceType, deque] = {
             resource_type: deque(maxlen=1000) for resource_type in ResourceType
         }
         self.monitoring_active = False
         self.monitor_interval = 30  # seconds
     
-    async def start_monitoring(self, interval: int = 30):
+    async def start_monitoring(self, interval -> None: int = 30) -> None:
         """Start resource monitoring"""
         self.monitoring_active = True
         self.monitor_interval = interval
@@ -278,12 +284,12 @@ class ResourceMonitor:
                 logger.error(f"Error in resource monitoring: {e}")
                 await asyncio.sleep(interval)
     
-    async def stop_monitoring(self):
+    async def stop_monitoring(self) -> None:
         """Stop resource monitoring"""
         self.monitoring_active = False
         logger.info("Stopped resource monitoring")
     
-    async def collect_resource_usage(self):
+    async def collect_resource_usage(self) -> None:
         """Collect current resource usage"""
         timestamp = datetime.now()
         
@@ -418,7 +424,7 @@ class ResourceMonitor:
 class CapacityPlanner:
     """Capacity planning and forecasting"""
     
-    def __init__(self, resource_monitor: ResourceMonitor):
+    def __init__(self, resource_monitor -> None: ResourceMonitor) -> None:
         self.resource_monitor = resource_monitor
         self.forecasts: Dict[ResourceType, CapacityForecast] = {}
     
@@ -548,7 +554,7 @@ class UnifiedProfilingManager:
     Unified profiling system that consolidates all performance monitoring functionality
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.function_profiler = FunctionProfiler()
         self.resource_monitor = ResourceMonitor()
         self.capacity_planner = CapacityPlanner(self.resource_monitor)
@@ -557,7 +563,7 @@ class UnifiedProfilingManager:
         self.active_monitoring = False
         self.profiling_enabled = True
     
-    async def start_monitoring(self, interval: int = 30):
+    async def start_monitoring(self, interval -> None: int = 30) -> None:
         """Start all monitoring components"""
         self.active_monitoring = True
         logger.info("Starting unified profiling and monitoring")
@@ -565,13 +571,13 @@ class UnifiedProfilingManager:
         # Start resource monitoring
         await self.resource_monitor.start_monitoring(interval)
     
-    async def stop_monitoring(self):
+    async def stop_monitoring(self) -> None:
         """Stop all monitoring components"""
         self.active_monitoring = False
         await self.resource_monitor.stop_monitoring()
         logger.info("Stopped unified profiling and monitoring")
     
-    def profile_function(self, name: str):
+    def profile_function(self, name -> None: str) -> None:
         """Profile a function"""
         if not self.profiling_enabled:
             return self.function_profiler.profile_function(f"disabled_{name}")
@@ -657,17 +663,17 @@ profiling_manager = UnifiedProfilingManager()
 
 
 # Convenience functions for external use
-async def start_performance_monitoring(interval: int = 30):
+async def start_performance_monitoring(interval -> None: int = 30) -> None:
     """Start performance monitoring"""
     await profiling_manager.start_monitoring(interval)
 
 
-async def stop_performance_monitoring():
+async def stop_performance_monitoring() -> None:
     """Stop performance monitoring"""
     await profiling_manager.stop_monitoring()
 
 
-def profile_function(name: str):
+def profile_function(name -> None: str) -> None:
     """Profile a function"""
     return profiling_manager.profile_function(name)
 

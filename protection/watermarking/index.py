@@ -1,4 +1,6 @@
 """Watermarking Module Index
+import asyncio
+
 Entry point for the IA Influencer Agent watermarking system
 
 Developed by: Fahed Mlaiel (mlaiel@live.de)

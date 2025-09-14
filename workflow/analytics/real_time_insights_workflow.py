@@ -12,6 +12,7 @@ from datetime import datetime
 
 @dataclass
 class RealTimeMetrics:
+    """RealTimeMetrics: class implementation"""
     metric_name: str
     current_value: float
     previous_value: float
@@ -21,6 +22,7 @@ class RealTimeMetrics:
 
 @dataclass
 class LiveInsights:
+    """LiveInsights: class implementation"""
     user_id: str
     live_metrics: List[RealTimeMetrics]
     alerts: List[str]

@@ -153,7 +153,7 @@ class IoTMeshConfig:
     encryption_algorithm: str = "AES-256"
     authentication_required: bool = True
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.default_protocols is None:
             self.default_protocols = [CommunicationProtocol.WIFI, CommunicationProtocol.BLUETOOTH]
 
@@ -165,7 +165,7 @@ class IoTMeshOrchestrator:
     for IoT devices in edge computing environments.
     """
     
-    def __init__(self, config: Optional[IoTMeshConfig] = None):
+    def __init__(self, config -> None: Optional[IoTMeshConfig] = None) -> None:
         self.config = config or IoTMeshConfig()
         
         # Network state
@@ -195,7 +195,7 @@ class IoTMeshOrchestrator:
         
         logger.info(f"IoT mesh orchestrator initialized with topology: {self.config.topology}")
     
-    async def start(self):
+    async def start(self) -> None:
         """Start the IoT mesh orchestrator."""
         if self.running:
             logger.warning("IoT mesh orchestrator already running")
@@ -213,7 +213,7 @@ class IoTMeshOrchestrator:
         
         logger.info("IoT mesh orchestrator started")
     
-    async def stop(self):
+    async def stop(self) -> None:
         """Stop the IoT mesh orchestrator."""
         if not self.running:
             return
@@ -511,7 +511,7 @@ class IoTMeshOrchestrator:
             "neighbor_count": len(neighbors)
         }
     
-    async def _discover_neighbors(self, device_id: str):
+    async def _discover_neighbors(self, device_id -> None: str) -> None:
         """Discover neighboring devices for a given device."""
         if device_id not in self.devices:
             return
@@ -550,7 +550,7 @@ class IoTMeshOrchestrator:
         lon_diff = abs(loc1.get("longitude", 0) - loc2.get("longitude", 0))
         return ((lat_diff ** 2 + lon_diff ** 2) ** 0.5) * 111000  # Approximate meters per degree
     
-    async def _create_mesh_link(self, device1_id: str, device2_id: str):
+    async def _create_mesh_link(self, device1_id -> None: str, device2_id -> None: str) -> None:
         """Create a mesh link between two devices."""
         link_id = f"{device1_id}_{device2_id}"
         
@@ -720,7 +720,7 @@ class IoTMeshOrchestrator:
         
         return max(device_scores, key=device_scores.get)
     
-    async def _device_discovery(self):
+    async def _device_discovery(self) -> None:
         """Continuously discover new devices and update connections."""
         while self.running:
             try:
@@ -735,7 +735,7 @@ class IoTMeshOrchestrator:
                 logger.error(f"Device discovery error: {e}")
                 await asyncio.sleep(60)
     
-    async def _route_maintenance(self):
+    async def _route_maintenance(self) -> None:
         """Maintain and update routes periodically."""
         while self.running:
             try:
@@ -755,7 +755,7 @@ class IoTMeshOrchestrator:
                 logger.error(f"Route maintenance error: {e}")
                 await asyncio.sleep(300)
     
-    async def _network_monitoring(self):
+    async def _network_monitoring(self) -> None:
         """Monitor network health and performance."""
         while self.running:
             try:
@@ -787,7 +787,7 @@ class IoTMeshOrchestrator:
                 logger.error(f"Network monitoring error: {e}")
                 await asyncio.sleep(60)
     
-    async def _auto_healing(self):
+    async def _auto_healing(self) -> None:
         """Perform automatic network healing and optimization."""
         while self.running:
             try:
@@ -812,7 +812,7 @@ class IoTMeshOrchestrator:
                 logger.error(f"Auto-healing error: {e}")
                 await asyncio.sleep(300)
     
-    async def _optimize_topology(self):
+    async def _optimize_topology(self) -> None:
         """Optimize network topology for better performance."""
         # This is a placeholder for topology optimization logic
         # In a real implementation, you would analyze the current topology
@@ -830,7 +830,7 @@ async def create_iot_mesh_orchestrator(config: Optional[IoTMeshConfig] = None) -
 
 
 # Example usage
-async def main():
+async def main() -> None:
     """Example usage of the IoT mesh orchestrator."""
     try:
         # Create configuration

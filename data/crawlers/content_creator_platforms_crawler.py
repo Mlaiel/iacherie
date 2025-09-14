@@ -205,7 +205,7 @@ class CreatorProfile:
 class BaseCreatorCrawler(ABC):
     """Abstract base class for creator platform crawlers"""
     
-    def __init__(self, platform: CreatorPlatform, config: Dict[str, Any]):
+    def __init__(self, platform -> None: CreatorPlatform, config -> None: Dict[str, Any]) -> None:
         self.platform = platform
         self.config = config
         self.session_manager = None
@@ -279,7 +279,7 @@ class BaseCreatorCrawler(ABC):
 class PatreonCrawler(BaseCreatorCrawler):
     """Patreon platform crawler for creator subscriptions"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         super().__init__(CreatorPlatform.PATREON, config)
         self.api_key = config.get('api_key')
         self.base_url = "https://www.patreon.com/api/oauth2/v2"
@@ -442,7 +442,7 @@ class PatreonCrawler(BaseCreatorCrawler):
 class SubstackCrawler(BaseCreatorCrawler):
     """Substack newsletter platform crawler"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         super().__init__(CreatorPlatform.SUBSTACK, config)
         self.base_url = "https://substack.com"
         
@@ -594,7 +594,7 @@ class SubstackCrawler(BaseCreatorCrawler):
 class MediumCrawler(BaseCreatorCrawler):
     """Medium publication platform crawler"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         super().__init__(CreatorPlatform.MEDIUM, config)
         self.base_url = "https://medium.com"
         
@@ -742,7 +742,7 @@ class MediumCrawler(BaseCreatorCrawler):
 class DeviantArtCrawler(BaseCreatorCrawler):
     """DeviantArt art community crawler"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         super().__init__(CreatorPlatform.DEVIANTART, config)
         self.client_id = config.get('client_id')
         self.base_url = "https://www.deviantart.com/api/v1/oauth2"
@@ -901,7 +901,7 @@ class DeviantArtCrawler(BaseCreatorCrawler):
 class CreatorPlatformManager:
     """Unified manager for all creator platform crawlers"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.crawlers: Dict[CreatorPlatform, BaseCreatorCrawler] = {}
         self.monetization_tracker = MonetizationTracker()
         self.creator_performance_analyzer = CreatorPerformanceEngine()
@@ -1165,7 +1165,7 @@ class CreatorPlatformManager:
 class MonetizationTracker:
     """Track monetization metrics across creator platforms"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.revenue_history: Dict[str, List[float]] = {}
         self.subscription_trends: Dict[str, List[int]] = {}
         
@@ -1187,7 +1187,7 @@ class MonetizationTracker:
 class CreatorPerformanceEngine:
     """Analyze creator performance and growth"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.performance_metrics: Dict[str, Dict] = {}
         
     async def initialize(self) -> None:
@@ -1247,7 +1247,7 @@ class CreatorPerformanceEngine:
 class SubscriptionAnalytics:
     """Analyze subscription patterns and trends"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.subscription_patterns: Dict[str, Any] = {}
         
     async def initialize(self) -> None:
@@ -1398,7 +1398,7 @@ __all__ = [
 
 if __name__ == "__main__":
     # Example usage
-    async def main():
+    async def main() -> None:
         # Create and initialize creator manager
         manager = await create_creator_manager()
         

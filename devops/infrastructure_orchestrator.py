@@ -120,7 +120,7 @@ class InfrastructureOrchestrator:
     - Infrastructure monitoring and analytics
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         # Infrastructure state
         self.resources: Dict[str, InfrastructureResource] = {}
         self.templates: Dict[str, InfrastructureTemplate] = {}
@@ -150,7 +150,7 @@ class InfrastructureOrchestrator:
         
         logger.info("InfrastructureOrchestrator initialized")
 
-    def _initialize_orchestrator(self):
+    def _initialize_orchestrator(self) -> None:
         """Initialize infrastructure orchestrator"""
         
         # Start background tasks
@@ -709,22 +709,22 @@ class InfrastructureOrchestrator:
             logger.error(f"Disaster recovery execution failed: {str(e)}")
             return False
 
-    async def _execute_failover(self, step: Dict[str, Any]):
+    async def _execute_failover(self, step -> None: Dict[str, Any]) -> None:
         """Execute failover step"""
         logger.info(f"Executing failover: {step['target']}")
         await asyncio.sleep(2)
 
-    async def _restore_from_backup(self, step: Dict[str, Any]):
+    async def _restore_from_backup(self, step -> None: Dict[str, Any]) -> None:
         """Execute backup restoration step"""
         logger.info(f"Restoring from backup: {step['backup_id']}")
         await asyncio.sleep(5)
 
-    async def _scale_recovery_resources(self, step: Dict[str, Any]):
+    async def _scale_recovery_resources(self, step -> None: Dict[str, Any]) -> None:
         """Execute resource scaling step"""
         logger.info(f"Scaling resources: {step['scaling_target']}")
         await asyncio.sleep(3)
 
-    def _load_default_templates(self):
+    def _load_default_templates(self) -> None:
         """Load default infrastructure templates"""
         
         # Web application template
@@ -971,7 +971,7 @@ output "cluster_name" {
 }
 """
 
-    def _setup_infrastructure_monitoring(self):
+    def _setup_infrastructure_monitoring(self) -> None:
         """Set up infrastructure monitoring"""
         
         # Default recovery plans
@@ -1003,7 +1003,7 @@ output "cluster_name" {
             }
         }
 
-    async def _drift_detection_loop(self):
+    async def _drift_detection_loop(self) -> None:
         """Background drift detection loop"""
         while True:
             try:
@@ -1016,7 +1016,7 @@ output "cluster_name" {
                 logger.error(f"Drift detection loop error: {str(e)}")
                 await asyncio.sleep(60)
 
-    async def _cost_optimization_loop(self):
+    async def _cost_optimization_loop(self) -> None:
         """Background cost optimization loop"""
         while True:
             try:
@@ -1026,7 +1026,7 @@ output "cluster_name" {
             except Exception as e:
                 logger.error(f"Cost optimization loop error: {str(e)}")
 
-    async def _resource_monitoring_loop(self):
+    async def _resource_monitoring_loop(self) -> None:
         """Background resource monitoring loop"""
         while True:
             try:
@@ -1036,7 +1036,7 @@ output "cluster_name" {
             except Exception as e:
                 logger.error(f"Resource monitoring loop error: {str(e)}")
 
-    async def _backup_orchestration_loop(self):
+    async def _backup_orchestration_loop(self) -> None:
         """Background backup orchestration loop"""
         while True:
             try:
@@ -1046,7 +1046,7 @@ output "cluster_name" {
             except Exception as e:
                 logger.error(f"Backup orchestration loop error: {str(e)}")
 
-    async def _collect_resource_metrics(self):
+    async def _collect_resource_metrics(self) -> None:
         """Collect resource utilization metrics"""
         
         for resource in self.resources.values():
@@ -1065,7 +1065,7 @@ output "cluster_name" {
                 
                 self.resource_usage_metrics[resource.resource_id].append(metrics)
 
-    async def _orchestrate_backups(self):
+    async def _orchestrate_backups(self) -> None:
         """Orchestrate automated backups"""
         
         for resource in self.resources.values():
@@ -1076,10 +1076,10 @@ output "cluster_name" {
 
     async def _update_terraform_state(
         self,
-        deployment_id: str,
-        template: InfrastructureTemplate,
-        resources: List[InfrastructureResource]
-    ):
+        deployment_id -> None: str,
+        template -> None: InfrastructureTemplate,
+        resources -> None: List[InfrastructureResource]
+    ) -> None:
         """Update Terraform state tracking"""
         
         self.terraform_state[deployment_id] = {

@@ -50,7 +50,7 @@ class DockerInfrastructureOrchestrator:
     infrastructure services based on creator type and business logic stages.
     """
     
-    def __init__(self, infrastructure_path: str = "/home/runner/work/Ainflue/Ainflue/docker/infrastructure"):
+    def __init__(self, infrastructure_path -> None: str = "/home/runner/work/Ainflue/Ainflue/docker/infrastructure") -> None:
         self.infrastructure_path = Path(infrastructure_path)
         self.business_logic_stages = BUSINESS_LOGIC_STAGES
         self.creator_infrastructure = CREATOR_INFRASTRUCTURE
@@ -368,13 +368,13 @@ class DockerInfrastructureOrchestrator:
 
 
 # Utility functions for direct usage
-async def deploy_for_creator(creator_type: str, environment: str = "production"):
+async def deploy_for_creator(creator_type -> None: str, environment -> None: str = "production") -> None:
     """Convenience function to deploy infrastructure for a creator type."""
     orchestrator = DockerInfrastructureOrchestrator()
     return await orchestrator.deploy_creator_infrastructure(creator_type, environment)
 
 
-async def get_infrastructure_health():
+async def get_infrastructure_health() -> None:
     """Convenience function to get current infrastructure health."""
     orchestrator = DockerInfrastructureOrchestrator()
     return await orchestrator.monitor_infrastructure_health()
@@ -383,7 +383,7 @@ async def get_infrastructure_health():
 if __name__ == "__main__":
     import sys
     
-    async def main():
+    async def main() -> None:
         if len(sys.argv) < 2:
             print("Usage: python index.py <command> [args]")
             print("Commands: deploy <creator_type>, health, backup")

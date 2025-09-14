@@ -160,7 +160,7 @@ class CompletionAnalytics:
 class ChallengeCompletionAnalyzer:
     """Main challenge completion analysis system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.challenges: Dict[str, Challenge] = {}
         self.user_progress: Dict[str, List[ChallengeProgress]] = defaultdict(list)
         self.completion_analytics: List[CompletionAnalytics] = []
@@ -173,7 +173,7 @@ class ChallengeCompletionAnalyzer:
         # Initialize with sample challenges
         self._initialize_sample_challenges()
         
-    def _initialize_sample_challenges(self):
+    def _initialize_sample_challenges(self) -> None:
         """Initialize with sample challenges for the platform"""
         sample_challenges = [
             {
@@ -305,9 +305,9 @@ class ChallengeCompletionAnalyzer:
         return progress
         
     async def _award_challenge_rewards(self, 
-                                     user_id: str, 
-                                     challenge: Challenge, 
-                                     progress: ChallengeProgress):
+                                     user_id -> None: str, 
+                                     challenge -> None: Challenge, 
+                                     progress -> None: ChallengeProgress) -> None:
         """Award rewards for challenge completion"""
         
         rewards_awarded = []
@@ -333,7 +333,7 @@ class ChallengeCompletionAnalyzer:
             
         logger.info(f"Awarded rewards to user {user_id}: {', '.join(rewards_awarded)}")
         
-    async def _update_challenge_statistics(self, challenge_id: str):
+    async def _update_challenge_statistics(self, challenge_id -> None: str) -> None:
         """Update challenge-level statistics"""
         
         challenge = self.challenges.get(challenge_id)

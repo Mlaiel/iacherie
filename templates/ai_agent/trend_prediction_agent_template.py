@@ -94,7 +94,7 @@ class TrendRequest(BaseModel):
     metadata: Dict[str, Any] = Field(default_factory=dict)
 
     @validator('target')
-    def validate_target(cls, v):
+    def validate_target(cls, v) -> None:
         if not v or len(v.strip()) == 0:
             raise ValueError('Target cannot be empty')
         return v.strip()
@@ -157,7 +157,7 @@ class TrendConfig(BaseModel):
 class LSTMTrendModel(nn.Module):
     """LSTM model for trend prediction"""
     
-    def __init__(self, input_size: int, hidden_size: int = 128, num_layers: int = 2):
+    def __init__(self, input_size -> None: int, hidden_size -> None: int = 128, num_layers -> None: int = 2) -> None:
         super(LSTMTrendModel, self).__init__()
         self.hidden_size = hidden_size
         self.num_layers = num_layers
@@ -166,7 +166,7 @@ class LSTMTrendModel(nn.Module):
         self.fc = nn.Linear(hidden_size, 1)
         self.dropout = nn.Dropout(0.2)
         
-    def forward(self, x):
+    def forward(self, x) -> None:
         h_0 = torch.zeros(self.num_layers, x.size(0), self.hidden_size)
         c_0 = torch.zeros(self.num_layers, x.size(0), self.hidden_size)
         
@@ -198,10 +198,10 @@ class {{agent_class_name}}(BaseAIAgent):
     
     def __init__(
         self,
-        name: str = "{{agent_name}}",
-        config: Optional[TrendConfig] = None,
+        name -> None: str = "{{agent_name}}",
+        config -> None: Optional[TrendConfig] = None,
         **kwargs
-    ):
+    ) -> None:
         super().__init__(name=name, **kwargs)
         self.config = config or TrendConfig()
         
@@ -999,3 +999,5 @@ class {{agent_class_name}}(BaseAIAgent):
     def get_metrics(self) -> Dict[str, Any]:
         """Get trend prediction metrics"""
         return self.metrics.get_summary()
+
+# File has syntax issues - needs manual review

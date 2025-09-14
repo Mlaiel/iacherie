@@ -25,7 +25,7 @@ logger = logging.getLogger(__name__)
 class VideoConference:
     """Video conference session management"""
     
-    def __init__(self, conference_id: str, host_id: str, title: str):
+    def __init__(self, conference_id -> None: str, host_id -> None: str, title -> None: str) -> None:
         self.conference_id = conference_id
         self.host_id = host_id
         self.title = title
@@ -43,7 +43,7 @@ class VideoConference:
 class ConferenceParticipant:
     """Conference participant management"""
     
-    def __init__(self, participant_id: str, user_id: str, display_name: str):
+    def __init__(self, participant_id -> None: str, user_id -> None: str, display_name -> None: str) -> None:
         self.participant_id = participant_id
         self.user_id = user_id
         self.display_name = display_name
@@ -59,7 +59,7 @@ class ConferenceParticipant:
 class ConferenceRecording:
     """Conference recording management"""
     
-    def __init__(self, recording_id: str, conference_id: str):
+    def __init__(self, recording_id -> None: str, conference_id -> None: str) -> None:
         self.recording_id = recording_id
         self.conference_id = conference_id
         self.title = ""
@@ -90,7 +90,7 @@ class VideoConferencingService:
     - Real-time chat integration
     """
     
-    def __init__(self, platforms_config: Dict[str, Dict[str, Any]]):
+    def __init__(self, platforms_config -> None: Dict[str, Dict[str, Any]]) -> None:
         self.platforms_config = platforms_config
         self.session = None
         self.active_conferences = {}
@@ -100,17 +100,17 @@ class VideoConferencingService:
             'minute_start': datetime.utcnow().minute
         }
         
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         """Async context manager entry"""
         self.session = aiohttp.ClientSession()
         return self
         
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         """Async context manager exit"""
         if self.session:
             await self.session.close()
 
-    def _check_rate_limit(self):
+    def _check_rate_limit(self) -> None:
         """Check and enforce rate limiting"""
         current_minute = datetime.utcnow().minute
         
@@ -692,7 +692,7 @@ class VideoConferencingService:
     # Additional helper methods for comprehensive functionality would continue here...
 
 # Example usage and testing
-async def main():
+async def main() -> None:
     """Example usage of Video Conferencing Service"""
     
     # Initialize the service

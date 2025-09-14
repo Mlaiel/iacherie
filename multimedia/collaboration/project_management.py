@@ -160,7 +160,7 @@ class TimeEntry:
 class ProjectManagementEngine:
     """Core project management engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.projects = {}  # project_id -> Project
         self.tasks = {}  # task_id -> Task
         self.milestones = {}  # milestone_id -> Milestone
@@ -593,7 +593,7 @@ class ProjectManagementEngine:
             logger.error(f"Failed to get project analytics: {e}")
             return {}
     
-    async def _calculate_actual_hours(self, task: Task):
+    async def _calculate_actual_hours(self, task -> None: Task) -> None:
         """Calculate actual hours from time entries"""
         try:
             task_entries = []
@@ -607,7 +607,7 @@ class ProjectManagementEngine:
         except Exception as e:
             logger.error(f"Failed to calculate actual hours: {e}")
     
-    async def _check_project_completion(self, project_id: str):
+    async def _check_project_completion(self, project_id -> None: str) -> None:
         """Check if project should be marked as completed"""
         try:
             project_task_ids = self.project_tasks.get(project_id, [])
@@ -887,43 +887,43 @@ class ProjectManagementEngine:
         return suggestions
     
     # Notification methods
-    async def _notify_project_created(self, project: Project):
+    async def _notify_project_created(self, project -> None: Project) -> None:
         """Notify about project creation"""
         # Implementation for project creation notification
         pass
     
-    async def _notify_task_created(self, task: Task):
+    async def _notify_task_created(self, task -> None: Task) -> None:
         """Notify about task creation"""
         # Implementation for task creation notification
         pass
     
-    async def _notify_task_status_changed(self, task: Task, old_status: TaskStatus, user_id: str, notes: str):
+    async def _notify_task_status_changed(self, task -> None: Task, old_status -> None: TaskStatus, user_id -> None: str, notes -> None: str) -> None:
         """Notify about task status change"""
         # Implementation for task status change notification
         pass
     
-    async def _notify_task_assigned(self, task: Task, assignee_id: str, assigner_id: str):
+    async def _notify_task_assigned(self, task -> None: Task, assignee_id -> None: str, assigner_id -> None: str) -> None:
         """Notify about task assignment"""
         # Implementation for task assignment notification
         pass
     
-    async def _notify_milestone_created(self, milestone: Milestone):
+    async def _notify_milestone_created(self, milestone -> None: Milestone) -> None:
         """Notify about milestone creation"""
         # Implementation for milestone creation notification
         pass
     
-    async def _notify_team_member_added(self, project_id: str, user_id: str, role: str):
+    async def _notify_team_member_added(self, project_id -> None: str, user_id -> None: str, role -> None: str) -> None:
         """Notify about team member addition"""
         # Implementation for team member addition notification
         pass
     
-    async def _notify_project_completed(self, project: Project):
+    async def _notify_project_completed(self, project -> None: Project) -> None:
         """Notify about project completion"""
         # Implementation for project completion notification
         pass
     
     # Storage methods
-    async def _store_project_redis(self, project: Project):
+    async def _store_project_redis(self, project -> None: Project) -> None:
         """Store project in Redis"""
         try:
             if self.redis_client:
@@ -934,7 +934,7 @@ class ProjectManagementEngine:
         except Exception as e:
             logger.error(f"Failed to store project in Redis: {e}")
     
-    async def _store_task_redis(self, task: Task):
+    async def _store_task_redis(self, task -> None: Task) -> None:
         """Store task in Redis"""
         try:
             if self.redis_client:
@@ -948,7 +948,7 @@ class ProjectManagementEngine:
 class CollaborativeProjectManager:
     """High-level collaborative project management"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.project_engine = ProjectManagementEngine()
         self.project_templates = self._load_project_templates()
     

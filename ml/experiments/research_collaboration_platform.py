@@ -124,7 +124,7 @@ class KnowledgeArtifact:
 class ResearchCollaborationPlatform:
     """Enterprise research collaboration platform"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize research collaboration platform"""
         self.config = config or {}
         
@@ -724,7 +724,7 @@ def get_research_platform() -> ResearchCollaborationPlatform:
     return _platform_instance
 
 # Test and validation functions
-async def test_research_collaboration():
+async def test_research_collaboration() -> None:
     """Test research collaboration platform functionality"""
     platform = ResearchCollaborationPlatform()
     

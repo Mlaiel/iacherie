@@ -139,7 +139,7 @@ class RightsManagementMonitor:
     - Integration with payment systems and legal frameworks
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.rights_holders: Dict[str, RightsHolder] = {}
         self.license_agreements: Dict[str, LicenseAgreement] = {}
@@ -349,8 +349,8 @@ class RightsManagementMonitor:
         required_rights = usage_rights_mapping.get(usage_type, [usage_type])
         return any(right in rights_granted for right in required_rights)
     
-    async def _calculate_and_record_royalties(self, usage_report: UsageReport,
-                                            license_agreement: LicenseAgreement):
+    async def _calculate_and_record_royalties(self, usage_report -> None: UsageReport,
+                                            license_agreement -> None: LicenseAgreement) -> None:
         """Calculate and record royalties for content usage."""
         calculator = self.royalty_calculators.get(license_agreement.royalty_type)
         if not calculator:
@@ -438,7 +438,7 @@ class RightsManagementMonitor:
         # Similar to mechanical royalties
         return await self._calculate_mechanical_royalties(usage_report, license_agreement)
     
-    async def _validate_license_compliance(self, license_agreement: LicenseAgreement):
+    async def _validate_license_compliance(self, license_agreement -> None: LicenseAgreement) -> None:
         """Validate license agreement compliance with regulations."""
         license_requirements = self.compliance_rules['license_requirements'].get(
             license_agreement.license_type, {}

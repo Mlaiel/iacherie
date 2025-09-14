@@ -1,5 +1,7 @@
 """Event Serialization Engine - Ultra-Optimized for Ainflue Business Events
 
+import asyncio
+
 High performance event serialization engine with intelligent compression,
 multi-format support, and schema evolution for Ainflue platform business logic.
 
@@ -112,7 +114,7 @@ class CompressedData:
 class SchemaRegistry:
     """Registry for event schemas with evolution support"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.schemas: Dict[str, Dict[str, Any]] = {}
         self.version_history: Dict[str, List[str]] = {}
     
@@ -276,7 +278,7 @@ class MessagePackSerializationStrategy:
 class SerializationPerformanceOptimizer:
     """Optimizer for serialization performance monitoring"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.performance_history: List[SerializationMetrics] = []
     
     async def collect_metrics(self, 
@@ -308,7 +310,7 @@ class EventSerializationEngine:
     Supports multi-format serialization with intelligent compression and schema evolution
     """
     
-    def __init__(self, compression_config: Optional[CompressionConfig] = None):
+    def __init__(self, compression_config -> None: Optional[CompressionConfig] = None) -> None:
         self.compression_config = compression_config or CompressionConfig()
         self.schema_registry = SchemaRegistry()
         self.serialization_strategies = {

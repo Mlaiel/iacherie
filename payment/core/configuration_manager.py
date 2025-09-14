@@ -145,7 +145,7 @@ class PaymentGatewayConfigurationManager:
     with dynamic updates, security, and monitoring capabilities.
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """Initialize configuration manager"""
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -167,7 +167,7 @@ class PaymentGatewayConfigurationManager:
         # Configuration validation
         self.config_validators = {}
         
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize the configuration manager"""
         try:
             # Connect to Redis for caching
@@ -472,17 +472,17 @@ class PaymentGatewayConfigurationManager:
         
         return None
     
-    async def _load_configurations(self):
+    async def _load_configurations(self) -> None:
         """Load provider configurations from storage"""
         # Implementation would load from database/file system
         pass
     
-    async def _load_credentials(self):
+    async def _load_credentials(self) -> None:
         """Load encrypted credentials from secure storage"""
         # Implementation would load from secure storage
         pass
     
-    async def _load_ab_tests(self):
+    async def _load_ab_tests(self) -> None:
         """Load A/B test configurations"""
         # Implementation would load from storage
         pass

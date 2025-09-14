@@ -1,3 +1,8 @@
+"""
+Task Scheduler module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Task Scheduler - Utils Module - Enterprise Implementation
@@ -135,7 +140,7 @@ class TaskScheduler:
     dependency management, and priority-based execution
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.tasks: Dict[str, ScheduledTask] = {}
         self.executions: Dict[str, TaskExecution] = {}
         self.running_tasks: Dict[str, asyncio.Task] = {}
@@ -415,7 +420,7 @@ class TaskScheduler:
     # PRIVATE HELPER METHODS
     # ========================================================================
     
-    async def _scheduler_loop(self):
+    async def _scheduler_loop(self) -> None:
         """Main scheduler loop"""
         logger.info("Scheduler loop started")
         
@@ -459,7 +464,7 @@ class TaskScheduler:
                 logger.error(f"Error in scheduler loop: {e}")
                 await asyncio.sleep(30)  # Wait longer on error
     
-    async def _schedule_task_execution(self, task_id: str, scheduled_task: ScheduledTask):
+    async def _schedule_task_execution(self, task_id -> None: str, scheduled_task -> None: ScheduledTask) -> None:
         """Schedule a task for execution"""
         try:
             # Create execution instance
@@ -488,7 +493,7 @@ class TaskScheduler:
         except Exception as e:
             logger.error(f"Failed to schedule task execution for {task_id}: {e}")
     
-    async def _execute_task(self, scheduled_task: ScheduledTask, execution: TaskExecution, parameters: Dict[str, Any]):
+    async def _execute_task(self, scheduled_task -> None: ScheduledTask, execution -> None: TaskExecution, parameters -> None: Dict[str, Any]) -> None:
         """Execute a task"""
         task_def = scheduled_task.task_definition
         
@@ -622,7 +627,7 @@ class TaskScheduler:
                 return False
         return True
     
-    def _register_builtin_functions(self):
+    def _register_builtin_functions(self) -> None:
         """Register built-in task functions"""
         self.task_functions.update({
             'system_health_check': self._task_system_health_check,
@@ -662,7 +667,7 @@ class TaskScheduler:
 # EXAMPLE USAGE AND TESTING
 # ============================================================================
 
-async def example_task_scheduling():
+async def example_task_scheduling() -> None:
     """Example usage of TaskScheduler"""
     try:
         # Initialize scheduler
@@ -670,7 +675,7 @@ async def example_task_scheduling():
         await scheduler.initialize_scheduler()
         
         # Register custom task function
-        async def custom_content_analysis(**kwargs):
+        async def custom_content_analysis(**kwargs) -> None:
             content_id = kwargs.get('content_id')
             await asyncio.sleep(3)  # Simulate processing
             return {'content_id': content_id, 'analysis_complete': True, 'score': 85.5}

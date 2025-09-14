@@ -181,7 +181,7 @@ class ComplianceManager:
     - Regulatory change monitoring and adaptation
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         # Compliance frameworks and requirements
         self.compliance_frameworks: Dict[str, Dict] = {}
         self.compliance_requirements: Dict[str, ComplianceRequirement] = {}
@@ -215,7 +215,7 @@ class ComplianceManager:
         
         logger.info("ComplianceManager initialized")
 
-    def _initialize_compliance_manager(self):
+    def _initialize_compliance_manager(self) -> None:
         """Initialize compliance manager"""
         
         # Start background tasks
@@ -234,7 +234,7 @@ class ComplianceManager:
         
         logger.info("Compliance manager initialization complete")
 
-    def _setup_compliance_frameworks(self):
+    def _setup_compliance_frameworks(self) -> None:
         """Setup compliance framework definitions"""
         
         self.compliance_frameworks = {
@@ -315,7 +315,7 @@ class ComplianceManager:
             }
         }
 
-    def _setup_compliance_requirements(self):
+    def _setup_compliance_requirements(self) -> None:
         """Setup detailed compliance requirements"""
         
         # GDPR Requirements
@@ -413,7 +413,7 @@ class ComplianceManager:
                 
                 self.compliance_requirements[requirement.requirement_id] = requirement
 
-    def _setup_audit_retention_policies(self):
+    def _setup_audit_retention_policies(self) -> None:
         """Setup audit trail retention policies"""
         
         self.audit_retention_policy = {
@@ -428,7 +428,7 @@ class ComplianceManager:
             "default": 365
         }
 
-    def _setup_compliance_policies(self):
+    def _setup_compliance_policies(self) -> None:
         """Setup compliance policies"""
         
         self.compliance_policies = {
@@ -480,7 +480,7 @@ class ComplianceManager:
             }
         }
 
-    def _setup_assessment_schedules(self):
+    def _setup_assessment_schedules(self) -> None:
         """Setup compliance assessment schedules"""
         
         self.assessment_schedules = {
@@ -1006,7 +1006,7 @@ class ComplianceManager:
         
         return mock_checks
 
-    async def _check_compliance_violations(self, audit_entry: AuditTrail):
+    async def _check_compliance_violations(self, audit_entry -> None: AuditTrail) -> None:
         """Check audit entry for compliance violations"""
         
         try:
@@ -1044,12 +1044,12 @@ class ComplianceManager:
 
     async def _create_policy_violation(
         self,
-        policy_id: str,
-        severity: str,
-        description: str,
-        affected_systems: List[str],
-        personal_data_involved: bool
-    ):
+        policy_id -> None: str,
+        severity -> None: str,
+        description -> None: str,
+        affected_systems -> None: List[str],
+        personal_data_involved -> None: bool
+    ) -> None:
         """Create policy violation record"""
         
         violation_id = str(uuid.uuid4())
@@ -1074,7 +1074,7 @@ class ComplianceManager:
         logger.warning(f"Policy violation detected: {violation_id} - {severity}")
 
     # Background monitoring tasks
-    async def _compliance_monitoring_loop(self):
+    async def _compliance_monitoring_loop(self) -> None:
         """Background compliance monitoring loop"""
         while True:
             try:
@@ -1086,7 +1086,7 @@ class ComplianceManager:
             except Exception as e:
                 logger.error(f"Compliance monitoring loop error: {str(e)}")
 
-    async def _perform_scheduled_compliance_checks(self):
+    async def _perform_scheduled_compliance_checks(self) -> None:
         """Perform scheduled compliance checks"""
         
         current_time = datetime.now()
@@ -1123,7 +1123,7 @@ class ComplianceManager:
                     except Exception as e:
                         logger.error(f"Scheduled compliance check failed: {requirement.requirement_id} - {str(e)}")
 
-    async def _audit_trail_processing_loop(self):
+    async def _audit_trail_processing_loop(self) -> None:
         """Background audit trail processing loop"""
         while True:
             try:
@@ -1135,7 +1135,7 @@ class ComplianceManager:
             except Exception as e:
                 logger.error(f"Audit trail processing loop error: {str(e)}")
 
-    async def _process_audit_trails(self):
+    async def _process_audit_trails(self) -> None:
         """Process audit trails for compliance insights"""
         
         # Analyze recent audit events
@@ -1157,7 +1157,7 @@ class ComplianceManager:
         if event_counts.get("data_export", 0) > 5:
             logger.warning("High number of data export events detected")
 
-    async def _policy_violation_detection_loop(self):
+    async def _policy_violation_detection_loop(self) -> None:
         """Background policy violation detection loop"""
         while True:
             try:
@@ -1169,7 +1169,7 @@ class ComplianceManager:
             except Exception as e:
                 logger.error(f"Policy violation detection loop error: {str(e)}")
 
-    async def _detect_policy_violations(self):
+    async def _detect_policy_violations(self) -> None:
         """Detect policy violations"""
         
         # Analyze recent audit trails for violations
@@ -1186,7 +1186,7 @@ class ComplianceManager:
                 # Mock check - in real implementation, check against deletion requests
                 pass
 
-    async def _data_retention_enforcement_loop(self):
+    async def _data_retention_enforcement_loop(self) -> None:
         """Background data retention enforcement loop"""
         while True:
             try:
@@ -1198,7 +1198,7 @@ class ComplianceManager:
             except Exception as e:
                 logger.error(f"Data retention enforcement loop error: {str(e)}")
 
-    async def _enforce_data_retention(self):
+    async def _enforce_data_retention(self) -> None:
         """Enforce data retention policies"""
         
         current_time = datetime.now()
@@ -1222,7 +1222,7 @@ class ComplianceManager:
             logger.info(f"Archiving {len(expired_audits)} expired audit entries")
             # In real implementation, archive to long-term storage
 
-    async def _compliance_reporting_loop(self):
+    async def _compliance_reporting_loop(self) -> None:
         """Background compliance reporting loop"""
         while True:
             try:

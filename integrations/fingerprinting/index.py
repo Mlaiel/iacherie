@@ -35,7 +35,7 @@ FINGERPRINTING_CONFIG = {
     'dmca_providers': ['google', 'youtube', 'instagram', 'tiktok', 'spotify']
 }
 
-def get_rights_protection_manager():
+def get_rights_protection_manager() -> None:
     """Factory pour créer le gestionnaire principal de protection."""
     return {
         'audio': AudioFingerprinting(),

@@ -158,7 +158,7 @@ class QueryExecutionResult:
 class AggregateDataProvider:
     """Abstract provider for aggregate data"""
     
-    def __init__(self, aggregate_type: str):
+    def __init__(self, aggregate_type -> None: str) -> None:
         self.aggregate_type = aggregate_type
     
     async def fetch_data(self, source: AggregateSource) -> List[Dict[str, Any]]:
@@ -177,7 +177,7 @@ class AggregateDataProvider:
 class MockAggregateDataProvider(AggregateDataProvider):
     """Mock data provider for testing"""
     
-    def __init__(self, aggregate_type: str):
+    def __init__(self, aggregate_type -> None: str) -> None:
         super().__init__(aggregate_type)
         self._data_cache: Dict[str, List[Dict[str, Any]]] = {}
         self._generate_mock_data()
@@ -290,7 +290,7 @@ class MockAggregateDataProvider(AggregateDataProvider):
 class QueryPlanner:
     """Plan execution for cross-aggregate queries"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._cost_model: Dict[str, float] = {
             "fetch_aggregate": 10.0,
             "join_operation": 50.0,
@@ -440,7 +440,7 @@ class QueryPlanner:
 class QueryExecutor:
     """Execute cross-aggregate queries"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._data_providers: Dict[str, AggregateDataProvider] = {}
         self._execution_cache: Dict[str, Any] = {}
         self._cache_ttl: Dict[str, datetime] = {}
@@ -823,7 +823,7 @@ class QueryExecutor:
 class EnterpriseCrossAggregateQueryEngine:
     """Enterprise cross-aggregate query engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._query_planner = QueryPlanner()
         self._query_executor = QueryExecutor()
         self._registered_queries: Dict[str, CrossAggregateQuery] = {}

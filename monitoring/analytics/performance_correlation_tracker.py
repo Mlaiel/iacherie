@@ -107,7 +107,7 @@ class PerformanceCorrelationTracker:
     - Causal relationship discovery
     """
     
-    def __init__(self, db_url: str, redis_url: str = None):
+    def __init__(self, db_url -> None: str, redis_url -> None: str = None) -> None:
         """Initialize performance correlation tracker"""
         self.db_url = db_url
         self.redis_url = redis_url
@@ -1118,7 +1118,7 @@ class PerformanceCorrelationTracker:
         return impact_map
 
 # Usage example
-async def main():
+async def main() -> None:
     """Test the performance correlation tracker"""
     try:
         # Initialize tracker

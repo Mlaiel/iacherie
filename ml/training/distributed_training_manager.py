@@ -1,3 +1,8 @@
+"""
+Distributed Training Manager module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 🚀 Distributed Training Manager - Enterprise ML Training Infrastructure
@@ -91,7 +96,7 @@ class DistributedTrainingManager:
     - Checkpoint management and recovery
     """
     
-    def __init__(self, config: Optional[DistributedTrainingConfig] = None):
+    def __init__(self, config -> None: Optional[DistributedTrainingConfig] = None) -> None:
         """Initialize the distributed training manager."""
         self.config = config or DistributedTrainingConfig()
         self.logger = logging.getLogger(__name__)
@@ -219,7 +224,7 @@ class DistributedTrainingManager:
             self.logger.error(f"Failed to optimize for creator type {creator_type}: {e}")
             return job
     
-    async def _schedule_jobs(self):
+    async def _schedule_jobs(self) -> None:
         """Schedule queued jobs on available nodes."""
         try:
             if not self.job_queue:
@@ -293,7 +298,7 @@ class DistributedTrainingManager:
             self.logger.error(f"Failed to calculate required nodes: {e}")
             return 1
     
-    async def _execute_distributed_training(self, job: Dict[str, Any]):
+    async def _execute_distributed_training(self, job -> None: Dict[str, Any]) -> None:
         """Execute distributed training job."""
         job_id = job["job_id"]
         
@@ -328,7 +333,7 @@ class DistributedTrainingManager:
             self.logger.error(f"Distributed training failed for job {job_id}: {e}")
             await self._handle_job_failure(job, str(e))
     
-    async def _simulate_training_step(self, job: Dict[str, Any], step: int):
+    async def _simulate_training_step(self, job -> None: Dict[str, Any], step -> None: int) -> None:
         """Simulate a training step."""
         # Simulate variable training time based on creator type
         creator_type = job.get("creator_type", "generic")
@@ -344,7 +349,7 @@ class DistributedTrainingManager:
         training_time = base_time + np.random.normal(0, 0.01)
         await asyncio.sleep(max(0.01, training_time))
     
-    async def _create_checkpoint(self, job_id: str, step: int):
+    async def _create_checkpoint(self, job_id -> None: str, step -> None: int) -> None:
         """Create training checkpoint."""
         try:
             checkpoint = {
@@ -435,7 +440,7 @@ class DistributedTrainingManager:
             self.logger.error(f"Failed to handle node failure: {e}")
             return False
     
-    async def _restore_from_checkpoint(self, job: Dict[str, Any]):
+    async def _restore_from_checkpoint(self, job -> None: Dict[str, Any]) -> None:
         """Restore training from latest checkpoint."""
         try:
             job_id = job["job_id"]
@@ -460,7 +465,7 @@ class DistributedTrainingManager:
         except Exception as e:
             self.logger.error(f"Failed to restore from checkpoint: {e}")
     
-    async def _update_training_metrics(self, job_id: str, step: int):
+    async def _update_training_metrics(self, job_id -> None: str, step -> None: int) -> None:
         """Update training metrics."""
         try:
             # Simulate metrics
@@ -484,7 +489,7 @@ class DistributedTrainingManager:
         except Exception as e:
             self.logger.error(f"Failed to update training metrics: {e}")
     
-    async def _complete_job(self, job: Dict[str, Any]):
+    async def _complete_job(self, job -> None: Dict[str, Any]) -> None:
         """Complete training job."""
         try:
             job_id = job["job_id"]
@@ -514,7 +519,7 @@ class DistributedTrainingManager:
         except Exception as e:
             self.logger.error(f"Failed to complete job: {e}")
     
-    async def _handle_job_failure(self, job: Dict[str, Any], error: str):
+    async def _handle_job_failure(self, job -> None: Dict[str, Any], error -> None: str) -> None:
         """Handle job failure."""
         try:
             job_id = job["job_id"]

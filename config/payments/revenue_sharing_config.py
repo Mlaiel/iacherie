@@ -1,7 +1,14 @@
+"""
+Revenue Sharing Config module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 """Ainflue Revenue Sharing Configuration Module
+import asyncio
+
 =============================================
 
 Enterprise-grade revenue sharing configuration for the Ainflue platform.
@@ -453,7 +460,7 @@ class RevenueAnalyticsConfig:
 class RevenueShareConfiguration:
     """Main revenue sharing configuration manager"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize revenue sharing configuration"""
         # Configuration components
         self.revenue_share_config = RevenueShareConfig()

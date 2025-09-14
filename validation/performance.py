@@ -25,12 +25,12 @@ class PerformanceMetrics:
 class PerformanceTracker:
     """Tracks performance metrics for validation"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.metrics: Dict[str, list] = {}
         self.error_count = 0
         self.total_requests = 0
         
-    async def track_request(self, endpoint: str, response_time: float, status_code: int):
+    async def track_request(self, endpoint -> None: str, response_time -> None: float, status_code -> None: int) -> None:
         """Track individual request performance"""
         self.total_requests += 1
         

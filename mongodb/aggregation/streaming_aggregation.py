@@ -18,29 +18,29 @@ logger = logging.getLogger(__name__)
 class StreamingAggregation:
     """Real-time streaming aggregation processor."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize streaming aggregation."""
         self._running = False
         self._stream_handlers: Dict[str, Callable] = {}
         self._real_time_metrics: Dict[str, Any] = {}
         self._update_lock = threading.Lock()
     
-    def start_streaming(self):
+    def start_streaming(self) -> None:
         """Start real-time streaming processing."""
         self._running = True
         logger.info("Streaming aggregation started")
     
-    def stop_streaming(self):
+    def stop_streaming(self) -> None:
         """Stop streaming processing."""
         self._running = False
         logger.info("Streaming aggregation stopped")
     
-    def register_stream_handler(self, collection: str, handler: Callable):
+    def register_stream_handler(self, collection -> None: str, handler -> None: Callable) -> None:
         """Register handler for collection change streams."""
         self._stream_handlers[collection] = handler
         logger.info(f"Registered stream handler for collection: {collection}")
     
-    def process_change_event(self, collection: str, change_event: Dict[str, Any]):
+    def process_change_event(self, collection -> None: str, change_event -> None: Dict[str, Any]) -> None:
         """Process a change stream event."""
         if collection in self._stream_handlers:
             try:
@@ -48,7 +48,7 @@ class StreamingAggregation:
             except Exception as e:
                 logger.error(f"Error processing change event for {collection}: {e}")
     
-    def update_real_time_metric(self, metric_name: str, value: Any):
+    def update_real_time_metric(self, metric_name -> None: str, value -> None: Any) -> None:
         """Update real-time metric."""
         with self._update_lock:
             self._real_time_metrics[metric_name] = {

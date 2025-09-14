@@ -69,7 +69,7 @@ class InferencePerformanceMonitor:
     - SLA compliance tracking
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.logger = self._setup_logging()
         
@@ -145,7 +145,7 @@ class InferencePerformanceMonitor:
             }
         }
     
-    def _setup_prometheus_metrics(self):
+    def _setup_prometheus_metrics(self) -> None:
         """Setup Prometheus metrics for monitoring."""
         self.prom_latency = Histogram(
             'inference_latency_seconds',
@@ -606,7 +606,7 @@ class InferencePerformanceMonitor:
 
 
 # Example usage and testing
-async def example_usage():
+async def example_usage() -> None:
     """Example usage of the InferencePerformanceMonitor."""
     monitor = InferencePerformanceMonitor()
     
@@ -614,7 +614,7 @@ async def example_usage():
     monitor.start_monitoring(prometheus_port=8001)
     
     # Add alert callback
-    async def alert_handler(alert: PerformanceAlert):
+    async def alert_handler(alert -> None: PerformanceAlert) -> None:
         print(f"ALERT: {alert.message}")
     
     monitor.add_alert_callback(alert_handler)

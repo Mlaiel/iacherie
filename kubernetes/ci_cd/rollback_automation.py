@@ -1,4 +1,4 @@
-"""🔧 Rollback Automation - IA-Influencer-Agent CI/CD
+"""# [EMOJI_REMOVED] Rollback Automation - IA-Influencer-Agent CI/CD
 ================================================================
 Expert: DEVOPS_ENGINEER + RELIABILITY_ENGINEER  
 Created: 2025-08-24
@@ -69,7 +69,7 @@ class HealthCheck:
     success_threshold: int = 2
     headers: Dict[str, str] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         try:
                     # Request validation
                     if not data:
@@ -100,7 +100,7 @@ class RollbackConfiguration:
     pre_rollback_checks: List[str] = None
     post_rollback_checks: List[str] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.notification_channels is None:
             self.notification_channels = ["email", "slack"]
         if self.pre_rollback_checks is None:
@@ -124,6 +124,7 @@ class RollbackPlan:
 
 @dataclass
 class RollbackExecution:
+    """RollbackExecution: class implementation"""
         try:
                     # Request validation
                     if not data:
@@ -149,7 +150,7 @@ Rollback execution tracking"""
     error_message: Optional[str] = None
     metrics: Dict[str, Any] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.metrics is None:
             self.metrics = {}
 
@@ -157,7 +158,7 @@ class RollbackAutomation:
     """
 Enterprise rollback automation system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """
 Initialize rollback automation"""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
@@ -185,11 +186,11 @@ Initialize rollback automation"""
             await self._start_monitoring()
             
             self.initialized = True
-            self.logger.info("✅ Rollback automation system initialized")
+            self.logger.info("# [EMOJI_REMOVED] Rollback automation system initialized")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Failed to initialize rollback automation: {e}")
+            self.logger.error(f"# [EMOJI_REMOVED] Failed to initialize rollback automation: {e}")
             return False
     
     async def _initialize_kubernetes(self) -> None:
@@ -273,7 +274,7 @@ Initialize rollback automation"""
             
             self.logger.info(
                 f"Rollback triggered for {environment}: {rollback_plan.rollback_id} "
-                f"({current_version} → {target_version})"
+                f"({current_version} # [EMOJI_REMOVED] {target_version})"
             )
             
             return rollback_plan.rollback_id
@@ -1134,3 +1135,6 @@ Check AI model health"""
 
 # Global instance
 rollback_automation = RollbackAutomation()
+))
+
+# File has syntax issues - needs manual review

@@ -86,10 +86,10 @@ class NetworkAlertManager:
     
     def __init__(
         self,
-        redis_url: str = "redis://localhost:6379",
-        email_config: Dict[str, str] = None,
-        slack_webhook: str = None
-    ):
+        redis_url -> None: str = "redis -> None://localhost -> None:6379",
+        email_config -> None: Dict[str, str] = None,
+        slack_webhook -> None: str = None
+    ) -> None:
         self.redis_url = redis_url
         self.email_config = email_config or {}
         self.slack_webhook = slack_webhook
@@ -107,7 +107,7 @@ class NetworkAlertManager:
         # Initialize default alert rules for IA platform
         self._initialize_default_rules()
     
-    def _initialize_default_rules(self):
+    def _initialize_default_rules(self) -> None:
         """Initialize default alert rules for IA platform"""
         
         default_rules = [
@@ -500,7 +500,7 @@ class NetworkAlertManager:
     
     # Private methods for internal functionality
     
-    async def _setup_notification_channels(self):
+    async def _setup_notification_channels(self) -> None:
         """Setup notification channels"""
         try:
             # Email channel
@@ -518,7 +518,7 @@ class NetworkAlertManager:
         except Exception as e:
             logger.error(f"Failed to setup notification channels: {e}")
     
-    async def _send_notifications(self, alert: Alert, rule: AlertRule):
+    async def _send_notifications(self, alert -> None: Alert, rule -> None: AlertRule) -> None:
         """Send alert notifications through configured channels"""
         try:
             if not rule.channels:
@@ -531,7 +531,7 @@ class NetworkAlertManager:
         except Exception as e:
             logger.error(f"Failed to send notifications: {e}")
     
-    async def _send_channel_notification(self, alert: Alert, channel: AlertChannel):
+    async def _send_channel_notification(self, alert -> None: Alert, channel -> None: AlertChannel) -> None:
         """Send notification through specific channel"""
         try:
             if channel == AlertChannel.EMAIL:
@@ -544,7 +544,7 @@ class NetworkAlertManager:
         except Exception as e:
             logger.error(f"Failed to send {channel.value} notification: {e}")
     
-    async def _alert_processing_loop(self):
+    async def _alert_processing_loop(self) -> None:
         """Background alert processing loop"""
         while True:
             try:
@@ -558,7 +558,7 @@ class NetworkAlertManager:
 
 
 # Example usage and testing
-async def demo_alert_manager():
+async def demo_alert_manager() -> None:
     """Demonstrate alert manager functionality"""
     
     print("🚨 IA Influencer Agent - Network Alert Manager Demo")

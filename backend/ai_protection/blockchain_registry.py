@@ -75,9 +75,9 @@ class BlockchainRightsRegistry:
     """Enhanced blockchain registry for digital rights management"""
     
     def __init__(self, 
-                 blockchain_url: Optional[str] = None,
-                 private_key: Optional[str] = None,
-                 contract_address: Optional[str] = None):
+                 blockchain_url -> None: Optional[str] = None,
+                 private_key -> None: Optional[str] = None,
+                 contract_address -> None: Optional[str] = None) -> None:
         """
         Initialize blockchain rights registry
         

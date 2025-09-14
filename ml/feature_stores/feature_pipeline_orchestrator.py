@@ -150,9 +150,9 @@ class FeaturePipelineOrchestrator:
     """Orchestrateur de pipelines de features enterprise"""
     
     def __init__(self,
-                 max_concurrent_pipelines: int = 10,
-                 global_cache_size: int = 1000,
-                 enable_distributed_execution: bool = False):
+                 max_concurrent_pipelines -> None: int = 10,
+                 global_cache_size -> None: int = 1000,
+                 enable_distributed_execution -> None: bool = False) -> None:
         
         self.max_concurrent_pipelines = max_concurrent_pipelines
         self.global_cache_size = global_cache_size
@@ -196,7 +196,7 @@ class FeaturePipelineOrchestrator:
         # Built-in transformers
         self._register_builtin_transformers()
     
-    def _register_builtin_transformers(self):
+    def _register_builtin_transformers(self) -> None:
         """Enregistre les transformateurs intégrés"""
         self.builtin_transformers = {
             "standard_scaler": StandardScaler,
@@ -212,7 +212,7 @@ class FeaturePipelineOrchestrator:
             "text_features": self._text_features_transformer
         }
     
-    async def start(self):
+    async def start(self) -> None:
         """Démarre l'orchestrateur"""
         try:
             self.is_running = True
@@ -228,7 +228,7 @@ class FeaturePipelineOrchestrator:
             logger.error(f"Erreur démarrage orchestrateur: {e}")
             raise
     
-    async def stop(self):
+    async def stop(self) -> None:
         """Arrête l'orchestrateur"""
         try:
             logger.info("Arrêt orchestrateur de pipelines...")
@@ -280,7 +280,7 @@ class FeaturePipelineOrchestrator:
             logger.error(f"Erreur enregistrement pipeline {config.pipeline_id}: {e}")
             return False
     
-    async def _validate_pipeline_steps(self, steps: List[TransformationStep]):
+    async def _validate_pipeline_steps(self, steps -> None: List[TransformationStep]) -> None:
         """Valide les étapes d'un pipeline"""
         step_ids = {step.step_id for step in steps}
         
@@ -346,7 +346,7 @@ class FeaturePipelineOrchestrator:
         logger.info(f"Pipeline {pipeline_id} démarré (run: {run_id})")
         return run_id
     
-    async def _execute_pipeline_async(self, run_id: str, input_data: pd.DataFrame):
+    async def _execute_pipeline_async(self, run_id -> None: str, input_data -> None: pd.DataFrame) -> None:
         """Exécute un pipeline de manière asynchrone"""
         
         pipeline_run = self.pipeline_runs[run_id]
@@ -611,7 +611,7 @@ class FeaturePipelineOrchestrator:
             # Utiliser toutes les données
             return data
     
-    def _get_transformer(self, step: TransformationStep):
+    def _get_transformer(self, step -> None: TransformationStep) -> None:
         """Obtient le transformateur pour une étape"""
         if isinstance(step.transformer, str):
             # Transformateur intégré
@@ -664,7 +664,7 @@ class FeaturePipelineOrchestrator:
         
         return result_data
     
-    async def _validate_step_output(self, step: TransformationStep, data: pd.DataFrame):
+    async def _validate_step_output(self, step -> None: TransformationStep, data -> None: pd.DataFrame) -> None:
         """Valide la sortie d'une étape"""
         # Validation basique
         for feature_name in step.output_features:
@@ -707,7 +707,7 @@ class FeaturePipelineOrchestrator:
             return self.transformation_cache[cache_key].copy()
         return None
     
-    def _put_in_cache(self, cache_key: str, data: pd.DataFrame):
+    def _put_in_cache(self, cache_key -> None: str, data -> None: pd.DataFrame) -> None:
         """Met une valeur en cache"""
         if len(self.transformation_cache) >= self.global_cache_size:
             self._evict_cache()
@@ -715,7 +715,7 @@ class FeaturePipelineOrchestrator:
         self.transformation_cache[cache_key] = data.copy()
         self.cache_access_times[cache_key] = datetime.now()
     
-    def _evict_cache(self):
+    def _evict_cache(self) -> None:
         """Éviction LRU du cache"""
         if not self.cache_access_times:
             return
@@ -730,14 +730,14 @@ class FeaturePipelineOrchestrator:
     
     # Transformateurs intégrés
     
-    def _polynomial_features_transformer(self, degree: int = 2, include_bias: bool = False):
+    def _polynomial_features_transformer(self, degree -> None: int = 2, include_bias -> None: bool = False) -> None:
         """Transformateur de features polynomiales"""
         from sklearn.preprocessing import PolynomialFeatures
         return PolynomialFeatures(degree=degree, include_bias=include_bias)
     
-    def _interaction_features_transformer(self, max_combinations: int = 2):
+    def _interaction_features_transformer(self, max_combinations -> None: int = 2) -> None:
         """Transformateur de features d'interaction"""
-        def transform(data):
+        def transform(data) -> None:
             result = data.copy()
             numeric_cols = data.select_dtypes(include=[np.number]).columns
             
@@ -751,9 +751,9 @@ class FeaturePipelineOrchestrator:
             return result
         return transform
     
-    def _time_features_transformer(self, datetime_columns: List[str] = None):
+    def _time_features_transformer(self, datetime_columns -> None: List[str] = None) -> None:
         """Transformateur de features temporelles"""
-        def transform(data):
+        def transform(data) -> None:
             result = data.copy()
             
             if datetime_columns:
@@ -774,9 +774,9 @@ class FeaturePipelineOrchestrator:
             return result
         return transform
     
-    def _text_features_transformer(self, text_columns: List[str] = None, max_features: int = 100):
+    def _text_features_transformer(self, text_columns -> None: List[str] = None, max_features -> None: int = 100) -> None:
         """Transformateur de features textuelles"""
-        def transform(data):
+        def transform(data) -> None:
             result = data.copy()
             
             if text_columns:
@@ -796,7 +796,7 @@ class FeaturePipelineOrchestrator:
     
     # Boucles de maintenance
     
-    async def _monitoring_loop(self):
+    async def _monitoring_loop(self) -> None:
         """Boucle de monitoring"""
         while self.is_running:
             try:
@@ -821,7 +821,7 @@ class FeaturePipelineOrchestrator:
             except Exception as e:
                 logger.error(f"Erreur boucle monitoring: {e}")
     
-    async def _cache_cleanup_loop(self):
+    async def _cache_cleanup_loop(self) -> None:
         """Boucle de nettoyage du cache"""
         while self.is_running:
             try:
@@ -863,15 +863,15 @@ class FeaturePipelineOrchestrator:
         """Récupère les métriques d'exécution"""
         return self.execution_metrics.copy()
     
-    def add_pipeline_callback(self, pipeline_id: str, callback: Callable):
+    def add_pipeline_callback(self, pipeline_id -> None: str, callback -> None: Callable) -> None:
         """Ajoute un callback pour un pipeline"""
         self.pipeline_callbacks[pipeline_id].append(callback)
     
-    def add_feature_callback(self, callback: Callable):
+    def add_feature_callback(self, callback -> None: Callable) -> None:
         """Ajoute un callback pour les features"""
         self.feature_callbacks.append(callback)
     
-    def add_error_callback(self, callback: Callable):
+    def add_error_callback(self, callback -> None: Callable) -> None:
         """Ajoute un callback pour les erreurs"""
         self.error_callbacks.append(callback)
     
@@ -931,7 +931,7 @@ class PipelineOrchestratorFactory:
 
 
 # Exemple d'utilisation
-async def example_usage():
+async def example_usage() -> None:
     """Exemple d'utilisation de l'orchestrateur"""
     
     import pandas as pd

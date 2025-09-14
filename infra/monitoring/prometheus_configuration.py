@@ -1,3 +1,8 @@
+"""
+Prometheus Configuration module
+Enterprise implementation for Ainflue platform
+"""
+
 # Ainflue Infrastructure Module
 # =============================
 # 
@@ -64,7 +69,7 @@ class PrometheusConfiguration:
     target discovery, and alerting rule management.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize Prometheus configuration."""
         self.config = config or {}
         self.prometheus_config = {}
@@ -114,7 +119,7 @@ class PrometheusConfiguration:
         
         logger.info("PrometheusConfiguration initialized")
     
-    def _create_directories(self):
+    def _create_directories(self) -> None:
         """Create necessary directories."""
         try:
             self.config_dir.mkdir(parents=True, exist_ok=True)
@@ -125,7 +130,7 @@ class PrometheusConfiguration:
             logger.error(f"Failed to create directories: {str(e)}")
             raise
     
-    def _initialize_base_config(self):
+    def _initialize_base_config(self) -> None:
         """Initialize base Prometheus configuration."""
         self.prometheus_config = {
             "global": self.global_config,
@@ -214,7 +219,7 @@ class PrometheusConfiguration:
             logger.error(f"Failed to add recording rule {rule.record}: {str(e)}")
             return False
     
-    async def _save_alerting_rules(self, rule_group: str):
+    async def _save_alerting_rules(self, rule_group -> None: str) -> None:
         """Save alerting rules to file."""
         try:
             # Group rules by rule_group
@@ -246,7 +251,7 @@ class PrometheusConfiguration:
         except Exception as e:
             logger.error(f"Failed to save alerting rules for {rule_group}: {str(e)}")
     
-    async def _save_recording_rules(self, rule_group: str):
+    async def _save_recording_rules(self, rule_group -> None: str) -> None:
         """Save recording rules to file."""
         try:
             # Group rules by rule_group
@@ -276,7 +281,7 @@ class PrometheusConfiguration:
         except Exception as e:
             logger.error(f"Failed to save recording rules for {rule_group}: {str(e)}")
     
-    async def create_default_monitoring_targets(self):
+    async def create_default_monitoring_targets(self) -> None:
         """Create default monitoring targets for Ainflue infrastructure."""
         try:
             # Ainflue API targets
@@ -340,7 +345,7 @@ class PrometheusConfiguration:
         except Exception as e:
             logger.error(f"Failed to create default monitoring targets: {str(e)}")
     
-    async def create_default_alerting_rules(self):
+    async def create_default_alerting_rules(self) -> None:
         """Create default alerting rules for Ainflue infrastructure."""
         try:
             # High CPU usage alert
@@ -413,7 +418,7 @@ class PrometheusConfiguration:
         except Exception as e:
             logger.error(f"Failed to create default alerting rules: {str(e)}")
     
-    async def create_default_recording_rules(self):
+    async def create_default_recording_rules(self) -> None:
         """Create default recording rules for performance optimization."""
         try:
             # Instance CPU usage rate

@@ -56,7 +56,7 @@ class QualityMetric:
     status: str = "normal"
     trend: Optional[str] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         """Évaluation automatique du statut"""
         if self.value >= self.threshold:
             self.status = "good"
@@ -101,7 +101,7 @@ class SystemMetric:
 class PerformanceMonitor:
     """Moniteur de performance temps réel"""
     
-    def __init__(self, monitoring_level: MonitoringLevel = MonitoringLevel.ENTERPRISE):
+    def __init__(self, monitoring_level -> None: MonitoringLevel = MonitoringLevel.ENTERPRISE) -> None:
         self.monitoring_level = monitoring_level
         self.metrics_history: List[SystemMetric] = []
         self.max_history = 1000
@@ -205,7 +205,7 @@ class PerformanceMonitor:
 class QualityMonitor:
     """Moniteur de qualité des données"""
     
-    def __init__(self, monitoring_level: MonitoringLevel = MonitoringLevel.ENTERPRISE):
+    def __init__(self, monitoring_level -> None: MonitoringLevel = MonitoringLevel.ENTERPRISE) -> None:
         self.monitoring_level = monitoring_level
         self.quality_metrics: Dict[str, QualityMetric] = {}
         self.alert_thresholds = {
@@ -288,7 +288,7 @@ class QualityMonitor:
         
         return 1.0
     
-    async def _trigger_quality_alert(self, metric: QualityMetric):
+    async def _trigger_quality_alert(self, metric -> None: QualityMetric) -> None:
         """Déclenchement alerte qualité"""
         severity = self._determine_alert_severity(metric.value)
         
@@ -319,8 +319,8 @@ class RealTimeMonitoringService:
     """Service de monitoring temps réel enterprise"""
     
     def __init__(self, 
-                 monitoring_level: MonitoringLevel = MonitoringLevel.ENTERPRISE,
-                 redis_url: str = "redis://localhost:6379"):
+                 monitoring_level -> None: MonitoringLevel = MonitoringLevel.ENTERPRISE,
+                 redis_url -> None: str = "redis -> None://localhost -> None:6379") -> None:
         self.monitoring_level = monitoring_level
         self.redis_url = redis_url
         self.redis_client: Optional[aioredis.Redis] = None
@@ -345,7 +345,7 @@ class RealTimeMonitoringService:
         }
         return intervals.get(self.monitoring_level, 30.0)
     
-    async def start_monitoring(self):
+    async def start_monitoring(self) -> None:
         """Démarrage service monitoring"""
         try:
             # Connexion Redis
@@ -362,14 +362,14 @@ class RealTimeMonitoringService:
             self.logger.error(f"Failed to start monitoring service: {e}")
             raise
     
-    async def stop_monitoring(self):
+    async def stop_monitoring(self) -> None:
         """Arrêt service monitoring"""
         self.is_running = False
         if self.redis_client:
             await self.redis_client.close()
         self.logger.info("Monitoring service stopped")
     
-    async def _monitoring_loop(self):
+    async def _monitoring_loop(self) -> None:
         """Boucle principale de monitoring"""
         while self.is_running:
             try:
@@ -390,7 +390,7 @@ class RealTimeMonitoringService:
                 self.logger.error(f"Error in monitoring loop: {e}")
                 await asyncio.sleep(self.monitoring_interval)
     
-    async def _store_metrics_redis(self, key: str, data: Dict[str, Any]):
+    async def _store_metrics_redis(self, key -> None: str, data -> None: Dict[str, Any]) -> None:
         """Stockage métriques dans Redis"""
         if not self.redis_client:
             return
@@ -409,7 +409,7 @@ class RealTimeMonitoringService:
         except Exception as e:
             self.logger.error(f"Error storing metrics in Redis: {e}")
     
-    def _json_serializer(self, obj):
+    def _json_serializer(self, obj) -> None:
         """Sérialiseur JSON pour datetime"""
         if isinstance(obj, datetime):
             return obj.isoformat()
@@ -454,7 +454,7 @@ class RealTimeMonitoringService:
             return {"error": str(e)}
     
     @asynccontextmanager
-    async def monitor_operation(self, operation_name: str):
+    async def monitor_operation(self, operation_name -> None: str) -> None:
         """Context manager pour monitoring d'opération"""
         start_time = time.time()
         try:
@@ -541,7 +541,7 @@ __all__ = [
 
 # Exemple d'utilisation
 if __name__ == "__main__":
-    async def main():
+    async def main() -> None:
         # Configuration logging
         logging.basicConfig(level=logging.INFO)
         

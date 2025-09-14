@@ -828,6 +828,7 @@ class ContentMetadataSchema(BaseModel):
     derivative_type: Optional[str] = None
     
     class Config:
+    """Config: class implementation"""
         from_attributes = True
         use_enum_values = True
 
@@ -884,18 +885,19 @@ class RightsHolderSchema(BaseModel):
     subscription_tier: str = 'basic'
     
     @validator('email')
-    def validate_email(cls, v):
+    def validate_email(cls, v) -> None:
         if '@' not in v:
             raise ValueError('Invalid email format')
         return v
     
     @validator('country')
-    def validate_country(cls, v):
+    def validate_country(cls, v) -> None:
         if v and len(v) != 2:
             raise ValueError('Country code must be 2 characters (ISO 3166-1 alpha-2)')
         return v
     
     class Config:
+    """Config: class implementation"""
         from_attributes = True
 
 
@@ -948,18 +950,19 @@ Schema Pydantic pour RightsRecord"""
     time_restrictions: Dict[str, Any] = {}
     
     @validator('rights_granted')
-    def validate_rights_granted(cls, v):
+    def validate_rights_granted(cls, v) -> None:
         if not v:
             raise ValueError('At least one right must be granted')
         return v
     
     @validator('territories')
-    def validate_territories(cls, v):
+    def validate_territories(cls, v) -> None:
         if not v:
             raise ValueError('At least one territory must be specified')
         return v
     
     class Config:
+    """Config: class implementation"""
         from_attributes = True
         use_enum_values = True
 
@@ -1017,24 +1020,25 @@ Schema Pydantic pour LicenseAgreement"""
     signature_status: Dict[str, Any] = {}
     
     @validator('licensed_rights')
-    def validate_licensed_rights(cls, v):
+    def validate_licensed_rights(cls, v) -> None:
         if not v:
             raise ValueError('At least one right must be licensed')
         return v
     
     @validator('territories')
-    def validate_territories(cls, v):
+    def validate_territories(cls, v) -> None:
         if not v:
             raise ValueError('At least one territory must be specified')
         return v
     
     @validator('royalty_structure')
-    def validate_royalty_structure(cls, v):
+    def validate_royalty_structure(cls, v) -> None:
         if not v:
             raise ValueError('Royalty structure must be defined')
         return v
     
     class Config:
+    """Config: class implementation"""
         from_attributes = True
         use_enum_values = True
         json_encoders = {

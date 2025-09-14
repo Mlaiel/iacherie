@@ -182,7 +182,7 @@ class WebhookSignatureValidator:
 class EventProcessor:
     """Processes incoming webhook events"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.event_handlers: Dict[WebhookEvent, List[Callable]] = {}
         self.processing_queue: asyncio.Queue = asyncio.Queue()
         self.is_processing = False
@@ -268,7 +268,7 @@ class EventProcessor:
 class WebhookDeliveryManager:
     """Manages webhook delivery attempts and retries"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.delivery_queue: asyncio.Queue = asyncio.Queue()
         self.is_delivering = False
         self.max_concurrent_deliveries = 10
@@ -442,7 +442,7 @@ class PlatformWebhookService:
     - Rate limiting and throttling
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.subscriptions: Dict[str, WebhookSubscription] = {}
         self.events: Dict[str, WebhookEvent] = {}

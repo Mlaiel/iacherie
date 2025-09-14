@@ -96,7 +96,7 @@ class HybridCloudCoordinator:
     - Edge deployment coordination
     """
     
-    def __init__(self, config_dir: str = "hybrid_config/"):
+    def __init__(self, config_dir -> None: str = "hybrid_config/") -> None:
         self.logger = logging.getLogger(__name__)
         self.config_dir = Path(config_dir)
         self.config_dir.mkdir(exist_ok=True, parents=True)
@@ -569,7 +569,7 @@ class HybridCloudCoordinator:
         return targets
 
 # Example usage and testing
-async def main():
+async def main() -> None:
     """Example usage of HybridCloudCoordinator."""
     coordinator = HybridCloudCoordinator()
     

@@ -104,7 +104,7 @@ class ConflictContext:
     sync_job_id: Optional[str] = None
     related_conflicts: List[str] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.related_conflicts is None:
             self.related_conflicts = []
 
@@ -139,7 +139,7 @@ class Conflict:
     resolution_note: Optional[str] = None
     error_message: Optional[str] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.resolution_actions is None:
             self.resolution_actions = []
 
@@ -166,7 +166,7 @@ class ConflictHandler:
     cross-platform content synchronization with AI-driven recommendations.
     """
     
-    def __init__(self, db: AsyncIOMotorDatabase):
+    def __init__(self, db -> None: AsyncIOMotorDatabase) -> None:
         """
         Initialize Conflict Handler
         

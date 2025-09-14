@@ -135,7 +135,7 @@ class VoiceSearchOptimizationTracker:
     - Multi-assistant optimization strategies
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize voice search optimization tracker"""
         self.config = config or {}
         self.voice_optimizations: Dict[str, List[VoiceSearchOptimization]] = {}
@@ -167,7 +167,7 @@ class VoiceSearchOptimizationTracker:
         self._initialize_voice_search_tracking()
         logger.info("Voice Search Optimization Tracker initialized")
     
-    def _initialize_voice_search_tracking(self):
+    def _initialize_voice_search_tracking(self) -> None:
         """Initialize voice search tracking components"""
         try:
             # Setup NLP tools for voice query analysis
@@ -188,7 +188,7 @@ class VoiceSearchOptimizationTracker:
             logger.error(f"Failed to initialize voice search tracking: {e}")
             raise
     
-    def _setup_nlp_tools(self):
+    def _setup_nlp_tools(self) -> None:
         """Setup NLP tools for voice query analysis"""
         self.nlp_tools = {
             "tfidf_vectorizer": TfidfVectorizer(
@@ -206,7 +206,7 @@ class VoiceSearchOptimizationTracker:
             }
         }
     
-    def _setup_conversational_patterns(self):
+    def _setup_conversational_patterns(self) -> None:
         """Setup conversational pattern detection"""
         self.conversational_patterns = {
             ConversationalPattern.QUESTION: {
@@ -241,7 +241,7 @@ class VoiceSearchOptimizationTracker:
             }
         }
     
-    def _setup_voice_assistant_optimization(self):
+    def _setup_voice_assistant_optimization(self) -> None:
         """Setup voice assistant specific optimization"""
         self.voice_assistant_preferences = {
             VoiceAssistant.GOOGLE_ASSISTANT: {
@@ -264,7 +264,7 @@ class VoiceSearchOptimizationTracker:
             }
         }
     
-    def _setup_featured_snippet_optimization(self):
+    def _setup_featured_snippet_optimization(self) -> None:
         """Setup featured snippet optimization for voice"""
         self.snippet_optimization = {
             "target_snippet_types": ["paragraph", "list", "table"],
@@ -1148,7 +1148,7 @@ class VoiceSearchOptimizationTracker:
 
 # Example usage and testing
 if __name__ == "__main__":
-    async def test_voice_search_optimization():
+    async def test_voice_search_optimization() -> None:
         """Test voice search optimization tracking functionality"""
         tracker = VoiceSearchOptimizationTracker()
         

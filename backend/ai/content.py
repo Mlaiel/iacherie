@@ -74,7 +74,7 @@ class ContentAgents:
     15. Storytelling - Narrative and story optimization
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._supported_formats = {
             'audio': ['.mp3', '.wav', '.flac', '.aac', '.ogg', '.m4a'],
             'video': ['.mp4', '.avi', '.mov', '.mkv', '.webm', '.flv'],

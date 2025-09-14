@@ -1,4 +1,6 @@
 """💳 Payment Processors Module
+from typing import Dict, List, Optional, Union, Tuple
+
 ============================
 
 Comprehensive payment processing suite with specialized processors for
@@ -144,7 +146,7 @@ PAYMENT_PROCESSORS = {
 }
 
 
-def get_processor(processor_name: str, **kwargs):
+def get_processor(processor_name -> None: str, **kwargs) -> None:
     """
     Factory function to get a payment processor instance
     
@@ -166,7 +168,7 @@ def get_processor(processor_name: str, **kwargs):
     return processor_class(**kwargs)
 
 
-def list_processors():
+def list_processors() -> None:
     """
     List all available payment processors
     
@@ -176,7 +178,7 @@ def list_processors():
     return list(PAYMENT_PROCESSORS.keys())
 
 
-def get_processor_info(processor_name: str):
+def get_processor_info(processor_name -> None: str) -> None:
     """
     Get information about a specific processor
     

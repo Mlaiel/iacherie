@@ -115,7 +115,7 @@ class TwitterSEOScore:
 class TwitterSEOEngine:
     """Advanced Twitter/X SEO optimization engine"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """Initialize Twitter SEO engine
         
         Args:

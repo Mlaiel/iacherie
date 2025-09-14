@@ -51,15 +51,16 @@ except ImportError:
     PYDANTIC_AVAILABLE = False
     # Create simple fallback for BaseModel
     class BaseModel:
-        def __init__(self, **kwargs):
+    """BaseModel: class implementation"""
+        def __init__(self, **kwargs) -> None:
             for key, value in kwargs.items():
                 setattr(self, key, value)
     
-    def Field(*args, **kwargs):
+    def Field(*args, **kwargs) -> None:
         return None
     
-    def validator(*args, **kwargs):
-        def decorator(func):
+    def validator(*args, **kwargs) -> None:
+        def decorator(func) -> None:
             return func
         return decorator
 
@@ -144,7 +145,7 @@ Live detection result from monitoring."""
     priority: MonitoringPriority = MonitoringPriority.MEDIUM
 
     @validator('similarity_score', 'confidence_score')
-    def validate_scores(cls, v):
+    def validate_scores(cls, v) -> None:
         """
 Validate score ranges."""
         if not 0.0 <= v <= 1.0:
@@ -180,10 +181,10 @@ class RealTimeMonitor:
     
     def __init__(
         self,
-        config: Dict[str, Any],
-        redis_client: Optional[Any] = None,
-        db_session: Optional[AsyncSession] = None
-    ):
+        config -> None: Dict[str, Any],
+        redis_client -> None: Optional[Any] = None,
+        db_session -> None: Optional[AsyncSession] = None
+    ) -> None:
         """
 Initialize real-time monitor."""
         self.config = config
@@ -630,7 +631,7 @@ Queue an event for processing."""
             logger.warning("WebSocket functionality not available - websockets module not installed")
             return
             
-        async def handle_websocket(websocket, path):
+        async def handle_websocket(websocket, path) -> None:
             """Handle WebSocket connections."""
             self._websocket_clients.add(websocket)
             logger.info(f"WebSocket client connected: {websocket.remote_address}")

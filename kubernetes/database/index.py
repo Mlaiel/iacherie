@@ -263,7 +263,7 @@ __author__ = "Fahed Mlaiel <mlaiel@live.de>"
 __copyright__ = "All rights reserved - Unauthorized use prohibited"
 
 
-async def main():
+async def main() -> None:
     """
     Main entry point for database system management
     Demonstrates enterprise-grade database operations
@@ -330,7 +330,7 @@ async def main():
         return False
 
 
-async def demonstrate_enterprise_features():
+async def demonstrate_enterprise_features() -> None:
     """Demonstrate enterprise database features"""
     try:
         logger.info("🎯 Demonstrating Enterprise Features...")
@@ -385,7 +385,7 @@ async def demonstrate_enterprise_features():
         logger.error(f"❌ Enterprise features demonstration failed: {e}")
 
 
-async def emergency_procedures():
+async def emergency_procedures() -> None:
     """Emergency procedures for critical situations"""
     try:
         logger.warning("🚨 Executing Emergency Procedures...")
@@ -411,7 +411,7 @@ async def emergency_procedures():
         logger.error(f"❌ Emergency procedures failed: {e}")
 
 
-def run_database_management():
+def run_database_management() -> None:
     """Run database management system"""
     try:
         # Run main database system

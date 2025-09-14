@@ -117,9 +117,9 @@ class EdgeResourceManager:
     """Advanced resource manager for edge computing infrastructure."""
     
     def __init__(self, 
-                 default_strategy: AllocationStrategy = AllocationStrategy.BALANCED,
-                 monitoring_interval: float = 5.0,
-                 resource_timeout: int = 3600):
+                 default_strategy -> None: AllocationStrategy = AllocationStrategy.BALANCED,
+                 monitoring_interval -> None: float = 5.0,
+                 resource_timeout -> None: int = 3600) -> None:
         self.default_strategy = default_strategy
         self.monitoring_interval = monitoring_interval
         self.resource_timeout = resource_timeout
@@ -153,7 +153,7 @@ class EdgeResourceManager:
         
         logger.info(f"EdgeResourceManager initialized with strategy: {default_strategy}")
     
-    async def start(self):
+    async def start(self) -> None:
         """Start the resource manager."""
         if self.running:
             logger.warning("Resource manager already running")
@@ -170,7 +170,7 @@ class EdgeResourceManager:
         
         logger.info("Edge resource manager started")
     
-    async def stop(self):
+    async def stop(self) -> None:
         """Stop the resource manager."""
         self.running = False
         
@@ -351,7 +351,7 @@ class EdgeResourceManager:
         
         return allocations
     
-    async def update_node_status(self, node_id: str, status: ResourceStatus):
+    async def update_node_status(self, node_id -> None: str, status -> None: ResourceStatus) -> None:
         """Update the status of an edge node."""
         if node_id in self.nodes:
             self.nodes[node_id].status = status
@@ -408,7 +408,7 @@ class EdgeResourceManager:
     
     # Private methods
     
-    async def _initialize_local_node(self):
+    async def _initialize_local_node(self) -> None:
         """Initialize the local node as an edge resource node."""
         try:
             # Get system information
@@ -445,7 +445,7 @@ class EdgeResourceManager:
         except Exception as e:
             logger.error(f"Failed to initialize local node: {e}")
     
-    async def _monitoring_loop(self):
+    async def _monitoring_loop(self) -> None:
         """Monitor resource usage and node health."""
         while self.running:
             try:
@@ -466,7 +466,7 @@ class EdgeResourceManager:
                 logger.error(f"Error in monitoring loop: {e}")
                 await asyncio.sleep(self.monitoring_interval)
     
-    async def _cleanup_loop(self):
+    async def _cleanup_loop(self) -> None:
         """Clean up expired allocations and reservations."""
         while self.running:
             try:
@@ -766,7 +766,7 @@ class EdgeResourceManager:
         
         return None
     
-    async def _rollback_allocations(self, allocations: List[ResourceAllocation]):
+    async def _rollback_allocations(self, allocations -> None: List[ResourceAllocation]) -> None:
         """Rollback a list of allocations."""
         for allocation in allocations:
             node_id = await self._find_allocation_node(allocation.allocation_id)
@@ -775,7 +775,7 @@ class EdgeResourceManager:
                 if allocation.allocation_id in self.allocations:
                     del self.allocations[allocation.allocation_id]
     
-    async def _release_node_allocations(self, node_id: str):
+    async def _release_node_allocations(self, node_id -> None: str) -> None:
         """Release all allocations on a specific node."""
         allocations_to_release = []
         
@@ -786,14 +786,14 @@ class EdgeResourceManager:
         
         await self.release_resources(allocations_to_release)
     
-    async def _update_usage_statistics(self):
+    async def _update_usage_statistics(self) -> None:
         """Update resource usage statistics."""
         usage_stats = await self.get_resource_usage()
         
         for key, usage in usage_stats.items():
             self.usage_history[key].append(usage)
     
-    async def _check_node_health(self):
+    async def _check_node_health(self) -> None:
         """Check health of all registered nodes."""
         current_time = datetime.now()
         
@@ -804,7 +804,7 @@ class EdgeResourceManager:
                     node.status = ResourceStatus.ERROR
                     logger.warning(f"Node {node_id} appears to be offline")
     
-    async def _update_local_metrics(self):
+    async def _update_local_metrics(self) -> None:
         """Update metrics for the local node."""
         if "local_node" not in self.nodes:
             return
@@ -828,7 +828,7 @@ class EdgeResourceManager:
         except Exception as e:
             logger.error(f"Failed to update local metrics: {e}")
     
-    async def _cleanup_expired_allocations(self):
+    async def _cleanup_expired_allocations(self) -> None:
         """Clean up expired resource allocations."""
         current_time = datetime.now()
         expired_allocations = []
@@ -841,7 +841,7 @@ class EdgeResourceManager:
             await self.release_resources(expired_allocations)
             logger.info(f"Cleaned up {len(expired_allocations)} expired allocations")
     
-    async def _cleanup_expired_reservations(self):
+    async def _cleanup_expired_reservations(self) -> None:
         """Clean up expired resource reservations."""
         current_time = datetime.now()
         expired_reservations = []
@@ -876,7 +876,7 @@ def create_resource_manager(
 
 # Example usage and testing
 if __name__ == "__main__":
-    async def test_resource_manager():
+    async def test_resource_manager() -> None:
         """Test the resource manager."""
         manager = create_resource_manager()
         

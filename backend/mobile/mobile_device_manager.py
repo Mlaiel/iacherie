@@ -119,7 +119,7 @@ class DeviceOptimization:
 class MobileDeviceManager:
     """Advanced mobile device management system"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         """Initialize mobile device manager"""
         self.config = config or {}
         self.device_profiles = {}
@@ -293,7 +293,7 @@ class MobileDeviceManager:
             "optimization_effectiveness": await self._analyze_optimization_effectiveness()
         }
     
-    def _update_device_diversity_score(self):
+    def _update_device_diversity_score(self) -> None:
         """Update device diversity score based on registered devices"""
         if not self.device_profiles:
             self.device_metrics["device_diversity_score"] = 0.0
@@ -310,7 +310,7 @@ class MobileDeviceManager:
         diversity_score = sum(min(1.0, factor / max_val) for factor, max_val in zip(diversity_factors, max_expected)) / len(diversity_factors)
         self.device_metrics["device_diversity_score"] = diversity_score
     
-    def _update_average_compatibility_score(self, new_score: float):
+    def _update_average_compatibility_score(self, new_score -> None: float) -> None:
         """Update average compatibility score"""
         current_avg = self.device_metrics["average_compatibility_score"]
         total_checks = self.device_metrics["compatibility_checks"]
@@ -443,7 +443,7 @@ class MobileDeviceManager:
 class DeviceProfiler:
     """Device profiling system"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         
     async def create_device_profile(self, device_info: Dict[str, Any], device_id: str) -> DeviceProfile:
@@ -607,7 +607,7 @@ class DeviceProfiler:
 class CompatibilityChecker:
     """Device compatibility checking system"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         
     async def check_compatibility(self, capabilities: DeviceCapabilities, 
@@ -674,7 +674,7 @@ class CompatibilityChecker:
     
     def _compare_versions(self, version1: str, version2: str) -> int:
         """Compare two version strings"""
-        def normalize_version(v):
+        def normalize_version(v) -> None:
             return [int(x) for x in re.sub(r'[^\d.]', '', v).split('.') if x.isdigit()]
         
         v1_parts = normalize_version(version1)
@@ -731,7 +731,7 @@ class CompatibilityChecker:
 class HardwareAdapter:
     """Hardware adaptation system"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         
     async def generate_optimization_settings(self, device_profile: DeviceProfile, 

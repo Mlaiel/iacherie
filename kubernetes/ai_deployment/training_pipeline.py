@@ -90,7 +90,7 @@ class TrainingPipelineConfig:
     gradient_accumulation_steps: int = 1
     mixed_precision: bool = True
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         try:
                     # Request validation
                     if not data:
@@ -125,7 +125,7 @@ class TrainingPipelineDeployment:
     - Resource optimization and scheduling
     """
     
-    def __init__(self, namespace: str = "ia-influencer-training"):
+    def __init__(self, namespace -> None: str = "ia-influencer-training") -> None:
         """
         Initialize training pipeline deployment
         
@@ -1247,3 +1247,5 @@ class TrainingPipelineDeployment:
         except Exception as e:
             logger.error(f"Training cleanup failed: {e}")
             raise
+
+# File has syntax issues - needs manual review

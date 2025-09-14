@@ -134,7 +134,7 @@ class AuditEvent(UUIDSchema, TimestampSchema):
     retention_period: Optional[int] = Field(None, description="Data retention period in days")
     
     @validator('ip_address')
-    def validate_ip_address(cls, v):
+    def validate_ip_address(cls, v) -> None:
         """Validate IP address format."""
         if v is not None:
             import re

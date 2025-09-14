@@ -5,7 +5,7 @@ Enterprise-grade configuration management system providing dynamic configuration
 environment-specific settings, secret management, and configuration validation.
 
 Features:
-- Multi-environment configuration management
+    - Multi-environment configuration management
 - Dynamic configuration updates and hot-reloading
 - Secure secret management and encryption
 - Configuration validation and schema enforcement
@@ -15,7 +15,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Team Specialization: Lead Dev IA + Backend Senior + ML Engineer + DBA + 
                     Security + Microservices + Audio + DevOps + IA Prompt Engineer
 
-⚠️  WARNING: PROPRIETARY CODE
+# [EMOJI_REMOVED]  WARNING: PROPRIETARY CODE
 All code, concepts, and implementations in this module are proprietary 
 intellectual property of Fahed Mlaiel. Any unauthorized use, copying, 
 distribution, or commercial exploitation without explicit written 
@@ -419,7 +419,7 @@ class SecretManager:
     key rotation, and secure storage integration.
     """
     
-    def __init__(self, encryption_key: Optional[str] = None):
+    def __init__(self, encryption_key -> None: Optional[str] = None) -> None:
         """
 Initialize secret manager."""
         self.encryption_key = encryption_key or self._generate_encryption_key()
@@ -556,7 +556,7 @@ class ConfigurationManager:
     hot-reloading, and multi-source configuration support.
     """
     
-    def __init__(self, environment: Environment = Environment.PRODUCTION):
+    def __init__(self, environment -> None: Environment = Environment.PRODUCTION) -> None:
         """
 Initialize configuration manager."""
         self.environment = environment
@@ -567,7 +567,7 @@ Initialize configuration manager."""
         self.config_cache: Dict[str, Any] = {}
         self.redis_client: Optional[aioredis.Redis] = None
         
-    async def initialize(self, config_path: Optional[str] = None):
+    async def initialize(self, config_path -> None: Optional[str] = None) -> None:
         """
 Initialize configuration manager."""
         try:
@@ -589,7 +589,7 @@ Initialize configuration manager."""
             logger.error(f"Configuration manager initialization failed: {e}")
             raise
     
-    async def _load_configuration(self, config_path: Optional[str] = None):
+    async def _load_configuration(self, config_path -> None: Optional[str] = None) -> None:
         """Load configuration from multiple sources."""
         # 1. Load from file
         if config_path:
@@ -619,7 +619,7 @@ Initialize configuration manager."""
         # 4. Apply environment-specific overrides
         await self._apply_environment_overrides()
     
-    async def _load_from_file(self, config_path: str):
+    async def _load_from_file(self, config_path -> None: str) -> None:
         """Load configuration from file."""
         try:
             config_file = Path(config_path)
@@ -646,7 +646,7 @@ Initialize configuration manager."""
         except Exception as e:
             logger.error(f"Failed to load configuration from file {config_path}: {e}")
     
-    async def _load_from_environment(self):
+    async def _load_from_environment(self) -> None:
         """Load configuration from environment variables."""
         try:
             if self.config is None:
@@ -708,7 +708,7 @@ Initialize configuration manager."""
         except Exception as e:
             logger.error(f"Failed to load configuration from environment: {e}")
     
-    async def _load_from_kubernetes(self):
+    async def _load_from_kubernetes(self) -> None:
         """Load configuration from Kubernetes secrets and configmaps."""
         try:
             # Check if running in Kubernetes
@@ -756,7 +756,7 @@ Initialize configuration manager."""
         except Exception as e:
             logger.debug(f"Kubernetes configuration loading failed: {e}")
     
-    async def _apply_environment_overrides(self):
+    async def _apply_environment_overrides(self) -> None:
         """Apply environment-specific configuration overrides."""
         if self.config is None:
             return
@@ -786,13 +786,13 @@ Initialize configuration manager."""
             self.config.monitoring.logging_level = "DEBUG"
             self.config.scaling.enabled = False
     
-    def _update_config_from_dict(self, config_data: Dict[str, Any]):
+    def _update_config_from_dict(self, config_data -> None: Dict[str, Any]) -> None:
         """Update configuration object from dictionary."""
         if self.config is None:
             self.config = CompleteAIProcessingConfig()
         
         # Recursively update configuration
-        def update_nested(obj, data):
+        def update_nested(obj, data) -> None:
         try:
                     async with self.db_session() as session:
                         # Database operation
@@ -815,7 +815,7 @@ Initialize configuration manager."""
         
         update_nested(self.config, config_data)
     
-    def _set_nested_config_value(self, config_path: str, value: Any):
+    def _set_nested_config_value(self, config_path -> None: str, value -> None: Any) -> None:
         """
 Set nested configuration value using dot notation."""
         if self.config is None:
@@ -836,7 +836,7 @@ Set nested configuration value using dot notation."""
         if hasattr(obj, final_key):
             setattr(obj, final_key, value)
     
-    async def _validate_configuration(self):
+    async def _validate_configuration(self) -> None:
         """
 Validate loaded configuration."""
         if self.config is None:
@@ -851,7 +851,7 @@ Validate loaded configuration."""
         
         logger.info("Configuration validation passed")
     
-    async def _initialize_redis_client(self):
+    async def _initialize_redis_client(self) -> None:
         """Initialize Redis client for configuration caching."""
         if self.config and self.config.redis:
             try:
@@ -875,7 +875,7 @@ Validate loaded configuration."""
                 logger.warning(f"Failed to initialize Redis client: {e}")
                 self.redis_client = None
     
-    async def _start_configuration_watchers(self):
+    async def _start_configuration_watchers(self) -> None:
         """Start configuration file watchers for hot-reloading."""
         # This would implement file watching for configuration changes
         # For now, we'll just log that watchers would be started
@@ -958,7 +958,7 @@ Validate loaded configuration."""
             logger.error(f"Failed to update configuration: {e}")
             return False
     
-    async def _cache_configuration(self):
+    async def _cache_configuration(self) -> None:
         """Cache configuration in Redis."""
         if self.redis_client and self.config:
             try:
@@ -984,7 +984,7 @@ Validate loaded configuration."""
         else:
             return yaml.dump(config_dict, default_flow_style=False)
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Shutdown configuration manager."""
         try:
             # Cancel watchers
@@ -1046,3 +1046,5 @@ def create_model_config(model_type: AIModelType, model_path: str,
         cache_enabled=True,
         optimization_enabled=True
     )
+
+# File has syntax issues - needs manual review

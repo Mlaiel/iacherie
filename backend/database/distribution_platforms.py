@@ -23,6 +23,7 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class PlatformType(Enum):
+    """PlatformType class implementation"""
     STREAMING_MUSIC = "streaming_music"
     STREAMING_VIDEO = "streaming_video"
     SOCIAL_MEDIA = "social_media"
@@ -30,6 +31,7 @@ class PlatformType(Enum):
     MARKETPLACE = "marketplace"
 
 class DistributionStatus(Enum):
+    """DistributionStatus class implementation"""
     PENDING = "pending"
     PUBLISHED = "published"
     FAILED = "failed"
@@ -98,10 +100,10 @@ class DistributionAnalytics(Base):
     geographic_distribution = Column(JSONB, default={})
     recorded_at = Column(DateTime(timezone=True), default=datetime.utcnow)
 
-def get_distribution_platforms_models():
+def get_distribution_platforms_models() -> None:
     return [PlatformIntegration, ContentDistribution, CrossPlatformSync, DistributionAnalytics]
 
-def create_distribution_platforms_tables(engine):
+def create_distribution_platforms_tables(engine) -> None:
     try:
         Base.metadata.create_all(engine, tables=[model.__table__ for model in get_distribution_platforms_models()])
         logger.info("Successfully created distribution platforms tables")

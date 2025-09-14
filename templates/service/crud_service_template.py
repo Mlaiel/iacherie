@@ -1,4 +1,6 @@
 """{{service_name}} CRUD Service Template for Ainflue Platform
+import asyncio
+
 {{service_description}}
 
 Author: {{author_name}} ({{author_email}})
@@ -56,6 +58,7 @@ class ServiceResult(BaseModel):
     created_at: datetime = Field(default_factory=datetime.utcnow)
     
     class Config:
+    """Config: class implementation"""
         arbitrary_types_allowed = True
 
 
@@ -77,10 +80,10 @@ class BaseCRUDService(Generic[ModelType, CreateSchemaType, UpdateSchemaType], AB
     
     def __init__(
         self,
-        model: ModelType,
-        config: Optional[CRUDServiceConfig] = None,
-        session: Optional[AsyncSession] = None
-    ):
+        model -> None: ModelType,
+        config -> None: Optional[CRUDServiceConfig] = None,
+        session -> None: Optional[AsyncSession] = None
+    ) -> None:
         self.model = model
         self.config = config or CRUDServiceConfig()
         self.session = session
@@ -569,36 +572,36 @@ class BaseCRUDService(Generic[ModelType, CreateSchemaType, UpdateSchemaType], AB
     
     # Abstract methods to be implemented by concrete services
     @abstractmethod
-    async def _validate_create_input(self, obj_in: CreateSchemaType, user_id: Optional[str] = None):
+    async def _validate_create_input(self, obj_in -> None: CreateSchemaType, user_id -> None: Optional[str] = None) -> None:
         """Validate create input"""
         pass
     
     @abstractmethod
-    async def _validate_update_input(self, obj_in: UpdateSchemaType, db_obj: ModelType, user_id: Optional[str] = None):
+    async def _validate_update_input(self, obj_in -> None: UpdateSchemaType, db_obj -> None: ModelType, user_id -> None: Optional[str] = None) -> None:
         """Validate update input"""
         pass
     
     @abstractmethod
-    async def _check_create_permission(self, user_id: Optional[str], obj_in: CreateSchemaType):
+    async def _check_create_permission(self, user_id -> None: Optional[str], obj_in -> None: CreateSchemaType) -> None:
         """Check create permission"""
         pass
     
     @abstractmethod
-    async def _check_read_permission(self, user_id: Optional[str], db_obj: ModelType):
+    async def _check_read_permission(self, user_id -> None: Optional[str], db_obj -> None: ModelType) -> None:
         """Check read permission"""
         pass
     
     @abstractmethod
-    async def _check_update_permission(self, user_id: Optional[str], db_obj: ModelType):
+    async def _check_update_permission(self, user_id -> None: Optional[str], db_obj -> None: ModelType) -> None:
         """Check update permission"""
         pass
     
     @abstractmethod
-    async def _check_delete_permission(self, user_id: Optional[str], db_obj: ModelType):
+    async def _check_delete_permission(self, user_id -> None: Optional[str], db_obj -> None: ModelType) -> None:
         """Check delete permission"""
         pass
     
-    async def _add_includes(self, query, includes: List[str]):
+    async def _add_includes(self, query, includes -> None: List[str]) -> None:
         """Add eager loading for relationships"""
         # Default implementation - override in concrete services
         return query
@@ -640,7 +643,7 @@ class BaseCRUDService(Generic[ModelType, CreateSchemaType, UpdateSchemaType], AB
         
         return conditions
     
-    async def _add_sorting(self, query, sort: SortParams):
+    async def _add_sorting(self, query, sort -> None: SortParams) -> None:
         """Add sorting to query"""
         if sort.field and hasattr(self.model, sort.field):
             column = getattr(self.model, sort.field)
@@ -656,7 +659,7 @@ class BaseCRUDService(Generic[ModelType, CreateSchemaType, UpdateSchemaType], AB
         # Override in concrete services for user-specific filtering
         return []
     
-    async def _clear_cache(self):
+    async def _clear_cache(self) -> None:
         """Clear service cache"""
         self._cache.clear()
 
@@ -677,7 +680,7 @@ class {{service_name}}CRUDService(BaseCRUDService):
     - Input validation and error handling
     """
     
-    async def _validate_create_input(self, obj_in: CreateSchemaType, user_id: Optional[str] = None):
+    async def _validate_create_input(self, obj_in -> None: CreateSchemaType, user_id -> None: Optional[str] = None) -> None:
         """Validate create input for {{service_name}}"""
         # Add specific validation logic here
         if hasattr(obj_in, 'name') and not obj_in.name:
@@ -686,7 +689,7 @@ class {{service_name}}CRUDService(BaseCRUDService):
         # Add more validation rules as needed
         pass
     
-    async def _validate_update_input(self, obj_in: UpdateSchemaType, db_obj: ModelType, user_id: Optional[str] = None):
+    async def _validate_update_input(self, obj_in -> None: UpdateSchemaType, db_obj -> None: ModelType, user_id -> None: Optional[str] = None) -> None:
         """Validate update input for {{service_name}}"""
         # Add specific validation logic here
         if hasattr(obj_in, 'name') and obj_in.name and not obj_in.name.strip():
@@ -695,7 +698,7 @@ class {{service_name}}CRUDService(BaseCRUDService):
         # Add more validation rules as needed
         pass
     
-    async def _check_create_permission(self, user_id: Optional[str], obj_in: CreateSchemaType):
+    async def _check_create_permission(self, user_id -> None: Optional[str], obj_in -> None: CreateSchemaType) -> None:
         """Check create permission for {{service_name}}"""
         # Add permission checking logic here
         if not user_id:
@@ -704,7 +707,7 @@ class {{service_name}}CRUDService(BaseCRUDService):
         # Add more permission checks as needed
         pass
     
-    async def _check_read_permission(self, user_id: Optional[str], db_obj: ModelType):
+    async def _check_read_permission(self, user_id -> None: Optional[str], db_obj -> None: ModelType) -> None:
         """Check read permission for {{service_name}}"""
         # Add permission checking logic here
         if hasattr(db_obj, 'is_public') and not db_obj.is_public and not user_id:
@@ -713,7 +716,7 @@ class {{service_name}}CRUDService(BaseCRUDService):
         # Add more permission checks as needed
         pass
     
-    async def _check_update_permission(self, user_id: Optional[str], db_obj: ModelType):
+    async def _check_update_permission(self, user_id -> None: Optional[str], db_obj -> None: ModelType) -> None:
         """Check update permission for {{service_name}}"""
         # Add permission checking logic here
         if not user_id:
@@ -727,7 +730,7 @@ class {{service_name}}CRUDService(BaseCRUDService):
         # Add more permission checks as needed
         pass
     
-    async def _check_delete_permission(self, user_id: Optional[str], db_obj: ModelType):
+    async def _check_delete_permission(self, user_id -> None: Optional[str], db_obj -> None: ModelType) -> None:
         """Check delete permission for {{service_name}}"""
         # Add permission checking logic here
         if not user_id:
@@ -741,7 +744,7 @@ class {{service_name}}CRUDService(BaseCRUDService):
         # Add more permission checks as needed
         pass
     
-    async def _add_includes(self, query, includes: List[str]):
+    async def _add_includes(self, query, includes -> None: List[str]) -> None:
         """Add eager loading for {{service_name}} relationships"""
         # Add specific relationship loading here
         for include in includes:
@@ -872,3 +875,5 @@ class {{service_name}}CRUDService(BaseCRUDService):
                 error_message=str(e),
                 operation=CRUDOperation.LIST
             )
+
+# File has syntax issues - needs manual review

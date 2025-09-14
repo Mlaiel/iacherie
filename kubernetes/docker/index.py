@@ -1,3 +1,8 @@
+"""
+Index module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """🐳 Docker Infrastructure Index - IA-Influencer-Agent Production Platform
 =========================================================================
@@ -53,7 +58,7 @@ logger = logging.getLogger(__name__)
 # Rich console for beautiful output
 console = Console()
 
-def display_header():
+def display_header() -> None:
     """
 Display application header"""
     header_text = Text()
@@ -65,7 +70,7 @@ Display application header"""
     
     console.print(Panel(header_text, title="[bold]Docker Infrastructure Manager[/bold]", border_style="blue"))
 
-def display_team_specialties():
+def display_team_specialties() -> None:
     """Display team specialties"""
     specialties = [
         "Lead Dev IA + Backend Senior",
@@ -98,7 +103,7 @@ def display_team_specialties():
     
     console.print(table)
 
-def display_available_services():
+def display_available_services() -> None:
     """Display available Docker services"""
     services = [
         ("API Gateway", "Main entry point & routing", "FastAPI + Nginx", "8000"),
@@ -128,7 +133,7 @@ def display_available_services():
     
     console.print(table)
 
-def display_deployment_environments():
+def display_deployment_environments() -> None:
     """Display deployment environment requirements"""
     environments = [
         ("Development", "8 cores", "16GB", "100GB", "Local testing"),
@@ -150,13 +155,13 @@ def display_deployment_environments():
 
 @click.group()
 @click.pass_context
-def cli(ctx):
+def cli(ctx) -> None:
     """IA-Influencer Docker Infrastructure Manager"""
     ctx.ensure_object(dict)
     display_header()
 
 @cli.command()
-def info():
+def info() -> None:
     """
 Display platform information"""
     console.print("\n")
@@ -181,7 +186,7 @@ Display platform information"""
 @click.option('--environment', '-e', default='production', help='Deployment environment')
 @click.option('--output-dir', '-o', default='./deployment', help='Output directory')
 @click.option('--registry', '-r', default='registry.ia-influencer.com', help='Docker registry URL')
-def generate(environment: str, output_dir: str, registry: str):
+def generate(environment -> None: str, output_dir -> None: str, registry -> None: str) -> None:
     """Generate complete Docker deployment configuration"""
     console.print(f"\n🚀 Generating Docker deployment configuration...")
     console.print(f"Environment: [bold cyan]{environment}[/bold cyan]")
@@ -238,13 +243,13 @@ def generate(environment: str, output_dir: str, registry: str):
 @cli.command()
 @click.option('--output-dir', '-o', default='./deployment', help='Deployment directory')
 @click.option('--environment', '-e', default='production', help='Environment')
-def deploy(output_dir: str, environment: str):
+def deploy(output_dir -> None: str, environment -> None: str) -> None:
     """Deploy the complete IA-Influencer platform"""
     console.print(f"\n🚀 Deploying IA-Influencer platform...")
     console.print(f"Environment: [bold cyan]{environment}[/bold cyan]")
     console.print(f"Deployment directory: [bold green]{output_dir}[/bold green]\n")
     
-    async def run_deployment():
+    async def run_deployment() -> None:
         try:
             logger.info(f"Executing run_deployment")
             
@@ -293,7 +298,7 @@ def deploy(output_dir: str, environment: str):
     asyncio.run(run_deployment())
 
 @cli.command()
-def validate():
+def validate() -> None:
     """Validate Docker configuration and requirements"""
     console.print("\n🔍 Validating Docker environment...")
     
@@ -325,7 +330,7 @@ def validate():
 
 @cli.command()
 @click.option('--service', '-s', help='Specific service to check')
-def status(service: Optional[str]):
+def status(service -> None: Optional[str]) -> None:
     """Check platform status"""
     console.print(f"\n📊 Checking platform status...")
     

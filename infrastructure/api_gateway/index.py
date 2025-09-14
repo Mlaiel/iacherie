@@ -286,7 +286,7 @@ def get_ai_processing_endpoints() -> List[APIEndpoint]:
 # Initialize default configuration
 DEFAULT_GATEWAY = None
 
-def initialize_default_gateway():
+def initialize_default_gateway() -> None:
     """Initialize default gateway instance"""
     global DEFAULT_GATEWAY
     if DEFAULT_GATEWAY is None:

@@ -1,7 +1,14 @@
+"""
+Metadata Config module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 """Ainflue Metadata Configuration Module
+import asyncio
+
 =======================================
 
 Enterprise-grade metadata configuration for the Ainflue platform.
@@ -582,7 +589,7 @@ class MetadataRecord:
 class MetadataConfiguration:
     """Main metadata configuration manager"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize metadata configuration"""
         # Data storage
         self.schemas: Dict[str, MetadataSchema] = {}
@@ -656,7 +663,7 @@ class MetadataConfiguration:
         # Initialize default schemas
         self._initialize_default_schemas()
     
-    def _initialize_default_schemas(self):
+    def _initialize_default_schemas(self) -> None:
         """Initialize default metadata schemas"""
         
         # Video metadata schema

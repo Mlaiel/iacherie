@@ -84,7 +84,7 @@ class SentimentRequest(BaseModel):
     metadata: Dict[str, Any] = Field(default_factory=dict)
 
     @validator('text')
-    def validate_text(cls, v):
+    def validate_text(cls, v) -> None:
         if isinstance(v, str):
             if len(v.strip()) == 0:
                 raise ValueError('Text cannot be empty')
@@ -167,10 +167,10 @@ class {{agent_class_name}}(BaseAIAgent):
     
     def __init__(
         self,
-        name: str = "{{agent_name}}",
-        config: Optional[SentimentConfig] = None,
+        name -> None: str = "{{agent_name}}",
+        config -> None: Optional[SentimentConfig] = None,
         **kwargs
-    ):
+    ) -> None:
         super().__init__(name=name, **kwargs)
         self.config = config or SentimentConfig()
         
@@ -899,3 +899,5 @@ class {{agent_class_name}}(BaseAIAgent):
     def get_metrics(self) -> Dict[str, Any]:
         """Get sentiment analysis metrics"""
         return self.metrics.get_summary()
+
+# File has syntax issues - needs manual review

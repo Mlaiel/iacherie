@@ -127,7 +127,7 @@ class TrafficMetrics:
 class GatewayLoadBalancer:
     """Enterprise load balancer for payment gateway"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.redis_client = None
         self.providers: Dict[str, ProviderCapacity] = {}
@@ -155,7 +155,7 @@ class GatewayLoadBalancer:
             'max_load_percentage': 80.0  # percentage
         })
         
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize the load balancer"""
         try:
             # Initialize Redis connection
@@ -192,7 +192,7 @@ class GatewayLoadBalancer:
             logger.error(f"Failed to initialize Gateway Load Balancer: {e}")
             raise
     
-    async def _load_configuration(self):
+    async def _load_configuration(self) -> None:
         """Load existing configuration from storage"""
         try:
             # Load providers
@@ -233,7 +233,7 @@ class GatewayLoadBalancer:
         except Exception as e:
             logger.error(f"Failed to load configuration: {e}")
     
-    async def _initialize_default_providers(self):
+    async def _initialize_default_providers(self) -> None:
         """Initialize default provider configurations"""
         try:
             default_providers = [
@@ -735,7 +735,7 @@ class GatewayLoadBalancer:
             logger.error(f"Failed to check provider health for {provider_id}: {e}")
             return False
     
-    async def _monitor_provider_health(self):
+    async def _monitor_provider_health(self) -> None:
         """Monitor provider health continuously"""
         while True:
             try:
@@ -749,7 +749,7 @@ class GatewayLoadBalancer:
                 logger.error(f"Error in provider health monitoring: {e}")
                 await asyncio.sleep(60)
     
-    async def _perform_health_check(self, provider_id: str):
+    async def _perform_health_check(self, provider_id -> None: str) -> None:
         """Perform health check for a specific provider"""
         try:
             # Simulate health check (in real implementation, make actual API calls)
@@ -767,7 +767,7 @@ class GatewayLoadBalancer:
         except Exception as e:
             logger.error(f"Failed to perform health check for {provider_id}: {e}")
     
-    async def _collect_traffic_metrics(self):
+    async def _collect_traffic_metrics(self) -> None:
         """Collect traffic metrics continuously"""
         while True:
             try:
@@ -780,7 +780,7 @@ class GatewayLoadBalancer:
                 logger.error(f"Error in traffic metrics collection: {e}")
                 await asyncio.sleep(60)
     
-    async def _collect_provider_metrics(self, provider_id: str):
+    async def _collect_provider_metrics(self, provider_id -> None: str) -> None:
         """Collect metrics for a specific provider"""
         try:
             provider = self.providers[provider_id]
@@ -801,7 +801,7 @@ class GatewayLoadBalancer:
         except Exception as e:
             logger.error(f"Failed to collect metrics for {provider_id}: {e}")
     
-    async def _update_provider_load(self, provider_id: str, load_change: int):
+    async def _update_provider_load(self, provider_id -> None: str, load_change -> None: int) -> None:
         """Update provider current load"""
         try:
             if provider_id in self.providers:
@@ -877,7 +877,7 @@ class GatewayLoadBalancer:
             logger.error(f"Failed to get load balancer status: {e}")
             return {'error': str(e)}
     
-    async def _save_providers(self):
+    async def _save_providers(self) -> None:
         """Save providers configuration to storage"""
         try:
             providers_dict = {}
@@ -903,7 +903,7 @@ class GatewayLoadBalancer:
         except Exception as e:
             logger.error(f"Failed to save providers: {e}")
     
-    async def _save_routing_rules(self):
+    async def _save_routing_rules(self) -> None:
         """Save routing rules to storage"""
         try:
             rules_dict = {}
@@ -928,7 +928,7 @@ class GatewayLoadBalancer:
         except Exception as e:
             logger.error(f"Failed to save routing rules: {e}")
     
-    async def close(self):
+    async def close(self) -> None:
         """Close the load balancer and cleanup resources"""
         try:
             if self.geoip_reader:

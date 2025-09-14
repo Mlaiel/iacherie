@@ -138,7 +138,7 @@ class BusinessLogicPipelineCore:
     and intelligent pipeline management for enterprise business logic execution.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None, level: str = "enterprise"):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None, level -> None: str = "enterprise") -> None:
         """Initialize business logic pipeline core"""
         self.config = config or {}
         self.level = level
@@ -222,7 +222,7 @@ class BusinessLogicPipelineCore:
             'escalation_policies': ['immediate', 'delayed', 'business_hours', 'severity_based']
         }
     
-    def _initialize_default_pipelines(self):
+    def _initialize_default_pipelines(self) -> None:
         """Initialize default business logic pipelines"""
         default_pipelines = [
             {
@@ -336,9 +336,9 @@ class BusinessLogicPipelineCore:
     
     async def _execute_pipeline_steps(
         self, 
-        execution: PipelineExecution, 
-        pipeline: BusinessPipeline
-    ):
+        execution -> None: PipelineExecution, 
+        pipeline -> None: BusinessPipeline
+    ) -> None:
         """Execute pipeline steps"""
         try:
             execution.status = PipelineStatus.RUNNING
@@ -510,7 +510,7 @@ class BusinessLogicPipelineCore:
         
         return False  # Stop pipeline execution
     
-    def _update_execution_metrics(self, execution: PipelineExecution):
+    def _update_execution_metrics(self, execution -> None: PipelineExecution) -> None:
         """Update execution metrics"""
         if execution.duration:
             duration_seconds = execution.duration.total_seconds()

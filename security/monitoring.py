@@ -80,7 +80,7 @@ class SecurityIncident:
 class SecurityMonitoringDashboard:
     """Comprehensive security monitoring and compliance dashboard"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.audit_trail = security_audit_trail
         self.vulnerability_scanner = security_scanner
         self.security_logger = SecurityEventLogger()

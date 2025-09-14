@@ -1,3 +1,8 @@
+"""
+Trend Analysis Core module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Ainflue Core Business - Advanced Trend Analysis Engine
@@ -107,7 +112,7 @@ class Trend:
 class TrendAnalysisCore:
     """Advanced enterprise trend analysis core"""
     
-    def __init__(self, level: str = "enterprise"):
+    def __init__(self, level -> None: str = "enterprise") -> None:
         self.level = level
         self.active_trends: Dict[str, Trend] = {}
         self.trend_history: List[Trend] = []
@@ -159,7 +164,7 @@ class TrendAnalysisCore:
         }
         return configs.get(self.level, configs["enterprise"])
     
-    def _setup_analysis_components(self):
+    def _setup_analysis_components(self) -> None:
         """Setup trend analysis components"""
         # Mock data sources for demonstration
         self.data_sources = {
@@ -222,7 +227,7 @@ class TrendAnalysisCore:
             logger.error(f"❌ Failed to start trend analysis: {e}")
             return False
     
-    async def _data_collection_loop(self):
+    async def _data_collection_loop(self) -> None:
         """Data collection background loop"""
         while self._analysis_running:
             try:
@@ -242,7 +247,7 @@ class TrendAnalysisCore:
                 logger.error(f"Data collection loop error: {e}")
                 await asyncio.sleep(60)
     
-    async def _trend_detection_loop(self):
+    async def _trend_detection_loop(self) -> None:
         """Trend detection background loop"""
         while self._analysis_running:
             try:
@@ -262,7 +267,7 @@ class TrendAnalysisCore:
                 logger.error(f"Trend detection loop error: {e}")
                 await asyncio.sleep(120)
     
-    async def _trend_tracking_loop(self):
+    async def _trend_tracking_loop(self) -> None:
         """Trend tracking and lifecycle management loop"""
         while self._analysis_running:
             try:
@@ -277,7 +282,7 @@ class TrendAnalysisCore:
                 logger.error(f"Trend tracking loop error: {e}")
                 await asyncio.sleep(180)
     
-    async def _process_data_points(self, data_points: List[TrendData], source: str):
+    async def _process_data_points(self, data_points -> None: List[TrendData], source -> None: str) -> None:
         """Process incoming data points"""
         async with self._lock:
             for data_point in data_points:
@@ -490,7 +495,7 @@ class TrendAnalysisCore:
             monetization_potential=monetization_potential
         )
     
-    async def _process_detected_trends(self, trends: List[Trend], algorithm: str):
+    async def _process_detected_trends(self, trends -> None: List[Trend], algorithm -> None: str) -> None:
         """Process newly detected trends"""
         async with self._lock:
             for trend in trends:
@@ -513,7 +518,7 @@ class TrendAnalysisCore:
                             self.active_trends[trend.trend_id] = trend
                             logger.info(f"✅ New trend detected: {', '.join(trend.keywords)} ({algorithm})")
     
-    async def _update_trend_statuses(self):
+    async def _update_trend_statuses(self) -> None:
         """Update trend lifecycle statuses"""
         async with self._lock:
             current_time = datetime.utcnow()
@@ -535,7 +540,7 @@ class TrendAnalysisCore:
                 else:
                     trend.status = TrendStatus.DEAD
     
-    async def _cleanup_expired_trends(self):
+    async def _cleanup_expired_trends(self) -> None:
         """Clean up expired trends"""
         async with self._lock:
             current_time = datetime.utcnow()

@@ -175,7 +175,7 @@ class DataPipeline:
 class RealTimeMetricsCollector:
     """Real-time metrics collection system"""
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client -> None: aioredis.Redis) -> None:
         self.redis = redis_client
         self.collectors = {}
         self.metric_streams = {}
@@ -300,7 +300,7 @@ class RealTimeMetricsCollector:
 class PredictiveAnalyticsEngine:
     """Predictive analytics and forecasting system"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         self.models = {}
@@ -425,7 +425,7 @@ class PredictiveAnalyticsEngine:
 class BusinessIntelligenceEngine:
     """Business intelligence and insights generation"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         self.insight_generators = {}
@@ -541,7 +541,7 @@ class BusinessIntelligenceEngine:
 class ReportGenerator:
     """Analytics report generation system"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         self.report_templates = {}
@@ -633,7 +633,7 @@ class ReportGenerator:
 class StreamingAnalyticsIntelligence:
     """Unified streaming analytics intelligence - Main service class"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         

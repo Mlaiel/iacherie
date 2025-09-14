@@ -163,7 +163,7 @@ class ComplianceServicesIntegration:
     - Regulatory change monitoring and adaptation
     """
     
-    def __init__(self, organization_id: str):
+    def __init__(self, organization_id -> None: str) -> None:
         """Initialize Compliance Services Integration"""
         
         self.organization_id = organization_id
@@ -1092,7 +1092,7 @@ class ComplianceServicesIntegration:
 class ContentComplianceAnalyzer:
     """AI-powered content compliance analyzer"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.models_loaded = False
     
     async def analyze(self, content: str, content_type: ContentType) -> Dict[str, Any]:
@@ -1102,7 +1102,7 @@ class ContentComplianceAnalyzer:
 class DataPrivacyAnalyzer:
     """Data privacy compliance analyzer"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.privacy_rules = {}
     
     async def analyze(self, data: Dict[str, Any]) -> Dict[str, Any]:
@@ -1112,7 +1112,7 @@ class DataPrivacyAnalyzer:
 class LegalComplianceAnalyzer:
     """Legal compliance analyzer"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.legal_frameworks = {}
     
     async def analyze(self, content: Dict[str, Any]) -> Dict[str, Any]:
@@ -1120,7 +1120,7 @@ class LegalComplianceAnalyzer:
         return {"legal_issues": [], "recommendations": []}
 
 # Example usage and testing
-async def main():
+async def main() -> None:
     """Example usage of Compliance Services Integration"""
     
     # Initialize compliance service

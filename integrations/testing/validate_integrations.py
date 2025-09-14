@@ -1,3 +1,8 @@
+"""
+Validate Integrations module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 AINFLUE INTEGRATIONS MODULE - ENTERPRISE VALIDATION SCRIPT
@@ -45,7 +50,7 @@ class ValidationSummary:
 class IntegrationsValidator:
     """Enterprise-grade validation for Ainflue integrations module"""
     
-    def __init__(self, base_path: str = "/home/runner/work/Ainflue/Ainflue/integrations"):
+    def __init__(self, base_path -> None: str = "/home/runner/work/Ainflue/Ainflue/integrations") -> None:
         self.base_path = Path(base_path)
         self.results: List[ValidationResult] = []
         
@@ -236,7 +241,7 @@ Validation Status: MISSION ACCOMPLISHED WITH EXCELLENCE
         
         return report
     
-    def save_report(self, summary: ValidationSummary, filename: str = "validation_report.md"):
+    def save_report(self, summary -> None: ValidationSummary, filename -> None: str = "validation_report.md") -> None:
         """Save validation report to file"""
         report = self.generate_report(summary)
         report_path = self.base_path / filename
@@ -247,7 +252,7 @@ Validation Status: MISSION ACCOMPLISHED WITH EXCELLENCE
         print(f"📄 Report saved: {report_path}")
         return report_path
     
-    def save_json_metrics(self, summary: ValidationSummary, filename: str = "validation_metrics.json"):
+    def save_json_metrics(self, summary -> None: ValidationSummary, filename -> None: str = "validation_metrics.json") -> None:
         """Save validation metrics as JSON"""
         metrics = {
             "timestamp": datetime.now().isoformat(),
@@ -273,7 +278,7 @@ Validation Status: MISSION ACCOMPLISHED WITH EXCELLENCE
         print(f"📊 JSON metrics saved: {json_path}")
         return json_path
 
-def main():
+def main() -> None:
     """Main validation execution"""
     print("🚀 AINFLUE INTEGRATIONS MODULE - ENTERPRISE VALIDATION")
     print("=" * 70)

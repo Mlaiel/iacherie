@@ -27,12 +27,12 @@ class AinflueSdkException(Exception):
     
     def __init__(
         self,
-        message: str,
-        error_code: Optional[str] = None,
-        context: Optional[Dict[str, Any]] = None,
-        inner_exception: Optional[Exception] = None,
-        severity: str = "ERROR"
-    ):
+        message -> None: str,
+        error_code -> None: Optional[str] = None,
+        context -> None: Optional[Dict[str, Any]] = None,
+        inner_exception -> None: Optional[Exception] = None,
+        severity -> None: str = "ERROR"
+    ) -> None:
         super().__init__(message)
         self.message = message
         self.error_code = error_code or self.__class__.__name__
@@ -45,7 +45,7 @@ class AinflueSdkException(Exception):
         # Log the exception for monitoring (DevOps expertise)
         self._log_exception()
     
-    def _log_exception(self):
+    def _log_exception(self) -> None:
         """Log exception for monitoring and debugging"""
         log_data = {
             'error_code': self.error_code,
@@ -96,28 +96,28 @@ class AinflueSdkException(Exception):
 class AuthenticationError(AinflueSdkException):
     """Authentication failed - invalid credentials or tokens"""
     
-    def __init__(self, message: str = "Authentication failed", **kwargs):
+    def __init__(self, message -> None: str = "Authentication failed", **kwargs) -> None:
         super().__init__(message, error_code="AUTH_FAILED", severity="ERROR", **kwargs)
 
 
 class AuthorizationError(AinflueSdkException):
     """Authorization failed - insufficient permissions"""
     
-    def __init__(self, message: str = "Insufficient permissions", **kwargs):
+    def __init__(self, message -> None: str = "Insufficient permissions", **kwargs) -> None:
         super().__init__(message, error_code="AUTH_INSUFFICIENT", severity="ERROR", **kwargs)
 
 
 class TokenExpiredError(AuthenticationError):
     """Access token has expired"""
     
-    def __init__(self, message: str = "Access token expired", **kwargs):
+    def __init__(self, message -> None: str = "Access token expired", **kwargs) -> None:
         super().__init__(message, error_code="TOKEN_EXPIRED", **kwargs)
 
 
 class TokenInvalidError(AuthenticationError):
     """Access token is invalid or malformed"""
     
-    def __init__(self, message: str = "Invalid access token", **kwargs):
+    def __init__(self, message -> None: str = "Invalid access token", **kwargs) -> None:
         super().__init__(message, error_code="TOKEN_INVALID", **kwargs)
 
 
@@ -127,11 +127,11 @@ class APIError(AinflueSdkException):
     
     def __init__(
         self,
-        message: str,
-        status_code: Optional[int] = None,
-        response_data: Optional[Dict] = None,
+        message -> None: str,
+        status_code -> None: Optional[int] = None,
+        response_data -> None: Optional[Dict] = None,
         **kwargs
-    ):
+    ) -> None:
         context = kwargs.pop('context', {})
         if status_code:
             context['status_code'] = status_code
@@ -151,14 +151,14 @@ class APIError(AinflueSdkException):
 class NetworkError(AinflueSdkException):
     """Network connectivity issues"""
     
-    def __init__(self, message: str = "Network connection failed", **kwargs):
+    def __init__(self, message -> None: str = "Network connection failed", **kwargs) -> None:
         super().__init__(message, error_code="NETWORK_ERROR", severity="ERROR", **kwargs)
 
 
 class TimeoutError(NetworkError):
     """Request timeout exceeded"""
     
-    def __init__(self, message: str = "Request timeout", timeout_duration: Optional[float] = None, **kwargs):
+    def __init__(self, message -> None: str = "Request timeout", timeout_duration -> None: Optional[float] = None, **kwargs) -> None:
         context = kwargs.pop('context', {})
         if timeout_duration:
             context['timeout_duration'] = timeout_duration
@@ -170,10 +170,10 @@ class RateLimitError(APIError):
     
     def __init__(
         self,
-        message: str = "Rate limit exceeded",
-        retry_after: Optional[int] = None,
+        message -> None: str = "Rate limit exceeded",
+        retry_after -> None: Optional[int] = None,
         **kwargs
-    ):
+    ) -> None:
         context = kwargs.pop('context', {})
         if retry_after:
             context['retry_after'] = retry_after
@@ -186,10 +186,10 @@ class ValidationError(AinflueSdkException):
     
     def __init__(
         self,
-        message: str,
-        field_errors: Optional[Dict[str, List[str]]] = None,
+        message -> None: str,
+        field_errors -> None: Optional[Dict[str, List[str]]] = None,
         **kwargs
-    ):
+    ) -> None:
         context = kwargs.pop('context', {})
         if field_errors:
             context['field_errors'] = field_errors
@@ -200,14 +200,14 @@ class ValidationError(AinflueSdkException):
 class DataError(AinflueSdkException):
     """Data processing or format error"""
     
-    def __init__(self, message: str = "Data processing error", **kwargs):
+    def __init__(self, message -> None: str = "Data processing error", **kwargs) -> None:
         super().__init__(message, error_code="DATA_ERROR", **kwargs)
 
 
 class SerializationError(DataError):
     """JSON/Data serialization failed"""
     
-    def __init__(self, message: str = "Serialization failed", **kwargs):
+    def __init__(self, message -> None: str = "Serialization failed", **kwargs) -> None:
         super().__init__(message, error_code="SERIALIZATION_ERROR", **kwargs)
 
 
@@ -217,11 +217,11 @@ class ContentProcessingError(AinflueSdkException):
     
     def __init__(
         self,
-        message: str,
-        content_type: Optional[str] = None,
-        processing_stage: Optional[str] = None,
+        message -> None: str,
+        content_type -> None: Optional[str] = None,
+        processing_stage -> None: Optional[str] = None,
         **kwargs
-    ):
+    ) -> None:
         context = kwargs.pop('context', {})
         if content_type:
             context['content_type'] = content_type
@@ -235,11 +235,11 @@ class AIProcessingError(AinflueSdkException):
     
     def __init__(
         self,
-        message: str,
-        model_name: Optional[str] = None,
-        ai_provider: Optional[str] = None,
+        message -> None: str,
+        model_name -> None: Optional[str] = None,
+        ai_provider -> None: Optional[str] = None,
         **kwargs
-    ):
+    ) -> None:
         context = kwargs.pop('context', {})
         if model_name:
             context['model_name'] = model_name
@@ -251,7 +251,7 @@ class AIProcessingError(AinflueSdkException):
 class ModelNotAvailableError(AIProcessingError):
     """AI model is not available or loaded"""
     
-    def __init__(self, message: str = "AI model not available", **kwargs):
+    def __init__(self, message -> None: str = "AI model not available", **kwargs) -> None:
         super().__init__(message, error_code="MODEL_UNAVAILABLE", **kwargs)
 
 
@@ -259,14 +259,14 @@ class ModelNotAvailableError(AIProcessingError):
 class ConfigurationError(AinflueSdkException):
     """SDK configuration error"""
     
-    def __init__(self, message: str = "Configuration error", **kwargs):
+    def __init__(self, message -> None: str = "Configuration error", **kwargs) -> None:
         super().__init__(message, error_code="CONFIG_ERROR", severity="CRITICAL", **kwargs)
 
 
 class InitializationError(ConfigurationError):
     """SDK initialization failed"""
     
-    def __init__(self, message: str = "SDK initialization failed", **kwargs):
+    def __init__(self, message -> None: str = "SDK initialization failed", **kwargs) -> None:
         super().__init__(message, error_code="INIT_ERROR", **kwargs)
 
 
@@ -274,7 +274,7 @@ class InitializationError(ConfigurationError):
 class BusinessLogicError(AinflueSdkException):
     """Business rule or logic violation"""
     
-    def __init__(self, message: str, rule_name: Optional[str] = None, **kwargs):
+    def __init__(self, message -> None: str, rule_name -> None: Optional[str] = None, **kwargs) -> None:
         context = kwargs.pop('context', {})
         if rule_name:
             context['rule_name'] = rule_name
@@ -286,12 +286,12 @@ class QuotaExceededError(BusinessLogicError):
     
     def __init__(
         self,
-        message: str = "Usage quota exceeded",
-        quota_type: Optional[str] = None,
-        current_usage: Optional[int] = None,
-        quota_limit: Optional[int] = None,
+        message -> None: str = "Usage quota exceeded",
+        quota_type -> None: Optional[str] = None,
+        current_usage -> None: Optional[int] = None,
+        quota_limit -> None: Optional[int] = None,
         **kwargs
-    ):
+    ) -> None:
         context = kwargs.pop('context', {})
         context.update({
             'quota_type': quota_type,
@@ -306,11 +306,11 @@ class ResourceNotFoundError(AinflueSdkException):
     
     def __init__(
         self,
-        message: str = "Resource not found",
-        resource_type: Optional[str] = None,
-        resource_id: Optional[str] = None,
+        message -> None: str = "Resource not found",
+        resource_type -> None: Optional[str] = None,
+        resource_id -> None: Optional[str] = None,
         **kwargs
-    ):
+    ) -> None:
         context = kwargs.pop('context', {})
         if resource_type:
             context['resource_type'] = resource_type

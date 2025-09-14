@@ -134,7 +134,7 @@ class APIContractValidator:
     Comprehensive API contract validator for OpenAPI specifications
     """
     
-    def __init__(self, project_root: Optional[str] = None):
+    def __init__(self, project_root -> None: Optional[str] = None) -> None:
         """Initialize API contract validator"""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self.project_root = Path(project_root or ".")

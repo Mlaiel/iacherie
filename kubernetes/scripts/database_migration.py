@@ -1,3 +1,8 @@
+"""
+Database Migration module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """Database Migration Manager
 Handles database schema migrations, data migrations, and version control
@@ -72,7 +77,7 @@ class DatabaseMigrationManager:
     Handles schema evolution, data migrations, and rollbacks
     """
     
-    def __init__(self, config_path: Optional[str] = None):
+    def __init__(self, config_path -> None: Optional[str] = None) -> None:
         """
 Initialize migration manager"""
         self.config_path = config_path or "/etc/migration/config.json"
@@ -433,7 +438,7 @@ Initialize migration manager"""
             visited = set()
             rec_stack = set()
             
-            def has_cycle(node):
+            def has_cycle(node) -> None:
                 visited.add(node)
                 rec_stack.add(node)
                 
@@ -907,7 +912,7 @@ Create backup before migration"""
             return []
 
 
-def main():
+def main() -> None:
     """Main function for standalone execution"""
     import argparse
     

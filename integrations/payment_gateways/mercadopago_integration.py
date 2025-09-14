@@ -110,7 +110,7 @@ class MercadoPagoConfig:
     differential_pricing_id: Optional[int] = None
     statement_descriptor: str = "AINFLUE"
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.back_urls is None:
             self.back_urls = {
                 "success": "https://ainflue.com/payment/success",
@@ -186,7 +186,7 @@ class MercadoPagoIntegration(BaseIntegration):
     - Subscription and recurring payment support
     """
 
-    def __init__(self, config: MercadoPagoConfig):
+    def __init__(self, config -> None: MercadoPagoConfig) -> None:
         super().__init__("mercadopago")
         self.config = config
         self.security_manager = SecurityManager()
@@ -877,7 +877,7 @@ def create_mercadopago_integration(
     return MercadoPagoIntegration(config)
 
 # Example usage for Ainflue platform
-async def example_mercadopago_flow():
+async def example_mercadopago_flow() -> None:
     """Example MercadoPago integration usage"""
     
     # Initialize MercadoPago integration for Brazil

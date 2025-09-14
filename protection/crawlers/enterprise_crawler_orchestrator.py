@@ -46,7 +46,7 @@ class EnterpriseCrawlerSystemOrchestrator:
     - Automated compliance monitoring and violation detection
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
         self.content_intelligence = ContentIntelligenceEngine()
         self.redis_client = None
@@ -55,7 +55,7 @@ class EnterpriseCrawlerSystemOrchestrator:
         self.crawler_session = None
         self._initialize_services()
     
-    def _initialize_services(self):
+    def _initialize_services(self) -> None:
         """🏗️ Backend Senior - Initialize enterprise crawler services"""
         try:
             # Initialize Redis connection pool
@@ -253,9 +253,9 @@ class EnterpriseCrawlerSystemOrchestrator:
     
     async def _store_discovered_content(
         self, 
-        content_results: List[ContentDiscoveryResult], 
-        task: CrawlerTask
-    ):
+        content_results -> None: List[ContentDiscoveryResult], 
+        task -> None: CrawlerTask
+    ) -> None:
         """🗄️ DBA - High-performance content storage"""
         try:
             for result in content_results:
@@ -343,10 +343,10 @@ class EnterpriseCrawlerSystemOrchestrator:
     
     async def _update_crawler_metrics(
         self, 
-        task: CrawlerTask, 
-        results: List[ContentDiscoveryResult], 
-        processing_time: float
-    ):
+        task -> None: CrawlerTask, 
+        results -> None: List[ContentDiscoveryResult], 
+        processing_time -> None: float
+    ) -> None:
         """⚙️ DevOps - Update crawler metrics"""
         try:
             # Update Prometheus metrics

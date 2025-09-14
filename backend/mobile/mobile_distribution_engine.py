@@ -221,7 +221,7 @@ class MobileProjectResult:
 class MobileDistributionEngine:
     """Unified mobile distribution engine consolidating distribution, platform adaptation, and project management"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         """Initialize mobile distribution engine with comprehensive capabilities"""
         self.config = config or {}
         self.distribution_manager = MobileDistributionManager(self.config)
@@ -393,7 +393,7 @@ class MobileDistributionEngine:
         
         return (avg_platform_score * 0.4 + success_rate * 0.4 + adaptation_score * 0.2)
     
-    def _update_distribution_metrics(self, distribution_result: MobileDistributionResult):
+    def _update_distribution_metrics(self, distribution_result -> None: MobileDistributionResult) -> None:
         """Update distribution engine metrics"""
         # Update success count
         if distribution_result.overall_status == DistributionStatus.COMPLETED:
@@ -466,7 +466,7 @@ class MobileDistributionEngine:
 class MobileDistributionManager:
     """Mobile distribution manager with multi-platform distribution"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.platform_distributors = {}
         self.distribution_queue = {}
@@ -630,7 +630,7 @@ class MobileDistributionManager:
 class MobilePlatformAdapter:
     """Mobile platform adapter with intelligent platform optimization"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.platform_specifications = {}
         self.adaptation_cache = {}
@@ -713,7 +713,7 @@ class MobilePlatformAdapter:
             "mobile_user_experience_boost": 0.30
         }
     
-    def _initialize_platform_specifications(self):
+    def _initialize_platform_specifications(self) -> None:
         """Initialize platform-specific specifications"""
         self.platform_specifications = {
             MobilePlatformType.TIKTOK: {
@@ -909,7 +909,7 @@ class MobilePlatformAdapter:
 class MobileProjectManagement:
     """Mobile project management with project coordination"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.active_projects = {}
         self.project_templates = {}

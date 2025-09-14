@@ -1,4 +1,6 @@
 """API Middleware - Consolidated Middleware Components
+import logging
+
 All middleware components for authentication, CORS, rate limiting, and request processing.
 
 This module consolidates middleware from:
@@ -95,7 +97,7 @@ async def authentication_middleware(
 class RateLimitMiddleware(BaseHTTPMiddleware):
     """Rate limiting middleware to prevent API abuse"""
     
-    def __init__(self, app, calls: int = 100, period: int = 60):
+    def __init__(self, app, calls -> None: int = 100, period -> None: int = 60) -> None:
         super().__init__(app)
         self.calls = calls
         self.period = period
@@ -135,7 +137,7 @@ class RateLimitMiddleware(BaseHTTPMiddleware):
 # CORS MIDDLEWARE CONFIGURATION
 # ========================================
 
-def setup_cors_middleware(app):
+def setup_cors_middleware(app) -> None:
     """Setup CORS middleware with appropriate settings"""
     app.add_middleware(
         CORSMiddleware,
@@ -197,7 +199,7 @@ class RequestLoggingMiddleware(BaseHTTPMiddleware):
 # COMPRESSION MIDDLEWARE
 # ========================================
 
-def setup_compression_middleware(app):
+def setup_compression_middleware(app) -> None:
     """Setup compression middleware"""
     app.add_middleware(GZipMiddleware, minimum_size=1000)
 
@@ -224,7 +226,7 @@ class SecurityHeadersMiddleware(BaseHTTPMiddleware):
 # MIDDLEWARE SETUP FUNCTION
 # ========================================
 
-def setup_middleware(app):
+def setup_middleware(app) -> None:
     """Setup all middleware components for the application"""
     
     # Security headers (first)
@@ -279,7 +281,7 @@ class SecurityEvent(BaseModel):
 class AdvancedSecurityMiddleware(BaseHTTPMiddleware):
     """Enterprise-grade security middleware with threat detection"""
     
-    def __init__(self, app, security_level: SecurityLevel = SecurityLevel.HIGH):
+    def __init__(self, app, security_level -> None: SecurityLevel = SecurityLevel.HIGH) -> None:
         super().__init__(app)
         self.security_level = security_level
         self.blocked_ips: Set[str] = set()
@@ -298,7 +300,7 @@ class AdvancedSecurityMiddleware(BaseHTTPMiddleware):
         self.attack_signatures = {}
         self.rate_limiter = AdvancedRateLimiter()
         
-    async def dispatch(self, request: Request, call_next):
+    async def dispatch(self, request -> None: Request, call_next) -> None:
         start_time = time.time()
         
         # Security checks
@@ -375,7 +377,7 @@ class AdvancedSecurityMiddleware(BaseHTTPMiddleware):
         
         return result
     
-    async def _check_malicious_patterns(self, request: Request, result: Dict):
+    async def _check_malicious_patterns(self, request -> None: Request, result -> None: Dict) -> None:
         """Check for malicious patterns in request"""
         try:
             # Check URL for suspicious patterns
@@ -487,7 +489,7 @@ class AdvancedSecurityMiddleware(BaseHTTPMiddleware):
         fingerprint_data = f"{request.method}:{request.url.path}:{request.headers.get('user-agent', '')}"
         return hashlib.sha256(fingerprint_data.encode()).hexdigest()[:16]
     
-    async def _add_security_headers(self, response: Response, request: Request):
+    async def _add_security_headers(self, response -> None: Response, request -> None: Request) -> None:
         """Add comprehensive security headers"""
         security_headers = {
             "X-Content-Type-Options": "nosniff",
@@ -541,7 +543,7 @@ class AdvancedSecurityMiddleware(BaseHTTPMiddleware):
             }
         )
     
-    async def _log_security_metrics(self, request: Request, response: Response, processing_time: float):
+    async def _log_security_metrics(self, request -> None: Request, response -> None: Response, processing_time -> None: float) -> None:
         """Log security metrics for analysis"""
         try:
             metrics = {
@@ -561,7 +563,7 @@ class AdvancedSecurityMiddleware(BaseHTTPMiddleware):
         except Exception:
             pass  # Don't let logging break the response
     
-    async def _log_security_incident(self, request: Request, error: str):
+    async def _log_security_incident(self, request -> None: Request, error -> None: str) -> None:
         """Log security incidents"""
         try:
             incident = {
@@ -582,7 +584,7 @@ class AdvancedSecurityMiddleware(BaseHTTPMiddleware):
 class AdvancedRateLimiter:
     """Advanced rate limiter with multiple algorithms"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.sliding_windows = defaultdict(lambda: deque())
         self.token_buckets = defaultdict(lambda: {"tokens": 100, "last_refill": time.time()})
         self.ip_reputation = defaultdict(int)
@@ -676,12 +678,12 @@ class AdvancedRateLimiter:
 class PerformanceOptimizationMiddleware(BaseHTTPMiddleware):
     """Performance optimization middleware"""
     
-    def __init__(self, app):
+    def __init__(self, app) -> None:
         super().__init__(app)
         self.response_cache = {}
         self.compression_threshold = 1024  # 1KB
         
-    async def dispatch(self, request: Request, call_next):
+    async def dispatch(self, request -> None: Request, call_next) -> None:
         start_time = time.time()
         
         # Check cache for GET requests
@@ -723,7 +725,7 @@ class PerformanceOptimizationMiddleware(BaseHTTPMiddleware):
         """Check if cached response is expired"""
         return time.time() - cached_response["timestamp"] > ttl
     
-    async def _cache_response(self, request: Request, response: Response):
+    async def _cache_response(self, request -> None: Request, response -> None: Response) -> None:
         """Cache response for future use"""
         try:
             cache_key = self._generate_cache_key(request)
@@ -748,9 +750,9 @@ class PerformanceOptimizationMiddleware(BaseHTTPMiddleware):
         except Exception:
             pass  # Don't let caching break the response
     
-    def _create_body_iterator(self, content: bytes):
+    def _create_body_iterator(self, content -> None: bytes) -> None:
         """Create body iterator from content"""
-        async def generate():
+        async def generate() -> None:
             yield content
         return generate()
 
@@ -759,7 +761,7 @@ class PerformanceOptimizationMiddleware(BaseHTTPMiddleware):
 # ENHANCED SETUP FUNCTION
 # ========================================
 
-def setup_advanced_middleware(app, security_level: SecurityLevel = SecurityLevel.HIGH):
+def setup_advanced_middleware(app, security_level -> None: SecurityLevel = SecurityLevel.HIGH) -> None:
     """Setup advanced middleware stack with enterprise security"""
     
     # Performance optimization (first)
@@ -791,7 +793,7 @@ def setup_advanced_middleware(app, security_level: SecurityLevel = SecurityLevel
 class OWASPSecurityMiddleware:
     """OWASP Top 10 compliant security middleware"""
     
-    def __init__(self, app):
+    def __init__(self, app) -> None:
         self.app = app
         self.owasp_checks = {
             "injection": self._check_injection_attacks,
@@ -806,7 +808,7 @@ class OWASPSecurityMiddleware:
             "insufficient_logging": self._check_insufficient_logging
         }
     
-    async def __call__(self, scope, receive, send):
+    async def __call__(self, scope, receive, send) -> None:
         if scope["type"] == "http":
             # Pre-request OWASP security checks
             security_result = await self._run_owasp_checks(scope)
@@ -990,7 +992,7 @@ class OWASPSecurityMiddleware:
 class IntelligentRateLimiter:
     """AI-powered intelligent rate limiting with dynamic thresholds"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.redis_client = None  # Would be Redis client in production
         self.base_limits = {
             "default": {"requests": 100, "window": 60},
@@ -1152,7 +1154,7 @@ class IntelligentRateLimiter:
 
 
 # Enhanced middleware setup with enterprise features
-def setup_enterprise_middleware(app):
+def setup_enterprise_middleware(app) -> None:
     """Setup enterprise-grade middleware stack"""
     # OWASP Security (first layer)
     app.add_middleware(OWASPSecurityMiddleware)

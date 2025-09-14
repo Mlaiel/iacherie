@@ -251,7 +251,7 @@ class MatchingResult(BaseModel):
 class InfluencerMatchingService:
     """🤝 Enterprise Influencer Matching Service - Multi-Expert Implementation"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize with all expert role capabilities"""
         # 🧠 Lead Dev IA: AI matching engines
         self.matching_algorithm = self._initialize_matching_ai()
@@ -454,13 +454,13 @@ class InfluencerMatchingService:
             }
         }
 
-    def _load_sample_data(self):
+    def _load_sample_data(self) -> None:
         """Load sample influencer and brand profiles for demonstration"""
         # Sample influencer profiles
         self._create_sample_influencers()
         self._create_sample_brands()
 
-    def _create_sample_influencers(self):
+    def _create_sample_influencers(self) -> None:
         """Create sample influencer profiles for testing"""
         sample_influencers = [
             {
@@ -535,7 +535,7 @@ class InfluencerMatchingService:
             self.tier_index[profile.tier].append(profile.id)
             self.location_index[profile.location].append(profile.id)
 
-    def _create_sample_brands(self):
+    def _create_sample_brands(self) -> None:
         """Create sample brand profiles for testing"""
         sample_brands = [
             {
@@ -1069,13 +1069,13 @@ class InfluencerMatchingService:
         
         return matches
 
-    def _track_matching_performance(self, request_id: str, matches_count: int):
+    def _track_matching_performance(self, request_id -> None: str, matches_count -> None: int) -> None:
         """⚙️ DevOps: Track matching performance metrics"""
         self.performance_metrics["total_requests"].append(1)
         self.performance_metrics["matches_per_request"].append(matches_count)
         self.performance_metrics["request_timestamp"].append(datetime.now())
 
-    async def _notify_services(self, event_type: str, resource_id: str):
+    async def _notify_services(self, event_type -> None: str, resource_id -> None: str) -> None:
         """🌐 Microservices: Notify other services"""
         event = {
             "type": event_type,
@@ -1085,7 +1085,7 @@ class InfluencerMatchingService:
         }
         logger.info(f"🌐 Event: {event_type} for {resource_id}")
 
-    def _audit_action(self, action: str, user_id: str, resource_id: str):
+    def _audit_action(self, action -> None: str, user_id -> None: str, resource_id -> None: str) -> None:
         """🔒 Security: Audit trail"""
         # In production, this would log to secure audit system
         logger.info(f"🔒 Audit: {action} by {user_id} on {resource_id}")
@@ -1144,27 +1144,27 @@ app = FastAPI(
 matching_service = InfluencerMatchingService()
 
 @app.post("/matching-requests", response_model=Dict[str, Any])
-async def create_matching_request(request: MatchingRequest):
+async def create_matching_request(request -> None: MatchingRequest) -> None:
     """Create new influencer matching request"""
     return await matching_service.create_matching_request(request)
 
 @app.get("/matching-requests/{request_id}/results", response_model=List[MatchingResult])
-async def get_matching_results(request_id: str):
+async def get_matching_results(request_id -> None: str) -> None:
     """Get matching results for a request"""
     return await matching_service.get_matching_results(request_id)
 
 @app.get("/influencers/{influencer_id}", response_model=InfluencerProfile)
-async def get_influencer_profile(influencer_id: str):
+async def get_influencer_profile(influencer_id -> None: str) -> None:
     """Get influencer profile"""
     return await matching_service.get_influencer_profile(influencer_id)
 
 @app.get("/brands/{brand_id}", response_model=BrandProfile)
-async def get_brand_profile(brand_id: str):
+async def get_brand_profile(brand_id -> None: str) -> None:
     """Get brand profile"""
     return await matching_service.get_brand_profile(brand_id)
 
 @app.get("/health")
-async def health_check():
+async def health_check() -> None:
     """Service health check"""
     return await matching_service.get_service_health()
 

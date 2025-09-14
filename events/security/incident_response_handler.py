@@ -86,7 +86,7 @@ class SecurityIncident:
     lessons_learned: str = ""
     closed_at: Optional[datetime] = None
     
-    def add_timeline_entry(self, action: str, description: str, user: str = "system"):
+    def add_timeline_entry(self, action -> None: str, description -> None: str, user -> None: str = "system") -> None:
         """Add entry to incident timeline"""
         self.timeline.append({
             'timestamp': datetime.utcnow().isoformat(),
@@ -131,7 +131,7 @@ class IncidentResponseHandler:
     Manages complete incident lifecycle with automated and manual responses.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.enabled = True
         self.incidents = []  # In-memory storage for demo
         self.response_plans = self._initialize_response_plans()
@@ -216,7 +216,7 @@ class IncidentResponseHandler:
             logger.error(f"Error handling security incident: {str(e)}")
             return self._create_error_incident(title, description, str(e))
     
-    async def _execute_automated_response(self, incident: SecurityIncident):
+    async def _execute_automated_response(self, incident -> None: SecurityIncident) -> None:
         """Execute automated response actions for incident"""
         
         if not self.automation_enabled:
@@ -489,7 +489,7 @@ class IncidentResponseHandler:
             logger.error(f"Failed to activate BCP: {str(e)}")
             return False
     
-    async def _auto_assign_incident(self, incident: SecurityIncident):
+    async def _auto_assign_incident(self, incident -> None: SecurityIncident) -> None:
         """Automatically assign incident based on type and severity"""
         
         # Assignment logic based on incident characteristics
@@ -510,7 +510,7 @@ class IncidentResponseHandler:
             "system"
         )
     
-    async def _send_incident_notifications(self, incident: SecurityIncident):
+    async def _send_incident_notifications(self, incident -> None: SecurityIncident) -> None:
         """Send incident notifications based on severity and type"""
         
         # Determine notification recipients based on severity
@@ -527,13 +527,13 @@ class IncidentResponseHandler:
             except Exception as e:
                 logger.error(f"Failed to notify {recipient}: {str(e)}")
     
-    async def _send_notification(self, recipient: str, incident: SecurityIncident):
+    async def _send_notification(self, recipient -> None: str, incident -> None: SecurityIncident) -> None:
         """Send notification to specific recipient"""
         
         # In a real implementation, this would use various notification channels
         logger.info(f"NOTIFICATION to {recipient}: Incident {incident.incident_id} - {incident.title}")
     
-    async def _check_escalation_triggers(self, incident: SecurityIncident):
+    async def _check_escalation_triggers(self, incident -> None: SecurityIncident) -> None:
         """Check if incident meets escalation criteria"""
         
         escalation_triggers = self.escalation_chains.get(incident.incident_type.value, {})
@@ -550,7 +550,7 @@ class IncidentResponseHandler:
         if len(incident.affected_users) > 100:
             await self._escalate_incident(incident, "mass_user_impact")
     
-    async def _escalate_incident(self, incident: SecurityIncident, reason: str):
+    async def _escalate_incident(self, incident -> None: SecurityIncident, reason -> None: str) -> None:
         """Escalate incident to higher level"""
         
         logger.warning(f"ESCALATING INCIDENT {incident.incident_id}: {reason}")
@@ -839,7 +839,7 @@ class IncidentResponseHandler:
             'low_resolution_time': timedelta(days=7)
         }
     
-    def _maintain_incident_history(self):
+    def _maintain_incident_history(self) -> None:
         """Maintain incident history size"""
         
         if len(self.incidents) > self.max_incident_history:
@@ -874,7 +874,7 @@ class IncidentResponseHandler:
             reported_by="system"
         )
     
-    def register_notification_handler(self, channel: str, handler: Callable):
+    def register_notification_handler(self, channel -> None: str, handler -> None: Callable) -> None:
         """Register notification handler for specific channel"""
         
         self.notification_handlers[channel] = handler
@@ -933,22 +933,22 @@ class IncidentResponseHandler:
             'automation_enabled': self.automation_enabled
         }
     
-    def enable_handler(self):
+    def enable_handler(self) -> None:
         """Enable incident response handler"""
         self.enabled = True
         logger.info("Incident response handler enabled")
     
-    def disable_handler(self):
+    def disable_handler(self) -> None:
         """Disable incident response handler"""
         self.enabled = False
         logger.info("Incident response handler disabled")
     
-    def enable_automation(self):
+    def enable_automation(self) -> None:
         """Enable automated response actions"""
         self.automation_enabled = True
         logger.info("Automated incident response enabled")
     
-    def disable_automation(self):
+    def disable_automation(self) -> None:
         """Disable automated response actions"""
         self.automation_enabled = False
         logger.info("Automated incident response disabled")

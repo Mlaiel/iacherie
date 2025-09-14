@@ -66,12 +66,12 @@ class UsageTracker:
     
     def __init__(
         self,
-        repository: LicensingRepository = None,
-        compliance_engine: ComplianceEngine = None,
-        analytics_engine: AnalyticsEngine = None,
-        cache_manager: CacheManager = None,
-        queue_manager: QueueManager = None
-    ):
+        repository -> None: LicensingRepository = None,
+        compliance_engine -> None: ComplianceEngine = None,
+        analytics_engine -> None: AnalyticsEngine = None,
+        cache_manager -> None: CacheManager = None,
+        queue_manager -> None: QueueManager = None
+    ) -> None:
         """
 Initialize usage tracker with dependencies"""
         self.repository = repository or LicensingRepository()

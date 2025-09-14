@@ -55,7 +55,7 @@ class MLRankingPredictor:
     Predicts search engine rankings based on multiple SEO factors
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.feature_weights = self._initialize_feature_weights()
         self.model_coefficients = self._initialize_model_coefficients()
         self.ranking_factors = self._define_ranking_factors()

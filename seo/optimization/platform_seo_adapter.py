@@ -443,7 +443,7 @@ class PlatformSEOAdapter:
     Main adapter class that provides platform-specific SEO optimization
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the platform SEO adapter with all supported platforms"""
         self.adapters = {
             Platform.INSTAGRAM: InstagramAdapter(),

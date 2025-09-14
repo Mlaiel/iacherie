@@ -1,3 +1,8 @@
+"""
+Revenue Sharing Demonstration module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Revenue Sharing Demonstration - Démonstration Partage Revenus Sophistiqué
@@ -165,7 +170,7 @@ class RevenueSharingDemonstration:
     Multi-level commissions avec optimization fiscale et analytics temps réel
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(f"{__name__}.RevenueSharingDemonstration")
         
         # Simulate service dependencies
@@ -688,7 +693,7 @@ class RevenueSharingDemonstration:
         }
 
 
-async def demonstrate():
+async def demonstrate() -> None:
     """Main demonstration function"""
     logger.info("🎬 DÉMARRAGE DÉMONSTRATION REVENUE SHARING")
     logger.info("=" * 70)
@@ -751,7 +756,7 @@ async def demonstrate():
         return False
 
 
-async def main():
+async def main() -> None:
     """Main entry point"""
     try:
         success = await demonstrate()

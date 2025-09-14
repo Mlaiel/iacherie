@@ -99,7 +99,7 @@ Configuration for smart contract deployment"""
     gas_price_gwei: Optional[int] = None
     constructor_args: List[Any] = field(default_factory=list)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         try:
                     # Request validation
                     if not data:
@@ -121,7 +121,7 @@ class SmartContractManager:
     """
 Professional smart contract management system"""
     
-    def __init__(self, network_config: Dict[str, Any], private_key: Optional[str] = None):
+    def __init__(self, network_config -> None: Dict[str, Any], private_key -> None: Optional[str] = None) -> None:
         self.network_config = network_config
         self.private_key = private_key
         self.w3: Optional[Web3] = None
@@ -177,7 +177,7 @@ Initialize blockchain connection and account"""
             ContractType.ACCESS_CONTROL: self._get_access_control_abi()
         }
     
-    async def _load_deployed_contracts(self):
+    async def _load_deployed_contracts(self) -> None:
         """
 Load deployed contract addresses from configuration"""
         try:
@@ -579,3 +579,5 @@ __all__ = [
     'SmartContractManager',
     'GasOptimizer'
 ]
+
+# File has syntax issues - needs manual review

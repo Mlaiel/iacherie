@@ -152,7 +152,7 @@ class DMCAPerformanceAnalyzer:
     """
 Enterprise performance analyzer for DMCA operations"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.metrics_history: List[PerformanceMetric] = []
         self.reports_cache: Dict[str, AnalyticsReport] = {}
         self.benchmarks: Dict[MetricType, float] = self._initialize_benchmarks()
@@ -257,7 +257,7 @@ Generate comprehensive performance analytics report"""
             logger.error(f"Failed to generate analytics report: {str(e)}")
             raise
     
-    async def _calculate_success_rate(self, case_data: List[Dict[str, Any]], report: AnalyticsReport):
+    async def _calculate_success_rate(self, case_data -> None: List[Dict[str, Any]], report -> None: AnalyticsReport) -> None:
         """Calculate DMCA success rate"""
         if not case_data:
             return
@@ -282,7 +282,7 @@ Generate comprehensive performance analytics report"""
         report.metrics.append(metric)
         self.metrics_history.append(metric)
     
-    async def _calculate_response_times(self, case_data: List[Dict[str, Any]], report: AnalyticsReport):
+    async def _calculate_response_times(self, case_data -> None: List[Dict[str, Any]], report -> None: AnalyticsReport) -> None:
         """Calculate average response times"""
         response_times = []
         
@@ -318,7 +318,7 @@ Generate comprehensive performance analytics report"""
             report.metrics.append(metric)
             self.metrics_history.append(metric)
     
-    async def _calculate_resolution_times(self, case_data: List[Dict[str, Any]], report: AnalyticsReport):
+    async def _calculate_resolution_times(self, case_data -> None: List[Dict[str, Any]], report -> None: AnalyticsReport) -> None:
         """Calculate average case resolution times"""
         resolution_times = []
         
@@ -354,7 +354,7 @@ Generate comprehensive performance analytics report"""
             report.metrics.append(metric)
             self.metrics_history.append(metric)
     
-    async def _calculate_compliance_rate(self, case_data: List[Dict[str, Any]], report: AnalyticsReport):
+    async def _calculate_compliance_rate(self, case_data -> None: List[Dict[str, Any]], report -> None: AnalyticsReport) -> None:
         """Calculate legal compliance rate"""
         if not case_data:
             return
@@ -379,7 +379,7 @@ Generate comprehensive performance analytics report"""
         report.metrics.append(metric)
         self.metrics_history.append(metric)
     
-    async def _calculate_cost_effectiveness(self, case_data: List[Dict[str, Any]], report: AnalyticsReport):
+    async def _calculate_cost_effectiveness(self, case_data -> None: List[Dict[str, Any]], report -> None: AnalyticsReport) -> None:
         """Calculate cost effectiveness metrics"""
         total_costs = sum(case.get('processing_cost', 0) for case in case_data)
         
@@ -399,7 +399,7 @@ Generate comprehensive performance analytics report"""
             report.metrics.append(metric)
             self.metrics_history.append(metric)
     
-    async def _calculate_platform_efficiency(self, case_data: List[Dict[str, Any]], report: AnalyticsReport):
+    async def _calculate_platform_efficiency(self, case_data -> None: List[Dict[str, Any]], report -> None: AnalyticsReport) -> None:
         """Calculate platform-specific efficiency"""
         platform_stats = defaultdict(list)
         
@@ -429,7 +429,7 @@ Generate comprehensive performance analytics report"""
             report.metrics.append(metric)
             self.metrics_history.append(metric)
     
-    async def _calculate_evidence_quality(self, case_data: List[Dict[str, Any]], report: AnalyticsReport):
+    async def _calculate_evidence_quality(self, case_data -> None: List[Dict[str, Any]], report -> None: AnalyticsReport) -> None:
         """Calculate evidence quality score"""
         quality_scores = []
         
@@ -457,7 +457,7 @@ Generate comprehensive performance analytics report"""
             report.metrics.append(metric)
             self.metrics_history.append(metric)
     
-    async def _calculate_escalation_rate(self, case_data: List[Dict[str, Any]], report: AnalyticsReport):
+    async def _calculate_escalation_rate(self, case_data -> None: List[Dict[str, Any]], report -> None: AnalyticsReport) -> None:
         """Calculate case escalation rate"""
         if not case_data:
             return
@@ -482,7 +482,7 @@ Generate comprehensive performance analytics report"""
         report.metrics.append(metric)
         self.metrics_history.append(metric)
     
-    async def _calculate_revenue_recovery(self, case_data: List[Dict[str, Any]], report: AnalyticsReport):
+    async def _calculate_revenue_recovery(self, case_data -> None: List[Dict[str, Any]], report -> None: AnalyticsReport) -> None:
         """Calculate revenue recovery metrics"""
         total_potential = sum(case.get('potential_revenue', 0) for case in case_data)
         total_recovered = sum(case.get('recovered_revenue', 0) for case in case_data)
@@ -507,7 +507,7 @@ Generate comprehensive performance analytics report"""
             report.metrics.append(metric)
             self.metrics_history.append(metric)
     
-    async def _calculate_user_satisfaction(self, case_data: List[Dict[str, Any]], report: AnalyticsReport):
+    async def _calculate_user_satisfaction(self, case_data -> None: List[Dict[str, Any]], report -> None: AnalyticsReport) -> None:
         """Calculate user satisfaction score"""
         satisfaction_scores = [
             case.get('satisfaction_score', 0) for case in case_data
@@ -530,7 +530,7 @@ Generate comprehensive performance analytics report"""
             report.metrics.append(metric)
             self.metrics_history.append(metric)
     
-    async def _analyze_trends(self, case_data: List[Dict[str, Any]], report: AnalyticsReport):
+    async def _analyze_trends(self, case_data -> None: List[Dict[str, Any]], report -> None: AnalyticsReport) -> None:
         """Analyze performance trends"""
         # Group cases by time periods
         time_series_data = defaultdict(list)
@@ -549,7 +549,7 @@ Generate comprehensive performance analytics report"""
         
         report.trends = trends
     
-    async def _analyze_platform_performance(self, case_data: List[Dict[str, Any]], report: AnalyticsReport):
+    async def _analyze_platform_performance(self, case_data -> None: List[Dict[str, Any]], report -> None: AnalyticsReport) -> None:
         """
 Analyze platform-specific performance"""
         platform_data = defaultdict(list)
@@ -631,7 +631,7 @@ Calculate metrics for specific platform"""
             satisfaction_score=satisfaction_score
         )
     
-    async def _generate_forecasts(self, case_data: List[Dict[str, Any]], report: AnalyticsReport):
+    async def _generate_forecasts(self, case_data -> None: List[Dict[str, Any]], report -> None: AnalyticsReport) -> None:
         """
 Generate performance forecasts"""
         # Simplified forecasting logic
@@ -663,7 +663,7 @@ Calculate trend for specific metric"""
             "forecast_accuracy": 0.85
         }
     
-    def _generate_summary(self, report: AnalyticsReport):
+    def _generate_summary(self, report -> None: AnalyticsReport) -> None:
         """Generate report summary"""
         metrics_by_type = {m.metric_type: m for m in report.metrics}
         
@@ -678,7 +678,7 @@ Calculate trend for specific metric"""
             "performance_indicators": self._calculate_performance_indicators(report.metrics)
         })
     
-    def _generate_recommendations(self, report: AnalyticsReport):
+    def _generate_recommendations(self, report -> None: AnalyticsReport) -> None:
         """Generate performance recommendations"""
         recommendations = []
         
@@ -703,7 +703,7 @@ Calculate trend for specific metric"""
         
         report.recommendations = recommendations
     
-    def _generate_alerts(self, report: AnalyticsReport):
+    def _generate_alerts(self, report -> None: AnalyticsReport) -> None:
         """Generate performance alerts"""
         alerts = []
         

@@ -145,10 +145,10 @@ class NetworkRevenueMonetizationManager:
     
     def __init__(
         self,
-        database_url: str,
-        redis_url: str = "redis://localhost:6379",
-        payment_providers_config: Optional[Dict[str, Any]] = None
-    ):
+        database_url -> None: str,
+        redis_url -> None: str = "redis -> None://localhost -> None:6379",
+        payment_providers_config -> None: Optional[Dict[str, Any]] = None
+    ) -> None:
         self.database_url = database_url
         self.redis_url = redis_url
         self.payment_providers_config = payment_providers_config or {}
@@ -692,7 +692,7 @@ class NetworkRevenueMonetizationManager:
                 await asyncio.sleep(self.revenue_analytics_interval)
 
 
-async def main():
+async def main() -> None:
     """Demo of Network Revenue & Monetization Manager"""
     
     # Initialize revenue manager

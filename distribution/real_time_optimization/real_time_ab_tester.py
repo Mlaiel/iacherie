@@ -95,7 +95,7 @@ class RealTimeABTest:
 class RealTimeABTester:
     """Real-time A/B testing engine for content optimization"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize real-time A/B tester"""
         self.active_tests = {}
         self.test_history = {}
@@ -498,7 +498,7 @@ class RealTimeABTester:
         
         return {'valid': True, 'reason': 'Configuration valid'}
     
-    async def _initialize_performance_tracking(self, test: RealTimeABTest):
+    async def _initialize_performance_tracking(self, test -> None: RealTimeABTest) -> None:
         """Initialize performance tracking for test"""
         self.performance_tracker[test.test_id] = {
             'variant_metrics': {v.variant_id: {} for v in test.variants},
@@ -507,12 +507,12 @@ class RealTimeABTester:
             'start_time': datetime.utcnow()
         }
     
-    async def _start_traffic_allocation(self, test: RealTimeABTest):
+    async def _start_traffic_allocation(self, test -> None: RealTimeABTest) -> None:
         """Start traffic allocation for test"""
         # Initialize traffic allocation system
         logger.info(f"Started traffic allocation for test: {test.test_id}")
     
-    async def _monitor_test_progress(self, test_id: str):
+    async def _monitor_test_progress(self, test_id -> None: str) -> None:
         """Monitor test progress and check for completion conditions"""
         while test_id in self.active_tests:
             try:
@@ -571,18 +571,18 @@ class RealTimeABTester:
         # Fallback to last variant
         return test.variants[-1]
     
-    async def _store_user_allocation(self, test_id: str, user_id: str, variant: TestVariant):
+    async def _store_user_allocation(self, test_id -> None: str, user_id -> None: str, variant -> None: TestVariant) -> None:
         """Store user allocation"""
         if test_id in self.performance_tracker:
             self.performance_tracker[test_id]['user_allocations'][user_id] = variant.variant_id
     
     async def _record_variant_metric(
         self, 
-        test_id: str, 
-        variant_id: str, 
-        metric_name: str, 
-        metric_value: float
-    ):
+        test_id -> None: str, 
+        variant_id -> None: str, 
+        metric_name -> None: str, 
+        metric_value -> None: float
+    ) -> None:
         """Record metric for variant"""
         if test_id in self.performance_tracker:
             variant_metrics = self.performance_tracker[test_id]['variant_metrics']
@@ -596,7 +596,7 @@ class RealTimeABTester:
                 'timestamp': datetime.utcnow()
             })
     
-    async def _update_variant_performance(self, test: RealTimeABTest, variant_id: str):
+    async def _update_variant_performance(self, test -> None: RealTimeABTest, variant_id -> None: str) -> None:
         """Update variant performance metrics"""
         tracker = self.performance_tracker.get(test.test_id, {})
         variant_metrics = tracker.get('variant_metrics', {}).get(variant_id, {})
@@ -627,7 +627,7 @@ class RealTimeABTester:
         
         return False
     
-    async def _stop_test_early(self, test_id: str, reason: str):
+    async def _stop_test_early(self, test_id -> None: str, reason -> None: str) -> None:
         """Stop test early"""
         if test_id in self.active_tests:
             test = self.active_tests[test_id]
@@ -790,13 +790,13 @@ class RealTimeABTester:
             return end_time - test.started_at
         return timedelta(0)
     
-    async def _apply_winning_variant(self, test: RealTimeABTest, winner_variant_id: str):
+    async def _apply_winning_variant(self, test -> None: RealTimeABTest, winner_variant_id -> None: str) -> None:
         """Apply winning variant to content"""
         winner_variant = next((v for v in test.variants if v.variant_id == winner_variant_id), None)
         if winner_variant:
             logger.info(f"Applying winning variant {winner_variant_id} with parameters: {winner_variant.parameters}")
     
-    async def _move_test_to_history(self, test_id: str):
+    async def _move_test_to_history(self, test_id -> None: str) -> None:
         """Move completed test to history"""
         if test_id in self.active_tests:
             test = self.active_tests[test_id]

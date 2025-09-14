@@ -112,7 +112,7 @@ class ProtectionResult:
 class AudioProtectionEngine:
     """Specialized audio content protection"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.sample_rate = self.config.get('sample_rate', 44100)
         self.bit_depth = self.config.get('bit_depth', 16)
@@ -363,7 +363,7 @@ class AudioProtectionEngine:
 class VideoProtectionEngine:
     """Specialized video content protection"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.frame_rate = self.config.get('frame_rate', 30)
         self.resolution = self.config.get('resolution', (1920, 1080))
@@ -578,7 +578,7 @@ class VideoProtectionEngine:
 class ImageProtectionEngine:
     """Specialized image content protection"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.default_quality = self.config.get('quality', 95)
         self.max_resolution = self.config.get('max_resolution', (4096, 4096))
@@ -795,7 +795,7 @@ class ImageProtectionEngine:
 class TextProtectionEngine:
     """Specialized text content protection"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.languages = self.config.get('supported_languages', ['en', 'de', 'fr', 'ar'])
     
@@ -1085,7 +1085,7 @@ class MultimediaProtectionEngine:
     for comprehensive multimedia content protection.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize multimedia protection engine"""
         self.config = config or {}
         
@@ -1318,7 +1318,7 @@ class MultimediaProtectionEngine:
         
         return requirements
     
-    async def _update_performance_metrics(self, content_type: ContentType, result: ProtectionResult):
+    async def _update_performance_metrics(self, content_type -> None: ContentType, result -> None: ProtectionResult) -> None:
         """Update performance metrics"""
         type_key = content_type.value
         

@@ -75,7 +75,7 @@ class ClientConnection:
 class RealtimeUpdater:
     """Enterprise-grade real-time updates and notifications system."""
     
-    def __init__(self, host: str = "localhost", port: int = 8765):
+    def __init__(self, host -> None: str = "localhost", port -> None: int = 8765) -> None:
         """Initialize realtime updater."""
         if not WEB_AVAILABLE:
             logger.warning("websockets/aiohttp not available - realtime functionality limited")
@@ -113,7 +113,7 @@ class RealtimeUpdater:
             'channels_created': 0
         }
     
-    async def start_server(self):
+    async def start_server(self) -> None:
         """Start the WebSocket server."""
         if not WEB_AVAILABLE:
             raise ImportError("websockets required for realtime updates")
@@ -148,7 +148,7 @@ class RealtimeUpdater:
         
         logger.info(f"Realtime updater started on {self.host}:{self.port}")
     
-    async def _handle_connection(self, websocket, path):
+    async def _handle_connection(self, websocket, path) -> None:
         """Handle new WebSocket connection."""
         connection_id = self._generate_connection_id()
         
@@ -189,7 +189,7 @@ class RealtimeUpdater:
             # Clean up connection
             await self._cleanup_connection(connection_id)
     
-    async def _handle_message(self, connection_id: str, message: str):
+    async def _handle_message(self, connection_id -> None: str, message -> None: str) -> None:
         """Handle message from WebSocket client."""
         try:
             data = json.loads(message)
@@ -211,7 +211,7 @@ class RealtimeUpdater:
         except Exception as e:
             logger.error(f"Error handling message from {connection_id}: {e}")
     
-    async def _handle_authentication(self, connection_id: str, data: Dict[str, Any]):
+    async def _handle_authentication(self, connection_id -> None: str, data -> None: Dict[str, Any]) -> None:
         """Handle client authentication."""
         if connection_id not in self.connections:
             return
@@ -251,7 +251,7 @@ class RealtimeUpdater:
                 'message': 'Invalid authentication data'
             })
     
-    async def _handle_subscription(self, connection_id: str, data: Dict[str, Any]):
+    async def _handle_subscription(self, connection_id -> None: str, data -> None: Dict[str, Any]) -> None:
         """Handle channel subscription."""
         channel = data.get('channel')
         
@@ -268,7 +268,7 @@ class RealtimeUpdater:
                 'message': 'Invalid or unauthorized channel'
             })
     
-    async def _handle_unsubscription(self, connection_id: str, data: Dict[str, Any]):
+    async def _handle_unsubscription(self, connection_id -> None: str, data -> None: Dict[str, Any]) -> None:
         """Handle channel unsubscription."""
         channel = data.get('channel')
         
@@ -280,7 +280,7 @@ class RealtimeUpdater:
                 'channel': channel
             })
     
-    async def _handle_ping(self, connection_id: str):
+    async def _handle_ping(self, connection_id -> None: str) -> None:
         """Handle ping message."""
         if connection_id in self.connections:
             self.connections[connection_id].last_ping = datetime.now()
@@ -309,7 +309,7 @@ class RealtimeUpdater:
         
         return True
     
-    async def _subscribe_to_channel(self, connection_id: str, channel: str):
+    async def _subscribe_to_channel(self, connection_id -> None: str, channel -> None: str) -> None:
         """Subscribe connection to a channel."""
         if connection_id not in self.connections:
             return
@@ -325,7 +325,7 @@ class RealtimeUpdater:
         self.channels[channel].add(connection_id)
         logger.debug(f"Connection {connection_id} subscribed to {channel}")
     
-    async def _unsubscribe_from_channel(self, connection_id: str, channel: str):
+    async def _unsubscribe_from_channel(self, connection_id -> None: str, channel -> None: str) -> None:
         """Unsubscribe connection from a channel."""
         if connection_id not in self.connections:
             return
@@ -343,7 +343,7 @@ class RealtimeUpdater:
         
         logger.debug(f"Connection {connection_id} unsubscribed from {channel}")
     
-    async def _cleanup_connection(self, connection_id: str):
+    async def _cleanup_connection(self, connection_id -> None: str) -> None:
         """Clean up disconnected connection."""
         if connection_id not in self.connections:
             return
@@ -387,14 +387,14 @@ class RealtimeUpdater:
             asyncio.create_task(self._cleanup_connection(connection_id))
             return False
     
-    def queue_update(self, update: RealtimeUpdate):
+    def queue_update(self, update -> None: RealtimeUpdate) -> None:
         """Queue an update for processing."""
         try:
             self.update_queue.put(update, timeout=1)
         except:
             logger.warning("Update queue full, dropping update")
     
-    def send_sync_event_update(self, sync_event: SyncEvent):
+    def send_sync_event_update(self, sync_event -> None: SyncEvent) -> None:
         """Send real-time update for sync event."""
         # Determine update type
         update_type_map = {
@@ -425,7 +425,7 @@ class RealtimeUpdater:
         
         self.queue_update(update)
     
-    def send_sync_status_update(self, sync_id: str, status: str, details: Dict[str, Any]):
+    def send_sync_status_update(self, sync_id -> None: str, status -> None: str, details -> None: Dict[str, Any]) -> None:
         """Send sync status update."""
         update = RealtimeUpdate(
             update_id=self._generate_update_id(),
@@ -443,7 +443,7 @@ class RealtimeUpdater:
         
         self.queue_update(update)
     
-    def send_conflict_update(self, conflict_id: str, conflict_data: Dict[str, Any]):
+    def send_conflict_update(self, conflict_id -> None: str, conflict_data -> None: Dict[str, Any]) -> None:
         """Send conflict detection update."""
         update = RealtimeUpdate(
             update_id=self._generate_update_id(),
@@ -460,7 +460,7 @@ class RealtimeUpdater:
         
         self.queue_update(update)
     
-    def send_batch_completion_update(self, batch_id: str, stats: Dict[str, Any]):
+    def send_batch_completion_update(self, batch_id -> None: str, stats -> None: Dict[str, Any]) -> None:
         """Send batch completion update."""
         update = RealtimeUpdate(
             update_id=self._generate_update_id(),
@@ -477,7 +477,7 @@ class RealtimeUpdater:
         
         self.queue_update(update)
     
-    def send_user_notification(self, user_id: str, message: str, data: Dict[str, Any] = None):
+    def send_user_notification(self, user_id -> None: str, message -> None: str, data -> None: Dict[str, Any] = None) -> None:
         """Send notification to specific user."""
         update = RealtimeUpdate(
             update_id=self._generate_update_id(),
@@ -500,7 +500,7 @@ class RealtimeUpdater:
         timestamp = int(time.time() * 1000000)
         return f"update_{timestamp}"
     
-    def _update_processor_loop(self):
+    def _update_processor_loop(self) -> None:
         """Process queued updates."""
         logger.info("Update processor started")
         
@@ -521,7 +521,7 @@ class RealtimeUpdater:
         
         logger.info("Update processor stopped")
     
-    async def _process_update(self, update: RealtimeUpdate):
+    async def _process_update(self, update -> None: RealtimeUpdate) -> None:
         """Process a real-time update."""
         try:
             # Get connections subscribed to the channel
@@ -562,7 +562,7 @@ class RealtimeUpdater:
             logger.error(f"Error processing update {update.update_id}: {e}")
             self.stats['updates_failed'] += 1
     
-    def _ping_loop(self):
+    def _ping_loop(self) -> None:
         """Send periodic pings and cleanup stale connections."""
         logger.info("Ping loop started")
         
@@ -630,7 +630,7 @@ class RealtimeUpdater:
             for conn in self.connections.values()
         ]
     
-    def broadcast_to_channel(self, channel: str, message: Dict[str, Any]):
+    def broadcast_to_channel(self, channel -> None: str, message -> None: Dict[str, Any]) -> None:
         """Broadcast message to all subscribers of a channel."""
         update = RealtimeUpdate(
             update_id=self._generate_update_id(),
@@ -658,7 +658,7 @@ class RealtimeUpdater:
         
         return False
     
-    async def stop_server(self):
+    async def stop_server(self) -> None:
         """Stop the realtime update server."""
         if not self.running:
             return

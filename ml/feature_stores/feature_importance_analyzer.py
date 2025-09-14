@@ -1,3 +1,8 @@
+"""
+Feature Importance Analyzer module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 🚀 **Feature Importance Analyzer - Enterprise ML Feature Intelligence**
@@ -104,7 +109,7 @@ class FeatureImportanceAnalyzer:
     - Automated feature selection recommendations
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.logger = logging.getLogger(__name__)
         
@@ -988,7 +993,7 @@ class FeatureImportanceAnalyzer:
         
         return recommendations
     
-    async def _store_analysis_history(self, analysis: ImportanceAnalysis):
+    async def _store_analysis_history(self, analysis -> None: ImportanceAnalysis) -> None:
         """Store analysis in history for trend tracking"""
         model_id = analysis.model_id
         
@@ -1066,7 +1071,7 @@ class FeatureImportanceAnalyzer:
         }
 
 # Usage example
-async def main():
+async def main() -> None:
     """Example usage of FeatureImportanceAnalyzer"""
     config = {
         'significance_threshold': 0.05,

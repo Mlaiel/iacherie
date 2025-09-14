@@ -98,7 +98,7 @@ class ErrorReport:
 class StructuredFormatter(logging.Formatter):
     """JSON formatter for structured logging"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
     
     def format(self, record: logging.LogRecord) -> str:
@@ -155,7 +155,7 @@ class StructuredFormatter(logging.Formatter):
 class ErrorAggregator:
     """Aggregate and track errors for analysis"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.errors: Dict[str, ErrorReport] = {}
         self.error_history: deque = deque(maxlen=10000)
         self.error_stats = defaultdict(int)
@@ -279,7 +279,7 @@ class ErrorAggregator:
 class SentryIntegration:
     """Sentry integration for error tracking"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.dsn = config.get("dsn", "")
         self.environment = config.get("environment", "production")
@@ -300,11 +300,11 @@ class SentryIntegration:
     
     def capture_error(
         self,
-        error: Exception,
-        context: Optional[Dict[str, Any]] = None,
-        tags: Optional[Dict[str, str]] = None,
-        user: Optional[Dict[str, str]] = None
-    ):
+        error -> None: Exception,
+        context -> None: Optional[Dict[str, Any]] = None,
+        tags -> None: Optional[Dict[str, str]] = None,
+        user -> None: Optional[Dict[str, str]] = None
+    ) -> None:
         """Capture error to Sentry"""
         if not self.enabled:
             return
@@ -331,10 +331,10 @@ class SentryIntegration:
     
     def capture_message(
         self,
-        message: str,
-        level: str = "info",
-        tags: Optional[Dict[str, str]] = None
-    ):
+        message -> None: str,
+        level -> None: str = "info",
+        tags -> None: Optional[Dict[str, str]] = None
+    ) -> None:
         """Capture message to Sentry"""
         if not self.enabled:
             return
@@ -356,7 +356,7 @@ class SentryIntegration:
 class LogCorrelation:
     """Log correlation for distributed tracing"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.active_correlations: Dict[str, Dict[str, Any]] = {}
         self.correlation_history: deque = deque(maxlen=1000)
     
@@ -375,12 +375,12 @@ class LogCorrelation:
         self.active_correlations[correlation_id] = correlation
         return correlation_id
     
-    def add_log(self, correlation_id: str, log_entry: LogEntry):
+    def add_log(self, correlation_id -> None: str, log_entry -> None: LogEntry) -> None:
         """Add log entry to correlation"""
         if correlation_id in self.active_correlations:
             self.active_correlations[correlation_id]["log_count"] += 1
     
-    def end_correlation(self, correlation_id: str, **kwargs):
+    def end_correlation(self, correlation_id -> None: str, **kwargs) -> None:
         """End a log correlation"""
         if correlation_id in self.active_correlations:
             correlation = self.active_correlations.pop(correlation_id)
@@ -402,7 +402,7 @@ class UnifiedLoggingManager:
     Unified logging system that consolidates all logging functionality
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         
         # Initialize components
@@ -417,7 +417,7 @@ class UnifiedLoggingManager:
         # Setup structured logging
         self._setup_structured_logging()
     
-    def _setup_structured_logging(self):
+    def _setup_structured_logging(self) -> None:
         """Setup structured logging configuration"""
         
         # Create structured formatter
@@ -457,17 +457,17 @@ class UnifiedLoggingManager:
     
     def log_structured(
         self,
-        level: LogLevel,
-        message: str,
-        category: LogCategory = LogCategory.APPLICATION,
-        correlation_id: Optional[str] = None,
-        user_id: Optional[str] = None,
-        session_id: Optional[str] = None,
-        tags: Optional[Dict[str, str]] = None,
-        extra: Optional[Dict[str, Any]] = None,
-        logger_name: str = "",
+        level -> None: LogLevel,
+        message -> None: str,
+        category -> None: LogCategory = LogCategory.APPLICATION,
+        correlation_id -> None: Optional[str] = None,
+        user_id -> None: Optional[str] = None,
+        session_id -> None: Optional[str] = None,
+        tags -> None: Optional[Dict[str, str]] = None,
+        extra -> None: Optional[Dict[str, Any]] = None,
+        logger_name -> None: str = "",
         **kwargs
-    ):
+    ) -> None:
         """Log structured message"""
         
         # Create log entry
@@ -570,11 +570,11 @@ class UnifiedLoggingManager:
     
     def log_business_event(
         self,
-        event: str,
-        details: Dict[str, Any],
-        user_id: Optional[str] = None,
-        correlation_id: Optional[str] = None
-    ):
+        event -> None: str,
+        details -> None: Dict[str, Any],
+        user_id -> None: Optional[str] = None,
+        correlation_id -> None: Optional[str] = None
+    ) -> None:
         """Log business event"""
         self.log_structured(
             level=LogLevel.INFO,
@@ -587,11 +587,11 @@ class UnifiedLoggingManager:
     
     def log_security_event(
         self,
-        event: str,
-        details: Dict[str, Any],
-        user_id: Optional[str] = None,
-        severity: LogLevel = LogLevel.WARNING
-    ):
+        event -> None: str,
+        details -> None: Dict[str, Any],
+        user_id -> None: Optional[str] = None,
+        severity -> None: LogLevel = LogLevel.WARNING
+    ) -> None:
         """Log security event"""
         self.log_structured(
             level=severity,
@@ -612,12 +612,12 @@ class UnifiedLoggingManager:
     
     def log_performance_metric(
         self,
-        metric_name: str,
-        value: float,
-        unit: str,
-        tags: Optional[Dict[str, str]] = None,
-        correlation_id: Optional[str] = None
-    ):
+        metric_name -> None: str,
+        value -> None: float,
+        unit -> None: str,
+        tags -> None: Optional[Dict[str, str]] = None,
+        correlation_id -> None: Optional[str] = None
+    ) -> None:
         """Log performance metric"""
         self.log_structured(
             level=LogLevel.INFO,
@@ -646,7 +646,7 @@ class UnifiedLoggingManager:
         
         return correlation_id
     
-    def end_operation(self, correlation_id: str, success: bool = True, **kwargs):
+    def end_operation(self, correlation_id -> None: str, success -> None: bool = True, **kwargs) -> None:
         """End a tracked operation"""
         correlation = self.correlation.get_correlation(correlation_id)
         if correlation:
@@ -716,11 +716,11 @@ class UnifiedLoggingManager:
 class ErrorCapturingHandler(logging.Handler):
     """Custom logging handler to capture errors"""
     
-    def __init__(self, logging_manager: UnifiedLoggingManager):
+    def __init__(self, logging_manager -> None: UnifiedLoggingManager) -> None:
         super().__init__()
         self.logging_manager = logging_manager
     
-    def emit(self, record: logging.LogRecord):
+    def emit(self, record -> None: logging.LogRecord) -> None:
         """Emit log record and capture errors"""
         if record.levelno >= logging.ERROR and record.exc_info:
             # Extract error information
@@ -744,22 +744,22 @@ logging_manager = UnifiedLoggingManager()
 
 
 # Convenience functions for external use
-def log_info(message: str, **kwargs):
+def log_info(message -> None: str, **kwargs) -> None:
     """Log info message"""
     logging_manager.log_structured(LogLevel.INFO, message, **kwargs)
 
 
-def log_warning(message: str, **kwargs):
+def log_warning(message -> None: str, **kwargs) -> None:
     """Log warning message"""
     logging_manager.log_structured(LogLevel.WARNING, message, **kwargs)
 
 
-def log_error(message: str, **kwargs):
+def log_error(message -> None: str, **kwargs) -> None:
     """Log error message"""
     logging_manager.log_structured(LogLevel.ERROR, message, **kwargs)
 
 
-def log_debug(message: str, **kwargs):
+def log_debug(message -> None: str, **kwargs) -> None:
     """Log debug message"""
     logging_manager.log_structured(LogLevel.DEBUG, message, **kwargs)
 
@@ -769,12 +769,12 @@ def capture_error(error: Exception, **kwargs) -> str:
     return logging_manager.log_error(error, **kwargs)
 
 
-def log_business_event(event: str, details: Dict[str, Any], **kwargs):
+def log_business_event(event -> None: str, details -> None: Dict[str, Any], **kwargs) -> None:
     """Log business event"""
     logging_manager.log_business_event(event, details, **kwargs)
 
 
-def log_security_event(event: str, details: Dict[str, Any], **kwargs):
+def log_security_event(event -> None: str, details -> None: Dict[str, Any], **kwargs) -> None:
     """Log security event"""
     logging_manager.log_security_event(event, details, **kwargs)
 
@@ -784,7 +784,7 @@ def start_operation(operation: str, **kwargs) -> str:
     return logging_manager.start_operation(operation, **kwargs)
 
 
-def end_operation(correlation_id: str, success: bool = True, **kwargs):
+def end_operation(correlation_id -> None: str, success -> None: bool = True, **kwargs) -> None:
     """End tracked operation"""
     logging_manager.end_operation(correlation_id, success, **kwargs)
 

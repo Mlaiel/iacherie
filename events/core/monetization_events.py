@@ -59,17 +59,17 @@ class RevenueGeneratedEvent(BaseEvent):
     """Event triggered when revenue is generated on the platform"""
     
     def __init__(self,
-                 revenue_id: str,
-                 user_id: str,
-                 content_id: Optional[str],
-                 amount: Decimal,
-                 currency: str,
-                 revenue_type: RevenueType,
-                 revenue_source: str,
-                 gross_amount: Optional[Decimal] = None,
-                 platform_fee: Optional[Decimal] = None,
-                 metadata: Optional[Dict[str, Any]] = None,
-                 **kwargs):
+                 revenue_id -> None: str,
+                 user_id -> None: str,
+                 content_id -> None: Optional[str],
+                 amount -> None: Decimal,
+                 currency -> None: str,
+                 revenue_type -> None: RevenueType,
+                 revenue_source -> None: str,
+                 gross_amount -> None: Optional[Decimal] = None,
+                 platform_fee -> None: Optional[Decimal] = None,
+                 metadata -> None: Optional[Dict[str, Any]] = None,
+                 **kwargs) -> None:
         data = {
             'revenue_id': revenue_id,
             'user_id': user_id,
@@ -97,17 +97,17 @@ class PaymentProcessedEvent(BaseEvent):
     """Event triggered when a payment is processed"""
     
     def __init__(self,
-                 payment_id: str,
-                 payer_id: str,
-                 payee_id: str,
-                 amount: Decimal,
-                 currency: str,
-                 payment_method: PaymentMethod,
-                 payment_status: PaymentStatus,
-                 transaction_id: Optional[str] = None,
-                 gateway_response: Optional[Dict[str, Any]] = None,
-                 metadata: Optional[Dict[str, Any]] = None,
-                 **kwargs):
+                 payment_id -> None: str,
+                 payer_id -> None: str,
+                 payee_id -> None: str,
+                 amount -> None: Decimal,
+                 currency -> None: str,
+                 payment_method -> None: PaymentMethod,
+                 payment_status -> None: PaymentStatus,
+                 transaction_id -> None: Optional[str] = None,
+                 gateway_response -> None: Optional[Dict[str, Any]] = None,
+                 metadata -> None: Optional[Dict[str, Any]] = None,
+                 **kwargs) -> None:
         data = {
             'payment_id': payment_id,
             'payer_id': payer_id,
@@ -143,17 +143,17 @@ class CommissionCalculatedEvent(BaseEvent):
     """Event triggered when commission is calculated for a transaction"""
     
     def __init__(self,
-                 commission_id: str,
-                 transaction_id: str,
-                 creator_id: str,
-                 content_id: Optional[str],
-                 gross_revenue: Decimal,
-                 commission_rate: float,
-                 commission_amount: Decimal,
-                 calculation_method: str,
-                 tier_level: Optional[str] = None,
-                 metadata: Optional[Dict[str, Any]] = None,
-                 **kwargs):
+                 commission_id -> None: str,
+                 transaction_id -> None: str,
+                 creator_id -> None: str,
+                 content_id -> None: Optional[str],
+                 gross_revenue -> None: Decimal,
+                 commission_rate -> None: float,
+                 commission_amount -> None: Decimal,
+                 calculation_method -> None: str,
+                 tier_level -> None: Optional[str] = None,
+                 metadata -> None: Optional[Dict[str, Any]] = None,
+                 **kwargs) -> None:
         data = {
             'commission_id': commission_id,
             'transaction_id': transaction_id,
@@ -181,16 +181,16 @@ class PayoutScheduledEvent(BaseEvent):
     """Event triggered when a payout is scheduled"""
     
     def __init__(self,
-                 payout_id: str,
-                 recipient_id: str,
-                 amount: Decimal,
-                 currency: str,
-                 payout_method: PaymentMethod,
-                 scheduled_date: datetime,
-                 included_transactions: List[str],
-                 payout_period: Dict[str, str],
-                 metadata: Optional[Dict[str, Any]] = None,
-                 **kwargs):
+                 payout_id -> None: str,
+                 recipient_id -> None: str,
+                 amount -> None: Decimal,
+                 currency -> None: str,
+                 payout_method -> None: PaymentMethod,
+                 scheduled_date -> None: datetime,
+                 included_transactions -> None: List[str],
+                 payout_period -> None: Dict[str, str],
+                 metadata -> None: Optional[Dict[str, Any]] = None,
+                 **kwargs) -> None:
         data = {
             'payout_id': payout_id,
             'recipient_id': recipient_id,
@@ -218,17 +218,17 @@ class SubscriptionEvent(BaseEvent):
     """Event triggered for subscription-related activities"""
     
     def __init__(self,
-                 subscription_id: str,
-                 user_id: str,
-                 plan_id: str,
-                 action: str,  # created, updated, cancelled, renewed
-                 subscription_status: str,
-                 billing_amount: Optional[Decimal] = None,
-                 billing_currency: Optional[str] = None,
-                 billing_cycle: Optional[str] = None,
-                 next_billing_date: Optional[datetime] = None,
-                 metadata: Optional[Dict[str, Any]] = None,
-                 **kwargs):
+                 subscription_id -> None: str,
+                 user_id -> None: str,
+                 plan_id -> None: str,
+                 action -> None: str,  # created, updated, cancelled, renewed
+                 subscription_status -> None: str,
+                 billing_amount -> None: Optional[Decimal] = None,
+                 billing_currency -> None: Optional[str] = None,
+                 billing_cycle -> None: Optional[str] = None,
+                 next_billing_date -> None: Optional[datetime] = None,
+                 metadata -> None: Optional[Dict[str, Any]] = None,
+                 **kwargs) -> None:
         data = {
             'subscription_id': subscription_id,
             'user_id': user_id,
@@ -265,17 +265,17 @@ class RefundProcessedEvent(BaseEvent):
     """Event triggered when a refund is processed"""
     
     def __init__(self,
-                 refund_id: str,
-                 original_payment_id: str,
-                 refund_amount: Decimal,
-                 currency: str,
-                 refund_reason: str,
-                 refund_type: str,  # full, partial
-                 requester_id: str,
-                 approver_id: Optional[str] = None,
-                 gateway_response: Optional[Dict[str, Any]] = None,
-                 metadata: Optional[Dict[str, Any]] = None,
-                 **kwargs):
+                 refund_id -> None: str,
+                 original_payment_id -> None: str,
+                 refund_amount -> None: Decimal,
+                 currency -> None: str,
+                 refund_reason -> None: str,
+                 refund_type -> None: str,  # full, partial
+                 requester_id -> None: str,
+                 approver_id -> None: Optional[str] = None,
+                 gateway_response -> None: Optional[Dict[str, Any]] = None,
+                 metadata -> None: Optional[Dict[str, Any]] = None,
+                 **kwargs) -> None:
         data = {
             'refund_id': refund_id,
             'original_payment_id': original_payment_id,
@@ -303,14 +303,14 @@ class FinancialReportGeneratedEvent(BaseEvent):
     """Event triggered when financial reports are generated"""
     
     def __init__(self,
-                 report_id: str,
-                 report_type: str,
-                 report_period: Dict[str, str],
-                 user_id: Optional[str] = None,
-                 report_data: Optional[Dict[str, Any]] = None,
-                 report_location: Optional[str] = None,
-                 metadata: Optional[Dict[str, Any]] = None,
-                 **kwargs):
+                 report_id -> None: str,
+                 report_type -> None: str,
+                 report_period -> None: Dict[str, str],
+                 user_id -> None: Optional[str] = None,
+                 report_data -> None: Optional[Dict[str, Any]] = None,
+                 report_location -> None: Optional[str] = None,
+                 metadata -> None: Optional[Dict[str, Any]] = None,
+                 **kwargs) -> None:
         data = {
             'report_id': report_id,
             'report_type': report_type,
@@ -342,16 +342,16 @@ class FraudDetectedEvent(BaseEvent):
     """Event triggered when fraudulent activity is detected"""
     
     def __init__(self,
-                 detection_id: str,
-                 transaction_id: str,
-                 user_id: str,
-                 fraud_type: str,
-                 risk_score: float,
-                 detection_method: str,
-                 suspicious_patterns: List[str],
-                 recommended_action: str,
-                 metadata: Optional[Dict[str, Any]] = None,
-                 **kwargs):
+                 detection_id -> None: str,
+                 transaction_id -> None: str,
+                 user_id -> None: str,
+                 fraud_type -> None: str,
+                 risk_score -> None: float,
+                 detection_method -> None: str,
+                 suspicious_patterns -> None: List[str],
+                 recommended_action -> None: str,
+                 metadata -> None: Optional[Dict[str, Any]] = None,
+                 **kwargs) -> None:
         data = {
             'detection_id': detection_id,
             'transaction_id': transaction_id,
@@ -386,16 +386,16 @@ class TaxCalculatedEvent(BaseEvent):
     """Event triggered when taxes are calculated for transactions"""
     
     def __init__(self,
-                 calculation_id: str,
-                 transaction_id: str,
-                 tax_jurisdiction: str,
-                 gross_amount: Decimal,
-                 tax_rate: float,
-                 tax_amount: Decimal,
-                 tax_type: str,
-                 calculation_method: str,
-                 metadata: Optional[Dict[str, Any]] = None,
-                 **kwargs):
+                 calculation_id -> None: str,
+                 transaction_id -> None: str,
+                 tax_jurisdiction -> None: str,
+                 gross_amount -> None: Decimal,
+                 tax_rate -> None: float,
+                 tax_amount -> None: Decimal,
+                 tax_type -> None: str,
+                 calculation_method -> None: str,
+                 metadata -> None: Optional[Dict[str, Any]] = None,
+                 **kwargs) -> None:
         data = {
             'calculation_id': calculation_id,
             'transaction_id': transaction_id,

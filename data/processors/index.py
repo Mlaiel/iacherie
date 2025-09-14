@@ -65,7 +65,7 @@ class ProcessorIndex:
     """
 Central index and registry for all content processors"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(f"{__name__}.ProcessorIndex")
         self._processors: Dict[str, ProcessorInfo] = {}
         self._instances: Dict[str, Any] = {}
@@ -74,7 +74,7 @@ Central index and registry for all content processors"""
         # Initialize processor registry
         self._initialize_registry()
     
-    def _initialize_registry(self):
+    def _initialize_registry(self) -> None:
         """Initialize the processor registry with all available processors"""
         try:
             # Register core processors
@@ -167,14 +167,14 @@ Central index and registry for all content processors"""
     
     def _register_processor(
         self,
-        name: str,
-        processor_class: Type,
-        category: str,
-        description: str,
-        supported_formats: List[str],
-        capabilities: List[str],
-        version: str = "1.0.0"
-    ):
+        name -> None: str,
+        processor_class -> None: Type,
+        category -> None: str,
+        description -> None: str,
+        supported_formats -> None: List[str],
+        capabilities -> None: List[str],
+        version -> None: str = "1.0.0"
+    ) -> None:
         """Register a processor in the index"""
         processor_info = ProcessorInfo(
             name=name,
@@ -210,7 +210,7 @@ List all processor categories"""
         categories = set(p.category for p in self._processors.values())
         return sorted(list(categories))
     
-    def get_processor_instance(self, processor_name: str, config: Optional[Dict[str, Any]] = None):
+    def get_processor_instance(self, processor_name -> None: str, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """
 Get or create a processor instance"""
         try:
@@ -299,7 +299,7 @@ Process content while tracking metrics"""
                 'processor': processor_name
             }
     
-    async def _update_metrics(self, processor_name: str, success: bool, processing_time: float):
+    async def _update_metrics(self, processor_name -> None: str, success -> None: bool, processing_time -> None: float) -> None:
         """Update processing metrics for a processor"""
         try:
             metrics = self._metrics.get(processor_name)
@@ -332,7 +332,7 @@ Process content while tracking metrics"""
 Get performance metrics for all processors"""
         return self._metrics.copy()
     
-    def reset_metrics(self, processor_name: Optional[str] = None):
+    def reset_metrics(self, processor_name -> None: Optional[str] = None) -> None:
         """
 Reset metrics for a specific processor or all processors"""
         if processor_name:
@@ -342,7 +342,7 @@ Reset metrics for a specific processor or all processors"""
             for name in self._metrics:
                 self._metrics[name] = ProcessorMetrics(processor_name=name)
     
-    def deactivate_processor(self, processor_name: str):
+    def deactivate_processor(self, processor_name -> None: str) -> None:
         """
 Deactivate a processor"""
         if processor_name in self._processors:
@@ -352,7 +352,7 @@ Deactivate a processor"""
                 del self._instances[processor_name]
             self.logger.info(f"Deactivated processor: {processor_name}")
     
-    def activate_processor(self, processor_name: str):
+    def activate_processor(self, processor_name -> None: str) -> None:
         """Activate a processor"""
         if processor_name in self._processors:
             self._processors[processor_name].is_active = True
@@ -394,7 +394,7 @@ Deactivate a processor"""
 processor_index = ProcessorIndex()
 
 # Convenience functions for easy access
-def get_processor(processor_name: str, config: Optional[Dict[str, Any]] = None):
+def get_processor(processor_name -> None: str, config -> None: Optional[Dict[str, Any]] = None) -> None:
     """Get a processor instance"""
     return processor_index.get_processor_instance(processor_name, config)
 

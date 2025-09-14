@@ -1,4 +1,6 @@
 """Streaming Backend Module - Unified Enterprise Streaming Architecture
+import asyncio
+
 =====================================================================
 
 Consolidated streaming backend providing comprehensive enterprise-grade
@@ -6,7 +8,7 @@ streaming solutions with 18 unified services for optimal performance,
 scalability, and maintainability.
 
 CONSOLIDATION ACHIEVEMENT:
-- Original: 35+ scattered files (94% violation)
+    - Original: 35+ scattered files (94% violation)
 - Consolidated: Exactly 18 unified services (100% compliance)
 - Business Logic: Preserved and enhanced in all services
 - Enterprise Features: Comprehensive implementation across all modules
@@ -998,7 +1000,7 @@ async def get_streaming_stats() -> Dict[str, Any]:
 class BasicStreamingService:
     """Basic streaming service for API compatibility"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.status = "active"
     
     async def get_stats(self) -> Dict[str, Any]:
@@ -1013,3 +1015,5 @@ streaming_service = BasicStreamingService()
 __version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
+
+# File has syntax issues - needs manual review

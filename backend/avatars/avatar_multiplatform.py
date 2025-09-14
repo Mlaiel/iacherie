@@ -155,12 +155,12 @@ class DeploymentResult:
 class PlatformAdapter:
     """Adaptateur multi-plateforme"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
         self.platform_constraints: Dict[PlatformType, PlatformConstraints] = {}
         self._initialize_platform_constraints()
     
-    def _initialize_platform_constraints(self):
+    def _initialize_platform_constraints(self) -> None:
         """Initialisation des contraintes par plateforme"""
         constraints = {
             PlatformType.WEB: PlatformConstraints(
@@ -345,12 +345,12 @@ class PlatformAdapter:
 class FormatConverter:
     """Convertisseur formats"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
         self.conversion_matrix: Dict[Tuple[ExportFormat, ExportFormat], Dict[str, Any]] = {}
         self._initialize_conversion_matrix()
     
-    def _initialize_conversion_matrix(self):
+    def _initialize_conversion_matrix(self) -> None:
         """Initialisation de la matrice de conversion"""
         # Définition des conversions possibles et leurs paramètres
         conversions = {
@@ -470,12 +470,12 @@ class FormatConverter:
 class QualityScaler:
     """Mise à l'échelle qualité"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
         self.quality_presets: Dict[QualityProfile, Dict[str, Any]] = {}
         self._initialize_quality_presets()
     
-    def _initialize_quality_presets(self):
+    def _initialize_quality_presets(self) -> None:
         """Initialisation des préréglages qualité"""
         presets = {
             QualityProfile.MOBILE_LOW: {
@@ -636,7 +636,7 @@ class QualityScaler:
 class PlatformOptimizer:
     """Optimiseur spécifique plateforme"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
         self.platform_adapter = PlatformAdapter()
         self.format_converter = FormatConverter()

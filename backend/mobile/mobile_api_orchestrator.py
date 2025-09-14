@@ -100,7 +100,7 @@ class APIMetrics:
 class MobileAPIOrchestrator:
     """Advanced mobile API orchestrator"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         """Initialize mobile API orchestrator"""
         self.config = config or {}
         self.api_gateway = APIGateway(self.config)
@@ -224,7 +224,7 @@ class MobileAPIOrchestrator:
             "mobile_optimization_effectiveness": self._calculate_mobile_optimization_effectiveness()
         }
     
-    def _initialize_api_endpoints(self):
+    def _initialize_api_endpoints(self) -> None:
         """Initialize API endpoint configurations"""
         endpoints = {
             "/api/mobile/content": {
@@ -279,7 +279,7 @@ class MobileAPIOrchestrator:
             processing_time=0.001
         )
     
-    def _update_response_time_metric(self, processing_time: float):
+    def _update_response_time_metric(self, processing_time -> None: float) -> None:
         """Update average response time metric"""
         current_avg = self.orchestrator_metrics["average_response_time"]
         total_requests = self.orchestrator_metrics["requests_processed"]
@@ -312,7 +312,7 @@ class MobileAPIOrchestrator:
 class APIGateway:
     """API gateway for request processing"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         
     async def process_request(self, request: APIRequest, target_service: str) -> APIResponse:
@@ -347,7 +347,7 @@ class APIGateway:
 class RequestRouter:
     """Request routing system"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         
     async def route_request(self, request: APIRequest) -> Dict[str, Any]:
@@ -380,7 +380,7 @@ class RequestRouter:
 class ResponseOptimizer:
     """Response optimization system"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         
     async def optimize_for_mobile(self, response: APIResponse, request: APIRequest) -> APIResponse:
@@ -438,7 +438,7 @@ class ResponseOptimizer:
 class RateLimiter:
     """Rate limiting system"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.rate_limits = {}
         self.violation_count = 0

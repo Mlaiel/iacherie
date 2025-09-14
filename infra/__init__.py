@@ -1,3 +1,8 @@
+"""
+  Init   module
+Enterprise implementation for Ainflue platform
+"""
+
 # Ainflue Infrastructure Module
 # =============================
 # 
@@ -74,7 +79,7 @@ INFRASTRUCTURE_ENDPOINTS = {
     "deployment": "/deployment"
 }
 
-def get_infrastructure_info():
+def get_infrastructure_info() -> None:
     """Get infrastructure module information."""
     return {
         "version": __version__,

@@ -31,7 +31,7 @@ class PlatformWideOrchestrationEngine:
     components, workflows, and business processes across the entire platform.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.active_workflows = {}
         self.system_components = {}
         self.orchestration_policies = {}
@@ -57,7 +57,7 @@ class MultiModuleCoordinator:
     between different platform modules with dependency resolution.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.module_registry = {}
         self.communication_channels = {}
         

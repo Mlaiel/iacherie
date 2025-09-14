@@ -26,12 +26,12 @@ class VersionInfo:
 class VersionTracker:
     """Database version tracking system."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize version tracker."""
         self._version_history: List[VersionInfo] = []
         self._current_version = "0.0.0"
     
-    def record_version(self, version: str, applied_by: str, migration_count: int, checksum: str):
+    def record_version(self, version -> None: str, applied_by -> None: str, migration_count -> None: int, checksum -> None: str) -> None:
         """Record a new database version."""
         version_info = VersionInfo(
             version=version,

@@ -168,7 +168,7 @@ class PromptTemplate(BaseModel):
     updated_at: datetime = Field(default_factory=datetime.utcnow)
     
     @validator('template')
-    def validate_template(cls, v):
+    def validate_template(cls, v) -> None:
         if not v.strip():
             raise ValueError("Template cannot be empty")
         return v
@@ -248,7 +248,7 @@ class ABTestResult(BaseModel):
     metric_used: EvaluationMetric
     
     @validator('winner_variant')
-    def validate_winner(cls, v):
+    def validate_winner(cls, v) -> None:
         if v not in ["A", "B", "No significant difference"]:
             raise ValueError("Winner must be 'A', 'B', or 'No significant difference'")
         return v
@@ -276,7 +276,7 @@ class AbstractPromptEvaluator(ABC):
 class NLPPromptEvaluator(AbstractPromptEvaluator):
     """NLP-based prompt evaluator"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.sentiment_analyzer = SentimentIntensityAnalyzer()
         self.nlp = spacy.load("en_core_web_sm")
         self.vectorizer = TfidfVectorizer(max_features=1000)
@@ -360,7 +360,7 @@ class NLPPromptEvaluator(AbstractPromptEvaluator):
 class PromptOptimizer:
     """Main prompt optimization engine"""
     
-    def __init__(self, config: PromptOptimizationConfig):
+    def __init__(self, config -> None: PromptOptimizationConfig) -> None:
         self.config = config
         self.evaluator = NLPPromptEvaluator()
         self.db_pool = None
@@ -370,7 +370,7 @@ class PromptOptimizer:
         # Initialize tokenizer for cost calculation
         self.tokenizer = tiktoken.encoding_for_model("gpt-4")
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize the optimizer"""
         # Connect to database
         self.db_pool = await asyncpg.create_pool(self.config.database_url)
@@ -383,14 +383,14 @@ class PromptOptimizer:
         
         self.logger.info("Prompt optimizer initialized")
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Shutdown the optimizer"""
         if self.db_pool:
             await self.db_pool.close()
         if self.redis:
             await self.redis.close()
     
-    async def _create_tables(self):
+    async def _create_tables(self) -> None:
         """Create database tables"""
         async with self.db_pool.acquire() as conn:
             await conn.execute("""
@@ -847,7 +847,7 @@ class PromptOptimizer:
         cost_per_1k_tokens = 0.03
         return (tokens_used / 1000) * cost_per_1k_tokens
     
-    async def _save_prompt(self, prompt: PromptTemplate):
+    async def _save_prompt(self, prompt -> None: PromptTemplate) -> None:
         """Save prompt template to database"""
         async with self.db_pool.acquire() as conn:
             await conn.execute("""
@@ -867,7 +867,7 @@ class PromptOptimizer:
                 prompt.token_efficiency, prompt.version, prompt.parent_id
             )
     
-    async def _save_optimization_result(self, result: OptimizationResult):
+    async def _save_optimization_result(self, result -> None: OptimizationResult) -> None:
         """Save optimization result to database"""
         async with self.db_pool.acquire() as conn:
             await conn.execute("""
@@ -940,7 +940,7 @@ class PromptOptimizer:
 
 
 # Usage example
-async def main():
+async def main() -> None:
     """Example usage of PromptOptimizer"""
     
     # Configure optimizer

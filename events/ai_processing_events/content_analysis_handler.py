@@ -179,7 +179,7 @@ class ContentAnalysisHandler(BaseEventHandler):
     quality assessment, and business intelligence generation.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
         self.content_processor = ContentProcessor()
         self.quality_analyzer = QualityAnalyzer()
@@ -194,7 +194,7 @@ class ContentAnalysisHandler(BaseEventHandler):
         # Initialize AI models for content analysis
         self._initialize_ai_models()
     
-    def _initialize_ai_models(self):
+    def _initialize_ai_models(self) -> None:
         """
 Initialize AI models for content analysis"""
         try:

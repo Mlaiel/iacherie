@@ -111,7 +111,7 @@ class ProcessingTask:
 class EdgeAIModel(ABC):
     """Classe abstraite pour modèles IA edge."""
     
-    def __init__(self, config: AIModelConfig):
+    def __init__(self, config -> None: AIModelConfig) -> None:
         self.config = config
         self.model = None
         self.is_loaded = False
@@ -248,7 +248,7 @@ class EngagementPredictionModel(EdgeAIModel):
 class EdgeContentProcessor:
     """Processeur de contenu edge optimisé."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.processing_queue = asyncio.Queue()
         self.active_tasks = {}
         self.is_processing = False
@@ -291,7 +291,7 @@ class EdgeContentProcessor:
 class EdgePerformanceOptimizer:
     """Optimiseur de performance edge."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.optimization_cache = {}
         self.performance_metrics = {}
     
@@ -389,7 +389,7 @@ class EdgePerformanceOptimizer:
 class EdgeRealTimeAnalytics:
     """Analytics en temps réel pour edge."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.metrics_cache = {}
         self.analytics_queue = asyncio.Queue()
     
@@ -428,7 +428,7 @@ class EdgeRealTimeAnalytics:
 class EdgeIntelligenceEngine:
     """Moteur IA Edge ultra-avancé pour optimisation créateurs."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.ai_models = {}
         self.content_processor = EdgeContentProcessor()
         self.performance_optimizer = EdgePerformanceOptimizer()
@@ -439,7 +439,7 @@ class EdgeIntelligenceEngine:
         # Initialisation des modèles par défaut
         self._initialize_default_models()
     
-    def _initialize_default_models(self):
+    def _initialize_default_models(self) -> None:
         """Initialise les modèles IA par défaut."""
         # Modèle de qualité
         quality_config = AIModelConfig(
@@ -567,7 +567,7 @@ class EdgeIntelligenceEngine:
         
         return metrics
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Arrête le moteur IA edge."""
         self.is_running = False
         logger.info("Edge Intelligence Engine stopped")

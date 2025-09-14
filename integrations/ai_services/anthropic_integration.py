@@ -80,9 +80,9 @@ class AnthropicIntegration:
     
     def __init__(
         self,
-        api_key: str,
-        config: Optional[Dict[str, Any]] = None
-    ):
+        api_key -> None: str,
+        config -> None: Optional[Dict[str, Any]] = None
+    ) -> None:
         self.api_key = api_key
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
@@ -136,14 +136,14 @@ class AnthropicIntegration:
         self.request_history: List[ClaudeResponse] = []
         self.max_history = self.config.get('max_history', 1000)
         
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize the Anthropic integration."""
         # Test API connectivity
         await self._test_connection()
         
         self.logger.info("Anthropic integration initialized")
     
-    async def _test_connection(self):
+    async def _test_connection(self) -> None:
         """Test API connection."""
         try:
             response = await self.client.get("/v1/models")
@@ -167,9 +167,9 @@ class AnthropicIntegration:
     
     async def add_message_to_conversation(
         self,
-        conversation_id: str,
-        message: ClaudeMessage
-    ):
+        conversation_id -> None: str,
+        message -> None: ClaudeMessage
+    ) -> None:
         """Add message to conversation."""
         if conversation_id not in self.active_conversations:
             await self.create_conversation(conversation_id)
@@ -414,7 +414,7 @@ class AnthropicIntegration:
         """Get conversation history."""
         return self.active_conversations.get(conversation_id)
     
-    async def clear_conversation(self, conversation_id: str):
+    async def clear_conversation(self, conversation_id -> None: str) -> None:
         """Clear conversation history."""
         if conversation_id in self.active_conversations:
             del self.active_conversations[conversation_id]
@@ -506,7 +506,7 @@ class AnthropicIntegration:
             'analysis_timestamp': datetime.now().isoformat()
         }
     
-    async def _update_metrics(self, response: ClaudeResponse, success: bool):
+    async def _update_metrics(self, response -> None: ClaudeResponse, success -> None: bool) -> None:
         """Update integration metrics."""
         self.metrics['total_requests'] += 1
         
@@ -590,14 +590,14 @@ class AnthropicIntegration:
                 'last_check': datetime.now().isoformat()
             }
     
-    async def cleanup(self):
+    async def cleanup(self) -> None:
         """Cleanup resources."""
         await self.client.aclose()
 
 
 # Example usage
 if __name__ == "__main__":
-    async def main():
+    async def main() -> None:
         # Initialize Anthropic integration
         anthropic = AnthropicIntegration(
             api_key="your-anthropic-api-key"

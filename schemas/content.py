@@ -59,7 +59,7 @@ Professional multi-format content upload schema."""
     external_id: Optional[str] = Field(None, description="External platform ID")
     
     @validator('content_type')
-    def validate_content_type(cls, v):
+    def validate_content_type(cls, v) -> None:
         """Validate content type."""
         allowed_types = {
             'audio', 'video', 'image', 'text', 'multimodal',
@@ -70,7 +70,7 @@ Professional multi-format content upload schema."""
         return v.lower()
     
     @validator('privacy_level')
-    def validate_privacy_level(cls, v):
+    def validate_privacy_level(cls, v) -> None:
         """Validate privacy level."""
         allowed_levels = {'public', 'unlisted', 'private', 'collaborators_only'}
         if v not in allowed_levels:
@@ -213,7 +213,7 @@ class ContentVersion(UUIDSchema, TimestampSchema, AuditSchema):
     metadata_changes: Dict[str, Any] = Field(default_factory=dict)
     
     @validator('version_type')
-    def validate_version_type(cls, v):
+    def validate_version_type(cls, v) -> None:
         """Validate version type."""
         allowed_types = {'major', 'minor', 'patch', 'revision', 'hotfix'}
         if v not in allowed_types:
@@ -243,7 +243,7 @@ class ContentTag(UUIDSchema, TimestampSchema):
     icon: Optional[str] = Field(None, description="Tag icon identifier")
     
     @validator('name')
-    def validate_tag_name(cls, v):
+    def validate_tag_name(cls, v) -> None:
         """Validate tag name format."""
         # Remove extra whitespace and convert to lowercase
         return v.strip().lower()
@@ -312,7 +312,7 @@ class ContentBulkOperation(BaseSchema):
     continue_on_error: bool = Field(default=False, description="Continue processing on individual errors")
     
     @validator('operation_type')
-    def validate_operation_type(cls, v):
+    def validate_operation_type(cls, v) -> None:
         """Validate bulk operation type."""
         allowed_operations = {
             'update_metadata', 'change_privacy', 'add_tags', 'remove_tags',
@@ -346,7 +346,7 @@ class ContentAnalysis(UUIDSchema, TimestampSchema):
     performance_predictions: Dict[str, float] = Field(default_factory=dict)
     
     @validator('analysis_type')
-    def validate_analysis_type(cls, v):
+    def validate_analysis_type(cls, v) -> None:
         """Validate analysis type."""
         allowed_types = {
             'content_classification', 'quality_assessment', 'sentiment_analysis',
@@ -373,7 +373,7 @@ class ContentExport(BaseSchema):
     archive_format: Optional[str] = Field(None, description="Archive format for multiple files")
     
     @validator('export_format')
-    def validate_export_format(cls, v):
+    def validate_export_format(cls, v) -> None:
         """Validate export format."""
         allowed_formats = {
             'original', 'mp3', 'wav', 'flac', 'mp4', 'webm', 'jpg', 'png', 

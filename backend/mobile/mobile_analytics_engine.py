@@ -180,7 +180,7 @@ class MobileAudienceRequest:
 class MobileAnalyticsEngine:
     """Unified mobile analytics engine consolidating engagement, trending, and audience analytics"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         """Initialize mobile analytics engine with comprehensive capabilities"""
         self.config = config or {}
         self.engagement_predictor = MobileEngagementPredictor(self.config)
@@ -473,7 +473,7 @@ class MobileAnalyticsEngine:
         ]
         return sum(confidence_scores) / len(confidence_scores) if confidence_scores else 0.0
     
-    def _update_analytics_metrics(self, result: Dict[str, Any]):
+    def _update_analytics_metrics(self, result -> None: Dict[str, Any]) -> None:
         """Update analytics performance metrics"""
         confidence = result.get("confidence_score", 0.0)
         current_avg = self.analytics_metrics["average_accuracy"]
@@ -677,7 +677,7 @@ class MobileAnalyticsEngine:
 class MobileEngagementPredictor:
     """Mobile engagement prediction with ML-based forecasting"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.prediction_models = {}
         self.historical_data = {}
@@ -778,7 +778,7 @@ class MobileEngagementPredictor:
 class MobileTrendingAnalyzer:
     """Mobile trending analysis with viral potential assessment"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.trend_models = {}
         self.trending_data = {}
@@ -846,7 +846,7 @@ class MobileTrendingAnalyzer:
 class MobileAudienceTargeting:
     """Mobile audience targeting with intelligent segmentation"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.targeting_models = {}
         self.audience_data = {}

@@ -84,7 +84,7 @@ class EnvironmentManagerFactory:
     }
     
     @classmethod
-    def create_manager(cls, environment_type: EnvironmentType, config_path: Optional[str] = None):
+    def create_manager(cls, environment_type -> None: EnvironmentType, config_path -> None: Optional[str] = None) -> None:
         """
 Create environment manager instance"""
         if environment_type not in cls._managers:
@@ -112,7 +112,7 @@ class EnvironmentCoordinator:
     - Resource optimization across environments
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.active_managers: Dict[EnvironmentType, Any] = {}
         self.environment_configs: Dict[EnvironmentType, Dict] = {}
         self.dependency_graph: Dict[EnvironmentType, List[EnvironmentType]] = {}
@@ -337,7 +337,7 @@ class EnvironmentCoordinator:
             return {}
     
     # Private helper methods
-    def _setup_environment_dependencies(self, environments: List[EnvironmentType]):
+    def _setup_environment_dependencies(self, environments -> None: List[EnvironmentType]) -> None:
         """Setup environment dependencies"""
         # Define common dependency relationships
         dependencies = {
@@ -363,7 +363,7 @@ Calculate environment initialization order based on dependencies"""
         visited = set()
         result = []
         
-        def visit(env_type):
+        def visit(env_type) -> None:
             if env_type in visited:
                 return
             
@@ -452,7 +452,7 @@ Generate resource optimization recommendations"""
 
 
 # Convenience functions for quick environment access
-def get_environment_manager(environment_type: str, config_path: Optional[str] = None):
+def get_environment_manager(environment_type -> None: str, config_path -> None: Optional[str] = None) -> None:
     """
 Get environment manager by type string"""
     try:
@@ -462,30 +462,30 @@ Get environment manager by type string"""
         raise ValueError(f"Invalid environment type: {environment_type}")
 
 
-def create_development_environment(config_path: Optional[str] = None):
+def create_development_environment(config_path -> None: Optional[str] = None) -> None:
     """Create development environment manager"""
     return DevelopmentEnvironmentManager(config_path)
 
 
-def create_production_environment(config_path: Optional[str] = None):
+def create_production_environment(config_path -> None: Optional[str] = None) -> None:
     """
 Create production environment manager"""
     return ProductionEnvironmentManager(config_path)
 
 
-def create_staging_environment(config_path: Optional[str] = None):
+def create_staging_environment(config_path -> None: Optional[str] = None) -> None:
     """
 Create staging environment manager"""
     return StagingEnvironmentManager(config_path)
 
 
-def create_kubernetes_environment(config_path: Optional[str] = None):
+def create_kubernetes_environment(config_path -> None: Optional[str] = None) -> None:
     """
 Create Kubernetes environment manager"""
     return KubernetesEnvironmentManager(config_path)
 
 
-def create_compliance_environment(config_path: Optional[str] = None):
+def create_compliance_environment(config_path -> None: Optional[str] = None) -> None:
     """
 Create compliance environment manager"""
     return ComplianceEnvironmentManager(config_path)

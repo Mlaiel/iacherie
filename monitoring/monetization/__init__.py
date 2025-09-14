@@ -109,7 +109,7 @@ class MonetizationOrchestrator:
     fraud detection, subscription management, and financial compliance.
     """
     
-    def __init__(self, config: MonetizationConfig):
+    def __init__(self, config -> None: MonetizationConfig) -> None:
         """Initialize monetization monitoring orchestrator."""
         self.config = config
         self.modules = {}
@@ -123,7 +123,7 @@ class MonetizationOrchestrator:
         self._initialize_modules()
         self._setup_payment_gateways()
     
-    def _initialize_modules(self):
+    def _initialize_modules(self) -> None:
         """Initialize enabled monetization modules."""
         for module in self.config.enabled_modules:
             try:
@@ -133,7 +133,7 @@ class MonetizationOrchestrator:
             except Exception as e:
                 logger.error(f"Failed to initialize module {module.value}: {e}")
     
-    def _create_monetization_module(self, module: MonetizationModules):
+    def _create_monetization_module(self, module -> None: MonetizationModules) -> None:
         """Create instance of specific monetization monitoring module."""
         return {
             "name": module.value,
@@ -145,7 +145,7 @@ class MonetizationOrchestrator:
             "performance_score": 0.95
         }
     
-    def _setup_payment_gateways(self):
+    def _setup_payment_gateways(self) -> None:
         """Setup monitoring for payment gateways."""
         self.gateway_status = {}
         for gateway in self.config.payment_gateways:
@@ -250,7 +250,7 @@ class MonetizationOrchestrator:
         
         return min(1.0, sum(fraud_factors))
     
-    def _create_fraud_alert(self, transaction: PaymentTransaction, fraud_score: float):
+    def _create_fraud_alert(self, transaction -> None: PaymentTransaction, fraud_score -> None: float) -> None:
         """Create fraud alert for suspicious transaction."""
         alert = {
             "alert_id": f"fraud_{transaction.transaction_id}",
@@ -345,7 +345,7 @@ class MonetizationOrchestrator:
             "metadata": transaction.metadata
         }
     
-    def _update_metrics(self, transaction: PaymentTransaction):
+    def _update_metrics(self, transaction -> None: PaymentTransaction) -> None:
         """Update monetization metrics."""
         self.metrics.transaction_count += 1
         

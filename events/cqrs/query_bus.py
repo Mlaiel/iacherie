@@ -115,7 +115,7 @@ class QueryHandler(Generic[T]):
 class CacheManager:
     """Multi-level cache manager for query results"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._memory_cache: Dict[str, Dict[str, Any]] = {}
         self._cache_stats = defaultdict(int)
         self._cache_expiry: Dict[str, datetime] = {}
@@ -198,7 +198,7 @@ class CacheManager:
 class ReadModelRouter:
     """Route queries to appropriate read models/databases"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._routes: Dict[str, Dict[str, Any]] = {}
         self._load_balancer_state: Dict[str, int] = defaultdict(int)
     
@@ -236,9 +236,9 @@ class EnterpriseQueryBus:
     """Enterprise-grade query bus with advanced optimization"""
     
     def __init__(self, 
-                 max_concurrent_queries: int = 200,
-                 enable_caching: bool = True,
-                 enable_query_optimization: bool = True):
+                 max_concurrent_queries -> None: int = 200,
+                 enable_caching -> None: bool = True,
+                 enable_query_optimization -> None: bool = True) -> None:
         self._handlers: Dict[str, QueryHandler] = {}
         self._middleware: List[Callable] = []
         self._cache_manager = CacheManager()

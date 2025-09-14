@@ -216,7 +216,7 @@ class QuantumWorkflowManager:
     ✅ Performance analytics & insights
     """
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.config = config or {}
         self.workflow_definitions: Dict[str, WorkflowDefinition] = {}
         self.active_executions: Dict[str, WorkflowExecution] = {}
@@ -235,7 +235,7 @@ class QuantumWorkflowManager:
         
         logger.info("🔄 Quantum Workflow Manager initialized")
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialisation complète workflow manager"""
         try:
             # Setup dependency graph engine
@@ -422,11 +422,11 @@ class QuantumWorkflowManager:
     
     async def _execute_workflow_async(
         self, 
-        workflow_def: WorkflowDefinition,
-        workflow_execution: WorkflowExecution,
-        execution_plan: Dict[str, Any],
-        input_data: Dict[str, Any]
-    ):
+        workflow_def -> None: WorkflowDefinition,
+        workflow_execution -> None: WorkflowExecution,
+        execution_plan -> None: Dict[str, Any],
+        input_data -> None: Dict[str, Any]
+    ) -> None:
         """Exécution asynchrone workflow"""
         try:
             execution_id = workflow_execution.execution_id
@@ -457,11 +457,11 @@ class QuantumWorkflowManager:
     
     async def _execute_hybrid_workflow(
         self,
-        workflow_def: WorkflowDefinition,
-        workflow_execution: WorkflowExecution,
-        dependency_graph: nx.DiGraph,
-        input_data: Dict[str, Any]
-    ):
+        workflow_def -> None: WorkflowDefinition,
+        workflow_execution -> None: WorkflowExecution,
+        dependency_graph -> None: nx.DiGraph,
+        input_data -> None: Dict[str, Any]
+    ) -> None:
         """Exécution workflow hybride (séquentiel + parallèle optimisé)"""
         try:
             # Analyse topologique pour déterminer niveaux d'exécution
@@ -805,7 +805,7 @@ class QuantumWorkflowManager:
     # MÉTHODES PRIVÉES - UTILITIES
     # ========================================
     
-    async def _validate_workflow_definition(self, workflow_def: WorkflowDefinition):
+    async def _validate_workflow_definition(self, workflow_def -> None: WorkflowDefinition) -> None:
         """Validation définition workflow"""
         if not workflow_def.tasks:
             raise ValueError("Workflow must have at least one task")
@@ -836,7 +836,7 @@ class QuantumWorkflowManager:
         
         return graph
     
-    async def _validate_dependency_graph(self, graph: nx.DiGraph):
+    async def _validate_dependency_graph(self, graph -> None: nx.DiGraph) -> None:
         """Validation graph de dépendances"""
         # Vérification cycles
         if not nx.is_directed_acyclic_graph(graph):

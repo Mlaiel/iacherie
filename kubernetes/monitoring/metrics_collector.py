@@ -51,11 +51,11 @@ class MetricsCollector:
     
     def __init__(
         self,
-        redis_client: Optional[redis.Redis] = None,
-        db_engine: Optional[Any] = None,
-        collection_interval: int = 30,
-        retention_days: int = 30
-    ):
+        redis_client -> None: Optional[redis.Redis] = None,
+        db_engine -> None: Optional[Any] = None,
+        collection_interval -> None: int = 30,
+        retention_days -> None: int = 30
+    ) -> None:
         self.redis_client = redis_client
         self.db_engine = db_engine
         self.collection_interval = collection_interval
@@ -96,7 +96,7 @@ class MetricsCollector:
         self._metrics_buffer: List[MetricPoint] = []
         self._buffer_lock = threading.Lock()
         
-    def start_collection(self, prometheus_port: int = 8000):
+    def start_collection(self, prometheus_port -> None: int = 8000) -> None:
         """
 Start metrics collection with Prometheus server"""
         if self._collecting:
@@ -118,14 +118,14 @@ Start metrics collection with Prometheus server"""
         
         logger.info("Metrics collection started")
         
-    def stop_collection(self):
+    def stop_collection(self) -> None:
         """Stop metrics collection"""
         self._collecting = False
         if self._collection_thread:
             self._collection_thread.join(timeout=5)
         logger.info("Metrics collection stopped")
         
-    def _collection_loop(self):
+    def _collection_loop(self) -> None:
         """Main collection loop"""
         while self._collecting:
             try:
@@ -141,7 +141,7 @@ Start metrics collection with Prometheus server"""
                 logger.error(f"Error in metrics collection loop: {e}")
                 time.sleep(5)  # Backoff on error
                 
-    def _collect_system_metrics(self):
+    def _collect_system_metrics(self) -> None:
         """Collect system-level metrics"""
         try:
             # CPU usage
@@ -183,7 +183,7 @@ Start metrics collection with Prometheus server"""
         except Exception as e:
             logger.error(f"Error collecting system metrics: {e}")
             
-    def _collect_application_metrics(self):
+    def _collect_application_metrics(self) -> None:
         """Collect application-level metrics"""
         try:
             # Redis metrics
@@ -212,7 +212,7 @@ Start metrics collection with Prometheus server"""
         except Exception as e:
             logger.error(f"Error collecting application metrics: {e}")
             
-    def _collect_business_metrics(self):
+    def _collect_business_metrics(self) -> None:
         """Collect business-specific metrics"""
         try:
             if self.db_engine:
@@ -256,7 +256,7 @@ Start metrics collection with Prometheus server"""
         except Exception as e:
             logger.error(f"Error collecting business metrics: {e}")
             
-    def _run_custom_collectors(self):
+    def _run_custom_collectors(self) -> None:
         """Run custom metric collectors"""
         for name, collector in self._custom_collectors.items():
             try:
@@ -270,7 +270,7 @@ Start metrics collection with Prometheus server"""
             except Exception as e:
                 logger.error(f"Error in custom collector '{name}': {e}")
                 
-    def _add_metric(self, name: str, value: float, labels: Dict[str, str] = None):
+    def _add_metric(self, name -> None: str, value -> None: float, labels -> None: Dict[str, str] = None) -> None:
         """Add a metric to the buffer"""
         metric_point = MetricPoint(
             name=name,
@@ -280,7 +280,7 @@ Start metrics collection with Prometheus server"""
         )
         self._add_metric_point(metric_point)
         
-    def _add_metric_point(self, metric: MetricPoint):
+    def _add_metric_point(self, metric -> None: MetricPoint) -> None:
         """
 Add a metric point to the buffer"""
         with self._buffer_lock:
@@ -290,7 +290,7 @@ Add a metric point to the buffer"""
             if len(self._metrics_buffer) > 10000:
                 self._metrics_buffer = self._metrics_buffer[-5000:]
                 
-    def _process_metrics_buffer(self):
+    def _process_metrics_buffer(self) -> None:
         """
 Process metrics buffer"""
         if not self._metrics_buffer:

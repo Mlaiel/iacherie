@@ -145,7 +145,7 @@ Evaluate step conditions against context."""
             return base_delay * (2 ** self.retry_attempts)
         return base_delay
     
-    def record_execution(self, success: bool, result: Any = None, error: str = None):
+    def record_execution(self, success -> None: bool, result -> None: Any = None, error -> None: str = None) -> None:
         """Record step execution result."""
         self.end_time = datetime.utcnow()
         if self.start_time:
@@ -164,7 +164,7 @@ class IntelligentContentPipeline:
     """
 Intelligent content processing pipeline with adaptive routing."""
     
-    def __init__(self, pipeline_id: str = None, config: Dict[str, Any] = None):
+    def __init__(self, pipeline_id -> None: str = None, config -> None: Dict[str, Any] = None) -> None:
         self.pipeline_id = pipeline_id or f"pipeline_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}_{uuid.uuid4().hex[:8]}"
         self.config = config or {}
         
@@ -264,7 +264,7 @@ Execute the entire pipeline with intelligent routing."""
         
         return self._build_execution_summary()
     
-    async def _execute_adaptive_pipeline(self):
+    async def _execute_adaptive_pipeline(self) -> None:
         """Execute pipeline with adaptive routing and parallel processing."""
         execution_queue = deque()
         
@@ -303,7 +303,7 @@ Execute the entire pipeline with intelligent routing."""
                 if not resolved:
                     break
     
-    async def _execute_step_with_monitoring(self, step_name: str):
+    async def _execute_step_with_monitoring(self, step_name -> None: str) -> None:
         """Execute step with comprehensive monitoring."""
         step = self.steps[step_name]
         step.status = PipelineStatus.RUNNING
@@ -355,7 +355,7 @@ Execute the entire pipeline with intelligent routing."""
             step.record_execution(False, error=str(e))
             await self._handle_step_failure(step_name, str(e))
     
-    async def _complete_step(self, step_name: str, result: Any):
+    async def _complete_step(self, step_name -> None: str, result -> None: Any) -> None:
         """Handle successful step completion."""
         self.completed_steps.add(step_name)
         self.current_steps.discard(step_name)
@@ -379,7 +379,7 @@ Execute the entire pipeline with intelligent routing."""
         
         self.logger.debug(f"Step completed: {step_name}")
     
-    async def _handle_step_failure(self, step_name: str, error: str):
+    async def _handle_step_failure(self, step_name -> None: str, error -> None: str) -> None:
         """Handle step failure with retry logic."""
         step = self.steps[step_name]
         
@@ -418,7 +418,7 @@ Execute the entire pipeline with intelligent routing."""
             # Cancel remaining steps
             await self._cancel_remaining_steps()
     
-    async def _wait_for_step_completion(self):
+    async def _wait_for_step_completion(self) -> None:
         """Wait for at least one currently running step to complete."""
         # Simple polling approach - could be improved with proper async coordination
         while self.current_steps:
@@ -473,7 +473,7 @@ Attempt to resolve stuck pipeline by analyzing dependencies."""
         
         return False
     
-    async def _cancel_remaining_steps(self):
+    async def _cancel_remaining_steps(self) -> None:
         """Cancel all remaining steps due to critical failure."""
         for step_name in self.current_steps.copy():
             step = self.steps[step_name]
@@ -596,19 +596,19 @@ Build comprehensive execution summary."""
         
         return min(total_processing_time / pipeline_duration, self.max_parallel_steps) / self.max_parallel_steps
     
-    def pause(self):
+    def pause(self) -> None:
         """
 Pause pipeline execution."""
         self.status = PipelineStatus.PAUSED
         self.logger.info(f"Paused pipeline: {self.pipeline_id}")
     
-    def resume(self):
+    def resume(self) -> None:
         """Resume pipeline execution."""
         if self.status == PipelineStatus.PAUSED:
             self.status = PipelineStatus.RUNNING
             self.logger.info(f"Resumed pipeline: {self.pipeline_id}")
     
-    def cancel(self):
+    def cancel(self) -> None:
         """Cancel pipeline execution."""
         self.status = PipelineStatus.CANCELLED
         asyncio.create_task(self._cancel_remaining_steps())

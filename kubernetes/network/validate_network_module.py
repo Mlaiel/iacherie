@@ -1,5 +1,12 @@
+"""
+Validate Network Module module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """IA Influencer Agent - Network Module Validation Script
+import logging
+
 Comprehensive validation of all network deployment modules
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -119,7 +126,7 @@ def validate_file_structure() -> bool:
     return all_files_exist
 
 
-async def run_comprehensive_validation():
+async def run_comprehensive_validation() -> None:
         try:
             logger.info(f"Executing run_comprehensive_validation")
             

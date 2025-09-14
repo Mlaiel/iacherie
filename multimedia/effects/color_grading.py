@@ -63,7 +63,7 @@ class ColorGradingConfig:
 class ColorGradingEngine:
     """Professional color grading engine for cinematic looks."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.config = ColorGradingConfig()
         self.presets = self._initialize_presets()
         

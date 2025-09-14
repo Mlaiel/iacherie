@@ -126,7 +126,7 @@ class ConversionJob:
 class FormatConversionConfiguration:
     """Enterprise format conversion configuration management"""
     
-    def __init__(self, level: str = "enterprise"):
+    def __init__(self, level -> None: str = "enterprise") -> None:
         self.level = level
         self.conversion_enabled = True
         self.gpu_acceleration = True
@@ -159,7 +159,7 @@ class FormatConversionConfiguration:
         self._configure_platform_optimization()
         self._configure_processing_pipeline()
     
-    def _configure_audio_formats(self):
+    def _configure_audio_formats(self) -> None:
         """Configure audio format specifications"""
         self.audio_formats = {
             # High quality formats
@@ -239,7 +239,7 @@ class FormatConversionConfiguration:
             )
         }
     
-    def _configure_video_formats(self):
+    def _configure_video_formats(self) -> None:
         """Configure video format specifications"""
         self.video_formats = {
             # 4K formats
@@ -364,7 +364,7 @@ class FormatConversionConfiguration:
             )
         }
     
-    def _configure_image_formats(self):
+    def _configure_image_formats(self) -> None:
         """Configure image format specifications"""
         self.image_formats = {
             # Modern formats
@@ -452,7 +452,7 @@ class FormatConversionConfiguration:
             )
         }
     
-    def _configure_conversion_presets(self):
+    def _configure_conversion_presets(self) -> None:
         """Configure conversion presets for different use cases"""
         self.conversion_presets = {
             "social_media": {
@@ -505,7 +505,7 @@ class FormatConversionConfiguration:
             }
         }
     
-    def _configure_quality_settings(self):
+    def _configure_quality_settings(self) -> None:
         """Configure quality assessment and validation"""
         self.quality_settings = {
             "validation_enabled": True,
@@ -561,7 +561,7 @@ class FormatConversionConfiguration:
             }
         }
     
-    def _configure_platform_optimization(self):
+    def _configure_platform_optimization(self) -> None:
         """Configure platform-specific optimizations"""
         self.platform_optimizations = {
             TargetPlatform.WEB: {
@@ -610,7 +610,7 @@ class FormatConversionConfiguration:
             }
         }
     
-    def _configure_processing_pipeline(self):
+    def _configure_processing_pipeline(self) -> None:
         """Configure processing pipeline settings"""
         self.pipeline_config = {
             "preprocessing": {

@@ -1,3 +1,8 @@
+"""
+Real Time Sync Core module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Ainflue Core Platform - Advanced Real-Time Synchronization Engine
@@ -67,11 +72,11 @@ class VectorClock:
     """Vector clock for distributed consistency"""
     clock: Dict[str, int] = field(default_factory=dict)
     
-    def increment(self, node_id: str):
+    def increment(self, node_id -> None: str) -> None:
         """Increment clock for node"""
         self.clock[node_id] = self.clock.get(node_id, 0) + 1
     
-    def update(self, other_clock: 'VectorClock'):
+    def update(self, other_clock -> None: 'VectorClock') -> None:
         """Update with another vector clock"""
         for node_id, timestamp in other_clock.clock.items():
             self.clock[node_id] = max(self.clock.get(node_id, 0), timestamp)
@@ -194,7 +199,7 @@ class SyncDocument:
             logger.error(f"Failed to apply operation {operation.operation_id}: {e}")
             return False
     
-    def _apply_insert(self, operation: Operation):
+    def _apply_insert(self, operation -> None: Operation) -> None:
         """Apply insert operation"""
         path_parts = operation.path.split('.')
         target = self.content
@@ -211,7 +216,7 @@ class SyncDocument:
         else:
             target[path_parts[-1]] = operation.new_value
     
-    def _apply_delete(self, operation: Operation):
+    def _apply_delete(self, operation -> None: Operation) -> None:
         """Apply delete operation"""
         path_parts = operation.path.split('.')
         target = self.content
@@ -229,7 +234,7 @@ class SyncDocument:
         else:
             target.pop(path_parts[-1], None)
     
-    def _apply_update(self, operation: Operation):
+    def _apply_update(self, operation -> None: Operation) -> None:
         """Apply update operation"""
         path_parts = operation.path.split('.')
         target = self.content
@@ -246,7 +251,7 @@ class SyncDocument:
         else:
             self.content = operation.new_value
     
-    def _apply_move(self, operation: Operation):
+    def _apply_move(self, operation -> None: Operation) -> None:
         """Apply move operation"""
         # Simplified move operation
         old_path_parts = operation.path.split('.')
@@ -255,7 +260,7 @@ class SyncDocument:
         # Implementation would depend on specific use case
         pass
     
-    def _apply_attribute(self, operation: Operation):
+    def _apply_attribute(self, operation -> None: Operation) -> None:
         """Apply attribute change operation"""
         path_parts = operation.path.split('.')
         target = self.content
@@ -344,7 +349,7 @@ class OperationalTransform:
 class SyncSession:
     """Real-time synchronization session"""
     
-    def __init__(self, session_id: str, user_id: str):
+    def __init__(self, session_id -> None: str, user_id -> None: str) -> None:
         self.session_id = session_id
         self.user_id = user_id
         self.connected_at = datetime.utcnow()
@@ -354,7 +359,7 @@ class SyncSession:
         self.pending_operations: List[Operation] = []
         self.connection_state = "connected"
         
-    def update_activity(self):
+    def update_activity(self) -> None:
         """Update last activity timestamp"""
         self.last_activity = datetime.utcnow()
     
@@ -366,7 +371,7 @@ class SyncSession:
 class RealTimeSyncCore:
     """Advanced enterprise real-time synchronization core"""
     
-    def __init__(self, level: str = "enterprise"):
+    def __init__(self, level -> None: str = "enterprise") -> None:
         self.level = level
         self.documents: Dict[str, SyncDocument] = {}
         self.sessions: Dict[str, SyncSession] = {}
@@ -466,7 +471,7 @@ class RealTimeSyncCore:
             logger.error(f"❌ Failed to start synchronization: {e}")
             return False
     
-    async def _session_management_loop(self):
+    async def _session_management_loop(self) -> None:
         """Session management background loop"""
         while self._sync_running:
             try:
@@ -479,7 +484,7 @@ class RealTimeSyncCore:
                 logger.error(f"Session management loop error: {e}")
                 await asyncio.sleep(60)
     
-    async def _operation_processing_loop(self):
+    async def _operation_processing_loop(self) -> None:
         """Operation processing background loop"""
         while self._sync_running:
             try:
@@ -492,7 +497,7 @@ class RealTimeSyncCore:
                 logger.error(f"Operation processing loop error: {e}")
                 await asyncio.sleep(5)
     
-    async def _conflict_resolution_loop(self):
+    async def _conflict_resolution_loop(self) -> None:
         """Conflict resolution background loop"""
         while self._sync_running:
             try:
@@ -706,7 +711,7 @@ class RealTimeSyncCore:
             # Manual resolution required
             return None
     
-    async def _broadcast_operation(self, operation: Operation):
+    async def _broadcast_operation(self, operation -> None: Operation) -> None:
         """Broadcast operation to all subscribed sessions"""
         try:
             document = self.documents.get(operation.document_id)
@@ -735,7 +740,7 @@ class RealTimeSyncCore:
         except Exception as e:
             logger.error(f"Failed to broadcast operation: {e}")
     
-    async def _process_pending_operations(self):
+    async def _process_pending_operations(self) -> None:
         """Process pending operations from all sessions"""
         async with self._lock:
             processed_count = 0
@@ -755,7 +760,7 @@ class RealTimeSyncCore:
             if processed_count > 0:
                 logger.debug(f"Processed {processed_count} operations")
     
-    async def _resolve_conflicts(self):
+    async def _resolve_conflicts(self) -> None:
         """Resolve document conflicts"""
         async with self._lock:
             conflict_documents = [
@@ -770,14 +775,14 @@ class RealTimeSyncCore:
                 except Exception as e:
                     logger.error(f"Conflict resolution failed for document {document.document_id}: {e}")
     
-    async def _resolve_document_conflicts(self, document: SyncDocument):
+    async def _resolve_document_conflicts(self, document -> None: SyncDocument) -> None:
         """Resolve conflicts for a specific document"""
         # Simplified conflict resolution
         # In production, this would be more sophisticated
         document.sync_state = SyncState.SYNCHRONIZED
         logger.info(f"Conflicts resolved for document {document.document_id}")
     
-    async def _cleanup_inactive_sessions(self):
+    async def _cleanup_inactive_sessions(self) -> None:
         """Clean up inactive sessions"""
         async with self._lock:
             inactive_sessions = [
@@ -834,15 +839,15 @@ class RealTimeSyncCore:
             }
     
     # Event callback registration
-    def on_operation(self, callback: Callable):
+    def on_operation(self, callback -> None: Callable) -> None:
         """Register operation callback"""
         self.operation_callbacks.append(callback)
     
-    def on_conflict(self, callback: Callable):
+    def on_conflict(self, callback -> None: Callable) -> None:
         """Register conflict callback"""
         self.conflict_callbacks.append(callback)
     
-    def on_sync(self, callback: Callable):
+    def on_sync(self, callback -> None: Callable) -> None:
         """Register sync callback"""
         self.sync_callbacks.append(callback)
     

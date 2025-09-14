@@ -105,7 +105,7 @@ class IntegrationResponse:
 class BaseIntegration(ABC):
     """Base class for all integrations."""
     
-    def __init__(self, config: IntegrationConfig):
+    def __init__(self, config -> None: IntegrationConfig) -> None:
         self.config = config
         self.status = IntegrationStatus.INACTIVE
         self.logger = logging.getLogger(f"{__name__}.{config.integration_id}")
@@ -365,7 +365,7 @@ class SystemIntegrator:
     payment processors, social platforms, cloud storage, and third-party services.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the system integrator."""
         self.integrations: Dict[str, BaseIntegration] = {}
         self.integration_configs: Dict[str, IntegrationConfig] = {}
@@ -373,7 +373,7 @@ class SystemIntegrator:
         self.logger = logging.getLogger(__name__)
         self._load_default_integrations()
     
-    def _load_default_integrations(self):
+    def _load_default_integrations(self) -> None:
         """Load default integration configurations."""
         # Payment processor integration
         stripe_config = IntegrationConfig(

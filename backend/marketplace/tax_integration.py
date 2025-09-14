@@ -117,7 +117,7 @@ class TaxReport:
 class TaxIntegrationManager:
     """Advanced tax calculation and compliance management"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.tax_rates: Dict[str, TaxRate] = {}
         self.calculations: Dict[str, TaxCalculation] = {}
         self.reports: Dict[str, TaxReport] = {}
@@ -126,7 +126,7 @@ class TaxIntegrationManager:
         # Initialize default tax rates
         self._initialize_default_rates()
     
-    def _initialize_default_rates(self):
+    def _initialize_default_rates(self) -> None:
         """Initialize default tax rates for major jurisdictions"""
         default_rates = [
             TaxRate("eu_vat_standard", TaxJurisdiction.EU, TaxType.VAT, Decimal("21.0")),
@@ -321,7 +321,7 @@ class TaxIntegrationManager:
         
         return tax_breakdowns
     
-    async def _record_for_reporting(self, calculation: TaxCalculation):
+    async def _record_for_reporting(self, calculation -> None: TaxCalculation) -> None:
         """Record tax calculation for reporting purposes"""
         # In production, this would write to database for tax reporting
         logger.debug(f"Recording tax calculation {calculation.calculation_id} for reporting")
@@ -428,7 +428,7 @@ class TaxIntegrationManager:
         ]
 
 # Example usage and integration
-async def main():
+async def main() -> None:
     """Example usage of TaxIntegrationManager"""
     tax_manager = TaxIntegrationManager()
     

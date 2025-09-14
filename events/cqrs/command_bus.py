@@ -86,9 +86,9 @@ class EnterpriseCommandBus:
     """Enterprise-grade command bus with advanced features"""
     
     def __init__(self, 
-                 max_concurrent_commands: int = 100,
-                 enable_circuit_breaker: bool = True,
-                 enable_rate_limiting: bool = True):
+                 max_concurrent_commands -> None: int = 100,
+                 enable_circuit_breaker -> None: bool = True,
+                 enable_rate_limiting -> None: bool = True) -> None:
         self._handlers: Dict[str, CommandHandler] = {}
         self._middleware: List[Callable] = []
         self._audit_logger = logging.getLogger(f"{__name__}.audit")

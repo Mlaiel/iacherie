@@ -65,7 +65,7 @@ class Condition:
     expected_result: Any = True
     timeout_seconds: int = 300
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if not self.parameters:
             self.parameters = {}
 
@@ -133,7 +133,7 @@ class DependencyManager:
     - Workflow orchestration
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.publications: Dict[str, Publication] = {}
         self.dependencies: Dict[str, Dependency] = {}
         self.workflows: Dict[str, WorkflowExecution] = {}
@@ -145,20 +145,20 @@ class DependencyManager:
         # Register default condition evaluators
         self._register_default_evaluators()
         
-    def _register_default_evaluators(self):
+    def _register_default_evaluators(self) -> None:
         """Register default condition evaluators"""
         self.condition_evaluators[ConditionType.ENGAGEMENT_THRESHOLD] = self._evaluate_engagement_threshold
         self.condition_evaluators[ConditionType.TIME_BASED] = self._evaluate_time_based
         self.condition_evaluators[ConditionType.PLATFORM_STATUS] = self._evaluate_platform_status
         self.condition_evaluators[ConditionType.CONTENT_PERFORMANCE] = self._evaluate_content_performance
         
-    async def add_publication(self, publication: Publication):
+    async def add_publication(self, publication -> None: Publication) -> None:
         """Add a publication to the dependency graph"""
         async with self._lock:
             self.publications[publication.publication_id] = publication
             logger.info(f"Added publication {publication.publication_id} for platform {publication.platform}")
             
-    async def add_dependency(self, dependency: Dependency):
+    async def add_dependency(self, dependency -> None: Dependency) -> None:
         """Add a dependency relationship"""
         async with self._lock:
             # Validate that both publications exist
@@ -458,7 +458,7 @@ class DependencyManager:
                 
             return False
             
-    async def _apply_dependency_delays(self, pub_id: str):
+    async def _apply_dependency_delays(self, pub_id -> None: str) -> None:
         """Apply delays specified in dependencies"""
         publication = self.publications[pub_id]
         
@@ -469,7 +469,7 @@ class DependencyManager:
                     logger.info(f"Applying {dependency.delay_seconds}s delay for dependency {dep_id}")
                     await asyncio.sleep(dependency.delay_seconds)
                     
-    async def _simulate_publication_execution(self, publication: Publication):
+    async def _simulate_publication_execution(self, publication -> None: Publication) -> None:
         """Simulate publication execution (replace with actual implementation)"""
         # Simulate variable execution time
         execution_time = min(max(0.5, publication.metadata.get("complexity", 1) * 0.5), 5.0)
@@ -626,7 +626,7 @@ class DependencyManager:
         return True
 
 # Usage example
-async def example_usage():
+async def example_usage() -> None:
     """Example usage of DependencyManager"""
     manager = DependencyManager()
     

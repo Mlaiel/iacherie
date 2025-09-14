@@ -33,12 +33,12 @@ class AIConfigurationLevel(str, Enum):
 class AISystemConfigurationManager:
     """AI system configuration manager"""
     
-    def __init__(self, level: AIConfigurationLevel = AIConfigurationLevel.ENTERPRISE):
+    def __init__(self, level -> None: AIConfigurationLevel = AIConfigurationLevel.ENTERPRISE) -> None:
         self.level = level
         self.configurations = {}
         self._initialize_ai_configs()
     
-    def _initialize_ai_configs(self):
+    def _initialize_ai_configs(self) -> None:
         """Initialize all AI configurations"""
         self.configurations = {
             "ai_models": AIModelConfiguration(level=self.level),

@@ -1,4 +1,6 @@
 """
+import asyncio
+
 PostgreSQL Cluster Management
 Enterprise PostgreSQL cluster management for Ainflue infrastructure
 
@@ -17,7 +19,7 @@ logger = logging.getLogger(__name__)
 class PostgreSQLCluster:
     """PostgreSQL cluster management for Ainflue creator data"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize PostgreSQL cluster manager"""
         logger.info("PostgreSQL cluster manager initialized")
         

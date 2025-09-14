@@ -162,7 +162,7 @@ class TranslationKey(BaseSchema):
     tags: List[str] = Field(default=[], description="Organizational tags")
     
     @validator('key')
-    def validate_key(cls, v):
+    def validate_key(cls, v) -> None:
         """Validate translation key format."""
         import re
         if not re.match(r'^[a-zA-Z][a-zA-Z0-9._-]*$', v):

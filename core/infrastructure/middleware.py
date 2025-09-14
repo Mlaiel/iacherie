@@ -1,4 +1,6 @@
 """
+import asyncio
+
 Core Middleware Components for Ainflue Platform
 Provides middleware for request processing, CORS, rate limiting, and security
 """
@@ -14,7 +16,7 @@ logger = get_logger("middleware")
 class RequestLoggingMiddleware:
     """Middleware for logging HTTP requests and responses"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = get_logger("requests")
     
     async def __call__(self, request: Any, call_next: Callable) -> Any:
@@ -42,7 +44,7 @@ class RequestLoggingMiddleware:
 class CORSMiddleware:
     """Middleware for handling Cross-Origin Resource Sharing (CORS)"""
     
-    def __init__(self, allowed_origins: list = None, allowed_methods: list = None):
+    def __init__(self, allowed_origins -> None: list = None, allowed_methods -> None: list = None) -> None:
         self.allowed_origins = allowed_origins or ["*"]
         self.allowed_methods = allowed_methods or ["GET", "POST", "PUT", "DELETE", "OPTIONS"]
         self.logger = get_logger("cors")
@@ -67,7 +69,7 @@ class CORSMiddleware:
 class RateLimitMiddleware:
     """Middleware for rate limiting requests"""
     
-    def __init__(self, max_requests: int = 100, window_seconds: int = 60):
+    def __init__(self, max_requests -> None: int = 100, window_seconds -> None: int = 60) -> None:
         self.max_requests = max_requests
         self.window_seconds = window_seconds
         self.request_counts: Dict[str, Dict[str, Any]] = {}
@@ -111,7 +113,7 @@ class RateLimitMiddleware:
 class SecurityHeadersMiddleware:
     """Middleware for adding security headers"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = get_logger("security_headers")
         self.security_headers = {
             "X-Content-Type-Options": "nosniff",

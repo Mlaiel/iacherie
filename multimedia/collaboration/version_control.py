@@ -113,7 +113,7 @@ class VersionDiff:
 class VersionControlEngine:
     """Git-like version control for multimedia content"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.versions = {}  # version_id -> Version
         self.branches = {}  # branch_name -> Branch
         self.content_versions = defaultdict(list)  # content_id -> [version_ids]
@@ -666,7 +666,7 @@ class VersionControlEngine:
         similarity = (len(common_keys) + matching_values) / (len(total_keys) * 2)
         return min(similarity, 1.0)
     
-    async def _store_version_redis(self, version: Version):
+    async def _store_version_redis(self, version -> None: Version) -> None:
         """Store version in Redis"""
         try:
             if self.redis_client:
@@ -680,7 +680,7 @@ class VersionControlEngine:
 class ConflictResolver:
     """Intelligent conflict resolution engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.resolution_strategies = {
             ConflictType.CONTENT_MODIFICATION: self._resolve_content_conflict,
             ConflictType.METADATA_CONFLICT: self._resolve_metadata_conflict,
@@ -766,7 +766,7 @@ class ConflictResolver:
 class MultimediaVersionManager:
     """High-level version management for multimedia content"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.version_engine = VersionControlEngine()
         self.active_branches = defaultdict(list)
         

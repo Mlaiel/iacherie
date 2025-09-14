@@ -132,7 +132,7 @@ class ProcessingConfiguration:
 class ContentFormatSettings:
     """Content format configuration settings"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         # Audio Format Specifications
         self.audio_formats = {
             "mp3": FormatSpecification(

@@ -126,7 +126,7 @@ class BaseComplianceChecker(ABC):
 class ContentPolicyChecker(BaseComplianceChecker):
     """Checker for content policy compliance"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.rules = self._initialize_content_rules()
     
     def _initialize_content_rules(self) -> List[ComplianceRule]:
@@ -248,7 +248,7 @@ class ContentPolicyChecker(BaseComplianceChecker):
 class PrivacyComplianceChecker(BaseComplianceChecker):
     """Checker for privacy compliance (GDPR, CCPA, etc.)"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.rules = self._initialize_privacy_rules()
     
     def _initialize_privacy_rules(self) -> List[ComplianceRule]:
@@ -343,7 +343,7 @@ class PrivacyComplianceChecker(BaseComplianceChecker):
 class AdvertisingComplianceChecker(BaseComplianceChecker):
     """Checker for advertising compliance (FTC guidelines)"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.rules = self._initialize_advertising_rules()
     
     def _initialize_advertising_rules(self) -> List[ComplianceRule]:
@@ -422,7 +422,7 @@ class AdvertisingComplianceChecker(BaseComplianceChecker):
 class ComplianceMonitor:
     """Main compliance monitoring system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.checkers: List[BaseComplianceChecker] = [
             ContentPolicyChecker(),
             PrivacyComplianceChecker(),
@@ -551,7 +551,7 @@ class ComplianceMonitor:
         # Remove duplicates
         return list(set(recommendations))
     
-    async def _check_alert_thresholds(self, violations: List[ComplianceViolation]):
+    async def _check_alert_thresholds(self, violations -> None: List[ComplianceViolation]) -> None:
         """Check if alert thresholds are exceeded"""
         if not self.monitoring_enabled:
             return
@@ -564,9 +564,9 @@ class ComplianceMonitor:
     
     async def _send_compliance_alert(
         self, 
-        severity: ComplianceLevel, 
-        violations: List[ComplianceViolation]
-    ):
+        severity -> None: ComplianceLevel, 
+        violations -> None: List[ComplianceViolation]
+    ) -> None:
         """Send compliance alert"""
         try:
             alert_data = {
@@ -590,7 +590,7 @@ class ComplianceMonitor:
         except Exception as e:
             logger.error(f"Failed to send compliance alert: {e}")
     
-    async def _attempt_auto_remediation(self, violations: List[ComplianceViolation]):
+    async def _attempt_auto_remediation(self, violations -> None: List[ComplianceViolation]) -> None:
         """Attempt automatic remediation of violations"""
         try:
             for violation in violations:
@@ -696,7 +696,7 @@ class ComplianceMonitor:
             logger.error(f"Failed to resolve violation: {e}")
             return False
     
-    def add_custom_checker(self, checker: BaseComplianceChecker):
+    def add_custom_checker(self, checker -> None: BaseComplianceChecker) -> None:
         """Add custom compliance checker"""
         self.checkers.append(checker)
         logger.info(f"Added custom compliance checker: {type(checker).__name__}")

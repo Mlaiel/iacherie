@@ -120,7 +120,7 @@ class SMSServicesHub:
     - Analytics and performance monitoring
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """Initialize SMS services hub"""
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -149,7 +149,7 @@ class SMSServicesHub:
         
         self.logger.info("SMS Services Hub initialized successfully")
     
-    def _initialize_providers(self):
+    def _initialize_providers(self) -> None:
         """Initialize SMS provider configurations"""
         
         # Twilio configuration
@@ -234,7 +234,7 @@ class SMSServicesHub:
         
         self.logger.info(f"Initialized {len(self.providers)} SMS providers")
     
-    async def start_session(self):
+    async def start_session(self) -> None:
         """Start HTTP session for API calls"""
         if not self.session:
             connector = aiohttp.TCPConnector(limit=100, limit_per_host=20)
@@ -245,7 +245,7 @@ class SMSServicesHub:
                 headers={'User-Agent': 'Ainflue-SMS-Hub/1.0'}
             )
     
-    async def close_session(self):
+    async def close_session(self) -> None:
         """Close HTTP session"""
         if self.session:
             await self.session.close()
@@ -387,7 +387,7 @@ class SMSServicesHub:
             cleaned[1:].isdigit()
         )
     
-    async def _process_message_queue(self):
+    async def _process_message_queue(self) -> None:
         """Process message queue with rate limiting"""
         self.is_processing = True
         
@@ -415,7 +415,7 @@ class SMSServicesHub:
         finally:
             self.is_processing = False
     
-    async def _send_message_via_provider(self, message: SMSMessage):
+    async def _send_message_via_provider(self, message -> None: SMSMessage) -> None:
         """Send message via specific provider"""
         
         provider_name = message.provider
@@ -451,7 +451,7 @@ class SMSServicesHub:
             # Try fallback provider
             await self._try_fallback_provider(message)
     
-    async def _send_via_twilio(self, message: SMSMessage, config: ProviderConfig):
+    async def _send_via_twilio(self, message -> None: SMSMessage, config -> None: ProviderConfig) -> None:
         """Send message via Twilio"""
         
         if not self.session:
@@ -486,7 +486,7 @@ class SMSServicesHub:
                 error_text = await response.text()
                 raise Exception(f"Twilio API error {response.status}: {error_text}")
     
-    async def _send_via_vonage(self, message: SMSMessage, config: ProviderConfig):
+    async def _send_via_vonage(self, message -> None: SMSMessage, config -> None: ProviderConfig) -> None:
         """Send message via Vonage/Nexmo"""
         
         if not self.session:
@@ -521,7 +521,7 @@ class SMSServicesHub:
                 error_text = await response.text()
                 raise Exception(f"Vonage API error {response.status}: {error_text}")
     
-    async def _send_via_messagebird(self, message: SMSMessage, config: ProviderConfig):
+    async def _send_via_messagebird(self, message -> None: SMSMessage, config -> None: ProviderConfig) -> None:
         """Send message via MessageBird"""
         
         if not self.session:
@@ -556,7 +556,7 @@ class SMSServicesHub:
                 error_text = await response.text()
                 raise Exception(f"MessageBird API error {response.status}: {error_text}")
     
-    async def _send_via_plivo(self, message: SMSMessage, config: ProviderConfig):
+    async def _send_via_plivo(self, message -> None: SMSMessage, config -> None: ProviderConfig) -> None:
         """Send message via Plivo"""
         
         if not self.session:
@@ -591,7 +591,7 @@ class SMSServicesHub:
                 error_text = await response.text()
                 raise Exception(f"Plivo API error {response.status}: {error_text}")
     
-    async def _send_via_sinch(self, message: SMSMessage, config: ProviderConfig):
+    async def _send_via_sinch(self, message -> None: SMSMessage, config -> None: ProviderConfig) -> None:
         """Send message via Sinch"""
         
         if not self.session:
@@ -626,7 +626,7 @@ class SMSServicesHub:
                 error_text = await response.text()
                 raise Exception(f"Sinch API error {response.status}: {error_text}")
     
-    async def _try_fallback_provider(self, message: SMSMessage):
+    async def _try_fallback_provider(self, message -> None: SMSMessage) -> None:
         """Try sending message via fallback provider"""
         
         # Get list of other providers
@@ -650,7 +650,7 @@ class SMSServicesHub:
             # Try sending again
             await self._send_message_via_provider(message)
     
-    def _update_analytics(self, message: SMSMessage, success: bool):
+    def _update_analytics(self, message -> None: SMSMessage, success -> None: bool) -> None:
         """Update analytics with message results"""
         
         self.analytics['total_messages'] += 1
@@ -809,7 +809,7 @@ class SMSServicesHub:
 
 
 # Example usage
-async def main():
+async def main() -> None:
     """Example usage of SMSServicesHub"""
     
     config = {

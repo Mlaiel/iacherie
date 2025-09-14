@@ -1,3 +1,8 @@
+"""
+Enterprise Affiliate Scenarios module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Enterprise Affiliate Scenarios - Scénarios Affiliation Enterprise
@@ -102,7 +107,7 @@ class EnterpriseAffiliateScenarios:
     Démonstrations complètes intégrant tous les modules affiliate examples
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(f"{__name__}.EnterpriseAffiliateScenarios")
         
         # Simulate all affiliate services
@@ -695,7 +700,7 @@ class EnterpriseAffiliateScenarios:
         }
 
 
-async def demonstrate():
+async def demonstrate() -> None:
     """Main demonstration function"""
     logger.info("🎬 DÉMARRAGE DÉMONSTRATIONS ENTERPRISE AFFILIATE SCENARIOS")
     logger.info("=" * 70)
@@ -764,7 +769,7 @@ async def demonstrate():
         return False
 
 
-async def main():
+async def main() -> None:
     """Main entry point"""
     try:
         success = await demonstrate()

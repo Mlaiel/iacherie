@@ -190,7 +190,7 @@ class UploadResponse(BaseModel):
 class ContentValidator:
     """Content validation engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.max_file_sizes = {
             ContentType.AUDIO: 100 * 1024 * 1024,      # 100MB
             ContentType.VIDEO: 2 * 1024 * 1024 * 1024,  # 2GB
@@ -431,7 +431,7 @@ class ContentValidator:
 class ChunkedUploadManager:
     """Manages chunked file uploads"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.active_uploads: Dict[str, ContentUpload] = {}
         self.chunk_storage: Dict[str, bytes] = {}  # In production, use cloud storage
     

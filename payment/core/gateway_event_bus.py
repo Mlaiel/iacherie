@@ -175,7 +175,7 @@ class EventDeliveryAttempt:
 class GatewayEventBus:
     """Enterprise event bus for payment gateway"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.redis_client = None
         self.http_session = None
@@ -199,7 +199,7 @@ class GatewayEventBus:
         self.event_filters: Dict[str, Callable] = {}
         self.event_transformers: Dict[EventType, Callable] = {}
         
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize the event bus"""
         try:
             # Initialize Redis connection for pub/sub
@@ -229,7 +229,7 @@ class GatewayEventBus:
             logger.error(f"Failed to initialize Gateway Event Bus: {e}")
             raise
     
-    async def _load_configuration(self):
+    async def _load_configuration(self) -> None:
         """Load existing configuration from storage"""
         try:
             # Load subscriptions
@@ -320,7 +320,7 @@ class GatewayEventBus:
             logger.error(f"Failed to publish event: {e}")
             raise
     
-    async def _queue_event_for_delivery(self, event: PaymentEvent):
+    async def _queue_event_for_delivery(self, event -> None: PaymentEvent) -> None:
         """Queue event for delivery to subscribers"""
         try:
             # Find matching subscriptions
@@ -391,9 +391,9 @@ class GatewayEventBus:
     
     async def _schedule_event_delivery(
         self,
-        event: PaymentEvent,
-        subscription: EventSubscription
-    ):
+        event -> None: PaymentEvent,
+        subscription -> None: EventSubscription
+    ) -> None:
         """Schedule event delivery for a subscription"""
         try:
             delivery_data = {
@@ -413,7 +413,7 @@ class GatewayEventBus:
         except Exception as e:
             logger.error(f"Failed to schedule event delivery: {e}")
     
-    async def _process_event_queue(self):
+    async def _process_event_queue(self) -> None:
         """Process queued events for delivery"""
         while True:
             try:
@@ -438,7 +438,7 @@ class GatewayEventBus:
                 logger.error(f"Error in event queue processing: {e}")
                 await asyncio.sleep(10)
     
-    async def _deliver_event(self, delivery_data: Dict[str, Any]):
+    async def _deliver_event(self, delivery_data -> None: Dict[str, Any]) -> None:
         """Deliver event using specified method"""
         try:
             event = PaymentEvent.from_dict(delivery_data['event'])
@@ -494,10 +494,10 @@ class GatewayEventBus:
     
     async def _deliver_webhook(
         self,
-        event: PaymentEvent,
-        delivery_data: Dict[str, Any],
-        attempt: EventDeliveryAttempt
-    ):
+        event -> None: PaymentEvent,
+        delivery_data -> None: Dict[str, Any],
+        attempt -> None: EventDeliveryAttempt
+    ) -> None:
         """Deliver event via webhook"""
         endpoint_url = delivery_data['endpoint_url']
         if not endpoint_url:
@@ -555,10 +555,10 @@ class GatewayEventBus:
     
     async def _deliver_websocket(
         self,
-        event: PaymentEvent,
-        delivery_data: Dict[str, Any],
-        attempt: EventDeliveryAttempt
-    ):
+        event -> None: PaymentEvent,
+        delivery_data -> None: Dict[str, Any],
+        attempt -> None: EventDeliveryAttempt
+    ) -> None:
         """Deliver event via WebSocket"""
         # This would implement WebSocket delivery
         # For now, mark as successful (placeholder implementation)
@@ -567,10 +567,10 @@ class GatewayEventBus:
     
     async def _deliver_redis_pubsub(
         self,
-        event: PaymentEvent,
-        delivery_data: Dict[str, Any],
-        attempt: EventDeliveryAttempt
-    ):
+        event -> None: PaymentEvent,
+        delivery_data -> None: Dict[str, Any],
+        attempt -> None: EventDeliveryAttempt
+    ) -> None:
         """Deliver event via Redis pub/sub"""
         channel = f"subscription:{delivery_data['subscription_id']}"
         await self.redis_client.publish(channel, json.dumps(event.to_dict()))
@@ -578,10 +578,10 @@ class GatewayEventBus:
     
     async def _deliver_internal(
         self,
-        event: PaymentEvent,
-        delivery_data: Dict[str, Any],
-        attempt: EventDeliveryAttempt
-    ):
+        event -> None: PaymentEvent,
+        delivery_data -> None: Dict[str, Any],
+        attempt -> None: EventDeliveryAttempt
+    ) -> None:
         """Deliver event to internal callback function"""
         subscription_id = delivery_data['subscription_id']
         
@@ -602,7 +602,7 @@ class GatewayEventBus:
         ).hexdigest()
         return f"sha256={signature}"
     
-    async def _schedule_retry(self, delivery_data: Dict[str, Any], retry_count: int):
+    async def _schedule_retry(self, delivery_data -> None: Dict[str, Any], retry_count -> None: int) -> None:
         """Schedule event delivery retry"""
         try:
             delivery_data['retry_count'] = retry_count
@@ -625,7 +625,7 @@ class GatewayEventBus:
         except Exception as e:
             logger.error(f"Failed to schedule retry: {e}")
     
-    async def _retry_failed_deliveries(self):
+    async def _retry_failed_deliveries(self) -> None:
         """Process retry queue for failed deliveries"""
         while True:
             try:
@@ -651,7 +651,7 @@ class GatewayEventBus:
                 logger.error(f"Error in retry processing: {e}")
                 await asyncio.sleep(60)
     
-    async def _cleanup_old_events(self):
+    async def _cleanup_old_events(self) -> None:
         """Clean up old events from history"""
         while True:
             try:
@@ -814,7 +814,7 @@ class GatewayEventBus:
             logger.error(f"Failed to get event bus status: {e}")
             return {'error': str(e)}
     
-    async def _save_subscriptions(self):
+    async def _save_subscriptions(self) -> None:
         """Save subscriptions to storage"""
         try:
             subs_dict = {}
@@ -841,7 +841,7 @@ class GatewayEventBus:
         except Exception as e:
             logger.error(f"Failed to save subscriptions: {e}")
     
-    async def _save_webhook_endpoints(self):
+    async def _save_webhook_endpoints(self) -> None:
         """Save webhook endpoints to storage"""
         try:
             webhooks_dict = {}
@@ -871,7 +871,7 @@ class GatewayEventBus:
         except Exception as e:
             logger.error(f"Failed to save webhook endpoints: {e}")
     
-    async def close(self):
+    async def close(self) -> None:
         """Close the event bus and cleanup resources"""
         try:
             if self.http_session:

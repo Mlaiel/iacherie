@@ -174,7 +174,7 @@ class CompressionResult:
 class PerceptualAnalyzer:
     """🧠 Perceptual audio analysis for optimal compression"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(self.__class__.__name__)
     
     def analyze_content(self, audio_data: np.ndarray, 
@@ -300,7 +300,7 @@ class PerceptualAnalyzer:
 class BitrateOptimizer:
     """📊 Intelligent Bitrate Optimization with Perceptual Analysis"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(self.__class__.__name__)
         self.analyzer = PerceptualAnalyzer()
         
@@ -410,7 +410,7 @@ class BitrateOptimizer:
 class CodecManager:
     """🔧 Enterprise Audio Codec Management System"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(self.__class__.__name__)
         self.supported_codecs = self._initialize_codec_support()
         self.encoder_cache = {}
@@ -553,7 +553,7 @@ class CodecManager:
 class AudioCompressor:
     """🗜️ Enterprise Audio Compression Engine with Advanced Features"""
     
-    def __init__(self, max_workers: Optional[int] = None):
+    def __init__(self, max_workers -> None: Optional[int] = None) -> None:
         self.logger = logging.getLogger(self.__class__.__name__)
         self.codec_manager = CodecManager()
         self.bitrate_optimizer = BitrateOptimizer()
@@ -810,9 +810,9 @@ class AudioCompressor:
             'compression_timestamp': time.time()
         }
     
-    def _update_stats(self, settings: CompressionSettings, 
-                     input_size: int, output_size: int, 
-                     encoding_time: float):
+    def _update_stats(self, settings -> None: CompressionSettings, 
+                     input_size -> None: int, output_size -> None: int, 
+                     encoding_time -> None: float) -> None:
         """Update compression statistics"""
         self.compression_stats['total_compressions'] += 1
         self.compression_stats['total_time'] += encoding_time
@@ -867,7 +867,7 @@ class AudioCompressor:
             
             return results
     
-    def __del__(self):
+    def __del__(self) -> None:
         """Cleanup resources"""
         if hasattr(self, 'executor'):
             self.executor.shutdown(wait=True)
@@ -876,7 +876,7 @@ class AudioCompressor:
 class MetadataPreserver:
     """🏷️ Advanced Metadata Preservation System"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(self.__class__.__name__)
     
     def extract_metadata(self, file_path: str) -> Dict[str, Any]:
@@ -928,7 +928,7 @@ class MetadataPreserver:
 class QualityController:
     """🎯 Advanced Quality Control and Validation"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(self.__class__.__name__)
         self.quality_thresholds = {
             CompressionQuality.DRAFT: 0.6,
@@ -973,7 +973,7 @@ class QualityController:
 class CompressionOrchestrator:
     """🎼 Enterprise Compression Orchestration System"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(self.__class__.__name__)
         self.compressor = AudioCompressor()
         self.quality_controller = QualityController()

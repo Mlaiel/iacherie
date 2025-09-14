@@ -79,7 +79,7 @@ class TLSConfig:
 class CertificateManager:
     """Certificate management and validation"""
     
-    def __init__(self, cert_dir: str = "/etc/ssl/certs", key_dir: str = "/etc/ssl/private"):
+    def __init__(self, cert_dir -> None: str = "/etc/ssl/certs", key_dir -> None: str = "/etc/ssl/private") -> None:
         self.cert_dir = Path(cert_dir)
         self.key_dir = Path(key_dir)
         
@@ -297,7 +297,7 @@ class CertificateManager:
 class LetsEncryptManager:
     """Let's Encrypt certificate management"""
     
-    def __init__(self, email: str, staging: bool = False):
+    def __init__(self, email -> None: str, staging -> None: bool = False) -> None:
         self.email = email
         self.staging = staging
         self.acme_server = "https://acme-staging-v02.api.letsencrypt.org/directory" if staging else "https://acme-v02.api.letsencrypt.org/directory"
@@ -403,9 +403,9 @@ class SSLTerminator:
     """Enterprise SSL Terminator for Load Balancer"""
     
     def __init__(self, 
-                 cert_dir: str = "/etc/ssl/certs",
-                 key_dir: str = "/etc/ssl/private",
-                 letsencrypt_email: Optional[str] = None):
+                 cert_dir -> None: str = "/etc/ssl/certs",
+                 key_dir -> None: str = "/etc/ssl/private",
+                 letsencrypt_email -> None: Optional[str] = None) -> None:
         self.cert_manager = CertificateManager(cert_dir, key_dir)
         self.certificates: Dict[str, SSLCertificate] = {}
         self.tls_config = TLSConfig()

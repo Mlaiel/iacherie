@@ -151,7 +151,7 @@ class SMSCampaignManager:
     - Cost optimization across multiple providers
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """Initialize SMS campaign manager"""
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -403,7 +403,7 @@ class SMSCampaignManager:
         self.logger.info(f"SMS campaign created: {name} ({campaign_id}) with {len(recipients)} recipients")
         return campaign_id
     
-    async def _validate_campaign_compliance(self, recipients: List[SMSRecipient], message_type: MessageType):
+    async def _validate_campaign_compliance(self, recipients -> None: List[SMSRecipient], message_type -> None: MessageType) -> None:
         """Validate campaign compliance with regulations"""
         
         for recipient in recipients:
@@ -678,7 +678,7 @@ class SMSCampaignManager:
             'timestamp': datetime.utcnow().isoformat()
         }
     
-    async def _handle_opt_out(self, phone_number: str):
+    async def _handle_opt_out(self, phone_number -> None: str) -> None:
         """Handle SMS opt-out request"""
         
         # Find recipient and update opt-out status
@@ -688,7 +688,7 @@ class SMSCampaignManager:
                 self.logger.info(f"SMS opt-out processed for {phone_number}")
                 break
     
-    async def _handle_opt_in(self, phone_number: str):
+    async def _handle_opt_in(self, phone_number -> None: str) -> None:
         """Handle SMS opt-in request"""
         
         # Find recipient and update opt-in status
@@ -805,7 +805,7 @@ class SMSCampaignManager:
 
 
 # Example usage
-async def main():
+async def main() -> None:
     """Example usage of SMSCampaignManager"""
     
     config = {

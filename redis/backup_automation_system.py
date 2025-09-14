@@ -1,3 +1,8 @@
+"""
+Backup Automation System module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Redis Backup Automation System - Ainflue Platform
@@ -135,7 +140,7 @@ class RedisBackupAutomationSystem:
     - Disaster recovery integration
     """
 
-    def __init__(self, cluster_client: RedisCluster, config: Dict[str, Any] = None):
+    def __init__(self, cluster_client -> None: RedisCluster, config -> None: Dict[str, Any] = None) -> None:
         """Initialize backup automation system"""
         self.cluster_client = cluster_client
         self.config = config or self._get_default_config()
@@ -1193,7 +1198,7 @@ class RedisBackupAutomationSystem:
 
 
 # Example usage
-async def main():
+async def main() -> None:
     """Example usage of Backup Automation System"""
     try:
         # This would normally be initialized with actual cluster client

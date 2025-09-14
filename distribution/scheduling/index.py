@@ -1,4 +1,6 @@
 """
+import asyncio
+
 Scheduling Service Entry Point - Content Scheduling Hub
 =====================================================
 
@@ -33,12 +35,12 @@ seasonal_scheduler = SeasonalScheduler()
 timezone_scheduler = TimezoneAwareScheduler()
 
 @scheduling_router.get("/health")
-async def scheduling_health():
+async def scheduling_health() -> None:
     """Scheduling service health check"""
     return {"status": "healthy", "service": "scheduling"}
 
 @scheduling_router.get("/active-schedules")
-async def get_active_schedules():
+async def get_active_schedules() -> None:
     """Get all active content schedules"""
     return await publication_scheduler.get_active_schedules()
 

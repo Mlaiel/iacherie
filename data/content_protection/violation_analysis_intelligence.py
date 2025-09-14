@@ -149,7 +149,7 @@ class ThreatPrediction:
 class ViolationAnalysisIntelligence:
     """AI-powered violation analysis and pattern detection"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.redis_client = None
         self.mongo_client = None
         self.pattern_analyzer = ViolationPatternAnalyzer()
@@ -404,7 +404,7 @@ class ViolationAnalysisIntelligence:
             logger.error(f"Failed to generate intelligence report: {e}")
             raise HTTPException(status_code=500, detail=f"Intelligence report generation failed: {e}")
     
-    async def _initialize_ai_models(self):
+    async def _initialize_ai_models(self) -> None:
         """Initialize AI models for analysis"""
         try:
             # Anomaly detection model
@@ -589,7 +589,7 @@ class ViolationAnalysisIntelligence:
         return recommendations
     
     # Storage and retrieval methods
-    async def _store_analysis_result(self, analysis_result: Dict[str, Any]):
+    async def _store_analysis_result(self, analysis_result -> None: Dict[str, Any]) -> None:
         """Store analysis result"""
         try:
             if self.mongo_client:
@@ -604,7 +604,7 @@ class ViolationAnalysisIntelligence:
         # Placeholder for data retrieval
         return []
     
-    async def _store_detected_patterns(self, patterns: List[ViolationPattern]):
+    async def _store_detected_patterns(self, patterns -> None: List[ViolationPattern]) -> None:
         """Store detected patterns"""
         try:
             if self.mongo_client:
@@ -622,7 +622,7 @@ class ViolationAnalysisIntelligence:
         # Placeholder for historical data retrieval
         return {"historical_violations": [], "content_metadata": {}}
     
-    async def _store_threat_predictions(self, predictions: List[ThreatPrediction]):
+    async def _store_threat_predictions(self, predictions -> None: List[ThreatPrediction]) -> None:
         """Store threat predictions"""
         try:
             if self.mongo_client:
@@ -647,7 +647,7 @@ class ViolationAnalysisIntelligence:
         """Generate piracy mitigation recommendations"""
         return ["Increase monitoring frequency", "Implement watermarking"]
     
-    async def _store_piracy_report(self, report: Dict[str, Any]):
+    async def _store_piracy_report(self, report -> None: Dict[str, Any]) -> None:
         """Store piracy report"""
         try:
             if self.mongo_client:

@@ -1,3 +1,8 @@
+"""
+Resource Sharing Service module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 🤝 RESOURCE SHARING SERVICE
@@ -80,7 +85,7 @@ class Resource:
     rating: float = 0.0
     rating_count: int = 0
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.tags is None:
             self.tags = []
         if self.metadata is None:
@@ -104,7 +109,7 @@ class ResourceShare:
     usage_limit: Optional[int] = None
     usage_count: int = 0
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.created_at is None:
             self.created_at = datetime.utcnow()
 
@@ -119,7 +124,7 @@ class ResourceUsage:
     session_duration: Optional[int] = None
     metadata: Dict[str, Any] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.timestamp is None:
             self.timestamp = datetime.utcnow()
         if self.metadata is None:
@@ -136,7 +141,7 @@ class SharingMetrics:
     popular_resources: List[str] = None
     top_sharers: List[str] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.popular_resources is None:
             self.popular_resources = []
         if self.top_sharers is None:
@@ -145,7 +150,7 @@ class SharingMetrics:
 class ResourceSharingService:
     """Enterprise resource sharing service"""
     
-    def __init__(self, redis_url: str = "redis://localhost:6379"):
+    def __init__(self, redis_url -> None: str = "redis -> None://localhost -> None:6379") -> None:
         self.redis_url = redis_url
         self.resources: Dict[str, Resource] = {}
         self.shares: Dict[str, ResourceShare] = {}
@@ -582,7 +587,7 @@ class ResourceSharingService:
 
 
 # Example usage and testing
-async def main():
+async def main() -> None:
     """Test the resource sharing service"""
     service = ResourceSharingService()
     

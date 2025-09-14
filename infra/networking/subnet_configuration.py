@@ -141,7 +141,7 @@ class EnterpriseSubnetConfiguration:
     - Cost-efficient IP utilization
     """
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
         
@@ -870,7 +870,7 @@ class SubnetScalingManager:
         return {'success': True, 'action': action}
 
 # Example usage
-async def main():
+async def main() -> None:
     """Example usage of the Enterprise Subnet Configuration"""
     subnet_manager = EnterpriseSubnetConfiguration()
     

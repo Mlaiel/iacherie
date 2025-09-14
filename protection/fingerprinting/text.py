@@ -89,13 +89,13 @@ class BERTEmbeddingExtractor:
     """
 BERT-based neural embeddings for semantic text understanding."""
     
-    def __init__(self, model_name: str = "bert-base-uncased"):
+    def __init__(self, model_name -> None: str = "bert-base-uncased") -> None:
         self.model_name = model_name
         self.tokenizer = None
         self.model = None
         self._initialize_model()
         
-    def _initialize_model(self):
+    def _initialize_model(self) -> None:
         """Initialize BERT model."""
         try:
             self.tokenizer = AutoTokenizer.from_pretrained(self.model_name)
@@ -234,7 +234,7 @@ class MultilingualBERTCopyrightExtractor:
     - Copyright-specific similarity thresholds
     """
     
-    def __init__(self, model_name: str = "bert-base-multilingual-cased"):
+    def __init__(self, model_name -> None: str = "bert-base-multilingual-cased") -> None:
         self.model_name = model_name
         self.tokenizer = None
         self.model = None
@@ -248,7 +248,7 @@ class MultilingualBERTCopyrightExtractor:
         self._initialize_model()
         self._initialize_language_support()
         
-    def _initialize_model(self):
+    def _initialize_model(self) -> None:
         """Initialize multilingual BERT model."""
         try:
             if self.model_name not in self._supported_models:
@@ -261,7 +261,7 @@ class MultilingualBERTCopyrightExtractor:
         except Exception as e:
             logger.error(f"Multilingual BERT model initialization failed: {e}")
     
-    def _initialize_language_support(self):
+    def _initialize_language_support(self) -> None:
         """Initialize 644 language support system."""
         if MULTILINGUAL_AVAILABLE:
             try:
@@ -575,12 +575,12 @@ class MultilingualBERTCopyrightExtractor:
 class SentenceTransformerExtractor:
     """Sentence-BERT embeddings for better semantic similarity."""
     
-    def __init__(self, model_name: str = "all-MiniLM-L6-v2"):
+    def __init__(self, model_name -> None: str = "all-MiniLM-L6-v2") -> None:
         self.model_name = model_name
         self.model = None
         self._initialize_model()
         
-    def _initialize_model(self):
+    def _initialize_model(self) -> None:
         """Initialize Sentence-BERT model."""
         try:
             self.model = SentenceTransformer(self.model_name)
@@ -763,7 +763,7 @@ Generate fingerprint from TF-IDF scores."""
 class NGramAnalyzer:
     """N-gram analysis for pattern detection and fingerprinting."""
     
-    def __init__(self, max_n: int = 5):
+    def __init__(self, max_n -> None: int = 5) -> None:
         self.max_n = max_n
         self.stemmer = PorterStemmer()
         
@@ -934,12 +934,12 @@ Extract N-grams of specified length."""
 class SemanticAnalyzer:
     """Semantic analysis including topic modeling and sentiment analysis."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.sentiment_pipeline = None
         self.ner_pipeline = None
         self._initialize_pipelines()
         
-    def _initialize_pipelines(self):
+    def _initialize_pipelines(self) -> None:
         """
 Initialize HuggingFace pipelines."""
         try:
@@ -1348,7 +1348,7 @@ class TextFingerprintingService:
     - Multi-language support
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.bert_extractor = BERTEmbeddingExtractor()
         self.sentence_bert_extractor = SentenceTransformerExtractor()

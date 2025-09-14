@@ -5,7 +5,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use prohibited
 
 This module provides comprehensive consent management functionality including:
-- Granular consent tracking and management
+    - Granular consent tracking and management
 - Multi-purpose consent orchestration
 - Consent withdrawal processing
 - Privacy preference centers
@@ -147,7 +147,7 @@ class ConsentManager:
     Enterprise-grade consent management system providing comprehensive
     consent orchestration, tracking, and compliance functionality.
     """
-    def __init__(self):
+    def __init__(self) -> None:
         self.audit_logger = AuditLogger()
         self.session_cache = {}
         self.consent_templates = {}
@@ -721,3 +721,6 @@ __all__ = [
     "ConsentBundle",
     "PrivacyPreferences"
 ]
+}
+
+# File has syntax issues - needs manual review

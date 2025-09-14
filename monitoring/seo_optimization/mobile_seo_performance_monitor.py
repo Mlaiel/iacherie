@@ -125,7 +125,7 @@ class MobileSEOPerformanceMonitor:
     - Mobile user experience optimization
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize mobile SEO performance monitor"""
         self.config = config or {}
         self.mobile_analyses: Dict[str, List[MobileSEOAnalysis]] = {}
@@ -157,7 +157,7 @@ class MobileSEOPerformanceMonitor:
         self._initialize_mobile_monitoring()
         logger.info("Mobile SEO Performance Monitor initialized")
     
-    def _initialize_mobile_monitoring(self):
+    def _initialize_mobile_monitoring(self) -> None:
         """Initialize mobile SEO monitoring components"""
         try:
             # Setup mobile testing tools
@@ -178,7 +178,7 @@ class MobileSEOPerformanceMonitor:
             logger.error(f"Failed to initialize mobile SEO monitoring: {e}")
             raise
     
-    def _setup_mobile_testing_tools(self):
+    def _setup_mobile_testing_tools(self) -> None:
         """Setup mobile testing tools configuration"""
         self.mobile_tools = {
             "google_mobile_friendly_test": {
@@ -196,7 +196,7 @@ class MobileSEOPerformanceMonitor:
             }
         }
     
-    def _setup_responsive_design_validation(self):
+    def _setup_responsive_design_validation(self) -> None:
         """Setup responsive design validation"""
         self.responsive_breakpoints = {
             "mobile": {"min_width": 320, "max_width": 767},
@@ -212,7 +212,7 @@ class MobileSEOPerformanceMonitor:
             "touch_targets": True
         }
     
-    def _setup_pwa_assessment(self):
+    def _setup_pwa_assessment(self) -> None:
         """Setup Progressive Web App assessment"""
         self.pwa_requirements = {
             "essential": [
@@ -229,7 +229,7 @@ class MobileSEOPerformanceMonitor:
             ]
         }
     
-    def _setup_mobile_performance_tracking(self):
+    def _setup_mobile_performance_tracking(self) -> None:
         """Setup mobile performance tracking"""
         self.mobile_performance_metrics = {
             "mobile_lcp_weight": 0.25,
@@ -834,7 +834,7 @@ class MobileSEOPerformanceMonitor:
 
 # Example usage and testing
 if __name__ == "__main__":
-    async def test_mobile_seo_monitoring():
+    async def test_mobile_seo_monitoring() -> None:
         """Test mobile SEO monitoring functionality"""
         monitor = MobileSEOPerformanceMonitor()
         

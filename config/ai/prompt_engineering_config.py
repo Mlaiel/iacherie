@@ -109,7 +109,7 @@ class PromptTemplate:
 class PromptEngineeringConfiguration:
     """Quantum-grade prompt engineering configuration"""
     
-    def __init__(self, level: PromptEngineeringLevel = PromptEngineeringLevel.ENTERPRISE):
+    def __init__(self, level -> None: PromptEngineeringLevel = PromptEngineeringLevel.ENTERPRISE) -> None:
         self.level = level
         self.model_config = self._get_model_config()
         self.prompt_templates = self._get_prompt_templates()

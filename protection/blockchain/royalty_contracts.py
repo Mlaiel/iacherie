@@ -107,7 +107,7 @@ class RoyaltyShare:
     maximum_payment: Optional[Decimal] = None
     payment_schedule: str = "immediate"
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.percentage < 0 or self.percentage > 100:
             raise ValueError("Percentage must be between 0 and 100")
 
@@ -170,7 +170,7 @@ class RoyaltyContract:
 class RoyaltyDistributionEngine:
     """Professional royalty distribution automation engine"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.active_contracts: Dict[str, RoyaltyContract] = {}
         self.payment_history: Dict[str, List[Dict]] = {}
@@ -696,7 +696,7 @@ class RoyaltyDistributionEngine:
             logger.error(f"Failed to update contract shares: {e}")
             raise
     
-    async def _save_contract_deployment(self, deployment_info: Dict[str, Any]):
+    async def _save_contract_deployment(self, deployment_info -> None: Dict[str, Any]) -> None:
         """Save contract deployment information to persistent storage"""
         
         # In production, this would save to a database

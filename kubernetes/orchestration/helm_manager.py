@@ -32,7 +32,7 @@ from .base_manager import BaseDeploymentManager
 class MetricsCollector:
     """
 Mock metrics collector."""
-    def __init__(self):
+    def __init__(self) -> None:
         """
 Initialize Helm metrics collector with chart monitoring capabilities"""
         self.logger = logging.getLogger(f"{__name__}.MetricsCollector")
@@ -114,11 +114,11 @@ class HelmManager(BaseDeploymentManager):
     """
     def __init__(
         self,
-        helm_binary: str = "helm",
-        kubeconfig: Optional[str] = None,
-        default_namespace: str = "ia-influencer-agent",
-        metrics_collector: Optional[MetricsCollector] = None
-    ):
+        helm_binary -> None: str = "helm",
+        kubeconfig -> None: Optional[str] = None,
+        default_namespace -> None: str = "ia-influencer-agent",
+        metrics_collector -> None: Optional[MetricsCollector] = None
+    ) -> None:
         super().__init__()
         self.helm_binary = helm_binary
         self.kubeconfig = kubeconfig

@@ -34,6 +34,7 @@ router = APIRouter(prefix="/api/v1/alerts", tags=["🚨 Intelligent Alerts"])
 # ============ ENHANCED ENUMS ============
 
 class AlertPriority(str, Enum):
+    """AlertPriority class implementation"""
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -41,6 +42,7 @@ class AlertPriority(str, Enum):
     INFO = "info"
 
 class AlertChannel(str, Enum):
+    """AlertChannel class implementation"""
     EMAIL = "email"
     SMS = "sms"
     SLACK = "slack"
@@ -51,6 +53,7 @@ class AlertChannel(str, Enum):
     TEAMS = "teams"
 
 class AlertStatus(str, Enum):
+    """AlertStatus class implementation"""
     ACTIVE = "active"
     ACKNOWLEDGED = "acknowledged"
     RESOLVED = "resolved"
@@ -58,12 +61,14 @@ class AlertStatus(str, Enum):
     ESCALATED = "escalated"
 
 class EscalationLevel(str, Enum):
+    """EscalationLevel class implementation"""
     LEVEL_1 = "level_1"
     LEVEL_2 = "level_2" 
     LEVEL_3 = "level_3"
     EXECUTIVE = "executive"
 
 class NotificationFrequency(str, Enum):
+    """NotificationFrequency class implementation"""
     IMMEDIATE = "immediate"
     EVERY_5_MIN = "every_5_min"
     EVERY_15_MIN = "every_15_min"
@@ -73,6 +78,7 @@ class NotificationFrequency(str, Enum):
 # ============ ENHANCED PYDANTIC MODELS ============
 
 class EnterpriseAlertRequest(BaseModel):
+    """EnterpriseAlertRequest class implementation"""
     alert_type: str = Field(..., description="Type of alert being triggered")
     priority: AlertPriority = Field(..., description="Alert priority level")
     title: str = Field(..., description="Alert title")
@@ -86,6 +92,7 @@ class EnterpriseAlertRequest(BaseModel):
     suppression_rules: Optional[Dict[str, Any]] = Field(default=None, description="Alert suppression rules")
 
 class AlertSubscriptionRequest(BaseModel):
+    """AlertSubscriptionRequest class implementation"""
     user_id: str = Field(..., description="User identifier")
     alert_types: List[str] = Field(..., description="Alert types to subscribe to")
     channels: List[AlertChannel] = Field(..., description="Notification channels")
@@ -95,12 +102,14 @@ class AlertSubscriptionRequest(BaseModel):
     escalation_preferences: Dict[str, Any] = Field(default={}, description="Escalation preferences")
 
 class AlertCorrelationRequest(BaseModel):
+    """AlertCorrelationRequest class implementation"""
     time_window_minutes: int = Field(default=15, description="Time window for correlation")
     correlation_rules: List[Dict[str, Any]] = Field(..., description="Correlation rules")
     similarity_threshold: float = Field(default=0.8, description="Similarity threshold for correlation")
     max_alerts_per_group: int = Field(default=50, description="Maximum alerts per correlation group")
 
 class AlertAnalyticsRequest(BaseModel):
+    """AlertAnalyticsRequest class implementation"""
     start_date: datetime = Field(..., description="Analytics start date")
     end_date: datetime = Field(..., description="Analytics end date")
     alert_types: Optional[List[str]] = Field(default=None, description="Filter by alert types")
@@ -109,6 +118,7 @@ class AlertAnalyticsRequest(BaseModel):
     include_trends: bool = Field(default=True, description="Include trend analysis")
 
 class IncidentManagementRequest(BaseModel):
+    """IncidentManagementRequest class implementation"""
     incident_id: Optional[str] = Field(default=None, description="Incident identifier")
     title: str = Field(..., description="Incident title")
     description: str = Field(..., description="Incident description")
@@ -139,6 +149,7 @@ except (ImportError, SyntaxError) as e:
     
     # Enhanced fallback classes
     class AlertCategory:
+    """AlertCategory: class implementation"""
         BUSINESS = "business"
         TECHNICAL = "technical"
         SECURITY = "security"
@@ -147,6 +158,7 @@ except (ImportError, SyntaxError) as e:
         MONETIZATION = "monetization"
     
     class AlertSeverity:
+    """AlertSeverity: class implementation"""
         LOW = "low"
         MEDIUM = "medium"
         HIGH = "high"
@@ -158,7 +170,7 @@ except (ImportError, SyntaxError) as e:
 class EnterpriseAlertEngine:
     """Enhanced enterprise alert processing with AI-powered correlation and analysis"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.active_alerts = {}
         self.alert_history = {}
         self.subscription_manager = {}
@@ -452,7 +464,7 @@ class EnterpriseAlertEngine:
 class AlertAnalyticsEngine:
     """Advanced analytics engine for alert patterns and insights"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.analytics_cache = {}
         self.trend_analyzer = {}
     
@@ -761,7 +773,7 @@ class SecurityEventRequest(BaseModel):
 # ============ ENHANCED API ENDPOINTS ============
 
 @router.post("/enterprise/create")
-async def create_enterprise_alert(request: EnterpriseAlertRequest):
+async def create_enterprise_alert(request -> None: EnterpriseAlertRequest) -> None:
     """
     Create and process enterprise alert with AI-powered analysis
     
@@ -782,7 +794,7 @@ async def create_enterprise_alert(request: EnterpriseAlertRequest):
         raise HTTPException(status_code=500, detail=str(e))
 
 @router.post("/analytics/generate")
-async def generate_alert_analytics(request: AlertAnalyticsRequest):
+async def generate_alert_analytics(request -> None: AlertAnalyticsRequest) -> None:
     """
     Generate comprehensive alert analytics with trends and insights
     
@@ -803,7 +815,7 @@ async def generate_alert_analytics(request: AlertAnalyticsRequest):
         raise HTTPException(status_code=500, detail=str(e))
 
 @router.post("/subscriptions/manage")
-async def manage_alert_subscriptions(request: AlertSubscriptionRequest):
+async def manage_alert_subscriptions(request -> None: AlertSubscriptionRequest) -> None:
     """
     Manage alert subscriptions with advanced notification preferences
     
@@ -841,7 +853,7 @@ async def manage_alert_subscriptions(request: AlertSubscriptionRequest):
         raise HTTPException(status_code=500, detail=str(e))
 
 @router.post("/correlation/analyze")
-async def analyze_alert_correlations(request: AlertCorrelationRequest):
+async def analyze_alert_correlations(request -> None: AlertCorrelationRequest) -> None:
     """
     Analyze alert correlations with AI-powered pattern recognition
     
@@ -909,7 +921,7 @@ async def analyze_alert_correlations(request: AlertCorrelationRequest):
         raise HTTPException(status_code=500, detail=str(e))
 
 @router.post("/incidents/manage")
-async def manage_incident(request: IncidentManagementRequest):
+async def manage_incident(request -> None: IncidentManagementRequest) -> None:
     """
     Manage incidents with enterprise workflow integration
     
@@ -967,7 +979,7 @@ async def manage_incident(request: IncidentManagementRequest):
 
 # Legacy compatibility endpoints with enhanced features
 @router.post("/evaluate/business")
-async def evaluate_business_metrics(metrics: BusinessMetricsRequest):
+async def evaluate_business_metrics(metrics -> None: BusinessMetricsRequest) -> None:
     """
     Enhanced business metrics evaluation with AI-powered insights
     
@@ -1044,7 +1056,7 @@ async def evaluate_business_metrics(metrics: BusinessMetricsRequest):
         raise HTTPException(status_code=500, detail=str(e))
 
 @router.get("/dashboard/real-time")
-async def get_realtime_alert_dashboard():
+async def get_realtime_alert_dashboard() -> None:
     """Get comprehensive real-time alert dashboard with enterprise features"""
     try:
         dashboard_data = {
@@ -1133,7 +1145,7 @@ async def get_realtime_alert_dashboard():
         raise HTTPException(status_code=500, detail=str(e))
 
 @router.get("/health/system")
-async def get_alert_system_health():
+async def get_alert_system_health() -> None:
     """Get comprehensive alert system health status"""
     try:
         health_data = {
@@ -1201,7 +1213,7 @@ async def get_alert_system_health():
 __all__ = ["router"]
 
 @router.post("/evaluate/technical")
-async def evaluate_technical_metrics(metrics: TechnicalMetricsRequest):
+async def evaluate_technical_metrics(metrics -> None: TechnicalMetricsRequest) -> None:
     """
     Evaluate technical metrics and trigger alerts
     
@@ -1249,7 +1261,7 @@ async def evaluate_technical_metrics(metrics: TechnicalMetricsRequest):
 
 
 @router.post("/evaluate/ai")
-async def evaluate_ai_metrics(metrics: List[ModelMetricsRequest]):
+async def evaluate_ai_metrics(metrics -> None: List[ModelMetricsRequest]) -> None:
     """
     Evaluate AI/ML model metrics and trigger alerts
     
@@ -1312,10 +1324,10 @@ async def evaluate_ai_metrics(metrics: List[ModelMetricsRequest]):
 
 @router.post("/evaluate/comprehensive")
 async def evaluate_comprehensive_metrics(
-    business_metrics: Optional[BusinessMetricsRequest] = None,
-    technical_metrics: Optional[TechnicalMetricsRequest] = None,
-    ai_metrics: Optional[List[ModelMetricsRequest]] = None
-):
+    business_metrics -> None: Optional[BusinessMetricsRequest] = None,
+    technical_metrics -> None: Optional[TechnicalMetricsRequest] = None,
+    ai_metrics -> None: Optional[List[ModelMetricsRequest]] = None
+) -> None:
     """
     Comprehensive evaluation across all metric categories
     
@@ -1430,7 +1442,7 @@ async def evaluate_comprehensive_metrics(
 
 
 @router.post("/security/event")
-async def process_security_event(event: SecurityEventRequest):
+async def process_security_event(event -> None: SecurityEventRequest) -> None:
     """
     Process a security event and trigger appropriate alerts
     
@@ -1468,7 +1480,7 @@ async def process_security_event(event: SecurityEventRequest):
 
 
 @router.get("/status")
-async def get_comprehensive_status():
+async def get_comprehensive_status() -> None:
     """
     Get comprehensive system status across all alert categories
     
@@ -1485,9 +1497,9 @@ async def get_comprehensive_status():
 
 @router.get("/alerts/active")
 async def get_active_alerts(
-    category: Optional[str] = None,
-    severity: Optional[str] = None
-):
+    category -> None: Optional[str] = None,
+    severity -> None: Optional[str] = None
+) -> None:
     """
     Get currently active alerts with optional filtering
     
@@ -1533,7 +1545,7 @@ async def get_active_alerts(
 
 
 @router.put("/alerts/{alert_id}/acknowledge")
-async def acknowledge_alert(alert_id: str, acknowledged_by: str):
+async def acknowledge_alert(alert_id -> None: str, acknowledged_by -> None: str) -> None:
     """
     Acknowledge an active alert
     
@@ -1560,7 +1572,7 @@ async def acknowledge_alert(alert_id: str, acknowledged_by: str):
 
 
 @router.put("/alerts/{alert_id}/resolve")
-async def resolve_alert(alert_id: str):
+async def resolve_alert(alert_id -> None: str) -> None:
     """
     Resolve an active alert
     
@@ -1586,7 +1598,7 @@ async def resolve_alert(alert_id: str):
 
 
 @router.get("/health")
-async def health_check():
+async def health_check() -> None:
     """
     Health check endpoint for the intelligent alert system
     """

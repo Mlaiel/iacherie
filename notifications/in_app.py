@@ -148,7 +148,7 @@ class InAppNotification:
     show_as_banner: bool = False
     persistent: bool = False
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.created_at is None:
             self.created_at = datetime.utcnow()
         if self.id is None:
@@ -172,7 +172,7 @@ User preferences for in-app notifications."""
     quiet_hours_end: Optional[int] = None
     categories_muted: Set[NotificationCategory] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         try:
                     # Request validation
                     if not data:
@@ -192,7 +192,7 @@ User preferences for in-app notifications."""
 
 class InAppNotifier:
     """Enterprise in-app notification service with real-time delivery and comprehensive user experience."""
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
         self.metrics = MetricsCollector()
         
@@ -599,7 +599,7 @@ Clean up expired notifications."""
         
         return True
 
-    async def _apply_template(self, notification: InAppNotification):
+    async def _apply_template(self, notification -> None: InAppNotification) -> None:
         """
 Apply notification template if available."""
         template = self.notification_templates.get(notification.type)
@@ -636,14 +636,14 @@ Apply notification template if available."""
             except KeyError:
                 pass  # Keep original message if formatting fails
 
-    async def _store_notification(self, notification: InAppNotification):
+    async def _store_notification(self, notification -> None: InAppNotification) -> None:
         """Store notification for user."""
         if notification.user_id not in self.notifications:
             self.notifications[notification.user_id] = []
         
         self.notifications[notification.user_id].append(notification)
 
-    async def _deliver_real_time(self, notification: InAppNotification):
+    async def _deliver_real_time(self, notification -> None: InAppNotification) -> None:
         """
 Deliver notification in real-time via WebSocket."""
         # This would integrate with WebSocket connections in production
@@ -678,7 +678,7 @@ Deliver notification in real-time via WebSocket."""
                 "message": "Custom action would be executed in production"
             }
 
-    async def _track_notification_metrics(self, notification: InAppNotification):
+    async def _track_notification_metrics(self, notification -> None: InAppNotification) -> None:
         """Track notification creation metrics."""
         await self.metrics.increment(
             "inapp_notifications_created_total",
@@ -689,7 +689,7 @@ Deliver notification in real-time via WebSocket."""
             }
         )
 
-    async def _track_engagement_metrics(self, notification: InAppNotification, action: str, action_id: Optional[str] = None):
+    async def _track_engagement_metrics(self, notification -> None: InAppNotification, action -> None: str, action_id -> None: Optional[str] = None) -> None:
         """Track notification engagement metrics."""
         tags = {
             "type": notification.type.value,
@@ -819,3 +819,5 @@ Deliver notification in real-time via WebSocket."""
 
     async def _get_user_preferences_trends(self, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
         return {}
+
+# File has syntax issues - needs manual review

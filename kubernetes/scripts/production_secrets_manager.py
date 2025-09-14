@@ -1,3 +1,8 @@
+"""
+Production Secrets Manager module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """🔧 Production Environment Secrets Manager - Ainflue Platform
 ==============================================================
@@ -98,7 +103,7 @@ class ProductionSecretsManager:
     - Security compliance checks
     """
     
-    def __init__(self, namespace: str = "ainflue", environment: str = "production"):
+    def __init__(self, namespace -> None: str = "ainflue", environment -> None: str = "production") -> None:
         self.namespace = namespace
         self.environment = environment
         self.kubernetes_client = None

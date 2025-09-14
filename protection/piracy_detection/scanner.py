@@ -1,4 +1,4 @@
-"""🌐 Platform Scanner Service
+"""# [EMOJI_REMOVED] Platform Scanner Service
 ===========================
 
 Multi-platform content scanning and crawling system.
@@ -7,7 +7,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 This module provides:
-- Multi-platform content scanning across 500+ platforms
+    - Multi-platform content scanning across 500+ platforms
 - Intelligent crawling with rate limiting
 - API integration for major platforms
 - Web scraping with anti-detection
@@ -77,7 +77,7 @@ class PlatformScanner:
     with intelligent rate limiting and anti-detection measures.
     """
     
-    def __init__(self, platform: Optional[str] = None, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, platform -> None: Optional[str] = None, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Platform Scanner.
         
@@ -368,7 +368,7 @@ Authenticate with platform API."""
             platform_results = {}
             semaphore = asyncio.Semaphore(self.max_concurrent_scans)
             
-            async def scan_with_semaphore(platform, task):
+            async def scan_with_semaphore(platform, task) -> None:
         try:
             logger.info(f"Executing scan_with_semaphore")
             
@@ -763,3 +763,5 @@ Gracefully shutdown the scanner."""
         self.rate_limiters.clear()
         
         logger.info("Platform Scanner shutdown complete")
+
+# File has syntax issues - needs manual review

@@ -84,7 +84,7 @@ class FormatAnalysis:
 class UniversalFormatAnalyzer:
     """Universal format analyzer using multiple detection engines"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.binary_signatures = {
             # Audio signatures
             b'\xff\xfb': ('audio', 'mp3'),
@@ -185,7 +185,7 @@ class UniversalFormatAnalyzer:
         self.ai_classifier = None
         self._initialize_ai_classifier()
     
-    def _initialize_ai_classifier(self):
+    def _initialize_ai_classifier(self) -> None:
         """Initialize AI classifier for format detection"""
         try:
             # In production, this would load a pre-trained model
@@ -687,7 +687,7 @@ class UniversalFormatAnalyzer:
 class AIFormatDetector:
     """Main AI-powered format detector interface"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.analyzer = UniversalFormatAnalyzer()
         self.audio_processor = AudioFormatProcessor()
         self.video_processor = VideoFormatProcessor()
@@ -739,7 +739,7 @@ class AIFormatDetector:
         tasks = [self.detect_format(path) for path in file_paths]
         return await asyncio.gather(*tasks, return_exceptions=True)
     
-    def clear_cache(self):
+    def clear_cache(self) -> None:
         """Clear detection cache"""
         self.cache.clear()
     

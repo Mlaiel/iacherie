@@ -52,7 +52,7 @@ class CompressionAlgorithm(Enum):
     ZSTD = ("zstd", 0.65, 0.9)  # Best balance
     LZ4 = ("lz4", 0.8, 1.0)    # Fastest
     
-    def __init__(self, name: str, compression_ratio: float, speed: float):
+    def __init__(self, name -> None: str, compression_ratio -> None: float, speed -> None: float) -> None:
         self.algorithm_name = name
         self.compression_ratio = compression_ratio  # Lower is better compression
         self.speed = speed  # Higher is faster
@@ -142,7 +142,7 @@ class BuildResult:
 class CompressionEngine:
     """Advanced compression engine with multiple algorithms"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.compression_stats = {}
     
     async def compress_file(self, input_path: str, output_path: str,
@@ -186,7 +186,7 @@ class CompressionEngine:
     
     async def _compress_gzip(self, input_path: str, output_path: str, chunk_size: int) -> int:
         """Compress using gzip"""
-        def _compress():
+        def _compress() -> None:
             with open(input_path, 'rb') as f_in:
                 with gzip.open(output_path, 'wb') as f_out:
                     while True:
@@ -202,7 +202,7 @@ class CompressionEngine:
     
     async def _compress_bzip2(self, input_path: str, output_path: str, chunk_size: int) -> int:
         """Compress using bzip2"""
-        def _compress():
+        def _compress() -> None:
             with open(input_path, 'rb') as f_in:
                 with bz2.open(output_path, 'wb') as f_out:
                     while True:
@@ -218,7 +218,7 @@ class CompressionEngine:
     
     async def _compress_lzma(self, input_path: str, output_path: str, chunk_size: int) -> int:
         """Compress using LZMA/XZ"""
-        def _compress():
+        def _compress() -> None:
             with open(input_path, 'rb') as f_in:
                 with lzma.open(output_path, 'wb') as f_out:
                     while True:
@@ -236,7 +236,7 @@ class CompressionEngine:
         """Compress using Zstandard (simulated)"""
         # In a real implementation, would use python-zstandard library
         # For now, simulate with gzip but with better compression ratio
-        def _compress():
+        def _compress() -> None:
             with open(input_path, 'rb') as f_in:
                 with gzip.open(output_path, 'wb') as f_out:
                     while True:
@@ -281,7 +281,7 @@ class CompressionEngine:
 class ArtifactOptimizer:
     """Optimizes artifacts based on type and strategy"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.optimization_cache = {}
     
     async def optimize_artifact(self, artifact_path: str, artifact_type: ArtifactType,
@@ -584,7 +584,7 @@ class ArtifactValidator:
 class ArtifactBuilder:
     """Main artifact builder with enterprise features"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.compression_engine = CompressionEngine()
         self.optimizer = ArtifactOptimizer()
         self.validator = ArtifactValidator()
@@ -827,7 +827,7 @@ class ArtifactBuilder:
         if config.output_format.startswith("tar"):
             archive_path = f"/tmp/{archive_name}.tar"
             
-            def _create_tar():
+            def _create_tar() -> None:
                 with tarfile.open(archive_path, 'w') as tar:
                     tar.add(staging_dir, arcname=metadata.name)
                 return archive_path
@@ -839,7 +839,7 @@ class ArtifactBuilder:
         elif config.output_format == "zip":
             archive_path = f"/tmp/{archive_name}.zip"
             
-            def _create_zip():
+            def _create_zip() -> None:
                 with zipfile.ZipFile(archive_path, 'w', zipfile.ZIP_DEFLATED) as zip_file:
                     for root, dirs, files in os.walk(staging_dir):
                         for file in files:
@@ -857,7 +857,7 @@ class ArtifactBuilder:
     
     async def _calculate_checksum(self, file_path: str, algorithm: str) -> str:
         """Calculate file checksum"""
-        def _calculate():
+        def _calculate() -> None:
             if algorithm == 'sha256':
                 hash_obj = hashlib.sha256()
             elif algorithm == 'md5':

@@ -63,7 +63,7 @@ class RevenueTracker:
     - Revenue optimization recommendations
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """
 Initialize revenue tracker"""
         

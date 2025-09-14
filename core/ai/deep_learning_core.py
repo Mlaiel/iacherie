@@ -146,7 +146,7 @@ class ModelCheckpoint:
 class NeuralNetwork(ABC):
     """Abstract neural network base class"""
     
-    def __init__(self, config: ModelConfig):
+    def __init__(self, config -> None: ModelConfig) -> None:
         self.config = config
         self.model = None
         self.compiled = False
@@ -158,7 +158,7 @@ class NeuralNetwork(ABC):
         pass
     
     @abstractmethod
-    def compile_model(self, training_config: TrainingConfig):
+    def compile_model(self, training_config -> None: TrainingConfig) -> None:
         """Compile the model with optimizer and loss function"""
         pass
     
@@ -168,7 +168,7 @@ class NeuralNetwork(ABC):
         pass
     
     @abstractmethod
-    def backward(self, gradients: np.ndarray):
+    def backward(self, gradients -> None: np.ndarray) -> None:
         """Backward pass for gradient computation"""
         pass
     
@@ -178,14 +178,14 @@ class NeuralNetwork(ABC):
         pass
     
     @abstractmethod
-    def set_parameters(self, parameters: Dict[str, np.ndarray]):
+    def set_parameters(self, parameters -> None: Dict[str, np.ndarray]) -> None:
         """Set model parameters"""
         pass
 
 class SimpleNeuralNetwork(NeuralNetwork):
     """Simple feedforward neural network implementation"""
     
-    def __init__(self, config: ModelConfig):
+    def __init__(self, config -> None: ModelConfig) -> None:
         super().__init__(config)
         self.layers = []
         self.activations = []
@@ -215,7 +215,7 @@ class SimpleNeuralNetwork(NeuralNetwork):
             logger.error(f"Failed to build model: {str(e)}")
             raise
     
-    def compile_model(self, training_config: TrainingConfig):
+    def compile_model(self, training_config -> None: TrainingConfig) -> None:
         """Compile the simple model"""
         self.training_config = training_config
         self.compiled = True
@@ -260,7 +260,7 @@ class SimpleNeuralNetwork(NeuralNetwork):
             logger.error(f"Forward pass failed: {str(e)}")
             raise
     
-    def backward(self, targets: np.ndarray):
+    def backward(self, targets -> None: np.ndarray) -> None:
         """Backward pass"""
         try:
             batch_size = targets.shape[0]
@@ -289,14 +289,14 @@ class SimpleNeuralNetwork(NeuralNetwork):
         """Get model parameters"""
         return self.parameters.copy()
     
-    def set_parameters(self, parameters: Dict[str, np.ndarray]):
+    def set_parameters(self, parameters -> None: Dict[str, np.ndarray]) -> None:
         """Set model parameters"""
         self.parameters = parameters.copy()
 
 class ModelTrainer:
     """Neural network training manager"""
     
-    def __init__(self, model: NeuralNetwork, config: TrainingConfig):
+    def __init__(self, model -> None: NeuralNetwork, config -> None: TrainingConfig) -> None:
         self.model = model
         self.config = config
         self.status = TrainingStatus.INITIALIZED
@@ -451,7 +451,7 @@ class ModelTrainer:
         true_classes = np.argmax(targets, axis=1)
         return np.mean(pred_classes == true_classes)
     
-    def _update_parameters(self):
+    def _update_parameters(self) -> None:
         """Update model parameters using gradients"""
         for param_name in self.model.parameters:
             if param_name in self.model.gradients:
@@ -470,7 +470,7 @@ class ModelTrainer:
         
         return self.patience_counter >= self.config.early_stopping_patience
     
-    def _update_learning_rate(self, current_metric: float):
+    def _update_learning_rate(self, current_metric -> None: float) -> None:
         """Update learning rate based on validation metric"""
         if self.patience_counter >= self.config.reduce_lr_patience:
             self.config.learning_rate *= self.config.reduce_lr_factor
@@ -478,7 +478,7 @@ class ModelTrainer:
             self.patience_counter = 0
             logger.info(f"Reduced learning rate to {self.config.learning_rate}")
     
-    async def _create_checkpoint(self):
+    async def _create_checkpoint(self) -> None:
         """Create training checkpoint"""
         try:
             checkpoint = ModelCheckpoint(
@@ -496,7 +496,7 @@ class ModelTrainer:
 class DeepLearningCore:
     """Core deep learning management system"""
     
-    def __init__(self, level: str = "enterprise"):
+    def __init__(self, level -> None: str = "enterprise") -> None:
         self.level = level
         self.models: Dict[str, NeuralNetwork] = {}
         self.trainers: Dict[str, ModelTrainer] = {}
@@ -569,7 +569,7 @@ class DeepLearningCore:
             logger.error(f"Health check failed: {str(e)}")
             return False
     
-    def _register_default_models(self):
+    def _register_default_models(self) -> None:
         """Register default model configurations"""
         # Simple feedforward network
         feedforward_config = ModelConfig(

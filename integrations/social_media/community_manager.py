@@ -125,10 +125,10 @@ class CommunityManager:
     
     def __init__(
         self,
-        creator_id: str,
-        platform_configs: Dict[str, Dict[str, Any]],
-        ai_config: Optional[Dict[str, Any]] = None
-    ):
+        creator_id -> None: str,
+        platform_configs -> None: Dict[str, Dict[str, Any]],
+        ai_config -> None: Optional[Dict[str, Any]] = None
+    ) -> None:
         """Initialize community manager.
         
         Args:
@@ -263,7 +263,7 @@ class CommunityManager:
             self.logger.error(f"Failed to process community event: {e}")
             return None
 
-    async def _update_member_profile(self, event: CommunityEvent):
+    async def _update_member_profile(self, event -> None: CommunityEvent) -> None:
         """Update community member profile based on event."""
         user_id = event.user_id
         
@@ -294,7 +294,7 @@ class CommunityManager:
         # Update engagement level based on activity
         await self._update_engagement_level(member)
 
-    async def _update_engagement_level(self, member: CommunityMember):
+    async def _update_engagement_level(self, member -> None: CommunityMember) -> None:
         """Update member engagement level based on activity."""
         # Calculate engagement score
         days_since_join = (datetime.utcnow() - member.join_date).days or 1
@@ -726,15 +726,15 @@ class CommunityManager:
             "total_new_members_last_week": recent_growth
         }
 
-    async def close(self):
+    async def close(self) -> None:
         """Close HTTP session."""
         await self.session.aclose()
 
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         """Async context manager entry."""
         return self
 
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         """Async context manager exit."""
         await self.close()
 

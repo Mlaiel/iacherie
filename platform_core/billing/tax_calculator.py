@@ -192,7 +192,7 @@ Informations fiscales client"""
 class TaxCalculator:
     """Calculateur de taxes intelligent"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.tax_rules: Dict[str, TaxRule] = {}
         self.tax_cache: Dict[str, TaxCalculationResult] = {}
         
@@ -202,7 +202,7 @@ class TaxCalculator:
         # Charger les règles par défaut
         self._load_default_rules()
         
-    def _load_default_rules(self):
+    def _load_default_rules(self) -> None:
         """
 Charge les règles de taxation par défaut"""
         
@@ -270,12 +270,12 @@ Charge les règles de taxation par défaut"""
         
         logger.info(f"Règles de taxation chargées: {len(self.tax_rules)}")
         
-    def add_tax_rule(self, rule: TaxRule):
+    def add_tax_rule(self, rule -> None: TaxRule) -> None:
         """Ajoute une règle de taxation"""
         self.tax_rules[rule.rule_id] = rule
         logger.debug(f"Règle ajoutée: {rule.name} ({rule.rule_id})")
         
-    def remove_tax_rule(self, rule_id: str):
+    def remove_tax_rule(self, rule_id -> None: str) -> None:
         """Supprime une règle de taxation"""
         if rule_id in self.tax_rules:
             del self.tax_rules[rule_id]

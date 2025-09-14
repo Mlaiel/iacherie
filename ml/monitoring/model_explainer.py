@@ -126,7 +126,7 @@ class ExplainerConfig:
 class ModelExplainer:
     """🔬 Explainer de modèles ML avec SHAP, LIME et méthodes custom"""
     
-    def __init__(self, config: ExplainerConfig, model: Any = None):
+    def __init__(self, config -> None: ExplainerConfig, model -> None: Any = None) -> None:
         self.config = config
         self.model = model
         self.explainer_id = str(uuid.uuid4())
@@ -137,7 +137,7 @@ class ModelExplainer:
         
         logger.info(f"Model Explainer initialized: {self.explainer_id}")
     
-    def _initialize_explainers(self):
+    def _initialize_explainers(self) -> None:
         """Initialise les explainers SHAP et LIME"""
         if not EXPLAINABILITY_AVAILABLE:
             logger.warning("SHAP/LIME not available, using simplified explanations")
@@ -267,7 +267,7 @@ class ModelExplainer:
                 )
             
             # Prédiction function
-            def predict_fn(x):
+            def predict_fn(x) -> None:
                 if hasattr(self.model, 'predict_proba'):
                     return self.model.predict_proba(x)
                 else:
@@ -487,7 +487,7 @@ class ModelExplainer:
         
         return weights.get(creator_type, {})
     
-    async def _add_creator_specific_insights(self, explanation: ModelExplanation, creator_type: CreatorType):
+    async def _add_creator_specific_insights(self, explanation -> None: ModelExplanation, creator_type -> None: CreatorType) -> None:
         """Ajoute des insights spécifiques au type de créateur"""
         try:
             insights = []
@@ -635,7 +635,7 @@ class ModelExplainer:
         }
         return str(hash(json.dumps(key_data, sort_keys=True)))
     
-    def _cache_explanation(self, cache_key: str, explanation: ModelExplanation):
+    def _cache_explanation(self, cache_key -> None: str, explanation -> None: ModelExplanation) -> None:
         """Met en cache une explication"""
         if len(self.explanation_cache) >= self.config.max_cache_size:
             # Supprimer l'entrée la plus ancienne
@@ -731,16 +731,17 @@ def create_model_explainer(
     )
     return ModelExplainer(config, model)
 
-async def demo_model_explainer():
+async def demo_model_explainer() -> None:
     """Démo du model explainer"""
     print("🔬 Model Explainer Demo")
     
     # Mock model
     class MockModel:
-        def predict(self, X):
+    """MockModel: class implementation"""
+        def predict(self, X) -> None:
             return np.random.rand(len(X))
         
-        def predict_proba(self, X):
+        def predict_proba(self, X) -> None:
             probs = np.random.rand(len(X), 2)
             return probs / probs.sum(axis=1, keepdims=True)
     

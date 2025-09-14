@@ -149,7 +149,7 @@ class MetadataProcessor:
     """
 Universal metadata extraction and enrichment engine"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or self._get_default_config()
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
@@ -185,7 +185,7 @@ Universal metadata extraction and enrichment engine"""
             ]
         }
     
-    def _initialize_engines(self):
+    def _initialize_engines(self) -> None:
         """
 Initialize metadata extraction engines"""
         try:
@@ -653,7 +653,7 @@ Initialize metadata extraction engines"""
     def _extract_gps_coordinates(self, gps_dict: Dict) -> Tuple[Optional[float], Optional[float]]:
         """Extract GPS coordinates from EXIF GPS data"""
         try:
-            def convert_to_degrees(value):
+            def convert_to_degrees(value) -> None:
                 """
 Convert GPS coordinate to decimal degrees"""
                 d, m, s = value
@@ -1131,7 +1131,7 @@ class MetadataProcessor:
     """
 Professional metadata extraction and processing engine"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or self._get_default_config()
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
@@ -1160,7 +1160,7 @@ Professional metadata extraction and processing engine"""
             }
         }
     
-    def _initialize_processors(self):
+    def _initialize_processors(self) -> None:
         """
 Initialize metadata processing components"""
         try:
@@ -1649,7 +1649,7 @@ Extract metadata from multiple files in bulk"""
 class AudioMetadataProcessor:
     """
 Audio metadata extraction"""
-    async def extract_metadata(self, content_data, file_path, config):
+    async def extract_metadata(self, content_data, file_path, config) -> None:
         metadata = UniversalMetadata(content_type='audio')
         # Implementation would go here
         return metadata
@@ -1657,7 +1657,7 @@ Audio metadata extraction"""
 class VideoMetadataProcessor:
     """
 Video metadata extraction"""
-    async def extract_metadata(self, content_data, file_path, config):
+    async def extract_metadata(self, content_data, file_path, config) -> None:
         metadata = UniversalMetadata(content_type='video')
         # Implementation would go here
         return metadata
@@ -1665,7 +1665,7 @@ Video metadata extraction"""
 class ImageMetadataProcessor:
     """
 Image metadata extraction"""
-    async def extract_metadata(self, content_data, file_path, config):
+    async def extract_metadata(self, content_data, file_path, config) -> None:
         metadata = UniversalMetadata(content_type='image')
         # Implementation would go here
         return metadata
@@ -1673,7 +1673,7 @@ Image metadata extraction"""
 class TextMetadataProcessor:
     """
 Text metadata extraction"""
-    async def extract_metadata(self, content_data, file_path, config):
+    async def extract_metadata(self, content_data, file_path, config) -> None:
         metadata = UniversalMetadata(content_type='text')
         # Implementation would go here
         return metadata

@@ -117,9 +117,9 @@ class ComplianceAuditor:
     
     def __init__(
         self,
-        vault_manager: VaultManager,
-        config: SecretsConfig = None
-    ):
+        vault_manager -> None: VaultManager,
+        config -> None: SecretsConfig = None
+    ) -> None:
         """
         Initialize compliance auditor.
         
@@ -1265,7 +1265,7 @@ class InfluencerComplianceAuditor(ComplianceAuditor):
     - Intellectual property compliance
     """
     
-    def __init__(self, vault_manager: VaultManager, config: SecretsConfig = None):
+    def __init__(self, vault_manager -> None: VaultManager, config -> None: SecretsConfig = None) -> None:
         super().__init__(vault_manager, config)
         
         # IA Influencer specific compliance rules
@@ -2217,7 +2217,7 @@ class InfluencerComplianceAuditor(ComplianceAuditor):
     - AI model usage and data handling compliance
     """
     
-    def __init__(self, vault_manager: VaultManager, config: SecretsConfig = None):
+    def __init__(self, vault_manager -> None: VaultManager, config -> None: SecretsConfig = None) -> None:
         super().__init__(vault_manager, config)
         self.platform_compliance_rules = self._initialize_platform_compliance_rules()
         self.content_protection_rules = self._initialize_content_protection_rules()

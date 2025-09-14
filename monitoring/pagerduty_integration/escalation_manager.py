@@ -64,7 +64,7 @@ class EscalationManager:
     Manages incident escalation based on business rules and context
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize escalation manager with business rules"""
         self.escalation_rules = self._load_escalation_rules()
         self.escalation_history = defaultdict(list)
@@ -372,9 +372,9 @@ class EscalationManager:
         # Remove duplicates and return
         return list(set(channels))
     
-    def _record_escalation(self, incident_context: IncidentContext,
-                          escalation_level: EscalationLevel,
-                          rule_name: str):
+    def _record_escalation(self, incident_context -> None: IncidentContext,
+                          escalation_level -> None: EscalationLevel,
+                          rule_name -> None: str) -> None:
         """Record escalation decision for tracking"""
         incident_key = f"{incident_context.service_name}:{incident_context.workflow_stage}"
         

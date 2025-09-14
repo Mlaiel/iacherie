@@ -1,4 +1,6 @@
 """
+import asyncio
+
 Monitoring Routes
 """
 
@@ -7,7 +9,7 @@ from fastapi import APIRouter
 router = APIRouter()
 
 @router.get("/status")
-async def get_monitoring_status():
+async def get_monitoring_status() -> None:
     """Get system monitoring status"""
     return {
         "system_status": "operational",
@@ -27,7 +29,7 @@ async def get_monitoring_status():
     }
 
 @router.get("/alerts")
-async def get_alerts():
+async def get_alerts() -> None:
     """Get system alerts"""
     return {
         "alerts": [

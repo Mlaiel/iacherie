@@ -1,5 +1,7 @@
 """Revenue Analytics Events Module
 
+import logging
+
 Advanced revenue tracking, optimization, and prediction for multi-format content creators.
 Provides comprehensive monetization analytics, attribution, and growth strategies.
 
@@ -173,7 +175,7 @@ class RevenueAnalyticsEventHandler(BaseEventHandler):
     """
 Handles revenue analytics events with comprehensive processing"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
         self.cache_manager = CacheManager()
         self.db_manager = DatabaseManager()
@@ -346,7 +348,7 @@ class RevenueTracker:
     """
 Tracks comprehensive revenue metrics and trends"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.db_manager = DatabaseManager()
         self.cache_manager = CacheManager()
         self.metrics_calculator = MetricsCalculator()
@@ -474,7 +476,7 @@ class RevenueOptimizationEngine:
     """
 Optimizes revenue strategies using ML and data analysis"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.db_manager = DatabaseManager()
         self.regressor = RandomForestRegressor(n_estimators=100, random_state=42)
         self.scaler = StandardScaler()
@@ -543,7 +545,7 @@ class RevenuePredictionEngine:
     """
 Predicts future revenue using advanced ML models"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.revenue_predictor = RevenuePredictor()
         self.db_manager = DatabaseManager()
         
@@ -579,7 +581,7 @@ class RevenueAttributionEngine:
     """
 Attributes revenue to specific content, campaigns, and channels"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         try:
             logger.info(f"Executing __init__")
             

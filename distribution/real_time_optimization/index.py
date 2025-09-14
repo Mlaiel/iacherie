@@ -32,7 +32,7 @@ class RealTimeOptimizationResults:
 class RealTimeOptimizationEngine:
     """Main real-time optimization engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize real-time optimization engine"""
         self.monitoring_interval = 30  # seconds
         self.active_optimizations = {}

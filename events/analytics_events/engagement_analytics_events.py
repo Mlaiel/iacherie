@@ -39,7 +39,7 @@ class EngagementAnalyticsEventHandler(BaseAnalyticsEventHandler):
     """
 Ultra-advanced engagement analytics event handler"""
     
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs) -> None:
         super().__init__(name="engagement_analytics", **kwargs)
         self.engagement_tracker = EngagementTracker()
         self.engagement_predictor = EngagementPredictor()
@@ -97,7 +97,7 @@ Ultra-advanced engagement analytics event handler"""
 class EngagementTracker:
     """Advanced engagement tracking with real-time metrics"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.metrics_cache = {}
         self.engagement_history = []
         self.platform_weights = {
@@ -490,7 +490,7 @@ Update metrics cache for faster retrieval"""
 class EngagementPredictor:
     """ML-powered engagement prediction engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.model = None
         self.scaler = StandardScaler()
         self.is_trained = False
@@ -755,7 +755,7 @@ class SocialMediaAnalyzer:
     """
 Advanced social media pattern analysis"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.platform_patterns = {}
         self.trend_cache = {}
     
@@ -985,7 +985,7 @@ class TrendDetector:
     """
 Advanced trend detection for engagement analytics"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.trend_history = []
         self.pattern_cache = {}
     

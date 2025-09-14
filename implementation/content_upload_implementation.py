@@ -137,7 +137,7 @@ class ContentUploadImplementation:
     content optimization, and platform-specific preparation.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
         
@@ -209,7 +209,7 @@ class ContentUploadImplementation:
         # Initialize directories
         self._initialize_directories()
     
-    def _initialize_directories(self):
+    def _initialize_directories(self) -> None:
         """Initialize required directories"""
         directories = [self.upload_directory, self.processing_directory]
         for directory in directories:

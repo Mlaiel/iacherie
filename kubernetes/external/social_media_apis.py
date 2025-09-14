@@ -85,7 +85,7 @@ Middleware d'authentification"""
             detail="Token invalide"
         )
 
-async def rate_limiting_middleware(request: Request):
+async def rate_limiting_middleware(request -> None: Request) -> None:
     """Middleware de limitation de débit"""
     # Rate limiting implementation with Redis-like logic
     import time
@@ -120,12 +120,12 @@ async def rate_limiting_middleware(request: Request):
 class SocialMediaApisAPI:
     """API principale Social Media Apis"""
     
-    def __init__(self, app: FastAPI):
+    def __init__(self, app -> None: FastAPI) -> None:
         self.app = app
         self.setup_routes()
         self.setup_middleware()
     
-    def setup_middleware(self):
+    def setup_middleware(self) -> None:
         """
 Configuration des middlewares"""
         self.app.add_middleware(
@@ -137,11 +137,11 @@ Configuration des middlewares"""
         )
         self.app.add_middleware(GZipMiddleware, minimum_size=1000)
     
-    def setup_routes(self):
+    def setup_routes(self) -> None:
         """Configuration des routes API"""
         
         @self.app.get("/health")
-        async def health_check():
+        async def health_check() -> None:
             """Vérification de santé de l'API"""
             return APIResponse(
                 success=True,
@@ -250,7 +250,7 @@ Configuration des middlewares"""
 class WebSocketManager:
     """Gestionnaire WebSocket pour temps réel"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         try:
             logger.info(f"Executing __init__")
             
@@ -265,18 +265,18 @@ class WebSocketManager:
         except Exception as e:
             logger.error(f"__init__ failed: {e}")
             raise
-    async def connect(self, websocket):
+    async def connect(self, websocket) -> None:
         """
 Connexion WebSocket"""
         await websocket.accept()
         self.active_connections.append(websocket)
     
-    def disconnect(self, websocket):
+    def disconnect(self, websocket) -> None:
         """
 Déconnexion WebSocket"""
         self.active_connections.remove(websocket)
     
-    async def broadcast(self, message: str):
+    async def broadcast(self, message -> None: str) -> None:
         """
 Diffusion message à tous les clients"""
         for connection in self.active_connections:

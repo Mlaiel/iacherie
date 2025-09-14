@@ -147,7 +147,7 @@ class PortScanner:
     Port scanning detection system
     """
     
-    def __init__(self, scan_threshold: int = 10, time_window: int = 60):
+    def __init__(self, scan_threshold -> None: int = 10, time_window -> None: int = 60) -> None:
         self.scan_threshold = scan_threshold
         self.time_window = time_window
         
@@ -242,7 +242,7 @@ class TrafficAnalyzer:
     Network traffic analysis and anomaly detection
     """
     
-    def __init__(self, baseline_window: int = 3600):
+    def __init__(self, baseline_window -> None: int = 3600) -> None:
         self.baseline_window = baseline_window
         
         # Traffic baselines per IP/port combination
@@ -258,12 +258,12 @@ class TrafficAnalyzer:
     
     def update_traffic_metrics(
         self,
-        source_ip: str,
-        destination_ip: str,
-        destination_port: int,
-        bytes_transferred: int,
-        timestamp: datetime
-    ):
+        source_ip -> None: str,
+        destination_ip -> None: str,
+        destination_port -> None: int,
+        bytes_transferred -> None: int,
+        timestamp -> None: datetime
+    ) -> None:
         """
         Update traffic metrics for analysis
         
@@ -392,7 +392,7 @@ class TrafficAnalyzer:
             logger.error(f"Failed to detect traffic anomalies: {e}")
             return []
     
-    def update_baselines(self):
+    def update_baselines(self) -> None:
         """Update traffic baselines from current metrics"""
         try:
             for key, metrics in self.current_metrics.items():
@@ -422,7 +422,7 @@ class IntrusionDetector:
     Network intrusion detection system
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.malicious_signatures = self._load_malicious_signatures()
         self.suspicious_user_agents = self._load_suspicious_user_agents()
         self.known_malicious_ips = set()
@@ -613,10 +613,10 @@ class NetworkSecurityMonitor:
     
     def __init__(
         self,
-        interface: str = "eth0",
-        redis_url: str = "redis://localhost:6379",
-        geoip_db_path: str = None
-    ):
+        interface -> None: str = "eth0",
+        redis_url -> None: str = "redis -> None://localhost -> None:6379",
+        geoip_db_path -> None: str = None
+    ) -> None:
         self.interface = interface
         self.redis_url = redis_url
         self.geoip_db_path = geoip_db_path
@@ -647,7 +647,7 @@ class NetworkSecurityMonitor:
         
         logger.info("Network security monitor initialized")
     
-    async def initialize_redis(self):
+    async def initialize_redis(self) -> None:
         """Initialize Redis connection"""
         try:
             self.redis_pool = aioredis.ConnectionPool.from_url(self.redis_url)
@@ -676,7 +676,7 @@ class NetworkSecurityMonitor:
         except Exception:
             return None
     
-    async def start_monitoring(self):
+    async def start_monitoring(self) -> None:
         """Start network monitoring"""
         try:
             await self.initialize_redis()
@@ -690,7 +690,7 @@ class NetworkSecurityMonitor:
             logger.error(f"Failed to start network monitoring: {e}")
             raise
     
-    async def stop_monitoring(self):
+    async def stop_monitoring(self) -> None:
         """Stop network monitoring"""
         try:
             self._monitoring_active = False
@@ -704,7 +704,7 @@ class NetworkSecurityMonitor:
         except Exception as e:
             logger.error(f"Failed to stop network monitoring: {e}")
     
-    async def _monitoring_loop(self):
+    async def _monitoring_loop(self) -> None:
         """Main network monitoring loop"""
         try:
             # In a real implementation, this would capture network packets
@@ -979,7 +979,7 @@ class NetworkSecurityMonitor:
             logger.error(f"Failed to get network status: {e}")
             return {"error": str(e)}
     
-    async def cleanup_old_data(self, retention_hours: int = 24):
+    async def cleanup_old_data(self, retention_hours -> None: int = 24) -> None:
         """
         Cleanup old monitoring data
         

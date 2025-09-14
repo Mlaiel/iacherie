@@ -175,10 +175,10 @@ class CeleryWorkflowIntegrator:
     """
     
     def __init__(self,
-                 broker_url: str = "redis://localhost:6379/0",
-                 result_backend: str = "redis://localhost:6379/1",
-                 encryption_manager: Optional[EncryptionManager] = None,
-                 metrics_collector: Optional[MetricsCollector] = None):
+                 broker_url -> None: str = "redis -> None://localhost -> None:6379/0",
+                 result_backend -> None: str = "redis -> None://localhost -> None:6379/1",
+                 encryption_manager -> None: Optional[EncryptionManager] = None,
+                 metrics_collector -> None: Optional[MetricsCollector] = None) -> None:
         self.broker_url = broker_url
         self.result_backend = result_backend
         self.encryption = encryption_manager
@@ -704,7 +704,7 @@ class CeleryWorkflowIntegrator:
             "previous_result": previous_result
         }
     
-    async def _register_business_workflows(self):
+    async def _register_business_workflows(self) -> None:
         """Register Ainflue business workflow definitions"""
         # Pre-register common workflow patterns
         business_workflows = [
@@ -717,7 +717,7 @@ class CeleryWorkflowIntegrator:
         for workflow_name in business_workflows:
             logger.debug(f"Registered workflow template: {workflow_name}")
     
-    async def _update_workflow_metrics(self, action: str, workflow: WorkflowDefinition, execution: WorkflowExecution):
+    async def _update_workflow_metrics(self, action -> None: str, workflow -> None: WorkflowDefinition, execution -> None: WorkflowExecution) -> None:
         """Update workflow metrics"""
         if not self.metrics:
             return

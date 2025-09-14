@@ -346,8 +346,8 @@ class CircuitBreakerProtection:
     """
     
     def __init__(self,
-                 metrics_collector: Optional[MetricsCollector] = None,
-                 encryption_manager: Optional[EncryptionManager] = None):
+                 metrics_collector -> None: Optional[MetricsCollector] = None,
+                 encryption_manager -> None: Optional[EncryptionManager] = None) -> None:
         self.metrics = metrics_collector
         self.encryption = encryption_manager
         
@@ -388,7 +388,7 @@ class CircuitBreakerProtection:
             logger.error(f"Failed to start circuit breaker protection: {str(e)}")
             raise MessageQueueError(f"Circuit breaker startup failed: {str(e)}")
     
-    async def stop(self):
+    async def stop(self) -> None:
         """Stop the circuit breaker protection system"""
         try:
             # Stop all monitoring tasks
@@ -663,7 +663,7 @@ class CircuitBreakerProtection:
         
         return False
     
-    async def _record_call_result(self, breaker_id: str, call_result: CallResult):
+    async def _record_call_result(self, breaker_id -> None: str, call_result -> None: CallResult) -> None:
         """Record the result of a protected call"""
         if breaker_id not in self.breaker_states:
             return
@@ -718,14 +718,14 @@ class CircuitBreakerProtection:
         else:
             self.global_metrics.total_failed_calls += 1
     
-    async def _record_blocked_call(self, breaker_id: str):
+    async def _record_blocked_call(self, breaker_id -> None: str) -> None:
         """Record a call that was blocked by circuit breaker"""
         if breaker_id in self.breaker_states:
             self.breaker_states[breaker_id].total_blocked_calls += 1
         
         self.global_metrics.total_blocked_calls += 1
     
-    async def _evaluate_circuit_opening(self, breaker_id: str):
+    async def _evaluate_circuit_opening(self, breaker_id -> None: str) -> None:
         """Evaluate whether circuit should be opened"""
         state = self.breaker_states[breaker_id]
         config = self.circuit_breakers[breaker_id]
@@ -755,7 +755,7 @@ class CircuitBreakerProtection:
             await self._transition_circuit_breaker(breaker_id, CircuitState.OPEN, f"slow_call_rate_exceeded_{slow_call_rate:.2f}")
             return
     
-    async def _transition_circuit_breaker(self, breaker_id: str, new_state: CircuitState, reason: str):
+    async def _transition_circuit_breaker(self, breaker_id -> None: str, new_state -> None: CircuitState, reason -> None: str) -> None:
         """Transition circuit breaker to new state"""
         if breaker_id not in self.breaker_states:
             return
@@ -793,7 +793,7 @@ class CircuitBreakerProtection:
     
     # Helper methods
     
-    async def _load_business_configurations(self):
+    async def _load_business_configurations(self) -> None:
         """Load Ainflue business circuit breaker configurations"""
         for service_name, config in AinflueBusiness.CIRCUIT_BREAKER_CONFIGS.items():
             await self.register_circuit_breaker(config)
@@ -832,12 +832,12 @@ class CircuitBreakerProtection:
         # Default to exception
         return FailureType.EXCEPTION
     
-    async def _start_monitoring_tasks(self):
+    async def _start_monitoring_tasks(self) -> None:
         """Start monitoring tasks for all circuit breakers"""
         for breaker_id in self.circuit_breakers.keys():
             await self._start_breaker_monitoring(breaker_id)
     
-    async def _start_breaker_monitoring(self, breaker_id: str):
+    async def _start_breaker_monitoring(self, breaker_id -> None: str) -> None:
         """Start monitoring task for a circuit breaker"""
         if breaker_id in self.monitoring_tasks:
             return  # Already monitoring
@@ -845,7 +845,7 @@ class CircuitBreakerProtection:
         task = asyncio.create_task(self._monitoring_loop(breaker_id))
         self.monitoring_tasks[breaker_id] = task
     
-    async def _monitoring_loop(self, breaker_id: str):
+    async def _monitoring_loop(self, breaker_id -> None: str) -> None:
         """Monitoring loop for a circuit breaker"""
         config = self.circuit_breakers[breaker_id]
         
@@ -866,7 +866,7 @@ class CircuitBreakerProtection:
                 logger.error(f"Error in monitoring loop for {breaker_id}: {str(e)}")
                 await asyncio.sleep(60)  # Back off on error
     
-    async def _perform_health_check(self, breaker_id: str):
+    async def _perform_health_check(self, breaker_id -> None: str) -> None:
         """Perform health check for circuit breaker service"""
         config = self.circuit_breakers[breaker_id]
         state = self.breaker_states[breaker_id]
@@ -897,7 +897,7 @@ class CircuitBreakerProtection:
             logger.warning(f"Health check failed for {config.service_name}: {str(e)}")
             state.health_check_status = False
     
-    async def _start_recovery_task(self, breaker_id: str):
+    async def _start_recovery_task(self, breaker_id -> None: str) -> None:
         """Start recovery task for opened circuit breaker"""
         if breaker_id in self.recovery_tasks:
             return  # Already has recovery task
@@ -905,7 +905,7 @@ class CircuitBreakerProtection:
         task = asyncio.create_task(self._recovery_loop(breaker_id))
         self.recovery_tasks[breaker_id] = task
     
-    async def _recovery_loop(self, breaker_id: str):
+    async def _recovery_loop(self, breaker_id -> None: str) -> None:
         """Recovery loop for opened circuit breaker"""
         config = self.circuit_breakers[breaker_id]
         state = self.breaker_states[breaker_id]
@@ -945,7 +945,7 @@ class CircuitBreakerProtection:
                 logger.error(f"Error in recovery loop for {breaker_id}: {str(e)}")
                 await asyncio.sleep(60)
     
-    async def _cleanup_old_call_results(self, breaker_id: str):
+    async def _cleanup_old_call_results(self, breaker_id -> None: str) -> None:
         """Clean up old call results to prevent memory growth"""
         state = self.breaker_states[breaker_id]
         
@@ -959,7 +959,7 @@ class CircuitBreakerProtection:
                state.call_results[0].timestamp < one_hour_ago):
             state.call_results.popleft()
     
-    async def _update_global_metrics(self):
+    async def _update_global_metrics(self) -> None:
         """Update global circuit breaker metrics"""
         self.global_metrics.total_breakers = len(self.circuit_breakers)
         
@@ -989,10 +989,10 @@ class CircuitBreakerProtection:
             self.global_metrics.avg_response_time = total_response_time / total_responses
     
     async def _send_state_change_notification(self, 
-                                            breaker_id: str,
-                                            old_state: CircuitState,
-                                            new_state: CircuitState,
-                                            reason: str):
+                                            breaker_id -> None: str,
+                                            old_state -> None: CircuitState,
+                                            new_state -> None: CircuitState,
+                                            reason -> None: str) -> None:
         """Send notification for circuit breaker state change"""
         config = self.circuit_breakers[breaker_id]
         
@@ -1058,7 +1058,7 @@ class CircuitBreakerProtection:
         
         return base_wait
     
-    def register_notification_callback(self, event_type: str, callback: Callable):
+    def register_notification_callback(self, event_type -> None: str, callback -> None: Callable) -> None:
         """Register notification callback for circuit breaker events"""
         if event_type not in self.notification_callbacks:
             self.notification_callbacks[event_type] = []

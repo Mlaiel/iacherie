@@ -157,7 +157,7 @@ class DependencyNode:
 class IntelligentDependencyTracker:
     """AI-powered dependency tracking for cache invalidation"""
     
-    def __init__(self, redis_client: redis.Redis, config: Dict[str, Any]):
+    def __init__(self, redis_client -> None: redis.Redis, config -> None: Dict[str, Any]) -> None:
         self.redis_client = redis_client
         self.config = config
         self.dependency_graph = nx.DiGraph()
@@ -174,11 +174,11 @@ class IntelligentDependencyTracker:
     
     async def track_dependency(
         self,
-        source_key: str,
-        target_key: str,
-        dependency_type: str = "content",
-        strength: float = 1.0
-    ):
+        source_key -> None: str,
+        target_key -> None: str,
+        dependency_type -> None: str = "content",
+        strength -> None: float = 1.0
+    ) -> None:
         """Track dependency between cache entries"""
         
         try:
@@ -452,7 +452,7 @@ class IntelligentDependencyTracker:
 class EventDrivenInvalidationEngine:
     """Event-driven cache invalidation with real-time processing"""
     
-    def __init__(self, redis_client: redis.Redis, dependency_tracker: IntelligentDependencyTracker):
+    def __init__(self, redis_client -> None: redis.Redis, dependency_tracker -> None: IntelligentDependencyTracker) -> None:
         self.redis_client = redis_client
         self.dependency_tracker = dependency_tracker
         self.event_queue = asyncio.Queue()
@@ -502,7 +502,7 @@ class EventDrivenInvalidationEngine:
             logging.error(f"Failed to trigger invalidation: {e}")
             raise
     
-    async def _process_events(self):
+    async def _process_events(self) -> None:
         """Process invalidation events from the queue"""
         
         while True:
@@ -517,7 +517,7 @@ class EventDrivenInvalidationEngine:
                 logging.error(f"Event processing error: {e}")
                 await asyncio.sleep(1)
     
-    async def _process_invalidations(self):
+    async def _process_invalidations(self) -> None:
         """Process invalidation requests from the queue"""
         
         while True:
@@ -540,7 +540,7 @@ class EventDrivenInvalidationEngine:
                 logging.error(f"Invalidation processing error: {e}")
                 await asyncio.sleep(1)
     
-    async def _check_scheduled_invalidations(self):
+    async def _check_scheduled_invalidations(self) -> None:
         """Check for invalidations that should be executed now"""
         
         try:
@@ -748,6 +748,7 @@ class EventDrivenInvalidationEngine:
 
 
 class InvalidationStrategy:
+    """InvalidationStrategy: class implementation"""
     pass
 
 import asyncio
@@ -846,9 +847,9 @@ class InvalidationStrategy:
     """
     def __init__(
         self,
-        config: CacheConfiguration,
-        metrics_collector: CacheMetricsCollector
-    ):
+        config -> None: CacheConfiguration,
+        metrics_collector -> None: CacheMetricsCollector
+    ) -> None:
         """
         Initialize invalidation strategy manager.
         

@@ -1,3 +1,8 @@
+"""
+Service Orchestration module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """Service Orchestration Manager
 Container orchestration and microservices management for the IA Influencer Agent platform
@@ -119,7 +124,7 @@ class ServiceOrchestrator:
     Manages container orchestration and microservices lifecycle
     """
     
-    def __init__(self, config_path: Optional[str] = None):
+    def __init__(self, config_path -> None: Optional[str] = None) -> None:
         """
 Initialize service orchestrator"""
         self.config_path = config_path or "/etc/orchestration/config.yaml"
@@ -1155,7 +1160,7 @@ Initialize service orchestrator"""
             return {"error": str(e)}
 
 
-def main():
+def main() -> None:
     """Main function for standalone execution"""
     import argparse
     

@@ -1,4 +1,6 @@
 """Content & Media SEO Package
+import logging
+
 Specialized SEO optimization for various content types and media formats.
 
 Author: Fahed Mlaiel (mlaiel@live.de)

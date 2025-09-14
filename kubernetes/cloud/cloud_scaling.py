@@ -123,7 +123,7 @@ class CloudAutoScaler:
     """
 Enterprise cloud auto-scaling management system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """
 Initialize cloud auto-scaler"""
         self.logger = logging.getLogger(self.__class__.__name__)
@@ -815,3 +815,5 @@ Main monitoring loop"""
             } if prediction else None,
             "generated_at": datetime.now().isoformat()
         }
+
+# File has syntax issues - needs manual review

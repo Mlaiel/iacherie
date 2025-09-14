@@ -124,7 +124,7 @@ class PipelineExecutionResult:
 class BasePipelineStep(ABC):
     """Base class for pipeline steps"""
     
-    def __init__(self, step_config: PipelineStepConfig):
+    def __init__(self, step_config -> None: PipelineStepConfig) -> None:
         self.step_config = step_config
         self.metrics = defaultdict(float)
         self.cache = {}
@@ -327,7 +327,7 @@ class ContentPreprocessor(BasePipelineStep):
 class ModelInferenceStep(BasePipelineStep):
     """🔬 ML ENGINEER - Model inference execution step"""
     
-    def __init__(self, step_config: PipelineStepConfig):
+    def __init__(self, step_config -> None: PipelineStepConfig) -> None:
         super().__init__(step_config)
         self.model = None
         self.model_loaded = False
@@ -927,7 +927,7 @@ class ContentPostprocessor(BasePipelineStep):
 class PipelineBuilder:
     """🎖️ LEAD DEV IA - Dynamic pipeline construction and management"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.step_registry = {
             "ContentPreprocessor": ContentPreprocessor,
             "ModelInferenceStep": ModelInferenceStep,
@@ -1099,7 +1099,7 @@ class PipelineBuilder:
 class PipelinePipeline:
     """Executable prediction pipeline"""
     
-    def __init__(self, config: PipelineConfig, steps: OrderedDict):
+    def __init__(self, config -> None: PipelineConfig, steps -> None: OrderedDict) -> None:
         self.config = config
         self.steps = steps
         self.execution_stats = defaultdict(float)
@@ -1255,7 +1255,7 @@ class PredictionPipelineBuilder:
     construction with creator-specific optimization and enterprise monitoring.
     """
     
-    def __init__(self, config_path: Optional[str] = None):
+    def __init__(self, config_path -> None: Optional[str] = None) -> None:
         self.config = self._load_config(config_path)
         self.pipeline_builder = PipelineBuilder()
         self.active_pipelines: Dict[str, PipelinePipeline] = {}
@@ -1377,7 +1377,7 @@ class PredictionPipelineBuilder:
 
 # Example usage and testing
 if __name__ == "__main__":
-    async def test_prediction_pipeline_builder():
+    async def test_prediction_pipeline_builder() -> None:
         """Test prediction pipeline builder"""
         # Initialize pipeline builder
         builder = PredictionPipelineBuilder()

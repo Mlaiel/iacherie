@@ -158,10 +158,10 @@ class EmergencyCommunication:
     """Enterprise emergency communication management system"""
     
     def __init__(self,
-                 auto_approval_threshold: CrisisLevel = CrisisLevel.EMERGENCY,
-                 max_response_time_minutes: int = 15,
-                 enable_multi_language: bool = True,
-                 enable_sentiment_monitoring: bool = True):
+                 auto_approval_threshold -> None: CrisisLevel = CrisisLevel.EMERGENCY,
+                 max_response_time_minutes -> None: int = 15,
+                 enable_multi_language -> None: bool = True,
+                 enable_sentiment_monitoring -> None: bool = True) -> None:
         
         self.auto_approval_threshold = auto_approval_threshold
         self.max_response_time_minutes = max_response_time_minutes

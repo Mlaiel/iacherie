@@ -169,7 +169,7 @@ class SecurityContentProcessor:
     content protection, and access control for the IA Influencer Agent platform.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.logger = logging.getLogger(f"{__name__}.SecurityContentProcessor")
         self.config = config or {}
         

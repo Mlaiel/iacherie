@@ -1,3 +1,8 @@
+"""
+Environment Provisioner module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 🏗️ Environment Provisioner Enterprise - Infrastructure as Code
@@ -60,7 +65,7 @@ class EnvironmentProvisioner:
     Automated infrastructure provisioning and management
     """
     
-    def __init__(self, config_file: str = "environments.yaml"):
+    def __init__(self, config_file -> None: str = "environments.yaml") -> None:
         """Initialize the provisioner"""
         self.config_file = config_file
         self.environments = {}
@@ -73,7 +78,7 @@ class EnvironmentProvisioner:
         # Load environment configurations
         self._load_configurations()
     
-    def _initialize_cloud_clients(self):
+    def _initialize_cloud_clients(self) -> None:
         """Initialize cloud provider clients"""
         try:
             # AWS
@@ -109,7 +114,7 @@ class EnvironmentProvisioner:
         except Exception as e:
             logger.warning(f"Failed to initialize Docker client: {e}")
     
-    def _load_configurations(self):
+    def _load_configurations(self) -> None:
         """Load environment configurations"""
         try:
             if os.path.exists(self.config_file):
@@ -127,7 +132,7 @@ class EnvironmentProvisioner:
             logger.error(f"Error loading configurations: {e}")
             self._create_default_configurations()
     
-    def _create_default_configurations(self):
+    def _create_default_configurations(self) -> None:
         """Create default environment configurations"""
         default_configs = {
             'environments': {
@@ -335,7 +340,7 @@ class EnvironmentProvisioner:
         
         return results
     
-    def _validate_prerequisites(self, env_config: EnvironmentConfig):
+    def _validate_prerequisites(self, env_config -> None: EnvironmentConfig) -> None:
         """Validate prerequisites for environment provisioning"""
         logger.info("Validating prerequisites...")
         
@@ -366,7 +371,7 @@ class EnvironmentProvisioner:
         except Exception:
             return False
     
-    def _validate_resource_requirements(self, env_config: EnvironmentConfig):
+    def _validate_resource_requirements(self, env_config -> None: EnvironmentConfig) -> None:
         """Validate resource requirements"""
         # Check if we have enough quota/limits for the requested resources
         if env_config.cloud_provider == 'aws':
@@ -374,12 +379,12 @@ class EnvironmentProvisioner:
         elif env_config.cloud_provider == 'local':
             self._validate_local_resources(env_config)
     
-    def _validate_aws_limits(self, env_config: EnvironmentConfig):
+    def _validate_aws_limits(self, env_config -> None: EnvironmentConfig) -> None:
         """Validate AWS service limits"""
         # This would check AWS service limits
         pass
     
-    def _validate_local_resources(self, env_config: EnvironmentConfig):
+    def _validate_local_resources(self, env_config -> None: EnvironmentConfig) -> None:
         """Validate local system resources"""
         # Check Docker availability
         try:
@@ -902,7 +907,7 @@ class EnvironmentProvisioner:
         
         return results
     
-    def _destroy_local_environment(self, env_config: EnvironmentConfig, results: Dict[str, Any]):
+    def _destroy_local_environment(self, env_config -> None: EnvironmentConfig, results -> None: Dict[str, Any]) -> None:
         """Destroy local Docker-based environment"""
         docker_client = self.cloud_clients['docker']
         prefix = f'ainflue-{env_config.name}'
@@ -926,7 +931,7 @@ class EnvironmentProvisioner:
             network.remove()
             results['components_destroyed'].append(f'network:{network.name}')
 
-def main():
+def main() -> None:
     """Main function for command-line usage"""
     import argparse
     

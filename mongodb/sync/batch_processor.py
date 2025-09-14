@@ -72,7 +72,7 @@ class BatchJob:
 class BatchProcessor:
     """Enterprise-grade MongoDB batch processing system."""
     
-    def __init__(self, connection_string: str, database_name: str):
+    def __init__(self, connection_string -> None: str, database_name -> None: str) -> None:
         """Initialize batch processor."""
         if not MONGODB_AVAILABLE:
             raise ImportError("PyMongo is required for batch processing")
@@ -124,7 +124,7 @@ class BatchProcessor:
             logger.error(f"Failed to connect to MongoDB: {e}")
             return False
     
-    def start_processing(self, num_workers: int = None):
+    def start_processing(self, num_workers -> None: int = None) -> None:
         """Start batch processing workers."""
         if self.running:
             logger.warning("Batch processor already running")
@@ -150,7 +150,7 @@ class BatchProcessor:
         
         logger.info(f"Started {num_workers} batch processing workers")
     
-    def _worker_loop(self, worker_name: str):
+    def _worker_loop(self, worker_name -> None: str) -> None:
         """Main worker loop for processing batches."""
         logger.info(f"Batch worker started: {worker_name}")
         
@@ -260,7 +260,7 @@ class BatchProcessor:
         timestamp = int(time.time() * 1000)
         return f"batch_{timestamp}"
     
-    def _process_batch(self, batch_job: BatchJob, worker_name: str):
+    def _process_batch(self, batch_job -> None: BatchJob, worker_name -> None: str) -> None:
         """Process a batch job."""
         batch_job.status = BatchStatus.PROCESSING
         batch_job.started_at = datetime.now()
@@ -433,7 +433,7 @@ class BatchProcessor:
             logger.error(f"Bulk {operation_type.value} failed: {e}")
             return 0, len(items)
     
-    def _finalize_batch(self, batch_job: BatchJob):
+    def _finalize_batch(self, batch_job -> None: BatchJob) -> None:
         """Finalize batch job processing."""
         # Remove from active batches
         if batch_job.batch_id in self.active_batches:
@@ -543,7 +543,7 @@ class BatchProcessor:
         
         return False
     
-    def stop_processing(self):
+    def stop_processing(self) -> None:
         """Stop batch processing."""
         if not self.running:
             return

@@ -58,7 +58,7 @@ class AlertRule:
 class MongoDBHealthDashboard:
     """Advanced MongoDB health monitoring dashboard."""
     
-    def __init__(self, database, collection_name: str = "health_metrics"):
+    def __init__(self, database, collection_name -> None: str = "health_metrics") -> None:
         """Initialize health dashboard.
         
         Args:
@@ -76,7 +76,7 @@ class MongoDBHealthDashboard:
         # Default alert rules
         self._setup_default_alerts()
     
-    def _setup_default_alerts(self):
+    def _setup_default_alerts(self) -> None:
         """Setup default monitoring alert rules."""
         default_rules = [
             AlertRule("High Response Time", "response_time_ms", "gt", 1000.0, "warning"),
@@ -92,12 +92,12 @@ class MongoDBHealthDashboard:
         for rule in default_rules:
             self.add_alert_rule(rule)
     
-    def add_alert_rule(self, rule: AlertRule):
+    def add_alert_rule(self, rule -> None: AlertRule) -> None:
         """Add a new alert rule."""
         self.alert_rules.append(rule)
         logger.info(f"Added alert rule: {rule.name}")
     
-    def remove_alert_rule(self, rule_name: str):
+    def remove_alert_rule(self, rule_name -> None: str) -> None:
         """Remove an alert rule by name."""
         self.alert_rules = [rule for rule in self.alert_rules if rule.name != rule_name]
         logger.info(f"Removed alert rule: {rule_name}")
@@ -186,7 +186,7 @@ class MongoDBHealthDashboard:
                 warnings_count=0
             )
     
-    async def store_metrics(self, metrics: HealthMetrics):
+    async def store_metrics(self, metrics -> None: HealthMetrics) -> None:
         """Store metrics in MongoDB for historical analysis."""
         try:
             doc = asdict(metrics)
@@ -351,7 +351,7 @@ class MongoDBHealthDashboard:
             logger.error(f"Failed to calculate summary stats: {e}")
             return {"error": str(e)}
     
-    async def start_monitoring(self, interval_seconds: int = 300):
+    async def start_monitoring(self, interval_seconds -> None: int = 300) -> None:
         """Start continuous monitoring (every 5 minutes by default)."""
         self.monitoring_active = True
         logger.info(f"Starting health monitoring with {interval_seconds}s interval")
@@ -379,12 +379,12 @@ class MongoDBHealthDashboard:
                 logger.error(f"Error in monitoring loop: {e}")
                 await asyncio.sleep(interval_seconds)
     
-    def stop_monitoring(self):
+    def stop_monitoring(self) -> None:
         """Stop continuous monitoring."""
         self.monitoring_active = False
         logger.info("Health monitoring stopped")
     
-    async def export_dashboard_json(self, filepath: str):
+    async def export_dashboard_json(self, filepath -> None: str) -> None:
         """Export dashboard data to JSON file."""
         try:
             dashboard_data = await self.get_dashboard_data()

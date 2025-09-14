@@ -90,7 +90,7 @@ class RateLimiter:
     adaptive throttling, and integration-specific configurations.
     """
     
-    def __init__(self, redis_url: Optional[str] = None):
+    def __init__(self, redis_url -> None: Optional[str] = None) -> None:
         """Initialize rate limiter with optional Redis backend."""
         self.logger = logging.getLogger(__name__)
         

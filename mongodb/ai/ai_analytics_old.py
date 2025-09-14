@@ -77,7 +77,7 @@ class AIAnalytics:
     and intelligent business intelligence with machine learning models.
     """
     
-    def __init__(self, db: AsyncIOMotorDatabase):
+    def __init__(self, db -> None: AsyncIOMotorDatabase) -> None:
         """
         Initialize AI Analytics
         

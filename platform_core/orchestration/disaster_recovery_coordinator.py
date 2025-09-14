@@ -1,3 +1,8 @@
+"""
+Disaster Recovery Coordinator module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Disaster Recovery Coordinator - Enterprise Core Component
@@ -151,7 +156,7 @@ class DisasterRecoveryCoordinator:
     cross-region failover, data consistency, and recovery optimization.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.backup_configs: Dict[str, BackupConfig] = {}
         self.backup_instances: Dict[str, BackupInstance] = {}
         self.recovery_plans: Dict[str, RecoveryPlan] = {}
@@ -619,18 +624,18 @@ class DisasterRecoveryCoordinator:
         data = f"{backup_instance.backup_id}:{backup_instance.size_bytes}:{backup_instance.started_at}"
         return hashlib.sha256(data.encode()).hexdigest()
     
-    async def _replicate_backup(self, backup_instance: BackupInstance, target_regions: List[str]):
+    async def _replicate_backup(self, backup_instance -> None: BackupInstance, target_regions -> None: List[str]) -> None:
         """Replicate backup to target regions"""
         for region in target_regions:
             logger.info(f"Replicating backup {backup_instance.backup_id} to region: {region}")
             # Simulate replication
             await asyncio.sleep(1)
     
-    async def _schedule_backup(self, config: BackupConfig):
+    async def _schedule_backup(self, config -> None: BackupConfig) -> None:
         """Schedule backup execution"""
         # Simple scheduling implementation
         # In production, would use proper cron-like scheduler
-        async def backup_scheduler():
+        async def backup_scheduler() -> None:
             while True:
                 try:
                     await asyncio.sleep(3600)  # Check every hour
@@ -674,7 +679,7 @@ class DisasterRecoveryCoordinator:
             "data_loss_risk": "low" if disaster_type != DisasterType.DATA_CORRUPTION else "high"
         }
     
-    async def _trigger_automatic_recovery(self, disaster_event: DisasterEvent):
+    async def _trigger_automatic_recovery(self, disaster_event -> None: DisasterEvent) -> None:
         """Trigger automatic recovery if configured"""
         # Find appropriate recovery plan
         for plan_id, plan in self.recovery_plans.items():
@@ -770,7 +775,7 @@ class DisasterRecoveryCoordinator:
             "error": None
         }
     
-    async def _trigger_event(self, event_type: str, event_data: str):
+    async def _trigger_event(self, event_type -> None: str, event_data -> None: str) -> None:
         """Trigger event handlers"""
         handlers = self.event_handlers.get(event_type, [])
         for handler in handlers:
@@ -844,7 +849,7 @@ async def create_disaster_recovery_plan(
 
 if __name__ == "__main__":
     # Example usage
-    async def main():
+    async def main() -> None:
         # Create backup schedule
         config_id = await create_backup_schedule(
             "api-service",

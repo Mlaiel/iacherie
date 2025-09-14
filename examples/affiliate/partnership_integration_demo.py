@@ -1,3 +1,8 @@
+"""
+Partnership Integration Demo module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Partnership Integration Demo - Démonstration Intégrations Partenariats
@@ -137,7 +142,7 @@ class PartnershipIntegrationDemo:
     API management avec real-time sync et compliance automation
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(f"{__name__}.PartnershipIntegrationDemo")
         
         # Simulate service dependencies
@@ -731,7 +736,7 @@ class PartnershipIntegrationDemo:
         }
 
 
-async def demonstrate():
+async def demonstrate() -> None:
     """Main demonstration function"""
     logger.info("🎬 DÉMARRAGE DÉMONSTRATION PARTNERSHIP INTEGRATION")
     logger.info("=" * 70)
@@ -795,7 +800,7 @@ async def demonstrate():
         return False
 
 
-async def main():
+async def main() -> None:
     """Main entry point"""
     try:
         success = await demonstrate()

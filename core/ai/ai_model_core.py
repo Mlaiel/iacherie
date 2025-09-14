@@ -117,7 +117,7 @@ class AIModelCore:
     monitoring, and optimization with enterprise-grade reliability.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.models: Dict[str, ModelConfiguration] = {}
         self.deployments: Dict[str, ModelDeployment] = {}
         self.model_registry: Dict[str, Any] = {}
@@ -143,7 +143,7 @@ class AIModelCore:
             logger.error(f"❌ AI Model Core initialization failed: {str(e)}")
             return False
     
-    async def _setup_model_registry(self):
+    async def _setup_model_registry(self) -> None:
         """Setup model registry with pre-configured models"""
         # Example models for the system
         example_models = [
@@ -227,7 +227,7 @@ class AIModelCore:
         
         logger.info(f"✅ Model registry setup complete: {len(self.models)} models")
     
-    async def _setup_deployment_strategies(self):
+    async def _setup_deployment_strategies(self) -> None:
         """Setup deployment strategies and configurations"""
         self.deployment_strategies = {
             DeploymentStrategy.CANARY: {
@@ -254,7 +254,7 @@ class AIModelCore:
         
         logger.info("✅ Deployment strategies configured")
     
-    async def _setup_monitoring_systems(self):
+    async def _setup_monitoring_systems(self) -> None:
         """Setup model monitoring and alerting"""
         self.monitoring_config = {
             "health_check_interval_seconds": 30,
@@ -274,7 +274,7 @@ class AIModelCore:
         
         logger.info("✅ Monitoring systems configured")
     
-    async def _setup_auto_scaling(self):
+    async def _setup_auto_scaling(self) -> None:
         """Setup auto-scaling rules for models"""
         self.auto_scaling_rules = {
             "scale_up_conditions": {

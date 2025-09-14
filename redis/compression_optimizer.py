@@ -1,3 +1,8 @@
+"""
+Compression Optimizer module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
@@ -91,7 +96,7 @@ class CompressionOptimizer:
     **DevOps**: Monitoring et métriques compression temps réel
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or self._get_default_config()
         
         # Profils performance algorithmes
@@ -130,7 +135,7 @@ class CompressionOptimizer:
             'benchmark_interval': 3600  # Re-benchmark chaque heure
         }
     
-    def _initialize_profiles(self):
+    def _initialize_profiles(self) -> None:
         """**Backend Senior**: Initialisation profils algorithmes"""
         algorithms = [
             (CompressionAlgorithm.LZ4, 0),
@@ -504,11 +509,11 @@ class CompressionOptimizer:
     
     async def _update_profile(
         self,
-        algorithm: CompressionAlgorithm,
-        level: int,
-        metrics: CompressionMetrics,
-        pattern: DataPattern
-    ):
+        algorithm -> None: CompressionAlgorithm,
+        level -> None: int,
+        metrics -> None: CompressionMetrics,
+        pattern -> None: DataPattern
+    ) -> None:
         """**DevOps**: Mise à jour profil performance**"""
         
         profile_key = f"{algorithm.value}_{level}"
@@ -679,12 +684,12 @@ class CompressionOptimizer:
         }
 
 # Factory function
-def create_compression_optimizer(config: Optional[Dict[str, Any]] = None):
+def create_compression_optimizer(config -> None: Optional[Dict[str, Any]] = None) -> None:
     """**Backend Senior**: Factory création optimiseur compression"""
     return CompressionOptimizer(config)
 
 if __name__ == "__main__":
-    async def demo():
+    async def demo() -> None:
         """Démonstration Compression Optimizer"""
         
         # Création optimizer

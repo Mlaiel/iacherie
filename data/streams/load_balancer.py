@@ -173,10 +173,10 @@ class LoadBalancer:
     
     def __init__(
         self,
-        default_algorithm: LoadBalancingAlgorithm = LoadBalancingAlgorithm.ADAPTIVE,
-        enable_health_checks: bool = True,
-        enable_session_affinity: bool = True
-    ):
+        default_algorithm -> None: LoadBalancingAlgorithm = LoadBalancingAlgorithm.ADAPTIVE,
+        enable_health_checks -> None: bool = True,
+        enable_session_affinity -> None: bool = True
+    ) -> None:
         # Configuration
         self.default_algorithm = default_algorithm
         self.enable_health_checks = enable_health_checks

@@ -121,7 +121,7 @@ class HealthAlertingSystem:
     Provides real-time alerting, multi-channel notifications, and incident
     management for the IA Influencer Agent platform health monitoring.
     """
-    def __init__(self, config: Dict[str, Any], redis_client: Optional[aioredis.Redis] = None):
+    def __init__(self, config -> None: Dict[str, Any], redis_client -> None: Optional[aioredis.Redis] = None) -> None:
         """
         Initialize health alerting system
         
@@ -164,7 +164,7 @@ class HealthAlertingSystem:
             "last_alert_timestamp": None
         }
 
-    def _initialize_notification_channels(self):
+    def _initialize_notification_channels(self) -> None:
         try:
             logger.info(f"Executing _initialize_notification_channels")
             
@@ -184,7 +184,7 @@ class HealthAlertingSystem:
                 "service_name": pagerduty_config.get("service_name", "IA Influencer Agent")
             }
 
-    def _initialize_default_rules(self):
+    def _initialize_default_rules(self) -> None:
         """Initialize default alert rules"""
         default_rules = [
             AlertRule(
@@ -270,7 +270,7 @@ class HealthAlertingSystem:
             except Exception as e:
                 self.logger.error(f"Failed to load custom alert rule {rule_config}: {str(e)}")
 
-    def _initialize_notification_templates(self):
+    def _initialize_notification_templates(self) -> None:
         """Initialize notification message templates"""
         
         # Email templates
@@ -388,7 +388,7 @@ class HealthAlertingSystem:
             )
         }
 
-    async def process_health_results(self, health_results: List[HealthCheckResult]):
+    async def process_health_results(self, health_results -> None: List[HealthCheckResult]) -> None:
         """
         Process health check results and trigger alerts based on configured rules
         
@@ -406,7 +406,7 @@ class HealthAlertingSystem:
         # Update metrics
         await self._update_alert_metrics()
 
-    async def _evaluate_alert_rules(self, result: HealthCheckResult):
+    async def _evaluate_alert_rules(self, result -> None: HealthCheckResult) -> None:
         """Evaluate health result against alert rules"""
         
         for rule in self._alert_rules:
@@ -520,7 +520,7 @@ Evaluate additional alert conditions"""
         
         return False
 
-    async def _create_and_trigger_alert(self, rule: AlertRule, result: HealthCheckResult):
+    async def _create_and_trigger_alert(self, rule -> None: AlertRule, result -> None: HealthCheckResult) -> None:
         """Create new alert and trigger notifications"""
         
         # Generate unique alert ID
@@ -610,7 +610,7 @@ Evaluate additional alert conditions"""
         
         return details
 
-    async def _set_cooldown(self, rule_name: str, service: str, cooldown_minutes: int):
+    async def _set_cooldown(self, rule_name -> None: str, service -> None: str, cooldown_minutes -> None: int) -> None:
         """Set cooldown period for alert rule"""
         cooldown_key = f"alert_cooldown:{rule_name}:{service}"
         
@@ -624,7 +624,7 @@ Evaluate additional alert conditions"""
             except Exception as e:
                 self.logger.error(f"Error setting cooldown in Redis: {str(e)}")
 
-    async def _send_notifications(self, alert: Alert, channels: List[AlertChannel]):
+    async def _send_notifications(self, alert -> None: Alert, channels -> None: List[AlertChannel]) -> None:
         """Send alert notifications through specified channels"""
         
         notification_tasks = []
@@ -643,7 +643,7 @@ Evaluate additional alert conditions"""
                 self.logger.error(f"Error sending notifications: {str(e)}")
                 self._alert_metrics["notification_failures"] += 1
 
-    async def _send_channel_notification(self, alert: Alert, channel: AlertChannel):
+    async def _send_channel_notification(self, alert -> None: Alert, channel -> None: AlertChannel) -> None:
         """Send notification through specific channel"""
         
         try:
@@ -662,7 +662,7 @@ Evaluate additional alert conditions"""
             self.logger.error(f"Failed to send {channel.value} notification for alert {alert.id}: {str(e)}")
             self._alert_metrics["notification_failures"] += 1
 
-    async def _send_email_notification(self, alert: Alert):
+    async def _send_email_notification(self, alert -> None: Alert) -> None:
         """Send email notification"""
         email_config = self._notification_channels.get(AlertChannel.EMAIL)
         if not email_config:
@@ -711,7 +711,7 @@ Evaluate additional alert conditions"""
         except Exception as e:
             raise Exception(f"Email sending failed: {str(e)}")
 
-    async def _send_slack_notification(self, alert: Alert):
+    async def _send_slack_notification(self, alert -> None: Alert) -> None:
         """Send Slack notification"""
         slack_config = self._notification_channels.get(AlertChannel.SLACK)
         if not slack_config:
@@ -742,7 +742,7 @@ Evaluate additional alert conditions"""
                     response_text = await response.text()
                     raise Exception(f"Slack API error {response.status}: {response_text}")
 
-    async def _send_webhook_notification(self, alert: Alert):
+    async def _send_webhook_notification(self, alert -> None: Alert) -> None:
         """Send webhook notification"""
         webhook_config = self._notification_channels.get(AlertChannel.WEBHOOK)
         if not webhook_config:
@@ -771,7 +771,7 @@ Evaluate additional alert conditions"""
                     response_text = await response.text()
                     raise Exception(f"Webhook error {response.status}: {response_text}")
 
-    async def _send_pagerduty_notification(self, alert: Alert):
+    async def _send_pagerduty_notification(self, alert -> None: Alert) -> None:
         """Send PagerDuty notification"""
         pagerduty_config = self._notification_channels.get(AlertChannel.PAGERDUTY)
         if not pagerduty_config:
@@ -804,7 +804,7 @@ Evaluate additional alert conditions"""
                     response_text = await response.text()
                     raise Exception(f"PagerDuty API error {response.status}: {response_text}")
 
-    async def _check_alert_escalations(self):
+    async def _check_alert_escalations(self) -> None:
         """Check for alerts that need escalation"""
         current_time = datetime.utcnow()
         
@@ -823,7 +823,7 @@ Evaluate additional alert conditions"""
             if current_time >= escalation_time:
                 await self._escalate_alert(alert, rule)
 
-    async def _escalate_alert(self, alert: Alert, rule: AlertRule):
+    async def _escalate_alert(self, alert -> None: Alert, rule -> None: AlertRule) -> None:
         """
 Escalate alert to higher severity channels"""
         
@@ -917,7 +917,7 @@ Escalate alert to higher severity channels"""
         self.logger.info(f"Alert {alert_id} resolved by {resolved_by}")
         return True
 
-    async def _update_alert_metrics(self):
+    async def _update_alert_metrics(self) -> None:
         """Update alert metrics"""
         current_time = datetime.utcnow()
         
@@ -957,7 +957,7 @@ Get alert history for specified time period"""
         
         return [asdict(alert) for alert in filtered_alerts]
 
-    async def cleanup_resources(self):
+    async def cleanup_resources(self) -> None:
         """
 Clean up alerting system resources"""
         try:
@@ -974,7 +974,7 @@ Clean up alerting system resources"""
         except Exception as e:
             self.logger.error(f"Error cleaning up alerting system resources: {str(e)}")
 
-    def add_custom_rule(self, rule: AlertRule):
+    def add_custom_rule(self, rule -> None: AlertRule) -> None:
         """Add custom alert rule"""
         self._alert_rules.append(rule)
         self.logger.info(f"Added custom alert rule: {rule.name}")

@@ -65,7 +65,7 @@ class MessagingDeploymentOrchestrator:
     Enterprise messaging infrastructure deployment orchestrator
     Manages complete lifecycle of multi-protocol messaging systems
     """
-    def __init__(self, config: Optional[MessagingInfrastructureConfig] = None):
+    def __init__(self, config -> None: Optional[MessagingInfrastructureConfig] = None) -> None:
         self.config = config or self._get_default_config()
         self.health_checker = HealthChecker()
         
@@ -875,7 +875,7 @@ Deploy complete messaging infrastructure"""
 
 # Main deployment function
 if __name__ == "__main__":
-    async def main():
+    async def main() -> None:
         """Main deployment function"""
         try:
             orchestrator = await deploy_messaging_infrastructure()
@@ -908,7 +908,7 @@ class MessagingDeploymentOrchestrator:
     Enterprise messaging deployment orchestrator
     Manages complete messaging infrastructure for IA content processing
     """
-    def __init__(self):
+    def __init__(self) -> None:
         self.kafka_manager: Optional[KafkaManager] = None
         self.rabbitmq_manager: Optional[RabbitMQManager] = None
         self.celery_manager: Optional[CeleryManager] = None
@@ -1146,7 +1146,7 @@ async def deploy_messaging_infrastructure(
 if __name__ == "__main__":
     """Example usage of messaging deployment"""
     
-    async def main():
+    async def main() -> None:
         try:
             logger.info(f"Executing main")
             

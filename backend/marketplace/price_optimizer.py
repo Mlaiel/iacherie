@@ -150,7 +150,7 @@ class PriceTestResult:
 class PriceOptimizer:
     """Advanced ML-powered price optimization engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.pricing_models: Dict[str, PricingModel] = {}
         self.market_data: Dict[str, MarketData] = {}
         self.optimization_requests: Dict[str, PriceOptimizationRequest] = {}
@@ -161,7 +161,7 @@ class PriceOptimizer:
         # Initialize default models
         self._initialize_default_models()
     
-    def _initialize_default_models(self):
+    def _initialize_default_models(self) -> None:
         """Initialize default pricing models"""
         default_models = [
             PricingModel(
@@ -808,7 +808,7 @@ class PriceOptimizer:
         }
 
 # Example usage
-async def main():
+async def main() -> None:
     """Example usage of PriceOptimizer"""
     optimizer = PriceOptimizer()
     

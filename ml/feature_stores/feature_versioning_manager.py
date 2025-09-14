@@ -151,7 +151,7 @@ class VersioningStrategy:
 class FeatureSchema:
     """Schéma d'une feature"""
     
-    def __init__(self, feature_data: Any):
+    def __init__(self, feature_data -> None: Any) -> None:
         self.schema = self._extract_schema(feature_data)
         self.hash = self._compute_hash()
     
@@ -291,11 +291,11 @@ class FeatureVersioningManager:
     
     def __init__(
         self,
-        storage_path: str = "data/feature_versions",
-        default_strategy: Optional[VersioningStrategy] = None,
-        enable_auto_migration: bool = True,
-        max_version_history: int = 100
-    ):
+        storage_path -> None: str = "data/feature_versions",
+        default_strategy -> None: Optional[VersioningStrategy] = None,
+        enable_auto_migration -> None: bool = True,
+        max_version_history -> None: int = 100
+    ) -> None:
         self.storage_path = Path(storage_path)
         self.storage_path.mkdir(parents=True, exist_ok=True)
         
@@ -841,9 +841,9 @@ class FeatureVersioningManager:
     
     async def _cleanup_old_versions(
         self,
-        feature_name: str,
-        strategy: VersioningStrategy
-    ):
+        feature_name -> None: str,
+        strategy -> None: VersioningStrategy
+    ) -> None:
         """Nettoyer les anciennes versions"""
         
         versions = self.feature_versions[feature_name]
@@ -855,7 +855,7 @@ class FeatureVersioningManager:
             
             logger.debug(f"🧹 Cleaned up old versions for {feature_name}")
     
-    async def _persist_version(self, version: FeatureVersion):
+    async def _persist_version(self, version -> None: FeatureVersion) -> None:
         """Persister une version"""
         
         version_file = self.storage_path / f"{version.feature_name}_{version.version}.json"
@@ -863,7 +863,7 @@ class FeatureVersioningManager:
         with open(version_file, 'w') as f:
             json.dump(version.to_dict(), f, indent=2)
     
-    async def _load_existing_versions(self):
+    async def _load_existing_versions(self) -> None:
         """Charger les versions existantes"""
         
         if not self.storage_path.exists():
@@ -937,7 +937,7 @@ class FeatureVersioningManager:
         }
 
 # Usage Example
-async def main():
+async def main() -> None:
     """Exemple d'utilisation du Feature Versioning Manager"""
     
     manager = FeatureVersioningManager(

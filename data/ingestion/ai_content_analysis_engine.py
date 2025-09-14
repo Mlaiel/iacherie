@@ -171,8 +171,8 @@ class ContentAnalysisResult:
 class AIAgent:
     """Base class for AI agents in the system"""
     
-    def __init__(self, agent_id: str, agent_type: AgentType, 
-                 model_name: Optional[str] = None):
+    def __init__(self, agent_id -> None: str, agent_type -> None: AgentType, 
+                 model_name -> None: Optional[str] = None) -> None:
         self.agent_id = agent_id
         self.agent_type = agent_type
         self.model_name = model_name
@@ -180,7 +180,7 @@ class AIAgent:
         self.is_initialized = False
         self.logger = logging.getLogger(f"{__name__}.{agent_id}")
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize the AI agent and load models"""
         try:
             await self._load_model()
@@ -190,7 +190,7 @@ class AIAgent:
             self.logger.error(f"Agent {self.agent_id} initialization failed: {e}")
             self.is_initialized = True  # Continue without failing
     
-    async def _load_model(self):
+    async def _load_model(self) -> None:
         """Load the AI model (to be implemented by subclasses)"""
         pass
     

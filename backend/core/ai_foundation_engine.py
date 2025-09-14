@@ -99,7 +99,7 @@ class MultiAIModelOrchestrator:
     load balancing, resource management, and performance optimization.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize the Multi-AI Model Orchestrator"""
         self.config = config or {}
         self.models: Dict[str, Any] = {}
@@ -191,7 +191,7 @@ class MultiAIModelOrchestrator:
         else:
             raise ValueError("Model instance has no predict method")
     
-    def _update_model_metrics(self, model_id: str, latency: float, success: bool):
+    def _update_model_metrics(self, model_id -> None: str, latency -> None: float, success -> None: bool) -> None:
         """Update performance metrics for model"""
         with self._model_lock:
             if model_id in self.models:
@@ -223,7 +223,7 @@ class MLPipelineManager:
     evaluation, and deployment automation.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize the ML Pipeline Manager"""
         self.config = config or {}
         self.pipelines: Dict[str, Dict[str, Any]] = {}
@@ -316,7 +316,7 @@ class AIDecisionEngine:
     analysis, and probabilistic reasoning for optimal platform decisions.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize the AI Decision Engine"""
         self.config = config or {}
         self.decision_rules: Dict[str, Callable] = {}
@@ -421,7 +421,7 @@ class ModelLifecycleManager:
     validation, deployment, monitoring, and retirement.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize the Model Lifecycle Manager"""
         self.config = config or {}
         self.models: Dict[str, Dict[str, Any]] = {}
@@ -478,9 +478,9 @@ class ModelLifecycleManager:
             return False
     
     def _log_lifecycle_event(self, 
-                           model_id: str,
-                           event_type: str,
-                           data: Dict[str, Any]):
+                           model_id -> None: str,
+                           event_type -> None: str,
+                           data -> None: Dict[str, Any]) -> None:
         """Log lifecycle event"""
         event = {
             'model_id': model_id,
@@ -501,7 +501,7 @@ class AIFoundationEngine:
     across the IA Influencer Agent platform with enterprise-grade capabilities.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize the AI Foundation Engine"""
         self.config = config or {}
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
@@ -532,7 +532,7 @@ class AIFoundationEngine:
             self.logger.error(f"AI Foundation Engine initialization failed: {e}")
             return False
     
-    async def _initialize_components(self):
+    async def _initialize_components(self) -> None:
         """Initialize all AI engine components"""
         # Register default decision rules
         await self.decision_engine.register_decision_rule(

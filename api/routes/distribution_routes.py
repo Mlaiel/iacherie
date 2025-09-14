@@ -31,6 +31,7 @@ router = APIRouter(
 # ========================================
 
 class PlatformType(str, Enum):
+    """PlatformType class implementation"""
     SOCIAL_MEDIA = "social_media"
     VIDEO_PLATFORM = "video_platform"
     AUDIO_PLATFORM = "audio_platform"
@@ -40,6 +41,7 @@ class PlatformType(str, Enum):
     PROFESSIONAL_NETWORK = "professional_network"
 
 class ContentFormat(str, Enum):
+    """ContentFormat class implementation"""
     VIDEO = "video"
     AUDIO = "audio"
     IMAGE = "image"
@@ -51,6 +53,7 @@ class ContentFormat(str, Enum):
     SHORT = "short"
 
 class DistributionStatus(str, Enum):
+    """DistributionStatus class implementation"""
     PENDING = "pending"
     SCHEDULED = "scheduled"
     PUBLISHING = "publishing"
@@ -61,6 +64,7 @@ class DistributionStatus(str, Enum):
     DRAFT = "draft"
 
 class PlatformStatus(str, Enum):
+    """PlatformStatus class implementation"""
     ACTIVE = "active"
     INACTIVE = "inactive"
     MAINTENANCE = "maintenance"
@@ -69,6 +73,7 @@ class PlatformStatus(str, Enum):
     UNAUTHORIZED = "unauthorized"
 
 class OptimizationType(str, Enum):
+    """OptimizationType class implementation"""
     AUTO = "auto"
     MANUAL = "manual"
     AI_ENHANCED = "ai_enhanced"
@@ -213,6 +218,7 @@ SUPPORTED_PLATFORMS = {
 # ========================================
 
 class PlatformConnection(BaseModel):
+    """PlatformConnection class implementation"""
     platform_id: str = Field(..., description="Platform identifier")
     account_id: str = Field(..., description="User account ID on platform")
     account_name: str = Field(..., description="Display name on platform")
@@ -226,6 +232,7 @@ class PlatformConnection(BaseModel):
     api_quota: Dict[str, int] = Field(default_factory=dict)
 
 class ContentFormatting(BaseModel):
+    """ContentFormatting class implementation"""
     platform_id: str
     title: str = Field(..., min_length=1, max_length=200)
     description: str = Field(..., min_length=1, max_length=5000)
@@ -239,6 +246,7 @@ class ContentFormatting(BaseModel):
     age_restriction: Optional[str] = None
 
 class DistributionRequest(BaseModel):
+    """DistributionRequest class implementation"""
     content_id: str = Field(..., description="Content ID to distribute")
     platforms: List[str] = Field(..., min_items=1, description="Target platforms")
     schedule_time: Optional[datetime] = None
@@ -250,6 +258,7 @@ class DistributionRequest(BaseModel):
     max_retries: int = Field(default=3, ge=0, le=10)
 
 class DistributionJob(BaseModel):
+    """DistributionJob class implementation"""
     job_id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     content_id: str
     platform_id: str
@@ -268,6 +277,7 @@ class DistributionJob(BaseModel):
     updated_at: datetime = Field(default_factory=datetime.utcnow)
 
 class DistributionBatch(BaseModel):
+    """DistributionBatch class implementation"""
     batch_id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     content_id: str
     total_platforms: int = Field(..., ge=1)
@@ -280,6 +290,7 @@ class DistributionBatch(BaseModel):
     actual_completion: Optional[datetime] = None
 
 class PlatformAnalytics(BaseModel):
+    """PlatformAnalytics class implementation"""
     platform_id: str
     content_id: str
     platform_post_id: str
@@ -299,6 +310,7 @@ class PlatformAnalytics(BaseModel):
     last_updated: datetime = Field(default_factory=datetime.utcnow)
 
 class CrossPlatformAnalytics(BaseModel):
+    """CrossPlatformAnalytics class implementation"""
     content_id: str
     total_platforms: int
     total_views: int
@@ -313,6 +325,7 @@ class CrossPlatformAnalytics(BaseModel):
     recommendations: List[str] = Field(default_factory=list)
 
 class AutoOptimization(BaseModel):
+    """AutoOptimization class implementation"""
     content_id: str
     platform_id: str
     optimization_type: OptimizationType
@@ -324,6 +337,7 @@ class AutoOptimization(BaseModel):
     a_b_test_enabled: bool = Field(default=False)
 
 class ScheduleRequest(BaseModel):
+    """ScheduleRequest class implementation"""
     content_id: str = Field(..., description="Content ID to schedule")
     platforms: List[str] = Field(..., min_items=1)
     schedule_times: Dict[str, datetime] = Field(..., description="Platform-specific schedule times")
@@ -919,33 +933,33 @@ async def get_scheduled_distributions(
 # BACKGROUND TASKS
 # ========================================
 
-async def complete_platform_connection(platform_id: str, auth_code: str, user_id: str):
+async def complete_platform_connection(platform_id -> None: str, auth_code -> None: str, user_id -> None: str) -> None:
     """Complete OAuth platform connection"""
     await asyncio.sleep(30)  # Simulate OAuth flow
     print(f"Connected {platform_id} for user {user_id}")
 
-async def handle_platform_disconnection(platform_id: str, user_id: str):
+async def handle_platform_disconnection(platform_id -> None: str, user_id -> None: str) -> None:
     """Handle platform disconnection"""
     await asyncio.sleep(5)
     print(f"Disconnected {platform_id} for user {user_id}")
 
-async def process_distribution_batch(batch: DistributionBatch, request: DistributionRequest, user_id: str):
+async def process_distribution_batch(batch -> None: DistributionBatch, request -> None: DistributionRequest, user_id -> None: str) -> None:
     """Process distribution batch in background"""
     for job in batch.jobs:
         await asyncio.sleep(30)  # Simulate platform API calls
         print(f"Published content {job.content_id} to {job.platform_id}")
 
-async def retry_distribution(job_id: str, user_id: str):
+async def retry_distribution(job_id -> None: str, user_id -> None: str) -> None:
     """Retry failed distribution"""
     await asyncio.sleep(20)
     print(f"Retried distribution job {job_id} for user {user_id}")
 
-async def perform_ai_optimization(content_id: str, platforms: List[str], user_id: str):
+async def perform_ai_optimization(content_id -> None: str, platforms -> None: List[str], user_id -> None: str) -> None:
     """Perform AI content optimization"""
     await asyncio.sleep(45)
     print(f"AI optimization completed for content {content_id} on {len(platforms)} platforms")
 
-async def setup_scheduled_distribution(content_id: str, platforms: List[str], schedule_times: Dict[str, datetime], user_id: str):
+async def setup_scheduled_distribution(content_id -> None: str, platforms -> None: List[str], schedule_times -> None: Dict[str, datetime], user_id -> None: str) -> None:
     """Setup scheduled distribution"""
     await asyncio.sleep(10)
     print(f"Scheduled distribution setup for content {content_id}")

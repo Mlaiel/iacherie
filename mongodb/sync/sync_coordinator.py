@@ -52,7 +52,7 @@ class SyncSession:
 class SyncCoordinator:
     """Enterprise-grade multi-service synchronization coordinator."""
     
-    def __init__(self, coordinator_config: Dict[str, Any]):
+    def __init__(self, coordinator_config -> None: Dict[str, Any]) -> None:
         """Initialize sync coordinator."""
         if not MONGODB_AVAILABLE:
             raise ImportError("PyMongo is required for sync coordination")
@@ -74,7 +74,7 @@ class SyncCoordinator:
         self.sync_metrics = {}
         self.bottleneck_detection = True
         
-    def register_sync_configuration(self, config: SyncConfiguration):
+    def register_sync_configuration(self, config -> None: SyncConfiguration) -> None:
         """Register a synchronization configuration."""
         self.sync_configurations[config.sync_id] = config
         logger.info(f"Registered sync configuration: {config.sync_id}")
@@ -83,7 +83,7 @@ class SyncCoordinator:
         self._update_dependency_graph(config)
         self._calculate_execution_order()
     
-    def _update_dependency_graph(self, config: SyncConfiguration):
+    def _update_dependency_graph(self, config -> None: SyncConfiguration) -> None:
         """Update dependency graph for execution ordering."""
         sync_id = config.sync_id
         
@@ -109,7 +109,7 @@ class SyncCoordinator:
                     # Bidirectional syncs need careful ordering
                     self.dependency_graph[sync_id].add(other_id)
     
-    def _calculate_execution_order(self):
+    def _calculate_execution_order(self) -> None:
         """Calculate optimal execution order using topological sort."""
         # Simple topological sort
         in_degree = {sync_id: 0 for sync_id in self.dependency_graph}
@@ -137,7 +137,7 @@ class SyncCoordinator:
         self.execution_order = execution_order
         logger.info(f"Calculated execution order: {execution_order}")
     
-    async def start_coordination(self):
+    async def start_coordination(self) -> None:
         """Start synchronization coordination."""
         if self.coordinator_running:
             logger.warning("Sync coordinator already running")
@@ -154,7 +154,7 @@ class SyncCoordinator:
         
         logger.info("Sync coordination started")
     
-    def _coordination_loop(self):
+    def _coordination_loop(self) -> None:
         """Main coordination loop."""
         logger.info("Sync coordination loop started")
         
@@ -277,7 +277,7 @@ class SyncCoordinator:
             session.last_error = str(e)
             return False
     
-    async def _perform_initial_sync(self, session: SyncSession, direction: str):
+    async def _perform_initial_sync(self, session -> None: SyncSession, direction -> None: str) -> None:
         """Perform initial synchronization."""
         logger.info(f"Performing initial sync: {session.session_id} ({direction})")
         
@@ -380,7 +380,7 @@ class SyncCoordinator:
         
         return transformed
     
-    def _check_session_health(self):
+    def _check_session_health(self) -> None:
         """Check health of all active sessions."""
         for sync_id, session in list(self.active_sessions.items()):
             try:
@@ -401,7 +401,7 @@ class SyncCoordinator:
             except Exception as e:
                 logger.error(f"Error checking session health for {sync_id}: {e}")
     
-    def _handle_failed_sessions(self):
+    def _handle_failed_sessions(self) -> None:
         """Handle failed synchronization sessions."""
         for sync_id, session in list(self.active_sessions.items()):
             if session.state == SyncState.ERROR:
@@ -422,7 +422,7 @@ class SyncCoordinator:
                     logger.error(f"Failed to recover session {sync_id}: {e}")
                     session.state = SyncState.STOPPED
     
-    async def _restart_session(self, sync_id: str):
+    async def _restart_session(self, sync_id -> None: str) -> None:
         """Restart a failed session."""
         # Stop current session
         await self.stop_sync_session(sync_id)
@@ -433,7 +433,7 @@ class SyncCoordinator:
         # Restart session
         await self.start_sync_session(sync_id)
     
-    def _optimize_sync_performance(self):
+    def _optimize_sync_performance(self) -> None:
         """Optimize synchronization performance."""
         for sync_id, session in self.active_sessions.items():
             config = session.config
@@ -460,7 +460,7 @@ class SyncCoordinator:
         total_time = (datetime.now() - session.started_at).total_seconds()
         return (total_time / session.total_synced) * 1000  # milliseconds
     
-    def _detect_bottlenecks(self):
+    def _detect_bottlenecks(self) -> None:
         """Detect performance bottlenecks in synchronization."""
         # Analyze sync performance across sessions
         slow_sessions = []
@@ -573,7 +573,7 @@ class SyncCoordinator:
             'config': asdict(session.config)
         }
     
-    def stop_coordination(self):
+    def stop_coordination(self) -> None:
         """Stop synchronization coordination."""
         if not self.coordinator_running:
             return

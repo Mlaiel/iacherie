@@ -1,5 +1,7 @@
 """Audience Profiler - Advanced Audience Analysis Engine
 
+import asyncio
+
 AI-powered audience profiling system that creates comprehensive demographic
 and psychographic profiles of content audiences.
 
@@ -99,7 +101,7 @@ class EngagementPattern:
 class AudienceProfiler:
     """Advanced audience profiling engine"""
     
-    def __init__(self, profile_depth: ProfileDepth = ProfileDepth.COMPREHENSIVE):
+    def __init__(self, profile_depth -> None: ProfileDepth = ProfileDepth.COMPREHENSIVE) -> None:
         """Initialize audience profiler"""
         self.profile_depth = profile_depth
         self.ml_models = self._load_profiling_models()

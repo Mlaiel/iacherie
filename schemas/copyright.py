@@ -49,7 +49,7 @@ Copyright registration request schema."""
     related_works: List[UUID] = Field(default_factory=list, description="Related copyrighted works")
     
     @validator('work_type')
-    def validate_work_type(cls, v):
+    def validate_work_type(cls, v) -> None:
         """Validate work type."""
         allowed_types = {
             "literary_work", "musical_work", "dramatic_work", "choreographic_work",
@@ -144,7 +144,7 @@ class CopyrightClaim(UUIDSchema, TimestampSchema, AuditSchema):
     resolution_notes: Optional[str] = None
     
     @validator('claim_type')
-    def validate_claim_type(cls, v):
+    def validate_claim_type(cls, v) -> None:
         """Validate claim type."""
         allowed_types = {
             "direct_infringement", "contributory_infringement", "vicarious_infringement",
@@ -193,7 +193,7 @@ class CopyrightTransfer(UUIDSchema, TimestampSchema, AuditSchema):
     registration_date: Optional[datetime] = None
     
     @validator('transfer_type')
-    def validate_transfer_type(cls, v):
+    def validate_transfer_type(cls, v) -> None:
         """Validate transfer type."""
         allowed_types = {
             "assignment", "exclusive_license", "non_exclusive_license",
@@ -256,7 +256,7 @@ class LicenseAgreement(UUIDSchema, TimestampSchema, AuditSchema):
     violations_reported: int = Field(default=0, ge=0)
     
     @validator('license_type')
-    def validate_license_type(cls, v):
+    def validate_license_type(cls, v) -> None:
         """Validate license type."""
         allowed_types = {
             "exclusive", "non_exclusive", "sole", "compulsory", "statutory",
@@ -395,7 +395,7 @@ class IntellectualProperty(UUIDSchema, TimestampSchema, AuditSchema):
     renewal_calendar: List[Dict[str, datetime]] = Field(default_factory=list)
     
     @validator('portfolio_type')
-    def validate_portfolio_type(cls, v):
+    def validate_portfolio_type(cls, v) -> None:
         """Validate portfolio type."""
         allowed_types = {
             "creative_works", "brand_assets", "technology_patents", "mixed_portfolio",

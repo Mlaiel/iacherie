@@ -86,7 +86,7 @@ class PricingStrategy:
 class MonetizationMaximizer:
     """Advanced monetization optimization engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize monetization maximizer"""
         self.revenue_models = {}
         self.market_data = {}

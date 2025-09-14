@@ -71,8 +71,8 @@ class PagerDutyClient:
     Handles incident creation, updates, and intelligent routing
     """
     
-    def __init__(self, integration_key: Optional[str] = None, 
-                 api_token: Optional[str] = None):
+    def __init__(self, integration_key -> None: Optional[str] = None, 
+                 api_token -> None: Optional[str] = None) -> None:
         """
         Initialize PagerDuty client
         
@@ -99,7 +99,7 @@ class PagerDutyClient:
             
         self._initialize_client()
     
-    def _initialize_client(self):
+    def _initialize_client(self) -> None:
         """Initialize PagerDuty client with session configuration"""
         try:
             self.session = requests.Session()

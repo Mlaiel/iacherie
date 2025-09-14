@@ -1,3 +1,8 @@
+"""
+Message Queue Service module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 📬 MESSAGE QUEUE SERVICE
@@ -105,7 +110,7 @@ class Message:
     content_type: str = "application/json"
     delivery_mode: DeliveryMode = DeliveryMode.AT_LEAST_ONCE
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.headers is None:
             self.headers = {}
 
@@ -165,7 +170,7 @@ class MessageQueueService:
     - AI Prompt Engineer: Intelligent message content processing
     """
     
-    def __init__(self, redis_url: str = "redis://localhost:6379"):
+    def __init__(self, redis_url -> None: str = "redis -> None://localhost -> None:6379") -> None:
         """Initialize message queue service"""
         self.redis_url = redis_url
         self.redis_client = None
@@ -210,7 +215,7 @@ class MessageQueueService:
         
         logger.info("Message Queue Service initialized")
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize Redis connection and queue infrastructure"""
         try:
             self.redis_client = redis.from_url(self.redis_url)
@@ -364,7 +369,7 @@ class MessageQueueService:
             logger.error(f"Failed to publish message to queue {queue_name}: {e}")
             raise
     
-    async def _enqueue_message(self, message: Message):
+    async def _enqueue_message(self, message -> None: Message) -> None:
         """Add message to the appropriate queue structure"""
         try:
             queue_config = self.queues[message.queue_name]
@@ -427,7 +432,7 @@ class MessageQueueService:
             logger.error(f"Failed to register consumer {config.id}: {e}")
             return False
     
-    async def _run_consumer(self, config: ConsumerConfig):
+    async def _run_consumer(self, config -> None: ConsumerConfig) -> None:
         """Run consumer to process messages from assigned queues"""
         try:
             logger.info(f"Starting consumer {config.id}")
@@ -453,7 +458,7 @@ class MessageQueueService:
         finally:
             logger.info(f"Consumer {config.id} stopped")
     
-    async def _process_queue_messages(self, config: ConsumerConfig, queue_name: str):
+    async def _process_queue_messages(self, config -> None: ConsumerConfig, queue_name -> None: str) -> None:
         """Process messages from a specific queue"""
         try:
             queue_config = self.queues[queue_name]
@@ -513,7 +518,7 @@ class MessageQueueService:
             logger.error(f"Failed to dequeue message from {queue_name}: {e}")
             return None
     
-    async def _process_single_message(self, config: ConsumerConfig, message: Message):
+    async def _process_single_message(self, config -> None: ConsumerConfig, message -> None: Message) -> None:
         """Process a single message with the consumer handler"""
         try:
             start_time = time.time()
@@ -554,7 +559,7 @@ class MessageQueueService:
             logger.error(f"Failed to process message {message.id}: {e}")
             await self._handle_message_failure(message, e)
     
-    async def _handle_message_success(self, message: Message, result: Any):
+    async def _handle_message_success(self, message -> None: Message, result -> None: Any) -> None:
         """Handle successful message processing"""
         try:
             message.status = MessageStatus.COMPLETED
@@ -578,7 +583,7 @@ class MessageQueueService:
         except Exception as e:
             logger.error(f"Failed to handle message success for {message.id}: {e}")
     
-    async def _handle_message_failure(self, message: Message, error: Exception):
+    async def _handle_message_failure(self, message -> None: Message, error -> None: Exception) -> None:
         """Handle message processing failure with retry logic"""
         try:
             message.retry_count += 1
@@ -609,7 +614,7 @@ class MessageQueueService:
         except Exception as e:
             logger.error(f"Failed to handle message failure for {message.id}: {e}")
     
-    async def _send_to_dead_letter_queue(self, message: Message, error: Exception):
+    async def _send_to_dead_letter_queue(self, message -> None: Message, error -> None: Exception) -> None:
         """Send failed message to dead letter queue"""
         try:
             message.status = MessageStatus.DEAD_LETTER
@@ -642,7 +647,7 @@ class MessageQueueService:
         except Exception as e:
             logger.error(f"Failed to send message {message.id} to dead letter queue: {e}")
     
-    async def _process_delayed_messages(self):
+    async def _process_delayed_messages(self) -> None:
         """Background task to process delayed messages"""
         while True:
             try:
@@ -671,7 +676,7 @@ class MessageQueueService:
                 logger.error(f"Error processing delayed messages: {e}")
                 await asyncio.sleep(5)
     
-    async def _handle_expired_message(self, message: Message):
+    async def _handle_expired_message(self, message -> None: Message) -> None:
         """Handle expired message"""
         try:
             message.status = MessageStatus.FAILED
@@ -895,7 +900,7 @@ class MessageQueueService:
             logger.error(f"Failed to unregister consumer {consumer_id}: {e}")
             return False
     
-    async def _route_topic_message(self, message: Message):
+    async def _route_topic_message(self, message -> None: Message) -> None:
         """Route message based on topic routing patterns"""
         try:
             # Placeholder for topic routing logic
@@ -909,7 +914,7 @@ class MessageQueueService:
         except Exception as e:
             logger.error(f"Failed to route topic message {message.id}: {e}")
     
-    async def _fanout_message(self, message: Message):
+    async def _fanout_message(self, message -> None: Message) -> None:
         """Broadcast message to all bound consumers"""
         try:
             # Placeholder for fanout logic
@@ -922,7 +927,7 @@ class MessageQueueService:
         except Exception as e:
             logger.error(f"Failed to fanout message {message.id}: {e}")
     
-    async def _optimize_queue_priority(self, queue_name: str):
+    async def _optimize_queue_priority(self, queue_name -> None: str) -> None:
         """AI-powered queue priority optimization"""
         try:
             # Placeholder for AI optimization
@@ -937,7 +942,7 @@ class MessageQueueService:
         except Exception as e:
             logger.error(f"Failed to optimize queue priority for {queue_name}: {e}")
     
-    async def _monitor_queue_health(self):
+    async def _monitor_queue_health(self) -> None:
         """Background task to monitor queue health and performance"""
         while True:
             try:
@@ -965,7 +970,7 @@ class MessageQueueService:
                 logger.error(f"Error monitoring queue health: {e}")
                 await asyncio.sleep(60)
     
-    async def _update_metrics(self):
+    async def _update_metrics(self) -> None:
         """Background task to update queue metrics"""
         while True:
             try:
@@ -986,7 +991,7 @@ class MessageQueueService:
                 logger.error(f"Error updating metrics: {e}")
                 await asyncio.sleep(30)
     
-    async def _cleanup_expired_messages(self):
+    async def _cleanup_expired_messages(self) -> None:
         """Background task to clean up expired messages"""
         while True:
             try:
@@ -1014,7 +1019,7 @@ class MessageQueueService:
                 logger.error(f"Error cleaning up expired messages: {e}")
                 await asyncio.sleep(120)
     
-    async def _save_queue_config_to_redis(self, config: QueueConfig):
+    async def _save_queue_config_to_redis(self, config -> None: QueueConfig) -> None:
         """Save queue configuration to Redis"""
         try:
             if self.redis_client:
@@ -1036,7 +1041,7 @@ class MessageQueueService:
         except Exception as e:
             logger.error(f"Failed to save queue config to Redis: {e}")
     
-    async def _save_message_to_redis(self, message: Message):
+    async def _save_message_to_redis(self, message -> None: Message) -> None:
         """Save message to Redis for persistence"""
         try:
             if self.redis_client:
@@ -1068,7 +1073,7 @@ class MessageQueueService:
         except Exception as e:
             logger.error(f"Failed to save message to Redis: {e}")
     
-    async def _load_queue_configurations(self):
+    async def _load_queue_configurations(self) -> None:
         """Load existing queue configurations from Redis"""
         try:
             if self.redis_client:
@@ -1084,7 +1089,7 @@ class MessageQueueService:
         except Exception as e:
             logger.error(f"Failed to load queue configurations: {e}")
     
-    async def _initialize_ai_models(self):
+    async def _initialize_ai_models(self) -> None:
         """Initialize AI models for queue optimization"""
         try:
             # Placeholder for AI model initialization
@@ -1101,7 +1106,7 @@ class MessageQueueService:
         except Exception as e:
             logger.error(f"Failed to initialize AI models: {e}")
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Graceful shutdown of message queue service"""
         try:
             # Stop all consumers
@@ -1121,7 +1126,7 @@ class MessageQueueService:
             logger.error(f"Error during shutdown: {e}")
 
 # Example usage and testing
-async def main():
+async def main() -> None:
     """Example usage of Message Queue Service"""
     service = MessageQueueService()
     await service.initialize()
@@ -1151,12 +1156,12 @@ async def main():
         print("Created queues")
         
         # Define message handlers
-        async def process_high_priority_task(message: Message):
+        async def process_high_priority_task(message -> None: Message) -> None:
             print(f"Processing high priority task: {message.payload}")
             await asyncio.sleep(0.1)  # Simulate processing
             return {"status": "completed", "processed_at": datetime.now().isoformat()}
         
-        async def process_notification(message: Message):
+        async def process_notification(message -> None: Message) -> None:
             print(f"Sending notification: {message.payload}")
             await asyncio.sleep(0.05)  # Simulate sending
             return {"status": "sent"}

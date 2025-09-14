@@ -150,7 +150,7 @@ class AIPromptEngineer:
     - Provider selection and load balancing
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         # Prompt management
         self.prompt_templates: Dict[str, PromptTemplate] = {}
         self.prompt_executions: deque = deque(maxlen=50000)
@@ -181,7 +181,7 @@ class AIPromptEngineer:
         
         logger.info("AIPromptEngineer initialized - IA Prompt Engineer")
 
-    def _initialize_prompt_system(self):
+    def _initialize_prompt_system(self) -> None:
         """Initialize prompt engineering system"""
         
         # Initialize monitoring tasks
@@ -206,7 +206,7 @@ class AIPromptEngineer:
         
         logger.info("Prompt engineering system components initialized")
 
-    def _initialize_providers(self):
+    def _initialize_providers(self) -> None:
         """Initialize AI provider configurations"""
         
         # OpenAI configuration
@@ -239,7 +239,7 @@ class AIPromptEngineer:
             enabled=True
         )
 
-    def _initialize_templates(self):
+    def _initialize_templates(self) -> None:
         """Initialize default prompt templates"""
         
         # Content classification template
@@ -324,7 +324,7 @@ Generated Content:""",
         self.prompt_templates[creative_template.template_id] = creative_template
         self.prompt_library["creative"].append(creative_template)
 
-    def _initialize_monitoring(self):
+    def _initialize_monitoring(self) -> None:
         """Initialize monitoring and analytics"""
         
         # Initialize performance baselines
@@ -812,10 +812,10 @@ Generated Content:""",
 
     async def _execute_optimization_test(
         self,
-        optimization: PromptOptimization,
-        variants: List[PromptTemplate],
-        test_variables: List[Dict[str, Any]]
-    ):
+        optimization -> None: PromptOptimization,
+        variants -> None: List[PromptTemplate],
+        test_variables -> None: List[Dict[str, Any]]
+    ) -> None:
         """Execute A/B optimization test"""
         
         try:
@@ -849,7 +849,7 @@ Generated Content:""",
             optimization.status = "failed"
             logger.error(f"Optimization test failed: {str(e)}")
 
-    async def _analyze_optimization_results(self, optimization: PromptOptimization):
+    async def _analyze_optimization_results(self, optimization -> None: PromptOptimization) -> None:
         """Analyze optimization test results"""
         
         try:
@@ -954,7 +954,7 @@ Generated Content:""",
             logger.error(f"Provider selection failed: {str(e)}")
             return AIProvider.OPENAI, "gpt-3.5-turbo"
 
-    async def _update_performance_metrics(self, execution: PromptExecution):
+    async def _update_performance_metrics(self, execution -> None: PromptExecution) -> None:
         """Update performance metrics with execution results"""
         
         try:
@@ -1005,7 +1005,7 @@ Generated Content:""",
         except Exception as e:
             logger.error(f"Metrics update failed: {str(e)}")
 
-    async def _performance_monitoring_loop(self):
+    async def _performance_monitoring_loop(self) -> None:
         """Background performance monitoring loop"""
         while True:
             try:
@@ -1028,7 +1028,7 @@ Generated Content:""",
             except Exception as e:
                 logger.error(f"Performance monitoring loop error: {str(e)}")
 
-    async def _cost_optimization_loop(self):
+    async def _cost_optimization_loop(self) -> None:
         """Background cost optimization loop"""
         while True:
             try:
@@ -1044,7 +1044,7 @@ Generated Content:""",
             except Exception as e:
                 logger.error(f"Cost optimization loop error: {str(e)}")
 
-    async def _quality_monitoring_loop(self):
+    async def _quality_monitoring_loop(self) -> None:
         """Background quality monitoring loop"""
         while True:
             try:
@@ -1063,7 +1063,7 @@ Generated Content:""",
             except Exception as e:
                 logger.error(f"Quality monitoring loop error: {str(e)}")
 
-    async def _provider_health_check_loop(self):
+    async def _provider_health_check_loop(self) -> None:
         """Background provider health check loop"""
         while True:
             try:

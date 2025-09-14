@@ -1,7 +1,14 @@
+"""
+Billing Config module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 """Ainflue Billing Configuration Module
+import asyncio
+
 ======================================
 
 Enterprise-grade billing configuration for the Ainflue platform.
@@ -432,7 +439,7 @@ class BillingAnalyticsConfig:
 class BillingConfiguration:
     """Main billing configuration manager"""
     
-    def __init__(self, billing_type: BillingType = BillingType.HYBRID):
+    def __init__(self, billing_type -> None: BillingType = BillingType.HYBRID) -> None:
         """Initialize billing configuration"""
         self.billing_type = billing_type
         
@@ -461,7 +468,7 @@ class BillingConfiguration:
         
         self._configure_for_billing_type()
     
-    def _configure_for_billing_type(self):
+    def _configure_for_billing_type(self) -> None:
         """Configure based on billing type"""
         if self.billing_type == BillingType.SUBSCRIPTION:
             self.subscription_config.enable_subscription_billing = True

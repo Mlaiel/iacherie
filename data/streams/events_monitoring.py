@@ -195,11 +195,11 @@ class EventsMonitoringHub:
     
     def __init__(
         self,
-        max_event_handlers: int = 100,
-        max_event_queue_size: int = 10000,
-        metrics_retention_hours: int = 24,
-        enable_correlation: bool = True
-    ):
+        max_event_handlers -> None: int = 100,
+        max_event_queue_size -> None: int = 10000,
+        metrics_retention_hours -> None: int = 24,
+        enable_correlation -> None: bool = True
+    ) -> None:
         # Configuration
         self.max_event_handlers = max_event_handlers
         self.max_event_queue_size = max_event_queue_size
@@ -991,7 +991,7 @@ class EventsMonitoringHub:
 class EventStreamer:
     """Legacy compatibility wrapper for EventsMonitoringHub event functionality"""
     
-    def __init__(self, hub: Optional[EventsMonitoringHub] = None):
+    def __init__(self, hub -> None: Optional[EventsMonitoringHub] = None) -> None:
         self.hub = hub or EventsMonitoringHub()
         
     async def initialize(self) -> None:
@@ -1010,7 +1010,7 @@ class EventStreamer:
 class StreamMonitor:
     """Legacy compatibility wrapper for EventsMonitoringHub monitoring functionality"""
     
-    def __init__(self, hub: Optional[EventsMonitoringHub] = None):
+    def __init__(self, hub -> None: Optional[EventsMonitoringHub] = None) -> None:
         self.hub = hub or EventsMonitoringHub()
         
     async def initialize(self) -> None:

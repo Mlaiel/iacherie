@@ -93,7 +93,7 @@ class CapitalizationResult:
 class MomentumCapitalizer:
     """Viral momentum detection and capitalization system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize momentum capitalizer"""
         self.active_momentum = {}
         self.capitalization_strategies = self._init_strategies()
@@ -497,7 +497,7 @@ class MomentumCapitalizer:
             return {}
     
     # Private helper methods
-    async def _momentum_monitoring_loop(self):
+    async def _momentum_monitoring_loop(self) -> None:
         """Main momentum monitoring loop"""
         while self.monitoring_active:
             try:
@@ -525,7 +525,7 @@ class MomentumCapitalizer:
                 logger.error(f"Error in momentum monitoring loop: {str(e)}")
                 await asyncio.sleep(300)
     
-    async def _update_velocity_tracking(self, content_id: str, metrics: Dict[str, Any]):
+    async def _update_velocity_tracking(self, content_id -> None: str, metrics -> None: Dict[str, Any]) -> None:
         """Update velocity tracking data"""
         if content_id not in self.velocity_trackers:
             self.velocity_trackers[content_id] = {
@@ -946,11 +946,11 @@ class MomentumCapitalizer:
             'viral_acceleration': 3.0
         }
     
-    async def _store_capitalization_result(self, result: CapitalizationResult):
+    async def _store_capitalization_result(self, result -> None: CapitalizationResult) -> None:
         """Store capitalization result"""
         logger.info(f"Stored capitalization result: {result.capitalization_id}")
     
-    async def _measure_capitalization_impact(self, result: CapitalizationResult):
+    async def _measure_capitalization_impact(self, result -> None: CapitalizationResult) -> None:
         """Measure actual impact of capitalization"""
         await asyncio.sleep(3600)  # Wait 1 hour
         logger.info(f"Measuring impact for capitalization: {result.capitalization_id}")
@@ -982,7 +982,7 @@ class MomentumCapitalizer:
             'engagement_rate': 0.05
         }
     
-    async def _cleanup_old_momentum(self):
+    async def _cleanup_old_momentum(self) -> None:
         """Clean up old momentum data"""
         current_time = datetime.utcnow()
         expired_content = []

@@ -17,7 +17,7 @@ logger = logging.getLogger(__name__)
 class BehaviorAnalyzer:
     """User behavior analyzer for pattern detection and optimization."""
     
-    def __init__(self, client: MongoClient, database_name: str):
+    def __init__(self, client -> None: MongoClient, database_name -> None: str) -> None:
         """Initialize behavior analyzer."""
         self.client = client
         self.database = client[database_name]

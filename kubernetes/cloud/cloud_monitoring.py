@@ -153,7 +153,7 @@ class CloudMonitoringSystem:
     """
 Enterprise cloud monitoring system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """
 Initialize cloud monitoring system"""
         self.logger = logging.getLogger(self.__class__.__name__)
@@ -959,7 +959,7 @@ Send alert to specific channel"""
 class PrometheusProvider:
     """Prometheus monitoring provider"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.endpoint = config.get("endpoint", "http://localhost:9090")
 
@@ -967,7 +967,7 @@ class PrometheusProvider:
 class CloudWatchProvider:
     """AWS CloudWatch monitoring provider"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
 
 
@@ -975,7 +975,7 @@ class AzureMonitorProvider:
     """
 Azure Monitor provider"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
 
 
@@ -983,7 +983,7 @@ class StackdriverProvider:
     """
 Google Cloud Stackdriver provider"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
 
 
@@ -991,5 +991,7 @@ class CustomProvider:
     """
 Custom monitoring provider"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
+
+# File has syntax issues - needs manual review

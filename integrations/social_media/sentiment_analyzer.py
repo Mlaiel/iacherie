@@ -1,3 +1,8 @@
+"""
+Sentiment Analyzer module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
@@ -169,7 +174,7 @@ class SentimentAnalyzer:
     contextual understanding, and real-time streaming capabilities.
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """Initialize sentiment analyzer with configuration"""
         self.config = config
         self.auth_handler = AuthenticationHandler(config)
@@ -221,7 +226,7 @@ class SentimentAnalyzer:
         
         logger.info("Sentiment Analyzer initialized successfully")
     
-    async def _initialize_sentiment_models(self):
+    async def _initialize_sentiment_models(self) -> None:
         """Initialize all sentiment analysis models"""
         try:
             # Load spaCy model
@@ -751,7 +756,7 @@ class SentimentAnalyzer:
 
 if __name__ == "__main__":
     # Example usage
-    async def test_sentiment_analyzer():
+    async def test_sentiment_analyzer() -> None:
         config = {
             'redis_url': 'redis://localhost:6379',
             'openai_api_key': 'your-api-key',

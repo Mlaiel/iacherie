@@ -62,7 +62,7 @@ class DecisionEngine:
     Enterprise AI decision engine for content protection
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.decision_history = []
         self.decision_policies = {}
@@ -92,7 +92,7 @@ class DecisionEngine:
         
         logger.info("Decision Engine initialized with AI-powered decision making")
     
-    def _initialize_policies(self):
+    def _initialize_policies(self) -> None:
         """Initialize decision policies and rules"""
         try:
             # Load decision policies from config
@@ -715,7 +715,7 @@ Generate unique decision ID"""
             'confidence': analysis_data.get('confidence_scores', {}).get('overall_confidence', 0.0)
         }
     
-    async def _create_audit_entry(self, decision_result: Dict[str, Any], analysis_data: Dict[str, Any]):
+    async def _create_audit_entry(self, decision_result -> None: Dict[str, Any], analysis_data -> None: Dict[str, Any]) -> None:
         """
 Create audit trail entry"""
         audit_entry = {
@@ -736,7 +736,7 @@ Create audit trail entry"""
         if len(self.audit_trail) > max_audit_entries:
             self.audit_trail = self.audit_trail[-max_audit_entries:]
     
-    async def _update_decision_history(self, decision_result: Dict[str, Any]):
+    async def _update_decision_history(self, decision_result -> None: Dict[str, Any]) -> None:
         """
 Update decision history for learning"""
         history_entry = {

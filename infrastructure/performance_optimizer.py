@@ -20,10 +20,12 @@ try:
 except ImportError:
     # Create mock objects for testing
     class MockNumpy:
-        def array(self, *args, **kwargs): return []
-        def mean(self, *args, **kwargs): return 0.0
+    """MockNumpy: class implementation"""
+        def array(self, *args, **kwargs) -> None: return []
+        def mean(self, *args, **kwargs) -> None: return 0.0
     class MockPandas:
-        def DataFrame(self, *args, **kwargs): return None
+    """MockPandas: class implementation"""
+        def DataFrame(self, *args, **kwargs) -> None: return None
     np = MockNumpy()
     pd = MockPandas()
 
@@ -98,7 +100,7 @@ class PerformanceOptimizer:
     - Ainflue-specific creator economy optimizations
     """
     
-    def __init__(self, optimization_strategy: OptimizationStrategy = OptimizationStrategy.BALANCED):
+    def __init__(self, optimization_strategy -> None: OptimizationStrategy = OptimizationStrategy.BALANCED) -> None:
         self.strategy = optimization_strategy
         self.metrics_history = []
         self.recommendations = []
@@ -124,7 +126,7 @@ class PerformanceOptimizer:
         
         logger.info(f"Performance optimizer initialized with strategy: {optimization_strategy}")
     
-    def _initialize_prediction_models(self):
+    def _initialize_prediction_models(self) -> None:
         """Initialize ML models for performance prediction - Lead Dev IA Role"""
         try:
             # Workload prediction model
@@ -1462,7 +1464,7 @@ class PerformanceOptimizer:
 
 # Example usage
 if __name__ == "__main__":
-    async def main():
+    async def main() -> None:
         # Initialize performance optimizer
         optimizer = PerformanceOptimizer(OptimizationStrategy.PERFORMANCE_OPTIMIZED)
         

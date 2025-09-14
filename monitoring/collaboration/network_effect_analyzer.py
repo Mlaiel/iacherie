@@ -144,7 +144,7 @@ class NetworkEffectAnalyzer:
     - Growth attribution analysis
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.network_graph = nx.MultiDiGraph()
         self.nodes: Dict[str, NetworkNode] = {}
@@ -161,7 +161,7 @@ class NetworkEffectAnalyzer:
         
         logger.info("🌐 Network Effect Analyzer initialized")
     
-    def _setup_network_algorithms(self):
+    def _setup_network_algorithms(self) -> None:
         """Initialize network analysis algorithms."""
         self.network_algorithms = {
             "centrality_metrics": {
@@ -190,7 +190,7 @@ class NetworkEffectAnalyzer:
         
         logger.info("🧮 Network analysis algorithms configured")
     
-    def _setup_viral_tracking(self):
+    def _setup_viral_tracking(self) -> None:
         """Initialize viral growth tracking."""
         self.viral_config = {
             "tracking_window_days": 30,
@@ -213,7 +213,7 @@ class NetworkEffectAnalyzer:
         
         logger.info("📈 Viral growth tracking configured")
     
-    def _setup_influence_calculation(self):
+    def _setup_influence_calculation(self) -> None:
         """Initialize influence calculation system."""
         self.influence_config = {
             "influence_factors": {
@@ -239,7 +239,7 @@ class NetworkEffectAnalyzer:
         
         logger.info("⭐ Influence calculation system configured")
     
-    def _setup_growth_optimization(self):
+    def _setup_growth_optimization(self) -> None:
         """Initialize growth optimization rules."""
         self.growth_optimization_rules = {
             "viral_loop_optimization": {
@@ -935,7 +935,7 @@ class NetworkEffectAnalyzer:
         # Simplified - new connections generally reduce path length
         return -0.01  # Small reduction in average path length
     
-    async def _update_node_metrics_for_connection(self, connection: NetworkConnection):
+    async def _update_node_metrics_for_connection(self, connection -> None: NetworkConnection) -> None:
         """Update node metrics when a new connection is added."""
         source_node = self.nodes[connection.source_node_id]
         target_node = self.nodes[connection.target_node_id]
@@ -954,7 +954,7 @@ class NetworkEffectAnalyzer:
         source_node.last_active = datetime.utcnow()
         target_node.last_active = datetime.utcnow()
     
-    async def _update_network_metrics(self):
+    async def _update_network_metrics(self) -> None:
         """Update overall network metrics."""
         self.network_metrics.total_nodes = len(self.nodes)
         self.network_metrics.total_connections = len(self.connections)

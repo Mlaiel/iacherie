@@ -32,7 +32,7 @@ except ImportError:
     exec(open('simple_test_challenges.py').read())
 
 
-async def demo_monthly_creative_challenges():
+async def demo_monthly_creative_challenges() -> None:
     """Demo monthly creative challenges with rewards"""
     print("\n🎨 MONTHLY CREATIVE CHALLENGES DEMO")
     print("=" * 50)
@@ -88,7 +88,7 @@ async def demo_monthly_creative_challenges():
     return january_challenge
 
 
-async def demo_technical_seo_challenges():
+async def demo_technical_seo_challenges() -> None:
     """Demo technical SEO challenges"""
     print("\n🔍 TECHNICAL SEO CHALLENGES DEMO")
     print("=" * 50)
@@ -121,7 +121,7 @@ async def demo_technical_seo_challenges():
     return seo_challenge
 
 
-async def demo_revenue_optimization_challenges():
+async def demo_revenue_optimization_challenges() -> None:
     """Demo revenue optimization challenges"""
     print("\n💰 REVENUE OPTIMIZATION CHALLENGES DEMO")
     print("=" * 50)
@@ -154,7 +154,7 @@ async def demo_revenue_optimization_challenges():
     return revenue_challenge
 
 
-async def demo_global_competitions():
+async def demo_global_competitions() -> None:
     """Demo global competitions for special events"""
     print("\n🌍 GLOBAL COMPETITIONS DEMO")
     print("=" * 50)
@@ -194,7 +194,7 @@ async def demo_global_competitions():
     return global_competition
 
 
-async def demo_analytics_and_management():
+async def demo_analytics_and_management() -> None:
     """Demo analytics and management features"""
     print("\n📊 ANALYTICS & MANAGEMENT DEMO")
     print("=" * 50)
@@ -227,7 +227,7 @@ async def demo_analytics_and_management():
     return analytics
 
 
-async def demo_reward_system():
+async def demo_reward_system() -> None:
     """Demo the comprehensive reward system"""
     print("\n💎 REWARD SYSTEM DEMO")
     print("=" * 50)
@@ -272,7 +272,7 @@ async def demo_reward_system():
     print(f"🏅 Badge: {badge_reward.description}")
 
 
-async def main():
+async def main() -> None:
     """Run the complete demo"""
     print("🎯 SPECIALIZED CHALLENGES & COMPETITIONS SYSTEM DEMO")
     print("🚀 Implementing the Problem Statement Requirements")

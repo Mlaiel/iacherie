@@ -120,7 +120,7 @@ class RegionalRequirement:
 class ComplianceChecker:
     """Advanced regional content compliance verification engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize compliance checker"""
         self.compliance_rules = {}
         self.regional_requirements = {}

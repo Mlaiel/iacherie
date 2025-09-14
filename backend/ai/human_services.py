@@ -81,7 +81,7 @@ class ICompanionService(ABC):
 class CompanionService(ICompanionService):
     """Virtual AI Companion Service"""
     
-    def __init__(self, personality_type: CompanionPersonalityType = CompanionPersonalityType.FRIENDLY):
+    def __init__(self, personality_type -> None: CompanionPersonalityType = CompanionPersonalityType.FRIENDLY) -> None:
         self.personality_type = personality_type
         self.active_conversations: Dict[str, Dict[str, Any]] = {}
         self.user_memories: Dict[str, CompanionMemory] = {}
@@ -219,7 +219,7 @@ class TherapySession:
 class TherapyAIService:
     """Virtual Psychology Agent for emotional support"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.active_sessions: Dict[str, TherapySession] = {}
         self.user_profiles: Dict[str, Dict[str, Any]] = {}
         self.session_count = 0
@@ -422,7 +422,7 @@ class IEducationAIService(ABC):
 class EducationAIService(IEducationAIService):
     """Personal AI Tutor & Learning Management Service"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.courses: Dict[str, Course] = {}
         self.student_profiles: Dict[str, StudentProfile] = {}
         self.enrollments: Dict[str, List[str]] = {}  # student_id -> course_ids

@@ -151,7 +151,7 @@ class ProjectAnalytics:
 class ProjectManager:
     """AI-powered collaborative project management system"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         
         # Project storage (in real implementation, use database)
@@ -405,9 +405,9 @@ class ProjectManager:
     
     async def _generate_initial_project_structure(
         self,
-        project: CollaborationProject,
-        project_data: Dict[str, Any]
-    ):
+        project -> None: CollaborationProject,
+        project_data -> None: Dict[str, Any]
+    ) -> None:
         """Generate initial project structure using AI"""
         project_type = project.project_type
         
@@ -473,7 +473,7 @@ class ProjectManager:
             )
             project.tasks.append(task)
     
-    async def _auto_schedule_task(self, task: Task, project: CollaborationProject):
+    async def _auto_schedule_task(self, task -> None: Task, project -> None: CollaborationProject) -> None:
         """Automatically schedule task based on dependencies and resource availability"""
         # Simple scheduling logic - in real implementation, use more sophisticated algorithms
         
@@ -495,7 +495,7 @@ class ProjectManager:
         working_days = max(1, int(task.estimated_hours / 8))
         task.due_date = task.start_date + timedelta(days=working_days)
     
-    async def _setup_communication_channels(self, project: CollaborationProject):
+    async def _setup_communication_channels(self, project -> None: CollaborationProject) -> None:
         """Set up communication channels for the project"""
         project.communication_channels = {
             'main_chat': f"project_{project.project_id}_main",
@@ -504,7 +504,7 @@ class ProjectManager:
             'feedback': f"project_{project.project_id}_feedback"
         }
     
-    async def _check_milestone_completion(self, project: CollaborationProject):
+    async def _check_milestone_completion(self, project -> None: CollaborationProject) -> None:
         """Check if any milestones should be marked as completed"""
         for milestone in project.milestones:
             if milestone.is_completed:
@@ -523,7 +523,7 @@ class ProjectManager:
                     
                     logger.info(f"Milestone {milestone.milestone_id} completed")
     
-    async def _update_project_progress(self, project: CollaborationProject):
+    async def _update_project_progress(self, project -> None: CollaborationProject) -> None:
         """Update overall project progress based on task completion"""
         if not project.tasks:
             project.progress_percentage = 0.0
@@ -549,7 +549,7 @@ class ProjectManager:
         
         project.updated_at = datetime.now()
     
-    async def _update_project_health(self, project: CollaborationProject):
+    async def _update_project_health(self, project -> None: CollaborationProject) -> None:
         """Update project health score based on various factors"""
         health_factors = []
         
@@ -607,7 +607,7 @@ class ProjectManager:
         
         return completed_milestones / total_milestones
     
-    async def _update_risk_factors(self, project: CollaborationProject):
+    async def _update_risk_factors(self, project -> None: CollaborationProject) -> None:
         """Update project risk factors based on current state"""
         risk_factors = []
         
@@ -638,7 +638,7 @@ class ProjectManager:
         
         project.risk_factors = risk_factors
     
-    async def _optimize_task_dependencies(self, project: CollaborationProject, updated_task: Task):
+    async def _optimize_task_dependencies(self, project -> None: CollaborationProject, updated_task -> None: Task) -> None:
         """Optimize task dependencies based on AI analysis"""
         if not self.optimization_enabled:
             return

@@ -99,7 +99,7 @@ class StorageManager:
     automatic failover, cost optimization, and intelligent data placement.
     """
     
-    def __init__(self, configs: List[StorageConfig]):
+    def __init__(self, configs -> None: List[StorageConfig]) -> None:
         """
         Initialize StorageManager with multiple provider configurations.
         
@@ -128,7 +128,7 @@ class StorageManager:
         # Initialize providers
         asyncio.create_task(self._initialize_providers())
     
-    async def _initialize_providers(self):
+    async def _initialize_providers(self) -> None:
         """
 Initialize storage provider clients"""
         try:
@@ -473,7 +473,7 @@ Initialize storage provider clients"""
     
     # Private helper methods for provider initialization
     
-    async def _initialize_s3_client(self, config: StorageConfig):
+    async def _initialize_s3_client(self, config -> None: StorageConfig) -> None:
         """Initialize AWS S3 client"""
         try:
             session = boto3.Session(
@@ -494,7 +494,7 @@ Initialize storage provider clients"""
             self.logger.error(f"Failed to initialize S3 client: {str(e)}")
             raise
     
-    async def _initialize_gcs_client(self, config: StorageConfig):
+    async def _initialize_gcs_client(self, config -> None: StorageConfig) -> None:
         """Initialize Google Cloud Storage client"""
         try:
             # Implementation for GCS client initialization
@@ -506,7 +506,7 @@ Initialize storage provider clients"""
             self.logger.error(f"Failed to initialize GCS client: {str(e)}")
             raise
     
-    async def _initialize_azure_client(self, config: StorageConfig):
+    async def _initialize_azure_client(self, config -> None: StorageConfig) -> None:
         """Initialize Azure Blob Storage client"""
         try:
             # Implementation for Azure client initialization
@@ -518,7 +518,7 @@ Initialize storage provider clients"""
             self.logger.error(f"Failed to initialize Azure client: {str(e)}")
             raise
     
-    async def _initialize_minio_client(self, config: StorageConfig):
+    async def _initialize_minio_client(self, config -> None: StorageConfig) -> None:
         """Initialize MinIO client"""
         try:
             # Implementation for MinIO client initialization
@@ -530,7 +530,7 @@ Initialize storage provider clients"""
             self.logger.error(f"Failed to initialize MinIO client: {str(e)}")
             raise
     
-    async def _initialize_local_storage(self, config: StorageConfig):
+    async def _initialize_local_storage(self, config -> None: StorageConfig) -> None:
         """Initialize local storage"""
         try:
             storage_path = Path(config.bucket_name)
@@ -792,7 +792,7 @@ Check if file already exists based on hash"""
         # Placeholder - would check file registry
         return None
     
-    async def _register_file(self, file_hash: str, result: StorageResult):
+    async def _register_file(self, file_hash -> None: str, result -> None: StorageResult) -> None:
         try:
             logger.info(f"Executing _register_file")
             
@@ -825,14 +825,14 @@ Check if file already exists based on hash"""
         except Exception as e:
             logger.error(f"_register_file failed: {e}")
             raise
-    async def _unregister_file(self, file_path: str):
+    async def _unregister_file(self, file_path -> None: str) -> None:
         """
 Remove file from registry"""
         # Placeholder
         pass
     
-    async def _create_backup_copies(self, file_content: bytes, file_path: str,
-                                  metadata: Dict[str, Any], primary_provider: StorageProvider):
+    async def _create_backup_copies(self, file_content -> None: bytes, file_path -> None: str,
+                                  metadata -> None: Dict[str, Any], primary_provider -> None: StorageProvider) -> None:
         """
 Create backup copies in other providers"""
         # Placeholder - would create backups

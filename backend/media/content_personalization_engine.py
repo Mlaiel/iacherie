@@ -205,7 +205,7 @@ class PersonalizationResult:
 class UserBehaviorAnalyzer:
     """Analyzes user behavior patterns for personalization"""
     
-    def __init__(self, config: PersonalizationConfig):
+    def __init__(self, config -> None: PersonalizationConfig) -> None:
         self.config = config
         self.user_profiles: Dict[str, UserProfile] = {}
         self.interaction_cache = defaultdict(list)
@@ -245,7 +245,7 @@ class UserBehaviorAnalyzer:
             logger.error(f"User behavior analysis failed for {user_id}: {e}")
             return {'error': str(e)}
     
-    async def update_user_profile(self, interaction: UserInteraction):
+    async def update_user_profile(self, interaction -> None: UserInteraction) -> None:
         """Update user profile based on new interaction"""
         try:
             user_id = interaction.user_id
@@ -471,7 +471,7 @@ class UserBehaviorAnalyzer:
 class ContentRecommendationEngine:
     """Content recommendation engine using various algorithms"""
     
-    def __init__(self, config: PersonalizationConfig):
+    def __init__(self, config -> None: PersonalizationConfig) -> None:
         self.config = config
         self.content_catalog: Dict[str, ContentItem] = {}
         self.user_item_matrix = {}
@@ -872,7 +872,7 @@ class ContentRecommendationEngine:
 class ContentPersonalizationEngine:
     """Main content personalization engine orchestrating all components"""
     
-    def __init__(self, config: Optional[PersonalizationConfig] = None):
+    def __init__(self, config -> None: Optional[PersonalizationConfig] = None) -> None:
         """Initialize content personalization engine"""
         self.config = config or PersonalizationConfig()
         
@@ -978,7 +978,7 @@ class ContentPersonalizationEngine:
                 explanation={'method': 'fallback', 'reason': str(e)}
             )
     
-    async def add_content_item(self, content_item: ContentItem):
+    async def add_content_item(self, content_item -> None: ContentItem) -> None:
         """Add content item to personalization catalog"""
         try:
             self.recommendation_engine.content_catalog[content_item.content_id] = content_item
@@ -1067,7 +1067,7 @@ class ContentPersonalizationEngine:
             logger.error(f"Failed to get personalization analytics: {e}")
             return {'error': str(e)}
     
-    async def _extract_content_features(self, content_item: ContentItem):
+    async def _extract_content_features(self, content_item -> None: ContentItem) -> None:
         """Extract features from content for ML algorithms"""
         # Would implement feature extraction here
         # For now, create basic features
@@ -1082,7 +1082,7 @@ class ContentPersonalizationEngine:
         
         self.recommendation_engine.content_features[content_item.content_id] = features
     
-    async def _invalidate_user_cache(self, user_id: str):
+    async def _invalidate_user_cache(self, user_id -> None: str) -> None:
         """Invalidate cache for specific user"""
         # Remove cached recommendations for user
         keys_to_remove = [
@@ -1093,7 +1093,7 @@ class ContentPersonalizationEngine:
         for key in keys_to_remove:
             del self.recommendation_engine.recommendation_cache[key]
     
-    def _update_average_metrics(self, result: PersonalizationResult):
+    def _update_average_metrics(self, result -> None: PersonalizationResult) -> None:
         """Update running average metrics"""
         total_recs = self.personalization_metrics['total_recommendations']
         

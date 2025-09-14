@@ -57,7 +57,7 @@ class IndexTemplate:
     """
 Elasticsearch index template management"""
     
-    def __init__(self, template_name: str = "ia-influencer-logs"):
+    def __init__(self, template_name -> None: str = "ia-influencer-logs") -> None:
         try:
             logger.info(f"Executing __init__")
             
@@ -182,10 +182,10 @@ Elasticsearch index template management"""
 class QueryBuilder:
     """Elasticsearch query builder for logs"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.query = {"bool": {"must": [], "filter": [], "should": [], "must_not": []}}
     
-    def add_time_range(self, start_time: datetime, end_time: datetime):
+    def add_time_range(self, start_time -> None: datetime, end_time -> None: datetime) -> None:
         """Add time range filter"""
         self.query["bool"]["filter"].append({
             "range": {
@@ -197,7 +197,7 @@ class QueryBuilder:
         })
         return self
     
-    def add_service_filter(self, services: Union[str, List[str]]):
+    def add_service_filter(self, services -> None: Union[str, List[str]]) -> None:
         """Add service filter"""
         if isinstance(services, str):
             services = [services]
@@ -207,7 +207,7 @@ class QueryBuilder:
         })
         return self
     
-    def add_level_filter(self, levels: Union[LogLevel, List[LogLevel]]):
+    def add_level_filter(self, levels -> None: Union[LogLevel, List[LogLevel]]) -> None:
         """Add log level filter"""
         if isinstance(levels, LogLevel):
             levels = [levels]
@@ -218,7 +218,7 @@ class QueryBuilder:
         })
         return self
     
-    def add_user_filter(self, user_ids: Union[str, List[str]]):
+    def add_user_filter(self, user_ids -> None: Union[str, List[str]]) -> None:
         """Add user ID filter"""
         if isinstance(user_ids, str):
             user_ids = [user_ids]
@@ -228,7 +228,7 @@ class QueryBuilder:
         })
         return self
     
-    def add_text_search(self, text: str, fields: Optional[List[str]] = None):
+    def add_text_search(self, text -> None: str, fields -> None: Optional[List[str]] = None) -> None:
         """Add full-text search"""
         if not fields:
             fields = ["message", "metadata.*"]
@@ -242,7 +242,7 @@ class QueryBuilder:
         })
         return self
     
-    def add_metadata_filter(self, metadata_filters: Dict[str, Any]):
+    def add_metadata_filter(self, metadata_filters -> None: Dict[str, Any]) -> None:
         """Add metadata filters"""
         for key, value in metadata_filters.items():
             self.query["bool"]["filter"].append({
@@ -250,7 +250,7 @@ class QueryBuilder:
             })
         return self
     
-    def add_aggregation(self, name: str, agg_config: Dict[str, Any]):
+    def add_aggregation(self, name -> None: str, agg_config -> None: Dict[str, Any]) -> None:
         """Add aggregation to query"""
         if "aggs" not in self.query:
             self.query["aggs"] = {}
@@ -266,7 +266,7 @@ class ElasticsearchManager:
     """
 Advanced Elasticsearch manager for IA Influencer Agent logging"""
     
-    def __init__(self, config: ElasticsearchConfig):
+    def __init__(self, config -> None: ElasticsearchConfig) -> None:
         self.config = config
         self.client: Optional[AsyncElasticsearch] = None
         self.template_manager = IndexTemplate()
@@ -315,14 +315,14 @@ Advanced Elasticsearch manager for IA Influencer Agent logging"""
             self.is_connected = False
             return False
     
-    async def disconnect(self):
+    async def disconnect(self) -> None:
         """Disconnect from Elasticsearch"""
         if self.client:
             await self.client.close()
             self.is_connected = False
             logging.info("Disconnected from Elasticsearch")
     
-    async def _setup_index_template(self):
+    async def _setup_index_template(self) -> None:
         """Setup index template for log indices"""
         try:
             template = self.template_manager.get_template()
@@ -509,7 +509,7 @@ Advanced Elasticsearch manager for IA Influencer Agent logging"""
         result = await self.search_logs(query, size=size)
         return result["hits"]
     
-    async def cleanup_old_indices(self, retention_days: int = 30):
+    async def cleanup_old_indices(self, retention_days -> None: int = 30) -> None:
         """Cleanup old log indices based on retention policy"""
         if not self.is_connected:
             raise ElasticsearchError("Not connected to Elasticsearch")
@@ -608,3 +608,5 @@ Advanced Elasticsearch manager for IA Influencer Agent logging"""
                                   }))
         
         return queries
+
+# File has syntax issues - needs manual review

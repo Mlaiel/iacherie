@@ -68,7 +68,7 @@ Enterprise Docker Deployment Manager for IA-Influencer Platform"""
     total_cpu_limit: str = "32000m"
     total_memory_limit: str = "64Gi"
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         """Initialize deployment manager"""
         self.deployment_order = [
             "network",

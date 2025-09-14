@@ -1,4 +1,4 @@
-"""🔄 Vector Storage Interface
+"""# [EMOJI_REMOVED] Vector Storage Interface
 ===========================
 
 Unified interface for different vector storage backends.
@@ -273,7 +273,7 @@ class MemoryVectorStorage(VectorStorageInterface):
     """
 In-memory vector storage implementation"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.MemoryVectorStorage")
         
@@ -560,7 +560,7 @@ Create a vector storage instance"""
 class VectorStorageManager:
     """Manager for multiple vector storage backends"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.VectorStorageManager")
         
@@ -676,3 +676,5 @@ Remove a storage instance"""
         except Exception as e:
             self.logger.error(f"Failed to remove storage '{storage_name}': {e}")
             return False
+
+# File has syntax issues - needs manual review

@@ -153,7 +153,7 @@ class BackupDisasterRecovery:
     - Compliance reporting and validation
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._backup_jobs: Dict[str, BackupJob] = {}
         self._recovery_plans: Dict[str, RecoveryPlan] = {}
         self._active_operations: Dict[str, RecoveryOperation] = {}
@@ -194,7 +194,7 @@ class BackupDisasterRecovery:
         # Initialize Ainflue business backup policies
         self._initialize_backup_policies()
     
-    def _initialize_backup_policies(self):
+    def _initialize_backup_policies(self) -> None:
         """Initialize Ainflue-specific backup policies"""
         
         # Content events - High priority with long retention
@@ -235,8 +235,8 @@ class BackupDisasterRecovery:
             'cross_region_replicas': 1
         }
     
-    async def initialize(self, storage_backends: Dict[str, Any],
-                        backup_storage: Dict[str, Any]):
+    async def initialize(self, storage_backends -> None: Dict[str, Any],
+                        backup_storage -> None: Dict[str, Any]) -> None:
         """Initialize backup and disaster recovery system"""
         
         self._storage_backends = storage_backends
@@ -257,7 +257,7 @@ class BackupDisasterRecovery:
         self._is_initialized = True
         logger.info("Backup & Disaster Recovery system initialized successfully")
     
-    async def _initialize_recovery_plans(self):
+    async def _initialize_recovery_plans(self) -> None:
         """Initialize disaster recovery plans for different scenarios"""
         
         # Data center outage plan
@@ -317,7 +317,7 @@ class BackupDisasterRecovery:
         )
         self._recovery_plans[ransomware_plan.plan_id] = ransomware_plan
     
-    async def _load_backup_history(self):
+    async def _load_backup_history(self) -> None:
         """Load existing backup history"""
         
         try:
@@ -611,7 +611,7 @@ class BackupDisasterRecovery:
         
         return max(backups, key=lambda x: x.completed_at or datetime.min)
     
-    async def _validate_backup(self, job_id: str):
+    async def _validate_backup(self, job_id -> None: str) -> None:
         """Validate backup integrity"""
         
         if job_id not in self._backup_jobs:
@@ -637,7 +637,7 @@ class BackupDisasterRecovery:
             job.error_message = f"Validation failed: {str(e)}"
             logger.error(f"Backup {job_id} validation failed: {e}")
     
-    async def _replicate_backup(self, job_id: str):
+    async def _replicate_backup(self, job_id -> None: str) -> None:
         """Replicate backup to cross-region storage"""
         
         if job_id not in self._backup_jobs:
@@ -682,7 +682,7 @@ class BackupDisasterRecovery:
         logger.info(f"Initiated recovery operation: {operation_id}")
         return operation
     
-    async def _execute_recovery_operation(self, operation_id: str):
+    async def _execute_recovery_operation(self, operation_id -> None: str) -> None:
         """Execute recovery operation"""
         
         if operation_id not in self._active_operations:
@@ -808,8 +808,8 @@ class BackupDisasterRecovery:
         # Assume average event size of 1KB
         return total_size // 1024
     
-    async def _execute_pitr_operation(self, operation_id: str, 
-                                    backup_chain: List[BackupJob]):
+    async def _execute_pitr_operation(self, operation_id -> None: str, 
+                                    backup_chain -> None: List[BackupJob]) -> None:
         """Execute point-in-time recovery operation"""
         
         operation = self._active_operations[operation_id]
@@ -973,7 +973,7 @@ class BackupDisasterRecovery:
         
         return self._metrics
     
-    async def _backup_scheduler_task(self):
+    async def _backup_scheduler_task(self) -> None:
         """Background task for backup scheduling"""
         
         while self._is_initialized:
@@ -984,7 +984,7 @@ class BackupDisasterRecovery:
                 logger.error(f"Backup scheduler task error: {e}")
                 await asyncio.sleep(600)  # 10 minutes retry
     
-    async def _schedule_backups(self):
+    async def _schedule_backups(self) -> None:
         """Schedule backups based on configuration"""
         
         current_time = datetime.utcnow()
@@ -1083,7 +1083,7 @@ class BackupDisasterRecovery:
         
         return backend_mapping.get(category, 'postgresql')
     
-    async def _backup_validation_task(self):
+    async def _backup_validation_task(self) -> None:
         """Background task for backup validation"""
         
         while self._is_initialized:
@@ -1102,7 +1102,7 @@ class BackupDisasterRecovery:
                 logger.error(f"Backup validation task error: {e}")
                 await asyncio.sleep(600)
     
-    async def _recovery_testing_task(self):
+    async def _recovery_testing_task(self) -> None:
         """Background task for recovery testing"""
         
         while self._is_initialized:
@@ -1122,7 +1122,7 @@ class BackupDisasterRecovery:
                 logger.error(f"Recovery testing task error: {e}")
                 await asyncio.sleep(3600)
     
-    async def _metrics_collection_task(self):
+    async def _metrics_collection_task(self) -> None:
         """Background task for metrics collection"""
         
         while self._is_initialized:

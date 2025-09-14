@@ -1,4 +1,6 @@
 """🏗️ Schema Manager - Enterprise Schema Management & Versioning
+from datetime import datetime
+
 ===============================================================
 Module: database/schema_manager.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -159,7 +161,7 @@ class SchemaDeploymentPlan:
 class EnterpriseSchemaManager:
     """Enterprise-grade schema management with multi-environment support"""
     
-    def __init__(self, connection_manager=None, config_path: str = None):
+    def __init__(self, connection_manager=None, config_path -> None: str = None) -> None:
         self.connection_manager = connection_manager
         self.config_path = config_path or "schema_config.yaml"
         
@@ -177,7 +179,7 @@ class EnterpriseSchemaManager:
         # Load configuration
         self._load_configuration()
     
-    def _load_configuration(self):
+    def _load_configuration(self) -> None:
         """Load schema manager configuration"""
         try:
             if os.path.exists(self.config_path) and YAML_AVAILABLE:
@@ -202,7 +204,7 @@ class EnterpriseSchemaManager:
             logger.error(f"Failed to load schema configuration: {e}")
             self._setup_default_configuration()
     
-    def _setup_default_configuration(self):
+    def _setup_default_configuration(self) -> None:
         """Setup default schema manager configuration"""
         self.validation_rules = {
             "require_approval_for_production": True,
@@ -661,7 +663,7 @@ class EnterpriseSchemaManager:
             "warnings": warnings
         }
     
-    async def _execute_deployment_step(self, conn, step: str, step_type: str):
+    async def _execute_deployment_step(self, conn, step -> None: str, step_type -> None: str) -> None:
         """Execute a deployment step"""
         logger.info(f"Executing {step_type} step: {step}")
         

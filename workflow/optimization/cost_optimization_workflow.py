@@ -1,5 +1,7 @@
 """Cost Optimization Workflow - Infrastructure cost optimization.
 
+import asyncio
+
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Ainflue Platform. All rights reserved.
 """
@@ -10,18 +12,21 @@ from datetime import datetime
 
 @dataclass
 class CostMetrics:
+    """CostMetrics: class implementation"""
     total_savings: float = 0.0
     compute_savings: float = 0.0
     storage_savings: float = 0.0
 
 @dataclass
 class CostSavings:
+    """CostSavings: class implementation"""
     user_id: str
     cost_reductions: CostMetrics
     optimization_strategies: List[str]
     analysis_timestamp: datetime
 
 class CostOptimizationWorkflow:
+    """CostOptimizationWorkflow: class implementation"""
     async def get_user_analytics(self, user_id: str, time_period: int = 30) -> Dict[str, Any]:
         return {
             "user_id": user_id,

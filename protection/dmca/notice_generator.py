@@ -1,4 +1,4 @@
-"""🔄 Professional DMCA Notice Generator
+"""# [EMOJI_REMOVED] Professional DMCA Notice Generator
 ==================================
 
 Enterprise-grade DMCA notice template engine with legal compliance validation.
@@ -8,7 +8,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use strictly prohibited
 
 This module provides:
-- Professional legal template engine
+    - Professional legal template engine
 - Multi-jurisdiction compliance
 - Automated evidence compilation
 - Legal validation framework
@@ -101,7 +101,7 @@ class NotificationDeliveryProtocol(Protocol):
             raise
 class TemplateRepository:
     """
-    🎯 Enterprise Template Repository - Ultra Advanced
+    # [EMOJI_REMOVED] Enterprise Template Repository - Ultra Advanced
     ===============================================
     
     Integrated template system with professional legal templates.
@@ -122,10 +122,10 @@ DIGITAL MILLENNIUM COPYRIGHT ACT TAKEDOWN NOTICE
 
 Dear {{ platform_contact.name or "Digital Millennium Copyright Act Agent" }},
 
-I am writing to notify you of copyright infringement occurring on your platform under 17 U.S.C. § 512(c)(3).
+I am writing to notify you of copyright infringement occurring on your platform under 17 U.S.C. # [EMOJI_REMOVED] 512(c)(3).
 
 IDENTIFICATION OF COPYRIGHTED WORK:
-- Title: {{ original_work.title }}
+    - Title: {{ original_work.title }}
 - Creator: {{ original_work.creator }}
 {% if copyright_registration -%}
 - Registration: {{ copyright_registration }}
@@ -134,29 +134,29 @@ IDENTIFICATION OF COPYRIGHTED WORK:
 - Original Location: {{ original_work.original_url }}
 
 IDENTIFICATION OF INFRINGING MATERIAL:
-- Infringing URL: {{ infringing_content.url }}
+    - Infringing URL: {{ infringing_content.url }}
 - Platform: {{ infringing_content.platform }}
 - User: {{ infringing_content.uploader }}
 - Upload Date: {{ infringing_content.upload_date }}
 - Evidence Similarity: {{ evidence_level.value|title }} ({{ similarity_score }}%)
 
 EVIDENCE OF INFRINGEMENT:
-{{ evidence_summary }}
+    {{ evidence_summary }}
 
 GOOD FAITH BELIEF STATEMENT:
-I have a good faith belief that use of the copyrighted material described above is not authorized by the copyright owner, its agent, or the law.
+    I have a good faith belief that use of the copyrighted material described above is not authorized by the copyright owner, its agent, or the law.
 
 ACCURACY STATEMENT:
-I swear, under penalty of perjury, that the information in this notification is accurate and that I am the copyright owner or authorized to act on behalf of the owner.
+    I swear, under penalty of perjury, that the information in this notification is accurate and that I am the copyright owner or authorized to act on behalf of the owner.
 
 CONTACT INFORMATION:
-- Name: {{ copyright_owner.name }}
+    - Name: {{ copyright_owner.name }}
 - Address: {{ copyright_owner.address }}
 - Phone: {{ copyright_owner.phone }}
 - Email: {{ copyright_owner.email }}
 
 REQUEST FOR ACTION:
-Please remove or disable access to the infringing material within 24 hours of receipt of this notice.
+    Please remove or disable access to the infringing material within 24 hours of receipt of this notice.
 
 Sincerely,
 {{ copyright_owner.signature }}
@@ -168,7 +168,7 @@ On behalf of {{ authorized_agent.name }}
 
         "takedown_urgent": """Subject: URGENT DMCA TAKEDOWN - {{ notice_id }} - IMMEDIATE REMOVAL REQUIRED
 
-⚠️  URGENT COPYRIGHT INFRINGEMENT NOTICE ⚠️
+# [EMOJI_REMOVED]  URGENT COPYRIGHT INFRINGEMENT NOTICE # [EMOJI_REMOVED]
 =========================================
 
 To: {{ platform_contact.designated_agent or platform_contact.email }}
@@ -180,15 +180,15 @@ Reference: DMCA Notice {{ notice_id }}
 URGENT DIGITAL MILLENNIUM COPYRIGHT ACT NOTICE
 ==============================================
 
-This is an URGENT copyright infringement notice requiring immediate action under 17 U.S.C. § 512.
+This is an URGENT copyright infringement notice requiring immediate action under 17 U.S.C. # [EMOJI_REMOVED] 512.
 
-🚨 CRITICAL INFRINGEMENT DETAILS:
-- SEVERITY: {{ evidence_level.value.upper() }} Evidence
+# [EMOJI_REMOVED] CRITICAL INFRINGEMENT DETAILS:
+    - SEVERITY: {{ evidence_level.value.upper() }} Evidence
 - COMMERCIAL DAMAGE: {{ commercial_damage_estimate }}
 - TIME SENSITIVE: {{ urgency_reason }}
 
 COPYRIGHTED WORK (PROTECTED):
-- Title: {{ original_work.title }}
+    - Title: {{ original_work.title }}
 - Owner: {{ copyright_owner.name }}
 {% if copyright_registration -%}
 - Federal Registration: {{ copyright_registration }}
@@ -196,24 +196,24 @@ COPYRIGHTED WORK (PROTECTED):
 - Market Value: {{ original_work.market_value }}
 
 INFRINGING CONTENT (REMOVE IMMEDIATELY):
-- Location: {{ infringing_content.url }}
+    - Location: {{ infringing_content.url }}
 - Platform: {{ infringing_content.platform }}
 - Infringer: {{ infringing_content.uploader }}
 - Commercial Use: {{ infringing_content.is_commercial }}
 - Views/Downloads: {{ infringing_content.engagement_metrics }}
 
-⚖️  LEGAL STATEMENTS:
-1. Good Faith Belief: I have a good faith belief that use of the copyrighted material is not authorized.
+# [EMOJI_REMOVED]  LEGAL STATEMENTS:
+    1. Good Faith Belief: I have a good faith belief that use of the copyrighted material is not authorized.
 2. Accuracy Under Penalty of Perjury: All information provided is accurate under penalty of perjury.
 3. Authorization: I am authorized to act on behalf of the copyright owner.
 
-📞 IMMEDIATE CONTACT:
-- Primary: {{ copyright_owner.phone }}
+# [EMOJI_REMOVED] IMMEDIATE CONTACT:
+    - Primary: {{ copyright_owner.phone }}
 - Emergency: {{ copyright_owner.emergency_contact }}
 - Legal Counsel: {{ legal_counsel.phone if legal_counsel else "Available upon request" }}
 
-⏰ REQUIRED ACTION:
-IMMEDIATE REMOVAL within 2 hours due to ongoing commercial damage.
+# [EMOJI_REMOVED] REQUIRED ACTION:
+    IMMEDIATE REMOVAL within 2 hours due to ongoing commercial damage.
 
 Legal escalation will commence automatically if no action is taken within the specified timeframe.
 
@@ -232,31 +232,31 @@ From: {{ content_creator.name }} <{{ content_creator.email }}>
 Date: {{ current_date }}
 Re: Counter-Notice for Content Removal {{ original_notice_id }}
 
-Pursuant to 17 U.S.C. § 512(g)(3), I hereby submit this counter-notice.
+Pursuant to 17 U.S.C. # [EMOJI_REMOVED] 512(g)(3), I hereby submit this counter-notice.
 
 IDENTIFICATION OF REMOVED CONTENT:
-- Original URL: {{ removed_content.original_url }}
+    - Original URL: {{ removed_content.original_url }}
 - Content Title: {{ removed_content.title }}
 - Removal Date: {{ removal_date }}
 - DMCA Notice Reference: {{ original_notice_id }}
 
 STATEMENT OF GOOD FAITH BELIEF:
-I swear, under penalty of perjury, that I have a good faith belief that the material was removed as a result of mistake or misidentification.
+    I swear, under penalty of perjury, that I have a good faith belief that the material was removed as a result of mistake or misidentification.
 
 BASIS FOR COUNTER-NOTICE:
-{{ counter_arguments }}
+    {{ counter_arguments }}
 
 CONSENT TO JURISDICTION:
-I consent to the jurisdiction of the Federal District Court for {{ jurisdiction_district }}.
+    I consent to the jurisdiction of the Federal District Court for {{ jurisdiction_district }}.
 
 CONTACT INFORMATION:
-- Name: {{ content_creator.name }}
+    - Name: {{ content_creator.name }}
 - Address: {{ content_creator.address }}
 - Phone: {{ content_creator.phone }}
 - Email: {{ content_creator.email }}
 
 REQUEST FOR RESTORATION:
-I request that you restore the removed content pursuant to DMCA counter-notice procedures.
+    I request that you restore the removed content pursuant to DMCA counter-notice procedures.
 
 {{ content_creator.signature }}
 {{ content_creator.name }}
@@ -279,24 +279,24 @@ NOTICE OF INTENT TO PURSUE LEGAL ACTION
 Our client, {{ copyright_owner.name }}, has experienced continued copyright infringement on your platform despite previous DMCA notices.
 
 PREVIOUS NOTICES IGNORED:
-{% for notice in previous_notices -%}
+    {% for notice in previous_notices -%}
 - Notice {{ notice.id }}: {{ notice.date }} - No Response
 {% endfor %}
 
 ESCALATED LEGAL CLAIMS:
-1. Copyright Infringement (17 U.S.C. § 501)
+    1. Copyright Infringement (17 U.S.C. # [EMOJI_REMOVED] 501)
 2. Contributory Infringement
 3. Vicarious Infringement
 4. DMCA Safe Harbor Violations
 
 DOCUMENTED DAMAGES:
-- Direct Losses: {{ damages.direct }}
+    - Direct Losses: {{ damages.direct }}
 - Lost Profits: {{ damages.lost_profits }}
 - Legal Fees: {{ damages.legal_fees }}
 - Total Claim: {{ damages.total }}
 
 SETTLEMENT OPPORTUNITY:
-We are prepared to resolve this matter for {{ settlement_amount }} if resolved within {{ settlement_deadline }} days.
+    We are prepared to resolve this matter for {{ settlement_amount }} if resolved within {{ settlement_deadline }} days.
 
 This serves as formal notice of our intent to file suit in federal court if this matter is not resolved promptly.
 
@@ -323,24 +323,24 @@ NOTICE OF COPYRIGHT INFRINGEMENT AND SETTLEMENT DEMAND
 You have willfully infringed upon copyrighted material owned by {{ copyright_owner.name }}.
 
 INFRINGEMENT EVIDENCE:
-- Original Work: {{ original_work.title }}
+    - Original Work: {{ original_work.title }}
 - Infringing Use: {{ infringement_details }}
 - Similarity Analysis: {{ similarity_percentage }}%
 - Commercial Use: {{ commercial_use_evidence }}
 
 CALCULATED DAMAGES:
-- Actual Damages: {{ damages.actual }}
+    - Actual Damages: {{ damages.actual }}
 - Statutory Damages: {{ damages.statutory_range }}
 - Attorney Fees: {{ damages.attorney_fees }}
 - Investigation Costs: {{ damages.investigation }}
 
 SETTLEMENT OFFER:
-Total Demand: {{ total_settlement_amount }}
+    Total Demand: {{ total_settlement_amount }}
 Payment Terms: {{ payment_terms }}
 Deadline: {{ settlement_deadline }}
 
 CONSEQUENCES OF NON-COMPLIANCE:
-Failure to respond will result in immediate federal court action seeking maximum statutory damages of $150,000 per work plus attorney fees.
+    Failure to respond will result in immediate federal court action seeking maximum statutory damages of $150,000 per work plus attorney fees.
 
 This offer expires on {{ expiration_date }}.
 
@@ -365,25 +365,25 @@ FORMAL PRESERVATION NOTICE
 Pursuant to Federal Rules of Civil Procedure, you are hereby notified to preserve all evidence related to the copyright infringement detailed below.
 
 CONTENT TO BE PRESERVED:
-- Infringing Content: {{ infringing_content.urls }}
+    - Infringing Content: {{ infringing_content.urls }}
 - User Data: {{ infringer.account_details }}
 - Server Logs: {{ technical_evidence.server_logs }}
 - Communication Records: {{ communication_evidence }}
 
 PRESERVATION REQUIREMENTS:
-1. Cease all deletion or modification of identified content
+    1. Cease all deletion or modification of identified content
 2. Preserve all server logs and metadata
 3. Maintain user account information and activity logs
 4. Preserve all related communications
 
 LEGAL BASIS:
-This preservation order is issued in anticipation of litigation for copyright infringement under 17 U.S.C. § 501 et seq.
+    This preservation order is issued in anticipation of litigation for copyright infringement under 17 U.S.C. # [EMOJI_REMOVED] 501 et seq.
 
 COMPLIANCE DEADLINE:
-Immediate compliance required. Confirmation of preservation measures must be provided within 24 hours.
+    Immediate compliance required. Confirmation of preservation measures must be provided within 24 hours.
 
 SANCTIONS WARNING:
-Failure to preserve evidence may result in spoliation sanctions under Federal Rules.
+    Failure to preserve evidence may result in spoliation sanctions under Federal Rules.
 
 {{ legal_counsel.signature }}
 {{ legal_counsel.name }}
@@ -394,7 +394,7 @@ Attorney for {{ copyright_owner.name }}
 
     JURISDICTION_MODIFIERS = {
         JurisdictionType.US_FEDERAL: {
-            "legal_references": ["17 U.S.C. § 512", "17 U.S.C. § 501"],
+            "legal_references": ["17 U.S.C. # [EMOJI_REMOVED] 512", "17 U.S.C. # [EMOJI_REMOVED] 501"],
             "required_statements": ["penalty of perjury", "good faith belief"],
             "court_jurisdiction": "United States Federal District Court"
         },
@@ -423,7 +423,7 @@ Attorney for {{ copyright_owner.name }}
 
 class AdvancedTemplateProcessor:
     """
-    🚀 Ultra-Advanced Template Processing Engine
+    # [EMOJI_REMOVED] Ultra-Advanced Template Processing Engine
     ==========================================
     
     Features:
@@ -434,7 +434,7 @@ class AdvancedTemplateProcessor:
     - Automated follow-up scheduling
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.jinja_env = jinja2.Environment(
             loader=jinja2.DictLoader(TemplateRepository.PROFESSIONAL_TEMPLATES),
             autoescape=True,
@@ -712,7 +712,7 @@ Enhanced template context with legal metadata"""
 
 class ProfessionalTemplateEngine:
     """
-    🎯 Ultra-Advanced DMCA Template Engine - Enterprise Grade
+    # [EMOJI_REMOVED] Ultra-Advanced DMCA Template Engine - Enterprise Grade
     ========================================================
     
     Complete professional template generation system with:
@@ -724,17 +724,17 @@ class ProfessionalTemplateEngine:
     - Real-time compliance monitoring
     
     Features:
-    ✅ Templates fully integrated (no external files)
-    ✅ Legal compliance validation
-    ✅ Multi-language support (EN/DE/FR)
-    ✅ Evidence-based content generation
-    ✅ Encryption and security
-    ✅ Automated follow-up scheduling
-    ✅ Platform-specific adaptations
-    ✅ Real-time legal updates
+    # [EMOJI_REMOVED] Templates fully integrated (no external files)
+    # [EMOJI_REMOVED] Legal compliance validation
+    # [EMOJI_REMOVED] Multi-language support (EN/DE/FR)
+    # [EMOJI_REMOVED] Evidence-based content generation
+    # [EMOJI_REMOVED] Encryption and security
+    # [EMOJI_REMOVED] Automated follow-up scheduling
+    # [EMOJI_REMOVED] Platform-specific adaptations
+    # [EMOJI_REMOVED] Real-time legal updates
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.template_processor = AdvancedTemplateProcessor()
         self.compliance_validator = LegalComplianceValidator()
         self.notification_delivery = EmailNotificationService()
@@ -765,7 +765,7 @@ class ProfessionalTemplateEngine:
         custom_modifications: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
         """
-        🚀 Generate Ultra-Professional DMCA Notice
+        # [EMOJI_REMOVED] Generate Ultra-Professional DMCA Notice
         ==========================================
         
         Creates legally compliant, evidence-integrated DMCA notices with:
@@ -872,7 +872,7 @@ class ProfessionalTemplateEngine:
         batch_options: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
         """
-        🔄 Batch Generation for Enterprise Operations
+        # [EMOJI_REMOVED] Batch Generation for Enterprise Operations
         ===========================================
         
         Process multiple DMCA notices simultaneously with:
@@ -933,7 +933,7 @@ class ProfessionalTemplateEngine:
         template_category: TemplateCategory
     ) -> Dict[str, Any]:
         """
-        🔍 Advanced Template Compliance Validation
+        # [EMOJI_REMOVED] Advanced Template Compliance Validation
         =========================================
         
         Comprehensive validation including:
@@ -955,7 +955,7 @@ class ProfessionalTemplateEngine:
         evidence_level: EvidenceLevel = EvidenceLevel.COMPREHENSIVE
     ) -> Dict[str, Any]:
         """
-        📊 Generate Professional Evidence Report
+        # [EMOJI_REMOVED] Generate Professional Evidence Report
         ======================================
         
         Creates detailed evidence documentation for legal proceedings.
@@ -971,7 +971,7 @@ class ProfessionalTemplateEngine:
         jurisdiction: JurisdictionType
     ) -> Dict[str, Any]:
         """
-        🎯 AI-Powered Template Recommendations
+        # [EMOJI_REMOVED] AI-Powered Template Recommendations
         ====================================
         
         Analyzes infringement details and recommends optimal template strategy.
@@ -1122,7 +1122,7 @@ class ProfessionalTemplateEngine:
         except Exception as e:
             return self._create_error_response(f"Request processing failed: {str(e)}")
     
-    async def _update_performance_metrics(self, generation_time: float, compliance_score: float):
+    async def _update_performance_metrics(self, generation_time -> None: float, compliance_score -> None: float) -> None:
         """Update internal performance metrics"""
         self.performance_metrics["templates_generated"] += 1
         
@@ -1146,7 +1146,7 @@ class ProfessionalTemplateEngine:
         
         return (compliance_score * 0.7 + speed_score * 0.3)
     
-    async def _log_generation_audit(self, response: Dict[str, Any]):
+    async def _log_generation_audit(self, response -> None: Dict[str, Any]) -> None:
         """Log generation for audit trail"""
         audit_entry = {
             "notice_id": response["notice_id"],
@@ -1310,7 +1310,7 @@ Generate recommended action timeline"""
 
 class EvidenceIntegrator:
     """
-    🔬 Advanced Evidence Integration System
+    # [EMOJI_REMOVED] Advanced Evidence Integration System
     =====================================
     
     Integrates various evidence sources for comprehensive DMCA notices.
@@ -1338,7 +1338,7 @@ Generate detailed evidence report"""
 
 class FollowUpScheduler:
     """
-    📅 Automated Follow-up Scheduling System
+    # [EMOJI_REMOVED] Automated Follow-up Scheduling System
     ======================================
     
     Manages automated follow-up sequences for DMCA notices.
@@ -1382,7 +1382,7 @@ Create automated follow-up schedule"""
 
 class EmailNotificationService:
     """
-    📧 Professional Email Notification Service
+    # [EMOJI_REMOVED] Professional Email Notification Service
     =========================================
     
     Handles professional delivery of DMCA notices via email.
@@ -1406,7 +1406,7 @@ Schedule professional email delivery"""
 
 class LegalComplianceValidator:
     """
-    ⚖️  Ultra-Advanced Legal Compliance Validation Engine
+    # [EMOJI_REMOVED]  Ultra-Advanced Legal Compliance Validation Engine
     ===================================================
     
     Comprehensive legal compliance validation system with:
@@ -1419,7 +1419,7 @@ class LegalComplianceValidator:
     - International law integration
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.jurisdiction_rules = self._initialize_jurisdiction_rules()
         self.compliance_cache = {}
         self.legal_database = LegalReferenceDatabase()
@@ -1435,7 +1435,7 @@ class LegalComplianceValidator:
         platform_type: Optional[str] = None
     ) -> Dict[str, Any]:
         """
-        🔍 Comprehensive Legal Compliance Validation
+        # [EMOJI_REMOVED] Comprehensive Legal Compliance Validation
         ==========================================
         
         Performs multi-layered validation:
@@ -1727,7 +1727,7 @@ class LegalComplianceValidator:
                     "penalty of perjury",
                     "authorized to act"
                 ],
-                "legal_references": ["17 U.S.C. § 512"],
+                "legal_references": ["17 U.S.C. # [EMOJI_REMOVED] 512"],
                 "contact_requirements": ["name", "address", "phone", "email"],
                 "signature_required": True,
                 "designated_agent_required": True
@@ -1854,8 +1854,8 @@ class LegalComplianceValidator:
                 "Add statement: 'I have a good faith belief that use of the copyrighted material is not authorized.'",
             "Missing required statement: penalty of perjury": 
                 "Add statement: 'I swear, under penalty of perjury, that the information in this notification is accurate.'",
-            "Missing legal reference: 17 U.S.C. § 512": 
-                "Include reference to DMCA statute: '17 U.S.C. § 512'",
+            "Missing legal reference: 17 U.S.C. # [EMOJI_REMOVED] 512": 
+                "Include reference to DMCA statute: '17 U.S.C. # [EMOJI_REMOVED] 512'",
             "Insufficient evidence presentation": 
                 "Provide detailed evidence including similarity analysis, timestamps, and technical documentation.",
             "Unprofessional language detected": 
@@ -1931,7 +1931,7 @@ class LegalComplianceValidator:
             "name": r"name:\s*\w+",
             "address": r"address:\s*\w+",
             "phone": r"phone:\s*[\d\-\(\)\+\s]+",
-            "email": r"email:\s*\w+@\w+\.\w+"
+            "email": r"email:\s*\w+@\w+.\w+"
         }
         
         pattern = requirement_patterns.get(requirement)
@@ -2015,7 +2015,7 @@ class LegalComplianceValidator:
 
 class LegalReferenceDatabase:
     """
-    📚 Legal Reference and Precedent Database
+    # [EMOJI_REMOVED] Legal Reference and Precedent Database
     =======================================
     
     Maintains database of legal precedents and references for compliance validation.
@@ -2044,7 +2044,7 @@ Analyze content alignment with legal precedents"""
 
 class ContentAnalysisEngine:
     """
-    🤖 AI-Powered Content Analysis Engine
+    # [EMOJI_REMOVED] AI-Powered Content Analysis Engine
     ===================================
     
     Advanced AI analysis for content quality and legal compliance.
@@ -2061,7 +2061,7 @@ Perform AI-powered content quality analysis"""
         }
     """Enterprise DMCA template generation engine"""
     
-    def __init__(self, templates_dir: Optional[Path] = None):
+    def __init__(self, templates_dir -> None: Optional[Path] = None) -> None:
         self.templates_dir = templates_dir or Path(__file__).parent / "templates"
         self.jinja_env = self._setup_jinja_environment()
         self.legal_validator = LegalComplianceValidator()
@@ -2085,7 +2085,7 @@ Format date for legal documents"""
             if currency == "USD":
                 return f"${amount:,.2f}"
             elif currency == "EUR":
-                return f"€{amount:,.2f}"
+                return f"# [EMOJI_REMOVED]{amount:,.2f}"
             else:
                 return f"{amount:,.2f} {currency}"
         
@@ -2132,7 +2132,7 @@ Format date for legal documents"""
         
         return env
     
-    def _load_professional_templates(self):
+    def _load_professional_templates(self) -> None:
         """Load all professional DMCA templates"""
         templates = {
             'takedown_standard': self._get_standard_takedown_template(),
@@ -2265,15 +2265,15 @@ Get relevant legal references for jurisdiction"""
         references = {
             JurisdictionType.US_FEDERAL: [
                 {
-                    'statute': '17 U.S.C. § 512(c)',
+                    'statute': '17 U.S.C. # [EMOJI_REMOVED] 512(c)',
                     'description': 'DMCA Safe Harbor Provisions'
                 },
                 {
-                    'statute': '17 U.S.C. § 504',
+                    'statute': '17 U.S.C. # [EMOJI_REMOVED] 504',
                     'description': 'Remedies for infringement: Damages and profits'
                 },
                 {
-                    'statute': '17 U.S.C. § 505',
+                    'statute': '17 U.S.C. # [EMOJI_REMOVED] 505',
                     'description': 'Remedies for infringement: Costs and attorney fees'
                 }
             ],
@@ -2361,7 +2361,7 @@ Subject: DMCA Takedown Notice - Copyright Infringement Claim
 
 To Whom It May Concern:
 
-I am writing to notify you of copyright infringement occurring on your platform pursuant to the Digital Millennium Copyright Act (DMCA), 17 U.S.C. § 512(c).
+I am writing to notify you of copyright infringement occurring on your platform pursuant to the Digital Millennium Copyright Act (DMCA), 17 U.S.C. # [EMOJI_REMOVED] 512(c).
 
 **NOTICE ID**: {{ notice_id }}
 **DATE**: {{ notice_date | legal_date }}
@@ -2370,7 +2370,7 @@ I am writing to notify you of copyright infringement occurring on your platform 
 **I. IDENTIFICATION OF COPYRIGHTED WORK**
 
 The copyrighted work that has been infringed is described as follows:
-- **Title**: {{ original_work.title }}
+    - **Title**: {{ original_work.title }}
 - **Author/Creator**: {{ original_work.creator }}
 - **Copyright Owner**: {{ copyright_owner.name }}
 - **Description**: {{ original_work.description }}
@@ -2383,7 +2383,7 @@ The copyrighted work that has been infringed is described as follows:
 **II. IDENTIFICATION OF INFRINGING MATERIAL**
 
 The following material on your platform infringes the above-described copyright:
-- **Infringing URL**: {{ infringing_content.url }}
+    - **Infringing URL**: {{ infringing_content.url }}
 - **Platform**: {{ platform_type | title }}
 - **Description**: {{ infringing_content.description }}
 - **Upload Date**: {{ infringing_content.upload_date | legal_date }}
@@ -2394,7 +2394,7 @@ The following material on your platform infringes the above-described copyright:
 {{ evidence_summary }}
 
 Technical Analysis:
-- **Similarity Score**: {{ infringing_content.similarity_score }}%
+    - **Similarity Score**: {{ infringing_content.similarity_score }}%
 - **Match Type**: {{ evidence_level.value | title }}
 - **Detection Method**: Advanced AI fingerprinting analysis
 - **Analysis Date**: {{ detection_date | legal_date }}
@@ -2406,34 +2406,34 @@ Technical Analysis:
 **IV. LEGAL BASIS**
 
 This notice is submitted pursuant to:
-{% for ref in legal_references -%}
+    {% for ref in legal_references -%}
 - {{ ref.statute or ref.directive }}: {{ ref.description }}
 {% endfor %}
 
 **V. GOOD FAITH BELIEF STATEMENT**
 
 I have a good faith belief that the use of the copyrighted material described above is not authorized by the copyright owner, its agent, or the law. This belief is based on:
-1. Substantial similarity analysis conducted by qualified technical experts
+    1. Substantial similarity analysis conducted by qualified technical experts
 2. Absence of any license or permission granted by the copyright owner
 3. Failure to qualify for fair use or other legal exceptions
 
 **VI. ACCURACY AND AUTHORITY STATEMENT**
 
 I swear, under penalty of perjury, that:
-1. The information in this notification is accurate
+    1. The information in this notification is accurate
 2. I am the copyright owner or am authorized to act on behalf of the owner of an exclusive right that is allegedly infringed
 3. I have conducted a reasonable investigation to confirm the validity of this claim
 
 **VII. CONTACT INFORMATION**
 
 **Copyright Owner**:
-{{ copyright_owner.name }}
+    {{ copyright_owner.name }}
 {{ copyright_owner.email }}
 {% if copyright_owner.phone -%}{{ copyright_owner.phone }}{% endif %}
 {% if copyright_owner.address -%}{{ copyright_owner.address }}{% endif %}
 
 **Authorized Agent**:
-{{ authorized_agent.name }}
+    {{ authorized_agent.name }}
 {{ authorized_agent.email }}
 {% if authorized_agent.phone -%}{{ authorized_agent.phone }}{% endif %}
 {% if authorized_agent.company -%}{{ authorized_agent.company }}{% endif %}
@@ -2445,7 +2445,7 @@ I request that you expeditiously remove or disable access to the infringing mate
 **IX. POTENTIAL DAMAGES**
 
 Please be advised that continued infringement may result in:
-- Statutory damages ranging from {{ statutory_damages_range.minimum | currency }} to {{ statutory_damages_range.maximum | currency }}
+    - Statutory damages ranging from {{ statutory_damages_range.minimum | currency }} to {{ statutory_damages_range.maximum | currency }}
 - Attorney fees and court costs
 - Injunctive relief
 - Actual damages and profits
@@ -2469,11 +2469,11 @@ Urgent DMCA takedown notice template"""
         return """
 Subject: URGENT DMCA Takedown Notice - Immediate Action Required
 
-**⚠️ URGENT - IMMEDIATE ACTION REQUIRED ⚠️**
+**# [EMOJI_REMOVED] URGENT - IMMEDIATE ACTION REQUIRED # [EMOJI_REMOVED]**
 
 To Whom It May Concern:
 
-This constitutes an URGENT notice of copyright infringement requiring immediate action pursuant to the Digital Millennium Copyright Act (DMCA), 17 U.S.C. § 512(c).
+This constitutes an URGENT notice of copyright infringement requiring immediate action pursuant to the Digital Millennium Copyright Act (DMCA), 17 U.S.C. # [EMOJI_REMOVED] 512(c).
 
 **NOTICE ID**: {{ notice_id }}
 **URGENCY LEVEL**: HIGH PRIORITY
@@ -2483,7 +2483,7 @@ This constitutes an URGENT notice of copyright infringement requiring immediate 
 **URGENT CIRCUMSTANCES**
 
 This matter requires urgent attention due to:
-{% if commercial_use_evidence -%}
+    {% if commercial_use_evidence -%}
 - **Commercial Exploitation**: Ongoing unauthorized commercial use causing immediate financial harm
 {% endif -%}
 - **Viral Distribution**: Rapid unauthorized distribution across multiple platforms
@@ -2524,7 +2524,7 @@ After careful review of your counter-notice and the arguments presented, we resp
 **II. EVIDENCE REINFORCEMENT**
 
 Our original claim is supported by:
-- Technical fingerprint analysis showing {{ infringing_content.similarity_score }}% similarity
+    - Technical fingerprint analysis showing {{ infringing_content.similarity_score }}% similarity
 - Comprehensive metadata comparison
 - Expert analysis by qualified copyright professionals
 - {{ evidence_summary }}
@@ -2532,7 +2532,7 @@ Our original claim is supported by:
 **III. LEGAL POSITION**
 
 The fair use arguments presented in your counter-notice are insufficient because:
-1. The use does not qualify under any recognized fair use category
+    1. The use does not qualify under any recognized fair use category
 2. The commercial nature of the use weighs against fair use
 3. The substantial similarity indicates copying rather than transformation
 4. The use negatively impacts the market for the original work
@@ -2556,8 +2556,8 @@ This notice serves as a formal escalation of our DMCA takedown notice dated {{ o
 
 **COMPLIANCE FAILURE**
 
-Despite the statutory requirement under 17 U.S.C. § 512(c) to expeditiously respond to valid DMCA notices, your platform has failed to:
-1. Acknowledge receipt of our notice
+Despite the statutory requirement under 17 U.S.C. # [EMOJI_REMOVED] 512(c) to expeditiously respond to valid DMCA notices, your platform has failed to:
+    1. Acknowledge receipt of our notice
 2. Take action on the clearly infringing content
 3. Provide any communication regarding the status of our request
 
@@ -2571,12 +2571,12 @@ Despite the statutory requirement under 17 U.S.C. § 512(c) to expeditiously res
 **CONTINUED INFRINGEMENT**
 
 The infringing material remains accessible and continues to cause harm:
-{{ infringing_content.url }}
+    {{ infringing_content.url }}
 
 **SAFE HARBOR IMPLICATIONS**
 
 Your platform's failure to respond to valid DMCA notices may result in loss of safe harbor protections under Section 512(c), exposing your platform to:
-- Direct liability for copyright infringement
+    - Direct liability for copyright infringement
 - Contributory infringement claims
 - Vicarious liability for user actions
 
@@ -2601,16 +2601,16 @@ This notice serves as formal notification of our intent to pursue legal action d
 
 Due to your platform's failure to respond to our DMCA notices and continued hosting of infringing content, we hereby provide notice of our intent to pursue the following legal remedies:
 
-1. **Federal Copyright Infringement Lawsuit** under 17 U.S.C. § 501 et seq.
+1. **Federal Copyright Infringement Lawsuit** under 17 U.S.C. # [EMOJI_REMOVED] 501 et seq.
 2. **Statutory Damages** ranging from {{ statutory_damages_range.minimum | currency }} to {{ statutory_damages_range.maximum | currency }}
-3. **Attorney Fees and Costs** under 17 U.S.C. § 505
+3. **Attorney Fees and Costs** under 17 U.S.C. # [EMOJI_REMOVED] 505
 4. **Injunctive Relief** to prevent further infringement
 5. **Preliminary and Permanent Injunctions** against your platform
 
 **LITIGATION TIMELINE**
 
 If the infringing content is not removed within 72 hours of this notice, we will:
-- File a federal lawsuit within 10 business days
+    - File a federal lawsuit within 10 business days
 - Seek emergency injunctive relief
 - Pursue maximum statutory damages
 - Request attorney fees and costs
@@ -2691,6 +2691,7 @@ Failure to comply will result in immediate legal action seeking maximum damages 
 **URGENT LEGAL MATTER - IMMEDIATE COMPLIANCE REQUIRED**
         """
 class LegalComplianceValidator:
+    """LegalComplianceValidator: class implementation"""
         try:
             logger.info(f"Executing __init__")
             
@@ -2722,7 +2723,7 @@ class LegalComplianceValidator:
     """
 Legal compliance validation for DMCA notices"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.validation_rules = self._load_validation_rules()
     
     def validate_notice(self, content: str, context: TemplateContext) -> LegalValidationResult:
@@ -2786,8 +2787,8 @@ Validate DMCA notice for legal compliance"""
         
         if jurisdiction == JurisdictionType.US_FEDERAL:
             # US-specific validations
-            if not re.search(r'17 U\.S\.C\..*512', content):
-                issues.append("Missing reference to 17 U.S.C. § 512")
+            if not re.search(r'17 U.S.C..*512', content):
+                issues.append("Missing reference to 17 U.S.C. # [EMOJI_REMOVED] 512")
             
             if not re.search(r'penalty of perjury', content, re.IGNORECASE):
                 issues.append("Missing 'penalty of perjury' statement required by US law")
@@ -2809,7 +2810,7 @@ Validate DMCA notice for legal compliance"""
                     "penalty of perjury",
                     "authorized to act"
                 ],
-                "required_references": ["17 U.S.C. § 512"],
+                "required_references": ["17 U.S.C. # [EMOJI_REMOVED] 512"],
                 "contact_requirements": ["name", "email", "address"]
             },
             "eu_gdpr": {
@@ -2875,3 +2876,5 @@ __all__ = [
     'create_legal_compliance_validator',
     'create_evidence_integrator'
 ]
+
+# File has syntax issues - needs manual review

@@ -50,13 +50,13 @@ class ComplianceRule:
 class ComplianceValidationEngine:
     """Moteur validation conformité."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.rules: Dict[str, ComplianceRule] = {}
         self.violations = {}
         self.audit_log = deque(maxlen=1000)
         self._load_default_rules()
     
-    def _load_default_rules(self):
+    def _load_default_rules(self) -> None:
         """Charge les règles de conformité par défaut."""
         default_rules = [
             ComplianceRule(
@@ -150,7 +150,7 @@ class DDoSAttack:
 class DDoSProtectionAdvanced:
     """Protection DDoS avancée."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.detection_thresholds = {
             "requests_per_second": 1000,
             "bandwidth_mbps": 100,
@@ -223,7 +223,7 @@ class DDoSProtectionAdvanced:
             "timestamp": datetime.utcnow().isoformat()
         }
     
-    async def _apply_rate_limiting(self, attack: DDoSAttack):
+    async def _apply_rate_limiting(self, attack -> None: DDoSAttack) -> None:
         """Applique la limitation de débit."""
         for ip in attack.source_ips:
             self.rate_limits[ip] = {
@@ -232,7 +232,7 @@ class DDoSProtectionAdvanced:
                 "applied_at": datetime.utcnow()
             }
     
-    async def _apply_ip_blocking(self, attack: DDoSAttack):
+    async def _apply_ip_blocking(self, attack -> None: DDoSAttack) -> None:
         """Applique le blocage d'IP."""
         for ip in attack.source_ips:
             self.blocked_ips.add(ip)
@@ -251,7 +251,7 @@ class DDoSProtectionAdvanced:
 class EdgeSecurityProtection:
     """Protection sécurité edge ultra-sécurisée."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.compliance_engine = ComplianceValidationEngine()
         self.ddos_protection = DDoSProtectionAdvanced()
         
@@ -300,7 +300,7 @@ class EdgeSecurityProtection:
                                        "needs_improvement"
         }
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Arrête le système de protection."""
         logger.info("Shutting down EdgeSecurityProtection")
 

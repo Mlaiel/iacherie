@@ -1,3 +1,8 @@
+"""
+Index module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """IA Influencer Agent - Disaster Recovery Index Module
 Centralized access point for disaster recovery and business continuity services
@@ -109,7 +114,7 @@ class DisasterRecoveryCoordinator:
     - SLA compliance monitoring
     """
     
-    def __init__(self, config: Config):
+    def __init__(self, config -> None: Config) -> None:
         """
 Initialize disaster recovery coordinator"""
         self.config = config
@@ -475,7 +480,7 @@ if __name__ == "__main__":
     import sys
     from backend.core.config import Config
     
-    async def main():
+    async def main() -> None:
         config = Config()
         coordinator = await initialize_disaster_recovery(config)
         

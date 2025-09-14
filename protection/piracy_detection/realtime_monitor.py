@@ -150,17 +150,17 @@ class WebSocketManager:
     """
 Manages WebSocket connections for real-time updates."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.connections: Set[WebSocketServerProtocol] = set()
         self.subscriptions: Dict[str, Set[WebSocketServerProtocol]] = defaultdict(set)
     
-    def add_connection(self, websocket: WebSocketServerProtocol):
+    def add_connection(self, websocket -> None: WebSocketServerProtocol) -> None:
         """
 Add new WebSocket connection."""
         self.connections.add(websocket)
         logger.info(f"WebSocket connection added: {websocket.remote_address}")
     
-    def remove_connection(self, websocket: WebSocketServerProtocol):
+    def remove_connection(self, websocket -> None: WebSocketServerProtocol) -> None:
         """Remove WebSocket connection."""
         self.connections.discard(websocket)
         
@@ -170,16 +170,16 @@ Add new WebSocket connection."""
         
         logger.info(f"WebSocket connection removed: {websocket.remote_address}")
     
-    def subscribe_to_topic(self, websocket: WebSocketServerProtocol, topic: str):
+    def subscribe_to_topic(self, websocket -> None: WebSocketServerProtocol, topic -> None: str) -> None:
         """Subscribe connection to specific topic."""
         self.subscriptions[topic].add(websocket)
         logger.info(f"WebSocket subscribed to topic {topic}: {websocket.remote_address}")
     
-    def unsubscribe_from_topic(self, websocket: WebSocketServerProtocol, topic: str):
+    def unsubscribe_from_topic(self, websocket -> None: WebSocketServerProtocol, topic -> None: str) -> None:
         """Unsubscribe connection from topic."""
         self.subscriptions[topic].discard(websocket)
     
-    async def broadcast_to_all(self, message: Dict[str, Any]):
+    async def broadcast_to_all(self, message -> None: Dict[str, Any]) -> None:
         """
 Broadcast message to all connected clients."""
         if not self.connections:
@@ -201,7 +201,7 @@ Broadcast message to all connected clients."""
         for websocket in disconnected:
             self.remove_connection(websocket)
     
-    async def broadcast_to_topic(self, topic: str, message: Dict[str, Any]):
+    async def broadcast_to_topic(self, topic -> None: str, message -> None: Dict[str, Any]) -> None:
         """Broadcast message to subscribers of specific topic."""
         topic_connections = self.subscriptions.get(topic, set())
         if not topic_connections:
@@ -226,12 +226,12 @@ Broadcast message to all connected clients."""
 class NotificationService:
     """Handles multi-channel notifications."""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.templates = {}
         self._load_notification_templates()
     
-    def _load_notification_templates(self):
+    def _load_notification_templates(self) -> None:
         """
 Load notification templates."""
         self.templates = {
@@ -354,20 +354,20 @@ Load notification templates."""
 class AlertEngine:
     """Processes violations and generates alerts."""
     
-    def __init__(self, notification_service: NotificationService):
+    def __init__(self, notification_service -> None: NotificationService) -> None:
         self.notification_service = notification_service
         self.monitoring_rules = {}
         self.escalation_policies = {}
         self.alert_history = {}
         self.active_alerts = {}
     
-    def add_monitoring_rule(self, rule: MonitoringRule):
+    def add_monitoring_rule(self, rule -> None: MonitoringRule) -> None:
         """
 Add new monitoring rule."""
         self.monitoring_rules[rule.rule_id] = rule
         logger.info(f"Monitoring rule added: {rule.rule_name}")
     
-    def add_escalation_policy(self, policy: EscalationPolicy):
+    def add_escalation_policy(self, policy -> None: EscalationPolicy) -> None:
         """Add escalation policy."""
         self.escalation_policies[policy.policy_id] = policy
         logger.info(f"Escalation policy added: {policy.name}")
@@ -539,7 +539,7 @@ Check if rule is in cooldown period."""
         
         return False
     
-    async def _send_rule_notifications(self, alert: ViolationAlert, rule: MonitoringRule):
+    async def _send_rule_notifications(self, alert -> None: ViolationAlert, rule -> None: MonitoringRule) -> None:
         """
 Send notifications for rule-triggered alert."""
         for channel in rule.notification_channels:
@@ -574,7 +574,7 @@ Send notifications for rule-triggered alert."""
             except Exception as e:
                 logger.error(f"Failed to send {channel.value} notification: {e}")
     
-    async def _start_escalation(self, alert: ViolationAlert, rule: MonitoringRule):
+    async def _start_escalation(self, alert -> None: ViolationAlert, rule -> None: MonitoringRule) -> None:
         """Start escalation process for alert."""
         # Implementation would handle escalation logic
         logger.info(f"Starting escalation for alert: {alert.alert_id}")
@@ -587,7 +587,7 @@ class RealtimeViolationMonitor:
     with advanced alerting, escalation, and notification features.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Real-time Violation Monitor.
         
@@ -714,7 +714,7 @@ class RealtimeViolationMonitor:
             logger.error(f"Violation submission failed: {e}")
             raise
     
-    async def _start_websocket_server(self):
+    async def _start_websocket_server(self) -> None:
         try:
             logger.info(f"Executing _start_websocket_server")
             
@@ -729,7 +729,7 @@ class RealtimeViolationMonitor:
         except Exception as e:
             logger.error(f"_start_websocket_server failed: {e}")
             raise
-    async def _handle_websocket_message(self, websocket: WebSocketServerProtocol, message: str):
+    async def _handle_websocket_message(self, websocket -> None: WebSocketServerProtocol, message -> None: str) -> None:
         """Handle incoming WebSocket message."""
         try:
             data = json.loads(message)
@@ -754,7 +754,7 @@ class RealtimeViolationMonitor:
         except Exception as e:
             logger.error(f"WebSocket message handling failed: {e}")
     
-    async def _process_violation_queue(self):
+    async def _process_violation_queue(self) -> None:
         """Process violations from queue."""
         while True:
             try:
@@ -784,7 +784,7 @@ class RealtimeViolationMonitor:
                 logger.error(f"Violation processing error: {e}")
                 await asyncio.sleep(1)
     
-    async def _monitor_content(self, content_id: str):
+    async def _monitor_content(self, content_id -> None: str) -> None:
         """Monitor specific content for violations."""
         while content_id in self.monitoring_tasks:
             try:
@@ -796,7 +796,7 @@ class RealtimeViolationMonitor:
                 logger.error(f"Content monitoring error for {content_id}: {e}")
                 await asyncio.sleep(60)
     
-    async def _store_violation_in_redis(self, violation_data: Dict[str, Any], alerts: List[ViolationAlert]):
+    async def _store_violation_in_redis(self, violation_data -> None: Dict[str, Any], alerts -> None: List[ViolationAlert]) -> None:
         """Store violation and alerts in Redis."""
         try:
             # Store violation data
@@ -833,7 +833,7 @@ class RealtimeViolationMonitor:
             'initialized': self._initialized
         }
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """
 Gracefully shutdown monitoring system."""
         try:

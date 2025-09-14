@@ -89,7 +89,7 @@ class MetadataField(BaseSchema):
     validation_rules: List[str] = Field(default=[], description="Validation rules")
     
     @validator('key')
-    def validate_key(cls, v):
+    def validate_key(cls, v) -> None:
         """Validate metadata key format."""
         import re
         if not re.match(r'^[a-zA-Z][a-zA-Z0-9_.-]*$', v):

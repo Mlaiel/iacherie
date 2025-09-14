@@ -1,3 +1,8 @@
+"""
+Throughput Analyzer module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 📊 Throughput Analyzer - Enterprise MLOps Platform
@@ -115,9 +120,9 @@ class ThroughputAnalyzer:
     """
     
     def __init__(self, 
-                 db_path: str = "/tmp/throughput_analyzer.db",
-                 retention_days: int = 30,
-                 analysis_window_size: int = 100):
+                 db_path -> None: str = "/tmp/throughput_analyzer.db",
+                 retention_days -> None: int = 30,
+                 analysis_window_size -> None: int = 100) -> None:
         self.db_path = db_path
         self.retention_days = retention_days
         self.analysis_window_size = analysis_window_size
@@ -183,7 +188,7 @@ class ThroughputAnalyzer:
         self._setup_database()
         logger.info("📊 ThroughputAnalyzer initialized for enterprise performance analysis")
     
-    def _setup_database(self):
+    def _setup_database(self) -> None:
         """Initialisation de la base de données SQLite"""
         try:
             with sqlite3.connect(self.db_path) as conn:
@@ -548,10 +553,10 @@ class ThroughputAnalyzer:
             logger.error(f"❌ Error analyzing bottleneck: {e}")
             return None
     
-    async def _save_measurement(self, measurement: ThroughputMeasurement):
+    async def _save_measurement(self, measurement -> None: ThroughputMeasurement) -> None:
         """Sauvegarde d'une mesure en base"""
         try:
-            def save_to_db():
+            def save_to_db() -> None:
                 with sqlite3.connect(self.db_path) as conn:
                     cursor = conn.cursor()
                     cursor.execute("""
@@ -590,10 +595,10 @@ class ThroughputAnalyzer:
         except Exception as e:
             logger.error(f"❌ Error saving measurement: {e}")
     
-    async def _save_bottleneck_analysis(self, model_id: str, analysis: BottleneckAnalysis):
+    async def _save_bottleneck_analysis(self, model_id -> None: str, analysis -> None: BottleneckAnalysis) -> None:
         """Sauvegarde d'une analyse de bottleneck"""
         try:
-            def save_to_db():
+            def save_to_db() -> None:
                 with sqlite3.connect(self.db_path) as conn:
                     cursor = conn.cursor()
                     cursor.execute("""
@@ -619,7 +624,7 @@ class ThroughputAnalyzer:
         except Exception as e:
             logger.error(f"❌ Error saving bottleneck analysis: {e}")
     
-    async def _check_throughput_alerts(self, measurement: ThroughputMeasurement):
+    async def _check_throughput_alerts(self, measurement -> None: ThroughputMeasurement) -> None:
         """Vérification et déclenchement d'alertes de throughput"""
         try:
             target = self.throughput_targets.get(measurement.processing_type)
@@ -819,17 +824,17 @@ class ThroughputAnalyzer:
             logger.error(f"❌ Error getting bottleneck recommendations: {e}")
             return []
     
-    def add_alert_callback(self, callback: Callable):
+    def add_alert_callback(self, callback -> None: Callable) -> None:
         """Ajouter un callback pour les alertes de throughput"""
         self.alert_callbacks.append(callback)
         logger.info(f"📢 Throughput alert callback added. Total: {len(self.alert_callbacks)}")
     
-    def add_bottleneck_callback(self, callback: Callable):
+    def add_bottleneck_callback(self, callback -> None: Callable) -> None:
         """Ajouter un callback pour les analyses de bottlenecks"""
         self.bottleneck_callbacks.append(callback)
         logger.info(f"🔍 Bottleneck callback added. Total: {len(self.bottleneck_callbacks)}")
     
-    async def cleanup_old_data(self):
+    async def cleanup_old_data(self) -> None:
         """Nettoyage des données anciennes"""
         try:
             cutoff_date = datetime.now() - timedelta(days=self.retention_days)
@@ -860,15 +865,15 @@ class ThroughputAnalyzer:
 
 
 # Exemple d'utilisation pour démonstration
-async def main():
+async def main() -> None:
     """Démonstration des capacités du ThroughputAnalyzer"""
     analyzer = ThroughputAnalyzer()
     
     # Callbacks pour démonstration
-    async def throughput_alert_handler(alert_data):
+    async def throughput_alert_handler(alert_data) -> None:
         print(f"🚨 THROUGHPUT ALERT: {alert_data['alert']['message']}")
     
-    async def bottleneck_handler(bottleneck_data):
+    async def bottleneck_handler(bottleneck_data) -> None:
         print(f"🔍 BOTTLENECK DETECTED: {bottleneck_data['analysis'].bottleneck_type.value}")
         print(f"   Severity: {bottleneck_data['analysis'].severity:.2f}")
         print(f"   Expected improvement: {bottleneck_data['analysis'].estimated_improvement:.1f}%")

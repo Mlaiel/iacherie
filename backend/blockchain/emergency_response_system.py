@@ -190,7 +190,7 @@ class RecoveryPlanRecord(Base):
 class ThreatDetector:
     """Advanced threat detection and monitoring system"""
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client -> None: aioredis.Redis) -> None:
         self.redis = redis_client
         self.detection_rules = self._load_detection_rules()
         self.monitoring_active = True
@@ -484,7 +484,7 @@ class ThreatDetector:
             SeverityLevel.INFO.value: 0
         }
         
-        def threat_priority(threat):
+        def threat_priority(threat) -> None:
             severity_score = severity_order.get(threat.get("severity", SeverityLevel.LOW.value), 1)
             confidence_score = threat.get("confidence", 0)
             return severity_score * 10 + confidence_score
@@ -519,7 +519,7 @@ class ThreatDetector:
 class IncidentResponseCoordinator:
     """Coordinates emergency incident response operations"""
     
-    def __init__(self, db_session: AsyncSession, redis_client: aioredis.Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: aioredis.Redis) -> None:
         self.db = db_session
         self.redis = redis_client
         self.active_incidents = {}
@@ -1013,7 +1013,7 @@ LESSONS LEARNED:
 class BusinessContinuityManager:
     """Manages business continuity during emergencies"""
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client -> None: aioredis.Redis) -> None:
         self.redis = redis_client
         self.continuity_plans = self._load_continuity_plans()
         
@@ -1143,7 +1143,7 @@ class BusinessContinuityManager:
 class EmergencyResponseSystem:
     """Main emergency response system coordinator"""
     
-    def __init__(self, db_session: AsyncSession, redis_client: aioredis.Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: aioredis.Redis) -> None:
         self.db = db_session
         self.redis = redis_client
         

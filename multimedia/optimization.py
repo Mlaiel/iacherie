@@ -1,4 +1,6 @@
 """Optimization Module
+import asyncio
+
 Professional optimization functionality for multimedia processing.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -25,14 +27,14 @@ class OptimizationResult:
     data: Dict[str, Any] = None
     error_message: Optional[str] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.data is None:
             self.data = {}
 
 class OptimizationManager:
     """Main optimization manager class"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logger
         self.config = {}
     
@@ -67,7 +69,7 @@ class ContentOptimizer(OptimizationManager):
 class CompressionEngine:
     """Content compression engine"""
     
-    def __init__(self, quality: float = 0.8):
+    def __init__(self, quality -> None: float = 0.8) -> None:
         self.quality = quality
     
     async def compress_image(self, image_path: Path, output_path: Path) -> bool:
@@ -89,7 +91,7 @@ class CompressionEngine:
 class QualityEnhancer:
     """Content quality enhancement"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.enhancement_models = {}
     
     async def enhance_image(self, image_path: Path) -> Path:

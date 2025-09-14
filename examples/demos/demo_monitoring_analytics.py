@@ -1,3 +1,8 @@
+"""
+Demo Monitoring Analytics module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 🚀 Ainflue Monitoring & Analytics System Demo
@@ -21,7 +26,7 @@ import json
 # Add project root to path
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
-async def demo_monitoring_system():
+async def demo_monitoring_system() -> None:
     """
 Comprehensive demo of the monitoring & analytics system"""
     

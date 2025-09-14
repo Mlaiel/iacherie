@@ -73,7 +73,7 @@ class EventLifecycleManager:
     Manages state transitions, automated workflows, and business processes
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.managed_events: Dict[str, EventLifecycle] = {}
         self.lifecycle_rules: List[LifecycleRule] = []
         self.state_handlers: Dict[EventState, List[Callable]] = defaultdict(list)
@@ -84,7 +84,7 @@ class EventLifecycleManager:
         
         logger.info("EventLifecycleManager initialized for Ainflue platform")
     
-    def _initialize_default_rules(self):
+    def _initialize_default_rules(self) -> None:
         """Initialize default lifecycle rules for Ainflue events"""
         
         # Content lifecycle rule
@@ -171,7 +171,7 @@ class EventLifecycleManager:
         
         self.lifecycle_rules = [content_rule, monetization_rule, collaboration_rule]
     
-    def _initialize_default_handlers(self):
+    def _initialize_default_handlers(self) -> None:
         """Initialize default action handlers"""
         
         self.action_handlers = {
@@ -309,7 +309,7 @@ class EventLifecycleManager:
         allowed_transitions = rule.state_transitions.get(current_state, [])
         return new_state in allowed_transitions
     
-    async def _execute_state_actions(self, event_id: str, rule: LifecycleRule, event_data: Dict[str, Any]):
+    async def _execute_state_actions(self, event_id -> None: str, rule -> None: LifecycleRule, event_data -> None: Dict[str, Any]) -> None:
         """Execute actions for current state"""
         
         lifecycle = self.managed_events[event_id]
@@ -330,7 +330,7 @@ class EventLifecycleManager:
                     await self.transition_state(event_id, EventState.FAILED, 
                                               f"Action {action.value} failed: {e}")
     
-    async def _notify_state_handlers(self, event_id: str, old_state: EventState, new_state: EventState):
+    async def _notify_state_handlers(self, event_id -> None: str, old_state -> None: EventState, new_state -> None: EventState) -> None:
         """Notify registered state change handlers"""
         
         handlers = self.state_handlers.get(new_state, [])
@@ -342,7 +342,7 @@ class EventLifecycleManager:
                 logger.error(f"State handler failed for event {event_id}: {e}")
     
     # Default action handlers
-    async def _handle_validate(self, event_id: str, event_data: Dict[str, Any], rule: LifecycleRule):
+    async def _handle_validate(self, event_id -> None: str, event_data -> None: Dict[str, Any], rule -> None: LifecycleRule) -> None:
         """Handle validation action"""
         logger.debug(f"Validating event {event_id}")
         
@@ -352,7 +352,7 @@ class EventLifecycleManager:
         # Assume validation succeeds for demo
         await self.transition_state(event_id, EventState.VALIDATED, "validation_completed")
     
-    async def _handle_process(self, event_id: str, event_data: Dict[str, Any], rule: LifecycleRule):
+    async def _handle_process(self, event_id -> None: str, event_data -> None: Dict[str, Any], rule -> None: LifecycleRule) -> None:
         """Handle processing action"""
         logger.debug(f"Starting processing for event {event_id}")
         
@@ -361,7 +361,7 @@ class EventLifecycleManager:
         # Note: Actual processing would be handled by external services
         # This just transitions to processing state
     
-    async def _handle_retry(self, event_id: str, event_data: Dict[str, Any], rule: LifecycleRule):
+    async def _handle_retry(self, event_id -> None: str, event_data -> None: Dict[str, Any], rule -> None: LifecycleRule) -> None:
         """Handle retry action"""
         lifecycle = self.managed_events[event_id]
         
@@ -377,7 +377,7 @@ class EventLifecycleManager:
         await self.transition_state(event_id, EventState.VALIDATED, 
                                    f"retry_attempt_{lifecycle.retry_count}")
     
-    async def _handle_escalate(self, event_id: str, event_data: Dict[str, Any], rule: LifecycleRule):
+    async def _handle_escalate(self, event_id -> None: str, event_data -> None: Dict[str, Any], rule -> None: LifecycleRule) -> None:
         """Handle escalation action"""
         logger.warning(f"Escalating event {event_id}")
         
@@ -386,7 +386,7 @@ class EventLifecycleManager:
         lifecycle.metadata["escalated"] = True
         lifecycle.metadata["escalation_time"] = datetime.utcnow().isoformat()
     
-    async def _handle_archive(self, event_id: str, event_data: Dict[str, Any], rule: LifecycleRule):
+    async def _handle_archive(self, event_id -> None: str, event_data -> None: Dict[str, Any], rule -> None: LifecycleRule) -> None:
         """Handle archive action"""
         logger.debug(f"Archiving event {event_id}")
         
@@ -397,13 +397,13 @@ class EventLifecycleManager:
         lifecycle.metadata["archived"] = True
         lifecycle.metadata["archive_time"] = datetime.utcnow().isoformat()
     
-    async def _handle_expire(self, event_id: str, event_data: Dict[str, Any], rule: LifecycleRule):
+    async def _handle_expire(self, event_id -> None: str, event_data -> None: Dict[str, Any], rule -> None: LifecycleRule) -> None:
         """Handle expiration action"""
         logger.debug(f"Expiring event {event_id}")
         
         await self.transition_state(event_id, EventState.EXPIRED, "event_expired")
     
-    async def _handle_notify(self, event_id: str, event_data: Dict[str, Any], rule: LifecycleRule):
+    async def _handle_notify(self, event_id -> None: str, event_data -> None: Dict[str, Any], rule -> None: LifecycleRule) -> None:
         """Handle notification action"""
         logger.debug(f"Sending notifications for event {event_id}")
         
@@ -412,7 +412,7 @@ class EventLifecycleManager:
         lifecycle.metadata["notifications_sent"] = True
         lifecycle.metadata["notification_time"] = datetime.utcnow().isoformat()
     
-    async def check_timeouts(self):
+    async def check_timeouts(self) -> None:
         """Check for timed out events and take action"""
         
         current_time = datetime.utcnow()
@@ -438,11 +438,11 @@ class EventLifecycleManager:
                 logger.warning(f"Event {event_id} expired")
                 await self._handle_expire(event_id, {}, rule)
     
-    def register_state_handler(self, state: EventState, handler: Callable):
+    def register_state_handler(self, state -> None: EventState, handler -> None: Callable) -> None:
         """Register handler for state changes"""
         self.state_handlers[state].append(handler)
     
-    def register_action_handler(self, action: LifecycleAction, handler: Callable):
+    def register_action_handler(self, action -> None: LifecycleAction, handler -> None: Callable) -> None:
         """Register custom action handler"""
         self.action_handlers[action] = handler
     

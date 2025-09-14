@@ -1,4 +1,6 @@
-"""📊 Response Tracking & Compliance Monitoring System
+"""# [EMOJI_REMOVED] Response Tracking & Compliance Monitoring System
+from pathlib import Path
+
 =================================================
 
 Enterprise-grade response tracking system for DMCA notice compliance monitoring and analytics.
@@ -8,7 +10,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use strictly prohibited
 
 This module provides:
-- Real-time response tracking
+    - Real-time response tracking
 - Compliance status monitoring
 - Automated response parsing
 - Performance analytics
@@ -126,7 +128,7 @@ Platform response to DMCA notice"""
     requires_manual_review: bool = False
     verified: bool = False
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         try:
                     # Request validation
                     if not data:
@@ -176,7 +178,7 @@ class ResponseParser:
     """
 Intelligent response content parser"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.patterns = self._load_response_patterns()
         self.ml_classifier = None  # Placeholder for ML-based classification
     
@@ -462,7 +464,7 @@ class ResponseTracker:
     """
 Main response tracking and monitoring system"""
     
-    def __init__(self, redis_url: str = None):
+    def __init__(self, redis_url -> None: str = None) -> None:
         self.redis_url = redis_url or "redis://localhost:6379"
         self.redis_client: Optional[aioredis.Redis] = None
         self.parser = ResponseParser()
@@ -922,7 +924,7 @@ Calculate efficiency score for the process"""
         
         return sum(efficiency_factors) / len(efficiency_factors)
     
-    async def _update_compliance_tracking(self, response: PlatformResponse):
+    async def _update_compliance_tracking(self, response -> None: PlatformResponse) -> None:
         """
 Update compliance tracking metrics"""
         
@@ -940,7 +942,7 @@ Update compliance tracking metrics"""
         await self.redis_client.hset(key, mapping=compliance_data)
         await self.redis_client.expire(key, 86400 * 30)  # Expire after 30 days
     
-    async def _check_response_alerts(self, response: PlatformResponse):
+    async def _check_response_alerts(self, response -> None: PlatformResponse) -> None:
         """Check if response triggers any alerts"""
         
         alerts = []
@@ -977,7 +979,7 @@ Update compliance tracking metrics"""
                 alert_key, 86400 * 30, json.dumps(alert, default=str)
             )
     
-    async def _persist_response(self, response: PlatformResponse):
+    async def _persist_response(self, response -> None: PlatformResponse) -> None:
         """Persist response to storage"""
         
         try:
@@ -1000,7 +1002,7 @@ Update compliance tracking metrics"""
         except Exception as e:
             logger.error(f"Error persisting response {response.response_id}: {e}")
     
-    async def _store_response_file(self, response: PlatformResponse):
+    async def _store_response_file(self, response -> None: PlatformResponse) -> None:
         """Store response as file backup"""
         
         storage_dir = Path("storage/responses")
@@ -1017,7 +1019,7 @@ Update compliance tracking metrics"""
             
             await f.write(json.dumps(data, indent=2, default=str))
     
-    async def _persist_compliance_report(self, report: ComplianceReport):
+    async def _persist_compliance_report(self, report -> None: ComplianceReport) -> None:
         """Persist compliance report"""
         
         try:
@@ -1032,7 +1034,7 @@ Update compliance tracking metrics"""
         except Exception as e:
             logger.error(f"Error persisting report {report.report_id}: {e}")
     
-    async def _load_stored_responses(self):
+    async def _load_stored_responses(self) -> None:
         """Load responses from storage on startup"""
         
         try:
@@ -1119,7 +1121,7 @@ Update compliance tracking metrics"""
             }
         }
     
-    async def cleanup(self):
+    async def cleanup(self) -> None:
         """
 Clean up resources"""
         
@@ -1151,3 +1153,5 @@ __all__ = [
     'ResponseChannel',
     'create_response_tracker'
 ]
+
+# File has syntax issues - needs manual review

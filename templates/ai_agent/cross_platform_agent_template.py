@@ -273,7 +273,7 @@ class InstagramOptimizer(PlatformOptimizer):
 class CrossPlatformAgent:
     """🌐 Advanced Cross-Platform AI Agent for Multi-Platform Content Management"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         """Initialize Cross-Platform Agent"""
         self.config = config or {}
         self.platforms = self._initialize_platforms()
@@ -400,7 +400,7 @@ class CrossPlatformAgent:
         
         return upload_data
     
-    async def _apply_rate_limit(self, platform: PlatformType):
+    async def _apply_rate_limit(self, platform -> None: PlatformType) -> None:
         """Apply platform-specific rate limiting"""
         platform_config = self.platforms[platform]
         delay = 60 / platform_config.rate_limit  # seconds between requests
@@ -571,7 +571,7 @@ class CrossPlatformAgent:
         return results
 
 # Usage Example and Template Testing
-async def main():
+async def main() -> None:
     """Example usage of Cross-Platform Agent Template"""
     
     # Initialize the agent

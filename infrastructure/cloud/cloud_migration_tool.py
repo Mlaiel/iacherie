@@ -108,7 +108,7 @@ class CloudMigrationTool:
     capabilities for moving workloads between cloud providers.
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize cloud migration tool."""
         self.logger = logging.getLogger(__name__)
         
@@ -134,7 +134,7 @@ class CloudMigrationTool:
         
         self.logger.info("CloudMigrationTool initialized successfully")
 
-    def _initialize_migration_templates(self):
+    def _initialize_migration_templates(self) -> None:
         """Initialize migration templates for common scenarios."""
         try:
             templates = {
@@ -186,7 +186,7 @@ class CloudMigrationTool:
         except Exception as e:
             self.logger.error(f"Failed to initialize migration templates: {e}")
 
-    def _initialize_best_practices(self):
+    def _initialize_best_practices(self) -> None:
         """Initialize migration best practices."""
         try:
             best_practices = {
@@ -1006,7 +1006,7 @@ class CloudMigrationTool:
         """Execute rollback procedures."""
         return {'status': 'completed', 'rollback_point': rollback_point}
 
-    def _record_migration_history(self, execution: MigrationExecution, plan: MigrationPlan):
+    def _record_migration_history(self, execution -> None: MigrationExecution, plan -> None: MigrationPlan) -> None:
         """Record migration in history."""
         self.migration_history.append({
             'execution_id': execution.execution_id,
@@ -1015,7 +1015,7 @@ class CloudMigrationTool:
             'completion_time': datetime.utcnow().isoformat()
         })
 
-    def _record_rollback_history(self, execution: MigrationExecution, rollback_result: Dict[str, Any]):
+    def _record_rollback_history(self, execution -> None: MigrationExecution, rollback_result -> None: Dict[str, Any]) -> None:
         """Record rollback in history."""
         self.migration_history.append({
             'execution_id': execution.execution_id,
@@ -1055,7 +1055,7 @@ class CloudMigrationTool:
 
 # Example usage and testing
 if __name__ == "__main__":
-    async def main():
+    async def main() -> None:
         # Initialize migration tool
         migration_tool = CloudMigrationTool()
         

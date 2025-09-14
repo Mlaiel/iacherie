@@ -147,9 +147,9 @@ class FinancialReportingProcessor:
     
     def __init__(
         self,
-        config: Dict[str, Any],
-        data_warehouse_config: Optional[Dict[str, Any]] = None
-    ):
+        config -> None: Dict[str, Any],
+        data_warehouse_config -> None: Optional[Dict[str, Any]] = None
+    ) -> None:
         """
 Initialize financial reporting processor"""
         self.config = config

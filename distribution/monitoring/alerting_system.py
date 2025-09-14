@@ -93,7 +93,7 @@ class AlertingSystem:
     and advanced alert management capabilities
     """
     
-    def __init__(self, redis_client: redis.Redis):
+    def __init__(self, redis_client -> None: redis.Redis) -> None:
         self.redis = redis_client
         self.alert_rules: Dict[str, AlertRule] = {}
         self.active_alerts: Dict[str, Alert] = {}
@@ -102,7 +102,7 @@ class AlertingSystem:
         self.evaluation_tasks = {}
         self.running = False
         
-    async def start(self):
+    async def start(self) -> None:
         """Start the alerting system"""
         self.running = True
         logger.info("Starting alerting system")
@@ -115,7 +115,7 @@ class AlertingSystem:
         # Start evaluation tasks
         await self._start_evaluation_tasks()
         
-    async def stop(self):
+    async def stop(self) -> None:
         """Stop the alerting system"""
         self.running = False
         logger.info("Stopping alerting system")
@@ -126,7 +126,7 @@ class AlertingSystem:
         
         await asyncio.gather(*self.evaluation_tasks.values(), return_exceptions=True)
         
-    async def add_alert_rule(self, rule: AlertRule):
+    async def add_alert_rule(self, rule -> None: AlertRule) -> None:
         """Add or update an alert rule"""
         self.alert_rules[rule.id] = rule
         
@@ -152,7 +152,7 @@ class AlertingSystem:
             
         logger.info(f"Added alert rule: {rule.id}")
     
-    async def remove_alert_rule(self, rule_id: str):
+    async def remove_alert_rule(self, rule_id -> None: str) -> None:
         """Remove an alert rule"""
         if rule_id in self.alert_rules:
             del self.alert_rules[rule_id]
@@ -167,7 +167,7 @@ class AlertingSystem:
             
             logger.info(f"Removed alert rule: {rule_id}")
     
-    async def trigger_alert(self, rule_id: str, metrics: Dict[str, Any], context: Dict[str, Any] = None):
+    async def trigger_alert(self, rule_id -> None: str, metrics -> None: Dict[str, Any], context -> None: Dict[str, Any] = None) -> None:
         """Trigger an alert for a rule"""
         if rule_id not in self.alert_rules:
             logger.warning(f"Alert rule not found: {rule_id}")
@@ -210,7 +210,7 @@ class AlertingSystem:
         
         logger.warning(f"Alert triggered: {alert.title} [{alert.severity.value}]")
     
-    async def acknowledge_alert(self, alert_id: str, user_id: str):
+    async def acknowledge_alert(self, alert_id -> None: str, user_id -> None: str) -> None:
         """Acknowledge an alert"""
         if alert_id in self.active_alerts:
             alert = self.active_alerts[alert_id]
@@ -221,7 +221,7 @@ class AlertingSystem:
             await self._save_alert(alert)
             logger.info(f"Alert acknowledged: {alert_id} by {user_id}")
     
-    async def resolve_alert(self, alert_id: str):
+    async def resolve_alert(self, alert_id -> None: str) -> None:
         """Resolve an alert"""
         if alert_id in self.active_alerts:
             alert = self.active_alerts[alert_id]
@@ -235,7 +235,7 @@ class AlertingSystem:
             
             logger.info(f"Alert resolved: {alert_id}")
     
-    async def suppress_alert(self, alert_id: str, duration: int = 3600):
+    async def suppress_alert(self, alert_id -> None: str, duration -> None: int = 3600) -> None:
         """Suppress an alert for a specified duration"""
         if alert_id in self.active_alerts:
             alert = self.active_alerts[alert_id]
@@ -248,7 +248,7 @@ class AlertingSystem:
             
             logger.info(f"Alert suppressed: {alert_id} for {duration} seconds")
     
-    async def _load_alert_rules(self):
+    async def _load_alert_rules(self) -> None:
         """Load alert rules from Redis"""
         rules_data = await self.redis.hgetall("alert_rules")
         
@@ -273,7 +273,7 @@ class AlertingSystem:
             except (json.JSONDecodeError, KeyError, ValueError) as e:
                 logger.error(f"Failed to load alert rule {rule_id}: {e}")
     
-    async def _load_notification_configs(self):
+    async def _load_notification_configs(self) -> None:
         """Load notification configurations"""
         # Default configurations - would typically load from database
         self.notification_configs = {
@@ -305,7 +305,7 @@ class AlertingSystem:
             )
         }
     
-    async def _load_active_alerts(self):
+    async def _load_active_alerts(self) -> None:
         """Load active alerts from Redis"""
         alerts_data = await self.redis.hgetall("active_alerts")
         
@@ -331,13 +331,13 @@ class AlertingSystem:
             except (json.JSONDecodeError, KeyError, ValueError) as e:
                 logger.error(f"Failed to load alert {alert_id}: {e}")
     
-    async def _start_evaluation_tasks(self):
+    async def _start_evaluation_tasks(self) -> None:
         """Start evaluation tasks for all enabled rules"""
         for rule in self.alert_rules.values():
             if rule.enabled:
                 await self._start_rule_evaluation(rule)
     
-    async def _start_rule_evaluation(self, rule: AlertRule):
+    async def _start_rule_evaluation(self, rule -> None: AlertRule) -> None:
         """Start evaluation task for a rule"""
         if rule.id in self.evaluation_tasks:
             self.evaluation_tasks[rule.id].cancel()
@@ -346,7 +346,7 @@ class AlertingSystem:
             self._evaluate_rule_continuously(rule)
         )
     
-    async def _evaluate_rule_continuously(self, rule: AlertRule):
+    async def _evaluate_rule_continuously(self, rule -> None: AlertRule) -> None:
         """Continuously evaluate a rule"""
         try:
             while self.running:
@@ -404,7 +404,7 @@ class AlertingSystem:
             logger.error(f"Error evaluating condition for rule {rule.id}: {e}")
             return False
     
-    async def _send_notifications(self, alert: Alert):
+    async def _send_notifications(self, alert -> None: Alert) -> None:
         """Send notifications for alert"""
         rule = self.alert_rules[alert.rule_id]
         
@@ -417,7 +417,7 @@ class AlertingSystem:
                     except Exception as e:
                         logger.error(f"Failed to send {channel.value} notification: {e}")
     
-    async def _send_notification(self, alert: Alert, channel: AlertChannel, config: NotificationConfig):
+    async def _send_notification(self, alert -> None: Alert, channel -> None: AlertChannel, config -> None: NotificationConfig) -> None:
         """Send notification to specific channel"""
         if channel == AlertChannel.EMAIL:
             await self._send_email_notification(alert, config)
@@ -427,7 +427,7 @@ class AlertingSystem:
             await self._send_webhook_notification(alert, config)
         # Add more channels as needed
     
-    async def _send_email_notification(self, alert: Alert, config: NotificationConfig):
+    async def _send_email_notification(self, alert -> None: Alert, config -> None: NotificationConfig) -> None:
         """Send email notification"""
         smtp_config = config.config
         
@@ -466,7 +466,7 @@ Alert ID: {alert.id}
         except Exception as e:
             logger.error(f"Failed to send email notification: {e}")
     
-    async def _send_slack_notification(self, alert: Alert, config: NotificationConfig):
+    async def _send_slack_notification(self, alert -> None: Alert, config -> None: NotificationConfig) -> None:
         """Send Slack notification"""
         slack_config = config.config
         
@@ -504,7 +504,7 @@ Alert ID: {alert.id}
             else:
                 logger.error(f"Failed to send Slack notification: {response.status_code}")
     
-    async def _send_webhook_notification(self, alert: Alert, config: NotificationConfig):
+    async def _send_webhook_notification(self, alert -> None: Alert, config -> None: NotificationConfig) -> None:
         """Send webhook notification"""
         webhook_config = config.config
         
@@ -535,7 +535,7 @@ Alert ID: {alert.id}
             else:
                 logger.error(f"Failed to send webhook notification: {response.status_code}")
     
-    async def _save_alert(self, alert: Alert):
+    async def _save_alert(self, alert -> None: Alert) -> None:
         """Save alert to Redis"""
         alert_data = {
             "id": alert.id,
@@ -566,7 +566,7 @@ Alert ID: {alert.id}
         cooldown_key = f"alert_cooldown:{rule_id}"
         return await self.redis.exists(cooldown_key)
     
-    async def _set_cooldown(self, rule_id: str, duration: int):
+    async def _set_cooldown(self, rule_id -> None: str, duration -> None: int) -> None:
         """Set cooldown period for rule"""
         cooldown_key = f"alert_cooldown:{rule_id}"
         await self.redis.setex(cooldown_key, duration, "1")

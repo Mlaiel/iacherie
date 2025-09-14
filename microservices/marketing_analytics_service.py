@@ -170,7 +170,7 @@ class CustomerJourney:
     channel_sequence: List[MarketingChannel] = field(default_factory=list)
     created_at: datetime = field(default_factory=datetime.utcnow)
     
-    def add_touchpoint(self, touchpoint: TouchPoint):
+    def add_touchpoint(self, touchpoint -> None: TouchPoint) -> None:
         """Add touchpoint to journey"""
         self.touchpoints.append(touchpoint)
         self.touchpoints.sort(key=lambda tp: tp.timestamp)
@@ -237,7 +237,7 @@ class MarketingMetrics:
     customer_acquisition_cost: Decimal = Decimal('0.00')
     lifetime_value: Decimal = Decimal('0.00')
     
-    def calculate_derived_metrics(self):
+    def calculate_derived_metrics(self) -> None:
         """Calculate derived metrics"""
         # CTR calculation
         if self.impressions > 0:
@@ -327,7 +327,7 @@ class AttributionResult:
 class AttributionAnalyzer:
     """Attribution modeling and analysis"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.models = {}
         self.attribution_cache = {}
     
@@ -494,7 +494,7 @@ class AttributionAnalyzer:
 class PerformancePredictor:
     """ML-based marketing performance prediction"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.models = {}
         self.training_data = []
     
@@ -654,7 +654,7 @@ class MarketingAnalyticsService:
     💡 AI Prompt: Intelligent insights generation, marketing recommendations, and content optimization
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.metrics_data: Dict[str, List[MarketingMetrics]] = defaultdict(list)
         self.customer_journeys: Dict[str, CustomerJourney] = {}
         self.touchpoints: List[TouchPoint] = []
@@ -1215,7 +1215,7 @@ class MarketingAnalyticsService:
 
 
 # Example usage and testing
-async def main():
+async def main() -> None:
     """Example usage of the MarketingAnalyticsService"""
     service = MarketingAnalyticsService()
     

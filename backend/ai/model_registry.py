@@ -249,7 +249,7 @@ class ModelRegistry:
     - Automated model validation and quality assurance
     """
     
-    def __init__(self, storage_path: str = "/tmp/model_registry"):
+    def __init__(self, storage_path -> None: str = "/tmp/model_registry") -> None:
         self.storage_path = Path(storage_path)
         self.storage_path.mkdir(parents=True, exist_ok=True)
         
@@ -680,7 +680,7 @@ class ModelRegistry:
             logger.error(f"Failed to load model: {e}")
             raise
     
-    async def _save_metadata(self, version: ModelVersion):
+    async def _save_metadata(self, version -> None: ModelVersion) -> None:
         """Save model version metadata"""
         metadata_path = Path(version.artifact_path).parent / "metadata.json"
         try:
@@ -729,7 +729,7 @@ class ModelRegistry:
 # Global model registry instance
 model_registry = ModelRegistry()
 
-async def main():
+async def main() -> None:
     """Demo function showcasing Advanced Model Registry capabilities"""
     print("🧠💻 Advanced AI Model Registry - Lead Dev IA + ML Engineer Demo")
     print("=" * 70)
@@ -796,7 +796,8 @@ async def main():
             
             # Mock model for demo
             class MockModel:
-                def predict(self, X):
+    """MockModel: class implementation"""
+                def predict(self, X) -> None:
                     return [1] * len(X)
             
             mock_model = MockModel()

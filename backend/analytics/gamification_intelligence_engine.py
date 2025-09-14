@@ -258,7 +258,7 @@ class GamificationIntelligenceEngine:
     reward effectiveness, and motivation modeling.
     """
     
-    def __init__(self, retention_days: int = 365):
+    def __init__(self, retention_days -> None: int = 365) -> None:
         """Initialize the Gamification Intelligence Engine"""
         self.retention_days = retention_days
         self.user_profiles: Dict[str, UserProfile] = {}
@@ -563,7 +563,7 @@ class GamificationIntelligenceEngine:
         
         return indicators
     
-    async def _update_user_profile_from_session(self, session: EngagementSession):
+    async def _update_user_profile_from_session(self, session -> None: EngagementSession) -> None:
         """Update user profile based on session data"""
         try:
             user_id = session.user_id
@@ -630,7 +630,7 @@ class GamificationIntelligenceEngine:
         else:
             return "low"
     
-    async def _update_engagement_patterns(self, user: UserProfile, session: EngagementSession):
+    async def _update_engagement_patterns(self, user -> None: UserProfile, session -> None: EngagementSession) -> None:
         """Update user engagement patterns based on session"""
         if "patterns" not in user.engagement_patterns:
             user.engagement_patterns["patterns"] = {
@@ -663,7 +663,7 @@ class GamificationIntelligenceEngine:
             current_social = patterns["social_engagement_level"]
             patterns["social_engagement_level"] = (current_social * 0.8) + (social_rate * 0.2)
     
-    async def _update_motivation_profile(self, user: UserProfile, session: EngagementSession):
+    async def _update_motivation_profile(self, user -> None: UserProfile, session -> None: EngagementSession) -> None:
         """Update user motivation profile based on session behavior"""
         motivation_adjustments = {}
         
@@ -692,7 +692,7 @@ class GamificationIntelligenceEngine:
                 current_value = user.motivation_profile[motivation_type]
                 user.motivation_profile[motivation_type] = max(0.1, current_value * 0.99)
     
-    async def _update_elements_performance(self, session: EngagementSession):
+    async def _update_elements_performance(self, session -> None: EngagementSession) -> None:
         """Update gamification elements performance based on session"""
         for mechanic in session.mechanics_engaged:
             # Find elements of this mechanic type

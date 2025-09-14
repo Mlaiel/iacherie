@@ -1,4 +1,6 @@
 """
+import asyncio
+
 Connectors Service Entry Point - Consolidated Platform Integration Hub
 ====================================================================
 
@@ -45,7 +47,7 @@ def get_platform_manager() -> PlatformManager:
     return platform_manager
 
 @connectors_router.get("/health")
-async def connectors_health():
+async def connectors_health() -> None:
     """Connectors service health check"""
     manager = get_platform_manager()
     health_status = await manager.health_check_all_platforms()
@@ -58,7 +60,7 @@ async def connectors_health():
     }
 
 @connectors_router.get("/platforms")
-async def get_available_platforms():
+async def get_available_platforms() -> None:
     """Get list of all available platform connectors"""
     manager = get_platform_manager()
     platforms = await manager.get_all_available_platforms()
@@ -73,7 +75,7 @@ async def get_available_platforms():
     }
 
 @connectors_router.get("/platforms/{platform_type}")
-async def get_platforms_by_type(platform_type: str):
+async def get_platforms_by_type(platform_type -> None: str) -> None:
     """Get platforms by type (social_media, music_streaming, creator_economy)"""
     manager = get_platform_manager()
     all_platforms = await manager.get_all_available_platforms()
@@ -89,9 +91,9 @@ async def get_platforms_by_type(platform_type: str):
 
 @connectors_router.post("/distribute")
 async def distribute_content(
-    request: Dict[str, Any],
-    background_tasks: BackgroundTasks
-):
+    request -> None: Dict[str, Any],
+    background_tasks -> None: BackgroundTasks
+) -> None:
     """Distribute content across multiple platforms"""
     try:
         # Validate request
@@ -131,7 +133,7 @@ async def distribute_content(
         raise HTTPException(status_code=500, detail=str(e))
 
 @connectors_router.get("/analytics/{platform_type}/{platform_name}/{content_id}")
-async def get_platform_analytics(platform_type: str, platform_name: str, content_id: str):
+async def get_platform_analytics(platform_type -> None: str, platform_name -> None: str, content_id -> None: str) -> None:
     """Get analytics for specific platform and content"""
     manager = get_platform_manager()
     analytics = await manager.get_platform_analytics(platform_type, platform_name, content_id)
@@ -144,7 +146,7 @@ async def get_platform_analytics(platform_type: str, platform_name: str, content
     }
 
 @connectors_router.get("/history")
-async def get_distribution_history(creator_id: Optional[str] = None):
+async def get_distribution_history(creator_id -> None: Optional[str] = None) -> None:
     """Get distribution history"""
     manager = get_platform_manager()
     history = manager.get_distribution_history(creator_id)
@@ -165,7 +167,7 @@ async def get_distribution_history(creator_id: Optional[str] = None):
     }
 
 @connectors_router.post("/emergency-stop/{request_id}")
-async def emergency_stop_distribution(request_id: str):
+async def emergency_stop_distribution(request_id -> None: str) -> None:
     """Emergency stop for active distribution"""
     manager = get_platform_manager()
     result = await manager.emergency_stop_distribution(request_id)
@@ -173,7 +175,7 @@ async def emergency_stop_distribution(request_id: str):
     return result
 
 @connectors_router.get("/")
-async def connectors_info():
+async def connectors_info() -> None:
     """Connectors system information"""
     manager = get_platform_manager()
     platforms = await manager.get_all_available_platforms()

@@ -1,3 +1,8 @@
+"""
+Health Checker module
+Enterprise implementation for Ainflue platform
+"""
+
 # Ainflue Infrastructure Module
 # =============================
 # 
@@ -91,7 +96,7 @@ class HealthChecker:
     and automated incident detection across infrastructure components.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize health checker."""
         self.config = config or {}
         self.health_checks: Dict[str, HealthCheck] = {}
@@ -123,14 +128,14 @@ class HealthChecker:
         
         logger.info("HealthChecker initialized")
     
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         """Async context manager entry."""
         self.session = aiohttp.ClientSession(
             timeout=aiohttp.ClientTimeout(total=self.default_timeout)
         )
         return self
     
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         """Async context manager exit."""
         if self.session:
             await self.session.close()
@@ -179,7 +184,7 @@ class HealthChecker:
             logger.error(f"Failed to remove health check {check_name}: {str(e)}")
             return False
     
-    async def _start_check_task(self, check: HealthCheck):
+    async def _start_check_task(self, check -> None: HealthCheck) -> None:
         """Start a health check task."""
         try:
             # Cancel existing task if any
@@ -193,7 +198,7 @@ class HealthChecker:
         except Exception as e:
             logger.error(f"Failed to start check task for {check.name}: {str(e)}")
     
-    async def _check_loop(self, check: HealthCheck):
+    async def _check_loop(self, check -> None: HealthCheck) -> None:
         """Health check loop."""
         while True:
             try:
@@ -493,7 +498,7 @@ class HealthChecker:
                 message=f"Custom check failed: {str(e)}"
             )
     
-    async def _store_result(self, result: HealthResult):
+    async def _store_result(self, result -> None: HealthResult) -> None:
         """Store health check result."""
         try:
             if result.check_name not in self.health_results:
@@ -509,7 +514,7 @@ class HealthChecker:
         except Exception as e:
             logger.error(f"Failed to store result for {result.check_name}: {str(e)}")
     
-    async def _process_result(self, result: HealthResult):
+    async def _process_result(self, result -> None: HealthResult) -> None:
         """Process health check result."""
         try:
             # Update service health
@@ -525,7 +530,7 @@ class HealthChecker:
         except Exception as e:
             logger.error(f"Failed to process result for {result.check_name}: {str(e)}")
     
-    async def _update_service_health(self, result: HealthResult):
+    async def _update_service_health(self, result -> None: HealthResult) -> None:
         """Update service health summary."""
         try:
             service_name = result.check_name
@@ -552,7 +557,7 @@ class HealthChecker:
         except Exception as e:
             logger.error(f"Failed to update service health for {result.check_name}: {str(e)}")
     
-    async def _check_status_changes(self, result: HealthResult):
+    async def _check_status_changes(self, result -> None: HealthResult) -> None:
         """Check for status changes and log them."""
         try:
             check_name = result.check_name
@@ -569,7 +574,7 @@ class HealthChecker:
         except Exception as e:
             logger.error(f"Failed to check status changes for {result.check_name}: {str(e)}")
     
-    async def _log_status_change(self, check_name: str, old_status: HealthStatus, new_status: HealthStatus):
+    async def _log_status_change(self, check_name -> None: str, old_status -> None: HealthStatus, new_status -> None: HealthStatus) -> None:
         """Log status change event."""
         try:
             # In real implementation, would send to logging system
@@ -578,7 +583,7 @@ class HealthChecker:
         except Exception as e:
             logger.error(f"Failed to log status change: {str(e)}")
     
-    async def _send_notifications(self, result: HealthResult):
+    async def _send_notifications(self, result -> None: HealthResult) -> None:
         """Send notifications for unhealthy services."""
         try:
             if result.status in [HealthStatus.UNHEALTHY, HealthStatus.DEGRADED]:
@@ -594,7 +599,7 @@ class HealthChecker:
         except Exception as e:
             logger.error(f"Failed to send notifications for {result.check_name}: {str(e)}")
     
-    async def _send_alert_notification(self, result: HealthResult):
+    async def _send_alert_notification(self, result -> None: HealthResult) -> None:
         """Send alert notification."""
         try:
             # In real implementation, would integrate with notification services
@@ -604,7 +609,7 @@ class HealthChecker:
         except Exception as e:
             logger.error(f"Failed to send alert notification: {str(e)}")
     
-    async def create_default_health_checks(self):
+    async def create_default_health_checks(self) -> None:
         """Create default health checks for Ainflue infrastructure."""
         try:
             # API health check

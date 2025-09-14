@@ -134,7 +134,7 @@ class FeatureExtractor:
     """
 Extract features for ML models"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         try:
             logger.info(f"Executing __init__")
             
@@ -203,7 +203,7 @@ Extract features from service metrics"""
 class PredictiveModel:
     """ML model for performance prediction"""
     
-    def __init__(self, model_type: MLModel = MLModel.RANDOM_FOREST):
+    def __init__(self, model_type -> None: MLModel = MLModel.RANDOM_FOREST) -> None:
         self.model_type = model_type
         self.model = None
         self.scaler = StandardScaler() if ML_AVAILABLE else None
@@ -445,7 +445,7 @@ class AILoadBalancerOptimizer:
     - Cost optimization recommendations
     """
     
-    def __init__(self, config_path: Optional[str] = None):
+    def __init__(self, config_path -> None: Optional[str] = None) -> None:
         self.config_path = config_path or "/etc/ia-influencer/ai-optimizer.yaml"
         self.config = {}
         
@@ -1118,7 +1118,7 @@ Stop AI optimization engine"""
         }
 
 
-async def main():
+async def main() -> None:
     """
 Demo function for AI optimization"""
     optimizer = AILoadBalancerOptimizer()

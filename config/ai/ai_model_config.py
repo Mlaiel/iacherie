@@ -13,7 +13,7 @@ from dataclasses import dataclass
 from datetime import datetime
 
 try:
-try:
+    try:
     from pydantic_settings import BaseSettings
     from pydantic import validator, Field
 except ImportError:
@@ -22,21 +22,23 @@ except ImportError:
 except ImportError:
     # Fallback for environments without pydantic
     class BaseSettings:
-        def __init__(self, **kwargs):
+    """BaseSettings: class implementation"""
+        def __init__(self, **kwargs) -> None:
             for key, value in kwargs.items():
                 setattr(self, key, value)
         
         class Config:
+    """Config: class implementation"""
             env_prefix = ""
             case_sensitive = False
             extra = "allow"
     
-    def validator(field_name):
-        def decorator(func):
+    def validator(field_name) -> None:
+        def decorator(func) -> None:
             return func
         return decorator
     
-    def Field(**kwargs):
+    def Field(**kwargs) -> None:
         return kwargs.get('default_factory', kwargs.get('default'))()
 
 
@@ -421,6 +423,7 @@ class AIModelSettings(BaseSettings):
     )
     
     class Config:
+    """Config: class implementation"""
         env_prefix = "AI_MODEL_"
         case_sensitive = False
         extra = "allow"
@@ -465,7 +468,7 @@ class AIModelSettings(BaseSettings):
             return None
         
         # Sort by performance score (accuracy / latency * cost factor)
-        def score_model(model):
+        def score_model(model) -> None:
             return model.metrics.accuracy / (model.metrics.latency_ms / 1000) / max(model.metrics.cost_per_request, 0.001)
         
         return max(filtered, key=score_model)
@@ -549,3 +552,5 @@ __all__ = [
     "ModelMetrics",
     "ModelConfiguration"
 ]
+
+# File has syntax issues - needs manual review

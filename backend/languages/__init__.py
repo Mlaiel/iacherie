@@ -1,4 +1,6 @@
 """Backend Languages Module - Multilingual Support Infrastructure
+import asyncio
+
 ================================================================================
 Module: backend/languages/__init__.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -423,7 +425,7 @@ class LanguageServiceManager:
     Unified manager for all language services with integrated workflows
     """
     
-    def __init__(self, config=None):
+    def __init__(self, config=None) -> None:
         """Initialize all language services"""
         self.config = {**DEFAULT_CONFIG, **(config or {})}
         

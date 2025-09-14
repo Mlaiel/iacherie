@@ -111,7 +111,7 @@ class ContentFingerprint:
     size_bytes: int
     mime_type: str
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         """
 Generate combined hash from content and metadata"""
         if not self.combined_hash:
@@ -125,19 +125,19 @@ class CryptographicTimestamping:
     Provides immutable proof of existence and integrity for digital content
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.private_key = self._load_private_key()
         self.public_key = self.private_key.public_key()
         self.session = None
         
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         """
 Async context manager entry"""
         self.session = aiohttp.ClientSession()
         return self
     
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         """
 Async context manager exit"""
         if self.session:

@@ -1,3 +1,8 @@
+"""
+Cache Optimizer module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
@@ -156,7 +161,7 @@ class CDNConfig:
 class MemoryCache:
     """Cache mémoire L1 avec LRU optimisé"""
     
-    def __init__(self, config: CacheConfig):
+    def __init__(self, config -> None: CacheConfig) -> None:
         self.config = config
         self.cache: OrderedDict[str, CacheEntry] = OrderedDict()
         self.metrics = CacheMetrics()
@@ -305,7 +310,7 @@ class MemoryCache:
         # Retourne les clés dans l'ordre LRU
         return list(self.cache.keys())
     
-    def _add_to_indexes(self, key: str, entry: CacheEntry):
+    def _add_to_indexes(self, key -> None: str, entry -> None: CacheEntry) -> None:
         """Ajoute aux index de recherche"""
         for tag in entry.tags:
             self._tag_index[tag].add(key)
@@ -313,7 +318,7 @@ class MemoryCache:
         size_bucket = entry.size // 1024  # Buckets de 1KB
         self._size_index[size_bucket].add(key)
     
-    def _remove_from_indexes(self, key: str, entry: CacheEntry):
+    def _remove_from_indexes(self, key -> None: str, entry -> None: CacheEntry) -> None:
         """Supprime des index de recherche"""
         for tag in entry.tags:
             self._tag_index[tag].discard(key)
@@ -375,13 +380,13 @@ class MemoryCache:
 class RedisCache:
     """Cache Redis L2 distribué"""
     
-    def __init__(self, config: CacheConfig, redis_url: str = "redis://localhost:6379"):
+    def __init__(self, config -> None: CacheConfig, redis_url -> None: str = "redis -> None://localhost -> None:6379") -> None:
         self.config = config
         self.redis_url = redis_url
         self.redis_client: Optional[redis.Redis] = None
         self.metrics = CacheMetrics()
         
-    async def connect(self):
+    async def connect(self) -> None:
         """Connexion à Redis"""
         try:
             self.redis_client = redis.from_url(self.redis_url)
@@ -461,15 +466,15 @@ class RedisCache:
 class CDNManager:
     """Gestionnaire CDN L4"""
     
-    def __init__(self, config: CDNConfig):
+    def __init__(self, config -> None: CDNConfig) -> None:
         self.config = config
         self.session: Optional[aiohttp.ClientSession] = None
         
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         self.session = aiohttp.ClientSession()
         return self
     
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         if self.session:
             await self.session.close()
     
@@ -599,13 +604,13 @@ class CDNManager:
 class PredictiveEngine:
     """Moteur de prédiction pour le preloading"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.access_patterns: Dict[str, List[Tuple[datetime, str]]] = defaultdict(list)
         self.model = None
         self.scaler = MinMaxScaler()
         self._lock = threading.Lock()
         
-    def record_access(self, user_id: str, resource_key: str):
+    def record_access(self, user_id -> None: str, resource_key -> None: str) -> None:
         """Enregistre un accès pour l'analyse"""
         with self._lock:
             self.access_patterns[user_id].append((datetime.now(), resource_key))
@@ -710,9 +715,9 @@ class CacheOptimizer:
     """
     
     def __init__(self, 
-                 cache_config: CacheConfig,
-                 cdn_config: Optional[CDNConfig] = None,
-                 redis_url: str = "redis://localhost:6379"):
+                 cache_config -> None: CacheConfig,
+                 cdn_config -> None: Optional[CDNConfig] = None,
+                 redis_url -> None: str = "redis -> None://localhost -> None:6379") -> None:
         
         self.logger = logging.getLogger(__name__)
         self.cache_config = cache_config
@@ -897,15 +902,15 @@ class CacheOptimizer:
         
         return l1_count + l2_count
     
-    async def _promote_to_l1(self, key: str, data: bytes):
+    async def _promote_to_l1(self, key -> None: str, data -> None: bytes) -> None:
         """Promotion vers cache L1"""
         self.l1_cache.put(key, data)
     
-    async def _promote_to_l2(self, key: str, data: bytes):
+    async def _promote_to_l2(self, key -> None: str, data -> None: bytes) -> None:
         """Promotion vers cache L2"""
         await self.l2_cache.put(key, data)
     
-    async def _promote_to_all_levels(self, key: str, data: bytes):
+    async def _promote_to_all_levels(self, key -> None: str, data -> None: bytes) -> None:
         """Promotion vers tous les niveaux inférieurs"""
         await self._promote_to_l1(key, data)
         await self._promote_to_l2(key, data)
@@ -938,7 +943,7 @@ class CacheOptimizer:
         # Simulation d'upload vers CDN
         return True
     
-    async def _predictive_preload(self, user_id: str):
+    async def _predictive_preload(self, user_id -> None: str) -> None:
         """Preloading prédictif basé sur ML"""
         
         try:
@@ -1074,7 +1079,7 @@ class CacheOptimizer:
         
         return stats
     
-    async def start_maintenance_tasks(self):
+    async def start_maintenance_tasks(self) -> None:
         """Démarre les tâches de maintenance"""
         
         self._maintenance_task = asyncio.create_task(self._maintenance_loop())
@@ -1082,7 +1087,7 @@ class CacheOptimizer:
         
         self.logger.info("Tâches de maintenance démarrées")
     
-    async def stop_maintenance_tasks(self):
+    async def stop_maintenance_tasks(self) -> None:
         """Arrête les tâches de maintenance"""
         
         if self._maintenance_task:
@@ -1101,7 +1106,7 @@ class CacheOptimizer:
         
         self.logger.info("Tâches de maintenance arrêtées")
     
-    async def _maintenance_loop(self):
+    async def _maintenance_loop(self) -> None:
         """Boucle de maintenance périodique"""
         
         while True:
@@ -1123,7 +1128,7 @@ class CacheOptimizer:
             except Exception as e:
                 self.logger.error(f"Erreur maintenance cache: {e}")
     
-    async def _prediction_training_loop(self):
+    async def _prediction_training_loop(self) -> None:
         """Boucle d'entraînement du modèle prédictif"""
         
         while True:
@@ -1140,7 +1145,7 @@ class CacheOptimizer:
             except Exception as e:
                 self.logger.error(f"Erreur entraînement prédictif: {e}")
     
-    async def _cleanup_expired_entries(self):
+    async def _cleanup_expired_entries(self) -> None:
         """Nettoie les entrées expirées"""
         
         # Nettoyage L1 (géré automatiquement par get())
@@ -1149,7 +1154,7 @@ class CacheOptimizer:
         
         pass
     
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         """Context manager entry"""
         if self.cdn_manager:
             await self.cdn_manager.__aenter__()
@@ -1157,7 +1162,7 @@ class CacheOptimizer:
         await self.start_maintenance_tasks()
         return self
     
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         """Context manager exit"""
         await self.stop_maintenance_tasks()
         if self.cdn_manager:
@@ -1220,7 +1225,7 @@ if __name__ == "__main__":
     # Test de l'optimiseur de cache
     import sys
     
-    async def test_cache_optimizer():
+    async def test_cache_optimizer() -> None:
         print("Test Cache Optimizer Ainflue")
         
         # Configuration de test

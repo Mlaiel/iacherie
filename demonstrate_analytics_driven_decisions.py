@@ -1,3 +1,8 @@
+"""
+Demonstrate Analytics Driven Decisions module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Analytics-Driven Decision Making Demonstration
@@ -22,7 +27,7 @@ from typing import Dict, Any
 # Add the project root to Python path
 sys.path.append('/home/runner/work/Ainflue/Ainflue')
 
-async def demonstrate_analytics_driven_decisions():
+async def demonstrate_analytics_driven_decisions() -> None:
     """Demonstrate the analytics-driven decision making capabilities"""
     
     print("🎉 AINFLUE PLATFORM - ANALYTICS-DRIVEN DECISION MAKING DEMONSTRATION")
@@ -128,7 +133,7 @@ async def demonstrate_analytics_driven_decisions():
         traceback.print_exc()
         return False
 
-def main():
+def main() -> None:
     """Main demonstration function"""
     print("🔄 Starting Analytics-Driven Decision Making Demonstration...")
     print()

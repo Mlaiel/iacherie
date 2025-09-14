@@ -1,4 +1,4 @@
-"""⚡ Performance Profiling System
+"""# [EMOJI_REMOVED] Performance Profiling System
 ==============================
 
 Advanced performance monitoring and optimization system for the Ainflue platform.
@@ -88,7 +88,7 @@ class PerformanceProfiler:
     - Optimization recommendations
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """
 Initialize performance profiler"""
         
@@ -473,7 +473,7 @@ Initialize performance profiler"""
         try:
             self.monitoring_active = True
             
-            def monitoring_loop():
+            def monitoring_loop() -> None:
         try:
                     # Collect metrics
                     metrics = {
@@ -813,3 +813,5 @@ __all__ = [
     "ProfilerType",
     "OptimizationLevel"
 ]
+
+# File has syntax issues - needs manual review

@@ -107,7 +107,7 @@ class EnterpriseVectorDatabase:
     - Scalable vector indexing
     """
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
         
@@ -533,7 +533,7 @@ class EnterpriseVectorDatabase:
 class FAISSVectorEngine:
     """FAISS-based vector storage engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.indices: Dict[str, faiss.Index] = {}
         self.id_to_index_map: Dict[str, Dict[str, int]] = {}
         self.index_to_id_map: Dict[str, Dict[int, str]] = {}
@@ -602,7 +602,7 @@ class FAISSVectorEngine:
 class ChromaVectorEngine:
     """ChromaDB-based vector storage engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.client = chromadb.Client()
         self.collections: Dict[str, Any] = {}
     
@@ -789,7 +789,7 @@ class DuplicateContentDetector:
         pass
 
 # Example usage
-async def main():
+async def main() -> None:
     """Example usage of the Enterprise Vector Database"""
     vector_db = EnterpriseVectorDatabase()
     

@@ -5,7 +5,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use prohibited
 
 Team Expertise:
-- Lead Dev IA + Backend Senior + ML Engineer
+    - Lead Dev IA + Backend Senior + ML Engineer
 - DBA + Security Expert + Microservices Architect
 - Audio Processing + DevOps + Prompt Engineering
 
@@ -132,7 +132,7 @@ class CertificateMonitor:
     Real-time monitoring, alerting, and reporting
     """
     
-    def __init__(self, config_path: Optional[Path] = None):
+    def __init__(self, config_path -> None: Optional[Path] = None) -> None:
         """
         Initialize certificate monitor
         
@@ -958,3 +958,6 @@ def create_certificate_monitor(config_path: Optional[Path] = None) -> Certificat
         Configured certificate monitor
     """
     return CertificateMonitor(config_path)
+)
+
+# File has syntax issues - needs manual review

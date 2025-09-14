@@ -1,3 +1,8 @@
+"""
+Security Group Manager module
+Enterprise implementation for Ainflue platform
+"""
+
 # Ainflue Infrastructure Module
 # =============================
 # 
@@ -87,7 +92,7 @@ class SecurityGroupManager:
     with automated compliance checking, risk assessment, and best practices enforcement.
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """Initialize security group manager."""
         self.config = config
         self.security_groups = {}
@@ -100,7 +105,7 @@ class SecurityGroupManager:
         
         self._initialize_cloud_clients()
     
-    def _initialize_cloud_clients(self):
+    def _initialize_cloud_clients(self) -> None:
         """Initialize cloud provider clients."""
         try:
             # AWS clients
@@ -243,8 +248,8 @@ class SecurityGroupManager:
             raise
     
     async def _add_aws_security_group_rules(self,
-                                          group_id: str,
-                                          rules: List[SecurityGroupRule]):
+                                          group_id -> None: str,
+                                          rules -> None: List[SecurityGroupRule]) -> None:
         """Add rules to AWS security group."""
         try:
             ec2_client = self.aws_clients['ec2']
@@ -964,7 +969,7 @@ if __name__ == "__main__":
         }
     }
     
-    async def main():
+    async def main() -> None:
         # Initialize security group manager
         manager = SecurityGroupManager(config)
         

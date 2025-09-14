@@ -20,7 +20,7 @@ from .index import create_notification_system
 class NotificationSystemValidator:
     """
 Comprehensive validation and health checks for the notification system."""
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
         self.notification_system = create_notification_system()
 
@@ -269,3 +269,5 @@ if __name__ == "__main__":
         except Exception as e:
             logger.error(f"main failed: {e}")
             raise
+
+# File has syntax issues - needs manual review

@@ -1,3 +1,8 @@
+"""
+Quality Dashboard Generator module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Quality Dashboard Generator - Ainflue Quality Platform
@@ -132,7 +137,7 @@ class QualityDashboardGenerator:
     - Data Visualization: Advanced charts and business intelligence
     """
     
-    def __init__(self, data_source_path: Optional[str] = None):
+    def __init__(self, data_source_path -> None: Optional[str] = None) -> None:
         self.data_source_path = data_source_path
         self.metric_store = {}
         self.dashboard_configs = {}
@@ -154,7 +159,7 @@ class QualityDashboardGenerator:
         
         logger.info("QualityDashboardGenerator initialized")
     
-    def _setup_template_environment(self):
+    def _setup_template_environment(self) -> None:
         """Setup Jinja2 template environment (Full-Stack expertise)"""
         loader = jinja2.FileSystemLoader(str(self.templates_dir))
         self.template_env = jinja2.Environment(
@@ -211,7 +216,7 @@ class QualityDashboardGenerator:
         else:
             return "success"
     
-    async def _create_default_templates(self):
+    async def _create_default_templates(self) -> None:
         """Create default dashboard templates (Full-Stack expertise)"""
         # Main dashboard template
         main_template = """
@@ -393,7 +398,7 @@ class QualityDashboardGenerator:
         
         logger.info("Default dashboard templates created")
     
-    async def _save_template(self, filename: str, content: str):
+    async def _save_template(self, filename -> None: str, content -> None: str) -> None:
         """Save template to file"""
         template_path = self.templates_dir / filename
         async with aiofiles.open(template_path, 'w') as f:
@@ -1274,7 +1279,7 @@ async def generate_security_dashboard() -> str:
 
 if __name__ == "__main__":
     # Example usage
-    async def main():
+    async def main() -> None:
         # Generate executive dashboard
         dashboard_path = await generate_executive_dashboard()
         print(f"Executive dashboard generated: {dashboard_path}")

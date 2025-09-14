@@ -76,7 +76,7 @@ class ContentProtectionOrchestrator:
     configuration, threat detection, rights management, and compliance monitoring.
     """
     
-    def __init__(self, config: ContentProtectionConfig):
+    def __init__(self, config -> None: ContentProtectionConfig) -> None:
         """Initialize content protection monitoring orchestrator."""
         self.config = config
         self.modules = {}
@@ -88,7 +88,7 @@ class ContentProtectionOrchestrator:
         logger.info("Initializing Content Protection Monitoring Orchestrator")
         self._initialize_modules()
     
-    def _initialize_modules(self):
+    def _initialize_modules(self) -> None:
         """Initialize enabled protection modules."""
         for module in self.config.enabled_modules:
             try:
@@ -98,7 +98,7 @@ class ContentProtectionOrchestrator:
             except Exception as e:
                 logger.error(f"Failed to initialize protection module {module.value}: {e}")
     
-    def _create_protection_module(self, module: ProtectionModules):
+    def _create_protection_module(self, module -> None: ProtectionModules) -> None:
         """Create instance of specific protection monitoring module."""
         return {
             "name": module.value,
@@ -247,7 +247,7 @@ class ContentProtectionOrchestrator:
         
         return detection_result
     
-    def start_monitoring(self):
+    def start_monitoring(self) -> None:
         """Start content protection monitoring."""
         logger.info("Starting content protection monitoring")
         for module_name, module in self.modules.items():
@@ -258,7 +258,7 @@ class ContentProtectionOrchestrator:
             except Exception as e:
                 logger.error(f"Failed to start monitoring for module {module_name}: {e}")
     
-    def stop_monitoring(self):
+    def stop_monitoring(self) -> None:
         """Stop content protection monitoring."""
         logger.info("Stopping content protection monitoring")
         for module_name, module in self.modules.items():

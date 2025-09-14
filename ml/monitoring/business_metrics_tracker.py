@@ -79,11 +79,11 @@ class BusinessMetricsTracker:
     """
     
     def __init__(self,
-                 redis_host: str = "localhost",
-                 redis_port: int = 6379,
-                 db_host: str = "localhost",
-                 db_port: int = 5432,
-                 db_name: str = "ainflue_business"):
+                 redis_host -> None: str = "localhost",
+                 redis_port -> None: int = 6379,
+                 db_host -> None: str = "localhost",
+                 db_port -> None: int = 5432,
+                 db_name -> None: str = "ainflue_business") -> None:
         self.logger = logging.getLogger(__name__)
         
         # Initialize Redis for caching
@@ -531,7 +531,7 @@ class BusinessMetricsTracker:
             f"{metric.name}_std": current_value * 0.05
         }
     
-    def _update_tracking_metrics(self, impact_report: Dict):
+    def _update_tracking_metrics(self, impact_report -> None: Dict) -> None:
         """Update tracking performance metrics"""
         self.tracking_metrics['total_assessments'] += 1
         
@@ -564,7 +564,7 @@ class BusinessMetricsTracker:
 
 # Example usage and integration
 if __name__ == "__main__":
-    async def main():
+    async def main() -> None:
         # Initialize tracker
         tracker = BusinessMetricsTracker()
         

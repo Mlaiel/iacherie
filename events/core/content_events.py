@@ -33,15 +33,15 @@ class ContentUploadEvent(BaseEvent):
     """Event triggered when content is uploaded to the platform"""
     
     def __init__(self, 
-                 content_id: str,
-                 user_id: str,
-                 content_type: ContentType,
-                 file_size: int,
-                 mime_type: str,
-                 original_filename: str,
-                 storage_path: Optional[str] = None,
-                 metadata: Optional[Dict[str, Any]] = None,
-                 **kwargs):
+                 content_id -> None: str,
+                 user_id -> None: str,
+                 content_type -> None: ContentType,
+                 file_size -> None: int,
+                 mime_type -> None: str,
+                 original_filename -> None: str,
+                 storage_path -> None: Optional[str] = None,
+                 metadata -> None: Optional[Dict[str, Any]] = None,
+                 **kwargs) -> None:
         data = {
             'content_id': content_id,
             'user_id': user_id,
@@ -67,11 +67,11 @@ class ContentValidationEvent(BaseEvent):
     """Event triggered when content undergoes validation"""
     
     def __init__(self,
-                 content_id: str,
-                 validation_type: str,
-                 validation_rules: List[str],
-                 metadata: Optional[Dict[str, Any]] = None,
-                 **kwargs):
+                 content_id -> None: str,
+                 validation_type -> None: str,
+                 validation_rules -> None: List[str],
+                 metadata -> None: Optional[Dict[str, Any]] = None,
+                 **kwargs) -> None:
         data = {
             'content_id': content_id,
             'validation_type': validation_type,
@@ -93,13 +93,13 @@ class ContentProcessingEvent(BaseEvent):
     """Event triggered during content processing operations"""
     
     def __init__(self,
-                 content_id: str,
-                 processing_stage: str,
-                 processor_id: str,
-                 processing_config: Dict[str, Any],
-                 estimated_duration: Optional[int] = None,
-                 metadata: Optional[Dict[str, Any]] = None,
-                 **kwargs):
+                 content_id -> None: str,
+                 processing_stage -> None: str,
+                 processor_id -> None: str,
+                 processing_config -> None: Dict[str, Any],
+                 estimated_duration -> None: Optional[int] = None,
+                 metadata -> None: Optional[Dict[str, Any]] = None,
+                 **kwargs) -> None:
         data = {
             'content_id': content_id,
             'processing_stage': processing_stage,
@@ -123,12 +123,12 @@ class ContentEnrichmentEvent(BaseEvent):
     """Event triggered when content metadata is enriched"""
     
     def __init__(self,
-                 content_id: str,
-                 enrichment_type: str,
-                 enrichment_data: Dict[str, Any],
-                 confidence_score: Optional[float] = None,
-                 metadata: Optional[Dict[str, Any]] = None,
-                 **kwargs):
+                 content_id -> None: str,
+                 enrichment_type -> None: str,
+                 enrichment_data -> None: Dict[str, Any],
+                 confidence_score -> None: Optional[float] = None,
+                 metadata -> None: Optional[Dict[str, Any]] = None,
+                 **kwargs) -> None:
         data = {
             'content_id': content_id,
             'enrichment_type': enrichment_type,
@@ -151,13 +151,13 @@ class ContentPublishEvent(BaseEvent):
     """Event triggered when content is published"""
     
     def __init__(self,
-                 content_id: str,
-                 user_id: str,
-                 publication_settings: Dict[str, Any],
-                 target_platforms: List[str],
-                 scheduled_time: Optional[datetime] = None,
-                 metadata: Optional[Dict[str, Any]] = None,
-                 **kwargs):
+                 content_id -> None: str,
+                 user_id -> None: str,
+                 publication_settings -> None: Dict[str, Any],
+                 target_platforms -> None: List[str],
+                 scheduled_time -> None: Optional[datetime] = None,
+                 metadata -> None: Optional[Dict[str, Any]] = None,
+                 **kwargs) -> None:
         data = {
             'content_id': content_id,
             'user_id': user_id,
@@ -181,13 +181,13 @@ class ContentModificationEvent(BaseEvent):
     """Event triggered when existing content is modified"""
     
     def __init__(self,
-                 content_id: str,
-                 user_id: str,
-                 modification_type: str,
-                 changes: Dict[str, Any],
-                 previous_version: Optional[str] = None,
-                 metadata: Optional[Dict[str, Any]] = None,
-                 **kwargs):
+                 content_id -> None: str,
+                 user_id -> None: str,
+                 modification_type -> None: str,
+                 changes -> None: Dict[str, Any],
+                 previous_version -> None: Optional[str] = None,
+                 metadata -> None: Optional[Dict[str, Any]] = None,
+                 **kwargs) -> None:
         data = {
             'content_id': content_id,
             'user_id': user_id,
@@ -211,13 +211,13 @@ class ContentDeletedEvent(BaseEvent):
     """Event triggered when content is deleted"""
     
     def __init__(self,
-                 content_id: str,
-                 user_id: str,
-                 deletion_reason: str,
-                 backup_location: Optional[str] = None,
-                 permanent: bool = False,
-                 metadata: Optional[Dict[str, Any]] = None,
-                 **kwargs):
+                 content_id -> None: str,
+                 user_id -> None: str,
+                 deletion_reason -> None: str,
+                 backup_location -> None: Optional[str] = None,
+                 permanent -> None: bool = False,
+                 metadata -> None: Optional[Dict[str, Any]] = None,
+                 **kwargs) -> None:
         data = {
             'content_id': content_id,
             'user_id': user_id,

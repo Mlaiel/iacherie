@@ -345,7 +345,7 @@ class MultimediaAssetModel(Base):
         Index('idx_asset_hash_original', 'file_hash', 'is_original'),
     )
     
-    def __repr__(self):
+    def __repr__(self) -> None:
         return f"<MultimediaAssetModel(id={self.id}, name='{self.asset_name[:50]}', type={self.media_type.value})>"
 
 
@@ -512,7 +512,7 @@ class ProcessingJobModel(Base):
         Index('idx_job_batch_position', 'batch_id', 'batch_position'),
     )
     
-    def __repr__(self):
+    def __repr__(self) -> None:
         return f"<ProcessingJobModel(id={self.id}, name='{self.job_name}', status={self.status.value})>"
 
 
@@ -668,7 +668,7 @@ class QualityMetricsModel(Base):
         Index('idx_quality_type_validated', 'assessment_type', 'is_validated'),
     )
     
-    def __repr__(self):
+    def __repr__(self) -> None:
         return f"<QualityMetricsModel(id={self.id}, score={self.overall_quality_score:.1f}, type={self.assessment_type})>"
 
 
@@ -795,7 +795,7 @@ class CompressionModel(Base):
         Index('idx_compression_optimal_created', 'is_optimal_compression', 'created_at'),
     )
     
-    def __repr__(self):
+    def __repr__(self) -> None:
         return f"<CompressionModel(id={self.id}, algorithm={self.compression_algorithm.value}, ratio={self.compression_ratio:.2f})>"
 
 

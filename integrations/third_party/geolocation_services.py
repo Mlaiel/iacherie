@@ -1,3 +1,8 @@
+"""
+Geolocation Services module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Ainflue Platform - Geolocation Services Integration Module
@@ -131,7 +136,7 @@ class GeolocationResponse(BaseModel):
 class GoogleMapsAPI:
     """Google Maps Platform APIs integration"""
     
-    def __init__(self, api_key: str):
+    def __init__(self, api_key -> None: str) -> None:
         self.api_key = api_key
         self.base_urls = {
             "geocoding": "https://maps.googleapis.com/maps/api/geocode/json",
@@ -141,13 +146,13 @@ class GoogleMapsAPI:
         }
         self.session = None
         
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         self.session = aiohttp.ClientSession(
             timeout=aiohttp.ClientTimeout(total=30)
         )
         return self
         
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         if self.session:
             await self.session.close()
             
@@ -358,18 +363,18 @@ class GoogleMapsAPI:
 class IPAPIService:
     """IP-API.com service for IP geolocation"""
     
-    def __init__(self, api_key: Optional[str] = None):
+    def __init__(self, api_key -> None: Optional[str] = None) -> None:
         self.api_key = api_key
         self.base_url = "http://ip-api.com/json" if not api_key else "https://pro.ip-api.com/json"
         self.session = None
         
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         self.session = aiohttp.ClientSession(
             timeout=aiohttp.ClientTimeout(total=15)
         )
         return self
         
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         if self.session:
             await self.session.close()
             
@@ -455,7 +460,7 @@ class IPAPIService:
 class MapboxAPI:
     """Mapbox APIs integration"""
     
-    def __init__(self, access_token: str):
+    def __init__(self, access_token -> None: str) -> None:
         self.access_token = access_token
         self.base_urls = {
             "geocoding": "https://api.mapbox.com/geocoding/v5/mapbox.places",
@@ -464,13 +469,13 @@ class MapboxAPI:
         }
         self.session = None
         
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         self.session = aiohttp.ClientSession(
             timeout=aiohttp.ClientTimeout(total=30)
         )
         return self
         
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         if self.session:
             await self.session.close()
             
@@ -577,7 +582,7 @@ class MapboxAPI:
 class GeofencingManager:
     """Manage geofencing and location-based triggers"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.geofences = {}  # In production, use database
         
     async def create_geofence(self, name: str, center: Coordinates, 
@@ -649,11 +654,11 @@ class GeofencingManager:
 class LocationAnalytics:
     """Analyze location patterns and insights"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.location_history = []
         
-    async def track_location(self, user_id: str, location_data: LocationData, 
-                           context: Dict[str, Any] = None):
+    async def track_location(self, user_id -> None: str, location_data -> None: LocationData, 
+                           context -> None: Dict[str, Any] = None) -> None:
         """Track user location for analytics"""
         location_record = {
             "user_id": user_id,
@@ -797,14 +802,14 @@ class LocationAnalytics:
 class GeolocationServicesManager:
     """Main manager for all geolocation services"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.providers = {}
         self.geofencing_manager = GeofencingManager()
         self.location_analytics = LocationAnalytics()
         self._initialize_providers()
         
-    def _initialize_providers(self):
+    def _initialize_providers(self) -> None:
         """Initialize geolocation providers"""
         try:
             # Google Maps
@@ -1070,7 +1075,7 @@ if __name__ == "__main__":
     # Test the geolocation services integration
     import asyncio
     
-    async def test_geolocation_services():
+    async def test_geolocation_services() -> None:
         """Test geolocation services functionality"""
         
         test_ip = "8.8.8.8"  # Google DNS for testing

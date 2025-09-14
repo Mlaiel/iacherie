@@ -109,15 +109,15 @@ class PerformanceMonitor:
     
     def __init__(
         self,
-        enable_prometheus: bool = True,
-        prometheus_port: int = 8080,
-        storage_backend: str = "memory",  # memory, redis, file
-        storage_config: Optional[Dict[str, Any]] = None,
-        alert_thresholds: Optional[List[PerformanceThreshold]] = None,
-        collection_interval: int = 60,  # seconds
-        retention_period: int = 86400,  # 24 hours in seconds
-        enable_system_monitoring: bool = True
-    ):
+        enable_prometheus -> None: bool = True,
+        prometheus_port -> None: int = 8080,
+        storage_backend -> None: str = "memory",  # memory, redis, file
+        storage_config -> None: Optional[Dict[str, Any]] = None,
+        alert_thresholds -> None: Optional[List[PerformanceThreshold]] = None,
+        collection_interval -> None: int = 60,  # seconds
+        retention_period -> None: int = 86400,  # 24 hours in seconds
+        enable_system_monitoring -> None: bool = True
+    ) -> None:
         self.enable_prometheus = enable_prometheus
         self.prometheus_port = prometheus_port
         self.storage_backend = storage_backend
@@ -235,10 +235,10 @@ class PerformanceMonitor:
     @asynccontextmanager
     async def trace_performance(
         self,
-        operation_name: str,
-        integration_name: Optional[str] = None,
-        tags: Optional[Dict[str, str]] = None
-    ):
+        operation_name -> None: str,
+        integration_name -> None: Optional[str] = None,
+        tags -> None: Optional[Dict[str, str]] = None
+    ) -> None:
         """Context manager for tracing operation performance."""
         start_time = time.time()
         tags = tags or {}

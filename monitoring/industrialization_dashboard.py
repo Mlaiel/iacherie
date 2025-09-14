@@ -30,7 +30,7 @@ class IndustrializationDashboard:
     Dashboard for industrialization success metrics visualization and reporting
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
         self.metrics = industrialization_metrics
     
@@ -484,7 +484,7 @@ Métrique\tObjectif\tMesure
 industrialization_dashboard = IndustrializationDashboard()
 
 
-async def main():
+async def main() -> None:
     """Test the dashboard"""
     logging.basicConfig(level=logging.INFO)
     

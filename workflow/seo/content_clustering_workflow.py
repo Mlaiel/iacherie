@@ -47,7 +47,7 @@ class ClusteringAnalysis:
 class ContentClusteringWorkflow:
     """AI-powered content clustering workflow"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.metrics_collector = MetricsCollector()
         self.cache_manager = CacheManager()
         
@@ -298,7 +298,7 @@ class ContentClusteringWorkflow:
         total_authority = base_authority + cluster_bonus + linking_bonus
         return min(total_authority, 1.0)
     
-    async def _cache_analysis(self, analysis: ClusteringAnalysis):
+    async def _cache_analysis(self, analysis -> None: ClusteringAnalysis) -> None:
         """Cache clustering analysis result"""
         cache_key = f"clustering_{analysis.analysis_id}"
         await self.cache_manager.set(cache_key, analysis, ttl=3600)

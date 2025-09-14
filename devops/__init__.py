@@ -92,12 +92,12 @@ logger = logging.getLogger(__name__)
 class DevOpsModuleRegistry:
     """DevOps module registry and service discovery"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.registered_modules: Dict[str, Any] = {}
         self.service_health: Dict[str, bool] = {}
         self.module_dependencies: Dict[str, List[str]] = {}
         
-    def register_module(self, name: str, module_instance: Any, dependencies: List[str] = None):
+    def register_module(self, name -> None: str, module_instance -> None: Any, dependencies -> None: List[str] = None) -> None:
         """Register a DevOps module with the registry"""
         self.registered_modules[name] = module_instance
         self.module_dependencies[name] = dependencies or []
@@ -153,9 +153,9 @@ class ComplianceException(DevOpsException):
     pass
 
 # Exception handling framework
-def handle_devops_exception(func):
+def handle_devops_exception(func) -> None:
     """Decorator for DevOps exception handling"""
-    async def wrapper(*args, **kwargs):
+    async def wrapper(*args, **kwargs) -> None:
         try:
             return await func(*args, **kwargs)
         except DevOpsException as e:
@@ -181,7 +181,7 @@ def get_devops_info() -> Dict[str, Any]:
     }
 
 # Module imports - Lazy loading to prevent circular imports
-def get_infrastructure_orchestrator():
+def get_infrastructure_orchestrator() -> None:
     """Get infrastructure orchestrator instance"""
     try:
         from .infrastructure_orchestrator import infrastructure_orchestrator
@@ -190,7 +190,7 @@ def get_infrastructure_orchestrator():
         logger.warning(f"Infrastructure orchestrator not available: {str(e)}")
         return None
 
-def get_deployment_manager():
+def get_deployment_manager() -> None:
     """Get deployment manager instance"""
     try:
         from .deployment_manager import deployment_manager
@@ -199,7 +199,7 @@ def get_deployment_manager():
         logger.warning(f"Deployment manager not available: {str(e)}")
         return None
 
-def get_observability_manager():
+def get_observability_manager() -> None:
     """Get observability manager instance"""
     try:
         from .observability_manager import observability_manager
@@ -208,7 +208,7 @@ def get_observability_manager():
         logger.warning(f"Observability manager not available: {str(e)}")
         return None
 
-def get_security_automation():
+def get_security_automation() -> None:
     """Get security automation instance"""
     try:
         from .security_automation import security_automation
@@ -217,7 +217,7 @@ def get_security_automation():
         logger.warning(f"Security automation not available: {str(e)}")
         return None
 
-def get_devops_system():
+def get_devops_system() -> None:
     """Get main DevOps system instance"""
     try:
         from .devops_system import advanced_devops_system
@@ -227,7 +227,7 @@ def get_devops_system():
         return None
 
 # Auto-registration of available modules
-async def initialize_devops_modules():
+async def initialize_devops_modules() -> None:
     """Initialize and register all available DevOps modules"""
     
     logger.info("Initializing Ainflue DevOps Engineering System...")

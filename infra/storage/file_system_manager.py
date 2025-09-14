@@ -1,3 +1,8 @@
+"""
+File System Manager module
+Enterprise implementation for Ainflue platform
+"""
+
 # Ainflue Infrastructure Module - File System Manager
 # =================================================
 # 
@@ -122,7 +127,7 @@ class FileSystemManager:
     and access control across the Ainflue platform.
     """
     
-    def __init__(self, config_path: Optional[str] = None):
+    def __init__(self, config_path -> None: Optional[str] = None) -> None:
         """Initialize file system manager"""
         self.config_path = config_path or "/home/runner/work/Ainflue/Ainflue/infra/storage"
         self.base_storage_path = f"{self.config_path}/storage_data"

@@ -146,7 +146,7 @@ class CollaborationAnalytics:
 class VersionControlManager:
     """Content version control and history management"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.logger = logging.getLogger(f"{__name__}.VersionControlManager")
         self.config = config or {}
         
@@ -277,7 +277,7 @@ class VersionControlManager:
 class MergeConflictResolver:
     """Intelligent merge conflict resolution"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.logger = logging.getLogger(f"{__name__}.MergeConflictResolver")
         self.config = config or {}
         
@@ -561,7 +561,7 @@ class MergeConflictResolver:
 class CollaborativeEditor:
     """Real-time collaborative editing engine"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.logger = logging.getLogger(f"{__name__}.CollaborativeEditor")
         self.config = config or {}
         
@@ -691,7 +691,7 @@ class CollaborativeEditor:
             self.logger.error(f"Failed to submit change: {str(e)}")
             return False
     
-    async def _process_pending_changes(self, session_id: str):
+    async def _process_pending_changes(self, session_id -> None: str) -> None:
         """Process pending changes for a session"""
         try:
             session = self.active_sessions.get(session_id)
@@ -734,7 +734,7 @@ class CollaborativeEditor:
         # For now, return empty list
         return []
     
-    async def _apply_changes(self, session_id: str, changes: List[ContentChange]):
+    async def _apply_changes(self, session_id -> None: str, changes -> None: List[ContentChange]) -> None:
         """Apply changes to the session"""
         try:
             session = self.active_sessions.get(session_id)
@@ -752,13 +752,13 @@ class CollaborativeEditor:
         except Exception as e:
             self.logger.error(f"Failed to apply changes: {str(e)}")
     
-    async def _notify_participants_of_changes(self, session_id: str, changes: List[ContentChange]):
+    async def _notify_participants_of_changes(self, session_id -> None: str, changes -> None: List[ContentChange]) -> None:
         """Notify session participants of changes"""
         # This would send real-time notifications to participants
         # For now, just log
         self.logger.info(f"Notifying participants of {len(changes)} changes in session {session_id}")
     
-    async def _notify_participants_of_conflicts(self, session_id: str, conflicts: List[MergeConflict]):
+    async def _notify_participants_of_conflicts(self, session_id -> None: str, conflicts -> None: List[MergeConflict]) -> None:
         """Notify session participants of conflicts"""
         self.logger.info(f"Notifying participants of {len(conflicts)} conflicts in session {session_id}")
     
@@ -773,7 +773,7 @@ class CollaborativeEditor:
 class CollaborationAnalytics:
     """Collaboration analytics and insights"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.logger = logging.getLogger(f"{__name__}.CollaborationAnalytics")
         self.config = config or {}
         
@@ -856,7 +856,7 @@ class CollaborationContentProcessor:
     conflict resolution, and team coordination for the IA Influencer Agent platform.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.logger = logging.getLogger(f"{__name__}.CollaborationContentProcessor")
         self.config = config or {}
         

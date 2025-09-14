@@ -154,10 +154,10 @@ class PlatformCoordinator:
     
     def __init__(
         self,
-        oauth_manager: Optional[PlatformOAuthManager] = None,
-        rate_limiter: Optional[APIRateLimiter] = None,
-        redis_url: Optional[str] = None
-    ):
+        oauth_manager -> None: Optional[PlatformOAuthManager] = None,
+        rate_limiter -> None: Optional[APIRateLimiter] = None,
+        redis_url -> None: Optional[str] = None
+    ) -> None:
         self.oauth_manager = oauth_manager or PlatformOAuthManager()
         self.rate_limiter = rate_limiter or APIRateLimiter(redis_url)
         
@@ -176,7 +176,7 @@ class PlatformCoordinator:
         # Platform health status
         self.platform_status: Dict[str, PlatformStatus] = {}
         
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         """
 Async context manager entry"""
         await self.oauth_manager.__aenter__()
@@ -190,7 +190,7 @@ Async context manager entry"""
         await self.dmca_api.__aenter__()
         return self
         
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         """
 Async context manager exit"""
         await self.oauth_manager.__aexit__(exc_type, exc_val, exc_tb)
@@ -205,12 +205,12 @@ Async context manager exit"""
         
     def configure_platform_oauth(
         self,
-        platform: str,
-        client_id: str,
-        client_secret: str,
-        redirect_uri: str,
-        scopes: Optional[List[str]] = None
-    ):
+        platform -> None: str,
+        client_id -> None: str,
+        client_secret -> None: str,
+        redirect_uri -> None: str,
+        scopes -> None: Optional[List[str]] = None
+    ) -> None:
         """
 Configure OAuth settings for a platform"""
         self.oauth_manager.configure_platform(
@@ -602,7 +602,7 @@ Sync content across multiple platforms"""
             logger.error(f"Failed to get insights for {platform}: {e}")
             return {"error": str(e)}
             
-    async def cleanup_expired_tokens(self):
+    async def cleanup_expired_tokens(self) -> None:
         """Clean up expired tokens and OAuth states"""
         current_time = datetime.now()
         

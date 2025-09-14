@@ -138,7 +138,7 @@ class PolicyEnforcer:
     """
 Enterprise policy enforcement engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logger
         self.audit_logger = AuditLogger()
         self.cache_ttl = settings.POLICY_CACHE_TTL

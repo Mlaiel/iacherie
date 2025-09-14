@@ -1,3 +1,8 @@
+"""
+Ml Pipeline Orchestrator module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 ML Pipeline Orchestrator - Enterprise AI/ML Automation
@@ -56,6 +61,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 class ModelType(Enum):
+    """ModelType class implementation"""
     CLASSIFICATION = "classification"
     REGRESSION = "regression"
     NLP = "nlp"
@@ -64,6 +70,7 @@ class ModelType(Enum):
     CONTENT_ANALYSIS = "content_analysis"
 
 class ModelStatus(Enum):
+    """ModelStatus class implementation"""
     TRAINING = "training"
     VALIDATING = "validating"
     DEPLOYED = "deployed"
@@ -71,6 +78,7 @@ class ModelStatus(Enum):
     FAILED = "failed"
 
 class ExperimentStatus(Enum):
+    """ExperimentStatus class implementation"""
     RUNNING = "running"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -126,7 +134,7 @@ class MLPipelineOrchestrator:
     - Content analysis and AI processing
     """
     
-    def __init__(self, config_path: str = "/etc/ainflue/ml_config.yaml"):
+    def __init__(self, config_path -> None: str = "/etc/ainflue/ml_config.yaml") -> None:
         self.config_path = config_path
         self.models: Dict[str, Any] = {}
         self.experiments: List[ExperimentResult] = []
@@ -208,13 +216,14 @@ class MLPipelineOrchestrator:
             
             # Custom content analysis model
             class ContentAnalysisModel(nn.Module):
-                def __init__(self, base_model, num_labels):
+    """ContentAnalysisModel class implementation"""
+                def __init__(self, base_model, num_labels) -> None:
                     super().__init__()
                     self.base_model = base_model
                     self.classifier = nn.Linear(base_model.config.hidden_size, num_labels)
                     self.dropout = nn.Dropout(0.1)
                     
-                def forward(self, input_ids, attention_mask):
+                def forward(self, input_ids, attention_mask) -> None:
                     outputs = self.base_model(input_ids=input_ids, attention_mask=attention_mask)
                     pooled_output = outputs.last_hidden_state[:, 0]  # CLS token
                     pooled_output = self.dropout(pooled_output)
@@ -614,7 +623,7 @@ echo "Model deployment completed"
             logger.error(f"Metric collection failed: {e}")
             raise
     
-    async def _trigger_model_retraining(self, model_id: str):
+    async def _trigger_model_retraining(self, model_id -> None: str) -> None:
         """Trigger automated model retraining"""
         try:
             logger.info(f"Triggering retraining for {model_id}")
@@ -628,7 +637,7 @@ echo "Model deployment completed"
         except Exception as e:
             logger.error(f"Retraining trigger failed: {e}")
     
-    async def _save_model_artifacts(self, model_id: str, experiment_id: str):
+    async def _save_model_artifacts(self, model_id -> None: str, experiment_id -> None: str) -> None:
         """Save model training artifacts"""
         try:
             artifacts_dir = f"/var/lib/ainflue/experiments/{experiment_id}"
@@ -739,7 +748,7 @@ echo "Model deployment completed"
             logger.error(f"ML report generation failed: {e}")
             raise
 
-async def main():
+async def main() -> None:
     """CLI entry point for ML pipeline orchestrator"""
     import argparse
     

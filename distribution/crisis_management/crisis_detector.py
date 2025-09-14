@@ -1,5 +1,7 @@
 """Crisis Detector - Real-time Crisis Detection Engine
 
+import asyncio
+
 AI-powered crisis detection system that monitors content performance,
 sentiment, and social signals to identify potential reputation crises.
 
@@ -42,7 +44,7 @@ class CrisisAlert:
 class CrisisDetector:
     """Real-time crisis detection and alerting engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize crisis detector"""
         self.detection_models = self._load_detection_models()
         self.monitoring_thresholds = self._load_monitoring_thresholds()

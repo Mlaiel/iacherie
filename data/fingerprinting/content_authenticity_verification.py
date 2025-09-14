@@ -116,7 +116,7 @@ class AuthenticityAssessment:
 class MetadataForensicsEngine:
     """Moteur d'analyse forensique des métadonnées."""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.logger = logging.getLogger(__name__)
         
@@ -160,8 +160,8 @@ class ContentAuthenticityVerificationEngine:
     et vérification d'authenticité complète multi-modale.
     """
     
-    def __init__(self, db_session: Any = None, redis_client: Any = None,
-                 config: Optional[Dict[str, Any]] = None):
+    def __init__(self, db_session -> None: Any = None, redis_client -> None: Any = None,
+                 config -> None: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialise le moteur de vérification d'authenticité.
         

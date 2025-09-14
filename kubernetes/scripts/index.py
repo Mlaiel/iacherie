@@ -1,3 +1,8 @@
+"""
+Index module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """IA Influencer Agent - Deployment Scripts Index
 Main entry point for enterprise-grade deployment automation and orchestration
@@ -118,7 +123,7 @@ class DeploymentConfiguration:
     rollback_on_failure: bool = True
     notification_channels: List[str] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.phases_to_execute is None:
             self.phases_to_execute = list(DeploymentPhase)
         if self.notification_channels is None:
@@ -131,7 +136,7 @@ class DeploymentOrchestrator:
     Coordinates all deployment managers for complete system rollout
     """
     
-    def __init__(self, config_path: Optional[str] = None):
+    def __init__(self, config_path -> None: Optional[str] = None) -> None:
         """
 Initialize the deployment orchestrator"""
         self.config_path = config_path or os.getenv('DEPLOYMENT_CONFIG_PATH', '/etc/deployment/config.json')
@@ -143,7 +148,7 @@ Initialize the deployment orchestrator"""
         
         logger.info("Deployment Orchestrator initialized successfully")
     
-    def _initialize_deployment_managers(self):
+    def _initialize_deployment_managers(self) -> None:
         """Initialize all deployment managers"""
         try:
             # Core Infrastructure Managers
@@ -505,7 +510,7 @@ Initialize the deployment orchestrator"""
             logger.error(f"Rollback failed: {e}")
             return False
     
-    def _generate_deployment_report(self):
+    def _generate_deployment_report(self) -> None:
         """Generate comprehensive deployment report"""
         report = {
             'deployment_id': f"deploy_{datetime.now().strftime('%Y%m%d_%H%M%S')}",
@@ -570,7 +575,7 @@ Initialize the deployment orchestrator"""
         return status
 
 
-def main():
+def main() -> None:
     """
 Main function for deployment orchestration"""
     parser = argparse.ArgumentParser(description='IA Influencer Agent Deployment Orchestrator')

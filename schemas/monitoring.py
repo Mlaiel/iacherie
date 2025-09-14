@@ -68,7 +68,7 @@ Content monitoring configuration schema."""
     next_scheduled_run: Optional[datetime] = None
     
     @validator('monitoring_type')
-    def validate_monitoring_type(cls, v):
+    def validate_monitoring_type(cls, v) -> None:
         """Validate monitoring type."""
         allowed_types = {
             "copyright_protection", "trademark_monitoring", "brand_surveillance",
@@ -80,7 +80,7 @@ Content monitoring configuration schema."""
         return v
     
     @validator('monitoring_frequency')
-    def validate_monitoring_frequency(cls, v):
+    def validate_monitoring_frequency(cls, v) -> None:
         """Validate monitoring frequency."""
         allowed_frequencies = {
             "real_time", "every_hour", "every_6_hours", "daily", 
@@ -147,7 +147,7 @@ class ContentViolation(UUIDSchema, TimestampSchema, AuditSchema):
     recurrence_risk: float = Field(default=0.0, ge=0.0, le=1.0)
     
     @validator('violation_type')
-    def validate_violation_type(cls, v):
+    def validate_violation_type(cls, v) -> None:
         """Validate violation type."""
         allowed_types = {
             "copyright_infringement", "trademark_violation", "unauthorized_usage",
@@ -159,7 +159,7 @@ class ContentViolation(UUIDSchema, TimestampSchema, AuditSchema):
         return v
     
     @validator('severity_level')
-    def validate_severity_level(cls, v):
+    def validate_severity_level(cls, v) -> None:
         """Validate severity level."""
         allowed_levels = {"low", "medium", "high", "critical", "urgent"}
         if v not in allowed_levels:
@@ -285,7 +285,7 @@ class SystemMonitoring(UUIDSchema, TimestampSchema):
     maintenance_recommendations: List[str] = Field(default_factory=list)
     
     @validator('monitoring_type')
-    def validate_monitoring_type(cls, v):
+    def validate_monitoring_type(cls, v) -> None:
         """Validate monitoring type."""
         allowed_types = {
             "performance", "security", "availability", "capacity",
@@ -351,7 +351,7 @@ class TrendAnalysis(UUIDSchema, TimestampSchema):
     expert_opinion_alignment: Dict[str, float] = Field(default_factory=dict)
     
     @validator('analysis_scope')
-    def validate_analysis_scope(cls, v):
+    def validate_analysis_scope(cls, v) -> None:
         """Validate analysis scope."""
         allowed_scopes = {
             "content_trends", "audience_behavior", "technology_trends",
@@ -419,7 +419,7 @@ class AlertConfiguration(UUIDSchema, TimestampSchema):
     false_positive_count: int = Field(default=0, ge=0)
     
     @validator('alert_type')
-    def validate_alert_type(cls, v):
+    def validate_alert_type(cls, v) -> None:
         """Validate alert type."""
         allowed_types = {
             "content_violation", "system_performance", "security_threat",
@@ -431,7 +431,7 @@ class AlertConfiguration(UUIDSchema, TimestampSchema):
         return v
     
     @validator('priority_level')
-    def validate_priority_level(cls, v):
+    def validate_priority_level(cls, v) -> None:
         """Validate priority level."""
         allowed_levels = {"low", "medium", "high", "critical", "emergency"}
         if v not in allowed_levels:
@@ -495,7 +495,7 @@ class CrawlerConfiguration(UUIDSchema, TimestampSchema):
     crawl_statistics: Dict[str, int] = Field(default_factory=dict)
     
     @validator('crawler_type')
-    def validate_crawler_type(cls, v):
+    def validate_crawler_type(cls, v) -> None:
         """Validate crawler type."""
         allowed_types = {
             "content_discovery", "copyright_monitoring", "competitive_intelligence",

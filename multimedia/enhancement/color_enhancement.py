@@ -34,7 +34,7 @@ class ColorEnhancementConfig:
 class ColorEnhancementEngine:
     """Enterprise color enhancement engine with advanced algorithms."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.config = ColorEnhancementConfig()
         
     async def enhance_colors(

@@ -39,12 +39,13 @@ try:
 except ImportError:
     PYDANTIC_AVAILABLE = False
     class BaseModel:
-        def __init__(self, **kwargs):
+    """BaseModel: class implementation"""
+        def __init__(self, **kwargs) -> None:
             for key, value in kwargs.items():
                 setattr(self, key, value)
-    def Field(*args, **kwargs): return None
-    def validator(*args, **kwargs):
-        def decorator(func): return func
+    def Field(*args, **kwargs) -> None: return None
+    def validator(*args, **kwargs) -> None:
+        def decorator(func) -> None: return func
         return decorator
 
 # Optional SQLAlchemy with fallback
@@ -55,9 +56,9 @@ try:
 except ImportError:
     SQLALCHEMY_AVAILABLE = False
     AsyncSession = None
-    def select(*args): return None
-    def update(*args): return None
-    def delete(*args): return None
+    def select(*args) -> None: return None
+    def update(*args) -> None: return None
+    def delete(*args) -> None: return None
 
 # Optional Celery with fallback
 try:
@@ -66,9 +67,10 @@ try:
 except ImportError:
     CELERY_AVAILABLE = False
     class Celery:
-        def __init__(self, *args, **kwargs): pass
-        def task(self, *args, **kwargs):
-            def decorator(func): return func
+    """Celery: class implementation"""
+        def __init__(self, *args, **kwargs) -> None: pass
+        def task(self, *args, **kwargs) -> None:
+            def decorator(func) -> None: return func
             return decorator
 
 from ..models.alert_models import (
@@ -84,7 +86,8 @@ except (ImportError, SyntaxError) as e:
     print(f"notification_engine not available due to syntax/import error: {e}")
     NOTIFICATION_ENGINE_AVAILABLE = False
     class NotificationEngine:
-        def __init__(self, *args, **kwargs): pass
+    """NotificationEngine: class implementation"""
+        def __init__(self, *args, **kwargs) -> None: pass
 
 try:
     from .escalation_engine import EscalationEngine
@@ -96,7 +99,8 @@ except ImportError:
     except ImportError:
         ESCALATION_ENGINE_AVAILABLE = False
         class EscalationEngine:
-            def __init__(self, *args, **kwargs): pass
+    """EscalationEngine: class implementation"""
+            def __init__(self, *args, **kwargs) -> None: pass
 
 try:
     from .evidence_collector import EvidenceCollector
@@ -108,7 +112,8 @@ except ImportError:
     except ImportError:
         EVIDENCE_COLLECTOR_AVAILABLE = False
         class EvidenceCollector:
-            def __init__(self, *args, **kwargs): pass
+    """EvidenceCollector: class implementation"""
+            def __init__(self, *args, **kwargs) -> None: pass
 
 try:
     from ..utils.ml_classifier import AlertMLClassifier
@@ -116,7 +121,8 @@ try:
 except ImportError:
     ML_CLASSIFIER_AVAILABLE = False
     class AlertMLClassifier:
-        def __init__(self, *args, **kwargs): pass
+    """AlertMLClassifier: class implementation"""
+        def __init__(self, *args, **kwargs) -> None: pass
 
 # Core imports with fallbacks
 try:
@@ -124,7 +130,7 @@ try:
     DATABASE_AVAILABLE = True
 except ImportError:
     DATABASE_AVAILABLE = False
-    def get_async_session(): return None
+    def get_async_session() -> None: return None
 
 try:
     from ...core.cache import CacheManager
@@ -132,7 +138,8 @@ try:
 except ImportError:
     CACHE_AVAILABLE = False
     class CacheManager:
-        def __init__(self, *args, **kwargs): pass
+    """CacheManager: class implementation"""
+        def __init__(self, *args, **kwargs) -> None: pass
 
 try:
     from ...core.metrics import MetricsCollector
@@ -140,7 +147,8 @@ try:
 except ImportError:
     METRICS_AVAILABLE = False
     class MetricsCollector:
-        def __init__(self, *args, **kwargs): pass
+    """MetricsCollector: class implementation"""
+        def __init__(self, *args, **kwargs) -> None: pass
 
 logger = logging.getLogger(__name__)
 
@@ -258,16 +266,16 @@ class AlertManager:
     
     def __init__(
         self,
-        config: AlertConfiguration,
-        notification_engine: NotificationEngine,
-        escalation_engine: EscalationEngine,
-        evidence_collector: EvidenceCollector,
-        ml_classifier: AlertMLClassifier,
-        cache_manager: CacheManager,
-        metrics_collector: MetricsCollector,
-        celery_app: Celery,
-        redis_client: redis.Redis
-    ):
+        config -> None: AlertConfiguration,
+        notification_engine -> None: NotificationEngine,
+        escalation_engine -> None: EscalationEngine,
+        evidence_collector -> None: EvidenceCollector,
+        ml_classifier -> None: AlertMLClassifier,
+        cache_manager -> None: CacheManager,
+        metrics_collector -> None: MetricsCollector,
+        celery_app -> None: Celery,
+        redis_client -> None: redis.Redis
+    ) -> None:
         self.config = config
         self.notification_engine = notification_engine
         self.escalation_engine = escalation_engine
@@ -942,7 +950,7 @@ Handle massive copyright infringement."""
             logger.error("Failed to archive alert: %s", str(e))
 
     @asynccontextmanager
-    async def alert_processing_context(self):
+    async def alert_processing_context(self) -> None:
         """Context manager for alert processing."""
         try:
             await self.start()
@@ -1230,14 +1238,14 @@ class EnterpriseAlertOrchestrator:
     Handles complex alert workflows, compliance tracking, and threat intelligence integration.
     """
     
-    def __init__(self, alert_manager: AlertManager):
+    def __init__(self, alert_manager -> None: AlertManager) -> None:
         self.alert_manager = alert_manager
         self.logger = logging.getLogger(__name__)
         self.threat_intelligence_feeds = {}
         self.compliance_frameworks = {}
         self.workflow_engine = None
         
-    async def initialize_enterprise_features(self):
+    async def initialize_enterprise_features(self) -> None:
         """
 Initialize enterprise-specific features"""
         await self._setup_threat_intelligence()
@@ -1364,7 +1372,7 @@ class AlertIntelligenceEngine:
     anomaly detection, and predictive alerting capabilities.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
         self.ml_models = {}
         self.anomaly_detectors = {}
@@ -1502,7 +1510,7 @@ class AlertComplianceManager:
     Ensures adherence to GDPR, CCPA, SOX, HIPAA, and industry regulations.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
         self.compliance_frameworks = {
             'GDPR': {'retention_days': 2555, 'privacy_requirements': True},

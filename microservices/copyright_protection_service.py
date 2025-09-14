@@ -155,7 +155,7 @@ class MonitoringAlert(BaseModel):
 class CopyrightProtectionEngine:
     """Main copyright protection engine"""
     
-    def __init__(self, fingerprinting_service=None):
+    def __init__(self, fingerprinting_service=None) -> None:
         self.fingerprinting_service = fingerprinting_service
         self.protected_content: Dict[str, CopyrightRegistration] = {}
         self.violations: Dict[str, ViolationDetection] = {}
@@ -328,7 +328,7 @@ class CopyrightProtectionEngine:
         # For now, return simulated fingerprint IDs
         return [str(uuid.uuid4()) for _ in range(3)]
     
-    async def _start_content_monitoring(self, registration_id: str):
+    async def _start_content_monitoring(self, registration_id -> None: str) -> None:
         """Start monitoring for content violations"""
         registration = self.protected_content[registration_id]
         

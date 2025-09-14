@@ -83,7 +83,7 @@ class SerializationAdapter(ABC):
 class JSONSerializationAdapter(SerializationAdapter):
     """JSON serialization adapter with enhanced features"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.custom_encoders = {
             datetime: lambda x: x.isoformat(),
             date: lambda x: x.isoformat(),
@@ -451,7 +451,7 @@ class XMLSerializationAdapter(SerializationAdapter):
         """Check if adapter supports XML format"""
         return format == SerializationFormat.XML
     
-    def _dict_to_xml(self, data: Any, parent_elem: ET.Element, key_name: str = "item"):
+    def _dict_to_xml(self, data -> None: Any, parent_elem -> None: ET.Element, key_name -> None: str = "item") -> None:
         """Convert dictionary to XML elements"""
         if isinstance(data, dict):
             for key, value in data.items():
@@ -488,7 +488,7 @@ class XMLSerializationAdapter(SerializationAdapter):
 class MultiFormatSerializationManager:
     """Central manager for multi-format serialization"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.adapters: Dict[SerializationFormat, SerializationAdapter] = {
             SerializationFormat.JSON: JSONSerializationAdapter(),
             SerializationFormat.YAML: YAMLSerializationAdapter(),
@@ -561,7 +561,7 @@ class MultiFormatSerializationManager:
         # Serialize to target format
         return await self.serialize(deserialize_result.data, target_format, context)
     
-    def add_adapter(self, format: SerializationFormat, adapter: SerializationAdapter):
+    def add_adapter(self, format -> None: SerializationFormat, adapter -> None: SerializationAdapter) -> None:
         """Add custom serialization adapter"""
         self.adapters[format] = adapter
     

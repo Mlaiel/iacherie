@@ -1,4 +1,6 @@
 """IA Influencer Agent - AI Model Performance Metrics
+import logging
+
 Advanced AI/ML model monitoring and optimization metrics
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -211,7 +213,7 @@ class AIModelMetricsCollector:
     and provides insights for model improvement and resource optimization
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.redis_manager = RedisManager()
         self.logger = logger
         

@@ -299,7 +299,7 @@ class DistributionIntelligenceEngine:
     optimization recommendations, and strategic distribution intelligence.
     """
     
-    def __init__(self, max_history_days: int = 90):
+    def __init__(self, max_history_days -> None: int = 90) -> None:
         """Initialize the Distribution Intelligence Engine"""
         self.distribution_data: Dict[str, List[PlatformPerformance]] = defaultdict(list)
         self.analysis_results: Dict[str, DistributionAnalysis] = {}

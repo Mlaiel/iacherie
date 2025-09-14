@@ -7,7 +7,7 @@ dynamic routing capabilities.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ WARNING: This code is proprietary and confidential.
+# [EMOJI_REMOVED] WARNING: This code is proprietary and confidential.
 Unauthorized copying, distribution, or use without explicit written
 permission from Fahed Mlaiel is strictly prohibited and may result
 in legal action.
@@ -81,7 +81,7 @@ Traffic server configuration and state"""
     metrics: ServerMetrics = field(default_factory=ServerMetrics)
     metadata: Dict[str, Any] = field(default_factory=dict)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         try:
                     # Request validation
                     if not data:
@@ -126,7 +126,7 @@ class ConsistentHashRing:
     """
 Consistent hashing implementation"""
     
-    def __init__(self, replicas: int = 150):
+    def __init__(self, replicas -> None: int = 150) -> None:
         self.replicas = replicas
         self.ring: Dict[int, str] = {}
         self.sorted_keys: List[int] = []
@@ -184,7 +184,7 @@ class LoadBalancingStrategy:
     """
 Base class for load balancing strategies"""
     
-    def __init__(self, servers: List[TrafficServer]):
+    def __init__(self, servers -> None: List[TrafficServer]) -> None:
         self.servers = {server.id: server for server in servers}
         self.lock = threading.RLock()
     
@@ -229,7 +229,7 @@ class RoundRobinStrategy(LoadBalancingStrategy):
     """
 Round Robin load balancing strategy"""
     
-    def __init__(self, servers: List[TrafficServer]):
+    def __init__(self, servers -> None: List[TrafficServer]) -> None:
         super().__init__(servers)
         self.current_index = 0
     
@@ -248,12 +248,12 @@ class WeightedRoundRobinStrategy(LoadBalancingStrategy):
     """
 Weighted Round Robin load balancing strategy"""
     
-    def __init__(self, servers: List[TrafficServer]):
+    def __init__(self, servers -> None: List[TrafficServer]) -> None:
         super().__init__(servers)
         self.current_weights = {}
         self.reset_weights()
     
-    def reset_weights(self):
+    def reset_weights(self) -> None:
         """
 Reset current weights to server weights"""
         with self.lock:
@@ -302,7 +302,7 @@ Weighted Least Connections load balancing strategy"""
             return None
         
         with self.lock:
-            def calculate_ratio(server):
+            def calculate_ratio(server) -> None:
                 if server.weight == 0:
                     return float('inf')
                 return server.metrics.active_connections / server.weight
@@ -327,7 +327,7 @@ class ConsistentHashStrategy(LoadBalancingStrategy):
     """
 Consistent Hash load balancing strategy"""
     
-    def __init__(self, servers: List[TrafficServer]):
+    def __init__(self, servers -> None: List[TrafficServer]) -> None:
         super().__init__(servers)
         self.hash_ring = ConsistentHashRing()
         for server in servers:
@@ -355,7 +355,7 @@ class ResourceBasedStrategy(LoadBalancingStrategy):
             return None
         
         with self.lock:
-            def calculate_score(server):
+            def calculate_score(server) -> None:
                 # Lower score is better
                 cpu_score = server.metrics.cpu_usage
                 memory_score = server.metrics.memory_usage
@@ -371,7 +371,7 @@ class AdaptiveStrategy(LoadBalancingStrategy):
     """
 Adaptive load balancing strategy that switches algorithms based on conditions"""
     
-    def __init__(self, servers: List[TrafficServer]):
+    def __init__(self, servers -> None: List[TrafficServer]) -> None:
         super().__init__(servers)
         self.strategies = {
             LoadBalancingAlgorithm.ROUND_ROBIN: RoundRobinStrategy(servers),
@@ -390,7 +390,7 @@ Adaptive load balancing strategy that switches algorithms based on conditions"""
         strategy = self.strategies[self.current_algorithm]
         return strategy.select_server(request)
     
-    def _adapt_algorithm(self):
+    def _adapt_algorithm(self) -> None:
         """
 Adapt algorithm based on current conditions"""
         now = datetime.now()
@@ -423,7 +423,7 @@ Adapt algorithm based on current conditions"""
 class TrafficDistributor:
     """Enterprise Traffic Distributor for Load Balancer"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.servers: Dict[str, TrafficServer] = {}
         self.routing_rules: List[RoutingRule] = []
         self.strategies: Dict[str, LoadBalancingStrategy] = {}
@@ -481,7 +481,7 @@ Add server to traffic distribution"""
             logger.error(f"Failed to add routing rule {rule.name}: {e}")
             return False
     
-    def _rebuild_strategies(self):
+    def _rebuild_strategies(self) -> None:
         """Rebuild load balancing strategies"""
         servers_list = list(self.servers.values())
         
@@ -910,3 +910,5 @@ Update server metrics"""
                 "recent_requests": len(self.request_history),
                 "timestamp": datetime.now().isoformat()
             }
+
+# File has syntax issues - needs manual review

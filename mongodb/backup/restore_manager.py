@@ -46,7 +46,7 @@ class RestoreOperation:
 class RestoreManager:
     """Advanced MongoDB restore manager with validation and rollback capabilities."""
     
-    def __init__(self, client: MongoClient, config: Dict[str, Any] = None):
+    def __init__(self, client -> None: MongoClient, config -> None: Dict[str, Any] = None) -> None:
         """Initialize restore manager.
         
         Args:

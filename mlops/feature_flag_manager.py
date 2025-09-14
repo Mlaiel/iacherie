@@ -94,7 +94,7 @@ class FeatureFlagMetrics:
 class FeatureFlagManager:
     """Enterprise feature flag manager for ML model deployments"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.feature_flags: Dict[str, FeatureFlag] = {}
         self.evaluations: List[FeatureFlagEvaluation] = []
@@ -395,7 +395,7 @@ class FeatureFlagManager:
             logger.error(f"Failed to get user flags: {e}")
             return {}
     
-    async def _setup_default_flags(self):
+    async def _setup_default_flags(self) -> None:
         """Setup default feature flags for different creator types"""
         
         # Model enhancement flags
@@ -413,7 +413,7 @@ class FeatureFlagManager:
                 )
                 await self.create_feature_flag(flag)
     
-    async def _setup_metrics_tracking(self):
+    async def _setup_metrics_tracking(self) -> None:
         """Setup metrics tracking for feature flags"""
         for flag_id in self.feature_flags:
             if flag_id not in self.metrics:
@@ -556,8 +556,8 @@ class FeatureFlagManager:
         )
     
     async def _update_flag_metrics(self, 
-                                 evaluation: FeatureFlagEvaluation,
-                                 user_context: Optional[Dict[str, Any]]):
+                                 evaluation -> None: FeatureFlagEvaluation,
+                                 user_context -> None: Optional[Dict[str, Any]]) -> None:
         """Update metrics for feature flag evaluation"""
         try:
             flag_id = evaluation.flag_id
@@ -597,7 +597,7 @@ class FeatureFlagManager:
         # Simplified health check - in real implementation, this would check actual system metrics
         return True
     
-    async def _cleanup_cache(self):
+    async def _cleanup_cache(self) -> None:
         """Cleanup expired cache entries"""
         while True:
             try:
@@ -661,7 +661,7 @@ class CreatorFeatureFlagManager:
 
 
 # Example usage and testing
-async def main():
+async def main() -> None:
     """Example usage of Feature Flag Manager"""
     manager = FeatureFlagManager()
     

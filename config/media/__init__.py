@@ -27,12 +27,12 @@ class MediaConfigurationLevel(str, Enum):
 class MediaProcessingConfigurationManager:
     """Media processing configuration manager"""
     
-    def __init__(self, level: MediaConfigurationLevel = MediaConfigurationLevel.ENTERPRISE):
+    def __init__(self, level -> None: MediaConfigurationLevel = MediaConfigurationLevel.ENTERPRISE) -> None:
         self.level = level
         self.configurations = {}
         self._initialize_media_configs()
     
-    def _initialize_media_configs(self):
+    def _initialize_media_configs(self) -> None:
         """Initialize all media configurations"""
         # Note: These will be created as we implement each configuration
         self.configurations = {

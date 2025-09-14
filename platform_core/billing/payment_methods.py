@@ -134,8 +134,8 @@ class PaymentMethodManager:
 Gestionnaire des méthodes de paiement"""
     
     def __init__(self, 
-                 encryption_key: Optional[bytes] = None,
-                 database_client: Optional[Any] = None):
+                 encryption_key -> None: Optional[bytes] = None,
+                 database_client -> None: Optional[Any] = None) -> None:
         self.database_client = database_client
         self.payment_methods: Dict[str, PaymentMethod] = {}
         
@@ -300,9 +300,9 @@ Définit la méthode de paiement par défaut"""
         return True
         
     async def update_payment_stats(self,
-                                 payment_method_id: str,
-                                 success: bool,
-                                 amount: Decimal):
+                                 payment_method_id -> None: str,
+                                 success -> None: bool,
+                                 amount -> None: Decimal) -> None:
         """Met à jour les statistiques d'une méthode de paiement"""
         method = await self.get_payment_method(payment_method_id)
         if not method:
@@ -359,7 +359,7 @@ Calcule le score de risque d'une méthode de paiement"""
         # Limiter entre 0 et 1
         return min(1.0, max(0.0, score))
         
-    async def _save_payment_method(self, method: PaymentMethod):
+    async def _save_payment_method(self, method -> None: PaymentMethod) -> None:
         """
 Sauvegarde une méthode de paiement en base"""
         try:
@@ -495,8 +495,8 @@ class RefundManager:
     """Gestionnaire des remboursements"""
     
     def __init__(self, 
-                 payment_processor: Any,
-                 database_client: Optional[Any] = None):
+                 payment_processor -> None: Any,
+                 database_client -> None: Optional[Any] = None) -> None:
         self.payment_processor = payment_processor
         self.database_client = database_client
         self.refund_requests: Dict[str, RefundRequest] = {}
@@ -635,7 +635,7 @@ Traite un remboursement approuvé"""
             logger.error(f"Erreur lors du traitement du remboursement {request.refund_id}: {e}")
             return False
             
-    async def _save_refund_request(self, request: RefundRequest):
+    async def _save_refund_request(self, request -> None: RefundRequest) -> None:
         """Sauvegarde une demande de remboursement"""
         try:
             logger.info(f"Saving refund request {request.refund_id}")

@@ -180,7 +180,7 @@ class PipelineExecution(BaseModel):
 class ModelManager:
     """Manages AI model instances and lifecycle"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.model_configurations: Dict[str, ModelConfiguration] = {}
         self.model_instances: Dict[str, List[ModelInstance]] = {}
         self.instance_registry: Dict[str, ModelInstance] = {}
@@ -263,7 +263,7 @@ class ModelManager:
         # Select instance with lowest load
         return min(candidates, key=lambda x: x.current_load)
     
-    async def health_check_instances(self):
+    async def health_check_instances(self) -> None:
         """Perform health checks on all instances"""
         
         for instance in self.instance_registry.values():
@@ -305,7 +305,7 @@ class ModelManager:
 class InferenceEngine:
     """Handles AI inference requests"""
     
-    def __init__(self, model_manager: ModelManager):
+    def __init__(self, model_manager -> None: ModelManager) -> None:
         self.model_manager = model_manager
         self.inference_queue: List[InferenceRequest] = []
         self.active_inferences: Dict[str, InferenceRequest] = {}
@@ -334,7 +334,7 @@ class InferenceEngine:
             logger.error(f"Failed to submit inference request {request.request_id}: {str(e)}")
             return False
     
-    async def _process_inference_request(self, request: InferenceRequest, instance: ModelInstance):
+    async def _process_inference_request(self, request -> None: InferenceRequest, instance -> None: ModelInstance) -> None:
         """Process an inference request"""
         
         start_time = datetime.utcnow()
@@ -531,7 +531,7 @@ class InferenceEngine:
         
         return output_templates.get(request.model_type, {"result": "Generic AI output"})
     
-    def _add_to_queue(self, request: InferenceRequest):
+    def _add_to_queue(self, request -> None: InferenceRequest) -> None:
         """Add request to processing queue"""
         
         # Insert based on priority (higher priority first)
@@ -545,7 +545,7 @@ class InferenceEngine:
         if not inserted:
             self.inference_queue.append(request)
     
-    async def process_queue(self):
+    async def process_queue(self) -> None:
         """Process requests in the queue"""
         
         while True:
@@ -595,7 +595,7 @@ class InferenceEngine:
 class PipelineManager:
     """Manages AI processing pipelines"""
     
-    def __init__(self, inference_engine: InferenceEngine):
+    def __init__(self, inference_engine -> None: InferenceEngine) -> None:
         self.inference_engine = inference_engine
         self.pipelines: Dict[str, AIPipeline] = {}
         self.pipeline_executions: Dict[str, PipelineExecution] = {}
@@ -640,7 +640,7 @@ class PipelineManager:
             logger.error(f"Failed to start pipeline execution: {str(e)}")
             return None
     
-    async def _execute_pipeline_steps(self, execution: PipelineExecution):
+    async def _execute_pipeline_steps(self, execution -> None: PipelineExecution) -> None:
         """Execute pipeline steps"""
         
         try:
@@ -782,20 +782,20 @@ class PipelineManager:
 class AIOrchestrationService:
     """Main AI orchestration service"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.model_manager = ModelManager()
         self.inference_engine = InferenceEngine(self.model_manager)
         self.pipeline_manager = PipelineManager(self.inference_engine)
         self._background_tasks = []
         
-    async def start_background_tasks(self):
+    async def start_background_tasks(self) -> None:
         """Start background tasks (call this in an async context)"""
         self._background_tasks.extend([
             asyncio.create_task(self.inference_engine.process_queue()),
             asyncio.create_task(self._periodic_health_checks())
         ])
     
-    async def _periodic_health_checks(self):
+    async def _periodic_health_checks(self) -> None:
         """Periodic health checks for model instances"""
         while True:
             try:

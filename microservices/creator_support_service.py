@@ -195,7 +195,7 @@ class CreatorSupportService:
     automated responses, multi-channel communication, and detailed analytics.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.tickets: Dict[str, SupportTicket] = {}
         self.messages: Dict[str, List[SupportMessage]] = defaultdict(list)  # ticket_id -> messages
         self.agents: Dict[str, SupportAgent] = {}
@@ -214,7 +214,7 @@ class CreatorSupportService:
         
         logger.info("CreatorSupportService initialized successfully")
     
-    def _initialize_agents(self):
+    def _initialize_agents(self) -> None:
         """Initialize support agents."""
         agents_data = [
             {
@@ -268,7 +268,7 @@ class CreatorSupportService:
             agent = SupportAgent(**agent_data)
             self.agents[agent.id] = agent
     
-    def _initialize_knowledge_base(self):
+    def _initialize_knowledge_base(self) -> None:
         """Initialize knowledge base with common solutions."""
         self.knowledge_base = {
             "password_reset": {
@@ -301,7 +301,7 @@ class CreatorSupportService:
             }
         }
     
-    def _initialize_auto_responses(self):
+    def _initialize_auto_responses(self) -> None:
         """Initialize automated response templates."""
         self.auto_responses = {
             SupportCategory.TECHNICAL_ISSUE: [
@@ -322,7 +322,7 @@ class CreatorSupportService:
             ]
         }
     
-    def _initialize_sla_targets(self):
+    def _initialize_sla_targets(self) -> None:
         """Initialize SLA targets by priority."""
         self.sla_targets = {
             SupportTicketPriority.CRITICAL: {
@@ -347,7 +347,7 @@ class CreatorSupportService:
             }
         }
     
-    def _initialize_escalation_rules(self):
+    def _initialize_escalation_rules(self) -> None:
         """Initialize escalation rules."""
         self.escalation_rules = [
             {
@@ -479,7 +479,7 @@ class CreatorSupportService:
             logger.error(f"Error auto-assigning agent: {e}")
             return None
     
-    async def _send_auto_response(self, ticket: SupportTicket):
+    async def _send_auto_response(self, ticket -> None: SupportTicket) -> None:
         """Send automated response for new ticket."""
         try:
             auto_responses = self.auto_responses.get(ticket.category, [])
@@ -523,7 +523,7 @@ class CreatorSupportService:
         matches.sort(key=lambda x: x["relevance_score"], reverse=True)
         return matches[:3]  # Return top 3 matches
     
-    async def _send_knowledge_base_suggestions(self, ticket_id: str, suggestions: List[Dict[str, Any]]):
+    async def _send_knowledge_base_suggestions(self, ticket_id -> None: str, suggestions -> None: List[Dict[str, Any]]) -> None:
         """Send knowledge base suggestions to creator."""
         try:
             if not suggestions:
@@ -813,7 +813,7 @@ class CreatorSupportService:
         
         return sorted(matching_tickets, key=lambda t: t.created_at, reverse=True)
     
-    async def check_escalation_rules(self):
+    async def check_escalation_rules(self) -> None:
         """Check and apply escalation rules to tickets."""
         current_time = datetime.now()
         escalated_count = 0
@@ -1080,7 +1080,7 @@ def get_creator_support_service() -> CreatorSupportService:
 
 
 # Example usage and testing
-async def example_usage():
+async def example_usage() -> None:
     """Example usage of Creator Support Service."""
     service = get_creator_support_service()
     

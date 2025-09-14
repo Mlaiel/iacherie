@@ -137,7 +137,7 @@ class CreatorGraphDatabase:
     - Path optimization for collaboration discovery
     """
     
-    def __init__(self, db_path: Optional[str] = None):
+    def __init__(self, db_path -> None: Optional[str] = None) -> None:
         """Initialize the graph database"""
         self.db_path = db_path or "creator_network.db"
         
@@ -165,7 +165,7 @@ class CreatorGraphDatabase:
         
         logger.info("Creator Graph Database initialized")
     
-    def _initialize_database(self):
+    def _initialize_database(self) -> None:
         """Initialize the SQLite database for persistence"""
         try:
             conn = sqlite3.connect(self.db_path)
@@ -755,7 +755,7 @@ class CreatorGraphDatabase:
     
     # --- Internal Helper Methods ---
     
-    def _invalidate_caches(self):
+    def _invalidate_caches(self) -> None:
         """Invalidate analysis caches when graph changes"""
         self.centrality_cache.clear()
         self.path_cache.clear()
@@ -816,7 +816,7 @@ class CreatorGraphDatabase:
         
         return dict(distribution)
     
-    async def _persist_node(self, node: NetworkNode):
+    async def _persist_node(self, node -> None: NetworkNode) -> None:
         """Persist node to database"""
         try:
             conn = sqlite3.connect(self.db_path)
@@ -846,7 +846,7 @@ class CreatorGraphDatabase:
         except Exception as e:
             logger.error(f"Error persisting node: {str(e)}")
     
-    async def _persist_edge(self, edge: RelationshipEdge):
+    async def _persist_edge(self, edge -> None: RelationshipEdge) -> None:
         """Persist edge to database"""
         try:
             conn = sqlite3.connect(self.db_path)
@@ -876,7 +876,7 @@ class CreatorGraphDatabase:
         except Exception as e:
             logger.error(f"Error persisting edge: {str(e)}")
     
-    async def _persist_community(self, community: NetworkCommunity):
+    async def _persist_community(self, community -> None: NetworkCommunity) -> None:
         """Persist community to database"""
         try:
             conn = sqlite3.connect(self.db_path)
@@ -907,7 +907,7 @@ class CreatorGraphDatabase:
         except Exception as e:
             logger.error(f"Error persisting community: {str(e)}")
     
-    async def load_from_database(self):
+    async def load_from_database(self) -> None:
         """Load graph data from database"""
         try:
             conn = sqlite3.connect(self.db_path)

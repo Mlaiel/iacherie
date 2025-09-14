@@ -71,7 +71,7 @@ class SecurityAuditEvent:
 class SecurityAuditTrail:
     """Comprehensive security audit trail system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.security_logger = SecurityEventLogger()
         self.access_controller = AccessController()
         self.audit_logger = AuditLogger()
@@ -123,7 +123,7 @@ Log a security audit event"""
         
         return event.event_id
     
-    async def _log_to_security_events(self, event: SecurityAuditEvent):
+    async def _log_to_security_events(self, event -> None: SecurityAuditEvent) -> None:
         """Log to security events system"""
         try:
             security_event_type = self._map_to_security_event_type(event.action, event.success)
@@ -144,7 +144,7 @@ Log a security audit event"""
         except Exception as e:
             logger.error(f"Failed to log to security events: {e}")
     
-    async def _log_to_audit_logger(self, event: SecurityAuditEvent):
+    async def _log_to_audit_logger(self, event -> None: SecurityAuditEvent) -> None:
         """Log to audit logger system"""
         try:
             audit_level = self._map_to_audit_level(event.level)
@@ -164,7 +164,7 @@ Log a security audit event"""
         except Exception as e:
             logger.error(f"Failed to log to audit logger: {e}")
     
-    async def _log_access_event(self, event: SecurityAuditEvent):
+    async def _log_access_event(self, event -> None: SecurityAuditEvent) -> None:
         """Log access-related events"""
         try:
             if event.user_id and event.resource:

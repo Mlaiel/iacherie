@@ -87,7 +87,7 @@ class ModelServingConfig:
     request_timeout: int = 30
     max_queue_size: int = 1000
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         try:
                     # Request validation
                     if not data:
@@ -118,7 +118,7 @@ class ModelServingDeployment:
     - Edge computing support
     """
     
-    def __init__(self, namespace: str = "ia-influencer-serving"):
+    def __init__(self, namespace -> None: str = "ia-influencer-serving") -> None:
         """
         Initialize model serving deployment
         
@@ -1404,3 +1404,5 @@ class ModelServingDeployment:
         except Exception as e:
             logger.error(f"Serving cleanup failed: {e}")
             raise
+
+# File has syntax issues - needs manual review

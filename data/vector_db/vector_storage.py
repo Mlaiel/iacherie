@@ -60,7 +60,7 @@ class SearchResult:
 class BaseVectorBackend(ABC):
     """Abstract base class for vector backends."""
     
-    def __init__(self, config: Any, security_manager: Optional[Any] = None):
+    def __init__(self, config -> None: Any, security_manager -> None: Optional[Any] = None) -> None:
         self.config = config
         self.security_manager = security_manager
         self.initialized = False
@@ -248,7 +248,7 @@ class VectorCompressor:
 class VectorVersionManager:
     """Manages vector versioning and backup."""
     
-    def __init__(self, storage_path: str):
+    def __init__(self, storage_path -> None: str) -> None:
         self.storage_path = Path(storage_path)
         self.storage_path.mkdir(parents=True, exist_ok=True)
     
@@ -335,10 +335,10 @@ class VectorStorage:
     
     def __init__(
         self,
-        backend_type: str,
-        config: Any,
-        security_manager: Optional[Any] = None
-    ):
+        backend_type -> None: str,
+        config -> None: Any,
+        security_manager -> None: Optional[Any] = None
+    ) -> None:
         """
         Initialize vector storage.
         

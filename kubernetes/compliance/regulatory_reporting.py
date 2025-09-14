@@ -136,7 +136,7 @@ class RegulatoryReportingSystem:
     """
 Automated regulatory reporting and submission system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logger
         self.audit_logger = AuditLogger()
         self.compliance_monitor = ComplianceMonitor()

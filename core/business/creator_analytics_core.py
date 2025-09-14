@@ -134,7 +134,7 @@ class AnalyticsReport:
 class CreatorAnalyticsCore:
     """Enterprise creator analytics core management system"""
     
-    def __init__(self, level: str = "enterprise"):
+    def __init__(self, level -> None: str = "enterprise") -> None:
         """Initialize creator analytics core"""
         self.level = level
         self.start_time = time.time()
@@ -182,7 +182,7 @@ class CreatorAnalyticsCore:
             logger.error(f"❌ Analytics initialization failed: {str(e)}")
             return False
     
-    def _setup_event_processors(self):
+    def _setup_event_processors(self) -> None:
         """Setup event processors for real-time analytics"""
         self.event_processors = {
             "content_view": self._process_view_event,
@@ -193,7 +193,7 @@ class CreatorAnalyticsCore:
             "revenue_generated": self._process_revenue_event
         }
     
-    async def _create_sample_data(self):
+    async def _create_sample_data(self) -> None:
         """Create sample analytics data"""
         sample_creators = ["creator_001", "creator_002", "creator_003"]
         
@@ -228,7 +228,7 @@ class CreatorAnalyticsCore:
             # Create time series data
             await self._generate_time_series(creator_id)
     
-    async def _generate_time_series(self, creator_id: str):
+    async def _generate_time_series(self, creator_id -> None: str) -> None:
         """Generate sample time series data"""
         end_time = datetime.utcnow()
         start_time = end_time - timedelta(days=30)
@@ -321,7 +321,7 @@ class CreatorAnalyticsCore:
             logger.error(f"Event tracking failed: {str(e)}")
             return False
     
-    async def _process_view_event(self, data: Dict[str, Any]):
+    async def _process_view_event(self, data -> None: Dict[str, Any]) -> None:
         """Process content view event"""
         creator_id = data.get("creator_id")
         content_id = data.get("content_id")
@@ -341,7 +341,7 @@ class CreatorAnalyticsCore:
                     )
                 self.content_metrics[content_id].views += 1
     
-    async def _process_engagement_event(self, data: Dict[str, Any]):
+    async def _process_engagement_event(self, data -> None: Dict[str, Any]) -> None:
         """Process engagement event (like, share, comment)"""
         creator_id = data.get("creator_id")
         content_id = data.get("content_id")
@@ -358,14 +358,14 @@ class CreatorAnalyticsCore:
             elif engagement_type == "comment":
                 self.content_metrics[content_id].comments += 1
     
-    async def _process_follow_event(self, data: Dict[str, Any]):
+    async def _process_follow_event(self, data -> None: Dict[str, Any]) -> None:
         """Process follow event"""
         creator_id = data.get("creator_id")
         
         if creator_id and creator_id in self.creator_metrics:
             self.creator_metrics[creator_id].follower_count += 1
     
-    async def _process_revenue_event(self, data: Dict[str, Any]):
+    async def _process_revenue_event(self, data -> None: Dict[str, Any]) -> None:
         """Process revenue event"""
         creator_id = data.get("creator_id")
         amount = data.get("amount", 0.0)
@@ -642,7 +642,7 @@ class CreatorAnalyticsCore:
         
         return recommendations
     
-    async def _analytics_processor_loop(self):
+    async def _analytics_processor_loop(self) -> None:
         """Background analytics processor"""
         while not self._shutdown_event.is_set():
             try:
@@ -668,7 +668,7 @@ class CreatorAnalyticsCore:
                 logger.error(f"Analytics processor error: {str(e)}")
                 await asyncio.sleep(300)  # Wait 5 minutes on error
     
-    async def _process_batch_event(self, event: Dict[str, Any]):
+    async def _process_batch_event(self, event -> None: Dict[str, Any]) -> None:
         """Process event in batch mode"""
         # Add to time series data
         event_type = event["event_type"]
@@ -689,14 +689,14 @@ class CreatorAnalyticsCore:
                         metadata={"event_type": event_type}
                     ))
     
-    async def _update_calculated_metrics(self):
+    async def _update_calculated_metrics(self) -> None:
         """Update calculated metrics like engagement rates"""
         for content_id, content in self.content_metrics.items():
             total_engagements = content.likes + content.shares + content.comments
             if content.views > 0:
                 content.engagement_rate = (total_engagements / content.views) * 100
     
-    async def _cleanup_old_data(self):
+    async def _cleanup_old_data(self) -> None:
         """Clean up old data to prevent memory bloat"""
         cutoff_time = datetime.utcnow() - timedelta(days=90)  # Keep 90 days
         
@@ -731,7 +731,7 @@ class CreatorAnalyticsCore:
             logger.error(f"Analytics health check failed: {str(e)}")
             return False
     
-    async def _health_monitor_loop(self):
+    async def _health_monitor_loop(self) -> None:
         """Health monitoring loop"""
         while not self._shutdown_event.is_set():
             try:

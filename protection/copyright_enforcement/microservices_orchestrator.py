@@ -229,7 +229,7 @@ class ServiceRegistry:
     and intelligent load balancing for distributed microservices architecture.
     """
     
-    def __init__(self, config: MicroservicesConfig):
+    def __init__(self, config -> None: MicroservicesConfig) -> None:
         self.config = config
         self.consul_client = None
         self.etcd_client = None
@@ -239,7 +239,7 @@ class ServiceRegistry:
         self.circuit_breakers: Dict[str, circuit_breaker.CircuitBreaker] = {}
         self.initialized = False
         
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize service registry with selected backend."""
         try:
             if self.config.service_discovery_backend == "consul":
@@ -256,7 +256,7 @@ class ServiceRegistry:
             logger.error(f"Service registry initialization failed: {str(e)}")
             raise
     
-    async def _initialize_consul(self):
+    async def _initialize_consul(self) -> None:
         """Initialize Consul service registry."""
         self.consul_client = consul.Consul(
             host=self.config.service_registry_host,
@@ -267,7 +267,7 @@ class ServiceRegistry:
         health = self.consul_client.health.state('any')
         logger.info("Consul connection established")
     
-    async def _initialize_etcd(self):
+    async def _initialize_etcd(self) -> None:
         """Initialize etcd service registry."""
         self.etcd_client = etcd3.client(
             host=self.config.service_registry_host,
@@ -278,7 +278,7 @@ class ServiceRegistry:
         await self.etcd_client.get("test")
         logger.info("etcd connection established")
     
-    async def _initialize_kubernetes(self):
+    async def _initialize_kubernetes(self) -> None:
         """Initialize Kubernetes service registry."""
         try:
             k8s_config.load_incluster_config()
@@ -332,7 +332,7 @@ class ServiceRegistry:
             logger.error(f"Service registration failed for {endpoint.service_id}: {str(e)}")
             return False
     
-    async def _register_consul_service(self, endpoint: ServiceEndpoint):
+    async def _register_consul_service(self, endpoint -> None: ServiceEndpoint) -> None:
         """Register service with Consul."""
         service_def = {
             'ID': endpoint.service_id,
@@ -353,7 +353,7 @@ class ServiceRegistry:
         
         self.consul_client.agent.service.register(service_def)
     
-    async def _register_etcd_service(self, endpoint: ServiceEndpoint):
+    async def _register_etcd_service(self, endpoint -> None: ServiceEndpoint) -> None:
         """Register service with etcd."""
         service_key = f"/services/{endpoint.service_type.value}/{endpoint.service_id}"
         service_data = {
@@ -368,7 +368,7 @@ class ServiceRegistry:
         
         await self.etcd_client.put(service_key, json.dumps(service_data))
     
-    async def _register_k8s_service(self, endpoint: ServiceEndpoint):
+    async def _register_k8s_service(self, endpoint -> None: ServiceEndpoint) -> None:
         """Register service with Kubernetes."""
         # This would typically involve creating/updating Service and Endpoint objects
         # Implementation depends on specific Kubernetes setup
@@ -510,7 +510,7 @@ class IntelligentLoadBalancer:
     and intelligent traffic distribution algorithms.
     """
     
-    def __init__(self, config: LoadBalancerConfig, service_registry: ServiceRegistry):
+    def __init__(self, config -> None: LoadBalancerConfig, service_registry -> None: ServiceRegistry) -> None:
         self.config = config
         self.service_registry = service_registry
         self.current_indices = {}  # For round-robin algorithms
@@ -650,13 +650,13 @@ class IntelligentLoadBalancer:
         index = hash_value % len(services)
         return services[index]
     
-    async def record_connection(self, service_id: str):
+    async def record_connection(self, service_id -> None: str) -> None:
         """Record a new connection to a service."""
         if service_id not in self.connection_counts:
             self.connection_counts[service_id] = 0
         self.connection_counts[service_id] += 1
     
-    async def record_disconnection(self, service_id: str):
+    async def record_disconnection(self, service_id -> None: str) -> None:
         """Record a disconnection from a service."""
         if service_id in self.connection_counts:
             self.connection_counts[service_id] = max(0, self.connection_counts[service_id] - 1)
@@ -669,14 +669,14 @@ class AutoScalingManager:
     and custom metrics monitoring for optimal resource utilization.
     """
     
-    def __init__(self, config: AutoScalingConfig, service_registry: ServiceRegistry):
+    def __init__(self, config -> None: AutoScalingConfig, service_registry -> None: ServiceRegistry) -> None:
         self.config = config
         self.service_registry = service_registry
         self.scaling_history = {}
         self.metrics_history = {}
         self.predictive_model = None
         
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize auto-scaling components."""
         try:
             # Initialize Kubernetes client for scaling operations
@@ -698,7 +698,7 @@ class AutoScalingManager:
             logger.error(f"Auto-scaling manager initialization failed: {str(e)}")
             raise
     
-    async def _initialize_predictive_model(self):
+    async def _initialize_predictive_model(self) -> None:
         """Initialize predictive scaling model (simplified ML model)."""
         # In production, this would load a trained ML model
         # For this implementation, we'll use a simple heuristic-based predictor
@@ -710,7 +710,7 @@ class AutoScalingManager:
         
         logger.info("Predictive scaling model initialized")
     
-    async def monitor_and_scale(self, service_type: ServiceType):
+    async def monitor_and_scale(self, service_type -> None: ServiceType) -> None:
         """
         Monitor service metrics and perform scaling decisions.
         
@@ -950,7 +950,7 @@ class AutoScalingManager:
         
         return "; ".join(reasons) if reasons else "Predictive scaling adjustment"
     
-    async def _execute_scaling_action(self, service_type: ServiceType, scaling_decision: Dict[str, Any]):
+    async def _execute_scaling_action(self, service_type -> None: ServiceType, scaling_decision -> None: Dict[str, Any]) -> None:
         """Execute the scaling action on Kubernetes deployment."""
         try:
             deployment_name = f"{service_type.value}-deployment"
@@ -1002,7 +1002,7 @@ class MicroservicesOrchestrator:
     including service registry, load balancing, circuit breakers, and auto-scaling.
     """
     
-    def __init__(self, config: MicroservicesConfig):
+    def __init__(self, config -> None: MicroservicesConfig) -> None:
         self.config = config
         self.service_registry = ServiceRegistry(config)
         self.load_balancer = IntelligentLoadBalancer(config.load_balancer, self.service_registry)
@@ -1012,7 +1012,7 @@ class MicroservicesOrchestrator:
         self.monitoring_tasks = []
         self.initialized = False
         
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize all orchestrator components."""
         start_time = time.time()
         
@@ -1043,7 +1043,7 @@ class MicroservicesOrchestrator:
             logger.error(f"Orchestrator initialization failed: {str(e)}")
             raise
     
-    async def _initialize_message_queue(self):
+    async def _initialize_message_queue(self) -> None:
         """Initialize Kafka message queue."""
         try:
             self.kafka_producer = KafkaProducer(
@@ -1062,7 +1062,7 @@ class MicroservicesOrchestrator:
             logger.error(f"Message queue initialization failed: {str(e)}")
             # Continue without message queue (degraded mode)
     
-    async def _initialize_cache(self):
+    async def _initialize_cache(self) -> None:
         """Initialize Redis cache."""
         try:
             self.cache_client = redis.from_url(self.config.redis_url)
@@ -1073,7 +1073,7 @@ class MicroservicesOrchestrator:
             logger.error(f"Cache initialization failed: {str(e)}")
             # Continue without cache (degraded mode)
     
-    async def _start_monitoring_tasks(self):
+    async def _start_monitoring_tasks(self) -> None:
         """Start background monitoring tasks."""
         # Health monitoring task
         health_task = asyncio.create_task(self._health_monitoring_loop())
@@ -1089,7 +1089,7 @@ class MicroservicesOrchestrator:
         
         logger.info("Background monitoring tasks started")
     
-    async def _start_metrics_server(self):
+    async def _start_metrics_server(self) -> None:
         """Start Prometheus metrics server."""
         try:
             start_http_server(self.config.metrics_port)
@@ -1097,7 +1097,7 @@ class MicroservicesOrchestrator:
         except Exception as e:
             logger.error(f"Metrics server start failed: {str(e)}")
     
-    async def _health_monitoring_loop(self):
+    async def _health_monitoring_loop(self) -> None:
         """Background task for health monitoring."""
         while True:
             try:
@@ -1112,7 +1112,7 @@ class MicroservicesOrchestrator:
                 logger.error(f"Health monitoring error: {str(e)}")
                 await asyncio.sleep(60)  # Longer sleep on error
     
-    async def _auto_scaling_loop(self):
+    async def _auto_scaling_loop(self) -> None:
         """Background task for auto-scaling monitoring."""
         while True:
             try:
@@ -1125,7 +1125,7 @@ class MicroservicesOrchestrator:
                 logger.error(f"Auto-scaling monitoring error: {str(e)}")
                 await asyncio.sleep(120)  # Longer sleep on error
     
-    async def _metrics_collection_loop(self):
+    async def _metrics_collection_loop(self) -> None:
         """Background task for metrics collection."""
         while True:
             try:
@@ -1136,7 +1136,7 @@ class MicroservicesOrchestrator:
                 logger.error(f"Metrics collection error: {str(e)}")
                 await asyncio.sleep(30)  # Longer sleep on error
     
-    async def _check_and_update_service_health(self, service: ServiceEndpoint):
+    async def _check_and_update_service_health(self, service -> None: ServiceEndpoint) -> None:
         """Check and update service health status."""
         try:
             is_healthy = await self.load_balancer._check_service_health(service)
@@ -1155,7 +1155,7 @@ class MicroservicesOrchestrator:
         except Exception as e:
             logger.error(f"Health check failed for {service.service_id}: {str(e)}")
     
-    async def _collect_and_update_metrics(self):
+    async def _collect_and_update_metrics(self) -> None:
         """Collect and update service metrics."""
         try:
             for service_id, service in self.service_registry.services.items():
@@ -1336,7 +1336,7 @@ class MicroservicesOrchestrator:
         
         return scaling_status
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Gracefully shutdown the orchestrator."""
         logger.info("Shutting down microservices orchestrator...")
         

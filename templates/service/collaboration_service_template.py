@@ -172,16 +172,16 @@ class ContentVersion:
 class CollaborationNotificationService:
     """Notification service for collaboration events"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.notification_handlers = []
     
-    def add_handler(self, handler: Callable):
+    def add_handler(self, handler -> None: Callable) -> None:
         """Add notification handler"""
         self.notification_handlers.append(handler)
     
-    async def send_notification(self, notification_type: str, 
-                              recipients: List[str], 
-                              data: Dict[str, Any]):
+    async def send_notification(self, notification_type -> None: str, 
+                              recipients -> None: List[str], 
+                              data -> None: Dict[str, Any]) -> None:
         """Send notification to recipients"""
         notification = {
             "type": notification_type,
@@ -199,11 +199,11 @@ class CollaborationNotificationService:
 class WorkflowEngine:
     """Workflow engine for collaboration processes"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.workflow_definitions = {}
         self.active_workflows = {}
     
-    def register_workflow(self, workflow_name: str, workflow_definition: Dict[str, Any]):
+    def register_workflow(self, workflow_name -> None: str, workflow_definition -> None: Dict[str, Any]) -> None:
         """Register a workflow definition"""
         self.workflow_definitions[workflow_name] = workflow_definition
     
@@ -229,7 +229,7 @@ class WorkflowEngine:
         
         return workflow_id
     
-    async def _execute_workflow_step(self, workflow_id: str):
+    async def _execute_workflow_step(self, workflow_id -> None: str) -> None:
         """Execute current workflow step"""
         workflow = self.active_workflows.get(workflow_id)
         if not workflow:
@@ -258,7 +258,7 @@ class WorkflowEngine:
 class CollaborationService:
     """🤝 Advanced Collaboration Service for Creator Partnerships"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         """Initialize Collaboration Service"""
         self.config = config or {}
         self.service_id = f"collaboration_service_{int(time.time())}"
@@ -287,7 +287,7 @@ class CollaborationService:
         
         logger.info(f"🤝 Collaboration Service initialized: {self.service_id}")
     
-    def _setup_default_workflows(self):
+    def _setup_default_workflows(self) -> None:
         """Setup default collaboration workflows"""
         
         # Content creation workflow
@@ -764,14 +764,14 @@ class CollaborationService:
         }
 
 # Usage Example and Template Testing
-async def main():
+async def main() -> None:
     """Example usage of Collaboration Service Template"""
     
     # Initialize the service
     service = CollaborationService()
     
     # Add notification handler
-    async def notification_handler(notification):
+    async def notification_handler(notification) -> None:
         print(f"📧 Notification [{notification['type']}]: {notification['data']}")
     
     service.notification_service.add_handler(notification_handler)

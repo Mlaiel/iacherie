@@ -167,7 +167,7 @@ class MetricStorage(ABC):
 class MemoryMetricStorage(MetricStorage):
     """In-memory metric storage implementation"""
     
-    def __init__(self, max_data_points: int = 1000000):
+    def __init__(self, max_data_points -> None: int = 1000000) -> None:
         self.data_points = defaultdict(list)  # metric_name -> list of data points
         self.max_data_points = max_data_points
         self.total_data_points = 0
@@ -371,7 +371,7 @@ class MemoryMetricStorage(MetricStorage):
         
         return timestamp
     
-    async def _cleanup_old_data(self):
+    async def _cleanup_old_data(self) -> None:
         """Clean up old data points to maintain storage limit"""
         # Remove oldest 10% of data points
         cleanup_count = self.max_data_points // 10
@@ -389,7 +389,7 @@ class MemoryMetricStorage(MetricStorage):
 class AnalyticsCollector:
     """Analytics event collector and processor"""
     
-    def __init__(self, metric_storage: MetricStorage):
+    def __init__(self, metric_storage -> None: MetricStorage) -> None:
         self.metric_storage = metric_storage
         self.event_buffer = deque(maxlen=10000)
         self.processing_stats = {
@@ -416,7 +416,7 @@ class AnalyticsCollector:
             logger.error(f"Failed to collect event {event.event_id}: {str(e)}")
             return False
     
-    async def _process_events(self):
+    async def _process_events(self) -> None:
         """Process collected events and generate metrics"""
         if self.is_processing:
             return
@@ -440,7 +440,7 @@ class AnalyticsCollector:
         finally:
             self.is_processing = False
     
-    async def _process_single_event(self, event: AnalyticsEvent):
+    async def _process_single_event(self, event -> None: AnalyticsEvent) -> None:
         """Process single event and generate metrics"""
         try:
             # Generate standard metrics from event
@@ -505,7 +505,7 @@ class AnalyticsCollector:
 class AnalyticsService:
     """📊 Advanced Analytics Service for Enterprise Data Insights"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         """Initialize Analytics Service"""
         self.config = config or {}
         self.service_id = f"analytics_service_{int(time.time())}"
@@ -542,7 +542,7 @@ class AnalyticsService:
         
         logger.info(f"📊 Analytics Service initialized: {self.service_id}")
     
-    def _setup_default_metrics(self):
+    def _setup_default_metrics(self) -> None:
         """Setup default metric definitions"""
         default_metrics = [
             MetricDefinition(
@@ -579,7 +579,7 @@ class AnalyticsService:
         for metric_def in default_metrics:
             self.metric_definitions[metric_def.metric_name] = metric_def
     
-    async def start(self):
+    async def start(self) -> None:
         """Start the analytics service"""
         logger.info("Starting Analytics Service")
         
@@ -595,7 +595,7 @@ class AnalyticsService:
         
         logger.info("✅ Analytics Service started successfully")
     
-    async def stop(self):
+    async def stop(self) -> None:
         """Stop the analytics service"""
         logger.info("Stopping Analytics Service")
         
@@ -640,7 +640,7 @@ class AnalyticsService:
         
         return event_id
     
-    async def register_metric(self, metric_definition: MetricDefinition):
+    async def register_metric(self, metric_definition -> None: MetricDefinition) -> None:
         """Register custom metric definition"""
         self.metric_definitions[metric_definition.metric_name] = metric_definition
         logger.info(f"Metric registered: {metric_definition.metric_name}")
@@ -877,7 +877,7 @@ class AnalyticsService:
         cache_age = (datetime.now() - cached_item["timestamp"]).total_seconds()
         return cache_age < self.cache_ttl_seconds
     
-    async def _cache_cleanup_loop(self):
+    async def _cache_cleanup_loop(self) -> None:
         """Background task to clean up expired cache entries"""
         while self.is_running:
             try:
@@ -901,7 +901,7 @@ class AnalyticsService:
             except Exception as e:
                 logger.error(f"Cache cleanup error: {str(e)}")
     
-    async def _metrics_aggregation_loop(self):
+    async def _metrics_aggregation_loop(self) -> None:
         """Background task for metrics aggregation and pre-calculation"""
         while self.is_running:
             try:
@@ -944,7 +944,7 @@ class AnalyticsService:
         }
 
 # Usage Example and Template Testing
-async def main():
+async def main() -> None:
     """Example usage of Analytics Service Template"""
     
     # Initialize the service

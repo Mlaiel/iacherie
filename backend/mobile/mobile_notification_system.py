@@ -141,17 +141,17 @@ class PushNotificationService:
     
     def __init__(
         self,
-        fcm_server_key: Optional[str] = None,
-        fcm_project_id: Optional[str] = None,
-        apns_key_id: Optional[str] = None,
-        apns_team_id: Optional[str] = None,
-        apns_private_key: Optional[str] = None,
-        apns_bundle_id: Optional[str] = None,
-        web_push_vapid_public: Optional[str] = None,
-        web_push_vapid_private: Optional[str] = None,
-        web_push_vapid_email: Optional[str] = None,
-        production: bool = True
-    ):
+        fcm_server_key -> None: Optional[str] = None,
+        fcm_project_id -> None: Optional[str] = None,
+        apns_key_id -> None: Optional[str] = None,
+        apns_team_id -> None: Optional[str] = None,
+        apns_private_key -> None: Optional[str] = None,
+        apns_bundle_id -> None: Optional[str] = None,
+        web_push_vapid_public -> None: Optional[str] = None,
+        web_push_vapid_private -> None: Optional[str] = None,
+        web_push_vapid_email -> None: Optional[str] = None,
+        production -> None: bool = True
+    ) -> None:
         # FCM Configuration
         self.fcm_server_key = fcm_server_key
         self.fcm_project_id = fcm_project_id
@@ -182,23 +182,23 @@ class PushNotificationService:
         
         logger.info("Push notification service initialized")
     
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         """Async context manager entry."""
         await self._ensure_session()
         return self
     
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         """Async context manager exit."""
         await self.close()
     
-    async def _ensure_session(self):
+    async def _ensure_session(self) -> None:
         """Ensure HTTP session is available."""
         if self.session is None or self.session.closed:
             self.session = aiohttp.ClientSession(
                 timeout=aiohttp.ClientTimeout(total=30)
             )
     
-    async def close(self):
+    async def close(self) -> None:
         """Close HTTP session."""
         if self.session and not self.session.closed:
             await self.session.close()
@@ -737,7 +737,7 @@ async def broadcast_system_notification(
 
 if __name__ == "__main__":
     # Example usage
-    async def main():
+    async def main() -> None:
         # Initialize service (in practice, get these from environment)
         service = PushNotificationService(
             fcm_server_key="your_fcm_server_key",

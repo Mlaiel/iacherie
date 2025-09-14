@@ -111,7 +111,7 @@ class ConsistencyCheck:
 class ModelSynchronizationEngine:
     """Enterprise Model Synchronization Engine"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.model_snapshots: Dict[str, Dict[str, ModelSnapshot]] = {}
         self.sync_operations: Dict[str, SyncOperation] = {}
@@ -383,7 +383,7 @@ class ModelSynchronizationEngine:
             logger.error(f"❌ Error cancelling sync: {e}")
             return False
     
-    async def _sync_real_time(self, operation: SyncOperation):
+    async def _sync_real_time(self, operation -> None: SyncOperation) -> None:
         """Execute real-time synchronization"""
         try:
             start_time = time.time()
@@ -443,7 +443,7 @@ class ModelSynchronizationEngine:
             if operation.model_id in self.active_syncs:
                 self.active_syncs.remove(operation.model_id)
     
-    async def _sync_standard(self, operation: SyncOperation):
+    async def _sync_standard(self, operation -> None: SyncOperation) -> None:
         """Execute standard synchronization"""
         try:
             start_time = time.time()
@@ -505,7 +505,7 @@ class ModelSynchronizationEngine:
             if operation.model_id in self.active_syncs:
                 self.active_syncs.remove(operation.model_id)
     
-    async def _batch_sync_worker(self):
+    async def _batch_sync_worker(self) -> None:
         """Background worker for batch synchronization"""
         try:
             while True:
@@ -626,7 +626,7 @@ class ModelSynchronizationEngine:
             logger.error(f"❌ Error selecting authoritative node: {e}")
             return None
     
-    async def _schedule_consistency_check(self, model_id: str):
+    async def _schedule_consistency_check(self, model_id -> None: str) -> None:
         """Schedule periodic consistency check"""
         try:
             check_interval = self.config.get('consistency_check_interval', 3600)  # 1 hour
@@ -642,7 +642,7 @@ class ModelSynchronizationEngine:
         except Exception as e:
             logger.error(f"❌ Error scheduling consistency check: {e}")
     
-    async def _consistency_checker(self):
+    async def _consistency_checker(self) -> None:
         """Background consistency checker"""
         try:
             while True:
@@ -693,7 +693,7 @@ class ModelSynchronizationEngine:
             logger.error(f"❌ Error waiting for sync completion: {e}")
             return False
     
-    async def _update_sync_metrics(self, sync_time: float, success: bool):
+    async def _update_sync_metrics(self, sync_time -> None: float, success -> None: bool) -> None:
         """Update synchronization metrics"""
         try:
             self.sync_metrics['total_syncs'] += 1
@@ -727,7 +727,7 @@ class ModelSynchronizationEngine:
 sync_engine = ModelSynchronizationEngine()
 
 
-async def main():
+async def main() -> None:
     """Test the Model Synchronization Engine"""
     engine = ModelSynchronizationEngine()
     

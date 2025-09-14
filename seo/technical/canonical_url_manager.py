@@ -1,4 +1,6 @@
 """
+import logging
+
 Canonical URL Manager for Ainflue Platform
 Advanced canonical URL management and duplicate content prevention
 
@@ -30,20 +32,20 @@ class CanonicalURLManager:
     Handles duplicate content prevention and URL canonicalization
     """
     
-    def __init__(self, base_domain: str):
+    def __init__(self, base_domain -> None: str) -> None:
         self.base_domain = base_domain.rstrip('/')
         self.rules: List[CanonicalRule] = []
         self.ignore_parameters = set()
         self.platform_rules = {}
         self.creator_type_rules = {}
         
-    def add_global_ignore_parameters(self, parameters: List[str]):
+    def add_global_ignore_parameters(self, parameters -> None: List[str]) -> None:
         """Add parameters to globally ignore in canonical URLs"""
         self.ignore_parameters.update(parameters)
         
-    def add_canonical_rule(self, pattern: str, canonical_template: str, 
-                          priority: int = 1, parameters_to_ignore: List[str] = None,
-                          platform_specific: bool = False, creator_type: str = None):
+    def add_canonical_rule(self, pattern -> None: str, canonical_template -> None: str, 
+                          priority -> None: int = 1, parameters_to_ignore -> None: List[str] = None,
+                          platform_specific -> None: bool = False, creator_type -> None: str = None) -> None:
         """Add a canonical URL rule"""
         
         rule = CanonicalRule(
@@ -58,7 +60,7 @@ class CanonicalURLManager:
         self.rules.append(rule)
         self.rules.sort(key=lambda x: x.priority, reverse=True)
         
-    def setup_default_rules(self):
+    def setup_default_rules(self) -> None:
         """Setup default canonical rules for Ainflue platform"""
         
         # Content URLs - highest priority
@@ -109,7 +111,7 @@ class CanonicalURLManager:
             parameters_to_ignore=['comment_page', 'share']
         )
         
-    def setup_creator_specific_rules(self, creator_type: str):
+    def setup_creator_specific_rules(self, creator_type -> None: str) -> None:
         """Setup canonical rules specific to creator type"""
         
         if creator_type == "musician":
@@ -160,7 +162,7 @@ class CanonicalURLManager:
                 parameters_to_ignore=['comment_page', 'preview']
             )
             
-    def setup_platform_specific_rules(self, platforms: List[str]):
+    def setup_platform_specific_rules(self, platforms -> None: List[str]) -> None:
         """Setup platform-specific canonical rules"""
         
         for platform in platforms:
@@ -398,7 +400,7 @@ class CanonicalURLManager:
 class CanonicalURLMiddleware:
     """Middleware for automatic canonical URL handling"""
     
-    def __init__(self, manager: CanonicalURLManager):
+    def __init__(self, manager -> None: CanonicalURLManager) -> None:
         self.manager = manager
         
     def process_request(self, request_data: Dict) -> Dict:

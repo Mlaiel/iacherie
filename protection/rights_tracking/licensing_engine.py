@@ -149,7 +149,7 @@ class DynamicPricingRule(BaseModel):
 class LicensingEngine:
     """Moteur avancé de génération et gestion de licences"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.license_templates: Dict[str, LicenseTemplate] = {}
         self.smart_clauses: Dict[str, SmartLicenseClause] = {}
@@ -165,7 +165,7 @@ class LicensingEngine:
         # Chargement des templates par défaut
         asyncio.create_task(self._load_default_templates())
     
-    async def _load_default_templates(self):
+    async def _load_default_templates(self) -> None:
         """
 Charge les templates de licence par défaut"""
         try:

@@ -302,7 +302,7 @@ class CachePerformanceMetrics:
 class MobileAIEngine:
     """Unified mobile AI engine consolidating analysis, orchestration, and cache management"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         """Initialize mobile AI engine with comprehensive capabilities"""
         self.config = config or {}
         self.ai_analyzer = AIAnalysisMobile(self.config)
@@ -469,7 +469,7 @@ class MobileAIEngine:
         
         return optimizations
     
-    def _update_performance_metrics(self, result: Dict[str, Any]):
+    def _update_performance_metrics(self, result -> None: Dict[str, Any]) -> None:
         """Update AI engine performance metrics"""
         self.performance_metrics["total_analyses"] += 1
         
@@ -509,7 +509,7 @@ class MobileAIEngine:
             "results": {"processed": True, "mobile_optimized": True}
         }
     
-    async def _apply_mobile_optimizations(self, optimizations: Dict[str, Any]):
+    async def _apply_mobile_optimizations(self, optimizations -> None: Dict[str, Any]) -> None:
         """Apply mobile optimization settings"""
         self.default_model_size = optimizations.get("model_size", self.default_model_size)
         self.max_concurrent_analyses = optimizations.get("concurrent_analyses", self.max_concurrent_analyses)
@@ -523,7 +523,7 @@ class MobileAIEngine:
 class AIAnalysisMobile:
     """Mobile AI content analysis system with comprehensive pattern recognition"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.analysis_models = {}
         self.analysis_cache = {}
@@ -798,7 +798,7 @@ class AIAnalysisMobile:
 class MobileAIOrchestrator:
     """Mobile AI orchestrator for workflow coordination and optimization"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.active_workflows = {}
         self.orchestration_metrics = {
@@ -968,7 +968,7 @@ class MobileAIOrchestrator:
             "device_optimization": True
         }
     
-    def _update_orchestration_metrics(self, workflow: Dict[str, Any]):
+    def _update_orchestration_metrics(self, workflow -> None: Dict[str, Any]) -> None:
         """Update orchestration performance metrics"""
         self.orchestration_metrics["workflows_completed"] += 1
         
@@ -984,7 +984,7 @@ class MobileAIOrchestrator:
 class MobileAICacheManager:
     """Mobile AI cache manager for performance optimization"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.cache_config = CacheConfiguration(**config.get("cache_config", {}))
         self.memory_cache = {}
@@ -1072,7 +1072,7 @@ class MobileAICacheManager:
             "cache_efficiency_score": self._calculate_cache_efficiency()
         }
     
-    async def update_cache_configuration(self, new_config: Dict[str, Any]):
+    async def update_cache_configuration(self, new_config -> None: Dict[str, Any]) -> None:
         """Update cache configuration dynamically"""
         for key, value in new_config.items():
             if hasattr(self.cache_config, key):
@@ -1081,7 +1081,7 @@ class MobileAICacheManager:
         # Apply configuration changes
         await self._apply_cache_configuration_changes()
     
-    async def cleanup_cache(self):
+    async def cleanup_cache(self) -> None:
         """Cleanup expired cache entries"""
         current_time = datetime.utcnow()
         expired_keys = []
@@ -1114,7 +1114,7 @@ class MobileAICacheManager:
             return False
         return True
     
-    async def _store_in_memory_cache(self, cache_key: str, entry: CacheEntry):
+    async def _store_in_memory_cache(self, cache_key -> None: str, entry -> None: CacheEntry) -> None:
         """Store entry in memory cache with size management"""
         # Check memory limit and evict if necessary
         while self._calculate_memory_usage() > self.cache_config.max_memory_cache:
@@ -1123,7 +1123,7 @@ class MobileAICacheManager:
         self.memory_cache[cache_key] = entry
         self.cache_metrics.memory_usage = self._calculate_memory_usage()
     
-    async def _store_in_disk_cache(self, cache_key: str, entry: CacheEntry):
+    async def _store_in_disk_cache(self, cache_key -> None: str, entry -> None: CacheEntry) -> None:
         """Store entry in disk cache"""
         try:
             cache_file = self.disk_cache_path / f"{cache_key}.json"
@@ -1173,7 +1173,7 @@ class MobileAICacheManager:
             logger.error(f"Failed to get disk cache: {e}")
             return None
     
-    async def _promote_to_memory_cache(self, cache_key: str, result_data: Dict[str, Any]):
+    async def _promote_to_memory_cache(self, cache_key -> None: str, result_data -> None: Dict[str, Any]) -> None:
         """Promote disk cache entry to memory cache"""
         # Create new memory cache entry
         cache_entry = CacheEntry(
@@ -1192,7 +1192,7 @@ class MobileAICacheManager:
         
         await self._store_in_memory_cache(cache_key, cache_entry)
     
-    async def _evict_least_recently_used(self):
+    async def _evict_least_recently_used(self) -> None:
         """Evict least recently used entry from memory cache"""
         if not self.memory_cache:
             return
@@ -1225,15 +1225,15 @@ class MobileAICacheManager:
         hit_ratio = self.cache_metrics.hit_rate / (self.cache_metrics.hit_rate + self.cache_metrics.miss_rate)
         return hit_ratio * 0.8 + (1 - self.cache_metrics.eviction_rate / 100) * 0.2
     
-    def _update_cache_hit_metrics(self):
+    def _update_cache_hit_metrics(self) -> None:
         """Update cache hit metrics"""
         self.cache_metrics.hit_rate += 1
     
-    def _update_cache_miss_metrics(self):
+    def _update_cache_miss_metrics(self) -> None:
         """Update cache miss metrics"""
         self.cache_metrics.miss_rate += 1
     
-    async def _cleanup_disk_cache(self):
+    async def _cleanup_disk_cache(self) -> None:
         """Cleanup expired disk cache files"""
         try:
             current_time = datetime.utcnow()
@@ -1255,7 +1255,7 @@ class MobileAICacheManager:
         except Exception as e:
             logger.error(f"Failed to cleanup disk cache: {e}")
     
-    async def _apply_cache_configuration_changes(self):
+    async def _apply_cache_configuration_changes(self) -> None:
         """Apply cache configuration changes"""
         # Implement configuration change logic
         pass

@@ -1,3 +1,8 @@
+"""
+Main module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """🚀 ENTERPRISE CRAWLER SERVICE - MAIN LAUNCHER
 =============================================
@@ -60,7 +65,7 @@ class CrawlerCLI:
     Provides access to all major functionalities through simple commands.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = self._setup_logging()
         self.api: Optional[CrawlerServiceAPI] = None
     
@@ -208,7 +213,7 @@ Setup logging configuration."""
             self.logger.error(f"❌ Failed to get status: {e}")
             return {"error": str(e)}
     
-    def print_results(self, results: Any, title: str = "Results"):
+    def print_results(self, results -> None: Any, title -> None: str = "Results") -> None:
         """Pretty print results."""
         print(f"\n{'='*50}")
         print(f"📋 {title}")
@@ -225,7 +230,7 @@ Setup logging configuration."""
         print(f"\n{'='*50}\n")
 
 
-async def main():
+async def main() -> None:
     """
     🎯 MAIN CLI ENTRY POINT
     =======================
@@ -396,7 +401,7 @@ async def main():
 
 
 # Quick utility functions for common operations
-async def quick_search(query: str, platform: str = "youtube", max_results: int = 10):
+async def quick_search(query -> None: str, platform -> None: str = "youtube", max_results -> None: int = 10) -> None:
     """Quick search utility function."""
     if platform == "youtube":
         return await quick_youtube_search(query, max_results)
@@ -404,7 +409,7 @@ async def quick_search(query: str, platform: str = "youtube", max_results: int =
         raise ValueError(f"Platform {platform} not supported in quick search")
 
 
-async def quick_status_check(config_path: Optional[str] = None):
+async def quick_status_check(config_path -> None: Optional[str] = None) -> None:
     """Quick status check utility."""
     api = await create_crawler_service(config_path)
     try:

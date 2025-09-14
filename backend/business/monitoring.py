@@ -111,7 +111,7 @@ class BusinessMonitor:
     for all business operations including content, revenue, users, and systems.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the business monitor."""
         self.metrics: Dict[str, deque] = defaultdict(lambda: deque(maxlen=1000))  # Store last 1000 values
         self.alerts: Dict[str, Alert] = {}
@@ -123,7 +123,7 @@ class BusinessMonitor:
         self._setup_default_monitoring()
         self._setup_default_health_checks()
     
-    def _setup_default_monitoring(self):
+    def _setup_default_monitoring(self) -> None:
         """Setup default monitoring configuration."""
         self.monitoring_config.update({
             "system_health": {
@@ -158,7 +158,7 @@ class BusinessMonitor:
             }
         })
     
-    def _setup_default_health_checks(self):
+    def _setup_default_health_checks(self) -> None:
         """Setup default health checks."""
         health_checks = [
             HealthCheck(

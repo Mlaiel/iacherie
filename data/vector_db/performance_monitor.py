@@ -104,7 +104,7 @@ class SystemHealth:
 class MetricsCollector:
     """Collects various system and application metrics."""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """Initialize metrics collector."""
         self.config = config
         self.collection_interval = config.get('collection_interval', 5)  # seconds
@@ -361,7 +361,7 @@ class MetricsCollector:
 class AlertManager:
     """Manages performance alerts and notifications."""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """Initialize alert manager."""
         self.config = config
         self.enabled = config.get('enabled', True)
@@ -634,7 +634,7 @@ class AlertManager:
 class SLAMonitor:
     """Monitors SLA compliance."""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """Initialize SLA monitor."""
         self.config = config
         self.enabled = config.get('enabled', True)
@@ -803,7 +803,7 @@ class PerformanceMonitor:
     - Integration with external monitoring systems
     """
     
-    def __init__(self, config: Any):
+    def __init__(self, config -> None: Any) -> None:
         """
         Initialize performance monitor.
         

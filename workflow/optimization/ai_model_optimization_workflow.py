@@ -1,5 +1,7 @@
 """AI Model Optimization Workflow - Machine learning model optimization.
 
+import asyncio
+
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Ainflue Platform. All rights reserved.
 """
@@ -10,6 +12,7 @@ from datetime import datetime
 
 @dataclass
 class ModelMetrics:
+    """ModelMetrics: class implementation"""
     accuracy: float
     precision: float
     recall: float
@@ -17,6 +20,7 @@ class ModelMetrics:
 
 @dataclass
 class OptimizationPlan:
+    """OptimizationPlan: class implementation"""
     user_id: str
     model_improvements: ModelMetrics
     training_optimizations: List[str]
@@ -24,6 +28,7 @@ class OptimizationPlan:
     analysis_timestamp: datetime
 
 class AIModelOptimizationWorkflow:
+    """AIModelOptimizationWorkflow: class implementation"""
     async def get_user_analytics(self, user_id: str, time_period: int = 30) -> Dict[str, Any]:
         return {
             "user_id": user_id,

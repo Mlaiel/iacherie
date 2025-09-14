@@ -257,7 +257,7 @@ class DatabaseConfigManager:
     - Disaster recovery
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """
 Initialize database configuration manager"""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")

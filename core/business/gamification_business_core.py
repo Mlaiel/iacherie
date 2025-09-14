@@ -211,7 +211,7 @@ class GamificationBusinessCore:
     challenges, and engagement optimization for the Ainflue platform.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize gamification business core"""
         self.config = config or {}
         self.achievements: Dict[str, Achievement] = {}
@@ -245,7 +245,7 @@ class GamificationBusinessCore:
         
         logger.info("Gamification Business Core initialized")
     
-    def _initialize_default_gamification(self):
+    def _initialize_default_gamification(self) -> None:
         """Initialize default achievements and badges"""
         # Default achievements
         default_achievements = [
@@ -411,7 +411,7 @@ class GamificationBusinessCore:
             logger.error(f"Error awarding points: {e}")
             raise
     
-    async def _award_level_benefits(self, user_id: str, level: int):
+    async def _award_level_benefits(self, user_id -> None: str, level -> None: int) -> None:
         """Award benefits for reaching new level"""
         try:
             user_level = self.user_levels[user_id]
@@ -437,7 +437,7 @@ class GamificationBusinessCore:
         except Exception as e:
             logger.error(f"Error awarding level benefits: {e}")
     
-    async def _update_engagement_level(self, user_id: str):
+    async def _update_engagement_level(self, user_id -> None: str) -> None:
         """Update user engagement level based on activity"""
         try:
             user_level = self.user_levels[user_id]
@@ -558,7 +558,7 @@ class GamificationBusinessCore:
             logger.error(f"Error awarding achievement: {e}")
             raise
     
-    async def _award_reward(self, user_id: str, reward: Dict[str, Any]):
+    async def _award_reward(self, user_id -> None: str, reward -> None: Dict[str, Any]) -> None:
         """Award reward to user"""
         try:
             reward_type = reward.get('type')
@@ -578,7 +578,7 @@ class GamificationBusinessCore:
         except Exception as e:
             logger.error(f"Error awarding reward: {e}")
     
-    async def _award_badge(self, user_id: str, badge_id: str):
+    async def _award_badge(self, user_id -> None: str, badge_id -> None: str) -> None:
         """Award badge to user"""
         try:
             if badge_id not in self.badges:

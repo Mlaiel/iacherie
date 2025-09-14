@@ -133,7 +133,7 @@ class UniversalAnalysisEngine:
     - Content quality analysis
     """
     
-    def __init__(self, max_workers: int = 8, enterprise_mode: bool = True):
+    def __init__(self, max_workers -> None: int = 8, enterprise_mode -> None: bool = True) -> None:
         """
         Initialise le moteur d'analyse universel
         
@@ -528,7 +528,7 @@ class UniversalAnalysisEngine:
             "enterprise_compliance": "EXCELLENT" if avg_score > 85 else "GOOD" if avg_score > 70 else "NEEDS_IMPROVEMENT"
         }
     
-    def cleanup(self):
+    def cleanup(self) -> None:
         """Nettoyage des ressources"""
         self.executor.shutdown(wait=True)
         logger.info("🧹 UniversalAnalysisEngine nettoyé")
@@ -598,7 +598,7 @@ def get_global_engine() -> UniversalAnalysisEngine:
 
 if __name__ == "__main__":
     # Example usage for testing
-    async def test_engine():
+    async def test_engine() -> None:
         engine = AnalysisEngineFactory.create_enterprise_engine()
         
         request = create_analysis_request(

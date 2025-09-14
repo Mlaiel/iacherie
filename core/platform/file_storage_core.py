@@ -94,7 +94,7 @@ class StorageMetrics:
 class FileStorageCore:
     """Enterprise file storage system"""
     
-    def __init__(self, level: str = "enterprise"):
+    def __init__(self, level -> None: str = "enterprise") -> None:
         """Initialize file storage core"""
         self.level = level
         self.files: Dict[str, FileMetadata] = {}
@@ -125,7 +125,7 @@ class FileStorageCore:
         
         logger.info(f"💾 File Storage Core initialized - Level: {level}")
 
-    def _initialize_local_storage(self):
+    def _initialize_local_storage(self) -> None:
         """Initialize local storage directories"""
         
         self.local_storage_path.mkdir(exist_ok=True)
@@ -137,9 +137,9 @@ class FileStorageCore:
 
     async def configure_provider(
         self,
-        provider: StorageProvider,
-        config: Dict[str, Any]
-    ):
+        provider -> None: StorageProvider,
+        config -> None: Dict[str, Any]
+    ) -> None:
         """Configure storage provider"""
         
         # Validate configuration
@@ -261,10 +261,10 @@ class FileStorageCore:
 
     async def _validate_file(
         self,
-        file_data: bytes,
-        filename: str,
-        content_type: Optional[str]
-    ):
+        file_data -> None: bytes,
+        filename -> None: str,
+        content_type -> None: Optional[str]
+    ) -> None:
         """Validate file before upload"""
         
         # Check file size
@@ -290,7 +290,7 @@ class FileStorageCore:
         if len(file_data) == 0:
             raise ValueError("File is empty")
 
-    async def _check_quota(self, user_id: str, file_size: int):
+    async def _check_quota(self, user_id -> None: str, file_size -> None: int) -> None:
         """Check user storage quota"""
         
         quota = self.quotas.get(user_id)
@@ -305,7 +305,7 @@ class FileStorageCore:
         if quota.used_space + file_size > quota.total_limit:
             raise ValueError(f"Storage quota exceeded: {quota.used_space + file_size} > {quota.total_limit}")
 
-    async def _update_quota(self, user_id: str, size_delta: int, file_delta: int):
+    async def _update_quota(self, user_id -> None: str, size_delta -> None: int, file_delta -> None: int) -> None:
         """Update user storage quota"""
         
         quota = self.quotas.get(user_id)
@@ -520,7 +520,7 @@ class FileStorageCore:
             logger.error(f"File deletion failed: {str(e)}")
             return False
 
-    async def _delete_from_provider(self, metadata: FileMetadata):
+    async def _delete_from_provider(self, metadata -> None: FileMetadata) -> None:
         """Delete file from storage provider"""
         
         if metadata.storage_provider == StorageProvider.LOCAL:
@@ -564,7 +564,7 @@ class FileStorageCore:
         # Apply pagination
         return files[offset:offset + limit]
 
-    async def cleanup_expired_files(self):
+    async def cleanup_expired_files(self) -> None:
         """Clean up expired files"""
         
         current_time = datetime.utcnow()
@@ -593,9 +593,9 @@ class FileStorageCore:
 
     async def set_storage_quota(
         self,
-        user_id: str,
-        total_limit: int
-    ):
+        user_id -> None: str,
+        total_limit -> None: int
+    ) -> None:
         """Set user storage quota"""
         
         quota = self.quotas.get(user_id)

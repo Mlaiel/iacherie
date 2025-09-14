@@ -186,7 +186,7 @@ class PlatformPerformanceTracker:
     across all major social media and content platforms with cross-platform optimization.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.platform_metrics: Dict[str, Dict[Platform, PlatformMetrics]] = defaultdict(dict)
         self.cross_platform_analytics: Dict[str, List[CrossPlatformAnalytics]] = defaultdict(list)
         self.platform_benchmarks: Dict[Platform, Dict[str, float]] = defaultdict(dict)
@@ -381,7 +381,7 @@ class PlatformPerformanceTracker:
             logger.error(f"❌ Failed to track platform performance: {e}")
             return False
     
-    async def _calculate_derived_metrics(self, metrics: PlatformMetrics):
+    async def _calculate_derived_metrics(self, metrics -> None: PlatformMetrics) -> None:
         """Calculate derived performance metrics"""
         try:
             # Calculate engagement rate
@@ -408,9 +408,9 @@ class PlatformPerformanceTracker:
     
     async def _update_platform_specific_metrics(
         self,
-        metrics: PlatformMetrics,
-        performance_data: Dict[str, Any]
-    ):
+        metrics -> None: PlatformMetrics,
+        performance_data -> None: Dict[str, Any]
+    ) -> None:
         """Update platform-specific metrics"""
         try:
             platform_config = self.platform_configs.get(metrics.platform, {})
@@ -458,7 +458,7 @@ class PlatformPerformanceTracker:
         except Exception as e:
             logger.error(f"❌ Failed to update platform-specific metrics: {e}")
     
-    async def _calculate_algorithm_scores(self, metrics: PlatformMetrics):
+    async def _calculate_algorithm_scores(self, metrics -> None: PlatformMetrics) -> None:
         """Calculate platform algorithm and optimization scores"""
         try:
             platform_config = self.platform_configs.get(metrics.platform, {})
@@ -547,7 +547,7 @@ class PlatformPerformanceTracker:
             logger.error(f"❌ Failed to calculate discoverability score: {e}")
             return 0.5
     
-    async def _generate_platform_optimization_insights(self, metrics: PlatformMetrics):
+    async def _generate_platform_optimization_insights(self, metrics -> None: PlatformMetrics) -> None:
         """Generate platform-specific optimization insights"""
         try:
             optimization_strategies = self.optimization_strategies.get(metrics.platform, [])

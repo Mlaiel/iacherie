@@ -196,7 +196,7 @@ class StorageEnvironmentManager:
     - Metadata extraction and indexing
     """
     
-    def __init__(self, config_path: Optional[str] = None):
+    def __init__(self, config_path -> None: Optional[str] = None) -> None:
         self.config_path = config_path or "/config/storage.yml"
         self.environment = "storage"
         
@@ -655,27 +655,27 @@ Initialize storage lifecycle policies"""
             )
         ]
     
-    def _setup_object_storage(self):
+    def _setup_object_storage(self) -> None:
         """Setup object storage infrastructure"""
         logger.info(f"Setting up object storage: {self.object_storage.provider}")
     
-    def _setup_block_storage(self):
+    def _setup_block_storage(self) -> None:
         """Setup block storage infrastructure"""
         logger.info(f"Setting up block storage: {self.block_storage.provider}")
     
-    def _setup_file_storage(self):
+    def _setup_file_storage(self) -> None:
         """Setup file storage infrastructure"""
         logger.info(f"Setting up file storage: {self.file_storage.provider}")
     
-    def _setup_cache_storage(self):
+    def _setup_cache_storage(self) -> None:
         """Setup cache storage infrastructure"""
         logger.info(f"Setting up cache storage: {self.cache_storage.provider}")
     
-    def _configure_lifecycle_policies(self):
+    def _configure_lifecycle_policies(self) -> None:
         """Configure storage lifecycle policies"""
         logger.info("Configuring storage lifecycle policies")
     
-    def _setup_storage_monitoring(self):
+    def _setup_storage_monitoring(self) -> None:
         """Setup storage monitoring"""
         logger.info("Setting up storage monitoring")
     
@@ -757,7 +757,7 @@ Schedule lifecycle transitions"""
             })
         return transitions
     
-    def _setup_lifecycle_monitoring(self, content_id: str, transitions: List[Dict]):
+    def _setup_lifecycle_monitoring(self, content_id -> None: str, transitions -> None: List[Dict]) -> None:
         """
 Setup lifecycle monitoring"""
         logger.info(f"Setting up lifecycle monitoring for {content_id}")
@@ -833,7 +833,7 @@ Calculate cost optimization score"""
 Calculate performance score"""
         return 91.2
     
-    def _check_storage_alerts(self, metrics: Dict[str, Any]):
+    def _check_storage_alerts(self, metrics -> None: Dict[str, Any]) -> None:
         """
 Check storage alert thresholds"""
         # Implement alerting logic

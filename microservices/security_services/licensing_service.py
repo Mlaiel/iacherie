@@ -150,7 +150,7 @@ class RoyaltyCalculation:
 class AILicenseOptimizer:
     """AI-powered license optimization and recommendations"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.market_data = {}
         self.pricing_models = {}
         self.risk_assessments = {}
@@ -359,7 +359,7 @@ class AILicenseOptimizer:
 class LicenseContractGenerator:
     """Automated legal contract generation"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.templates = self._load_contract_templates()
         self.legal_clauses = self._load_legal_clauses()
     
@@ -545,7 +545,7 @@ This agreement grants specified rights subject to standard licensing terms.
 class LicensingService:
     """🎯 Enterprise Licensing and Rights Management Service"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.license_db = {}  # In production: Replace with Redis/PostgreSQL
         self.usage_tracker = {}
         self.royalty_calculator = {}
@@ -933,7 +933,7 @@ class LicensingService:
             logger.error(f"Analytics error: {e}")
             return {'status': 'error', 'error': str(e)}
     
-    async def _initialize_usage_tracking(self, agreement_id: str):
+    async def _initialize_usage_tracking(self, agreement_id -> None: str) -> None:
         """Initialize usage tracking for activated license"""
         self.usage_tracker[agreement_id] = []
         logger.info(f"Usage tracking initialized for license: {agreement_id}")
@@ -1133,7 +1133,7 @@ class LicensingService:
 
 # Example usage and testing
 if __name__ == "__main__":
-    async def demo_licensing_service():
+    async def demo_licensing_service() -> None:
         """Demonstration of the LicensingService capabilities"""
         print("🎯 Licensing Service Demo - Multi-Expert Implementation")
         print("=" * 60)

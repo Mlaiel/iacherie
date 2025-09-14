@@ -1,3 +1,8 @@
+"""
+  Init   module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """IA Influencer Agent - Deployment Scripts Module
 Enterprise-grade deployment automation and orchestration scripts for

@@ -96,7 +96,7 @@ class ValidationResult:
 class DataTransformer:
     """Enterprise data transformation engine with advanced capabilities."""
     
-    def __init__(self, database_connection=None, cache_backend=None):
+    def __init__(self, database_connection=None, cache_backend=None) -> None:
         """Initialize data transformer.
         
         Args:

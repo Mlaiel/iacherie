@@ -210,7 +210,7 @@ class LicensingEngine:
     marketplace integration with AI-powered opportunity identification.
     """
     
-    def __init__(self, db_session: AsyncSession, redis_client: Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: Redis) -> None:
         """
         Initialize Licensing Engine.
         

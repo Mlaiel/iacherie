@@ -275,7 +275,7 @@ class InfrastructureProvider(ABC):
 class KubernetesProvider(InfrastructureProvider):
     """Kubernetes infrastructure provider"""
     
-    def __init__(self, cluster_config: Dict[str, Any]):
+    def __init__(self, cluster_config -> None: Dict[str, Any]) -> None:
         self.cluster_config = cluster_config
         self.namespace = cluster_config.get("namespace", "default")
     
@@ -359,7 +359,7 @@ class KubernetesProvider(InfrastructureProvider):
 class AWSProvider(InfrastructureProvider):
     """AWS infrastructure provider"""
     
-    def __init__(self, aws_config: Dict[str, Any]):
+    def __init__(self, aws_config -> None: Dict[str, Any]) -> None:
         self.aws_config = aws_config
         self.region = aws_config.get("region", "us-east-1")
     
@@ -433,7 +433,7 @@ class AWSProvider(InfrastructureProvider):
 class PipelineEngine:
     """CI/CD pipeline execution engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.stage_executors = {
             "build": self._execute_build_stage,
             "test": self._execute_test_stage,
@@ -473,7 +473,7 @@ class PipelineEngine:
         
         return execution
     
-    async def _execute_stages_sequential(self, pipeline: CIPipeline, execution: PipelineExecution):
+    async def _execute_stages_sequential(self, pipeline -> None: CIPipeline, execution -> None: PipelineExecution) -> None:
         """Execute pipeline stages sequentially"""
         
         for stage_config in pipeline.stages:
@@ -484,7 +484,7 @@ class PipelineEngine:
             if not stage_result["success"] and not stage_config.get("allow_failure", False):
                 raise Exception(f"Stage {stage_config['name']} failed: {stage_result.get('error', 'Unknown error')}")
     
-    async def _execute_stages_parallel(self, pipeline: CIPipeline, execution: PipelineExecution):
+    async def _execute_stages_parallel(self, pipeline -> None: CIPipeline, execution -> None: PipelineExecution) -> None:
         """Execute pipeline stages in parallel where possible"""
         
         # Group stages by dependencies
@@ -745,7 +745,7 @@ class PipelineEngine:
 class DevOpsOrchestrator:
     """Central orchestrator for DevOps operations"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.environments: Dict[str, DeploymentEnvironment] = {}
         self.pipelines: Dict[str, CIPipeline] = {}
         self.templates: Dict[str, InfrastructureTemplate] = {}
@@ -990,7 +990,7 @@ class DevOpsOrchestrator:
             "performance_trend": "improving" if recent_success_rate > (successful_executions / total_executions) else "declining"
         }
     
-    async def _validate_template(self, template: InfrastructureTemplate):
+    async def _validate_template(self, template -> None: InfrastructureTemplate) -> None:
         """Validate infrastructure template"""
         
         # Basic validation
@@ -1013,7 +1013,7 @@ class DevOpsOrchestrator:
             except (json.JSONDecodeError, yaml.YAMLError) as e:
                 raise ValueError(f"Invalid CloudFormation template: {e}")
     
-    async def _configure_monitoring_tools(self, config: MonitoringConfiguration):
+    async def _configure_monitoring_tools(self, config -> None: MonitoringConfiguration) -> None:
         """Configure monitoring tools for environment"""
         
         # Simulate monitoring tool configuration
@@ -1024,17 +1024,17 @@ class DevOpsOrchestrator:
                 await self._setup_grafana(config)
             # Add more monitoring tool configurations as needed
     
-    async def _setup_prometheus(self, config: MonitoringConfiguration):
+    async def _setup_prometheus(self, config -> None: MonitoringConfiguration) -> None:
         """Setup Prometheus monitoring"""
         # Simulate Prometheus configuration
         pass
     
-    async def _setup_grafana(self, config: MonitoringConfiguration):
+    async def _setup_grafana(self, config -> None: MonitoringConfiguration) -> None:
         """Setup Grafana dashboards"""
         # Simulate Grafana configuration
         pass
     
-    async def _apply_security_configurations(self, environment_id: str, policy: SecurityPolicy):
+    async def _apply_security_configurations(self, environment_id -> None: str, policy -> None: SecurityPolicy) -> None:
         """Apply security configurations to environment"""
         
         # Simulate security policy application

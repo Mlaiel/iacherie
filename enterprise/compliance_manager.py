@@ -238,7 +238,7 @@ class DataClassifier:
     """
 Advanced data classification engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         try:
             logger.info(f"Executing __init__")
             
@@ -341,7 +341,7 @@ Classify data and identify sensitive information"""
 class ConsentManager:
     """Advanced consent management system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._consent_records: Dict[str, ConsentRecord] = {}
         self._consent_history: Dict[str, List[ConsentRecord]] = {}
         
@@ -505,12 +505,12 @@ Generate consent compliance report"""
 class AuditTrail:
     """Comprehensive audit trail system"""
     
-    def __init__(self, storage_config: Dict[str, Any]):
+    def __init__(self, storage_config -> None: Dict[str, Any]) -> None:
         self.storage_config = storage_config
         self._audit_events: List[AuditEvent] = []
         self._redis: Optional[aioredis.Redis] = None
         
-    async def initialize(self):
+    async def initialize(self) -> None:
         """
 Initialize audit trail storage"""
         try:
@@ -581,7 +581,7 @@ Initialize audit trail storage"""
             logger.error(f"Failed to log audit event: {e}")
             raise
     
-    async def _check_compliance_violations(self, event: AuditEvent):
+    async def _check_compliance_violations(self, event -> None: AuditEvent) -> None:
         """Check audit event for potential compliance violations"""
         try:
             violations = []
@@ -720,11 +720,11 @@ Initialize audit trail storage"""
 class RegulatoryFramework:
     """Regulatory framework implementation"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._compliance_rules: Dict[ComplianceFramework, List[ComplianceRule]] = {}
         self._initialize_frameworks()
     
-    def _initialize_frameworks(self):
+    def _initialize_frameworks(self) -> None:
         """
 Initialize compliance frameworks with rules"""
         # GDPR Rules
@@ -916,7 +916,7 @@ Initialize compliance frameworks with rules"""
 class DataGovernance:
     """Data governance and lifecycle management"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._data_inventory: Dict[str, Dict[str, Any]] = {}
         self._retention_policies: Dict[str, Dict[str, Any]] = {}
         self._data_lineage: Dict[str, List[str]] = {}
@@ -1058,7 +1058,7 @@ Register data asset in inventory"""
 class ComplianceManager:
     """Main compliance management orchestrator"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.data_classifier = DataClassifier()
         self.consent_manager = ConsentManager()
@@ -1067,7 +1067,7 @@ class ComplianceManager:
         self.data_governance = DataGovernance()
         self._assessments: Dict[str, ComplianceAssessment] = {}
         
-    async def initialize(self):
+    async def initialize(self) -> None:
         """
 Initialize compliance management system"""
         try:

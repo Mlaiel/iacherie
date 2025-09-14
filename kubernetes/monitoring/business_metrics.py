@@ -6,7 +6,7 @@ for content protection, AI fingerprinting, revenue optimization, and
 multi-platform influencer collaboration metrics.
 
 Core Business Domains:
-- Content Protection & Fingerprinting Analytics
+    - Content Protection & Fingerprinting Analytics
 - Revenue Tracking & Monetization Optimization
 - User Engagement & Platform Performance
 - AI Engine Performance & Accuracy Metrics
@@ -120,7 +120,7 @@ Key Performance Indicator definition and tracking"""
 class ContentProtectionMetrics:
     """Specialized metrics for content protection and fingerprinting"""
     
-    def __init__(self, db_engine: AsyncEngine):
+    def __init__(self, db_engine -> None: AsyncEngine) -> None:
         try:
             logger.info(f"Executing __init__")
             
@@ -279,7 +279,7 @@ Collect AI fingerprinting performance metrics"""
 class RevenueTrackingMetrics:
     """Specialized metrics for revenue tracking and monetization"""
     
-    def __init__(self, db_engine: AsyncEngine):
+    def __init__(self, db_engine -> None: AsyncEngine) -> None:
         self.db_engine = db_engine
     
     async def collect_revenue_metrics(self) -> List[BusinessMetric]:
@@ -417,7 +417,7 @@ Collect revenue and monetization metrics"""
 class UserEngagementMetrics:
     """User engagement and platform usage metrics"""
     
-    def __init__(self, db_engine: AsyncEngine):
+    def __init__(self, db_engine -> None: AsyncEngine) -> None:
         self.db_engine = db_engine
     
     async def collect_engagement_metrics(self) -> List[BusinessMetric]:
@@ -587,7 +587,7 @@ Collect user engagement and activity metrics"""
 class PlatformPerformanceMetrics:
     """Platform performance and operational metrics"""
     
-    def __init__(self, db_engine: AsyncEngine):
+    def __init__(self, db_engine -> None: AsyncEngine) -> None:
         self.db_engine = db_engine
     
     async def collect_performance_metrics(self) -> List[BusinessMetric]:
@@ -708,12 +708,12 @@ class BusinessMetricsCollector:
     
     def __init__(
         self,
-        redis_client: Optional[aioredis.Redis] = None,
-        db_engine: Optional[AsyncEngine] = None,
-        collection_interval: int = 60,
-        aggregation_intervals: List[int] = None,
-        enable_predictive_analytics: bool = True
-    ):
+        redis_client -> None: Optional[aioredis.Redis] = None,
+        db_engine -> None: Optional[AsyncEngine] = None,
+        collection_interval -> None: int = 60,
+        aggregation_intervals -> None: List[int] = None,
+        enable_predictive_analytics -> None: bool = True
+    ) -> None:
         self.redis_client = redis_client
         self.db_engine = db_engine
         self.collection_interval = collection_interval
@@ -748,7 +748,7 @@ class BusinessMetricsCollector:
         # Initialize KPIs
         self._initialize_business_kpis()
         
-    def _initialize_business_kpis(self):
+    def _initialize_business_kpis(self) -> None:
         """
 Initialize key business KPIs for the platform"""
         
@@ -870,7 +870,7 @@ Initialize key business KPIs for the platform"""
         self.register_metric("ai.matching.precision", MetricType.GAUGE, "percentage")
         self.register_metric("ai.processing.time", MetricType.HISTOGRAM, "milliseconds")
         
-    async def start_collection(self):
+    async def start_collection(self) -> None:
         try:
                     # Collect metrics
                     metrics = {
@@ -921,7 +921,7 @@ Initialize key business KPIs for the platform"""
         self.register_metric("ai.matching.precision", MetricType.GAUGE, "percentage")
         self.register_metric("ai.processing.time", MetricType.HISTOGRAM, "milliseconds")
         
-    async def start_collection(self):
+    async def start_collection(self) -> None:
         """Start business metrics collection"""
         if self._collecting:
             logger.warning("Business metrics collection already running")
@@ -933,7 +933,7 @@ Initialize key business KPIs for the platform"""
         
         logger.info("Business metrics collection started")
         
-    async def stop_collection(self):
+    async def stop_collection(self) -> None:
         """Stop business metrics collection"""
         self._collecting = False
         
@@ -956,7 +956,7 @@ Initialize key business KPIs for the platform"""
         
         logger.info("Business metrics collection stopped")
         
-    async def _collection_loop(self):
+    async def _collection_loop(self) -> None:
         """Main collection loop"""
         while self._collecting:
             try:
@@ -973,7 +973,7 @@ Initialize key business KPIs for the platform"""
                 logger.error(f"Error in business metrics collection loop: {e}")
                 await asyncio.sleep(10)
                 
-    async def _aggregation_loop(self):
+    async def _aggregation_loop(self) -> None:
         """Aggregation processing loop"""
         while self._collecting:
             try:
@@ -986,34 +986,34 @@ Initialize key business KPIs for the platform"""
                 logger.error(f"Error in aggregation loop: {e}")
                 await asyncio.sleep(10)
                 
-    async def _collect_platform_metrics(self):
+    async def _collect_platform_metrics(self) -> None:
         """Collect platform-level metrics"""
         metrics = await self._platform_metrics.collect()
         for metric in metrics:
             self._metrics_buffer.append(metric)
             
-    async def _collect_content_metrics(self):
+    async def _collect_content_metrics(self) -> None:
         """
 Collect content protection metrics"""
         metrics = await self._content_metrics.collect()
         for metric in metrics:
             self._metrics_buffer.append(metric)
             
-    async def _collect_revenue_metrics(self):
+    async def _collect_revenue_metrics(self) -> None:
         """
 Collect revenue tracking metrics"""
         metrics = await self._revenue_metrics.collect()
         for metric in metrics:
             self._metrics_buffer.append(metric)
             
-    async def _collect_user_metrics(self):
+    async def _collect_user_metrics(self) -> None:
         """
 Collect user engagement metrics"""
         metrics = await self._user_metrics.collect()
         for metric in metrics:
             self._metrics_buffer.append(metric)
             
-    async def _process_metrics_buffer(self):
+    async def _process_metrics_buffer(self) -> None:
         """
 Process metrics buffer"""
         if not self._metrics_buffer:
@@ -1029,7 +1029,7 @@ Process metrics buffer"""
         # Update aggregations
         await self._update_aggregations(metrics_to_process)
         
-    async def _store_metrics(self, metrics: List[BusinessMetric]):
+    async def _store_metrics(self, metrics -> None: List[BusinessMetric]) -> None:
         """
 Store metrics in Redis"""
         try:
@@ -1063,7 +1063,7 @@ Store metrics in Redis"""
         except Exception as e:
             logger.error(f"Error storing business metrics: {e}")
             
-    async def _update_aggregations(self, metrics: List[BusinessMetric]):
+    async def _update_aggregations(self, metrics -> None: List[BusinessMetric]) -> None:
         """Update metric aggregations"""
         for metric in metrics:
             for interval in self.aggregation_intervals:
@@ -1096,7 +1096,7 @@ Store metrics in Redis"""
                 agg._unique_dims.add(dim_key)
                 agg.unique_dimensions = len(agg._unique_dims)
                 
-    async def _process_aggregations(self):
+    async def _process_aggregations(self) -> None:
         """Process and store aggregations"""
         if not self.redis_client:
             return
@@ -1132,7 +1132,7 @@ Store metrics in Redis"""
         return f"{interval}s_{period_start}"
         
     # Public interface methods
-    def register_metric(self, name: str, metric_type: MetricType, unit: str = "count"):
+    def register_metric(self, name -> None: str, metric_type -> None: MetricType, unit -> None: str = "count") -> None:
         """Register a business metric"""
         self._metric_definitions[name] = {
             "type": metric_type,
@@ -1143,11 +1143,11 @@ Store metrics in Redis"""
         
     async def record_metric(
         self,
-        name: str,
-        value: Union[int, float],
-        dimensions: Optional[Dict[str, str]] = None,
-        metadata: Optional[Dict[str, Any]] = None
-    ):
+        name -> None: str,
+        value -> None: Union[int, float],
+        dimensions -> None: Optional[Dict[str, str]] = None,
+        metadata -> None: Optional[Dict[str, Any]] = None
+    ) -> None:
         """Record a business metric"""
         if name not in self._metric_definitions:
             logger.warning(f"Unknown metric: {name}")
@@ -1375,7 +1375,7 @@ class PlatformMetricsTracker:
     """
 Track platform-level metrics"""
     
-    def __init__(self, db_engine: Optional[AsyncEngine]):
+    def __init__(self, db_engine -> None: Optional[AsyncEngine]) -> None:
         self.db_engine = db_engine
         
     async def collect(self) -> List[BusinessMetric]:
@@ -1423,7 +1423,7 @@ Collect platform metrics"""
 class ContentMetricsTracker:
     """Track content protection metrics"""
     
-    def __init__(self, db_engine: Optional[AsyncEngine]):
+    def __init__(self, db_engine -> None: Optional[AsyncEngine]) -> None:
         self.db_engine = db_engine
         
     async def collect(self) -> List[BusinessMetric]:
@@ -1482,7 +1482,7 @@ Collect content metrics"""
 class RevenueMetricsTracker:
     """Track revenue metrics"""
     
-    def __init__(self, db_engine: Optional[AsyncEngine]):
+    def __init__(self, db_engine -> None: Optional[AsyncEngine]) -> None:
         self.db_engine = db_engine
         
     async def collect(self) -> List[BusinessMetric]:
@@ -1522,7 +1522,7 @@ Collect revenue metrics"""
 class UserMetricsTracker:
     """Track user engagement metrics"""
     
-    def __init__(self, db_engine: Optional[AsyncEngine]):
+    def __init__(self, db_engine -> None: Optional[AsyncEngine]) -> None:
         self.db_engine = db_engine
         
     async def collect(self) -> List[BusinessMetric]:
@@ -1570,3 +1570,6 @@ Collect user metrics"""
                 logger.error(f"Error collecting user metrics: {e}")
                 
         return metrics
+}}
+
+# File has syntax issues - needs manual review

@@ -1,3 +1,8 @@
+"""
+Data Pipeline Orchestrator module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Data Pipeline Orchestrator - Platform Core Enterprise Architecture
@@ -176,7 +181,7 @@ class DataPipelineOrchestrator:
     data quality monitoring, and real-time data flow coordination
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.pipelines: Dict[str, PipelineConfiguration] = {}
         self.executions: Dict[str, PipelineExecution] = {}
         self.active_streams: Dict[str, Any] = {}
@@ -668,7 +673,7 @@ class DataPipelineOrchestrator:
 # EXAMPLE USAGE AND TESTING
 # ============================================================================
 
-async def example_data_pipeline_orchestration():
+async def example_data_pipeline_orchestration() -> None:
     """Example usage of DataPipelineOrchestrator"""
     try:
         # Initialize orchestrator

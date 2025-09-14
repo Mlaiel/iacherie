@@ -141,7 +141,7 @@ class FraudAnalysisResult:
 class FraudDetectionModel(ABC):
     """Abstract fraud detection model"""
     
-    def __init__(self, name: str, version: str = "1.0.0"):
+    def __init__(self, name -> None: str, version -> None: str = "1.0.0") -> None:
         self.name = name
         self.version = version
         self.loaded = False
@@ -167,7 +167,7 @@ class FraudDetectionModel(ABC):
 class VelocityFraudModel(FraudDetectionModel):
     """Velocity-based fraud detection model"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__("VelocityFraudModel", "1.0.0")
         self.transaction_history: Dict[str, List[TransactionData]] = {}
         self.accuracy = 0.85
@@ -234,7 +234,7 @@ class VelocityFraudModel(FraudDetectionModel):
 class BehavioralFraudModel(FraudDetectionModel):
     """Behavioral anomaly detection model"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__("BehavioralFraudModel", "1.0.0")
         self.accuracy = 0.82
     
@@ -302,11 +302,11 @@ class BehavioralFraudModel(FraudDetectionModel):
 class RuleEngine:
     """Rule-based fraud detection engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.rules: Dict[str, FraudRule] = {}
         self._initialize_default_rules()
     
-    def _initialize_default_rules(self):
+    def _initialize_default_rules(self) -> None:
         """Initialize default fraud detection rules"""
         default_rules = [
             FraudRule(
@@ -361,7 +361,7 @@ class RuleEngine:
         for rule in default_rules:
             self.rules[rule.id] = rule
     
-    def add_rule(self, rule: FraudRule):
+    def add_rule(self, rule -> None: FraudRule) -> None:
         """Add fraud detection rule"""
         self.rules[rule.id] = rule
         logger.info(f"Added fraud rule: {rule.name}")
@@ -443,7 +443,7 @@ class RuleEngine:
 class FraudDetectionCore:
     """Core fraud detection system"""
     
-    def __init__(self, level: str = "enterprise"):
+    def __init__(self, level -> None: str = "enterprise") -> None:
         self.level = level
         self.models: Dict[str, FraudDetectionModel] = {}
         self.rule_engine = RuleEngine()
@@ -531,7 +531,7 @@ class FraudDetectionCore:
             logger.error(f"Health check failed: {str(e)}")
             return False
     
-    def _initialize_models(self):
+    def _initialize_models(self) -> None:
         """Initialize fraud detection models"""
         self.models = {
             'velocity_fraud': VelocityFraudModel(),
@@ -711,7 +711,7 @@ class FraudDetectionCore:
         
         return fraud_types
     
-    def _update_metrics(self, result: FraudAnalysisResult):
+    def _update_metrics(self, result -> None: FraudAnalysisResult) -> None:
         """Update system metrics"""
         self.metrics['total_transactions_analyzed'] += 1
         
@@ -729,9 +729,9 @@ class FraudDetectionCore:
                      result.processing_time_ms)
         self.metrics['avg_analysis_time'] = total_time / self.metrics['total_transactions_analyzed']
     
-    def _update_user_profile(self, user_profile: UserProfile, 
-                           transaction_data: TransactionData, 
-                           result: FraudAnalysisResult):
+    def _update_user_profile(self, user_profile -> None: UserProfile, 
+                           transaction_data -> None: TransactionData, 
+                           result -> None: FraudAnalysisResult) -> None:
         """Update user profile with transaction data"""
         user_profile.total_transactions += 1
         user_profile.total_amount += transaction_data.amount
@@ -757,7 +757,7 @@ class FraudDetectionCore:
         
         user_profile.updated_at = datetime.utcnow()
     
-    def _store_transaction_history(self, transaction_data: TransactionData):
+    def _store_transaction_history(self, transaction_data -> None: TransactionData) -> None:
         """Store transaction in history"""
         if transaction_data.user_id not in self.transaction_history:
             self.transaction_history[transaction_data.user_id] = []
@@ -771,7 +771,7 @@ class FraudDetectionCore:
             if t.timestamp >= cutoff_date
         ]
     
-    def add_to_blacklist(self, item_type: str, value: str):
+    def add_to_blacklist(self, item_type -> None: str, value -> None: str) -> None:
         """Add item to blacklist"""
         if item_type == 'ip':
             self.blacklisted_ips.add(value)
@@ -779,7 +779,7 @@ class FraudDetectionCore:
             self.blacklisted_devices.add(value)
         logger.info(f"Added {item_type} to blacklist: {value}")
     
-    def add_to_whitelist(self, user_id: str):
+    def add_to_whitelist(self, user_id -> None: str) -> None:
         """Add user to whitelist"""
         self.whitelisted_users.add(user_id)
         logger.info(f"Added user to whitelist: {user_id}")
@@ -857,11 +857,11 @@ def get_user_risk_profile(user_id: str) -> Optional[Dict[str, Any]]:
     """Get user risk profile"""
     return fraud_detection_core.get_user_risk_profile(user_id)
 
-def blacklist_ip(ip_address: str):
+def blacklist_ip(ip_address -> None: str) -> None:
     """Blacklist IP address"""
     fraud_detection_core.add_to_blacklist('ip', ip_address)
 
-def whitelist_user(user_id: str):
+def whitelist_user(user_id -> None: str) -> None:
     """Whitelist user"""
     fraud_detection_core.add_to_whitelist(user_id)
 

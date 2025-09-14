@@ -84,7 +84,7 @@ class GamificationSystem:
     """
 Creator gamification and engagement system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.challenges = {}
         self.achievements = {}
         self.user_progress = {}
@@ -230,7 +230,7 @@ Create a new challenge"""
             logger.error(f"Error unlocking achievements: {str(e)}")
             return []
     
-    async def update_leaderboards(self):
+    async def update_leaderboards(self) -> None:
         """Update global and category leaderboards"""
         try:
             # Global leaderboard by experience points
@@ -340,7 +340,7 @@ Create a new challenge"""
             logger.error(f"Error getting user dashboard: {str(e)}")
             return {"error": str(e)}
     
-    def _initialize_default_content(self):
+    def _initialize_default_content(self) -> None:
         """Initialize default achievements and challenges"""
         try:
             # Default achievements
@@ -459,9 +459,9 @@ Create a new challenge"""
     
     async def _award_challenge_rewards(
         self,
-        user_id: str,
-        rewards: Dict[str, Any]
-    ):
+        user_id -> None: str,
+        rewards -> None: Dict[str, Any]
+    ) -> None:
         """Award challenge completion rewards"""
         try:
             user_progress = self.user_progress[user_id]
@@ -486,9 +486,9 @@ Create a new challenge"""
     
     async def _award_achievement_rewards(
         self,
-        user_id: str,
-        rewards: Dict[str, Any]
-    ):
+        user_id -> None: str,
+        rewards -> None: Dict[str, Any]
+    ) -> None:
         """Award achievement unlock rewards"""
         try:
             user_progress = self.user_progress[user_id]

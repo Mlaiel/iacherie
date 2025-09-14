@@ -94,7 +94,7 @@ class EnsembleConfig:
 class ModelPool:
     """Thread-safe model pool for managing hundreds of models"""
     
-    def __init__(self, max_size: int = 500):
+    def __init__(self, max_size -> None: int = 500) -> None:
         self.max_size = max_size
         self.models: Dict[str, Any] = {}
         self.model_metrics: Dict[str, ModelMetrics] = {}
@@ -155,7 +155,7 @@ class ModelPool:
                         available.append(model_id)
             return available
     
-    def update_metrics(self, model_id: str, metrics: ModelMetrics):
+    def update_metrics(self, model_id -> None: str, metrics -> None: ModelMetrics) -> None:
         """Update model performance metrics"""
         with self._lock:
             if model_id in self.model_metrics:
@@ -199,7 +199,7 @@ class ModelPool:
 class ModelRegistry:
     """Registry for managing model metadata and capabilities"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.models_db: Dict[str, Dict[str, Any]] = {}
         self.capability_index: Dict[str, Set[str]] = defaultdict(set)
         self.performance_index: Dict[str, List[str]] = defaultdict(list)
@@ -245,7 +245,7 @@ class ModelRegistry:
 class LargeScaleEnsembleManager:
     """Main manager for large-scale ensemble orchestration"""
     
-    def __init__(self, config: EnsembleConfig):
+    def __init__(self, config -> None: EnsembleConfig) -> None:
         self.config = config
         self.model_pool = ModelPool(max_size=config.max_models)
         self.model_registry = ModelRegistry()
@@ -257,7 +257,7 @@ class LargeScaleEnsembleManager:
         
         logger.info(f"LargeScaleEnsembleManager initialized with strategy: {config.strategy}")
     
-    async def start(self):
+    async def start(self) -> None:
         """Start the ensemble manager"""
         if self.is_running:
             return
@@ -269,7 +269,7 @@ class LargeScaleEnsembleManager:
         
         logger.info("LargeScaleEnsembleManager started")
     
-    async def stop(self):
+    async def stop(self) -> None:
         """Stop the ensemble manager"""
         self.is_running = False
         
@@ -469,7 +469,7 @@ class LargeScaleEnsembleManager:
             'timestamp': datetime.utcnow().isoformat()
         }
     
-    async def _update_prediction_metrics(self, model_ids: List[str]):
+    async def _update_prediction_metrics(self, model_ids -> None: List[str]) -> None:
         """Update prediction metrics for models"""
         for model_id in model_ids:
             if model_id in self.model_pool.model_metrics:
@@ -479,7 +479,7 @@ class LargeScaleEnsembleManager:
                     (datetime.utcnow() - metrics.last_updated).total_seconds(), 1
                 )
     
-    async def _monitor_performance(self):
+    async def _monitor_performance(self) -> None:
         """Monitor ensemble performance continuously"""
         while self.is_running:
             try:
@@ -500,7 +500,7 @@ class LargeScaleEnsembleManager:
                 logger.error(f"Performance monitoring error: {e}")
                 await asyncio.sleep(10)
     
-    async def _update_adaptive_weights(self):
+    async def _update_adaptive_weights(self) -> None:
         """Update model weights based on recent performance"""
         for model_id in self.model_pool.models.keys():
             metrics = self.model_pool.model_metrics[model_id]
@@ -515,7 +515,7 @@ class LargeScaleEnsembleManager:
             # Update weight
             self.ensemble_weights[model_id] = max(0.1, min(2.0, performance_score))
     
-    async def _check_model_health(self):
+    async def _check_model_health(self) -> None:
         """Check model health and handle failures"""
         for model_id, status in self.model_pool.model_status.items():
             if status == ModelStatus.ERROR:
@@ -526,7 +526,7 @@ class LargeScaleEnsembleManager:
             if metrics.error_rate > 0.1:  # 10% error rate threshold
                 logger.warning(f"Model {model_id} has high error rate: {metrics.error_rate}")
     
-    async def _optimize_resources(self):
+    async def _optimize_resources(self) -> None:
         """Optimize resource usage across models"""
         pool_stats = self.model_pool.get_pool_stats()
         
@@ -554,7 +554,7 @@ class LargeScaleEnsembleManager:
 class EnsembleOrchestrator:
     """High-level orchestrator for managing multiple ensemble managers"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.ensembles: Dict[str, LargeScaleEnsembleManager] = {}
         self.global_stats = {
             'total_models': 0,

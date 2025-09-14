@@ -152,7 +152,7 @@ class AudioProcessingService:
     - Batch processing and automation
     """
 
-    def __init__(self, redis_url: str = "redis://localhost:6379"):
+    def __init__(self, redis_url -> None: str = "redis -> None://localhost -> None:6379") -> None:
         self.logger = logging.getLogger(__name__)
         self.redis_url = redis_url
         self.redis_client: Optional[aioredis.Redis] = None
@@ -201,7 +201,7 @@ class AudioProcessingService:
         
         self.logger.info("Audio Processing Service initialized")
 
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize audio processing service"""
         try:
             self.redis_client = aioredis.from_url(
@@ -223,7 +223,7 @@ class AudioProcessingService:
             self.logger.error(f"Failed to initialize Audio Processing Service: {e}")
             raise
 
-    async def _start_processing_tasks(self):
+    async def _start_processing_tasks(self) -> None:
         """Start background audio processing tasks"""
         
         # Job processor
@@ -307,7 +307,7 @@ class AudioProcessingService:
             self.logger.error(f"Error analyzing audio file {audio_file}: {e}")
             raise
 
-    async def _process_audio_queue(self):
+    async def _process_audio_queue(self) -> None:
         """Process audio jobs in queue"""
         
         while True:
@@ -445,7 +445,7 @@ class AudioProcessingService:
             self.logger.error(f"Error loading audio file {file_path}: {e}")
             raise
 
-    async def _save_audio_file(self, file_path: str, audio_data: np.ndarray, sample_rate: int):
+    async def _save_audio_file(self, file_path -> None: str, audio_data -> None: np.ndarray, sample_rate -> None: int) -> None:
         """Save audio data to file"""
         
         try:
@@ -998,7 +998,7 @@ class AudioProcessingService:
         
         return recommendations
 
-    async def _monitor_audio_quality(self):
+    async def _monitor_audio_quality(self) -> None:
         """Monitor audio quality across processed files"""
         
         while True:
@@ -1026,7 +1026,7 @@ class AudioProcessingService:
                 self.logger.error(f"Error monitoring audio quality: {e}")
                 await asyncio.sleep(600)
 
-    async def _update_processing_metrics(self, result: AudioProcessingResult):
+    async def _update_processing_metrics(self, result -> None: AudioProcessingResult) -> None:
         """Update processing metrics"""
         
         self.processing_metrics["total_jobs"] += 1
@@ -1050,7 +1050,7 @@ class AudioProcessingService:
 
     # Redis persistence methods
     
-    async def _save_processing_job(self, job: ProcessingJob):
+    async def _save_processing_job(self, job -> None: ProcessingJob) -> None:
         """Save processing job to Redis"""
         
         job_data = {
@@ -1074,7 +1074,7 @@ class AudioProcessingService:
             json.dumps(job_data)
         )
 
-    async def _load_processing_jobs(self):
+    async def _load_processing_jobs(self) -> None:
         """Load processing jobs from Redis"""
         
         try:
@@ -1114,7 +1114,7 @@ class AudioProcessingService:
         except Exception as e:
             self.logger.warning(f"Could not load processing jobs: {e}")
 
-    async def _save_audio_analysis(self, file_hash: str, analysis: AudioAnalysis):
+    async def _save_audio_analysis(self, file_hash -> None: str, analysis -> None: AudioAnalysis) -> None:
         """Save audio analysis to Redis"""
         
         analysis_data = {
@@ -1172,7 +1172,7 @@ class AudioProcessingService:
             "last_updated": datetime.utcnow().isoformat()
         }
 
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Shutdown audio processing service"""
         
         if self.redis_client:
@@ -1182,7 +1182,7 @@ class AudioProcessingService:
 
 
 # Example usage
-async def main():
+async def main() -> None:
     """Example usage of Audio Processing Service"""
     
     processor = AudioProcessingService()

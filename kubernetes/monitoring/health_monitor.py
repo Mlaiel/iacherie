@@ -6,7 +6,7 @@ predictive failure detection, and automated recovery for content protection
 and influencer collaboration platforms.
 
 Features:
-- Multi-layer health checks with dependency mapping
+    - Multi-layer health checks with dependency mapping
 - Circuit breaker patterns with intelligent recovery
 - AI-powered anomaly detection and predictive analytics
 - Content protection service monitoring
@@ -147,14 +147,14 @@ class HealthMonitor:
     
     def __init__(
         self,
-        redis_client: Optional[aioredis.Redis] = None,
-        db_engine: Optional[AsyncEngine] = None,
-        check_interval: int = 30,
-        circuit_breaker_threshold: int = 5,
-        circuit_breaker_timeout: int = 300,
-        enable_ai_diagnostics: bool = True,
-        enable_predictive_analysis: bool = True
-    ):
+        redis_client -> None: Optional[aioredis.Redis] = None,
+        db_engine -> None: Optional[AsyncEngine] = None,
+        check_interval -> None: int = 30,
+        circuit_breaker_threshold -> None: int = 5,
+        circuit_breaker_timeout -> None: int = 300,
+        enable_ai_diagnostics -> None: bool = True,
+        enable_predictive_analysis -> None: bool = True
+    ) -> None:
         self.redis_client = redis_client
         self.db_engine = db_engine
         self.check_interval = check_interval
@@ -202,7 +202,7 @@ class HealthMonitor:
         # Register default health checks
         self._register_default_health_checks()
         
-    def _register_default_health_checks(self):
+    def _register_default_health_checks(self) -> None:
         """
 Register default health checks for IA Influencer Agent Platform"""
         
@@ -860,7 +860,7 @@ Register default health checks for IA Influencer Agent Platform"""
             dependencies=["database_connection"]
         ))
         
-    async def start_monitoring(self):
+    async def start_monitoring(self) -> None:
         """Start health monitoring"""
         if self._monitoring:
             logger.warning("Health monitoring already running")
@@ -870,7 +870,7 @@ Register default health checks for IA Influencer Agent Platform"""
         self._monitor_task = asyncio.create_task(self._monitoring_loop())
         logger.info("Health monitoring started")
         
-    async def stop_monitoring(self):
+    async def stop_monitoring(self) -> None:
         try:
                     # Collect metrics
                     metrics = {
@@ -893,7 +893,7 @@ Register default health checks for IA Influencer Agent Platform"""
                 except Exception as e:
                     logger.error(f"Metric collection stop_monitoring failed: {e}")
                     return None
-    async def _monitoring_loop(self):
+    async def _monitoring_loop(self) -> None:
         """Main monitoring loop"""
         while self._monitoring:
             try:
@@ -907,7 +907,7 @@ Register default health checks for IA Influencer Agent Platform"""
                 logger.error(f"Error in health monitoring loop: {e}")
                 await asyncio.sleep(5)  # Backoff on error
                 
-    async def _run_health_checks(self):
+    async def _run_health_checks(self) -> None:
         """Run all enabled health checks"""
         tasks = []
         
@@ -1036,7 +1036,7 @@ Check if circuit breaker is open for a health check"""
             
         return False
         
-    def _handle_circuit_breaker(self, check_name: str, success: bool):
+    def _handle_circuit_breaker(self, check_name -> None: str, success -> None: bool) -> None:
         """Handle circuit breaker state transitions"""
         if check_name not in self._circuit_breakers:
             self._circuit_breakers[check_name] = CircuitBreakerState()
@@ -1058,7 +1058,7 @@ Check if circuit breaker is open for a health check"""
                 cb_state.next_attempt_time = datetime.utcnow() + timedelta(seconds=self.circuit_breaker_timeout)
                 logger.warning(f"Circuit breaker opened for health check: {check_name}")
                 
-    async def _process_results(self):
+    async def _process_results(self) -> None:
         """Process health check results and trigger recovery if needed"""
         overall_status = self.get_overall_status()
         
@@ -1372,12 +1372,12 @@ Check database connection and performance"""
             )
             
     # Public interface methods
-    def register_check(self, health_check: HealthCheck):
+    def register_check(self, health_check -> None: HealthCheck) -> None:
         """Register a new health check"""
         self._health_checks[health_check.name] = health_check
         logger.info(f"Registered health check: {health_check.name}")
         
-    def unregister_check(self, check_name: str):
+    def unregister_check(self, check_name -> None: str) -> None:
         """Unregister a health check"""
         if check_name in self._health_checks:
             del self._health_checks[check_name]
@@ -1385,7 +1385,7 @@ Check database connection and performance"""
                 del self._health_results[check_name]
             logger.info(f"Unregistered health check: {check_name}")
             
-    def register_recovery_handler(self, check_name: str, handler: Callable):
+    def register_recovery_handler(self, check_name -> None: str, handler -> None: Callable) -> None:
         """Register a recovery handler for a health check"""
         self._recovery_handlers[check_name] = handler
         logger.info(f"Registered recovery handler for: {check_name}")
@@ -1441,3 +1441,5 @@ Get comprehensive health summary"""
             }
             for name, result in self._health_results.items()
         }
+
+# File has syntax issues - needs manual review

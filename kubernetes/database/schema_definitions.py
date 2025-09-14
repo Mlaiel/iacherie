@@ -302,7 +302,7 @@ class SchemaDefinitionManager:
     Fournit des outils avancés pour la gestion des schémas
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or get_settings()
         self.logger = get_logger(f"{__name__}.SchemaDefinitionManager")
         
@@ -322,7 +322,7 @@ class SchemaDefinitionManager:
         # Initialisation
         self._initialize_schema_manager()
     
-    def _initialize_schema_manager(self):
+    def _initialize_schema_manager(self) -> None:
         """Initialise le gestionnaire de schémas"""
         try:
             self.logger.info("🗄️ Initializing schema definition manager...")
@@ -390,7 +390,7 @@ Charge les règles d'optimisation"""
             }
         }
     
-    def _load_existing_definitions(self):
+    def _load_existing_definitions(self) -> None:
         """
 Charge les définitions existantes depuis la base"""
         try:
@@ -921,7 +921,7 @@ Charge les définitions existantes depuis la base"""
         
         return errors
     
-    def _validate_all_definitions(self):
+    def _validate_all_definitions(self) -> None:
         """Valide toutes les définitions chargées"""
         try:
             total_errors = 0
@@ -940,7 +940,7 @@ Charge les définitions existantes depuis la base"""
         except Exception as e:
             self.logger.error(f"Schema validation failed: {e}")
     
-    def _apply_optimization_rules(self, table_def: TableDefinition):
+    def _apply_optimization_rules(self, table_def -> None: TableDefinition) -> None:
         """Applique les règles d'optimisation à une table"""
         try:
             # Génération d'index automatiques
@@ -955,7 +955,7 @@ Charge les définitions existantes depuis la base"""
         except Exception as e:
             self.logger.warning(f"Failed to apply optimization rules: {e}")
     
-    def _generate_automatic_indexes(self, table_def: TableDefinition, specific_column: Optional[ColumnDefinition] = None):
+    def _generate_automatic_indexes(self, table_def -> None: TableDefinition, specific_column -> None: Optional[ColumnDefinition] = None) -> None:
         """Génère des index automatiques selon les règles"""
         try:
             columns_to_index = [specific_column] if specific_column else table_def.columns
@@ -1025,7 +1025,7 @@ Charge les définitions existantes depuis la base"""
         except Exception as e:
             self.logger.warning(f"Failed to generate automatic indexes: {e}")
     
-    def _apply_partitioning_strategy(self, table_def: TableDefinition):
+    def _apply_partitioning_strategy(self, table_def -> None: TableDefinition) -> None:
         """Applique une stratégie de partitioning si approprié"""
         try:
             # Recherche de colonnes appropriées pour le partitioning
@@ -1052,7 +1052,7 @@ Charge les définitions existantes depuis la base"""
         except Exception as e:
             self.logger.warning(f"Failed to apply partitioning strategy: {e}")
     
-    def _optimize_storage_parameters(self, table_def: TableDefinition):
+    def _optimize_storage_parameters(self, table_def -> None: TableDefinition) -> None:
         """Optimise les paramètres de stockage"""
         try:
             # Configuration auto-vacuum
@@ -1621,7 +1621,7 @@ Récupère un résumé du schéma"""
         except Exception as e:
             self.logger.error(f"SFTP upload failed: {e}")
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Arrêt propre du gestionnaire de schémas"""
         try:
             self.logger.info("🔒 Shutting down schema definition manager...")

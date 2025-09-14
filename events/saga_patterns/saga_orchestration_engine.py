@@ -1,3 +1,8 @@
+"""
+Saga Orchestration Engine module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """Saga Orchestration Engine - Enterprise Distributed Transaction Management
 ============================================================================
@@ -87,7 +92,7 @@ class SagaStepException(Exception):
 class SagaStep(ABC):
     """Abstract base class for saga steps"""
     
-    def __init__(self, step_id: str, step_name: str):
+    def __init__(self, step_id -> None: str, step_name -> None: str) -> None:
         self.step_id = step_id
         self.step_name = step_name
         self.dependencies: List[str] = []
@@ -107,7 +112,7 @@ class SagaStep(ABC):
 class ContentProcessingSaga:
     """Business saga for content processing workflow"""
     
-    def __init__(self, saga_id: str, creator_id: str, content_data: Dict[str, Any]):
+    def __init__(self, saga_id -> None: str, creator_id -> None: str, content_data -> None: Dict[str, Any]) -> None:
         self.saga_id = saga_id
         self.creator_id = creator_id
         self.content_data = content_data
@@ -286,7 +291,7 @@ class ContentProcessingSaga:
                 error_message=str(e)
             )
     
-    async def _compensate_saga(self):
+    async def _compensate_saga(self) -> None:
         """Execute compensation for failed saga"""
         logger.info(f"Starting compensation for saga {self.saga_id}")
         
@@ -297,12 +302,12 @@ class ContentProcessingSaga:
             except Exception as e:
                 logger.error(f"Compensation action failed: {e}")
     
-    async def _delete_uploaded_content(self, content_id: str):
+    async def _delete_uploaded_content(self, content_id -> None: str) -> None:
         """Compensation: delete uploaded content"""
         logger.info(f"Compensating: deleting content {content_id}")
         await asyncio.sleep(0.05)  # Simulate cleanup
     
-    async def _cleanup_ai_analysis(self, content_id: str):
+    async def _cleanup_ai_analysis(self, content_id -> None: str) -> None:
         """Compensation: cleanup AI analysis data"""
         logger.info(f"Compensating: cleaning up AI analysis for {content_id}")
         await asyncio.sleep(0.05)  # Simulate cleanup
@@ -311,12 +316,12 @@ class ContentProcessingSaga:
 class SagaOrchestrationEngine:
     """Central orchestration engine for managing sagas"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.active_sagas: Dict[str, Any] = {}
         self.saga_definitions: Dict[str, Callable] = {}
         self.execution_metrics: Dict[str, Any] = {}
     
-    def register_saga_definition(self, saga_type: str, saga_factory: Callable):
+    def register_saga_definition(self, saga_type -> None: str, saga_factory -> None: Callable) -> None:
         """Register a saga definition"""
         self.saga_definitions[saga_type] = saga_factory
         logger.info(f"Registered saga definition: {saga_type}")
@@ -349,7 +354,7 @@ class SagaOrchestrationEngine:
         
         return saga_id
     
-    async def _execute_saga(self, saga_id: str):
+    async def _execute_saga(self, saga_id -> None: str) -> None:
         """Execute saga and update status"""
         try:
             saga_info = self.active_sagas[saga_id]
@@ -389,7 +394,7 @@ class SagaOrchestrationEngine:
             if info["status"] in [SagaStatus.RUNNING, SagaStatus.COMPENSATING]
         ]
     
-    def _update_execution_metrics(self, saga_type: str, status: SagaStatus):
+    def _update_execution_metrics(self, saga_type -> None: str, status -> None: SagaStatus) -> None:
         """Update execution metrics"""
         if saga_type not in self.execution_metrics:
             self.execution_metrics[saga_type] = {

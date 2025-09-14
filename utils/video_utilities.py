@@ -168,12 +168,12 @@ class VideoUtilities:
     """
     
     def __init__(self,
-                 ffmpeg_path: Optional[str] = None,
-                 ffprobe_path: Optional[str] = None,
-                 temp_dir: Optional[str] = None,
-                 max_concurrent_jobs: int = 4,
-                 enable_hardware_acceleration: bool = True,
-                 quality_presets: Optional[Dict[VideoQuality, Dict]] = None):
+                 ffmpeg_path -> None: Optional[str] = None,
+                 ffprobe_path -> None: Optional[str] = None,
+                 temp_dir -> None: Optional[str] = None,
+                 max_concurrent_jobs -> None: int = 4,
+                 enable_hardware_acceleration -> None: bool = True,
+                 quality_presets -> None: Optional[Dict[VideoQuality, Dict]] = None) -> None:
         """
         Initialize video utilities
         
@@ -966,8 +966,8 @@ class VideoUtilities:
             }
         }
 
-    def _update_processing_stats(self, success: bool, processing_time: float, 
-                               input_size: int, output_size: int):
+    def _update_processing_stats(self, success -> None: bool, processing_time -> None: float, 
+                               input_size -> None: int, output_size -> None: int) -> None:
         """Update processing statistics"""
         self.processing_stats["total_jobs"] += 1
         self.processing_stats["total_processing_time"] += processing_time

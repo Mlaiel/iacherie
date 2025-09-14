@@ -1,5 +1,7 @@
 """Container Orchestration System
 
+from pathlib import Path
+
 Provides comprehensive Kubernetes and Docker container orchestration
 for the IA Influencer Agent platform with advanced deployment strategies.
 
@@ -77,13 +79,13 @@ class ContainerOrchestrator:
     """
 Main container orchestration manager"""
     
-    def __init__(self, platform: OrchestrationPlatform = OrchestrationPlatform.KUBERNETES):
+    def __init__(self, platform -> None: OrchestrationPlatform = OrchestrationPlatform.KUBERNETES) -> None:
         self.platform = platform
         self.k8s_client = None
         self.docker_client = None
         self._init_clients()
         
-    def _init_clients(self):
+    def _init_clients(self) -> None:
         """
 Initialize orchestration clients"""
         try:

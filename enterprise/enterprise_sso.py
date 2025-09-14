@@ -182,13 +182,13 @@ class SAMLProvider:
     """
 SAML 2.0 authentication provider"""
     
-    def __init__(self, config: SAMLConfiguration):
+    def __init__(self, config -> None: SAMLConfiguration) -> None:
         self.config = config
         self._certificate = None
         self._private_key = None
         self._load_certificates()
     
-    def _load_certificates(self):
+    def _load_certificates(self) -> None:
         """
 Load SAML certificates"""
         try:
@@ -333,12 +333,12 @@ Load SAML certificates"""
 class OIDCProvider:
     """OpenID Connect authentication provider"""
     
-    def __init__(self, config: OIDCConfiguration):
+    def __init__(self, config -> None: OIDCConfiguration) -> None:
         self.config = config
         self._discovery_doc: Optional[Dict[str, Any]] = None
         self._jwks: Optional[Dict[str, Any]] = None
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """
 Initialize OIDC provider with discovery"""
         try:
@@ -500,7 +500,7 @@ class ActiveDirectoryConnector:
     """
 Active Directory LDAP connector"""
     
-    def __init__(self, config: ActiveDirectoryConfiguration):
+    def __init__(self, config -> None: ActiveDirectoryConfiguration) -> None:
         self.config = config
         self._connection: Optional[ldap3.Connection] = None
     
@@ -611,7 +611,7 @@ Connect to Active Directory"""
             logger.error(f"Failed to get user groups: {e}")
             return []
     
-    async def disconnect(self):
+    async def disconnect(self) -> None:
         """Disconnect from Active Directory"""
         if self._connection:
             self._connection.unbind()
@@ -622,13 +622,13 @@ class SessionManager:
     """
 Advanced session management with Redis backend"""
     
-    def __init__(self, redis_url: str = "redis://localhost:6379"):
+    def __init__(self, redis_url -> None: str = "redis -> None://localhost -> None:6379") -> None:
         self.redis_url = redis_url
         self._redis: Optional[aioredis.Redis] = None
         self._session_timeout = timedelta(hours=8)
         self._max_sessions_per_user = 5
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize Redis connection"""
         try:
             self._redis = aioredis.from_url(self.redis_url, decode_responses=True)
@@ -683,7 +683,7 @@ Advanced session management with Redis backend"""
             logger.error(f"Failed to create session: {e}")
             raise
     
-    async def _store_session(self, session: AuthenticationSession):
+    async def _store_session(self, session -> None: AuthenticationSession) -> None:
         """Store session in Redis"""
         if not self._redis:
             await self.initialize()
@@ -707,7 +707,7 @@ Advanced session management with Redis backend"""
         await self._redis.sadd(user_sessions_key, session.session_id)
         await self._redis.expire(user_sessions_key, int(self._session_timeout.total_seconds()))
     
-    async def _enforce_session_limits(self, user_id: str):
+    async def _enforce_session_limits(self, user_id -> None: str) -> None:
         """Enforce maximum sessions per user"""
         try:
             user_sessions_key = f"user_sessions:{user_id}"
@@ -828,7 +828,7 @@ Advanced session management with Redis backend"""
 class EnterpriseSSO:
     """Main Enterprise SSO orchestrator"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self._providers: Dict[str, IdentityProvider] = {}
         self._saml_providers: Dict[str, SAMLProvider] = {}
@@ -838,7 +838,7 @@ class EnterpriseSSO:
             redis_url=self.config.get('redis_url', 'redis://localhost:6379')
         )
         
-    async def initialize(self):
+    async def initialize(self) -> None:
         """
 Initialize SSO system"""
         try:

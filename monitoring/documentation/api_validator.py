@@ -46,7 +46,7 @@ class APIDocumentationValidator:
     Ensures 100% documentation coverage requirement
     """
     
-    def __init__(self, project_root: str = "/home/runner/work/Ainflue/Ainflue"):
+    def __init__(self, project_root -> None: str = "/home/runner/work/Ainflue/Ainflue") -> None:
         self.logger = logging.getLogger(__name__)
         self.project_root = Path(project_root)
         self.api_directories = [
@@ -270,7 +270,7 @@ class APIDocumentationValidator:
         
         return False
         
-    async def _validate_endpoint_documentation(self, endpoint: APIEndpoint):
+    async def _validate_endpoint_documentation(self, endpoint -> None: APIEndpoint) -> None:
         """Validate documentation completeness for an endpoint"""
         is_documented = True
         

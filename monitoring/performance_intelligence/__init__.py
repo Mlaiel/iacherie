@@ -1,4 +1,6 @@
 """🎯 Advanced Metrics Module - Enterprise Analytics & Business Intelligence
+import logging
+
 ========================================================================
 
 Comprehensive advanced metrics collection and analysis system for the Ainflue platform.

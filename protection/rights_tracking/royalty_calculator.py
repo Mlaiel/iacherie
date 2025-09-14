@@ -133,7 +133,7 @@ class ExchangeRate(BaseModel):
     source: str = Field(default="ecb")  # ecb, fed, bank_of_england, etc.
     
     @validator('rate')
-    def validate_positive_rate(cls, v):
+    def validate_positive_rate(cls, v) -> None:
         if v <= 0:
             raise ValueError("Le taux de change doit être positif")
         return v
@@ -221,7 +221,7 @@ class PaymentInstruction(BaseModel):
 class RoyaltyCalculator:
     """Calculateur avancé de redevances avec IA et multi-devises"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.royalty_rules: Dict[str, RoyaltyRule] = {}
         self.exchange_rates: Dict[Tuple[CurrencyCode, CurrencyCode], ExchangeRate] = {}
@@ -243,7 +243,7 @@ class RoyaltyCalculator:
         if self.auto_exchange_rates:
             asyncio.create_task(self._initialize_exchange_rates())
     
-    async def _load_default_rules(self):
+    async def _load_default_rules(self) -> None:
         """
 Charge les règles de redevances par défaut"""
         try:
@@ -340,7 +340,7 @@ Charge les règles de redevances par défaut"""
         except Exception as e:
             logger.error(f"Erreur chargement règles: {e}")
     
-    async def _initialize_exchange_rates(self):
+    async def _initialize_exchange_rates(self) -> None:
         """Initialise les taux de change"""
         try:
             # Taux de change fictifs pour démonstration

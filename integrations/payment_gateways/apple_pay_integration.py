@@ -90,7 +90,7 @@ class ApplePayConfig:
     validation_endpoint: str = "https://apple-pay-gateway-cert.apple.com/paymentservices/startSession"
     validation_endpoint_sandbox: str = "https://apple-pay-gateway-cert.apple.com/paymentservices/paymentSession"
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.supported_networks is None:
             self.supported_networks = [
                 ApplePayNetwork.VISA,
@@ -159,7 +159,7 @@ class ApplePayIntegration(BaseIntegration):
     - Comprehensive audit logging
     """
 
-    def __init__(self, config: ApplePayConfig):
+    def __init__(self, config -> None: ApplePayConfig) -> None:
         super().__init__("apple_pay")
         self.config = config
         self.security_manager = SecurityManager()
@@ -185,7 +185,7 @@ class ApplePayIntegration(BaseIntegration):
                    merchant_id=config.merchant_identifier,
                    sandbox=config.apple_pay_sandbox)
 
-    def _load_certificates(self):
+    def _load_certificates(self) -> None:
         """Load merchant and processing certificates"""
         try:
             # Load merchant certificate
@@ -577,7 +577,7 @@ class ApplePayIntegration(BaseIntegration):
                         error=str(e))
             return None
 
-    async def cleanup_expired_sessions(self):
+    async def cleanup_expired_sessions(self) -> None:
         """Clean up expired merchant sessions"""
         try:
             current_time = datetime.utcnow()
@@ -686,7 +686,7 @@ def create_apple_pay_integration(
     return ApplePayIntegration(config)
 
 # Example usage for Ainflue platform
-async def example_apple_pay_flow():
+async def example_apple_pay_flow() -> None:
     """Example Apple Pay integration usage"""
     
     # Initialize Apple Pay integration

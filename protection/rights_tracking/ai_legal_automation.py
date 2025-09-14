@@ -147,7 +147,7 @@ class LegalContract(BaseModel):
     last_modified: datetime = Field(default_factory=datetime.utcnow)
     
     @validator('jurisdiction')
-    def validate_jurisdiction(cls, v):
+    def validate_jurisdiction(cls, v) -> None:
         if not isinstance(v, LegalJurisdiction):
             raise ValueError('Invalid jurisdiction')
         return v
@@ -156,7 +156,7 @@ class LegalContract(BaseModel):
 class AILegalAutomationEngine:
     """🧠 Lead Dev IA: Advanced AI-powered legal automation with neural optimization"""
     
-    def __init__(self, legal_config: Dict[str, Any]):
+    def __init__(self, legal_config -> None: Dict[str, Any]) -> None:
         self.legal_config = legal_config
         self.jurisdiction_rules = {}
         self.legal_templates = {}
@@ -182,7 +182,7 @@ class AILegalAutomationEngine:
         
         logger.info("⚖️ AI Legal Automation Engine initialized with multi-expert architecture")
     
-    def _initialize_legal_framework(self):
+    def _initialize_legal_framework(self) -> None:
         """🏗️ Backend Senior: Setup distributed legal processing infrastructure"""
         try:
             # Load jurisdiction-specific rules
@@ -200,7 +200,7 @@ class AILegalAutomationEngine:
             logger.error(f"❌ Legal framework initialization failed: {e}")
             raise
     
-    def _load_jurisdiction_rules(self):
+    def _load_jurisdiction_rules(self) -> None:
         """🤖 ML Engineer: Load predictive jurisdiction-specific legal rules"""
         
         # US Federal jurisdiction rules
@@ -232,7 +232,7 @@ class AILegalAutomationEngine:
         # Add more jurisdictions as needed
         logger.info("✅ Jurisdiction rules loaded for multi-jurisdiction legal analysis")
     
-    def _load_legal_templates(self):
+    def _load_legal_templates(self) -> None:
         """💡 IA Prompt Engineer: Load AI-optimized legal document templates"""
         
         # Licensing agreement template
@@ -303,7 +303,7 @@ class AILegalAutomationEngine:
         
         logger.info("✅ Legal templates loaded for AI-powered document generation")
     
-    def _initialize_case_law_database(self):
+    def _initialize_case_law_database(self) -> None:
         """🗄️ DBA: Setup high-performance case law database with advanced indexing"""
         
         # Initialize case law indices for fast retrieval

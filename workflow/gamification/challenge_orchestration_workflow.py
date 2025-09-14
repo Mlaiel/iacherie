@@ -63,7 +63,7 @@ class ChallengeProgress:
 class ChallengeOrchestrationWorkflow:
     """AI-powered challenge orchestration workflow"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.metrics_collector = MetricsCollector()
         self.active_challenges: Dict[str, Challenge] = {}
         self.user_progress: Dict[str, List[ChallengeProgress]] = {}
@@ -380,7 +380,7 @@ class ChallengeOrchestrationWorkflow:
         
         return rewards
     
-    async def _reward_user(self, user_id: str, challenge: Challenge):
+    async def _reward_user(self, user_id -> None: str, challenge -> None: Challenge) -> None:
         """Award rewards to user for completing challenge"""
         
         # In real implementation, this would:
@@ -397,7 +397,7 @@ class ChallengeOrchestrationWorkflow:
         await self.metrics_collector.record_metric("challenges_completed", 1)
         await self.metrics_collector.record_metric("challenge_points_awarded", challenge.reward_points)
     
-    async def expire_challenges(self):
+    async def expire_challenges(self) -> None:
         """Mark expired challenges as inactive"""
         
         now = datetime.utcnow()

@@ -111,7 +111,7 @@ class EnvironmentProvisioner(BaseComponent):
     Handles automated provisioning of infrastructure, networking, databases,
     and Kubernetes clusters across multiple cloud providers.
     """
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         super().__init__()
         self.config = config
         self.logger = logging.getLogger(__name__)

@@ -68,7 +68,7 @@ class SpanContext:
     status: str = "active"
     error: Optional[str] = None
 
-    def finish(self, error: Optional[str] = None):
+    def finish(self, error -> None: Optional[str] = None) -> None:
         """Finish the span"""
         self.end_time = time.time()
         self.duration_ms = (self.end_time - self.start_time) * 1000
@@ -91,7 +91,7 @@ class TraceMetrics:
 class TracingCore:
     """Enterprise distributed tracing system"""
     
-    def __init__(self, level: str = "enterprise"):
+    def __init__(self, level -> None: str = "enterprise") -> None:
         """Initialize tracing core"""
         self.level = TracingLevel.DETAILED if level == "enterprise" else TracingLevel.STANDARD
         self.active_spans: Dict[str, SpanContext] = {}
@@ -122,7 +122,7 @@ class TracingCore:
         
         logger.info(f"🔍 Tracing Core initialized - Level: {self.level}")
 
-    def _initialize_tracing(self):
+    def _initialize_tracing(self) -> None:
         """Initialize tracing backend"""
         try:
             if OPENTELEMETRY_AVAILABLE:
@@ -139,7 +139,7 @@ class TracingCore:
         except Exception as e:
             logger.error(f"Failed to initialize tracing: {str(e)}")
 
-    def _setup_opentelemetry(self):
+    def _setup_opentelemetry(self) -> None:
         """Setup OpenTelemetry integration"""
         if not OPENTELEMETRY_AVAILABLE:
             return
@@ -177,7 +177,7 @@ class TracingCore:
         except Exception as e:
             logger.error(f"Failed to setup OpenTelemetry: {str(e)}")
 
-    def _setup_processors(self):
+    def _setup_processors(self) -> None:
         """Setup trace processors"""
         self.processors = [
             self._enrich_span_processor,
@@ -186,7 +186,7 @@ class TracingCore:
             self._business_processor
         ]
 
-    def _setup_samplers(self):
+    def _setup_samplers(self) -> None:
         """Setup trace samplers"""
         self.samplers = {
             "always": lambda: True,
@@ -220,11 +220,11 @@ class TracingCore:
     @asynccontextmanager
     async def trace(
         self,
-        operation_name: str,
-        span_type: SpanType = SpanType.BUSINESS_LOGIC,
-        tags: Optional[Dict[str, Any]] = None,
-        parent_span_id: Optional[str] = None
-    ):
+        operation_name -> None: str,
+        span_type -> None: SpanType = SpanType.BUSINESS_LOGIC,
+        tags -> None: Optional[Dict[str, Any]] = None,
+        parent_span_id -> None: Optional[str] = None
+    ) -> None:
         """Create and manage a trace span"""
         span_id = str(uuid.uuid4())
         trace_id = parent_span_id or str(uuid.uuid4())
@@ -279,10 +279,10 @@ class TracingCore:
     @contextmanager
     def sync_trace(
         self,
-        operation_name: str,
-        span_type: SpanType = SpanType.BUSINESS_LOGIC,
-        tags: Optional[Dict[str, Any]] = None
-    ):
+        operation_name -> None: str,
+        span_type -> None: SpanType = SpanType.BUSINESS_LOGIC,
+        tags -> None: Optional[Dict[str, Any]] = None
+    ) -> None:
         """Synchronous version of trace context manager"""
         span_id = str(uuid.uuid4())
         trace_id = str(uuid.uuid4())
@@ -311,7 +311,7 @@ class TracingCore:
             self.active_spans.pop(span_id, None)
             self.completed_spans.append(span)
 
-    async def _process_span(self, span: SpanContext):
+    async def _process_span(self, span -> None: SpanContext) -> None:
         """Process completed span through processors"""
         for processor in self.processors:
             try:
@@ -319,7 +319,7 @@ class TracingCore:
             except Exception as e:
                 logger.error(f"Processor error: {str(e)}")
 
-    async def _enrich_span_processor(self, span: SpanContext):
+    async def _enrich_span_processor(self, span -> None: SpanContext) -> None:
         """Enrich span with additional metadata"""
         span.tags["timestamp"] = datetime.utcnow().isoformat()
         span.tags["environment"] = self.config["environment"]
@@ -332,7 +332,7 @@ class TracingCore:
         except ImportError:
             pass
 
-    async def _performance_processor(self, span: SpanContext):
+    async def _performance_processor(self, span -> None: SpanContext) -> None:
         """Process performance metrics"""
         if span.duration_ms:
             if span.duration_ms > 1000:  # Slow operation
@@ -343,7 +343,7 @@ class TracingCore:
                     "timestamp": time.time()
                 })
 
-    async def _security_processor(self, span: SpanContext):
+    async def _security_processor(self, span -> None: SpanContext) -> None:
         """Process security-related information"""
         if span.span_id in self.active_spans:
             # Check for security-related operations
@@ -351,12 +351,12 @@ class TracingCore:
                    for sec_tag in ["auth", "login", "security", "encrypt"]):
                 span.tags["security.sensitive"] = True
 
-    async def _business_processor(self, span: SpanContext):
+    async def _business_processor(self, span -> None: SpanContext) -> None:
         """Process business logic metrics"""
         if "business_logic" in span.tags.get("span.type", ""):
             span.tags["business.processed"] = True
 
-    def add_log_to_span(self, span_id: str, level: str, message: str, **kwargs):
+    def add_log_to_span(self, span_id -> None: str, level -> None: str, message -> None: str, **kwargs) -> None:
         """Add log entry to active span"""
         if span_id in self.active_spans:
             span = self.active_spans[span_id]
@@ -367,12 +367,12 @@ class TracingCore:
                 **kwargs
             })
 
-    def add_tag_to_span(self, span_id: str, key: str, value: Any):
+    def add_tag_to_span(self, span_id -> None: str, key -> None: str, value -> None: Any) -> None:
         """Add tag to active span"""
         if span_id in self.active_spans:
             self.active_spans[span_id].tags[key] = value
 
-    def _update_metrics(self):
+    def _update_metrics(self) -> None:
         """Update trace metrics"""
         completed_count = len(self.completed_spans)
         if completed_count > 0:
@@ -435,7 +435,7 @@ class TracingCore:
         
         return ""
 
-    async def cleanup_old_traces(self, max_age_hours: int = 24):
+    async def cleanup_old_traces(self, max_age_hours -> None: int = 24) -> None:
         """Clean up old completed traces"""
         cutoff_time = time.time() - (max_age_hours * 3600)
         initial_count = len(self.completed_spans)
@@ -470,7 +470,7 @@ class TracingCore:
             logger.error(f"Tracing health check failed: {str(e)}")
             return False
 
-    def __del__(self):
+    def __del__(self) -> None:
         """Cleanup on destruction"""
         try:
             # Export remaining traces

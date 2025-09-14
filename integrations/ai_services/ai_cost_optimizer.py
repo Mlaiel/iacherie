@@ -125,7 +125,7 @@ class OptimizationRecommendation:
 class CostTracker:
     """Cost tracking and monitoring system."""
     
-    def __init__(self, redis_url: str = None):
+    def __init__(self, redis_url -> None: str = None) -> None:
         self.cost_records: deque = deque(maxlen=10000)
         self.budget_limits: Dict[str, BudgetLimit] = {}
         self.redis_client = None
@@ -147,7 +147,7 @@ class CostTracker:
         self.optimization_cache: Dict[str, Any] = {}
         self.last_optimization = {}
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize the cost tracker."""
         try:
             if self.redis_url:
@@ -228,7 +228,7 @@ class CostTracker:
             logger.error(f"Failed to record cost: {str(e)}")
             raise
     
-    async def _update_period_costs(self, cost_record: CostRecord):
+    async def _update_period_costs(self, cost_record -> None: CostRecord) -> None:
         """Update cost tracking for different periods."""
         timestamp = cost_record.timestamp
         provider_key = f"{cost_record.provider}_{cost_record.model}"
@@ -291,7 +291,7 @@ class CostTracker:
             logger.error(f"Failed to create budget limit: {str(e)}")
             raise
     
-    async def _check_budget_limits(self, cost_record: CostRecord):
+    async def _check_budget_limits(self, cost_record -> None: CostRecord) -> None:
         """Check if cost record violates any budget limits."""
         for budget_id, budget in self.budget_limits.items():
             try:
@@ -362,7 +362,7 @@ class CostTracker:
         
         return total_usage
     
-    async def _send_budget_alert(self, budget: BudgetLimit, usage_percentage: float, threshold: float):
+    async def _send_budget_alert(self, budget -> None: BudgetLimit, usage_percentage -> None: float, threshold -> None: float) -> None:
         """Send budget alert notification."""
         alert_data = {
             "budget_name": budget.name,
@@ -380,7 +380,7 @@ class CostTracker:
         if self.redis_client:
             await self.redis_client.lpush("budget_alerts", json.dumps(alert_data))
     
-    async def _handle_budget_exceeded(self, budget: BudgetLimit, cost_record: CostRecord):
+    async def _handle_budget_exceeded(self, budget -> None: BudgetLimit, cost_record -> None: CostRecord) -> None:
         """Handle budget exceeded scenario."""
         logger.critical(f"Budget exceeded: {budget.name} - ${budget.current_usage:.2f} / ${budget.limit_amount:.2f}")
         
@@ -406,7 +406,7 @@ class CostTracker:
 class CostOptimizer:
     """AI cost optimization system."""
     
-    def __init__(self, cost_tracker: CostTracker):
+    def __init__(self, cost_tracker -> None: CostTracker) -> None:
         self.cost_tracker = cost_tracker
         self.optimization_rules = {
             'provider_switching': self._optimize_provider_switching,
@@ -775,7 +775,7 @@ class CostOptimizer:
 class AICostOptimizer:
     """Main AI cost optimization system."""
     
-    def __init__(self, redis_url: str = None):
+    def __init__(self, redis_url -> None: str = None) -> None:
         self.cost_tracker = CostTracker(redis_url)
         self.cost_optimizer = CostOptimizer(self.cost_tracker)
         
@@ -783,7 +783,7 @@ class AICostOptimizer:
         self.optimization_counter = Counter('ai_cost_optimizations_total', 'Total cost optimizations', ['type'])
         self.savings_gauge = Gauge('ai_cost_savings_total', 'Total cost savings', ['period'])
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize the cost optimization system."""
         await self.cost_tracker.initialize()
         logger.info("AI cost optimizer initialized successfully")
@@ -881,7 +881,7 @@ class AICostOptimizer:
             "budget_status": budget_status
         }
     
-    async def cleanup(self):
+    async def cleanup(self) -> None:
         """Cleanup resources."""
         if self.cost_tracker.redis_client:
             self.cost_tracker.redis_client.close()
@@ -903,7 +903,7 @@ async def get_cost_optimization_recommendations(strategy: CostOptimizationStrate
 
 
 # Example usage
-async def main():
+async def main() -> None:
     """Example usage of AI cost optimizer."""
     await cost_optimizer.initialize()
     

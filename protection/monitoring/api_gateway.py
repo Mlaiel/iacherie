@@ -95,7 +95,7 @@ class MonitoringAPIResponse(BaseModel):
 class MonitoringAPIGateway:
     """Ultra-advanced monitoring API gateway."""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """
 Initialize the API gateway."""
         self.config = config
@@ -122,7 +122,7 @@ Initialize the API gateway."""
         
         logger.info("Monitoring API Gateway initialized")
 
-    def _setup_middleware(self):
+    def _setup_middleware(self) -> None:
         """Setup API middleware."""
         # CORS middleware
         self.app.add_middleware(
@@ -136,12 +136,12 @@ Initialize the API gateway."""
         # Compression middleware
         self.app.add_middleware(GZipMiddleware, minimum_size=1000)
 
-    def _setup_routes(self):
+    def _setup_routes(self) -> None:
         """Setup API routes."""
         
         # Health check
         @self.app.get("/health")
-        async def health_check():
+        async def health_check() -> None:
             """API health check endpoint."""
             try:
                 ecosystem_status = await self.orchestrator.get_ecosystem_status()
@@ -406,7 +406,7 @@ Initialize the API gateway."""
 
         # WebSocket endpoint for real-time updates
         @self.app.websocket("/api/v2/monitoring/websocket/{client_id}")
-        async def websocket_endpoint(websocket: WebSocket, client_id: str):
+        async def websocket_endpoint(websocket -> None: WebSocket, client_id -> None: str) -> None:
             """WebSocket endpoint for real-time monitoring updates."""
             try:
                 await websocket.accept()
@@ -512,7 +512,7 @@ Initialize the API gateway."""
                     error=str(e)
                 )
 
-    async def initialize(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    async def initialize(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         """Initialize the API gateway."""
         self.redis_client = redis_client
         self.db_session = db_session
@@ -586,7 +586,7 @@ Initialize the API gateway."""
             logger.error(f"Rate limit check failed: {e}")
             return True  # Allow on error
 
-    async def _log_api_usage(self, user_id: int, action: str, request_data: Dict[str, Any]):
+    async def _log_api_usage(self, user_id -> None: int, action -> None: str, request_data -> None: Dict[str, Any]) -> None:
         """Log API usage for analytics."""
         try:
             log_entry = {
@@ -608,7 +608,7 @@ Initialize the API gateway."""
         except Exception as e:
             logger.error(f"Failed to log API usage: {e}")
 
-    async def _notify_websocket_clients(self, event_type: str, data: Dict[str, Any]):
+    async def _notify_websocket_clients(self, event_type -> None: str, data -> None: Dict[str, Any]) -> None:
         """Notify all connected WebSocket clients."""
         try:
             message = {
@@ -634,7 +634,7 @@ Initialize the API gateway."""
         except Exception as e:
             logger.error(f"Failed to notify WebSocket clients: {e}")
 
-    async def _handle_websocket_subscription(self, client_id: str, message: Dict[str, Any]):
+    async def _handle_websocket_subscription(self, client_id -> None: str, message -> None: Dict[str, Any]) -> None:
         """Handle WebSocket subscription requests."""
         try:
             subscription_type = message.get("subscription_type")
@@ -700,10 +700,10 @@ Initialize the API gateway."""
 
     async def _generate_report_background(
         self,
-        report_generator: ReportGenerator,
-        report_id: str,
-        request: ReportGenerationRequest
-    ):
+        report_generator -> None: ReportGenerator,
+        report_id -> None: str,
+        request -> None: ReportGenerationRequest
+    ) -> None:
         """Generate report in background task."""
         try:
             # Generate report based on request parameters
@@ -795,7 +795,7 @@ Initialize the API gateway."""
             logger.error(f"Failed to create comprehensive report: {e}")
             raise
 
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Shutdown the API gateway."""
         logger.info("Shutting down Monitoring API Gateway...")
         

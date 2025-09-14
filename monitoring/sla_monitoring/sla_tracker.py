@@ -45,7 +45,7 @@ class SLATracker:
     Tracks performance against production requirements
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
         self.sla_targets = SLATarget()
         self.metrics: Dict[str, SLAMetric] = {}
@@ -58,7 +58,7 @@ class SLATracker:
         # Initialize core SLA metrics
         self._initialize_sla_metrics()
         
-    def _initialize_sla_metrics(self):
+    def _initialize_sla_metrics(self) -> None:
         """
 Initialize SLA metrics with targets"""
         self.metrics = {
@@ -96,7 +96,7 @@ Initialize SLA metrics with targets"""
             )
         }
         
-    async def record_api_request(self, response_time_ms: float, success: bool = True):
+    async def record_api_request(self, response_time_ms -> None: float, success -> None: bool = True) -> None:
         """Record API request metrics for SLA tracking"""
         timestamp = datetime.now()
         
@@ -113,7 +113,7 @@ Initialize SLA metrics with targets"""
         # Check SLA violations
         await self._check_sla_violations()
         
-    async def record_throughput(self, request_count: int, time_window_seconds: int = 1):
+    async def record_throughput(self, request_count -> None: int, time_window_seconds -> None: int = 1) -> None:
         """
 Record throughput metrics"""
         timestamp = datetime.now()
@@ -131,8 +131,8 @@ Record throughput metrics"""
         
         await self._check_sla_violations()
         
-    async def record_downtime_event(self, start_time: datetime, end_time: datetime, 
-                                   reason: str = "Unknown"):
+    async def record_downtime_event(self, start_time -> None: datetime, end_time -> None: datetime, 
+                                   reason -> None: str = "Unknown") -> None:
         """Record system downtime event"""
         duration_minutes = (end_time - start_time).total_seconds() / 60
         duration_hours = duration_minutes / 60
@@ -152,7 +152,7 @@ Record throughput metrics"""
         
         self.logger.warning(f"Downtime event recorded: {duration_minutes:.2f} minutes - {reason}")
         
-    async def _update_response_time_p95(self):
+    async def _update_response_time_p95(self) -> None:
         """Update P95 response time metric"""
         if len(self.response_times) < 20:  # Need minimum data points
             return
@@ -169,7 +169,7 @@ Record throughput metrics"""
             self.metrics["response_time_p95"].current_value = p95_value
             self.metrics["response_time_p95"].last_updated = datetime.now()
             
-    async def _update_uptime_metrics(self):
+    async def _update_uptime_metrics(self) -> None:
         """Update uptime and availability metrics"""
         now = datetime.now()
         
@@ -193,7 +193,7 @@ Record throughput metrics"""
         for metric_name in ["uptime_percentage", "availability_percentage"]:
             self.metrics[metric_name].last_updated = now
             
-    async def _check_sla_violations(self):
+    async def _check_sla_violations(self) -> None:
         """Check for SLA violations and generate alerts"""
         violations = []
         
@@ -242,7 +242,7 @@ Check if metric is in critical violation"""
             return metric.current_value < metric.threshold_warning
         return False
         
-    async def _process_sla_violation(self, violation: Dict[str, Any]):
+    async def _process_sla_violation(self, violation -> None: Dict[str, Any]) -> None:
         """Process SLA violation and generate alert"""
         self.alerts.append(violation)
         

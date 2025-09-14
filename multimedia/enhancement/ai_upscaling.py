@@ -37,7 +37,7 @@ class UpscalingConfig:
 class AIUpscalingEngine:
     """Enterprise AI upscaling engine with multiple neural network models."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the AI upscaling engine."""
         self.models = self._initialize_models()
         self.preprocessing_pipeline = self._setup_preprocessing()

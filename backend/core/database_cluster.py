@@ -1,4 +1,6 @@
 """Database Cluster Architecture Module for IA-Influencer Agent Platform
+from datetime import datetime
+
 ==================================================================
 
 Enterprise-grade database cluster architecture supporting massive scale:
@@ -223,7 +225,7 @@ class AinflueDataArchitecture:
     - 10B+ vector embeddings with Pinecone distributed indexing
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the complete database cluster architecture"""
         
         # Sharding strategy for 100B+ records

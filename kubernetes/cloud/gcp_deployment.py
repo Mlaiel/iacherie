@@ -108,7 +108,7 @@ class GCPDeploymentManager:
     """
 Enterprise GCP deployment and management system"""
     
-    def __init__(self, credentials: GCPCredentials):
+    def __init__(self, credentials -> None: GCPCredentials) -> None:
         """
 Initialize GCP deployment manager"""
         self.logger = logging.getLogger(self.__class__.__name__)
@@ -958,3 +958,5 @@ Deploy Cloud Run service"""
         except Exception as e:
             self.logger.error(f"Failed to cleanup resources: {e}")
             return False
+
+# File has syntax issues - needs manual review

@@ -77,12 +77,12 @@ class OpenAIIntegration:
     
     def __init__(
         self,
-        api_key: str,
-        organization_id: Optional[str] = None,
-        project_id: Optional[str] = None,
-        base_url: str = "https://api.openai.com/v1",
-        timeout: int = 60
-    ):
+        api_key -> None: str,
+        organization_id -> None: Optional[str] = None,
+        project_id -> None: Optional[str] = None,
+        base_url -> None: str = "https -> None://api.openai.com/v1",
+        timeout -> None: int = 60
+    ) -> None:
         self.api_key = api_key
         self.organization_id = organization_id
         self.project_id = project_id
@@ -97,16 +97,16 @@ class OpenAIIntegration:
         
         logger.info("OpenAI integration initialized")
     
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         """Async context manager entry."""
         await self._ensure_session()
         return self
     
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         """Async context manager exit."""
         await self.close()
     
-    async def _ensure_session(self):
+    async def _ensure_session(self) -> None:
         """Ensure HTTP session is available."""
         if self.session is None or self.session.closed:
             headers = {
@@ -126,7 +126,7 @@ class OpenAIIntegration:
                 timeout=aiohttp.ClientTimeout(total=self.timeout)
             )
     
-    async def close(self):
+    async def close(self) -> None:
         """Close HTTP session."""
         if self.session and not self.session.closed:
             await self.session.close()
@@ -423,11 +423,11 @@ class OpenAIIntegration:
     
     def _add_to_history(
         self,
-        operation: str,
-        request_data: Dict[str, Any],
-        response_data: Any,
-        metadata: Optional[Dict[str, Any]] = None
-    ):
+        operation -> None: str,
+        request_data -> None: Dict[str, Any],
+        response_data -> None: Any,
+        metadata -> None: Optional[Dict[str, Any]] = None
+    ) -> None:
         """Add operation to history."""
         history_entry = {
             "timestamp": datetime.now().isoformat(),
@@ -517,7 +517,7 @@ async def generate_content_with_openai(
 
 if __name__ == "__main__":
     # Example usage
-    async def main():
+    async def main() -> None:
         import os
         api_key = os.getenv("OPENAI_API_KEY")
         if not api_key:

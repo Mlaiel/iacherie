@@ -210,7 +210,7 @@ class SemanticAnalysisResult:
 class ContentUnderstandingEngine:
     """Deep content understanding and semantic analysis engine"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.logger = logging.getLogger(f"{__name__}.ContentUnderstandingEngine")
         self.config = config or {}
         
@@ -225,7 +225,7 @@ class ContentUnderstandingEngine:
             'similarity_threshold': self.config.get('similarity_threshold', 0.8)
         }
     
-    def _initialize_nlp_resources(self):
+    def _initialize_nlp_resources(self) -> None:
         """Initialize NLP libraries and download required resources"""
         try:
             if NLTK_AVAILABLE:
@@ -1106,7 +1106,7 @@ class SemanticAnalysisProcessor:
     and meaning extraction using advanced NLP techniques.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.logger = logging.getLogger(f"{__name__}.SemanticAnalysisProcessor")
         self.config = config or {}
         
@@ -1268,7 +1268,7 @@ class SemanticAnalysisProcessor:
         else:
             return 0.5  # Default confidence
     
-    def _update_analysis_stats(self, result: SemanticAnalysisResult, content_type: str):
+    def _update_analysis_stats(self, result -> None: SemanticAnalysisResult, content_type -> None: str) -> None:
         """Update analysis statistics"""
         self.analysis_stats['total_analyses'] += 1
         

@@ -126,7 +126,7 @@ class AudioFeatures:
 class AudioFeatureExtractor:
     """Extract audio features from music content"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.sample_rate = 22050
         self.hop_length = 512
         
@@ -172,7 +172,7 @@ class AudioFeatureExtractor:
 class EngagementPredictor:
     """Predict engagement based on content and musician features"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.model = None
         self.feature_scaler = None
         self.trained = False
@@ -431,7 +431,7 @@ class EngagementPredictor:
 class BehaviorPatternAnalyzer:
     """Analyze musician behavior patterns and trends"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.clustering_model = None
         self.pattern_history: List[Dict[str, Any]] = []
     
@@ -698,7 +698,7 @@ class BehaviorPatternAnalyzer:
 class MusicianBehaviorAnalyzer:
     """Main musician behavior analysis system"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.config = config or {}
         self.audio_extractor = AudioFeatureExtractor()
         self.engagement_predictor = EngagementPredictor()
@@ -1056,7 +1056,7 @@ class MusicianBehaviorAnalyzer:
             raise
 
 # Example usage and testing
-async def main():
+async def main() -> None:
     """Test musician behavior analyzer"""
     try:
         # Initialize analyzer

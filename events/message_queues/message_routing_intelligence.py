@@ -346,8 +346,8 @@ class MessageRoutingIntelligence:
     """
     
     def __init__(self,
-                 metrics_collector: Optional[MetricsCollector] = None,
-                 encryption_manager: Optional[EncryptionManager] = None):
+                 metrics_collector -> None: Optional[MetricsCollector] = None,
+                 encryption_manager -> None: Optional[EncryptionManager] = None) -> None:
         self.metrics = metrics_collector
         self.encryption = encryption_manager
         
@@ -394,7 +394,7 @@ class MessageRoutingIntelligence:
             logger.error(f"Failed to start routing intelligence: {str(e)}")
             raise MessageQueueError(f"Routing intelligence startup failed: {str(e)}")
     
-    async def stop(self):
+    async def stop(self) -> None:
         """Stop the routing intelligence system"""
         try:
             # Stop health monitoring
@@ -823,7 +823,7 @@ class MessageRoutingIntelligence:
     
     # Helper methods
     
-    async def _load_business_configuration(self):
+    async def _load_business_configuration(self) -> None:
         """Load Ainflue business routing configuration"""
         # Load destinations
         for service_type, destinations in AinflueBusiness.ROUTING_DESTINATIONS.items():
@@ -862,7 +862,7 @@ class MessageRoutingIntelligence:
         
         return True
     
-    async def _update_routing_state(self, destination_id: str, decision: RoutingDecision):
+    async def _update_routing_state(self, destination_id -> None: str, decision -> None: RoutingDecision) -> None:
         """Update routing state after decision"""
         # Update connection count
         self.destination_connections[destination_id] += 1
@@ -872,7 +872,7 @@ class MessageRoutingIntelligence:
             self.destinations[destination_id].current_load += 1
             self.destinations[destination_id].total_messages_routed += 1
     
-    async def _update_routing_metrics(self, decision: RoutingDecision):
+    async def _update_routing_metrics(self, decision -> None: RoutingDecision) -> None:
         """Update routing metrics"""
         self.routing_metrics.total_messages += 1
         self.routing_metrics.successful_routes += 1
@@ -886,12 +886,12 @@ class MessageRoutingIntelligence:
         strategy = decision.strategy_used.value
         self.routing_metrics.strategy_usage[strategy] = self.routing_metrics.strategy_usage.get(strategy, 0) + 1
     
-    async def _start_health_monitoring(self):
+    async def _start_health_monitoring(self) -> None:
         """Start health monitoring for all destinations"""
         for dest_id in self.destinations.keys():
             await self._start_destination_health_monitoring(dest_id)
     
-    async def _start_destination_health_monitoring(self, destination_id: str):
+    async def _start_destination_health_monitoring(self, destination_id -> None: str) -> None:
         """Start health monitoring for a specific destination"""
         if destination_id in self.health_check_tasks:
             return  # Already monitoring
@@ -899,7 +899,7 @@ class MessageRoutingIntelligence:
         task = asyncio.create_task(self._health_check_loop(destination_id))
         self.health_check_tasks[destination_id] = task
     
-    async def _health_check_loop(self, destination_id: str):
+    async def _health_check_loop(self, destination_id -> None: str) -> None:
         """Health check loop for a destination"""
         while destination_id in self.destinations:
             try:
@@ -935,9 +935,9 @@ class MessageRoutingIntelligence:
             return HealthStatus.UNHEALTHY
     
     async def _handle_health_status_change(self, 
-                                         destination_id: str,
-                                         old_status: HealthStatus,
-                                         new_status: HealthStatus):
+                                         destination_id -> None: str,
+                                         old_status -> None: HealthStatus,
+                                         new_status -> None: HealthStatus) -> None:
         """Handle destination health status changes"""
         destination = self.destinations[destination_id]
         

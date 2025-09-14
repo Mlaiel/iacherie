@@ -206,7 +206,7 @@ class PlatformAPIs:
     synchronization across 35+ content platforms.
     """
     
-    def __init__(self, db_session: AsyncSession, redis_client: Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: Redis) -> None:
         """
         Initialize Platform APIs Engine.
         
@@ -240,7 +240,7 @@ class PlatformAPIs:
         # HTTP session for API calls
         self.session = None
     
-    async def initialize_session(self):
+    async def initialize_session(self) -> None:
         """Initialize HTTP session for API calls"""
         if not self.session:
             connector = aiohttp.TCPConnector(
@@ -253,7 +253,7 @@ class PlatformAPIs:
                 timeout=aiohttp.ClientTimeout(total=self.request_timeout)
             )
     
-    async def close_session(self):
+    async def close_session(self) -> None:
         """Close HTTP session"""
         if self.session:
             await self.session.close()
@@ -832,7 +832,7 @@ class PlatformAPIs:
         
         return headers
     
-    async def _apply_rate_limiting(self, platform: str):
+    async def _apply_rate_limiting(self, platform -> None: str) -> None:
         """Apply rate limiting for platform"""
         limiter = self.rate_limiter
         

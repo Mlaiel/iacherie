@@ -32,7 +32,7 @@ from .webhook import WebhookNotifier, WebhookPayload, WebhookEvent, WebhookEndpo
 from .in_app import InAppNotifier, InAppNotification, InAppNotificationType, NotificationPreferences
 
 # Quick setup function for common use cases
-def create_notification_system():
+def create_notification_system() -> None:
     """
 Create a fully configured notification system for IA Influencer Agent."""
     orchestrator = NotificationOrchestrator()
@@ -49,7 +49,7 @@ Create a fully configured notification system for IA Influencer Agent."""
     }
 
 # Business-specific notification creators
-def create_content_protection_notification(user_id: str, content_title: str, protection_status: str):
+def create_content_protection_notification(user_id -> None: str, content_title -> None: str, protection_status -> None: str) -> None:
     """
 Create notification for content protection events."""
     return UniversalNotification(
@@ -60,7 +60,7 @@ Create notification for content protection events."""
         template_id="content_protection_update"
     )
 
-def create_collaboration_notification(user_id: str, requester_name: str, project_type: str):
+def create_collaboration_notification(user_id -> None: str, requester_name -> None: str, project_type -> None: str) -> None:
     """Create notification for collaboration requests."""
     return UniversalNotification(
         user_id=user_id,
@@ -70,7 +70,7 @@ def create_collaboration_notification(user_id: str, requester_name: str, project
         template_id="collaboration_request"
     )
 
-def create_revenue_notification(user_id: str, amount: float, period: str):
+def create_revenue_notification(user_id -> None: str, amount -> None: float, period -> None: str) -> None:
     """Create notification for revenue milestones."""
     return UniversalNotification(
         user_id=user_id,
@@ -80,7 +80,7 @@ def create_revenue_notification(user_id: str, amount: float, period: str):
         template_id="revenue_milestone"
     )
 
-def create_viral_content_notification(user_id: str, content_title: str, views: int):
+def create_viral_content_notification(user_id -> None: str, content_title -> None: str, views -> None: int) -> None:
     """Create notification for viral content alerts."""
     return UniversalNotification(
         user_id=user_id,

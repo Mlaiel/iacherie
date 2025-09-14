@@ -77,7 +77,7 @@ class QualityReport:
 class QualityAnalyzer:
     """Comprehensive media quality analysis system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize quality analyzer"""
         self.audio_processor = AudioProcessor()
         self.video_processor = VideoProcessor()

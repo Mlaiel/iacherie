@@ -15,12 +15,14 @@ from enum import Enum
 logger = logging.getLogger(__name__)
 
 class MetricType(Enum):
+    """MetricType class implementation"""
     COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram" 
     SUMMARY = "summary"
 
 class AlertSeverity(Enum):
+    """AlertSeverity class implementation"""
     INFO = "info"
     WARNING = "warning"
     CRITICAL = "critical"
@@ -50,7 +52,7 @@ class MetricDefinition:
 class MonitoringOrchestrator:
     """Main orchestrator for monitoring services"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.prometheus_collector = None
         self.grafana_dashboard = None
         self.jaeger_tracing = None
@@ -60,7 +62,7 @@ class MonitoringOrchestrator:
         self.active_alerts: Dict[str, MonitoringAlert] = {}
         self.registered_metrics: Dict[str, MetricDefinition] = {}
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize all monitoring services"""
         logger.info("Initializing Monitoring Orchestrator...")
         
@@ -77,49 +79,49 @@ class MonitoringOrchestrator:
         
         logger.info("Monitoring Orchestrator initialized successfully")
     
-    async def _initialize_prometheus(self):
+    async def _initialize_prometheus(self) -> None:
         """Initialize Prometheus metrics collector"""
         from .prometheus_collector import PrometheusCollector
         self.prometheus_collector = PrometheusCollector()
         await self.prometheus_collector.initialize()
         logger.info("✅ Prometheus collector initialized")
     
-    async def _initialize_grafana(self):
+    async def _initialize_grafana(self) -> None:
         """Initialize Grafana dashboard service"""
         from .grafana_dashboard import GrafanaDashboard
         self.grafana_dashboard = GrafanaDashboard()
         await self.grafana_dashboard.initialize()
         logger.info("✅ Grafana dashboard initialized")
     
-    async def _initialize_jaeger(self):
+    async def _initialize_jaeger(self) -> None:
         """Initialize Jaeger distributed tracing"""
         from .jaeger_tracing import JaegerTracing
         self.jaeger_tracing = JaegerTracing()
         await self.jaeger_tracing.initialize()
         logger.info("✅ Jaeger tracing initialized")
     
-    async def _initialize_elk_stack(self):
+    async def _initialize_elk_stack(self) -> None:
         """Initialize ELK stack for log management"""
         from .elk_stack import ELKStack
         self.elk_stack = ELKStack()
         await self.elk_stack.initialize()
         logger.info("✅ ELK stack initialized")
     
-    async def _initialize_alertmanager(self):
+    async def _initialize_alertmanager(self) -> None:
         """Initialize Alert Manager"""
         from .alertmanager import AlertManager
         self.alertmanager = AlertManager()
         await self.alertmanager.initialize()
         logger.info("✅ Alert Manager initialized")
     
-    async def _initialize_health_checker(self):
+    async def _initialize_health_checker(self) -> None:
         """Initialize Health Checker"""
         from .health_checker import HealthChecker
         self.health_checker = HealthChecker()
         await self.health_checker.initialize()
         logger.info("✅ Health Checker initialized")
     
-    async def _register_default_metrics(self):
+    async def _register_default_metrics(self) -> None:
         """Register default platform metrics"""
         default_metrics = [
             MetricDefinition(
@@ -162,7 +164,7 @@ class MonitoringOrchestrator:
         for metric in default_metrics:
             await self.register_metric(metric)
     
-    async def register_metric(self, metric: MetricDefinition):
+    async def register_metric(self, metric -> None: MetricDefinition) -> None:
         """Register a new metric with Prometheus"""
         try:
             await self.prometheus_collector.register_metric(metric)
@@ -172,8 +174,8 @@ class MonitoringOrchestrator:
             logger.error(f"❌ Failed to register metric {metric.name}: {e}")
             raise
     
-    async def record_metric(self, metric_name: str, value: float, 
-                           labels: Optional[Dict[str, str]] = None):
+    async def record_metric(self, metric_name -> None: str, value -> None: float, 
+                           labels -> None: Optional[Dict[str, str]] = None) -> None:
         """Record a metric value"""
         try:
             await self.prometheus_collector.record_metric(metric_name, value, labels)
@@ -201,8 +203,8 @@ class MonitoringOrchestrator:
             logger.error(f"❌ Failed to start trace {operation_name}: {e}")
             raise
     
-    async def finish_trace(self, trace_id: str, 
-                          tags: Optional[Dict[str, str]] = None):
+    async def finish_trace(self, trace_id -> None: str, 
+                          tags -> None: Optional[Dict[str, str]] = None) -> None:
         """Finish a distributed trace"""
         try:
             await self.jaeger_tracing.finish_trace(trace_id, tags)
@@ -210,8 +212,8 @@ class MonitoringOrchestrator:
             logger.error(f"❌ Failed to finish trace {trace_id}: {e}")
             raise
     
-    async def log_event(self, service_name: str, level: str, 
-                       message: str, metadata: Optional[Dict] = None):
+    async def log_event(self, service_name -> None: str, level -> None: str, 
+                       message -> None: str, metadata -> None: Optional[Dict] = None) -> None:
         """Log an event to ELK stack"""
         try:
             await self.elk_stack.log_event(service_name, level, message, metadata)
@@ -219,7 +221,7 @@ class MonitoringOrchestrator:
             logger.error(f"❌ Failed to log event: {e}")
             raise
     
-    async def create_alert(self, alert: MonitoringAlert):
+    async def create_alert(self, alert -> None: MonitoringAlert) -> None:
         """Create a new monitoring alert"""
         try:
             self.active_alerts[alert.alert_id] = alert
@@ -232,7 +234,7 @@ class MonitoringOrchestrator:
             logger.error(f"❌ Failed to create alert {alert.alert_id}: {e}")
             raise
     
-    async def resolve_alert(self, alert_id: str, resolution_notes: str):
+    async def resolve_alert(self, alert_id -> None: str, resolution_notes -> None: str) -> None:
         """Resolve a monitoring alert"""
         try:
             if alert_id in self.active_alerts:
@@ -345,7 +347,7 @@ class MonitoringOrchestrator:
             logger.error(f"❌ Failed to get system status: {e}")
             return {"status": "error", "error": str(e)}
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Gracefully shutdown all monitoring services"""
         logger.info("Shutting down Monitoring Orchestrator...")
         
@@ -371,11 +373,11 @@ class MonitoringOrchestrator:
 # Global monitoring orchestrator instance
 monitoring_orchestrator = MonitoringOrchestrator()
 
-async def initialize_monitoring_services():
+async def initialize_monitoring_services() -> None:
     """Initialize monitoring services"""
     await monitoring_orchestrator.initialize()
 
-async def shutdown_monitoring_services():
+async def shutdown_monitoring_services() -> None:
     """Shutdown monitoring services"""
     await monitoring_orchestrator.shutdown()
 

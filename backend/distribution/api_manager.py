@@ -158,7 +158,7 @@ class APIManager:
     integration with comprehensive monitoring and management capabilities.
     """
     
-    def __init__(self, cache_client=None):
+    def __init__(self, cache_client=None) -> None:
         """Initialize the API manager."""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self.cache = cache_client
@@ -172,7 +172,7 @@ class APIManager:
         
         self.logger.info("APIManager initialized")
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize the API manager."""
         try:
             self.session = aiohttp.ClientSession(
@@ -309,7 +309,7 @@ class APIManager:
             self.logger.error(f"Error checking rate limit: {e}")
             return True
     
-    async def _update_rate_limit_counters(self, endpoint_id: str):
+    async def _update_rate_limit_counters(self, endpoint_id -> None: str) -> None:
         """Update rate limit counters after successful request."""
         try:
             if endpoint_id in self.rate_limits:
@@ -360,11 +360,11 @@ class APIManager:
     
     async def _cache_response(
         self,
-        endpoint_id: str,
-        params: Optional[Dict[str, Any]],
-        response: APIResponse,
-        ttl: int
-    ):
+        endpoint_id -> None: str,
+        params -> None: Optional[Dict[str, Any]],
+        response -> None: APIResponse,
+        ttl -> None: int
+    ) -> None:
         """Cache API response."""
         try:
             if not self.cache:
@@ -722,7 +722,7 @@ class APIManager:
                 error_message=str(e)
             )
     
-    def add_middleware(self, middleware_func: Callable):
+    def add_middleware(self, middleware_func -> None: Callable) -> None:
         """Add middleware function to be applied to all requests."""
         self.middleware_functions.append(middleware_func)
     
@@ -798,7 +798,7 @@ class APIManager:
             self.logger.error(f"Error getting overall statistics: {e}")
             return {}
     
-    async def cleanup(self):
+    async def cleanup(self) -> None:
         """Cleanup resources."""
         try:
             if self.session:

@@ -244,11 +244,11 @@ class StreamingEngine:
     
     def __init__(
         self,
-        max_workers: int = 16,
-        max_queue_size: int = 10000,
-        enable_metrics: bool = True,
-        enable_scheduling: bool = True
-    ):
+        max_workers -> None: int = 16,
+        max_queue_size -> None: int = 10000,
+        enable_metrics -> None: bool = True,
+        enable_scheduling -> None: bool = True
+    ) -> None:
         # Core configuration
         self.max_workers = max_workers
         self.max_queue_size = max_queue_size
@@ -841,7 +841,7 @@ class StreamingEngine:
 class DataStreamManager:
     """Legacy compatibility wrapper for StreamingEngine stream management"""
     
-    def __init__(self, engine: Optional[StreamingEngine] = None):
+    def __init__(self, engine -> None: Optional[StreamingEngine] = None) -> None:
         self.engine = engine or StreamingEngine()
         
     async def initialize(self) -> None:
@@ -864,7 +864,7 @@ class DataStreamManager:
 class RealTimeProcessor:
     """Legacy compatibility wrapper for StreamingEngine processing"""
     
-    def __init__(self, max_workers: int = 16, engine: Optional[StreamingEngine] = None):
+    def __init__(self, max_workers -> None: int = 16, engine -> None: Optional[StreamingEngine] = None) -> None:
         self.engine = engine or StreamingEngine(max_workers=max_workers)
         
     async def initialize(self) -> None:
@@ -879,7 +879,7 @@ class RealTimeProcessor:
 class StreamScheduler:
     """Legacy compatibility wrapper for StreamingEngine scheduling"""
     
-    def __init__(self, engine: Optional[StreamingEngine] = None):
+    def __init__(self, engine -> None: Optional[StreamingEngine] = None) -> None:
         self.engine = engine or StreamingEngine(enable_scheduling=True)
         
     async def initialize(self) -> None:

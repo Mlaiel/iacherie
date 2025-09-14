@@ -193,7 +193,7 @@ class StreamingSession:
 class PlatformAPIManager:
     """Platform API management system"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         self.api_clients = {}
@@ -308,7 +308,7 @@ class PlatformAPIManager:
 class CrossPlatformDistributor:
     """Cross-platform content distribution system"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         self.distribution_queues = {}
@@ -425,7 +425,7 @@ class CrossPlatformDistributor:
 class PlatformOptimizer:
     """Platform-specific optimization system"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         self.optimization_rules = {}
@@ -490,7 +490,7 @@ class PlatformOptimizer:
 class UnifiedAnalyticsAggregator:
     """Unified cross-platform analytics aggregation system"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         self.analytics_collectors = {}
@@ -558,7 +558,7 @@ class UnifiedAnalyticsAggregator:
 class StreamingPlatformIntegrator:
     """Unified streaming platform integrator - Main service class"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         

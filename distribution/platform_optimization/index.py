@@ -32,7 +32,7 @@ class PlatformOptimizationResults:
 class PlatformOptimizationEngine:
     """Main platform optimization engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize platform optimization engine"""
         self.supported_platforms = [
             'youtube', 'tiktok', 'instagram', 'twitter', 'facebook', 

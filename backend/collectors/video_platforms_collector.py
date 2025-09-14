@@ -25,7 +25,7 @@ logger = logging.getLogger(__name__)
 # Individual platform collector classes (simplified implementations)
 class YouTubeCollector(BaseCollector):
     """YouTube content collector."""
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs) -> None:
         super().__init__("youtube", rate_limit=100)
     
     async def search_content(self, query: str, config: CollectionConfig) -> List[CollectorResult]:
@@ -42,7 +42,7 @@ class YouTubeCollector(BaseCollector):
 
 class TwitchCollector(BaseCollector):
     """Twitch content collector."""
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs) -> None:
         super().__init__("twitch", rate_limit=50)
     
     async def search_content(self, query: str, config: CollectionConfig) -> List[CollectorResult]:
@@ -65,7 +65,7 @@ class VideoPlatformsCollector(BaseCollector):
     into a single interface for efficient video content collection.
     """
     
-    def __init__(self, platform_configs: Optional[Dict[str, Dict]] = None):
+    def __init__(self, platform_configs -> None: Optional[Dict[str, Dict]] = None) -> None:
         """Initialize with platform-specific configurations."""
         super().__init__("video_platforms", rate_limit=150)
         

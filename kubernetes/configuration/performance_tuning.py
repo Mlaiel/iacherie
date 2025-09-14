@@ -175,7 +175,7 @@ class PerformanceTuningManager:
     - Automated performance tuning
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """
 Initialize performance tuning manager"""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")

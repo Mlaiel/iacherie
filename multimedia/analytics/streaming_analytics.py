@@ -156,7 +156,7 @@ class QoSMetrics:
 class StreamingMonitor:
     """Real-time streaming monitoring system"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.logger = logger.getChild(self.__class__.__name__)
         
@@ -203,7 +203,7 @@ class StreamingMonitor:
             self.logger.error(f"Failed to start streaming session: {e}")
             raise
     
-    async def update_session_metrics(self, session_id: str, metrics: Dict[str, Any]):
+    async def update_session_metrics(self, session_id -> None: str, metrics -> None: Dict[str, Any]) -> None:
         """Update real-time session metrics"""
         try:
             if session_id not in self.active_sessions:
@@ -263,7 +263,7 @@ class StreamingMonitor:
         except Exception as e:
             self.logger.error(f"Failed to update session metrics: {e}")
     
-    async def end_streaming_session(self, session_id: str, end_data: Optional[Dict[str, Any]] = None):
+    async def end_streaming_session(self, session_id -> None: str, end_data -> None: Optional[Dict[str, Any]] = None) -> None:
         """End a streaming session"""
         try:
             if session_id not in self.active_sessions:
@@ -292,7 +292,7 @@ class StreamingMonitor:
         except Exception as e:
             self.logger.error(f"Failed to end streaming session: {e}")
     
-    async def _calculate_session_metrics(self, session: StreamingSession):
+    async def _calculate_session_metrics(self, session -> None: StreamingSession) -> None:
         """Calculate final session metrics"""
         try:
             session_duration = 0
@@ -321,7 +321,7 @@ class StreamingMonitor:
         except Exception as e:
             self.logger.error(f"Session metrics calculation failed: {e}")
     
-    async def record_qos_metrics(self, session_id: str, qos_data: Dict[str, Any]):
+    async def record_qos_metrics(self, session_id -> None: str, qos_data -> None: Dict[str, Any]) -> None:
         """Record Quality of Service metrics"""
         try:
             qos_metrics = QoSMetrics(
@@ -350,7 +350,7 @@ class StreamingMonitor:
         except Exception as e:
             self.logger.error(f"QoS metrics recording failed: {e}")
     
-    async def _calculate_qos_scores(self, qos_metrics: QoSMetrics):
+    async def _calculate_qos_scores(self, qos_metrics -> None: QoSMetrics) -> None:
         """Calculate QoS quality scores"""
         try:
             # Video quality score
@@ -460,8 +460,8 @@ class StreamingMonitor:
             self.logger.error(f"Streaming analytics calculation failed: {e}")
             return StreamingMetrics(analysis_period=(start_time, end_time))
     
-    async def _calculate_volume_metrics(self, sessions: List[StreamingSession],
-                                      metrics: StreamingMetrics):
+    async def _calculate_volume_metrics(self, sessions -> None: List[StreamingSession],
+                                      metrics -> None: StreamingMetrics) -> None:
         """Calculate volume-based metrics"""
         try:
             metrics.total_sessions = len(sessions)
@@ -478,8 +478,8 @@ class StreamingMonitor:
         except Exception as e:
             self.logger.error(f"Volume metrics calculation failed: {e}")
     
-    async def _calculate_quality_metrics(self, sessions: List[StreamingSession],
-                                       metrics: StreamingMetrics):
+    async def _calculate_quality_metrics(self, sessions -> None: List[StreamingSession],
+                                       metrics -> None: StreamingMetrics) -> None:
         """Calculate quality-related metrics"""
         try:
             startup_delays = [s.startup_delay for s in sessions if s.startup_delay is not None]
@@ -511,8 +511,8 @@ class StreamingMonitor:
         except Exception as e:
             self.logger.error(f"Quality metrics calculation failed: {e}")
     
-    async def _calculate_performance_metrics(self, sessions: List[StreamingSession],
-                                           metrics: StreamingMetrics):
+    async def _calculate_performance_metrics(self, sessions -> None: List[StreamingSession],
+                                           metrics -> None: StreamingMetrics) -> None:
         """Calculate performance metrics"""
         try:
             # Completion rate
@@ -548,8 +548,8 @@ class StreamingMonitor:
         except Exception as e:
             self.logger.error(f"Performance metrics calculation failed: {e}")
     
-    async def _calculate_bandwidth_analytics(self, sessions: List[StreamingSession],
-                                           metrics: StreamingMetrics):
+    async def _calculate_bandwidth_analytics(self, sessions -> None: List[StreamingSession],
+                                           metrics -> None: StreamingMetrics) -> None:
         """Calculate bandwidth analytics"""
         try:
             all_bandwidths = []
@@ -577,8 +577,8 @@ class StreamingMonitor:
         except Exception as e:
             self.logger.error(f"Bandwidth analytics calculation failed: {e}")
     
-    async def _calculate_distribution_metrics(self, sessions: List[StreamingSession],
-                                            metrics: StreamingMetrics):
+    async def _calculate_distribution_metrics(self, sessions -> None: List[StreamingSession],
+                                            metrics -> None: StreamingMetrics) -> None:
         """Calculate geographic and device distribution"""
         try:
             # Geographic distribution
@@ -600,8 +600,8 @@ class StreamingMonitor:
         except Exception as e:
             self.logger.error(f"Distribution metrics calculation failed: {e}")
     
-    async def _calculate_real_time_insights(self, sessions: List[StreamingSession],
-                                          metrics: StreamingMetrics):
+    async def _calculate_real_time_insights(self, sessions -> None: List[StreamingSession],
+                                          metrics -> None: StreamingMetrics) -> None:
         """Calculate real-time insights and scores"""
         try:
             # Current viewers (active sessions)
@@ -635,7 +635,7 @@ class StreamingMonitor:
 class BandwidthAnalyzer:
     """Bandwidth analysis and optimization"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.logger = logger.getChild(self.__class__.__name__)
     

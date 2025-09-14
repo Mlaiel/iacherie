@@ -265,7 +265,7 @@ class AIRemixMetricsCollector:
     Monitors and evaluates AI-generated content quality across multiple dimensions.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(self.__class__.__name__)
         self.quality_models = {}
         self.assessment_cache = {}
@@ -1720,7 +1720,7 @@ class RemixQualityAnalyzer:
     Provides insights, optimization recommendations, and quality predictions.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(self.__class__.__name__)
         self.analysis_models = {}
         self.quality_patterns = {}

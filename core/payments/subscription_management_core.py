@@ -165,7 +165,7 @@ class RevenueRecord:
 class PlanManager:
     """Subscription plan management system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.plans = {}
         self.plan_features = {}
         self.tier_configs = {}
@@ -175,7 +175,7 @@ class PlanManager:
         
         logger.info("Plan Manager initialized")
 
-    def _initialize_default_plans(self):
+    def _initialize_default_plans(self) -> None:
         """Initialize default subscription plans"""
         default_plans = [
             {
@@ -370,7 +370,7 @@ class PlanManager:
 class BillingEngine:
     """Automated billing processing engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.billing_transactions = {}
         self.invoices = {}
         self.billing_rules = {}
@@ -381,7 +381,7 @@ class BillingEngine:
         
         logger.info("Billing Engine initialized")
 
-    def _initialize_billing_rules(self):
+    def _initialize_billing_rules(self) -> None:
         """Initialize billing and tax rules"""
         self.billing_rules = {
             "retry_failed_payments": {
@@ -672,7 +672,7 @@ class BillingEngine:
 class RevenueAnalytics:
     """Revenue analytics and reporting system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.revenue_records = {}
         self.revenue_metrics = {}
         
@@ -872,7 +872,7 @@ class RevenueAnalytics:
 class SubscriptionManagementCore:
     """Main Subscription Management Core System"""
     
-    def __init__(self, level: str = "enterprise"):
+    def __init__(self, level -> None: str = "enterprise") -> None:
         self.version = "2.1.0"
         self.level = level
         self.plan_manager = PlanManager()
@@ -1114,7 +1114,7 @@ class SubscriptionManagementCore:
         else:
             return start_date + timedelta(days=30)  # Default to monthly
 
-    async def _change_subscription_plan(self, subscription: Subscription, new_plan_id: str):
+    async def _change_subscription_plan(self, subscription -> None: Subscription, new_plan_id -> None: str) -> None:
         """Handle subscription plan change with proration"""
         try:
             # Get new plan
@@ -1155,7 +1155,7 @@ class SubscriptionManagementCore:
         }
         return cycle_days.get(billing_cycle, 30)
 
-    async def _record_proration_transaction(self, subscription: Subscription, proration: Dict[str, Any]):
+    async def _record_proration_transaction(self, subscription -> None: Subscription, proration -> None: Dict[str, Any]) -> None:
         """Record proration transaction"""
         transaction_id = f"pro_{uuid.uuid4().hex[:12]}"
         

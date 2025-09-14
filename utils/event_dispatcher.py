@@ -1,3 +1,8 @@
+"""
+Event Dispatcher module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Event Dispatcher - Utils Module - Enterprise Implementation
@@ -117,7 +122,7 @@ class EventDispatcher:
     message routing, and asynchronous communication
     """
     
-    def __init__(self, max_queue_size: int = 10000):
+    def __init__(self, max_queue_size -> None: int = 10000) -> None:
         self.handlers: Dict[str, EventHandler] = {}
         self.event_queue: asyncio.Queue = asyncio.Queue(maxsize=max_queue_size)
         self.executions: Dict[str, EventExecution] = {}
@@ -421,7 +426,7 @@ class EventDispatcher:
     # PRIVATE HELPER METHODS
     # ========================================================================
     
-    async def _worker_loop(self, worker_id: str):
+    async def _worker_loop(self, worker_id -> None: str) -> None:
         """Worker loop for processing events"""
         logger.info(f"Event worker {worker_id} started")
         
@@ -469,7 +474,7 @@ class EventDispatcher:
         handlers = [self.handlers[hid] for hid in handler_ids if hid in self.handlers]
         return sorted(handlers, key=lambda h: h.priority, reverse=True)
     
-    async def _process_event_with_handlers(self, event: Event, handlers: List[EventHandler]):
+    async def _process_event_with_handlers(self, event -> None: Event, handlers -> None: List[EventHandler]) -> None:
         """Process event with all applicable handlers"""
         tasks = []
         
@@ -495,7 +500,7 @@ class EventDispatcher:
         if tasks:
             await asyncio.gather(*tasks, return_exceptions=True)
     
-    async def _execute_handler(self, event: Event, handler: EventHandler, execution: EventExecution):
+    async def _execute_handler(self, event -> None: Event, handler -> None: EventHandler, execution -> None: EventExecution) -> None:
         """Execute a single event handler"""
         try:
             execution.status = EventStatus.PROCESSING
@@ -564,7 +569,7 @@ class EventDispatcher:
             else:
                 await self._handle_dead_letter(event, f"Handler failed: {e}")
     
-    async def _handle_dead_letter(self, event: Event, reason: str):
+    async def _handle_dead_letter(self, event -> None: Event, reason -> None: str) -> None:
         """Handle events that cannot be processed"""
         try:
             if len(self.dead_letter_queue) >= self.max_dead_letter_size:
@@ -614,7 +619,7 @@ class EventDispatcher:
         
         return True
     
-    async def _monitoring_loop(self):
+    async def _monitoring_loop(self) -> None:
         """Monitoring loop for cleanup and metrics"""
         logger.info("Event dispatcher monitoring loop started")
         
@@ -654,7 +659,7 @@ class EventDispatcher:
 # EXAMPLE USAGE AND TESTING
 # ============================================================================
 
-async def example_event_dispatching():
+async def example_event_dispatching() -> None:
     """Example usage of EventDispatcher"""
     try:
         # Initialize dispatcher
@@ -662,20 +667,20 @@ async def example_event_dispatching():
         await dispatcher.initialize_dispatcher()
         
         # Define event handlers
-        async def content_upload_handler(event_data, **kwargs):
+        async def content_upload_handler(event_data, **kwargs) -> None:
             content_id = event_data.get('content_id')
             logger.info(f"Processing content upload: {content_id}")
             await asyncio.sleep(1)  # Simulate processing
             return {'processed': True, 'content_id': content_id}
         
-        async def user_activity_handler(event_data, **kwargs):
+        async def user_activity_handler(event_data, **kwargs) -> None:
             user_id = event_data.get('user_id')
             activity = event_data.get('activity')
             logger.info(f"Recording user activity: {user_id} - {activity}")
             await asyncio.sleep(0.5)  # Simulate processing
             return {'recorded': True, 'user_id': user_id}
         
-        async def audit_handler(event_data, **kwargs):
+        async def audit_handler(event_data, **kwargs) -> None:
             logger.info(f"Audit log: {event_data}")
             await asyncio.sleep(0.1)  # Simulate logging
             return {'audited': True}

@@ -98,7 +98,7 @@ class ScheduledMessage:
     next_execution: Optional[datetime] = None
     is_active: bool = True
     
-    def __lt__(self, other):
+    def __lt__(self, other) -> None:
         """Comparison for heap operations"""
         return self.scheduled_time < other.scheduled_time
 
@@ -204,8 +204,8 @@ class DelayedSchedulingCoordinator:
     """
     
     def __init__(self,
-                 metrics_collector: Optional[MetricsCollector] = None,
-                 encryption_manager: Optional[EncryptionManager] = None):
+                 metrics_collector -> None: Optional[MetricsCollector] = None,
+                 encryption_manager -> None: Optional[EncryptionManager] = None) -> None:
         self.metrics = metrics_collector
         self.encryption = encryption_manager
         
@@ -256,7 +256,7 @@ class DelayedSchedulingCoordinator:
             logger.error(f"Failed to start scheduler: {str(e)}")
             raise MessageQueueError(f"Scheduler startup failed: {str(e)}")
     
-    async def stop(self):
+    async def stop(self) -> None:
         """Stop the scheduling coordinator"""
         try:
             self.is_running = False
@@ -581,7 +581,7 @@ class DelayedSchedulingCoordinator:
     
     # Core scheduling logic
     
-    async def _scheduler_loop(self):
+    async def _scheduler_loop(self) -> None:
         """Main scheduler loop"""
         while self.is_running:
             try:
@@ -603,7 +603,7 @@ class DelayedSchedulingCoordinator:
                 logger.error(f"Error in scheduler loop: {str(e)}")
                 await asyncio.sleep(5.0)  # Back off on error
     
-    async def _process_ready_messages(self):
+    async def _process_ready_messages(self) -> None:
         """Process messages that are ready for execution"""
         current_time = datetime.now(timezone.utc)
         
@@ -618,7 +618,7 @@ class DelayedSchedulingCoordinator:
         for message in ready_messages:
             await self._execute_scheduled_message(message)
     
-    async def _execute_scheduled_message(self, message: ScheduledMessage):
+    async def _execute_scheduled_message(self, message -> None: ScheduledMessage) -> None:
         """Execute a scheduled message"""
         try:
             execution_time = datetime.now(timezone.utc)
@@ -663,7 +663,7 @@ class DelayedSchedulingCoordinator:
             logger.error(f"Error executing scheduled message {message.id}: {str(e)}")
             await self._handle_execution_failure(message, str(e))
     
-    async def _handle_recurring_execution(self, message: ScheduledMessage):
+    async def _handle_recurring_execution(self, message -> None: ScheduledMessage) -> None:
         """Handle recurring message execution"""
         try:
             # Check if we should continue recurring
@@ -696,7 +696,7 @@ class DelayedSchedulingCoordinator:
             logger.error(f"Error handling recurring execution: {str(e)}")
             message.is_active = False
     
-    async def _process_conditional_messages(self):
+    async def _process_conditional_messages(self) -> None:
         """Process messages with conditional execution"""
         current_time = datetime.now(timezone.utc)
         
@@ -857,7 +857,7 @@ class DelayedSchedulingCoordinator:
             logger.error(f"Error checking condition: {str(e)}")
             return False
     
-    async def _initialize_business_calendar(self):
+    async def _initialize_business_calendar(self) -> None:
         """Initialize business calendar with recurring events"""
         try:
             # Set up recurring business events
@@ -924,7 +924,7 @@ class DelayedSchedulingCoordinator:
         
         return None
     
-    async def _update_business_calendar(self):
+    async def _update_business_calendar(self) -> None:
         """Update business calendar events"""
         # Placeholder for business calendar updates
         pass
@@ -934,7 +934,7 @@ class DelayedSchedulingCoordinator:
         # Placeholder for encryption
         return payload
     
-    async def _update_execution_metrics(self, message: ScheduledMessage, delay: float):
+    async def _update_execution_metrics(self, message -> None: ScheduledMessage, delay -> None: float) -> None:
         """Update execution metrics"""
         self.scheduling_metrics.executed_messages += 1
         
@@ -952,7 +952,7 @@ class DelayedSchedulingCoordinator:
             if delay > self.precision_threshold:
                 self.scheduling_metrics.precision_accuracy *= 0.99  # Slight decrease
     
-    async def _handle_execution_failure(self, message: ScheduledMessage, error: str):
+    async def _handle_execution_failure(self, message -> None: ScheduledMessage, error -> None: str) -> None:
         """Handle execution failure"""
         self.scheduling_metrics.failed_executions += 1
         
@@ -972,7 +972,7 @@ class DelayedSchedulingCoordinator:
             return self.scheduled_messages[0].scheduled_time.isoformat()
         return None
     
-    def register_condition_handler(self, name: str, handler: Callable):
+    def register_condition_handler(self, name -> None: str, handler -> None: Callable) -> None:
         """Register a condition handler for conditional scheduling"""
         self.condition_handlers[name] = handler
         logger.info(f"Registered condition handler: {name}")

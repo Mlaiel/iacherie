@@ -23,7 +23,7 @@ logger = logging.getLogger(__name__)
 class CompetitiveAnalysisCore:
     """Advanced Competitive Analysis Core System"""
     
-    def __init__(self, level: str = "enterprise"):
+    def __init__(self, level -> None: str = "enterprise") -> None:
         self.version = "2.1.0"
         self.level = level
         logger.info(f"Competitive Analysis Core initialized - Level: {level}")

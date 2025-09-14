@@ -68,7 +68,7 @@ class CreatorTypeConfig:
 class MusicianCore:
     """Specialized core for musician creators"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.supported_formats = [ContentFormat.AUDIO, ContentFormat.VIDEO]
         self.processing_functions = [
             "audio_processing", "music_analysis", 
@@ -170,7 +170,7 @@ class MusicianCore:
 class BloggerCore:
     """Specialized core for blogger creators"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.supported_formats = [ContentFormat.TEXT, ContentFormat.IMAGE]
         self.processing_functions = [
             "text_processing", "content_optimization", 
@@ -287,7 +287,7 @@ class BloggerCore:
 class PhotographerCore:
     """Specialized core for photographer creators"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.supported_formats = [ContentFormat.IMAGE]
         self.processing_functions = [
             "image_processing", "quality_enhancement", 
@@ -393,7 +393,7 @@ class PhotographerCore:
 class InfluencerCore:
     """Specialized core for influencer creators"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.supported_formats = [ContentFormat.MIXED, ContentFormat.VIDEO, ContentFormat.IMAGE, ContentFormat.TEXT]
         self.processing_functions = [
             "multi_format_processing", "engagement_analysis", 
@@ -506,7 +506,7 @@ class InfluencerCore:
 class ComedianCore:
     """Specialized core for comedian creators"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.supported_formats = [ContentFormat.VIDEO, ContentFormat.AUDIO]
         self.processing_functions = [
             "performance_processing", "timing_analysis", 
@@ -626,7 +626,7 @@ class ComedianCore:
 class CreatorTypesCore:
     """Main Creator Types Core Management System"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.version = "2.1.0"
         self.cores = {
             CreatorType.MUSICIAN: MusicianCore(),
@@ -752,7 +752,7 @@ class CreatorTypesCore:
         random_hash = hashlib.md5(timestamp.encode()).hexdigest()[:8]
         return f"creator_{random_hash}"
 
-    async def _update_creator_metrics(self, creator_id: str, processing_result: Dict[str, Any]):
+    async def _update_creator_metrics(self, creator_id -> None: str, processing_result -> None: Dict[str, Any]) -> None:
         """Update creator performance metrics"""
         if creator_id in self.creator_profiles:
             profile = self.creator_profiles[creator_id]

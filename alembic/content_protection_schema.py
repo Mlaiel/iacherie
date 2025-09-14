@@ -1,4 +1,6 @@
 """🛡️ Content Protection Agent Schema - ULTRA-ADVANCED ENTERPRISE CONSOLIDATION
+import asyncio
+
 ================================================================
 Module: alembic/content_protection_schema.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -828,7 +830,7 @@ def upgrade() -> None:
     await create_global_enforcement_tables()
 
 
-async def create_advanced_blockchain_protection_tables():
+async def create_advanced_blockchain_protection_tables() -> None:
     """🔗 Create advanced blockchain-based content protection tables"""
     
     # Multi-chain immutable ownership registry
@@ -912,7 +914,7 @@ async def create_advanced_blockchain_protection_tables():
     )
 
 
-async def create_ai_detection_enhancement_tables():
+async def create_ai_detection_enhancement_tables() -> None:
     """🤖 Create AI-powered detection enhancement tables"""
     
     # Advanced AI detection models registry
@@ -979,7 +981,7 @@ async def create_ai_detection_enhancement_tables():
     )
 
 
-async def create_quantum_watermarking_advanced_tables():
+async def create_quantum_watermarking_advanced_tables() -> None:
     """🔬 Create quantum watermarking advanced protection tables"""
     
     # Quantum-resistant watermarking systems
@@ -1044,7 +1046,7 @@ async def create_quantum_watermarking_advanced_tables():
     )
 
 
-async def create_global_enforcement_tables():
+async def create_global_enforcement_tables() -> None:
     """🌍 Create global enforcement coordination tables"""
     
     # Multi-jurisdiction legal coordination

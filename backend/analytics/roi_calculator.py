@@ -161,8 +161,8 @@ class ROICalculator:
     """
     
     def __init__(self, 
-                 default_discount_rate: float = 0.05,
-                 currency: str = "USD"):
+                 default_discount_rate -> None: float = 0.05,
+                 currency -> None: str = "USD") -> None:
         """
         Initialize ROI Calculator
         

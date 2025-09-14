@@ -166,7 +166,7 @@ class PaymentTransactionLogger:
     audit trails, compliance support, and analytics capabilities.
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """Initialize transaction logger"""
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -197,7 +197,7 @@ class PaymentTransactionLogger:
         self.flush_task = None
         self.cleanup_task = None
         
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize the transaction logger"""
         try:
             # Initialize database connection
@@ -226,7 +226,7 @@ class PaymentTransactionLogger:
             self.logger.error(f"Failed to initialize transaction logger: {e}")
             raise
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Shutdown the transaction logger"""
         try:
             # Cancel background tasks
@@ -470,7 +470,7 @@ class PaymentTransactionLogger:
             self.logger.error(f"Failed to export compliance report: {e}")
             return ""
     
-    async def _flush_loop(self):
+    async def _flush_loop(self) -> None:
         """Background task to flush logs to database"""
         while True:
             try:
@@ -483,7 +483,7 @@ class PaymentTransactionLogger:
             except Exception as e:
                 self.logger.error(f"Error in flush loop: {e}")
     
-    async def _cleanup_loop(self):
+    async def _cleanup_loop(self) -> None:
         """Background task to clean up old logs"""
         while True:
             try:
@@ -496,7 +496,7 @@ class PaymentTransactionLogger:
             except Exception as e:
                 self.logger.error(f"Error in cleanup loop: {e}")
     
-    async def _flush_logs(self):
+    async def _flush_logs(self) -> None:
         """Flush cached logs to database"""
         if not self.db_pool or not self.log_cache:
             return
@@ -542,7 +542,7 @@ class PaymentTransactionLogger:
         except Exception as e:
             self.logger.error(f"Failed to flush logs: {e}")
     
-    async def _flush_audit_logs(self):
+    async def _flush_audit_logs(self) -> None:
         """Flush cached audit logs to database"""
         if not self.db_pool or not self.audit_cache:
             return
@@ -578,7 +578,7 @@ class PaymentTransactionLogger:
         except Exception as e:
             self.logger.error(f"Failed to flush audit logs: {e}")
     
-    async def _write_log_to_file(self, log_entry: TransactionLogEntry):
+    async def _write_log_to_file(self, log_entry -> None: TransactionLogEntry) -> None:
         """Write log entry to file"""
         try:
             log_file = self.log_directory / f"transactions_{datetime.now().strftime('%Y%m%d')}.log"
@@ -598,7 +598,7 @@ class PaymentTransactionLogger:
         except Exception as e:
             self.logger.error(f"Failed to write log to file: {e}")
     
-    async def _write_audit_to_file(self, audit_entry: AuditLogEntry):
+    async def _write_audit_to_file(self, audit_entry -> None: AuditLogEntry) -> None:
         """Write audit entry to file"""
         try:
             audit_file = self.log_directory / f"audit_{datetime.now().strftime('%Y%m%d')}.log"
@@ -618,7 +618,7 @@ class PaymentTransactionLogger:
         except Exception as e:
             self.logger.error(f"Failed to write audit to file: {e}")
     
-    async def _create_database_tables(self):
+    async def _create_database_tables(self) -> None:
         """Create database tables for logging"""
         async with self.db_pool.acquire() as conn:
             # Transaction logs table
@@ -773,12 +773,12 @@ class PaymentTransactionLogger:
             performance_trends=[]
         )
     
-    async def _compress_old_logs(self):
+    async def _compress_old_logs(self) -> None:
         """Compress old log files"""
         # Implementation for compressing old log files
         pass
     
-    async def _archive_old_logs(self):
+    async def _archive_old_logs(self) -> None:
         """Archive very old logs"""
         # Implementation for archiving old logs
         pass

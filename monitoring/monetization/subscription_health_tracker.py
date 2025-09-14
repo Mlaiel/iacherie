@@ -127,7 +127,7 @@ class SubscriptionHealthTracker:
     and provides optimization recommendations for subscription revenue.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the subscription health tracker."""
         self.subscriptions: Dict[str, SubscriptionMetrics] = {}
         self.engagement_patterns: Dict[str, EngagementPattern] = {}
@@ -142,7 +142,7 @@ class SubscriptionHealthTracker:
         self._setup_churn_models()
         self._initialize_cohort_tracking()
     
-    def _initialize_health_rules(self):
+    def _initialize_health_rules(self) -> None:
         """Initialize subscription health rules."""
         self.health_rules = [
             {
@@ -202,7 +202,7 @@ class SubscriptionHealthTracker:
             }
         ]
     
-    def _setup_churn_models(self):
+    def _setup_churn_models(self) -> None:
         """Setup machine learning models for churn prediction."""
         self.churn_models = {
             "behavioral_churn": {
@@ -248,7 +248,7 @@ class SubscriptionHealthTracker:
             }
         }
     
-    def _initialize_cohort_tracking(self):
+    def _initialize_cohort_tracking(self) -> None:
         """Initialize cohort analytics tracking."""
         self.cohort_analytics = {
             "monthly_cohorts": {},
@@ -743,11 +743,11 @@ class SubscriptionHealthTracker:
     
     def _record_subscription_event(
         self,
-        subscription_id: str,
-        event_type: str,
-        event_data: Dict[str, Any],
-        impact_score: float = 0.0
-    ):
+        subscription_id -> None: str,
+        event_type -> None: str,
+        event_data -> None: Dict[str, Any],
+        impact_score -> None: float = 0.0
+    ) -> None:
         """Record subscription lifecycle event."""
         
         event = SubscriptionEvent(

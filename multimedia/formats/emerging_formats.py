@@ -116,7 +116,7 @@ class EmergingFormat:
 class EmergingFormatsManager:
     """Professional emerging formats management and tracking system"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize emerging formats manager"""
         self.config = config or {}
         self.formats: Dict[str, EmergingFormat] = {}
@@ -130,7 +130,7 @@ class EmergingFormatsManager:
         self._initialize_immersive_formats()
         self._initialize_container_formats()
     
-    def _initialize_video_formats(self):
+    def _initialize_video_formats(self) -> None:
         """Initialize emerging video formats"""
         try:
             # VVC (Versatile Video Coding)
@@ -234,7 +234,7 @@ class EmergingFormatsManager:
         except Exception as e:
             logger.error(f"Error initializing video formats: {e}")
     
-    def _initialize_audio_formats(self):
+    def _initialize_audio_formats(self) -> None:
         """Initialize emerging audio formats"""
         try:
             # xHE-AAC (Extended High Efficiency AAC)
@@ -329,7 +329,7 @@ class EmergingFormatsManager:
         except Exception as e:
             logger.error(f"Error initializing audio formats: {e}")
     
-    def _initialize_image_formats(self):
+    def _initialize_image_formats(self) -> None:
         """Initialize emerging image formats"""
         try:
             # JPEG XL
@@ -442,7 +442,7 @@ class EmergingFormatsManager:
         except Exception as e:
             logger.error(f"Error initializing image formats: {e}")
     
-    def _initialize_immersive_formats(self):
+    def _initialize_immersive_formats(self) -> None:
         """Initialize immersive and VR/AR formats"""
         try:
             # Immersive Video Format
@@ -483,7 +483,7 @@ class EmergingFormatsManager:
         except Exception as e:
             logger.error(f"Error initializing immersive formats: {e}")
     
-    def _initialize_container_formats(self):
+    def _initialize_container_formats(self) -> None:
         """Initialize emerging container formats"""
         try:
             # CMAF (Common Media Application Format)

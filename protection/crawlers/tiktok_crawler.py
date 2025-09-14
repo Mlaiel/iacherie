@@ -110,7 +110,7 @@ Get random viewport size."""
         return random.choice(viewports)
     
     @staticmethod
-    async def random_delay(min_seconds: float = 1.0, max_seconds: float = 3.0):
+    async def random_delay(min_seconds -> None: float = 1.0, max_seconds -> None: float = 3.0) -> None:
         """
 Random delay to mimic human behavior."""
         delay = random.uniform(min_seconds, max_seconds)
@@ -145,7 +145,7 @@ Setup Chrome options for stealth scraping."""
 class TikTokSeleniumCrawler:
     """Selenium-based TikTok crawler with anti-detection."""
     
-    def __init__(self, headless: bool = True, proxy: Optional[str] = None):
+    def __init__(self, headless -> None: bool = True, proxy -> None: Optional[str] = None) -> None:
         """
 Initialize TikTok Selenium crawler."""
         self.headless = headless
@@ -192,7 +192,7 @@ Initialize TikTok Selenium crawler."""
             logger.error(f"Failed to setup Chrome driver for TikTok: {e}")
             raise
     
-    async def _rate_limit(self):
+    async def _rate_limit(self) -> None:
         """Apply rate limiting between requests."""
         current_time = time.time()
         elapsed = current_time - self.last_request_time
@@ -248,7 +248,7 @@ Search for TikTok videos."""
             logger.error(f"TikTok search error: {e}")
             return []
     
-    async def _human_type(self, element, text: str):
+    async def _human_type(self, element, text -> None: str) -> None:
         """Type text with human-like delays."""
         for char in text:
             element.send_keys(char)
@@ -489,7 +489,7 @@ Scrape detailed information from TikTok video page."""
             logger.error(f"Error scraping TikTok video page: {e}")
             return None
     
-    def close(self):
+    def close(self) -> None:
         """Close Selenium driver."""
         if self.driver:
             self.driver.quit()
@@ -509,7 +509,7 @@ class TikTokCrawler(BasePlatformCrawler):
     - Real-time content discovery
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """
 Initialize TikTok crawler."""
         super().__init__("tiktok", config)
@@ -671,7 +671,7 @@ Search content by hashtag."""
             "selenium_active": self.selenium_crawler is not None
         }
     
-    def cleanup(self):
+    def cleanup(self) -> None:
         """Cleanup crawler resources."""
         if self.selenium_crawler:
             self.selenium_crawler.close()

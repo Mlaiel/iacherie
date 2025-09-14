@@ -1,3 +1,8 @@
+"""
+Security Policy Engine module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Security Policy Engine - Enterprise Security Component
@@ -144,7 +149,7 @@ class SecurityPolicyEngine:
     capabilities for enterprise-grade security governance.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.policies: Dict[str, SecurityPolicy] = {}
         self.policy_rules: Dict[str, List[PolicyRule]] = defaultdict(list)
         self.violations: List[PolicyViolation] = []
@@ -393,7 +398,7 @@ def create_security_policy_engine() -> SecurityPolicyEngine:
 
 
 # Example usage
-async def main():
+async def main() -> None:
     """Example usage of Security Policy Engine"""
     policy_engine = create_security_policy_engine()
     

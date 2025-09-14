@@ -1,4 +1,6 @@
 """Public API Routes
+import logging
+
 Public-facing API for external developers, SDK integration, and testing sandbox.
 Provides access to core platform functionality through a developer-friendly interface.
 
@@ -27,7 +29,8 @@ try:
 except ImportError:
     # Mock dependencies for standalone operation
     class MockManager:
-        def __getattr__(self, name):
+    """MockManager: class implementation"""
+        def __getattr__(self, name) -> None:
             return lambda *args, **kwargs: {"status": "mocked"}
     
     database_manager = MockManager()
@@ -147,7 +150,7 @@ async def get_api_key_user(credentials: HTTPAuthorizationCredentials = Depends(s
 # ========================================
 
 @public_router.get("/health", response_model=APIHealthResponse)
-async def get_api_health():
+async def get_api_health() -> None:
     """Get API health status"""
     start_time = datetime.utcnow()
     
@@ -181,7 +184,7 @@ async def get_api_health():
     )
 
 @public_router.get("/info", response_model=SDKInfoResponse)
-async def get_sdk_info():
+async def get_sdk_info() -> None:
     """Get SDK and API information"""
     return SDKInfoResponse(
         sdk_version="1.0.0",
@@ -208,7 +211,7 @@ async def get_sdk_info():
     )
 
 @public_router.get("/docs", response_class=HTMLResponse)
-async def get_public_documentation():
+async def get_public_documentation() -> None:
     """Get public API documentation"""
     docs_html = """
     <!DOCTYPE html>
@@ -429,7 +432,7 @@ async def generate_content_fingerprint(
 # ========================================
 
 @public_router.get("/sdk/python")
-async def download_python_sdk():
+async def download_python_sdk() -> None:
     """Download Python SDK"""
     try:
         # Read SDK file
@@ -454,7 +457,7 @@ async def download_python_sdk():
         )
 
 @public_router.get("/docs/postman")
-async def get_postman_collection():
+async def get_postman_collection() -> None:
     """Get Postman collection for API testing"""
     postman_collection = {
         "info": {
@@ -542,7 +545,7 @@ async def get_postman_collection():
 # RATE LIMITING MIDDLEWARE
 # ========================================
 
-async def rate_limit_middleware(request, call_next):
+async def rate_limit_middleware(request, call_next) -> None:
     """Rate limiting middleware for public API"""
     # Extract API key or IP address for rate limiting
     auth_header = request.headers.get("authorization")
@@ -635,7 +638,7 @@ async def discover_creators(
         )
 
 @public_router.get("/creators/{creator_id}/profile", response_model=CreatorProfile)
-async def get_creator_profile(creator_id: str):
+async def get_creator_profile(creator_id -> None: str) -> None:
     """Get SEO-optimized creator profile"""
     try:
         # Mock profile data - would fetch from database
@@ -687,7 +690,7 @@ async def get_creator_profile(creator_id: str):
         )
 
 @public_router.get("/seo/sitemap.xml", response_class=HTMLResponse)
-async def generate_sitemap():
+async def generate_sitemap() -> None:
     """Generate SEO sitemap"""
     try:
         # Mock sitemap generation
@@ -770,7 +773,7 @@ async def search_creators(
 class CreatorDiscoveryEngine:
     """Enterprise creator discovery with AI-powered recommendations"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.search_index = CreatorSearchIndex()
         self.recommendation_engine = CreatorRecommendationEngine()
         self.trending_analyzer = TrendingAnalyzer()
@@ -1011,7 +1014,7 @@ class CreatorRecommendationEngine:
 class SEOOptimizationEngine:
     """Enterprise SEO optimization for creator content"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.keyword_analyzer = KeywordAnalyzer()
         self.content_optimizer = ContentOptimizer()
         self.structured_data = StructuredDataGenerator()
@@ -1223,11 +1226,11 @@ seo_optimization_engine = SEOOptimizationEngine()
 # Enhanced creator discovery endpoints
 @public_router.get("/discover/creators", response_model=Dict[str, Any])
 async def discover_creators_endpoint(
-    discovery_type: str = "trending",
-    category: Optional[str] = None,
-    min_followers: Optional[int] = None,
-    limit: int = 20
-):
+    discovery_type -> None: str = "trending",
+    category -> None: Optional[str] = None,
+    min_followers -> None: Optional[int] = None,
+    limit -> None: int = 20
+) -> None:
     """Discover creators with advanced filtering"""
     filters = {}
     if category:
@@ -1240,7 +1243,7 @@ async def discover_creators_endpoint(
     )
 
 @public_router.get("/creators/{creator_id}/seo", response_model=Dict[str, Any])
-async def get_creator_seo_data(creator_id: str):
+async def get_creator_seo_data(creator_id -> None: str) -> None:
     """Get SEO optimization data for creator"""
     # Mock creator data - would fetch from database
     creator_data = {

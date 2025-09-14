@@ -8,7 +8,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
 Ultra-advanced threat intelligence engine for real-time threat detection,
 attribution analysis, campaign tracking, and predictive threat modeling.
-Business Logic: Threat detection → intelligence analysis → attribution → response coordination
+Business Logic: Threat detection # [EMOJI_REMOVED] intelligence analysis # [EMOJI_REMOVED] attribution # [EMOJI_REMOVED] response coordination
 """
 
 import asyncio
@@ -144,7 +144,7 @@ class AdvancedThreatIntelligenceEngine:
     attribution modeling, campaign tracking, and predictive capabilities.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
         self.threat_feeds = ThreatFeedManager()
         self.campaign_tracker = CampaignTracker()
@@ -165,7 +165,7 @@ class AdvancedThreatIntelligenceEngine:
         self.campaign_correlator = None
         self.predictive_engine = None
         
-    async def initialize(self):
+    async def initialize(self) -> None:
         """
 Initialize threat intelligence engine"""
         await self.threat_feeds.initialize()
@@ -1335,7 +1335,7 @@ Initialize threat intelligence engine"""
     
     # Background processing methods
     
-    async def _threat_feed_processor(self):
+    async def _threat_feed_processor(self) -> None:
         """Background task to process threat feeds"""
         while True:
             try:
@@ -1346,7 +1346,7 @@ Initialize threat intelligence engine"""
             except Exception as e:
                 self.logger.error(f"Threat feed processing error: {str(e)}")
     
-    async def _indicator_processor(self):
+    async def _indicator_processor(self) -> None:
         """Background task to process indicator queue"""
         while True:
             try:
@@ -1358,7 +1358,7 @@ Initialize threat intelligence engine"""
             except Exception as e:
                 self.logger.error(f"Indicator processing error: {str(e)}")
     
-    async def _campaign_analyzer(self):
+    async def _campaign_analyzer(self) -> None:
         """Background task to analyze campaigns"""
         while True:
             try:
@@ -1369,7 +1369,7 @@ Initialize threat intelligence engine"""
             except Exception as e:
                 self.logger.error(f"Campaign analysis error: {str(e)}")
     
-    async def _attribution_analyzer(self):
+    async def _attribution_analyzer(self) -> None:
         """Background task for attribution analysis"""
         while True:
             try:
@@ -1428,7 +1428,7 @@ Find domains related to the given domain"""
         base = domain.split('.')[0]
         return [f'{base}1.com', f'{base}-copy.net', f'fake-{base}.org']
     
-    async def _process_indicator(self, indicator: ThreatIndicator):
+    async def _process_indicator(self, indicator -> None: ThreatIndicator) -> None:
         """
 Process individual threat indicator"""
         # Add to storage
@@ -1439,7 +1439,7 @@ Process individual threat indicator"""
             # Schedule cleanup
             pass
     
-    async def _analyze_active_campaigns(self):
+    async def _analyze_active_campaigns(self) -> None:
         """
 Analyze all active campaigns"""
         for campaign in self.campaigns.values():
@@ -1447,7 +1447,7 @@ Analyze all active campaigns"""
                 # Update campaign intelligence
                 pass
     
-    async def _update_attribution_models(self):
+    async def _update_attribution_models(self) -> None:
         try:
                     async with self.db_session() as session:
                         # Database operation
@@ -1459,16 +1459,16 @@ Analyze all active campaigns"""
                 except Exception as e:
                     logger.error(f"Database operation _update_attribution_models failed: {e}")
                     raise
-    async def _initialize_attribution_engine(self):
+    async def _initialize_attribution_engine(self) -> None:
         """
 Initialize attribution analysis engine"""
         self.attribution_engine = "AttributionEngine"
     
-    async def _initialize_campaign_correlator(self):
+    async def _initialize_campaign_correlator(self) -> None:
         """Initialize campaign correlation engine"""
         self.campaign_correlator = "CampaignCorrelator"
     
-    async def _initialize_predictive_engine(self):
+    async def _initialize_predictive_engine(self) -> None:
         """Initialize predictive analysis engine"""
         self.predictive_engine = "PredictiveEngine"
 
@@ -1483,3 +1483,5 @@ __all__ = [
     "ThreatSeverity",
     "ThreatConfidence"
 ]
+
+# File has syntax issues - needs manual review

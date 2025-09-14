@@ -114,7 +114,7 @@ class CacheSetRequest(BaseModel):
     serialization: Optional[SerializationFormat] = Field(None, description="Serialization format")
 
     @validator('key')
-    def validate_key(cls, v):
+    def validate_key(cls, v) -> None:
         if not v or len(v.strip()) == 0:
             raise ValueError('Cache key cannot be empty')
         return v.strip()
@@ -144,7 +144,7 @@ class WarmupRequest(BaseModel):
     parallel_workers: int = Field(1, description="Number of parallel workers")
 
     @validator('priority')
-    def validate_priority(cls, v):
+    def validate_priority(cls, v) -> None:
         if v < 1 or v > 10:
             raise ValueError('Priority must be between 1 and 10')
         return v
@@ -178,7 +178,7 @@ class {{service_class_name}}(BaseService):
     - Real-time cache statistics
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
         self.name = "{{service_name}}"
         self.version = "{{service_version}}"
@@ -223,7 +223,7 @@ class {{service_class_name}}(BaseService):
             )
         }
 
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize service with dependencies"""
         try:
             await super().initialize()
@@ -564,11 +564,11 @@ class {{service_class_name}}(BaseService):
     # Backend-specific operations
     async def _set_single_backend(
         self,
-        cache_key: str,
-        value: bytes,
-        ttl: int,
-        config: CacheConfig
-    ):
+        cache_key -> None: str,
+        value -> None: bytes,
+        ttl -> None: int,
+        config -> None: CacheConfig
+    ) -> None:
         """Set value in single backend"""
         if config.backend == CacheBackend.REDIS:
             await self.redis_client.setex(cache_key, ttl, value)
@@ -605,11 +605,11 @@ class {{service_class_name}}(BaseService):
 
     async def _set_multi_tier(
         self,
-        cache_key: str,
-        value: bytes,
-        ttl: int,
-        config: CacheConfig
-    ):
+        cache_key -> None: str,
+        value -> None: bytes,
+        ttl -> None: int,
+        config -> None: CacheConfig
+    ) -> None:
         """Set value in multi-tier cache"""
         # Set in all tiers
         tasks = []
@@ -750,12 +750,12 @@ class {{service_class_name}}(BaseService):
 
     async def _store_cache_metadata(
         self,
-        cache_key: str,
-        namespace: str,
-        tags: Optional[List[str]],
-        ttl: int,
-        session: Optional[AsyncSession]
-    ):
+        cache_key -> None: str,
+        namespace -> None: str,
+        tags -> None: Optional[List[str]],
+        ttl -> None: int,
+        session -> None: Optional[AsyncSession]
+    ) -> None:
         """Store cache metadata"""
         if session:
             try:
@@ -776,7 +776,7 @@ class {{service_class_name}}(BaseService):
             except Exception as e:
                 logger.warning(f"Failed to store cache metadata: {e}")
 
-    async def _update_access_time(self, cache_key: str):
+    async def _update_access_time(self, cache_key -> None: str) -> None:
         """Update access time for cache entry"""
         try:
             async with self.get_session() as session:
@@ -884,7 +884,7 @@ class {{service_class_name}}(BaseService):
             logger.error(f"Failed to delete by tags: {e}")
             return 0
 
-    async def _execute_warmup(self, task_id: str, request: WarmupRequest):
+    async def _execute_warmup(self, task_id -> None: str, request -> None: WarmupRequest) -> None:
         """Execute cache warmup task"""
         try:
             # Update task status
@@ -909,7 +909,7 @@ class {{service_class_name}}(BaseService):
             # Simulate warmup with parallel workers
             semaphore = asyncio.Semaphore(request.parallel_workers)
             
-            async def warm_key(key: str):
+            async def warm_key(key -> None: str) -> None:
                 nonlocal keys_warmed
                 async with semaphore:
                     try:
@@ -1030,7 +1030,7 @@ class {{service_class_name}}(BaseService):
                 "last_updated": datetime.utcnow()
             }
 
-    async def _load_namespace_configs(self):
+    async def _load_namespace_configs(self) -> None:
         """Load namespace configurations"""
         try:
             async with self.get_session() as session:
@@ -1053,7 +1053,7 @@ class {{service_class_name}}(BaseService):
             logger.warning(f"Failed to load namespace configs: {e}")
 
     # Background workers
-    async def _cleanup_worker(self):
+    async def _cleanup_worker(self) -> None:
         """Background worker for cache cleanup"""
         while self.cleanup_running:
             try:
@@ -1096,7 +1096,7 @@ class {{service_class_name}}(BaseService):
                 logger.error(f"Cleanup worker error: {e}")
                 await asyncio.sleep(60)
 
-    async def _stats_collector_worker(self):
+    async def _stats_collector_worker(self) -> None:
         """Background worker for collecting cache statistics"""
         while self.cleanup_running:
             try:
@@ -1126,7 +1126,7 @@ class {{service_class_name}}(BaseService):
                 logger.error(f"Stats collector error: {e}")
                 await asyncio.sleep(300)
 
-    async def _warmup_scheduler(self):
+    async def _warmup_scheduler(self) -> None:
         """Background scheduler for warmup tasks"""
         while self.cleanup_running:
             try:
@@ -1257,7 +1257,7 @@ class {{service_class_name}}(BaseService):
                 "timestamp": datetime.utcnow().isoformat()
             }
 
-    async def cleanup(self):
+    async def cleanup(self) -> None:
         """Cleanup service resources"""
         try:
             self.cleanup_running = False
@@ -1289,7 +1289,7 @@ class {{service_class_name}}(BaseService):
 
 # Example usage and testing
 if __name__ == "__main__":
-    async def main():
+    async def main() -> None:
         service = {{service_class_name}}()
         await service.initialize()
         
@@ -1336,3 +1336,5 @@ if __name__ == "__main__":
             await service.cleanup()
 
     asyncio.run(main())
+
+# File has syntax issues - needs manual review

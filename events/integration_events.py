@@ -31,12 +31,12 @@ class ExternalAPICallStartedEvent(BaseEvent):
     """External API call started event"""
     
     def __init__(self,
-                 api_name: str,
-                 endpoint: str,
-                 method: str,
-                 request_id: str,
-                 correlation_id: Optional[str] = None,
-                 metadata: Optional[Dict[str, Any]] = None):
+                 api_name -> None: str,
+                 endpoint -> None: str,
+                 method -> None: str,
+                 request_id -> None: str,
+                 correlation_id -> None: Optional[str] = None,
+                 metadata -> None: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(
             event_type="integration.api.call.started",
             data={
@@ -56,14 +56,14 @@ class ExternalAPICallCompletedEvent(BaseEvent):
     """External API call completed event"""
     
     def __init__(self,
-                 api_name: str,
-                 endpoint: str,
-                 request_id: str,
-                 status_code: int,
-                 response_time_ms: float,
-                 success: bool,
-                 error_message: Optional[str] = None,
-                 metadata: Optional[Dict[str, Any]] = None):
+                 api_name -> None: str,
+                 endpoint -> None: str,
+                 request_id -> None: str,
+                 status_code -> None: int,
+                 response_time_ms -> None: float,
+                 success -> None: bool,
+                 error_message -> None: Optional[str] = None,
+                 metadata -> None: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(
             event_type="integration.api.call.completed",
             data={
@@ -85,12 +85,12 @@ class WebhookReceivedEvent(BaseEvent):
     """Webhook received from external service"""
     
     def __init__(self,
-                 source: str,
-                 webhook_type: str,
-                 payload: Dict[str, Any],
-                 signature: Optional[str] = None,
-                 verified: bool = False,
-                 metadata: Optional[Dict[str, Any]] = None):
+                 source -> None: str,
+                 webhook_type -> None: str,
+                 payload -> None: Dict[str, Any],
+                 signature -> None: Optional[str] = None,
+                 verified -> None: bool = False,
+                 metadata -> None: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(
             event_type="integration.webhook.received",
             data={
@@ -110,13 +110,13 @@ class WebhookSentEvent(BaseEvent):
     """Webhook sent to external service"""
     
     def __init__(self,
-                 target_url: str,
-                 webhook_type: str,
-                 payload: Dict[str, Any],
-                 attempt_number: int = 1,
-                 success: bool = False,
-                 response_code: Optional[int] = None,
-                 metadata: Optional[Dict[str, Any]] = None):
+                 target_url -> None: str,
+                 webhook_type -> None: str,
+                 payload -> None: Dict[str, Any],
+                 attempt_number -> None: int = 1,
+                 success -> None: bool = False,
+                 response_code -> None: Optional[int] = None,
+                 metadata -> None: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(
             event_type="integration.webhook.sent",
             data={
@@ -137,12 +137,12 @@ class DataSyncStartedEvent(BaseEvent):
     """Data synchronization started"""
     
     def __init__(self,
-                 sync_id: str,
-                 source_system: str,
-                 target_system: str,
-                 data_type: str,
-                 record_count: Optional[int] = None,
-                 metadata: Optional[Dict[str, Any]] = None):
+                 sync_id -> None: str,
+                 source_system -> None: str,
+                 target_system -> None: str,
+                 data_type -> None: str,
+                 record_count -> None: Optional[int] = None,
+                 metadata -> None: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(
             event_type="integration.data.sync.started",
             data={
@@ -162,14 +162,14 @@ class DataSyncCompletedEvent(BaseEvent):
     """Data synchronization completed"""
     
     def __init__(self,
-                 sync_id: str,
-                 source_system: str,
-                 target_system: str,
-                 records_processed: int,
-                 records_success: int,
-                 records_failed: int,
-                 duration_seconds: float,
-                 metadata: Optional[Dict[str, Any]] = None):
+                 sync_id -> None: str,
+                 source_system -> None: str,
+                 target_system -> None: str,
+                 records_processed -> None: int,
+                 records_success -> None: int,
+                 records_failed -> None: int,
+                 duration_seconds -> None: float,
+                 metadata -> None: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(
             event_type="integration.data.sync.completed",
             data={
@@ -191,11 +191,11 @@ class ThirdPartyServiceConnectedEvent(BaseEvent):
     """Third-party service connection established"""
     
     def __init__(self,
-                 service_name: str,
-                 user_id: str,
-                 connection_type: str,
-                 permissions: List[str],
-                 metadata: Optional[Dict[str, Any]] = None):
+                 service_name -> None: str,
+                 user_id -> None: str,
+                 connection_type -> None: str,
+                 permissions -> None: List[str],
+                 metadata -> None: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(
             event_type="integration.thirdparty.connected",
             data={
@@ -214,10 +214,10 @@ class ThirdPartyServiceDisconnectedEvent(BaseEvent):
     """Third-party service disconnected"""
     
     def __init__(self,
-                 service_name: str,
-                 user_id: str,
-                 reason: str,
-                 metadata: Optional[Dict[str, Any]] = None):
+                 service_name -> None: str,
+                 user_id -> None: str,
+                 reason -> None: str,
+                 metadata -> None: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(
             event_type="integration.thirdparty.disconnected",
             data={
@@ -235,12 +235,12 @@ class PlatformContentSyncEvent(BaseEvent):
     """Content synchronized with external platform"""
     
     def __init__(self,
-                 content_id: str,
-                 platform: str,
-                 platform_content_id: str,
-                 sync_type: str,
-                 status: str,
-                 metadata: Optional[Dict[str, Any]] = None):
+                 content_id -> None: str,
+                 platform -> None: str,
+                 platform_content_id -> None: str,
+                 sync_type -> None: str,
+                 status -> None: str,
+                 metadata -> None: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(
             event_type="integration.platform.content.sync",
             data={
@@ -260,15 +260,15 @@ class PaymentGatewayTransactionEvent(BaseEvent):
     """Payment gateway transaction event"""
     
     def __init__(self,
-                 transaction_id: str,
-                 gateway: str,
-                 user_id: str,
-                 amount: Decimal,
-                 currency: str,
-                 transaction_type: str,
-                 status: str,
-                 gateway_response: Optional[Dict[str, Any]] = None,
-                 metadata: Optional[Dict[str, Any]] = None):
+                 transaction_id -> None: str,
+                 gateway -> None: str,
+                 user_id -> None: str,
+                 amount -> None: Decimal,
+                 currency -> None: str,
+                 transaction_type -> None: str,
+                 status -> None: str,
+                 gateway_response -> None: Optional[Dict[str, Any]] = None,
+                 metadata -> None: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(
             event_type="integration.payment.transaction",
             data={
@@ -291,13 +291,13 @@ class EmailServiceDeliveryEvent(BaseEvent):
     """Email service delivery event"""
     
     def __init__(self,
-                 message_id: str,
-                 service_provider: str,
-                 recipient: str,
-                 email_type: str,
-                 delivery_status: str,
-                 bounce_reason: Optional[str] = None,
-                 metadata: Optional[Dict[str, Any]] = None):
+                 message_id -> None: str,
+                 service_provider -> None: str,
+                 recipient -> None: str,
+                 email_type -> None: str,
+                 delivery_status -> None: str,
+                 bounce_reason -> None: Optional[str] = None,
+                 metadata -> None: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(
             event_type="integration.email.delivery",
             data={
@@ -318,13 +318,13 @@ class SMSServiceDeliveryEvent(BaseEvent):
     """SMS service delivery event"""
     
     def __init__(self,
-                 message_id: str,
-                 service_provider: str,
-                 recipient: str,
-                 message_type: str,
-                 delivery_status: str,
-                 error_code: Optional[str] = None,
-                 metadata: Optional[Dict[str, Any]] = None):
+                 message_id -> None: str,
+                 service_provider -> None: str,
+                 recipient -> None: str,
+                 message_type -> None: str,
+                 delivery_status -> None: str,
+                 error_code -> None: Optional[str] = None,
+                 metadata -> None: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(
             event_type="integration.sms.delivery",
             data={
@@ -345,14 +345,14 @@ class CloudStorageOperationEvent(BaseEvent):
     """Cloud storage operation event"""
     
     def __init__(self,
-                 operation_id: str,
-                 provider: str,
-                 operation_type: str,
-                 file_path: str,
-                 file_size: Optional[int] = None,
-                 success: bool = True,
-                 error_message: Optional[str] = None,
-                 metadata: Optional[Dict[str, Any]] = None):
+                 operation_id -> None: str,
+                 provider -> None: str,
+                 operation_type -> None: str,
+                 file_path -> None: str,
+                 file_size -> None: Optional[int] = None,
+                 success -> None: bool = True,
+                 error_message -> None: Optional[str] = None,
+                 metadata -> None: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(
             event_type="integration.storage.operation",
             data={
@@ -374,12 +374,12 @@ class CDNPurgeEvent(BaseEvent):
     """CDN cache purge event"""
     
     def __init__(self,
-                 purge_id: str,
-                 cdn_provider: str,
-                 purge_type: str,
-                 paths: List[str],
-                 status: str,
-                 metadata: Optional[Dict[str, Any]] = None):
+                 purge_id -> None: str,
+                 cdn_provider -> None: str,
+                 purge_type -> None: str,
+                 paths -> None: List[str],
+                 status -> None: str,
+                 metadata -> None: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(
             event_type="integration.cdn.purge",
             data={
@@ -399,12 +399,12 @@ class AnalyticsServiceDataSentEvent(BaseEvent):
     """Analytics data sent to external service"""
     
     def __init__(self,
-                 service: str,
-                 data_type: str,
-                 record_count: int,
-                 batch_id: str,
-                 success: bool,
-                 metadata: Optional[Dict[str, Any]] = None):
+                 service -> None: str,
+                 data_type -> None: str,
+                 record_count -> None: int,
+                 batch_id -> None: str,
+                 success -> None: bool,
+                 metadata -> None: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(
             event_type="integration.analytics.data.sent",
             data={
@@ -424,14 +424,14 @@ class MicroserviceCallEvent(BaseEvent):
     """Microservice to microservice call event"""
     
     def __init__(self,
-                 source_service: str,
-                 target_service: str,
-                 operation: str,
-                 request_id: str,
-                 response_time_ms: Optional[float] = None,
-                 status_code: Optional[int] = None,
-                 success: Optional[bool] = None,
-                 metadata: Optional[Dict[str, Any]] = None):
+                 source_service -> None: str,
+                 target_service -> None: str,
+                 operation -> None: str,
+                 request_id -> None: str,
+                 response_time_ms -> None: Optional[float] = None,
+                 status_code -> None: Optional[int] = None,
+                 success -> None: Optional[bool] = None,
+                 metadata -> None: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(
             event_type="integration.microservice.call",
             data={
@@ -453,12 +453,12 @@ class ConfigurationUpdatedEvent(BaseEvent):
     """Configuration updated from external source"""
     
     def __init__(self,
-                 config_source: str,
-                 config_key: str,
-                 old_value: Optional[str] = None,
-                 new_value: Optional[str] = None,
-                 applied: bool = False,
-                 metadata: Optional[Dict[str, Any]] = None):
+                 config_source -> None: str,
+                 config_key -> None: str,
+                 old_value -> None: Optional[str] = None,
+                 new_value -> None: Optional[str] = None,
+                 applied -> None: bool = False,
+                 metadata -> None: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(
             event_type="integration.config.updated",
             data={

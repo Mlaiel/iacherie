@@ -126,7 +126,7 @@ class TrustScoreMonitor:
     - Predictive trust modeling
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.trust_metrics: Dict[str, TrustMetrics] = {}
         self.collaboration_records: List[CollaborationRecord] = []
@@ -142,7 +142,7 @@ class TrustScoreMonitor:
         
         logger.info("🛡️ Trust Score Monitor initialized")
     
-    def _setup_trust_algorithms(self):
+    def _setup_trust_algorithms(self) -> None:
         """Initialize trust calculation algorithms."""
         self.trust_algorithms = {
             "base_scoring": {
@@ -169,7 +169,7 @@ class TrustScoreMonitor:
         
         logger.info("🧮 Trust calculation algorithms configured")
     
-    def _setup_reputation_aggregation(self):
+    def _setup_reputation_aggregation(self) -> None:
         """Initialize reputation source aggregation."""
         self.reputation_sources = {
             "internal_ratings": {
@@ -196,7 +196,7 @@ class TrustScoreMonitor:
         
         logger.info("🌐 Reputation aggregation system configured")
     
-    def _setup_fraud_detection(self):
+    def _setup_fraud_detection(self) -> None:
         """Initialize fraud detection patterns."""
         self.fraud_patterns = {
             "fake_ratings": {
@@ -218,7 +218,7 @@ class TrustScoreMonitor:
         
         logger.info("🚨 Fraud detection patterns configured")
     
-    def _setup_verification_system(self):
+    def _setup_verification_system(self) -> None:
         """Initialize trust verification system."""
         self.verification_levels = {
             "basic": {
@@ -594,7 +594,7 @@ class TrustScoreMonitor:
     
     # Helper methods
     
-    async def _initialize_user_trust_metrics(self, user_id: str):
+    async def _initialize_user_trust_metrics(self, user_id -> None: str) -> None:
         """Initialize trust metrics for a new user."""
         self.trust_metrics[user_id] = TrustMetrics(
             user_id=user_id,

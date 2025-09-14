@@ -62,7 +62,7 @@ class ExpertAnalysis:
 class EnterpriseMLValidator:
     """🎯 Validateur Enterprise ML Multi-Expert"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.ml_base_path = Path(__file__).parent
         self.results: List[ValidationResult] = []
         self.expert_analyses: List[ExpertAnalysis] = []
@@ -563,7 +563,7 @@ class EnterpriseMLValidator:
         return report
 
 # Utilitaire d'exécution
-async def main():
+async def main() -> None:
     """🚀 Exécution validation ML Enterprise"""
     validator = EnterpriseMLValidator()
     

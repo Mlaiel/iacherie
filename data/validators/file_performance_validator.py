@@ -160,7 +160,7 @@ class PerformanceValidationResult:
 class FilePerformanceValidator:
     """Consolidated file integrity and performance validation system."""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize the file performance validator.
         
         Args:

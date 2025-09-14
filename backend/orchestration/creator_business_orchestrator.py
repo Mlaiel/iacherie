@@ -87,7 +87,7 @@ class ContentWorkflow:
     created_at: datetime = None
     updated_at: datetime = None
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.created_at is None:
             self.created_at = datetime.utcnow()
         if self.updated_at is None:
@@ -117,7 +117,7 @@ class CreatorBusinessOrchestrator:
     - Performance optimization and business impact tracking
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.workflows: Dict[str, ContentWorkflow] = {}
         self.creator_profiles: Dict[str, CreatorProfile] = {}
         self.orchestration_strategies: Dict[CreatorType, Dict[str, Any]] = {}
@@ -139,7 +139,7 @@ class CreatorBusinessOrchestrator:
             logger.error(f"❌ Failed to initialize Creator Business Orchestrator: {e}")
             return False
 
-    async def _setup_creator_strategies(self):
+    async def _setup_creator_strategies(self) -> None:
         """Setup creator-type specific orchestration strategies"""
         # Musicians strategy
         self.orchestration_strategies[CreatorType.MUSICIAN] = {
@@ -238,7 +238,7 @@ class CreatorBusinessOrchestrator:
 
         logger.info(f"✅ Setup orchestration strategies for {len(self.orchestration_strategies)} creator types")
 
-    async def _setup_stage_handlers(self):
+    async def _setup_stage_handlers(self) -> None:
         """Setup business stage handlers"""
         # For now, use placeholder handlers - these would be implemented in separate modules
         self.stage_handlers = {
@@ -253,7 +253,7 @@ class CreatorBusinessOrchestrator:
         }
         logger.info(f"✅ Setup {len(self.stage_handlers)} business stage handlers")
 
-    async def _setup_business_rules(self):
+    async def _setup_business_rules(self) -> None:
         """Setup business logic rules and dependencies"""
         # Business stage dependencies as per Cahier des Charges
         self.stage_dependencies = {

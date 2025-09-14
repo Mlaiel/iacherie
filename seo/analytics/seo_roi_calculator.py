@@ -84,7 +84,7 @@ class SEOROIReport:
 class SEOROICalculator:
     """Advanced SEO ROI calculation and analysis system"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """Initialize SEO ROI calculator
         
         Args:
@@ -692,7 +692,7 @@ class SEOROICalculator:
         """Get base monthly revenue"""
         return Decimal('25000.00')  # Placeholder
     
-    async def _store_investment(self, investment: SEOInvestment):
+    async def _store_investment(self, investment -> None: SEOInvestment) -> None:
         """Store investment to database"""
         logger.debug(f"Storing investment: {investment.investment_id}")
     
@@ -705,7 +705,7 @@ class SEOROICalculator:
 class ROIOptimizer:
     """Optimize SEO investments for maximum ROI"""
     
-    def __init__(self, calculator: SEOROICalculator):
+    def __init__(self, calculator -> None: SEOROICalculator) -> None:
         self.calculator = calculator
     
     async def optimize_investment_allocation(self, 

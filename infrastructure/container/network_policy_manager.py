@@ -1,4 +1,6 @@
 """
+import asyncio
+
 Network Policy Manager
 Kubernetes network security policies for Ainflue infrastructure
 
@@ -15,7 +17,7 @@ logger = logging.getLogger(__name__)
 class NetworkPolicyManager:
     """Kubernetes network policy management"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize network policy manager"""
         logger.info("Network policy manager initialized")
         

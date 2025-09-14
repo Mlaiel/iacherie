@@ -1,3 +1,8 @@
+"""
+App Deployment module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """Application Deployment Manager
 Handles complete application deployment lifecycle including zero-downtime deployments
@@ -66,7 +71,7 @@ class AppDeploymentManager:
     Handles zero-downtime deployments with advanced strategies
     """
     
-    def __init__(self, config_path: Optional[str] = None):
+    def __init__(self, config_path -> None: Optional[str] = None) -> None:
         """
 Initialize deployment manager"""
         self.config_path = config_path or "/etc/deployment/config.yaml"
@@ -796,7 +801,7 @@ Initialize deployment manager"""
             return []
 
 
-def main():
+def main() -> None:
     """Main function for standalone execution"""
     import argparse
     

@@ -24,7 +24,7 @@ logger = logging.getLogger(__name__)
 class BackupEncryption:
     """Encrypted backup management system."""
     
-    def __init__(self, encryption_key: Optional[str] = None):
+    def __init__(self, encryption_key -> None: Optional[str] = None) -> None:
         """Initialize backup encryption."""
         self._encryption_key = encryption_key or self._generate_key()
         self._fernet = Fernet(self._encryption_key.encode() if isinstance(self._encryption_key, str) else self._encryption_key)

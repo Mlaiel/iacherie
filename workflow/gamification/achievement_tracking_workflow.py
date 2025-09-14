@@ -136,7 +136,7 @@ class AchievementEvent:
 class AchievementTrackingWorkflow:
     """Advanced achievement tracking workflow with real-time detection and progress monitoring."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the achievement tracking workflow."""
         self.achievement_registry = {}
         self.user_progress = {}

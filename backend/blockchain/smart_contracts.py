@@ -118,7 +118,7 @@ class SmartContractManager:
     Smart Contract Manager for deploying and managing smart contracts
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """
         Initialize Smart Contract Manager
         
@@ -606,7 +606,7 @@ class ContractDeployer:
     Specialized deployer for batch contract deployments
     """
     
-    def __init__(self, manager: SmartContractManager):
+    def __init__(self, manager -> None: SmartContractManager) -> None:
         """
         Initialize Contract Deployer
         

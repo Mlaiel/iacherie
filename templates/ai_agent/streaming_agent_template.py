@@ -115,7 +115,7 @@ class StreamingEventProcessor(ABC):
 class RealTimeContentModerator(StreamingEventProcessor):
     """Real-time content moderation processor"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.config = config or {}
         self.moderation_rules = self.config.get("moderation_rules", {})
         self.toxic_patterns = [
@@ -213,7 +213,7 @@ class RealTimeContentModerator(StreamingEventProcessor):
 class LiveEngagementAnalyzer(StreamingEventProcessor):
     """Real-time engagement analysis processor"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.config = config or {}
         self.engagement_windows = defaultdict(deque)  # Rolling windows per content
         self.window_size = self.config.get("window_size_seconds", 300)  # 5 minutes
@@ -316,7 +316,7 @@ class LiveEngagementAnalyzer(StreamingEventProcessor):
 class StreamingMLInference(StreamingEventProcessor):
     """Real-time ML inference processor"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.config = config or {}
         self.model_cache = {}
         self.inference_cache = {}
@@ -512,7 +512,7 @@ class StreamingMLInference(StreamingEventProcessor):
 class StreamingAgent:
     """🌊 Advanced Streaming AI Agent for Real-Time Data Processing"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         """Initialize Streaming Agent"""
         self.config = config or {}
         self.kafka_config = self.config.get("kafka", {
@@ -534,7 +534,7 @@ class StreamingAgent:
         
         logger.info("🌊 Streaming Agent initialized successfully")
     
-    def register_processor(self, processor_config: StreamProcessor, processor: StreamingEventProcessor):
+    def register_processor(self, processor_config -> None: StreamProcessor, processor -> None: StreamingEventProcessor) -> None:
         """Register a streaming processor"""
         self.processors[processor_config.processor_id] = {
             "config": processor_config,
@@ -542,7 +542,7 @@ class StreamingAgent:
         }
         logger.info(f"Registered processor: {processor_config.name}")
     
-    async def start(self):
+    async def start(self) -> None:
         """Start the streaming agent"""
         logger.info("Starting Streaming Agent")
         self.is_running = True
@@ -563,7 +563,7 @@ class StreamingAgent:
         
         logger.info("✅ Streaming Agent started")
     
-    async def stop(self):
+    async def stop(self) -> None:
         """Stop the streaming agent"""
         logger.info("Stopping Streaming Agent")
         self.is_running = False
@@ -580,7 +580,7 @@ class StreamingAgent:
         
         logger.info("✅ Streaming Agent stopped")
     
-    async def _initialize_kafka(self):
+    async def _initialize_kafka(self) -> None:
         """Initialize Kafka producers and consumers"""
         # Create shared producer
         self.producer = AIOKafkaProducer(
@@ -603,7 +603,7 @@ class StreamingAgent:
             await consumer.start()
             self.consumers[processor_id] = consumer
     
-    async def _cleanup_kafka(self):
+    async def _cleanup_kafka(self) -> None:
         """Clean up Kafka connections"""
         # Stop producer
         if hasattr(self, 'producer'):
@@ -613,7 +613,7 @@ class StreamingAgent:
         for consumer in self.consumers.values():
             await consumer.stop()
     
-    async def _process_stream(self, processor_id: str, processor_info: Dict[str, Any]):
+    async def _process_stream(self, processor_id -> None: str, processor_info -> None: Dict[str, Any]) -> None:
         """Process stream for a specific processor"""
         config = processor_info["config"]
         processor = processor_info["processor"]
@@ -677,9 +677,9 @@ class StreamingAgent:
             if message_batch:
                 await self._process_message_batch(processor, message_batch, config, stats)
     
-    async def _process_single_message(self, processor: StreamingEventProcessor, 
-                                    message: StreamMessage, config: StreamProcessor, 
-                                    stats: StreamingStats):
+    async def _process_single_message(self, processor -> None: StreamingEventProcessor, 
+                                    message -> None: StreamMessage, config -> None: StreamProcessor, 
+                                    stats -> None: StreamingStats) -> None:
         """Process a single message"""
         start_time = time.time()
         
@@ -702,9 +702,9 @@ class StreamingAgent:
             if config.error_handling == "dead_letter":
                 await self._send_to_dead_letter(message, str(e))
     
-    async def _process_message_batch(self, processor: StreamingEventProcessor, 
-                                   messages: List[StreamMessage], config: StreamProcessor, 
-                                   stats: StreamingStats):
+    async def _process_message_batch(self, processor -> None: StreamingEventProcessor, 
+                                   messages -> None: List[StreamMessage], config -> None: StreamProcessor, 
+                                   stats -> None: StreamingStats) -> None:
         """Process a batch of messages"""
         start_time = time.time()
         
@@ -725,7 +725,7 @@ class StreamingAgent:
             logger.error(f"Batch processing error: {str(e)}")
             stats.messages_failed += len(messages)
     
-    async def _send_message(self, topic: str, message: StreamMessage):
+    async def _send_message(self, topic -> None: str, message -> None: StreamMessage) -> None:
         """Send message to Kafka topic"""
         try:
             message_data = {
@@ -742,7 +742,7 @@ class StreamingAgent:
         except Exception as e:
             logger.error(f"Error sending message to {topic}: {str(e)}")
     
-    async def _send_to_dead_letter(self, message: StreamMessage, error: str):
+    async def _send_to_dead_letter(self, message -> None: StreamMessage, error -> None: str) -> None:
         """Send failed message to dead letter queue"""
         dead_letter_topic = "dead_letter_queue"
         
@@ -759,7 +759,7 @@ class StreamingAgent:
         
         await self.producer.send_and_wait(dead_letter_topic, dead_letter_message)
     
-    async def _collect_metrics(self):
+    async def _collect_metrics(self) -> None:
         """Collect and update streaming metrics"""
         last_message_count = 0
         last_time = time.time()
@@ -838,7 +838,7 @@ class StreamingAgent:
         }
 
 # Usage Example and Template Testing
-async def main():
+async def main() -> None:
     """Example usage of Streaming Agent Template"""
     
     # Initialize the agent

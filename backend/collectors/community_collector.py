@@ -25,7 +25,7 @@ logger = logging.getLogger(__name__)
 # Individual platform collector classes (simplified implementations)
 class DiscordCollector(BaseCollector):
     """Discord content collector."""
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs) -> None:
         super().__init__("discord", rate_limit=50)
     
     async def search_content(self, query: str, config: CollectionConfig) -> List[CollectorResult]:
@@ -42,7 +42,7 @@ class DiscordCollector(BaseCollector):
 
 class RedditCollector(BaseCollector):
     """Reddit content collector."""
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs) -> None:
         super().__init__("reddit", rate_limit=60)
     
     async def search_content(self, query: str, config: CollectionConfig) -> List[CollectorResult]:
@@ -65,7 +65,7 @@ class CommunityCollector(BaseCollector):
     into a single interface for efficient community content collection.
     """
     
-    def __init__(self, platform_configs: Optional[Dict[str, Dict]] = None):
+    def __init__(self, platform_configs -> None: Optional[Dict[str, Dict]] = None) -> None:
         """Initialize with platform-specific configurations."""
         super().__init__("community", rate_limit=100)
         

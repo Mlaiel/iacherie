@@ -81,7 +81,7 @@ class ColorPalette:
     error: str
     info: str
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         """
 Validate color formats"""
         for field_name, color_value in asdict(self).items():
@@ -259,7 +259,7 @@ class AssetProcessor:
     """
 Advanced asset processing and optimization"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         try:
             logger.info(f"Executing __init__")
             
@@ -336,7 +336,7 @@ Process and optimize logo"""
 class ThemeGenerator:
     """Intelligent theme generation and color palette creation"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._color_harmony_rules = {
             'monochromatic': self._generate_monochromatic,
             'analogous': self._generate_analogous,
@@ -413,7 +413,7 @@ Generate complete color palette from base color"""
 class WhiteLabelManager:
     """Advanced white-label management system"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self._configurations: Dict[str, WhiteLabelConfiguration] = {}
         self._themes: Dict[str, BrandingTheme] = {}
@@ -426,7 +426,7 @@ class WhiteLabelManager:
         # Initialize default templates
         asyncio.create_task(self._initialize_default_templates())
     
-    async def _initialize_default_templates(self):
+    async def _initialize_default_templates(self) -> None:
         """
 Initialize default customization templates"""
         try:

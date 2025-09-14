@@ -172,7 +172,7 @@ class DisputeAnalytics:
 class DisputeResolutionEngine:
     """Advanced dispute resolution and mediation system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.disputes: Dict[str, Dispute] = {}
         self.mediators: Dict[str, Dict[str, Any]] = {}
         self.auto_resolution_rules: List[Dict[str, Any]] = []
@@ -181,7 +181,7 @@ class DisputeResolutionEngine:
         # Initialize default settings
         self._initialize_auto_rules()
     
-    def _initialize_auto_rules(self):
+    def _initialize_auto_rules(self) -> None:
         """Initialize automatic resolution rules"""
         self.auto_resolution_rules = [
             {
@@ -286,7 +286,7 @@ class DisputeResolutionEngine:
         }
         return deadlines.get(priority, timedelta(days=7))
     
-    async def _check_auto_resolution(self, dispute: Dispute):
+    async def _check_auto_resolution(self, dispute -> None: Dispute) -> None:
         """Check if dispute can be automatically resolved"""
         try:
             for rule in self.auto_resolution_rules:
@@ -317,7 +317,7 @@ class DisputeResolutionEngine:
         except:
             return False
     
-    async def _apply_auto_resolution(self, dispute: Dispute, rule: Dict[str, Any]):
+    async def _apply_auto_resolution(self, dispute -> None: Dispute, rule -> None: Dict[str, Any]) -> None:
         """Apply automatic resolution based on rule"""
         action = rule["action"]
         refund_percentage = rule.get("refund_percentage", 0)
@@ -381,7 +381,7 @@ class DisputeResolutionEngine:
             logger.error(f"Error adding evidence: {e}")
             raise
     
-    async def _verify_evidence(self, evidence: Evidence):
+    async def _verify_evidence(self, evidence -> None: Evidence) -> None:
         """Verify evidence authenticity"""
         # In production, would implement evidence verification
         # For now, mark as verified
@@ -424,7 +424,7 @@ class DisputeResolutionEngine:
             logger.error(f"Error adding message: {e}")
             raise
     
-    async def _analyze_message_for_resolution(self, dispute_id: str, message: DisputeMessage):
+    async def _analyze_message_for_resolution(self, dispute_id -> None: str, message -> None: DisputeMessage) -> None:
         """Analyze message for potential resolution opportunities"""
         resolution_keywords = ["agree", "accept", "settle", "resolve", "compromise"]
         content_lower = message.content.lower()
@@ -433,7 +433,7 @@ class DisputeResolutionEngine:
             # Suggest mediation or resolution
             await self._suggest_mediation(dispute_id)
     
-    async def _suggest_mediation(self, dispute_id: str):
+    async def _suggest_mediation(self, dispute_id -> None: str) -> None:
         """Suggest mediation to dispute parties"""
         # In production, would send notifications to parties
         logger.info(f"Mediation suggested for dispute {dispute_id}")
@@ -561,7 +561,7 @@ class DisputeResolutionEngine:
             logger.error(f"Error escalating dispute: {e}")
             return False
     
-    async def _assign_mediator(self, dispute: Dispute):
+    async def _assign_mediator(self, dispute -> None: Dispute) -> None:
         """Assign mediator to dispute"""
         # In production, would implement mediator selection algorithm
         # For now, assign a default mediator
@@ -610,12 +610,12 @@ class DisputeResolutionEngine:
             logger.error(f"Error resolving dispute: {e}")
             return False
     
-    async def _process_refund(self, dispute: Dispute, amount: Decimal):
+    async def _process_refund(self, dispute -> None: Dispute, amount -> None: Decimal) -> None:
         """Process refund for dispute resolution"""
         # In production, would integrate with payment system
         logger.info(f"Processing refund of {amount} for dispute {dispute.dispute_id}")
     
-    async def _generate_ai_recommendation(self, dispute: Dispute):
+    async def _generate_ai_recommendation(self, dispute -> None: Dispute) -> None:
         """Generate AI-powered resolution recommendation"""
         try:
             # Simplified AI recommendation - in production would use ML models
@@ -654,12 +654,12 @@ class DisputeResolutionEngine:
         except Exception as e:
             logger.error(f"Error generating AI recommendation: {e}")
     
-    async def _notify_dispute_created(self, dispute: Dispute):
+    async def _notify_dispute_created(self, dispute -> None: Dispute) -> None:
         """Notify parties about dispute creation"""
         # In production, would send emails/notifications
         logger.info(f"Notifying parties about dispute {dispute.dispute_id}")
     
-    def _invalidate_analytics_cache(self):
+    def _invalidate_analytics_cache(self) -> None:
         """Invalidate analytics cache"""
         self.analytics_cache = None
     
@@ -726,7 +726,7 @@ class DisputeResolutionEngine:
         return analytics
 
 # Example usage
-async def main():
+async def main() -> None:
     """Example usage of DisputeResolutionEngine"""
     engine = DisputeResolutionEngine()
     

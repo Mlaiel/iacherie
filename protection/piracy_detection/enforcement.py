@@ -80,7 +80,7 @@ class AutomatedEnforcement:
     automated submission, and intelligent escalation management.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Automated Enforcement system.
         

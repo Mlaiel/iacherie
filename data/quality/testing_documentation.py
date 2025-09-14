@@ -128,7 +128,7 @@ class TestReport:
 class DataQualityUnitTests:
     """Tests unitaires pour le module Data Quality"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
     
     async def test_monitoring_service_initialization(self) -> TestResult:
@@ -353,7 +353,7 @@ class DataQualityUnitTests:
 class DataQualityIntegrationTests:
     """Tests d'intégration pour le module Data Quality"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
     
     async def test_monitoring_analytics_integration(self) -> TestResult:
@@ -520,7 +520,7 @@ class DataQualityIntegrationTests:
 class PerformanceTests:
     """Tests de performance"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
     
     async def test_monitoring_service_performance(self) -> TestResult:
@@ -644,7 +644,7 @@ class PerformanceTests:
 class SecurityTests:
     """Tests de sécurité"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
     
     async def test_injection_attack_protection(self) -> TestResult:
@@ -770,7 +770,7 @@ class SecurityTests:
 class ComprehensiveTestRunner:
     """Runner de tests complet pour le module Data Quality"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
         
         # Initialisation des test suites
@@ -1027,7 +1027,7 @@ class ComprehensiveTestRunner:
                 # Exécution parallèle
                 semaphore = asyncio.Semaphore(suite.max_parallel_tests)
                 
-                async def run_with_semaphore(test_case):
+                async def run_with_semaphore(test_case) -> None:
                     async with semaphore:
                         return await self.run_test_case(test_case)
                 
@@ -1241,7 +1241,7 @@ __all__ = [
 
 # Exemple d'utilisation
 if __name__ == "__main__":
-    async def main():
+    async def main() -> None:
         # Configuration logging
         logging.basicConfig(level=logging.INFO)
         

@@ -127,7 +127,7 @@ class DatabaseConnectionManager:
     - Performance optimization
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         self._connections: Dict[DatabaseType, Any] = {}
         self._configs: Dict[DatabaseType, ConnectionConfig] = {}
         self._status: Dict[DatabaseType, ConnectionStatus] = {}
@@ -135,7 +135,7 @@ class DatabaseConnectionManager:
         self._health_monitor_task: Optional[asyncio.Task] = None
         self._session_makers: Dict[DatabaseType, Any] = {}
         
-    async def initialize(self, configs: Dict[DatabaseType, ConnectionConfig]):
+    async def initialize(self, configs -> None: Dict[DatabaseType, ConnectionConfig]) -> None:
         """Initialize all database connections."""
         logger.info("🚀 Initializing enterprise database connections...")
         
@@ -153,7 +153,7 @@ class DatabaseConnectionManager:
         self._health_monitor_task = asyncio.create_task(self._health_monitor())
         logger.info("🏥 Database health monitoring started")
     
-    async def _connect_database(self, db_type: DatabaseType, config: ConnectionConfig):
+    async def _connect_database(self, db_type -> None: DatabaseType, config -> None: ConnectionConfig) -> None:
         """Connect to a specific database type."""
         self._status[db_type] = ConnectionStatus.CONNECTING
         
@@ -172,7 +172,7 @@ class DatabaseConnectionManager:
         
         self._status[db_type] = ConnectionStatus.CONNECTED
     
-    async def _connect_postgresql(self, config: ConnectionConfig):
+    async def _connect_postgresql(self, config -> None: ConnectionConfig) -> None:
         """Connect to PostgreSQL database."""
         connection_string = f"postgresql+asyncpg://{config.username}:{config.password}@{config.host}:{config.port}/{config.database}"
         
@@ -191,7 +191,7 @@ class DatabaseConnectionManager:
             engine, class_=AsyncSession, expire_on_commit=False
         )
     
-    async def _connect_redis(self, config: ConnectionConfig):
+    async def _connect_redis(self, config -> None: ConnectionConfig) -> None:
         """Connect to Redis database."""
         redis_client = aioredis.Redis(
             host=config.host,
@@ -206,7 +206,7 @@ class DatabaseConnectionManager:
         await redis_client.ping()
         self._connections[DatabaseType.REDIS] = redis_client
     
-    async def _connect_mongodb(self, config: ConnectionConfig):
+    async def _connect_mongodb(self, config -> None: ConnectionConfig) -> None:
         """Connect to MongoDB database."""
         connection_string = f"mongodb://{config.username}:{config.password}@{config.host}:{config.port}/{config.database}"
         
@@ -220,7 +220,7 @@ class DatabaseConnectionManager:
         await client.admin.command('ping')
         self._connections[DatabaseType.MONGODB] = client
     
-    async def _connect_elasticsearch(self, config: ConnectionConfig):
+    async def _connect_elasticsearch(self, config -> None: ConnectionConfig) -> None:
         """Connect to Elasticsearch."""
         es_config = {
             'hosts': [{'host': config.host, 'port': config.port}],
@@ -235,7 +235,7 @@ class DatabaseConnectionManager:
         await client.info()
         self._connections[DatabaseType.ELASTICSEARCH] = client
     
-    async def _connect_object_storage(self, config: ConnectionConfig):
+    async def _connect_object_storage(self, config -> None: ConnectionConfig) -> None:
         """Connect to object storage (S3/MinIO)."""
         session = aioboto3.Session()
         
@@ -250,7 +250,7 @@ class DatabaseConnectionManager:
         self._connections[DatabaseType.OBJECT_STORAGE] = client
     
     @asynccontextmanager
-    async def get_postgres_session(self):
+    async def get_postgres_session(self) -> None:
         """Get PostgreSQL session context manager."""
         if DatabaseType.POSTGRESQL not in self._session_makers:
             raise RuntimeError("PostgreSQL connection not initialized")
@@ -264,23 +264,23 @@ class DatabaseConnectionManager:
                 await session.rollback()
                 raise
     
-    async def get_redis_client(self):
+    async def get_redis_client(self) -> None:
         """Get Redis client."""
         return self._connections.get(DatabaseType.REDIS)
     
-    async def get_mongodb_client(self):
+    async def get_mongodb_client(self) -> None:
         """Get MongoDB client."""
         return self._connections.get(DatabaseType.MONGODB)
     
-    async def get_elasticsearch_client(self):
+    async def get_elasticsearch_client(self) -> None:
         """Get Elasticsearch client."""
         return self._connections.get(DatabaseType.ELASTICSEARCH)
     
-    async def get_object_storage_client(self):
+    async def get_object_storage_client(self) -> None:
         """Get object storage client."""
         return self._connections.get(DatabaseType.OBJECT_STORAGE)
     
-    async def _health_monitor(self):
+    async def _health_monitor(self) -> None:
         """Monitor database health and handle reconnections."""
         while True:
             try:
@@ -310,7 +310,7 @@ class DatabaseConnectionManager:
             except Exception as e:
                 logger.error(f"Health monitor error: {e}")
     
-    async def _check_connection_health(self, db_type: DatabaseType, connection):
+    async def _check_connection_health(self, db_type -> None: DatabaseType, connection) -> None:
         """Check health of a specific database connection."""
         if db_type == DatabaseType.POSTGRESQL:
             async with self.get_postgres_session() as session:
@@ -330,7 +330,7 @@ class DatabaseConnectionManager:
         """Get all connection statuses."""
         return {db_type.value: status.value for db_type, status in self._status.items()}
     
-    async def close_all_connections(self):
+    async def close_all_connections(self) -> None:
         """Close all database connections."""
         logger.info("🔌 Closing all database connections...")
         
@@ -376,7 +376,7 @@ def get_connection_manager() -> DatabaseConnectionManager:
 
 
 # Consolidation of key functions from original database/connections/ modules
-async def create_tables():
+async def create_tables() -> None:
     """Create all database tables (migrated from database.schema)."""
     try:
         manager = get_connection_manager()

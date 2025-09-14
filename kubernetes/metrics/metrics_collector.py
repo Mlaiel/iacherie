@@ -148,7 +148,7 @@ class MetricsCollector:
     - Metric storage and export
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.redis_manager = RedisManager()
         self.logger = logger
         self.settings = settings

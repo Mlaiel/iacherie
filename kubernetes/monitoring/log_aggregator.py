@@ -6,7 +6,7 @@ security event correlation, and business intelligence extraction for
 content protection, revenue tracking, and platform operations.
 
 Features:
-- Real-time log streaming and processing
+    - Real-time log streaming and processing
 - AI-powered anomaly detection in log patterns
 - Security event correlation and threat detection
 - Business intelligence extraction from operational logs
@@ -175,7 +175,7 @@ class BusinessInsight:
 class AILogAnalyzer:
     """AI-powered log analysis and pattern recognition"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.pattern_baselines: Dict[str, Dict[str, float]] = {}
         self.anomaly_thresholds: Dict[str, Tuple[float, float]] = {}
         self.correlation_patterns: Dict[str, List[str]] = {}
@@ -363,7 +363,7 @@ class AILogAnalyzer:
 class SecurityEventProcessor:
     """Process security-related log events"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.threat_patterns = self._load_threat_patterns()
         self.ip_reputation_cache: Dict[str, str] = {}
         
@@ -483,13 +483,13 @@ class LogAggregator:
     
     def __init__(
         self,
-        redis_client: Optional[aioredis.Redis] = None,
-        log_directories: List[str] = None,
-        retention_days: int = 30,
-        enable_ai_analysis: bool = True,
-        enable_security_processing: bool = True,
-        max_log_size_mb: int = 100
-    ):
+        redis_client -> None: Optional[aioredis.Redis] = None,
+        log_directories -> None: List[str] = None,
+        retention_days -> None: int = 30,
+        enable_ai_analysis -> None: bool = True,
+        enable_security_processing -> None: bool = True,
+        max_log_size_mb -> None: int = 100
+    ) -> None:
         self.redis_client = redis_client
         self.log_directories = log_directories or ["/var/log/ia-influencer/"]
         self.retention_days = retention_days
@@ -533,7 +533,7 @@ class LogAggregator:
         # Register default patterns
         self._register_default_patterns()
         
-    def _register_default_patterns(self):
+    def _register_default_patterns(self) -> None:
         """Register default log patterns"""
         
         # Error patterns
@@ -601,7 +601,7 @@ class LogAggregator:
             window=300
         ))
         
-    async def start_aggregation(self):
+    async def start_aggregation(self) -> None:
         """Start log aggregation"""
         if self._aggregating:
             logger.warning("Log aggregation already running")
@@ -623,7 +623,7 @@ class LogAggregator:
                 
         logger.info("Log aggregation started")
         
-    async def stop_aggregation(self):
+    async def stop_aggregation(self) -> None:
         """Stop log aggregation"""
         self._aggregating = False
         
@@ -655,7 +655,7 @@ class LogAggregator:
         
         logger.info("Log aggregation stopped")
         
-    async def _aggregation_loop(self):
+    async def _aggregation_loop(self) -> None:
         """Main aggregation loop"""
         while self._aggregating:
             try:
@@ -670,7 +670,7 @@ class LogAggregator:
                 logger.error(f"Error in log aggregation loop: {e}")
                 await asyncio.sleep(5)
                 
-    async def _pattern_matching_loop(self):
+    async def _pattern_matching_loop(self) -> None:
         """Pattern matching loop"""
         while self._aggregating:
             try:
@@ -683,7 +683,7 @@ class LogAggregator:
                 logger.error(f"Error in pattern matching loop: {e}")
                 await asyncio.sleep(5)
                 
-    async def _watch_log_directory(self, directory: str):
+    async def _watch_log_directory(self, directory -> None: str) -> None:
         """Watch log directory for new entries"""
         log_dir = Path(directory)
         
@@ -714,7 +714,7 @@ class LogAggregator:
                 logger.error(f"Error watching log directory {directory}: {e}")
                 await asyncio.sleep(10)
                 
-    async def _process_log_file(self, log_file: Path):
+    async def _process_log_file(self, log_file -> None: Path) -> None:
         """Process entire log file"""
         try:
             async with aiofiles.open(log_file, 'r') as f:
@@ -726,13 +726,13 @@ class LogAggregator:
         except Exception as e:
             logger.error(f"Error processing log file {log_file}: {e}")
             
-    async def _process_log_file_incremental(self, log_file: Path):
+    async def _process_log_file_incremental(self, log_file -> None: Path) -> None:
         """Process new lines in modified log file"""
         # This is a simplified implementation
         # In production, maintain file positions for each watched file
         await self._process_log_file(log_file)
         
-    async def _process_log_line(self, line: str, source_file: str):
+    async def _process_log_line(self, line -> None: str, source_file -> None: str) -> None:
         """Process a single log line"""
         try:
             # Determine parser based on file or content
@@ -791,7 +791,7 @@ class LogAggregator:
             # Parse common log format
             patterns = [
                 # Standard format: timestamp level service message
-                r'(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}[,\.]\d{3})\s+(\w+)\s+(\S+)\s+(.+)',
+                r'(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}[,.]\d{3})\s+(\w+)\s+(\S+)\s+(.+)',
                 # Syslog format
                 r'(\w{3}\s+\d{1,2}\s+\d{2}:\d{2}:\d{2})\s+(\S+)\s+(\S+):\s*(.+)',
                 # Simple format: level message
@@ -872,7 +872,7 @@ class LogAggregator:
         else:
             return LogSource.APPLICATION
             
-    def _update_log_index(self, log_entry: LogEntry):
+    def _update_log_index(self, log_entry -> None: LogEntry) -> None:
         """Update log index for fast searching"""
         # Index by time buckets (5-minute intervals)
         time_bucket = log_entry.timestamp.replace(second=0, microsecond=0)
@@ -885,7 +885,7 @@ class LogAggregator:
         if len(self._log_index[bucket_key]) > 1000:
             self._log_index[bucket_key] = self._log_index[bucket_key][-500:]
             
-    async def _process_log_buffer(self):
+    async def _process_log_buffer(self) -> None:
         """Process log buffer"""
         if not self._log_buffer:
             return
@@ -901,7 +901,7 @@ class LogAggregator:
             for _ in range(len(self._log_buffer) - 2500):
                 self._log_buffer.popleft()
                 
-    async def _store_logs_to_redis(self):
+    async def _store_logs_to_redis(self) -> None:
         """Store logs to Redis"""
         try:
             pipeline = self.redis_client.pipeline()
@@ -935,7 +935,7 @@ class LogAggregator:
         except Exception as e:
             logger.error(f"Error storing logs to Redis: {e}")
             
-    async def _process_pattern_matching(self):
+    async def _process_pattern_matching(self) -> None:
         """Process pattern matching on recent logs"""
         for pattern_name, pattern in self._patterns.items():
             if not pattern.enabled:
@@ -946,7 +946,7 @@ class LogAggregator:
             except Exception as e:
                 logger.error(f"Error checking pattern {pattern_name}: {e}")
                 
-    async def _check_pattern_matches(self, pattern: LogPattern):
+    async def _check_pattern_matches(self, pattern -> None: LogPattern) -> None:
         """Check for pattern matches in recent logs"""
         now = datetime.utcnow()
         window_start = now - timedelta(seconds=pattern.window) if pattern.window > 0 else now
@@ -968,11 +968,11 @@ class LogAggregator:
             
     async def _handle_pattern_match(
         self,
-        pattern: LogPattern,
-        matches: List[LogEntry],
-        window_start: datetime,
-        window_end: datetime
-    ):
+        pattern -> None: LogPattern,
+        matches -> None: List[LogEntry],
+        window_start -> None: datetime,
+        window_end -> None: datetime
+    ) -> None:
         """Handle pattern match"""
         self._stats["patterns_matched"] += 1
         
@@ -1009,7 +1009,7 @@ class LogAggregator:
         else:
             return "low"
             
-    async def _fire_log_alert(self, alert: LogAlert):
+    async def _fire_log_alert(self, alert -> None: LogAlert) -> None:
         """Fire log alert"""
         self._stats["alerts_generated"] += 1
         
@@ -1045,7 +1045,7 @@ class LogAggregator:
             except Exception as e:
                 logger.error(f"Error in alert callback: {e}")
                 
-    async def _compress_old_logs(self):
+    async def _compress_old_logs(self) -> None:
         """Compress old log files"""
         cutoff = datetime.utcnow() - timedelta(hours=self.compression_age_hours)
         
@@ -1071,7 +1071,7 @@ class LogAggregator:
                 except Exception as e:
                     logger.error(f"Error compressing log file {log_file}: {e}")
                     
-    async def _cleanup_old_logs(self):
+    async def _cleanup_old_logs(self) -> None:
         """Clean up old compressed logs"""
         cutoff = datetime.utcnow() - timedelta(days=self.retention_days)
         
@@ -1090,17 +1090,17 @@ class LogAggregator:
                     logger.error(f"Error deleting old log file {log_file}: {e}")
                     
     # Public interface methods
-    def register_pattern(self, pattern: LogPattern):
+    def register_pattern(self, pattern -> None: LogPattern) -> None:
         """Register a log pattern"""
         self._patterns[pattern.name] = pattern
         logger.info(f"Registered log pattern: {pattern.name}")
         
-    def register_parser(self, file_pattern: str, parser: Callable):
+    def register_parser(self, file_pattern -> None: str, parser -> None: Callable) -> None:
         """Register a custom log parser"""
         self._log_parsers[file_pattern] = parser
         logger.info(f"Registered log parser for pattern: {file_pattern}")
         
-    def register_alert_callback(self, callback: Callable):
+    def register_alert_callback(self, callback -> None: Callable) -> None:
         """Register alert callback"""
         self._alert_callbacks.append(callback)
         logger.info("Registered log alert callback")
@@ -1186,3 +1186,6 @@ class LogAggregator:
         except Exception as e:
             logger.error(f"Error getting recent alerts: {e}")
             return []
+}
+
+# File has syntax issues - needs manual review

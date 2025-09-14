@@ -155,7 +155,7 @@ class ContentIntelligenceOrchestrator:
     - Actionable insights with ROI projections and implementation guidance
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.intelligence_requests: Dict[str, IntelligenceRequest] = {}
         self.active_executions: Dict[str, IntelligenceExecution] = {}
         self.intelligence_engines: Dict[str, Any] = {}
@@ -182,7 +182,7 @@ class ContentIntelligenceOrchestrator:
             logger.error(f"❌ Failed to initialize Content Intelligence Orchestrator: {e}")
             return False
 
-    async def _setup_intelligence_engines(self):
+    async def _setup_intelligence_engines(self) -> None:
         """Setup AI intelligence engines for content analysis"""
         
         self.intelligence_engines = {
@@ -232,7 +232,7 @@ class ContentIntelligenceOrchestrator:
 
         logger.info(f"✅ Setup {len(self.intelligence_engines)} intelligence engines")
 
-    async def _setup_analysis_models(self):
+    async def _setup_analysis_models(self) -> None:
         """Setup AI models for content intelligence analysis"""
         
         self.analysis_models = {
@@ -275,7 +275,7 @@ class ContentIntelligenceOrchestrator:
 
         logger.info(f"✅ Setup {len(self.analysis_models)} analysis models")
 
-    async def _setup_insight_templates(self):
+    async def _setup_insight_templates(self) -> None:
         """Setup insight templates for different intelligence types"""
         
         self.insight_templates = {
@@ -338,7 +338,7 @@ class ContentIntelligenceOrchestrator:
 
         logger.info(f"✅ Setup {len(self.insight_templates)} insight templates")
 
-    async def _setup_business_rules(self):
+    async def _setup_business_rules(self) -> None:
         """Setup business logic rules for content intelligence"""
         
         self.business_rules = {
@@ -372,7 +372,7 @@ class ContentIntelligenceOrchestrator:
 
         logger.info("✅ Setup business logic rules for content intelligence")
 
-    async def _setup_performance_baselines(self):
+    async def _setup_performance_baselines(self) -> None:
         """Setup performance baselines for different content types"""
         
         self.performance_baselines = {
@@ -533,7 +533,7 @@ class ContentIntelligenceOrchestrator:
         logger.info(f"✅ Started content intelligence analysis {execution_id}")
         return execution_id
 
-    async def _execute_intelligence_logic(self, execution: IntelligenceExecution):
+    async def _execute_intelligence_logic(self, execution -> None: IntelligenceExecution) -> None:
         """Execute the content intelligence analysis logic"""
         
         try:
@@ -562,7 +562,7 @@ class ContentIntelligenceOrchestrator:
             execution.status = "failed"
             logger.error(f"❌ Content intelligence analysis {execution.execution_id} failed: {e}")
 
-    async def _analyze_intelligence_type(self, execution: IntelligenceExecution, intelligence_type: IntelligenceType):
+    async def _analyze_intelligence_type(self, execution -> None: IntelligenceExecution, intelligence_type -> None: IntelligenceType) -> None:
         """Analyze specific intelligence type"""
         
         # Simulate intelligence analysis
@@ -609,7 +609,7 @@ class ContentIntelligenceOrchestrator:
         
         execution.analysis_results[intelligence_type] = analysis_result
 
-    async def _generate_insights(self, execution: IntelligenceExecution):
+    async def _generate_insights(self, execution -> None: IntelligenceExecution) -> None:
         """Generate actionable insights from analysis results"""
         
         insights = []
@@ -650,7 +650,7 @@ class ContentIntelligenceOrchestrator:
         
         execution.generated_insights = insights
 
-    async def _calculate_intelligence_scores(self, execution: IntelligenceExecution):
+    async def _calculate_intelligence_scores(self, execution -> None: IntelligenceExecution) -> None:
         """Calculate overall intelligence scores"""
         
         # Calculate intelligence scores
@@ -673,7 +673,7 @@ class ContentIntelligenceOrchestrator:
             execution.actionability_score = (execution.intelligence_scores["average_confidence"] + 
                                             execution.intelligence_scores["average_relevance"]) / 2
 
-    async def _generate_business_intelligence(self, execution: IntelligenceExecution):
+    async def _generate_business_intelligence(self, execution -> None: IntelligenceExecution) -> None:
         """Generate comprehensive business intelligence summary"""
         
         execution.business_intelligence = {

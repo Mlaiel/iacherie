@@ -165,7 +165,7 @@ class RevenueMetricsTracker:
     Monitors MRR, ARR, CLV, churn rates, and provides comprehensive revenue insights.
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(self.__class__.__name__)
         self.transaction_cache = {}
         self.customer_cache = {}
@@ -1031,7 +1031,7 @@ Update real-time transaction cache"""
             self.logger.error(f"❌ Failed to setup transaction tracking: {e}")
             raise
 
-    async def _process_payment_stream(self):
+    async def _process_payment_stream(self) -> None:
         """Process real-time payment events"""
         while True:
             try:
@@ -1065,7 +1065,7 @@ Update real-time transaction cache"""
             except Exception as e:
                 self.logger.error(f"Error processing payment stream: {e}")
 
-    async def _process_subscription_stream(self):
+    async def _process_subscription_stream(self) -> None:
         """Process real-time subscription events"""
         while True:
             try:
@@ -1080,7 +1080,7 @@ Update real-time transaction cache"""
             except Exception as e:
                 self.logger.error(f"Error processing subscription stream: {e}")
 
-    async def _process_refund_stream(self):
+    async def _process_refund_stream(self) -> None:
         """Process real-time refund events"""
         while True:
             try:
@@ -1095,7 +1095,7 @@ Update real-time transaction cache"""
             except Exception as e:
                 self.logger.error(f"Error processing refund stream: {e}")
 
-    async def _reconcile_transactions(self):
+    async def _reconcile_transactions(self) -> None:
         """Periodic transaction reconciliation"""
         while True:
             try:
@@ -1114,7 +1114,7 @@ Update real-time transaction cache"""
             except Exception as e:
                 self.logger.error(f"Error during transaction reconciliation: {e}")
 
-    async def _monitor_connections(self):
+    async def _monitor_connections(self) -> None:
         """Monitor database and API connections health"""
         while True:
             try:
@@ -1227,7 +1227,7 @@ Update real-time transaction cache"""
             self.logger.error(f"❌ Failed to initialize customer segmentation: {e}")
             raise
 
-    async def _process_segment_updates(self):
+    async def _process_segment_updates(self) -> None:
         """Process customer segment updates"""
         while True:
             try:
@@ -1304,7 +1304,7 @@ Update real-time transaction cache"""
             'support_tickets': 1
         }
 
-    async def _refresh_customer_segments(self):
+    async def _refresh_customer_segments(self) -> None:
         """Periodically refresh all customer segments"""
         while True:
             try:
@@ -1322,7 +1322,7 @@ Update real-time transaction cache"""
             except Exception as e:
                 self.logger.error(f"Error refreshing customer segments: {e}")
 
-    async def _trigger_retention_strategy(self, customer_id: str, segment: str):
+    async def _trigger_retention_strategy(self, customer_id -> None: str, segment -> None: str) -> None:
         """Trigger retention strategy for at-risk customers"""
         try:
             strategy = self.customer_segments[segment]['retention_strategy']

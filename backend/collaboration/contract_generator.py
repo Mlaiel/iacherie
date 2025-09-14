@@ -177,7 +177,7 @@ class ContractTemplate:
 class ContractGenerator:
     """AI-powered smart contract generation system"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         
         # Contract storage (in real implementation, use database)
@@ -1007,9 +1007,9 @@ Date: _______________                        Date: _______________
     
     async def _apply_contract_amendment(
         self,
-        contract: SmartContract,
-        amendment: Dict[str, Any]
-    ):
+        contract -> None: SmartContract,
+        amendment -> None: Dict[str, Any]
+    ) -> None:
         """Apply approved amendment to contract terms"""
         
         proposed_changes = amendment['proposed_changes']
@@ -1049,7 +1049,7 @@ Date: _______________                        Date: _______________
         
         return blockchain_address
     
-    async def _setup_contract_monitoring(self, contract: SmartContract):
+    async def _setup_contract_monitoring(self, contract -> None: SmartContract) -> None:
         """Set up automated contract monitoring and execution"""
         
         # In real implementation, set up monitoring for:
@@ -1060,7 +1060,7 @@ Date: _______________                        Date: _______________
         
         logger.info(f"Monitoring setup for contract {contract.contract_id}")
     
-    def _initialize_default_templates(self):
+    def _initialize_default_templates(self) -> None:
         """Initialize default contract templates"""
         
         # Content Creation Template

@@ -189,8 +189,8 @@ class GovernanceProposalDB(Base):
 class TokenomicsManager:
     """Advanced tokenomics management system"""
     
-    def __init__(self, db_session: AsyncSession, redis_client: aioredis.Redis, 
-                 config: TokenomicsConfig):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: aioredis.Redis, 
+                 config -> None: TokenomicsConfig) -> None:
         self.db = db_session
         self.redis = redis_client
         self.config = config
@@ -552,7 +552,7 @@ class TokenomicsManager:
 class InflationController:
     """Controls token inflation according to economic models"""
     
-    def __init__(self, config: TokenomicsConfig):
+    def __init__(self, config -> None: TokenomicsConfig) -> None:
         self.config = config
         self.target_inflation_rate = config.inflation_rate
         self.max_deviation = 0.02  # 2% maximum deviation from target
@@ -600,7 +600,7 @@ class InflationController:
 class TokenBurningMechanism:
     """Advanced token burning mechanisms"""
     
-    def __init__(self, config: TokenomicsConfig):
+    def __init__(self, config -> None: TokenomicsConfig) -> None:
         self.config = config
         self.burn_strategies = {
             "transaction_fee": 0.001,  # 0.1% of transaction value
@@ -653,7 +653,7 @@ class TokenBurningMechanism:
 class RewardCalculator:
     """Calculates staking and governance rewards"""
     
-    def __init__(self, config: TokenomicsConfig):
+    def __init__(self, config -> None: TokenomicsConfig) -> None:
         self.config = config
         self.base_staking_rate = config.staking_reward_rate
         self.governance_bonus = 0.02  # 2% bonus for governance participation
@@ -719,8 +719,8 @@ class RewardCalculator:
 class GovernanceEngine:
     """Advanced governance system with automated voting and proposal management"""
     
-    def __init__(self, db_session: AsyncSession, redis_client: aioredis.Redis, 
-                 tokenomics_config: TokenomicsConfig):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: aioredis.Redis, 
+                 tokenomics_config -> None: TokenomicsConfig) -> None:
         self.db = db_session
         self.redis = redis_client
         self.config = tokenomics_config
@@ -1050,7 +1050,7 @@ class GovernanceEngine:
 class VotingPowerCalculator:
     """Calculates voting power using various mechanisms"""
     
-    def __init__(self, config: TokenomicsConfig):
+    def __init__(self, config -> None: TokenomicsConfig) -> None:
         self.config = config
         self.calculation_method = VotingPowerCalculation.STAKE_WEIGHTED
     

@@ -1,3 +1,8 @@
+"""
+Protection Seo Engine module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 🛡️ Protection SEO Engine - Système de Protection et SEO Local Ultra-Avancé
@@ -179,7 +184,7 @@ class ProtectionSEOEngine:
     - Compliance et conformité réglementaire
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialise le moteur de protection SEO"""
         self.config = config or {}
         self.protected_content: Dict[str, ContentFingerprint] = {}
@@ -1053,7 +1058,7 @@ class AILocalSEOOptimizer:
     - Monitoring de réputation locale
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialise l'optimiseur SEO local"""
         self.config = config or {}
         self.business_profiles: Dict[str, LocalBusinessProfile] = {}
@@ -2379,7 +2384,7 @@ __all__ = [
 
 if __name__ == "__main__":
     # Test des moteurs
-    async def test_protection_and_local_engines():
+    async def test_protection_and_local_engines() -> None:
         # Test moteur de protection
         await protection_seo_engine.initialize()
         

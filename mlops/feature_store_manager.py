@@ -102,7 +102,7 @@ class FeatureVector:
 class FeatureStoreManager:
     """Enterprise feature store manager for ML pipelines"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.feature_definitions: Dict[str, FeatureDefinition] = {}
         self.feature_groups: Dict[str, FeatureGroup] = {}
@@ -481,7 +481,7 @@ class FeatureStoreManager:
             logger.error(f"Failed to get feature quality report: {e}")
             return {}
     
-    async def _setup_default_features(self):
+    async def _setup_default_features(self) -> None:
         """Setup default features for each creator type"""
         for creator_type, catalog in self.creator_feature_catalogs.items():
             for category, feature_names in catalog.items():
@@ -503,12 +503,12 @@ class FeatureStoreManager:
                     
                     await self.register_feature(feature_def)
     
-    async def _setup_feature_computation(self):
+    async def _setup_feature_computation(self) -> None:
         """Setup feature computation tasks"""
         # Start background computation for batch features
         asyncio.create_task(self._batch_feature_computation())
     
-    async def _setup_feature_monitoring(self):
+    async def _setup_feature_monitoring(self) -> None:
         """Setup feature monitoring"""
         # Start monitoring task
         asyncio.create_task(self._monitor_feature_quality())
@@ -612,7 +612,7 @@ class FeatureStoreManager:
             logger.error(f"Feature value validation error: {e}")
             return False
     
-    async def _store_feature_value(self, feature_value: FeatureValue):
+    async def _store_feature_value(self, feature_value -> None: FeatureValue) -> None:
         """Store feature value"""
         try:
             key = f"{feature_value.entity_id}_{feature_value.feature_id}"
@@ -622,9 +622,9 @@ class FeatureStoreManager:
             logger.error(f"Failed to store feature value: {e}")
     
     async def _update_feature_metrics(self, 
-                                    feature_id: str,
-                                    computation_time: float,
-                                    success: bool):
+                                    feature_id -> None: str,
+                                    computation_time -> None: float,
+                                    success -> None: bool) -> None:
         """Update feature computation metrics"""
         try:
             metrics = self.feature_metrics[feature_id]
@@ -781,7 +781,7 @@ class FeatureStoreManager:
             logger.error(f"Validation rule error: {e}")
             return False
     
-    async def _batch_feature_computation(self):
+    async def _batch_feature_computation(self) -> None:
         """Background task for batch feature computation"""
         while True:
             try:
@@ -797,7 +797,7 @@ class FeatureStoreManager:
             except Exception as e:
                 logger.error(f"Batch computation error: {e}")
     
-    async def _monitor_feature_quality(self):
+    async def _monitor_feature_quality(self) -> None:
         """Background task for feature quality monitoring"""
         while True:
             try:
@@ -818,7 +818,7 @@ class FeatureStoreManager:
 
 
 # Example usage and testing
-async def main():
+async def main() -> None:
     """Example usage of Feature Store Manager"""
     manager = FeatureStoreManager()
     

@@ -68,7 +68,7 @@ class CommunityEvent:
 class CommunityBuildingWorkflow:
     """AI-powered community building workflow"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.metrics_collector = MetricsCollector()
         self.community_members: Dict[str, CommunityMember] = {}
         self.community_events: Dict[str, CommunityEvent] = {}
@@ -329,7 +329,7 @@ class CommunityBuildingWorkflow:
         
         return insights
     
-    async def _create_welcome_event(self, member: CommunityMember):
+    async def _create_welcome_event(self, member -> None: CommunityMember) -> None:
         """Create welcome event for new member"""
         
         event = CommunityEvent(
@@ -377,7 +377,7 @@ class CommunityBuildingWorkflow:
         # Return first available mentor if no specialty match
         return potential_mentors[0] if potential_mentors else None
     
-    async def _create_mentorship_pair(self, mentor_id: str, mentee_id: str):
+    async def _create_mentorship_pair(self, mentor_id -> None: str, mentee_id -> None: str) -> None:
         """Create mentorship relationship"""
         
         self.mentorship_pairs[mentor_id] = mentee_id
@@ -400,7 +400,7 @@ class CommunityBuildingWorkflow:
         
         logger.info(f"Mentorship pair created: {mentor_id} -> {mentee_id}")
     
-    async def _check_role_promotion(self, member: CommunityMember):
+    async def _check_role_promotion(self, member -> None: CommunityMember) -> None:
         """Check if member qualifies for role promotion"""
         
         current_role = member.role
@@ -537,7 +537,7 @@ class CommunityBuildingWorkflow:
         
         return participants
     
-    async def _notify_event_participants(self, event: CommunityEvent):
+    async def _notify_event_participants(self, event -> None: CommunityEvent) -> None:
         """Notify participants about community event"""
         
         # In real implementation, this would send notifications

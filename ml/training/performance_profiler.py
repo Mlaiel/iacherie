@@ -135,7 +135,7 @@ class PerformanceReport:
 class SystemResourceMonitor:
     """🛡️ BACKEND SENIOR - System resource monitoring and analysis"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.monitoring_active = False
         self.snapshots = deque(maxlen=10000)
         self.monitoring_thread = None
@@ -259,7 +259,7 @@ class SystemResourceMonitor:
 class TrainingProfiler:
     """🔬 ML ENGINEER - Training-specific performance profiling"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.training_metrics = defaultdict(list)
         self.profiler_context = None
         
@@ -352,7 +352,7 @@ class TrainingProfiler:
 class BottleneckDetector:
     """⚙️ DEVOPS - Automated bottleneck detection and analysis"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.bottleneck_thresholds = {
             "cpu_utilization": 85.0,
             "memory_utilization": 90.0,
@@ -597,7 +597,7 @@ class PerformanceProfiler:
     Provides comprehensive analysis, bottleneck detection, and optimization recommendations.
     """
     
-    def __init__(self, config_path: Optional[str] = None):
+    def __init__(self, config_path -> None: Optional[str] = None) -> None:
         self.config = self._load_config(config_path)
         self.resource_monitor = SystemResourceMonitor()
         self.training_profiler = TrainingProfiler()
@@ -990,7 +990,7 @@ class PerformanceProfiler:
 
 # Example usage and testing
 if __name__ == "__main__":
-    async def test_performance_profiler():
+    async def test_performance_profiler() -> None:
         """Test performance profiler"""
         # Create a test model
         model = nn.Sequential(

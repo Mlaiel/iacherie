@@ -1,3 +1,8 @@
+"""
+Network Security Policies module
+Enterprise implementation for Ainflue platform
+"""
+
 # Ainflue Infrastructure Module - Network Security Policies
 # =======================================================
 # 
@@ -61,7 +66,7 @@ class SecurityPolicyConfig:
 class NetworkSecurityPolicyManager:
     """Enterprise network security policy management for multi-cloud environments"""
     
-    def __init__(self, config: SecurityPolicyConfig):
+    def __init__(self, config -> None: SecurityPolicyConfig) -> None:
         """Initialize network security policy manager
         
         Args:
@@ -91,7 +96,7 @@ class NetworkSecurityPolicyManager:
             
         return logger
     
-    def _initialize_cloud_clients(self):
+    def _initialize_cloud_clients(self) -> None:
         """Initialize cloud provider clients"""
         try:
             if self.config.cloud_provider.lower() == 'aws':
@@ -344,7 +349,7 @@ class NetworkSecurityPolicyManager:
             self.logger.error(f"Failed to create AWS security group for {tier_name}: {e}")
             raise
     
-    async def _add_aws_security_rules(self, sg_id: str, rules: List[SecurityRule]):
+    async def _add_aws_security_rules(self, sg_id -> None: str, rules -> None: List[SecurityRule]) -> None:
         """Add security rules to AWS security group"""
         try:
             ingress_rules = []
@@ -422,7 +427,7 @@ class NetworkSecurityPolicyManager:
             self.logger.error(f"Failed to create Azure NSG for {tier_name}: {e}")
             raise
     
-    async def _add_azure_security_rules(self, nsg_name: str, rules: List[SecurityRule]):
+    async def _add_azure_security_rules(self, nsg_name -> None: str, rules -> None: List[SecurityRule]) -> None:
         """Add security rules to Azure NSG"""
         try:
             resource_group = self._get_azure_resource_group()
@@ -536,7 +541,7 @@ class NetworkSecurityPolicyManager:
         import os
         return os.getenv('GOOGLE_CLOUD_PROJECT', 'ainflue-platform')
     
-    def _wait_for_gcp_operation(self, operation, project: str):
+    def _wait_for_gcp_operation(self, operation, project -> None: str) -> None:
         """Wait for GCP operation to complete"""
         # Simplified wait logic - in production, implement proper polling
         import time
@@ -760,7 +765,7 @@ class NetworkSecurityPolicyManager:
 class AinflueSecurityPolicyOrchestrator:
     """High-level security policy orchestration for Ainflue platform"""
     
-    def __init__(self, environment: str = "production"):
+    def __init__(self, environment -> None: str = "production") -> None:
         """Initialize security policy orchestrator
         
         Args:
@@ -857,7 +862,7 @@ class AinflueSecurityPolicyOrchestrator:
 
 if __name__ == "__main__":
     # Example usage
-    async def main():
+    async def main() -> None:
         orchestrator = AinflueSecurityPolicyOrchestrator(environment="production")
         
         # Deploy security policies to all clouds

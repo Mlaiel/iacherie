@@ -1,4 +1,6 @@
 """
+import asyncio
+
 Registry Manager
 Container registry management for Ainflue infrastructure
 
@@ -15,7 +17,7 @@ logger = logging.getLogger(__name__)
 class RegistryManager:
     """Container registry management"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize registry manager"""
         logger.info("Registry manager initialized")
         

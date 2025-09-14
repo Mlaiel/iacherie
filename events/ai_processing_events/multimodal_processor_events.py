@@ -285,7 +285,7 @@ class MultimodalResult:
 class ModalityProcessor(ABC):
     """Abstract base class for modality processors"""
     
-    def __init__(self, modality_type: ModalityType):
+    def __init__(self, modality_type -> None: ModalityType) -> None:
         self.modality_type = modality_type
         self.logger = logging.getLogger(f"{__name__}.{modality_type.value}")
     
@@ -308,7 +308,7 @@ class ModalityProcessor(ABC):
 class AudioProcessor(ModalityProcessor):
     """Audio modality processor"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__(ModalityType.AUDIO)
     
     async def extract_features(self, 
@@ -351,7 +351,7 @@ class AudioProcessor(ModalityProcessor):
 class VideoProcessor(ModalityProcessor):
     """Video modality processor"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__(ModalityType.VIDEO)
     
     async def extract_features(self, 
@@ -395,7 +395,7 @@ class VideoProcessor(ModalityProcessor):
 class TextProcessor(ModalityProcessor):
     """Text modality processor"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__(ModalityType.TEXT)
     
     async def extract_features(self, 
@@ -438,7 +438,7 @@ class TextProcessor(ModalityProcessor):
 class FusionEngine:
     """Multimodal fusion engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.fusion_strategies = {
             FusionStrategy.EARLY_FUSION: self._early_fusion,
             FusionStrategy.LATE_FUSION: self._late_fusion,
@@ -763,7 +763,7 @@ class MultimodalProcessor(BaseEventHandler):
     learning for the IA Influencer Agent platform.
     """
     
-    def __init__(self, max_workers: int = 4):
+    def __init__(self, max_workers -> None: int = 4) -> None:
         super().__init__()
         
         # Core components
@@ -793,7 +793,7 @@ class MultimodalProcessor(BaseEventHandler):
         
         logger.info("Multimodal Processor initialized")
     
-    async def start_processor(self):
+    async def start_processor(self) -> None:
         """Start the multimodal processor"""
         self.is_running = True
         
@@ -806,7 +806,7 @@ class MultimodalProcessor(BaseEventHandler):
         
         logger.info("Multimodal Processor started")
     
-    async def stop_processor(self):
+    async def stop_processor(self) -> None:
         """Stop the multimodal processor"""
         self.is_running = False
         self.executor.shutdown(wait=True)
@@ -853,7 +853,7 @@ class MultimodalProcessor(BaseEventHandler):
             logger.error(f"Validation error: {str(e)}")
             return False
     
-    async def _worker_loop(self, worker_id: str):
+    async def _worker_loop(self, worker_id -> None: str) -> None:
         """Main worker loop for processing multimodal inputs"""
         logger.info(f"Multimodal worker {worker_id} started")
         
@@ -1103,7 +1103,7 @@ class MultimodalProcessor(BaseEventHandler):
         
         return recommendations
     
-    def _update_performance_metrics(self, result: MultimodalResult):
+    def _update_performance_metrics(self, result -> None: MultimodalResult) -> None:
         """Update processor performance metrics"""
         # Update average processing time
         if self.total_processed > 0:
@@ -1111,7 +1111,7 @@ class MultimodalProcessor(BaseEventHandler):
             self.average_processing_time = (alpha * result.processing_time + 
                                           (1 - alpha) * self.average_processing_time)
     
-    async def _monitor_processing_performance(self):
+    async def _monitor_processing_performance(self) -> None:
         """Monitor processing performance"""
         while self.is_running:
             try:

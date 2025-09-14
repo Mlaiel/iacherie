@@ -71,7 +71,7 @@ class VectorIndexManager:
     """
 Manages multiple vector indexes for different content types"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.VectorIndexManager")
         
@@ -709,7 +709,7 @@ Get information about indexes"""
             'supported_embedding_types': [e.value for e in EmbeddingType]
         }
     
-    def __del__(self):
+    def __del__(self) -> None:
         """
 Cleanup resources"""
         if self.auto_save_task:

@@ -183,7 +183,7 @@ class PrivacyImpactAssessment:
 class ComplianceProcessor:
     """Enterprise compliance processing engine."""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize compliance processor with configuration."""
         self.config = config or {}
         
@@ -581,7 +581,7 @@ class ComplianceProcessor:
         logger.info(f"Created data subject request {request_id} for user {user_id}: {right_type.value}")
         return request
     
-    async def _process_access_request(self, request: DataSubjectRequest):
+    async def _process_access_request(self, request -> None: DataSubjectRequest) -> None:
         """Process data access request."""
         user_id = request.user_id
         
@@ -604,7 +604,7 @@ class ComplianceProcessor:
         request.processing_status = "completed"
         request.completion_timestamp = time.time()
     
-    async def _process_erasure_request(self, request: DataSubjectRequest):
+    async def _process_erasure_request(self, request -> None: DataSubjectRequest) -> None:
         """Process right to be forgotten request."""
         user_id = request.user_id
         
@@ -622,7 +622,7 @@ class ComplianceProcessor:
         request.processing_status = "completed"
         request.completion_timestamp = time.time()
     
-    async def _process_portability_request(self, request: DataSubjectRequest):
+    async def _process_portability_request(self, request -> None: DataSubjectRequest) -> None:
         """Process data portability request."""
         user_id = request.user_id
         
@@ -785,7 +785,7 @@ class ComplianceProcessor:
         
         return sum(durations) / len(durations) / 3600  # Convert to hours
     
-    async def cleanup_expired_data(self):
+    async def cleanup_expired_data(self) -> None:
         """Clean up expired processing records and data."""
         current_time = time.time()
         expired_records = []

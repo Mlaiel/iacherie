@@ -35,6 +35,7 @@ logging.basicConfig(
 logger = logging.getLogger("GamificationEngineService")
 
 class BadgeType(str, Enum):
+    """BadgeType class implementation"""
     BRONZE = "bronze"
     SILVER = "silver"
     GOLD = "gold"
@@ -43,6 +44,7 @@ class BadgeType(str, Enum):
     LEGENDARY = "legendary"
 
 class QuestType(str, Enum):
+    """QuestType class implementation"""
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -51,6 +53,7 @@ class QuestType(str, Enum):
     SPECIAL = "special"
 
 class QuestStatus(str, Enum):
+    """QuestStatus class implementation"""
     AVAILABLE = "available"
     ACTIVE = "active"
     COMPLETED = "completed"
@@ -58,6 +61,7 @@ class QuestStatus(str, Enum):
     LOCKED = "locked"
 
 class RewardType(str, Enum):
+    """RewardType class implementation"""
     POINTS = "points"
     BADGE = "badge"
     TITLE = "title"
@@ -67,6 +71,7 @@ class RewardType(str, Enum):
     MULTIPLIER = "multiplier"
 
 class EngagementLevel(str, Enum):
+    """EngagementLevel class implementation"""
     NOVICE = "novice"
     APPRENTICE = "apprentice"
     EXPERT = "expert"
@@ -159,7 +164,7 @@ class GamificationEngineService:
     - **AI Prompt Engineer**: Dynamic content generation
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.badges: Dict[str, BadgeModel] = {}
         self.quests: Dict[str, QuestModel] = {}
         self.user_progress: Dict[str, UserProgressModel] = {}
@@ -187,7 +192,7 @@ class GamificationEngineService:
         
         return requirements
     
-    def _initialize_default_badges(self):
+    def _initialize_default_badges(self) -> None:
         """Initialize default badge system"""
         default_badges = [
             {
@@ -250,7 +255,7 @@ class GamificationEngineService:
             badge = BadgeModel(**badge_data)
             self.badges[badge.id] = badge
     
-    def _initialize_default_quests(self):
+    def _initialize_default_quests(self) -> None:
         """Initialize default quest system"""
         default_quests = [
             {
@@ -307,7 +312,7 @@ class GamificationEngineService:
             quest = QuestModel(**quest_data)
             self.quests[quest.id] = quest
     
-    def _initialize_default_leaderboards(self):
+    def _initialize_default_leaderboards(self) -> None:
         """Initialize default leaderboard system"""
         default_leaderboards = [
             {
@@ -344,7 +349,7 @@ class GamificationEngineService:
             leaderboard = LeaderboardModel(**leaderboard_data)
             self.leaderboards[leaderboard.id] = leaderboard
     
-    def _initialize_engagement_rules(self):
+    def _initialize_engagement_rules(self) -> None:
         """Initialize engagement rules for automatic progression"""
         self.engagement_rules = {
             "daily_login_bonus": 10,
@@ -665,7 +670,7 @@ class GamificationEngineService:
         
         return new_badges
     
-    async def _update_engagement_level(self, user_id: str):
+    async def _update_engagement_level(self, user_id -> None: str) -> None:
         """Update user engagement level based on activity"""
         user_progress = self.user_progress[user_id]
         
@@ -691,7 +696,7 @@ class GamificationEngineService:
         else:
             user_progress.engagement_level = EngagementLevel.NOVICE
     
-    async def _complete_quest(self, user_id: str, quest_id: str):
+    async def _complete_quest(self, user_id -> None: str, quest_id -> None: str) -> None:
         """Complete quest and award rewards"""
         user_progress = self.user_progress[user_id]
         quest = self.quests[quest_id]
@@ -744,7 +749,7 @@ class GamificationEngineService:
         
         return True
     
-    async def _update_leaderboards(self, user_id: str):
+    async def _update_leaderboards(self, user_id -> None: str) -> None:
         """Update leaderboards with user data"""
         user_progress = self.user_progress[user_id]
         
@@ -839,42 +844,42 @@ app = FastAPI(title="Gamification Engine Service", version="1.0.0")
 service = GamificationEngineService()
 
 @app.post("/users/{user_id}/register")
-async def register_user(user_id: str):
+async def register_user(user_id -> None: str) -> None:
     """Register user in gamification system"""
     return await service.register_user(user_id)
 
 @app.post("/users/{user_id}/points")
-async def award_points(user_id: str, points: int, reason: str = "Action completed", multiplier: float = 1.0):
+async def award_points(user_id -> None: str, points -> None: int, reason -> None: str = "Action completed", multiplier -> None: float = 1.0) -> None:
     """Award points to user"""
     return await service.award_points(user_id, points, reason, multiplier)
 
 @app.post("/users/{user_id}/quests/{quest_id}/start")
-async def start_quest(user_id: str, quest_id: str):
+async def start_quest(user_id -> None: str, quest_id -> None: str) -> None:
     """Start quest for user"""
     return await service.start_quest(user_id, quest_id)
 
 @app.put("/users/{user_id}/quests/progress")
-async def update_quest_progress(user_id: str, objective_type: str, value: Any):
+async def update_quest_progress(user_id -> None: str, objective_type -> None: str, value -> None: Any) -> None:
     """Update quest progress"""
     return await service.update_quest_progress(user_id, objective_type, value)
 
 @app.get("/users/{user_id}/profile")
-async def get_user_profile(user_id: str):
+async def get_user_profile(user_id -> None: str) -> None:
     """Get user gamification profile"""
     return await service.get_user_profile(user_id)
 
 @app.get("/leaderboards/{leaderboard_id}")
-async def get_leaderboard(leaderboard_id: str, limit: int = 50):
+async def get_leaderboard(leaderboard_id -> None: str, limit -> None: int = 50) -> None:
     """Get leaderboard rankings"""
     return await service.get_leaderboard(leaderboard_id, limit)
 
 @app.get("/metrics")
-async def get_metrics():
+async def get_metrics() -> None:
     """Get gamification service metrics"""
     return await service.get_gamification_metrics()
 
 @app.get("/health")
-async def health_check():
+async def health_check() -> None:
     """Service health check"""
     return {
         "service": "GamificationEngineService",

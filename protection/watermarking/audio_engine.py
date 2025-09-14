@@ -92,7 +92,7 @@ class PsychoacousticModel:
     """
 Psychoacoustic masking model for audio watermarking"""
     
-    def __init__(self, sample_rate: int = 44100):
+    def __init__(self, sample_rate -> None: int = 44100) -> None:
         self.sample_rate = sample_rate
         self.bark_scale = self._generate_bark_scale()
         self.masking_thresholds = {}
@@ -141,7 +141,7 @@ Calculate psychoacoustic masking threshold"""
 class SpectralWatermarkEngine:
     """Advanced spectral domain watermarking"""
     
-    def __init__(self, config: AudioWatermarkConfig):
+    def __init__(self, config -> None: AudioWatermarkConfig) -> None:
         self.config = config
         self.psychoacoustic = PsychoacousticModel(config.sample_rate)
     
@@ -393,7 +393,7 @@ Embed watermark using spread spectrum technique"""
 class WaveletWatermarkEngine:
     """Wavelet domain watermarking engine"""
     
-    def __init__(self, config: AudioWatermarkConfig):
+    def __init__(self, config -> None: AudioWatermarkConfig) -> None:
         self.config = config
         self.wavelet_type = 'db4'
         self.decomposition_levels = 4
@@ -540,7 +540,7 @@ class AudioWatermarkEngine:
     - Psychoacoustic Model
     """
     
-    def __init__(self, config: Optional[AudioWatermarkConfig] = None):
+    def __init__(self, config -> None: Optional[AudioWatermarkConfig] = None) -> None:
         self.config = config or AudioWatermarkConfig()
         self.spectral_engine = SpectralWatermarkEngine(self.config)
         self.wavelet_engine = WaveletWatermarkEngine(self.config)

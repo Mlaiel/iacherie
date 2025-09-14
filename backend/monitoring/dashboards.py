@@ -70,11 +70,11 @@ class Dashboard:
 class DashboardDataProvider:
     """Provides data for dashboard widgets"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.data_sources: Dict[str, callable] = {}
         self._register_default_sources()
     
-    def _register_default_sources(self):
+    def _register_default_sources(self) -> None:
         """Register default data sources"""
         self.data_sources.update({
             "system_metrics": self._get_system_metrics,
@@ -392,14 +392,14 @@ class UnifiedDashboardManager:
     Unified dashboard management system
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.dashboards: Dict[str, Dashboard] = {}
         self.data_provider = DashboardDataProvider()
         
         # Initialize default dashboards
         self._create_default_dashboards()
     
-    def _create_default_dashboards(self):
+    def _create_default_dashboards(self) -> None:
         """Create default dashboards"""
         
         # Production Dashboard

@@ -72,7 +72,7 @@ class MLServiceHealthChecker:
     Monitors AI/ML pipeline components including model serving,
     training jobs, vector databases, and GPU resources.
     """
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """
         Initialize ML service health checker
         

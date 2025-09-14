@@ -1,3 +1,8 @@
+"""
+Monitoring Service module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 📊 MONITORING SERVICE
@@ -137,11 +142,11 @@ class ApplicationMetrics:
 class MetricsCollector:
     """System and application metrics collector"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.registry = CollectorRegistry()
         self._setup_prometheus_metrics()
         
-    def _setup_prometheus_metrics(self):
+    def _setup_prometheus_metrics(self) -> None:
         """Setup Prometheus metrics"""
         self.cpu_gauge = Gauge('system_cpu_percent', 'CPU usage percentage', registry=self.registry)
         self.memory_gauge = Gauge('system_memory_percent', 'Memory usage percentage', registry=self.registry)
@@ -235,23 +240,23 @@ class MetricsCollector:
 class AlertManager:
     """Alert management and notification system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.alerts: Dict[str, Alert] = {}
         self.alert_rules: List[Dict[str, Any]] = []
         self.notification_handlers: List[Callable] = []
         self.alert_history: deque = deque(maxlen=1000)
         
-    def add_notification_handler(self, handler: Callable):
+    def add_notification_handler(self, handler -> None: Callable) -> None:
         """Add a notification handler"""
         self.notification_handlers.append(handler)
         logger.info("Added notification handler", handler=handler.__name__)
     
-    def add_alert_rule(self, rule: Dict[str, Any]):
+    def add_alert_rule(self, rule -> None: Dict[str, Any]) -> None:
         """Add an alert rule"""
         self.alert_rules.append(rule)
         logger.info("Added alert rule", rule=rule)
     
-    async def check_alert_rules(self, metrics: Dict[str, Any]):
+    async def check_alert_rules(self, metrics -> None: Dict[str, Any]) -> None:
         """Check metrics against alert rules"""
         for rule in self.alert_rules:
             try:
@@ -290,8 +295,8 @@ class AlertManager:
             except Exception as e:
                 logger.error("Error checking alert rule", rule=rule, error=str(e))
     
-    async def create_alert(self, name: str, severity: AlertSeverity, message: str, 
-                          source: str = "monitoring", metadata: Dict[str, Any] = None):
+    async def create_alert(self, name -> None: str, severity -> None: AlertSeverity, message -> None: str, 
+                          source -> None: str = "monitoring", metadata -> None: Dict[str, Any] = None) -> None:
         """Create a new alert"""
         alert_id = f"alert_{int(time.time())}_{hash(name) % 10000}"
         
@@ -314,7 +319,7 @@ class AlertManager:
         logger.warning("Alert created", alert_id=alert_id, name=name, severity=severity.value)
         return alert_id
     
-    async def resolve_alert(self, alert_id: str):
+    async def resolve_alert(self, alert_id -> None: str) -> None:
         """Resolve an alert"""
         if alert_id in self.alerts:
             self.alerts[alert_id].resolved = True
@@ -325,7 +330,7 @@ class AlertManager:
             return True
         return False
     
-    async def _send_notifications(self, alert: Alert, resolved: bool = False):
+    async def _send_notifications(self, alert -> None: Alert, resolved -> None: bool = False) -> None:
         """Send alert notifications"""
         for handler in self.notification_handlers:
             try:
@@ -353,12 +358,12 @@ class AlertManager:
 class HealthChecker:
     """Health check system for services and endpoints"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.health_checks: Dict[str, MonitorCheck] = {}
         self.health_status: Dict[str, Dict[str, Any]] = {}
         self.failure_counts: Dict[str, int] = defaultdict(int)
         
-    def add_health_check(self, check: MonitorCheck):
+    def add_health_check(self, check -> None: MonitorCheck) -> None:
         """Add a health check"""
         self.health_checks[check.id] = check
         logger.info("Added health check", check_id=check.id, name=check.name)
@@ -475,7 +480,7 @@ class HealthChecker:
 class MonitoringService:
     """Advanced real-time system monitoring and alerting service"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.service_name = "MonitoringService"
         self.version = "1.0.0"
         self.metrics_collector = MetricsCollector()
@@ -489,7 +494,7 @@ class MonitoringService:
         
         logger.info("Monitoring service initialized", service=self.service_name, version=self.version)
     
-    async def initialize(self, redis_url: str = "redis://localhost:6379/0"):
+    async def initialize(self, redis_url -> None: str = "redis -> None://localhost -> None:6379/0") -> None:
         """Initialize the monitoring service"""
         try:
             # Initialize Redis connection
@@ -512,7 +517,7 @@ class MonitoringService:
             logger.error("Failed to initialize monitoring service", error=str(e))
             return False
     
-    def _setup_default_alert_rules(self):
+    def _setup_default_alert_rules(self) -> None:
         """Setup default alert rules"""
         default_rules = [
             {
@@ -556,10 +561,10 @@ class MonitoringService:
         for rule in default_rules:
             self.alert_manager.add_alert_rule(rule)
     
-    def _setup_default_notification_handlers(self):
+    def _setup_default_notification_handlers(self) -> None:
         """Setup default notification handlers"""
         
-        async def log_notification_handler(alert: Alert, resolved: bool = False):
+        async def log_notification_handler(alert -> None: Alert, resolved -> None: bool = False) -> None:
             """Log-based notification handler"""
             if resolved:
                 logger.info("Alert resolved", alert_id=alert.id, name=alert.name)
@@ -570,7 +575,7 @@ class MonitoringService:
                              severity=alert.severity.value,
                              message=alert.message)
         
-        async def redis_notification_handler(alert: Alert, resolved: bool = False):
+        async def redis_notification_handler(alert -> None: Alert, resolved -> None: bool = False) -> None:
             """Redis-based notification handler"""
             if self.redis_client:
                 try:
@@ -596,7 +601,7 @@ class MonitoringService:
         self.alert_manager.add_notification_handler(log_notification_handler)
         self.alert_manager.add_notification_handler(redis_notification_handler)
     
-    def _setup_default_health_checks(self):
+    def _setup_default_health_checks(self) -> None:
         """Setup default health checks"""
         # Add Redis health check
         redis_check = MonitorCheck(
@@ -622,7 +627,7 @@ class MonitoringService:
         )
         self.health_checker.add_health_check(http_check)
     
-    async def start_monitoring(self):
+    async def start_monitoring(self) -> None:
         """Start the monitoring loops"""
         self.monitoring_enabled = True
         
@@ -640,7 +645,7 @@ class MonitoringService:
         
         logger.info("Monitoring started")
     
-    async def stop_monitoring(self):
+    async def stop_monitoring(self) -> None:
         """Stop the monitoring loops"""
         self.monitoring_enabled = False
         
@@ -656,7 +661,7 @@ class MonitoringService:
         
         logger.info("Monitoring stopped")
     
-    async def _metrics_collection_loop(self):
+    async def _metrics_collection_loop(self) -> None:
         """Main metrics collection loop"""
         while self.monitoring_enabled:
             try:
@@ -690,7 +695,7 @@ class MonitoringService:
                 logger.error("Error in metrics collection loop", error=str(e))
                 await asyncio.sleep(10)
     
-    async def _health_check_loop(self):
+    async def _health_check_loop(self) -> None:
         """Health check loop"""
         while self.monitoring_enabled:
             try:
@@ -725,7 +730,7 @@ class MonitoringService:
                 logger.error("Error in health check loop", error=str(e))
                 await asyncio.sleep(10)
     
-    async def _alert_processing_loop(self):
+    async def _alert_processing_loop(self) -> None:
         """Alert processing and cleanup loop"""
         while self.monitoring_enabled:
             try:
@@ -793,11 +798,11 @@ class MonitoringService:
             metadata=metadata
         )
     
-    def add_custom_health_check(self, check: MonitorCheck):
+    def add_custom_health_check(self, check -> None: MonitorCheck) -> None:
         """Add a custom health check"""
         self.health_checker.add_health_check(check)
     
-    def add_custom_alert_rule(self, rule: Dict[str, Any]):
+    def add_custom_alert_rule(self, rule -> None: Dict[str, Any]) -> None:
         """Add a custom alert rule"""
         self.alert_manager.add_alert_rule(rule)
 
@@ -805,7 +810,7 @@ class MonitoringService:
 monitoring_service = MonitoringService()
 
 # Example usage
-async def main():
+async def main() -> None:
     """Example usage of the monitoring service"""
     try:
         # Initialize service

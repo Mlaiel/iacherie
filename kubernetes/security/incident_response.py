@@ -167,9 +167,9 @@ class EvidenceCollector:
     
     def __init__(
         self,
-        evidence_storage_path: str = "/var/evidence",
-        encryption_key: Optional[str] = None
-    ):
+        evidence_storage_path -> None: str = "/var/evidence",
+        encryption_key -> None: Optional[str] = None
+    ) -> None:
         self.evidence_storage_path = Path(evidence_storage_path)
         self.evidence_storage_path.mkdir(parents=True, exist_ok=True)
         
@@ -567,7 +567,7 @@ class IncidentResponseOrchestrator:
     Coordinates automated incident response actions
     """
     
-    def __init__(self, evidence_collector: EvidenceCollector):
+    def __init__(self, evidence_collector -> None: EvidenceCollector) -> None:
         self.evidence_collector = evidence_collector
         
         # Response playbooks
@@ -886,7 +886,7 @@ class ForensicsAnalyzer:
     Digital forensics analysis engine
     """
     
-    def __init__(self, evidence_collector: EvidenceCollector):
+    def __init__(self, evidence_collector -> None: EvidenceCollector) -> None:
         self.evidence_collector = evidence_collector
         self.analysis_tasks: Dict[str, ForensicsTask] = {}
         
@@ -1128,9 +1128,9 @@ class SecurityIncidentManager:
     
     def __init__(
         self,
-        redis_url: str = "redis://localhost:6379",
-        evidence_storage_path: str = "/var/evidence"
-    ):
+        redis_url -> None: str = "redis -> None://localhost -> None:6379",
+        evidence_storage_path -> None: str = "/var/evidence"
+    ) -> None:
         self.redis_url = redis_url
         self.redis_pool = None
         
@@ -1144,7 +1144,7 @@ class SecurityIncidentManager:
         
         logger.info("Security incident manager initialized")
     
-    async def initialize_redis(self):
+    async def initialize_redis(self) -> None:
         """Initialize Redis connection"""
         try:
             self.redis_pool = aioredis.ConnectionPool.from_url(self.redis_url)

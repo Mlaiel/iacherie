@@ -96,7 +96,7 @@ class Subscription:
     churn_risk_score: float = 0.0
     metadata: Dict[str, Any] = None
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.metadata is None:
             self.metadata = {}
 
@@ -125,10 +125,10 @@ class PayPalSubscriptionEngine:
     """
 
     def __init__(self, 
-                 paypal_client_id: str,
-                 paypal_client_secret: str,
-                 environment: str = "sandbox",
-                 database_url: Optional[str] = None):
+                 paypal_client_id -> None: str,
+                 paypal_client_secret -> None: str,
+                 environment -> None: str = "sandbox",
+                 database_url -> None: Optional[str] = None) -> None:
         """Initialize PayPal Subscription Engine with enterprise configuration"""
         self.client_id = paypal_client_id
         self.client_secret = paypal_client_secret
@@ -710,7 +710,7 @@ class PayPalSubscriptionEngine:
 
 
 # 🧪 Example usage and testing
-async def test_paypal_subscription_engine():
+async def test_paypal_subscription_engine() -> None:
     """Test PayPal Subscription Engine functionality"""
     try:
         # Initialize engine

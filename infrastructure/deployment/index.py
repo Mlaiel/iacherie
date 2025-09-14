@@ -1,4 +1,6 @@
 """
+import logging
+
 Deployment Module - Ainflue Infrastructure Enterprise
 ====================================================
 Point d'entrée principal pour tous les services de déploiement

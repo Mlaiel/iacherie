@@ -148,7 +148,7 @@ class BloggerContentOptimizer:
     - Analyse de tendances
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialise l'optimiseur de contenu blogger
         
         Args:
@@ -171,7 +171,7 @@ class BloggerContentOptimizer:
         
         logger.info("Blogger Content Optimizer initialized - Content Intelligence Ready")
     
-    def _load_seo_database(self):
+    def _load_seo_database(self) -> None:
         """Chargement de la base de données SEO"""
         # Simulation d'une base de données de mots-clés
         self.seo_database = {
@@ -981,9 +981,9 @@ class BloggerContentOptimizer:
     
     async def _update_content_analytics(
         self,
-        blogger_id: str,
-        result: ContentOptimizationResult
-    ):
+        blogger_id -> None: str,
+        result -> None: ContentOptimizationResult
+    ) -> None:
         """Mise à jour des analytics de contenu"""
         try:
             if blogger_id not in self.content_analytics:

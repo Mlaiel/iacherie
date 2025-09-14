@@ -1,3 +1,8 @@
+"""
+Vpn Gateway Manager module
+Enterprise implementation for Ainflue platform
+"""
+
 # Ainflue Infrastructure Module - VPN Gateway Manager
 # ===================================================
 # 
@@ -120,7 +125,7 @@ class VPNGatewayManager:
     - Traffic analytics and optimization
     """
     
-    def __init__(self, config_path: str = None):
+    def __init__(self, config_path -> None: str = None) -> None:
         """Initialize VPN gateway manager"""
         self.config_path = config_path
         self.providers = {}
@@ -131,7 +136,7 @@ class VPNGatewayManager:
         
         logger.info("VPN Gateway Manager initialized")
     
-    async def initialize_providers(self, providers_config: Dict[str, Any]):
+    async def initialize_providers(self, providers_config -> None: Dict[str, Any]) -> None:
         """Initialize cloud provider clients"""
         try:
             # Initialize AWS
@@ -842,7 +847,7 @@ CREATOR_VPN_CONFIGS = {
 }
 
 
-async def main():
+async def main() -> None:
     """Example usage of VPN Gateway Manager"""
     vpn_manager = VPNGatewayManager()
     

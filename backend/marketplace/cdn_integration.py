@@ -141,7 +141,7 @@ class ContentOptimizationResult:
 class MockCDNProvider:
     """Mock CDN provider for development and testing"""
     
-    def __init__(self, provider: CDNProvider, base_url: str):
+    def __init__(self, provider -> None: CDNProvider, base_url -> None: str) -> None:
         self.provider = provider
         self.base_url = base_url
         self.cached_content: Dict[str, Any] = {}
@@ -206,7 +206,7 @@ class MockCDNProvider:
 class CDNIntegrationManager:
     """CDN integration and content delivery management system"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.config = config or {}
         
         # CDN endpoints and providers
@@ -227,7 +227,7 @@ class CDNIntegrationManager:
         
         logger.info("🌐 CDN Integration Manager initialized")
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize CDN providers and endpoints"""
         try:
             # Initialize default CDN endpoints
@@ -238,7 +238,7 @@ class CDNIntegrationManager:
         except Exception as e:
             logger.error(f"CDN initialization error: {e}")
     
-    async def _initialize_default_endpoints(self):
+    async def _initialize_default_endpoints(self) -> None:
         """Initialize default CDN endpoints"""
         try:
             # Add default endpoints (mock for development)
@@ -539,7 +539,7 @@ class CDNIntegrationManager:
             logger.error(f"Cache invalidation error: {e}")
             raise
     
-    async def _process_cache_invalidation(self, request: CacheInvalidationRequest):
+    async def _process_cache_invalidation(self, request -> None: CacheInvalidationRequest) -> None:
         """Process cache invalidation request"""
         try:
             request.status = "processing"
@@ -611,7 +611,7 @@ class CDNIntegrationManager:
             logger.error(f"Content deletion error: {e}")
             return False
     
-    async def update_performance_metrics(self):
+    async def update_performance_metrics(self) -> None:
         """Update performance metrics for all CDN providers"""
         try:
             for endpoint in self.cdn_endpoints.values():

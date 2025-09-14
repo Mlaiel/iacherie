@@ -83,7 +83,7 @@ class PiracyDetector:
     - Cross-platform content surveillance and tracking
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """
 Initialize the piracy detection engine."""
         self.config = config or {}
@@ -142,7 +142,7 @@ class PiracyDetector:
     across multiple platforms and content types.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Piracy Detector.
         
@@ -413,7 +413,7 @@ Get default list of platforms to scan."""
             logger.error(f"Error scanning platform {platform}: {str(e)}")
             return None
     
-    async def _get_platform_scanner(self, platform: str):
+    async def _get_platform_scanner(self, platform -> None: str) -> None:
         """Get scanner instance for specific platform."""
         # Import platform scanner
         from .scanner import PlatformScanner

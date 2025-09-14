@@ -105,7 +105,7 @@ class EnvironmentManager:
     Handles creation, configuration, and lifecycle of deployment environments
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.logger = logging.getLogger(__name__)
         self.audit_manager = AuditManager(config.get('audit', {}))

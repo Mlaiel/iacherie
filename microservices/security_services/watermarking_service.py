@@ -170,7 +170,7 @@ class WatermarkingService:
     invisible embedding, blockchain verification, and advanced detection capabilities.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.watermark_sessions: Dict[str, WatermarkResult] = {}
         self.detection_sessions: Dict[str, WatermarkDetectionResult] = {}
         self.watermark_registry: Dict[str, WatermarkData] = {}
@@ -186,7 +186,7 @@ class WatermarkingService:
         
         logger.info("WatermarkingService initialized successfully")
     
-    def _initialize_embedding_algorithms(self):
+    def _initialize_embedding_algorithms(self) -> None:
         """Initialize watermark embedding algorithms for different content types."""
         self.embedding_algorithms = {
             ContentType.IMAGE: {
@@ -220,7 +220,7 @@ class WatermarkingService:
             }
         }
     
-    def _initialize_detection_algorithms(self):
+    def _initialize_detection_algorithms(self) -> None:
         """Initialize watermark detection algorithms."""
         self.detection_algorithms = {
             ContentType.IMAGE: {
@@ -249,7 +249,7 @@ class WatermarkingService:
             }
         }
     
-    def _initialize_blockchain_integration(self):
+    def _initialize_blockchain_integration(self) -> None:
         """Initialize blockchain integration for watermark verification."""
         # Placeholder for blockchain integration
         # In real implementation, would connect to blockchain network
@@ -280,7 +280,7 @@ class WatermarkingService:
             logger.error(f"Error starting watermark embedding: {e}")
             raise
     
-    async def _process_watermark_embedding(self, request_id: str, request: WatermarkRequest, watermark_id: str):
+    async def _process_watermark_embedding(self, request_id -> None: str, request -> None: WatermarkRequest, watermark_id -> None: str) -> None:
         """Process watermark embedding."""
         try:
             start_time = datetime.now()
@@ -867,7 +867,7 @@ class WatermarkingService:
             logger.error(f"Error starting watermark detection: {e}")
             raise
     
-    async def _process_watermark_detection(self, detection_id: str, request: WatermarkDetectionRequest):
+    async def _process_watermark_detection(self, detection_id -> None: str, request -> None: WatermarkDetectionRequest) -> None:
         """Process watermark detection."""
         try:
             start_time = datetime.now()
@@ -1310,7 +1310,7 @@ def get_watermarking_service() -> WatermarkingService:
 
 
 # Example usage and testing
-async def example_usage():
+async def example_usage() -> None:
     """Example usage of Watermarking Service."""
     service = get_watermarking_service()
     

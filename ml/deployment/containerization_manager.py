@@ -128,7 +128,7 @@ class ContainerizationManager:
     - Performance monitoring and optimization
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize containerization manager"""
         self.config = config or {}
         self.runtime = ContainerRuntime(self.config.get("runtime", "docker"))
@@ -448,7 +448,7 @@ CMD ["python", "src/main.py"]
         
         return base_deps
 
-    async def _generate_application_files(self, src_dir: Path, config: ContainerConfig):
+    async def _generate_application_files(self, src_dir -> None: Path, config -> None: ContainerConfig) -> None:
         """Generate starter application files"""
         
         # Main application file
@@ -465,18 +465,20 @@ app = FastAPI(title="ML Inference Service", version="1.0.0")
 logger = logging.getLogger(__name__)
 
 class PredictionRequest(BaseModel):
+    """PredictionRequest class implementation"""
     features: list
     
 class PredictionResponse(BaseModel):
+    """PredictionResponse class implementation"""
     prediction: float
     confidence: float
 
 @app.get("/health")
-async def health_check():
+async def health_check() -> None:
     return {"status": "healthy", "service": "ml-inference"}
 
 @app.post("/predict", response_model=PredictionResponse)
-async def predict(request: PredictionRequest):
+async def predict(request -> None: PredictionRequest) -> None:
     try:
         # Placeholder inference logic
         features = np.array(request.features)
@@ -499,7 +501,7 @@ from datetime import datetime
 
 logger = logging.getLogger(__name__)
 
-def train_model():
+def train_model() -> None:
     """Main training function"""
     logger.info("🚀 Starting ML training...")
     
@@ -521,11 +523,11 @@ app = FastAPI(title="ML Service", version="1.0.0")
 logger = logging.getLogger(__name__)
 
 @app.get("/")
-async def root():
+async def root() -> None:
     return {"message": "ML Service is running", "status": "healthy"}
 
 @app.get("/health")
-async def health_check():
+async def health_check() -> None:
     return {"status": "healthy"}
 
 if __name__ == "__main__":
@@ -691,7 +693,7 @@ if __name__ == "__main__":
             logger.error(f"Image push failed: {str(e)}")
             return False
 
-    async def _registry_login(self, credentials: Dict[str, str]):
+    async def _registry_login(self, credentials -> None: Dict[str, str]) -> None:
         """Login to container registry"""
         cmd = [
             self.runtime.value, "login",
@@ -782,7 +784,7 @@ if __name__ == "__main__":
         except:
             return {"read_bytes": 0, "write_bytes": 0}
 
-    async def cleanup_build_cache(self, max_age_days: int = 7):
+    async def cleanup_build_cache(self, max_age_days -> None: int = 7) -> None:
         """Cleanup old build cache files"""
         try:
             cutoff_time = datetime.utcnow() - timedelta(days=max_age_days)

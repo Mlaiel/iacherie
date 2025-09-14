@@ -1,3 +1,8 @@
+"""
+News Services module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Ainflue Platform - News Services Integration Module
@@ -148,19 +153,19 @@ class NewsResponse(BaseModel):
 class NewsAPIService:
     """NewsAPI.org integration"""
     
-    def __init__(self, api_key: str):
+    def __init__(self, api_key -> None: str) -> None:
         self.api_key = api_key
         self.base_url = "https://newsapi.org/v2"
         self.session = None
         
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         self.session = aiohttp.ClientSession(
             headers={"X-API-Key": self.api_key},
             timeout=aiohttp.ClientTimeout(total=30)
         )
         return self
         
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         if self.session:
             await self.session.close()
             
@@ -355,18 +360,18 @@ class NewsAPIService:
 class GuardianAPI:
     """The Guardian News API integration"""
     
-    def __init__(self, api_key: str):
+    def __init__(self, api_key -> None: str) -> None:
         self.api_key = api_key
         self.base_url = "https://content.guardianapis.com"
         self.session = None
         
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         self.session = aiohttp.ClientSession(
             timeout=aiohttp.ClientTimeout(total=30)
         )
         return self
         
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         if self.session:
             await self.session.close()
             
@@ -543,7 +548,7 @@ class GuardianAPI:
 class TrendAnalyzer:
     """Analyze trends and content opportunities"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.trend_history = []
         self.content_performance = {}
         
@@ -759,13 +764,13 @@ class TrendAnalyzer:
 class NewsServicesManager:
     """Main manager for all news services"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.providers = {}
         self.trend_analyzer = TrendAnalyzer()
         self._initialize_providers()
         
-    def _initialize_providers(self):
+    def _initialize_providers(self) -> None:
         """Initialize news providers"""
         try:
             # NewsAPI
@@ -1297,7 +1302,7 @@ if __name__ == "__main__":
     # Test the news services integration
     import asyncio
     
-    async def test_news_services():
+    async def test_news_services() -> None:
         """Test news services functionality"""
         
         test_topics = ["artificial intelligence", "climate change", "cryptocurrency"]

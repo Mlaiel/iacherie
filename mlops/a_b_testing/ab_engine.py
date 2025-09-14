@@ -91,7 +91,7 @@ class ExperimentResult:
 class ABTestingEngine:
     """Core A/B testing engine for AI models"""
     
-    def __init__(self, storage_backend: Optional[Any] = None):
+    def __init__(self, storage_backend -> None: Optional[Any] = None) -> None:
         """Initialize A/B testing engine
         
         Args:
@@ -557,7 +557,7 @@ class ABTestingEngine:
 class AdvancedABTesting:
     """Advanced A/B testing features"""
     
-    def __init__(self, ab_engine: ABTestingEngine):
+    def __init__(self, ab_engine -> None: ABTestingEngine) -> None:
         try:
             logger.info(f"Executing __init__")
             

@@ -106,7 +106,7 @@ class IndexAnalyzer:
     """
 Analyze index characteristics and performance"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.IndexAnalyzer")
         
@@ -242,7 +242,7 @@ Generate specific recommendations based on analysis"""
 class ParameterOptimizer:
     """Optimize index and search parameters"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.ParameterOptimizer")
         
@@ -292,11 +292,11 @@ class ParameterOptimizer:
     async def _optimize_ivf_parameters(
         self,
         vector_store,
-        test_queries: List[np.ndarray],
-        current_params: Dict[str, Any],
-        optimization_level: OptimizationLevel,
-        recommendations: List[OptimizationRecommendation]
-    ):
+        test_queries -> None: List[np.ndarray],
+        current_params -> None: Dict[str, Any],
+        optimization_level -> None: OptimizationLevel,
+        recommendations -> None: List[OptimizationRecommendation]
+    ) -> None:
         """Optimize IVF-specific parameters"""
         try:
             current_nprobe = current_params.get('nprobe', 1)
@@ -353,11 +353,11 @@ class ParameterOptimizer:
     async def _optimize_hnsw_parameters(
         self,
         vector_store,
-        test_queries: List[np.ndarray],
-        current_params: Dict[str, Any],
-        optimization_level: OptimizationLevel,
-        recommendations: List[OptimizationRecommendation]
-    ):
+        test_queries -> None: List[np.ndarray],
+        current_params -> None: Dict[str, Any],
+        optimization_level -> None: OptimizationLevel,
+        recommendations -> None: List[OptimizationRecommendation]
+    ) -> None:
         """Optimize HNSW-specific parameters"""
         try:
             current_ef_search = current_params.get('ef_search', 50)
@@ -412,11 +412,11 @@ class ParameterOptimizer:
     async def _optimize_general_parameters(
         self,
         vector_store,
-        test_queries: List[np.ndarray],
-        current_params: Dict[str, Any],
-        optimization_level: OptimizationLevel,
-        recommendations: List[OptimizationRecommendation]
-    ):
+        test_queries -> None: List[np.ndarray],
+        current_params -> None: Dict[str, Any],
+        optimization_level -> None: OptimizationLevel,
+        recommendations -> None: List[OptimizationRecommendation]
+    ) -> None:
         """Optimize general search parameters"""
         try:
             # Batch size optimization
@@ -447,7 +447,7 @@ class ParameterOptimizer:
 class BenchmarkRunner:
     """Run performance benchmarks for optimization decisions"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.BenchmarkRunner")
         
@@ -580,7 +580,7 @@ class BenchmarkRunner:
 class OptimizationEngine:
     """Main optimization engine coordinating all optimization components"""
     
-    def __init__(self, vector_store, config: Dict[str, Any]):
+    def __init__(self, vector_store, config -> None: Dict[str, Any]) -> None:
         self.vector_store = vector_store
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.OptimizationEngine")
@@ -603,14 +603,14 @@ class OptimizationEngine:
         # Background task
         self.optimization_task = None
     
-    async def start_optimization_engine(self):
+    async def start_optimization_engine(self) -> None:
         """Start automatic optimization engine"""
         if self.auto_optimization:
             self.optimization_task = asyncio.create_task(self._optimization_loop())
         
         self.logger.info("Optimization engine started")
     
-    async def stop_optimization_engine(self):
+    async def stop_optimization_engine(self) -> None:
         try:
             logger.info(f"Executing stop_optimization_engine")
             
@@ -826,7 +826,7 @@ class OptimizationEngine:
             self.logger.error(f"Cache optimization implementation failed: {e}")
             return False
     
-    async def _optimization_loop(self):
+    async def _optimization_loop(self) -> None:
         """Background optimization loop"""
         while True:
             try:

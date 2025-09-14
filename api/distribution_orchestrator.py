@@ -35,6 +35,7 @@ router = APIRouter(prefix="/api/v1/distribution", tags=["Distribution Management
 # ============ ENUMS ============
 
 class PlatformCategory(str, Enum):
+    """PlatformCategory class implementation"""
     MUSIC_STREAMING = "music_streaming"
     VIDEO_PLATFORMS = "video_platforms"
     SOCIAL_MEDIA = "social_media"
@@ -45,6 +46,7 @@ class PlatformCategory(str, Enum):
     COMMUNITY_FORUMS = "community_forums"
 
 class ContentFormat(str, Enum):
+    """ContentFormat class implementation"""
     AUDIO_TRACK = "audio_track"
     VIDEO_CONTENT = "video_content"
     PODCAST_EPISODE = "podcast_episode"
@@ -55,6 +57,7 @@ class ContentFormat(str, Enum):
     LIVE_STREAM = "live_stream"
 
 class PublishingStatus(str, Enum):
+    """PublishingStatus class implementation"""
     SCHEDULED = "scheduled"
     PUBLISHING = "publishing"
     PUBLISHED = "published"
@@ -64,6 +67,7 @@ class PublishingStatus(str, Enum):
     ARCHIVED = "archived"
 
 class SynchronizationMode(str, Enum):
+    """SynchronizationMode class implementation"""
     IMMEDIATE = "immediate"
     SCHEDULED = "scheduled"
     BATCH_PROCESSING = "batch_processing"
@@ -71,6 +75,7 @@ class SynchronizationMode(str, Enum):
     MANUAL_APPROVAL = "manual_approval"
 
 class RevenueModel(str, Enum):
+    """RevenueModel class implementation"""
     SUBSCRIPTION = "subscription"
     ADVERTISING = "advertising"
     PAY_PER_VIEW = "pay_per_view"
@@ -215,6 +220,7 @@ PLATFORM_CONFIGURATIONS = {
 # ============ PYDANTIC MODELS ============
 
 class ContentDistributionRequest(BaseModel):
+    """ContentDistributionRequest class implementation"""
     content_id: str = Field(..., description="Content identifier")
     content_format: ContentFormat = Field(..., description="Content format type")
     target_platforms: List[str] = Field(..., description="Target platforms for distribution")
@@ -226,6 +232,7 @@ class ContentDistributionRequest(BaseModel):
     priority_level: str = Field(default="medium", description="Distribution priority")
 
 class PlatformSyncRequest(BaseModel):
+    """PlatformSyncRequest class implementation"""
     source_platform: str = Field(..., description="Source platform")
     target_platforms: List[str] = Field(..., description="Target platforms for sync")
     content_filters: Dict[str, Any] = Field(default={}, description="Content filtering criteria")
@@ -234,6 +241,7 @@ class PlatformSyncRequest(BaseModel):
     batch_size: int = Field(default=10, description="Batch processing size")
 
 class AnalyticsAggregationRequest(BaseModel):
+    """AnalyticsAggregationRequest class implementation"""
     content_ids: List[str] = Field(..., description="Content IDs for analytics")
     platforms: List[str] = Field(..., description="Platforms to aggregate from")
     metrics: List[str] = Field(..., description="Metrics to aggregate")
@@ -243,6 +251,7 @@ class AnalyticsAggregationRequest(BaseModel):
     include_geographic: bool = Field(default=True, description="Include geographic data")
 
 class RevenueAttributionRequest(BaseModel):
+    """RevenueAttributionRequest class implementation"""
     revenue_period: Dict[str, datetime] = Field(..., description="Revenue period")
     attribution_model: str = Field(..., description="Attribution model to use")
     platforms: List[str] = Field(..., description="Platforms for revenue attribution")
@@ -251,6 +260,7 @@ class RevenueAttributionRequest(BaseModel):
     include_costs: bool = Field(default=True, description="Include platform costs")
 
 class PublishingScheduleRequest(BaseModel):
+    """PublishingScheduleRequest class implementation"""
     content_id: str = Field(..., description="Content identifier")
     platform_schedules: Dict[str, datetime] = Field(..., description="Platform-specific publish times")
     timezone: str = Field(default="UTC", description="Timezone for scheduling")
@@ -259,6 +269,7 @@ class PublishingScheduleRequest(BaseModel):
     notification_settings: Dict[str, Any] = Field(default={}, description="Notification preferences")
 
 class ComplianceCheckRequest(BaseModel):
+    """ComplianceCheckRequest class implementation"""
     content_id: str = Field(..., description="Content identifier")
     target_platforms: List[str] = Field(..., description="Platforms to check compliance for")
     content_metadata: Dict[str, Any] = Field(..., description="Content metadata")
@@ -270,7 +281,7 @@ class ComplianceCheckRequest(BaseModel):
 class MultiPlatformDistributionEngine:
     """Advanced multi-platform content distribution engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.active_distributions = {}
         self.platform_connections = {}
         self.distribution_queue = {}
@@ -542,7 +553,7 @@ class MultiPlatformDistributionEngine:
 class CrossPlatformSyncEngine:
     """Advanced cross-platform content synchronization"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.sync_jobs = {}
         self.conflict_resolution = {}
     
@@ -744,7 +755,7 @@ class CrossPlatformSyncEngine:
 class AnalyticsAggregationEngine:
     """Advanced analytics aggregation across multiple platforms"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.aggregation_cache = {}
         self.platform_apis = {}
     
@@ -1006,7 +1017,7 @@ analytics_engine = AnalyticsAggregationEngine()
 # ============ API ENDPOINTS ============
 
 @router.post("/content/distribute")
-async def distribute_content(request: ContentDistributionRequest):
+async def distribute_content(request -> None: ContentDistributionRequest) -> None:
     """
     Distribute content across multiple platforms with intelligent orchestration
     
@@ -1027,7 +1038,7 @@ async def distribute_content(request: ContentDistributionRequest):
         raise HTTPException(status_code=500, detail=str(e))
 
 @router.post("/platforms/synchronize")
-async def synchronize_platforms(request: PlatformSyncRequest):
+async def synchronize_platforms(request -> None: PlatformSyncRequest) -> None:
     """
     Synchronize content across platforms with intelligent conflict resolution
     
@@ -1048,7 +1059,7 @@ async def synchronize_platforms(request: PlatformSyncRequest):
         raise HTTPException(status_code=500, detail=str(e))
 
 @router.post("/analytics/aggregate")
-async def aggregate_analytics(request: AnalyticsAggregationRequest):
+async def aggregate_analytics(request -> None: AnalyticsAggregationRequest) -> None:
     """
     Aggregate analytics data across platforms with intelligent insights
     
@@ -1069,7 +1080,7 @@ async def aggregate_analytics(request: AnalyticsAggregationRequest):
         raise HTTPException(status_code=500, detail=str(e))
 
 @router.get("/platforms/supported")
-async def get_supported_platforms():
+async def get_supported_platforms() -> None:
     """Get list of all supported platforms with their capabilities"""
     try:
         platforms_info = {}
@@ -1122,7 +1133,7 @@ async def get_supported_platforms():
         raise HTTPException(status_code=500, detail=str(e))
 
 @router.get("/distribution/{distribution_id}/status")
-async def get_distribution_status(distribution_id: str):
+async def get_distribution_status(distribution_id -> None: str) -> None:
     """Get real-time status of content distribution"""
     try:
         if distribution_id not in distribution_engine.active_distributions:
@@ -1173,7 +1184,7 @@ async def get_distribution_status(distribution_id: str):
         raise HTTPException(status_code=500, detail=str(e))
 
 @router.get("/analytics/cross-platform-insights")
-async def get_cross_platform_insights(content_id: Optional[str] = None, timeframe_days: int = 30):
+async def get_cross_platform_insights(content_id -> None: Optional[str] = None, timeframe_days -> None: int = 30) -> None:
     """Get comprehensive cross-platform analytics insights"""
     try:
         insights = {

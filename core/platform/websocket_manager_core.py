@@ -120,7 +120,7 @@ class WebSocketMetrics:
 class WebSocketManagerCore:
     """Enterprise WebSocket manager core system"""
     
-    def __init__(self, host: str = "localhost", port: int = 8765, level: str = "enterprise"):
+    def __init__(self, host -> None: str = "localhost", port -> None: int = 8765, level -> None: str = "enterprise") -> None:
         """Initialize WebSocket manager"""
         self.host = host
         self.port = port
@@ -178,7 +178,7 @@ class WebSocketManagerCore:
             logger.error(f"❌ WebSocket manager initialization failed: {str(e)}")
             return False
     
-    def _setup_message_handlers(self):
+    def _setup_message_handlers(self) -> None:
         """Setup default message handlers"""
         self.message_handlers = {
             MessageType.AUTH: self._handle_auth_message,
@@ -190,7 +190,7 @@ class WebSocketManagerCore:
             MessageType.NOTIFICATION: self._handle_notification_message
         }
     
-    async def _create_default_rooms(self):
+    async def _create_default_rooms(self) -> None:
         """Create default rooms"""
         default_rooms = [
             Room(
@@ -295,7 +295,7 @@ class WebSocketManagerCore:
             logger.error(f"❌ WebSocket manager stop failed: {str(e)}")
             return False
     
-    async def _handle_connection(self, websocket, path):
+    async def _handle_connection(self, websocket, path) -> None:
         """Handle new WebSocket connection"""
         connection_id = str(uuid.uuid4())
         
@@ -335,7 +335,7 @@ class WebSocketManagerCore:
         finally:
             await self._cleanup_connection(connection_id)
     
-    async def _handle_message(self, connection_id: str, raw_message: str):
+    async def _handle_message(self, connection_id -> None: str, raw_message -> None: str) -> None:
         """Handle incoming message"""
         start_time = time.time()
         
@@ -385,7 +385,7 @@ class WebSocketManagerCore:
             logger.error(f"Message handling error for {connection_id}: {str(e)}")
             await self._send_error(connection_id, "Internal server error")
     
-    async def _handle_auth_message(self, connection_id: str, message: Message):
+    async def _handle_auth_message(self, connection_id -> None: str, message -> None: Message) -> None:
         """Handle authentication message"""
         try:
             connection = self.connections.get(connection_id)
@@ -430,7 +430,7 @@ class WebSocketManagerCore:
             logger.error(f"Auth message handling error: {str(e)}")
             await self._send_error(connection_id, "Authentication error")
     
-    async def _handle_join_room_message(self, connection_id: str, message: Message):
+    async def _handle_join_room_message(self, connection_id -> None: str, message -> None: Message) -> None:
         """Handle join room message"""
         try:
             connection = self.connections.get(connection_id)
@@ -483,7 +483,7 @@ class WebSocketManagerCore:
             logger.error(f"Join room message handling error: {str(e)}")
             await self._send_error(connection_id, "Join room error")
     
-    async def _handle_leave_room_message(self, connection_id: str, message: Message):
+    async def _handle_leave_room_message(self, connection_id -> None: str, message -> None: Message) -> None:
         """Handle leave room message"""
         try:
             connection = self.connections.get(connection_id)
@@ -505,7 +505,7 @@ class WebSocketManagerCore:
         except Exception as e:
             logger.error(f"Leave room message handling error: {str(e)}")
     
-    async def _handle_broadcast_message(self, connection_id: str, message: Message):
+    async def _handle_broadcast_message(self, connection_id -> None: str, message -> None: Message) -> None:
         """Handle broadcast message"""
         try:
             connection = self.connections.get(connection_id)
@@ -545,7 +545,7 @@ class WebSocketManagerCore:
         except Exception as e:
             logger.error(f"Broadcast message handling error: {str(e)}")
     
-    async def _handle_private_message(self, connection_id: str, message: Message):
+    async def _handle_private_message(self, connection_id -> None: str, message -> None: Message) -> None:
         """Handle private message"""
         try:
             connection = self.connections.get(connection_id)
@@ -578,14 +578,14 @@ class WebSocketManagerCore:
         except Exception as e:
             logger.error(f"Private message handling error: {str(e)}")
     
-    async def _handle_ping_message(self, connection_id: str, message: Message):
+    async def _handle_ping_message(self, connection_id -> None: str, message -> None: Message) -> None:
         """Handle ping message"""
         connection = self.connections.get(connection_id)
         if connection:
             connection.last_ping = datetime.utcnow()
             await self._send_to_connection(connection_id, {"type": "pong"})
     
-    async def _handle_notification_message(self, connection_id: str, message: Message):
+    async def _handle_notification_message(self, connection_id -> None: str, message -> None: Message) -> None:
         """Handle notification message"""
         try:
             connection = self.connections.get(connection_id)
@@ -682,7 +682,7 @@ class WebSocketManagerCore:
         
         return sent_count
     
-    async def _send_error(self, connection_id: str, error_message: str):
+    async def _send_error(self, connection_id -> None: str, error_message -> None: str) -> None:
         """Send error message to connection"""
         await self._send_to_connection(connection_id, {
             "type": "error",
@@ -690,7 +690,7 @@ class WebSocketManagerCore:
             "timestamp": datetime.utcnow().isoformat()
         })
     
-    async def _remove_from_room(self, connection_id: str, room_id: str):
+    async def _remove_from_room(self, connection_id -> None: str, room_id -> None: str) -> None:
         """Remove connection from room"""
         connection = self.connections.get(connection_id)
         if not connection:
@@ -709,7 +709,7 @@ class WebSocketManagerCore:
         
         connection.rooms.discard(room_id)
     
-    async def _cleanup_connection(self, connection_id: str):
+    async def _cleanup_connection(self, connection_id -> None: str) -> None:
         """Clean up connection"""
         try:
             connection = self.connections.get(connection_id)
@@ -741,7 +741,7 @@ class WebSocketManagerCore:
         except Exception as e:
             logger.error(f"Connection cleanup error: {str(e)}")
     
-    async def _ping_loop(self):
+    async def _ping_loop(self) -> None:
         """Send periodic pings to connections"""
         while not self._shutdown_event.is_set() and self.is_running:
             try:
@@ -773,7 +773,7 @@ class WebSocketManagerCore:
                 logger.error(f"Ping loop error: {str(e)}")
                 await asyncio.sleep(60)
     
-    async def _cleanup_loop(self):
+    async def _cleanup_loop(self) -> None:
         """Periodic cleanup of inactive rooms and old messages"""
         while not self._shutdown_event.is_set() and self.is_running:
             try:
@@ -877,7 +877,7 @@ class WebSocketManagerCore:
             logger.error(f"WebSocket health check failed: {str(e)}")
             return False
     
-    async def _health_monitor_loop(self):
+    async def _health_monitor_loop(self) -> None:
         """Health monitoring loop"""
         while not self._shutdown_event.is_set():
             try:

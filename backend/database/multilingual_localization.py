@@ -23,6 +23,7 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class TranslationStatus(Enum):
+    """TranslationStatus class implementation"""
     PENDING = "pending"
     IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
@@ -30,6 +31,7 @@ class TranslationStatus(Enum):
     PUBLISHED = "published"
 
 class LocalizationType(Enum):
+    """LocalizationType class implementation"""
     CONTENT = "content"
     UI_TEXT = "ui_text"
     METADATA = "metadata"
@@ -164,10 +166,10 @@ class LinguisticAnalytics(Base):
     time_spent_by_language = Column(JSONB, default={})
     recorded_at = Column(DateTime(timezone=True), default=datetime.utcnow)
 
-def get_multilingual_localization_models():
+def get_multilingual_localization_models() -> None:
     return [MultilingualContent, TranslationManagement, CulturalLocalization, LanguageDetection, RegionalCompliance, LinguisticAnalytics]
 
-def create_multilingual_localization_tables(engine):
+def create_multilingual_localization_tables(engine) -> None:
     try:
         Base.metadata.create_all(engine, tables=[model.__table__ for model in get_multilingual_localization_models()])
         logger.info("Successfully created multilingual localization tables")

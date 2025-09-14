@@ -187,7 +187,7 @@ Complete escalation record"""
     approved_by: Optional[str] = None
     notes: List[str] = field(default_factory=list)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if not self.escalation_id:
             self.escalation_id = f"esc-{secrets.token_hex(8)}"
         if not self.created_at:
@@ -197,7 +197,7 @@ Complete escalation record"""
 class EscalationWorkflow:
     """Escalation workflow definition and management"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.workflow_steps = self._define_default_workflow()
         self.trigger_rules = self._define_trigger_rules()
         self.legal_templates = self._load_legal_templates()
@@ -481,7 +481,7 @@ Get template for escalation level"""
 class EscalationManager:
     """Main escalation management system"""
     
-    def __init__(self, redis_url: str = None):
+    def __init__(self, redis_url -> None: str = None) -> None:
         self.redis_url = redis_url or "redis://localhost:6379"
         self.redis_client: Optional[aioredis.Redis] = None
         self.workflow = EscalationWorkflow()
@@ -816,7 +816,7 @@ Generate escalation notice content"""
         # Default medium
         return EscalationUrgency.MEDIUM
     
-    async def _schedule_escalation(self, escalation: EscalationRecord):
+    async def _schedule_escalation(self, escalation -> None: EscalationRecord) -> None:
         """
 Schedule automatic escalation"""
         
@@ -839,8 +839,8 @@ Schedule automatic escalation"""
             logger.info(f"Scheduled escalation {escalation.escalation_id} "
                        f"for {escalation.deadline}")
     
-    async def _delayed_escalation_execution(self, escalation: EscalationRecord, 
-                                          delay_seconds: float):
+    async def _delayed_escalation_execution(self, escalation -> None: EscalationRecord, 
+                                          delay_seconds -> None: float) -> None:
         """Execute escalation after delay"""
         
         try:
@@ -855,7 +855,7 @@ Schedule automatic escalation"""
         except Exception as e:
             logger.error(f"Error in delayed escalation {escalation.escalation_id}: {e}")
     
-    async def _schedule_next_escalation(self, current_escalation: EscalationRecord):
+    async def _schedule_next_escalation(self, current_escalation -> None: EscalationRecord) -> None:
         """Schedule next escalation level"""
         
         try:
@@ -937,7 +937,7 @@ Schedule automatic escalation"""
         await asyncio.sleep(1)
         return True
     
-    async def _log_escalation_sent(self, escalation: EscalationRecord):
+    async def _log_escalation_sent(self, escalation -> None: EscalationRecord) -> None:
         """Log escalation sending for audit trail"""
         
         log_entry = {
@@ -955,7 +955,7 @@ Schedule automatic escalation"""
             log_key, 86400 * 365, json.dumps(log_entry)  # 1 year retention
         )
     
-    async def _escalation_monitor_task(self):
+    async def _escalation_monitor_task(self) -> None:
         """Background task to monitor escalations"""
         
         while True:
@@ -978,7 +978,7 @@ Schedule automatic escalation"""
                 logger.error(f"Error in escalation monitor task: {e}")
                 await asyncio.sleep(3600)
     
-    async def _deadline_checker_task(self):
+    async def _deadline_checker_task(self) -> None:
         """Background task to check approaching deadlines"""
         
         while True:
@@ -1000,7 +1000,7 @@ Schedule automatic escalation"""
                 logger.error(f"Error in deadline checker task: {e}")
                 await asyncio.sleep(3600)
     
-    async def _handle_overdue_escalation(self, escalation: EscalationRecord):
+    async def _handle_overdue_escalation(self, escalation -> None: EscalationRecord) -> None:
         """Handle overdue escalation"""
         
         try:
@@ -1026,7 +1026,7 @@ Schedule automatic escalation"""
         except Exception as e:
             logger.error(f"Error handling overdue escalation {escalation.escalation_id}: {e}")
     
-    async def _send_deadline_warning(self, escalation: EscalationRecord):
+    async def _send_deadline_warning(self, escalation -> None: EscalationRecord) -> None:
         """Send deadline warning notification"""
         
         try:
@@ -1045,7 +1045,7 @@ Schedule automatic escalation"""
         except Exception as e:
             logger.error(f"Error sending deadline warning: {e}")
     
-    async def _persist_escalation(self, escalation: EscalationRecord):
+    async def _persist_escalation(self, escalation -> None: EscalationRecord) -> None:
         """Persist escalation to storage"""
         
         try:
@@ -1070,7 +1070,7 @@ Schedule automatic escalation"""
         except Exception as e:
             logger.error(f"Error persisting escalation {escalation.escalation_id}: {e}")
     
-    async def _load_active_escalations(self):
+    async def _load_active_escalations(self) -> None:
         """Load active escalations from storage"""
         
         try:
@@ -1161,7 +1161,7 @@ Schedule automatic escalation"""
             }
         }
     
-    async def cleanup(self):
+    async def cleanup(self) -> None:
         """
 Clean up escalation manager resources"""
         

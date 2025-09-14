@@ -51,7 +51,7 @@ class ProcessingMetrics:
 class AudioValidator:
     """✅ Professional Audio Quality Validator"""
     
-    def __init__(self, standard: QualityStandard = QualityStandard.BROADCAST):
+    def __init__(self, standard -> None: QualityStandard = QualityStandard.BROADCAST) -> None:
         self.logger = logging.getLogger(self.__class__.__name__)
         self.standard = standard
         self.thresholds = self._get_quality_thresholds(standard)
@@ -198,7 +198,7 @@ class AudioValidator:
 class QualityMetrics:
     """📊 Comprehensive Audio Quality Metrics"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(self.__class__.__name__)
     
     def calculate_comprehensive_metrics(self, audio_data: np.ndarray, 
@@ -294,7 +294,7 @@ class QualityMetrics:
 class ComplianceChecker:
     """⚖️ Broadcast & Streaming Compliance Checker"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(self.__class__.__name__)
         self.compliance_standards = {
             "EBU_R128": {"target_lufs": -23.0, "max_peak": -1.0},
@@ -344,7 +344,7 @@ class ComplianceChecker:
 class MasteringStandards:
     """🎯 Professional Mastering Standards"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(self.__class__.__name__)
     
     def evaluate_mastering_quality(self, audio_data: np.ndarray) -> Dict[str, Any]:
@@ -457,7 +457,7 @@ class MasteringStandards:
 class DistortionAnalyzer:
     """🔍 Advanced Distortion Analysis"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(self.__class__.__name__)
     
     def analyze_distortion(self, audio_data: np.ndarray) -> Dict[str, float]:
@@ -523,7 +523,7 @@ class DistortionAnalyzer:
 class DynamicRangeAnalyzer:
     """📊 Dynamic Range Analysis"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(self.__class__.__name__)
     
     def analyze_dynamic_range(self, audio_data: np.ndarray) -> Dict[str, float]:
@@ -594,14 +594,14 @@ class DynamicRangeAnalyzer:
 class PerformanceMonitor:
     """⚡ Processing Performance Monitor"""
     
-    def __init__(self, history_size: int = 100):
+    def __init__(self, history_size -> None: int = 100) -> None:
         self.logger = logging.getLogger(self.__class__.__name__)
         self.history_size = history_size
         self.processing_times = deque(maxlen=history_size)
         self.throughput_history = deque(maxlen=history_size)
         self.memory_usage_history = deque(maxlen=history_size)
     
-    def record_processing_metrics(self, metrics: ProcessingMetrics):
+    def record_processing_metrics(self, metrics -> None: ProcessingMetrics) -> None:
         """Record processing performance metrics"""
         self.processing_times.append(metrics.processing_time)
         self.throughput_history.append(metrics.throughput_mbps)
@@ -625,7 +625,7 @@ class PerformanceMonitor:
 class ProcessingStats:
     """📈 Processing Statistics Collector"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(self.__class__.__name__)
         self.stats = {
             "total_processed": 0,
@@ -635,8 +635,8 @@ class ProcessingStats:
             "quality_scores": []
         }
     
-    def record_processing(self, format_type: str, processing_time: float, 
-                         quality_score: float, success: bool = True):
+    def record_processing(self, format_type -> None: str, processing_time -> None: float, 
+                         quality_score -> None: float, success -> None: bool = True) -> None:
         """Record processing statistics"""
         self.stats["total_processed"] += 1
         self.stats["total_processing_time"] += processing_time

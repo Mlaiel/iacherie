@@ -1,3 +1,8 @@
+"""
+Ai Model Management Service module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Enterprise AI Model Management Service
@@ -147,7 +152,7 @@ class AIModelManagementService:
     - Resource optimization
     """
     
-    def __init__(self, storage_path: str = "/tmp/models"):
+    def __init__(self, storage_path -> None: str = "/tmp/models") -> None:
         """Initialize AI model management service"""
         self.storage_path = Path(storage_path)
         self.storage_path.mkdir(parents=True, exist_ok=True)
@@ -194,7 +199,7 @@ class AIModelManagementService:
         
         logger.info("AIModelManagementService initialized with storage: %s", storage_path)
     
-    async def start(self):
+    async def start(self) -> None:
         """Start the model management service"""
         try:
             # Load existing model registry
@@ -209,7 +214,7 @@ class AIModelManagementService:
             logger.error("Failed to start AIModelManagementService: %s", e)
             raise
     
-    async def stop(self):
+    async def stop(self) -> None:
         """Stop the model management service"""
         try:
             self.shutdown_event.set()
@@ -718,7 +723,7 @@ class AIModelManagementService:
             with open(model_path, 'rb') as f:
                 return pickle.load(f)
     
-    async def _cache_model(self, cache_key: str, model: Any):
+    async def _cache_model(self, cache_key -> None: str, model -> None: Any) -> None:
         """Cache model with LRU eviction"""
         # Remove oldest cached model if cache is full
         if len(self.loaded_models) >= self.model_cache_size:
@@ -736,7 +741,7 @@ class AIModelManagementService:
                 hash_sha256.update(chunk)
         return hash_sha256.hexdigest()
     
-    async def _cleanup_old_versions(self, model_id: str):
+    async def _cleanup_old_versions(self, model_id -> None: str) -> None:
         """Clean up old versions beyond the limit"""
         registry = self.model_registry[model_id]
         max_versions = self.config["max_versions_per_model"]
@@ -768,7 +773,7 @@ class AIModelManagementService:
             
             logger.info("Cleaned up old version %s of model %s", version, model_id)
     
-    async def _update_prediction_metrics(self, model_id: str, latency: float, success: bool):
+    async def _update_prediction_metrics(self, model_id -> None: str, latency -> None: float, success -> None: bool) -> None:
         """Update prediction performance metrics"""
         metrics = self.prediction_metrics[model_id]
         
@@ -784,7 +789,7 @@ class AIModelManagementService:
             (metrics["request_count"] - metrics["error_count"]) / metrics["request_count"]
         )
     
-    async def _schedule_deployment(self, model_id: str, version: str, environment: DeploymentEnvironment):
+    async def _schedule_deployment(self, model_id -> None: str, version -> None: str, environment -> None: DeploymentEnvironment) -> None:
         """Schedule model deployment"""
         deployment_task = {
             "model_id": model_id,
@@ -794,7 +799,7 @@ class AIModelManagementService:
         }
         self.deployment_queue.append(deployment_task)
     
-    async def _execute_deployment(self, deployment: ModelDeployment):
+    async def _execute_deployment(self, deployment -> None: ModelDeployment) -> None:
         """Execute model deployment (simulation)"""
         # Simulate deployment process
         await asyncio.sleep(0.1)
@@ -815,7 +820,7 @@ class AIModelManagementService:
         
         return True
     
-    async def _load_registry(self):
+    async def _load_registry(self) -> None:
         """Load model registry from disk"""
         registry_path = self.storage_path / "registry.json"
         if registry_path.exists():
@@ -828,7 +833,7 @@ class AIModelManagementService:
             except Exception as e:
                 logger.warning("Failed to load registry: %s", e)
     
-    async def _save_registry(self):
+    async def _save_registry(self) -> None:
         """Save model registry to disk"""
         registry_path = self.storage_path / "registry.json"
         try:
@@ -849,7 +854,7 @@ class AIModelManagementService:
         except Exception as e:
             logger.error("Failed to save registry: %s", e)
     
-    async def _health_check_loop(self):
+    async def _health_check_loop(self) -> None:
         """Background health check loop"""
         while not self.shutdown_event.is_set():
             try:
@@ -860,7 +865,7 @@ class AIModelManagementService:
             except Exception as e:
                 logger.error("Error in health check loop: %s", e)
     
-    async def _perform_health_checks(self):
+    async def _perform_health_checks(self) -> None:
         """Perform health checks on deployed models"""
         async with self._lock:
             for registry in self.model_registry.values():
@@ -869,7 +874,7 @@ class AIModelManagementService:
                         # Simulate health check
                         deployment.last_health_check = time.time()
     
-    async def _cleanup_loop(self):
+    async def _cleanup_loop(self) -> None:
         """Background cleanup loop"""
         while not self.shutdown_event.is_set():
             try:
@@ -880,7 +885,7 @@ class AIModelManagementService:
             except Exception as e:
                 logger.error("Error in cleanup loop: %s", e)
     
-    async def _perform_cleanup(self):
+    async def _perform_cleanup(self) -> None:
         """Perform cleanup tasks"""
         async with self._lock:
             # Clean up old cache entries
@@ -904,7 +909,7 @@ async def get_model_service(storage_path: str = "/tmp/models") -> AIModelManagem
         await _model_service.start()
     return _model_service
 
-async def shutdown_model_service():
+async def shutdown_model_service() -> None:
     """Shutdown global model management service"""
     global _model_service
     if _model_service:
@@ -912,7 +917,7 @@ async def shutdown_model_service():
         _model_service = None
 
 if __name__ == "__main__":
-    async def test_model_service():
+    async def test_model_service() -> None:
         """Test model management service functionality"""
         service = AIModelManagementService("/tmp/test_models")
         await service.start()
@@ -920,7 +925,8 @@ if __name__ == "__main__":
         try:
             # Create a simple test model
             class SimpleModel:
-                def predict(self, X):
+    """SimpleModel: class implementation"""
+                def predict(self, X) -> None:
                     return [1] * len(X) if hasattr(X, '__len__') else 1
             
             model = SimpleModel()

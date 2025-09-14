@@ -1,3 +1,8 @@
+"""
+Creator Recommendation Service module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Enterprise Creator Recommendation Service
@@ -131,7 +136,7 @@ class CreatorRecommendationService:
     - Performance tracking
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize creator recommendation service"""
         self.creators: Dict[str, CreatorProfile] = {}
         self.interaction_matrix: Dict[str, Dict[str, float]] = defaultdict(dict)
@@ -173,7 +178,7 @@ class CreatorRecommendationService:
         
         logger.info("CreatorRecommendationService initialized")
     
-    async def start(self):
+    async def start(self) -> None:
         """Start the recommendation service"""
         try:
             # Initialize embeddings
@@ -187,7 +192,7 @@ class CreatorRecommendationService:
             logger.error("Failed to start CreatorRecommendationService: %s", e)
             raise
     
-    async def stop(self):
+    async def stop(self) -> None:
         """Stop the recommendation service"""
         try:
             self.shutdown_event.set()
@@ -204,7 +209,7 @@ class CreatorRecommendationService:
         except Exception as e:
             logger.error("Error stopping CreatorRecommendationService: %s", e)
     
-    async def register_creator(self, profile: CreatorProfile):
+    async def register_creator(self, profile -> None: CreatorProfile) -> None:
         """Register a new creator profile"""
         async with self._lock:
             self.creators[profile.creator_id] = profile
@@ -217,7 +222,7 @@ class CreatorRecommendationService:
         
         logger.info("Registered creator: %s", profile.creator_id)
     
-    async def update_creator(self, creator_id: str, updates: Dict[str, Any]):
+    async def update_creator(self, creator_id -> None: str, updates -> None: Dict[str, Any]) -> None:
         """Update creator profile"""
         async with self._lock:
             if creator_id not in self.creators:
@@ -241,11 +246,11 @@ class CreatorRecommendationService:
     
     async def record_interaction(
         self,
-        creator1_id: str,
-        creator2_id: str,
-        interaction_type: str,
-        strength: float = 1.0
-    ):
+        creator1_id -> None: str,
+        creator2_id -> None: str,
+        interaction_type -> None: str,
+        strength -> None: float = 1.0
+    ) -> None:
         """Record interaction between creators"""
         async with self._lock:
             # Update interaction matrix
@@ -666,7 +671,7 @@ class CreatorRecommendationService:
         
         return score, confidence, reason, explanation
     
-    async def _generate_creator_features(self, profile: CreatorProfile):
+    async def _generate_creator_features(self, profile -> None: CreatorProfile) -> None:
         """Generate feature vector for a creator"""
         # Create feature vector from profile attributes
         features = []
@@ -690,7 +695,7 @@ class CreatorRecommendationService:
         
         self.creator_features[profile.creator_id] = np.array(features[:self.config["feature_dimension"]])
     
-    async def _update_similarity_matrices(self, creator_id: str):
+    async def _update_similarity_matrices(self, creator_id -> None: str) -> None:
         """Update similarity matrices for a creator"""
         if creator_id not in self.creator_features:
             return
@@ -708,7 +713,7 @@ class CreatorRecommendationService:
             
             self.content_similarity_matrix[creator_id][other_id] = float(similarity)
     
-    async def _initialize_embeddings(self):
+    async def _initialize_embeddings(self) -> None:
         """Initialize skill and genre embeddings"""
         # This would normally load pre-trained embeddings
         # For now, create random embeddings
@@ -729,10 +734,10 @@ class CreatorRecommendationService:
     
     async def _update_stats(
         self,
-        request: RecommendationRequest,
-        recommendations: List[Recommendation],
-        processing_time: float
-    ):
+        request -> None: RecommendationRequest,
+        recommendations -> None: List[Recommendation],
+        processing_time -> None: float
+    ) -> None:
         """Update recommendation statistics"""
         rec_type = request.recommendation_type.value
         stats = self.recommendation_stats[rec_type]
@@ -755,7 +760,7 @@ class CreatorRecommendationService:
                 stats["total_requests"]
             )
     
-    async def _update_loop(self):
+    async def _update_loop(self) -> None:
         """Background update loop"""
         while not self.shutdown_event.is_set():
             try:
@@ -766,7 +771,7 @@ class CreatorRecommendationService:
             except Exception as e:
                 logger.error("Error in update loop: %s", e)
     
-    async def _update_recommendations(self):
+    async def _update_recommendations(self) -> None:
         """Update recommendation models and matrices"""
         async with self._lock:
             # Update embeddings
@@ -793,7 +798,7 @@ async def get_recommendation_service() -> CreatorRecommendationService:
         await _recommendation_service.start()
     return _recommendation_service
 
-async def shutdown_recommendation_service():
+async def shutdown_recommendation_service() -> None:
     """Shutdown global recommendation service"""
     global _recommendation_service
     if _recommendation_service:
@@ -801,7 +806,7 @@ async def shutdown_recommendation_service():
         _recommendation_service = None
 
 if __name__ == "__main__":
-    async def test_recommendation_service():
+    async def test_recommendation_service() -> None:
         """Test recommendation service functionality"""
         service = CreatorRecommendationService()
         await service.start()

@@ -94,7 +94,7 @@ class DistributionTask:
 class MultiPlatformDistributor:
     """Distributeur multi-plateformes."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.platform_configs: Dict[Platform, PlatformConfig] = {}
         self.distribution_queue = asyncio.Queue()
         self.active_distributions = {}
@@ -166,7 +166,7 @@ class MultiPlatformDistributor:
         logger.info(f"Content distribution task created: {task_id}")
         return task_id
     
-    async def process_distribution_queue(self):
+    async def process_distribution_queue(self) -> None:
         """Traite la queue de distribution."""
         while True:
             try:
@@ -177,7 +177,7 @@ class MultiPlatformDistributor:
             
             await asyncio.sleep(0.1)  # Prevent tight loop
     
-    async def _process_distribution_task(self, distribution_item: Dict[str, Any]):
+    async def _process_distribution_task(self, distribution_item -> None: Dict[str, Any]) -> None:
         """Traite une tâche de distribution."""
         task = distribution_item["task"]
         content_data = distribution_item["content_data"]
@@ -323,7 +323,7 @@ class MultiPlatformDistributor:
 class ContentAdaptationRealtime:
     """Adaptation contenu temps réel."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.adaptation_cache = {}
         self.performance_analytics = defaultdict(list)
     
@@ -387,7 +387,7 @@ class ContentAdaptationRealtime:
 class DeliveryOptimization:
     """Optimisation livraison."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.delivery_metrics = defaultdict(list)
         self.optimization_rules = {}
     
@@ -443,7 +443,7 @@ class DeliveryOptimization:
 class EdgeDistributionGateway:
     """Passerelle Distribution Edge."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.multi_platform_distributor = MultiPlatformDistributor()
         self.content_adaptation = ContentAdaptationRealtime()
         self.delivery_optimization = DeliveryOptimization()
@@ -585,7 +585,7 @@ class EdgeDistributionGateway:
             "cache_efficiency": len(self.content_adaptation.adaptation_cache)
         }
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Arrête la passerelle de distribution."""
         logger.info("Shutting down EdgeDistributionGateway")
 

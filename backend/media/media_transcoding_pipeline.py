@@ -235,7 +235,7 @@ class TranscodingJob:
 class MediaAnalyzer:
     """Media file analysis and information extraction"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.supported_video_formats = {'.mp4', '.avi', '.mov', '.mkv', '.wmv', '.flv', '.webm'}
         self.supported_audio_formats = {'.mp3', '.wav', '.flac', '.aac', '.ogg', '.m4a'}
         self.supported_image_formats = {'.jpg', '.jpeg', '.png', '.gif', '.bmp', '.tiff', '.webp'}
@@ -289,7 +289,7 @@ class MediaAnalyzer:
         else:
             return MediaType.DOCUMENT  # Default fallback
     
-    async def _analyze_video(self, media_info: MediaInfo):
+    async def _analyze_video(self, media_info -> None: MediaInfo) -> None:
         """Analyze video file properties"""
         try:
             cap = cv2.VideoCapture(media_info.file_path)
@@ -315,7 +315,7 @@ class MediaAnalyzer:
         except Exception as e:
             logger.error(f"Video analysis failed: {e}")
     
-    async def _analyze_audio(self, media_info: MediaInfo):
+    async def _analyze_audio(self, media_info -> None: MediaInfo) -> None:
         """Analyze audio file properties"""
         try:
             # Load audio file
@@ -333,7 +333,7 @@ class MediaAnalyzer:
         except Exception as e:
             logger.error(f"Audio analysis failed: {e}")
     
-    async def _analyze_image(self, media_info: MediaInfo):
+    async def _analyze_image(self, media_info -> None: MediaInfo) -> None:
         """Analyze image file properties"""
         try:
             with Image.open(media_info.file_path) as img:
@@ -356,7 +356,7 @@ class MediaAnalyzer:
 class TranscodingEngine:
     """Core transcoding engine for media conversion"""
     
-    def __init__(self, config: TranscodingConfig):
+    def __init__(self, config -> None: TranscodingConfig) -> None:
         self.config = config
         self.media_analyzer = MediaAnalyzer()
         
@@ -682,7 +682,7 @@ class TranscodingEngine:
 class TranscodingPipeline:
     """Main transcoding pipeline orchestrating batch processing"""
     
-    def __init__(self, config: Optional[TranscodingConfig] = None):
+    def __init__(self, config -> None: Optional[TranscodingConfig] = None) -> None:
         """Initialize transcoding pipeline"""
         self.config = config or TranscodingConfig()
         self.transcoding_engine = TranscodingEngine(self.config)
@@ -954,11 +954,11 @@ class TranscodingPipeline:
             logger.error(f"Failed to get pipeline status: {e}")
             return {'error': str(e)}
     
-    def _sort_queue_by_priority(self):
+    def _sort_queue_by_priority(self) -> None:
         """Sort job queue by priority (higher priority first)"""
         self.job_queue.sort(key=lambda job: (-job.priority, job.created_at))
     
-    async def _process_queue(self):
+    async def _process_queue(self) -> None:
         """Process job queue continuously"""
         while self.is_processing:
             try:
@@ -977,14 +977,14 @@ class TranscodingPipeline:
                 logger.error(f"Queue processing error: {e}")
                 await asyncio.sleep(5)  # Wait longer on error
     
-    async def _process_job(self, job: TranscodingJob):
+    async def _process_job(self, job -> None: TranscodingJob) -> None:
         """Process individual transcoding job"""
         try:
             job.status = TranscodingStatus.PROCESSING
             job.started_at = datetime.now(timezone.utc)
             
             # Progress callback
-            async def progress_callback(progress: float):
+            async def progress_callback(progress -> None: float) -> None:
                 job.progress_percent = progress
             
             # Get input file info
@@ -1043,7 +1043,7 @@ class TranscodingPipeline:
             if self.config.cleanup_temp_files:
                 await self._cleanup_temp_files(job)
     
-    async def _cleanup_temp_files(self, job: TranscodingJob):
+    async def _cleanup_temp_files(self, job -> None: TranscodingJob) -> None:
         """Clean up temporary files for job"""
         try:
             # Would clean up any temporary files created during processing
@@ -1055,7 +1055,7 @@ class TranscodingPipeline:
 class MediaTranscodingPipeline:
     """Main interface for the media transcoding pipeline system"""
     
-    def __init__(self, config: Optional[TranscodingConfig] = None):
+    def __init__(self, config -> None: Optional[TranscodingConfig] = None) -> None:
         """Initialize media transcoding pipeline"""
         self.config = config or TranscodingConfig()
         self.pipeline = TranscodingPipeline(self.config)

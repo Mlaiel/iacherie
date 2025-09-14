@@ -712,7 +712,7 @@ class CollaborationAnalytics(Base):
 # EXPORT FUNCTIONS
 # ================================
 
-def get_collaboration_marketplace_models():
+def get_collaboration_marketplace_models() -> None:
     """Get all collaboration and marketplace models."""
     return [
         CreatorProfile,
@@ -727,7 +727,7 @@ def get_collaboration_marketplace_models():
     ]
 
 
-def create_collaboration_marketplace_tables(engine):
+def create_collaboration_marketplace_tables(engine) -> None:
     """Create all collaboration and marketplace tables."""
     try:
         Base.metadata.create_all(engine, tables=[model.__table__ for model in get_collaboration_marketplace_models()])

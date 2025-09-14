@@ -1,3 +1,8 @@
+"""
+Performance Metrics Collector module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
@@ -121,7 +126,7 @@ class PerformanceMetricsCollector:
     - Optimisation index et structures données
     """
     
-    def __init__(self, redis_pool, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, redis_pool, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.redis_pool = redis_pool
         self.config = config or {}
         
@@ -163,7 +168,7 @@ class PerformanceMetricsCollector:
         
         logger.info(f"📊 Performance Metrics Collector initialisé (intervalle: {self.collection_interval}s)")
     
-    def _setup_default_thresholds(self):
+    def _setup_default_thresholds(self) -> None:
         """**DevOps**: Configuration seuils par défaut"""
         
         default_thresholds = [
@@ -195,7 +200,7 @@ class PerformanceMetricsCollector:
         for threshold in default_thresholds:
             self.thresholds[threshold.metric_name] = threshold
     
-    async def _initialize_ml_models(self):
+    async def _initialize_ml_models(self) -> None:
         """**ML Engineer**: Initialisation modèles ML pour analytics"""
         try:
             if not self.enable_ml_analytics:
@@ -227,20 +232,20 @@ class PerformanceMetricsCollector:
         except Exception as e:
             logger.error(f"❌ Erreur initialisation ML: {e}")
     
-    async def _start_collection_loop(self):
+    async def _start_collection_loop(self) -> None:
         """**DevOps**: Démarrage boucle collecte métriques"""
         asyncio.create_task(self._metrics_collection_loop())
         asyncio.create_task(self._system_metrics_loop())
         logger.info("📈 Collecte métriques démarrée")
     
-    async def _start_analysis_loop(self):
+    async def _start_analysis_loop(self) -> None:
         """**ML Engineer**: Démarrage boucle analyse ML"""
         asyncio.create_task(self._anomaly_detection_loop())
         asyncio.create_task(self._trend_analysis_loop())
         asyncio.create_task(self._alert_management_loop())
         logger.info("🔍 Analyse ML démarrée")
     
-    async def _metrics_collection_loop(self):
+    async def _metrics_collection_loop(self) -> None:
         """**Backend Senior**: Boucle collecte métriques Redis"""
         while True:
             try:
@@ -259,7 +264,7 @@ class PerformanceMetricsCollector:
                 logger.error(f"❌ Erreur collecte métriques Redis: {e}")
                 self.performance_stats["collection_errors"] += 1
     
-    async def _system_metrics_loop(self):
+    async def _system_metrics_loop(self) -> None:
         """**DevOps**: Boucle collecte métriques système"""
         while True:
             try:
@@ -423,7 +428,7 @@ class PerformanceMetricsCollector:
             logger.error(f"❌ Erreur collecte métriques système: {e}")
             return None
     
-    async def _process_metrics(self, metrics: Dict[str, float]):
+    async def _process_metrics(self, metrics -> None: Dict[str, float]) -> None:
         """**Backend Senior**: Traitement et stockage métriques"""
         current_time = time.time()
         
@@ -445,7 +450,7 @@ class PerformanceMetricsCollector:
         # Persistance Redis pour historique
         await self._persist_metrics_redis(metrics, current_time)
     
-    async def _check_metric_threshold(self, metric_name: str, value: float, timestamp: float):
+    async def _check_metric_threshold(self, metric_name -> None: str, value -> None: float, timestamp -> None: float) -> None:
         """**DevOps**: Vérification seuils avec génération alertes"""
         threshold = self.thresholds.get(metric_name)
         if not threshold:
@@ -516,7 +521,7 @@ class PerformanceMetricsCollector:
                 # Notification externe (webhook, email, etc.)
                 await self._send_alert_notification(alert)
     
-    async def _send_alert_notification(self, alert: PerformanceAlert):
+    async def _send_alert_notification(self, alert -> None: PerformanceAlert) -> None:
         """**DevOps**: Envoi notifications alertes externes"""
         try:
             # Persistance alerte Redis pour traitement externe
@@ -541,7 +546,7 @@ class PerformanceMetricsCollector:
         except Exception as e:
             logger.error(f"❌ Erreur envoi notification alerte: {e}")
     
-    async def _persist_metrics_redis(self, metrics: Dict[str, float], timestamp: float):
+    async def _persist_metrics_redis(self, metrics -> None: Dict[str, float], timestamp -> None: float) -> None:
         """**DBA**: Persistance métriques Redis avec compression temporelle"""
         try:
             async with self.redis_pool.get_connection() as redis_conn:
@@ -569,7 +574,7 @@ class PerformanceMetricsCollector:
         except Exception as e:
             logger.error(f"❌ Erreur persistance métriques: {e}")
     
-    async def _anomaly_detection_loop(self):
+    async def _anomaly_detection_loop(self) -> None:
         """**ML Engineer**: Boucle détection d'anomalies ML"""
         while True:
             try:
@@ -583,7 +588,7 @@ class PerformanceMetricsCollector:
             except Exception as e:
                 logger.error(f"❌ Erreur détection d'anomalies: {e}")
     
-    async def _detect_anomalies(self):
+    async def _detect_anomalies(self) -> None:
         """**ML Engineer**: Détection d'anomalies avec Machine Learning"""
         try:
             # Préparation données pour ML
@@ -657,7 +662,7 @@ class PerformanceMetricsCollector:
         except Exception as e:
             logger.error(f"❌ Erreur détection anomalies ML: {e}")
     
-    async def _generate_anomaly_alert(self, timestamp: float, anomaly_score: float, features: List[float]):
+    async def _generate_anomaly_alert(self, timestamp -> None: float, anomaly_score -> None: float, features -> None: List[float]) -> None:
         """**ML Engineer**: Génération alerte anomalie ML"""
         try:
             # Analyse features pour identifier cause
@@ -698,7 +703,7 @@ class PerformanceMetricsCollector:
         except Exception as e:
             logger.error(f"❌ Erreur génération alerte anomalie: {e}")
     
-    async def _trend_analysis_loop(self):
+    async def _trend_analysis_loop(self) -> None:
         """**ML Engineer**: Boucle analyse tendances prédictives"""
         while True:
             try:
@@ -711,7 +716,7 @@ class PerformanceMetricsCollector:
             except Exception as e:
                 logger.error(f"❌ Erreur analyse tendances: {e}")
     
-    async def _analyze_performance_trends(self):
+    async def _analyze_performance_trends(self) -> None:
         """**ML Engineer**: Analyse tendances avec prédictions"""
         try:
             # Analyse pour métriques clés
@@ -785,7 +790,7 @@ class PerformanceMetricsCollector:
         except Exception as e:
             logger.error(f"❌ Erreur analyse tendances: {e}")
     
-    async def _generate_trend_alert(self, metric_name: str, trend_data: Dict[str, Any]):
+    async def _generate_trend_alert(self, metric_name -> None: str, trend_data -> None: Dict[str, Any]) -> None:
         """**ML Engineer**: Génération alerte tendance prédictive"""
         try:
             severity = AlertSeverity.WARNING
@@ -819,7 +824,7 @@ class PerformanceMetricsCollector:
         except Exception as e:
             logger.error(f"❌ Erreur alerte tendance: {e}")
     
-    async def _alert_management_loop(self):
+    async def _alert_management_loop(self) -> None:
         """**DevOps**: Boucle gestion alertes et résolution automatique"""
         while True:
             try:
@@ -833,7 +838,7 @@ class PerformanceMetricsCollector:
             except Exception as e:
                 logger.error(f"❌ Erreur gestion alertes: {e}")
     
-    async def _auto_resolve_alerts(self):
+    async def _auto_resolve_alerts(self) -> None:
         """**DevOps**: Résolution automatique alertes"""
         current_time = time.time()
         
@@ -871,7 +876,7 @@ class PerformanceMetricsCollector:
                 # Notification résolution
                 await self._send_resolution_notification(alert)
     
-    async def _send_resolution_notification(self, alert: PerformanceAlert):
+    async def _send_resolution_notification(self, alert -> None: PerformanceAlert) -> None:
         """**DevOps**: Notification résolution alerte"""
         try:
             async with self.redis_pool.get_connection() as redis_conn:
@@ -888,7 +893,7 @@ class PerformanceMetricsCollector:
         except Exception as e:
             logger.error(f"❌ Erreur notification résolution: {e}")
     
-    async def _cleanup_old_alerts(self):
+    async def _cleanup_old_alerts(self) -> None:
         """**DevOps**: Nettoyage alertes anciennes"""
         current_time = time.time()
         
@@ -1073,17 +1078,18 @@ class PerformanceMetricsCollector:
         return problematic[:10]  # Top 10 problématiques
 
 # Factory function
-async def create_performance_metrics_collector(redis_pool, config: Optional[Dict[str, Any]] = None):
+async def create_performance_metrics_collector(redis_pool, config -> None: Optional[Dict[str, Any]] = None) -> None:
     """**DevOps**: Factory création collecteur métriques"""
     return PerformanceMetricsCollector(redis_pool, config)
 
 if __name__ == "__main__":
-    async def demo():
+    async def demo() -> None:
         """Démonstration Performance Metrics Collector"""
         
         # Configuration Redis simulée
         class MockRedisPool:
-            def get_connection(self):
+    """MockRedisPool: class implementation"""
+            def get_connection(self) -> None:
                 from unittest.mock import AsyncMock
                 mock = AsyncMock()
                 mock.info.return_value = {

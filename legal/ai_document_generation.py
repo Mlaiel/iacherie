@@ -106,7 +106,7 @@ class PromptOptimizationEngine:
     Advanced prompt optimization and engineering for legal document generation
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.prompt_templates = {}
         self.optimization_history = {}
         self.performance_metrics = {}
@@ -120,7 +120,7 @@ class PromptOptimizationEngine:
         
         logger.info("🤖 Prompt Optimization Engine initialized with advanced templates")
 
-    def _initialize_prompt_templates(self):
+    def _initialize_prompt_templates(self) -> None:
         """Initialize sophisticated prompt templates for different document types."""
         
         # DMCA Notice Template (Multi-language optimized)
@@ -311,7 +311,7 @@ Use data visualization descriptions and make recommendations based on ML-powered
             }
         }
 
-    def _initialize_optimization_algorithms(self):
+    def _initialize_optimization_algorithms(self) -> None:
         """Initialize prompt optimization algorithms."""
         self.optimization_algorithms = {
             'performance_tracking': self._track_prompt_performance,
@@ -378,7 +378,7 @@ Use data visualization descriptions and make recommendations based on ML-powered
         
         return jurisdiction_requirements.get(jurisdiction, "Ensure compliance with local legal requirements and appropriate jurisdiction clauses.")
 
-    async def _track_optimization_usage(self, document_type: DocumentType, language: Language, quality_level: QualityLevel, prompts: Dict[str, str]):
+    async def _track_optimization_usage(self, document_type -> None: DocumentType, language -> None: Language, quality_level -> None: QualityLevel, prompts -> None: Dict[str, str]) -> None:
         """Track prompt optimization usage for continuous improvement."""
         tracking_key = f"{document_type.value}_{language.value}_{quality_level.value}"
         
@@ -391,7 +391,7 @@ Use data visualization descriptions and make recommendations based on ML-powered
             'usage_count': 1
         })
 
-    def _track_prompt_performance(self, prompt_id: str, performance_metrics: Dict[str, float]):
+    def _track_prompt_performance(self, prompt_id -> None: str, performance_metrics -> None: Dict[str, float]) -> None:
         """Track performance of specific prompts."""
         if prompt_id not in self.performance_metrics:
             self.performance_metrics[prompt_id] = []
@@ -401,7 +401,7 @@ Use data visualization descriptions and make recommendations based on ML-powered
             'metrics': performance_metrics
         })
 
-    def _run_a_b_testing(self, prompt_a: str, prompt_b: str, test_context: Dict[str, Any]):
+    def _run_a_b_testing(self, prompt_a -> None: str, prompt_b -> None: str, test_context -> None: Dict[str, Any]) -> None:
         """Run A/B testing for prompt optimization."""
         test_id = str(uuid.uuid4())
         self.a_b_test_results[test_id] = {
@@ -450,7 +450,7 @@ class AILegalDocumentGenerator:
     Advanced AI-powered legal document generation with intelligent processing
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.prompt_optimizer = PromptOptimizationEngine()
         self.generation_cache = {}
         self.quality_validators = {}
@@ -494,7 +494,7 @@ class AILegalDocumentGenerator:
         conn.commit()
         return conn
 
-    def _initialize_ai_models(self):
+    def _initialize_ai_models(self) -> None:
         """Initialize AI models for document generation."""
         # Simulated AI models - in production, use actual OpenAI, Claude, etc.
         self.ai_models = {
@@ -518,7 +518,7 @@ class AILegalDocumentGenerator:
             }
         }
 
-    def _initialize_quality_validators(self):
+    def _initialize_quality_validators(self) -> None:
         """Initialize quality validation systems."""
         self.quality_validators = {
             'legal_terminology': self._validate_legal_terminology,
@@ -1015,7 +1015,7 @@ Date: [Date]"""
         except KeyError:
             return template
 
-    async def _store_generated_document(self, document: GeneratedDocument):
+    async def _store_generated_document(self, document -> None: GeneratedDocument) -> None:
         """Store generated document metadata in database."""
         self.db_connection.execute('''
             INSERT INTO generated_documents 
@@ -1031,7 +1031,7 @@ Date: [Date]"""
         self.db_connection.commit()
 
 # Demonstration function
-async def demonstrate_ai_legal_generation():
+async def demonstrate_ai_legal_generation() -> None:
     """
     🎯 DEMONSTRATION OF AI LEGAL DOCUMENT GENERATION:
     Comprehensive demonstration of all expert roles in AI generation

@@ -1,4 +1,6 @@
 """
+import logging
+
 🔄 Content Lifecycle Manager Service
 Enterprise content lifecycle management with automated workflows and state transitions
 
@@ -136,7 +138,7 @@ class ContentLifecycleInfo(BaseModel):
 class LifecycleRule(ABC):
     """Abstract base class for lifecycle rules"""
     
-    def __init__(self, name: str, description: str):
+    def __init__(self, name -> None: str, description -> None: str) -> None:
         self.name = name
         self.description = description
     
@@ -148,7 +150,7 @@ class LifecycleRule(ABC):
 class TimeBasedRule(LifecycleRule):
     """Time-based lifecycle rule"""
     
-    def __init__(self, name: str, days_threshold: int, target_state: ContentLifecycleState):
+    def __init__(self, name -> None: str, days_threshold -> None: int, target_state -> None: ContentLifecycleState) -> None:
         super().__init__(name, f"Transition to {target_state} after {days_threshold} days")
         self.days_threshold = days_threshold
         self.target_state = target_state
@@ -161,7 +163,7 @@ class TimeBasedRule(LifecycleRule):
 class ViewCountRule(LifecycleRule):
     """View count based lifecycle rule"""
     
-    def __init__(self, name: str, view_threshold: int, action: str):
+    def __init__(self, name -> None: str, view_threshold -> None: int, action -> None: str) -> None:
         super().__init__(name, f"Trigger {action} when views exceed {view_threshold}")
         self.view_threshold = view_threshold
         self.action = action
@@ -182,7 +184,7 @@ class ContentLifecycleManager:
     - Security: Access control, audit logging, secure state transitions
     """
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.config = config or {}
         self.state_machine: Dict[ContentLifecycleState, List[StateTransition]] = {}
         self.workflows: Dict[str, ContentWorkflow] = {}
@@ -208,7 +210,7 @@ class ContentLifecycleManager:
                    workflows=len(self.workflows),
                    rules=len(self.rules))
     
-    def _initialize_state_machine(self):
+    def _initialize_state_machine(self) -> None:
         """Initialize content lifecycle state machine"""
         
         # Define valid state transitions
@@ -299,7 +301,7 @@ class ContentLifecycleManager:
                 self.state_machine[transition.from_state] = []
             self.state_machine[transition.from_state].append(transition)
     
-    def _initialize_default_workflows(self):
+    def _initialize_default_workflows(self) -> None:
         """Initialize default content workflows"""
         
         # Standard content workflow
@@ -360,7 +362,7 @@ class ContentLifecycleManager:
         self.workflows[standard_workflow.workflow_id] = standard_workflow
         self.workflows[fast_track_workflow.workflow_id] = fast_track_workflow
     
-    def _initialize_default_rules(self):
+    def _initialize_default_rules(self) -> None:
         """Initialize default lifecycle rules"""
         
         # Auto-archive old content
@@ -590,8 +592,8 @@ class ContentLifecycleManager:
         user_roles = context.get('user_roles', [])
         return any(role in user_roles for role in required_roles)
     
-    async def _execute_workflow_action(self, action: WorkflowAction, content: ContentLifecycleInfo,
-                                     triggered_by: str, context: Dict[str, Any]):
+    async def _execute_workflow_action(self, action -> None: WorkflowAction, content -> None: ContentLifecycleInfo,
+                                     triggered_by -> None: str, context -> None: Dict[str, Any]) -> None:
         """Execute workflow action"""
         try:
             if action == WorkflowAction.VALIDATE:
@@ -624,8 +626,8 @@ class ContentLifecycleManager:
                         content_id=content.content_id,
                         error=str(e))
     
-    async def _send_notification(self, content: ContentLifecycleInfo, action: WorkflowAction,
-                               triggered_by: str, context: Dict[str, Any]):
+    async def _send_notification(self, content -> None: ContentLifecycleInfo, action -> None: WorkflowAction,
+                               triggered_by -> None: str, context -> None: Dict[str, Any]) -> None:
         """Send notification for workflow action"""
         # Simulate notification sending
         logger.info("Notification sent",
@@ -633,7 +635,7 @@ class ContentLifecycleManager:
                    action=action,
                    triggered_by=triggered_by)
     
-    async def _create_backup(self, content: ContentLifecycleInfo):
+    async def _create_backup(self, content -> None: ContentLifecycleInfo) -> None:
         """Create content backup"""
         backup_id = str(uuid.uuid4())
         backup_path = f"/backups/{content.content_id}/{backup_id}"
@@ -654,8 +656,8 @@ class ContentLifecycleManager:
         ]
         return (old_state, new_state) in significant_changes
     
-    async def _create_new_version(self, content: ContentLifecycleInfo, created_by: str, 
-                                changes: str):
+    async def _create_new_version(self, content -> None: ContentLifecycleInfo, created_by -> None: str, 
+                                changes -> None: str) -> None:
         """Create new content version"""
         # Calculate new version number
         current_version = content.current_version.version_number
@@ -686,11 +688,11 @@ class ContentLifecycleManager:
                    version=new_version,
                    created_by=created_by)
     
-    async def _create_audit_entry(self, content_id: str, action: str, 
-                                triggered_by: str, trigger_type: TransitionTrigger,
-                                old_state: Optional[ContentLifecycleState] = None,
-                                new_state: Optional[ContentLifecycleState] = None,
-                                details: Dict[str, Any] = None):
+    async def _create_audit_entry(self, content_id -> None: str, action -> None: str, 
+                                triggered_by -> None: str, trigger_type -> None: TransitionTrigger,
+                                old_state -> None: Optional[ContentLifecycleState] = None,
+                                new_state -> None: Optional[ContentLifecycleState] = None,
+                                details -> None: Dict[str, Any] = None) -> None:
         """Create audit log entry"""
         entry = AuditLogEntry(
             content_id=content_id,
@@ -708,7 +710,7 @@ class ContentLifecycleManager:
         if len(self.audit_log) > 10000:
             self.audit_log = self.audit_log[-5000:]  # Keep last 5000 entries
     
-    async def _check_automatic_transitions(self, content_id: str):
+    async def _check_automatic_transitions(self, content_id -> None: str) -> None:
         """Check and execute automatic transitions"""
         content = self.content_registry.get(content_id)
         if not content:
@@ -763,7 +765,7 @@ class ContentLifecycleManager:
         # Return most recent entries
         return sorted(entries, key=lambda x: x.timestamp, reverse=True)[:limit]
     
-    async def process_lifecycle_rules(self):
+    async def process_lifecycle_rules(self) -> None:
         """Process automated lifecycle rules"""
         processed_count = 0
         
@@ -827,7 +829,7 @@ class ContentLifecycleManager:
         }
 
 # Example usage and testing
-async def example_usage():
+async def example_usage() -> None:
     """Example usage of the Content Lifecycle Manager"""
     
     # Initialize manager

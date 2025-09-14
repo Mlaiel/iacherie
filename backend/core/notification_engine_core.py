@@ -142,7 +142,7 @@ class MultiChannelNotificationEngine:
     with intelligent routing, failover, and delivery optimization.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize the Multi-Channel Notification Engine"""
         self.config = config or {}
         self.templates: Dict[str, NotificationTemplate] = {}
@@ -161,7 +161,7 @@ class MultiChannelNotificationEngine:
         self._processor_running = True
         asyncio.create_task(self._message_processor())
     
-    def _initialize_channel_handlers(self):
+    def _initialize_channel_handlers(self) -> None:
         """Initialize channel-specific handlers"""
         
         self.channel_handlers = {
@@ -288,7 +288,7 @@ class MultiChannelNotificationEngine:
             self.logger.error(f"Template rendering failed: {e}")
             raise
     
-    async def _queue_message(self, message: NotificationMessage):
+    async def _queue_message(self, message -> None: NotificationMessage) -> None:
         """Queue message for delivery"""
         
         with self._engine_lock:
@@ -302,7 +302,7 @@ class MultiChannelNotificationEngine:
                 # Immediate delivery
                 self.message_queue.append(message.message_id)
     
-    async def _message_processor(self):
+    async def _message_processor(self) -> None:
         """Main message processing loop"""
         
         while self._processor_running:
@@ -325,7 +325,7 @@ class MultiChannelNotificationEngine:
                 self.logger.error(f"Message processor error: {e}")
                 await asyncio.sleep(5)  # Longer sleep on error
     
-    async def _process_scheduled_messages(self):
+    async def _process_scheduled_messages(self) -> None:
         """Process scheduled messages that are due"""
         
         now = datetime.now(timezone.utc)
@@ -341,7 +341,7 @@ class MultiChannelNotificationEngine:
         for message_id in due_messages:
             self.message_queue.append(message_id)
     
-    async def _process_message(self, message_id: str):
+    async def _process_message(self, message_id -> None: str) -> None:
         """Process a single message"""
         
         if message_id not in self.pending_messages:
@@ -740,7 +740,7 @@ class RealTimeMessagingCore:
     presence tracking, and high-performance message delivery.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize the Real-Time Messaging Core"""
         self.config = config or {}
         self.active_connections: Dict[str, Dict[str, Any]] = {}
@@ -934,7 +934,7 @@ class RealTimeMessagingCore:
             self.logger.error(f"Failed to send direct message from {sender_id} to {recipient_id}: {e}")
             raise
     
-    async def _broadcast_presence_update(self, user_id: str, status: str):
+    async def _broadcast_presence_update(self, user_id -> None: str, status -> None: str) -> None:
         """Broadcast user presence update"""
         
         presence_update = {
@@ -955,9 +955,9 @@ class RealTimeMessagingCore:
             await self._broadcast_to_room(room_id, presence_update, exclude_user=user_id)
     
     async def _broadcast_to_room(self, 
-                               room_id: str,
-                               message: Dict[str, Any],
-                               exclude_user: str = None):
+                               room_id -> None: str,
+                               message -> None: Dict[str, Any],
+                               exclude_user -> None: str = None) -> None:
         """Broadcast message to all users in room"""
         
         if room_id not in self.message_rooms:
@@ -971,7 +971,7 @@ class RealTimeMessagingCore:
             
             await self._send_to_user(user_id, message)
     
-    async def _send_to_user(self, user_id: str, message: Dict[str, Any]):
+    async def _send_to_user(self, user_id -> None: str, message -> None: Dict[str, Any]) -> None:
         """Send message to specific user"""
         
         try:
@@ -999,7 +999,7 @@ class RealTimeMessagingCore:
             self.logger.error(f"Failed to send message to user {user_id}: {e}")
             return False
     
-    async def _send_message_history(self, user_id: str, room_id: str):
+    async def _send_message_history(self, user_id -> None: str, room_id -> None: str) -> None:
         """Send recent message history to user"""
         
         if room_id not in self.message_history:
@@ -1054,7 +1054,7 @@ class NotificationEngineCore:
     across the IA Influencer Agent platform with enterprise-grade capabilities.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize the Notification Engine Core"""
         self.config = config or {}
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
@@ -1090,7 +1090,7 @@ class NotificationEngineCore:
             self.logger.error(f"Notification Engine Core initialization failed: {e}")
             return False
     
-    async def _initialize_default_templates(self):
+    async def _initialize_default_templates(self) -> None:
         """Initialize default notification templates"""
         
         default_templates = [

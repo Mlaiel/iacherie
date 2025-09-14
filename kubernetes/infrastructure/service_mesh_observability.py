@@ -46,7 +46,7 @@ class ServiceMeshObservabilityConfig:
 class ServiceMeshObservabilityManager:
     """Manages service mesh observability configuration"""
     
-    def __init__(self, config: ServiceMeshObservabilityConfig):
+    def __init__(self, config -> None: ServiceMeshObservabilityConfig) -> None:
         try:
             logger.info(f"Executing __init__")
             
@@ -628,7 +628,7 @@ class ServiceMeshObservabilityManager:
         
         return manifests
     
-    def save_manifests_to_files(self, output_dir: str = "./k8s-manifests/service-mesh"):
+    def save_manifests_to_files(self, output_dir -> None: str = "./k8s-manifests/service-mesh") -> None:
         """Save all service mesh observability manifests to files"""
         import os
         os.makedirs(output_dir, exist_ok=True)

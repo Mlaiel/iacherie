@@ -138,7 +138,7 @@ class CrossChainTransfer:
 class BridgeManager:
     """Enterprise cross-chain bridge management system"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.networks: Dict[BlockchainNetwork, NetworkConfig] = {}
         self.validators: Dict[str, CrossChainValidator] = {}
@@ -171,7 +171,7 @@ class BridgeManager:
             logger.error(f"Error initializing bridge manager: {str(e)}")
             return False
 
-    async def _setup_network_configs(self):
+    async def _setup_network_configs(self) -> None:
         """Setup blockchain network configurations"""
         try:
             # Ethereum mainnet
@@ -213,7 +213,7 @@ class BridgeManager:
         except Exception as e:
             logger.error(f"Error setting up network configs: {str(e)}")
 
-    async def _initialize_validators(self):
+    async def _initialize_validators(self) -> None:
         """Initialize cross-chain validators"""
         try:
             # Add default validators (in production, these would be real validator nodes)
@@ -247,7 +247,7 @@ class BridgeManager:
         except Exception as e:
             logger.error(f"Error initializing validators: {str(e)}")
 
-    async def _setup_liquidity_pools(self):
+    async def _setup_liquidity_pools(self) -> None:
         """Setup liquidity pools for different bridge routes"""
         try:
             # ETH <-> POLYGON pool
@@ -280,7 +280,7 @@ class BridgeManager:
         except Exception as e:
             logger.error(f"Error setting up liquidity pools: {str(e)}")
 
-    async def _load_supported_assets(self):
+    async def _load_supported_assets(self) -> None:
         """Load supported assets for bridging"""
         try:
             # Example supported assets

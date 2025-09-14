@@ -1,3 +1,8 @@
+"""
+Health Monitoring module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """Health Monitoring System
 Comprehensive health monitoring and alerting for the IA Influencer Agent platform
@@ -81,7 +86,7 @@ class HealthMonitor:
     Monitors system health, services, and generates alerts
     """
     
-    def __init__(self, config_path: Optional[str] = None):
+    def __init__(self, config_path -> None: Optional[str] = None) -> None:
         """
 Initialize health monitor"""
         self.config_path = config_path or "/etc/monitoring/health_config.json"
@@ -1015,7 +1020,7 @@ Get current health status"""
             logger.error(f"Data cleanup error: {e}")
 
 
-def main():
+def main() -> None:
     """Main function for standalone execution"""
     import argparse
     

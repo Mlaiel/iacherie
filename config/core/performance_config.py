@@ -1,3 +1,8 @@
+"""
+Performance Config module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
@@ -225,7 +230,7 @@ class NetworkPerformanceConfig:
 class PerformanceConfiguration:
     """Main performance configuration manager"""
     
-    def __init__(self, level: PerformanceLevel = PerformanceLevel.HIGH):
+    def __init__(self, level -> None: PerformanceLevel = PerformanceLevel.HIGH) -> None:
         """Initialize performance configuration"""
         self.level = level
         self.cpu_config = CPUPerformanceConfig()
@@ -236,7 +241,7 @@ class PerformanceConfiguration:
         
         self._optimize_for_level()
     
-    def _optimize_for_level(self):
+    def _optimize_for_level(self) -> None:
         """Optimize configurations based on performance level"""
         if self.level == PerformanceLevel.BASIC:
             self.cpu_config.max_workers = 4
@@ -286,7 +291,7 @@ class PerformanceConfiguration:
             }
         }
     
-    async def apply_performance_optimizations(self):
+    async def apply_performance_optimizations(self) -> None:
         """Apply performance optimizations"""
         # CPU optimizations
         if self.cpu_config.enable_cpu_pinning:
@@ -300,17 +305,17 @@ class PerformanceConfiguration:
         if self.database_config.enable_query_optimization:
             await self._optimize_database_queries()
     
-    async def _apply_cpu_pinning(self):
+    async def _apply_cpu_pinning(self) -> None:
         """Apply CPU pinning optimizations"""
         # Implementation for CPU pinning
         pass
     
-    async def _preallocate_memory(self):
+    async def _preallocate_memory(self) -> None:
         """Preallocate memory for better performance"""
         # Implementation for memory preallocation
         pass
     
-    async def _optimize_database_queries(self):
+    async def _optimize_database_queries(self) -> None:
         """Optimize database query performance"""
         # Implementation for database optimization
         pass

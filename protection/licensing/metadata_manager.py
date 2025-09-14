@@ -175,7 +175,7 @@ class LicenseMetadataManager:
     all types of content metadata for licensing purposes.
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """
 Initialize metadata manager with configuration."""
         self.config = config
@@ -202,7 +202,7 @@ Initialize metadata manager with configuration."""
         
         self.logger.info("License Metadata Manager initialized successfully")
 
-    def _load_metadata_standards(self):
+    def _load_metadata_standards(self) -> None:
         """Load industry metadata standards and requirements."""
         self.metadata_standards = {
             MetadataStandard.DDEX: {
@@ -236,7 +236,7 @@ Initialize metadata manager with configuration."""
             }
         }
 
-    def _load_validation_rules(self):
+    def _load_validation_rules(self) -> None:
         """
 Load metadata validation rules."""
         self.validation_rules = {
@@ -275,7 +275,7 @@ Load metadata validation rules."""
             }
         }
 
-    def _initialize_ai_services(self):
+    def _initialize_ai_services(self) -> None:
         """
 Initialize AI services for metadata enhancement."""
         try:
@@ -296,7 +296,7 @@ Initialize AI services for metadata enhancement."""
             self.text_classifier = None
             self.music_analyzer = None
 
-    def _initialize_external_services(self):
+    def _initialize_external_services(self) -> None:
         """Initialize external metadata services."""
         self.external_services = {
             'musicbrainz': {
@@ -987,7 +987,7 @@ Check ID3 standard compliance."""
         required_id3_fields = ['title', 'artist']
         return all(getattr(metadata, field) for field in required_id3_fields)
 
-    def _update_extraction_metrics(self, success: bool, processing_time: float):
+    def _update_extraction_metrics(self, success -> None: bool, processing_time -> None: float) -> None:
         """
 Update metadata extraction metrics."""
         self.metadata_metrics['total_extractions'] += 1

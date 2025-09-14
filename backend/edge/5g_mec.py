@@ -168,14 +168,14 @@ class MECOrchestrator:
     
     def __init__(
         self,
-        orchestrator_id: str,
-        management_ip: str = "0.0.0.0",
-        management_port: int = 8080,
-        enable_5g_core_integration: bool = True,
-        enable_network_slicing: bool = True,
-        enable_auto_scaling: bool = True,
-        enable_service_migration: bool = True
-    ):
+        orchestrator_id -> None: str,
+        management_ip -> None: str = "0.0.0.0",
+        management_port -> None: int = 8080,
+        enable_5g_core_integration -> None: bool = True,
+        enable_network_slicing -> None: bool = True,
+        enable_auto_scaling -> None: bool = True,
+        enable_service_migration -> None: bool = True
+    ) -> None:
         self.orchestrator_id = orchestrator_id
         self.management_ip = management_ip
         self.management_port = management_port
@@ -209,7 +209,7 @@ class MECOrchestrator:
         
         logger.info(f"MEC Orchestrator {orchestrator_id} initialized")
     
-    async def start(self):
+    async def start(self) -> None:
         """Start the MEC orchestrator."""
         self.running = True
         await self._initialize_session()
@@ -233,7 +233,7 @@ class MECOrchestrator:
         
         logger.info("MEC Orchestrator started")
     
-    async def stop(self):
+    async def stop(self) -> None:
         """Stop the MEC orchestrator."""
         self.running = False
         
@@ -248,7 +248,7 @@ class MECOrchestrator:
         
         logger.info("MEC Orchestrator stopped")
     
-    async def _initialize_session(self):
+    async def _initialize_session(self) -> None:
         """Initialize HTTP session."""
         self.session = aiohttp.ClientSession(
             timeout=aiohttp.ClientTimeout(total=30)
@@ -757,7 +757,7 @@ class MECOrchestrator:
         # For simulation, return a mock value based on IP
         return hash(ip_address) % 1000 + 100  # 100-1100 Mbps
     
-    async def _update_node_load(self, node_id: str):
+    async def _update_node_load(self, node_id -> None: str) -> None:
         """Update node load percentage."""
         if node_id not in self.edge_nodes:
             return
@@ -779,7 +779,7 @@ class MECOrchestrator:
         node.load_percentage = max(cpu_load, memory_load)
         node.last_heartbeat = datetime.now()
     
-    async def _auto_scaling_monitor(self):
+    async def _auto_scaling_monitor(self) -> None:
         """Monitor and trigger auto-scaling decisions."""
         while self.running:
             try:
@@ -798,7 +798,7 @@ class MECOrchestrator:
                 logger.error(f"Auto-scaling monitor error: {e}")
                 await asyncio.sleep(30)
     
-    async def _migration_monitor(self):
+    async def _migration_monitor(self) -> None:
         """Monitor and trigger service migrations."""
         while self.running:
             try:
@@ -824,7 +824,7 @@ class MECOrchestrator:
                 logger.error(f"Migration monitor error: {e}")
                 await asyncio.sleep(60)
     
-    async def _node_health_monitor(self):
+    async def _node_health_monitor(self) -> None:
         """Monitor edge node health."""
         while self.running:
             try:
@@ -856,7 +856,7 @@ class MECOrchestrator:
                 logger.error(f"Node health monitor error: {e}")
                 await asyncio.sleep(60)
     
-    async def _device_tracker(self):
+    async def _device_tracker(self) -> None:
         """Track mobile device movements and optimize services."""
         while self.running:
             try:
@@ -881,7 +881,7 @@ class MECOrchestrator:
                 logger.error(f"Device tracker error: {e}")
                 await asyncio.sleep(30)
     
-    async def _predict_and_premigrate(self, device: MobileDevice):
+    async def _predict_and_premigrate(self, device -> None: MobileDevice) -> None:
         """Predict device movement and pre-migrate services."""
         # Simplified prediction based on historical handovers
         # In reality, this would use ML models and mobility patterns
@@ -890,12 +890,12 @@ class MECOrchestrator:
             # Consider pre-migration to nearby nodes
             pass
     
-    async def _trigger_scale_up(self, node_id: str):
+    async def _trigger_scale_up(self, node_id -> None: str) -> None:
         """Trigger scale-up for overloaded node."""
         logger.info(f"Triggering scale-up for node {node_id}")
         # In reality, this would provision additional resources
     
-    async def _trigger_scale_down(self, node_id: str):
+    async def _trigger_scale_down(self, node_id -> None: str) -> None:
         """Trigger scale-down for underutilized node."""
         logger.info(f"Triggering scale-down for node {node_id}")
         # In reality, this would deallocate unused resources
@@ -987,7 +987,7 @@ async def deploy_edge_service(
 
 if __name__ == "__main__":
     # Example usage
-    async def main():
+    async def main() -> None:
         orchestrator = await create_mec_orchestrator()
         
         try:

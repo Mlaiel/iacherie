@@ -195,7 +195,7 @@ class ComplianceEnvironmentManager:
     - Legal documentation management
     """
     
-    def __init__(self, config_path: Optional[str] = None):
+    def __init__(self, config_path -> None: Optional[str] = None) -> None:
         self.config_path = config_path or "/config/compliance.yml"
         self.environment = "compliance"
         
@@ -642,7 +642,7 @@ Get compliance environment health status"""
         }
     
     # Private helper methods
-    def _initialize_active_regulations(self):
+    def _initialize_active_regulations(self) -> None:
         """
 Initialize active regulations based on configuration"""
         if self.gdpr_config.enabled:
@@ -658,32 +658,32 @@ Initialize active regulations based on configuration"""
         if os.getenv('LGPD_ENABLED', 'false').lower() == 'true':
             self.active_regulations.add(ComplianceRegulation.LGPD)
     
-    def _setup_gdpr_compliance(self):
+    def _setup_gdpr_compliance(self) -> None:
         """
 Setup GDPR compliance controls"""
         logger.info("Setting up GDPR compliance controls")
     
-    def _setup_ccpa_compliance(self):
+    def _setup_ccpa_compliance(self) -> None:
         """Setup CCPA compliance controls"""
         logger.info("Setting up CCPA compliance controls")
     
-    def _setup_copyright_compliance(self):
+    def _setup_copyright_compliance(self) -> None:
         """Setup copyright compliance controls"""
         logger.info("Setting up copyright compliance controls")
     
-    def _setup_data_protection_controls(self):
+    def _setup_data_protection_controls(self) -> None:
         """Setup data protection controls"""
         logger.info("Setting up data protection controls")
     
-    def _setup_audit_monitoring(self):
+    def _setup_audit_monitoring(self) -> None:
         """Setup audit and monitoring"""
         logger.info("Setting up audit and monitoring")
     
-    def _setup_consent_management(self):
+    def _setup_consent_management(self) -> None:
         """Setup consent management system"""
         logger.info("Setting up consent management system")
     
-    def _setup_data_subject_rights(self):
+    def _setup_data_subject_rights(self) -> None:
         """Setup data subject rights management"""
         logger.info("Setting up data subject rights management")
     
@@ -717,8 +717,8 @@ Setup GDPR compliance controls"""
             expiry = datetime.now() + timedelta(days=730)  # 2 years
         return expiry.isoformat()
     
-    def _log_audit_event(self, event_type: AuditEventType, user_id: str = None, 
-                        details: Dict[str, Any] = None):
+    def _log_audit_event(self, event_type -> None: AuditEventType, user_id -> None: str = None, 
+                        details -> None: Dict[str, Any] = None) -> None:
         """
 Log audit event"""
         event = {
@@ -734,7 +734,7 @@ Log audit event"""
         self.audit_events.append(event)
         logger.debug(f"Audit event logged: {event['event_id']}")
     
-    def _process_consent_withdrawal(self, consent_id: str):
+    def _process_consent_withdrawal(self, consent_id -> None: str) -> None:
         """Process consent withdrawal"""
         logger.info(f"Processing consent withdrawal: {consent_id}")
         # Implement consent withdrawal processing logic
@@ -753,28 +753,28 @@ Log audit event"""
         return due_date.isoformat()
     
     # Data subject request processing methods
-    def _process_access_request(self, request_id: str):
+    def _process_access_request(self, request_id -> None: str) -> None:
         """
 Process data access request"""
         logger.info(f"Processing access request: {request_id}")
     
-    def _process_erasure_request(self, request_id: str):
+    def _process_erasure_request(self, request_id -> None: str) -> None:
         """Process data erasure request"""
         logger.info(f"Processing erasure request: {request_id}")
     
-    def _process_portability_request(self, request_id: str):
+    def _process_portability_request(self, request_id -> None: str) -> None:
         """Process data portability request"""
         logger.info(f"Processing portability request: {request_id}")
     
-    def _process_rectification_request(self, request_id: str):
+    def _process_rectification_request(self, request_id -> None: str) -> None:
         """Process data rectification request"""
         logger.info(f"Processing rectification request: {request_id}")
     
-    def _process_restriction_request(self, request_id: str):
+    def _process_restriction_request(self, request_id -> None: str) -> None:
         """Process data processing restriction request"""
         logger.info(f"Processing restriction request: {request_id}")
     
-    def _process_objection_request(self, request_id: str):
+    def _process_objection_request(self, request_id -> None: str) -> None:
         """Process data processing objection request"""
         logger.info(f"Processing objection request: {request_id}")
     
@@ -841,7 +841,7 @@ Check security violations"""
 Check copyright violations"""
         return []  # Placeholder
     
-    def _generate_compliance_alerts(self, violations: List[Dict]):
+    def _generate_compliance_alerts(self, violations -> None: List[Dict]) -> None:
         """
 Generate compliance alerts"""
         logger.warning(f"Critical compliance violations detected: {len(violations)}")

@@ -145,7 +145,7 @@ class DisputeResolutionTracker:
     - Satisfaction measurement and feedback
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.disputes: Dict[str, DisputeRecord] = {}
         self.mediators: Dict[str, MediatorProfile] = {}
@@ -161,7 +161,7 @@ class DisputeResolutionTracker:
         
         logger.info("⚖️ Dispute Resolution Tracker initialized")
     
-    def _setup_ai_mediation_engine(self):
+    def _setup_ai_mediation_engine(self) -> None:
         """Initialize AI mediation engine."""
         self.ai_mediation_rules = {
             "automatic_resolution_criteria": {
@@ -186,7 +186,7 @@ class DisputeResolutionTracker:
         
         logger.info("🤖 AI mediation engine configured")
     
-    def _setup_resolution_workflows(self):
+    def _setup_resolution_workflows(self) -> None:
         """Initialize resolution workflow processes."""
         self.resolution_workflows = {
             "standard_timeline": {
@@ -211,7 +211,7 @@ class DisputeResolutionTracker:
         
         logger.info("📋 Resolution workflows configured")
     
-    def _setup_performance_tracking(self):
+    def _setup_performance_tracking(self) -> None:
         """Initialize performance tracking system."""
         self.performance_metrics = {
             "resolution_time_targets": {
@@ -233,7 +233,7 @@ class DisputeResolutionTracker:
         
         logger.info("📊 Performance tracking configured")
     
-    def _setup_conflict_detection(self):
+    def _setup_conflict_detection(self) -> None:
         """Initialize proactive conflict detection."""
         self.conflict_indicators = {
             "communication_patterns": {
@@ -767,8 +767,8 @@ class DisputeResolutionTracker:
             "finalized_at": dispute.resolved_at.isoformat()
         }
     
-    async def _log_dispute_action(self, dispute_id: str, action_type: str, 
-                                performer_id: str, description: str, outcome: str):
+    async def _log_dispute_action(self, dispute_id -> None: str, action_type -> None: str, 
+                                performer_id -> None: str, description -> None: str, outcome -> None: str) -> None:
         """Log an action taken on a dispute."""
         if dispute_id in self.disputes:
             action = DisputeResolutionAction(
@@ -831,7 +831,7 @@ class DisputeResolutionTracker:
             dispute.reported_against_id: 3.8
         }
     
-    async def _update_mediator_performance(self, dispute: DisputeRecord):
+    async def _update_mediator_performance(self, dispute -> None: DisputeRecord) -> None:
         """Update mediator performance metrics."""
         if dispute.assigned_mediator_id and dispute.assigned_mediator_id in self.mediators:
             mediator = self.mediators[dispute.assigned_mediator_id]
@@ -850,7 +850,7 @@ class DisputeResolutionTracker:
             current_avg = mediator.average_resolution_time * (mediator.total_cases - 1)
             mediator.average_resolution_time = (current_avg + resolution_time) / mediator.total_cases
     
-    async def _update_resolution_analytics(self, dispute: DisputeRecord, resolution_result: Dict[str, Any]):
+    async def _update_resolution_analytics(self, dispute -> None: DisputeRecord, resolution_result -> None: Dict[str, Any]) -> None:
         """Update analytics with resolution data."""
         # Update pattern recognition
         dispute_pattern = f"{dispute.dispute_type.value}_{dispute.priority.value}"

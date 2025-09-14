@@ -138,7 +138,7 @@ class CompetitiveAnalysisMonitor:
     - Strategic recommendation generation
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.competitors: Dict[str, CompetitorProfile] = {}
         self.metrics_history: Dict[str, List[CompetitiveMetric]] = defaultdict(list)
@@ -154,7 +154,7 @@ class CompetitiveAnalysisMonitor:
         
         logger.info("🔍 Competitive Analysis Monitor initialized")
     
-    def _setup_analysis_models(self):
+    def _setup_analysis_models(self) -> None:
         """Initialize competitive analysis models."""
         self.analysis_models = {
             "market_positioning": {
@@ -183,7 +183,7 @@ class CompetitiveAnalysisMonitor:
         
         logger.info("📊 Analysis models configured")
     
-    def _setup_data_sources(self):
+    def _setup_data_sources(self) -> None:
         """Initialize data sources for competitive intelligence."""
         self.data_sources = {
             "web_scraping": {
@@ -220,7 +220,7 @@ class CompetitiveAnalysisMonitor:
         
         logger.info("🌐 Data sources configured")
     
-    def _setup_intelligence_algorithms(self):
+    def _setup_intelligence_algorithms(self) -> None:
         """Initialize intelligence analysis algorithms."""
         self.intelligence_algorithms = {
             "swot_analysis": {
@@ -251,7 +251,7 @@ class CompetitiveAnalysisMonitor:
         
         logger.info("🧠 Intelligence algorithms configured")
     
-    def _setup_benchmarking_framework(self):
+    def _setup_benchmarking_framework(self) -> None:
         """Initialize competitive benchmarking framework."""
         self.benchmarking_framework = {
             "performance_indicators": {
@@ -604,7 +604,7 @@ class CompetitiveAnalysisMonitor:
     
     # Helper methods
     
-    async def _initialize_competitor_monitoring(self, competitor: CompetitorProfile):
+    async def _initialize_competitor_monitoring(self, competitor -> None: CompetitorProfile) -> None:
         """Initialize monitoring for a new competitor."""
         # Set up data collection schedules
         monitoring_config = {

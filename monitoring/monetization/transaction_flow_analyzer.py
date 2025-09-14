@@ -133,7 +133,7 @@ class TransactionFlowAnalyzer:
     analyzes conversion funnels, and provides optimization recommendations.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the transaction flow analyzer."""
         self.active_flows: Dict[str, TransactionFlow] = {}
         self.completed_flows: List[TransactionFlow] = []
@@ -148,7 +148,7 @@ class TransactionFlowAnalyzer:
         self._initialize_stage_tracking()
         self._setup_optimization_rules()
     
-    def _initialize_stage_tracking(self):
+    def _initialize_stage_tracking(self) -> None:
         """Initialize performance tracking for each stage."""
         for stage in TransactionStage:
             self.stage_performance[stage] = {
@@ -159,7 +159,7 @@ class TransactionFlowAnalyzer:
                 "bottleneck_score": 0.0
             }
     
-    def _setup_optimization_rules(self):
+    def _setup_optimization_rules(self) -> None:
         """Setup transaction flow optimization rules."""
         self.optimization_rules = [
             {
@@ -307,7 +307,7 @@ class TransactionFlowAnalyzer:
         logger.debug(f"Added {stage.value} event to flow {flow_id}")
         return True
     
-    def _complete_flow(self, flow_id: str, final_stage: TransactionStage, final_status: str):
+    def _complete_flow(self, flow_id -> None: str, final_stage -> None: TransactionStage, final_status -> None: str) -> None:
         """Complete a transaction flow."""
         
         flow = self.active_flows[flow_id]
@@ -336,7 +336,7 @@ class TransactionFlowAnalyzer:
         
         logger.info(f"Completed flow {flow_id}: {final_status} in {flow.total_duration_ms}ms")
     
-    def _update_stage_metrics(self, stage: TransactionStage, duration_ms: Optional[int], status: str):
+    def _update_stage_metrics(self, stage -> None: TransactionStage, duration_ms -> None: Optional[int], status -> None: str) -> None:
         """Update performance metrics for a specific stage."""
         
         stage_metrics = self.stage_performance[stage]
@@ -356,7 +356,7 @@ class TransactionFlowAnalyzer:
         # Update error rate
         stage_metrics["error_rate"] = 1.0 - stage_metrics["success_rate"]
     
-    def _update_gateway_metrics(self, gateway: str, stage: TransactionStage, duration_ms: Optional[int], status: str):
+    def _update_gateway_metrics(self, gateway -> None: str, stage -> None: TransactionStage, duration_ms -> None: Optional[int], status -> None: str) -> None:
         """Update performance metrics for a specific gateway."""
         
         if gateway not in self.gateway_performance:
@@ -442,7 +442,7 @@ class TransactionFlowAnalyzer:
         
         return opportunities
     
-    def _update_flow_metrics(self):
+    def _update_flow_metrics(self) -> None:
         """Update overall flow performance metrics."""
         
         total_flows = len(self.completed_flows)
@@ -505,7 +505,7 @@ class TransactionFlowAnalyzer:
         total_weighted_score = sum(score * weight for _, score, weight in factors)
         return round(total_weighted_score, 3)
     
-    def _check_for_bottlenecks(self, flow: TransactionFlow):
+    def _check_for_bottlenecks(self, flow -> None: TransactionFlow) -> None:
         """Check for bottlenecks in the completed flow."""
         
         # Analyze each stage for potential bottlenecks

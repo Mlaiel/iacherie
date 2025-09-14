@@ -71,7 +71,7 @@ class SafetyProtocol:
 class BrandSafetyGuardian:
     """Advanced brand safety monitoring and protection system"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
         
@@ -102,7 +102,7 @@ class BrandSafetyGuardian:
         
         self.logger.info("BrandSafetyGuardian initialized")
     
-    def _initialize_default_protocols(self):
+    def _initialize_default_protocols(self) -> None:
         """Initialize default brand safety protocols"""
         
         # Content Safety Protocol
@@ -434,7 +434,7 @@ class BrandSafetyGuardian:
         
         return threats
     
-    async def _trigger_automated_response(self, threat: BrandThreat):
+    async def _trigger_automated_response(self, threat -> None: BrandThreat) -> None:
         """Trigger automated response to high-priority threats"""
         try:
             self.logger.warning(f"Triggering automated response for threat: {threat.threat_id}")
@@ -474,7 +474,7 @@ class BrandSafetyGuardian:
         
         return None
     
-    async def _execute_safety_action(self, action: str, threat: BrandThreat):
+    async def _execute_safety_action(self, action -> None: str, threat -> None: BrandThreat) -> None:
         """Execute a specific safety action"""
         try:
             if action == 'pause_content_distribution':
@@ -523,7 +523,7 @@ class BrandSafetyGuardian:
         
         return False
     
-    async def _escalate_threat(self, threat: BrandThreat):
+    async def _escalate_threat(self, threat -> None: BrandThreat) -> None:
         """Escalate threat to higher authorities"""
         try:
             self.logger.critical(f"ESCALATING THREAT: {threat.threat_id} - {threat.description}")

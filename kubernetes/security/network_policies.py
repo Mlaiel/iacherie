@@ -42,7 +42,7 @@ class NetworkPolicySpec:
 class NetworkPolicyManager:
     """Manages Kubernetes Network Policies for micro-segmentation"""
     
-    def __init__(self, namespace: str = "ia-influencer"):
+    def __init__(self, namespace -> None: str = "ia-influencer") -> None:
         self.namespace = namespace
         self.policies: Dict[str, NetworkPolicySpec] = {}
         
@@ -311,7 +311,7 @@ class NetworkPolicyManager:
         
         return manifests
     
-    def save_manifests_to_files(self, output_dir: str = "./k8s-manifests/network-policies"):
+    def save_manifests_to_files(self, output_dir -> None: str = "./k8s-manifests/network-policies") -> None:
         """Save all network policy manifests to files"""
         import os
         os.makedirs(output_dir, exist_ok=True)

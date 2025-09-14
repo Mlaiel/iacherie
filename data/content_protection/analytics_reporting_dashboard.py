@@ -23,7 +23,7 @@ logger = structlog.get_logger()
 class AnalyticsReportingDashboard:
     """Unified analytics and reporting system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.redis_client = None
         self.mongo_client = None
         self.metrics_cache = {}
@@ -44,7 +44,7 @@ class AnalyticsReportingDashboard:
             logger.error(f"Failed to initialize Analytics Dashboard: {e}")
             return False
     
-    async def _initialize_database_collections(self):
+    async def _initialize_database_collections(self) -> None:
         """Initialize required database collections"""
         try:
             if self.mongo_client:
@@ -208,7 +208,7 @@ class AnalyticsReportingDashboard:
         
         return recommendations
     
-    async def _cache_report(self, report: Dict[str, Any]):
+    async def _cache_report(self, report -> None: Dict[str, Any]) -> None:
         """Cache report for performance"""
         try:
             if self.redis_client:
@@ -322,7 +322,7 @@ class AnalyticsReportingDashboard:
 class ProtectionAnalyticsDashboard:
     """Protection-specific analytics with advanced insights"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.metrics_history = []
         self.alert_thresholds = {
             "violation_rate": 0.05,
@@ -438,7 +438,7 @@ class ProtectionAnalyticsDashboard:
 class PerformanceMetricsCollector:
     """Enhanced performance metrics collection with real-time monitoring"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.metrics_buffer = []
         self.collection_interval = 60  # seconds
         self.last_collection = None
@@ -560,7 +560,7 @@ class PerformanceMetricsCollector:
 class ProtectionReportingEngine:
     """Advanced automated reporting system with multiple formats"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.report_templates = {
             "executive_summary": "Executive protection overview",
             "detailed_analytics": "Comprehensive analytics report",

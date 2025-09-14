@@ -141,7 +141,7 @@ class SpecialtyResult:
 class BasePersonalityAgent(ABC):
     """Base class for personality agents"""
     
-    def __init__(self, profile: PersonalityProfile):
+    def __init__(self, profile -> None: PersonalityProfile) -> None:
         self.profile = profile
         self.interaction_count = 0
         self.last_activity = datetime.now()
@@ -157,7 +157,7 @@ class BasePersonalityAgent(ABC):
         """Create specialized content"""
         pass
     
-    def update_activity(self):
+    def update_activity(self) -> None:
         """Update activity tracking"""
         self.interaction_count += 1
         self.last_activity = datetime.now()
@@ -165,7 +165,7 @@ class BasePersonalityAgent(ABC):
 class BaseSpecialtyAgent(ABC):
     """Base class for specialty agents"""
     
-    def __init__(self, specialty_type: SpecialtyType, specialization_level: SpecializationLevel):
+    def __init__(self, specialty_type -> None: SpecialtyType, specialization_level -> None: SpecializationLevel) -> None:
         self.specialty_type = specialty_type
         self.specialization_level = specialization_level
         self.processing_count = 0
@@ -186,7 +186,7 @@ class BaseSpecialtyAgent(ABC):
 class FashionExpertAgent(BasePersonalityAgent):
     """Fashion and style expert personality"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         profile = PersonalityProfile(
             personality_type=PersonalityType.FASHION_EXPERT,
             expertise_level=ExpertiseLevel.EXPERT,
@@ -228,7 +228,7 @@ class FashionExpertAgent(BasePersonalityAgent):
 class FitnessCoachAgent(BasePersonalityAgent):
     """Fitness and wellness coach personality"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         profile = PersonalityProfile(
             personality_type=PersonalityType.FITNESS_COACH,
             expertise_level=ExpertiseLevel.EXPERT,
@@ -268,7 +268,7 @@ class FitnessCoachAgent(BasePersonalityAgent):
 class TechReviewerAgent(BasePersonalityAgent):
     """Technology reviewer and expert personality"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         profile = PersonalityProfile(
             personality_type=PersonalityType.TECH_REVIEWER,
             expertise_level=ExpertiseLevel.EXPERT,
@@ -308,7 +308,7 @@ class TechReviewerAgent(BasePersonalityAgent):
 class FoodCriticAgent(BasePersonalityAgent):
     """Food critic and culinary expert personality"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         profile = PersonalityProfile(
             personality_type=PersonalityType.FOOD_CRITIC,
             expertise_level=ExpertiseLevel.EXPERT,
@@ -350,7 +350,7 @@ class FoodCriticAgent(BasePersonalityAgent):
 class AudioSpecialistAgent(BaseSpecialtyAgent):
     """Audio processing and analysis specialist"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__(SpecialtyType.AUDIO_SPECIALIST, SpecializationLevel.EXPERT)
     
     async def process(self, input_data: Any, parameters: Dict[str, Any] = None) -> SpecialtyResult:
@@ -384,7 +384,7 @@ class AudioSpecialistAgent(BaseSpecialtyAgent):
 class VideoSpecialistAgent(BaseSpecialtyAgent):
     """Video processing and analysis specialist"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__(SpecialtyType.VIDEO_SPECIALIST, SpecializationLevel.EXPERT)
     
     async def process(self, input_data: Any, parameters: Dict[str, Any] = None) -> SpecialtyResult:
@@ -418,7 +418,7 @@ class VideoSpecialistAgent(BaseSpecialtyAgent):
 class ImageSpecialistAgent(BaseSpecialtyAgent):
     """Image processing and analysis specialist"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__(SpecialtyType.IMAGE_SPECIALIST, SpecializationLevel.EXPERT)
     
     async def process(self, input_data: Any, parameters: Dict[str, Any] = None) -> SpecialtyResult:
@@ -452,7 +452,7 @@ class ImageSpecialistAgent(BaseSpecialtyAgent):
 class TextSpecialistAgent(BaseSpecialtyAgent):
     """Text processing and analysis specialist"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__(SpecialtyType.TEXT_SPECIALIST, SpecializationLevel.EXPERT)
     
     async def process(self, input_data: Any, parameters: Dict[str, Any] = None) -> SpecialtyResult:
@@ -486,7 +486,7 @@ class TextSpecialistAgent(BaseSpecialtyAgent):
 class EngagementSpecialistAgent(BaseSpecialtyAgent):
     """Engagement optimization specialist"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__(SpecialtyType.ENGAGEMENT_SPECIALIST, SpecializationLevel.EXPERT)
     
     async def process(self, input_data: Any, parameters: Dict[str, Any] = None) -> SpecialtyResult:
@@ -521,11 +521,11 @@ class EngagementSpecialistAgent(BaseSpecialtyAgent):
 class PersonalityAgents:
     """Manager for personality agents"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.agents: Dict[PersonalityType, BasePersonalityAgent] = {}
         self._initialize_agents()
     
-    def _initialize_agents(self):
+    def _initialize_agents(self) -> None:
         """Initialize all personality agents"""
         self.agents[PersonalityType.FASHION_EXPERT] = FashionExpertAgent()
         self.agents[PersonalityType.FITNESS_COACH] = FitnessCoachAgent()
@@ -551,11 +551,11 @@ class PersonalityAgents:
 class SpecialtyAgents:
     """Manager for specialty agents"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.agents: Dict[SpecialtyType, BaseSpecialtyAgent] = {}
         self._initialize_agents()
     
-    def _initialize_agents(self):
+    def _initialize_agents(self) -> None:
         """Initialize all specialty agents"""
         self.agents[SpecialtyType.AUDIO_SPECIALIST] = AudioSpecialistAgent()
         self.agents[SpecialtyType.VIDEO_SPECIALIST] = VideoSpecialistAgent()

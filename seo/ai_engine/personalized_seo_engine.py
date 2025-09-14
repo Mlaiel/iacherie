@@ -137,7 +137,7 @@ class PersonalizationInsight:
 class PersonalizedSEOEngine:
     """Advanced personalized SEO optimization engine with AI-powered recommendations"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize Personalized SEO Engine
         
         Args:
@@ -1025,9 +1025,9 @@ class PersonalizedSEOEngine:
     
     def _update_recommendation_history(
         self,
-        user_id: str,
-        recommendations: List[PersonalizedRecommendation]
-    ):
+        user_id -> None: str,
+        recommendations -> None: List[PersonalizedRecommendation]
+    ) -> None:
         """Update recommendation history for user"""
         history_entry = {
             "timestamp": datetime.now().isoformat(),
@@ -1039,7 +1039,7 @@ class PersonalizedSEOEngine:
         # Keep only last 10 entries
         self.recommendation_history[user_id] = self.recommendation_history[user_id][-10:]
     
-    async def _initialize_models(self):
+    async def _initialize_models(self) -> None:
         """Initialize ML models with synthetic data"""
         try:
             # Generate synthetic training data for models
@@ -1155,10 +1155,10 @@ class PersonalizedSEOEngine:
     
     async def _update_personalization_models(
         self,
-        user_id: str,
-        feedback_data: Dict[str, Any],
-        performance_data: Optional[Dict[str, Any]]
-    ):
+        user_id -> None: str,
+        feedback_data -> None: Dict[str, Any],
+        performance_data -> None: Optional[Dict[str, Any]]
+    ) -> None:
         """Update models with new data"""
         pass  # Model updates would happen here
     
@@ -1212,7 +1212,7 @@ class PersonalizedSEOEngine:
 
 
 # Example usage
-async def main():
+async def main() -> None:
     """Example usage of Personalized SEO Engine"""
     try:
         # Initialize engine

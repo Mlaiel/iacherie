@@ -1,3 +1,8 @@
+"""
+Creator Affiliation Workflow module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Creator Affiliation Workflow - Workflow Affiliation Créateurs Multi-Format
@@ -195,7 +200,7 @@ class CreatorAffiliationWorkflowDemo:
     Multi-format avec business logic awareness et revenue optimization
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(f"{__name__}.CreatorAffiliationWorkflowDemo")
         
         # Simulate service dependencies
@@ -1072,7 +1077,7 @@ class CreatorAffiliationWorkflowDemo:
         }
 
 
-async def demonstrate():
+async def demonstrate() -> None:
     """Main demonstration function"""
     logger.info("🎬 DÉMARRAGE DÉMONSTRATION CREATOR AFFILIATION WORKFLOWS")
     logger.info("=" * 70)
@@ -1139,7 +1144,7 @@ async def demonstrate():
         return False
 
 
-async def main():
+async def main() -> None:
     """Main entry point"""
     try:
         success = await demonstrate()

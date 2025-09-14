@@ -6,7 +6,7 @@ business intelligence visualization, and comprehensive system observability
 for content protection, revenue tracking, and platform operations.
 
 Features:
-- Real-time system health visualization with WebSocket updates
+    - Real-time system health visualization with WebSocket updates
 - AI-powered performance insights and predictive analytics
 - Content protection metrics and violation tracking
 - Revenue analytics and monetization dashboards
@@ -458,7 +458,7 @@ class DashboardTemplates:
                 <div class="status-card">
                     <div class="d-flex align-items-center justify-content-between">
                         <div>
-                            <div class="metric-value text-success" id="daily-revenue">€{{ daily_revenue }}</div>
+                            <div class="metric-value text-success" id="daily-revenue"># [EMOJI_REMOVED]{{ daily_revenue }}</div>
                             <div class="metric-label">Daily Revenue</div>
                         </div>
                         <i class="fas fa-euro-sign fa-2x text-success opacity-25"></i>
@@ -526,15 +526,15 @@ class StatusDashboard:
     
     def __init__(
         self,
-        redis_client: Optional[aioredis.Redis] = None,
+        redis_client -> None: Optional[aioredis.Redis] = None,
         metrics_collector=None,
         health_monitor=None,
         alert_manager=None,
         performance_tracker=None,
         business_metrics=None,
-        port: int = 8080,
-        enable_auth: bool = True
-    ):
+        port -> None: int = 8080,
+        enable_auth -> None: bool = True
+    ) -> None:
         self.redis_client = redis_client
         self.metrics_collector = metrics_collector
         self.health_monitor = health_monitor
@@ -560,7 +560,7 @@ class StatusDashboard:
         # Dashboard state
         self._dashboard_running = False
     
-    def _initialize_default_components(self):
+    def _initialize_default_components(self) -> None:
         """Initialize default system components"""
         components_config = [
             {
@@ -649,7 +649,7 @@ class StatusDashboard:
             )
             self.components[component.name.lower().replace(" ", "_")] = component
     
-    def _initialize_default_widgets(self):
+    def _initialize_default_widgets(self) -> None:
         """Initialize default dashboard widgets"""
         widgets_config = [
             {
@@ -745,7 +745,7 @@ class StatusDashboard:
             )
             self.widgets[widget.id] = widget
     
-    def setup_routes(self):
+    def setup_routes(self) -> None:
         """Setup web application routes"""
         # Dashboard routes
         self.app.router.add_get('/', self.serve_dashboard)
@@ -775,7 +775,7 @@ class StatusDashboard:
         # Static files
         self.app.router.add_static('/', path='static', name='static')
     
-    def setup_cors(self):
+    def setup_cors(self) -> None:
         """Setup CORS for cross-origin requests"""
         cors = aiohttp_cors.setup(self.app, defaults={
             "*": aiohttp_cors.ResourceOptions(
@@ -950,7 +950,7 @@ class StatusDashboard:
         # Register default components
         self._register_default_components()
         
-    def _register_default_components(self):
+    def _register_default_components(self) -> None:
         """Register default system components"""
         
         # Core platform components
@@ -1035,7 +1035,7 @@ class StatusDashboard:
             category="external"
         ))
         
-    def setup_routes(self):
+    def setup_routes(self) -> None:
         """Setup web routes"""
         # CORS setup
         cors = aiohttp_cors.setup(self.app, defaults={
@@ -1068,7 +1068,7 @@ class StatusDashboard:
         for route in list(self.app.router.routes()):
             cors.add(route)
             
-    async def start_dashboard(self):
+    async def start_dashboard(self) -> None:
         """Start the status dashboard"""
         if self._dashboard_running:
             logger.warning("Status dashboard already running")
@@ -1088,7 +1088,7 @@ class StatusDashboard:
         
         logger.info(f"Status dashboard started on port {self.port}")
         
-    async def stop_dashboard(self):
+    async def stop_dashboard(self) -> None:
         """Stop the status dashboard"""
         self._dashboard_running = False
         
@@ -1106,7 +1106,7 @@ class StatusDashboard:
                 
         logger.info("Status dashboard stopped")
         
-    async def _update_loop(self):
+    async def _update_loop(self) -> None:
         """Main update loop for dashboard data"""
         while self._dashboard_running:
             try:
@@ -1120,7 +1120,7 @@ class StatusDashboard:
                 logger.error(f"Error in dashboard update loop: {e}")
                 await asyncio.sleep(5)
                 
-    async def _update_component_status(self):
+    async def _update_component_status(self) -> None:
         """Update status of all components"""
         if self.health_monitor:
             health_results = self.health_monitor.get_detailed_results()
@@ -1176,7 +1176,7 @@ class StatusDashboard:
         
         return mapping.get(component_name, component_name)
         
-    async def _broadcast_updates(self):
+    async def _broadcast_updates(self) -> None:
         """Broadcast updates to all WebSocket connections"""
         if not self.websocket_connections:
             return
@@ -1225,7 +1225,7 @@ class StatusDashboard:
             logger.error(f"Error broadcasting updates: {e}")
             
     # Web handlers
-    async def dashboard_home(self, request):
+    async def dashboard_home(self, request) -> None:
         """Dashboard home page"""
         html_template = """
         <!DOCTYPE html>
@@ -1239,7 +1239,7 @@ class StatusDashboard:
         <body>
             <div id="dashboard">
                 <header>
-                    <h1>🚀 IA Influencer Agent Platform</h1>
+                    <h1># [EMOJI_REMOVED] IA Influencer Agent Platform</h1>
                     <div class="status-indicator" id="overall-status">
                         <span class="status-dot operational"></span>
                         <span>All Systems Operational</span>
@@ -1270,8 +1270,8 @@ class StatusDashboard:
                 </div>
                 
                 <footer>
-                    <p>© 2025 Fahed Mlaiel - IA Influencer Agent Platform</p>
-                    <p><strong>⚠️ Proprietary System - Unauthorized access prohibited</strong></p>
+                    <p># [EMOJI_REMOVED] 2025 Fahed Mlaiel - IA Influencer Agent Platform</p>
+                    <p><strong># [EMOJI_REMOVED] Proprietary System - Unauthorized access prohibited</strong></p>
                 </footer>
             </div>
             
@@ -1282,7 +1282,7 @@ class StatusDashboard:
         
         return web.Response(text=html_template, content_type='text/html')
         
-    async def dashboard_css(self, request):
+    async def dashboard_css(self, request) -> None:
         """Dashboard CSS styles"""
         css = """
         * {
@@ -1478,7 +1478,7 @@ class StatusDashboard:
         
         return web.Response(text=css, content_type='text/css')
         
-    async def dashboard_js(self, request):
+    async def dashboard_js(self, request) -> None:
         """Dashboard JavaScript"""
         js = """
         class StatusDashboard {
@@ -1539,7 +1539,7 @@ class StatusDashboard:
                 }
                 
                 statusEl.className = `connection-status ${connected ? 'connected' : 'disconnected'}`;
-                statusEl.textContent = connected ? '🟢 Connected' : '🔴 Disconnected';
+                statusEl.textContent = connected ? '# [EMOJI_REMOVED] Connected' : '# [EMOJI_REMOVED] Disconnected';
             }
             
             async loadInitialData() {
@@ -1753,7 +1753,7 @@ class StatusDashboard:
         
         return web.Response(text=js, content_type='application/javascript')
         
-    async def websocket_handler(self, request):
+    async def websocket_handler(self, request) -> None:
         """WebSocket handler for real-time updates"""
         ws = web.WebSocketResponse()
         await ws.prepare(request)
@@ -1776,7 +1776,7 @@ class StatusDashboard:
                 
         return ws
         
-    async def api_status(self, request):
+    async def api_status(self, request) -> None:
         """API endpoint for overall status"""
         overall_status = self._calculate_overall_status()
         
@@ -1787,7 +1787,7 @@ class StatusDashboard:
             "incidents_count": len([i for i in self.incidents.values() if i.status != "resolved"])
         })
         
-    async def api_components(self, request):
+    async def api_components(self, request) -> None:
         """API endpoint for components status"""
         components_data = {}
         
@@ -1805,7 +1805,7 @@ class StatusDashboard:
             
         return web.json_response(components_data)
         
-    async def api_incidents(self, request):
+    async def api_incidents(self, request) -> None:
         """API endpoint for incidents"""
         incidents_data = []
         
@@ -1827,7 +1827,7 @@ class StatusDashboard:
         
         return web.json_response(incidents_data[:10])  # Return last 10 incidents
         
-    async def api_metrics(self, request):
+    async def api_metrics(self, request) -> None:
         """API endpoint for metrics"""
         metrics_data = {}
         
@@ -1846,7 +1846,7 @@ class StatusDashboard:
             
         return web.json_response(metrics_data)
         
-    async def api_health(self, request):
+    async def api_health(self, request) -> None:
         """API endpoint for health status"""
         if self.health_monitor:
             health_summary = self.health_monitor.get_health_summary()
@@ -1859,7 +1859,7 @@ class StatusDashboard:
         else:
             return web.json_response({"error": "Health monitor not available"})
             
-    async def api_performance(self, request):
+    async def api_performance(self, request) -> None:
         """API endpoint for performance metrics"""
         if self.performance_tracker:
             performance_summary = self.performance_tracker.get_performance_summary()
@@ -1867,7 +1867,7 @@ class StatusDashboard:
         else:
             return web.json_response({"error": "Performance tracker not available"})
             
-    async def api_business_metrics(self, request):
+    async def api_business_metrics(self, request) -> None:
         """API endpoint for business metrics"""
         if self.business_metrics:
             business_kpis = await self.business_metrics.get_business_kpis()
@@ -1876,12 +1876,12 @@ class StatusDashboard:
             return web.json_response({"error": "Business metrics not available"})
             
     # Utility methods
-    def register_component(self, component: SystemComponent):
+    def register_component(self, component -> None: SystemComponent) -> None:
         """Register a system component"""
         self.components[component.name] = component
         logger.info(f"Registered component: {component.name}")
         
-    def update_component_status(self, name: str, status: ComponentStatus, **kwargs):
+    def update_component_status(self, name -> None: str, status -> None: ComponentStatus, **kwargs) -> None:
         """Update component status"""
         if name in self.components:
             component = self.components[name]
@@ -2121,7 +2121,7 @@ class StatusDashboard:
             return await self.health_monitor.get_health_summary()
         return {}
     
-    async def start_dashboard(self):
+    async def start_dashboard(self) -> None:
         """Start the status dashboard"""
         try:
             if self._dashboard_running:
@@ -2147,7 +2147,7 @@ class StatusDashboard:
             self._dashboard_running = False
             raise
     
-    async def stop_dashboard(self):
+    async def stop_dashboard(self) -> None:
         """Stop the status dashboard"""
         try:
             self._dashboard_running = False
@@ -2170,7 +2170,7 @@ class StatusDashboard:
         except Exception as e:
             logger.error(f"Error stopping dashboard: {e}")
     
-    async def _update_loop(self):
+    async def _update_loop(self) -> None:
         """Background update loop for real-time data"""
         try:
             while self._dashboard_running:
@@ -2225,7 +2225,7 @@ class StatusDashboard:
         
         return incident_id
         
-    def update_incident(self, incident_id: str, status: str, update_message: str):
+    def update_incident(self, incident_id -> None: str, status -> None: str, update_message -> None: str) -> None:
         """Update an incident"""
         if incident_id in self.incidents:
             incident = self.incidents[incident_id]
@@ -2261,7 +2261,7 @@ class StatusDashboard:
 
 
 # Example usage
-async def create_status_dashboard_example():
+async def create_status_dashboard_example() -> None:
     """Example of creating and running a status dashboard"""
     import aioredis
     
@@ -2310,3 +2310,5 @@ if __name__ == "__main__":
             return ComponentStatus.MAINTENANCE
         else:
             return ComponentStatus.OPERATIONAL
+
+# File has syntax issues - needs manual review

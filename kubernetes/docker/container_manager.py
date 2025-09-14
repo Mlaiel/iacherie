@@ -113,7 +113,7 @@ class DockerContainerManager:
     - Automatic scaling capabilities
     """
     
-    def __init__(self, config_path: Optional[Path] = None):
+    def __init__(self, config_path -> None: Optional[Path] = None) -> None:
         """
 Initialize container manager with optional configuration"""
         self.logger = logger

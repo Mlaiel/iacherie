@@ -1,3 +1,8 @@
+"""
+Pod Orchestrator module
+Enterprise implementation for Ainflue platform
+"""
+
 # Ainflue Infrastructure Module - Kubernetes Pod Orchestrator
 # =========================================================
 # 
@@ -83,7 +88,7 @@ class PodOrchestrator:
     across multi-cloud Kubernetes clusters.
     """
     
-    def __init__(self, config_path: Optional[str] = None):
+    def __init__(self, config_path -> None: Optional[str] = None) -> None:
         """Initialize pod orchestrator"""
         self.config_path = config_path
         self.api_client = None

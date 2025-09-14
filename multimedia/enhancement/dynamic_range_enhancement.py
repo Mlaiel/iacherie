@@ -36,7 +36,7 @@ class DynamicRangeConfig:
 class DynamicProcessor:
     """Advanced dynamic range processor with multiple algorithms."""
     
-    def __init__(self, config: DynamicRangeConfig, sample_rate: int):
+    def __init__(self, config -> None: DynamicRangeConfig, sample_rate -> None: int) -> None:
         self.config = config
         self.sample_rate = sample_rate
         
@@ -109,7 +109,7 @@ class DynamicProcessor:
 class MultibandProcessor:
     """Multiband dynamic range processor."""
     
-    def __init__(self, config: DynamicRangeConfig, sample_rate: int):
+    def __init__(self, config -> None: DynamicRangeConfig, sample_rate -> None: int) -> None:
         self.config = config
         self.sample_rate = sample_rate
         
@@ -190,7 +190,7 @@ class MultibandProcessor:
 class AdaptiveDynamicsProcessor:
     """Adaptive dynamics processor that adjusts parameters based on content."""
     
-    def __init__(self, config: DynamicRangeConfig, sample_rate: int):
+    def __init__(self, config -> None: DynamicRangeConfig, sample_rate -> None: int) -> None:
         self.config = config
         self.sample_rate = sample_rate
         self.processor = DynamicProcessor(config, sample_rate)
@@ -229,7 +229,7 @@ class AdaptiveDynamicsProcessor:
         """Convert linear to dB scale."""
         return 20.0 * np.log10(max(linear, 1e-10))
     
-    def adapt_parameters(self, analysis: Dict[str, float]):
+    def adapt_parameters(self, analysis -> None: Dict[str, float]) -> None:
         """Adapt processing parameters based on content analysis."""
         # Adjust threshold based on average level
         if analysis["average_level_db"] < -30:
@@ -254,7 +254,7 @@ class AdaptiveDynamicsProcessor:
 class DynamicRangeEnhancementEngine:
     """Enterprise dynamic range enhancement engine with advanced algorithms."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.config = DynamicRangeConfig()
         
     async def enhance_dynamic_range(

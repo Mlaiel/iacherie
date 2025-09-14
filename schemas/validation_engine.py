@@ -1,4 +1,7 @@
 """
+import asyncio
+from datetime import datetime
+
 🔍 Advanced Validation Engine with Custom Rules
 Enterprise-grade validation system for Ainflue Platform
 
@@ -62,7 +65,7 @@ class ValidationRuleEngine(ABC):
 class ContentValidationRules(ValidationRuleEngine):
     """Content-specific validation rules"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.rules = {
             "content_length": self._validate_content_length,
             "content_format": self._validate_content_format,
@@ -178,7 +181,7 @@ class ContentValidationRules(ValidationRuleEngine):
 class UserValidationRules(ValidationRuleEngine):
     """User-specific validation rules"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.rules = {
             "email_format": self._validate_email_format,
             "password_strength": self._validate_password_strength,
@@ -292,7 +295,7 @@ class UserValidationRules(ValidationRuleEngine):
 class AdvancedValidationEngine:
     """Advanced validation engine with custom rules and context awareness"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.rule_engines: Dict[str, ValidationRuleEngine] = {
             "content": ContentValidationRules(),
             "user": UserValidationRules(),
@@ -375,11 +378,11 @@ class AdvancedValidationEngine:
     
     def _store_validation_history(
         self,
-        entity_type: str,
-        entity_data: Dict[str, Any],
-        results: List[ValidationResult],
-        context: ValidationContext
-    ):
+        entity_type -> None: str,
+        entity_data -> None: Dict[str, Any],
+        results -> None: List[ValidationResult],
+        context -> None: ValidationContext
+    ) -> None:
         """Store validation history for analytics and improvement"""
         history_entry = {
             "timestamp": datetime.datetime.utcnow(),
@@ -397,7 +400,7 @@ class AdvancedValidationEngine:
         
         self.validation_history.append(history_entry)
     
-    def add_custom_rule_engine(self, entity_type: str, rule_engine: ValidationRuleEngine):
+    def add_custom_rule_engine(self, entity_type -> None: str, rule_engine -> None: ValidationRuleEngine) -> None:
         """Add custom rule engine for specific entity type"""
         self.rule_engines[entity_type] = rule_engine
     

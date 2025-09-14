@@ -65,7 +65,7 @@ class AntiPiracyConfig:
     redis_url: str = "redis://localhost:6379"
     blockchain_verification: bool = True
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.fingerprint_types is None:
             self.fingerprint_types = [
                 FingerprintType.PERCEPTUAL_HASH,
@@ -147,7 +147,7 @@ class EnterpriseAntiPiracyEngine:
     - Blockchain-verified authenticity
     """
     
-    def __init__(self, config: Optional[AntiPiracyConfig] = None):
+    def __init__(self, config -> None: Optional[AntiPiracyConfig] = None) -> None:
         self.config = config or AntiPiracyConfig()
         self.logger = logging.getLogger(__name__)
         self.executor = ThreadPoolExecutor(max_workers=6)
@@ -165,7 +165,7 @@ class EnterpriseAntiPiracyEngine:
             FingerprintType.DEEP_CONTENT_HASH: self._generate_deep_content_hash
         }
     
-    def _initialize_ml_models(self):
+    def _initialize_ml_models(self) -> None:
         """Initialize ML models for piracy detection"""
         try:
             # Placeholder for ML model initialization
@@ -182,7 +182,7 @@ class EnterpriseAntiPiracyEngine:
             self.logger.warning(f"ML models initialization failed: {e}")
             self.ml_models = {}
 
-    async def initialize_redis(self):
+    async def initialize_redis(self) -> None:
         """Initialize Redis connection for fingerprint storage"""
         try:
             self.redis_client = redis.from_url(self.config.redis_url)
@@ -264,7 +264,7 @@ class EnterpriseAntiPiracyEngine:
         content_type: str
     ) -> Dict[str, Any]:
         """Generate perceptual hash for images/videos"""
-        def _hash():
+        def _hash() -> None:
             if content_type in ['image', 'photo']:
                 # Image perceptual hashing
                 with Image.open(content_path) as img:
@@ -348,7 +348,7 @@ class EnterpriseAntiPiracyEngine:
         content_type: str
     ) -> Dict[str, Any]:
         """Generate audio fingerprint using spectral analysis"""
-        def _fingerprint():
+        def _fingerprint() -> None:
             try:
                 # Load audio file
                 y, sr = librosa.load(str(content_path), sr=22050, duration=30)
@@ -406,7 +406,7 @@ class EnterpriseAntiPiracyEngine:
         content_type: str
     ) -> Dict[str, Any]:
         """Generate comprehensive video fingerprint"""
-        def _fingerprint():
+        def _fingerprint() -> None:
             try:
                 cap = cv2.VideoCapture(str(content_path))
                 
@@ -480,7 +480,7 @@ class EnterpriseAntiPiracyEngine:
         content_type: str
     ) -> Dict[str, Any]:
         """Generate text content fingerprint"""
-        def _fingerprint():
+        def _fingerprint() -> None:
             try:
                 with open(content_path, 'r', encoding='utf-8') as f:
                     text = f.read()
@@ -854,7 +854,7 @@ class EnterpriseAntiPiracyEngine:
 class FingerprintGenerator:
     """Legacy fingerprint generation interface"""
     
-    def __init__(self, engine: EnterpriseAntiPiracyEngine):
+    def __init__(self, engine -> None: EnterpriseAntiPiracyEngine) -> None:
         self.engine = engine
     
     async def generate_fingerprint(
@@ -874,7 +874,7 @@ class FingerprintGenerator:
 class AntiPiracyProcessor:
     """Legacy anti-piracy processing interface"""
     
-    def __init__(self, engine: EnterpriseAntiPiracyEngine):
+    def __init__(self, engine -> None: EnterpriseAntiPiracyEngine) -> None:
         self.engine = engine
     
     async def check_piracy(

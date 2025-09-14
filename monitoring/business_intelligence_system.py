@@ -37,22 +37,23 @@ except ImportError:
     NUMPY_AVAILABLE = False
     # Mock numpy functions for fallback
     class MockNumpy:
+    """MockNumpy: class implementation"""
         @staticmethod
-        def random(*args, **kwargs):
+        def random(*args, **kwargs) -> None:
             import random
             return random.random()
         @staticmethod
-        def array(data):
+        def array(data) -> None:
             """Mock numpy array implementation"""
             return list(data) if hasattr(data, '__iter__') else [data]
         @staticmethod
-        def mean(data):
+        def mean(data) -> None:
             """Mock numpy mean implementation"""
             if not data:
                 return 0
             return sum(data) / len(data)
         @staticmethod
-        def std(data):
+        def std(data) -> None:
             """Mock numpy std implementation"""
             if not data:
                 return 0
@@ -68,8 +69,9 @@ try:
 except ImportError:
     PANDAS_AVAILABLE = False
     class MockPandas:
+    """MockPandas: class implementation"""
         @staticmethod
-        def DataFrame(data):
+        def DataFrame(data) -> None:
             """Mock pandas DataFrame implementation"""
             return data if isinstance(data, dict) else {"data": data}
     pd = MockPandas()
@@ -88,7 +90,7 @@ class BusinessMetric:
 class BusinessMonitor:
     """Business monitoring and analytics system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize business monitoring system"""
         self.metrics_store = defaultdict(list)
         self.alerts = []
@@ -99,12 +101,12 @@ class BusinessMonitor:
             'churn_rate': 0.05  # 5% maximum churn
         }
         
-    async def collect_metric(self, metric: BusinessMetric):
+    async def collect_metric(self, metric -> None: BusinessMetric) -> None:
         """Collect a business metric"""
         self.metrics_store[metric.metric_name].append(metric)
         await self._check_alerts(metric)
         
-    async def _check_alerts(self, metric: BusinessMetric):
+    async def _check_alerts(self, metric -> None: BusinessMetric) -> None:
         """Check if metric triggers any alerts"""
         # Implementation would check thresholds and send alerts
         logger.info(f"Checking alerts for metric: {metric.metric_name}")

@@ -84,7 +84,7 @@ class WebhookDelivery:
 class WebhookDispatcher:
     """Enterprise-grade webhook dispatcher for MongoDB sync events."""
     
-    def __init__(self, max_workers: int = 10):
+    def __init__(self, max_workers -> None: int = 10) -> None:
         """Initialize webhook dispatcher."""
         if not HTTP_AVAILABLE:
             logger.warning("aiohttp not available - webhook functionality limited")
@@ -112,18 +112,18 @@ class WebhookDispatcher:
             'retries': 0
         }
     
-    def register_webhook(self, config: WebhookConfig):
+    def register_webhook(self, config -> None: WebhookConfig) -> None:
         """Register a new webhook."""
         self.webhooks[config.webhook_id] = config
         logger.info(f"Registered webhook: {config.webhook_id} -> {config.url}")
     
-    def unregister_webhook(self, webhook_id: str):
+    def unregister_webhook(self, webhook_id -> None: str) -> None:
         """Unregister a webhook."""
         if webhook_id in self.webhooks:
             del self.webhooks[webhook_id]
             logger.info(f"Unregistered webhook: {webhook_id}")
     
-    def dispatch_event(self, event_type: WebhookEvent, payload: Dict[str, Any]):
+    def dispatch_event(self, event_type -> None: WebhookEvent, payload -> None: Dict[str, Any]) -> None:
         """Dispatch an event to all registered webhooks."""
         for webhook_id, webhook_config in self.webhooks.items():
             if not webhook_config.enabled:
@@ -132,7 +132,7 @@ class WebhookDispatcher:
             if event_type in webhook_config.events:
                 self._queue_delivery(webhook_config, event_type, payload)
     
-    def _queue_delivery(self, webhook_config: WebhookConfig, event_type: WebhookEvent, payload: Dict[str, Any]):
+    def _queue_delivery(self, webhook_config -> None: WebhookConfig, event_type -> None: WebhookEvent, payload -> None: Dict[str, Any]) -> None:
         """Queue a webhook delivery."""
         delivery = WebhookDelivery(
             delivery_id=self._generate_delivery_id(),
@@ -157,7 +157,7 @@ class WebhookDispatcher:
         timestamp = str(int(time.time() * 1000000))
         return hashlib.md5(timestamp.encode()).hexdigest()[:16]
     
-    def start_workers(self):
+    def start_workers(self) -> None:
         """Start webhook worker threads."""
         if self.running:
             logger.warning("Webhook dispatcher already running")
@@ -185,7 +185,7 @@ class WebhookDispatcher:
         
         logger.info(f"Started {self.max_workers} webhook workers")
     
-    def _worker_loop(self, worker_name: str):
+    def _worker_loop(self, worker_name -> None: str) -> None:
         """Main worker loop for processing webhook deliveries."""
         logger.info(f"Webhook worker started: {worker_name}")
         
@@ -206,7 +206,7 @@ class WebhookDispatcher:
         
         logger.info(f"Webhook worker stopped: {worker_name}")
     
-    def _process_delivery(self, delivery: WebhookDelivery):
+    def _process_delivery(self, delivery -> None: WebhookDelivery) -> None:
         """Process a webhook delivery."""
         webhook_config = self.webhooks.get(delivery.webhook_id)
         
@@ -319,9 +319,9 @@ class WebhookDispatcher:
         except Exception as e:
             return False, None, None, str(e)
     
-    def _schedule_retry(self, delivery: WebhookDelivery, delay_seconds: int):
+    def _schedule_retry(self, delivery -> None: WebhookDelivery, delay_seconds -> None: int) -> None:
         """Schedule a delivery for retry."""
-        def retry_after_delay():
+        def retry_after_delay() -> None:
             time.sleep(delay_seconds)
             if self.running:
                 try:
@@ -332,7 +332,7 @@ class WebhookDispatcher:
         retry_thread = threading.Thread(target=retry_after_delay, daemon=True)
         retry_thread.start()
     
-    def _record_delivery(self, delivery: WebhookDelivery):
+    def _record_delivery(self, delivery -> None: WebhookDelivery) -> None:
         """Record delivery in history."""
         self.delivery_history.append(delivery)
         
@@ -340,7 +340,7 @@ class WebhookDispatcher:
         if len(self.delivery_history) > self.max_history_size:
             self.delivery_history = self.delivery_history[-self.max_history_size:]
     
-    def _cleanup_loop(self):
+    def _cleanup_loop(self) -> None:
         """Cleanup old delivery records."""
         while self.running and not self.shutdown_event.is_set():
             try:
@@ -365,7 +365,7 @@ class WebhookDispatcher:
                 time.sleep(3600)  # Sleep 1 hour on error
     
     # Event-specific dispatch methods
-    def dispatch_sync_started(self, sync_id: str, config: Dict[str, Any]):
+    def dispatch_sync_started(self, sync_id -> None: str, config -> None: Dict[str, Any]) -> None:
         """Dispatch sync started event."""
         payload = {
             'sync_id': sync_id,
@@ -374,7 +374,7 @@ class WebhookDispatcher:
         }
         self.dispatch_event(WebhookEvent.SYNC_STARTED, payload)
     
-    def dispatch_sync_completed(self, sync_id: str, stats: Dict[str, Any]):
+    def dispatch_sync_completed(self, sync_id -> None: str, stats -> None: Dict[str, Any]) -> None:
         """Dispatch sync completed event."""
         payload = {
             'sync_id': sync_id,
@@ -383,7 +383,7 @@ class WebhookDispatcher:
         }
         self.dispatch_event(WebhookEvent.SYNC_COMPLETED, payload)
     
-    def dispatch_sync_failed(self, sync_id: str, error: str, stats: Dict[str, Any]):
+    def dispatch_sync_failed(self, sync_id -> None: str, error -> None: str, stats -> None: Dict[str, Any]) -> None:
         """Dispatch sync failed event."""
         payload = {
             'sync_id': sync_id,
@@ -393,7 +393,7 @@ class WebhookDispatcher:
         }
         self.dispatch_event(WebhookEvent.SYNC_FAILED, payload)
     
-    def dispatch_document_synced(self, sync_event: SyncEvent):
+    def dispatch_document_synced(self, sync_event -> None: SyncEvent) -> None:
         """Dispatch document synced event."""
         payload = {
             'sync_id': sync_event.sync_id,
@@ -406,7 +406,7 @@ class WebhookDispatcher:
         }
         self.dispatch_event(WebhookEvent.DOCUMENT_SYNCED, payload)
     
-    def dispatch_conflict_detected(self, conflict_id: str, conflict_data: Dict[str, Any]):
+    def dispatch_conflict_detected(self, conflict_id -> None: str, conflict_data -> None: Dict[str, Any]) -> None:
         """Dispatch conflict detected event."""
         payload = {
             'conflict_id': conflict_id,
@@ -417,7 +417,7 @@ class WebhookDispatcher:
         }
         self.dispatch_event(WebhookEvent.CONFLICT_DETECTED, payload)
     
-    def dispatch_conflict_resolved(self, conflict_id: str, resolution: Dict[str, Any]):
+    def dispatch_conflict_resolved(self, conflict_id -> None: str, resolution -> None: Dict[str, Any]) -> None:
         """Dispatch conflict resolved event."""
         payload = {
             'conflict_id': conflict_id,
@@ -426,7 +426,7 @@ class WebhookDispatcher:
         }
         self.dispatch_event(WebhookEvent.CONFLICT_RESOLVED, payload)
     
-    def dispatch_error_occurred(self, error_type: str, error_message: str, context: Dict[str, Any]):
+    def dispatch_error_occurred(self, error_type -> None: str, error_message -> None: str, context -> None: Dict[str, Any]) -> None:
         """Dispatch error occurred event."""
         payload = {
             'error_type': error_type,
@@ -437,7 +437,7 @@ class WebhookDispatcher:
         }
         self.dispatch_event(WebhookEvent.ERROR_OCCURRED, payload)
     
-    def dispatch_health_check(self, health_status: Dict[str, Any]):
+    def dispatch_health_check(self, health_status -> None: Dict[str, Any]) -> None:
         """Dispatch health check event."""
         payload = {
             'health_status': health_status,
@@ -553,7 +553,7 @@ class WebhookDispatcher:
             'error': error
         }
     
-    def stop_workers(self):
+    def stop_workers(self) -> None:
         """Stop webhook workers."""
         if not self.running:
             return

@@ -134,7 +134,7 @@ class KeyAccessLog:
 class KeyVault:
     """Enterprise cryptographic key vault with security controls"""
     
-    def __init__(self, master_key: Optional[bytes] = None):
+    def __init__(self, master_key -> None: Optional[bytes] = None) -> None:
         self.master_key = master_key or self._generate_master_key()
         self.keys: Dict[str, CryptographicKey] = {}
         self.access_logs: List[KeyAccessLog] = []
@@ -347,7 +347,7 @@ class WalletTransaction:
 class WalletManager:
     """Enterprise wallet management with HD support"""
     
-    def __init__(self, key_vault: KeyVault):
+    def __init__(self, key_vault -> None: KeyVault) -> None:
         self.key_vault = key_vault
         self.wallets: Dict[str, SecureWallet] = {}
         self.transactions: Dict[str, WalletTransaction] = {}
@@ -510,12 +510,12 @@ class AuditEvent:
 class AuditLogger:
     """Immutable security audit logging system"""
     
-    def __init__(self, db_path: str = "security_audit.db"):
+    def __init__(self, db_path -> None: str = "security_audit.db") -> None:
         self.db_path = db_path
         self.events: List[AuditEvent] = []
         self._init_database()
         
-    def _init_database(self):
+    def _init_database(self) -> None:
         """Initialize audit database"""
         try:
             with sqlite3.connect(self.db_path) as conn:
@@ -610,7 +610,7 @@ class AuditLogger:
             logger.error(f"Error calculating hash chain: {str(e)}")
             return ""
 
-    async def _store_event_in_db(self, event: AuditEvent, hash_chain: str):
+    async def _store_event_in_db(self, event -> None: AuditEvent, hash_chain -> None: str) -> None:
         """Store event in database"""
         try:
             with sqlite3.connect(self.db_path) as conn:
@@ -687,7 +687,7 @@ class SecurityMetrics:
 class ThreatDetector:
     """Real-time security threat detection system"""
     
-    def __init__(self, audit_logger: AuditLogger):
+    def __init__(self, audit_logger -> None: AuditLogger) -> None:
         self.audit_logger = audit_logger
         self.threats: Dict[str, SecurityThreat] = {}
         self.metrics = SecurityMetrics()
@@ -945,13 +945,13 @@ class ComplianceReport:
 class ComplianceChecker:
     """Regulatory compliance checking system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.compliance_rules: Dict[ComplianceFramework, Dict[str, Any]] = {}
         self.checks: Dict[str, ComplianceCheck] = {}
         self.reports: Dict[str, ComplianceReport] = {}
         self._initialize_rules()
         
-    def _initialize_rules(self):
+    def _initialize_rules(self) -> None:
         """Initialize compliance rules for different frameworks"""
         try:
             # GDPR rules
@@ -1179,7 +1179,7 @@ class ComplianceChecker:
 class EncryptionEngine:
     """Advanced encryption engine with multiple algorithms"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.algorithms = {
             'AES-256-GCM': self._aes_gcm_encrypt,
             'AES-256-CBC': self._aes_cbc_encrypt,
@@ -1370,7 +1370,7 @@ class EncryptionEngine:
 class BlockchainSecuritySuiteManager:
     """Central manager for all blockchain security functionalities"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         
         # Initialize all subsystems
@@ -1404,7 +1404,7 @@ class BlockchainSecuritySuiteManager:
             logger.error(f"Error initializing security suite: {str(e)}")
             return False
 
-    async def _setup_threat_detection(self):
+    async def _setup_threat_detection(self) -> None:
         """Setup threat detection rules and blacklists"""
         try:
             # Add known malicious IPs (example)
@@ -1425,7 +1425,7 @@ class BlockchainSecuritySuiteManager:
         except Exception as e:
             logger.error(f"Error setting up threat detection: {str(e)}")
 
-    async def _setup_compliance_monitoring(self):
+    async def _setup_compliance_monitoring(self) -> None:
         """Setup compliance monitoring for all frameworks"""
         try:
             # Enable all supported compliance frameworks

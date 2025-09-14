@@ -107,7 +107,7 @@ class PredictionRequest:
 class ModelCachingOptimizer:
     """Intelligent Model Caching Optimizer"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         
         # Cache storage
@@ -382,7 +382,7 @@ class ModelCachingOptimizer:
             logger.error(f"❌ Error loading model {model_id}: {e}")
             return None
     
-    async def _store_in_l1(self, cache_key: str, model: Any, priority: float = 1.0):
+    async def _store_in_l1(self, cache_key -> None: str, model -> None: Any, priority -> None: float = 1.0) -> None:
         """Store model in L1 cache"""
         try:
             # Check if eviction needed
@@ -411,7 +411,7 @@ class ModelCachingOptimizer:
         except Exception as e:
             logger.error(f"❌ Error storing in L1 cache: {e}")
     
-    async def _store_in_l2(self, cache_key: str, model: Any, priority: float = 1.0):
+    async def _store_in_l2(self, cache_key -> None: str, model -> None: Any, priority -> None: float = 1.0) -> None:
         """Store model in L2 cache"""
         try:
             # Serialize and compress
@@ -450,12 +450,12 @@ class ModelCachingOptimizer:
     
     async def _store_model(
         self,
-        cache_key: str,
-        model: Any,
-        cache_level: CacheLevel,
-        creator_type: Optional[str] = None,
-        priority: float = 1.0
-    ):
+        cache_key -> None: str,
+        model -> None: Any,
+        cache_level -> None: CacheLevel,
+        creator_type -> None: Optional[str] = None,
+        priority -> None: float = 1.0
+    ) -> None:
         """Store model in specified cache level"""
         try:
             if cache_level == CacheLevel.L1_MEMORY:
@@ -537,10 +537,10 @@ class ModelCachingOptimizer:
     
     async def _update_access_stats(
         self,
-        cache_key: str,
-        cache_level: CacheLevel,
-        miss: bool = False
-    ):
+        cache_key -> None: str,
+        cache_level -> None: CacheLevel,
+        miss -> None: bool = False
+    ) -> None:
         """Update access statistics"""
         try:
             # Update cache entry
@@ -564,7 +564,7 @@ class ModelCachingOptimizer:
         except Exception as e:
             logger.error(f"❌ Error updating access stats: {e}")
     
-    async def _evict_from_l1(self):
+    async def _evict_from_l1(self) -> None:
         """Evict entries from L1 cache"""
         try:
             if self.eviction_policy == EvictionPolicy.LRU:
@@ -747,7 +747,7 @@ class ModelCachingOptimizer:
             logger.error(f"❌ Error getting creator patterns: {e}")
             return {}
     
-    async def _update_cache_metrics(self):
+    async def _update_cache_metrics(self) -> None:
         """Update cache metrics"""
         try:
             for level in CacheLevel:
@@ -766,7 +766,7 @@ class ModelCachingOptimizer:
 cache_optimizer = ModelCachingOptimizer()
 
 
-async def main():
+async def main() -> None:
     """Test the Model Caching Optimizer"""
     optimizer = ModelCachingOptimizer()
     

@@ -76,7 +76,7 @@ class LookalikeFinder:
     for targeted expansion and improved campaign performance.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the Lookalike Finder"""
         self.similarity_models = self._load_similarity_models()
         self.audience_database = self._initialize_audience_database()

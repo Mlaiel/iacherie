@@ -17,7 +17,7 @@ logger = logging.getLogger(__name__)
 class RevenueAnalytics:
     """Revenue and monetization analytics engine."""
     
-    def __init__(self, pipeline_builder: Optional[PipelineBuilder] = None):
+    def __init__(self, pipeline_builder -> None: Optional[PipelineBuilder] = None) -> None:
         """Initialize revenue analytics."""
         self.pipeline_builder = pipeline_builder or get_pipeline_builder()
     

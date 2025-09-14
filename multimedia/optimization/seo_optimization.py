@@ -60,7 +60,7 @@ class SEOOptimizationResult:
 class MetadataOptimizationEngine:
     """Metadata optimization engine for SEO"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         # SEO metadata templates
         self.metadata_templates = {
             'image': {
@@ -389,7 +389,7 @@ class MetadataOptimizationEngine:
 class SEOOptimizer:
     """Main SEO optimization engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.metadata_engine = MetadataOptimizationEngine()
         
         # SEO scoring weights

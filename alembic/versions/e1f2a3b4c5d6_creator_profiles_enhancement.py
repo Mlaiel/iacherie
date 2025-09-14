@@ -1,5 +1,7 @@
 """Enhanced creator profiles for multi-format content creation
 
+import logging
+
 Revision ID: e1f2a3b4c5d6
 Revises: d21b3c27ee2c
 Create Date: 2025-09-05 06:20:00.000000

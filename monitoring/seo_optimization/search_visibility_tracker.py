@@ -144,7 +144,7 @@ class CompetitorVisibility:
 class SearchVisibilityTracker:
     """Main search visibility tracking system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.visibility_metrics: Dict[str, List[VisibilityMetrics]] = defaultdict(list)
         self.visibility_alerts: List[VisibilityAlert] = []
         self.competitor_analyses: List[CompetitorVisibility] = []
@@ -225,7 +225,7 @@ class SearchVisibilityTracker:
             "traffic_drop_critical": -40.0     # 40% traffic drop
         }
         
-    async def start_monitoring(self):
+    async def start_monitoring(self) -> None:
         """Start search visibility monitoring"""
         self.monitoring_active = True
         
@@ -239,12 +239,12 @@ class SearchVisibilityTracker:
         
         await asyncio.gather(*monitoring_tasks)
         
-    async def stop_monitoring(self):
+    async def stop_monitoring(self) -> None:
         """Stop search visibility monitoring"""
         self.monitoring_active = False
         logger.info("Search visibility monitoring stopped")
         
-    async def _monitor_keyword_visibility(self):
+    async def _monitor_keyword_visibility(self) -> None:
         """Monitor visibility for tracked keywords"""
         while self.monitoring_active:
             try:
@@ -328,7 +328,7 @@ class SearchVisibilityTracker:
             visibility_trend="stable"
         )
         
-    async def _check_visibility_alerts(self, metrics: VisibilityMetrics, keyword_data: Dict[str, Any]):
+    async def _check_visibility_alerts(self, metrics -> None: VisibilityMetrics, keyword_data -> None: Dict[str, Any]) -> None:
         """Check for visibility alerts based on metrics"""
         keyword = metrics.keyword
         search_engine = metrics.search_engine
@@ -406,12 +406,12 @@ class SearchVisibilityTracker:
             )
             
     async def _create_alert(self, 
-                          metrics: VisibilityMetrics,
-                          alert_type: str,
-                          severity: str,
-                          description: str,
-                          possible_causes: List[str],
-                          recommended_actions: List[str]):
+                          metrics -> None: VisibilityMetrics,
+                          alert_type -> None: str,
+                          severity -> None: str,
+                          description -> None: str,
+                          possible_causes -> None: List[str],
+                          recommended_actions -> None: List[str]) -> None:
         """Create visibility alert"""
         
         alert = VisibilityAlert(
@@ -429,7 +429,7 @@ class SearchVisibilityTracker:
         self.visibility_alerts.append(alert)
         logger.warning(f"Visibility alert: {description} for {metrics.keyword}")
         
-    async def _detect_visibility_changes(self):
+    async def _detect_visibility_changes(self) -> None:
         """Detect and analyze visibility changes"""
         while self.monitoring_active:
             try:
@@ -444,7 +444,7 @@ class SearchVisibilityTracker:
                 logger.error(f"Error detecting visibility changes: {e}")
                 await asyncio.sleep(300)
                 
-    async def _analyze_visibility_trend(self, key: str, recent_metrics: List[VisibilityMetrics]):
+    async def _analyze_visibility_trend(self, key -> None: str, recent_metrics -> None: List[VisibilityMetrics]) -> None:
         """Analyze visibility trend for keyword"""
         
         visibility_scores = [m.visibility_score for m in recent_metrics]
@@ -475,7 +475,7 @@ class SearchVisibilityTracker:
                 if recent_metrics:
                     recent_metrics[-1].visibility_trend = trend
                     
-    async def _analyze_search_features(self):
+    async def _analyze_search_features(self) -> None:
         """Analyze search result features"""
         while self.monitoring_active:
             try:
@@ -512,7 +512,7 @@ class SearchVisibilityTracker:
                 logger.error(f"Error analyzing search features: {e}")
                 await asyncio.sleep(600)
                 
-    async def _compare_competitor_visibility(self):
+    async def _compare_competitor_visibility(self) -> None:
         """Compare visibility with competitors"""
         while self.monitoring_active:
             try:
@@ -594,7 +594,7 @@ class SearchVisibilityTracker:
             our_features=our_features
         )
         
-    async def _generate_visibility_reports(self):
+    async def _generate_visibility_reports(self) -> None:
         """Generate periodic visibility reports"""
         while self.monitoring_active:
             try:

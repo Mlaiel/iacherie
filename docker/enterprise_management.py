@@ -34,7 +34,7 @@ class DeploymentMetrics:
 class EnterpriseDockerManager:
     """Advanced enterprise Docker management with full automation"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
         self.services_health = {}
         self.deployment_history = []
@@ -119,7 +119,7 @@ class EnterpriseDockerManager:
         }
         return service_counts.get(module, 5)
     
-    async def _wait_for_health(self, module: str):
+    async def _wait_for_health(self, module -> None: str) -> None:
         """Wait for module services to be healthy"""
         max_wait = 60  # seconds
         wait_time = 0
@@ -177,7 +177,7 @@ class EnterpriseDockerManager:
         # Simulate current replica count
         return 3
     
-    async def _scale_service(self, service: str, replicas: int):
+    async def _scale_service(self, service -> None: str, replicas -> None: int) -> None:
         """Scale service to specified number of replicas"""
         # Simulate scaling
         await asyncio.sleep(1)
@@ -281,7 +281,7 @@ deployment with full automation, monitoring, and disaster recovery capabilities.
 # Global enterprise manager instance
 enterprise_manager = EnterpriseDockerManager()
 
-async def main():
+async def main() -> None:
     """Main enterprise deployment function"""
     print("🚀 Starting Enterprise Docker Management Demo...")
     

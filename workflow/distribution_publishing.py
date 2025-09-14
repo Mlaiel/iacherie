@@ -134,7 +134,7 @@ class DistributionPublishingWorkflow:
     """
 Advanced distribution and publishing workflow system."""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.config = config or {}
         self.logger = logging.getLogger("workflow.distribution")
         
@@ -189,9 +189,9 @@ Advanced distribution and publishing workflow system."""
     
     async def _add_distribution_workflow_steps(
         self,
-        pipeline: IntelligentContentPipeline,
-        distribution_request: Dict[str, Any]
-    ):
+        pipeline -> None: IntelligentContentPipeline,
+        distribution_request -> None: Dict[str, Any]
+    ) -> None:
         """Add distribution workflow steps."""
         
         # Step 1: Platform configuration and validation
@@ -1441,10 +1441,10 @@ Setup performance tracking for content."""
     
     async def _send_distribution_notifications(
         self,
-        distribution_data: Dict[str, Any],
-        generated_reports: List[Dict[str, Any]],
-        notification_preferences: Dict[str, Any]
-    ):
+        distribution_data -> None: Dict[str, Any],
+        generated_reports -> None: List[Dict[str, Any]],
+        notification_preferences -> None: Dict[str, Any]
+    ) -> None:
         """Send distribution completion notifications."""
         # Simplified notification sending
         notification_channels = notification_preferences.get("channels", ["email"])

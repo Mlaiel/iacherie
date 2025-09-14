@@ -59,7 +59,7 @@ class CoreBusinessAgents:
     20. Business Intelligence - Strategic insights
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._agents_config = {
             "content_strategist": {"priority": "high", "resources": "medium"},
             "collaboration_matcher": {"priority": "high", "resources": "high"},

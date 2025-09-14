@@ -59,7 +59,7 @@ class MonitoringConfig:
 class ClusterHealthMonitor:
     """Manages cluster health monitoring and alerting"""
     
-    def __init__(self, config: MonitoringConfig):
+    def __init__(self, config -> None: MonitoringConfig) -> None:
         self.config = config
         self.alert_rules = self._initialize_alert_rules()
     
@@ -612,7 +612,7 @@ class ClusterHealthMonitor:
         
         return manifests
     
-    def save_manifests_to_files(self, output_dir: str = "./k8s-manifests/monitoring"):
+    def save_manifests_to_files(self, output_dir -> None: str = "./k8s-manifests/monitoring") -> None:
         """Save all monitoring manifests to files"""
         import os
         os.makedirs(output_dir, exist_ok=True)

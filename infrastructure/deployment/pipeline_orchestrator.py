@@ -60,7 +60,7 @@ class PipelineConfig:
 class PipelineOrchestrator:
     """Enterprise CI/CD pipeline orchestrator for Ainflue infrastructure"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
         self.active_pipelines: Dict[str, Dict[str, Any]] = {}
         self.pipeline_history: List[Dict[str, Any]] = []

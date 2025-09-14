@@ -131,7 +131,7 @@ class EscalationEvent:
 class EscalationManager:
     """Enterprise Escalation Manager"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         
         # Storage
@@ -173,7 +173,7 @@ class EscalationManager:
         
         logger.info("⬆️ Escalation Manager initialized")
     
-    def _initialize_team_members(self):
+    def _initialize_team_members(self) -> None:
         """Initialize default team members"""
         team_members = [
             TeamMember(
@@ -237,7 +237,7 @@ class EscalationManager:
         for member in team_members:
             self.team_members[member.member_id] = member
     
-    def _initialize_escalation_rules(self):
+    def _initialize_escalation_rules(self) -> None:
         """Initialize default escalation rules"""
         rules = [
             EscalationRule(
@@ -301,7 +301,7 @@ class EscalationManager:
         for rule in rules:
             self.escalation_rules[rule.rule_id] = rule
     
-    def _initialize_escalation_paths(self):
+    def _initialize_escalation_paths(self) -> None:
         """Initialize escalation paths"""
         paths = [
             EscalationPath(
@@ -491,7 +491,7 @@ class EscalationManager:
             logger.error(f"❌ Error creating escalation event: {e}")
             return None
     
-    async def _execute_escalation(self, event_id: str):
+    async def _execute_escalation(self, event_id -> None: str) -> None:
         """Execute escalation event"""
         try:
             event = self.escalation_events[event_id]
@@ -577,9 +577,9 @@ class EscalationManager:
     
     async def _send_escalation_notification(
         self,
-        event: EscalationEvent,
-        assigned_member: TeamMember
-    ):
+        event -> None: EscalationEvent,
+        assigned_member -> None: TeamMember
+    ) -> None:
         """Send escalation notification"""
         try:
             message = f"""
@@ -694,7 +694,7 @@ class EscalationManager:
             logger.error(f"❌ Error resolving escalation: {e}")
             return False
     
-    async def _monitor_escalation_timeout(self, event_id: str):
+    async def _monitor_escalation_timeout(self, event_id -> None: str) -> None:
         """Monitor escalation timeout and auto-escalate if needed"""
         try:
             event = self.escalation_events[event_id]
@@ -721,7 +721,7 @@ class EscalationManager:
         except Exception as e:
             logger.error(f"❌ Error monitoring escalation timeout: {e}")
     
-    async def _auto_escalate_to_next_level(self, event_id: str):
+    async def _auto_escalate_to_next_level(self, event_id -> None: str) -> None:
         """Auto-escalate to next level"""
         try:
             event = self.escalation_events[event_id]
@@ -875,7 +875,7 @@ class EscalationManager:
 escalation_manager = EscalationManager()
 
 
-async def main():
+async def main() -> None:
     """Test the Escalation Manager"""
     manager = EscalationManager()
     

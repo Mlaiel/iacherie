@@ -83,7 +83,7 @@ class CacheItem:
             return False
         return (datetime.now() - self.created_at).seconds > self.ttl
     
-    def update_access(self):
+    def update_access(self) -> None:
         """Update access statistics."""
         self.last_accessed = datetime.now()
         self.access_count += 1
@@ -115,11 +115,11 @@ class EdgeCache:
     """Advanced edge cache system with intelligent caching strategies."""
     
     def __init__(self,
-                 max_memory_size: int = 1024 * 1024 * 1024,  # 1GB
-                 max_disk_size: int = 10 * 1024 * 1024 * 1024,  # 10GB
-                 strategy: CacheStrategy = CacheStrategy.ADAPTIVE,
-                 default_ttl: int = 3600,
-                 compression_threshold: int = 1024):
+                 max_memory_size -> None: int = 1024 * 1024 * 1024,  # 1GB
+                 max_disk_size -> None: int = 10 * 1024 * 1024 * 1024,  # 10GB
+                 strategy -> None: CacheStrategy = CacheStrategy.ADAPTIVE,
+                 default_ttl -> None: int = 3600,
+                 compression_threshold -> None: int = 1024) -> None:
         
         self.max_memory_size = max_memory_size
         self.max_disk_size = max_disk_size
@@ -158,7 +158,7 @@ class EdgeCache:
         
         logger.info(f"EdgeCache initialized with strategy: {strategy}")
     
-    async def start(self):
+    async def start(self) -> None:
         """Start the cache system and background tasks."""
         self.cleanup_task = asyncio.create_task(self._cleanup_loop())
         self.prefetch_task = asyncio.create_task(self._prefetch_loop())
@@ -166,7 +166,7 @@ class EdgeCache:
         
         logger.info("Edge cache system started")
     
-    async def stop(self):
+    async def stop(self) -> None:
         """Stop the cache system and background tasks."""
         # Cancel background tasks
         tasks = [self.cleanup_task, self.prefetch_task, self.analytics_task]
@@ -442,11 +442,11 @@ class EdgeCache:
             logger.error(f"Cache optimization failed: {e}")
             return optimization_results
     
-    def add_event_handler(self, event_type: str, handler: Callable):
+    def add_event_handler(self, event_type -> None: str, handler -> None: Callable) -> None:
         """Add event handler for cache events."""
         self.event_handlers[event_type].append(handler)
     
-    def remove_event_handler(self, event_type: str, handler: Callable):
+    def remove_event_handler(self, event_type -> None: str, handler -> None: Callable) -> None:
         """Remove event handler for cache events."""
         if event_type in self.event_handlers:
             try:
@@ -551,7 +551,7 @@ class EdgeCache:
             logger.error(f"Failed to promote item to memory: {e}")
             return False
     
-    async def _evict_item(self, key: str):
+    async def _evict_item(self, key -> None: str) -> None:
         """Evict specific item from memory cache."""
         if key in self.memory_cache:
             item = self.memory_cache[key]
@@ -559,7 +559,7 @@ class EdgeCache:
             self.stats.memory_usage -= item.size
             self.stats.evictions += 1
     
-    async def _evict_least_valuable(self):
+    async def _evict_least_valuable(self) -> None:
         """Evict least valuable item based on current strategy."""
         if not self.memory_cache:
             return
@@ -601,7 +601,7 @@ class EdgeCache:
             key = next(iter(self.memory_cache))
             await self._evict_item(key)
     
-    async def _update_access_pattern(self, key: str):
+    async def _update_access_pattern(self, key -> None: str) -> None:
         """Update access pattern for adaptive caching."""
         now = datetime.now()
         self.access_patterns[key].append(now)
@@ -618,7 +618,7 @@ class EdgeCache:
         time_decay = 0.9 ** ((now - self.access_patterns[key][-1]).seconds / 3600)  # Decay over time
         self.popularity_scores[key] = recent_accesses * time_decay
     
-    async def _cleanup_loop(self):
+    async def _cleanup_loop(self) -> None:
         """Background cleanup task."""
         while True:
             try:
@@ -631,7 +631,7 @@ class EdgeCache:
                 logger.error(f"Error in cleanup loop: {e}")
                 await asyncio.sleep(60)
     
-    async def _prefetch_loop(self):
+    async def _prefetch_loop(self) -> None:
         """Background prefetch task."""
         while True:
             try:
@@ -644,7 +644,7 @@ class EdgeCache:
             except Exception as e:
                 logger.error(f"Error in prefetch loop: {e}")
     
-    async def _analytics_loop(self):
+    async def _analytics_loop(self) -> None:
         """Background analytics task."""
         while True:
             try:
@@ -657,7 +657,7 @@ class EdgeCache:
                 logger.error(f"Error in analytics loop: {e}")
                 await asyncio.sleep(300)
     
-    async def _cleanup_expired_items(self):
+    async def _cleanup_expired_items(self) -> None:
         """Clean up expired cache items."""
         expired_keys = []
         
@@ -672,7 +672,7 @@ class EdgeCache:
         if expired_keys:
             logger.info(f"Cleaned up {len(expired_keys)} expired cache items")
     
-    async def _process_prefetch_request(self, request: CachePrefetchRequest):
+    async def _process_prefetch_request(self, request -> None: CachePrefetchRequest) -> None:
         """Process a prefetch request."""
         logger.info(f"Processing prefetch request for {len(request.keys)} keys")
         
@@ -684,7 +684,7 @@ class EdgeCache:
                 dummy_value = f"prefetched_value_{key}"
                 await self.set(key, dummy_value, ttl=request.ttl)
     
-    async def _analyze_access_patterns(self):
+    async def _analyze_access_patterns(self) -> None:
         """Analyze access patterns for optimization."""
         # Clean up old access patterns
         cutoff_time = datetime.now() - timedelta(hours=24)
@@ -705,7 +705,7 @@ class EdgeCache:
             if key in self.popularity_scores:
                 del self.popularity_scores[key]
     
-    async def _trigger_event(self, event_type: str, data: Dict[str, Any]):
+    async def _trigger_event(self, event_type -> None: str, data -> None: Dict[str, Any]) -> None:
         """Trigger cache event handlers."""
         if event_type in self.event_handlers:
             for handler in self.event_handlers[event_type]:
@@ -735,7 +735,7 @@ def create_edge_cache(
 
 # Example usage and testing
 if __name__ == "__main__":
-    async def test_cache():
+    async def test_cache() -> None:
         """Test the edge cache system."""
         cache = create_edge_cache(max_memory_size=1024*1024)  # 1MB for testing
         

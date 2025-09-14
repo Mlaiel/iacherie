@@ -275,7 +275,7 @@ class FingerprintModel(Base):
         Index('idx_fingerprint_created_type', 'created_at', 'fingerprint_type'),
     )
     
-    def __repr__(self):
+    def __repr__(self) -> None:
         return f"<FingerprintModel(id={self.id}, type={self.fingerprint_type.value}, algorithm={self.algorithm.value})>"
 
 
@@ -437,7 +437,7 @@ class ProtectionModel(Base):
         Index('idx_protection_enforcement_priority', 'current_enforcement', 'is_priority'),
     )
     
-    def __repr__(self):
+    def __repr__(self) -> None:
         return f"<ProtectionModel(id={self.id}, type={self.protection_type.value}, similarity={self.similarity_score:.2f})>"
 
 

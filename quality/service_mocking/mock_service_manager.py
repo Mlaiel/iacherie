@@ -90,7 +90,7 @@ class MockServiceManager:
     Comprehensive mock service manager for testing isolation
     """
     
-    def __init__(self, project_root: Optional[str] = None):
+    def __init__(self, project_root -> None: Optional[str] = None) -> None:
         """Initialize mock service manager"""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self.project_root = Path(project_root or ".")
@@ -103,7 +103,7 @@ class MockServiceManager:
         # Initialize predefined mocks
         self._initialize_platform_mocks()
 
-    def _initialize_platform_mocks(self):
+    def _initialize_platform_mocks(self) -> None:
         """Initialize platform-specific mock configurations"""
         
         # Database mocks
@@ -158,7 +158,7 @@ class MockServiceManager:
             return_value=self._mock_file_operations
         ))
 
-    def register_mock(self, config: MockConfiguration):
+    def register_mock(self, config -> None: MockConfiguration) -> None:
         """Register a mock configuration"""
         self.mock_configs[config.name] = config
         self.logger.info(f"Registered mock configuration: {config.name}")
@@ -171,7 +171,7 @@ class MockServiceManager:
         return session
 
     @contextmanager
-    def mock_context(self, mock_names: List[str], session_id: Optional[str] = None):
+    def mock_context(self, mock_names -> None: List[str], session_id -> None: Optional[str] = None) -> None:
         """Context manager for temporary mocking"""
         session = None
         if session_id:
@@ -194,7 +194,7 @@ class MockServiceManager:
                 self.deactivate_mock(mock_name)
 
     @asynccontextmanager
-    async def async_mock_context(self, mock_names: List[str], session_id: Optional[str] = None):
+    async def async_mock_context(self, mock_names -> None: List[str], session_id -> None: Optional[str] = None) -> None:
         """Async context manager for temporary mocking"""
         session = None
         if session_id:
@@ -246,7 +246,7 @@ class MockServiceManager:
         self.logger.info(f"Activated mock: {mock_name}")
         return mock_obj
 
-    def deactivate_mock(self, mock_name: str):
+    def deactivate_mock(self, mock_name -> None: str) -> None:
         """Deactivate a specific mock"""
         if mock_name in self.active_mocks:
             del self.active_mocks[mock_name]
@@ -261,7 +261,7 @@ class MockServiceManager:
         
         self.logger.info(f"Deactivated mock: {mock_name}")
 
-    def deactivate_all_mocks(self):
+    def deactivate_all_mocks(self) -> None:
         """Deactivate all active mocks"""
         for mock_name in list(self.active_mocks.keys()):
             self.deactivate_mock(mock_name)
@@ -306,7 +306,7 @@ class MockServiceManager:
         """Wrap mock function with tracking and delay"""
         original_func = config.return_value
         
-        def wrapped_function(*args, **kwargs):
+        def wrapped_function(*args, **kwargs) -> None:
             start_time = time.time()
             
             # Add delay if specified
@@ -321,7 +321,7 @@ class MockServiceManager:
             try:
                 if inspect.iscoroutinefunction(original_func):
                     # Handle async functions
-                    async def async_wrapper():
+                    async def async_wrapper() -> None:
                         result = await original_func(*args, **kwargs)
                         self._record_interaction(config, args, kwargs, result, time.time() - start_time)
                         return result
@@ -339,7 +339,7 @@ class MockServiceManager:
 
     def _wrap_with_tracking(self, original_behavior: Any, config: MockConfiguration) -> Callable:
         """Wrap any mock behavior with tracking"""
-        def tracking_wrapper(*args, **kwargs):
+        def tracking_wrapper(*args, **kwargs) -> None:
             start_time = time.time()
             config.call_count += 1
             
@@ -360,13 +360,13 @@ class MockServiceManager:
 
     def _record_interaction(
         self, 
-        config: MockConfiguration, 
-        args: tuple, 
-        kwargs: Dict[str, Any], 
-        result: Any, 
-        execution_time: float,
-        exception: Optional[str] = None
-    ):
+        config -> None: MockConfiguration, 
+        args -> None: tuple, 
+        kwargs -> None: Dict[str, Any], 
+        result -> None: Any, 
+        execution_time -> None: float,
+        exception -> None: Optional[str] = None
+    ) -> None:
         """Record mock interaction"""
         interaction = MockInteraction(
             mock_name=config.name,
@@ -380,7 +380,7 @@ class MockServiceManager:
         self.interactions.append(interaction)
 
     # Platform-specific mock implementations
-    def _mock_mongodb_client(self, *args, **kwargs):
+    def _mock_mongodb_client(self, *args, **kwargs) -> None:
         """Mock MongoDB client"""
         mock_client = Mock()
         mock_db = Mock()
@@ -399,24 +399,24 @@ class MockServiceManager:
         
         return mock_client
 
-    def _mock_redis_client(self, *args, **kwargs):
+    def _mock_redis_client(self, *args, **kwargs) -> None:
         """Mock Redis client"""
         mock_redis = Mock()
         
         # In-memory storage for testing
         mock_storage = {}
         
-        def mock_get(key):
+        def mock_get(key) -> None:
             return mock_storage.get(key)
         
-        def mock_set(key, value, **kwargs):
+        def mock_set(key, value, **kwargs) -> None:
             mock_storage[key] = value
             return True
         
-        def mock_delete(key):
+        def mock_delete(key) -> None:
             return mock_storage.pop(key, None) is not None
         
-        def mock_exists(key):
+        def mock_exists(key) -> None:
             return key in mock_storage
         
         mock_redis.get = mock_get
@@ -427,7 +427,7 @@ class MockServiceManager:
         
         return mock_redis
 
-    def _mock_openai_client(self, *args, **kwargs):
+    def _mock_openai_client(self, *args, **kwargs) -> None:
         """Mock OpenAI client"""
         mock_client = Mock()
         mock_completions = Mock()
@@ -452,7 +452,7 @@ class MockServiceManager:
         
         return mock_client
 
-    def _mock_stripe_client(self, *args, **kwargs):
+    def _mock_stripe_client(self, *args, **kwargs) -> None:
         """Mock Stripe client"""
         mock_stripe = Mock()
         
@@ -471,13 +471,13 @@ class MockServiceManager:
         
         return mock_stripe
 
-    def _mock_torch_forward(self, *args, **kwargs):
+    def _mock_torch_forward(self, *args, **kwargs) -> None:
         """Mock PyTorch model forward pass"""
         import torch
         # Return a mock tensor
         return torch.randn(1, 10)  # Assuming output shape
 
-    def _mock_file_operations(self, filename, mode='r', **kwargs):
+    def _mock_file_operations(self, filename, mode='r', **kwargs) -> None:
         """Mock file operations"""
         mock_file = Mock()
         
@@ -546,7 +546,7 @@ class MockServiceManager:
         
         return False
 
-    def reset_mock(self, mock_name: str):
+    def reset_mock(self, mock_name -> None: str) -> None:
         """Reset a specific mock's state"""
         if mock_name in self.mock_configs:
             self.mock_configs[mock_name].call_count = 0
@@ -558,7 +558,7 @@ class MockServiceManager:
         if mock_name in self.active_mocks:
             self.active_mocks[mock_name].reset_mock()
 
-    def reset_all_mocks(self):
+    def reset_all_mocks(self) -> None:
         """Reset all mocks"""
         for mock_name in self.mock_configs:
             self.reset_mock(mock_name)

@@ -1,3 +1,8 @@
+"""
+Capacity Planning Tester module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Capacity Planning Testing Framework for Ainflue Platform
@@ -140,7 +145,7 @@ class CapacityPlanningTester:
     - Enterprise-grade capacity analytics
     """
     
-    def __init__(self, config_path: Optional[str] = None):
+    def __init__(self, config_path -> None: Optional[str] = None) -> None:
         """Initialize capacity planning testing framework."""
         self.logger = self._setup_logging()
         self.config = self._load_config(config_path)
@@ -692,7 +697,7 @@ class CapacityMLPredictor:
     and intelligent resource optimization.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize ML capacity predictor."""
         self.logger = logging.getLogger("CapacityMLPredictor")
         self.models = {
@@ -1009,7 +1014,7 @@ class ResourceMonitor:
     and infrastructure health checks.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize resource monitor."""
         self.logger = logging.getLogger("ResourceMonitor")
         
@@ -1031,7 +1036,7 @@ class LoadGenerator:
     and comprehensive metrics collection.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize load generator."""
         self.logger = logging.getLogger("LoadGenerator")
         self.current_load = 0
@@ -1087,7 +1092,7 @@ if __name__ == "__main__":
     # Example usage
     import asyncio
     
-    async def main():
+    async def main() -> None:
         """Example capacity planning test execution."""
         
         # Initialize tester

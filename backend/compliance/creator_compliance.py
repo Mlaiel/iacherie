@@ -357,7 +357,7 @@ class CreatorCertificationRecord(Base):
 class CreatorProfileManager:
     """Manages creator profiles and compliance tracking"""
     
-    def __init__(self, db_session: AsyncSession, redis_client: aioredis.Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: aioredis.Redis) -> None:
         self.db = db_session
         self.redis = redis_client
         
@@ -498,7 +498,7 @@ class CreatorProfileManager:
 class DisclosureComplianceManager:
     """Manages FTC disclosure and sponsored content compliance"""
     
-    def __init__(self, db_session: AsyncSession, redis_client: aioredis.Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: aioredis.Redis) -> None:
         self.db = db_session
         self.redis = redis_client
         
@@ -888,7 +888,7 @@ class DisclosureComplianceManager:
 class ContractComplianceManager:
     """Manages creator contract compliance and monitoring"""
     
-    def __init__(self, db_session: AsyncSession, redis_client: aioredis.Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: aioredis.Redis) -> None:
         self.db = db_session
         self.redis = redis_client
         
@@ -1040,7 +1040,7 @@ class ContractComplianceManager:
 class CreatorCompliance:
     """Main creator compliance management engine"""
     
-    def __init__(self, db_session: AsyncSession, redis_client: aioredis.Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: aioredis.Redis) -> None:
         self.db = db_session
         self.redis = redis_client
         

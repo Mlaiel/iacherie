@@ -1,4 +1,6 @@
 """
+from datetime import datetime
+
 Monitoring System Configurations
 ===============================
 
@@ -132,7 +134,7 @@ class MonitoringConfigs:
     - Data retention policies
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.metrics: Dict[str, MetricConfig] = {}
         self.alert_rules: Dict[str, AlertRule] = {}
         self.alert_channels: Dict[str, AlertChannel] = {}
@@ -159,7 +161,7 @@ class MonitoringConfigs:
             "backup_interval_hours": 24
         }
         
-    def _load_default_configurations(self):
+    def _load_default_configurations(self) -> None:
         """Load default monitoring configurations"""
         
         # System metrics
@@ -544,15 +546,15 @@ class MonitoringConfigs:
         metric = self.get_metric_config(metric_name)
         return metric.collection_interval_seconds if metric else self.global_settings["default_collection_interval"]
         
-    def add_custom_metric(self, metric_config: MetricConfig):
+    def add_custom_metric(self, metric_config -> None: MetricConfig) -> None:
         """Add a custom metric configuration"""
         self.metrics[metric_config.name] = metric_config
         
-    def add_custom_alert_rule(self, alert_rule: AlertRule):
+    def add_custom_alert_rule(self, alert_rule -> None: AlertRule) -> None:
         """Add a custom alert rule"""
         self.alert_rules[alert_rule.name] = alert_rule
         
-    def add_custom_alert_channel(self, alert_channel: AlertChannel):
+    def add_custom_alert_channel(self, alert_channel -> None: AlertChannel) -> None:
         """Add a custom alert channel"""
         self.alert_channels[alert_channel.name] = alert_channel
         
@@ -622,7 +624,7 @@ class MonitoringConfigs:
             
         return prometheus_config
         
-    def export_config(self, output_path: str):
+    def export_config(self, output_path -> None: str) -> None:
         """Export configuration to JSON file"""
         config_data = {
             "global_settings": self.global_settings,

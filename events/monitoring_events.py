@@ -97,7 +97,7 @@ class MonitoringMetrics:
     """
 Prometheus metrics for monitoring"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         # Counters
         self.events_total = Counter('monitoring_events_total', 'Total monitoring events', ['event_type', 'severity'])
         self.alerts_total = Counter('monitoring_alerts_total', 'Total alerts triggered', ['severity'])
@@ -118,7 +118,7 @@ class SystemMonitor:
     """
 Advanced system monitoring and health checking"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.metrics = MonitoringMetrics()
         self.health_checks = {}
         self.performance_history = deque(maxlen=1000)
@@ -233,7 +233,7 @@ class AnomalyDetector:
     """
 ML-powered anomaly detection for monitoring"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.baseline_metrics = defaultdict(list)
         self.anomaly_threshold = 2.5  # Standard deviations
         self.min_baseline_samples = 50
@@ -296,7 +296,7 @@ class AlertManager:
     """
 Advanced alert management and notification system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.active_alerts = {}
         self.alert_history = deque(maxlen=10000)
         self.notification_channels = []
@@ -368,7 +368,7 @@ Send alert notifications through configured channels"""
 class PerformanceProfiler:
     """Performance profiling and optimization recommendations"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.performance_data = defaultdict(list)
         self.profiling_active = False
     
@@ -453,7 +453,7 @@ class MonitoringEventHandler:
     """
 Main monitoring event handler orchestrating all monitoring components"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.system_monitor = SystemMonitor()
         self.anomaly_detector = AnomalyDetector()
         self.alert_manager = AlertManager()

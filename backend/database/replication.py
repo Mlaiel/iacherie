@@ -210,7 +210,7 @@ class PostgreSQLReplicationProvider(IReplicationProvider):
     and automated failover capabilities.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._config: Optional[ReplicationConfig] = None
         self._nodes: Dict[str, ReplicationNode] = {}
         self._master_node: Optional[ReplicationNode] = None
@@ -261,7 +261,7 @@ class PostgreSQLReplicationProvider(IReplicationProvider):
             self._replication_status = ReplicationStatus.FAILED
             return False
     
-    async def _configure_master_replication(self):
+    async def _configure_master_replication(self) -> None:
         """Configure master node for replication."""
         if not self._master_node:
             return
@@ -274,7 +274,7 @@ class PostgreSQLReplicationProvider(IReplicationProvider):
         
         logger.info(f"🔧 Configured master replication for {self._master_node.node_id}")
     
-    async def _configure_slave_replication(self, slave_node: ReplicationNode):
+    async def _configure_slave_replication(self, slave_node -> None: ReplicationNode) -> None:
         """Configure slave node for replication."""
         # In a real implementation, this would:
         # 1. Create recovery.conf with streaming settings
@@ -304,7 +304,7 @@ class PostgreSQLReplicationProvider(IReplicationProvider):
             logger.error(f"❌ Failed to start PostgreSQL replication: {e}")
             return False
     
-    async def _monitor_replication_lag(self):
+    async def _monitor_replication_lag(self) -> None:
         """Monitor replication lag across all slaves."""
         while True:
             try:
@@ -367,7 +367,7 @@ class PostgreSQLReplicationProvider(IReplicationProvider):
             logger.error(f"Failed to get replication lag for {node.node_id}: {e}")
             return 999.0  # Return high lag on error
     
-    async def _health_monitor(self):
+    async def _health_monitor(self) -> None:
         """Monitor overall replication health."""
         while True:
             try:
@@ -407,7 +407,7 @@ class PostgreSQLReplicationProvider(IReplicationProvider):
             logger.error(f"Health check failed for {node.node_id}: {e}")
             return False
     
-    async def _trigger_failover(self):
+    async def _trigger_failover(self) -> None:
         """Trigger automatic failover to best available slave."""
         logger.warning("🚨 Triggering automatic failover...")
         
@@ -503,13 +503,13 @@ class ShardingManager:
     and cross-shard query coordination.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._shard_configs: Dict[str, ShardConfig] = {}
         self._shard_map: Dict[str, str] = {}  # key -> shard_id mapping
         self._rebalancing_enabled = True
         self._monitoring_tasks: List[asyncio.Task] = []
         
-    async def initialize(self, database_name: str, shard_key: str, initial_shards: int = 4):
+    async def initialize(self, database_name -> None: str, shard_key -> None: str, initial_shards -> None: int = 4) -> None:
         """Initialize sharding for database."""
         logger.info(f"🔀 Initializing sharding for {database_name} with {initial_shards} shards")
         
@@ -553,7 +553,7 @@ class ShardingManager:
         # Fallback to first shard
         return next(iter(self._shard_configs.keys()))
     
-    async def _shard_monitoring_loop(self):
+    async def _shard_monitoring_loop(self) -> None:
         """Monitor shard health and balance."""
         while True:
             try:
@@ -567,7 +567,7 @@ class ShardingManager:
             except Exception as e:
                 logger.error(f"Shard monitoring error: {e}")
     
-    async def _check_shard_balance(self):
+    async def _check_shard_balance(self) -> None:
         """Check if shards need rebalancing."""
         try:
             # Calculate shard statistics
@@ -593,7 +593,7 @@ class ShardingManager:
         except Exception as e:
             logger.error(f"Shard balance check failed: {e}")
     
-    async def _split_shard(self, shard_id: str):
+    async def _split_shard(self, shard_id -> None: str) -> None:
         """Split an oversized shard."""
         try:
             original_shard = self._shard_configs[shard_id]
@@ -658,13 +658,13 @@ class DatabaseReplicationManager:
     comprehensive replication, sharding, and high availability management.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._replication_providers: Dict[str, IReplicationProvider] = {}
         self.sharding_manager = ShardingManager()
         self._global_metrics: Dict[str, ReplicationMetrics] = {}
         self._monitoring_tasks: List[asyncio.Task] = []
         
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize replication manager."""
         logger.info("🏢 Initializing Enterprise Database Replication Manager...")
         
@@ -678,7 +678,7 @@ class DatabaseReplicationManager:
         
         logger.info("✅ Enterprise Database Replication Manager initialized")
     
-    def add_replication_provider(self, database_name: str, provider: IReplicationProvider):
+    def add_replication_provider(self, database_name -> None: str, provider -> None: IReplicationProvider) -> None:
         """Add replication provider for database."""
         self._replication_providers[database_name] = provider
         logger.info(f"📋 Added replication provider: {database_name}")
@@ -701,7 +701,7 @@ class DatabaseReplicationManager:
             logger.error(f"❌ Failed to setup replication for {database_name}: {e}")
             return False
     
-    async def _global_monitoring_loop(self):
+    async def _global_monitoring_loop(self) -> None:
         """Global replication monitoring."""
         while True:
             try:
@@ -797,7 +797,7 @@ class DatabaseReplicationManager:
             logger.error(f"❌ Failover failed for {database_name}: {e}")
             return False
     
-    async def close(self):
+    async def close(self) -> None:
         """Close replication manager."""
         logger.info("🔌 Closing Database Replication Manager...")
         

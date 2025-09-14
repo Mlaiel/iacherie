@@ -100,7 +100,7 @@ class ResolutionError(Exception):
 class ScopedContainer:
     """Scoped dependency container"""
     
-    def __init__(self, parent_container: 'DependencyInjectionCore'):
+    def __init__(self, parent_container -> None: 'DependencyInjectionCore') -> None:
         self.parent = parent_container
         self.scoped_instances: Dict[Type, Any] = {}
         self.disposed = False
@@ -109,11 +109,11 @@ class ScopedContainer:
         """Get scoped instance"""
         return self.scoped_instances.get(interface)
 
-    def set_scoped_instance(self, interface: Type, instance: Any):
+    def set_scoped_instance(self, interface -> None: Type, instance -> None: Any) -> None:
         """Set scoped instance"""
         self.scoped_instances[interface] = instance
 
-    async def dispose(self):
+    async def dispose(self) -> None:
         """Dispose scoped instances"""
         if self.disposed:
             return
@@ -131,7 +131,7 @@ class ScopedContainer:
 class DependencyInjectionCore:
     """Enterprise dependency injection container"""
     
-    def __init__(self, level: str = "enterprise"):
+    def __init__(self, level -> None: str = "enterprise") -> None:
         """Initialize dependency injection container"""
         self.level = level
         self.registrations: Dict[Type, ComponentRegistration] = {}
@@ -383,7 +383,7 @@ class DependencyInjectionCore:
         return scope
 
     @asynccontextmanager
-    async def scope(self):
+    async def scope(self) -> None:
         """Context manager for scoped resolution"""
         scoped_container = self.create_scope()
         try:
@@ -406,7 +406,7 @@ class DependencyInjectionCore:
         """Get registration information"""
         return self.registrations.get(interface)
 
-    def unregister(self, interface: Type):
+    def unregister(self, interface -> None: Type) -> None:
         """Unregister a component"""
         with self._lock:
             if interface in self.registrations:
@@ -424,11 +424,11 @@ class DependencyInjectionCore:
                 
                 logger.debug(f"🗑️ Unregistered {interface.__name__}")
 
-    def add_lifecycle_callback(self, phase: LifecyclePhase, callback: Callable[[Any], None]):
+    def add_lifecycle_callback(self, phase -> None: LifecyclePhase, callback -> None: Callable[[Any], None]) -> None:
         """Add lifecycle callback"""
         self.lifecycle_callbacks[phase].append(callback)
 
-    async def initialize_all(self):
+    async def initialize_all(self) -> None:
         """Initialize all registered components"""
         logger.info("🚀 Initializing all registered components")
         
@@ -441,7 +441,7 @@ class DependencyInjectionCore:
         for registration in sorted_registrations:
             await self._initialize_component(registration)
 
-    async def _initialize_component(self, registration: ComponentRegistration):
+    async def _initialize_component(self, registration -> None: ComponentRegistration) -> None:
         """Initialize a single component"""
         try:
             registration.lifecycle_phase = LifecyclePhase.INITIALIZING
@@ -466,7 +466,7 @@ class DependencyInjectionCore:
             logger.error(f"❌ Failed to initialize {registration.interface.__name__}: {str(e)}")
             raise
 
-    async def start_all(self):
+    async def start_all(self) -> None:
         """Start all initialized components"""
         logger.info("▶️ Starting all components")
         
@@ -474,7 +474,7 @@ class DependencyInjectionCore:
             if registration.lifecycle_phase == LifecyclePhase.INITIALIZED:
                 await self._start_component(registration)
 
-    async def _start_component(self, registration: ComponentRegistration):
+    async def _start_component(self, registration -> None: ComponentRegistration) -> None:
         """Start a single component"""
         try:
             registration.lifecycle_phase = LifecyclePhase.STARTING
@@ -496,7 +496,7 @@ class DependencyInjectionCore:
             logger.error(f"❌ Failed to start {registration.interface.__name__}: {str(e)}")
             raise
 
-    async def stop_all(self):
+    async def stop_all(self) -> None:
         """Stop all running components"""
         logger.info("⏹️ Stopping all components")
         
@@ -511,7 +511,7 @@ class DependencyInjectionCore:
             if registration.lifecycle_phase == LifecyclePhase.RUNNING:
                 await self._stop_component(registration)
 
-    async def _stop_component(self, registration: ComponentRegistration):
+    async def _stop_component(self, registration -> None: ComponentRegistration) -> None:
         """Stop a single component"""
         try:
             registration.lifecycle_phase = LifecyclePhase.STOPPING
@@ -551,7 +551,7 @@ class DependencyInjectionCore:
         
         return errors
 
-    def _validate_resolution_path(self, interface: Type, visited: set):
+    def _validate_resolution_path(self, interface -> None: Type, visited -> None: set) -> None:
         """Validate resolution path without creating instances"""
         if interface in visited:
             raise CircularDependencyError(f"Circular dependency involving {interface.__name__}")
@@ -571,7 +571,7 @@ class DependencyInjectionCore:
         """Get container metrics"""
         return self.metrics
 
-    def clear(self):
+    def clear(self) -> None:
         """Clear all registrations and instances"""
         with self._lock:
             self.registrations.clear()
@@ -600,9 +600,9 @@ class DependencyInjectionCore:
 container = DependencyInjectionCore()
 
 # Decorator for easy registration
-def injectable(scope: Scope = Scope.SINGLETON, interface: Optional[Type] = None):
+def injectable(scope -> None: Scope = Scope.SINGLETON, interface -> None: Optional[Type] = None) -> None:
     """Decorator to mark class as injectable"""
-    def decorator(cls):
+    def decorator(cls) -> None:
         registration_interface = interface or cls
         container.register(registration_interface, cls, scope)
         return cls

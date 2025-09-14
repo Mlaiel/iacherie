@@ -1,3 +1,8 @@
+"""
+Regression Detector module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """MongoDB Performance Regression Detection
 =========================================
@@ -64,7 +69,7 @@ class RegressionConfig:
 class PerformanceRegressionDetector:
     """MongoDB performance regression detection system."""
     
-    def __init__(self, config: RegressionConfig = None, storage_dir: str = None):
+    def __init__(self, config -> None: RegressionConfig = None, storage_dir -> None: str = None) -> None:
         self.config = config or RegressionConfig()
         self.storage_dir = Path(storage_dir or "performance_data")
         self.storage_dir.mkdir(exist_ok=True)
@@ -79,7 +84,7 @@ class PerformanceRegressionDetector:
         
         self._load_data()
     
-    def _load_data(self):
+    def _load_data(self) -> None:
         """Load existing performance data."""
         try:
             # Load baselines
@@ -107,7 +112,7 @@ class PerformanceRegressionDetector:
         except Exception as e:
             logger.error(f"Error loading performance data: {e}")
     
-    def _save_data(self):
+    def _save_data(self) -> None:
         """Save performance data to storage."""
         try:
             # Save baselines
@@ -127,7 +132,7 @@ class PerformanceRegressionDetector:
         except Exception as e:
             logger.error(f"Error saving performance data: {e}")
     
-    def _cleanup_old_data(self):
+    def _cleanup_old_data(self) -> None:
         """Clean up old performance data."""
         now = datetime.now(timezone.utc)
         
@@ -145,7 +150,7 @@ class PerformanceRegressionDetector:
             if datetime.fromisoformat(entry['timestamp'].replace('Z', '+00:00')) > history_cutoff
         ]
     
-    def add_performance_data(self, benchmark_results: List[Dict[str, Any]]):
+    def add_performance_data(self, benchmark_results -> None: List[Dict[str, Any]]) -> None:
         """Add new performance data and update baselines."""
         timestamp = datetime.now(timezone.utc).isoformat()
         
@@ -164,7 +169,7 @@ class PerformanceRegressionDetector:
         # Save updated data
         self._save_data()
     
-    def _update_baseline(self, operation_type: str, result: Dict[str, Any], timestamp: str):
+    def _update_baseline(self, operation_type -> None: str, result -> None: Dict[str, Any], timestamp -> None: str) -> None:
         """Update performance baseline for an operation type."""
         # Get historical data for this operation type
         historical_data = self._get_historical_data(operation_type)
@@ -461,7 +466,7 @@ class PerformanceRegressionDetector:
         
         return str(filepath)
     
-    def print_alert_summary(self):
+    def print_alert_summary(self) -> None:
         """Print summary of performance alerts."""
         active_alerts = [a for a in self.alerts if self._is_alert_active(a)]
         
@@ -490,7 +495,7 @@ class PerformanceRegressionDetector:
                     if alert.suggested_actions:
                         print(f"    Suggested: {alert.suggested_actions[0]}")
 
-def main():
+def main() -> None:
     """CLI interface for regression detection."""
     import argparse
     

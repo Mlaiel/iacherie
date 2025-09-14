@@ -12,6 +12,7 @@ from datetime import datetime
 
 @dataclass
 class QualityMetrics:
+    """QualityMetrics: class implementation"""
     content_id: str
     overall_score: float = 0.0
     technical_quality: float = 0.0
@@ -22,6 +23,7 @@ class QualityMetrics:
 
 @dataclass
 class OptimizationResult:
+    """OptimizationResult: class implementation"""
     user_id: str
     optimized_content: List[QualityMetrics]
     improvements_made: List[str]

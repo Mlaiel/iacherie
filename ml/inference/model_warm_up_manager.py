@@ -1,3 +1,8 @@
+"""
+Model Warm Up Manager module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 🚀 **Model Warm-up Manager - Enterprise ML Model Preloading**
@@ -96,7 +101,7 @@ class ModelWarmupManager:
     - Performance monitoring and optimization
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.logger = logging.getLogger(__name__)
         
@@ -139,7 +144,7 @@ class ModelWarmupManager:
             'cache_misses': 0
         }
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize the warm-up manager"""
         self.logger.info("Initializing ModelWarmupManager")
         
@@ -154,7 +159,7 @@ class ModelWarmupManager:
         
         self.logger.info("ModelWarmupManager initialized successfully")
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Graceful shutdown"""
         self.logger.info("Shutting down ModelWarmupManager")
         
@@ -322,7 +327,7 @@ class ModelWarmupManager:
             'metrics': self.metrics
         }
     
-    async def _apply_warmup_strategy(self, config: WarmupConfig):
+    async def _apply_warmup_strategy(self, config -> None: WarmupConfig) -> None:
         """Apply the configured warm-up strategy"""
         if config.strategy == WarmupStrategy.EAGER:
             # Load immediately
@@ -458,7 +463,7 @@ class ModelWarmupManager:
         
         return True
     
-    async def _free_memory_for_model(self, model_id: str, required_memory: int):
+    async def _free_memory_for_model(self, model_id -> None: str, required_memory -> None: int) -> None:
         """Free memory by cooling down lower priority models"""
         target_config = self.warmup_configs.get(model_id)
         target_priority = target_config.priority if target_config else 5
@@ -518,7 +523,7 @@ class ModelWarmupManager:
         # Default estimate
         return 512 * 1024 * 1024  # 512MB
     
-    async def _record_usage_pattern(self, model_id: str):
+    async def _record_usage_pattern(self, model_id -> None: str) -> None:
         """Record model usage pattern for prediction"""
         if model_id not in self.usage_patterns:
             self.usage_patterns[model_id] = []
@@ -536,9 +541,9 @@ class ModelWarmupManager:
         if len(self.usage_patterns[model_id]) > 1000:
             self.usage_patterns[model_id] = self.usage_patterns[model_id][-1000:]
     
-    async def _start_scheduled_warmup_task(self):
+    async def _start_scheduled_warmup_task(self) -> None:
         """Start scheduled warmup background task"""
-        async def scheduled_warmup_loop():
+        async def scheduled_warmup_loop() -> None:
             while not self.shutdown_event.is_set():
                 try:
                     current_time = datetime.utcnow().strftime("%H:%M")
@@ -560,9 +565,9 @@ class ModelWarmupManager:
         task = asyncio.create_task(scheduled_warmup_loop())
         self.scheduled_tasks.append(task)
     
-    async def _start_usage_pattern_analyzer(self):
+    async def _start_usage_pattern_analyzer(self) -> None:
         """Start usage pattern analysis task"""
-        async def pattern_analysis_loop():
+        async def pattern_analysis_loop() -> None:
             while not self.shutdown_event.is_set():
                 try:
                     # Analyze usage patterns and predict future needs
@@ -576,9 +581,9 @@ class ModelWarmupManager:
         task = asyncio.create_task(pattern_analysis_loop())
         self.scheduled_tasks.append(task)
     
-    async def _start_memory_monitor(self):
+    async def _start_memory_monitor(self) -> None:
         """Start memory monitoring task"""
-        async def memory_monitor_loop():
+        async def memory_monitor_loop() -> None:
             while not self.shutdown_event.is_set():
                 try:
                     # Monitor memory usage
@@ -601,9 +606,9 @@ class ModelWarmupManager:
         task = asyncio.create_task(memory_monitor_loop())
         self.scheduled_tasks.append(task)
     
-    async def _start_performance_optimizer(self):
+    async def _start_performance_optimizer(self) -> None:
         """Start performance optimization task"""
-        async def optimization_loop():
+        async def optimization_loop() -> None:
             while not self.shutdown_event.is_set():
                 try:
                     await self._optimize_model_placement()
@@ -616,7 +621,7 @@ class ModelWarmupManager:
         task = asyncio.create_task(optimization_loop())
         self.scheduled_tasks.append(task)
     
-    async def _analyze_usage_patterns(self):
+    async def _analyze_usage_patterns(self) -> None:
         """Analyze usage patterns and predict model needs"""
         current_hour = datetime.utcnow().hour
         current_day = datetime.utcnow().weekday()
@@ -640,7 +645,7 @@ class ModelWarmupManager:
                     self.logger.info(f"Predictively warming up model {model_id}")
                     await self.warmup_model(model_id, preload_samples=config.preload_samples)
     
-    async def _handle_memory_pressure(self):
+    async def _handle_memory_pressure(self) -> None:
         """Handle high memory utilization"""
         # Cool down least recently used models with lowest priority
         candidates = []
@@ -657,7 +662,7 @@ class ModelWarmupManager:
             await self.cooldown_model(model_to_cool)
             self.logger.info(f"Cooled down model {model_to_cool} due to memory pressure")
     
-    async def _optimize_model_placement(self):
+    async def _optimize_model_placement(self) -> None:
         """Optimize model placement based on usage patterns"""
         # This could implement more sophisticated optimization
         # For now, ensure high-priority models are warm
@@ -665,30 +670,30 @@ class ModelWarmupManager:
             if config.priority <= 2 and not await self.is_model_warm(model_id):
                 await self.warmup_model(model_id, preload_samples=config.preload_samples)
     
-    async def _load_initial_models(self):
+    async def _load_initial_models(self) -> None:
         """Load initial models based on configuration"""
         # Load eager strategy models
         for model_id, config in self.warmup_configs.items():
             if config.strategy == WarmupStrategy.EAGER:
                 await self.warmup_model(model_id, preload_samples=config.preload_samples)
     
-    async def _unload_all_models(self):
+    async def _unload_all_models(self) -> None:
         """Unload all models during shutdown"""
         for model_id in list(self.model_instances.keys()):
             await self.cooldown_model(model_id)
     
-    async def _schedule_warmup(self, model_id: str, schedule_time: str):
+    async def _schedule_warmup(self, model_id -> None: str, schedule_time -> None: str) -> None:
         """Schedule a warmup for specific time (handled by scheduled task)"""
         # This is handled by the scheduled warmup loop
         pass
     
-    async def _setup_predictive_warmup(self, model_id: str):
+    async def _setup_predictive_warmup(self, model_id -> None: str) -> None:
         """Setup predictive warmup (handled by pattern analyzer)"""
         # This is handled by the usage pattern analyzer
         pass
 
 # Usage example
-async def main():
+async def main() -> None:
     """Example usage of ModelWarmupManager"""
     config = {
         'max_memory_mb': 4096,

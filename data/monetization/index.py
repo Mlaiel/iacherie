@@ -134,7 +134,7 @@ class MonetizationService:
     including revenue tracking, optimization, payments, and compliance.
     """
     
-    def __init__(self, db_session: AsyncSession, redis_client: Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: Redis) -> None:
         """
 Initialize monetization service with all components."""
         self.db_session = db_session
@@ -144,7 +144,7 @@ Initialize monetization service with all components."""
         # Initialize core monetization components
         self._initialize_components()
     
-    def _initialize_components(self):
+    def _initialize_components(self) -> None:
         """
 Initialize all monetization components."""
         try:

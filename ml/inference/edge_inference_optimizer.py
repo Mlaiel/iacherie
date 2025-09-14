@@ -97,7 +97,7 @@ class EdgeInferenceOptimizer:
     - Real-time performance monitoring and adaptation
     """
     
-    def __init__(self, edge_cache_dir: str = "edge_cache/"):
+    def __init__(self, edge_cache_dir -> None: str = "edge_cache/") -> None:
         self.logger = logging.getLogger(__name__)
         self.edge_cache_dir = Path(edge_cache_dir)
         self.edge_cache_dir.mkdir(exist_ok=True, parents=True)
@@ -694,7 +694,7 @@ class EdgeInferenceOptimizer:
             return {"cpu_usage": 0, "memory_usage": 0, "memory_used": 0}
 
 # Example usage and testing
-async def main():
+async def main() -> None:
     """Example usage of EdgeInferenceOptimizer."""
     optimizer = EdgeInferenceOptimizer()
     

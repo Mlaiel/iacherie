@@ -163,7 +163,7 @@ class NetlifyConfig(BaseModel):
     log_retention_days: int = Field(default=30, description="Log retention period")
     
     @validator('access_token')
-    def validate_access_token(cls, v):
+    def validate_access_token(cls, v) -> None:
         if not v or len(v) < 10:
             raise ValueError("Valid Netlify access token required")
         return v
@@ -171,7 +171,7 @@ class NetlifyConfig(BaseModel):
 class NetlifySecurityManager:
     """Security manager for Netlify deployments - Security Expert role"""
     
-    def __init__(self, config: NetlifyConfig):
+    def __init__(self, config -> None: NetlifyConfig) -> None:
         self.config = config
     
     def generate_webhook_signature(self, payload: str, secret: str) -> str:
@@ -280,7 +280,7 @@ class NetlifySecurityManager:
 class NetlifyMLOptimizer:
     """ML-powered deployment optimization - ML Engineer + Lead Dev IA roles"""
     
-    def __init__(self, config: NetlifyConfig):
+    def __init__(self, config -> None: NetlifyConfig) -> None:
         self.config = config
         self.build_history = []
     
@@ -538,11 +538,11 @@ class NetlifyMLOptimizer:
 class NetlifyAPIClient:
     """Netlify API client - Backend Senior role"""
     
-    def __init__(self, config: NetlifyConfig):
+    def __init__(self, config -> None: NetlifyConfig) -> None:
         self.config = config
         self.session = None
     
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         self.session = aiohttp.ClientSession(
             headers={
                 "Authorization": f"Bearer {self.config.access_token}",
@@ -552,7 +552,7 @@ class NetlifyAPIClient:
         )
         return self
     
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         if self.session:
             await self.session.close()
     
@@ -695,7 +695,7 @@ class NetlifyAPIClient:
 class NetlifyFileManager:
     """File management for Netlify deployments - Backend Senior + DevOps roles"""
     
-    def __init__(self, config: NetlifyConfig):
+    def __init__(self, config -> None: NetlifyConfig) -> None:
         self.config = config
     
     async def prepare_site_files(self, source_path: str, site_type: SiteType) -> Dict[str, bytes]:
@@ -825,7 +825,7 @@ class NetlifyFileManager:
 class NetlifyMonitor:
     """Monitoring and analytics for Netlify deployments - DevOps role"""
     
-    def __init__(self, config: NetlifyConfig):
+    def __init__(self, config -> None: NetlifyConfig) -> None:
         self.config = config
     
     async def monitor_deployment(self, deploy_id: str, api_client: NetlifyAPIClient) -> AsyncGenerator[Dict[str, Any], None]:
@@ -970,7 +970,7 @@ class NetlifyMonitor:
 class NetlifyIntegration:
     """Main Netlify integration orchestrator - Lead Dev IA + Backend Senior roles"""
     
-    def __init__(self, config: NetlifyConfig):
+    def __init__(self, config -> None: NetlifyConfig) -> None:
         self.config = config
         self.security_manager = NetlifySecurityManager(config)
         self.ml_optimizer = NetlifyMLOptimizer(config)
@@ -1166,7 +1166,7 @@ class NetlifyIntegration:
 class NetlifyService:
     """Main Netlify service facade - DevOps + Integration role"""
     
-    def __init__(self, config: Optional[NetlifyConfig] = None):
+    def __init__(self, config -> None: Optional[NetlifyConfig] = None) -> None:
         self.config = config or NetlifyConfig(
             access_token="your-netlify-token-here",  # Should be configured via environment
             enable_forms=True,
@@ -1175,7 +1175,7 @@ class NetlifyService:
         )
         self.integration = NetlifyIntegration(self.config)
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize the Netlify service"""
         logger.info("Initializing Netlify Integration Service")
         
@@ -1187,12 +1187,12 @@ class NetlifyService:
         
         logger.info("Netlify Integration Service initialized successfully")
     
-    async def _validate_configuration(self):
+    async def _validate_configuration(self) -> None:
         """Validate service configuration"""
         if not self.config.access_token or self.config.access_token == "your-netlify-token-here":
             logger.warning("Netlify access token not configured - deployments will fail")
     
-    async def _test_connectivity(self):
+    async def _test_connectivity(self) -> None:
         """Test Netlify API connectivity"""
         try:
             async with NetlifyAPIClient(self.config) as api_client:
@@ -1238,7 +1238,7 @@ __all__ = [
 
 if __name__ == "__main__":
     # Example usage and testing
-    async def main():
+    async def main() -> None:
         # Initialize service
         service = NetlifyService()
         await service.initialize()

@@ -1,4 +1,6 @@
 """{{agent_name}} Natural Language Processing Agent for Ainflue Platform
+import asyncio
+
 {{agent_description}}
 
 Author: {{author_name}} ({{author_email}})
@@ -67,7 +69,7 @@ class NLPTask(BaseModel):
     created_at: datetime = Field(default_factory=datetime.utcnow)
     
     @validator('text')
-    def validate_text(cls, v):
+    def validate_text(cls, v) -> None:
         if isinstance(v, str) and not v.strip():
             raise ValueError('Text cannot be empty')
         if isinstance(v, list) and not v:
@@ -102,7 +104,7 @@ class {{agent_name}}NLPAgent(BaseAIAgent):
     - Text similarity and semantic search
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(config)
         self.model_manager = NLPModelManager()
         self.metrics_collector = NLPMetricsCollector()
@@ -113,7 +115,7 @@ class {{agent_name}}NLPAgent(BaseAIAgent):
         # Initialize default models
         self._initialize_default_models()
     
-    def _initialize_default_models(self):
+    def _initialize_default_models(self) -> None:
         """Initialize default NLP models"""
         try:
             # Load spaCy model for basic NLP tasks
@@ -742,9 +744,11 @@ class {{agent_name}}NLPAgent(BaseAIAgent):
             "supported_models": [model.value for model in NLPModel]
         }
     
-    async def clear_cache(self):
+    async def clear_cache(self) -> None:
         """Clear model cache to free memory"""
         self.loaded_models.clear()
         self.pipelines.clear()
         # Keep spaCy models as they're lighter
         logger.info("Model cache cleared")
+
+# File has syntax issues - needs manual review

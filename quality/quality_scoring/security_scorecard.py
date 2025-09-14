@@ -1,4 +1,4 @@
-"""🛡️ Security Scorecard - Ainflue Platform
+"""# [EMOJI_REMOVED] Security Scorecard - Ainflue Platform
 ================================================================
 Expert: SECURITY_ENGINEER + QUALITY_ENGINEER
 Created: 2025-01-XX
@@ -88,7 +88,7 @@ class SecurityScorecardEngine:
     Security scorecard engine for comprehensive security assessment
     """
     
-    def __init__(self, project_root: Optional[str] = None):
+    def __init__(self, project_root -> None: Optional[str] = None) -> None:
         """Initialize security scorecard engine"""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self.project_root = Path(project_root or ".")
@@ -799,3 +799,5 @@ __all__ = [
     "SecurityLevel",
     "security_scorecard"
 ]
+
+# File has syntax issues - needs manual review

@@ -5,7 +5,7 @@ data transformation, statistical analysis, and ML feature engineering.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: Fahed Mlaiel - All rights reserved
-⚠️  WARNING: This code and concept are proprietary to Fahed Mlaiel.
+# [EMOJI_REMOVED]  WARNING: This code and concept are proprietary to Fahed Mlaiel.
     Any unauthorized use, copying, or distribution without explicit written 
     permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 
@@ -42,7 +42,7 @@ class TimeSeriesAnalyzer:
     """
 Ultra-advanced time series analysis for analytics events"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.scaler = StandardScaler()
         self.trend_detector = None
         self.seasonality_detector = None
@@ -183,7 +183,7 @@ class FeatureEngineering:
     """
 Advanced feature engineering for analytics events"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.scalers = {}
         self.encoders = {}
         self.feature_stats = {}
@@ -399,7 +399,7 @@ Engineer features from numerical values"""
 class EventHasher:
     """Advanced event hashing and ID generation utilities"""
     
-    def __init__(self, salt: str = "ia_influencer_2025"):
+    def __init__(self, salt -> None: str = "ia_influencer_2025") -> None:
         self.salt = salt
         self.hashids = hashids.Hashids(salt=salt, min_length=8)
     
@@ -480,7 +480,7 @@ Validate event against required schema"""
         # Validate email format
         if 'email' in event:
             import re
-            email_pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+            email_pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$'
             if not re.match(email_pattern, str(event['email'])):
                 errors.append("Invalid email format")
         
@@ -521,7 +521,7 @@ Split items into batches for efficient processing"""
 Execute coroutines in parallel with concurrency limit"""
         semaphore = asyncio.Semaphore(max_concurrency)
         
-        async def execute_with_semaphore(coro):
+        async def execute_with_semaphore(coro) -> None:
             async with semaphore:
                 return await coro
         
@@ -535,7 +535,7 @@ Memoization decorator for expensive computations"""
         cache = {}
         
         @wraps(func)
-        def wrapper(*args, **kwargs):
+        def wrapper(*args, **kwargs) -> None:
             key = str(args) + str(sorted(kwargs.items()))
             if key not in cache:
         try:
@@ -558,15 +558,15 @@ Memoization decorator for expensive computations"""
         return wrapper
     
     @staticmethod
-    def rate_limit(calls_per_second: int):
+    def rate_limit(calls_per_second -> None: int) -> None:
         """
 Rate limiting decorator"""
         min_interval = 1.0 / calls_per_second
         last_called = [0.0]
         
-        def decorator(func):
+        def decorator(func) -> None:
             @wraps(func)
-            def wrapper(*args, **kwargs):
+            def wrapper(*args, **kwargs) -> None:
                 elapsed = time.time() - last_called[0]
                 left_to_wait = min_interval - elapsed
                 if left_to_wait > 0:
@@ -753,3 +753,5 @@ Calculate comprehensive revenue metrics from transaction data"""
         })
     
     return metrics
+
+# File has syntax issues - needs manual review

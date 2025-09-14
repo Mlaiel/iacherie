@@ -56,7 +56,7 @@ class AudioUtilities:
     - Professional DSP operations
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize audio utilities"""
         # Supported formats
         self.supported_formats = ['mp3', 'wav', 'flac', 'ogg', 'aac', 'm4a']

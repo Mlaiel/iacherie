@@ -43,7 +43,8 @@ except ImportError:
     class AsyncIOMotorDatabase: pass
     class PyMongoError(Exception): pass
     class ObjectId:
-        def __init__(self): pass
+    """ObjectId: class implementation"""
+        def __init__(self) -> None: pass
     ASCENDING = 1
     DESCENDING = -1
     TEXT = "text"
@@ -72,7 +73,7 @@ class MongoDBAnalyticsStore(IEventStoreBackend):
     - Time-series metrics collection
     """
     
-    def __init__(self, connection_config: Dict[str, Any]):
+    def __init__(self, connection_config -> None: Dict[str, Any]) -> None:
         if not MOTOR_AVAILABLE:
             raise ImportError("motor not available. Install with: pip install motor")
         
@@ -100,7 +101,7 @@ class MongoDBAnalyticsStore(IEventStoreBackend):
             'general_events': 'general_analytics_events'
         }
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize MongoDB connection and collections"""
         try:
             # Create MongoDB client
@@ -145,7 +146,7 @@ class MongoDBAnalyticsStore(IEventStoreBackend):
         else:
             return f"mongodb://{host}:{port}"
     
-    async def _initialize_collections(self):
+    async def _initialize_collections(self) -> None:
         """Initialize specialized collections for analytics"""
         
         # Initialize regular collections
@@ -185,7 +186,7 @@ class MongoDBAnalyticsStore(IEventStoreBackend):
                 logger.warning(f"Could not create capped collection: {e}")
             self._collections['realtime'] = self.database["realtime_events"]
     
-    async def _create_analytics_indexes(self):
+    async def _create_analytics_indexes(self) -> None:
         """Create specialized indexes for analytics queries"""
         
         # User analytics indexes
@@ -260,7 +261,7 @@ class MongoDBAnalyticsStore(IEventStoreBackend):
         
         logger.info("Created analytics indexes successfully")
     
-    async def _setup_sharding(self):
+    async def _setup_sharding(self) -> None:
         """Setup sharding for scalability"""
         try:
             # Enable sharding on database
@@ -455,7 +456,7 @@ class MongoDBAnalyticsStore(IEventStoreBackend):
         performance_patterns = ['performance', 'metrics', 'latency', 'throughput']
         return any(pattern in event.event_type.lower() for pattern in performance_patterns)
     
-    async def _store_performance_metrics(self, event: BaseEvent):
+    async def _store_performance_metrics(self, event -> None: BaseEvent) -> None:
         """Store performance metrics in time-series collection"""
         if 'time_series' not in self._collections:
             return
@@ -843,7 +844,7 @@ class MongoDBAnalyticsStore(IEventStoreBackend):
         results = await self.execute_analytics_aggregation(pipeline, 'revenue_analytics')
         return results
     
-    async def close(self):
+    async def close(self) -> None:
         """Close MongoDB connection"""
         if self.client:
             self.client.close()

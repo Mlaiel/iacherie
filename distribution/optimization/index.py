@@ -1,4 +1,6 @@
 """
+import asyncio
+
 Optimization Service Entry Point - Distribution Optimization Hub
 ==============================================================
 
@@ -31,12 +33,12 @@ queue_intelligence = QueueIntelligence()
 distribution_intelligence = DistributionIntelligence()
 
 @optimization_router.get("/health")
-async def optimization_health():
+async def optimization_health() -> None:
     """Optimization service health check"""
     return {"status": "healthy", "service": "optimization"}
 
 @optimization_router.get("/recommendations")
-async def get_optimization_recommendations():
+async def get_optimization_recommendations() -> None:
     """Get AI-powered optimization recommendations"""
     return await distribution_intelligence.get_recommendations()
 

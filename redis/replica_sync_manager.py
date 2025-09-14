@@ -93,7 +93,7 @@ class ReplicaSyncManager:
     Microservices + DBA implementation with advanced sync strategies
     """
     
-    def __init__(self, redis_settings: RedisSettings, is_master: bool = False):
+    def __init__(self, redis_settings -> None: RedisSettings, is_master -> None: bool = False) -> None:
         self.redis_settings = redis_settings
         self.is_master = is_master
         self.redis_client: Optional[redis.Redis] = None
@@ -130,7 +130,7 @@ class ReplicaSyncManager:
         self.enable_pipeline = True
         self.pipeline_size = 100
         
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize the replica sync manager"""
         try:
             # Connect to Redis
@@ -249,7 +249,7 @@ class ReplicaSyncManager:
             logger.error(f"Error scheduling sync: {e}")
             raise
     
-    async def _heartbeat_monitor(self):
+    async def _heartbeat_monitor(self) -> None:
         """Monitor replica heartbeats"""
         while self._running:
             try:
@@ -277,7 +277,7 @@ class ReplicaSyncManager:
                 logger.error(f"Error in heartbeat monitor: {e}")
                 await asyncio.sleep(1)
     
-    async def _send_heartbeat(self):
+    async def _send_heartbeat(self) -> None:
         """Send heartbeat to master (if we're a replica)"""
         try:
             if self.is_master:
@@ -300,7 +300,7 @@ class ReplicaSyncManager:
         except Exception as e:
             logger.error(f"Error sending heartbeat: {e}")
     
-    async def _sync_manager(self):
+    async def _sync_manager(self) -> None:
         """Manage synchronization operations"""
         while self._running:
             try:
@@ -323,7 +323,7 @@ class ReplicaSyncManager:
                 logger.error(f"Error in sync manager: {e}")
                 await asyncio.sleep(1)
     
-    async def _execute_sync(self, operation_id: str):
+    async def _execute_sync(self, operation_id -> None: str) -> None:
         """Execute a synchronization operation"""
         try:
             sync_op = self.sync_operations.get(operation_id)
@@ -548,7 +548,7 @@ class ReplicaSyncManager:
             logger.error(f"Incremental sync error for replica {replica.replica_id}: {e}")
             return False
     
-    async def _metrics_collector(self):
+    async def _metrics_collector(self) -> None:
         """Collect replication metrics"""
         while self._running:
             try:
@@ -561,7 +561,7 @@ class ReplicaSyncManager:
                 logger.error(f"Error in metrics collector: {e}")
                 await asyncio.sleep(1)
     
-    async def _update_replication_metrics(self):
+    async def _update_replication_metrics(self) -> None:
         """Update replication metrics"""
         try:
             now = datetime.utcnow()
@@ -607,7 +607,7 @@ class ReplicaSyncManager:
         except Exception as e:
             logger.error(f"Error updating replication metrics: {e}")
     
-    async def _lag_monitor(self):
+    async def _lag_monitor(self) -> None:
         """Monitor replication lag"""
         while self._running:
             try:
@@ -679,7 +679,7 @@ class ReplicaSyncManager:
             logger.error(f"Error getting replication offset: {e}")
             return 0
     
-    async def _health_checker(self):
+    async def _health_checker(self) -> None:
         """Check replica health"""
         while self._running:
             try:
@@ -720,7 +720,7 @@ class ReplicaSyncManager:
                 logger.error(f"Error in health checker: {e}")
                 await asyncio.sleep(1)
     
-    async def _master_coordinator(self):
+    async def _master_coordinator(self) -> None:
         """Coordinate replica management (master only)"""
         while self._running:
             try:
@@ -741,7 +741,7 @@ class ReplicaSyncManager:
                 logger.error(f"Error in master coordinator: {e}")
                 await asyncio.sleep(1)
     
-    async def _discover_replicas(self):
+    async def _discover_replicas(self) -> None:
         """Discover new replicas from Redis info"""
         try:
             info = await self.redis_client.info('replication')
@@ -759,7 +759,7 @@ class ReplicaSyncManager:
         except Exception as e:
             logger.error(f"Error discovering replicas: {e}")
     
-    async def _optimize_sync_strategies(self):
+    async def _optimize_sync_strategies(self) -> None:
         """Optimize sync strategies based on replica performance"""
         try:
             for replica in self.replicas.values():
@@ -781,7 +781,7 @@ class ReplicaSyncManager:
         except Exception as e:
             logger.error(f"Error optimizing sync strategies: {e}")
     
-    async def _handle_replica_disconnect(self, replica_id: str):
+    async def _handle_replica_disconnect(self, replica_id -> None: str) -> None:
         """Handle replica disconnection"""
         try:
             replica = self.replicas.get(replica_id)
@@ -798,7 +798,7 @@ class ReplicaSyncManager:
         except Exception as e:
             logger.error(f"Error handling replica disconnect: {e}")
     
-    async def _cancel_replica_syncs(self, replica_id: str):
+    async def _cancel_replica_syncs(self, replica_id -> None: str) -> None:
         """Cancel active sync operations for a replica"""
         try:
             # Find and cancel active syncs for this replica
@@ -822,7 +822,7 @@ class ReplicaSyncManager:
         except Exception as e:
             logger.error(f"Error cancelling replica syncs: {e}")
     
-    async def _cleanup_completed_syncs(self):
+    async def _cleanup_completed_syncs(self) -> None:
         """Clean up completed sync operations"""
         try:
             completed_ops = [op_id for op_id, op in self.sync_operations.items() 
@@ -834,7 +834,7 @@ class ReplicaSyncManager:
         except Exception as e:
             logger.error(f"Error cleaning up completed syncs: {e}")
     
-    async def _cleanup_old_operations(self):
+    async def _cleanup_old_operations(self) -> None:
         """Clean up old sync operations"""
         try:
             now = datetime.utcnow()
@@ -853,7 +853,7 @@ class ReplicaSyncManager:
         except Exception as e:
             logger.error(f"Error cleaning up old operations: {e}")
     
-    async def _store_replica_info(self, replica: ReplicaInfo):
+    async def _store_replica_info(self, replica -> None: ReplicaInfo) -> None:
         """Store replica information in Redis"""
         try:
             replica_data = {
@@ -880,7 +880,7 @@ class ReplicaSyncManager:
         except Exception as e:
             logger.error(f"Error storing replica info: {e}")
     
-    async def _store_sync_operation(self, sync_op: SyncOperation):
+    async def _store_sync_operation(self, sync_op -> None: SyncOperation) -> None:
         """Store sync operation information in Redis"""
         try:
             op_data = {
@@ -901,7 +901,7 @@ class ReplicaSyncManager:
         except Exception as e:
             logger.error(f"Error storing sync operation: {e}")
     
-    async def _store_metrics(self):
+    async def _store_metrics(self) -> None:
         """Store replication metrics in Redis"""
         try:
             metrics_data = {
@@ -921,7 +921,7 @@ class ReplicaSyncManager:
         except Exception as e:
             logger.error(f"Error storing metrics: {e}")
     
-    async def _load_replica_info(self):
+    async def _load_replica_info(self) -> None:
         """Load replica information from Redis"""
         try:
             replica_data = await self.redis_client.hgetall(self.replicas_key)
@@ -983,7 +983,7 @@ class ReplicaSyncManager:
             logger.error(f"Error getting replication status: {e}")
             return {'error': str(e)}
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Shutdown the replica sync manager"""
         try:
             self._running = False

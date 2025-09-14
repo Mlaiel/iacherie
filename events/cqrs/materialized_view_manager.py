@@ -130,7 +130,7 @@ class ViewRefreshJob:
 class ViewStorageBackend:
     """Abstract storage backend for materialized views"""
     
-    def __init__(self, backend_config: Dict[str, Any]):
+    def __init__(self, backend_config -> None: Dict[str, Any]) -> None:
         self.backend_config = backend_config
         self.backend_name = backend_config.get("name", "default")
     
@@ -163,7 +163,7 @@ class ViewStorageBackend:
 class InMemoryViewBackend(ViewStorageBackend):
     """In-memory storage backend for materialized views"""
     
-    def __init__(self, backend_config: Dict[str, Any]):
+    def __init__(self, backend_config -> None: Dict[str, Any]) -> None:
         super().__init__(backend_config)
         self._views: Dict[str, Dict[str, Any]] = {}
         self._view_data: Dict[str, List[Dict[str, Any]]] = {}
@@ -391,7 +391,7 @@ class InMemoryViewBackend(ViewStorageBackend):
 class ViewQueryOptimizer:
     """Optimize queries by routing to appropriate materialized views"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._view_mappings: Dict[str, List[str]] = defaultdict(list)
         self._query_patterns: Dict[str, str] = {}
     
@@ -438,7 +438,7 @@ class ViewQueryOptimizer:
 class ViewDependencyManager:
     """Manage dependencies between materialized views"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._dependencies: Dict[str, Set[str]] = defaultdict(set)
         self._reverse_dependencies: Dict[str, Set[str]] = defaultdict(set)
     
@@ -458,7 +458,7 @@ class ViewDependencyManager:
         visited = set()
         result = []
         
-        def visit(view_id: str):
+        def visit(view_id -> None: str) -> None:
             if view_id in visited:
                 return
             
@@ -484,7 +484,7 @@ class ViewDependencyManager:
 class MaterializedViewScheduler:
     """Schedule materialized view refresh operations"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._scheduled_jobs: Dict[str, ViewRefreshJob] = {}
         self._job_queue: asyncio.Queue = asyncio.Queue()
         self._scheduler_task: Optional[asyncio.Task] = None
@@ -596,7 +596,7 @@ class MaterializedViewScheduler:
 class EnterpriseMaterializedViewManager:
     """Enterprise materialized view manager"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._views: Dict[str, MaterializedViewInstance] = {}
         self._storage_backends: Dict[str, ViewStorageBackend] = {}
         self._query_optimizer = ViewQueryOptimizer()

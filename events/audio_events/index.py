@@ -1,4 +1,6 @@
 """Audio Events Module Index - Central Entry Point
+from typing import Dict, List, Optional, Union, Tuple
+
 ==============================================
 
 This module provides centralized access to all audio event classes and handlers
@@ -274,7 +276,7 @@ __all__ = [
 ]
 
 
-def get_all_audio_event_types():
+def get_all_audio_event_types() -> None:
     """
     Returns a list of all audio event types for registration purposes.
     
@@ -374,7 +376,7 @@ def get_all_audio_event_types():
     ]
 
 
-def get_all_audio_event_handlers():
+def get_all_audio_event_handlers() -> None:
     """
     Returns a list of all audio event handler classes.
     
@@ -393,7 +395,7 @@ def get_all_audio_event_handlers():
     ]
 
 
-def register_all_audio_event_handlers(event_bus, services):
+def register_all_audio_event_handlers(event_bus, services) -> None:
     """
     Register all audio event handlers with the event bus.
     

@@ -1,3 +1,8 @@
+"""
+Compensation Transaction Handler module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """Compensation Transaction Handler - Intelligent Rollback Management
 ====================================================================
@@ -96,11 +101,11 @@ class CompensationWorkflowResult:
 class CompensationStore:
     """Storage for compensation actions"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.actions: Dict[str, List[CompensationAction]] = {}
         self.execution_log: List[Dict[str, Any]] = []
     
-    async def store_action(self, action: CompensationAction):
+    async def store_action(self, action -> None: CompensationAction) -> None:
         """Store compensation action"""
         if action.saga_id not in self.actions:
             self.actions[action.saga_id] = []
@@ -110,7 +115,7 @@ class CompensationStore:
         """Get all compensation actions for saga"""
         return self.actions.get(saga_id, [])
     
-    async def log_execution(self, saga_id: str, action_id: str, result: CompensationResult):
+    async def log_execution(self, saga_id -> None: str, action_id -> None: str, result -> None: CompensationResult) -> None:
         """Log compensation execution"""
         self.execution_log.append({
             "saga_id": saga_id,
@@ -301,7 +306,7 @@ class SEOOptimizationCompensation(CompensationStrategy):
 class CompensationTransactionHandler:
     """Main handler for compensation transactions"""
     
-    def __init__(self, compensation_store: CompensationStore):
+    def __init__(self, compensation_store -> None: CompensationStore) -> None:
         self.compensation_store = compensation_store
         self.strategies: List[CompensationStrategy] = [
             ContentUploadCompensation(),
@@ -313,7 +318,7 @@ class CompensationTransactionHandler:
         self.strategy_map: Dict[str, CompensationStrategy] = {}
         self._build_strategy_map()
     
-    def _build_strategy_map(self):
+    def _build_strategy_map(self) -> None:
         """Build strategy mapping for fast lookup"""
         for strategy in self.strategies:
             for action_type in ["content_upload", "ai_analysis", "content_protection", 

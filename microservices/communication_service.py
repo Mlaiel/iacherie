@@ -36,6 +36,7 @@ logging.basicConfig(
 logger = logging.getLogger("CommunicationService")
 
 class MessageType(str, Enum):
+    """MessageType class implementation"""
     TEXT = "text"
     FILE = "file"
     IMAGE = "image"
@@ -45,6 +46,7 @@ class MessageType(str, Enum):
     ANNOUNCEMENT = "announcement"
 
 class ChannelType(str, Enum):
+    """ChannelType class implementation"""
     DIRECT = "direct"
     GROUP = "group"
     PUBLIC = "public"
@@ -52,12 +54,14 @@ class ChannelType(str, Enum):
     BROADCAST = "broadcast"
 
 class MessageStatus(str, Enum):
+    """MessageStatus class implementation"""
     SENT = "sent"
     DELIVERED = "delivered"
     READ = "read"
     FAILED = "failed"
 
 class UserStatus(str, Enum):
+    """UserStatus class implementation"""
     ONLINE = "online"
     AWAY = "away"
     BUSY = "busy"
@@ -124,7 +128,7 @@ class CommunicationService:
     - **Security**: End-to-end encryption and moderation
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.messages: Dict[str, List[MessageModel]] = {}
         self.channels: Dict[str, ChannelModel] = {}
         self.user_sessions: Dict[str, UserSessionModel] = {}
@@ -146,7 +150,7 @@ class CommunicationService:
             "threat", "violence", "illegal", "fraud", "phishing"
         }
     
-    def _initialize_default_channels(self):
+    def _initialize_default_channels(self) -> None:
         """Initialize default system channels"""
         system_channel = ChannelModel(
             id="system",
@@ -200,7 +204,7 @@ class CommunicationService:
             logger.error(f"❌ User connection failed: {str(e)}")
             raise HTTPException(status_code=500, detail=f"Connection failed: {str(e)}")
     
-    async def disconnect_user(self, user_id: str):
+    async def disconnect_user(self, user_id -> None: str) -> None:
         """Disconnect user from real-time communication"""
         try:
             if user_id in self.user_sessions:
@@ -439,7 +443,7 @@ class CommunicationService:
             logger.error(f"❌ Status update failed: {str(e)}")
             raise HTTPException(status_code=500, detail=f"Status update failed: {str(e)}")
     
-    async def _check_rate_limit(self, user_id: str):
+    async def _check_rate_limit(self, user_id -> None: str) -> None:
         """Check message rate limiting"""
         now = datetime.utcnow()
         limit_window = timedelta(minutes=1)
@@ -500,7 +504,7 @@ class CommunicationService:
         mention_pattern = r'@(\w+)'
         return re.findall(mention_pattern, content)
     
-    async def _broadcast_message_to_channel(self, message: MessageModel):
+    async def _broadcast_message_to_channel(self, message -> None: MessageModel) -> None:
         """Broadcast message to all channel members"""
         channel = self.channels[message.channel_id]
         
@@ -518,7 +522,7 @@ class CommunicationService:
                         # Remove dead connection
                         del self.active_connections[session.websocket_id]
     
-    async def _broadcast_user_status(self, user_id: str, status: UserStatus):
+    async def _broadcast_user_status(self, user_id -> None: str, status -> None: UserStatus) -> None:
         """Broadcast user status change to relevant channels"""
         if user_id not in self.user_sessions:
             return
@@ -547,7 +551,7 @@ class CommunicationService:
                             except:
                                 pass
     
-    async def _send_system_message(self, channel_id: str, content: str, msg_type: MessageType):
+    async def _send_system_message(self, channel_id -> None: str, content -> None: str, msg_type -> None: MessageType) -> None:
         """Send system message to channel"""
         system_message = MessageModel(
             channel_id=channel_id,
@@ -562,7 +566,7 @@ class CommunicationService:
         self.messages[channel_id].append(system_message)
         await self._broadcast_message_to_channel(system_message)
     
-    async def _send_mention_notifications(self, message: MessageModel):
+    async def _send_mention_notifications(self, message -> None: MessageModel) -> None:
         """Send notifications for user mentions"""
         for mentioned_user in message.mentions:
             if mentioned_user in self.user_sessions:
@@ -631,7 +635,7 @@ app = FastAPI(title="Communication Service", version="1.0.0")
 service = CommunicationService()
 
 @app.websocket("/ws/{user_id}")
-async def websocket_endpoint(websocket: WebSocket, user_id: str):
+async def websocket_endpoint(websocket -> None: WebSocket, user_id -> None: str) -> None:
     """WebSocket endpoint for real-time communication"""
     websocket_id = await service.connect_user(websocket, user_id)
     try:
@@ -651,37 +655,37 @@ async def websocket_endpoint(websocket: WebSocket, user_id: str):
         await service.disconnect_user(user_id)
 
 @app.post("/channels/create")
-async def create_channel(channel: ChannelModel):
+async def create_channel(channel -> None: ChannelModel) -> None:
     """Create new communication channel"""
     return await service.create_channel(channel)
 
 @app.post("/channels/{channel_id}/join")
-async def join_channel(channel_id: str, user_id: str):
+async def join_channel(channel_id -> None: str, user_id -> None: str) -> None:
     """Join communication channel"""
     return await service.join_channel(user_id, channel_id)
 
 @app.post("/messages/send")
-async def send_message(message: MessageModel):
+async def send_message(message -> None: MessageModel) -> None:
     """Send message to channel"""
     return await service.send_message(message)
 
 @app.get("/channels/{channel_id}/messages")
-async def get_messages(channel_id: str, user_id: str, limit: int = 50, before: Optional[str] = None):
+async def get_messages(channel_id -> None: str, user_id -> None: str, limit -> None: int = 50, before -> None: Optional[str] = None) -> None:
     """Get channel messages with pagination"""
     return await service.get_channel_messages(channel_id, user_id, limit, before)
 
 @app.put("/users/{user_id}/status")
-async def update_status(user_id: str, status: UserStatus):
+async def update_status(user_id -> None: str, status -> None: UserStatus) -> None:
     """Update user status"""
     return await service.update_user_status(user_id, status)
 
 @app.get("/metrics")
-async def get_metrics():
+async def get_metrics() -> None:
     """Get communication service metrics"""
     return await service.get_communication_metrics()
 
 @app.get("/health")
-async def health_check():
+async def health_check() -> None:
     """Service health check"""
     return {
         "service": "CommunicationService",

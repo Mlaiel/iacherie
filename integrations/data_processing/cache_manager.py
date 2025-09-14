@@ -92,7 +92,7 @@ class CacheManager:
     compression, and automatic prefetching for optimal performance.
     """
     
-    def __init__(self, redis_url: Optional[str] = None, disk_path: str = "/tmp/ainflue_cache"):
+    def __init__(self, redis_url -> None: Optional[str] = None, disk_path -> None: str = "/tmp/ainflue_cache") -> None:
         """Initialize cache manager."""
         self.logger = logging.getLogger(__name__)
         

@@ -45,7 +45,7 @@ class ValidationResult:
     validation_score: float = 0.0
     risk_indicators: List[str] = None
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.risk_indicators is None:
             self.risk_indicators = []
 
@@ -62,7 +62,7 @@ class PaymentRequestModel(BaseModel):
     metadata: Optional[Dict[str, Any]] = None
 
     @validator('amount')
-    def validate_amount(cls, v):
+    def validate_amount(cls, v) -> None:
         if v <= 0:
             raise ValueError('Amount must be positive')
         if v > Decimal('1000000'):
@@ -70,14 +70,14 @@ class PaymentRequestModel(BaseModel):
         return v.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
 
     @validator('currency')
-    def validate_currency(cls, v):
+    def validate_currency(cls, v) -> None:
         valid_currencies = {'USD', 'EUR', 'GBP', 'CAD', 'AUD', 'JPY', 'BTC', 'ETH', 'USDC'}
         if v.upper() not in valid_currencies:
             raise ValueError(f'Unsupported currency: {v}')
         return v.upper()
 
     @validator('transaction_id')
-    def validate_transaction_id(cls, v):
+    def validate_transaction_id(cls, v) -> None:
         if not re.match(r'^[a-zA-Z0-9\-_]{10,50}$', v):
             raise ValueError('Invalid transaction ID format')
         return v
@@ -86,7 +86,7 @@ class PaymentRequestModel(BaseModel):
 class PaymentGatewayValidator:
     """Enterprise payment gateway validation system"""
 
-    def __init__(self, validation_level: ValidationLevel = ValidationLevel.ENTERPRISE):
+    def __init__(self, validation_level -> None: ValidationLevel = ValidationLevel.ENTERPRISE) -> None:
         self.validation_level = validation_level
         self.max_amount_limits = {
             'USD': Decimal('100000'),

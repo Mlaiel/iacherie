@@ -139,12 +139,12 @@ class ShopifyIntegration:
     
     def __init__(
         self,
-        shop_domain: str,
-        access_token: str,
-        api_version: str = "2023-10",
-        webhook_secret: Optional[str] = None,
-        timeout: int = 30
-    ):
+        shop_domain -> None: str,
+        access_token -> None: str,
+        api_version -> None: str = "2023-10",
+        webhook_secret -> None: Optional[str] = None,
+        timeout -> None: int = 30
+    ) -> None:
         self.shop_domain = shop_domain.replace('.myshopify.com', '')
         self.access_token = access_token
         self.api_version = api_version
@@ -161,16 +161,16 @@ class ShopifyIntegration:
         
         logger.info(f"Shopify integration initialized for shop: {shop_domain}")
     
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         """Async context manager entry."""
         await self._ensure_session()
         return self
     
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         """Async context manager exit."""
         await self.close()
     
-    async def _ensure_session(self):
+    async def _ensure_session(self) -> None:
         """Ensure HTTP session is available."""
         if self.session is None or self.session.closed:
             headers = {
@@ -184,7 +184,7 @@ class ShopifyIntegration:
                 timeout=aiohttp.ClientTimeout(total=self.timeout)
             )
     
-    async def close(self):
+    async def close(self) -> None:
         """Close HTTP session."""
         if self.session and not self.session.closed:
             await self.session.close()
@@ -747,10 +747,10 @@ class ShopifyIntegration:
     
     def _add_to_history(
         self,
-        operation: str,
-        request_data: Dict[str, Any],
-        response_data: Any
-    ):
+        operation -> None: str,
+        request_data -> None: Dict[str, Any],
+        response_data -> None: Any
+    ) -> None:
         """Add operation to history."""
         history_entry = {
             "timestamp": datetime.now().isoformat(),
@@ -839,7 +839,7 @@ async def quick_product_creation(
 
 if __name__ == "__main__":
     # Example usage
-    async def main():
+    async def main() -> None:
         import os
         shop_domain = os.getenv("SHOPIFY_SHOP_DOMAIN")
         access_token = os.getenv("SHOPIFY_ACCESS_TOKEN")

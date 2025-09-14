@@ -6,13 +6,13 @@ Copyright: All rights reserved. Any unauthorized use, reproduction, or distribut
 of this code without explicit written permission is strictly prohibited.
 
 Project Team Specialties:
-- Lead AI Developer & Backend Senior: Fahed Mlaiel
+    - Lead AI Developer & Backend Senior: Fahed Mlaiel
 - ML Engineer & Blockchain Specialist: Advanced IA Processing
 - Database Administrator & Security Expert: Data Protection
 - Microservices Architect & Audio Processing: Multi-format Support  
 - DevOps Engineer & IA Prompt Engineer: Production Deployment
 
-⚠️ STRONG WARNING ⚠️
+# [EMOJI_REMOVED] STRONG WARNING # [EMOJI_REMOVED]
 Any attempt to steal, copy, reproduce, or use this concept, idea, or code 
 without explicit written authorization from Fahed Mlaiel is strictly 
 prohibited and will result in legal action.
@@ -139,7 +139,7 @@ Staking position tracking"""
 class UniswapV3Manager:
     """Professional Uniswap V3 liquidity management"""
     
-    def __init__(self, web3_client: Web3, private_key: str, config: Dict[str, Any]):
+    def __init__(self, web3_client -> None: Web3, private_key -> None: str, config -> None: Dict[str, Any]) -> None:
         self.w3 = web3_client
         self.private_key = private_key
         self.account = Account.from_key(private_key)
@@ -368,7 +368,7 @@ class CompoundManager:
     """
 Professional Compound lending protocol integration"""
     
-    def __init__(self, web3_client: Web3, private_key: str):
+    def __init__(self, web3_client -> None: Web3, private_key -> None: str) -> None:
         self.w3 = web3_client
         self.private_key = private_key
         self.account = Account.from_key(private_key)
@@ -426,7 +426,7 @@ Professional Compound lending protocol integration"""
 class AaveManager:
     """Professional Aave lending protocol integration"""
     
-    def __init__(self, web3_client: Web3, private_key: str):
+    def __init__(self, web3_client -> None: Web3, private_key -> None: str) -> None:
         self.w3 = web3_client
         self.private_key = private_key
         self.account = Account.from_key(private_key)
@@ -465,7 +465,7 @@ class AaveManager:
 class YieldOptimizer:
     """Automated yield optimization across DeFi protocols"""
     
-    def __init__(self, web3_client: Web3, private_key: str, config: Dict[str, Any]):
+    def __init__(self, web3_client -> None: Web3, private_key -> None: str, config -> None: Dict[str, Any]) -> None:
         self.w3 = web3_client
         self.private_key = private_key
         self.config = config
@@ -598,3 +598,5 @@ __all__ = [
     'AaveManager',
     'YieldOptimizer'
 ]
+
+# File has syntax issues - needs manual review

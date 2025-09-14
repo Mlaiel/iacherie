@@ -201,7 +201,7 @@ class CompressionHandler:
 class EncryptionHandler:
     """Handle backup encryption and decryption"""
     
-    def __init__(self, encryption_key: Optional[bytes] = None):
+    def __init__(self, encryption_key -> None: Optional[bytes] = None) -> None:
         self.encryption_key = encryption_key or self._generate_key()
         self.key_id = hashlib.sha256(self.encryption_key).hexdigest()[:16]
     
@@ -256,7 +256,7 @@ class EncryptionHandler:
 class DatabaseBackupHandler:
     """Handle database-specific backup operations"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.supported_databases = {
             'postgresql': self._backup_postgresql if POSTGRESQL_AVAILABLE else None,
             'mysql': self._backup_mysql if MYSQL_AVAILABLE else None,
@@ -513,7 +513,7 @@ class DatabaseBackupHandler:
 class FileSystemBackupHandler:
     """Handle file system backup operations"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.ignore_patterns = {
             '__pycache__',
             '*.pyc',
@@ -684,7 +684,7 @@ class FileSystemBackupHandler:
 class BackupStorage:
     """Handle backup storage to different destinations"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.storage_handlers = {
             'local': self._local_storage,
             's3': self._s3_storage if AWS_AVAILABLE else None,
@@ -748,7 +748,7 @@ class BackupStorage:
 class BackupScheduler:
     """Handle backup job scheduling and execution"""
     
-    def __init__(self, backup_manager):
+    def __init__(self, backup_manager) -> None:
         self.backup_manager = backup_manager
         self.scheduled_jobs: Dict[str, BackupJob] = {}
         self.running_jobs: Dict[str, threading.Thread] = {}
@@ -758,13 +758,13 @@ class BackupScheduler:
         # Configure logging
         self.logger = logging.getLogger(__name__)
     
-    def add_job(self, job: BackupJob):
+    def add_job(self, job -> None: BackupJob) -> None:
         """Add a backup job to the scheduler"""
         self.scheduled_jobs[job.job_id] = job
         self._calculate_next_run(job)
         self.logger.info(f"Added backup job: {job.name} ({job.job_id})")
     
-    def remove_job(self, job_id: str):
+    def remove_job(self, job_id -> None: str) -> None:
         """Remove a backup job from the scheduler"""
         if job_id in self.scheduled_jobs:
             del self.scheduled_jobs[job_id]
@@ -775,7 +775,7 @@ class BackupScheduler:
             # Note: In a production system, you'd want to gracefully stop the thread
             self.logger.warning(f"Job {job_id} was running when removed")
     
-    def start_scheduler(self):
+    def start_scheduler(self) -> None:
         """Start the backup scheduler"""
         if self.scheduler_thread is not None and self.scheduler_thread.is_alive():
             return
@@ -785,7 +785,7 @@ class BackupScheduler:
         self.scheduler_thread.start()
         self.logger.info("Backup scheduler started")
     
-    def stop_scheduler(self):
+    def stop_scheduler(self) -> None:
         """Stop the backup scheduler"""
         self.stop_event.set()
         
@@ -794,7 +794,7 @@ class BackupScheduler:
         
         self.logger.info("Backup scheduler stopped")
     
-    def _scheduler_loop(self):
+    def _scheduler_loop(self) -> None:
         """Main scheduler loop"""
         while not self.stop_event.is_set():
             try:
@@ -828,9 +828,9 @@ class BackupScheduler:
                 self.logger.error(f"Scheduler error: {e}")
                 self.stop_event.wait(60)
     
-    def _run_job(self, job: BackupJob):
+    def _run_job(self, job -> None: BackupJob) -> None:
         """Run a backup job"""
-        def job_runner():
+        def job_runner() -> None:
             try:
                 self.logger.info(f"Starting backup job: {job.name}")
                 
@@ -875,7 +875,7 @@ class BackupScheduler:
         job_thread.start()
         self.running_jobs[job.job_id] = job_thread
     
-    def _calculate_next_run(self, job: BackupJob):
+    def _calculate_next_run(self, job -> None: BackupJob) -> None:
         """Calculate next run time based on schedule"""
         if not job.schedule:
             job.next_run = None
@@ -896,7 +896,7 @@ class BackupScheduler:
             # Default to daily if unknown format
             job.next_run = current_time.replace(hour=0, minute=0, second=0, microsecond=0) + timedelta(days=1)
     
-    def _run_script(self, script_path: str):
+    def _run_script(self, script_path -> None: str) -> None:
         """Run pre/post backup script"""
         try:
             result = subprocess.run([script_path], capture_output=True, text=True, timeout=300)
@@ -905,7 +905,7 @@ class BackupScheduler:
         except Exception as e:
             self.logger.error(f"Failed to run script {script_path}: {e}")
     
-    def _send_notification(self, job: BackupJob, status: str, metadata: Optional[BackupMetadata], error: Optional[str] = None):
+    def _send_notification(self, job -> None: BackupJob, status -> None: str, metadata -> None: Optional[BackupMetadata], error -> None: Optional[str] = None) -> None:
         """Send backup completion notification"""
         notification_config = job.notification_config
         
@@ -924,7 +924,7 @@ class BackupScheduler:
 class BackupManager:
     """Main backup management class orchestrating all backup operations"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.config = config or {}
         self.database_handler = DatabaseBackupHandler()
         self.filesystem_handler = FileSystemBackupHandler()
@@ -1277,7 +1277,7 @@ class BackupManager:
         self.logger.info(f"Restored filesystem to {restore_path}")
         return True
     
-    def _delete_backup_file(self, metadata: BackupMetadata):
+    def _delete_backup_file(self, metadata -> None: BackupMetadata) -> None:
         """Delete backup file from storage"""
         # This is a simplified implementation
         if metadata.destination.startswith('s3://'):
@@ -1297,7 +1297,7 @@ class BackupManager:
                 else:
                     backup_path.unlink()
     
-    def _load_metadata(self):
+    def _load_metadata(self) -> None:
         """Load backup metadata from storage"""
         metadata_file = Path(self.config.get('metadata_file', 'backup_metadata.json'))
         
@@ -1328,7 +1328,7 @@ class BackupManager:
             except Exception as e:
                 self.logger.error(f"Failed to load metadata: {e}")
     
-    def _save_metadata(self):
+    def _save_metadata(self) -> None:
         """Save backup metadata to storage"""
         metadata_file = Path(self.config.get('metadata_file', 'backup_metadata.json'))
         

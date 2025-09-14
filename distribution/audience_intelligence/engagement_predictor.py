@@ -115,7 +115,7 @@ class AdvancedEngagementPredictor:
     - A/B testing integration
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.models = {}
         self.scalers = {}
         self.encoders = {}
@@ -127,7 +127,7 @@ class AdvancedEngagementPredictor:
         # Initialize models for different engagement types
         self._initialize_models()
         
-    def _initialize_models(self):
+    def _initialize_models(self) -> None:
         """Initialize ML models for different engagement types"""
         
         for engagement_type in EngagementType:

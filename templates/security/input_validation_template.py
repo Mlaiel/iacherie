@@ -318,7 +318,7 @@ class FileValidator:
 class InputValidator:
     """🛡️ Advanced Input Validation and Security Framework"""
     
-    def __init__(self, validation_level: ValidationLevel = ValidationLevel.STANDARD):
+    def __init__(self, validation_level -> None: ValidationLevel = ValidationLevel.STANDARD) -> None:
         """Initialize Input Validator"""
         self.validation_level = validation_level
         self.validation_rules = {}
@@ -338,7 +338,7 @@ class InputValidator:
         
         logger.info(f"🛡️ Input Validator initialized with {validation_level.value} security level")
     
-    def _setup_default_rules(self):
+    def _setup_default_rules(self) -> None:
         """Setup default validation rules"""
         
         # Email validation
@@ -690,8 +690,8 @@ class InputValidator:
         self.rate_limits[client_id].append(current_time)
         return True
     
-    async def _log_security_threat(self, threat_type: str, input_value: str, 
-                                 context: Dict[str, Any]):
+    async def _log_security_threat(self, threat_type -> None: str, input_value -> None: str, 
+                                 context -> None: Dict[str, Any]) -> None:
         """Log detected security threat"""
         
         threat = ThreatDetection(
@@ -714,7 +714,7 @@ class InputValidator:
         else:
             logger.warning(f"Security threat detected: {threat_type}")
     
-    def add_custom_rule(self, rule: ValidationRule):
+    def add_custom_rule(self, rule -> None: ValidationRule) -> None:
         """Add custom validation rule"""
         self.validation_rules[rule.rule_id] = rule
         logger.info(f"Custom validation rule added: {rule.rule_id}")
@@ -740,7 +740,7 @@ class InputValidator:
         }
 
 # Usage Example and Template Testing
-async def main():
+async def main() -> None:
     """Example usage of Input Validation Template"""
     
     # Initialize validator with strict security level

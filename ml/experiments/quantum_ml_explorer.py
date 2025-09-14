@@ -78,7 +78,7 @@ class QuantumExperiment:
 class QuantumFeatureMap:
     """Quantum feature mapping strategies"""
     
-    def __init__(self, n_qubits: int, feature_dimension: int):
+    def __init__(self, n_qubits -> None: int, feature_dimension -> None: int) -> None:
         self.n_qubits = n_qubits
         self.feature_dimension = feature_dimension
         self.encoding_type = "amplitude"
@@ -113,7 +113,7 @@ class QuantumFeatureMap:
 class VariationalQuantumClassifier:
     """Variational Quantum Classifier implementation"""
     
-    def __init__(self, n_qubits: int, n_layers: int = 3):
+    def __init__(self, n_qubits -> None: int, n_layers -> None: int = 3) -> None:
         self.n_qubits = n_qubits
         self.n_layers = n_layers
         self.parameters = np.random.uniform(0, 2*np.pi, (n_layers, n_qubits, 3))
@@ -254,7 +254,7 @@ class VariationalQuantumClassifier:
 class QuantumMLExplorer:
     """Main quantum ML research platform"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.config = config or {}
         self.experiments: Dict[str, QuantumExperiment] = {}
         self.quantum_circuits: Dict[str, QuantumCircuit] = {}
@@ -624,7 +624,7 @@ class QuantumMLExplorer:
             raise
 
 # Example usage and testing
-async def main():
+async def main() -> None:
     """Test quantum ML explorer functionality"""
     try:
         # Initialize quantum ML explorer

@@ -187,7 +187,7 @@ class ProcessingResult:
 class MediaProcessingEngine:
     """Unified media processing engine"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         """Initialize media processing engine"""
         self.config = config or {}
         self.processors = {}
@@ -198,7 +198,7 @@ class MediaProcessingEngine:
         
         logger.info("🎬 Media Processing Engine initialized")
     
-    def _initialize_processors(self):
+    def _initialize_processors(self) -> None:
         """Initialize specialized media processors"""
         self.processors = {
             MediaType.IMAGE: ImageProcessor(self.config.get('image', {})),
@@ -340,7 +340,7 @@ class MediaProcessingEngine:
         """Extract metadata from media"""
         return await self._extract_metadata(media_data, media_type)
     
-    def cleanup(self):
+    def cleanup(self) -> None:
         """Cleanup temporary files"""
         try:
             import shutil
@@ -414,7 +414,7 @@ class MediaProcessingEngine:
 class BaseProcessor:
     """Base class for media processors"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
     
     async def apply_operation(self, data: Any, config: ProcessingConfig) -> Any:

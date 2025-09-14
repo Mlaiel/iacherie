@@ -60,7 +60,7 @@ class CacheEntry:
 class CacheStats:
     """Cache statistics tracking."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.hits = 0
         self.misses = 0
         self.sets = 0
@@ -70,32 +70,32 @@ class CacheStats:
         self.start_time = datetime.now()
         self._lock = threading.RLock()
     
-    def record_hit(self):
+    def record_hit(self) -> None:
         """Record cache hit."""
         with self._lock:
             self.hits += 1
     
-    def record_miss(self):
+    def record_miss(self) -> None:
         """Record cache miss."""
         with self._lock:
             self.misses += 1
     
-    def record_set(self):
+    def record_set(self) -> None:
         """Record cache set."""
         with self._lock:
             self.sets += 1
     
-    def record_delete(self):
+    def record_delete(self) -> None:
         """Record cache delete."""
         with self._lock:
             self.deletes += 1
     
-    def record_eviction(self):
+    def record_eviction(self) -> None:
         """Record cache eviction."""
         with self._lock:
             self.evictions += 1
     
-    def record_error(self):
+    def record_error(self) -> None:
         """Record cache error."""
         with self._lock:
             self.errors += 1
@@ -121,7 +121,7 @@ class CacheStats:
                 'uptime_seconds': uptime.total_seconds()
             }
     
-    def reset(self):
+    def reset(self) -> None:
         """Reset all statistics."""
         with self._lock:
             self.hits = 0
@@ -170,7 +170,7 @@ class CacheBackend(ABC):
 class InMemoryCache(CacheBackend):
     """In-memory cache implementation with LRU eviction."""
     
-    def __init__(self, max_size: int = 1000, default_ttl: int = 3600):
+    def __init__(self, max_size -> None: int = 1000, default_ttl -> None: int = 3600) -> None:
         self.max_size = max_size
         self.default_ttl = default_ttl
         self._cache: OrderedDict[str, CacheEntry] = OrderedDict()
@@ -178,7 +178,7 @@ class InMemoryCache(CacheBackend):
         self.stats = CacheStats()
         self.logger = logging.getLogger(__name__)
     
-    def _evict_expired(self):
+    def _evict_expired(self) -> None:
         """Remove expired entries."""
         expired_keys = []
         for key, entry in self._cache.items():
@@ -189,7 +189,7 @@ class InMemoryCache(CacheBackend):
             del self._cache[key]
             self.stats.record_eviction()
     
-    def _evict_lru(self):
+    def _evict_lru(self) -> None:
         """Remove least recently used entry."""
         if self._cache:
             key, _ = self._cache.popitem(last=False)
@@ -310,9 +310,9 @@ class InMemoryCache(CacheBackend):
 class RedisCache(CacheBackend):
     """Redis-based cache implementation."""
     
-    def __init__(self, host: str = 'localhost', port: int = 6379, 
-                 db: int = 0, password: Optional[str] = None,
-                 key_prefix: str = 'ainflue:'):
+    def __init__(self, host -> None: str = 'localhost', port -> None: int = 6379, 
+                 db -> None: int = 0, password -> None: Optional[str] = None,
+                 key_prefix -> None: str = 'ainflue -> None:') -> None:
         self.key_prefix = key_prefix
         self.stats = CacheStats()
         self.logger = logging.getLogger(__name__)
@@ -446,10 +446,10 @@ class CacheUtilities:
     """
     
     def __init__(self, 
-                 primary_backend: CacheBackend,
-                 secondary_backend: Optional[CacheBackend] = None,
-                 enable_compression: bool = False,
-                 compression_threshold: int = 1024):
+                 primary_backend -> None: CacheBackend,
+                 secondary_backend -> None: Optional[CacheBackend] = None,
+                 enable_compression -> None: bool = False,
+                 compression_threshold -> None: int = 1024) -> None:
         
         self.primary_backend = primary_backend
         self.secondary_backend = secondary_backend
@@ -545,8 +545,8 @@ class CacheUtilities:
         
         return value
     
-    def warm_cache(self, key_value_pairs: Dict[str, Any], 
-                   ttl: Optional[int] = None, tags: Optional[List[str]] = None):
+    def warm_cache(self, key_value_pairs -> None: Dict[str, Any], 
+                   ttl -> None: Optional[int] = None, tags -> None: Optional[List[str]] = None) -> None:
         """Warm cache with multiple key-value pairs."""
         for key, value in key_value_pairs.items():
             self.set(key, value, ttl, tags)
@@ -588,7 +588,7 @@ class CacheUtilities:
         
         return stats
     
-    def _add_tags(self, key: str, tags: List[str]):
+    def _add_tags(self, key -> None: str, tags -> None: List[str]) -> None:
         """Add tag associations for a key."""
         with self._lock:
             for tag in tags:
@@ -600,7 +600,7 @@ class CacheUtilities:
                 self._key_tags[key] = set()
             self._key_tags[key].update(tags)
     
-    def _remove_tags(self, key: str):
+    def _remove_tags(self, key -> None: str) -> None:
         """Remove tag associations for a key."""
         with self._lock:
             if key in self._key_tags:
@@ -614,13 +614,13 @@ class CacheUtilities:
 
 
 # Decorators for caching
-def cached(cache: CacheUtilities, ttl: int = 3600, 
-          key_func: Optional[Callable] = None,
-          tags: Optional[List[str]] = None):
+def cached(cache -> None: CacheUtilities, ttl -> None: int = 3600, 
+          key_func -> None: Optional[Callable] = None,
+          tags -> None: Optional[List[str]] = None) -> None:
     """Decorator for caching function results."""
-    def decorator(func):
+    def decorator(func) -> None:
         @wraps(func)
-        def wrapper(*args, **kwargs):
+        def wrapper(*args, **kwargs) -> None:
             # Generate cache key
             if key_func:
                 cache_key = key_func(*args, **kwargs)
@@ -641,14 +641,14 @@ def cached(cache: CacheUtilities, ttl: int = 3600,
     return decorator
 
 
-def cache_result(ttl: int = 3600, tags: Optional[List[str]] = None):
+def cache_result(ttl -> None: int = 3600, tags -> None: Optional[List[str]] = None) -> None:
     """Simple decorator for caching with global cache."""
-    def decorator(func):
+    def decorator(func) -> None:
         if not hasattr(decorator, '_cache'):
             decorator._cache = CacheUtilities(InMemoryCache())
         
         @wraps(func)
-        def wrapper(*args, **kwargs):
+        def wrapper(*args, **kwargs) -> None:
             cache_key = f"{func.__name__}:{hash(str(args) + str(sorted(kwargs.items())))}"
             
             result = decorator._cache.get(cache_key)
@@ -716,7 +716,7 @@ if __name__ == "__main__":
     
     # Test decorator
     @cache_result(ttl=30)
-    def expensive_function(x, y):
+    def expensive_function(x, y) -> None:
         time.sleep(0.1)  # Simulate expensive operation
         return x + y
     

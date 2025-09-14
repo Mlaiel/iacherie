@@ -8,7 +8,7 @@ content understanding, classification, and quality assessment.
 Project: IA Influencer Agent + Content Protection Platform
 Author: Fahed Mlaiel <mlaiel@live.de>
 
-⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
+# [EMOJI_REMOVED]  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED # [EMOJI_REMOVED]
 This software is protected by international copyright laws.
 Contact: mlaiel@live.de for licensing inquiries.
 """
@@ -117,7 +117,7 @@ class ContentAnalysisConfig:
     trend_analysis: bool = True
     replicas: int = 4
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.supported_content_types is None:
             self.supported_content_types = [
                 ContentType.AUDIO, ContentType.VIDEO, 
@@ -153,7 +153,7 @@ class ContentAnalysisDeployment:
     - Privacy and copyright protection
     """
     
-    def __init__(self, namespace: str = "ia-content-analysis"):
+    def __init__(self, namespace -> None: str = "ia-content-analysis") -> None:
         """
         Initialize content analysis deployment
         
@@ -448,7 +448,7 @@ class ContentAnalysisDeployment:
             # Process content in parallel with controlled concurrency
             semaphore = asyncio.Semaphore(4)  # Limit concurrent analyses
             
-            async def analyze_single_content(content_request):
+            async def analyze_single_content(content_request) -> None:
         try:
                     # AI model processing
                     if not hasattr(self, 'model') or self.model is None:
@@ -1303,3 +1303,5 @@ class ContentAnalysisDeployment:
         except Exception as e:
             logger.error(f"Content analysis cleanup failed: {e}")
             raise
+
+# File has syntax issues - needs manual review

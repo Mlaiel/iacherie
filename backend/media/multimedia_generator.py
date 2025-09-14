@@ -161,7 +161,7 @@ class GenerationResult:
 class MultimediaGenerator:
     """Unified multimedia generation system"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         """Initialize multimedia generator"""
         self.config = config or {}
         self.generators = {}
@@ -172,7 +172,7 @@ class MultimediaGenerator:
         
         logger.info("🎨 Multimedia Generator initialized")
     
-    def _initialize_generators(self):
+    def _initialize_generators(self) -> None:
         """Initialize specialized generators"""
         self.generators = {
             GeneratorType.TEXT: TextGenerator(self.config.get('text', {})),
@@ -306,13 +306,13 @@ class MultimediaGenerator:
 class TextGenerator:
     """Advanced text content generator"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.models = {}
         self.templates = {}
         self._load_text_models()
     
-    def _load_text_models(self):
+    def _load_text_models(self) -> None:
         """Load text generation models"""
         # Placeholder for model loading
         self.models = {
@@ -405,13 +405,13 @@ class TextGenerator:
 class ImageGenerator:
     """Professional image generator"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.ai_models = {}
         self.style_engines = {}
         self._load_image_models()
     
-    def _load_image_models(self):
+    def _load_image_models(self) -> None:
         """Load image generation models"""
         self.ai_models = {
             'social_media': {"type": "social_image_model", "status": "loaded"},
@@ -502,13 +502,13 @@ class ImageGenerator:
 class VideoGenerator:
     """Cinematic video generator"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.rendering_engines = {}
         self.video_models = {}
         self._load_video_models()
     
-    def _load_video_models(self):
+    def _load_video_models(self) -> None:
         """Load video generation models"""
         self.video_models = {
             'short_form': {"type": "short_video_model", "status": "loaded"},
@@ -576,13 +576,13 @@ class VideoGenerator:
 class AudioGenerator:
     """Professional audio generator"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.audio_engines = {}
         self.audio_models = {}
         self._load_audio_models()
     
-    def _load_audio_models(self):
+    def _load_audio_models(self) -> None:
         """Load audio generation models"""
         self.audio_models = {
             'music': {"type": "music_model", "status": "loaded"},
@@ -661,13 +661,13 @@ class AudioGenerator:
 class VoiceGenerator:
     """Advanced voice synthesis generator"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.voice_models = {}
         self.tts_engines = {}
         self._load_voice_models()
     
-    def _load_voice_models(self):
+    def _load_voice_models(self) -> None:
         """Load voice synthesis models"""
         self.voice_models = {
             'natural': {"type": "natural_voice_model", "status": "loaded"},
@@ -736,13 +736,13 @@ class VoiceGenerator:
 class AvatarGenerator:
     """3D avatar generator"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.avatar_engines = {}
         self.avatar_models = {}
         self._load_avatar_models()
     
-    def _load_avatar_models(self):
+    def _load_avatar_models(self) -> None:
         """Load avatar generation models"""
         self.avatar_models = {
             'realistic': {"type": "realistic_avatar_model", "status": "loaded"},

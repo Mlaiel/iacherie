@@ -135,7 +135,7 @@ class WiseInternationalTransferEngine:
     - 🤖 IA Prompt Engineer: Intelligent notifications + smart recommendations + automated workflows
     """
     
-    def __init__(self, wise_config: Dict[str, str], redis_client=None, db_pool=None):
+    def __init__(self, wise_config -> None: Dict[str, str], redis_client=None, db_pool=None) -> None:
         """Initialize Wise International Transfer Engine with enterprise features"""
         self.wise_config = wise_config
         self.redis_client = redis_client
@@ -190,7 +190,7 @@ class WiseInternationalTransferEngine:
         
         logger.info("🏆 Wise International Transfer Engine initialized with multi-role expertise")
     
-    def _initialize_ml_models(self):
+    def _initialize_ml_models(self) -> None:
         """🧠 ML Engineer: Initialize ML models for transfer optimization"""
         try:
             # Generate sample training data for demonstration
@@ -892,9 +892,9 @@ class WiseInternationalTransferEngine:
     
     async def _process_audio_creator_transfer(
         self,
-        transfer_request: TransferRequest,
-        result: TransferResult
-    ):
+        transfer_request -> None: TransferRequest,
+        result -> None: TransferResult
+    ) -> None:
         """
         🎵 Audio Engineer: Process audio creator-specific transfer logic
         """
@@ -941,7 +941,7 @@ class WiseInternationalTransferEngine:
             logger.warning(f"⚠️ Quote retrieval failed: {str(e)}")
             return None
     
-    async def _store_transfer_quote(self, quote: TransferQuote):
+    async def _store_transfer_quote(self, quote -> None: TransferQuote) -> None:
         """🗄️ DBA: Store transfer quote"""
         try:
             if self.db_pool:
@@ -964,7 +964,7 @@ class WiseInternationalTransferEngine:
         except Exception as e:
             logger.warning(f"⚠️ Quote storage failed: {str(e)}")
     
-    async def _store_transfer_result(self, result: TransferResult):
+    async def _store_transfer_result(self, result -> None: TransferResult) -> None:
         """🗄️ DBA: Store transfer result"""
         try:
             if self.db_pool:
@@ -992,9 +992,9 @@ class WiseInternationalTransferEngine:
     
     async def _send_transfer_notifications(
         self,
-        transfer_request: TransferRequest,
-        result: TransferResult
-    ):
+        transfer_request -> None: TransferRequest,
+        result -> None: TransferResult
+    ) -> None:
         """
         🤖 IA Prompt Engineer: Send intelligent transfer notifications
         """
@@ -1072,6 +1072,6 @@ class WiseInternationalTransferEngine:
             logger.error(f"❌ Transfer analytics failed: {str(e)}")
             return {'error': str(e)}
     
-    async def close(self):
+    async def close(self) -> None:
         """Clean up resources"""
         await self.http_client.aclose()

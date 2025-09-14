@@ -56,13 +56,13 @@ class RewardDistribution:
 class RewardDistributionWorkflow:
     """AI-powered reward distribution workflow"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.metrics_collector = MetricsCollector()
         self.reward_catalog: Dict[str, Reward] = {}
         self.user_rewards: Dict[str, List[RewardDistribution]] = {}
         self._initialize_reward_catalog()
         
-    def _initialize_reward_catalog(self):
+    def _initialize_reward_catalog(self) -> None:
         """Initialize default reward catalog"""
         default_rewards = [
             Reward("points_100", "100 Points", "100 experience points", RewardType.POINTS, 100),
@@ -222,7 +222,7 @@ class RewardDistributionWorkflow:
         
         return reward
     
-    async def distribute_milestone_rewards(self, user_id: str, milestone: str, user_stats: Dict[str, Any]):
+    async def distribute_milestone_rewards(self, user_id -> None: str, milestone -> None: str, user_stats -> None: Dict[str, Any]) -> None:
         """Distribute rewards based on milestone achievement"""
         
         milestone_rewards = {
@@ -280,7 +280,7 @@ class RewardDistributionWorkflow:
             "bonus_reasons": self._get_bonus_reasons(context)
         }
     
-    async def _apply_reward(self, user_id: str, reward: Reward):
+    async def _apply_reward(self, user_id -> None: str, reward -> None: Reward) -> None:
         """Apply the effect of a reward to the user"""
         
         if reward.reward_type == RewardType.POINTS:

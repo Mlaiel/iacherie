@@ -121,7 +121,7 @@ class PartnershipPerformanceAnalyzer:
     - Actionable insights generation
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.performance_snapshots: Dict[str, List[PerformanceSnapshot]] = defaultdict(list)
         self.partnership_analyses: Dict[str, PartnershipAnalysis] = {}
@@ -148,7 +148,7 @@ class PartnershipPerformanceAnalyzer:
         
         logger.info("PartnershipPerformanceAnalyzer initialized")
 
-    def _initialize_ml_models(self):
+    def _initialize_ml_models(self) -> None:
         """Initialize ML models for performance prediction."""
         try:
             self.ml_models = {
@@ -161,7 +161,7 @@ class PartnershipPerformanceAnalyzer:
         except Exception as e:
             logger.error(f"Error initializing ML models: {e}")
 
-    def _initialize_benchmarks(self):
+    def _initialize_benchmarks(self) -> None:
         """Initialize industry benchmarks."""
         self.benchmarks = {
             'engagement_growth': 0.15,
@@ -1294,7 +1294,7 @@ class PartnershipPerformanceAnalyzer:
 
 # Example usage and testing
 if __name__ == "__main__":
-    async def test_partnership_analyzer():
+    async def test_partnership_analyzer() -> None:
         """Test partnership performance analyzer."""
         analyzer = PartnershipPerformanceAnalyzer()
         

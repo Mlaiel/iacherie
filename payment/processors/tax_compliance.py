@@ -136,9 +136,9 @@ class TaxComplianceProcessor:
     
     def __init__(
         self,
-        config: Dict[str, Any],
-        tax_service_apis: Optional[Dict[str, str]] = None
-    ):
+        config -> None: Dict[str, Any],
+        tax_service_apis -> None: Optional[Dict[str, str]] = None
+    ) -> None:
         """
 Initialize tax compliance processor"""
         self.config = config

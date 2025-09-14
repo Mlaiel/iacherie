@@ -100,7 +100,7 @@ class EngagementNotificationEngine:
     Gère toutes les notifications liées à l'engagement utilisateur
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialise l'engine engagement notifications"""
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
@@ -126,7 +126,7 @@ class EngagementNotificationEngine:
         
         self.logger.info("EngagementNotificationEngine initialisé avec succès")
 
-    def _initialize_engagement_milestones(self):
+    def _initialize_engagement_milestones(self) -> None:
         """Initialise les milestones d'engagement"""
         self.engagement_milestones = {
             EngagementMetricType.FOLLOWERS: [
@@ -915,9 +915,9 @@ class EngagementNotificationEngine:
 
     async def _update_engine_metrics(
         self,
-        engagement_events: List[EngagementEvent],
-        milestones_reached: List[EngagementMilestone]
-    ):
+        engagement_events -> None: List[EngagementEvent],
+        milestones_reached -> None: List[EngagementMilestone]
+    ) -> None:
         """Met à jour les métriques de l'engine"""
         self.engine_metrics['notifications_sent'] += 1
         self.engine_metrics['milestones_celebrated'] += len(milestones_reached)

@@ -1,3 +1,8 @@
+"""
+Shard Management Engine module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Redis Shard Management Engine - Ainflue Platform
@@ -94,7 +99,7 @@ class RedisShardManagementEngine:
     - Data consistency guarantees
     """
 
-    def __init__(self, cluster_client: RedisCluster, config: Dict[str, Any] = None):
+    def __init__(self, cluster_client -> None: RedisCluster, config -> None: Dict[str, Any] = None) -> None:
         """Initialize shard management engine"""
         self.cluster_client = cluster_client
         self.config = config or self._get_default_config()
@@ -764,7 +769,7 @@ class RedisShardManagementEngine:
 
 
 # Example usage
-async def main():
+async def main() -> None:
     """Example usage of Shard Management Engine"""
     try:
         # This would normally be initialized with actual cluster client

@@ -1,3 +1,8 @@
+"""
+Predictive Analytics Service module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 📋 PREDICTIVE ANALYTICS SERVICE
@@ -76,7 +81,7 @@ class PredictionRequest:
     content_type: Optional[str] = None
     created_at: datetime = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.created_at is None:
             self.created_at = datetime.utcnow()
 
@@ -94,7 +99,7 @@ class PredictionResult:
     recommendations: List[str]
     created_at: datetime = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.created_at is None:
             self.created_at = datetime.utcnow()
 
@@ -113,7 +118,7 @@ class ModelMetrics:
     feature_count: int
     prediction_count: int = 0
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.last_trained is None:
             self.last_trained = datetime.utcnow()
 
@@ -126,7 +131,7 @@ class AnalyticsMetrics:
     prediction_types: Dict[str, int] = None
     model_performance: Dict[str, float] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.prediction_types is None:
             self.prediction_types = {}
         if self.model_performance is None:
@@ -135,7 +140,7 @@ class AnalyticsMetrics:
 class PredictiveAnalyticsService:
     """Enterprise predictive analytics service"""
     
-    def __init__(self, redis_url: str = "redis://localhost:6379"):
+    def __init__(self, redis_url -> None: str = "redis -> None://localhost -> None:6379") -> None:
         self.redis_url = redis_url
         self.models: Dict[str, Any] = {}
         self.scalers: Dict[str, StandardScaler] = {}
@@ -630,7 +635,7 @@ class PredictiveAnalyticsService:
 
 
 # Example usage and testing
-async def main():
+async def main() -> None:
     """Test the predictive analytics service"""
     service = PredictiveAnalyticsService()
     

@@ -132,7 +132,7 @@ class GeographicManager:
     """
 Geographic optimization for global content distribution"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.geolocator = Nominatim(user_agent="ia_influencer_cache")
         self.regional_nodes: Dict[str, List[NodeConfiguration]] = {}
         self.latency_matrix: Dict[Tuple[str, str], float] = {}
@@ -190,7 +190,7 @@ class ContentAwareRouter:
     """
 Intelligent content routing based on type and usage patterns"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.content_routing_rules: Dict[str, ContentDistributionRule] = {}
         self.usage_patterns: Dict[str, Dict] = defaultdict(dict)
         self.performance_metrics: Dict[str, Dict] = defaultdict(dict)
@@ -252,7 +252,7 @@ Route content to optimal cache nodes"""
 class ReplicationManager:
     """Advanced replication management for distributed content"""
     
-    def __init__(self, redis_clients: Dict[str, redis.Redis]):
+    def __init__(self, redis_clients -> None: Dict[str, redis.Redis]) -> None:
         self.redis_clients = redis_clients
         self.replication_queue = asyncio.Queue()
         self.conflict_resolver = ConflictResolver()
@@ -395,6 +395,7 @@ class ClusterHealth:
 
 
 class DistributedCacheManager:
+    """DistributedCacheManager: class implementation"""
     GOSSIP = "gossip"
     RAFT = "raft"
 
@@ -470,10 +471,10 @@ class DistributedCacheManager:
     """
     def __init__(
         self,
-        config: CacheConfiguration,
-        metrics_collector: CacheMetricsCollector,
-        local_node_id: Optional[str] = None
-    ):
+        config -> None: CacheConfiguration,
+        metrics_collector -> None: CacheMetricsCollector,
+        local_node_id -> None: Optional[str] = None
+    ) -> None:
         """
         Initialize distributed cache manager.
         

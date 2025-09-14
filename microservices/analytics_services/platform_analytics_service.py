@@ -103,7 +103,7 @@ class PerformanceInsight:
 class PlatformAnalyticsEngine:
     """Core analytics processing engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.metrics_cache: Dict[str, List[PlatformMetric]] = {}
         self.aggregation_rules: Dict[str, Callable] = {}
         self.benchmark_data: Dict[str, Dict[str, float]] = {}
@@ -305,7 +305,7 @@ class PlatformAnalyticsEngine:
 class InsightGenerator:
     """Generate performance insights and recommendations"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.insight_rules: Dict[str, Callable] = {}
         self.benchmark_data: Dict[str, float] = {}
     
@@ -402,7 +402,7 @@ class PlatformAnalyticsService:
     - Automated recommendations
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.analytics_engine = PlatformAnalyticsEngine()
         self.insight_generator = InsightGenerator()

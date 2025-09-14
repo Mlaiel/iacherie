@@ -82,7 +82,7 @@ class PipelineManager:
     - Rollback capabilities
     """
     
-    def __init__(self, config_path: Optional[Path] = None):
+    def __init__(self, config_path -> None: Optional[Path] = None) -> None:
         self.logger = logging.getLogger(__name__)
         self.config_path = config_path or Path(__file__).parent / "config"
         self.active_pipelines: Dict[str, PipelineConfig] = {}

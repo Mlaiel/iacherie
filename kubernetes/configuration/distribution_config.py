@@ -436,7 +436,7 @@ class MultiPlatformDistributionConfigManager:
     social media and streaming platforms with optimization, scheduling, and analytics.
     """
     
-    def __init__(self, config_path: Optional[str] = None):
+    def __init__(self, config_path -> None: Optional[str] = None) -> None:
         """
 Initialize multi-platform distribution configuration manager"""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")

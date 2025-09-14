@@ -1,5 +1,7 @@
 """Event Versioning Engine - Advanced Implementation
 
+import asyncio
+
 Enterprise-grade event versioning system with schema evolution, migration,
 backward compatibility, and breaking change detection.
 
@@ -261,7 +263,7 @@ class SchemaRegistryInterface(ABC):
 class MemorySchemaRegistry(SchemaRegistryInterface):
     """In-memory schema registry for testing"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.schemas: Dict[str, Dict[str, EventSchema]] = {}  # event_type -> version -> schema
         self.metadata: Dict[str, Dict[str, VersionMetadata]] = {}
     
@@ -422,7 +424,7 @@ class SchemaComparator:
 class EventMigrator:
     """Event data migrator between versions"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.migration_functions: Dict[str, Callable] = {}
         self.validation_functions: Dict[str, Callable] = {}
     
@@ -476,7 +478,7 @@ class EventMigrator:
 class EventValidator:
     """Validate events against schemas"""
     
-    def __init__(self, schema_registry: SchemaRegistryInterface):
+    def __init__(self, schema_registry -> None: SchemaRegistryInterface) -> None:
         self.schema_registry = schema_registry
     
     async def validate_event(self, event: DomainEvent, 
@@ -545,7 +547,7 @@ class EventValidator:
 class EventVersioningEngine:
     """Enterprise event versioning engine"""
     
-    def __init__(self, schema_registry: SchemaRegistryInterface):
+    def __init__(self, schema_registry -> None: SchemaRegistryInterface) -> None:
         self.schema_registry = schema_registry
         self.comparator = SchemaComparator()
         self.migrator = EventMigrator()

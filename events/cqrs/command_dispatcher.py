@@ -101,7 +101,7 @@ class CommandWorkflow:
 class TransactionCoordinator:
     """Coordinate transactions across command handlers"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._active_transactions: Dict[str, Dict[str, Any]] = {}
         self._transaction_logs: List[Dict[str, Any]] = []
     
@@ -156,7 +156,7 @@ class TransactionCoordinator:
 class CommandEnricher:
     """Enrich commands with additional context and data"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._enrichment_rules: List[Callable] = []
     
     def add_enrichment_rule(self, rule: Callable[[Command], Command]) -> None:
@@ -182,7 +182,7 @@ class CommandEnricher:
 class BusinessRuleEngine:
     """Validate and enforce business rules for commands"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._rules: Dict[str, List[Callable]] = defaultdict(list)
     
     def add_rule(self, command_type: str, rule: Callable[[Command], bool], error_message: str) -> None:
@@ -219,7 +219,7 @@ class BusinessRuleEngine:
 class LoadBalancer:
     """Load balancer for handler selection"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._handler_metrics: Dict[str, deque] = defaultdict(lambda: deque(maxlen=100))
     
     def update_handler_metrics(self, handler_id: str, execution_time: float, success: bool) -> None:
@@ -275,7 +275,7 @@ class LoadBalancer:
 class EnterpriseCommandDispatcher:
     """Enterprise command dispatcher with advanced routing and orchestration"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._handler_registry: Dict[str, List[HandlerInstance]] = defaultdict(list)
         self._dispatch_rules: List[DispatchRule] = []
         self._workflows: Dict[str, CommandWorkflow] = {}

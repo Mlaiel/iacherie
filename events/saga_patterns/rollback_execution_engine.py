@@ -1,3 +1,8 @@
+"""
+Rollback Execution Engine module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """Rollback Execution Engine - Advanced Saga Rollback Management
 ===============================================================
@@ -50,12 +55,12 @@ class RollbackExecution:
 class RollbackExecutionEngine:
     """Main engine for executing saga rollbacks"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.active_rollbacks: Dict[str, RollbackExecution] = {}
         self.rollback_strategies: Dict[str, Callable] = {}
         self._setup_default_strategies()
     
-    def _setup_default_strategies(self):
+    def _setup_default_strategies(self) -> None:
         """Setup default rollback strategies"""
         self.rollback_strategies.update({
             "content_upload": self._rollback_content_upload,
@@ -89,7 +94,7 @@ class RollbackExecutionEngine:
         logger.info(f"Started rollback execution {execution_id} for saga {saga_id}")
         return execution_id
     
-    async def _execute_rollback_async(self, execution: RollbackExecution):
+    async def _execute_rollback_async(self, execution -> None: RollbackExecution) -> None:
         """Execute rollback asynchronously"""
         try:
             execution.status = RollbackStatus.RUNNING

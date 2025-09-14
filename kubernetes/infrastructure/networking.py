@@ -110,7 +110,7 @@ class ServiceMeshSpec:
 class NetworkingManager:
     """Main networking infrastructure manager"""
     
-    def __init__(self, k8s_client=None, cloud_provider=None):
+    def __init__(self, k8s_client=None, cloud_provider=None) -> None:
         self.k8s_client = k8s_client
         self.cloud_provider = cloud_provider
         self.core_v1 = client.CoreV1Api() if k8s_client else None

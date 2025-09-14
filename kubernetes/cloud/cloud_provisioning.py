@@ -109,7 +109,7 @@ class CloudProvisioningEngine:
     """
 Enterprise cloud infrastructure provisioning system"""
     
-    def __init__(self, workspace_path: str = "/tmp/provisioning"):
+    def __init__(self, workspace_path -> None: str = "/tmp/provisioning") -> None:
         """Initialize cloud provisioning engine"""
         self.logger = logging.getLogger(self.__class__.__name__)
         self.workspace_path = Path(workspace_path)
@@ -578,7 +578,7 @@ Get detailed cost breakdown"""
 class TerraformEngine:
     """Terraform provisioning engine"""
     
-    def __init__(self, workspace_path: Path):
+    def __init__(self, workspace_path -> None: Path) -> None:
         self.workspace_path = workspace_path / "terraform"
         self.logger = logging.getLogger(self.__class__.__name__)
     
@@ -612,7 +612,7 @@ Validate Terraform template"""
 class AnsibleEngine:
     """Ansible provisioning engine"""
     
-    def __init__(self, workspace_path: Path):
+    def __init__(self, workspace_path -> None: Path) -> None:
         self.workspace_path = workspace_path / "ansible"
         self.logger = logging.getLogger(self.__class__.__name__)
     
@@ -635,7 +635,7 @@ Execute Ansible playbook"""
 class CloudFormationEngine:
     """AWS CloudFormation provisioning engine"""
     
-    def __init__(self, workspace_path: Path):
+    def __init__(self, workspace_path -> None: Path) -> None:
         self.workspace_path = workspace_path / "cloudformation"
         self.logger = logging.getLogger(self.__class__.__name__)
     
@@ -669,7 +669,7 @@ Validate CloudFormation template"""
 class ARMTemplatesEngine:
     """Azure ARM Templates provisioning engine"""
     
-    def __init__(self, workspace_path: Path):
+    def __init__(self, workspace_path -> None: Path) -> None:
         self.workspace_path = workspace_path / "arm_templates"
         self.logger = logging.getLogger(self.__class__.__name__)
     

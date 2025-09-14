@@ -125,7 +125,7 @@ class TrafficRule:
 class LoadBalancer:
     """Enterprise load balancing and traffic management system"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.config = config or {}
         
         # Server management
@@ -154,7 +154,7 @@ class LoadBalancer:
         
         logger.info("⚖️ Load Balancer initialized")
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize load balancer and start health checks"""
         try:
             # Start health check monitoring
@@ -427,8 +427,8 @@ class LoadBalancer:
         
         return False
     
-    async def record_request_result(self, server_id: str, success: bool, 
-                                  response_time_ms: float):
+    async def record_request_result(self, server_id -> None: str, success -> None: bool, 
+                                  response_time_ms -> None: float) -> None:
         """Record request result for monitoring and circuit breaker"""
         try:
             # Update server stats
@@ -477,7 +477,7 @@ class LoadBalancer:
         except Exception as e:
             logger.error(f"Request result recording error: {e}")
     
-    async def _record_circuit_breaker_success(self, server_id: str):
+    async def _record_circuit_breaker_success(self, server_id -> None: str) -> None:
         """Record successful request for circuit breaker"""
         circuit_breaker = self.circuit_breakers.get(server_id)
         if not circuit_breaker:
@@ -493,7 +493,7 @@ class LoadBalancer:
             # Reset failure count on success
             circuit_breaker.failure_count = 0
     
-    async def _record_circuit_breaker_failure(self, server_id: str):
+    async def _record_circuit_breaker_failure(self, server_id -> None: str) -> None:
         """Record failed request for circuit breaker"""
         circuit_breaker = self.circuit_breakers.get(server_id)
         if not circuit_breaker:
@@ -509,7 +509,7 @@ class LoadBalancer:
             if server_id in self.servers:
                 self.servers[server_id].status = ServerStatus.UNHEALTHY
     
-    async def _health_check_loop(self):
+    async def _health_check_loop(self) -> None:
         """Background health check loop"""
         while True:
             try:
@@ -520,7 +520,7 @@ class LoadBalancer:
             except Exception as e:
                 logger.error(f"Health check loop error: {e}")
     
-    async def _perform_health_checks(self):
+    async def _perform_health_checks(self) -> None:
         """Perform health checks on all servers"""
         try:
             tasks = []
@@ -533,7 +533,7 @@ class LoadBalancer:
         except Exception as e:
             logger.error(f"Health checks error: {e}")
     
-    async def _check_server_health(self, server: ServerInstance):
+    async def _check_server_health(self, server -> None: ServerInstance) -> None:
         """Check health of individual server"""
         try:
             # Mock health check - in production, make actual HTTP request
@@ -636,7 +636,7 @@ class LoadBalancer:
             logger.error(f"Server status retrieval error: {e}")
             return []
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Shutdown load balancer"""
         try:
             if self._health_check_task:

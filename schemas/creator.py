@@ -1,4 +1,6 @@
 """Creator Management Schemas for IA Influencer Agent Platform
+import logging
+
 Professional creator profiles, verification, statistics and subscription management
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -43,7 +45,7 @@ Schema for creator profile creation."""
     label_affiliation: Optional[str] = Field(None, description="Record label or agency")
     
     @validator('creator_type')
-    def validate_creator_type(cls, v):
+    def validate_creator_type(cls, v) -> None:
         """Validate creator type."""
         allowed_types = {
             'musician', 'singer', 'songwriter', 'producer', 'dj',
@@ -231,7 +233,7 @@ class CreatorSubscription(UUIDSchema, TimestampSchema):
     discount_percentage: Optional[float] = Field(None, ge=0.0, le=100.0)
     
     @validator('subscription_tier')
-    def validate_subscription_tier(cls, v):
+    def validate_subscription_tier(cls, v) -> None:
         """Validate subscription tier."""
         allowed_tiers = {'free', 'creator', 'professional', 'enterprise', 'custom'}
         if v not in allowed_tiers:
@@ -283,7 +285,7 @@ Creator verification and identity confirmation."""
     credentials: Dict[str, any] = Field(default_factory=dict)
     
     @validator('verification_status')
-    def validate_verification_status(cls, v):
+    def validate_verification_status(cls, v) -> None:
         """Validate verification status."""
         allowed_statuses = {
             'pending', 'under_review', 'approved', 'rejected', 

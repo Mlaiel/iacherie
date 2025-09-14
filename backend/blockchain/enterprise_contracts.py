@@ -121,7 +121,7 @@ class CopyrightRecord:
 class CopyrightRegistry:
     """Enterprise copyright registry with blockchain immutability"""
     
-    def __init__(self, web3_provider: Web3, contract_address: str):
+    def __init__(self, web3_provider -> None: Web3, contract_address -> None: str) -> None:
         self.web3 = web3_provider
         self.contract_address = contract_address
         self.registry: Dict[str, CopyrightRecord] = {}
@@ -197,7 +197,7 @@ class Permission:
 class AccessController:
     """Enterprise access control with granular permissions"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.roles: Dict[str, Set[str]] = {}  # role -> permissions
         self.user_roles: Dict[str, Set[str]] = {}  # user -> roles
         self.permissions: Dict[str, Permission] = {}
@@ -297,7 +297,7 @@ class License:
 class LicensingSystem:
     """Enterprise licensing system with automated management"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.licenses: Dict[str, License] = {}
         self.templates: Dict[LicenseType, Dict[str, Any]] = {}
         self.content_licenses: Dict[str, List[str]] = {}  # content_id -> license_ids
@@ -393,7 +393,7 @@ class EscrowContract:
 class EscrowManager:
     """Enterprise escrow management with multi-party support"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.escrows: Dict[str, EscrowContract] = {}
         self.user_escrows: Dict[str, List[str]] = {}  # user -> escrow_ids
         
@@ -509,7 +509,7 @@ class RoyaltyDistribution:
 class RoyaltyDistributor:
     """Automated royalty distribution system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.distributions: Dict[str, RoyaltyDistribution] = {}
         self.content_royalties: Dict[str, List[RoyaltyShare]] = {}
         
@@ -599,7 +599,7 @@ class Dispute:
 class DisputeResolver:
     """Enterprise dispute resolution system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.disputes: Dict[str, Dispute] = {}
         self.arbitrators: Set[str] = set()
         
@@ -679,7 +679,7 @@ class MultiSigTransaction:
 class MultiSignatureWallet:
     """Enterprise multi-signature wallet management"""
     
-    def __init__(self, wallet_id: str, owners: List[str], required_signatures: int):
+    def __init__(self, wallet_id -> None: str, owners -> None: List[str], required_signatures -> None: int) -> None:
         self.wallet_id = wallet_id
         self.owners = set(owners)
         self.required_signatures = required_signatures
@@ -779,7 +779,7 @@ class VestingSchedule:
 class TimeLockedVault:
     """Enterprise time-locked vault with vesting schedules"""
     
-    def __init__(self, vault_id: str):
+    def __init__(self, vault_id -> None: str) -> None:
         self.vault_id = vault_id
         self.schedules: Dict[str, VestingSchedule] = {}
         self.total_locked: Decimal = Decimal('0')
@@ -880,7 +880,7 @@ class TimeLockedVault:
 class EnterpriseContractsManager:
     """Central manager for all enterprise smart contracts"""
     
-    def __init__(self, web3_provider: Web3):
+    def __init__(self, web3_provider -> None: Web3) -> None:
         self.web3 = web3_provider
         
         # Initialize all subsystems
@@ -909,7 +909,7 @@ class EnterpriseContractsManager:
             logger.error(f"Error initializing contracts manager: {str(e)}")
             return False
             
-    async def _setup_license_templates(self):
+    async def _setup_license_templates(self) -> None:
         """Setup default license templates"""
         templates = {
             LicenseType.BASIC: {
@@ -935,7 +935,7 @@ class EnterpriseContractsManager:
         
         self.licensing_system.templates = templates
         
-    async def _setup_default_arbitrators(self):
+    async def _setup_default_arbitrators(self) -> None:
         """Setup default arbitrators for dispute resolution"""
         default_arbitrators = [
             "0x1234567890123456789012345678901234567890",  # Platform arbitrator

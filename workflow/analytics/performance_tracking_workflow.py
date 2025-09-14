@@ -118,7 +118,7 @@ class PerformanceTrackingWorkflow:
     growth analysis, audience insights, and cross-platform performance comparison.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize performance tracking workflow."""
         self.tracking_data = defaultdict(list)
         self.platform_weights = {

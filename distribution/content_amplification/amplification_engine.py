@@ -87,7 +87,7 @@ class IntelligentAmplificationEngine:
     - Community engagement amplification
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.amplification_models = {}
         self.historical_performance = {}
         self.active_campaigns = {}
@@ -784,7 +784,7 @@ class IntelligentAmplificationEngine:
             logger.error(f"Error executing amplification plan: {e}")
             raise
 
-    async def _execute_amplification_tactics(self, plan: AmplificationPlan):
+    async def _execute_amplification_tactics(self, plan -> None: AmplificationPlan) -> None:
         """Execute specific amplification tactics"""
         
         # This would integrate with actual platform APIs and tools

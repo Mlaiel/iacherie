@@ -203,7 +203,7 @@ class CreatorNetworkManager:
     - Système de réputation dynamique
     """
     
-    def __init__(self, db_session=None, redis_client=None):
+    def __init__(self, db_session=None, redis_client=None) -> None:
         self.db_session = db_session
         self.redis_client = redis_client
         self.creator_profiles = {}
@@ -216,7 +216,7 @@ class CreatorNetworkManager:
         # Initialiser les modèles de scoring
         self._initialize_scoring_models()
     
-    def _initialize_scoring_models(self):
+    def _initialize_scoring_models(self) -> None:
         """Initialise les modèles de scoring"""
         self.scoring_models = {
             'reputation': {
@@ -528,7 +528,7 @@ class CreatorDiscoveryEngine:
     - Onboarding automatisé
     """
     
-    def __init__(self, network_manager):
+    def __init__(self, network_manager) -> None:
         self.network_manager = network_manager
         self.discovery_pipelines = {}
         self.trending_analysis = {}
@@ -628,7 +628,7 @@ class CreatorReputationSystem:
     - Système de vérification progressive
     """
     
-    def __init__(self, network_manager):
+    def __init__(self, network_manager) -> None:
         self.network_manager = network_manager
         self.reputation_factors = {}
         self.badge_system = {}
@@ -637,7 +637,7 @@ class CreatorReputationSystem:
         # Initialiser le système de réputation
         self._initialize_reputation_system()
     
-    def _initialize_reputation_system(self):
+    def _initialize_reputation_system(self) -> None:
         """Initialise le système de réputation"""
         self.reputation_factors = {
             'collaboration_success': {

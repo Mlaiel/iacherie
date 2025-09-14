@@ -214,7 +214,7 @@ class QuantumMonitoringSystem:
     ✅ Real-time dashboard avec visualizations
     """
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.config = config or {}
         self.metrics_storage: Dict[MetricType, deque] = defaultdict(lambda: deque(maxlen=10000))
         self.alert_handlers: Dict[AlertSeverity, List[Callable]] = defaultdict(list)
@@ -234,7 +234,7 @@ class QuantumMonitoringSystem:
         
         logger.info("📊 Quantum Monitoring System initialized")
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialisation complète système monitoring"""
         try:
             # Setup monitoring infrastructure
@@ -263,7 +263,7 @@ class QuantumMonitoringSystem:
             logger.error(f"❌ Failed to initialize monitoring system: {e}")
             raise
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Arrêt propre système monitoring"""
         try:
             self.is_monitoring_active = False
@@ -285,7 +285,7 @@ class QuantumMonitoringSystem:
     # METRICS COLLECTION & RECORDING
     # ========================================
     
-    async def record_metric(self, metric: QuantumMetric):
+    async def record_metric(self, metric -> None: QuantumMetric) -> None:
         """Enregistrement métrique"""
         try:
             # Validation métrique
@@ -307,7 +307,7 @@ class QuantumMonitoringSystem:
         except Exception as e:
             logger.error(f"❌ Failed to record metric: {e}")
     
-    async def record_performance_metrics(self, metrics: PerformanceMetrics):
+    async def record_performance_metrics(self, metrics -> None: PerformanceMetrics) -> None:
         """Enregistrement métriques performance"""
         try:
             performance_metric = QuantumMetric(
@@ -349,7 +349,7 @@ class QuantumMonitoringSystem:
         except Exception as e:
             logger.error(f"❌ Failed to record performance metrics: {e}")
     
-    async def record_quantum_advantage_metrics(self, metrics: QuantumAdvantageMetrics):
+    async def record_quantum_advantage_metrics(self, metrics -> None: QuantumAdvantageMetrics) -> None:
         """Enregistrement métriques avantage quantique"""
         try:
             quantum_advantage_metric = QuantumMetric(
@@ -386,7 +386,7 @@ class QuantumMonitoringSystem:
         except Exception as e:
             logger.error(f"❌ Failed to record quantum advantage metrics: {e}")
     
-    async def record_system_health_metrics(self, metrics: SystemHealthMetrics):
+    async def record_system_health_metrics(self, metrics -> None: SystemHealthMetrics) -> None:
         """Enregistrement métriques santé système"""
         try:
             health_metric = QuantumMetric(
@@ -417,7 +417,7 @@ class QuantumMonitoringSystem:
         except Exception as e:
             logger.error(f"❌ Failed to record system health metrics: {e}")
     
-    async def record_business_impact_metrics(self, metrics: BusinessImpactMetrics):
+    async def record_business_impact_metrics(self, metrics -> None: BusinessImpactMetrics) -> None:
         """Enregistrement métriques impact business"""
         try:
             business_metric = QuantumMetric(
@@ -456,7 +456,7 @@ class QuantumMonitoringSystem:
     # MONITORING & ANALYSIS AUTOMATIQUE
     # ========================================
     
-    async def start_continuous_monitoring(self):
+    async def start_continuous_monitoring(self) -> None:
         """Démarrage monitoring continu"""
         try:
             if self.is_monitoring_active:
@@ -507,7 +507,7 @@ class QuantumMonitoringSystem:
             logger.error(f"❌ Failed to start continuous monitoring: {e}")
             raise
     
-    async def stop_continuous_monitoring(self):
+    async def stop_continuous_monitoring(self) -> None:
         """Arrêt monitoring continu"""
         try:
             self.is_monitoring_active = False
@@ -530,13 +530,13 @@ class QuantumMonitoringSystem:
     
     async def create_alert(
         self, 
-        severity: AlertSeverity,
-        title: str,
-        description: str,
-        metric_source: str,
-        threshold_data: Dict[str, Any],
-        current_value: Any
-    ):
+        severity -> None: AlertSeverity,
+        title -> None: str,
+        description -> None: str,
+        metric_source -> None: str,
+        threshold_data -> None: Dict[str, Any],
+        current_value -> None: Any
+    ) -> None:
         """Création alerte"""
         try:
             alert = MonitoringAlert(
@@ -567,7 +567,7 @@ class QuantumMonitoringSystem:
         except Exception as e:
             logger.error(f"❌ Failed to create alert: {e}")
     
-    async def acknowledge_alert(self, alert_id: str, acknowledged_by: str = "system"):
+    async def acknowledge_alert(self, alert_id -> None: str, acknowledged_by -> None: str = "system") -> None:
         """Acknowledgment alerte"""
         try:
             for alert in self.active_alerts:
@@ -583,7 +583,7 @@ class QuantumMonitoringSystem:
             logger.error(f"❌ Failed to acknowledge alert {alert_id}: {e}")
             return False
     
-    async def resolve_alert(self, alert_id: str, resolved_by: str = "system"):
+    async def resolve_alert(self, alert_id -> None: str, resolved_by -> None: str = "system") -> None:
         """Résolution alerte"""
         try:
             for alert in self.active_alerts:
@@ -600,11 +600,11 @@ class QuantumMonitoringSystem:
             logger.error(f"❌ Failed to resolve alert {alert_id}: {e}")
             return False
     
-    def add_alert_handler(self, severity: AlertSeverity, handler: Callable):
+    def add_alert_handler(self, severity -> None: AlertSeverity, handler -> None: Callable) -> None:
         """Ajout handler alerte"""
         self.alert_handlers[severity].append(handler)
     
-    def remove_alert_handler(self, severity: AlertSeverity, handler: Callable):
+    def remove_alert_handler(self, severity -> None: AlertSeverity, handler -> None: Callable) -> None:
         """Suppression handler alerte"""
         if handler in self.alert_handlers[severity]:
             self.alert_handlers[severity].remove(handler)
@@ -790,7 +790,7 @@ class QuantumMonitoringSystem:
     # MÉTHODES PRIVÉES - MONITORING THREADS
     # ========================================
     
-    def _run_performance_monitoring(self):
+    def _run_performance_monitoring(self) -> None:
         """Thread monitoring performance"""
         while self.is_monitoring_active:
             try:
@@ -819,7 +819,7 @@ class QuantumMonitoringSystem:
             
             time.sleep(self.monitoring_interval_seconds)
     
-    def _run_system_health_monitoring(self):
+    def _run_system_health_monitoring(self) -> None:
         """Thread monitoring santé système"""
         while self.is_monitoring_active:
             try:
@@ -851,7 +851,7 @@ class QuantumMonitoringSystem:
             
             time.sleep(self.monitoring_interval_seconds * 2)  # Moins fréquent
     
-    def _run_quantum_advantage_monitoring(self):
+    def _run_quantum_advantage_monitoring(self) -> None:
         """Thread monitoring avantage quantique"""
         while self.is_monitoring_active:
             try:
@@ -880,7 +880,7 @@ class QuantumMonitoringSystem:
             
             time.sleep(self.monitoring_interval_seconds * 3)  # Moins fréquent
     
-    def _run_dashboard_updates(self):
+    def _run_dashboard_updates(self) -> None:
         """Thread mise à jour dashboard"""
         while self.is_monitoring_active:
             try:
@@ -921,24 +921,24 @@ class QuantumMonitoringSystem:
         
         return (values[-1] - values[0]) / values[0] if values[0] != 0 else 0.0
     
-    async def _validate_metric(self, metric: QuantumMetric):
+    async def _validate_metric(self, metric -> None: QuantumMetric) -> None:
         """Validation métrique"""
         if not metric.metric_id:
             raise ValueError("Metric ID is required")
         if not metric.metric_name:
             raise ValueError("Metric name is required")
     
-    async def _check_alert_thresholds(self, metric: QuantumMetric):
+    async def _check_alert_thresholds(self, metric -> None: QuantumMetric) -> None:
         """Vérification seuils alertes"""
         # Implémentation spécifique selon type métrique
         pass
     
-    async def _update_metric_trends(self, metric: QuantumMetric):
+    async def _update_metric_trends(self, metric -> None: QuantumMetric) -> None:
         """Mise à jour tendances métriques"""
         # Implémentation tracking trends
         pass
     
-    async def _update_business_impact_correlation(self, metric: QuantumMetric):
+    async def _update_business_impact_correlation(self, metric -> None: QuantumMetric) -> None:
         """Mise à jour corrélation impact business"""
         # Implémentation corrélation business
         pass

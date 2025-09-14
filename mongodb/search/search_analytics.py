@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 class SearchAnalytics:
     """Search analytics and performance tracking."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize search analytics."""
         self._analytics_data = {
             'total_searches': 0,

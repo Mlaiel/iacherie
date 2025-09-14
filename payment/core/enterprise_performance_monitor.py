@@ -149,7 +149,7 @@ class EnterprisePerformanceMonitor:
     - Advanced data aggregation and trend analysis
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """Initialize enterprise performance monitor"""
         self.config = config
         self.logger = logging.getLogger(__name__)

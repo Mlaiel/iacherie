@@ -127,7 +127,7 @@ class CrossRegionalAnalysis:
 class RegionalTrendsAnalyzer:
     """Advanced regional trend analysis engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize regional trends analyzer"""
         self.region_profiles = {}
         self.trend_data = {}

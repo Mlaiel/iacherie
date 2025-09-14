@@ -66,7 +66,7 @@ class BulkheadPartition:
     last_health_check: float = field(default_factory=time.time)
     executor: Optional[ThreadPoolExecutor] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         """Initialize partition with thread executor."""
         self.executor = ThreadPoolExecutor(
             max_workers=self.resource_limits.max_concurrent_requests,
@@ -77,7 +77,7 @@ class BulkheadPartition:
 class BulkheadManager:
     """Enterprise bulkhead manager for service isolation and resource management."""
     
-    def __init__(self, config_path: Optional[str] = None):
+    def __init__(self, config_path -> None: Optional[str] = None) -> None:
         """Initialize the bulkhead manager.
         
         Args:
@@ -632,7 +632,7 @@ class BulkheadManager:
 
 
 # Example usage and testing
-async def main():
+async def main() -> None:
     """Example usage of the BulkheadManager."""
     # Initialize manager
     manager = BulkheadManager()
@@ -642,7 +642,7 @@ async def main():
         await manager.start_monitoring()
         
         # Example: Execute function in partition
-        async def sample_ai_task():
+        async def sample_ai_task() -> None:
             await asyncio.sleep(0.1)  # Simulate AI processing
             return "AI processing completed"
         

@@ -1,4 +1,6 @@
 """
+import asyncio
+
 📊 ANALYTICS SERVICES MODULE - ENTERPRISE ANALYTICS & BUSINESS INTELLIGENCE
 ===========================================================================
 
@@ -72,7 +74,7 @@ __all__ = [
     'CompetitorAnalysisService'
 ]
 
-def get_services():
+def get_services() -> None:
     """Get list of all available analytics services."""
     return [
         'real_time_analytics_service.py',
@@ -94,7 +96,7 @@ def get_services():
         'competitor_analysis_service.py'
     ]
 
-async def start_services():
+async def start_services() -> None:
     """Start all analytics services."""
     # Initialize and start analytics services
     pass

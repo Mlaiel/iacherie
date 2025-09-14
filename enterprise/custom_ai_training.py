@@ -224,12 +224,12 @@ class CustomDataset(Dataset):
     
     def __init__(
         self,
-        data: Union[pd.DataFrame, List[Dict[str, Any]]],
-        tokenizer: Optional[Any] = None,
-        max_length: int = 512,
-        label_column: str = "label",
-        text_column: str = "text"
-    ):
+        data -> None: Union[pd.DataFrame, List[Dict[str, Any]]],
+        tokenizer -> None: Optional[Any] = None,
+        max_length -> None: int = 512,
+        label_column -> None: str = "label",
+        text_column -> None: str = "text"
+    ) -> None:
         self.data = data if isinstance(data, pd.DataFrame) else pd.DataFrame(data)
         self.tokenizer = tokenizer
         self.max_length = max_length
@@ -245,7 +245,7 @@ class CustomDataset(Dataset):
             self.label_to_id = {}
             self.id_to_label = {}
     
-    def __len__(self):
+    def __len__(self) -> None:
         try:
             logger.info(f"Executing __len__")
             
@@ -303,7 +303,7 @@ class CustomDataset(Dataset):
         except Exception as e:
             logger.error(f"__len__ failed: {e}")
             raise
-    def __getitem__(self, idx):
+    def __getitem__(self, idx) -> None:
         row = self.data.iloc[idx]
         
         # Tokenize text if tokenizer provided
@@ -338,7 +338,7 @@ class CustomDataset(Dataset):
 class DatasetManager:
     """Advanced dataset management and preprocessing"""
     
-    def __init__(self, storage_path: str = "/tmp/ai_training_datasets"):
+    def __init__(self, storage_path -> None: str = "/tmp/ai_training_datasets") -> None:
         self.storage_path = Path(storage_path)
         self.storage_path.mkdir(exist_ok=True, parents=True)
         self._datasets: Dict[str, DatasetMetadata] = {}
@@ -635,14 +635,14 @@ class DatasetManager:
 class ModelTrainingPipeline:
     """Advanced model training pipeline with distributed support"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self._accelerator = None
         self._setup_accelerator()
         self.dataset_manager = DatasetManager()
         self._training_jobs: Dict[str, Dict[str, Any]] = {}
         
-    def _setup_accelerator(self):
+    def _setup_accelerator(self) -> None:
         """
 Setup Accelerate for distributed training"""
         try:
@@ -704,13 +704,13 @@ Setup Accelerate for distributed training"""
     
     async def _execute_training(
         self,
-        training_id: str,
-        organization_id: str,
-        model_name: str,
-        train_dataset_id: str,
-        config: TrainingConfiguration,
-        val_dataset_id: Optional[str] = None
-    ):
+        training_id -> None: str,
+        organization_id -> None: str,
+        model_name -> None: str,
+        train_dataset_id -> None: str,
+        config -> None: TrainingConfiguration,
+        val_dataset_id -> None: Optional[str] = None
+    ) -> None:
         """Execute the actual training process"""
         try:
             # Update status
@@ -780,7 +780,7 @@ Setup Accelerate for distributed training"""
                 )
                 
                 # Custom metrics computation
-                def compute_metrics(eval_pred):
+                def compute_metrics(eval_pred) -> None:
                     predictions, labels = eval_pred
                     predictions = np.argmax(predictions, axis=1)
                     precision, recall, f1, _ = precision_recall_fscore_support(labels, predictions, average='weighted')
@@ -854,20 +854,21 @@ Setup Accelerate for distributed training"""
     
     async def _train_with_progress_tracking(
         self,
-        trainer: Trainer,
-        training_id: str,
-        config: TrainingConfiguration
-    ):
+        trainer -> None: Trainer,
+        training_id -> None: str,
+        config -> None: TrainingConfiguration
+    ) -> None:
         """Train model with progress tracking"""
         try:
             # Custom callback for progress tracking
             class ProgressCallback:
-                def __init__(self, training_id, total_epochs, training_jobs):
+    """ProgressCallback: class implementation"""
+                def __init__(self, training_id, total_epochs, training_jobs) -> None:
                     self.training_id = training_id
                     self.total_epochs = total_epochs
                     self.training_jobs = training_jobs
                 
-                def on_epoch_end(self, args, state, control, **kwargs):
+                def on_epoch_end(self, args, state, control, **kwargs) -> None:
                     current_epoch = state.epoch
                     progress = current_epoch / self.total_epochs
                     
@@ -960,7 +961,7 @@ class CustomAITrainer:
     """
 Main custom AI trainer orchestrator"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.dataset_manager = DatasetManager()
         self.training_pipeline = ModelTrainingPipeline(config)
@@ -970,7 +971,7 @@ Main custom AI trainer orchestrator"""
         if self.config.get('distributed_training', False):
             self._initialize_ray_cluster()
     
-    def _initialize_ray_cluster(self):
+    def _initialize_ray_cluster(self) -> None:
         """
 Initialize Ray cluster for distributed training"""
         try:

@@ -109,14 +109,14 @@ class SmartContractEvent:
 class BlockchainRightsMonitor:
     """Enterprise blockchain rights monitoring system."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.network_providers = {}
         self.contract_abis = {}
         self.monitored_contracts = {}
         self.rights_cache = {}
         self.transaction_cache = {}
         
-    async def initialize_networks(self, network_configs: Dict[BlockchainNetwork, Dict[str, Any]]):
+    async def initialize_networks(self, network_configs -> None: Dict[BlockchainNetwork, Dict[str, Any]]) -> None:
         """Initialize blockchain network connections."""
         for network, config in network_configs.items():
             try:

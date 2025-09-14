@@ -123,10 +123,10 @@ class MessageQueue:
 File d'attente de messages avec Redis Streams"""
     
     def __init__(self, 
-                 redis_client: aioredis.Redis,
-                 queue_name: str,
-                 max_length: int = 10000,
-                 dead_letter_queue: bool = True):
+                 redis_client -> None: aioredis.Redis,
+                 queue_name -> None: str,
+                 max_length -> None: int = 10000,
+                 dead_letter_queue -> None: bool = True) -> None:
         self.redis_client = redis_client
         self.queue_name = queue_name
         self.max_length = max_length
@@ -253,7 +253,7 @@ File d'attente de messages avec Redis Streams"""
         except Exception as e:
             logger.error(f"Failed to handle get request: {e}")
             return None
-    async def ack(self, message: QueueMessage, success: bool = True, error: Optional[str] = None):
+    async def ack(self, message -> None: QueueMessage, success -> None: bool = True, error -> None: Optional[str] = None) -> None:
         """Accuse réception d'un message traité"""
         
         # Récupérer les infos de traitement
@@ -311,14 +311,14 @@ File d'attente de messages avec Redis Streams"""
         await self.redis_client.hdel(self.processing_key, message.message_id)
         await self._update_stats("ack", message)
         
-    async def _ack_message(self, stream_key: str, group_name: str, message_id: str):
+    async def _ack_message(self, stream_key -> None: str, group_name -> None: str, message_id -> None: str) -> None:
         """Acknowledge un message dans Redis Stream"""
         try:
             await self.redis_client.xack(stream_key, group_name, message_id)
         except Exception as e:
             logger.error(f"Erreur lors de l'ack du message {message_id}: {e}")
             
-    async def _send_to_dlq(self, message: QueueMessage):
+    async def _send_to_dlq(self, message -> None: QueueMessage) -> None:
         """Envoie un message vers la Dead Letter Queue"""
         dlq_data = message.to_dict()
         dlq_data["original_queue"] = self.queue_name
@@ -331,7 +331,7 @@ File d'attente de messages avec Redis Streams"""
             approximate=True
         )
         
-    async def _reschedule_message(self, message: QueueMessage):
+    async def _reschedule_message(self, message -> None: QueueMessage) -> None:
         """Replanifie un message pour plus tard"""
         delay_seconds = (message.scheduled_at - datetime.utcnow()).total_seconds()
         if delay_seconds > 0:
@@ -344,7 +344,7 @@ File d'attente de messages avec Redis Streams"""
                 headers=message.headers
             )
             
-    async def _update_stats(self, operation: str, message: QueueMessage):
+    async def _update_stats(self, operation -> None: str, message -> None: QueueMessage) -> None:
         """
 Met à jour les statistiques de la queue"""
         now = datetime.utcnow()
@@ -385,7 +385,7 @@ Met à jour les statistiques de la queue"""
             await self._persist_stats()
             self._last_stats_update = now
             
-    async def _persist_stats(self):
+    async def _persist_stats(self) -> None:
         """Persiste les statistiques dans Redis"""
         stats_data = asdict(self.stats)
         # Convertir les dates
@@ -423,7 +423,7 @@ Retourne les informations détaillées de la queue"""
                 
         return info
         
-    async def purge(self, priority: Optional[MessagePriority] = None):
+    async def purge(self, priority -> None: Optional[MessagePriority] = None) -> None:
         """Vide la queue (optionnellement par priorité)"""
         if priority:
             stream_key = f"{self.queue_name}:p{priority.value}"
@@ -443,7 +443,7 @@ Retourne les informations détaillées de la queue"""
 class QueueManager:
     """Gestionnaire de multiples queues avec load balancing"""
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client -> None: aioredis.Redis) -> None:
         self.redis_client = redis_client
         self.queues: Dict[str, MessageQueue] = {}
         self.consumers: Dict[str, asyncio.Task] = {}
@@ -470,7 +470,7 @@ Crée une nouvelle queue"""
         logger.info(f"Queue créée: {queue_name}")
         return queue
         
-    async def register_handler(self, queue_name: str, handler: Callable):
+    async def register_handler(self, queue_name -> None: str, handler -> None: Callable) -> None:
         """Enregistre un handler pour une queue"""
         self.handlers[queue_name] = handler
         
@@ -478,7 +478,7 @@ Crée une nouvelle queue"""
         if queue_name not in self.consumers and self._running:
             await self._start_consumer(queue_name)
             
-    async def start(self):
+    async def start(self) -> None:
         """
 Démarre le gestionnaire de queues"""
         self._running = True
@@ -489,7 +489,7 @@ Démarre le gestionnaire de queues"""
             
         logger.info("QueueManager démarré")
         
-    async def stop(self):
+    async def stop(self) -> None:
         """Arrête le gestionnaire de queues"""
         self._running = False
         
@@ -504,7 +504,7 @@ Démarre le gestionnaire de queues"""
         self.consumers.clear()
         logger.info("QueueManager arrêté")
         
-    async def _start_consumer(self, queue_name: str):
+    async def _start_consumer(self, queue_name -> None: str) -> None:
         """Démarre un consumer pour une queue"""
         if queue_name in self.consumers:
             return
@@ -513,7 +513,7 @@ Démarre le gestionnaire de queues"""
         self.consumers[queue_name] = task
         logger.info(f"Consumer démarré pour {queue_name}")
         
-    async def _consumer_loop(self, queue_name: str):
+    async def _consumer_loop(self, queue_name -> None: str) -> None:
         """Boucle principale du consumer"""
         queue = self.queues.get(queue_name)
         handler = self.handlers.get(queue_name)

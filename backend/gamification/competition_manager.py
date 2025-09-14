@@ -196,7 +196,7 @@ class CompetitionMatch(Base):
 class CompetitionManager:
     """Advanced competition management system"""
     
-    def __init__(self, redis_client: redis.Redis):
+    def __init__(self, redis_client -> None: redis.Redis) -> None:
         self.redis = redis_client
         self.active_competitions: Dict[str, Competition] = {}
         self.matchmaking_engine = SkillBasedMatchmaking()
@@ -444,7 +444,7 @@ class CompetitionManager:
         
         return True
     
-    async def _cache_competition(self, competition: Competition):
+    async def _cache_competition(self, competition -> None: Competition) -> None:
         """Cache competition data for fast access"""
         await self.redis.setex(
             f"competition:{competition.id}",
@@ -496,7 +496,7 @@ class CompetitionManager:
         
         return True
     
-    async def _update_match_result(self, match: CompetitionMatch, result: MatchResult):
+    async def _update_match_result(self, match -> None: CompetitionMatch, result -> None: MatchResult) -> None:
         """Update match with result data"""
         match.winner_id = result.winner_id
         match.score_1 = result.score_1
@@ -511,7 +511,7 @@ class CompetitionManager:
         # and determine final winner
         return False
     
-    async def _finalize_competition(self, competition_id: str):
+    async def _finalize_competition(self, competition_id -> None: str) -> None:
         """Finalize competition and distribute prizes"""
         competition = await self._get_competition(competition_id)
         competition.status = CompetitionStatus.COMPLETED.value
@@ -534,7 +534,7 @@ class CompetitionManager:
 class SkillBasedMatchmaking:
     """ML-powered skill-based matchmaking system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.skill_ratings: Dict[str, float] = {}
         logger.info("Skill-based matchmaking engine initialized")
     
@@ -568,10 +568,10 @@ class SkillBasedMatchmaking:
     
     async def update_skill_rating(
         self,
-        creator_id: str,
-        match_result: MatchResult,
-        opponent_rating: float
-    ):
+        creator_id -> None: str,
+        match_result -> None: MatchResult,
+        opponent_rating -> None: float
+    ) -> None:
         """Update skill rating based on match result using ELO-like system"""
         try:
             current_rating = await self._get_skill_rating(creator_id)
@@ -625,7 +625,7 @@ class SkillBasedMatchmaking:
         
         return rating_diff * skill_multiplier.get(skill_level, 1.0)
     
-    async def _persist_skill_rating(self, creator_id: str, rating: float):
+    async def _persist_skill_rating(self, creator_id -> None: str, rating -> None: float) -> None:
         """Persist skill rating to database"""
         # Database persistence would happen here
         pass
@@ -637,7 +637,7 @@ class SkillBasedMatchmaking:
 class TournamentBracket:
     """Advanced tournament bracket generation and management"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         logger.info("Tournament bracket engine initialized")
     
     async def generate_bracket(
@@ -786,11 +786,11 @@ class TournamentBracket:
 class CompetitionAnalytics:
     """Real-time competition analytics and insights"""
     
-    def __init__(self, redis_client: redis.Redis):
+    def __init__(self, redis_client -> None: redis.Redis) -> None:
         self.redis = redis_client
         logger.info("Competition analytics engine initialized")
     
-    async def start_competition_tracking(self, competition_id: str):
+    async def start_competition_tracking(self, competition_id -> None: str) -> None:
         """Start real-time tracking for competition"""
         try:
             await self.redis.hset(
@@ -808,7 +808,7 @@ class CompetitionAnalytics:
         except Exception as e:
             logger.error(f"Failed to start competition tracking: {e}")
     
-    async def track_registration(self, competition_id: str, creator_id: str):
+    async def track_registration(self, competition_id -> None: str, creator_id -> None: str) -> None:
         """Track participant registration"""
         try:
             await self.redis.hincrby(
@@ -828,7 +828,7 @@ class CompetitionAnalytics:
         except Exception as e:
             logger.error(f"Failed to track registration: {e}")
     
-    async def track_match_result(self, match_id: str, result: MatchResult):
+    async def track_match_result(self, match_id -> None: str, result -> None: MatchResult) -> None:
         """Track match result for analytics"""
         try:
             # Extract competition ID from match
@@ -920,7 +920,7 @@ class CompetitionAnalytics:
 class SeasonalCompetition:
     """Advanced seasonal competition management"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.current_season = None
         self.season_leaderboards: Dict[str, List[Dict]] = {}
         logger.info("Seasonal competition manager initialized")
@@ -959,10 +959,10 @@ class SeasonalCompetition:
     
     async def add_competition_to_season(
         self,
-        season_id: str,
-        competition_id: str,
-        points_multiplier: float = 1.0
-    ):
+        season_id -> None: str,
+        competition_id -> None: str,
+        points_multiplier -> None: float = 1.0
+    ) -> None:
         """Add competition to seasonal progression"""
         try:
             if self.current_season and self.current_season['id'] == season_id:
@@ -979,9 +979,9 @@ class SeasonalCompetition:
     
     async def update_seasonal_points(
         self,
-        creator_id: str,
-        competition_result: Dict[str, Any]
-    ):
+        creator_id -> None: str,
+        competition_result -> None: Dict[str, Any]
+    ) -> None:
         """Update creator's seasonal points based on competition performance"""
         try:
             if not self.current_season:

@@ -93,7 +93,7 @@ class MultiPlatformDistributor:
     Gestion simultanée de 65+ plateformes avec optimization.
     """
     
-    def __init__(self, config: Optional[Dict] = None):
+    def __init__(self, config -> None: Optional[Dict] = None) -> None:
         """Initialise le distributeur multi-plateformes."""
         self.config = config or {}
         self.platform_configs: Dict[str, PlatformConfig] = {}
@@ -103,7 +103,7 @@ class MultiPlatformDistributor:
         self._initialize_platforms()
         logger.info("Multi-Platform Distributor initialisé avec 65+ plateformes")
     
-    def _initialize_platforms(self):
+    def _initialize_platforms(self) -> None:
         """Initialise les configurations des 65+ plateformes."""
         
         # Social Media Platforms (29)
@@ -292,7 +292,7 @@ class MultiPlatformDistributor:
         logger.info(f"Distribution job créé: {job_id} pour {len(valid_platforms)} plateformes")
         return job
     
-    async def _execute_distribution(self, job_id: str):
+    async def _execute_distribution(self, job_id -> None: str) -> None:
         """Exécute la distribution d'un job."""
         if job_id not in self.active_jobs:
             return
@@ -325,7 +325,7 @@ class MultiPlatformDistributor:
             job.status = DistributionStatus.FAILED
             logger.error(f"Erreur distribution {job_id}: {e}")
     
-    async def _distribute_simultaneous(self, job: DistributionJob):
+    async def _distribute_simultaneous(self, job -> None: DistributionJob) -> None:
         """Distribution simultanée sur toutes les plateformes."""
         job.status = DistributionStatus.UPLOADING
         
@@ -355,7 +355,7 @@ class MultiPlatformDistributor:
                 else:
                     job.failure_count += 1
     
-    async def _distribute_sequential(self, job: DistributionJob):
+    async def _distribute_sequential(self, job -> None: DistributionJob) -> None:
         """Distribution séquentielle sur les plateformes."""
         job.status = DistributionStatus.UPLOADING
         
@@ -380,7 +380,7 @@ class MultiPlatformDistributor:
                 }
                 job.failure_count += 1
     
-    async def _distribute_intelligent_sequential(self, job: DistributionJob):
+    async def _distribute_intelligent_sequential(self, job -> None: DistributionJob) -> None:
         """Distribution séquentielle intelligente basée sur priorités."""
         job.status = DistributionStatus.UPLOADING
         
@@ -619,7 +619,7 @@ class MultiPlatformDistributor:
         else:
             raise Exception(f"Upload failed on {platform_id}")
     
-    async def _schedule_distribution(self, job_id: str, scheduled_time: datetime):
+    async def _schedule_distribution(self, job_id -> None: str, scheduled_time -> None: datetime) -> None:
         """Planifie une distribution pour plus tard."""
         
         wait_seconds = (scheduled_time - datetime.now()).total_seconds()

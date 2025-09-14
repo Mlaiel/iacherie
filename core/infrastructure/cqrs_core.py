@@ -189,14 +189,14 @@ class QueryHandler(ABC, Generic[TQuery, TResult]):
 class ReadModel(ABC):
     """Abstract read model for queries"""
     
-    def __init__(self, name: str):
+    def __init__(self, name -> None: str) -> None:
         self.name = name
         self.version = 0
         self.last_updated = datetime.utcnow()
         self.data: Dict[str, Any] = {}
     
     @abstractmethod
-    async def project_event(self, event: Dict[str, Any]):
+    async def project_event(self, event -> None: Dict[str, Any]) -> None:
         """Project event data into read model"""
         pass
     
@@ -205,7 +205,7 @@ class ReadModel(ABC):
         """Query read model data"""
         pass
     
-    async def reset(self):
+    async def reset(self) -> None:
         """Reset read model to initial state"""
         self.data = {}
         self.version = 0
@@ -214,7 +214,7 @@ class ReadModel(ABC):
 class CommandBus:
     """Command bus for dispatching commands"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.handlers: Dict[str, CommandHandler] = {}
         self.middleware: List[Callable] = []
         self.command_queue: List[Command] = []
@@ -222,12 +222,12 @@ class CommandBus:
         self.results: Dict[str, CommandResult] = {}
         self.lock = threading.Lock()
         
-    def register_handler(self, command_type: str, handler: CommandHandler):
+    def register_handler(self, command_type -> None: str, handler -> None: CommandHandler) -> None:
         """Register command handler"""
         self.handlers[command_type] = handler
         logger.info(f"Registered command handler for: {command_type}")
     
-    def add_middleware(self, middleware: Callable):
+    def add_middleware(self, middleware -> None: Callable) -> None:
         """Add middleware to command pipeline"""
         self.middleware.append(middleware)
     
@@ -358,7 +358,7 @@ class CommandBus:
 class QueryBus:
     """Query bus for dispatching queries"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.handlers: Dict[str, QueryHandler] = {}
         self.read_models: Dict[str, ReadModel] = {}
         self.cache: Dict[str, Any] = {}
@@ -366,17 +366,17 @@ class QueryBus:
         self.middleware: List[Callable] = []
         self.results: Dict[str, QueryResult] = {}
         
-    def register_handler(self, query_type: str, handler: QueryHandler):
+    def register_handler(self, query_type -> None: str, handler -> None: QueryHandler) -> None:
         """Register query handler"""
         self.handlers[query_type] = handler
         logger.info(f"Registered query handler for: {query_type}")
     
-    def register_read_model(self, name: str, read_model: ReadModel):
+    def register_read_model(self, name -> None: str, read_model -> None: ReadModel) -> None:
         """Register read model"""
         self.read_models[name] = read_model
         logger.info(f"Registered read model: {name}")
     
-    def add_middleware(self, middleware: Callable):
+    def add_middleware(self, middleware -> None: Callable) -> None:
         """Add middleware to query pipeline"""
         self.middleware.append(middleware)
     
@@ -464,7 +464,7 @@ class QueryBus:
         logger.debug(f"Cache hit for query {query.id}")
         return result
     
-    def _cache_result(self, query: Query, result: QueryResult):
+    def _cache_result(self, query -> None: Query, result -> None: QueryResult) -> None:
         """Cache query result"""
         self.cache[query.cache_key] = {
             'data': result.data,
@@ -473,7 +473,7 @@ class QueryBus:
         }
         self.cache_timestamps[query.cache_key] = datetime.utcnow()
     
-    def clear_cache(self, pattern: Optional[str] = None):
+    def clear_cache(self, pattern -> None: Optional[str] = None) -> None:
         """Clear cache entries"""
         if pattern:
             keys_to_remove = [key for key in self.cache.keys() if pattern in key]
@@ -497,7 +497,7 @@ class QueryBus:
 class CQRSCore:
     """Core CQRS management system"""
     
-    def __init__(self, level: str = "enterprise"):
+    def __init__(self, level -> None: str = "enterprise") -> None:
         self.level = level
         self.command_bus = CommandBus()
         self.query_bus = QueryBus()
@@ -581,7 +581,7 @@ class CQRSCore:
             logger.error(f"Health check failed: {str(e)}")
             return False
     
-    async def _command_middleware(self, command: Command):
+    async def _command_middleware(self, command -> None: Command) -> None:
         """Default command middleware"""
         # Add correlation ID if not present
         if not command.correlation_id:
@@ -591,7 +591,7 @@ class CQRSCore:
         command.metadata['processed_at'] = datetime.utcnow().isoformat()
         command.metadata['processor'] = 'cqrs_core'
     
-    async def _query_middleware(self, query: Query):
+    async def _query_middleware(self, query -> None: Query) -> None:
         """Default query middleware"""
         # Generate cache key if not present
         if not query.cache_key and query.parameters:
@@ -602,7 +602,7 @@ class CQRSCore:
         query.metadata['processed_at'] = datetime.utcnow().isoformat()
         query.metadata['processor'] = 'cqrs_core'
     
-    async def _command_processor(self):
+    async def _command_processor(self) -> None:
         """Background command processor"""
         while self.is_running:
             try:
@@ -624,7 +624,7 @@ class CQRSCore:
                 logger.error(f"Command processor error: {str(e)}")
                 await asyncio.sleep(1)
     
-    async def _publish_event(self, event_type: str, event_data: Dict[str, Any]):
+    async def _publish_event(self, event_type -> None: str, event_data -> None: Dict[str, Any]) -> None:
         """Publish domain event"""
         try:
             handlers = self.event_handlers.get(event_type, [])
@@ -641,19 +641,19 @@ class CQRSCore:
             logger.error(f"Failed to publish event {event_type}: {str(e)}")
     
     # Public API methods
-    def register_command_handler(self, command_type: str, handler: CommandHandler):
+    def register_command_handler(self, command_type -> None: str, handler -> None: CommandHandler) -> None:
         """Register command handler"""
         self.command_bus.register_handler(command_type, handler)
     
-    def register_query_handler(self, query_type: str, handler: QueryHandler):
+    def register_query_handler(self, query_type -> None: str, handler -> None: QueryHandler) -> None:
         """Register query handler"""
         self.query_bus.register_handler(query_type, handler)
     
-    def register_read_model(self, name: str, read_model: ReadModel):
+    def register_read_model(self, name -> None: str, read_model -> None: ReadModel) -> None:
         """Register read model"""
         self.query_bus.register_read_model(name, read_model)
     
-    def register_event_handler(self, event_type: str, handler: Callable):
+    def register_event_handler(self, event_type -> None: str, handler -> None: Callable) -> None:
         """Register event handler"""
         if event_type not in self.event_handlers:
             self.event_handlers[event_type] = []
@@ -681,7 +681,7 @@ class CQRSCore:
         """Get command execution result"""
         return self.command_bus.get_result(command_id)
     
-    def clear_query_cache(self, pattern: Optional[str] = None):
+    def clear_query_cache(self, pattern -> None: Optional[str] = None) -> None:
         """Clear query cache"""
         self.query_bus.clear_cache(pattern)
     
@@ -741,11 +741,11 @@ async def send_query(query_type: str, parameters: Dict[str, Any],
     )
     return await cqrs_core.send_query(query)
 
-def register_command_handler(command_type: str, handler: CommandHandler):
+def register_command_handler(command_type -> None: str, handler -> None: CommandHandler) -> None:
     """Register command handler"""
     cqrs_core.register_command_handler(command_type, handler)
 
-def register_query_handler(query_type: str, handler: QueryHandler):
+def register_query_handler(query_type -> None: str, handler -> None: QueryHandler) -> None:
     """Register query handler"""
     cqrs_core.register_query_handler(query_type, handler)
 

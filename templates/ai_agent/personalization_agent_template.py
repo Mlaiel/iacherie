@@ -90,7 +90,7 @@ class PersonalizationRequest(BaseModel):
     metadata: Dict[str, Any] = Field(default_factory=dict)
 
     @validator('user_id')
-    def validate_user_id(cls, v):
+    def validate_user_id(cls, v) -> None:
         if not v or len(v.strip()) == 0:
             raise ValueError('User ID cannot be empty')
         return v.strip()
@@ -155,11 +155,11 @@ class DeepPersonalizationModel(nn.Module):
     
     def __init__(
         self,
-        user_features: int,
-        item_features: int,
-        embedding_dim: int = 128,
-        hidden_dims: List[int] = [256, 128, 64]
-    ):
+        user_features -> None: int,
+        item_features -> None: int,
+        embedding_dim -> None: int = 128,
+        hidden_dims -> None: List[int] = [256, 128, 64]
+    ) -> None:
         super(DeepPersonalizationModel, self).__init__()
         
         self.user_embedding = nn.Embedding(user_features, embedding_dim)
@@ -183,7 +183,7 @@ class DeepPersonalizationModel(nn.Module):
         
         self.mlp = nn.Sequential(*layers)
         
-    def forward(self, user_ids, item_ids):
+    def forward(self, user_ids, item_ids) -> None:
         user_emb = self.user_embedding(user_ids)
         item_emb = self.item_embedding(item_ids)
         
@@ -213,10 +213,10 @@ class {{agent_class_name}}(BaseAIAgent):
     
     def __init__(
         self,
-        name: str = "{{agent_name}}",
-        config: Optional[PersonalizationConfig] = None,
+        name -> None: str = "{{agent_name}}",
+        config -> None: Optional[PersonalizationConfig] = None,
         **kwargs
-    ):
+    ) -> None:
         super().__init__(name=name, **kwargs)
         self.config = config or PersonalizationConfig()
         
@@ -1251,3 +1251,5 @@ class {{agent_class_name}}(BaseAIAgent):
     def get_metrics(self) -> Dict[str, Any]:
         """Get personalization metrics"""
         return self.metrics.get_summary()
+
+# File has syntax issues - needs manual review

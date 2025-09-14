@@ -113,7 +113,7 @@ class ModelAccessController:
     - Creator-specific access patterns
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize access controller with enterprise security"""
         self.config = config or {}
         self.audit_logs: List[AuditLog] = []
@@ -323,7 +323,7 @@ class ModelAccessController:
         
         return len(recent_attempts) >= self.max_failed_attempts
 
-    async def record_failed_attempt(self, user_id: str):
+    async def record_failed_attempt(self, user_id -> None: str) -> None:
         """Record failed authentication attempt"""
         if user_id not in self.failed_attempts:
             self.failed_attempts[user_id] = []
@@ -379,8 +379,8 @@ class ModelAccessController:
         
         return True
 
-    async def _log_audit_event(self, action: str, resource: str, result: str, 
-                              user_id: str = "", metadata: Optional[Dict[str, Any]] = None):
+    async def _log_audit_event(self, action -> None: str, resource -> None: str, result -> None: str, 
+                              user_id -> None: str = "", metadata -> None: Optional[Dict[str, Any]] = None) -> None:
         """🔍 SOC 2: Log audit event for compliance"""
         audit_log = AuditLog(
             user_id=user_id,
@@ -435,7 +435,7 @@ class ModelAccessController:
         
         return logs
 
-    async def cleanup_expired_sessions(self):
+    async def cleanup_expired_sessions(self) -> None:
         """Cleanup expired sessions"""
         current_time = datetime.utcnow()
         expired_sessions = [

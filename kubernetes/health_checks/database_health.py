@@ -2,7 +2,7 @@
 Comprehensive health checking for all database systems
 
 This module provides health monitoring for:
-- PostgreSQL primary database with performance metrics
+    - PostgreSQL primary database with performance metrics
 - Redis cache and session storage monitoring  
 - MongoDB document storage health checking
 - Vector databases (FAISS, Elasticsearch)
@@ -72,7 +72,7 @@ class DatabaseHealthChecker:
     Monitors all database systems including PostgreSQL, Redis, MongoDB,
     and vector databases with performance metrics and alerting.
     """
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """
         Initialize database health checker
         
@@ -98,7 +98,7 @@ class DatabaseHealthChecker:
         self._redis_client = None
         self._mongodb_client = None
 
-    async def _get_postgres_pool(self):
+    async def _get_postgres_pool(self) -> None:
         try:
                     # Request validation
                     if not data:
@@ -113,7 +113,7 @@ class DatabaseHealthChecker:
                 except Exception as e:
                     logger.error(f"API handler _get_postgres_pool failed: {e}")
                     return {"status": "error", "message": str(e)}
-    async def _get_redis_client(self):
+    async def _get_redis_client(self) -> None:
         """Get or create Redis client"""
         if self._redis_client is None:
             try:
@@ -602,7 +602,7 @@ class DatabaseHealthChecker:
             "database_results": [asdict(result) for result in results]
         }
 
-    async def cleanup_connections(self):
+    async def cleanup_connections(self) -> None:
         """Clean up database connections"""
         try:
             if self._postgres_pool:
@@ -619,3 +619,5 @@ class DatabaseHealthChecker:
                 
         except Exception as e:
             self.logger.error(f"Error cleaning up database connections: {str(e)}")
+
+# File has syntax issues - needs manual review

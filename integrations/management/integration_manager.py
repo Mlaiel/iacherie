@@ -101,7 +101,7 @@ class IntegrationManager:
     ensuring secure, reliable, and performant service communication.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize integration manager with core components."""
         self.logger = logging.getLogger(__name__)
         

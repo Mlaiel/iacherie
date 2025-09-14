@@ -48,7 +48,7 @@ Revenue creation/tracking request schema."""
     reporting_data: Dict[str, Any] = Field(default_factory=dict)
     
     @validator('revenue_source')
-    def validate_revenue_source(cls, v):
+    def validate_revenue_source(cls, v) -> None:
         """Validate revenue source."""
         allowed_sources = {
             "streaming", "downloads", "licensing", "synchronization", "performance",
@@ -142,7 +142,7 @@ Revenue stream configuration schema."""
     growth_projections: List[Dict[str, Any]] = Field(default_factory=list)
     
     @validator('stream_type')
-    def validate_stream_type(cls, v):
+    def validate_stream_type(cls, v) -> None:
         """Validate stream type."""
         allowed_types = {
             "direct_sales", "subscription", "advertising", "licensing", "royalties",
@@ -239,7 +239,7 @@ class PaymentRecord(UUIDSchema, TimestampSchema):
     tax_reporting_data: Dict[str, Any] = Field(default_factory=dict)
     
     @validator('payment_type')
-    def validate_payment_type(cls, v):
+    def validate_payment_type(cls, v) -> None:
         """Validate payment type."""
         allowed_types = {
             "royalty_payment", "revenue_share", "licensing_fee", "advance_payment",
@@ -292,7 +292,7 @@ class RoyaltyCalculation(UUIDSchema, TimestampSchema):
     dispute_period_end: Optional[datetime] = None
     
     @validator('calculation_method')
-    def validate_calculation_method(cls, v):
+    def validate_calculation_method(cls, v) -> None:
         """Validate calculation method."""
         allowed_methods = {
             "percentage_of_revenue", "per_unit", "tiered_percentage", "minimum_guarantee",
@@ -347,7 +347,7 @@ class MonetizationReport(UUIDSchema, TimestampSchema):
     report_confidence_level: float = Field(ge=0.0, le=1.0, description="Report accuracy confidence")
     
     @validator('report_type')
-    def validate_report_type(cls, v):
+    def validate_report_type(cls, v) -> None:
         """Validate report type."""
         allowed_types = {
             "monthly_summary", "quarterly_analysis", "annual_report", "performance_dashboard",
@@ -411,7 +411,7 @@ class FinancialAnalytics(UUIDSchema, TimestampSchema):
     performance_alerts: List[str] = Field(default_factory=list)
     
     @validator('analytics_type')
-    def validate_analytics_type(cls, v):
+    def validate_analytics_type(cls, v) -> None:
         """Validate analytics type."""
         allowed_types = {
             "revenue_analysis", "profitability_analysis", "portfolio_analysis",

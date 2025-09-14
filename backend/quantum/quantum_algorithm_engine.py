@@ -232,7 +232,7 @@ class QuantumAlgorithmEngine:
     ✅ Métriques performance et quantum advantage
     """
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.config = config or {}
         self.optimization_processors: Dict[OptimizationAlgorithmType, QuantumOptimizationProcessor] = {}
         self.search_processors: Dict[SearchAlgorithmType, QuantumSearchProcessor] = {}
@@ -684,15 +684,16 @@ class QuantumAlgorithmEngine:
     # MÉTHODES PRIVÉES - OPTIMIZATION
     # ========================================
     
-    async def _get_or_create_optimization_processor(self, algorithm_type: OptimizationAlgorithmType):
+    async def _get_or_create_optimization_processor(self, algorithm_type -> None: OptimizationAlgorithmType) -> None:
         """Récupération ou création processeur optimisation"""
         if algorithm_type not in self.optimization_processors:
             self.optimization_processors[algorithm_type] = await self._create_optimization_processor(algorithm_type)
         return self.optimization_processors[algorithm_type]
     
-    async def _create_optimization_processor(self, algorithm_type: OptimizationAlgorithmType):
+    async def _create_optimization_processor(self, algorithm_type -> None: OptimizationAlgorithmType) -> None:
         """Création processeur optimisation"""
         class MockOptimizationProcessor(QuantumOptimizationProcessor):
+    """MockOptimizationProcessor class implementation"""
             async def optimize_problem(self, problem: Dict[str, Any], alg_type: OptimizationAlgorithmType) -> Dict[str, Any]:
                 return {
                     "optimal_solution": np.random.random(10).tolist(),
@@ -787,15 +788,16 @@ class QuantumAlgorithmEngine:
     # MÉTHODES PRIVÉES - SEARCH
     # ========================================
     
-    async def _get_or_create_search_processor(self, algorithm_type: SearchAlgorithmType):
+    async def _get_or_create_search_processor(self, algorithm_type -> None: SearchAlgorithmType) -> None:
         """Récupération ou création processeur recherche"""
         if algorithm_type not in self.search_processors:
             self.search_processors[algorithm_type] = await self._create_search_processor(algorithm_type)
         return self.search_processors[algorithm_type]
     
-    async def _create_search_processor(self, algorithm_type: SearchAlgorithmType):
+    async def _create_search_processor(self, algorithm_type -> None: SearchAlgorithmType) -> None:
         """Création processeur recherche"""
         class MockSearchProcessor(QuantumSearchProcessor):
+    """MockSearchProcessor class implementation"""
             async def search_database(self, database: Dict[str, Any], query: Dict[str, Any], alg_type: SearchAlgorithmType) -> Dict[str, Any]:
                 items = database.get("items", [])
                 matches = items[:min(5, len(items))]  # Simulation de résultats
@@ -905,15 +907,16 @@ class QuantumAlgorithmEngine:
     # MÉTHODES PRIVÉES - CONTENT PROCESSING
     # ========================================
     
-    async def _get_or_create_content_processor(self, processing_type: ContentProcessingType):
+    async def _get_or_create_content_processor(self, processing_type -> None: ContentProcessingType) -> None:
         """Récupération ou création processeur contenu"""
         if processing_type not in self.content_processors:
             self.content_processors[processing_type] = await self._create_content_processor(processing_type)
         return self.content_processors[processing_type]
     
-    async def _create_content_processor(self, processing_type: ContentProcessingType):
+    async def _create_content_processor(self, processing_type -> None: ContentProcessingType) -> None:
         """Création processeur contenu"""
         class MockContentProcessor(ContentProcessingProcessor):
+    """MockContentProcessor class implementation"""
             async def process_content(self, content: Dict[str, Any], proc_type: ContentProcessingType) -> Dict[str, Any]:
                 return {
                     "processed_content": content.copy(),
@@ -1005,15 +1008,16 @@ class QuantumAlgorithmEngine:
     # MÉTHODES PRIVÉES - ENGAGEMENT PREDICTION
     # ========================================
     
-    async def _get_or_create_engagement_processor(self, prediction_type: EngagementPredictionType):
+    async def _get_or_create_engagement_processor(self, prediction_type -> None: EngagementPredictionType) -> None:
         """Récupération ou création processeur prédiction"""
         if prediction_type not in self.engagement_processors:
             self.engagement_processors[prediction_type] = await self._create_engagement_processor(prediction_type)
         return self.engagement_processors[prediction_type]
     
-    async def _create_engagement_processor(self, prediction_type: EngagementPredictionType):
+    async def _create_engagement_processor(self, prediction_type -> None: EngagementPredictionType) -> None:
         """Création processeur prédiction"""
         class MockEngagementProcessor(EngagementPredictionProcessor):
+    """MockEngagementProcessor class implementation"""
             async def predict_engagement(self, content_data: Dict[str, Any], pred_type: EngagementPredictionType) -> Dict[str, Any]:
                 return {
                     "engagement_score": np.random.uniform(0.7, 0.95),

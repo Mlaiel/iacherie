@@ -1,3 +1,9 @@
+"""
+Leaderboard Updates module
+Enterprise implementation for Ainflue platform
+"""
+
 # Gamification Engine: leaderboard_updates.py
 class LeaderboardUpdatesEngine: 
-    def __init__(self, config=None): pass
+    """LeaderboardUpdatesEngine: class implementation"""
+    def __init__(self, config=None) -> None: pass

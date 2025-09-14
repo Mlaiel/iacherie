@@ -105,7 +105,7 @@ class AuditTrailGenerator:
     - Anomaly detection in audit logs
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize audit trail generator.
         
         Args:
@@ -135,7 +135,7 @@ class AuditTrailGenerator:
         
         self.logger.info("🛡️ Audit Trail Generator initialized successfully")
     
-    def _initialize_storage(self):
+    def _initialize_storage(self) -> None:
         """Initialize audit storage infrastructure."""
         self.storage_path.mkdir(parents=True, exist_ok=True)
         
@@ -148,7 +148,7 @@ class AuditTrailGenerator:
         (self.storage_path / "compliance_reports").mkdir(exist_ok=True)
         (self.storage_path / "evidence").mkdir(exist_ok=True)
     
-    def _create_audit_tables(self):
+    def _create_audit_tables(self) -> None:
         """Create SQLite tables for audit storage."""
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()
@@ -209,7 +209,7 @@ class AuditTrailGenerator:
         conn.commit()
         conn.close()
     
-    def _initialize_encryption(self):
+    def _initialize_encryption(self) -> None:
         """Initialize encryption for sensitive audit data."""
         if not self.encryption_enabled:
             self.cipher_suite = None
@@ -241,7 +241,7 @@ class AuditTrailGenerator:
         self.cipher_suite = Fernet(key)
         self.logger.info("🔐 Audit encryption initialized")
     
-    def _initialize_compliance_controls(self):
+    def _initialize_compliance_controls(self) -> None:
         """Initialize SOC 2 and other compliance controls."""
         soc2_controls = [
             ComplianceControl(
@@ -495,7 +495,7 @@ class AuditTrailGenerator:
         event_string = json.dumps(event_data, sort_keys=True)
         return hashlib.sha256(event_string.encode()).hexdigest()
     
-    async def _store_audit_event(self, event: AuditEvent):
+    async def _store_audit_event(self, event -> None: AuditEvent) -> None:
         """Store audit event in persistent storage."""
         # Store in SQLite database
         conn = sqlite3.connect(self.db_path)
@@ -532,7 +532,7 @@ class AuditTrailGenerator:
         if self.encryption_enabled:
             await self._store_encrypted_log(event)
     
-    async def _store_encrypted_log(self, event: AuditEvent):
+    async def _store_encrypted_log(self, event -> None: AuditEvent) -> None:
         """Store encrypted audit log for long-term retention."""
         date_str = event.timestamp.strftime('%Y-%m-%d')
         log_file = self.storage_path / "daily_logs" / f"audit_{date_str}.log"
@@ -554,7 +554,7 @@ class AuditTrailGenerator:
         with open(log_file, 'a') as f:
             f.write(log_line)
     
-    async def _process_real_time_monitoring(self, event: AuditEvent):
+    async def _process_real_time_monitoring(self, event -> None: AuditEvent) -> None:
         """Process real-time monitoring for security incidents."""
         # Check for security incidents
         if event.severity in [AuditSeverity.CRITICAL, AuditSeverity.ERROR]:
@@ -567,7 +567,7 @@ class AuditTrailGenerator:
         # Anomaly detection
         await self._detect_anomalies(event)
     
-    async def _handle_security_incident(self, event: AuditEvent):
+    async def _handle_security_incident(self, event -> None: AuditEvent) -> None:
         """Handle potential security incident."""
         incident_id = f"SI_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}_{hash(event.event_id) % 10000:04d}"
         
@@ -610,7 +610,7 @@ class AuditTrailGenerator:
         
         self.logger.warning(f"🚨 Security incident created: {incident_id}")
     
-    async def _handle_compliance_violation(self, event: AuditEvent):
+    async def _handle_compliance_violation(self, event -> None: AuditEvent) -> None:
         """Handle potential compliance violation."""
         for tag in event.compliance_tags:
             if tag in self.compliance_controls:
@@ -620,7 +620,7 @@ class AuditTrailGenerator:
                 
                 self.logger.warning(f"⚠️ Compliance control {tag} requires review due to event {event.event_id}")
     
-    async def _detect_anomalies(self, event: AuditEvent):
+    async def _detect_anomalies(self, event -> None: AuditEvent) -> None:
         """Detect anomalies in audit patterns."""
         # Simple anomaly detection based on recent events
         recent_events = [
@@ -637,7 +637,7 @@ class AuditTrailGenerator:
         if len(admin_actions) > 5:
             await self._create_anomaly_alert("potential_privilege_escalation", event, admin_actions)
     
-    async def _create_anomaly_alert(self, anomaly_type: str, event: AuditEvent, related_events: List[AuditEvent]):
+    async def _create_anomaly_alert(self, anomaly_type -> None: str, event -> None: AuditEvent, related_events -> None: List[AuditEvent]) -> None:
         """Create anomaly alert for investigation."""
         alert = {
             'alert_id': f"AA_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}_{hash(event.event_id) % 1000:03d}",
@@ -1014,7 +1014,7 @@ class AuditTrailGenerator:
 
 
 # Example usage and testing
-async def main():
+async def main() -> None:
     """Test audit trail generator functionality."""
     # Initialize audit trail generator
     config = {

@@ -95,7 +95,7 @@ class FeatureOptimizer:
     - Automated feature testing
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.feature_databases = {}
         self.optimization_models = {}
         self.impact_predictors = {}
@@ -105,7 +105,7 @@ class FeatureOptimizer:
         # Initialize platform feature databases
         self._initialize_platform_features()
         
-    def _initialize_platform_features(self):
+    def _initialize_platform_features(self) -> None:
         """Initialize comprehensive platform feature databases"""
         self.platform_features = {
             'youtube': {

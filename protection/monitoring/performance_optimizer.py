@@ -40,14 +40,15 @@ except ImportError:
     NUMPY_AVAILABLE = False
     # Simple numpy fallback for basic operations
     class NumpyFallback:
-        def mean(self, data):
+    """NumpyFallback: class implementation"""
+        def mean(self, data) -> None:
             return sum(data) / len(data) if data else 0
-        def std(self, data):
+        def std(self, data) -> None:
             if not data:
                 return 0
             mean_val = self.mean(data)
             return (sum((x - mean_val) ** 2 for x in data) / len(data)) ** 0.5
-        def array(self, data):
+        def array(self, data) -> None:
             return data
     np = NumpyFallback()
 from typing import Dict, List, Optional, Any, Tuple, Set
@@ -74,10 +75,11 @@ try:
 except ImportError:
     PYDANTIC_AVAILABLE = False
     class BaseModel:
-        def __init__(self, **kwargs):
+    """BaseModel: class implementation"""
+        def __init__(self, **kwargs) -> None:
             for key, value in kwargs.items():
                 setattr(self, key, value)
-    def Field(*args, **kwargs):
+    def Field(*args, **kwargs) -> None:
         return None
 
 # Optional sklearn imports with fallbacks
@@ -90,14 +92,17 @@ except ImportError:
     SKLEARN_AVAILABLE = False
     # Simple fallback classes
     class RandomForestRegressor:
-        def fit(self, X, y): pass
-        def predict(self, X): return [0] * len(X)
+    """RandomForestRegressor: class implementation"""
+        def fit(self, X, y) -> None: pass
+        def predict(self, X) -> None: return [0] * len(X)
     class KMeans:
-        def fit(self, X): pass
-        def predict(self, X): return [0] * len(X)
+    """KMeans: class implementation"""
+        def fit(self, X) -> None: pass
+        def predict(self, X) -> None: return [0] * len(X)
     class StandardScaler:
-        def fit(self, X): pass
-        def transform(self, X): return X
+    """StandardScaler: class implementation"""
+        def fit(self, X) -> None: pass
+        def transform(self, X) -> None: return X
 
 logger = logging.getLogger(__name__)
 
@@ -209,10 +214,10 @@ class PerformanceOptimizer:
     
     def __init__(
         self,
-        config: Dict[str, Any],
-        redis_client: Optional[aioredis.Redis] = None,
-        db_session: Optional[AsyncSession] = None
-    ):
+        config -> None: Dict[str, Any],
+        redis_client -> None: Optional[aioredis.Redis] = None,
+        db_session -> None: Optional[AsyncSession] = None
+    ) -> None:
         """
         Initialize the performance optimizer.
         
@@ -880,7 +885,7 @@ class PerformanceOptimizer:
     async def _setup_auto_optimization(self) -> None:
         """Set up automatic optimization scheduler."""
         try:
-            async def auto_optimization_loop():
+            async def auto_optimization_loop() -> None:
                 try:
                     logger.info(f"Executing auto_optimization_loop")
                     
@@ -1526,7 +1531,7 @@ class PerformanceOptimizer:
     ) -> List[OptimizationRecommendation]:
         """
 Rank recommendations using heuristic approach."""
-        def recommendation_score(rec):
+        def recommendation_score(rec) -> None:
             priority_weight = {"critical": 4, "high": 3, "medium": 2, "low": 1}
             effort_weight = {"low": 3, "medium": 2, "high": 1}
             risk_weight = {"low": 3, "medium": 2, "high": 1}
@@ -2021,10 +2026,10 @@ class PerformanceOptimizer:
     
     def __init__(
         self,
-        config: Dict[str, Any],
-        redis_client: Optional[aioredis.Redis] = None,
-        db_session: Optional[AsyncSession] = None
-    ):
+        config -> None: Dict[str, Any],
+        redis_client -> None: Optional[aioredis.Redis] = None,
+        db_session -> None: Optional[AsyncSession] = None
+    ) -> None:
         """
 Initialize performance optimizer."""
         self.config = config

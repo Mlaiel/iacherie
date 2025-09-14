@@ -1,4 +1,6 @@
 """
+import asyncio
+
 🗄️ DATA SERVICES MODULE - ENTERPRISE DATA MANAGEMENT SERVICES
 ==============================================================
 
@@ -21,7 +23,7 @@ __all__ = [
     'DataBackupService'
 ]
 
-def get_services():
+def get_services() -> None:
     """Get list of all available data services."""
     return [
         'data_governance_service.py',
@@ -36,6 +38,6 @@ def get_services():
         'data_backup_service.py'
     ]
 
-async def start_services():
+async def start_services() -> None:
     """Start all data services."""
     pass

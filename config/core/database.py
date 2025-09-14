@@ -229,20 +229,21 @@ class DatabaseSettings(BaseSettings):
         }
     
     class Config:
+    """Config: class implementation"""
         env_file = ".env"
         extra = "allow"
 
 class EnterpriseDatabase:
     """Enterprise database management system"""
     
-    def __init__(self, settings: Optional[DatabaseSettings] = None):
+    def __init__(self, settings -> None: Optional[DatabaseSettings] = None) -> None:
         self.settings = settings or DatabaseSettings()
         self.clusters: Dict[str, DatabaseCluster] = {}
         self.performance_metrics: Dict[str, Any] = {}
         self.health_status: Dict[str, bool] = {}
         self._initialize_clusters()
     
-    def _initialize_clusters(self):
+    def _initialize_clusters(self) -> None:
         """Initialize database clusters"""
         # Primary cluster
         self.clusters["primary"] = DatabaseCluster(
@@ -423,7 +424,7 @@ db_settings = DatabaseSettings()
 class DatabaseConfiguration:
     """Database configuration manager for Ainflue platform"""
     
-    def __init__(self, level: str = "enterprise"):
+    def __init__(self, level -> None: str = "enterprise") -> None:
         self.level = level
         self.settings = db_settings
         

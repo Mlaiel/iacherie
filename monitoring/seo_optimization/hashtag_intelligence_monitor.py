@@ -117,7 +117,7 @@ class HashtagIntelligenceMonitor:
     recommendations across all major social media platforms.
     """
     
-    def __init__(self, config: Optional[Dict] = None):
+    def __init__(self, config -> None: Optional[Dict] = None) -> None:
         """Initialize the hashtag intelligence monitor."""
         self.config = config or {}
         
@@ -139,7 +139,7 @@ class HashtagIntelligenceMonitor:
         
         logger.info("HashtagIntelligenceMonitor initialized")
     
-    async def start_monitoring(self):
+    async def start_monitoring(self) -> None:
         """Start the hashtag intelligence monitoring system."""
         try:
             logger.info("Starting hashtag intelligence monitoring...")
@@ -409,7 +409,7 @@ class HashtagIntelligenceMonitor:
     
     # Private helper methods
     
-    async def _initialize_ai_models(self):
+    async def _initialize_ai_models(self) -> None:
         """Initialize AI models for hashtag intelligence."""
         for platform in Platform:
             self.trend_prediction_models[platform] = {
@@ -432,7 +432,7 @@ class HashtagIntelligenceMonitor:
         
         logger.info("AI models initialized for hashtag intelligence")
     
-    async def _load_historical_data(self):
+    async def _load_historical_data(self) -> None:
         """Load historical hashtag data."""
         # Placeholder for loading historical data from database
         logger.info("Historical hashtag data loaded")
@@ -514,7 +514,7 @@ class HashtagIntelligenceMonitor:
     
     # Background monitoring loops
     
-    async def _trend_monitoring_loop(self):
+    async def _trend_monitoring_loop(self) -> None:
         """Background loop for trend monitoring."""
         while True:
             try:
@@ -526,7 +526,7 @@ class HashtagIntelligenceMonitor:
                 logger.error(f"Error in trend monitoring loop: {e}")
                 await asyncio.sleep(60)
     
-    async def _engagement_analysis_loop(self):
+    async def _engagement_analysis_loop(self) -> None:
         """Background loop for engagement analysis."""
         while True:
             try:
@@ -537,7 +537,7 @@ class HashtagIntelligenceMonitor:
                 logger.error(f"Error in engagement analysis loop: {e}")
                 await asyncio.sleep(300)
     
-    async def _competitor_hashtag_tracking_loop(self):
+    async def _competitor_hashtag_tracking_loop(self) -> None:
         """Background loop for competitor hashtag tracking."""
         while True:
             try:
@@ -548,7 +548,7 @@ class HashtagIntelligenceMonitor:
                 logger.error(f"Error in competitor hashtag tracking loop: {e}")
                 await asyncio.sleep(600)
     
-    async def _viral_detection_loop(self):
+    async def _viral_detection_loop(self) -> None:
         """Background loop for viral hashtag detection."""
         while True:
             try:
@@ -663,7 +663,7 @@ class HashtagIntelligenceMonitor:
     
     # Background task implementations
     
-    async def _update_platform_trends(self, platform: Platform):
+    async def _update_platform_trends(self, platform -> None: Platform) -> None:
         """Update trends for a specific platform."""
         try:
             # Fetch trending hashtags for the platform
@@ -695,7 +695,7 @@ class HashtagIntelligenceMonitor:
             logger.error(f"Error updating platform trends for {platform.value}: {e}")
             raise
     
-    async def _analyze_engagement_patterns(self):
+    async def _analyze_engagement_patterns(self) -> None:
         """Analyze engagement patterns across hashtags."""
         try:
             # Get hashtag performance data
@@ -742,7 +742,7 @@ class HashtagIntelligenceMonitor:
             logger.error(f"Error analyzing engagement patterns: {e}")
             raise
     
-    async def _track_competitor_hashtags(self):
+    async def _track_competitor_hashtags(self) -> None:
         """Track competitor hashtag usage."""
         try:
             # Get competitor list
@@ -796,7 +796,7 @@ class HashtagIntelligenceMonitor:
             logger.error(f"Error tracking competitor hashtags: {e}")
             raise
     
-    async def _detect_viral_hashtags(self):
+    async def _detect_viral_hashtags(self) -> None:
         """Detect viral hashtags."""
         try:
             # Collect recent hashtag performance data

@@ -91,7 +91,7 @@ class KeywordStrategy:
 class KeywordResearchWorkflow:
     """Advanced keyword research workflow with AI-powered analysis."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the keyword research workflow."""
         self.keyword_databases = {
             "google": self._google_keyword_api,

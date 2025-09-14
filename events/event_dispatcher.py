@@ -114,7 +114,7 @@ class QueuedEvent:
     queued_at: datetime = field(default_factory=datetime.utcnow)
     attempts: int = 0
     
-    def __lt__(self, other):
+    def __lt__(self, other) -> None:
         """For priority queue ordering"""
         return self.priority > other.priority  # Higher priority first
 
@@ -123,11 +123,11 @@ class EventDispatcher:
     """Intelligent event dispatcher with advanced routing"""
     
     def __init__(self,
-                 mode: DispatchMode = DispatchMode.LOAD_BALANCED,
-                 max_queue_size: int = 10000,
-                 max_retries: int = 3,
-                 circuit_failure_threshold: int = 5,
-                 circuit_timeout: int = 60):
+                 mode -> None: DispatchMode = DispatchMode.LOAD_BALANCED,
+                 max_queue_size -> None: int = 10000,
+                 max_retries -> None: int = 3,
+                 circuit_failure_threshold -> None: int = 5,
+                 circuit_timeout -> None: int = 60) -> None:
         """Initialize event dispatcher
         
         Args:

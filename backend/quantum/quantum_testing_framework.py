@@ -238,7 +238,7 @@ class QuantumTestingFramework:
     ✅ Quantum-specific assertions
     """
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.config = config or {}
         
         # État du framework
@@ -268,7 +268,7 @@ class QuantumTestingFramework:
         
         logger.info("🧪 Quantum Testing Framework initialized")
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialisation complète framework"""
         try:
             # Initialisation environnement quantique
@@ -338,15 +338,15 @@ class QuantumTestingFramework:
     
     @staticmethod
     def test_case(
-        test_name: str,
-        test_type: TestType = TestType.UNIT,
-        priority: TestPriority = TestPriority.NORMAL,
-        timeout: int = 30,
-        quantum_specific: bool = False,
+        test_name -> None: str,
+        test_type -> None: TestType = TestType.UNIT,
+        priority -> None: TestPriority = TestPriority.NORMAL,
+        timeout -> None: int = 30,
+        quantum_specific -> None: bool = False,
         **kwargs
-    ):
+    ) -> None:
         """Décorateur pour enregistrement automatique test case"""
-        def decorator(func):
+        def decorator(func) -> None:
             test_id = kwargs.get("test_id", f"test_{func.__name__}_{uuid.uuid4().hex[:8]}")
             
             test_case = TestCase(
@@ -364,7 +364,7 @@ class QuantumTestingFramework:
             func._quantum_test_case = test_case
             
             @wraps(func)
-            async def wrapper(*args, **kwargs):
+            async def wrapper(*args, **kwargs) -> None:
                 return await func(*args, **kwargs)
             
             return wrapper
@@ -677,14 +677,14 @@ class QuantumTestingFramework:
     # ASSERTIONS QUANTIQUES
     # ========================================
     
-    def assert_quantum_fidelity(self, actual_fidelity: float, expected_fidelity: float, tolerance: float = 0.05):
+    def assert_quantum_fidelity(self, actual_fidelity -> None: float, expected_fidelity -> None: float, tolerance -> None: float = 0.05) -> None:
         """Assertion fidélité quantique"""
         if abs(actual_fidelity - expected_fidelity) > tolerance:
             raise AssertionError(
                 f"Quantum fidelity assertion failed: {actual_fidelity:.3f} not within {tolerance} of {expected_fidelity:.3f}"
             )
     
-    def assert_quantum_advantage(self, quantum_result: Any, classical_result: Any, min_advantage: float = 1.5):
+    def assert_quantum_advantage(self, quantum_result -> None: Any, classical_result -> None: Any, min_advantage -> None: float = 1.5) -> None:
         """Assertion avantage quantique"""
         # Simulation calcul avantage
         quantum_performance = getattr(quantum_result, 'performance_score', 1.0)
@@ -697,7 +697,7 @@ class QuantumTestingFramework:
                 f"Quantum advantage assertion failed: {advantage:.2f}x < required {min_advantage}x"
             )
     
-    def assert_entanglement_measure(self, state: Any, min_entanglement: float = 0.5):
+    def assert_entanglement_measure(self, state -> None: Any, min_entanglement -> None: float = 0.5) -> None:
         """Assertion mesure intrication"""
         # Simulation mesure intrication
         entanglement = getattr(state, 'entanglement_measure', np.random.random())
@@ -707,7 +707,7 @@ class QuantumTestingFramework:
                 f"Entanglement assertion failed: {entanglement:.3f} < required {min_entanglement:.3f}"
             )
     
-    def assert_coherence_time(self, measured_time: float, required_time: float):
+    def assert_coherence_time(self, measured_time -> None: float, required_time -> None: float) -> None:
         """Assertion temps de cohérence"""
         if measured_time < required_time:
             raise AssertionError(
@@ -959,13 +959,13 @@ def create_mock_quantum_service(
     )
 
 # Assertions quantiques globales
-def assert_quantum_state_valid(quantum_state: Any):
+def assert_quantum_state_valid(quantum_state -> None: Any) -> None:
     """Assertion état quantique valide"""
     # Simulation validation état quantique
     if not hasattr(quantum_state, 'amplitude') or quantum_state.amplitude < 0:
         raise AssertionError("Invalid quantum state: amplitude must be non-negative")
 
-def assert_quantum_gate_fidelity(gate_result: Any, expected_fidelity: float = 0.99):
+def assert_quantum_gate_fidelity(gate_result -> None: Any, expected_fidelity -> None: float = 0.99) -> None:
     """Assertion fidélité porte quantique"""
     actual_fidelity = getattr(gate_result, 'fidelity', 0.95)  # Simulation
     if actual_fidelity < expected_fidelity:

@@ -165,7 +165,7 @@ class CrossPlatformStrategy:
 class AIDistributionEngine:
     """Core AI-powered distribution intelligence engine."""
     
-    def __init__(self, intelligence_level: IntelligenceLevel = IntelligenceLevel.ADVANCED):
+    def __init__(self, intelligence_level -> None: IntelligenceLevel = IntelligenceLevel.ADVANCED) -> None:
         self.intelligence_level = intelligence_level
         self.logger = logging.getLogger(f"{__name__}.AIDistributionEngine")
         
@@ -206,7 +206,7 @@ class AIDistributionEngine:
             self.logger.error(f"Failed to initialize AI distribution engine: {e}")
             return False
     
-    async def _initialize_prediction_models(self):
+    async def _initialize_prediction_models(self) -> None:
         """Initialize AI prediction models."""
         base_model = {
             "version": "1.0",
@@ -233,7 +233,7 @@ class AIDistributionEngine:
                     "historical_performance", "seasonal_trends", "geographic_factors"
                 ]
     
-    async def _load_historical_data(self):
+    async def _load_historical_data(self) -> None:
         """Load historical performance data for AI training."""
         # Simulate loading historical data
         # In production, this would load from databases, APIs, etc.
@@ -253,7 +253,7 @@ class AIDistributionEngine:
         self.content_performance_history = sample_data
         self.logger.info(f"Loaded {len(sample_data)} historical performance records")
     
-    async def _initialize_audience_segments(self):
+    async def _initialize_audience_segments(self) -> None:
         """Initialize audience segmentation data."""
         # Create sample audience segments
         segments = [
@@ -294,7 +294,7 @@ class AIDistributionEngine:
         for segment in segments:
             self.audience_segments[segment.segment_id] = segment
     
-    async def _setup_data_feeds(self):
+    async def _setup_data_feeds(self) -> None:
         """Setup real-time data feeds for AI processing."""
         # Simulate trending data feed
         self.trending_data = {
@@ -974,7 +974,7 @@ class AIDistributionEngine:
         
         return suggestions
     
-    async def cleanup(self):
+    async def cleanup(self) -> None:
         """Cleanup resources."""
         self.prediction_models.clear()
         self.audience_segments.clear()

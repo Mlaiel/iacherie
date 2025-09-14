@@ -1,5 +1,7 @@
 """CCPA Compliance Module - California Consumer Privacy Act
 
+import asyncio
+
 Enterprise CCPA compliance management for California consumer privacy rights.
 Provides automated CCPA compliance, consumer rights management, and privacy controls.
 
@@ -95,7 +97,7 @@ class CCPACompliance:
     Provides comprehensive CCPA compliance services for California consumers.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.logger = logger
         self.config = config or {}
         
@@ -112,7 +114,7 @@ class CCPACompliance:
         # Initialize personal information categories
         self._initialize_personal_info_categories()
     
-    def _initialize_personal_info_categories(self):
+    def _initialize_personal_info_categories(self) -> None:
         """Initialize personal information categories and their handling"""
         self.personal_info_categories = {
             PersonalInfoCategory.IDENTIFIERS: PersonalInfoDisclosure(
@@ -411,17 +413,17 @@ class CCPACompliance:
         
         return deletion_log
 
-    async def _notify_third_parties_deletion(self, consumer_id: int):
+    async def _notify_third_parties_deletion(self, consumer_id -> None: int) -> None:
         """Notify third parties about consumer data deletion"""
         # Placeholder for third-party notifications
         self.logger.info(f"Notifying third parties about deletion for consumer {consumer_id}")
 
-    async def _stop_sale_sharing(self, consumer_id: int):
+    async def _stop_sale_sharing(self, consumer_id -> None: int) -> None:
         """Stop sale/sharing of consumer's personal information"""
         # Placeholder for stopping sale/sharing mechanisms
         self.logger.info(f"Stopping sale/sharing for consumer {consumer_id}")
 
-    async def _notify_partners_opt_out(self, consumer_id: int):
+    async def _notify_partners_opt_out(self, consumer_id -> None: int) -> None:
         """Notify partners about consumer opt-out"""
         # Placeholder for partner notifications
         self.logger.info(f"Notifying partners about opt-out for consumer {consumer_id}")

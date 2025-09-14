@@ -48,7 +48,7 @@ class AuthenticationMethod(str, Enum):
 class SecurityCoreConfiguration:
     """Core security configuration"""
     
-    def __init__(self, level: SecurityLevel = SecurityLevel.ENTERPRISE):
+    def __init__(self, level -> None: SecurityLevel = SecurityLevel.ENTERPRISE) -> None:
         self.level = level
         self.encryption_config = self._get_encryption_config()
         self.authentication_config = self._get_authentication_config()

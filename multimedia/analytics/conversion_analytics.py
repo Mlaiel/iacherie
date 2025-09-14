@@ -72,7 +72,7 @@ class ConversionRecord:
     # Configuration
     conversion_settings: Dict[str, Any] = field(default_factory=dict)
     
-    def finalize(self):
+    def finalize(self) -> None:
         """Finalize conversion record"""
         if self.end_time and self.start_time:
             self.duration = (self.end_time - self.start_time).total_seconds()
@@ -129,7 +129,7 @@ class ConversionAnalytics:
 class ConversionTracker:
     """Main conversion tracking system"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.logger = logger.getChild(self.__class__.__name__)
         
@@ -176,9 +176,9 @@ class ConversionTracker:
             self.logger.error(f"Failed to start conversion tracking: {e}")
             raise
     
-    async def update_conversion_progress(self, conversion_id: str, 
-                                       status: ConversionStatus,
-                                       progress_data: Optional[Dict[str, Any]] = None):
+    async def update_conversion_progress(self, conversion_id -> None: str, 
+                                       status -> None: ConversionStatus,
+                                       progress_data -> None: Optional[Dict[str, Any]] = None) -> None:
         """Update conversion progress"""
         try:
             if conversion_id not in self.conversion_records:
@@ -208,8 +208,8 @@ class ConversionTracker:
         except Exception as e:
             self.logger.error(f"Failed to update conversion progress: {e}")
     
-    async def _finalize_conversion(self, record: ConversionRecord, status: ConversionStatus,
-                                 completion_data: Optional[Dict[str, Any]] = None):
+    async def _finalize_conversion(self, record -> None: ConversionRecord, status -> None: ConversionStatus,
+                                 completion_data -> None: Optional[Dict[str, Any]] = None) -> None:
         """Finalize conversion tracking"""
         try:
             record.end_time = datetime.now()
@@ -253,7 +253,7 @@ class ConversionTracker:
         """Detect file format from extension"""
         return Path(file_path).suffix.lower().lstrip('.')
     
-    async def _analyze_source_file(self, record: ConversionRecord):
+    async def _analyze_source_file(self, record -> None: ConversionRecord) -> None:
         """Analyze source file properties"""
         try:
             file_path = Path(record.source_file_path)
@@ -268,7 +268,7 @@ class ConversionTracker:
         except Exception as e:
             self.logger.error(f"Source file analysis failed: {e}")
     
-    async def _analyze_target_file(self, record: ConversionRecord):
+    async def _analyze_target_file(self, record -> None: ConversionRecord) -> None:
         """Analyze target file properties"""
         try:
             if not record.target_file_path:
@@ -285,7 +285,7 @@ class ConversionTracker:
         except Exception as e:
             self.logger.error(f"Target file analysis failed: {e}")
     
-    async def _update_performance_history(self, record: ConversionRecord):
+    async def _update_performance_history(self, record -> None: ConversionRecord) -> None:
         """Update performance tracking history"""
         try:
             if record.duration and record.source_size:
@@ -345,8 +345,8 @@ class ConversionTracker:
             self.logger.error(f"Conversion analytics calculation failed: {e}")
             return ConversionAnalytics(analysis_period=(start_time, end_time))
     
-    async def _calculate_volume_metrics(self, conversions: List[ConversionRecord],
-                                      analytics: ConversionAnalytics):
+    async def _calculate_volume_metrics(self, conversions -> None: List[ConversionRecord],
+                                      analytics -> None: ConversionAnalytics) -> None:
         """Calculate volume-based metrics"""
         try:
             analytics.total_conversions = len(conversions)
@@ -361,8 +361,8 @@ class ConversionTracker:
         except Exception as e:
             self.logger.error(f"Volume metrics calculation failed: {e}")
     
-    async def _calculate_performance_metrics(self, conversions: List[ConversionRecord],
-                                           analytics: ConversionAnalytics):
+    async def _calculate_performance_metrics(self, conversions -> None: List[ConversionRecord],
+                                           analytics -> None: ConversionAnalytics) -> None:
         """Calculate performance metrics"""
         try:
             successful_conversions = [
@@ -391,8 +391,8 @@ class ConversionTracker:
         except Exception as e:
             self.logger.error(f"Performance metrics calculation failed: {e}")
     
-    async def _calculate_quality_metrics(self, conversions: List[ConversionRecord],
-                                       analytics: ConversionAnalytics):
+    async def _calculate_quality_metrics(self, conversions -> None: List[ConversionRecord],
+                                       analytics -> None: ConversionAnalytics) -> None:
         """Calculate quality-related metrics"""
         try:
             successful_conversions = [
@@ -418,8 +418,8 @@ class ConversionTracker:
         except Exception as e:
             self.logger.error(f"Quality metrics calculation failed: {e}")
     
-    async def _calculate_resource_metrics(self, conversions: List[ConversionRecord],
-                                        analytics: ConversionAnalytics):
+    async def _calculate_resource_metrics(self, conversions -> None: List[ConversionRecord],
+                                        analytics -> None: ConversionAnalytics) -> None:
         """Calculate resource utilization metrics"""
         try:
             # CPU usage
@@ -440,8 +440,8 @@ class ConversionTracker:
         except Exception as e:
             self.logger.error(f"Resource metrics calculation failed: {e}")
     
-    async def _calculate_size_metrics(self, conversions: List[ConversionRecord],
-                                    analytics: ConversionAnalytics):
+    async def _calculate_size_metrics(self, conversions -> None: List[ConversionRecord],
+                                    analytics -> None: ConversionAnalytics) -> None:
         """Calculate file size metrics"""
         try:
             successful_conversions = [
@@ -468,8 +468,8 @@ class ConversionTracker:
         except Exception as e:
             self.logger.error(f"Size metrics calculation failed: {e}")
     
-    async def _calculate_trends(self, conversions: List[ConversionRecord],
-                              analytics: ConversionAnalytics):
+    async def _calculate_trends(self, conversions -> None: List[ConversionRecord],
+                              analytics -> None: ConversionAnalytics) -> None:
         """Calculate trend analysis"""
         try:
             # Group conversions by hour
@@ -498,8 +498,8 @@ class ConversionTracker:
         except Exception as e:
             self.logger.error(f"Trend calculation failed: {e}")
     
-    async def _generate_optimization_insights(self, conversions: List[ConversionRecord],
-                                            analytics: ConversionAnalytics):
+    async def _generate_optimization_insights(self, conversions -> None: List[ConversionRecord],
+                                            analytics -> None: ConversionAnalytics) -> None:
         """Generate optimization recommendations"""
         try:
             recommendations = []
@@ -562,7 +562,7 @@ class ConversionTracker:
 class FormatAnalyzer:
     """Format-specific conversion analysis"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.logger = logger.getChild(self.__class__.__name__)
         
@@ -695,7 +695,7 @@ class FormatAnalyzer:
 class CompressionAnalytics:
     """Compression-specific analytics"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.logger = logger.getChild(self.__class__.__name__)
     

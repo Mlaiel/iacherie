@@ -30,7 +30,7 @@ MONETIZATION_CONFIG = {
     'optimization_algorithms': ['ml_pricing', 'ab_testing', 'cohort_analysis', 'elasticity']
 }
 
-def get_monetization_manager():
+def get_monetization_manager() -> None:
     """Factory pour créer le gestionnaire principal de monétisation."""
     return {
         'pricing': IntelligentPricingEngine(),

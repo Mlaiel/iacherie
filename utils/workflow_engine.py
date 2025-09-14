@@ -1,3 +1,8 @@
+"""
+Workflow Engine module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Workflow Engine - Utils Module - Enterprise Implementation
@@ -161,7 +166,7 @@ class WorkflowEngine:
     decision workflows, and multi-step task orchestration
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.workflows: Dict[str, WorkflowDefinition] = {}
         self.instances: Dict[str, WorkflowInstance] = {}
         self.step_functions: Dict[str, Callable] = {}
@@ -527,7 +532,7 @@ class WorkflowEngine:
     # PRIVATE HELPER METHODS
     # ========================================================================
     
-    async def _engine_loop(self):
+    async def _engine_loop(self) -> None:
         """Main engine loop for monitoring workflows"""
         logger.info("Workflow engine loop started")
         
@@ -554,7 +559,7 @@ class WorkflowEngine:
                 logger.error(f"Error in workflow engine loop: {e}")
                 await asyncio.sleep(60)  # Wait longer on error
     
-    async def _execute_workflow_instance(self, instance: WorkflowInstance):
+    async def _execute_workflow_instance(self, instance -> None: WorkflowInstance) -> None:
         """Execute a workflow instance"""
         try:
             logger.info(f"Executing workflow instance: {instance.instance_id}")
@@ -744,7 +749,7 @@ class WorkflowEngine:
         
         return True
     
-    def _register_builtin_functions(self):
+    def _register_builtin_functions(self) -> None:
         """Register built-in step functions"""
         self.step_functions.update({
             'log_message': self._step_log_message,
@@ -786,7 +791,7 @@ class WorkflowEngine:
 # EXAMPLE USAGE AND TESTING
 # ============================================================================
 
-async def example_workflow_engine():
+async def example_workflow_engine() -> None:
     """Example usage of WorkflowEngine"""
     try:
         # Initialize engine
@@ -794,7 +799,7 @@ async def example_workflow_engine():
         await engine.initialize_engine()
         
         # Register custom step function
-        async def process_content(**kwargs):
+        async def process_content(**kwargs) -> None:
             content_id = kwargs.get('content_id')
             await asyncio.sleep(2)  # Simulate processing
             return {

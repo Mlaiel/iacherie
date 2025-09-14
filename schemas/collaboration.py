@@ -62,7 +62,7 @@ Collaboration request schema."""
     special_requirements: Optional[str] = Field(None, max_length=500)
     
     @validator('collaboration_type')
-    def validate_collaboration_type(cls, v):
+    def validate_collaboration_type(cls, v) -> None:
         """Validate collaboration type."""
         allowed_types = {
             "music_production", "songwriting", "vocal_performance", "mixing_mastering",
@@ -179,7 +179,7 @@ Legal collaboration agreement schema."""
     blockchain_hash: Optional[str] = Field(None, description="Blockchain verification hash")
     
     @validator('agreement_type')
-    def validate_agreement_type(cls, v):
+    def validate_agreement_type(cls, v) -> None:
         """Validate agreement type."""
         allowed_types = {
             "collaboration_contract", "work_for_hire", "joint_venture", "partnership_agreement",
@@ -296,7 +296,7 @@ class CollaborationMessage(UUIDSchema, TimestampSchema):
     message_hash: Optional[str] = Field(None, description="Message integrity hash")
     
     @validator('message_type')
-    def validate_message_type(cls, v):
+    def validate_message_type(cls, v) -> None:
         """Validate message type."""
         allowed_types = {
             "text_message", "file_share", "milestone_update", "feedback_request",
@@ -351,7 +351,7 @@ class ProjectCollaboration(UUIDSchema, TimestampSchema, AuditSchema):
     change_requests: List[Dict[str, Any]] = Field(default_factory=list)
     
     @validator('project_type')
-    def validate_project_type(cls, v):
+    def validate_project_type(cls, v) -> None:
         """Validate project type."""
         allowed_types = {
             "album_production", "single_release", "music_video", "podcast_series",

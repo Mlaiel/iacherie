@@ -24,11 +24,13 @@ except ImportError:
     BSON_AVAILABLE = False
     # Create mock classes to prevent NameError
     class ObjectId:
-        def __init__(self, oid=None):
+    """ObjectId: class implementation"""
+        def __init__(self, oid=None) -> None:
             self.oid = oid
-        def __str__(self):
+        def __str__(self) -> None:
             return str(self.oid) if self.oid else "000000000000000000000000"
     class InvalidId(Exception):
+    """InvalidId class implementation"""
         pass
 
 logger = logging.getLogger(__name__)
@@ -40,7 +42,7 @@ class ValidationError(Exception):
 class BaseModel(ABC):
     """Base model class for MongoDB documents."""
     
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs) -> None:
         """Initialize model with data."""
         self._id: Optional[ObjectId] = kwargs.get('_id')
         self._data: Dict[str, Any] = {}
@@ -55,7 +57,7 @@ class BaseModel(ABC):
         # Store original data for change tracking
         self._original_data = self._data.copy()
     
-    def __setattr__(self, name: str, value: Any):
+    def __setattr__(self, name -> None: str, value -> None: Any) -> None:
         """Set attribute with change tracking."""
         if name.startswith('_'):
             super().__setattr__(name, value)
@@ -67,7 +69,7 @@ class BaseModel(ABC):
                     self._modified_fields.add(name)
             super().__setattr__(name, value)
     
-    def __getattr__(self, name: str):
+    def __getattr__(self, name -> None: str) -> None:
         """Get attribute from data."""
         if hasattr(self, '_data') and name in self._data:
             return self._data[name]
@@ -110,7 +112,7 @@ class BaseModel(ABC):
         data = self.to_dict(include_id)
         
         # Convert ObjectId to string for JSON serialization
-        def convert_objectid(obj):
+        def convert_objectid(obj) -> None:
             if isinstance(obj, ObjectId):
                 return str(obj)
             elif isinstance(obj, datetime):
@@ -187,7 +189,7 @@ class BaseModel(ABC):
         # Regular type check
         return isinstance(value, expected_type)
     
-    def save_changes(self):
+    def save_changes(self) -> None:
         """Mark changes as saved."""
         self._original_data = self._data.copy()
         self._modified_fields.clear()

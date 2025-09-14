@@ -120,7 +120,7 @@ class HealthCheckService:
     - Performance metrics and trend analysis
     """
 
-    def __init__(self, redis_url: str = "redis://localhost:6379"):
+    def __init__(self, redis_url -> None: str = "redis -> None://localhost -> None:6379") -> None:
         self.logger = logging.getLogger(__name__)
         self.redis_url = redis_url
         self.redis_client: Optional[aioredis.Redis] = None
@@ -149,7 +149,7 @@ class HealthCheckService:
         
         self.logger.info("Health Check Service initialized")
 
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize health check service"""
         try:
             self.redis_client = aioredis.from_url(
@@ -174,7 +174,7 @@ class HealthCheckService:
             self.logger.error(f"Failed to initialize Health Check Service: {e}")
             raise
 
-    def _initialize_default_health_checks(self):
+    def _initialize_default_health_checks(self) -> None:
         """Initialize default health checks for common services"""
         
         default_checks = [
@@ -228,7 +228,7 @@ class HealthCheckService:
         for check in default_checks:
             self.health_checks[check.name] = check
 
-    def _initialize_circuit_breakers(self):
+    def _initialize_circuit_breakers(self) -> None:
         """Initialize circuit breakers for all services"""
         
         for service_name in self.health_checks.keys():
@@ -238,7 +238,7 @@ class HealthCheckService:
                 recovery_timeout=60
             )
 
-    async def _start_monitoring_tasks(self):
+    async def _start_monitoring_tasks(self) -> None:
         """Start background monitoring tasks"""
         
         # Health checking task
@@ -268,7 +268,7 @@ class HealthCheckService:
         
         self.logger.info(f"Started {len(self.monitoring_tasks)} monitoring tasks")
 
-    async def _health_check_loop(self):
+    async def _health_check_loop(self) -> None:
         """Main health checking loop"""
         
         while True:
@@ -544,7 +544,7 @@ class HealthCheckService:
         
         return dependency_status
 
-    async def _process_health_result(self, result: HealthResult):
+    async def _process_health_result(self, result -> None: HealthResult) -> None:
         """Process health check result and update state"""
         
         # Store result
@@ -564,7 +564,7 @@ class HealthCheckService:
         
         self.logger.debug(f"Health result processed: {result.service_name} - {result.status.value}")
 
-    async def _update_circuit_breaker(self, result: HealthResult):
+    async def _update_circuit_breaker(self, result -> None: HealthResult) -> None:
         """Update circuit breaker state based on health result"""
         
         circuit_breaker = self.circuit_breakers.get(result.service_name)
@@ -591,7 +591,7 @@ class HealthCheckService:
                 circuit_breaker.state = CircuitBreakerState.OPEN
                 self.logger.warning(f"Circuit breaker OPENED for {result.service_name}")
 
-    async def _circuit_breaker_management(self):
+    async def _circuit_breaker_management(self) -> None:
         """Manage circuit breaker state transitions"""
         
         while True:
@@ -623,7 +623,7 @@ class HealthCheckService:
         
         return False
 
-    async def _update_service_metrics(self, result: HealthResult):
+    async def _update_service_metrics(self, result -> None: HealthResult) -> None:
         """Update service metrics based on health result"""
         
         metrics = self.service_metrics.get(result.service_name)
@@ -651,7 +651,7 @@ class HealthCheckService:
         if metrics.total_checks > 0:
             metrics.uptime_percentage = (metrics.successful_checks / metrics.total_checks) * 100
 
-    async def _service_discovery_loop(self):
+    async def _service_discovery_loop(self) -> None:
         """Service discovery and registration loop"""
         
         while True:
@@ -668,7 +668,7 @@ class HealthCheckService:
                 self.logger.error(f"Error in service discovery: {e}")
                 await asyncio.sleep(600)
 
-    async def _discover_services(self):
+    async def _discover_services(self) -> None:
         """Discover new services automatically"""
         
         try:
@@ -684,7 +684,7 @@ class HealthCheckService:
         except Exception as e:
             self.logger.error(f"Service discovery error: {e}")
 
-    async def _discover_redis_services(self):
+    async def _discover_redis_services(self) -> None:
         """Discover Redis services"""
         
         common_redis_ports = [6379, 6380, 6381]
@@ -713,7 +713,7 @@ class HealthCheckService:
                 except:
                     pass  # Service not available
 
-    async def _discover_http_services(self):
+    async def _discover_http_services(self) -> None:
         """Discover HTTP services"""
         
         common_ports = [8080, 8081, 8082, 3000, 3001, 5000, 5001]
@@ -739,7 +739,7 @@ class HealthCheckService:
                 except:
                     pass
 
-    async def _discover_process_services(self):
+    async def _discover_process_services(self) -> None:
         """Discover services by process names"""
         
         service_processes = {
@@ -772,7 +772,7 @@ class HealthCheckService:
             except:
                 pass
 
-    async def _update_service_registry(self):
+    async def _update_service_registry(self) -> None:
         """Update service registry with current service information"""
         
         registry_data = {}
@@ -802,7 +802,7 @@ class HealthCheckService:
             json.dumps(registry_data)
         )
 
-    async def _calculate_metrics_loop(self):
+    async def _calculate_metrics_loop(self) -> None:
         """Calculate and update service metrics periodically"""
         
         while True:
@@ -837,7 +837,7 @@ class HealthCheckService:
                 self.logger.error(f"Error calculating metrics: {e}")
                 await asyncio.sleep(120)
 
-    async def _assess_system_health_loop(self):
+    async def _assess_system_health_loop(self) -> None:
         """Assess overall system health periodically"""
         
         while True:
@@ -849,7 +849,7 @@ class HealthCheckService:
                 self.logger.error(f"Error assessing system health: {e}")
                 await asyncio.sleep(60)
 
-    async def _assess_overall_system_health(self):
+    async def _assess_overall_system_health(self) -> None:
         """Assess overall system health status"""
         
         if not self.health_results:
@@ -882,7 +882,7 @@ class HealthCheckService:
         else:
             self.system_health = HealthStatus.HEALTHY
 
-    async def _store_health_result(self, result: HealthResult):
+    async def _store_health_result(self, result -> None: HealthResult) -> None:
         """Store health result in Redis"""
         
         result_data = {
@@ -911,7 +911,7 @@ class HealthCheckService:
         # Keep only last 100 results
         await self.redis_client.ltrim(f"health_history:{result.service_name}", 0, 99)
 
-    async def _check_health_alerts(self, result: HealthResult):
+    async def _check_health_alerts(self, result -> None: HealthResult) -> None:
         """Check if health result should trigger alerts"""
         
         if result.status in [HealthStatus.UNHEALTHY, HealthStatus.CRITICAL]:
@@ -932,7 +932,7 @@ class HealthCheckService:
             
             self.logger.warning(f"Health alert for {result.service_name}: {result.status.value}")
 
-    async def _load_health_check_config(self):
+    async def _load_health_check_config(self) -> None:
         """Load health check configuration from Redis"""
         
         try:
@@ -948,7 +948,7 @@ class HealthCheckService:
         except Exception as e:
             self.logger.warning(f"Could not load health check config: {e}")
 
-    async def register_service(self, config: HealthCheckConfig):
+    async def register_service(self, config -> None: HealthCheckConfig) -> None:
         """Register a new service for health monitoring"""
         
         self.health_checks[config.name] = config
@@ -965,7 +965,7 @@ class HealthCheckService:
         
         self.logger.info(f"Registered service for health monitoring: {config.name}")
 
-    async def unregister_service(self, service_name: str):
+    async def unregister_service(self, service_name -> None: str) -> None:
         """Unregister a service from health monitoring"""
         
         if service_name in self.health_checks:
@@ -985,7 +985,7 @@ class HealthCheckService:
         
         self.logger.info(f"Unregistered service from health monitoring: {service_name}")
 
-    async def _save_health_check_config(self):
+    async def _save_health_check_config(self) -> None:
         """Save health check configuration to Redis"""
         
         configs = {}
@@ -1054,7 +1054,7 @@ class HealthCheckService:
             "last_updated": datetime.utcnow().isoformat()
         }
 
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Shutdown health check service gracefully"""
         
         # Cancel monitoring tasks
@@ -1073,7 +1073,7 @@ class HealthCheckService:
 
 
 # Example usage
-async def main():
+async def main() -> None:
     """Example usage of Health Check Service"""
     
     health_service = HealthCheckService()

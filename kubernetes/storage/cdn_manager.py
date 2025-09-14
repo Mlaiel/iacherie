@@ -199,7 +199,7 @@ class CDNManager:
     - Comprehensive analytics and user experience monitoring
     """
     
-    def __init__(self, config: CDNConfig):
+    def __init__(self, config -> None: CDNConfig) -> None:
         self.config = config
         self.metrics = CDNMetrics(distribution_id=f"cdn-{config.name}")
         self._executor = ThreadPoolExecutor(max_workers=10)
@@ -212,7 +212,7 @@ class CDNManager:
         
         logger.info(f"🚀 CDNManager initialized: {config.name} ({config.provider.value})")
     
-    def _initialize_clients(self):
+    def _initialize_clients(self) -> None:
         """Initialize CDN provider clients"""
         try:
             if self.config.provider == CDNProvider.AWS_CLOUDFRONT:
@@ -460,7 +460,7 @@ Get path pattern for content type"""
         }
         return patterns.get(content_type, "*")
     
-    async def _wait_for_cloudfront_deployment(self, distribution_id: str):
+    async def _wait_for_cloudfront_deployment(self, distribution_id -> None: str) -> None:
         """Wait for CloudFront distribution deployment to complete"""
         try:
             logger.info(f"⏳ Waiting for CloudFront deployment: {distribution_id}")
@@ -524,7 +524,7 @@ Get path pattern for content type"""
             logger.error(f"❌ CloudFlare deployment failed: {e}")
             raise
     
-    async def _create_cloudflare_page_rules(self, headers: Dict[str, str]):
+    async def _create_cloudflare_page_rules(self, headers -> None: Dict[str, str]) -> None:
         """Create CloudFlare page rules for cache optimization"""
         try:
             url = f"{self._cloudflare_client['base_url']}/zones/{self._cloudflare_client['zone_id']}/pagerules"
@@ -706,7 +706,7 @@ Get path pattern for content type"""
             logger.error(f"❌ Analytics configuration failed: {e}")
             return {"analytics": "failed", "error": str(e)}
     
-    async def _setup_cloudwatch_alarms(self):
+    async def _setup_cloudwatch_alarms(self) -> None:
         """Setup CloudWatch alarms for CloudFront monitoring"""
         try:
             cloudwatch = boto3.client('cloudwatch')
@@ -1103,7 +1103,7 @@ Load CDN configuration from YAML file"""
             raise
     
     @staticmethod
-    def save_config_to_file(config: CDNConfig, config_path: Path):
+    def save_config_to_file(config -> None: CDNConfig, config_path -> None: Path) -> None:
         """Save CDN configuration to YAML file"""
         try:
             config_data = {
@@ -1153,7 +1153,7 @@ def create_cdn_manager(
 
 
 # Usage Example
-async def main():
+async def main() -> None:
     """
 Example usage of CDNManager"""
     try:

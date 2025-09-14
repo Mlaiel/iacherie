@@ -152,7 +152,7 @@ class AmplificationConfig:
     Manages strategies, budgets, targeting, and optimization settings
     """
     
-    def __init__(self, config_path: Optional[str] = None):
+    def __init__(self, config_path -> None: Optional[str] = None) -> None:
         self.config_path = config_path or os.path.join(
             os.path.dirname(__file__), "amplification_config.json"
         )
@@ -190,7 +190,7 @@ class AmplificationConfig:
         if os.path.exists(self.config_path):
             self.load_config()
             
-    def _load_default_config(self):
+    def _load_default_config(self) -> None:
         """Load default amplification configuration"""
         
         # Default platform settings
@@ -542,7 +542,7 @@ class AmplificationConfig:
             logger.error(f"Performance optimization error: {e}")
             return False
             
-    def _optimize_platform_settings(self, platform: str, metrics: Dict[str, Any]):
+    def _optimize_platform_settings(self, platform -> None: str, metrics -> None: Dict[str, Any]) -> None:
         """Optimize settings for specific platform"""
         settings = self.platform_settings[platform]
         
@@ -559,7 +559,7 @@ class AmplificationConfig:
             if settings.strategy == AmplificationStrategy.ORGANIC_GROWTH:
                 settings.strategy = AmplificationStrategy.VIRAL_ENGINEERING
                 
-    def _optimize_budget_allocation(self, performance_data: Dict[str, Any]):
+    def _optimize_budget_allocation(self, performance_data -> None: Dict[str, Any]) -> None:
         """Optimize budget allocation across platforms"""
         
         # Calculate ROI for each platform
@@ -584,7 +584,7 @@ class AmplificationConfig:
                 
                 self.platform_settings[platform].budget_allocation = adjusted_allocation
                 
-    def _optimize_engagement_targets(self, performance_data: Dict[str, Any]):
+    def _optimize_engagement_targets(self, performance_data -> None: Dict[str, Any]) -> None:
         """Optimize engagement targets based on achieved performance"""
         
         all_engagement_rates = []

@@ -67,7 +67,7 @@ class SemanticOptimizationConfig:
 class NaturalLanguageSEOEngine:
     """Advanced Natural Language SEO optimization engine."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the Natural Language SEO Engine."""
         self.nlp_models = {}
         self.semantic_models = {}
@@ -85,7 +85,7 @@ class NaturalLanguageSEOEngine:
         except:
             pass
     
-    def _load_nlp_models(self):
+    def _load_nlp_models(self) -> None:
         """Load NLP models for different languages."""
         try:
             # Load spaCy models for different languages

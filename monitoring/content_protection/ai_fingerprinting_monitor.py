@@ -100,7 +100,7 @@ class AIFingerprintingMonitor:
     - Comprehensive analytics and reporting
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.fingerprint_records: Dict[str, FingerprintRecord] = {}
         self.similarity_matches: deque = deque(maxlen=50000)
@@ -126,7 +126,7 @@ class AIFingerprintingMonitor:
             }
         }
     
-    def _initialize_ai_models(self):
+    def _initialize_ai_models(self) -> None:
         """Initialize AI models for fingerprinting."""
         self.ai_models = {
             FingerprintAlgorithm.NEURAL_EMBEDDING: {
@@ -343,7 +343,7 @@ class AIFingerprintingMonitor:
         
         return duration_estimates.get(content_type, len(content_data) / (128 * 1024))
     
-    def _update_performance_metrics(self, record: FingerprintRecord):
+    def _update_performance_metrics(self, record -> None: FingerprintRecord) -> None:
         """Update performance tracking metrics."""
         if record.status == FingerprintStatus.COMPLETED:
             self.performance_metrics['generation_times'][record.algorithm].append(

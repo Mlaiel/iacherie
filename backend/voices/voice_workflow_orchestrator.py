@@ -101,7 +101,7 @@ class WorkflowExecution:
 class WorkflowEngine:
     """Core workflow execution engine"""
     
-    def __init__(self, max_workers: int = 10):
+    def __init__(self, max_workers -> None: int = 10) -> None:
         """Initialize workflow engine"""
         self.max_workers = max_workers
         self.executor = ThreadPoolExecutor(max_workers=max_workers)
@@ -171,7 +171,7 @@ class WorkflowEngine:
             logger.error(f"Failed to execute pipeline: {e}")
             raise
     
-    async def _execution_worker(self):
+    async def _execution_worker(self) -> None:
         """Background execution worker"""
         while True:
             try:
@@ -195,11 +195,11 @@ class WorkflowEngine:
     
     async def _execute_pipeline_internal(
         self,
-        execution_id: str,
-        pipeline: VoicePipeline,
-        input_data: Dict[str, Any],
-        options: Dict[str, Any]
-    ):
+        execution_id -> None: str,
+        pipeline -> None: VoicePipeline,
+        input_data -> None: Dict[str, Any],
+        options -> None: Dict[str, Any]
+    ) -> None:
         """Internal pipeline execution logic"""
         try:
             execution = self.active_executions[execution_id]
@@ -230,11 +230,11 @@ class WorkflowEngine:
     
     async def _execute_sequential(
         self,
-        execution: WorkflowExecution,
-        pipeline: VoicePipeline,
-        input_data: Dict[str, Any],
-        options: Dict[str, Any]
-    ):
+        execution -> None: WorkflowExecution,
+        pipeline -> None: VoicePipeline,
+        input_data -> None: Dict[str, Any],
+        options -> None: Dict[str, Any]
+    ) -> None:
         """Execute tasks sequentially"""
         current_data = input_data.copy()
         
@@ -260,11 +260,11 @@ class WorkflowEngine:
     
     async def _execute_parallel(
         self,
-        execution: WorkflowExecution,
-        pipeline: VoicePipeline,
-        input_data: Dict[str, Any],
-        options: Dict[str, Any]
-    ):
+        execution -> None: WorkflowExecution,
+        pipeline -> None: VoicePipeline,
+        input_data -> None: Dict[str, Any],
+        options -> None: Dict[str, Any]
+    ) -> None:
         """Execute tasks in parallel where possible"""
         # Build task dependency graph
         dependency_graph = self._build_dependency_graph(pipeline.tasks)
@@ -370,7 +370,7 @@ class WorkflowEngine:
 class WorkflowManagement:
     """High-level workflow management system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize workflow management"""
         self.workflow_engine = WorkflowEngine()
         self.pipeline_registry = {}
@@ -429,7 +429,7 @@ class WorkflowManagement:
             logger.error(f"Failed to create pipeline: {e}")
             raise
     
-    async def _initialize_standard_pipelines(self):
+    async def _initialize_standard_pipelines(self) -> None:
         """Initialize standard voice processing pipelines"""
         try:
             # Standard voice analysis pipeline
@@ -490,7 +490,7 @@ class WorkflowManagement:
 class TaskOrchestration:
     """Advanced task orchestration system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize task orchestration"""
         self.task_scheduler = None
         self.resource_manager = None
@@ -501,7 +501,7 @@ class TaskOrchestration:
 class ProcessAutomation:
     """Process automation engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize process automation"""
         self.automation_rules = {}
         self.trigger_system = None
@@ -512,7 +512,7 @@ class ProcessAutomation:
 class WorkflowAnalytics:
     """Workflow analytics and monitoring"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize workflow analytics"""
         self.metrics_collector = None
         self.performance_analyzer = None
@@ -523,7 +523,7 @@ class WorkflowAnalytics:
 class VoiceWorkflowOrchestrator:
     """Main voice workflow orchestrator"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         """Initialize voice workflow orchestrator"""
         self.config = config or {}
         self.workflow_management = WorkflowManagement()

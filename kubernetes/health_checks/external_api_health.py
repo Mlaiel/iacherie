@@ -54,7 +54,7 @@ class ExternalAPIHealthChecker:
     Monitors all third-party service integrations and API connectivity
     for the IA Influencer Agent platform.
     """
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """
         Initialize external API health checker
         

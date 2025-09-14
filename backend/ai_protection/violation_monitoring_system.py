@@ -154,14 +154,14 @@ class MonitoringReport:
 class PlatformMonitor:
     """Individual platform monitoring agent"""
     
-    def __init__(self, config: PlatformConfiguration):
+    def __init__(self, config -> None: PlatformConfiguration) -> None:
         self.config = config
         self.session: Optional[aiohttp.ClientSession] = None
         self.last_scan_time: Optional[datetime] = None
         self.scan_count = 0
         self.detection_history: List[ViolationDetection] = []
         
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize platform monitor"""
         if HTTP_AVAILABLE:
             connector = aiohttp.TCPConnector(limit=10)
@@ -172,7 +172,7 @@ class PlatformMonitor:
                 headers={'User-Agent': 'Ainflue-Protection-Bot/1.0'}
             )
     
-    async def cleanup(self):
+    async def cleanup(self) -> None:
         """Cleanup platform monitor"""
         if self.session:
             await self.session.close()
@@ -441,7 +441,7 @@ class ViolationMonitoringSystem:
     automated escalation, and comprehensive evidence collection.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize violation monitoring system"""
         self.config = config or {}
         
@@ -464,7 +464,7 @@ class ViolationMonitoringSystem:
         
         logger.info("Violation Monitoring System initialized")
     
-    def _initialize_platform_configs(self):
+    def _initialize_platform_configs(self) -> None:
         """Initialize platform monitoring configurations"""
         
         # Video streaming platforms
@@ -580,7 +580,7 @@ class ViolationMonitoringSystem:
             is_active=True
         )
     
-    async def add_monitoring_target(self, target: MonitoringTarget):
+    async def add_monitoring_target(self, target -> None: MonitoringTarget) -> None:
         """Add content for monitoring"""
         try:
             self.monitoring_targets[target.target_id] = target
@@ -594,7 +594,7 @@ class ViolationMonitoringSystem:
             logger.error(f"Failed to add monitoring target: {e}")
             raise
     
-    async def remove_monitoring_target(self, target_id: str):
+    async def remove_monitoring_target(self, target_id -> None: str) -> None:
         """Remove content from monitoring"""
         try:
             if target_id in self.monitoring_targets:
@@ -609,7 +609,7 @@ class ViolationMonitoringSystem:
             logger.error(f"Failed to remove monitoring target: {e}")
             raise
     
-    async def start_monitoring(self):
+    async def start_monitoring(self) -> None:
         """Start violation monitoring"""
         try:
             if self.is_monitoring:
@@ -625,7 +625,7 @@ class ViolationMonitoringSystem:
             self.is_monitoring = False
             raise
     
-    async def stop_monitoring(self):
+    async def stop_monitoring(self) -> None:
         """Stop violation monitoring"""
         try:
             self.is_monitoring = False
@@ -647,7 +647,7 @@ class ViolationMonitoringSystem:
         except Exception as e:
             logger.error(f"Failed to stop monitoring: {e}")
     
-    async def _monitoring_loop(self):
+    async def _monitoring_loop(self) -> None:
         """Main monitoring loop"""
         try:
             while self.is_monitoring:
@@ -672,7 +672,7 @@ class ViolationMonitoringSystem:
             logger.error(f"Monitoring loop error: {e}")
             self.is_monitoring = False
     
-    async def _perform_scan_cycle(self):
+    async def _perform_scan_cycle(self) -> None:
         """Perform one complete scan cycle across all platforms"""
         try:
             targets = list(self.monitoring_targets.values())
@@ -735,7 +735,7 @@ class ViolationMonitoringSystem:
                 logger.error(f"Platform scan failed for {monitor.config.platform_name}: {e}")
                 return []
     
-    async def _process_violations(self):
+    async def _process_violations(self) -> None:
         """Process detected violations and trigger escalations"""
         try:
             for violation_id, violation in list(self.active_violations.items()):
@@ -899,7 +899,7 @@ class ViolationMonitoringSystem:
             logger.error(f"Owner notification failed: {e}")
             return False
     
-    async def _notify_owner(self, violation: ViolationDetection):
+    async def _notify_owner(self, violation -> None: ViolationDetection) -> None:
         """Notify content owner of violation"""
         await self._send_owner_notification(violation)
     
@@ -994,7 +994,7 @@ class ViolationMonitoringSystem:
         else:
             return base_sleep
     
-    async def _update_monitoring_metrics(self, scan_start_time: float):
+    async def _update_monitoring_metrics(self, scan_start_time -> None: float) -> None:
         """Update monitoring performance metrics"""
         try:
             scan_duration = time.time() - scan_start_time

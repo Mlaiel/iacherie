@@ -144,7 +144,7 @@ class MLPipelineCore:
     performance and reliability standards.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize ML Pipeline Core"""
         self.config = config or {}
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
@@ -910,7 +910,7 @@ class MLPipelineCore:
                 "errors": [f"Model deployment error: {e}"]
             }
             
-    def _create_model(self, algorithm: str, parameters: Dict[str, Any]):
+    def _create_model(self, algorithm -> None: str, parameters -> None: Dict[str, Any]) -> None:
         """Create model instance"""
         from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
         from sklearn.svm import SVC
@@ -1102,7 +1102,7 @@ class MLPipelineCore:
         
         return interaction_df
         
-    async def _validate_pipeline_config(self, config: PipelineConfiguration):
+    async def _validate_pipeline_config(self, config -> None: PipelineConfiguration) -> None:
         """Validate pipeline configuration"""
         
         if not config.dataset_config.get("source"):
@@ -1115,7 +1115,7 @@ class MLPipelineCore:
         if algorithm not in self.supported_algorithms:
             raise ValueError(f"Unsupported algorithm: {algorithm}")
             
-    def _update_pipeline_statistics(self, execution: PipelineExecution):
+    def _update_pipeline_statistics(self, execution -> None: PipelineExecution) -> None:
         """Update pipeline statistics"""
         self.pipeline_stats["total_executions"] += 1
         

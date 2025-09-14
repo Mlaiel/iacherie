@@ -86,7 +86,7 @@ class PipelineValidationConfig:
 class SchemaValidator:
     """Data schema validation"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.schema_cache = {}
     
     async def validate_data_schema(self, data: Union[pd.DataFrame, Dict], 
@@ -178,7 +178,7 @@ class SchemaValidator:
 class ModelValidator:
     """ML model validation"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.baseline_metrics = {}
     
     async def validate_model_performance(self, model: Any, test_data: pd.DataFrame, 
@@ -399,7 +399,7 @@ class SecurityValidator:
 class PipelineValidator:
     """Main pipeline validation orchestrator"""
     
-    def __init__(self, config: PipelineValidationConfig):
+    def __init__(self, config -> None: PipelineValidationConfig) -> None:
         self.config = config
         self.schema_validator = SchemaValidator()
         self.model_validator = ModelValidator()

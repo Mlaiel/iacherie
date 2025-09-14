@@ -24,7 +24,7 @@ logger = logging.getLogger(__name__)
 class TransferLearningCore:
     """Advanced Transfer Learning Core System"""
     
-    def __init__(self, level: str = "enterprise"):
+    def __init__(self, level -> None: str = "enterprise") -> None:
         self.version = "2.1.0"
         self.level = level
         logger.info(f"Transfer Learning Core initialized - Level: {level}")

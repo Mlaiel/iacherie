@@ -91,7 +91,7 @@ class FormatConversionMonitor:
     metadata integrity, and provides optimization recommendations.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize format conversion monitor."""
         self.config = config or self._default_config()
         self.jobs: Dict[str, ConversionJob] = {}
@@ -218,7 +218,7 @@ class FormatConversionMonitor:
         }
         return defaults.get(target_format, ConversionSettings(44100, 16, None, 2))
     
-    def _process_conversion_job(self, job: ConversionJob):
+    def _process_conversion_job(self, job -> None: ConversionJob) -> None:
         """Process format conversion job."""
         try:
             job.status = "converting"
@@ -391,7 +391,7 @@ class FormatConversionMonitor:
         else:
             return 0.10  # Significant compression for lossy formats
     
-    def _update_metrics(self, job: ConversionJob):
+    def _update_metrics(self, job -> None: ConversionJob) -> None:
         """Update format conversion metrics."""
         self.metrics.total_conversions += 1
         

@@ -254,7 +254,7 @@ class PipelineExecution:
 class PipelineStageProcessor(ABC):
     """Abstract base class for pipeline stage processors"""
     
-    def __init__(self, stage: PipelineStage):
+    def __init__(self, stage -> None: PipelineStage) -> None:
         self.stage = stage
         self.logger = logging.getLogger(f"{__name__}.{stage.value}")
     
@@ -284,7 +284,7 @@ class PipelineStageProcessor(ABC):
 class DataIngestionProcessor(PipelineStageProcessor):
     """Data ingestion stage processor"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__(PipelineStage.DATA_INGESTION)
     
     async def execute(self, 
@@ -346,7 +346,7 @@ class DataIngestionProcessor(PipelineStageProcessor):
 class ModelTrainingProcessor(PipelineStageProcessor):
     """Model training stage processor"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__(PipelineStage.MODEL_TRAINING)
     
     async def execute(self, 
@@ -429,7 +429,7 @@ class ModelTrainingProcessor(PipelineStageProcessor):
 class ModelEvaluationProcessor(PipelineStageProcessor):
     """Model evaluation stage processor"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__(PipelineStage.MODEL_EVALUATION)
     
     async def execute(self, 
@@ -509,7 +509,7 @@ class DeepLearningPipeline(BaseEventHandler):
     computing environments in the IA Influencer Agent platform.
     """
     
-    def __init__(self, max_workers: int = 4, max_concurrent_pipelines: int = 10):
+    def __init__(self, max_workers -> None: int = 4, max_concurrent_pipelines -> None: int = 10) -> None:
         super().__init__()
         self.executor = ThreadPoolExecutor(max_workers=max_workers)
         self.process_executor = ProcessPoolExecutor(max_workers=max_workers // 2)
@@ -537,7 +537,7 @@ class DeepLearningPipeline(BaseEventHandler):
         
         logger.info("Deep Learning Pipeline initialized")
     
-    async def start_pipeline_manager(self):
+    async def start_pipeline_manager(self) -> None:
         """Start the pipeline manager"""
         self.is_running = True
         
@@ -548,7 +548,7 @@ class DeepLearningPipeline(BaseEventHandler):
         
         logger.info("Deep Learning Pipeline Manager started")
     
-    async def stop_pipeline_manager(self):
+    async def stop_pipeline_manager(self) -> None:
         """Stop the pipeline manager"""
         self.is_running = False
         
@@ -613,9 +613,9 @@ class DeepLearningPipeline(BaseEventHandler):
             raise
     
     async def _execute_pipeline_stages(self, 
-                                      execution: PipelineExecution, 
-                                      config: PipelineConfiguration, 
-                                      input_data: Any):
+                                      execution -> None: PipelineExecution, 
+                                      config -> None: PipelineConfiguration, 
+                                      input_data -> None: Any) -> None:
         """Execute pipeline stages"""
         try:
             execution.status = PipelineStatus.RUNNING
@@ -729,7 +729,7 @@ class DeepLearningPipeline(BaseEventHandler):
         
         return execution.retry_count < max_retries
     
-    async def _generate_pipeline_metrics(self, execution: PipelineExecution):
+    async def _generate_pipeline_metrics(self, execution -> None: PipelineExecution) -> None:
         """Generate overall pipeline metrics"""
         try:
             total_duration = 0.0
@@ -827,7 +827,7 @@ class DeepLearningPipeline(BaseEventHandler):
             logger.error(f"Error resuming pipeline {execution_id}: {str(e)}")
             return False
     
-    async def _monitor_pipeline_health(self):
+    async def _monitor_pipeline_health(self) -> None:
         """Monitor pipeline health and performance"""
         while self.is_running:
             try:
@@ -853,7 +853,7 @@ class DeepLearningPipeline(BaseEventHandler):
                 logger.error(f"Error in pipeline health monitoring: {str(e)}")
                 await asyncio.sleep(300)
     
-    async def _optimize_resource_allocation(self):
+    async def _optimize_resource_allocation(self) -> None:
         """Optimize resource allocation for pipelines"""
         while self.is_running:
             try:
@@ -878,7 +878,7 @@ class DeepLearningPipeline(BaseEventHandler):
                 logger.error(f"Error in resource optimization: {str(e)}")
                 await asyncio.sleep(600)
     
-    async def _cleanup_completed_pipelines(self):
+    async def _cleanup_completed_pipelines(self) -> None:
         """Clean up completed pipeline resources"""
         while self.is_running:
             try:

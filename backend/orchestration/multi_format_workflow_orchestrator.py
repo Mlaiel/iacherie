@@ -110,7 +110,7 @@ class MultiFormatWorkflowOrchestrator:
     - Real-time optimization and performance monitoring
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.format_processors: Dict[ContentFormat, Any] = {}
         self.workflow_templates: Dict[str, Dict[str, Any]] = {}
         self.execution_queue: List[WorkflowExecution] = []
@@ -135,7 +135,7 @@ class MultiFormatWorkflowOrchestrator:
             logger.error(f"❌ Failed to initialize Multi-Format Workflow Orchestrator: {e}")
             return False
 
-    async def _setup_format_strategies(self):
+    async def _setup_format_strategies(self) -> None:
         """Setup format-specific processing strategies"""
         
         # Audio format strategy
@@ -218,7 +218,7 @@ class MultiFormatWorkflowOrchestrator:
 
         logger.info(f"✅ Setup processing strategies for {len(self.format_strategies)} content formats")
 
-    async def _setup_workflow_templates(self):
+    async def _setup_workflow_templates(self) -> None:
         """Setup predefined workflow templates for common use cases"""
         
         # Content creator complete workflow
@@ -267,7 +267,7 @@ class MultiFormatWorkflowOrchestrator:
 
         logger.info(f"✅ Setup {len(self.workflow_templates)} workflow templates")
 
-    async def _setup_cross_format_rules(self):
+    async def _setup_cross_format_rules(self) -> None:
         """Setup cross-format coordination rules and synergies"""
         
         self.cross_format_rules = {
@@ -315,7 +315,7 @@ class MultiFormatWorkflowOrchestrator:
 
         logger.info(f"✅ Setup {len(self.cross_format_rules)} cross-format coordination rules")
 
-    async def _initialize_format_processors(self):
+    async def _initialize_format_processors(self) -> None:
         """Initialize format-specific processors"""
         # Placeholder for format processor initialization
         # In a real implementation, these would be actual processor instances
@@ -555,7 +555,7 @@ class MultiFormatWorkflowOrchestrator:
         await asyncio.sleep(processing_time / 1000)  # Simulate processing
         return processing_time
 
-    async def _apply_cross_format_optimizations(self, execution: WorkflowExecution):
+    async def _apply_cross_format_optimizations(self, execution -> None: WorkflowExecution) -> None:
         """Apply cross-format optimizations and detect synergies"""
         processed_formats = list(execution.format_results.keys())
         
@@ -585,7 +585,7 @@ class MultiFormatWorkflowOrchestrator:
             "performance_improvement": 0.15
         }
 
-    async def _calculate_final_metrics(self, execution: WorkflowExecution):
+    async def _calculate_final_metrics(self, execution -> None: WorkflowExecution) -> None:
         """Calculate final optimization metrics for the workflow"""
         total_processing_time = sum(
             result.get("processing_time_ms", 0) 
@@ -695,7 +695,7 @@ class MultiFormatWorkflowOrchestrator:
             logger.error(f"❌ Failed to optimize execution {execution_id}: {e}")
             return False
 
-    async def _apply_real_time_optimizations(self, execution: WorkflowExecution):
+    async def _apply_real_time_optimizations(self, execution -> None: WorkflowExecution) -> None:
         """Apply real-time optimizations to running execution"""
         # Placeholder for real-time optimization logic
         await asyncio.sleep(0.1)

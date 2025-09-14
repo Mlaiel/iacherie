@@ -110,7 +110,7 @@ class CommentThread:
 class CommentEngine:
     """Core comment engine with threading and timeline support"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.comments = {}  # comment_id -> Comment
         self.content_comments = defaultdict(list)  # content_id -> [comment_ids]
         self.comment_threads = {}  # thread_id -> CommentThread
@@ -577,7 +577,7 @@ class CommentEngine:
             logger.error(f"Failed to extract mentions: {e}")
             return []
     
-    async def _create_thread(self, comment: Comment):
+    async def _create_thread(self, comment -> None: Comment) -> None:
         """Create new comment thread"""
         try:
             thread_id = str(uuid.uuid4())
@@ -599,7 +599,7 @@ class CommentEngine:
         except Exception as e:
             logger.error(f"Failed to create thread: {e}")
     
-    async def _add_to_thread(self, comment: Comment):
+    async def _add_to_thread(self, comment -> None: Comment) -> None:
         """Add comment to existing thread"""
         try:
             # Find thread by root comment
@@ -633,14 +633,14 @@ class CommentEngine:
         
         return thread_comments
     
-    def _add_replies_to_list(self, parent_id: str, comment_list: List[Comment]):
+    def _add_replies_to_list(self, parent_id -> None: str, comment_list -> None: List[Comment]) -> None:
         """Recursively add replies to comment list"""
         for comment in self.comments.values():
             if comment.parent_comment_id == parent_id:
                 comment_list.append(comment)
                 self._add_replies_to_list(comment.comment_id, comment_list)
     
-    async def _build_thread_structure(self, root_id: str, result: List[Dict[str, Any]]):
+    async def _build_thread_structure(self, root_id -> None: str, result -> None: List[Dict[str, Any]]) -> None:
         """Build hierarchical thread structure"""
         try:
             for comment in self.comments.values():
@@ -656,7 +656,7 @@ class CommentEngine:
         except Exception as e:
             logger.error(f"Failed to build thread structure: {e}")
     
-    async def _process_mentions(self, comment: Comment):
+    async def _process_mentions(self, comment -> None: Comment) -> None:
         """Process user mentions in comment"""
         try:
             for mentioned_user in comment.mentions:
@@ -668,7 +668,7 @@ class CommentEngine:
         except Exception as e:
             logger.error(f"Failed to process mentions: {e}")
     
-    async def _notify_comment_added(self, comment: Comment):
+    async def _notify_comment_added(self, comment -> None: Comment) -> None:
         """Notify about new comment"""
         try:
             notification = {
@@ -686,7 +686,7 @@ class CommentEngine:
         except Exception as e:
             logger.error(f"Failed to notify comment added: {e}")
     
-    async def _notify_comment_edited(self, comment: Comment):
+    async def _notify_comment_edited(self, comment -> None: Comment) -> None:
         """Notify about comment edit"""
         try:
             notification = {
@@ -701,7 +701,7 @@ class CommentEngine:
         except Exception as e:
             logger.error(f"Failed to notify comment edited: {e}")
     
-    async def _notify_comment_deleted(self, comment_id: str, user_id: str, soft_delete: bool):
+    async def _notify_comment_deleted(self, comment_id -> None: str, user_id -> None: str, soft_delete -> None: bool) -> None:
         """Notify about comment deletion"""
         try:
             notification = {
@@ -717,7 +717,7 @@ class CommentEngine:
         except Exception as e:
             logger.error(f"Failed to notify comment deleted: {e}")
     
-    async def _notify_reaction_added(self, reaction: CommentReaction):
+    async def _notify_reaction_added(self, reaction -> None: CommentReaction) -> None:
         """Notify about reaction added"""
         try:
             notification = {
@@ -734,7 +734,7 @@ class CommentEngine:
         except Exception as e:
             logger.error(f"Failed to notify reaction added: {e}")
     
-    async def _notify_reaction_removed(self, comment_id: str, user_id: str, reaction_type: ReactionType):
+    async def _notify_reaction_removed(self, comment_id -> None: str, user_id -> None: str, reaction_type -> None: ReactionType) -> None:
         """Notify about reaction removed"""
         try:
             notification = {
@@ -750,7 +750,7 @@ class CommentEngine:
         except Exception as e:
             logger.error(f"Failed to notify reaction removed: {e}")
     
-    async def _notify_user_mentioned(self, mentioned_user: str, comment: Comment):
+    async def _notify_user_mentioned(self, mentioned_user -> None: str, comment -> None: Comment) -> None:
         """Notify user about mention"""
         try:
             notification = {
@@ -768,7 +768,7 @@ class CommentEngine:
         except Exception as e:
             logger.error(f"Failed to notify user mentioned: {e}")
     
-    async def _notify_thread_resolved(self, thread: CommentThread):
+    async def _notify_thread_resolved(self, thread -> None: CommentThread) -> None:
         """Notify about thread resolution"""
         try:
             notification = {
@@ -783,7 +783,7 @@ class CommentEngine:
         except Exception as e:
             logger.error(f"Failed to notify thread resolved: {e}")
     
-    async def _send_notification(self, notification: Dict[str, Any], target_user: str = None):
+    async def _send_notification(self, notification -> None: Dict[str, Any], target_user -> None: str = None) -> None:
         """Send notification to users"""
         try:
             # Send to all connected users or specific user
@@ -802,7 +802,7 @@ class CommentEngine:
         except Exception as e:
             logger.error(f"Failed to send notification: {e}")
     
-    async def _store_comment_redis(self, comment: Comment):
+    async def _store_comment_redis(self, comment -> None: Comment) -> None:
         """Store comment in Redis"""
         try:
             if self.redis_client:
@@ -816,7 +816,7 @@ class CommentEngine:
 class TimelineCommentManager:
     """Specialized manager for timeline-based comments"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.comment_engine = CommentEngine()
         self.timeline_index = defaultdict(list)  # content_id -> [(timestamp, comment_id)]
         

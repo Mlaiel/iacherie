@@ -132,9 +132,9 @@ class DisputeResolutionProcessor:
     
     def __init__(
         self,
-        config: Dict[str, Any],
-        ai_mediation_enabled: bool = True
-    ):
+        config -> None: Dict[str, Any],
+        ai_mediation_enabled -> None: bool = True
+    ) -> None:
         """
 Initialize dispute resolution processor"""
         self.config = config

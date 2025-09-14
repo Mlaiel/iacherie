@@ -91,7 +91,7 @@ class ScalingDecision:
 class AutoScaler:
     """Auto-scaler intelligent pour les services edge."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.policies: Dict[str, ScalingPolicy] = {}
         self.scaling_history: List[ScalingDecision] = []
         self.last_scaling: Dict[str, datetime] = {}
@@ -239,7 +239,7 @@ class ServiceSpec:
 class ContainerOrchestrator:
     """Orchestrateur de conteneurs enterprise."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.services: Dict[str, ServiceSpec] = {}
         self.deployments: Dict[str, Dict[str, Any]] = {}
         self.container_registry = {}
@@ -408,7 +408,7 @@ class EdgeCluster:
 class KubernetesEdge:
     """Optimisation Kubernetes pour edge computing."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.clusters: Dict[str, EdgeCluster] = {}
         self.workloads: Dict[str, Dict[str, Any]] = {}
         
@@ -518,7 +518,7 @@ class WorkflowDefinition:
 class WorkflowEngine:
     """Moteur de workflow pour orchestration avancée."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.workflows: Dict[str, WorkflowDefinition] = {}
         self.executions: Dict[str, Dict[str, Any]] = {}
         
@@ -562,7 +562,7 @@ class WorkflowEngine:
             logger.error(f"Failed to execute workflow: {e}")
             raise
     
-    async def _run_workflow(self, execution_id: str):
+    async def _run_workflow(self, execution_id -> None: str) -> None:
         """Exécute les étapes d'un workflow."""
         try:
             execution = self.executions[execution_id]
@@ -613,7 +613,7 @@ class WorkflowEngine:
             logger.error(f"Workflow execution failed: {e}")
             self.executions[execution_id]["status"] = WorkflowStatus.FAILED
     
-    async def _execute_step(self, execution_id: str, step: WorkflowStep):
+    async def _execute_step(self, execution_id -> None: str, step -> None: WorkflowStep) -> None:
         """Exécute une étape de workflow."""
         try:
             logger.info(f"Executing step: {step.name}")
@@ -659,7 +659,7 @@ class DeploymentPlan:
 class DeploymentManager:
     """Gestionnaire de déploiement CI/CD enterprise."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.deployment_plans: Dict[str, DeploymentPlan] = {}
         self.active_deployments: Dict[str, Dict[str, Any]] = {}
         
@@ -702,7 +702,7 @@ class DeploymentManager:
             logger.error(f"Failed to execute deployment: {e}")
             raise
     
-    async def _run_deployment(self, deployment_id: str):
+    async def _run_deployment(self, deployment_id -> None: str) -> None:
         """Exécute un déploiement."""
         try:
             deployment = self.active_deployments[deployment_id]
@@ -736,7 +736,7 @@ class DeploymentManager:
             if plan.rollback_enabled:
                 await self._rollback_deployment(deployment_id)
     
-    async def _run_health_checks(self, deployment_id: str, health_checks: List[str]):
+    async def _run_health_checks(self, deployment_id -> None: str, health_checks -> None: List[str]) -> None:
         """Exécute les vérifications de santé."""
         deployment = self.active_deployments[deployment_id]
         
@@ -748,7 +748,7 @@ class DeploymentManager:
             
             deployment["health_checks_status"][check] = "passed"
     
-    async def _rollback_deployment(self, deployment_id: str):
+    async def _rollback_deployment(self, deployment_id -> None: str) -> None:
         """Effectue un rollback de déploiement."""
         try:
             deployment = self.active_deployments[deployment_id]
@@ -780,7 +780,7 @@ class RollbackPolicy:
 class RollbackController:
     """Contrôleur de rollback sécurisé."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.policies: Dict[str, RollbackPolicy] = {}
         self.rollback_history: List[Dict[str, Any]] = []
         
@@ -887,10 +887,10 @@ class TrafficPolicy:
 class ServiceDiscovery:
     """Découverte de services."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.services: Dict[str, ServiceInstance] = {}
         
-    async def register_service(self, service: ServiceInstance):
+    async def register_service(self, service -> None: ServiceInstance) -> None:
         """Enregistre un service."""
         self.services[service.service_id] = service
         logger.info(f"Service registered: {service.name}")
@@ -903,15 +903,15 @@ class ServiceDiscovery:
 class EdgeServiceMesh:
     """Service mesh pour edge computing."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.service_discovery = ServiceDiscovery()
         self.traffic_policies: Dict[str, TrafficPolicy] = {}
         
-    async def register_service(self, service: ServiceInstance):
+    async def register_service(self, service -> None: ServiceInstance) -> None:
         """Enregistre un service dans le mesh."""
         await self.service_discovery.register_service(service)
     
-    async def add_traffic_policy(self, policy: TrafficPolicy):
+    async def add_traffic_policy(self, policy -> None: TrafficPolicy) -> None:
         """Ajoute une politique de trafic."""
         self.traffic_policies[policy.policy_id] = policy
         logger.info(f"Traffic policy added: {policy.policy_id}")
@@ -924,7 +924,7 @@ class EdgeServiceMesh:
 class EdgeOrchestrationAutomation:
     """Orchestrateur principal pour l'automatisation edge."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.auto_scaler = AutoScaler()
         self.container_orchestrator = ContainerOrchestrator()
         self.kubernetes_edge = KubernetesEdge()

@@ -127,7 +127,7 @@ class CloudResourceProvisioner:
     and cost optimization across multiple cloud providers.
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize cloud resource provisioner."""
         self.logger = logging.getLogger(__name__)
         
@@ -157,7 +157,7 @@ class CloudResourceProvisioner:
         
         self.logger.info("CloudResourceProvisioner initialized successfully")
 
-    def _initialize_default_templates(self):
+    def _initialize_default_templates(self) -> None:
         """Initialize default resource templates."""
         try:
             default_templates = [
@@ -686,7 +686,7 @@ class CloudResourceProvisioner:
 
     # Private helper methods
 
-    async def _start_provisioning(self, request_id: str):
+    async def _start_provisioning(self, request_id -> None: str) -> None:
         """Start the provisioning process for a request."""
         try:
             self.logger.info(f"Starting provisioning for request: {request_id}")
@@ -759,7 +759,7 @@ class CloudResourceProvisioner:
             self.logger.error(f"Provisioning execution failed: {e}")
             raise
 
-    async def _update_job_progress(self, job: ProvisioningJob, step_description: str, step_number: int):
+    async def _update_job_progress(self, job -> None: ProvisioningJob, step_description -> None: str, step_number -> None: int) -> None:
         """Update job progress."""
         job.steps_completed = step_number
         job.progress_percentage = (step_number / job.steps_total) * 100
@@ -807,7 +807,7 @@ class CloudResourceProvisioner:
             self.logger.error(f"Resource configuration failed: {e}")
             raise
 
-    async def _verify_resource(self, template: ResourceTemplate, cloud_resource_id: str):
+    async def _verify_resource(self, template -> None: ResourceTemplate, cloud_resource_id -> None: str) -> None:
         """Verify resource is working correctly."""
         try:
             # Simulate resource verification
@@ -825,12 +825,12 @@ class CloudResourceProvisioner:
             self.logger.error(f"Resource verification failed: {e}")
             raise
 
-    async def _verify_compute_instance(self, cloud_resource_id: str):
+    async def _verify_compute_instance(self, cloud_resource_id -> None: str) -> None:
         """Verify compute instance is running."""
         # Simulate compute instance verification
         await asyncio.sleep(0.5)
 
-    async def _verify_database(self, cloud_resource_id: str):
+    async def _verify_database(self, cloud_resource_id -> None: str) -> None:
         """Verify database is accessible."""
         # Simulate database verification
         await asyncio.sleep(1)
@@ -1063,7 +1063,7 @@ class CloudResourceProvisioner:
 
 # Example usage and testing
 if __name__ == "__main__":
-    async def main():
+    async def main() -> None:
         # Initialize provisioner
         provisioner = CloudResourceProvisioner()
         

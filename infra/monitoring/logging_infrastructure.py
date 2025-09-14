@@ -1,3 +1,8 @@
+"""
+Logging Infrastructure module
+Enterprise implementation for Ainflue platform
+"""
+
 # Ainflue Infrastructure Module
 # =============================
 # 
@@ -78,7 +83,7 @@ class LoggingInfrastructure:
     - Multi-tenant log isolation
     """
     
-    def __init__(self, config: LoggingConfig):
+    def __init__(self, config -> None: LoggingConfig) -> None:
         self.config = config
         self.logger = self._setup_logging()
         self.elasticsearch_client = None

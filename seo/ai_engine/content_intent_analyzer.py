@@ -107,7 +107,7 @@ class ContentIntentConfig:
 class ContentIntentAnalyzer:
     """Advanced content intent analysis engine."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the Content Intent Analyzer."""
         self.intent_signals = IntentSignals()
         self.intent_classifier = None
@@ -126,7 +126,7 @@ class ContentIntentAnalyzer:
             "retention": ["support", "help", "maintenance", "upgrade", "renew"]
         }
     
-    def _load_models(self):
+    def _load_models(self) -> None:
         """Load AI models for intent analysis."""
         try:
             # Load zero-shot classification model

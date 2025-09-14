@@ -99,14 +99,14 @@ class ProjectComplexity:
 class PythonComplexityVisitor(ast.NodeVisitor):
     """Custom AST visitor for detailed complexity analysis"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.complexity_data = []
         self.current_function = None
         self.current_class = None
         self.nesting_depth = 0
         self.max_nesting_depth = 0
 
-    def visit_FunctionDef(self, node):
+    def visit_FunctionDef(self, node) -> None:
         """Visit function definition"""
         old_function = self.current_function
         self.current_function = node.name
@@ -128,11 +128,11 @@ class PythonComplexityVisitor(ast.NodeVisitor):
         self.generic_visit(node)
         self.current_function = old_function
 
-    def visit_AsyncFunctionDef(self, node):
+    def visit_AsyncFunctionDef(self, node) -> None:
         """Visit async function definition"""
         self.visit_FunctionDef(node)
 
-    def visit_ClassDef(self, node):
+    def visit_ClassDef(self, node) -> None:
         """Visit class definition"""
         old_class = self.current_class
         self.current_class = node.name
@@ -153,28 +153,28 @@ class PythonComplexityVisitor(ast.NodeVisitor):
         self.generic_visit(node)
         self.current_class = old_class
 
-    def visit_If(self, node):
+    def visit_If(self, node) -> None:
         """Visit if statement"""
         self.nesting_depth += 1
         self.max_nesting_depth = max(self.max_nesting_depth, self.nesting_depth)
         self.generic_visit(node)
         self.nesting_depth -= 1
 
-    def visit_For(self, node):
+    def visit_For(self, node) -> None:
         """Visit for loop"""
         self.nesting_depth += 1
         self.max_nesting_depth = max(self.max_nesting_depth, self.nesting_depth)
         self.generic_visit(node)
         self.nesting_depth -= 1
 
-    def visit_While(self, node):
+    def visit_While(self, node) -> None:
         """Visit while loop"""
         self.nesting_depth += 1
         self.max_nesting_depth = max(self.max_nesting_depth, self.nesting_depth)
         self.generic_visit(node)
         self.nesting_depth -= 1
 
-    def _calculate_cyclomatic_complexity(self, node):
+    def _calculate_cyclomatic_complexity(self, node) -> None:
         """Calculate cyclomatic complexity for a function"""
         complexity = 1  # Base complexity
         
@@ -190,12 +190,12 @@ class PythonComplexityVisitor(ast.NodeVisitor):
         
         return complexity
 
-    def _calculate_cognitive_complexity(self, node):
+    def _calculate_cognitive_complexity(self, node) -> None:
         """Calculate cognitive complexity (more intuitive than cyclomatic)"""
         complexity = 0
         nesting_level = 0
         
-        def calculate_recursive(node, nesting):
+        def calculate_recursive(node, nesting) -> None:
             nonlocal complexity
             
             for child in ast.iter_child_nodes(node):
@@ -212,11 +212,11 @@ class PythonComplexityVisitor(ast.NodeVisitor):
         calculate_recursive(node, 0)
         return complexity
 
-    def _calculate_max_nesting_depth(self, node):
+    def _calculate_max_nesting_depth(self, node) -> None:
         """Calculate maximum nesting depth in a function"""
         max_depth = 0
         
-        def calculate_depth(node, current_depth=0):
+        def calculate_depth(node, current_depth=0) -> None:
             nonlocal max_depth
             max_depth = max(max_depth, current_depth)
             
@@ -229,7 +229,7 @@ class PythonComplexityVisitor(ast.NodeVisitor):
         calculate_depth(node)
         return max_depth
 
-    def _calculate_class_coupling(self, node):
+    def _calculate_class_coupling(self, node) -> None:
         """Calculate coupling between classes (simplified)"""
         coupling = 0
         
@@ -246,7 +246,7 @@ class CodeComplexityAnalyzer:
     Advanced code complexity analyzer for Python projects
     """
     
-    def __init__(self, project_root: Optional[str] = None):
+    def __init__(self, project_root -> None: Optional[str] = None) -> None:
         """Initialize complexity analyzer"""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self.project_root = Path(project_root or ".")

@@ -86,16 +86,16 @@ class BaseEnterpriseIntegration:
     """
 Base class for enterprise integrations"""
     
-    def __init__(self, config: IntegrationConfig):
+    def __init__(self, config -> None: IntegrationConfig) -> None:
         self.config = config
         self.logger = logging.getLogger(self.__class__.__name__)
         self.session: Optional[aiohttp.ClientSession] = None
     
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         self.session = aiohttp.ClientSession()
         return self
     
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         try:
             logger.info(f"Executing __aexit__")
             
@@ -543,12 +543,12 @@ Send alert to PagerDuty as incident"""
 class AWSCloudWatchIntegration(BaseEnterpriseIntegration):
     """AWS CloudWatch integration for metrics and alarms"""
     
-    def __init__(self, config: IntegrationConfig):
+    def __init__(self, config -> None: IntegrationConfig) -> None:
         super().__init__(config)
         self.cloudwatch_client = None
         self._initialize_aws_client()
     
-    def _initialize_aws_client(self):
+    def _initialize_aws_client(self) -> None:
         """
 Initialize AWS CloudWatch client"""
         try:
@@ -663,7 +663,7 @@ class EnterpriseIntegrationManager:
     unified interface for alerts, metrics, and monitoring.
     """
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
         

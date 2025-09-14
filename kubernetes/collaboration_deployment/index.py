@@ -174,7 +174,7 @@ class CollaborationDeploymentCoordinator:
     while maintaining high availability, security, and performance
     for creator collaboration workflows.
     """
-    def __init__(self, config: CollaborationDeploymentConfig):
+    def __init__(self, config -> None: CollaborationDeploymentConfig) -> None:
         """
 Initialize the collaboration deployment coordinator."""
         self.config = config
@@ -909,7 +909,7 @@ async def deploy_ia_influencer_collaboration_platform(
 
 
 # Module initialization
-def initialize_collaboration_deployment_module():
+def initialize_collaboration_deployment_module() -> None:
     """Initialize the collaboration deployment module."""
     logger.info("IA Influencer Agent - Collaboration Deployment Module Loaded")
     logger.info("Ready for creator collaboration infrastructure deployment")

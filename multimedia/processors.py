@@ -92,7 +92,7 @@ class ContentProcessor(ABC):
     """
 Abstract base class for content processors"""
     
-    def __init__(self, options: Optional[ProcessingOptions] = None):
+    def __init__(self, options -> None: Optional[ProcessingOptions] = None) -> None:
         self.options = options or ProcessingOptions()
         self.temp_dir = self.options.temp_dir or Path(tempfile.gettempdir())
         self.executor = ThreadPoolExecutor(max_workers=4)
@@ -126,7 +126,7 @@ Process content and return result"""
 Generate unique content identifier"""
         return hashlib.sha256(content_data[:1024]).hexdigest()[:16]
     
-    async def cleanup(self):
+    async def cleanup(self) -> None:
         """
 Clean up resources"""
         if hasattr(self, 'executor'):
@@ -137,7 +137,7 @@ class AudioProcessor(ContentProcessor):
     """
 Professional audio content processor"""
     
-    def __init__(self, options: Optional[ProcessingOptions] = None):
+    def __init__(self, options -> None: Optional[ProcessingOptions] = None) -> None:
         super().__init__(options)
         self.supported_formats = {fmt.value for fmt in AudioFormat}
         self.speech_recognizer = sr.Recognizer()
@@ -388,7 +388,7 @@ Apply audio enhancements"""
 class VideoProcessor(ContentProcessor):
     """Professional video content processor"""
     
-    def __init__(self, options: Optional[ProcessingOptions] = None):
+    def __init__(self, options -> None: Optional[ProcessingOptions] = None) -> None:
         super().__init__(options)
         self.supported_formats = {fmt.value for fmt in VideoFormat}
         
@@ -739,7 +739,7 @@ Analyze audio track of video"""
 class ImageProcessor(ContentProcessor):
     """Professional image content processor"""
     
-    def __init__(self, options: Optional[ProcessingOptions] = None):
+    def __init__(self, options -> None: Optional[ProcessingOptions] = None) -> None:
         super().__init__(options)
         self.supported_formats = {fmt.value for fmt in ImageFormat}
         
@@ -1184,7 +1184,7 @@ Apply image enhancements"""
 class MultimediaProcessor:
     """Unified multimedia processor for all content types"""
     
-    def __init__(self, options: Optional[ProcessingOptions] = None):
+    def __init__(self, options -> None: Optional[ProcessingOptions] = None) -> None:
         self.options = options or ProcessingOptions()
         self.processors = {
             ContentFormat.AUDIO: AudioProcessor(options),
@@ -1249,7 +1249,7 @@ Process multimedia content automatically detecting type"""
             ContentFormat.IMAGE: [fmt.value for fmt in ImageFormat]
         }
     
-    async def cleanup(self):
+    async def cleanup(self) -> None:
         """
 Clean up all processors"""
         for processor in self.processors.values():

@@ -151,10 +151,10 @@ class AudioProcessor:
     """
     
     def __init__(self, 
-                 sample_rate: int = 44100,
-                 frame_size: int = 2048,
-                 hop_length: int = 512,
-                 max_workers: int = 4):
+                 sample_rate -> None: int = 44100,
+                 frame_size -> None: int = 2048,
+                 hop_length -> None: int = 512,
+                 max_workers -> None: int = 4) -> None:
         """Initialize audio processor"""
         self.logger = logging.getLogger(self.__class__.__name__)
         self.sample_rate = sample_rate
@@ -341,8 +341,8 @@ class SourceSeparator:
     """
     
     def __init__(self, 
-                 sample_rate: int = 44100,
-                 model: SeparationModel = SeparationModel.DEMUCS_HTDEMUCS):
+                 sample_rate -> None: int = 44100,
+                 model -> None: SeparationModel = SeparationModel.DEMUCS_HTDEMUCS) -> None:
         """Initialize source separator"""
         self.logger = logging.getLogger(self.__class__.__name__)
         self.sample_rate = sample_rate
@@ -1351,7 +1351,7 @@ class VocalSeparator:
     for professional vocal processing.
     """
     
-    def __init__(self, sample_rate: int = 44100):
+    def __init__(self, sample_rate -> None: int = 44100) -> None:
         """Initialize vocal separator"""
         self.logger = logging.getLogger(self.__class__.__name__)
         self.sample_rate = sample_rate
@@ -1398,7 +1398,7 @@ class InstrumentSeparator:
     Specialized separation for individual instruments and instrument groups.
     """
     
-    def __init__(self, sample_rate: int = 44100):
+    def __init__(self, sample_rate -> None: int = 44100) -> None:
         """Initialize instrument separator"""
         self.logger = logging.getLogger(self.__class__.__name__)
         self.sample_rate = sample_rate
@@ -1425,7 +1425,7 @@ class StemExtractor:
     and professional audio production.
     """
     
-    def __init__(self, sample_rate: int = 44100):
+    def __init__(self, sample_rate -> None: int = 44100) -> None:
         """Initialize stem extractor"""
         self.logger = logging.getLogger(self.__class__.__name__)
         self.sample_rate = sample_rate
@@ -1464,7 +1464,7 @@ class BackgroundRemover:
     like speech or primary audio sources.
     """
     
-    def __init__(self, sample_rate: int = 44100):
+    def __init__(self, sample_rate -> None: int = 44100) -> None:
         """Initialize background remover"""
         self.logger = logging.getLogger(self.__class__.__name__)
         self.sample_rate = sample_rate
@@ -1539,9 +1539,9 @@ class BatchProcessor:
     """
     
     def __init__(self, 
-                 max_workers: int = 8,
-                 memory_limit_gb: float = 8.0,
-                 enable_gpu: bool = True):
+                 max_workers -> None: int = 8,
+                 memory_limit_gb -> None: float = 8.0,
+                 enable_gpu -> None: bool = True) -> None:
         """Initialize batch processor with enterprise configuration"""
         self.logger = logging.getLogger(self.__class__.__name__)
         self.max_workers = max_workers
@@ -1711,9 +1711,9 @@ class RealTimeProcessor:
     """
     
     def __init__(self, 
-                 sample_rate: int = 48000,
-                 buffer_size: int = 1024,
-                 target_latency_ms: float = 50.0):
+                 sample_rate -> None: int = 48000,
+                 buffer_size -> None: int = 1024,
+                 target_latency_ms -> None: float = 50.0) -> None:
         """Initialize real-time processor"""
         self.logger = logging.getLogger(self.__class__.__name__)
         self.sample_rate = sample_rate
@@ -1734,7 +1734,7 @@ class RealTimeProcessor:
         
         self.logger.info(f"RealTimeProcessor initialized - Latency target: {target_latency_ms}ms")
     
-    def add_processor(self, processor_func, parameters: Dict[str, Any] = None):
+    def add_processor(self, processor_func, parameters -> None: Dict[str, Any] = None) -> None:
         """Add processor to real-time chain"""
         self.processing_chain.append({
             'function': processor_func,
@@ -1809,7 +1809,7 @@ class QualityPreservationEngine:
     with lossless pipeline guarantees and quality certification.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize quality preservation engine"""
         self.logger = logging.getLogger(self.__class__.__name__)
         

@@ -82,7 +82,7 @@ class CollaborativeEffect:
     version: int = 1
     metadata: Dict[str, Any] = field(default_factory=dict)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.created_at is None:
             self.created_at = datetime.now().timestamp()
         if self.updated_at is None:
@@ -102,7 +102,7 @@ class EffectSession:
     updated_at: Optional[float] = None
     settings: Dict[str, Any] = field(default_factory=dict)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.created_at is None:
             self.created_at = datetime.now().timestamp()
         if self.updated_at is None:
@@ -112,7 +112,7 @@ class EffectSession:
 class CollaborativeEffectsManager:
     """Professional collaborative effects management system"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize collaborative effects manager"""
         self.config = config or {}
         self.sessions: Dict[str, EffectSession] = {}
@@ -127,7 +127,7 @@ class CollaborativeEffectsManager:
         # Initialize conflict handlers
         self._initialize_conflict_handlers()
     
-    def _initialize_effect_processors(self):
+    def _initialize_effect_processors(self) -> None:
         """Initialize effect processing functions"""
         self.effect_processors.update({
             EffectType.FILTER: self._process_filter_effect,
@@ -141,7 +141,7 @@ class CollaborativeEffectsManager:
             EffectType.TRANSFORMATION: self._process_transformation_effect
         })
     
-    def _initialize_conflict_handlers(self):
+    def _initialize_conflict_handlers(self) -> None:
         """Initialize conflict resolution handlers"""
         self.conflict_handlers.update({
             'parameter_conflict': self._handle_parameter_conflict,
@@ -512,10 +512,10 @@ class CollaborativeEffectsManager:
     
     async def _resolve_conflicts(
         self,
-        session: EffectSession,
-        new_effect: CollaborativeEffect,
-        conflicts: List[Dict[str, Any]]
-    ):
+        session -> None: EffectSession,
+        new_effect -> None: CollaborativeEffect,
+        conflicts -> None: List[Dict[str, Any]]
+    ) -> None:
         """Resolve detected conflicts"""
         try:
             for conflict in conflicts:
@@ -533,10 +533,10 @@ class CollaborativeEffectsManager:
     
     async def _handle_timeline_conflict(
         self,
-        session: EffectSession,
-        new_effect: CollaborativeEffect,
-        conflict: Dict[str, Any]
-    ):
+        session -> None: EffectSession,
+        new_effect -> None: CollaborativeEffect,
+        conflict -> None: Dict[str, Any]
+    ) -> None:
         """Handle timeline conflicts"""
         try:
             # Auto-adjust layer to avoid conflict
@@ -554,10 +554,10 @@ class CollaborativeEffectsManager:
     
     async def _handle_parameter_conflict(
         self,
-        session: EffectSession,
-        new_effect: CollaborativeEffect,
-        conflict: Dict[str, Any]
-    ):
+        session -> None: EffectSession,
+        new_effect -> None: CollaborativeEffect,
+        conflict -> None: Dict[str, Any]
+    ) -> None:
         """Handle parameter conflicts"""
         try:
             # Merge parameters or use versioning
@@ -570,10 +570,10 @@ class CollaborativeEffectsManager:
     
     async def _handle_layer_conflict(
         self,
-        session: EffectSession,
-        new_effect: CollaborativeEffect,
-        conflict: Dict[str, Any]
-    ):
+        session -> None: EffectSession,
+        new_effect -> None: CollaborativeEffect,
+        conflict -> None: Dict[str, Any]
+    ) -> None:
         """Handle layer conflicts"""
         try:
             # Find next available layer
@@ -591,10 +591,10 @@ class CollaborativeEffectsManager:
     
     async def _handle_version_conflict(
         self,
-        session: EffectSession,
-        new_effect: CollaborativeEffect,
-        conflict: Dict[str, Any]
-    ):
+        session -> None: EffectSession,
+        new_effect -> None: CollaborativeEffect,
+        conflict -> None: Dict[str, Any]
+    ) -> None:
         """Handle version conflicts"""
         try:
             # Create branched version
@@ -691,10 +691,10 @@ class CollaborativeEffectsManager:
     # Synchronization methods
     async def _sync_effect_update(
         self,
-        session_id: str,
-        effect: CollaborativeEffect,
-        action: str
-    ):
+        session_id -> None: str,
+        effect -> None: CollaborativeEffect,
+        action -> None: str
+    ) -> None:
         """Sync effect updates with participants"""
         try:
             sync_data = {
@@ -713,13 +713,13 @@ class CollaborativeEffectsManager:
     
     async def _sync_parameter_update(
         self,
-        session_id: str,
-        effect_id: str,
-        parameter_name: str,
-        old_value: Any,
-        new_value: Any,
-        user_id: str
-    ):
+        session_id -> None: str,
+        effect_id -> None: str,
+        parameter_name -> None: str,
+        old_value -> None: Any,
+        new_value -> None: Any,
+        user_id -> None: str
+    ) -> None:
         """Sync parameter updates with participants"""
         try:
             sync_data = {
@@ -740,12 +740,12 @@ class CollaborativeEffectsManager:
     
     async def _sync_parameter_lock(
         self,
-        session_id: str,
-        effect_id: str,
-        parameter_name: str,
-        user_id: str,
-        locked: bool
-    ):
+        session_id -> None: str,
+        effect_id -> None: str,
+        parameter_name -> None: str,
+        user_id -> None: str,
+        locked -> None: bool
+    ) -> None:
         """Sync parameter lock status with participants"""
         try:
             sync_data = {

@@ -52,7 +52,7 @@ class APIGateway:
     - Creator workflow optimization
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         # Core API managers
         self.rest_api_manager = RESTAPIManager()
         self.rate_limiter = RateLimiter()
@@ -98,7 +98,7 @@ class APIGateway:
         
         logger.info("API Gateway initialized for creator platform")
     
-    def _initialize_ainflue_gateway(self):
+    def _initialize_ainflue_gateway(self) -> None:
         """Initialize Ainflue creator platform specific gateway configuration"""
         
         # Creator-specific middleware
@@ -604,7 +604,7 @@ class APIGateway:
         
         return {'valid': False}
     
-    def _update_average_response_time(self, response_time_ms: float):
+    def _update_average_response_time(self, response_time_ms -> None: float) -> None:
         """Update average response time metric"""
         current_avg = self.gateway_metrics['average_response_time']
         total_requests = self.gateway_metrics['total_requests']
@@ -653,17 +653,17 @@ class APIGateway:
         
         return status
     
-    async def add_middleware(self, middleware_func):
+    async def add_middleware(self, middleware_func) -> None:
         """Add custom middleware to the stack"""
         self.middleware_stack.append(middleware_func)
         logger.info("Custom middleware added to gateway")
     
-    async def add_request_interceptor(self, interceptor_func):
+    async def add_request_interceptor(self, interceptor_func) -> None:
         """Add request interceptor"""
         self.request_interceptors.append(interceptor_func)
         logger.info("Request interceptor added to gateway")
     
-    async def add_response_interceptor(self, interceptor_func):
+    async def add_response_interceptor(self, interceptor_func) -> None:
         """Add response interceptor"""
         self.response_interceptors.append(interceptor_func)
         logger.info("Response interceptor added to gateway")

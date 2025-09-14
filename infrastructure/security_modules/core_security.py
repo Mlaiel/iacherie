@@ -49,7 +49,7 @@ class SecretConfig:
 class SecurityManager:
     """Unified security management interface"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.certificate_manager = CertificateManager()
         self.vault_manager = VaultManager()
         self.policy_manager = PolicyManager()
@@ -59,7 +59,7 @@ class SecurityManager:
 class CertificateManager:
     """Certificate management"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.certificates = {}
         self.logger = logging.getLogger(__name__)
     
@@ -98,7 +98,7 @@ class CertificateManager:
 class VaultManager:
     """HashiCorp Vault management"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.secrets = {}
         self.logger = logging.getLogger(__name__)
     
@@ -136,7 +136,7 @@ class VaultManager:
 class PolicyManager:
     """Security policy management"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.policies = {}
         self.logger = logging.getLogger(__name__)
     
@@ -181,7 +181,7 @@ class PolicyManager:
 class ComplianceManager:
     """Compliance and audit management"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.compliance_frameworks = ['GDPR', 'PCI-DSS', 'SOC2', 'ISO27001']
         self.audit_logs = []
         self.logger = logging.getLogger(__name__)

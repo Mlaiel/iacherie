@@ -260,7 +260,7 @@ class TaskScheduler:
     resource optimization, and load balancing.
     """
     
-    def __init__(self, config: CompleteAIProcessingConfig):
+    def __init__(self, config -> None: CompleteAIProcessingConfig) -> None:
         """
 Initialize task scheduler."""
         self.config = config
@@ -280,14 +280,14 @@ Initialize task scheduler."""
         self.scheduling_duration = Histogram('ai_scheduling_duration_seconds', 'Task scheduling duration')
         self.queue_size = Gauge('ai_task_queue_size', 'Current task queue size')
         
-    def add_node(self, node_capacity: NodeCapacity):
+    def add_node(self, node_capacity -> None: NodeCapacity) -> None:
         """
 Add computational node to scheduler."""
         with self.scheduler_lock:
             self.node_capacities[node_capacity.node_id] = node_capacity
             logger.info(f"Added node to scheduler: {node_capacity.node_name}")
     
-    def remove_node(self, node_id: str):
+    def remove_node(self, node_id -> None: str) -> None:
         """Remove computational node from scheduler."""
         with self.scheduler_lock:
             if node_id in self.node_capacities:
@@ -296,7 +296,7 @@ Add computational node to scheduler."""
                 del self.node_capacities[node_id]
                 logger.info(f"Removed node from scheduler: {node_id}")
     
-    def _reschedule_node_tasks(self, node_id: str):
+    def _reschedule_node_tasks(self, node_id -> None: str) -> None:
         """Reschedule tasks from unavailable node."""
         tasks_to_reschedule = []
         
@@ -405,7 +405,7 @@ Calculate node score for task assignment."""
         
         return total_score
     
-    async def start_scheduler(self):
+    async def start_scheduler(self) -> None:
         """
 Start the task scheduler."""
         self.is_running = True
@@ -415,7 +415,7 @@ Start the task scheduler."""
         scheduler_task = asyncio.create_task(self._scheduler_loop())
         return scheduler_task
     
-    async def _scheduler_loop(self):
+    async def _scheduler_loop(self) -> None:
         """Main scheduler loop."""
         while self.is_running:
             try:
@@ -449,7 +449,7 @@ Start the task scheduler."""
                 logger.error(f"Error in scheduler loop: {e}")
                 await asyncio.sleep(5)
     
-    async def _assign_task_to_node(self, execution: TaskExecution, node: NodeCapacity):
+    async def _assign_task_to_node(self, execution -> None: TaskExecution, node -> None: NodeCapacity) -> None:
         """Assign task execution to specific node."""
         try:
             # Update execution info
@@ -473,7 +473,7 @@ Start the task scheduler."""
             execution.status = TaskStatus.FAILED
             execution.error_message = str(e)
     
-    def _reserve_node_resources(self, node: NodeCapacity, task: TaskDefinition):
+    def _reserve_node_resources(self, node -> None: NodeCapacity, task -> None: TaskDefinition) -> None:
         """Reserve node resources for task execution."""
         node.used_cpu_cores += task.cpu_cores
         node.used_memory_mb += task.memory_mb
@@ -482,7 +482,7 @@ Start the task scheduler."""
             node.used_gpu_count += 1
             node.used_gpu_memory_mb += task.gpu_memory_mb
     
-    def _release_node_resources(self, node: NodeCapacity, task: TaskDefinition):
+    def _release_node_resources(self, node -> None: NodeCapacity, task -> None: TaskDefinition) -> None:
         """
 Release node resources after task completion."""
         node.used_cpu_cores = max(0, node.used_cpu_cores - task.cpu_cores)
@@ -555,7 +555,7 @@ Execute task and return updated execution info."""
         
         return execution
     
-    async def _update_node_heartbeats(self):
+    async def _update_node_heartbeats(self) -> None:
         """Update node heartbeat information."""
         current_time = datetime.utcnow()
         heartbeat_timeout = timedelta(minutes=5)
@@ -567,7 +567,7 @@ Execute task and return updated execution info."""
                     node.is_healthy = False
                     logger.warning(f"Node {node.node_name} heartbeat timeout")
     
-    def _cleanup_completed_tasks(self):
+    def _cleanup_completed_tasks(self) -> None:
         """Clean up old completed and failed tasks."""
         cutoff_time = datetime.utcnow() - timedelta(hours=24)
         
@@ -628,7 +628,7 @@ Cancel task execution."""
         
         return False
     
-    async def stop_scheduler(self):
+    async def stop_scheduler(self) -> None:
         """Stop the task scheduler."""
         self.is_running = False
         
@@ -648,7 +648,7 @@ class WorkflowOrchestrator:
     with dependency resolution, parallel execution, and fault tolerance.
     """
     
-    def __init__(self, config: CompleteAIProcessingConfig, task_scheduler: TaskScheduler):
+    def __init__(self, config -> None: CompleteAIProcessingConfig, task_scheduler -> None: TaskScheduler) -> None:
         """
 Initialize workflow orchestrator."""
         self.config = config
@@ -663,7 +663,7 @@ Initialize workflow orchestrator."""
         self.workflows_completed = Counter('ai_workflows_completed_total', 'Total workflows completed')
         self.workflows_failed = Counter('ai_workflows_failed_total', 'Total workflows failed')
         
-    def register_workflow(self, workflow_definition: WorkflowDefinition):
+    def register_workflow(self, workflow_definition -> None: WorkflowDefinition) -> None:
         """
 Register workflow definition."""
         self.workflows[workflow_definition.workflow_id] = workflow_definition
@@ -699,13 +699,13 @@ Register workflow definition."""
             logger.info(f"Started workflow: {workflow_definition.workflow_name}")
             return execution_id
     
-    def _apply_parameters_to_tasks(self, execution: WorkflowExecution, parameters: Dict[str, Any]):
+    def _apply_parameters_to_tasks(self, execution -> None: WorkflowExecution, parameters -> None: Dict[str, Any]) -> None:
         """Apply runtime parameters to workflow tasks."""
         for task in execution.workflow_definition.tasks:
             # Update task parameters with workflow parameters
             task.parameters.update(parameters)
     
-    async def _execute_workflow(self, execution: WorkflowExecution):
+    async def _execute_workflow(self, execution -> None: WorkflowExecution) -> None:
         """
 Execute workflow with dependency resolution and parallel execution."""
         try:
@@ -755,8 +755,8 @@ Execute workflow with dependency resolution and parallel execution."""
         
         return graph
     
-    async def _execute_tasks_with_dependencies(self, execution: WorkflowExecution, 
-                                             dependency_graph: Dict[str, Set[str]]):
+    async def _execute_tasks_with_dependencies(self, execution -> None: WorkflowExecution, 
+                                             dependency_graph -> None: Dict[str, Set[str]]) -> None:
         """
 Execute tasks respecting dependencies and parallel execution limits."""
         completed_tasks = set()
@@ -890,7 +890,7 @@ class DistributedOrchestrator:
     across multiple nodes and clusters with fault tolerance.
     """
     
-    def __init__(self, config: CompleteAIProcessingConfig):
+    def __init__(self, config -> None: CompleteAIProcessingConfig) -> None:
         """
 Initialize distributed orchestrator."""
         self.config = config
@@ -908,7 +908,7 @@ Initialize distributed orchestrator."""
         self.active_nodes: Dict[str, Dict[str, Any]] = {}
         self.node_heartbeat_interval = 30  # seconds
         
-    async def initialize(self):
+    async def initialize(self) -> None:
         """
 Initialize distributed orchestrator."""
         try:
@@ -945,7 +945,7 @@ Initialize distributed orchestrator."""
             logger.error(f"Failed to initialize distributed orchestrator: {e}")
             raise
     
-    async def _initialize_redis(self):
+    async def _initialize_redis(self) -> None:
         """Initialize Redis client for coordination."""
         if self.config.redis:
             self.redis_client = aioredis.Redis(
@@ -959,7 +959,7 @@ Initialize distributed orchestrator."""
             await self.redis_client.ping()
             logger.info("Redis client initialized for distributed coordination")
     
-    async def _initialize_celery(self):
+    async def _initialize_celery(self) -> None:
         """Initialize Celery for distributed task execution."""
         if self.redis_client:
             redis_url = f"redis://{self.config.redis.host}:{self.config.redis.port}/{self.config.redis.database}"
@@ -984,7 +984,7 @@ Initialize distributed orchestrator."""
             
             logger.info("Celery initialized for distributed task execution")
     
-    async def _register_node(self):
+    async def _register_node(self) -> None:
         """Register this node in the distributed system."""
         if not self.redis_client:
             return
@@ -1010,7 +1010,7 @@ Initialize distributed orchestrator."""
         
         logger.info(f"Registered node in distributed system: {node_info['node_name']}")
     
-    async def _leader_election_loop(self):
+    async def _leader_election_loop(self) -> None:
         """Leader election loop using Redis."""
         while True:
             try:
@@ -1043,17 +1043,17 @@ Initialize distributed orchestrator."""
                 logger.error(f"Error in leader election: {e}")
                 await asyncio.sleep(10)
     
-    async def _on_become_leader(self):
+    async def _on_become_leader(self) -> None:
         """Actions to take when becoming leader."""
         # Leader is responsible for workflow scheduling and cluster coordination
         logger.info("Taking leadership responsibilities")
     
-    async def _on_lose_leadership(self):
+    async def _on_lose_leadership(self) -> None:
         """Actions to take when losing leadership."""
         # Stop leader-specific tasks
         logger.info("Relinquishing leadership responsibilities")
     
-    async def _heartbeat_loop(self):
+    async def _heartbeat_loop(self) -> None:
         """Send periodic heartbeats to indicate node health."""
         while True:
             try:
@@ -1079,7 +1079,7 @@ Initialize distributed orchestrator."""
                 logger.error(f"Error sending heartbeat: {e}")
                 await asyncio.sleep(self.node_heartbeat_interval)
     
-    async def _node_discovery_loop(self):
+    async def _node_discovery_loop(self) -> None:
         """Discover and monitor other nodes in the cluster."""
         while True:
             try:
@@ -1105,7 +1105,7 @@ Initialize distributed orchestrator."""
                 logger.error(f"Error in node discovery: {e}")
                 await asyncio.sleep(60)
     
-    async def _update_scheduler_nodes(self):
+    async def _update_scheduler_nodes(self) -> None:
         """Update task scheduler with current node information."""
         current_time = datetime.utcnow()
         
@@ -1194,7 +1194,7 @@ Get current cluster leader."""
             return leader.decode('utf-8') if leader else None
         return None
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Shutdown distributed orchestrator."""
         try:
             # Stop task scheduler

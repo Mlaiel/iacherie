@@ -1,3 +1,8 @@
+"""
+Rbac Configuration module
+Enterprise implementation for Ainflue platform
+"""
+
 # Ainflue Infrastructure Module - RBAC Configuration
 # =================================================
 # 
@@ -135,7 +140,7 @@ class RBACConfigurator:
     access control across the Ainflue platform.
     """
     
-    def __init__(self, config_path: Optional[str] = None):
+    def __init__(self, config_path -> None: Optional[str] = None) -> None:
         """Initialize RBAC configurator"""
         self.config_path = config_path or "/home/runner/work/Ainflue/Ainflue/infra/security"
         self.roles: Dict[str, Role] = {}

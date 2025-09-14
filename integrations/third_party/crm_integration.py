@@ -160,7 +160,7 @@ class CRMIntegrationService:
     - GDPR compliant data management
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize CRM Integration Service"""
         
         # Platform configurations
@@ -1029,7 +1029,7 @@ class CRMIntegrationService:
 class SalesforceConnector:
     """Salesforce API connector"""
     
-    def __init__(self, client_id: str, client_secret: str, username: str, password: str, security_token: str, instance_url: str):
+    def __init__(self, client_id -> None: str, client_secret -> None: str, username -> None: str, password -> None: str, security_token -> None: str, instance_url -> None: str) -> None:
         self.client_id = client_id
         self.client_secret = client_secret
         self.username = username
@@ -1084,7 +1084,7 @@ class SalesforceConnector:
 class HubSpotConnector:
     """HubSpot API connector"""
     
-    def __init__(self, api_key: str, portal_id: str):
+    def __init__(self, api_key -> None: str, portal_id -> None: str) -> None:
         self.api_key = api_key
         self.portal_id = portal_id
         self.base_url = "https://api.hubapi.com"
@@ -1132,7 +1132,7 @@ class HubSpotConnector:
 class PipedriveConnector:
     """Pipedrive API connector"""
     
-    def __init__(self, api_token: str, company_domain: str):
+    def __init__(self, api_token -> None: str, company_domain -> None: str) -> None:
         self.api_token = api_token
         self.company_domain = company_domain
         self.base_url = f"https://{company_domain}.pipedrive.com/api/v1"
@@ -1179,7 +1179,7 @@ class PipedriveConnector:
 class ZohoConnector:
     """Zoho CRM API connector"""
     
-    def __init__(self, client_id: str, client_secret: str, refresh_token: str, region: str = "com"):
+    def __init__(self, client_id -> None: str, client_secret -> None: str, refresh_token -> None: str, region -> None: str = "com") -> None:
         self.client_id = client_id
         self.client_secret = client_secret
         self.refresh_token = refresh_token
@@ -1227,7 +1227,7 @@ class ZohoConnector:
         return {"activity_id": str(uuid.uuid4())}
 
 # Example usage and testing
-async def main():
+async def main() -> None:
     """Example usage of CRM Integration Service"""
     
     # Initialize CRM service

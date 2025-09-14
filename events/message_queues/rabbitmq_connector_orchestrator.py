@@ -235,9 +235,9 @@ class RabbitMQConnectorOrchestrator:
     """
     
     def __init__(self,
-                 connection_url: str,
-                 encryption_manager: Optional[EncryptionManager] = None,
-                 metrics_collector: Optional[MetricsCollector] = None):
+                 connection_url -> None: str,
+                 encryption_manager -> None: Optional[EncryptionManager] = None,
+                 metrics_collector -> None: Optional[MetricsCollector] = None) -> None:
         self.connection_url = connection_url
         self.encryption = encryption_manager
         self.metrics = metrics_collector
@@ -285,7 +285,7 @@ class RabbitMQConnectorOrchestrator:
             logger.error(f"Failed to connect to RabbitMQ: {str(e)}")
             raise MessageQueueError(f"RabbitMQ connection failed: {str(e)}")
     
-    async def disconnect(self):
+    async def disconnect(self) -> None:
         """Close RabbitMQ connection"""
         try:
             if self.is_connected:
@@ -585,12 +585,12 @@ class RabbitMQConnectorOrchestrator:
             logger.error(f"Error publishing message: {str(e)}")
             raise MessageQueueError(f"Message publishing failed: {str(e)}")
     
-    async def _setup_publisher_confirms(self):
+    async def _setup_publisher_confirms(self) -> None:
         """Setup publisher confirmation mode"""
         # Placeholder for publisher confirms setup
         logger.info("Publisher confirms enabled")
     
-    async def _setup_dead_letter_exchanges(self):
+    async def _setup_dead_letter_exchanges(self) -> None:
         """Setup dead letter exchanges for error handling"""
         dlx_exchanges = [
             RabbitMQExchange("ainflue.content.dlx", ExchangeType.DIRECT),
@@ -605,17 +605,17 @@ class RabbitMQConnectorOrchestrator:
         
         self.dlx_configured = True
     
-    async def _declare_exchange(self, exchange: RabbitMQExchange):
+    async def _declare_exchange(self, exchange -> None: RabbitMQExchange) -> None:
         """Declare RabbitMQ exchange"""
         # Placeholder for exchange declaration
         logger.debug(f"Declaring exchange: {exchange.name} ({exchange.type.value})")
     
-    async def _declare_queue(self, queue: RabbitMQQueue):
+    async def _declare_queue(self, queue -> None: RabbitMQQueue) -> None:
         """Declare RabbitMQ queue"""
         # Placeholder for queue declaration
         logger.debug(f"Declaring queue: {queue.name}")
     
-    async def _setup_bindings(self):
+    async def _setup_bindings(self) -> None:
         """Setup queue bindings"""
         bindings = [
             # Content bindings
@@ -652,7 +652,7 @@ class RabbitMQConnectorOrchestrator:
             await self._create_binding(binding)
             logger.debug(f"Created binding: {binding.queue} -> {binding.exchange}")
     
-    async def _create_binding(self, binding: RabbitMQBinding):
+    async def _create_binding(self, binding -> None: RabbitMQBinding) -> None:
         """Create queue binding"""
         # Placeholder for binding creation
         pass
@@ -662,7 +662,7 @@ class RabbitMQConnectorOrchestrator:
         # Placeholder for encryption
         return payload
     
-    async def _update_metrics(self, action: str, data: Dict[str, Any]):
+    async def _update_metrics(self, action -> None: str, data -> None: Dict[str, Any]) -> None:
         """Update metrics"""
         if not self.metrics:
             return

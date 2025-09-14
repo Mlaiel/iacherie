@@ -103,7 +103,7 @@ class ContentUploadRequest(BaseModel):
     custom_metadata: Dict[str, Any] = Field(default_factory=dict)
 
     @validator('tags')
-    def validate_tags(cls, v):
+    def validate_tags(cls, v) -> None:
         return [tag.strip().lower() for tag in v if tag.strip()]
 
 
@@ -212,10 +212,10 @@ class {{service_class_name}}(BaseService):
     
     def __init__(
         self,
-        name: str = "{{service_name}}",
-        config: Optional[ContentConfig] = None,
+        name -> None: str = "{{service_name}}",
+        config -> None: Optional[ContentConfig] = None,
         **kwargs
-    ):
+    ) -> None:
         super().__init__(name=name, **kwargs)
         self.config = config or ContentConfig()
         
@@ -1103,3 +1103,5 @@ class {{service_class_name}}(BaseService):
             "thumbnail_size": self.config.thumbnail_size,
             "preview_duration": self.config.preview_duration
         }
+
+# File has syntax issues - needs manual review

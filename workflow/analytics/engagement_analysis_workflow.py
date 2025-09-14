@@ -127,7 +127,7 @@ class EngagementAnalysisWorkflow:
     audience behavior patterns, community building insights, and optimization strategies.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize engagement analysis workflow."""
         self.engagement_data = defaultdict(list)
         self.quality_weights = {
@@ -837,7 +837,7 @@ class EngagementAnalysisWorkflow:
         middle_events = events[third:2*third]
         late_events = events[2*third:]
         
-        def get_type_distribution(event_list):
+        def get_type_distribution(event_list) -> None:
             types = [event.engagement_type for event in event_list]
             total = len(types)
             return {eng_type.value: types.count(eng_type) / total for eng_type in EngagementType if types.count(eng_type) > 0}

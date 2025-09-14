@@ -88,6 +88,7 @@ Configuration principale du système de suivi des droits"""
     CACHE_ENABLED: bool = Field(default=True, env="CACHE_ENABLED")
     
     class Config:
+    """Config: class implementation"""
         env_file = ".env"
         case_sensitive = True
 

@@ -1,3 +1,8 @@
+"""
+  Init   module
+Enterprise implementation for Ainflue platform
+"""
+
 # 🤝 Collaboration Deployment - IA Influencer Agent
 # =================================================
 # Auteur: Fahed Mlaiel <mlaiel@live.de>

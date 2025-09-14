@@ -1,3 +1,9 @@
+"""
+Project Updates module
+Enterprise implementation for Ainflue platform
+"""
+
 # Collaboration Engine: project_updates.py
 class ProjectUpdatesEngine: 
-    def __init__(self, config=None): pass
+    """ProjectUpdatesEngine: class implementation"""
+    def __init__(self, config=None) -> None: pass

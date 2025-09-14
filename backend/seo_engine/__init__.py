@@ -1,4 +1,7 @@
 """
+import asyncio
+from typing import Dict, List, Optional, Union, Tuple
+
 🔍 SEO ENGINE MODULE - Architecture Consolidée Complète v4.0.0
 ========================================================
 
@@ -203,7 +206,7 @@ class ConsolidatedSEOEngine:
     Simplifie l'utilisation et assure la cohérence architecturale.
     """
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         """Initialize consolidated SEO engine"""
         self.config = config or {}
         

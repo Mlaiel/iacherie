@@ -204,10 +204,10 @@ class NotificationStreams:
     
     def __init__(
         self,
-        enable_real_time: bool = True,
-        enable_throttling: bool = True,
-        max_retry_attempts: int = 3
-    ):
+        enable_real_time -> None: bool = True,
+        enable_throttling -> None: bool = True,
+        max_retry_attempts -> None: int = 3
+    ) -> None:
         # Configuration
         self.enable_real_time = enable_real_time
         self.enable_throttling = enable_throttling
@@ -1106,21 +1106,21 @@ class NotificationStreams:
         """Register default channel handlers"""
         try:
             # Email handler (simulated)
-            async def email_handler(notification, recipients, formatted_message):
+            async def email_handler(notification, recipients, formatted_message) -> None:
                 # Simulate email sending
                 await asyncio.sleep(0.1)  # Simulate network delay
                 logger.info(f"Email sent: {formatted_message['subject']} to {len(recipients)} recipients")
                 return True
                 
             # SMS handler (simulated)
-            async def sms_handler(notification, recipients, formatted_message):
+            async def sms_handler(notification, recipients, formatted_message) -> None:
                 # Simulate SMS sending
                 await asyncio.sleep(0.05)  # Simulate network delay
                 logger.info(f"SMS sent: {formatted_message['body'][:50]}... to {len(recipients)} recipients")
                 return True
                 
             # WebHook handler (simulated)
-            async def webhook_handler(notification, recipients, formatted_message):
+            async def webhook_handler(notification, recipients, formatted_message) -> None:
                 # Simulate webhook call
                 await asyncio.sleep(0.1)  # Simulate network delay
                 logger.info(f"Webhook called for notification {notification.notification_id}")

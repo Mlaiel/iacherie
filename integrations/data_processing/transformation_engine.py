@@ -95,7 +95,7 @@ class TransformationContext:
 class DataTransformationEngine:
     """Advanced data transformation engine."""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
         
@@ -121,7 +121,7 @@ class DataTransformationEngine:
         self._setup_built_in_functions()
         self._setup_format_converters()
     
-    def _setup_built_in_functions(self):
+    def _setup_built_in_functions(self) -> None:
         """Setup built-in transformation functions."""
         self.custom_functions.update({
             'to_uppercase': lambda x: str(x).upper() if x is not None else None,
@@ -140,7 +140,7 @@ class DataTransformationEngine:
             'current_timestamp': lambda: datetime.now().isoformat(),
         })
     
-    def _setup_format_converters(self):
+    def _setup_format_converters(self) -> None:
         """Setup format conversion functions."""
         self.format_converters = {
             DataFormat.JSON: {
@@ -161,12 +161,12 @@ class DataTransformationEngine:
             }
         }
     
-    def register_custom_function(self, name: str, function: Callable):
+    def register_custom_function(self, name -> None: str, function -> None: Callable) -> None:
         """Register custom transformation function."""
         self.custom_functions[name] = function
         self.logger.info(f"Registered custom function: {name}")
     
-    def add_transformation_schema(self, schema: TransformationSchema):
+    def add_transformation_schema(self, schema -> None: TransformationSchema) -> None:
         """Add transformation schema."""
         self.schemas[schema.id] = schema
         self.logger.info(f"Added transformation schema: {schema.name}")
@@ -245,9 +245,9 @@ class DataTransformationEngine:
     
     async def _apply_transformation_rule(
         self, 
-        rule: TransformationRule, 
-        context: TransformationContext
-    ):
+        rule -> None: TransformationRule, 
+        context -> None: TransformationContext
+    ) -> None:
         """Apply single transformation rule."""
         # Check condition if specified
         if rule.condition and not self._evaluate_condition(rule.condition, context):
@@ -274,9 +274,9 @@ class DataTransformationEngine:
     
     async def _apply_field_mapping(
         self, 
-        rule: TransformationRule, 
-        context: TransformationContext
-    ):
+        rule -> None: TransformationRule, 
+        context -> None: TransformationContext
+    ) -> None:
         """Apply field mapping transformation."""
         source_value = self._get_nested_value(context.source_data, rule.source_field)
         
@@ -285,9 +285,9 @@ class DataTransformationEngine:
     
     async def _apply_data_type_conversion(
         self, 
-        rule: TransformationRule, 
-        context: TransformationContext
-    ):
+        rule -> None: TransformationRule, 
+        context -> None: TransformationContext
+    ) -> None:
         """Apply data type conversion."""
         source_value = self._get_nested_value(context.source_data, rule.source_field)
         target_type = rule.parameters.get('target_type')
@@ -298,9 +298,9 @@ class DataTransformationEngine:
     
     async def _apply_value_transformation(
         self, 
-        rule: TransformationRule, 
-        context: TransformationContext
-    ):
+        rule -> None: TransformationRule, 
+        context -> None: TransformationContext
+    ) -> None:
         """Apply value transformation using function."""
         source_value = self._get_nested_value(context.source_data, rule.source_field)
         function_name = rule.parameters.get('function')
@@ -318,9 +318,9 @@ class DataTransformationEngine:
     
     async def _apply_conditional_transformation(
         self, 
-        rule: TransformationRule, 
-        context: TransformationContext
-    ):
+        rule -> None: TransformationRule, 
+        context -> None: TransformationContext
+    ) -> None:
         """Apply conditional transformation."""
         condition = rule.parameters.get('condition')
         true_value = rule.parameters.get('true_value')
@@ -336,9 +336,9 @@ class DataTransformationEngine:
     
     async def _apply_aggregation(
         self, 
-        rule: TransformationRule, 
-        context: TransformationContext
-    ):
+        rule -> None: TransformationRule, 
+        context -> None: TransformationContext
+    ) -> None:
         """Apply aggregation transformation."""
         source_data = self._get_nested_value(context.source_data, rule.source_field)
         aggregation_type = rule.parameters.get('type')
@@ -364,9 +364,9 @@ class DataTransformationEngine:
     
     async def _apply_filtering(
         self, 
-        rule: TransformationRule, 
-        context: TransformationContext
-    ):
+        rule -> None: TransformationRule, 
+        context -> None: TransformationContext
+    ) -> None:
         """Apply filtering transformation."""
         source_data = self._get_nested_value(context.source_data, rule.source_field)
         filter_condition = rule.parameters.get('condition')
@@ -382,9 +382,9 @@ class DataTransformationEngine:
     
     async def _apply_templating(
         self, 
-        rule: TransformationRule, 
-        context: TransformationContext
-    ):
+        rule -> None: TransformationRule, 
+        context -> None: TransformationContext
+    ) -> None:
         """Apply Jinja2 templating transformation."""
         if rule.template:
             template = self.jinja_env.from_string(rule.template)
@@ -401,9 +401,9 @@ class DataTransformationEngine:
     
     async def _apply_custom_function(
         self, 
-        rule: TransformationRule, 
-        context: TransformationContext
-    ):
+        rule -> None: TransformationRule, 
+        context -> None: TransformationContext
+    ) -> None:
         """Apply custom function transformation."""
         if rule.custom_function:
             result = await rule.custom_function(context, rule.parameters)
@@ -432,7 +432,7 @@ class DataTransformationEngine:
         
         return current
     
-    def _set_nested_value(self, data: Dict[str, Any], field_path: str, value: Any):
+    def _set_nested_value(self, data -> None: Dict[str, Any], field_path -> None: str, value -> None: Any) -> None:
         """Set nested value using dot notation."""
         if not field_path:
             return
@@ -491,14 +491,14 @@ class DataTransformationEngine:
             self.logger.warning(f"Condition evaluation failed: {e}")
             return False
     
-    def _validate_data(self, data: Any, schema: Dict[str, Any], data_type: str):
+    def _validate_data(self, data -> None: Any, schema -> None: Dict[str, Any], data_type -> None: str) -> None:
         """Validate data against JSON schema."""
         try:
             jsonschema.validate(data, schema)
         except jsonschema.ValidationError as e:
             raise ValueError(f"{data_type} data validation failed: {e.message}")
     
-    def _apply_validation_rules(self, data: Dict[str, Any], rules: Dict[str, Any]):
+    def _apply_validation_rules(self, data -> None: Dict[str, Any], rules -> None: Dict[str, Any]) -> None:
         """Apply custom validation rules."""
         for rule_name, rule_config in rules.items():
             field = rule_config.get('field')
@@ -521,7 +521,7 @@ class DataTransformationEngine:
                 if not re.match(pattern, value):
                     raise ValueError(f"Field {field} does not match pattern: {pattern}")
     
-    def _update_metrics(self, processing_time: float, success: bool):
+    def _update_metrics(self, processing_time -> None: float, success -> None: bool) -> None:
         """Update transformation metrics."""
         self.transformation_metrics['total_transformations'] += 1
         
@@ -620,7 +620,7 @@ class DataTransformationEngine:
     # Format conversion helpers
     def _dict_to_xml(self, data: Dict[str, Any], root_tag: str = 'root') -> str:
         """Convert dictionary to XML string."""
-        def dict_to_xml_recursive(tag, d):
+        def dict_to_xml_recursive(tag, d) -> None:
             elem = etree.Element(tag)
             for key, val in d.items():
                 if isinstance(val, dict):
@@ -692,7 +692,7 @@ class DataTransformationEngine:
             'error_handling': schema.error_handling
         }
     
-    def import_schema(self, schema_data: Dict[str, Any]):
+    def import_schema(self, schema_data -> None: Dict[str, Any]) -> None:
         """Import transformation schema from dictionary."""
         transformation_rules = []
         for rule_data in schema_data.get('transformation_rules', []):
@@ -725,7 +725,7 @@ class DataTransformationEngine:
 
 # Example usage
 if __name__ == "__main__":
-    async def main():
+    async def main() -> None:
         # Initialize transformation engine
         engine = DataTransformationEngine()
         

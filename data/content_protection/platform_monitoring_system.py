@@ -151,7 +151,7 @@ class MonitoringResult:
 class BasePlatformMonitor(ABC):
     """Abstract base class for platform monitors"""
     
-    def __init__(self, config: PlatformConfig):
+    def __init__(self, config -> None: PlatformConfig) -> None:
         self.config = config
         self.rate_limiter = None
         self.session = None
@@ -175,7 +175,7 @@ class BasePlatformMonitor(ABC):
         """Get detailed information about found content"""
         pass
     
-    async def cleanup(self):
+    async def cleanup(self) -> None:
         """Cleanup resources"""
         if self.session:
             await self.session.close()
@@ -184,7 +184,7 @@ class BasePlatformMonitor(ABC):
 class PlatformMonitoringSystem:
     """Unified 35+ platforms monitoring system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.redis_client = None
         self.mongo_client = None
         self.platform_monitors: Dict[str, BasePlatformMonitor] = {}
@@ -211,7 +211,7 @@ class PlatformMonitoringSystem:
             logger.error(f"Failed to initialize Platform Monitoring System: {e}")
             return False
     
-    def _initialize_platform_configs(self):
+    def _initialize_platform_configs(self) -> None:
         """Initialize configurations for all supported platforms"""
         platforms = {
             # Social Media Platforms
@@ -413,7 +413,7 @@ class PlatformMonitoringSystem:
         
         self.monitoring_configs = platforms
     
-    async def _initialize_platform_monitors(self):
+    async def _initialize_platform_monitors(self) -> None:
         """Initialize monitors for all platforms"""
         for platform_name, config in self.monitoring_configs.items():
             try:
@@ -571,11 +571,11 @@ class PlatformMonitoringSystem:
     
     async def _monitor_platform_continuously(
         self, 
-        platform: str, 
-        content_id: str, 
-        search_criteria: Dict[str, Any],
-        task_id: str
-    ):
+        platform -> None: str, 
+        content_id -> None: str, 
+        search_criteria -> None: Dict[str, Any],
+        task_id -> None: str
+    ) -> None:
         """Continuously monitor a platform for content"""
         monitor = self.platform_monitors[platform]
         config = self.monitoring_configs[platform]
@@ -681,10 +681,10 @@ class PlatformMonitoringSystem:
     
     async def _store_monitoring_config(
         self, 
-        content_id: str, 
-        platforms: List[str], 
-        search_criteria: Dict[str, Any]
-    ):
+        content_id -> None: str, 
+        platforms -> None: List[str], 
+        search_criteria -> None: Dict[str, Any]
+    ) -> None:
         """Store monitoring configuration"""
         try:
             if self.mongo_client:
@@ -704,7 +704,7 @@ class PlatformMonitoringSystem:
         except Exception as e:
             logger.error(f"Failed to store monitoring config: {e}")
     
-    async def _store_monitoring_result(self, result: MonitoringResult):
+    async def _store_monitoring_result(self, result -> None: MonitoringResult) -> None:
         """Store monitoring result"""
         try:
             if self.mongo_client:
@@ -814,7 +814,7 @@ class APIBasedMonitor(BasePlatformMonitor):
             logger.error(f"Failed to get content details from {content_url}: {e}")
             return {}
     
-    async def _respect_rate_limit(self):
+    async def _respect_rate_limit(self) -> None:
         """Respect platform rate limits"""
         # Implement rate limiting logic
         await asyncio.sleep(0.1)  # Basic delay
@@ -1090,7 +1090,7 @@ class GenericPlatformMonitor(BasePlatformMonitor):
 class SocialMediaMonitor:
     """Social networks specialized monitoring"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.social_platforms = ["instagram", "tiktok", "twitter", "facebook", "linkedin", "pinterest"]
     
     async def monitor_social_engagement(
@@ -1109,7 +1109,7 @@ class SocialMediaMonitor:
 class StreamingPlatformProtector:
     """Streaming platforms protection"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.streaming_platforms = ["youtube", "vimeo", "twitch", "dailymotion"]
     
     async def monitor_live_streams(
@@ -1127,7 +1127,7 @@ class StreamingPlatformProtector:
 class NFTMarketplaceGuardian:
     """NFT marketplaces monitoring"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.nft_platforms = ["opensea", "foundation", "rarible", "superrare"]
     
     async def monitor_nft_markets(

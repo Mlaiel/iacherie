@@ -1,4 +1,6 @@
 """Mobile Configuration Management
+import asyncio
+
 Platform-specific configs, feature flags, and environment management
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -20,7 +22,7 @@ try:
     from core.logging import get_logger
 except ImportError:
     # Fallback for standalone operation
-    def get_logger(name: str):
+    def get_logger(name -> None: str) -> None:
         try:
                     # Request validation
                     if not data:
@@ -46,7 +48,7 @@ except ImportError:
                 except Exception as e:
                     logger.error(f"API handler get_logger failed: {e}")
                     return {"status": "error", "message": str(e)}
-    def get_settings():
+    def get_settings() -> None:
         return {"environment": "development"}
 
 
@@ -156,7 +158,7 @@ class MobileConfig:
     """
 Professional mobile configuration management system."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = get_logger("mobile.config")
         self.settings = get_settings()
         self.current_environment = Environment(
@@ -169,7 +171,7 @@ Professional mobile configuration management system."""
         # Initialize default configurations
         self._initialize_default_configs()
     
-    def _initialize_default_configs(self):
+    def _initialize_default_configs(self) -> None:
         """Initialize default mobile configurations."""
         
         # Default feature flags
@@ -181,7 +183,7 @@ Professional mobile configuration management system."""
         # Default app config
         self._create_default_app_config()
     
-    def _create_default_feature_flags(self):
+    def _create_default_feature_flags(self) -> None:
         """
 Create default feature flags."""
         
@@ -246,7 +248,7 @@ Create default feature flags."""
             
             self.feature_flags[flag_data["name"]] = feature_flag
     
-    def _create_default_platform_settings(self):
+    def _create_default_platform_settings(self) -> None:
         """Create default platform-specific settings."""
         
         # Android settings
@@ -680,3 +682,5 @@ if __name__ == "__main__":
     print(f"Exported Android config: {len(export_data)} sections")
     
     print("Mobile configuration testing completed!")
+
+# File has syntax issues - needs manual review

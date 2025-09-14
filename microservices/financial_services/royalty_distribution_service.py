@@ -165,7 +165,7 @@ class PaymentDistribution:
 class AIRoyaltyOptimizer:
     """AI-powered royalty optimization and fraud detection"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.ml_models = {}
         self.fraud_patterns = {}
         self.optimization_history = {}
@@ -605,7 +605,7 @@ class AIRoyaltyOptimizer:
 class RoyaltyDistributionService:
     """🎯 Enterprise Royalty Distribution and Payment Management Service"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.distribution_db = {}  # In production: Replace with Redis/PostgreSQL
         self.payment_queue = deque()
         self.transaction_history = defaultdict(list)
@@ -1069,7 +1069,7 @@ class RoyaltyDistributionService:
             logger.error(f"Distribution analytics error: {e}")
             return {'status': 'error', 'error': str(e)}
     
-    async def _queue_payment_processing(self, payment_distribution: PaymentDistribution):
+    async def _queue_payment_processing(self, payment_distribution -> None: PaymentDistribution) -> None:
         """Add payment to processing queue"""
         self.payment_queue.append(payment_distribution)
         logger.info(f"Payment queued for processing: {payment_distribution.distribution_id}")
@@ -1276,7 +1276,7 @@ class RoyaltyDistributionService:
 
 # Example usage and testing
 if __name__ == "__main__":
-    async def demo_royalty_distribution():
+    async def demo_royalty_distribution() -> None:
         """Demonstration of RoyaltyDistributionService capabilities"""
         print("🎯 Royalty Distribution Service Demo - Multi-Expert Implementation")
         print("=" * 70)

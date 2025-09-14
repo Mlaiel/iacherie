@@ -1,4 +1,7 @@
 """Core API Routes
+import asyncio
+import logging
+
 Consolidated core platform functionality including authentication, content management, 
 uploads, analytics, monitoring, platform integrations, and compliance.
 
@@ -29,7 +32,8 @@ try:
 except ImportError:
     # Mock dependencies for standalone operation
     class MockManager:
-        def __getattr__(self, name):
+    """MockManager: class implementation"""
+        def __getattr__(self, name) -> None:
             return lambda *args, **kwargs: {"status": "mocked"}
     
     database_manager = MockManager()
@@ -47,6 +51,7 @@ except ImportError:
 
 # Pydantic models for authentication
 class UserRegistration(BaseModel):
+    """UserRegistration class implementation"""
     email: EmailStr
     password: str = Field(..., min_length=8, max_length=100)
     username: str = Field(..., min_length=3, max_length=50)
@@ -57,11 +62,13 @@ class UserRegistration(BaseModel):
 
 
 class UserLogin(BaseModel):
+    """UserLogin class implementation"""
     email: EmailStr
     password: str
 
 
 class TokenResponse(BaseModel):
+    """TokenResponse class implementation"""
     access_token: str
     refresh_token: str
     token_type: str = "bearer"
@@ -70,6 +77,7 @@ class TokenResponse(BaseModel):
 
 
 class UserProfile(BaseModel):
+    """UserProfile class implementation"""
     user_id: str
     email: str
     username: str
@@ -83,15 +91,18 @@ class UserProfile(BaseModel):
 
 
 class PasswordChange(BaseModel):
+    """PasswordChange class implementation"""
     current_password: str
     new_password: str = Field(..., min_length=8, max_length=100)
 
 
 class PasswordReset(BaseModel):
+    """PasswordReset class implementation"""
     email: EmailStr
 
 
 class PasswordResetConfirm(BaseModel):
+    """PasswordResetConfirm class implementation"""
     reset_token: str
     new_password: str = Field(..., min_length=8, max_length=100)
 
@@ -101,6 +112,7 @@ class PasswordResetConfirm(BaseModel):
 # ========================================
 
 class ContentMetadata(BaseModel):
+    """ContentMetadata class implementation"""
     title: str
     description: Optional[str] = None
     tags: Optional[List[str]] = []
@@ -108,6 +120,7 @@ class ContentMetadata(BaseModel):
 
 
 class ContentResponse(BaseModel):
+    """ContentResponse class implementation"""
     content_id: str
     user_id: str
     title: str
@@ -125,6 +138,7 @@ class ContentResponse(BaseModel):
 # ========================================
 
 class AnalyticsQuery(BaseModel):
+    """AnalyticsQuery class implementation"""
     metric_types: List[str]
     start_date: datetime
     end_date: datetime
@@ -134,6 +148,7 @@ class AnalyticsQuery(BaseModel):
 
 
 class AnalyticsResponse(BaseModel):
+    """AnalyticsResponse class implementation"""
     query_id: str
     metrics: Dict[str, Any]
     generated_at: datetime
@@ -146,6 +161,7 @@ class AnalyticsResponse(BaseModel):
 # ========================================
 
 class SystemHealthResponse(BaseModel):
+    """SystemHealthResponse class implementation"""
     status: str
     timestamp: datetime
     services: Dict[str, Dict[str, Any]]
@@ -155,6 +171,7 @@ class SystemHealthResponse(BaseModel):
 
 
 class MetricsResponse(BaseModel):
+    """MetricsResponse class implementation"""
     timestamp: datetime
     cpu_usage: float
     memory_usage: float
@@ -169,6 +186,7 @@ class MetricsResponse(BaseModel):
 # ========================================
 
 class PlatformCredentials(BaseModel):
+    """PlatformCredentials class implementation"""
     platform: str = Field(..., pattern="^(youtube|spotify|instagram|tiktok|facebook|twitter)$")
     client_id: str
     client_secret: str
@@ -176,6 +194,7 @@ class PlatformCredentials(BaseModel):
 
 
 class PlatformConnection(BaseModel):
+    """PlatformConnection class implementation"""
     platform: str
     access_token: str
     refresh_token: Optional[str] = None
@@ -188,18 +207,21 @@ class PlatformConnection(BaseModel):
 # ========================================
 
 class DataExportRequest(BaseModel):
+    """DataExportRequest class implementation"""
     data_types: List[str] = Field(..., description="Types of data to export")
     format: str = Field(default="json", pattern="^(json|csv|xml)$")
     email_delivery: bool = Field(default=True)
 
 
 class DataDeletionRequest(BaseModel):
+    """DataDeletionRequest class implementation"""
     confirm_deletion: bool = Field(..., description="Must confirm data deletion")
     keep_analytics: bool = Field(default=False)
     reason: Optional[str] = None
 
 
 class ConsentUpdate(BaseModel):
+    """ConsentUpdate class implementation"""
     consent_type: str = Field(..., pattern="^(marketing|analytics|cookies|data_processing)$")
     granted: bool
     timestamp: datetime = Field(default_factory=datetime.utcnow)
@@ -272,7 +294,7 @@ async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(s
 # ========================================
 
 @core_router.post("/auth/register", response_model=TokenResponse, status_code=status.HTTP_201_CREATED)
-async def register_user(user_data: UserRegistration):
+async def register_user(user_data -> None: UserRegistration) -> None:
     """Register a new user account"""
     try:
         # Validate terms acceptance
@@ -357,7 +379,7 @@ async def register_user(user_data: UserRegistration):
 
 
 @core_router.post("/auth/login", response_model=TokenResponse)
-async def login_user(login_data: UserLogin):
+async def login_user(login_data -> None: UserLogin) -> None:
     """Authenticate user and return tokens"""
     try:
         async with database_manager.get_postgres_session() as session:
@@ -618,7 +640,7 @@ async def query_analytics(
 # ========================================
 
 @core_router.get("/monitoring/health", response_model=SystemHealthResponse)
-async def get_system_health():
+async def get_system_health() -> None:
     """Get system health status"""
     try:
         # Mock health check - in production this would check real services
@@ -824,8 +846,8 @@ async def _get_user_permissions(subscription_tier: str) -> list:
     return base_permissions
 
 
-async def _process_data_export(export_id: str, user_id: str, data_types: List[str], 
-                              format: str, email_delivery: bool):
+async def _process_data_export(export_id -> None: str, user_id -> None: str, data_types -> None: List[str], 
+                              format -> None: str, email_delivery -> None: bool) -> None:
     """Background task to process data export"""
     try:
         # Mock data export processing
@@ -1169,7 +1191,7 @@ async def get_content_analysis(
         )
 
 @core_router.get("/content/formats/supported", response_model=Dict[str, List[str]])
-async def get_supported_formats():
+async def get_supported_formats() -> None:
     """Get list of all supported content formats"""
     formats_by_type = {
         "audio": [fmt.value for fmt in ContentFormat if fmt.value in ["mp3", "wav", "flac", "aac", "ogg", "m4a"]],
@@ -1268,7 +1290,7 @@ async def _generate_format_variants(content: bytes, original_format: str, target
     except Exception:
         return []
 
-async def _store_content_data(file_id: str, content: bytes, metadata: Dict, user_id: str):
+async def _store_content_data(file_id -> None: str, content -> None: bytes, metadata -> None: Dict, user_id -> None: str) -> None:
     """Store content data and metadata"""
     try:
         # Mock storage - would use cloud storage in production
@@ -1288,7 +1310,7 @@ async def _store_content_data(file_id: str, content: bytes, metadata: Dict, user
     except Exception as e:
         logger.error(f"Content storage failed: {str(e)}")
 
-async def _store_content_collection(collection_data: Dict):
+async def _store_content_collection(collection_data -> None: Dict) -> None:
     """Store content collection"""
     try:
         async with database_manager.get_postgres_session() as session:
@@ -1322,7 +1344,7 @@ async def _get_content_data(content_id: str) -> Optional[Dict]:
     except Exception:
         return None
 
-async def _queue_processing_job(job_data: Dict):
+async def _queue_processing_job(job_data -> None: Dict) -> None:
     """Queue content processing job"""
     try:
         async with database_manager.get_postgres_session() as session:
@@ -1478,7 +1500,7 @@ async def _generate_content_fingerprint(content_data: Dict) -> str:
 class EnterpriseContentProcessor:
     """Enterprise-grade multi-format content processing with AI enhancement"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.supported_audio_formats = {
             "mp3": {"max_bitrate": 320, "compression": "lossy"},
             "wav": {"max_bitrate": 1411, "compression": "lossless"},  

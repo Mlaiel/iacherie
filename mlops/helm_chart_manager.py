@@ -1,3 +1,8 @@
+"""
+Helm Chart Manager module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 ⚓ Helm Chart Manager - Enterprise MLOps Platform
@@ -112,9 +117,9 @@ class HelmChartManager:
     """
     
     def __init__(self,
-                 charts_directory: str = "/tmp/helm_charts",
-                 templates_directory: str = "/tmp/chart_templates",
-                 helm_binary_path: str = "helm"):
+                 charts_directory -> None: str = "/tmp/helm_charts",
+                 templates_directory -> None: str = "/tmp/chart_templates",
+                 helm_binary_path -> None: str = "helm") -> None:
         self.charts_directory = Path(charts_directory)
         self.templates_directory = Path(templates_directory)
         self.helm_binary_path = helm_binary_path
@@ -172,7 +177,7 @@ class HelmChartManager:
         self._check_helm_installation()
         logger.info("⚓ HelmChartManager initialized for enterprise Kubernetes deployments")
     
-    def _setup_directories(self):
+    def _setup_directories(self) -> None:
         """Initialisation des répertoires"""
         try:
             self.charts_directory.mkdir(parents=True, exist_ok=True)
@@ -186,7 +191,7 @@ class HelmChartManager:
             logger.error(f"❌ Directory setup error: {e}")
             raise
     
-    def _check_helm_installation(self):
+    def _check_helm_installation(self) -> None:
         """Vérification de l'installation Helm"""
         try:
             result = subprocess.run(
@@ -205,7 +210,7 @@ class HelmChartManager:
         except Exception as e:
             logger.warning(f"⚠️ Could not verify Helm installation: {e}")
     
-    def _setup_chart_templates(self):
+    def _setup_chart_templates(self) -> None:
         """Configuration des templates de charts par créateur"""
         try:
             # Template pour service audio de musicien
@@ -668,11 +673,11 @@ data:
             raise
     
     async def _create_chart_structure(self,
-                                    chart_path: Path,
-                                    chart_name: str,
-                                    template: ChartTemplate,
-                                    app_version: str,
-                                    description: Optional[str]):
+                                    chart_path -> None: Path,
+                                    chart_name -> None: str,
+                                    template -> None: ChartTemplate,
+                                    app_version -> None: str,
+                                    description -> None: Optional[str]) -> None:
         """Création de la structure du chart"""
         try:
             # Création des répertoires
@@ -1113,31 +1118,31 @@ Your {creator_type} service has been deployed to Kubernetes.
             logger.error(f"❌ Error getting release status: {e}")
             return {"error": str(e)}
     
-    def add_deployment_callback(self, callback: Callable):
+    def add_deployment_callback(self, callback -> None: Callable) -> None:
         """Ajouter callback de déploiement"""
         self.deployment_callbacks.append(callback)
         logger.info(f"🚀 Deployment callback added. Total: {len(self.deployment_callbacks)}")
     
-    def add_chart_callback(self, callback: Callable):
+    def add_chart_callback(self, callback -> None: Callable) -> None:
         """Ajouter callback de chart"""
         self.chart_callbacks.append(callback)
         logger.info(f"📦 Chart callback added. Total: {len(self.chart_callbacks)}")
 
 
 # Exemple d'utilisation pour démonstration
-async def main():
+async def main() -> None:
     """Démonstration des capacités du HelmChartManager"""
     
     manager = HelmChartManager()
     
     # Callbacks de démonstration
-    async def deployment_callback(release: HelmRelease):
+    async def deployment_callback(release -> None: HelmRelease) -> None:
         print(f"🚀 DEPLOYED: {release.release_name}")
         print(f"   Chart: {release.chart.chart_name}")
         print(f"   Environment: {release.environment.value}")
         print(f"   Namespace: {release.namespace}")
     
-    async def chart_callback(chart: HelmChart):
+    async def chart_callback(chart -> None: HelmChart) -> None:
         print(f"📦 CHART CREATED: {chart.chart_name}")
         print(f"   Type: {chart.chart_type.value}")
         print(f"   Creator Service: {chart.creator_service.value}")

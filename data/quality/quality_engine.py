@@ -108,7 +108,7 @@ class ValidationRule:
     priority: int = 5
     tags: List[str] = field(default_factory=list)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if not self.id:
             self.id = str(uuid.uuid4())
 
@@ -143,7 +143,7 @@ class QualityScore:
     confidence: float
     timestamp: datetime = field(default_factory=datetime.utcnow)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if not 0 <= self.overall <= 100:
             raise ValueError("Overall score must be between 0 and 100")
 
@@ -212,7 +212,7 @@ class QualityEngine:
     trend analysis, and automated quality assurance workflows.
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """
         Initialize the quality engine.
         
@@ -412,7 +412,7 @@ class QualityEngine:
     
     # Private helper methods
     
-    async def _load_default_rules(self):
+    async def _load_default_rules(self) -> None:
         """Load default validation rules"""
         default_rules = [
             ValidationRule(
@@ -444,7 +444,7 @@ class QualityEngine:
         for rule in default_rules:
             self.validation_rules[rule.id] = rule
     
-    async def _load_default_policies(self):
+    async def _load_default_policies(self) -> None:
         """Load default quality policies"""
         default_policy = QualityPolicy(
             id="standard_policy",
@@ -465,7 +465,7 @@ class QualityEngine:
         
         self.quality_policies[default_policy.id] = default_policy
     
-    async def _load_default_workflows(self):
+    async def _load_default_workflows(self) -> None:
         """Load default quality workflows"""
         default_workflow = QualityWorkflow(
             id="standard_workflow",
@@ -478,7 +478,7 @@ class QualityEngine:
         
         self.quality_workflows[default_workflow.id] = default_workflow
     
-    async def _load_default_baselines(self):
+    async def _load_default_baselines(self) -> None:
         """Load default quality baselines"""
         default_baseline = QualityBaseline(
             id="default_baseline",
@@ -502,7 +502,7 @@ class QualityEngine:
         
         self.quality_baselines[default_baseline.id] = default_baseline
     
-    async def _initialize_ml_models(self):
+    async def _initialize_ml_models(self) -> None:
         """Initialize ML models for advanced validation"""
         # This would load pre-trained models for quality assessment
         # For now, we'll use placeholder initialization
@@ -695,7 +695,7 @@ class QualityEngine:
         
         return hasher.hexdigest()
     
-    async def _record_quality_metrics(self, quality_score: QualityScore, processing_time: float):
+    async def _record_quality_metrics(self, quality_score -> None: QualityScore, processing_time -> None: float) -> None:
         """Record quality metrics for analysis"""
         # Record overall score
         measurement = QualityMeasurement(
@@ -718,7 +718,7 @@ class QualityEngine:
 class DataQualityManager:
     """Data quality management coordinator"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.logger = logger
 
@@ -726,7 +726,7 @@ class DataQualityManager:
 class ValidationEngine:
     """Content validation engine"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.logger = logger
     
@@ -781,7 +781,7 @@ class ValidationEngine:
 class QualityMetrics:
     """Quality metrics collection and analysis"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.logger = logger
     

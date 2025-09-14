@@ -74,7 +74,7 @@ class OrganicReachMaximizer:
     - Community engagement building
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.platform_algorithms = {}
         self.hashtag_database = {}
         self.timing_patterns = {}

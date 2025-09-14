@@ -123,7 +123,7 @@ class CaseAnalyzer:
     """
 Analyzer for enforcement case performance"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.min_cases_for_analysis = self.config.get('min_cases_for_analysis', 10)
     
@@ -377,7 +377,7 @@ Analyze performance metrics from enforcement cases"""
 class TrendAnalyzer:
     """Analyzer for trends and patterns"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.min_data_points = self.config.get('min_data_points', 5)
         self.trend_periods = self.config.get('trend_periods', ['daily', 'weekly', 'monthly'])
@@ -484,7 +484,7 @@ Analyze trends in performance metrics"""
 class ReportGenerator:
     """Generator for analytics reports"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.report_storage_path = Path(self.config.get('report_storage_path', 'analytics_reports'))
         self.report_storage_path.mkdir(exist_ok=True)
@@ -861,7 +861,7 @@ Generate recommendations based on daily analysis"""
         
         return recommendations
     
-    async def _save_report(self, report: Dict[str, Any]):
+    async def _save_report(self, report -> None: Dict[str, Any]) -> None:
         """Save report to storage"""
         try:
             report_file = self.report_storage_path / f"{report['id']}.json"
@@ -879,7 +879,7 @@ Generate recommendations based on daily analysis"""
 class AnalyticsEngine:
     """Main analytics engine for enforcement performance"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         
         # Initialize analyzers
@@ -906,7 +906,7 @@ class AnalyticsEngine:
         
         logger.info("Analytics engine initialized")
     
-    async def record_metric(self, metric: PerformanceMetric):
+    async def record_metric(self, metric -> None: PerformanceMetric) -> None:
         """Record a performance metric"""
         try:
             self.metrics_storage.append(metric)
@@ -1004,7 +1004,7 @@ class AnalyticsEngine:
             logger.error(f"Error calculating performance score: {e}")
             return 0.0
     
-    async def _check_metric_alerts(self, metric: PerformanceMetric):
+    async def _check_metric_alerts(self, metric -> None: PerformanceMetric) -> None:
         """Check if metric triggers any alerts"""
         try:
             metric_type = metric.metric_type.value
@@ -1057,13 +1057,13 @@ class AnalyticsEngine:
     
     async def _create_alert(
         self,
-        alert_type: str,
-        level: AlertLevel,
-        title: str,
-        description: str,
-        metric_value: float,
-        threshold: float
-    ):
+        alert_type -> None: str,
+        level -> None: AlertLevel,
+        title -> None: str,
+        description -> None: str,
+        metric_value -> None: float,
+        threshold -> None: float
+    ) -> None:
         """Create new alert"""
         try:
             alert_id = f"{alert_type}_{int(datetime.utcnow().timestamp())}"
@@ -1092,11 +1092,11 @@ class AnalyticsEngine:
         except Exception as e:
             logger.error(f"Error creating alert: {e}")
     
-    def add_alert_callback(self, callback: callable):
+    def add_alert_callback(self, callback -> None: callable) -> None:
         """Add callback for alert notifications"""
         self.alert_callbacks.append(callback)
     
-    async def resolve_alert(self, alert_id: str):
+    async def resolve_alert(self, alert_id -> None: str) -> None:
         """
 Resolve an active alert"""
         try:
@@ -1152,7 +1152,7 @@ Get analytics summary"""
             logger.error(f"Error getting analytics summary: {e}")
             return {}
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Shutdown analytics engine"""
         try:
             # Save current metrics and alerts if needed

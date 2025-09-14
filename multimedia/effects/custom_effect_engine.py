@@ -37,7 +37,7 @@ class CustomEffectConfig:
 class EffectChain:
     """Chain of effects that can be applied sequentially."""
     
-    def __init__(self, config: CustomEffectConfig):
+    def __init__(self, config -> None: CustomEffectConfig) -> None:
         self.config = config
         self.effect_registry = self._build_effect_registry()
         
@@ -143,7 +143,7 @@ class EffectChain:
 class CustomEffectEngine:
     """Enterprise custom effect engine for programmable video processing."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.presets = {
             "cinematic": CustomEffectConfig(
                 name="cinematic",

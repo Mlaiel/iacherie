@@ -31,6 +31,7 @@ router = APIRouter(
 # ========================================
 
 class CollaborationType(str, Enum):
+    """CollaborationType class implementation"""
     MUSIC_PRODUCTION = "music_production"
     VIDEO_CREATION = "video_creation" 
     PODCAST_CREATION = "podcast_creation"
@@ -40,6 +41,7 @@ class CollaborationType(str, Enum):
     CROSS_PLATFORM = "cross_platform"
 
 class CollaborationStatus(str, Enum):
+    """CollaborationStatus class implementation"""
     DRAFT = "draft"
     OPEN = "open"
     IN_PROGRESS = "in_progress"
@@ -48,6 +50,7 @@ class CollaborationStatus(str, Enum):
     PAUSED = "paused"
 
 class SkillLevel(str, Enum):
+    """SkillLevel class implementation"""
     BEGINNER = "beginner"
     INTERMEDIATE = "intermediate"
     ADVANCED = "advanced"
@@ -55,6 +58,7 @@ class SkillLevel(str, Enum):
     MASTER = "master"
 
 class RevenueShareType(str, Enum):
+    """RevenueShareType class implementation"""
     EQUAL_SPLIT = "equal_split"
     CONTRIBUTION_BASED = "contribution_based"
     ROLE_BASED = "role_based"
@@ -65,6 +69,7 @@ class RevenueShareType(str, Enum):
 # ========================================
 
 class CreatorProfile(BaseModel):
+    """CreatorProfile class implementation"""
     id: str = Field(..., description="Creator unique identifier")
     name: str = Field(..., min_length=2, max_length=100)
     email: str = Field(..., description="Creator email")
@@ -79,6 +84,7 @@ class CreatorProfile(BaseModel):
     languages: List[str] = Field(default_factory=list, description="Spoken languages")
 
 class CollaborationRequest(BaseModel):
+    """CollaborationRequest class implementation"""
     title: str = Field(..., min_length=10, max_length=200)
     description: str = Field(..., min_length=50, max_length=2000)
     collaboration_type: CollaborationType
@@ -94,13 +100,14 @@ class CollaborationRequest(BaseModel):
     required_commitment_hours: int = Field(default=10, ge=1, le=40)
 
     @validator('budget_range_max')
-    def validate_budget_range(cls, v, values):
+    def validate_budget_range(cls, v, values) -> None:
         if v is not None and 'budget_range_min' in values and values['budget_range_min'] is not None:
             if v < values['budget_range_min']:
                 raise ValueError('Maximum budget must be greater than minimum budget')
         return v
 
 class CollaborationMatch(BaseModel):
+    """CollaborationMatch class implementation"""
     collaboration_id: str
     creator_id: str
     match_score: float = Field(..., ge=0.0, le=1.0, description="AI matching score")
@@ -113,6 +120,7 @@ class CollaborationMatch(BaseModel):
     estimated_contribution_percentage: float = Field(..., ge=0.0, le=100.0)
 
 class CollaborationInvitation(BaseModel):
+    """CollaborationInvitation class implementation"""
     collaboration_id: str
     invited_creator_id: str
     role: str = Field(..., min_length=2, max_length=50)
@@ -121,6 +129,7 @@ class CollaborationInvitation(BaseModel):
     expires_at: datetime = Field(default_factory=lambda: datetime.utcnow() + timedelta(days=7))
 
 class CollaborationProject(BaseModel):
+    """CollaborationProject class implementation"""
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     creator_id: str = Field(..., description="Project creator")
     title: str
@@ -137,6 +146,7 @@ class CollaborationProject(BaseModel):
     completion_percentage: float = Field(default=0.0, ge=0.0, le=100.0)
 
 class RevenueShareContract(BaseModel):
+    """RevenueShareContract class implementation"""
     collaboration_id: str
     participants: Dict[str, float] = Field(..., description="Creator ID to percentage mapping")
     contract_terms: str = Field(..., min_length=100)
@@ -146,7 +156,7 @@ class RevenueShareContract(BaseModel):
     signed_by: List[str] = Field(default_factory=list, description="List of creator IDs who signed")
 
     @validator('participants')
-    def validate_percentage_sum(cls, v):
+    def validate_percentage_sum(cls, v) -> None:
         total = sum(v.values())
         if abs(total - 100.0) > 0.01:  # Allow small floating point errors
             raise ValueError('Revenue share percentages must sum to 100%')
@@ -530,19 +540,19 @@ async def get_collaboration_revenue_analytics(
 # BACKGROUND TASKS
 # ========================================
 
-async def run_ai_matching_algorithm(request: CollaborationRequest, creator_id: str):
+async def run_ai_matching_algorithm(request -> None: CollaborationRequest, creator_id -> None: str) -> None:
     """Background task to run AI matching algorithm"""
     # In production, implement sophisticated AI matching
     await asyncio.sleep(2)  # Simulate processing time
     print(f"AI matching completed for creator {creator_id}")
 
-async def send_invitation_notification(invitation: CollaborationInvitation, sender: Dict[str, Any]):
+async def send_invitation_notification(invitation -> None: CollaborationInvitation, sender -> None: Dict[str, Any]) -> None:
     """Background task to send invitation notification"""
     # In production, send email/push notification
     await asyncio.sleep(1)
     print(f"Invitation sent from {sender['id']} to {invitation.invited_creator_id}")
 
-async def process_invitation_response(invitation_id: str, action: str, responder_id: str):
+async def process_invitation_response(invitation_id -> None: str, action -> None: str, responder_id -> None: str) -> None:
     """Background task to process invitation response"""
     # In production, update database and notify parties
     await asyncio.sleep(1)

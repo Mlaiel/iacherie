@@ -34,7 +34,7 @@ class VideoWatermarkConfig:
 class VideoWatermarkEngine:
     """Video watermarking engine for content protection"""
     
-    def __init__(self, config: Optional[VideoWatermarkConfig] = None):
+    def __init__(self, config -> None: Optional[VideoWatermarkConfig] = None) -> None:
         """Initialize video watermark engine"""
         self.config = config or VideoWatermarkConfig()
         self.supported_formats = ['.mp4', '.avi', '.mov', '.mkv', '.webm']

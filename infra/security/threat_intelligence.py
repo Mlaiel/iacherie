@@ -124,7 +124,7 @@ class EnterpriseThreatIntelligence:
     - Automated response coordination
     """
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
         
@@ -653,7 +653,7 @@ class ContentThreatDetector:
         return threats
 
 # Example usage
-async def main():
+async def main() -> None:
     """Example usage of the Enterprise Threat Intelligence System"""
     threat_intel = EnterpriseThreatIntelligence()
     

@@ -167,7 +167,7 @@ class CampaignAnalytics(BaseModel):
 class CampaignManagementService:
     """🎯 Enterprise Campaign Management Service - Multi-Expert Implementation"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize with all expert role capabilities"""
         # 🧠 Lead Dev IA: AI optimization engines
         self.ai_optimizer = self._initialize_ai_optimizer()
@@ -439,7 +439,7 @@ class CampaignManagementService:
             "confidence_interval": "85-95%"
         }
 
-    def _index_campaign(self, campaign: CampaignModel):
+    def _index_campaign(self, campaign -> None: CampaignModel) -> None:
         """🗄️ DBA: Index campaign for efficient querying"""
         # Index by type
         if campaign.type not in self.campaign_index:
@@ -452,7 +452,7 @@ class CampaignManagementService:
             self.campaign_index[status_key] = []
         self.campaign_index[status_key].append(campaign.id)
 
-    async def _notify_services(self, event_type: str, campaign_id: str):
+    async def _notify_services(self, event_type -> None: str, campaign_id -> None: str) -> None:
         """🌐 Microservices: Notify other services about campaign events"""
         event = {
             "type": event_type,
@@ -465,7 +465,7 @@ class CampaignManagementService:
         # In production, this would publish to message queue
         logger.info(f"🌐 Event published: {event_type} for campaign {campaign_id}")
 
-    def _setup_campaign_monitoring(self, campaign_id: str):
+    def _setup_campaign_monitoring(self, campaign_id -> None: str) -> None:
         """⚙️ DevOps: Set up monitoring for campaign"""
         self.monitoring_metrics[campaign_id] = {
             "created_at": datetime.now(),
@@ -474,7 +474,7 @@ class CampaignManagementService:
             "alerts_triggered": 0
         }
 
-    def _audit_action(self, action: str, user_id: str, resource_id: str):
+    def _audit_action(self, action -> None: str, user_id -> None: str, resource_id -> None: str) -> None:
         """🔒 Security: Audit trail for campaign actions"""
         audit_entry = {
             "timestamp": datetime.now().isoformat(),
@@ -517,7 +517,7 @@ class CampaignManagementService:
         
         return campaign
 
-    async def _reoptimize_campaign(self, campaign: CampaignModel):
+    async def _reoptimize_campaign(self, campaign -> None: CampaignModel) -> None:
         """🧠 Lead Dev IA: Re-optimize campaign based on updates"""
         # Re-run optimization algorithms
         if campaign.status == CampaignStatus.ACTIVE:
@@ -668,46 +668,46 @@ app = FastAPI(
 campaign_service = CampaignManagementService()
 
 @app.post("/campaigns", response_model=Dict[str, Any])
-async def create_campaign(campaign: CampaignModel):
+async def create_campaign(campaign -> None: CampaignModel) -> None:
     """Create new marketing campaign"""
     return await campaign_service.create_campaign(campaign)
 
 @app.get("/campaigns/{campaign_id}", response_model=CampaignModel)
-async def get_campaign(campaign_id: str):
+async def get_campaign(campaign_id -> None: str) -> None:
     """Get campaign by ID"""
     return await campaign_service.get_campaign(campaign_id)
 
 @app.put("/campaigns/{campaign_id}", response_model=CampaignModel)
-async def update_campaign(campaign_id: str, updates: Dict[str, Any]):
+async def update_campaign(campaign_id -> None: str, updates -> None: Dict[str, Any]) -> None:
     """Update campaign configuration"""
     return await campaign_service.update_campaign(campaign_id, updates)
 
 @app.get("/campaigns/{campaign_id}/analytics", response_model=CampaignAnalytics)
-async def get_campaign_analytics(campaign_id: str):
+async def get_campaign_analytics(campaign_id -> None: str) -> None:
     """Get campaign analytics and insights"""
     return await campaign_service.get_campaign_analytics(campaign_id)
 
 @app.get("/campaigns", response_model=List[CampaignModel])
 async def list_campaigns(
-    status: Optional[CampaignStatus] = None,
-    campaign_type: Optional[CampaignType] = None,
-    limit: int = 100
-):
+    status -> None: Optional[CampaignStatus] = None,
+    campaign_type -> None: Optional[CampaignType] = None,
+    limit -> None: int = 100
+) -> None:
     """List campaigns with filtering"""
     return await campaign_service.list_campaigns(status, campaign_type, limit)
 
 @app.post("/campaigns/{campaign_id}/pause")
-async def pause_campaign(campaign_id: str):
+async def pause_campaign(campaign_id -> None: str) -> None:
     """Pause active campaign"""
     return await campaign_service.pause_campaign(campaign_id)
 
 @app.post("/campaigns/{campaign_id}/resume")
-async def resume_campaign(campaign_id: str):
+async def resume_campaign(campaign_id -> None: str) -> None:
     """Resume paused campaign"""
     return await campaign_service.resume_campaign(campaign_id)
 
 @app.get("/health")
-async def health_check():
+async def health_check() -> None:
     """Service health check"""
     return await campaign_service.get_service_health()
 

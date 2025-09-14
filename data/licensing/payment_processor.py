@@ -142,18 +142,18 @@ class PaymentProcessor:
     
     def __init__(
         self,
-        repository: LicensingRepository = None,
-        gateway_manager: PaymentGatewayManager = None,
-        fraud_service: FraudDetectionService = None,
-        currency_converter: CurrencyConverter = None,
-        exchange_service: ExchangeRateService = None,
-        banking_manager: BankingAPIManager = None,
-        crypto_processor: CryptocurrencyProcessor = None,
-        compliance_checker: AMLComplianceChecker = None,
-        sanctions_screening: SanctionsScreening = None,
-        notification_service: NotificationService = None,
-        audit_logger: AuditLogger = None
-    ):
+        repository -> None: LicensingRepository = None,
+        gateway_manager -> None: PaymentGatewayManager = None,
+        fraud_service -> None: FraudDetectionService = None,
+        currency_converter -> None: CurrencyConverter = None,
+        exchange_service -> None: ExchangeRateService = None,
+        banking_manager -> None: BankingAPIManager = None,
+        crypto_processor -> None: CryptocurrencyProcessor = None,
+        compliance_checker -> None: AMLComplianceChecker = None,
+        sanctions_screening -> None: SanctionsScreening = None,
+        notification_service -> None: NotificationService = None,
+        audit_logger -> None: AuditLogger = None
+    ) -> None:
         """
 Initialize payment processor with comprehensive dependencies"""
         self.repository = repository or LicensingRepository()
@@ -762,11 +762,11 @@ class PaymentProcessor:
     
     def __init__(
         self,
-        repository: LicensingRepository = None,
-        currency_converter: CurrencyConverter = None,
-        payment_security: PaymentSecurity = None,
-        cache_manager: CacheManager = None
-    ):
+        repository -> None: LicensingRepository = None,
+        currency_converter -> None: CurrencyConverter = None,
+        payment_security -> None: PaymentSecurity = None,
+        cache_manager -> None: CacheManager = None
+    ) -> None:
         """
 Initialize payment processor with dependencies"""
         self.repository = repository or LicensingRepository()

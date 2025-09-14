@@ -95,12 +95,12 @@ class ContainerMetrics:
 class DockerManager:
     """Unified Docker management interface"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.client = None
         self.logger = logging.getLogger(__name__)
         self._initialize_client()
     
-    def _initialize_client(self):
+    def _initialize_client(self) -> None:
         """Initialize Docker client"""
         if not DOCKER_AVAILABLE:
             self.logger.warning("Docker client not available")
@@ -115,7 +115,7 @@ class DockerManager:
 class ContainerManager:
     """Docker container management"""
     
-    def __init__(self, docker_manager: DockerManager):
+    def __init__(self, docker_manager -> None: DockerManager) -> None:
         self.docker_manager = docker_manager
         self.logger = logging.getLogger(__name__)
     
@@ -205,7 +205,7 @@ class ContainerManager:
 class ImageBuilder:
     """Docker image building and management"""
     
-    def __init__(self, docker_manager: DockerManager):
+    def __init__(self, docker_manager -> None: DockerManager) -> None:
         self.docker_manager = docker_manager
         self.logger = logging.getLogger(__name__)
     
@@ -273,7 +273,7 @@ class ImageBuilder:
 class RegistryManager:
     """Container registry management"""
     
-    def __init__(self, docker_manager: DockerManager):
+    def __init__(self, docker_manager -> None: DockerManager) -> None:
         self.docker_manager = docker_manager
         self.logger = logging.getLogger(__name__)
     
@@ -319,7 +319,7 @@ class RegistryManager:
 class DockerComposeManager:
     """Docker Compose management"""
     
-    def __init__(self, docker_manager: DockerManager):
+    def __init__(self, docker_manager -> None: DockerManager) -> None:
         self.docker_manager = docker_manager
         self.logger = logging.getLogger(__name__)
     

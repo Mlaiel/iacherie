@@ -35,7 +35,7 @@ class AudioRestorationConfig:
 class SpectralSubtractionFilter:
     """Spectral subtraction for noise reduction."""
     
-    def __init__(self, alpha: float = 2.0, beta: float = 0.01):
+    def __init__(self, alpha -> None: float = 2.0, beta -> None: float = 0.01) -> None:
         self.alpha = alpha  # Over-subtraction factor
         self.beta = beta    # Spectral floor factor
         
@@ -68,7 +68,7 @@ class SpectralSubtractionFilter:
 class ClickRemovalFilter:
     """Click and pop removal filter."""
     
-    def __init__(self, threshold: float = 0.1, window_size: int = 5):
+    def __init__(self, threshold -> None: float = 0.1, window_size -> None: int = 5) -> None:
         self.threshold = threshold
         self.window_size = window_size
     
@@ -103,7 +103,7 @@ class ClickRemovalFilter:
 class HumRemovalFilter:
     """Remove electrical hum (50Hz/60Hz and harmonics)."""
     
-    def __init__(self, fundamental_freq: float = 50.0, sample_rate: int = 44100):
+    def __init__(self, fundamental_freq -> None: float = 50.0, sample_rate -> None: int = 44100) -> None:
         self.fundamental_freq = fundamental_freq
         self.sample_rate = sample_rate
         self.harmonics = [1, 2, 3, 4, 5]  # Fundamental and first 4 harmonics
@@ -133,7 +133,7 @@ class HumRemovalFilter:
 class HarmonicEnhancer:
     """Enhance harmonic content for warmth and presence."""
     
-    def __init__(self, enhancement_factor: float = 0.3):
+    def __init__(self, enhancement_factor -> None: float = 0.3) -> None:
         self.enhancement_factor = enhancement_factor
     
     def enhance_harmonics(self, audio: np.ndarray, sample_rate: int) -> np.ndarray:
@@ -153,7 +153,7 @@ class HarmonicEnhancer:
 class AudioRestorationEngine:
     """Enterprise audio restoration engine with advanced algorithms."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.config = AudioRestorationConfig()
         
     async def restore_audio(

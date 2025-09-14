@@ -81,7 +81,7 @@ class UnifiedMetricsCollector:
     Unified metrics collection system that consolidates all monitoring metrics
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.metrics: Dict[str, Metric] = {}
         self.snapshots: List[MetricSnapshot] = []
         self.collectors: Dict[MetricCategory, Callable] = {}
@@ -94,7 +94,7 @@ class UnifiedMetricsCollector:
         self.last_collection = None
         self.collection_count = 0
         
-    def _register_collectors(self):
+    def _register_collectors(self) -> None:
         """Register all metric collectors"""
         self.collectors = {
             MetricCategory.BUSINESS: self._collect_business_metrics,
@@ -107,7 +107,7 @@ class UnifiedMetricsCollector:
             MetricCategory.COLLABORATION: self._collect_collaboration_metrics,
         }
     
-    async def start_collection(self, interval: int = 60):
+    async def start_collection(self, interval -> None: int = 60) -> None:
         """Start automated metrics collection"""
         self.running = True
         logger.info(f"Starting unified metrics collection with {interval}s interval")
@@ -120,12 +120,12 @@ class UnifiedMetricsCollector:
                 logger.error(f"Error in metrics collection: {e}")
                 await asyncio.sleep(interval)
     
-    async def stop_collection(self):
+    async def stop_collection(self) -> None:
         """Stop metrics collection"""
         self.running = False
         logger.info("Stopped unified metrics collection")
     
-    async def collect_all_metrics(self):
+    async def collect_all_metrics(self) -> None:
         """Collect metrics from all categories"""
         timestamp = datetime.now()
         collected_metrics = {}
@@ -632,12 +632,12 @@ metrics_collector = UnifiedMetricsCollector()
 
 
 # Convenience functions for external use
-async def start_metrics_collection(interval: int = 60):
+async def start_metrics_collection(interval -> None: int = 60) -> None:
     """Start the global metrics collection"""
     await metrics_collector.start_collection(interval)
 
 
-async def stop_metrics_collection():
+async def stop_metrics_collection() -> None:
     """Stop the global metrics collection"""
     await metrics_collector.stop_collection()
 

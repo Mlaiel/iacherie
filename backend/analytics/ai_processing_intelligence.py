@@ -234,7 +234,7 @@ class AIProcessingIntelligence:
     quality assessment, and predictive scaling recommendations.
     """
     
-    def __init__(self, max_history_days: int = 30):
+    def __init__(self, max_history_days -> None: int = 30) -> None:
         """Initialize the AI Processing Intelligence Engine"""
         self.max_history_days = max_history_days
         self.processing_requests: Dict[str, ProcessingRequest] = {}
@@ -494,7 +494,7 @@ class AIProcessingIntelligence:
             logger.error(f"❌ Failed to mark processing as failed for {request_id}: {e}")
             return False
     
-    def start_resource_monitoring(self, interval_seconds: int = 10):
+    def start_resource_monitoring(self, interval_seconds -> None: int = 10) -> None:
         """Start real-time resource monitoring"""
         if self.resource_monitoring_active:
             logger.warning("Resource monitoring already active")
@@ -510,7 +510,7 @@ class AIProcessingIntelligence:
         
         logger.info(f"🔍 Started resource monitoring (interval: {interval_seconds}s)")
     
-    def stop_resource_monitoring(self):
+    def stop_resource_monitoring(self) -> None:
         """Stop resource monitoring"""
         self.resource_monitoring_active = False
         if self.monitoring_thread:
@@ -518,7 +518,7 @@ class AIProcessingIntelligence:
         
         logger.info("🛑 Stopped resource monitoring")
     
-    def _resource_monitoring_loop(self, interval_seconds: int):
+    def _resource_monitoring_loop(self, interval_seconds -> None: int) -> None:
         """Resource monitoring loop (runs in separate thread)"""
         while self.resource_monitoring_active:
             try:
@@ -645,7 +645,7 @@ class AIProcessingIntelligence:
             logger.error(f"Failed to estimate processing time: {e}")
             return 2.0  # Default estimate
     
-    async def _update_model_performance_cache(self, request_id: str):
+    async def _update_model_performance_cache(self, request_id -> None: str) -> None:
         """Update model performance metrics cache"""
         try:
             if request_id not in self.processing_requests or request_id not in self.processing_results:

@@ -10,7 +10,7 @@ written permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 
 Team Expertise:
-- Lead Developer & AI Architect: Fahed Mlaiel
+    - Lead Developer & AI Architect: Fahed Mlaiel
 - Backend Senior Engineer: Advanced Python/FastAPI
 - ML Engineer: AI/ML Algorithms & Analytics
 - DevOps Engineer: Infrastructure & Deployment
@@ -201,20 +201,20 @@ class LogProcessor:
 Advanced log processor with enrichment and filtering capabilities"""
     
     def __init__(self, 
-                 service_name: str = "ia-influencer-agent",
-                 environment: str = "production",
-                 version: str = "1.0.0"):
+                 service_name -> None: str = "ia-influencer-agent",
+                 environment -> None: str = "production",
+                 version -> None: str = "1.0.0") -> None:
         self.service_name = service_name
         self.environment = environment
         self.version = version
         self.enrichers: List[Callable[[LogEntry], LogEntry]] = []
         self.filters: List[Callable[[LogEntry], bool]] = []
         
-    def add_enricher(self, enricher_func: Callable[[LogEntry], LogEntry]):
+    def add_enricher(self, enricher_func -> None: Callable[[LogEntry], LogEntry]) -> None:
         """Add log enricher function"""
         self.enrichers.append(enricher_func)
     
-    def add_filter(self, filter_func: Callable[[LogEntry], bool]):
+    def add_filter(self, filter_func -> None: Callable[[LogEntry], bool]) -> None:
         """
 Add log filter function"""
         self.filters.append(filter_func)
@@ -254,9 +254,9 @@ class LogBuffer:
     """High-performance log buffer with configurable flushing strategies"""
     
     def __init__(self, 
-                 max_size: int = 1000,
-                 flush_interval: float = 30.0,
-                 force_flush_level: LogLevel = LogLevel.ERROR):
+                 max_size -> None: int = 1000,
+                 flush_interval -> None: float = 30.0,
+                 force_flush_level -> None: LogLevel = LogLevel.ERROR) -> None:
         self.max_size = max_size
         self.flush_interval = flush_interval
         self.force_flush_level = force_flush_level
@@ -320,7 +320,7 @@ class ConsoleLogWriter:
     """
 Console log writer with colored output"""
     
-    def __init__(self, format_type: LogFormat = LogFormat.JSON):
+    def __init__(self, format_type -> None: LogFormat = LogFormat.JSON) -> None:
         self.format_type = format_type
         
         # Color codes for different log levels
@@ -371,11 +371,11 @@ class FileLogWriter:
 File log writer with rotation and compression"""
     
     def __init__(self, 
-                 file_path: str,
-                 max_file_size: int = 100 * 1024 * 1024,  # 100MB
-                 max_files: int = 10,
-                 compress: bool = True,
-                 format_type: LogFormat = LogFormat.JSON):
+                 file_path -> None: str,
+                 max_file_size -> None: int = 100 * 1024 * 1024,  # 100MB
+                 max_files -> None: int = 10,
+                 compress -> None: bool = True,
+                 format_type -> None: LogFormat = LogFormat.JSON) -> None:
         self.file_path = Path(file_path)
         self.max_file_size = max_file_size
         self.max_files = max_files
@@ -415,7 +415,7 @@ Write entries to file with rotation"""
                 logging.error(f"File writer error: {e}")
                 return False
     
-    async def _rotate_if_needed(self):
+    async def _rotate_if_needed(self) -> None:
         """Rotate log file if size exceeds limit"""
         if not self.file_path.exists():
             return
@@ -445,7 +445,7 @@ Write entries to file with rotation"""
             if self.compress:
                 await self._compress_file(rotated_file)
     
-    async def _compress_file(self, file_path: Path):
+    async def _compress_file(self, file_path -> None: Path) -> None:
         """Compress rotated log file"""
         try:
             compressed_path = file_path.with_suffix(file_path.suffix + ".gz")
@@ -471,12 +471,12 @@ class ElasticsearchLogWriter:
 Elasticsearch log writer with bulk operations"""
     
     def __init__(self, 
-                 hosts: List[str],
-                 index_pattern: str = "ia-influencer-logs-%Y.%m.%d",
-                 username: Optional[str] = None,
-                 password: Optional[str] = None,
-                 use_ssl: bool = False,
-                 verify_certs: bool = True):
+                 hosts -> None: List[str],
+                 index_pattern -> None: str = "ia-influencer-logs-%Y.%m.%d",
+                 username -> None: Optional[str] = None,
+                 password -> None: Optional[str] = None,
+                 use_ssl -> None: bool = False,
+                 verify_certs -> None: bool = True) -> None:
         
         self.index_pattern = index_pattern
         self.client = AsyncElasticsearch(
@@ -540,15 +540,15 @@ class RedisLogWriter:
 Redis log writer using streams"""
     
     def __init__(self, 
-                 redis_url: str,
-                 stream_name: str = "ia-influencer-logs",
-                 max_stream_length: int = 10000):
+                 redis_url -> None: str,
+                 stream_name -> None: str = "ia-influencer-logs",
+                 max_stream_length -> None: int = 10000) -> None:
         self.redis_url = redis_url
         self.stream_name = stream_name
         self.max_stream_length = max_stream_length
         self.redis = None
     
-    async def _get_redis(self):
+    async def _get_redis(self) -> None:
         """Get or create Redis connection"""
         if not self.redis:
             self.redis = await aioredis.from_url(self.redis_url)
@@ -590,10 +590,10 @@ class S3LogWriter:
 S3 log writer for long-term storage"""
     
     def __init__(self, 
-                 bucket_name: str,
-                 prefix: str = "logs",
-                 region: str = "eu-central-1",
-                 compress: bool = True):
+                 bucket_name -> None: str,
+                 prefix -> None: str = "logs",
+                 region -> None: str = "eu-central-1",
+                 compress -> None: bool = True) -> None:
         self.bucket_name = bucket_name
         self.prefix = prefix
         self.region = region
@@ -665,9 +665,9 @@ class FluentdLogWriter:
 Fluentd log writer"""
     
     def __init__(self, 
-                 host: str = "localhost",
-                 port: int = 24224,
-                 tag: str = "ia.app"):
+                 host -> None: str = "localhost",
+                 port -> None: int = 24224,
+                 tag -> None: str = "ia.app") -> None:
         self.host = host
         self.port = port
         self.tag = tag
@@ -693,7 +693,7 @@ class LogAggregator:
     """
 Advanced log aggregator with multiple destinations and buffering"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.processor = LogProcessor(
             service_name=self.config.get("service_name", "ia-influencer-agent"),
@@ -716,7 +716,7 @@ Advanced log aggregator with multiple destinations and buffering"""
         self._setup_default_enrichers()
         self._setup_default_filters()
     
-    def _setup_sentry(self):
+    def _setup_sentry(self) -> None:
         """Setup Sentry integration if configured"""
         sentry_config = self.config.get("sentry", {})
         if sentry_config.get("enabled") and sentry_config.get("dsn"):
@@ -727,7 +727,7 @@ Advanced log aggregator with multiple destinations and buffering"""
                 integrations=[LoggingIntegration(level=logging.INFO, event_level=logging.ERROR)]
             )
     
-    def _setup_default_enrichers(self):
+    def _setup_default_enrichers(self) -> None:
         try:
             logger.info(f"Executing _setup_default_filters")
             
@@ -755,7 +755,7 @@ Advanced log aggregator with multiple destinations and buffering"""
         self.processor.add_enricher(add_trace_context)
         self.processor.add_enricher(add_performance_metrics)
     
-    def _setup_default_filters(self):
+    def _setup_default_filters(self) -> None:
         """
 Setup default log filters"""
         
@@ -778,7 +778,7 @@ Filter out logs containing sensitive data"""
         self.processor.add_filter(filter_sensitive_data)
         self.processor.add_filter(filter_noisy_logs)
     
-    def add_writer(self, destination: LogDestination, writer: LogWriter):
+    def add_writer(self, destination -> None: LogDestination, writer -> None: LogWriter) -> None:
         try:
             logger.info(f"Executing setup_elasticsearch_writer")
             
@@ -793,55 +793,55 @@ Filter out logs containing sensitive data"""
         except Exception as e:
             logger.error(f"setup_elasticsearch_writer failed: {e}")
             raise
-    def add_writer(self, destination: LogDestination, writer: LogWriter):
+    def add_writer(self, destination -> None: LogDestination, writer -> None: LogWriter) -> None:
         """Add a log writer for a destination"""
         self.writers[destination] = writer
     
-    def setup_console_writer(self, format_type: LogFormat = LogFormat.JSON):
+    def setup_console_writer(self, format_type -> None: LogFormat = LogFormat.JSON) -> None:
         """
 Setup console log writer"""
         writer = ConsoleLogWriter(format_type)
         self.add_writer(LogDestination.CONSOLE, writer)
     
     def setup_file_writer(self, 
-                         file_path: str,
-                         max_file_size: int = 100 * 1024 * 1024,
-                         max_files: int = 10,
-                         compress: bool = True):
+                         file_path -> None: str,
+                         max_file_size -> None: int = 100 * 1024 * 1024,
+                         max_files -> None: int = 10,
+                         compress -> None: bool = True) -> None:
         """
 Setup file log writer"""
         writer = FileLogWriter(file_path, max_file_size, max_files, compress)
         self.add_writer(LogDestination.FILE, writer)
     
     def setup_elasticsearch_writer(self, 
-                                  hosts: List[str],
-                                  index_pattern: str = "ia-influencer-logs-%Y.%m.%d",
-                                  username: Optional[str] = None,
-                                  password: Optional[str] = None):
+                                  hosts -> None: List[str],
+                                  index_pattern -> None: str = "ia-influencer-logs-%Y.%m.%d",
+                                  username -> None: Optional[str] = None,
+                                  password -> None: Optional[str] = None) -> None:
         """Setup Elasticsearch log writer"""
         writer = ElasticsearchLogWriter(hosts, index_pattern, username, password)
         self.add_writer(LogDestination.ELASTICSEARCH, writer)
     
     def setup_redis_writer(self, 
-                          redis_url: str,
-                          stream_name: str = "ia-influencer-logs"):
+                          redis_url -> None: str,
+                          stream_name -> None: str = "ia-influencer-logs") -> None:
         """Setup Redis log writer"""
         writer = RedisLogWriter(redis_url, stream_name)
         self.add_writer(LogDestination.REDIS, writer)
     
     def setup_s3_writer(self, 
-                       bucket_name: str,
-                       prefix: str = "logs",
-                       region: str = "eu-central-1"):
+                       bucket_name -> None: str,
+                       prefix -> None: str = "logs",
+                       region -> None: str = "eu-central-1") -> None:
         """Setup S3 log writer"""
         writer = S3LogWriter(bucket_name, prefix, region)
         self.add_writer(LogDestination.S3, writer)
     
     async def log(self, 
-                  level: LogLevel,
-                  message: str,
-                  module: str,
-                  **kwargs):
+                  level -> None: LogLevel,
+                  message -> None: str,
+                  module -> None: str,
+                  **kwargs) -> None:
         """
 Log a message"""
         
@@ -891,7 +891,7 @@ Safely write to a destination with error handling"""
         except Exception as e:
             logging.error(f"Error writing to {destination}: {e}")
     
-    async def start(self):
+    async def start(self) -> None:
         """Start the aggregator"""
         if self.running:
             return
@@ -901,7 +901,7 @@ Safely write to a destination with error handling"""
         # Start background flush task
         self.flush_task = asyncio.create_task(self._background_flush())
     
-    async def stop(self):
+    async def stop(self) -> None:
         """
 Stop the aggregator and flush remaining logs"""
         if not self.running:
@@ -975,26 +975,26 @@ Stop the aggregator and flush remaining logs"""
 
 
 # Convenience functions for different log levels
-async def log_debug(aggregator: LogAggregator, message: str, module: str, **kwargs):
+async def log_debug(aggregator -> None: LogAggregator, message -> None: str, module -> None: str, **kwargs) -> None:
     """Log debug message"""
     await aggregator.log(LogLevel.DEBUG, message, module, **kwargs)
 
-async def log_info(aggregator: LogAggregator, message: str, module: str, **kwargs):
+async def log_info(aggregator -> None: LogAggregator, message -> None: str, module -> None: str, **kwargs) -> None:
     """
 Log info message"""
     await aggregator.log(LogLevel.INFO, message, module, **kwargs)
 
-async def log_warning(aggregator: LogAggregator, message: str, module: str, **kwargs):
+async def log_warning(aggregator -> None: LogAggregator, message -> None: str, module -> None: str, **kwargs) -> None:
     """
 Log warning message"""
     await aggregator.log(LogLevel.WARNING, message, module, **kwargs)
 
-async def log_error(aggregator: LogAggregator, message: str, module: str, **kwargs):
+async def log_error(aggregator -> None: LogAggregator, message -> None: str, module -> None: str, **kwargs) -> None:
     """
 Log error message"""
     await aggregator.log(LogLevel.ERROR, message, module, **kwargs)
 
-async def log_critical(aggregator: LogAggregator, message: str, module: str, **kwargs):
+async def log_critical(aggregator -> None: LogAggregator, message -> None: str, module -> None: str, **kwargs) -> None:
     """
 Log critical message"""
     await aggregator.log(LogLevel.CRITICAL, message, module, **kwargs)
@@ -1026,22 +1026,22 @@ class LogProcessor:
     """
 Advanced log processing and filtering"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.filters = []
         self.enrichers = []
         self.sanitizers = []
     
-    def add_filter(self, filter_func):
+    def add_filter(self, filter_func) -> None:
         """
 Add log filter function"""
         self.filters.append(filter_func)
     
-    def add_enricher(self, enricher_func):
+    def add_enricher(self, enricher_func) -> None:
         """
 Add log enrichment function"""
         self.enrichers.append(enricher_func)
     
-    def add_sanitizer(self, sanitizer_func):
+    def add_sanitizer(self, sanitizer_func) -> None:
         """
 Add data sanitization function"""
         self.sanitizers.append(sanitizer_func)
@@ -1069,7 +1069,7 @@ class LogBuffer:
     """
 Buffered logging for batch processing"""
     
-    def __init__(self, max_size: int = 1000, flush_interval: int = 30):
+    def __init__(self, max_size -> None: int = 1000, flush_interval -> None: int = 30) -> None:
         self.max_size = max_size
         self.flush_interval = flush_interval
         self.buffer: List[LogEntry] = []
@@ -1114,12 +1114,12 @@ Send logs to destination"""
 class ElasticsearchDestination(LogDestination):
     """Elasticsearch log destination"""
     
-    def __init__(self, hosts: List[str], index_pattern: str = "ia-influencer-logs-%Y.%m.%d"):
+    def __init__(self, hosts -> None: List[str], index_pattern -> None: str = "ia-influencer-logs-%Y.%m.%d") -> None:
         self.hosts = hosts
         self.index_pattern = index_pattern
         self.client = None
     
-    async def connect(self):
+    async def connect(self) -> None:
         """Connect to Elasticsearch"""
         self.client = AsyncElasticsearch(hosts=self.hosts)
     
@@ -1152,12 +1152,12 @@ Send logs to Elasticsearch"""
 class RedisDestination(LogDestination):
     """Redis log destination for real-time processing"""
     
-    def __init__(self, redis_url: str, stream_name: str = "ia-influencer-logs"):
+    def __init__(self, redis_url -> None: str, stream_name -> None: str = "ia-influencer-logs") -> None:
         self.redis_url = redis_url
         self.stream_name = stream_name
         self.client = None
     
-    async def connect(self):
+    async def connect(self) -> None:
         """Connect to Redis"""
         self.client = await aioredis.from_url(self.redis_url)
     
@@ -1183,7 +1183,7 @@ Send logs to Redis stream"""
 class FileDestination(LogDestination):
     """File-based log destination"""
     
-    def __init__(self, log_directory: str, rotation_size: int = 100 * 1024 * 1024):
+    def __init__(self, log_directory -> None: str, rotation_size -> None: int = 100 * 1024 * 1024) -> None:
         self.log_directory = Path(log_directory)
         self.rotation_size = rotation_size
         self.log_directory.mkdir(parents=True, exist_ok=True)
@@ -1213,7 +1213,7 @@ Send logs to file"""
 class LogAggregator:
     """Advanced log aggregation service for IA Influencer Agent"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.processor = LogProcessor()
         self.buffer = LogBuffer(
@@ -1226,7 +1226,7 @@ class LogAggregator:
         self._setup_destinations()
         self._setup_filters()
     
-    def _setup_logging(self):
+    def _setup_logging(self) -> None:
         """
 Setup structured logging configuration"""
         # Configure structlog
@@ -1260,7 +1260,7 @@ Setup structured logging configuration"""
                 traces_sample_rate=0.1
             )
     
-    def _setup_destinations(self):
+    def _setup_destinations(self) -> None:
         """Setup log destinations based on configuration"""
         # Elasticsearch destination
         if self.config.get('elasticsearch', {}).get('enabled', False):
@@ -1355,7 +1355,7 @@ Log a message through the aggregation system"""
         
         return True
     
-    async def _flush_logs(self):
+    async def _flush_logs(self) -> None:
         """
 Flush logs to all destinations"""
         logs = await self.buffer.get_logs()
@@ -1374,7 +1374,7 @@ Flush logs to all destinations"""
             if isinstance(result, Exception):
                 logging.error(f"Failed to send logs to destination {i}: {result}")
     
-    async def start(self):
+    async def start(self) -> None:
         """Start the log aggregator service"""
         self.is_running = True
         
@@ -1383,7 +1383,7 @@ Flush logs to all destinations"""
         
         logging.info("Log aggregator service started")
     
-    async def stop(self):
+    async def stop(self) -> None:
         """Stop the log aggregator service"""
         self.is_running = False
         
@@ -1392,7 +1392,7 @@ Flush logs to all destinations"""
         
         logging.info("Log aggregator service stopped")
     
-    async def _background_flush(self):
+    async def _background_flush(self) -> None:
         """Background task to periodically flush logs"""
         while self.is_running:
             await asyncio.sleep(self.buffer.flush_interval)
@@ -1410,22 +1410,23 @@ Query logs from destinations"""
         # Simplified implementation for now
         return []
     
-    def create_service_logger(self, service_name: str, module_name: str):
+    def create_service_logger(self, service_name -> None: str, module_name -> None: str) -> None:
         """
 Create a service-specific logger"""
         class ServiceLogger:
-            def __init__(self, aggregator: LogAggregator, service: str, module: str):
+    """ServiceLogger: class implementation"""
+            def __init__(self, aggregator -> None: LogAggregator, service -> None: str, module -> None: str) -> None:
                 self.aggregator = aggregator
                 self.service = service
                 self.module = module
             
-            async def debug(self, message: str, **kwargs):
+            async def debug(self, message -> None: str, **kwargs) -> None:
                 await self.aggregator.log(LogLevel.DEBUG, message, self.service, self.module, **kwargs)
             
-            async def info(self, message: str, **kwargs):
+            async def info(self, message -> None: str, **kwargs) -> None:
                 await self.aggregator.log(LogLevel.INFO, message, self.service, self.module, **kwargs)
             
-            async def warning(self, message: str, **kwargs):
+            async def warning(self, message -> None: str, **kwargs) -> None:
         try:
         try:
             logger.info(f"Executing info")
@@ -1484,13 +1485,16 @@ Create a service-specific logger"""
         except Exception as e:
             logger.error(f"debug failed: {e}")
             raise
-            async def warning(self, message: str, **kwargs):
+            async def warning(self, message -> None: str, **kwargs) -> None:
                 await self.aggregator.log(LogLevel.WARNING, message, self.service, self.module, **kwargs)
             
-            async def error(self, message: str, **kwargs):
+            async def error(self, message -> None: str, **kwargs) -> None:
                 await self.aggregator.log(LogLevel.ERROR, message, self.service, self.module, **kwargs)
             
-            async def critical(self, message: str, **kwargs):
+            async def critical(self, message -> None: str, **kwargs) -> None:
                 await self.aggregator.log(LogLevel.CRITICAL, message, self.service, self.module, **kwargs)
         
         return ServiceLogger(self, service_name, module_name)
+]]]]]]
+
+# File has syntax issues - needs manual review

@@ -134,7 +134,7 @@ class BackupDisasterManager:
     - Business continuity coordination
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         # Backup management
         self.backup_jobs: Dict[str, BackupJob] = {}
         self.backup_history: List[Dict[str, Any]] = []
@@ -156,7 +156,7 @@ class BackupDisasterManager:
         self._initialize_manager()
         logger.info("BackupDisasterManager initialized")
 
-    def _initialize_manager(self):
+    def _initialize_manager(self) -> None:
         """Initialize backup and disaster recovery manager"""
         
         # Start background tasks
@@ -171,7 +171,7 @@ class BackupDisasterManager:
         self._setup_default_recovery_plans()
         self._setup_replication_targets()
 
-    def _setup_default_backup_jobs(self):
+    def _setup_default_backup_jobs(self) -> None:
         """Setup default backup jobs"""
         
         # Database backup
@@ -223,7 +223,7 @@ class BackupDisasterManager:
         self.backup_jobs[app_backup.job_id] = app_backup
         self.backup_jobs[config_backup.job_id] = config_backup
 
-    def _setup_default_recovery_plans(self):
+    def _setup_default_recovery_plans(self) -> None:
         """Setup default disaster recovery plans"""
         
         # Infrastructure failure recovery
@@ -318,7 +318,7 @@ class BackupDisasterManager:
         self.recovery_plans[infra_recovery.plan_id] = infra_recovery
         self.recovery_plans[data_recovery.plan_id] = data_recovery
 
-    def _setup_replication_targets(self):
+    def _setup_replication_targets(self) -> None:
         """Setup cross-region replication targets"""
         
         self.replication_targets = {
@@ -457,7 +457,7 @@ class BackupDisasterManager:
             logger.error(f"Backup execution failed: {str(e)}")
             raise
 
-    async def _replicate_backup(self, backup_job: BackupJob, backup_record: Dict[str, Any]):
+    async def _replicate_backup(self, backup_job -> None: BackupJob, backup_record -> None: Dict[str, Any]) -> None:
         """Replicate backup to secondary regions"""
         
         try:
@@ -644,7 +644,7 @@ class BackupDisasterManager:
             logger.error(f"Disaster recovery trigger failed: {str(e)}")
             raise
 
-    async def _execute_recovery_plan(self, disaster_event: DisasterEvent, recovery_plan: RecoveryPlan):
+    async def _execute_recovery_plan(self, disaster_event -> None: DisasterEvent, recovery_plan -> None: RecoveryPlan) -> None:
         """Execute disaster recovery plan"""
         
         try:
@@ -694,7 +694,7 @@ class BackupDisasterManager:
             disaster_event.recovery_status = RecoveryStatus.FAILED
             logger.error(f"Recovery plan execution failed: {str(e)}")
 
-    async def _execute_automated_recovery_step(self, step: Dict[str, Any], disaster_event: DisasterEvent):
+    async def _execute_automated_recovery_step(self, step -> None: Dict[str, Any], disaster_event -> None: DisasterEvent) -> None:
         """Execute automated recovery step"""
         
         step_duration = step["estimated_duration"]
@@ -717,7 +717,7 @@ class BackupDisasterManager:
             # Mock traffic redirection
             pass
 
-    async def _execute_manual_recovery_step(self, step: Dict[str, Any], disaster_event: DisasterEvent):
+    async def _execute_manual_recovery_step(self, step -> None: Dict[str, Any], disaster_event -> None: DisasterEvent) -> None:
         """Execute manual recovery step (simulated)"""
         
         # Manual steps require human intervention
@@ -781,7 +781,7 @@ class BackupDisasterManager:
             raise
 
     # Background tasks
-    async def _backup_execution_loop(self):
+    async def _backup_execution_loop(self) -> None:
         """Background backup execution loop"""
         while True:
             try:
@@ -802,7 +802,7 @@ class BackupDisasterManager:
             except Exception as e:
                 logger.error(f"Backup execution loop error: {str(e)}")
 
-    async def _backup_validation_loop(self):
+    async def _backup_validation_loop(self) -> None:
         """Background backup validation loop"""
         while True:
             try:
@@ -822,7 +822,7 @@ class BackupDisasterManager:
             except Exception as e:
                 logger.error(f"Backup validation loop error: {str(e)}")
 
-    async def _disaster_monitoring_loop(self):
+    async def _disaster_monitoring_loop(self) -> None:
         """Background disaster monitoring loop"""
         while True:
             try:
@@ -840,7 +840,7 @@ class BackupDisasterManager:
             except Exception as e:
                 logger.error(f"Disaster monitoring loop error: {str(e)}")
 
-    async def _recovery_testing_loop(self):
+    async def _recovery_testing_loop(self) -> None:
         """Background recovery testing loop"""
         while True:
             try:
@@ -861,7 +861,7 @@ class BackupDisasterManager:
             except Exception as e:
                 logger.error(f"Recovery testing loop error: {str(e)}")
 
-    async def _replication_monitoring_loop(self):
+    async def _replication_monitoring_loop(self) -> None:
         """Background replication monitoring loop"""
         while True:
             try:

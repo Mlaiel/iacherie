@@ -137,7 +137,7 @@ class EnterpriseIncidentResponse:
     - Post-incident analysis and reporting
     """
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
         
@@ -937,7 +937,7 @@ class IncidentMetricsCollector:
         )
 
 # Example usage
-async def main():
+async def main() -> None:
     """Example usage of the Enterprise Incident Response System"""
     incident_response = EnterpriseIncidentResponse()
     

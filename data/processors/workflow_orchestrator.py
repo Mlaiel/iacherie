@@ -138,7 +138,7 @@ class WorkflowExecution:
 class ResourceManager:
     """System resource allocation and monitoring"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.logger = logging.getLogger(f"{__name__}.ResourceManager")
         self.config = config or {}
         
@@ -219,7 +219,7 @@ class ResourceManager:
             self.logger.error(f"Resource allocation failed: {str(e)}")
             return False
     
-    def release_resources(self, task_id: str, requirements: List[ResourceRequirement]):
+    def release_resources(self, task_id -> None: str, requirements -> None: List[ResourceRequirement]) -> None:
         """Release resources after task completion"""
         try:
             for req in requirements:
@@ -236,7 +236,7 @@ class ResourceManager:
 class QualityController:
     """Quality control and validation throughout pipeline"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.logger = logging.getLogger(f"{__name__}.QualityController")
         self.config = config or {}
         
@@ -405,7 +405,7 @@ class QualityController:
 class TaskScheduler:
     """Intelligent task scheduling and execution management"""
     
-    def __init__(self, max_concurrent_tasks: int = 5, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, max_concurrent_tasks -> None: int = 5, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.logger = logging.getLogger(f"{__name__}.TaskScheduler")
         self.max_concurrent_tasks = max_concurrent_tasks
         self.config = config or {}
@@ -448,7 +448,7 @@ class TaskScheduler:
             self.logger.error(f"Failed to schedule task {task_def.task_id}: {str(e)}")
             raise
     
-    async def start_scheduler(self):
+    async def start_scheduler(self) -> None:
         """Start the task scheduler"""
         if self._scheduler_running:
             return
@@ -457,7 +457,7 @@ class TaskScheduler:
         self._scheduler_task = asyncio.create_task(self._scheduler_loop())
         self.logger.info("Task scheduler started")
     
-    async def stop_scheduler(self):
+    async def stop_scheduler(self) -> None:
         """Stop the task scheduler"""
         self._scheduler_running = False
         if self._scheduler_task:
@@ -473,7 +473,7 @@ class TaskScheduler:
         
         self.logger.info("Task scheduler stopped")
     
-    async def _scheduler_loop(self):
+    async def _scheduler_loop(self) -> None:
         """Main scheduler loop"""
         while self._scheduler_running:
             try:
@@ -499,13 +499,13 @@ class TaskScheduler:
                 self.logger.error(f"Scheduler loop error: {str(e)}")
                 await asyncio.sleep(1)
     
-    async def _execute_task(self, task_item: Dict[str, Any]):
+    async def _execute_task(self, task_item -> None: Dict[str, Any]) -> None:
         """Execute a single task"""
         execution_id = task_item['execution_id']
         task_def = task_item['task_def']
         input_data = task_item['input_data']
         
-        async def task_wrapper():
+        async def task_wrapper() -> None:
             async with self.semaphore:
                 try:
                     # Execute the task function
@@ -521,7 +521,7 @@ class TaskScheduler:
         
         self.logger.info(f"Started execution of task {task_def.task_id} (ID: {execution_id})")
     
-    async def _cleanup_completed_tasks(self):
+    async def _cleanup_completed_tasks(self) -> None:
         """Remove completed tasks from running tasks"""
         completed_tasks = []
         
@@ -552,7 +552,7 @@ class WorkflowOrchestrator:
     resource allocation, quality control, and error recovery.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.logger = logging.getLogger(f"{__name__}.WorkflowOrchestrator")
         self.config = config or {}
         
@@ -580,7 +580,7 @@ class WorkflowOrchestrator:
         
         self.logger.info("WorkflowOrchestrator initialized successfully")
     
-    async def register_workflow(self, workflow_def: WorkflowDefinition):
+    async def register_workflow(self, workflow_def -> None: WorkflowDefinition) -> None:
         """Register a workflow definition"""
         try:
             # Validate workflow definition
@@ -641,11 +641,11 @@ class WorkflowOrchestrator:
     
     async def _execute_workflow_async(
         self,
-        execution: WorkflowExecution,
-        workflow_def: WorkflowDefinition,
-        input_data: Any,
-        execution_config: Optional[Dict[str, Any]] = None
-    ):
+        execution -> None: WorkflowExecution,
+        workflow_def -> None: WorkflowDefinition,
+        input_data -> None: Any,
+        execution_config -> None: Optional[Dict[str, Any]] = None
+    ) -> None:
         """Asynchronous workflow execution"""
         try:
             execution.status = WorkflowStatus.RUNNING
@@ -702,11 +702,11 @@ class WorkflowOrchestrator:
     
     async def _execute_task_in_workflow(
         self,
-        execution: WorkflowExecution,
-        task_def: TaskDefinition,
-        workflow_input: Any,
-        task_results: Dict[str, Any]
-    ):
+        execution -> None: WorkflowExecution,
+        task_def -> None: TaskDefinition,
+        workflow_input -> None: Any,
+        task_results -> None: Dict[str, Any]
+    ) -> None:
         """Execute a single task within a workflow"""
         try:
             # Create task execution tracking
@@ -793,12 +793,12 @@ class WorkflowOrchestrator:
             for task_exec in execution.task_executions.values()
         )
     
-    async def _wait_for_task_completion(self, execution: WorkflowExecution):
+    async def _wait_for_task_completion(self, execution -> None: WorkflowExecution) -> None:
         """Wait for at least one task to complete"""
         while self._has_running_tasks(execution):
             await asyncio.sleep(0.5)
     
-    async def _finalize_workflow_execution(self, execution: WorkflowExecution, workflow_def: WorkflowDefinition):
+    async def _finalize_workflow_execution(self, execution -> None: WorkflowExecution, workflow_def -> None: WorkflowDefinition) -> None:
         """Finalize workflow execution"""
         execution.end_time = time.time()
         execution.total_execution_time = execution.end_time - execution.start_time
@@ -823,7 +823,7 @@ class WorkflowOrchestrator:
         
         self.logger.info(f"Workflow execution completed: {execution.execution_id} - Status: {execution.status}")
     
-    def _update_performance_metrics(self, execution: WorkflowExecution):
+    def _update_performance_metrics(self, execution -> None: WorkflowExecution) -> None:
         """Update performance metrics"""
         self.performance_metrics['total_workflows'] += 1
         
@@ -874,7 +874,7 @@ class WorkflowOrchestrator:
         visited = set()
         rec_stack = set()
         
-        def has_cycle(node):
+        def has_cycle(node) -> None:
             if node in rec_stack:
                 return True
             if node in visited:

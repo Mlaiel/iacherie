@@ -1,3 +1,8 @@
+"""
+Cache Policy Engine module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
@@ -90,7 +95,7 @@ class CachePolicyEngine:
     **DBA**: Gestion optimisée stockage et indexation
     """
     
-    def __init__(self, redis_pool, config_path: Optional[str] = None):
+    def __init__(self, redis_pool, config_path -> None: Optional[str] = None) -> None:
         self.redis_pool = redis_pool
         self.policies: Dict[str, CachePolicyConfig] = {}
         self.metrics: Dict[str, CacheMetrics] = {}
@@ -117,7 +122,7 @@ class CachePolicyEngine:
         
         logger.info("🧠 Cache Policy Engine initialisé")
     
-    def _load_default_policies(self):
+    def _load_default_policies(self) -> None:
         """**Backend Senior**: Politiques par défaut optimisées"""
         
         # Politique adaptative IA
@@ -166,7 +171,7 @@ class CachePolicyEngine:
             }
         )
     
-    def _load_policies_from_config(self, config_path: str):
+    def _load_policies_from_config(self, config_path -> None: str) -> None:
         """**DBA**: Chargement configuration depuis fichier"""
         try:
             with open(config_path, 'r') as f:
@@ -187,7 +192,7 @@ class CachePolicyEngine:
         except Exception as e:
             logger.error(f"❌ Erreur chargement config {config_path}: {e}")
     
-    async def _initialize_ml_model(self):
+    async def _initialize_ml_model(self) -> None:
         """**ML Engineer**: Initialisation modèle ML optimisation cache"""
         try:
             # Modèle pour prédiction TTL optimal
@@ -206,7 +211,7 @@ class CachePolicyEngine:
         except Exception as e:
             logger.error(f"❌ Erreur initialisation ML: {e}")
     
-    async def _train_initial_model(self):
+    async def _train_initial_model(self) -> None:
         """**ML Engineer**: Entraînement initial avec données simulées"""
         # Génération données d'entraînement simulées
         n_samples = 1000
@@ -388,7 +393,7 @@ class CachePolicyEngine:
         
         return policy.ttl_seconds or 3600
     
-    async def _set_l1_cache(self, key: str, value: Any):
+    async def _set_l1_cache(self, key -> None: str, value -> None: Any) -> None:
         """**Backend Senior**: Gestion cache L1 mémoire"""
         if len(self.l1_cache) >= self.l1_max_size:
             # Éviction LRU pour L1
@@ -400,7 +405,7 @@ class CachePolicyEngine:
         
         self.l1_cache[key] = value
     
-    async def _consider_l1_promotion(self, key: str, value: Any):
+    async def _consider_l1_promotion(self, key -> None: str, value -> None: Any) -> None:
         """**ML Engineer**: Décision promotion cache L1 basée IA"""
         metrics = self.metrics.get(key, CacheMetrics(key=key))
         
@@ -413,7 +418,7 @@ class CachePolicyEngine:
             await self._set_l1_cache(key, value)
             logger.debug(f"⬆️ Promotion L1: {key}")
     
-    def _update_access_metrics(self, key: str, hit: bool, level: str = "L2"):
+    def _update_access_metrics(self, key -> None: str, hit -> None: bool, level -> None: str = "L2") -> None:
         """**DBA**: Mise à jour métriques d'accès"""
         if key not in self.metrics:
             self.metrics[key] = CacheMetrics(key=key)
@@ -437,10 +442,10 @@ class CachePolicyEngine:
     
     async def _record_cache_pattern(
         self, 
-        key: str, 
-        operation: str, 
-        context: Optional[Dict[str, Any]] = None
-    ):
+        key -> None: str, 
+        operation -> None: str, 
+        context -> None: Optional[Dict[str, Any]] = None
+    ) -> None:
         """**ML Engineer**: Enregistrement patterns pour apprentissage ML"""
         pattern = {
             "timestamp": time.time(),
@@ -471,7 +476,7 @@ class CachePolicyEngine:
             if len(self.pattern_features) % 1000 == 0:
                 await self._retrain_model()
     
-    async def _retrain_model(self):
+    async def _retrain_model(self) -> None:
         """**ML Engineer**: Re-entraînement modèle avec nouvelles données"""
         try:
             if len(self.pattern_features) < 100:
@@ -513,11 +518,11 @@ class CachePolicyEngine:
     async def _store_cache_metadata(
         self, 
         redis_conn, 
-        key: str, 
-        ttl: int, 
-        policy_name: str,
-        context: Optional[Dict[str, Any]] = None
-    ):
+        key -> None: str, 
+        ttl -> None: int, 
+        policy_name -> None: str,
+        context -> None: Optional[Dict[str, Any]] = None
+    ) -> None:
         """**DBA**: Stockage métadonnées cache pour analytics"""
         metadata = {
             "policy": policy_name,
@@ -533,7 +538,7 @@ class CachePolicyEngine:
             json.dumps(metadata)
         )
     
-    async def invalidate_cache(self, pattern: str = None, keys: List[str] = None):
+    async def invalidate_cache(self, pattern -> None: str = None, keys -> None: List[str] = None) -> None:
         """**Backend Senior**: Invalidation cache intelligente"""
         try:
             async with self.redis_pool.get_connection() as redis_conn:
@@ -613,7 +618,7 @@ class CachePolicyEngine:
             "pattern_samples": len(self.pattern_features)
         }
     
-    async def optimize_policies(self):
+    async def optimize_policies(self) -> None:
         """**Lead Dev IA**: Optimisation automatique politiques cache"""
         analytics = await self.get_cache_analytics()
         
@@ -638,18 +643,19 @@ class CachePolicyEngine:
             logger.info("💾 Taille cache réduite pour optimiser mémoire")
 
 # Factory function
-async def create_cache_policy_engine(redis_pool, config_path: Optional[str] = None):
+async def create_cache_policy_engine(redis_pool, config_path -> None: Optional[str] = None) -> None:
     """**Lead Dev IA**: Factory création moteur politiques cache"""
     engine = CachePolicyEngine(redis_pool, config_path)
     return engine
 
 if __name__ == "__main__":
-    async def demo():
+    async def demo() -> None:
         """Démonstration Cache Policy Engine"""
         
         # Configuration Redis (simulé)
         class MockRedisPool:
-            def get_connection(self):
+    """MockRedisPool: class implementation"""
+            def get_connection(self) -> None:
                 from unittest.mock import AsyncMock
                 return AsyncMock()
         

@@ -113,7 +113,7 @@ class MultiAgentConfig:
 class DQNNetwork(nn.Module):
     """Deep Q-Network for value-based RL"""
     
-    def __init__(self, input_dim: int, output_dim: int, hidden_dims: List[int] = [256, 256]):
+    def __init__(self, input_dim -> None: int, output_dim -> None: int, hidden_dims -> None: List[int] = [256, 256]) -> None:
         super().__init__()
         
         layers = []
@@ -148,7 +148,7 @@ class DQNNetwork(nn.Module):
 class ActorCriticNetwork(nn.Module):
     """Actor-Critic network for policy-based RL"""
     
-    def __init__(self, state_dim: int, action_dim: int, hidden_dims: List[int] = [256, 256]):
+    def __init__(self, state_dim -> None: int, action_dim -> None: int, hidden_dims -> None: List[int] = [256, 256]) -> None:
         super().__init__()
         
         # Shared feature extractor
@@ -198,7 +198,7 @@ class ActorCriticNetwork(nn.Module):
 class CreatorEnvironment:
     """Creator platform RL environment"""
     
-    def __init__(self, env_type: EnvironmentType, config: Dict[str, Any]):
+    def __init__(self, env_type -> None: EnvironmentType, config -> None: Dict[str, Any]) -> None:
         self.env_type = env_type
         self.config = config
         
@@ -404,7 +404,7 @@ class CreatorEnvironment:
 class ReinforcementLearningLab:
     """Advanced reinforcement learning research laboratory"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize RL laboratory"""
         self.config = config or {}
         
@@ -1053,7 +1053,7 @@ def get_rl_lab() -> ReinforcementLearningLab:
     return _lab_instance
 
 # Test function
-async def test_rl_lab():
+async def test_rl_lab() -> None:
     """Test RL lab functionality"""
     lab = ReinforcementLearningLab()
     

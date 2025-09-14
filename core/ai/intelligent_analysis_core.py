@@ -207,7 +207,7 @@ class IntelligentAnalysisCore:
     with enterprise-grade performance and accuracy standards.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize Intelligent Analysis Core"""
         self.config = config or {}
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
@@ -253,7 +253,7 @@ class IntelligentAnalysisCore:
         
         self.logger.info("Intelligent Analysis Core initialized")
         
-    def _initialize_models(self):
+    def _initialize_models(self) -> None:
         """Initialize AI models"""
         try:
             # Initialize spaCy model
@@ -1355,7 +1355,7 @@ class IntelligentAnalysisCore:
             
         return completed_analyses / max(requested_analyses, 1)
         
-    def _update_analysis_statistics(self, result: IntelligentAnalysisResult, processing_time: float):
+    def _update_analysis_statistics(self, result -> None: IntelligentAnalysisResult, processing_time -> None: float) -> None:
         """Update analysis statistics"""
         self.analysis_stats["total_analyses"] += 1
         

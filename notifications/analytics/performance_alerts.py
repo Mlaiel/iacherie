@@ -94,7 +94,7 @@ class PerformanceAlertsEngine:
     Monitoring intelligent et alertes prédictives pour Ainflue
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialise l'engine d'alertes performance"""
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
@@ -120,7 +120,7 @@ class PerformanceAlertsEngine:
         
         self.logger.info("PerformanceAlertsEngine initialisé avec succès")
 
-    def _initialize_default_thresholds(self):
+    def _initialize_default_thresholds(self) -> None:
         """Initialise les seuils de performance par défaut"""
         self.default_thresholds = {
             PerformanceMetricType.CONTENT_VIEWS: PerformanceThreshold(
@@ -834,7 +834,7 @@ Performance issue détectée pour votre contenu:
         
         return min(1.0, score)
 
-    async def _update_engine_metrics(self, alerts: List[PerformanceAlert]):
+    async def _update_engine_metrics(self, alerts -> None: List[PerformanceAlert]) -> None:
         """Met à jour les métriques de l'engine"""
         self.engine_metrics['alerts_generated'] += len(alerts)
         

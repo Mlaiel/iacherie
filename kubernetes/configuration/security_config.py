@@ -1,4 +1,6 @@
 """🔧 Security Configuration Manager - IA-Influencer-Agent
+import asyncio
+
 ==================================================================
 Lead Dev IA: Fahed Mlaiel <mlaiel@live.de>
 Experts: Security Engineer + DevOps + Backend Senior + Compliance Officer
@@ -152,7 +154,7 @@ class SecurityConfigManager:
     - Compliance framework implementation
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """
 Initialize security configuration manager"""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")

@@ -137,7 +137,7 @@ class ModelComplianceValidator:
     - Automated compliance monitoring
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize compliance validator with enterprise standards"""
         self.config = config or {}
         self.compliance_rules = self._initialize_compliance_rules()

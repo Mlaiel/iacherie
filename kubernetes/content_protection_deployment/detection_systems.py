@@ -167,11 +167,11 @@ class CopyrightDetectionEngine:
     """
     
     def __init__(self,
-                 redis_host: str = "localhost",
-                 redis_port: int = 6379,
-                 postgres_url: str = "postgresql://localhost/ia_influencer",
-                 fingerprint_threshold: float = 0.85,
-                 confidence_threshold: float = 0.80):
+                 redis_host -> None: str = "localhost",
+                 redis_port -> None: int = 6379,
+                 postgres_url -> None: str = "postgresql -> None://localhost/ia_influencer",
+                 fingerprint_threshold -> None: float = 0.85,
+                 confidence_threshold -> None: float = 0.80) -> None:
         
         self.redis_client = redis.Redis(host=redis_host, port=redis_port, decode_responses=True)
         self.postgres_url = postgres_url
@@ -820,7 +820,7 @@ Create violation detection from crawl result and match"""
         # Implementation would create violation detection object
         return None
     
-    async def _store_detection(self, detection: ViolationDetection):
+    async def _store_detection(self, detection -> None: ViolationDetection) -> None:
         """
 Store violation detection in database"""
         try:
@@ -850,16 +850,16 @@ Store violation detection in database"""
         except Exception as e:
             self.logger.error(f"Error storing detection: {str(e)}")
     
-    def _start_background_workers(self):
+    def _start_background_workers(self) -> None:
         """Start background worker threads"""
-        def detection_processor():
+        def detection_processor() -> None:
             """
 Process detection queue"""
             loop = asyncio.new_event_loop()
             asyncio.set_event_loop(loop)
             loop.run_forever()
         
-        def enforcement_processor():
+        def enforcement_processor() -> None:
             """
 Process enforcement queue"""
             loop = asyncio.new_event_loop()
@@ -890,10 +890,10 @@ class ViolationEnforcementSystem:
     """
     
     def __init__(self,
-                 redis_host: str = "localhost",
-                 redis_port: int = 6379,
-                 postgres_url: str = "postgresql://localhost/ia_influencer",
-                 email_config: Dict[str, str] = None):
+                 redis_host -> None: str = "localhost",
+                 redis_port -> None: int = 6379,
+                 postgres_url -> None: str = "postgresql -> None://localhost/ia_influencer",
+                 email_config -> None: Dict[str, str] = None) -> None:
         
         self.redis_client = redis.Redis(host=redis_host, port=redis_port, decode_responses=True)
         self.postgres_url = postgres_url
@@ -1386,7 +1386,7 @@ Generic platform violation reporting"""
         # Generic reporting mechanism
         return False
     
-    async def _notify_legal_team(self, action: EnforcementAction, detection: ViolationDetection):
+    async def _notify_legal_team(self, action -> None: EnforcementAction, detection -> None: ViolationDetection) -> None:
         """
 Notify legal team of escalated case"""
         try:
@@ -1436,7 +1436,7 @@ Twitter-specific enforcement"""
 Generic web platform enforcement"""
         return False
     
-    async def _store_enforcement_action(self, action: EnforcementAction):
+    async def _store_enforcement_action(self, action -> None: EnforcementAction) -> None:
         """
 Store enforcement action in database"""
         try:
@@ -1465,7 +1465,7 @@ Store enforcement action in database"""
         except Exception as e:
             self.logger.error(f"Error storing enforcement action: {str(e)}")
     
-    async def _store_revenue_claim(self, claim: RevenueClaim):
+    async def _store_revenue_claim(self, claim -> None: RevenueClaim) -> None:
         """Store revenue claim in database"""
         try:
             claim_data = {

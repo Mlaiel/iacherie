@@ -5,7 +5,7 @@ and copyright protection. Supports multi-platform monitoring (YouTube, TikTok,
 Instagram, Twitter, etc.) with intelligent crawling strategies and real-time detection.
 
 Key Features:
-- Distributed crawler deployment across multiple platforms
+    - Distributed crawler deployment across multiple platforms
 - Intelligent crawling strategies and rate limiting
 - Real-time content detection and matching
 - DMCA compliance and takedown automation
@@ -17,7 +17,7 @@ Key Features:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 
-⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
+# [EMOJI_REMOVED]  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED # [EMOJI_REMOVED]
 """
 
 import asyncio
@@ -159,10 +159,10 @@ class ContentCrawlerOrchestrator:
     """
     
     def __init__(self,
-                 redis_host: str = "localhost",
-                 redis_port: int = 6379,
-                 postgres_url: str = "postgresql://localhost/ia_influencer",
-                 k8s_namespace: str = "ia-influencer"):
+                 redis_host -> None: str = "localhost",
+                 redis_port -> None: int = 6379,
+                 postgres_url -> None: str = "postgresql -> None://localhost/ia_influencer",
+                 k8s_namespace -> None: str = "ia-influencer") -> None:
         
         self.redis_client = redis.Redis(host=redis_host, port=redis_port, decode_responses=True)
         self.postgres_url = postgres_url
@@ -199,7 +199,7 @@ class ContentCrawlerOrchestrator:
         self.logger = logging.getLogger(__name__)
         self.logger.info("ContentCrawlerOrchestrator initialized successfully")
     
-    def _init_kubernetes_client(self):
+    def _init_kubernetes_client(self) -> None:
         """Initialize Kubernetes client"""
         try:
             config.load_incluster_config()
@@ -210,7 +210,7 @@ class ContentCrawlerOrchestrator:
         self.k8s_core_v1 = client.CoreV1Api()
         self.k8s_autoscaling = client.AutoscalingV1Api()
     
-    def _init_platform_crawlers(self):
+    def _init_platform_crawlers(self) -> None:
         """
 Initialize platform-specific crawlers"""
         platforms = [
@@ -466,7 +466,7 @@ Initialize platform-specific crawlers"""
             self.logger.error(f"Failed to setup creator monitoring: {str(e)}")
             return False
     
-    async def _deploy_platform_crawlers(self, platform: str, config: Dict[str, Any]):
+    async def _deploy_platform_crawlers(self, platform -> None: str, config -> None: Dict[str, Any]) -> None:
         """Deploy crawler pods for specific platform"""
         crawler_manifest = self._create_crawler_deployment_manifest(platform, config)
         
@@ -586,7 +586,7 @@ Initialize platform-specific crawlers"""
             }
         }
     
-    async def _deploy_proxy_management(self):
+    async def _deploy_proxy_management(self) -> None:
         """Deploy proxy management service"""
         proxy_manifest = {
             "apiVersion": "apps/v1",
@@ -628,7 +628,7 @@ Initialize platform-specific crawlers"""
             body=proxy_manifest
         )
     
-    async def _deploy_rate_limiting_service(self):
+    async def _deploy_rate_limiting_service(self) -> None:
         """Deploy rate limiting service"""
         rate_limit_manifest = {
             "apiVersion": "apps/v1",
@@ -669,7 +669,7 @@ Initialize platform-specific crawlers"""
             body=rate_limit_manifest
         )
     
-    async def _setup_crawler_monitoring(self):
+    async def _setup_crawler_monitoring(self) -> None:
         """Setup monitoring and alerting for crawlers"""
         # Deploy Prometheus monitoring
         monitoring_manifest = {
@@ -828,7 +828,7 @@ Determine if content requires fingerprinting"""
         
         return False  # Default to non-violation
     
-    async def _store_crawl_task(self, task: CrawlTask):
+    async def _store_crawl_task(self, task -> None: CrawlTask) -> None:
         """Store crawl task in Redis"""
         task_data = {
             'task_id': task.task_id,
@@ -845,7 +845,7 @@ Determine if content requires fingerprinting"""
             mapping=task_data
         )
     
-    async def _update_crawl_task(self, task: CrawlTask):
+    async def _update_crawl_task(self, task -> None: CrawlTask) -> None:
         """Update crawl task in storage"""
         task_data = {
             'status': task.status.value,
@@ -867,7 +867,7 @@ Determine if content requires fingerprinting"""
             mapping=task_data
         )
     
-    async def _store_crawl_results(self, results: List[CrawlResult]):
+    async def _store_crawl_results(self, results -> None: List[CrawlResult]) -> None:
         """Store crawl results in database"""
         try:
             # Store in PostgreSQL for permanent storage
@@ -890,14 +890,14 @@ Determine if content requires fingerprinting"""
         except Exception as e:
             self.logger.error(f"Error storing crawl results: {str(e)}")
     
-    async def _check_dmca_violations(self, results: List[CrawlResult]):
+    async def _check_dmca_violations(self, results -> None: List[CrawlResult]) -> None:
         """Check results for potential DMCA violations"""
         for result in results:
             if result.dmca_candidate:
                 # Trigger DMCA enforcement workflow
                 await self._trigger_dmca_enforcement(result)
     
-    async def _trigger_dmca_enforcement(self, result: CrawlResult):
+    async def _trigger_dmca_enforcement(self, result -> None: CrawlResult) -> None:
         """
 Trigger DMCA enforcement for potential violation"""
         try:
@@ -921,7 +921,7 @@ Trigger DMCA enforcement for potential violation"""
         except Exception as e:
             self.logger.error(f"Error triggering DMCA enforcement: {str(e)}")
     
-    async def _schedule_recurring_task(self, target: CrawlTarget):
+    async def _schedule_recurring_task(self, target -> None: CrawlTarget) -> None:
         try:
             logger.info(f"Executing _schedule_recurring_task")
             
@@ -956,16 +956,16 @@ Wait for task completion and return results"""
         # Implementation to retrieve results from storage
         return []
     
-    def _start_background_workers(self):
+    def _start_background_workers(self) -> None:
         """
 Start background worker threads"""
-        def queue_processor():
+        def queue_processor() -> None:
             """
 Process crawl queue"""
             loop = asyncio.new_event_loop()
             asyncio.set_event_loop(loop)
             
-            async def process_queue():
+            async def process_queue() -> None:
                 while True:
                     try:
                         task = await self.crawl_queue.get()
@@ -976,7 +976,7 @@ Process crawl queue"""
             
             loop.run_until_complete(process_queue())
         
-        def health_monitor():
+        def health_monitor() -> None:
             """Monitor crawler health"""
             while True:
                 try:
@@ -992,7 +992,7 @@ Process crawl queue"""
         queue_thread.start()
         health_thread.start()
     
-    def _update_health_metrics(self):
+    def _update_health_metrics(self) -> None:
         """Update health and performance metrics"""
         self.queue_size.set(self.crawl_queue.qsize())
         self.active_crawlers_gauge.set(len(self.active_crawlers))
@@ -1011,9 +1011,9 @@ class PlatformCrawlerManager:
     """
     
     def __init__(self, 
-                 platform: PlatformType,
-                 redis_client: redis.Redis,
-                 orchestrator):
+                 platform -> None: PlatformType,
+                 redis_client -> None: redis.Redis,
+                 orchestrator) -> None:
         
         self.platform = platform
         self.redis_client = redis_client
@@ -2227,14 +2227,14 @@ Crawl using official platform APIs"""
                                 soup = BeautifulSoup(html, 'html.parser')
                                 
                                 # Extract data from Instagram's embedded JSON
-                                script_tags = soup.find_all('script', string=re.compile('window\\._sharedData'))
+                                script_tags = soup.find_all('script', string=re.compile('window\._sharedData'))
                                 
                                 for script in script_tags:
                                     try:
                                         script_content = script.string
                                         if script_content:
                                             # Extract JSON data
-                                            json_match = re.search(r'window\._sharedData = ({.*?});', script_content)
+                                            json_match = re.search(r'window._sharedData = ({.*?});', script_content)
                                             if json_match:
                                                 data = json.loads(json_match.group(1))
                                                 posts = self._extract_instagram_posts_from_data(data, target.target_id)
@@ -2591,7 +2591,7 @@ Get detailed YouTube video information"""
             self.logger.error(f"Error checking rate limit: {str(e)}")
             return False  # Fail safe
     
-    async def _record_api_request(self, platform: PlatformType):
+    async def _record_api_request(self, platform -> None: PlatformType) -> None:
         """Record an API request for rate limiting"""
         try:
             current_time = datetime.now()
@@ -2935,3 +2935,5 @@ def create_crawler_deployment_config() -> Dict[str, Any]:
             'target_cpu_utilization': 70
         }
     }
+
+# File has syntax issues - needs manual review

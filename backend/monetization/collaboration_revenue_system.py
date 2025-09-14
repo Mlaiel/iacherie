@@ -201,7 +201,7 @@ class CollaborationRevenueSystem:
     Architecture enterprise pour monétisation collaborative
     """
     
-    def __init__(self, db_session: Session, redis_client: redis.Redis):
+    def __init__(self, db_session -> None: Session, redis_client -> None: redis.Redis) -> None:
         self.db = db_session
         self.redis = redis_client
         self.logger = logging.getLogger(__name__)
@@ -226,7 +226,7 @@ class CollaborationRevenueSystem:
         self.brand_tracker = BrandCollaborationTracker(db_session, redis_client)
         self.matchmaking_engine = CreatorMatchmakingEngine(db_session, redis_client)
     
-    def _load_ml_models(self):
+    def _load_ml_models(self) -> None:
         """Charger les modèles ML pour prédictions"""
         try:
             # Chargement ou initialisation des modèles
@@ -688,7 +688,7 @@ class CollaborationRevenueSystem:
 class CollaborationRevenueTracker:
     """Tracker spécialisé pour les revenus de collaboration"""
     
-    def __init__(self, db_session: Session, redis_client: redis.Redis):
+    def __init__(self, db_session -> None: Session, redis_client -> None: redis.Redis) -> None:
         self.db = db_session
         self.redis = redis_client
         self.logger = logging.getLogger(__name__)
@@ -747,7 +747,7 @@ class CollaborationRevenueTracker:
 class PartnershipRevenueManager:
     """Gestionnaire des revenus de partenariat"""
     
-    def __init__(self, db_session: Session, redis_client: redis.Redis):
+    def __init__(self, db_session -> None: Session, redis_client -> None: redis.Redis) -> None:
         self.db = db_session
         self.redis = redis_client
         self.logger = logging.getLogger(__name__)
@@ -784,7 +784,7 @@ class PartnershipRevenueManager:
 class BrandCollaborationTracker:
     """Tracker spécialisé pour collaborations avec marques"""
     
-    def __init__(self, db_session: Session, redis_client: redis.Redis):
+    def __init__(self, db_session -> None: Session, redis_client -> None: redis.Redis) -> None:
         self.db = db_session
         self.redis = redis_client
         self.logger = logging.getLogger(__name__)
@@ -823,14 +823,14 @@ class BrandCollaborationTracker:
 class CreatorMatchmakingEngine:
     """Moteur de matchmaking intelligent pour créateurs"""
     
-    def __init__(self, db_session: Session, redis_client: redis.Redis):
+    def __init__(self, db_session -> None: Session, redis_client -> None: redis.Redis) -> None:
         self.db = db_session
         self.redis = redis_client
         self.logger = logging.getLogger(__name__)
         self.ml_model = None
         self._initialize_ml_model()
     
-    def _initialize_ml_model(self):
+    def _initialize_ml_model(self) -> None:
         """Initialiser le modèle ML de matchmaking"""
         try:
             self.ml_model = GradientBoostingClassifier(

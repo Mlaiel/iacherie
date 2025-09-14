@@ -6,7 +6,7 @@ content protection, fingerprinting, and monetization services.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ WARNING: This code is proprietary and confidential.
+# [EMOJI_REMOVED] WARNING: This code is proprietary and confidential.
 Unauthorized copying, distribution, or use without explicit written
 permission from Fahed Mlaiel is strictly prohibited and may result
 in legal action.
@@ -139,7 +139,7 @@ class SecurityConfig:
     xss_protection: bool = True
     referrer_policy: str = "strict-origin-when-cross-origin"
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         try:
                     # Request validation
                     if not data:
@@ -159,6 +159,7 @@ class SecurityConfig:
 
 @dataclass
 class CacheConfig:
+    """CacheConfig: class implementation"""
         try:
                     # Request validation
                     if not data:
@@ -184,7 +185,7 @@ class CacheConfig:
     cache_valid_404: str = "1m"
     cache_bypass_patterns: List[str] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.cache_bypass_patterns is None:
             self.cache_bypass_patterns = ["/api/auth", "/api/upload", "/api/streaming"]
 
@@ -216,12 +217,12 @@ class NginxManager:
     
     def __init__(
         self,
-        config_path: str = "/etc/nginx",
-        sites_available: str = "/etc/nginx/sites-available", 
-        sites_enabled: str = "/etc/nginx/sites-enabled",
-        log_path: str = "/var/log/nginx",
-        cache_path: str = "/var/cache/nginx"
-    ):
+        config_path -> None: str = "/etc/nginx",
+        sites_available -> None: str = "/etc/nginx/sites-available", 
+        sites_enabled -> None: str = "/etc/nginx/sites-enabled",
+        log_path -> None: str = "/var/log/nginx",
+        cache_path -> None: str = "/var/cache/nginx"
+    ) -> None:
         self.config_path = Path(config_path)
         self.sites_available = Path(sites_available)
         self.sites_enabled = Path(sites_enabled)
@@ -1039,10 +1040,13 @@ server {{
             logger.error(f"Failed to toggle maintenance mode: {e}")
             return False
     
-    def __del__(self):
+    def __del__(self) -> None:
         """Cleanup on destruction"""
         if hasattr(self, '_monitoring_active') and self._monitoring_active:
             asyncio.create_task(self.stop_monitoring())
         
         if hasattr(self, '_executor'):
             self._executor.shutdown(wait=False)
+}
+
+# File has syntax issues - needs manual review

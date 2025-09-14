@@ -250,7 +250,7 @@ class CollaborationMatchingEngine:
     - Network effect analysis
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the Collaboration Matching Engine"""
         self.logger = logging.getLogger(__name__)
         self.initialized = False
@@ -286,7 +286,7 @@ class CollaborationMatchingEngine:
             'average_processing_time': 0.0
         }
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize the collaboration matching engine and components"""
         try:
             self.logger.info("Initializing Collaboration Matching Engine...")
@@ -304,7 +304,7 @@ class CollaborationMatchingEngine:
             self.logger.error(f"Engine initialization failed: {e}")
             raise CollaborationError(f"Engine initialization failed: {str(e)}")
     
-    async def _initialize_matching_components(self):
+    async def _initialize_matching_components(self) -> None:
         """Initialize matching component engines"""
         await self.compatibility_analyzer.initialize()
         await self.audience_analyzer.initialize()
@@ -312,7 +312,7 @@ class CollaborationMatchingEngine:
         await self.success_predictor.initialize()
         await self.network_analyzer.initialize()
     
-    async def _load_sample_data(self):
+    async def _load_sample_data(self) -> None:
         """Load sample creator and brand profiles for testing"""
         # Sample creator profiles
         sample_creators = [
@@ -1103,7 +1103,7 @@ class CollaborationMatchingEngine:
         
         return predictions
     
-    async def _update_metrics(self, processing_time: float, success: bool, result: Optional[CollaborationResult]):
+    async def _update_metrics(self, processing_time -> None: float, success -> None: bool, result -> None: Optional[CollaborationResult]) -> None:
         """Update performance metrics"""
         self.matching_metrics['total_matches_generated'] += 1
         
@@ -1133,11 +1133,11 @@ class CollaborationMatchingEngine:
             (total_time + processing_time) / self.matching_metrics['total_matches_generated']
         )
     
-    def add_creator_profile(self, profile: CreatorProfile):
+    def add_creator_profile(self, profile -> None: CreatorProfile) -> None:
         """Add a creator profile to the database"""
         self.creator_profiles[profile.creator_id] = profile
     
-    def add_brand_profile(self, profile: BrandProfile):
+    def add_brand_profile(self, profile -> None: BrandProfile) -> None:
         """Add a brand profile to the database"""
         self.brand_profiles[profile.brand_id] = profile
     
@@ -1160,7 +1160,7 @@ class CollaborationMatchingEngine:
 class CompatibilityAnalyzer:
     """Specialized engine for compatibility analysis"""
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize compatibility analyzer"""
         pass
     
@@ -1173,7 +1173,7 @@ class CompatibilityAnalyzer:
 class AudienceOverlapAnalyzer:
     """Specialized engine for audience overlap analysis"""
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize audience overlap analyzer"""
         pass
     
@@ -1197,7 +1197,7 @@ class AudienceOverlapAnalyzer:
 class ContentSynergyAnalyzer:
     """Specialized engine for content synergy analysis"""
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize content synergy analyzer"""
         pass
     
@@ -1221,7 +1221,7 @@ class ContentSynergyAnalyzer:
 class CollaborationSuccessPredictor:
     """Specialized engine for predicting collaboration success"""
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize success predictor"""
         pass
     
@@ -1243,7 +1243,7 @@ class CollaborationSuccessPredictor:
 class NetworkAnalyzer:
     """Specialized engine for network analysis"""
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize network analyzer"""
         pass
     

@@ -124,14 +124,14 @@ class EnterpriseMigrationManager:
     - Security compliance enforcement
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         self._migration_history: List[MigrationRecord] = []
         self._pending_migrations: List[MigrationRecord] = []
         self._connection_manager = get_connection_manager()
         self._alembic_config: Optional[Config] = None
         self._metadata = MetaData()
         
-    async def initialize(self, alembic_ini_path: Optional[str] = None):
+    async def initialize(self, alembic_ini_path -> None: Optional[str] = None) -> None:
         """Initialize the migration manager."""
         logger.info("🚀 Initializing Enterprise Migration Manager...")
         
@@ -146,7 +146,7 @@ class EnterpriseMigrationManager:
         
         logger.info("✅ Enterprise Migration Manager initialized")
     
-    async def _create_migration_tracking_table(self):
+    async def _create_migration_tracking_table(self) -> None:
         """Create the migration tracking table."""
         try:
             async with self._connection_manager.get_postgres_session() as session:
@@ -191,7 +191,7 @@ class EnterpriseMigrationManager:
             logger.error(f"❌ Failed to create migration tracking table: {e}")
             raise
     
-    async def _load_migration_history(self):
+    async def _load_migration_history(self) -> None:
         """Load migration history from database."""
         try:
             async with self._connection_manager.get_postgres_session() as session:
@@ -356,7 +356,7 @@ class EnterpriseMigrationManager:
             
         return result
     
-    async def _execute_schema_migration(self, migration: MigrationRecord):
+    async def _execute_schema_migration(self, migration -> None: MigrationRecord) -> None:
         """Execute schema migration."""
         logger.info(f"🏗️ Executing schema migration: {migration.migration_id}")
         
@@ -376,7 +376,7 @@ class EnterpriseMigrationManager:
         if "platform_integration" in migration.tags:
             await self._create_platform_integration_tables()
     
-    async def _create_content_protection_tables(self):
+    async def _create_content_protection_tables(self) -> None:
         """Create content protection tables."""
         async with self._connection_manager.get_postgres_session() as session:
             # Content fingerprints table
@@ -414,7 +414,7 @@ class EnterpriseMigrationManager:
                 )
             """))
     
-    async def _create_monetization_tables(self):
+    async def _create_monetization_tables(self) -> None:
         """Create monetization tables."""
         async with self._connection_manager.get_postgres_session() as session:
             # Revenue tracking table
@@ -433,7 +433,7 @@ class EnterpriseMigrationManager:
                 )
             """))
     
-    async def _create_ai_analytics_tables(self):
+    async def _create_ai_analytics_tables(self) -> None:
         """Create AI analytics tables."""
         async with self._connection_manager.get_postgres_session() as session:
             # AI analysis table
@@ -450,7 +450,7 @@ class EnterpriseMigrationManager:
                 )
             """))
     
-    async def _create_platform_integration_tables(self):
+    async def _create_platform_integration_tables(self) -> None:
         """Create platform integration tables."""
         async with self._connection_manager.get_postgres_session() as session:
             # Platform integrations table
@@ -486,7 +486,7 @@ class EnterpriseMigrationManager:
                 return migration
         return None
     
-    async def _update_migration_status(self, migration: MigrationRecord):
+    async def _update_migration_status(self, migration -> None: MigrationRecord) -> None:
         """Update migration status in database."""
         try:
             async with self._connection_manager.get_postgres_session() as session:
@@ -507,37 +507,37 @@ class EnterpriseMigrationManager:
         except Exception as e:
             logger.error(f"Failed to update migration status: {e}")
     
-    async def _execute_data_migration(self, migration: MigrationRecord):
+    async def _execute_data_migration(self, migration -> None: MigrationRecord) -> None:
         """Execute data migration."""
         logger.info(f"📊 Executing data migration: {migration.migration_id}")
         # Implement data migration logic
         pass
     
-    async def _execute_index_migration(self, migration: MigrationRecord):
+    async def _execute_index_migration(self, migration -> None: MigrationRecord) -> None:
         """Execute index migration."""
         logger.info(f"🔍 Executing index migration: {migration.migration_id}")
         # Implement index migration logic
         pass
     
-    async def _execute_content_protection_migration(self, migration: MigrationRecord):
+    async def _execute_content_protection_migration(self, migration -> None: MigrationRecord) -> None:
         """Execute content protection migration."""
         logger.info(f"🛡️ Executing content protection migration: {migration.migration_id}")
         # Implement content protection specific migration logic
         pass
     
-    async def _execute_monetization_migration(self, migration: MigrationRecord):
+    async def _execute_monetization_migration(self, migration -> None: MigrationRecord) -> None:
         """Execute monetization migration."""
         logger.info(f"💰 Executing monetization migration: {migration.migration_id}")
         # Implement monetization specific migration logic
         pass
     
-    async def _execute_ai_analytics_migration(self, migration: MigrationRecord):
+    async def _execute_ai_analytics_migration(self, migration -> None: MigrationRecord) -> None:
         """Execute AI analytics migration."""
         logger.info(f"🤖 Executing AI analytics migration: {migration.migration_id}")
         # Implement AI analytics specific migration logic
         pass
     
-    async def _execute_generic_migration(self, migration: MigrationRecord):
+    async def _execute_generic_migration(self, migration -> None: MigrationRecord) -> None:
         """Execute generic migration."""
         logger.info(f"⚙️ Executing generic migration: {migration.migration_id}")
         # Implement generic migration logic
@@ -571,7 +571,7 @@ def get_migration_manager() -> EnterpriseMigrationManager:
 
 
 # Migration functions that were originally in database.schema
-async def create_tables():
+async def create_tables() -> None:
     """Create all database tables - consolidated from original database.schema."""
     logger.info("🏗️ Creating database tables...")
     

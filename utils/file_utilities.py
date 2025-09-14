@@ -105,11 +105,11 @@ class FileUtilities:
     """
     
     def __init__(self, 
-                 base_path: Optional[str] = None,
-                 security_level: FileSecurityLevel = FileSecurityLevel.INTERNAL,
-                 max_file_size: int = 100 * 1024 * 1024,  # 100MB
-                 allowed_extensions: Optional[List[str]] = None,
-                 temp_dir: Optional[str] = None):
+                 base_path -> None: Optional[str] = None,
+                 security_level -> None: FileSecurityLevel = FileSecurityLevel.INTERNAL,
+                 max_file_size -> None: int = 100 * 1024 * 1024,  # 100MB
+                 allowed_extensions -> None: Optional[List[str]] = None,
+                 temp_dir -> None: Optional[str] = None) -> None:
         """
         Initialize file utilities with configuration
         
@@ -746,7 +746,7 @@ class FileUtilities:
         
         return True
 
-    async def _secure_delete(self, path: Path):
+    async def _secure_delete(self, path -> None: Path) -> None:
         """Securely delete a file by overwriting it first"""
         try:
             # Get file size
@@ -815,7 +815,7 @@ class FileUtilities:
         except Exception:
             return False
 
-    def _record_operation(self, result: FileOperationResult):
+    def _record_operation(self, result -> None: FileOperationResult) -> None:
         """Record file operation for statistics"""
         self.operations_log.append(result)
         

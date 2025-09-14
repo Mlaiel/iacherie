@@ -191,12 +191,12 @@ class EnterpriseDatabaseManager:
     
     def __init__(
         self,
-        organization_name: str,
-        default_connection: Optional[DatabaseConnection] = None,
-        enable_lineage_tracking: bool = True,
-        enable_data_quality: bool = True,
-        cache_ttl_seconds: int = 3600
-    ):
+        organization_name -> None: str,
+        default_connection -> None: Optional[DatabaseConnection] = None,
+        enable_lineage_tracking -> None: bool = True,
+        enable_data_quality -> None: bool = True,
+        cache_ttl_seconds -> None: int = 3600
+    ) -> None:
         """Initialize Enterprise Database Manager
         
         Args:

@@ -246,7 +246,7 @@ class ConversionResult:
 class AdvancedResamplingEngine:
     """🔄 Advanced High-Quality Resampling Engine"""
     
-    def __init__(self, algorithm: ResamplingAlgorithm = ResamplingAlgorithm.KAISER_BEST):
+    def __init__(self, algorithm -> None: ResamplingAlgorithm = ResamplingAlgorithm.KAISER_BEST) -> None:
         self.logger = logging.getLogger(self.__class__.__name__)
         self.algorithm = algorithm
         
@@ -335,7 +335,7 @@ class AdvancedResamplingEngine:
 class QualityAnalyzer:
     """📊 Advanced Audio Quality Analysis Engine"""
     
-    def __init__(self, sample_rate: int = 44100):
+    def __init__(self, sample_rate -> None: int = 44100) -> None:
         self.logger = logging.getLogger(self.__class__.__name__)
         self.sample_rate = sample_rate
     
@@ -514,7 +514,7 @@ class QualityAnalyzer:
 class MetadataManager:
     """📋 Enterprise Metadata Management System"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(self.__class__.__name__)
         
     def extract_metadata(self, audio_path: Union[str, Path, io.BytesIO]) -> Dict[str, Any]:
@@ -592,7 +592,7 @@ class MetadataManager:
 class ConversionProfileManager:
     """📊 Conversion Profile Management System"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(self.__class__.__name__)
         self.profiles = self._initialize_profiles()
     
@@ -694,7 +694,7 @@ class ConversionProfileManager:
 class EnterpriseAudioConverter:
     """🚀 Enterprise Audio Conversion Engine"""
     
-    def __init__(self, max_workers: int = 4):
+    def __init__(self, max_workers -> None: int = 4) -> None:
         self.logger = logging.getLogger(self.__class__.__name__)
         self.max_workers = max_workers
         self.thread_pool = ThreadPoolExecutor(max_workers=max_workers)
@@ -1100,7 +1100,7 @@ class EnterpriseAudioConverter:
         else:
             return 'PCM_16'  # Default
     
-    def _update_stats(self, processing_time: float, data_size: int, success: bool):
+    def _update_stats(self, processing_time -> None: float, data_size -> None: int, success -> None: bool) -> None:
         """Update conversion statistics"""
         self.conversion_stats['total_conversions'] += 1
         
@@ -1125,7 +1125,7 @@ class EnterpriseAudioConverter:
 class BatchConverter:
     """📦 Enterprise Batch Conversion System"""
     
-    def __init__(self, max_workers: int = 4):
+    def __init__(self, max_workers -> None: int = 4) -> None:
         self.logger = logging.getLogger(self.__class__.__name__)
         self.converter = EnterpriseAudioConverter(max_workers)
         self.max_workers = max_workers
@@ -1211,7 +1211,7 @@ class BatchConverter:
 class FormatDetector:
     """🔍 Advanced Audio Format Detection"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(self.__class__.__name__)
         
         # Format signatures
@@ -1264,7 +1264,7 @@ class FormatDetector:
 class ConversionOrchestrator:
     """🎼 Enterprise Audio Conversion Orchestration System"""
     
-    def __init__(self, max_workers: int = 8):
+    def __init__(self, max_workers -> None: int = 8) -> None:
         self.logger = logging.getLogger(self.__class__.__name__)
         
         # Initialize components
@@ -1311,7 +1311,7 @@ class ConversionOrchestrator:
         
         return result
     
-    def _update_performance_metrics(self, result: ConversionResult):
+    def _update_performance_metrics(self, result -> None: ConversionResult) -> None:
         """Update system performance metrics"""
         if result.processing_time > 0:
             data_gb = result.original_size / (1024**3)

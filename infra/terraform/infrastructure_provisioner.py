@@ -1,3 +1,8 @@
+"""
+Infrastructure Provisioner module
+Enterprise implementation for Ainflue platform
+"""
+
 # Ainflue Infrastructure Module
 # =============================
 # 
@@ -63,7 +68,7 @@ class InfrastructureProvisioner:
     with validation, testing, and rollback support.
     """
     
-    def __init__(self, project_name: str, environment: str, terraform_dir: str):
+    def __init__(self, project_name -> None: str, environment -> None: str, terraform_dir -> None: str) -> None:
         """
         Initialize infrastructure provisioner.
         

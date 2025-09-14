@@ -127,7 +127,7 @@ class ReputationImpactAnalyzer:
     - Real-time reputation alerts
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize reputation impact analyzer."""
         self.config = config or {}
         self.reputation_scores: Dict[str, ReputationScore] = {}
@@ -165,7 +165,7 @@ class ReputationImpactAnalyzer:
         logger.info("📊 Reputation Impact Analyzer initialized")
         self._initialize_baseline_scores()
     
-    def _initialize_baseline_scores(self):
+    def _initialize_baseline_scores(self) -> None:
         """Initialize baseline reputation scoring system."""
         self.baseline_scores = {
             ReputationMetric.TRUST_SCORE: 0.75,
@@ -300,7 +300,7 @@ class ReputationImpactAnalyzer:
         logger.info(f"📊 Recorded reputation event: {event_id} ({impact_level}) for {creator_id}")
         return event_id
     
-    def _apply_event_impact(self, event: ReputationEvent):
+    def _apply_event_impact(self, event -> None: ReputationEvent) -> None:
         """Apply reputation event impact to creator scores."""
         if event.creator_id not in self.reputation_scores:
             logger.warning(f"Creator {event.creator_id} not found in reputation tracking")
@@ -344,7 +344,7 @@ class ReputationImpactAnalyzer:
         # Check for alerts
         self._check_reputation_alerts(reputation, event)
     
-    def _recalculate_overall_score(self, reputation: ReputationScore):
+    def _recalculate_overall_score(self, reputation -> None: ReputationScore) -> None:
         """Recalculate overall reputation score."""
         old_score = reputation.overall_score
         
@@ -372,7 +372,7 @@ class ReputationImpactAnalyzer:
         
         logger.debug(f"Updated overall score for {reputation.creator_id}: {old_score:.3f} -> {new_score:.3f}")
     
-    def _update_reputation_trend(self, reputation: ReputationScore):
+    def _update_reputation_trend(self, reputation -> None: ReputationScore) -> None:
         """Update reputation trend direction."""
         if len(reputation.historical_data) < 2:
             reputation.trend_direction = "stable"
@@ -394,7 +394,7 @@ class ReputationImpactAnalyzer:
         data_points = len(reputation.historical_data)
         reputation.confidence_level = min(1.0, 0.5 + (data_points / 20) * 0.5)
     
-    def _check_reputation_alerts(self, reputation: ReputationScore, event: ReputationEvent):
+    def _check_reputation_alerts(self, reputation -> None: ReputationScore, event -> None: ReputationEvent) -> None:
         """Check if reputation changes warrant alerts."""
         alerts_to_create = []
         

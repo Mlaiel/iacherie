@@ -214,7 +214,7 @@ class ReputationManager:
     - Tracking de performance longitudinal
     """
     
-    def __init__(self, db_session=None, redis_client=None):
+    def __init__(self, db_session=None, redis_client=None) -> None:
         self.db_session = db_session
         self.redis_client = redis_client
         self.reputation_scores = defaultdict(dict)
@@ -227,7 +227,7 @@ class ReputationManager:
         # Initialiser le système
         self._initialize_reputation_system()
     
-    def _initialize_reputation_system(self):
+    def _initialize_reputation_system(self) -> None:
         """Initialise le système de réputation"""
         # Créer les badges par défaut
         self._create_default_badges()
@@ -238,7 +238,7 @@ class ReputationManager:
         # Configurer les facteurs de réputation
         self._configure_reputation_factors()
     
-    def _create_default_badges(self):
+    def _create_default_badges(self) -> None:
         """Crée les badges par défaut du système"""
         default_badges = [
             {
@@ -293,7 +293,7 @@ class ReputationManager:
             badge = Badge(**badge_data)
             self.badges[badge.id] = badge
     
-    def _initialize_fraud_detection(self):
+    def _initialize_fraud_detection(self) -> None:
         """Initialise les systèmes de détection de fraude"""
         self.fraud_detectors = {
             'fake_reviews': {
@@ -313,7 +313,7 @@ class ReputationManager:
             }
         }
     
-    def _configure_reputation_factors(self):
+    def _configure_reputation_factors(self) -> None:
         """Configure les facteurs de réputation"""
         self.reputation_models = {
             ReputationCategory.COLLABORATION: {
@@ -679,7 +679,7 @@ class BadgeSystem:
     - Analytics de progression badges
     """
     
-    def __init__(self, reputation_manager):
+    def __init__(self, reputation_manager) -> None:
         self.reputation_manager = reputation_manager
         self.badge_progression_tracking = defaultdict(dict)
         
@@ -754,7 +754,7 @@ class FraudDetectionEngine:
     - Alertes automatisées et investigation
     """
     
-    def __init__(self, reputation_manager):
+    def __init__(self, reputation_manager) -> None:
         self.reputation_manager = reputation_manager
         self.fraud_models = {}
         self.suspicious_patterns = defaultdict(list)

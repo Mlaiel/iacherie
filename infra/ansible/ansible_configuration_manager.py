@@ -1,3 +1,8 @@
+"""
+Ansible Configuration Manager module
+Enterprise implementation for Ainflue platform
+"""
+
 # Ainflue Infrastructure Module - Ansible Configuration Manager
 # ===========================================================
 # 
@@ -55,7 +60,7 @@ class PlaybookExecution:
 class AnsibleConfigurationManager:
     """Enterprise Ansible configuration management for multi-cloud environments"""
     
-    def __init__(self, config: AnsibleConfig):
+    def __init__(self, config -> None: AnsibleConfig) -> None:
         """Initialize Ansible configuration manager
         
         Args:
@@ -88,7 +93,7 @@ class AnsibleConfigurationManager:
             
         return logger
     
-    def _ensure_directories(self):
+    def _ensure_directories(self) -> None:
         """Ensure required directories exist"""
         directories = [
             self.config.playbook_directory,
@@ -738,7 +743,7 @@ class AnsibleConfigurationManager:
             self.logger.error(f"Failed to create role {role_name}: {e}")
             raise
     
-    async def _create_role_main_files(self, role_path: str, role_name: str, role_type: str):
+    async def _create_role_main_files(self, role_path -> None: str, role_name -> None: str, role_type -> None: str) -> None:
         """Create main.yml files for an Ansible role"""
         
         # tasks/main.yml
@@ -990,7 +995,7 @@ class AnsibleConfigurationManager:
 class AinflueAnsibleOrchestrator:
     """High-level Ansible orchestration for Ainflue platform"""
     
-    def __init__(self, environment: str = "production"):
+    def __init__(self, environment -> None: str = "production") -> None:
         """Initialize Ansible orchestrator
         
         Args:
@@ -1051,7 +1056,7 @@ class AinflueAnsibleOrchestrator:
 
 if __name__ == "__main__":
     # Example usage
-    async def main():
+    async def main() -> None:
         orchestrator = AinflueAnsibleOrchestrator(environment="production")
         
         # Bootstrap environment

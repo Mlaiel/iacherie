@@ -1,3 +1,8 @@
+"""
+Health Check Core module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Ainflue Core Infrastructure - Advanced Health Check Engine
@@ -134,7 +139,7 @@ class HealthChecker(ABC):
 class DatabaseHealthChecker(HealthChecker):
     """Database connectivity health checker"""
     
-    def __init__(self, db_pool: Any, name: str = "database"):
+    def __init__(self, db_pool -> None: Any, name -> None: str = "database") -> None:
         self.db_pool = db_pool
         self.name = name
     
@@ -165,7 +170,7 @@ class DatabaseHealthChecker(HealthChecker):
 class RedisHealthChecker(HealthChecker):
     """Redis connectivity health checker"""
     
-    def __init__(self, redis_client: Any, name: str = "redis"):
+    def __init__(self, redis_client -> None: Any, name -> None: str = "redis") -> None:
         self.redis_client = redis_client
         self.name = name
     
@@ -195,7 +200,7 @@ class RedisHealthChecker(HealthChecker):
 class HttpServiceHealthChecker(HealthChecker):
     """HTTP service health checker"""
     
-    def __init__(self, url: str, name: str, timeout: int = 5):
+    def __init__(self, url -> None: str, name -> None: str, timeout -> None: int = 5) -> None:
         self.url = url
         self.name = name
         self.timeout = timeout
@@ -237,7 +242,7 @@ class HttpServiceHealthChecker(HealthChecker):
 class SystemResourcesHealthChecker(HealthChecker):
     """System resources health checker"""
     
-    def __init__(self, name: str = "system_resources"):
+    def __init__(self, name -> None: str = "system_resources") -> None:
         self.name = name
     
     async def check(self) -> HealthCheckResult:
@@ -304,7 +309,7 @@ class SystemResourcesHealthChecker(HealthChecker):
 class CustomHealthChecker(HealthChecker):
     """Custom health checker with user-defined function"""
     
-    def __init__(self, name: str, check_function: Callable[[], Any]):
+    def __init__(self, name -> None: str, check_function -> None: Callable[[], Any]) -> None:
         self.name = name
         self.check_function = check_function
     
@@ -351,7 +356,7 @@ class HealthCheckHistory:
     results: List[HealthCheckResult] = field(default_factory=list)
     max_history: int = 100
     
-    def add_result(self, result: HealthCheckResult):
+    def add_result(self, result -> None: HealthCheckResult) -> None:
         """Add health check result to history"""
         self.results.append(result)
         if len(self.results) > self.max_history:
@@ -393,7 +398,7 @@ class HealthCheckHistory:
 class HealthCheckCore:
     """Advanced enterprise health check core"""
     
-    def __init__(self, level: str = "enterprise", service_name: str = "ainflue-service"):
+    def __init__(self, level -> None: str = "enterprise", service_name -> None: str = "ainflue-service") -> None:
         self.level = level
         self.service_name = service_name
         self.checkers: Dict[str, HealthChecker] = {}
@@ -461,7 +466,7 @@ class HealthCheckCore:
             logger.error(f"❌ Failed to initialize HealthCheckCore: {e}")
             return False
     
-    async def _add_default_checkers(self):
+    async def _add_default_checkers(self) -> None:
         """Add default health checkers"""
         # System resources checker
         system_checker = SystemResourcesHealthChecker()
@@ -477,7 +482,7 @@ class HealthCheckCore:
         )
         
         # Add custom memory check
-        async def memory_check():
+        async def memory_check() -> None:
             memory = psutil.virtual_memory()
             return {
                 'status': 'healthy' if memory.percent < 85 else 'degraded',
@@ -667,7 +672,7 @@ class HealthCheckCore:
         """Run all health checks concurrently"""
         semaphore = asyncio.Semaphore(self.performance_config["max_concurrent"])
         
-        async def run_with_semaphore(name: str):
+        async def run_with_semaphore(name -> None: str) -> None:
             async with semaphore:
                 return await self._run_single_check(name)
         
@@ -815,11 +820,11 @@ class HealthCheckCore:
             logger.error(f"❌ Failed to start health check scheduler: {e}")
             return False
     
-    async def _start_checker_task(self, name: str):
+    async def _start_checker_task(self, name -> None: str) -> None:
         """Start individual health checker task"""
         config = self.configs[name]
         
-        async def checker_loop():
+        async def checker_loop() -> None:
             while self.scheduler_running and config.enabled:
                 try:
                     await self._run_single_check(name)

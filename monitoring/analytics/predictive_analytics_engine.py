@@ -116,7 +116,7 @@ class ModelPerformance:
 class PredictiveModel(ABC):
     """Abstract base class for predictive models."""
     
-    def __init__(self, model_type: ModelType, features: List[str]):
+    def __init__(self, model_type -> None: ModelType, features -> None: List[str]) -> None:
         self.model_type = model_type
         self.features = features
         self.model = None
@@ -142,7 +142,7 @@ class PredictiveModel(ABC):
 class RandomForestModel(PredictiveModel):
     """Random Forest predictive model."""
     
-    def __init__(self, features: List[str], n_estimators: int = 100):
+    def __init__(self, features -> None: List[str], n_estimators -> None: int = 100) -> None:
         super().__init__(ModelType.RANDOM_FOREST, features)
         self.n_estimators = n_estimators
         self.model = RandomForestRegressor(
@@ -217,7 +217,7 @@ class RandomForestModel(PredictiveModel):
 class GradientBoostingModel(PredictiveModel):
     """Gradient Boosting predictive model."""
     
-    def __init__(self, features: List[str], n_estimators: int = 100):
+    def __init__(self, features -> None: List[str], n_estimators -> None: int = 100) -> None:
         super().__init__(ModelType.GRADIENT_BOOSTING, features)
         self.model = GradientBoostingRegressor(
             n_estimators=n_estimators,
@@ -286,7 +286,7 @@ class GradientBoostingModel(PredictiveModel):
 class TrendPredictor:
     """Trend prediction and forecasting system."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.trend_models = {}
         self.trend_history = defaultdict(list)
         self.trend_patterns = {}
@@ -361,7 +361,7 @@ class TrendPredictor:
 class ChurnPredictor:
     """User churn prediction system."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.churn_model = None
         self.feature_names = [
             'days_since_last_login',
@@ -406,7 +406,7 @@ class ChurnPredictor:
 class PredictiveAnalyticsEngine:
     """Main predictive analytics engine for Ainflue platform."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.models = {}
         self.trend_predictor = TrendPredictor()
         self.churn_predictor = ChurnPredictor()
@@ -430,7 +430,7 @@ class PredictiveAnalyticsEngine:
             ]
         }
         
-    async def initialize_models(self):
+    async def initialize_models(self) -> None:
         """Initialize predictive models for different prediction types."""
         for prediction_type, features in self.feature_registry.items():
             # Initialize Random Forest model
@@ -593,7 +593,7 @@ class PredictiveAnalyticsEngine:
                 
         return performance_data
         
-    async def retrain_models(self, training_data: Dict[str, pd.DataFrame]):
+    async def retrain_models(self, training_data -> None: Dict[str, pd.DataFrame]) -> None:
         """Retrain models with new data."""
         retrain_results = {}
         
@@ -646,7 +646,7 @@ __all__ = [
 ]
 
 # Initialize module
-async def initialize_predictive_analytics():
+async def initialize_predictive_analytics() -> None:
     """Initialize the predictive analytics engine."""
     engine = PredictiveAnalyticsEngine()
     await engine.initialize_models()
@@ -655,7 +655,7 @@ async def initialize_predictive_analytics():
 
 if __name__ == "__main__":
     # Example usage
-    async def main():
+    async def main() -> None:
         engine = await initialize_predictive_analytics()
         
         # Example prediction request

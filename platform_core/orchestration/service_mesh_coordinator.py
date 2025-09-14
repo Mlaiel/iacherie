@@ -1,3 +1,8 @@
+"""
+Service Mesh Coordinator module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Service Mesh Coordinator - Platform Core Enterprise Architecture
@@ -126,7 +131,7 @@ class ServiceMeshCoordinator:
     security policy enforcement, and observability
     """
     
-    def __init__(self, mesh_type: ServiceMeshType = ServiceMeshType.ISTIO):
+    def __init__(self, mesh_type -> None: ServiceMeshType = ServiceMeshType.ISTIO) -> None:
         self.mesh_type = mesh_type
         self.services: Dict[str, ServiceEndpoint] = {}
         self.traffic_rules: Dict[str, TrafficRule] = {}
@@ -579,7 +584,7 @@ class ServiceMeshCoordinator:
 # EXAMPLE USAGE AND TESTING
 # ============================================================================
 
-async def example_service_mesh_coordination():
+async def example_service_mesh_coordination() -> None:
     """Example usage of ServiceMeshCoordinator"""
     try:
         # Initialize coordinator

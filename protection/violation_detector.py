@@ -1,4 +1,7 @@
 """Violation Detection System
+import asyncio
+import logging
+
 Advanced violation detection and analysis.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -17,7 +20,7 @@ class ViolationDetector:
     """
 Advanced violation detection using AI fingerprinting"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.detection_algorithms = ["fingerprint", "visual", "audio", "text"]
         self.confidence_threshold = 0.85
     

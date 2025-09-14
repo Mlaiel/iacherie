@@ -1,3 +1,8 @@
+"""
+Event Orchestrator module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Event Orchestrator - Enterprise Core Component
@@ -143,7 +148,7 @@ class EventStore(ABC):
 class InMemoryEventStore(EventStore):
     """In-memory event store implementation"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.streams: Dict[str, List[Event]] = defaultdict(list)
         self.event_index: Dict[str, Event] = {}
     
@@ -180,7 +185,7 @@ class EventOrchestrator:
     and real-time event stream processing with enterprise-grade reliability.
     """
     
-    def __init__(self, event_store: Optional[EventStore] = None, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, event_store -> None: Optional[EventStore] = None, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.event_store = event_store or InMemoryEventStore()
         self.subscriptions: Dict[str, EventSubscription] = {}
@@ -704,11 +709,11 @@ class EventOrchestrator:
                 await asyncio.sleep(60)
     
     # Context Manager Support
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         await self.start()
         return self
     
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         await self.stop()
 
 
@@ -738,7 +743,7 @@ async def handle_content_uploaded(event: Event) -> None:
 
 
 # Example usage
-async def main():
+async def main() -> None:
     """Example usage of Event Orchestrator"""
     async with create_event_orchestrator() as orchestrator:
         # Create subscriptions

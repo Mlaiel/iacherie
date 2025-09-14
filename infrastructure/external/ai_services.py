@@ -18,7 +18,7 @@ class AiServicesManager:
     """
 Gestionnaire Ai Services"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.initialized = False
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
     

@@ -1,3 +1,8 @@
+"""
+Cross Platform Sync module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """Cross Platform Sync Engine
 
@@ -158,7 +163,7 @@ class CrossPlatformSync:
     - Rollback and recovery capabilities
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize the cross-platform sync engine"""
         self.config = config or {}
         self.sync_rules: Dict[str, SyncRule] = {}

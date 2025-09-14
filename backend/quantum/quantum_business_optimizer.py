@@ -243,7 +243,7 @@ class QuantumBusinessOptimizer:
     ✅ ROI optimization et performance tracking
     """
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.config = config or {}
         self.monetization_optimizers: Dict[MonetizationStrategy, MonetizationOptimizer] = {}
         self.pricing_optimizers: Dict[PricingStrategy, PricingOptimizer] = {}
@@ -738,15 +738,16 @@ class QuantumBusinessOptimizer:
     # MÉTHODES PRIVÉES - MONETIZATION
     # ========================================
     
-    async def _get_or_create_monetization_optimizer(self, strategy: MonetizationStrategy):
+    async def _get_or_create_monetization_optimizer(self, strategy -> None: MonetizationStrategy) -> None:
         """Récupération ou création optimiseur monétisation"""
         if strategy not in self.monetization_optimizers:
             self.monetization_optimizers[strategy] = await self._create_monetization_optimizer(strategy)
         return self.monetization_optimizers[strategy]
     
-    async def _create_monetization_optimizer(self, strategy: MonetizationStrategy):
+    async def _create_monetization_optimizer(self, strategy -> None: MonetizationStrategy) -> None:
         """Création optimiseur monétisation"""
         class MockMonetizationOptimizer(MonetizationOptimizer):
+    """MockMonetizationOptimizer class implementation"""
             async def optimize_monetization_strategy(self, request: MonetizationOptimizationRequest) -> Dict[str, Any]:
                 return {
                     "optimized_strategy": strategy.value,
@@ -827,15 +828,16 @@ class QuantumBusinessOptimizer:
     # MÉTHODES PRIVÉES - PRICING
     # ========================================
     
-    async def _get_or_create_pricing_optimizer(self, strategy: PricingStrategy):
+    async def _get_or_create_pricing_optimizer(self, strategy -> None: PricingStrategy) -> None:
         """Récupération ou création optimiseur pricing"""
         if strategy not in self.pricing_optimizers:
             self.pricing_optimizers[strategy] = await self._create_pricing_optimizer(strategy)
         return self.pricing_optimizers[strategy]
     
-    async def _create_pricing_optimizer(self, strategy: PricingStrategy):
+    async def _create_pricing_optimizer(self, strategy -> None: PricingStrategy) -> None:
         """Création optimiseur pricing"""
         class MockPricingOptimizer(PricingOptimizer):
+    """MockPricingOptimizer class implementation"""
             async def optimize_pricing_strategy(self, request: PricingOptimizationRequest) -> Dict[str, Any]:
                 current_price = list(request.current_pricing.values())[0] if request.current_pricing else 100.0
                 
@@ -904,15 +906,16 @@ class QuantumBusinessOptimizer:
     # MÉTHODES PRIVÉES - REVENUE PREDICTION
     # ========================================
     
-    async def _get_or_create_revenue_predictor(self, market_segment: str):
+    async def _get_or_create_revenue_predictor(self, market_segment -> None: str) -> None:
         """Récupération ou création prédicteur revenus"""
         if market_segment not in self.revenue_predictors:
             self.revenue_predictors[market_segment] = await self._create_revenue_predictor(market_segment)
         return self.revenue_predictors[market_segment]
     
-    async def _create_revenue_predictor(self, market_segment: str):
+    async def _create_revenue_predictor(self, market_segment -> None: str) -> None:
         """Création prédicteur revenus"""
         class MockRevenuePredictor(RevenuePredictor):
+    """MockRevenuePredictor class implementation"""
             async def predict_revenue(self, historical_data: Dict[str, Any], time_horizon: int) -> Dict[str, Any]:
                 base_revenue = historical_data.get("current_monthly_revenue", 10000)
                 growth_rate = np.random.uniform(0.02, 0.08)  # 2-8% monthly growth
@@ -975,15 +978,16 @@ class QuantumBusinessOptimizer:
     # MÉTHODES PRIVÉES - FINANCIAL MODELING
     # ========================================
     
-    async def _get_or_create_financial_modeler(self, model_type: str):
+    async def _get_or_create_financial_modeler(self, model_type -> None: str) -> None:
         """Récupération ou création modélisateur financier"""
         if model_type not in self.financial_modelers:
             self.financial_modelers[model_type] = await self._create_financial_modeler(model_type)
         return self.financial_modelers[model_type]
     
-    async def _create_financial_modeler(self, model_type: str):
+    async def _create_financial_modeler(self, model_type -> None: str) -> None:
         """Création modélisateur financier"""
         class MockFinancialModeler(FinancialModeler):
+    """MockFinancialModeler class implementation"""
             async def create_financial_model(self, model_type: str, data: Dict[str, Any]) -> FinancialModel:
                 return FinancialModel(
                     model_id=str(uuid.uuid4()),

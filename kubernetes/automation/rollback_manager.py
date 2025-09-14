@@ -100,7 +100,7 @@ class RollbackManager(BaseComponent):
     creation, intelligent rollback point selection, and multi-component
     rollback orchestration with dependency management.
     """
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         super().__init__()
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -567,7 +567,7 @@ Get correct order for service rollback (considering dependencies)"""
         visited = set()
         temp_visited = set()
         
-        def visit(service):
+        def visit(service) -> None:
             if service in temp_visited:
                 # Circular dependency, just add it
                 return
@@ -1028,3 +1028,6 @@ Cancel an active rollback execution"""
             return True
         
         return False
+)
+
+# File has syntax issues - needs manual review

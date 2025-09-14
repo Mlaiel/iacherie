@@ -161,7 +161,7 @@ class VercelConfig(BaseModel):
     metrics_enabled: bool = Field(default=True, description="Enable metrics collection")
     
     @validator('api_token')
-    def validate_api_token(cls, v):
+    def validate_api_token(cls, v) -> None:
         if not v or len(v) < 10:
             raise ValueError("Valid Vercel API token required")
         return v
@@ -169,7 +169,7 @@ class VercelConfig(BaseModel):
 class VercelSecurityManager:
     """Security manager for Vercel deployments - Security Expert role"""
     
-    def __init__(self, config: VercelConfig):
+    def __init__(self, config -> None: VercelConfig) -> None:
         self.config = config
         
     def generate_deployment_signature(self, payload: str, secret: str) -> str:
@@ -241,7 +241,7 @@ class VercelSecurityManager:
 class VercelMLOptimizer:
     """ML-powered deployment optimization - ML Engineer + Lead Dev IA roles"""
     
-    def __init__(self, config: VercelConfig):
+    def __init__(self, config -> None: VercelConfig) -> None:
         self.config = config
         self.performance_history = []
         
@@ -424,11 +424,11 @@ class VercelMLOptimizer:
 class VercelAPIClient:
     """Vercel API client - Backend Senior role"""
     
-    def __init__(self, config: VercelConfig):
+    def __init__(self, config -> None: VercelConfig) -> None:
         self.config = config
         self.session = None
         
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         self.session = aiohttp.ClientSession(
             headers={
                 "Authorization": f"Bearer {self.config.api_token}",
@@ -438,7 +438,7 @@ class VercelAPIClient:
         )
         return self
     
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         if self.session:
             await self.session.close()
     
@@ -583,7 +583,7 @@ class VercelAPIClient:
 class VercelFileManager:
     """File management for Vercel deployments - Backend Senior + DevOps roles"""
     
-    def __init__(self, config: VercelConfig):
+    def __init__(self, config -> None: VercelConfig) -> None:
         self.config = config
     
     async def prepare_deployment_files(self, source_path: str, framework: ProjectType) -> Dict[str, str]:
@@ -667,7 +667,7 @@ class VercelFileManager:
 class VercelMonitor:
     """Monitoring and analytics for Vercel deployments - DevOps role"""
     
-    def __init__(self, config: VercelConfig):
+    def __init__(self, config -> None: VercelConfig) -> None:
         self.config = config
         
     async def monitor_deployment(self, deployment_id: str, api_client: VercelAPIClient) -> AsyncGenerator[Dict[str, Any], None]:
@@ -814,7 +814,7 @@ class VercelMonitor:
 class VercelIntegration:
     """Main Vercel integration orchestrator - Lead Dev IA + Backend Senior roles"""
     
-    def __init__(self, config: VercelConfig):
+    def __init__(self, config -> None: VercelConfig) -> None:
         self.config = config
         self.security_manager = VercelSecurityManager(config)
         self.ml_optimizer = VercelMLOptimizer(config)
@@ -1000,7 +1000,7 @@ class VercelIntegration:
 class VercelService:
     """Main Vercel service facade - DevOps + Integration role"""
     
-    def __init__(self, config: Optional[VercelConfig] = None):
+    def __init__(self, config -> None: Optional[VercelConfig] = None) -> None:
         self.config = config or VercelConfig(
             api_token="your-vercel-token-here",  # Should be configured via environment
             enable_analytics=True,
@@ -1009,7 +1009,7 @@ class VercelService:
         )
         self.integration = VercelIntegration(self.config)
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize the Vercel service"""
         logger.info("Initializing Vercel Integration Service")
         
@@ -1021,12 +1021,12 @@ class VercelService:
         
         logger.info("Vercel Integration Service initialized successfully")
     
-    async def _validate_configuration(self):
+    async def _validate_configuration(self) -> None:
         """Validate service configuration"""
         if not self.config.api_token or self.config.api_token == "your-vercel-token-here":
             logger.warning("Vercel API token not configured - deployments will fail")
     
-    async def _test_connectivity(self):
+    async def _test_connectivity(self) -> None:
         """Test Vercel API connectivity"""
         try:
             async with VercelAPIClient(self.config) as api_client:
@@ -1070,7 +1070,7 @@ __all__ = [
 
 if __name__ == "__main__":
     # Example usage and testing
-    async def main():
+    async def main() -> None:
         # Initialize service
         service = VercelService()
         await service.initialize()

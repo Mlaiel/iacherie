@@ -42,12 +42,12 @@ class BusinessConfigurationLevel(str, Enum):
 class BusinessLogicConfigurationManager:
     """Business logic configuration manager"""
     
-    def __init__(self, level: BusinessConfigurationLevel = BusinessConfigurationLevel.ENTERPRISE):
+    def __init__(self, level -> None: BusinessConfigurationLevel = BusinessConfigurationLevel.ENTERPRISE) -> None:
         self.level = level
         self.configurations = {}
         self._initialize_business_configs()
     
-    def _initialize_business_configs(self):
+    def _initialize_business_configs(self) -> None:
         """Initialize all business configurations"""
         self.configurations = {
             "creator_multi_format": CreatorMultiFormatConfiguration(level=self.level),

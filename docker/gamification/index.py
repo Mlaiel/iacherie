@@ -37,12 +37,12 @@ class GamificationServiceManager:
     including challenge management, rewards, leaderboards, and social features.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.orchestrator = gamification_orchestrator
         self.service_registry = {}
         self._initialize_service_registry()
     
-    def _initialize_service_registry(self):
+    def _initialize_service_registry(self) -> None:
         """Initialize service registry with all gamification services"""
         self.service_registry = {
             'challenge_engine': {
@@ -257,29 +257,29 @@ class GamificationServiceManager:
 service_manager = GamificationServiceManager()
 
 # FastAPI-style route handlers (for when integrated with FastAPI)
-async def get_gamification_status():
+async def get_gamification_status() -> None:
     """Get overall gamification system status"""
     return await service_manager.get_service_metrics()
 
-async def get_creator_engagement(creator_id: str):
+async def get_creator_engagement(creator_id -> None: str) -> None:
     """Get creator engagement status"""
     return await service_manager.orchestrator.get_creator_engagement_status(creator_id)
 
-async def create_new_challenge(challenge_data: Dict[str, Any]):
+async def create_new_challenge(challenge_data -> None: Dict[str, Any]) -> None:
     """Create new challenge"""
     return await service_manager.create_challenge(challenge_data)
 
-async def calculate_creator_rewards(creator_id: str, action_type: str, action_data: Dict):
+async def calculate_creator_rewards(creator_id -> None: str, action_type -> None: str, action_data -> None: Dict) -> None:
     """Calculate rewards for creator action"""
     return await service_manager.calculate_rewards(creator_id, action_type, action_data)
 
-async def get_global_leaderboards(category: str = "global", timeframe: str = "monthly"):
+async def get_global_leaderboards(category -> None: str = "global", timeframe -> None: str = "monthly") -> None:
     """Get leaderboard data"""
     return await service_manager.get_leaderboards(category, timeframe)
 
 if __name__ == "__main__":
     # Example usage
-    async def main():
+    async def main() -> None:
         # Check service health
         metrics = await service_manager.get_service_metrics()
         print(f"Service Metrics: {metrics}")

@@ -169,7 +169,7 @@ class EmotionState:
 class ExpressionConfig:
     """Configuration for facial expression generation"""
     
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs) -> None:
         # Basic expression parameters
         self.target_emotion = kwargs.get('target_emotion', BaseEmotion.NEUTRAL)
         self.intensity = kwargs.get('intensity', 0.5)
@@ -249,7 +249,7 @@ class FacialExpressionSystem(BaseContentGenerator):
     - Dynamic blending and transitions
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(config or {})
         self.logger = logging.getLogger(__name__)
         self._setup_expression_engine()

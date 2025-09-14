@@ -120,11 +120,11 @@ class RealTimeInferenceEngine:
     """Moteur d'inférence temps réel enterprise"""
     
     def __init__(self,
-                 max_workers: int = 10,
-                 max_queue_size: int = 10000,
-                 cache_size: int = 1000,
-                 model_timeout_minutes: int = 30,
-                 enable_auto_scaling: bool = True):
+                 max_workers -> None: int = 10,
+                 max_queue_size -> None: int = 10000,
+                 cache_size -> None: int = 1000,
+                 model_timeout_minutes -> None: int = 30,
+                 enable_auto_scaling -> None: bool = True) -> None:
         self.max_workers = max_workers
         self.max_queue_size = max_queue_size
         self.cache_size = cache_size
@@ -168,7 +168,7 @@ class RealTimeInferenceEngine:
             "last_scale_time": datetime.now()
         }
     
-    async def start(self):
+    async def start(self) -> None:
         """Démarre le moteur d'inférence"""
         try:
             self.is_running = True
@@ -197,7 +197,7 @@ class RealTimeInferenceEngine:
             logger.error(f"Erreur démarrage moteur d'inférence: {e}")
             raise
     
-    async def stop(self):
+    async def stop(self) -> None:
         """Arrête le moteur d'inférence"""
         try:
             logger.info("Arrêt du moteur d'inférence...")
@@ -367,7 +367,7 @@ class RealTimeInferenceEngine:
         result_event = threading.Event()
         result_container = {}
         
-        def callback(response: PredictionResponse):
+        def callback(response -> None: PredictionResponse) -> None:
             result_container['response'] = response
             result_event.set()
         
@@ -406,7 +406,7 @@ class RealTimeInferenceEngine:
         
         return response
     
-    def _worker_loop(self, worker_name: str):
+    def _worker_loop(self, worker_name -> None: str) -> None:
         """Boucle principale d'un worker"""
         logger.info(f"Worker {worker_name} démarré")
         
@@ -585,7 +585,7 @@ class RealTimeInferenceEngine:
             logger.error(f"Erreur lecture cache: {e}")
             return None
     
-    def _put_in_cache(self, cache_key: str, response: PredictionResponse):
+    def _put_in_cache(self, cache_key -> None: str, response -> None: PredictionResponse) -> None:
         """Met une réponse en cache"""
         try:
             # Vérifier la taille du cache
@@ -598,7 +598,7 @@ class RealTimeInferenceEngine:
         except Exception as e:
             logger.error(f"Erreur mise en cache: {e}")
     
-    def _evict_cache(self):
+    def _evict_cache(self) -> None:
         """Éviction LRU du cache"""
         try:
             if not self.cache_access_times:
@@ -617,7 +617,7 @@ class RealTimeInferenceEngine:
         except Exception as e:
             logger.error(f"Erreur éviction cache: {e}")
     
-    def _update_metrics(self, response: PredictionResponse):
+    def _update_metrics(self, response -> None: PredictionResponse) -> None:
         """Met à jour les métriques"""
         try:
             if response.status == InferenceStatus.COMPLETED:
@@ -647,7 +647,7 @@ class RealTimeInferenceEngine:
         except Exception as e:
             logger.error(f"Erreur mise à jour métriques: {e}")
     
-    async def _cleanup_loop(self):
+    async def _cleanup_loop(self) -> None:
         """Boucle de nettoyage périodique"""
         while self.is_running:
             try:
@@ -686,7 +686,7 @@ class RealTimeInferenceEngine:
             except Exception as e:
                 logger.error(f"Erreur boucle nettoyage: {e}")
     
-    async def _metrics_loop(self):
+    async def _metrics_loop(self) -> None:
         """Boucle de collection des métriques"""
         while self.is_running:
             try:
@@ -706,7 +706,7 @@ class RealTimeInferenceEngine:
             except Exception as e:
                 logger.error(f"Erreur boucle métriques: {e}")
     
-    async def _auto_scaling_loop(self):
+    async def _auto_scaling_loop(self) -> None:
         """Boucle d'auto-scaling"""
         while self.is_running:
             try:
@@ -733,7 +733,7 @@ class RealTimeInferenceEngine:
             except Exception as e:
                 logger.error(f"Erreur boucle auto-scaling: {e}")
     
-    async def _scale_up(self):
+    async def _scale_up(self) -> None:
         """Scale up le nombre de workers"""
         try:
             workers_to_add = self.scaling_metrics["scale_up_workers"]
@@ -754,7 +754,7 @@ class RealTimeInferenceEngine:
         except Exception as e:
             logger.error(f"Erreur scale up: {e}")
     
-    async def _scale_down(self):
+    async def _scale_down(self) -> None:
         """Scale down le nombre de workers"""
         try:
             # Simple: ne pas créer de nouveaux workers lors du prochain cycle
@@ -766,11 +766,11 @@ class RealTimeInferenceEngine:
         except Exception as e:
             logger.error(f"Erreur scale down: {e}")
     
-    def add_prediction_callback(self, callback: Callable[[PredictionResponse], None]):
+    def add_prediction_callback(self, callback -> None: Callable[[PredictionResponse], None]) -> None:
         """Ajoute un callback pour les prédictions"""
         self.prediction_callbacks.append(callback)
     
-    def add_error_callback(self, callback: Callable[[Exception, PredictionRequest], None]):
+    def add_error_callback(self, callback -> None: Callable[[Exception, PredictionRequest], None]) -> None:
         """Ajoute un callback pour les erreurs"""
         self.error_callbacks.append(callback)
     
@@ -850,7 +850,7 @@ class InferenceEngineFactory:
 
 
 # Exemple d'utilisation
-async def example_usage():
+async def example_usage() -> None:
     """Exemple d'utilisation du moteur d'inférence"""
     
     from sklearn.ensemble import RandomForestClassifier
@@ -868,7 +868,7 @@ async def example_usage():
     engine = InferenceEngineFactory.create_development_engine()
     
     # Ajouter des callbacks
-    def prediction_callback(response: PredictionResponse):
+    def prediction_callback(response -> None: PredictionResponse) -> None:
         print(f"Prédiction terminée: {response.request_id} - "
               f"Latence: {response.latency_ms:.2f}ms")
     

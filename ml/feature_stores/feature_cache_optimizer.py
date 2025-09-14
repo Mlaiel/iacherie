@@ -124,13 +124,13 @@ class FeatureCacheOptimizer:
     
     def __init__(
         self,
-        l1_max_size_mb: int = 512,         # 512MB RAM cache
-        l2_max_size_gb: int = 10,          # 10GB SSD cache
-        l3_max_size_gb: int = 100,         # 100GB network cache
-        default_ttl: int = 3600,           # 1 heure par défaut
-        enable_prefetch: bool = True,
-        enable_analytics: bool = True
-    ):
+        l1_max_size_mb -> None: int = 512,         # 512MB RAM cache
+        l2_max_size_gb -> None: int = 10,          # 10GB SSD cache
+        l3_max_size_gb -> None: int = 100,         # 100GB network cache
+        default_ttl -> None: int = 3600,           # 1 heure par défaut
+        enable_prefetch -> None: bool = True,
+        enable_analytics -> None: bool = True
+    ) -> None:
         self.l1_max_size_bytes = l1_max_size_mb * 1024 * 1024
         self.l2_max_size_bytes = l2_max_size_gb * 1024 * 1024 * 1024
         self.l3_max_size_bytes = l3_max_size_gb * 1024 * 1024 * 1024
@@ -334,7 +334,7 @@ class FeatureCacheOptimizer:
         # Features larges → L3
         return CacheTier.L3_NETWORK
     
-    async def _evict_from_l1(self):
+    async def _evict_from_l1(self) -> None:
         """Éviction intelligente du cache L1"""
         
         policy = self.eviction_policies[CacheTier.L1_MEMORY]
@@ -352,7 +352,7 @@ class FeatureCacheOptimizer:
             # Éviction basée sur la priorité des creators
             await self._creator_aware_eviction(CacheTier.L1_MEMORY)
     
-    async def _evict_from_l2(self):
+    async def _evict_from_l2(self) -> None:
         """Éviction intelligente du cache L2"""
         
         policy = self.eviction_policies[CacheTier.L2_SSD]
@@ -373,7 +373,7 @@ class FeatureCacheOptimizer:
                 await self._demote_to_l3(evict_key, entry)
                 self.stats.evictions += 1
     
-    async def _evict_from_l3(self):
+    async def _evict_from_l3(self) -> None:
         """Éviction du cache L3"""
         
         # Supprimer les entrées les plus anciennes
@@ -391,7 +391,7 @@ class FeatureCacheOptimizer:
                 del self.key_to_tier[oldest_key]
             self.stats.evictions += 1
     
-    async def _promote_to_l1(self, key: str, entry: CacheEntry):
+    async def _promote_to_l1(self, key -> None: str, entry -> None: CacheEntry) -> None:
         """Promouvoir une entrée vers L1"""
         
         # Copier vers L1
@@ -404,7 +404,7 @@ class FeatureCacheOptimizer:
         
         logger.debug(f"⬆️ Promoted {key} to L1 cache")
     
-    async def _promote_to_l2(self, key: str, entry: CacheEntry):
+    async def _promote_to_l2(self, key -> None: str, entry -> None: CacheEntry) -> None:
         """Promouvoir une entrée vers L2"""
         
         # Copier vers L2
@@ -417,7 +417,7 @@ class FeatureCacheOptimizer:
         
         logger.debug(f"⬆️ Promoted {key} to L2 cache")
     
-    async def _demote_to_l2(self, key: str, entry: CacheEntry):
+    async def _demote_to_l2(self, key -> None: str, entry -> None: CacheEntry) -> None:
         """Dégrader une entrée vers L2"""
         
         entry.tier = CacheTier.L2_SSD
@@ -425,7 +425,7 @@ class FeatureCacheOptimizer:
         
         logger.debug(f"⬇️ Demoted {key} to L2 cache")
     
-    async def _demote_to_l3(self, key: str, entry: CacheEntry):
+    async def _demote_to_l3(self, key -> None: str, entry -> None: CacheEntry) -> None:
         """Dégrader une entrée vers L3"""
         
         entry.tier = CacheTier.L3_NETWORK
@@ -435,9 +435,9 @@ class FeatureCacheOptimizer:
     
     async def _trigger_prefetch_analysis(
         self,
-        key: str,
-        creator_types: Optional[List[str]]
-    ):
+        key -> None: str,
+        creator_types -> None: Optional[List[str]]
+    ) -> None:
         """Déclencher l'analyse de prefetch"""
         
         if not self.enable_prefetch or not creator_types:
@@ -484,7 +484,7 @@ class FeatureCacheOptimizer:
         
         return predictions
     
-    async def _schedule_prefetch(self, prediction: PrefetchPrediction):
+    async def _schedule_prefetch(self, prediction -> None: PrefetchPrediction) -> None:
         """Planifier un prefetch"""
         
         # Simple: ajouter à la liste des prédictions
@@ -493,7 +493,7 @@ class FeatureCacheOptimizer:
         
         logger.debug(f"🔮 Scheduled prefetch for {prediction.key} (confidence: {prediction.confidence:.2f})")
     
-    def _update_access_patterns(self, key: str, creator_type: Optional[str]):
+    def _update_access_patterns(self, key -> None: str, creator_type -> None: Optional[str]) -> None:
         """Mettre à jour les patterns d'accès"""
         
         now = datetime.now()
@@ -512,7 +512,7 @@ class FeatureCacheOptimizer:
         if creator_type and len(self.creator_patterns[creator_type][key]) > 100:
             self.creator_patterns[creator_type][key] = self.creator_patterns[creator_type][key][-100:]
     
-    def _update_stats_hit(self, start_time: float):
+    def _update_stats_hit(self, start_time -> None: float) -> None:
         """Mettre à jour les stats pour un hit"""
         
         self.stats.hits += 1
@@ -529,7 +529,7 @@ class FeatureCacheOptimizer:
         total_requests = self.stats.hits + self.stats.misses
         self.stats.hit_rate = self.stats.hits / total_requests if total_requests > 0 else 0.0
     
-    def _update_stats_miss(self):
+    def _update_stats_miss(self) -> None:
         """Mettre à jour les stats pour un miss"""
         
         self.stats.misses += 1
@@ -621,7 +621,7 @@ class FeatureCacheOptimizer:
             
             return invalidated
     
-    async def clear_cache(self, tier: Optional[CacheTier] = None):
+    async def clear_cache(self, tier -> None: Optional[CacheTier] = None) -> None:
         """Vider le cache"""
         
         with self.lock:
@@ -642,7 +642,7 @@ class FeatureCacheOptimizer:
                 self.stats = CacheStats()
 
 # Usage Example
-async def main():
+async def main() -> None:
     """Exemple d'utilisation du Feature Cache Optimizer"""
     
     cache = FeatureCacheOptimizer(

@@ -1,4 +1,6 @@
 """
+import asyncio
+
 👥 MULTIMEDIA COLLABORATION MODULE - ENTERPRISE ARCHITECTURE
 ===========================================================
 
@@ -182,7 +184,7 @@ REALTIME_EVENTS = [
     'version_saved'
 ]
 
-def get_module_info():
+def get_module_info() -> None:
     """Get comprehensive module information"""
     return {
         'name': 'Multimedia Collaboration',
@@ -252,7 +254,7 @@ async def get_collaboration_metrics(project_id: str, time_range: str = '30d') ->
     return metrics
 
 # Module initialization
-def initialize_collaboration_module():
+def initialize_collaboration_module() -> None:
     """Initialize the collaboration module"""
     try:
         # Initialize WebRTC signaling server

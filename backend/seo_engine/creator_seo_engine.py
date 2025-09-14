@@ -106,7 +106,7 @@ class CreatorSEOStrategy:
 class CreatorSEOIntelligence:
     """Creator SEO intelligence system"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.config = config or {}
         self.creator_profiles = {}
         self.intelligence_cache = {}
@@ -466,7 +466,7 @@ class CreatorSEOIntelligence:
 class CreatorTypeSEOEngine:
     """Creator type-specific SEO engine"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.config = config or {}
         self.type_strategies = {}
     
@@ -616,7 +616,7 @@ class CreatorTypeSEOEngine:
 class CreatorBrandSEOOptimizer:
     """Creator brand SEO optimizer"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.config = config or {}
     
     async def optimize_creator_brand_seo(
@@ -802,7 +802,7 @@ class CreatorBrandSEOOptimizer:
 class CreatorAudienceSEOMatcher:
     """Creator audience SEO matcher"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.config = config or {}
     
     async def analyze_audience_seo_matching(
@@ -1005,7 +1005,7 @@ class CreatorAudienceSEOMatcher:
 class CreatorSEOEngine:
     """Main creator SEO engine"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.config = config or {}
         
         # Initialize sub-components

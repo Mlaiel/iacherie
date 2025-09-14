@@ -194,7 +194,7 @@ class RevenueReport:
 class CreatorAccountManager:
     """Creator account management system"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         self.creator_profiles = {}
@@ -313,7 +313,7 @@ class CreatorAccountManager:
 class ContentManager:
     """Content management system for creators"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         self.content_library = {}
@@ -413,7 +413,7 @@ class ContentManager:
 class MonetizationManager:
     """Monetization management system"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         self.monetization_configs = {}
@@ -484,7 +484,7 @@ class MonetizationManager:
 class AudienceAnalyticsEngine:
     """Audience analytics and insights engine"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         self.analytics_processors = {}
@@ -563,7 +563,7 @@ class AudienceAnalyticsEngine:
 class StreamingCreatorManager:
     """Unified streaming creator manager - Main service class"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         

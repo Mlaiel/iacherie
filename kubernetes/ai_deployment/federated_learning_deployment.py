@@ -107,7 +107,7 @@ class FederatedLearningConfig:
     model_compression: bool = True
     asynchronous_updates: bool = False
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         try:
                     # Request validation
                     if not data:
@@ -139,7 +139,7 @@ class FederatedLearningDeployment:
     - Real-time monitoring and analytics
     """
     
-    def __init__(self, namespace: str = "ia-influencer-federated"):
+    def __init__(self, namespace -> None: str = "ia-influencer-federated") -> None:
         """
         Initialize federated learning deployment
         
@@ -1037,7 +1037,7 @@ class FederatedLearningDeployment:
 class SecureAggregator:
     """Secure aggregation implementation for federated learning"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.aggregation_key = Fernet.generate_key()
         self.cipher = Fernet(self.aggregation_key)
     
@@ -1094,3 +1094,5 @@ class SecureAggregator:
         
         # Convert back to lists for JSON serialization
         return {key: value.tolist() for key, value in aggregated.items()}
+
+# File has syntax issues - needs manual review

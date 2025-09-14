@@ -62,7 +62,7 @@ class QualityScore:
     assessment_timestamp: datetime = field(default_factory=datetime.now)
     assessment_duration: float = 0.0
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         """Determine quality level based on overall score"""
         if self.overall_score >= 0.9:
             self.quality_level = QualityLevel.EXCELLENT
@@ -79,7 +79,7 @@ class QualityScore:
 class AudioQualityAssessment:
     """Audio quality assessment algorithms"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.logger = logger.getChild(self.__class__.__name__)
         
@@ -333,7 +333,7 @@ class AudioQualityAssessment:
 class VideoQualityAssessment:
     """Video quality assessment algorithms"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.logger = logger.getChild(self.__class__.__name__)
         
@@ -659,7 +659,7 @@ class VideoQualityAssessment:
 class MultimediaQuality:
     """Unified multimedia quality assessment system"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.logger = logger.getChild(self.__class__.__name__)
         

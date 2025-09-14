@@ -145,7 +145,7 @@ class SEORecommendationService:
     impact prediction, and actionable optimization strategies.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize SEO Recommendation Service with enterprise configuration"""
         self.service_name = "SEORecommendationService"
         self.version = "1.0.0"
@@ -846,7 +846,7 @@ class SEORecommendationService:
         # Sort by composite score
         return sorted(recommendations, key=lambda r: r.composite_score, reverse=True)
 
-    async def _load_recommendation_templates(self):
+    async def _load_recommendation_templates(self) -> None:
         """Load recommendation templates for different types"""
         self.templates_db = {
             'keyword_optimization': {
@@ -910,7 +910,7 @@ class SEORecommendationService:
     # Additional utility methods would be implemented here...
 
 # Example usage and testing
-async def main():
+async def main() -> None:
     """Example usage of SEO Recommendation Service"""
     service = SEORecommendationService()
     

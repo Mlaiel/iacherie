@@ -1,3 +1,8 @@
+"""
+Playbook Orchestrator module
+Enterprise implementation for Ainflue platform
+"""
+
 # Ainflue Infrastructure Module - Ansible Playbook Orchestrator
 # =============================================================
 # 
@@ -116,7 +121,7 @@ class PlaybookOrchestrator:
     and deployment orchestration across multi-cloud environments.
     """
     
-    def __init__(self, ansible_config_path: Optional[str] = None):
+    def __init__(self, ansible_config_path -> None: Optional[str] = None) -> None:
         """Initialize playbook orchestrator"""
         self.ansible_config_path = ansible_config_path or "/home/runner/work/Ainflue/Ainflue/infra/ansible"
         self.playbooks: Dict[str, PlaybookConfig] = {}

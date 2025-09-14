@@ -1,4 +1,6 @@
 """ASGI Application Entry Point
+import asyncio
+
 ---------------------------
 - Complete FastAPI-ASGI App for Ainflue AI Platform
 - Integrates Security, CORS, Observability, Health, Multilingual, Sentry, OpenTelemetry
@@ -60,7 +62,9 @@ try:
 except ImportError:
     # Fallback settings if simple_config is not available
     class MockSettings:
+    """MockSettings: class implementation"""
         class App:
+    """App: class implementation"""
             environment = "production"
             debug = False
             host = "0.0.0.0"
@@ -109,7 +113,7 @@ logging.basicConfig(
 )
 
 # Create custom OpenAPI schema
-def custom_openapi():
+def custom_openapi() -> None:
     if app.openapi_schema:
         return app.openapi_schema
     
@@ -378,7 +382,7 @@ app.openapi = custom_openapi
 if ENTERPRISE_CONFIG["security"]["security_headers_enabled"]:
     # Security Headers Middleware
     @app.middleware("http")
-    async def security_headers_middleware(request, call_next):
+    async def security_headers_middleware(request, call_next) -> None:
         response = await call_next(request)
         response.headers["X-Content-Type-Options"] = "nosniff"
         response.headers["X-Frame-Options"] = "DENY"
@@ -450,7 +454,7 @@ if ENTERPRISE_CONFIG["security"]["response_compression_enabled"]:
 
 # Request/Response Timing Middleware
 @app.middleware("http")
-async def timing_middleware(request, call_next):
+async def timing_middleware(request, call_next) -> None:
     import time
     start_time = time.time()
     
@@ -469,7 +473,7 @@ async def timing_middleware(request, call_next):
 
 # Request Logging Middleware
 @app.middleware("http") 
-async def logging_middleware(request, call_next):
+async def logging_middleware(request, call_next) -> None:
     # Log request
     logger.info(
         f"Request: {request.method} {request.url.path} - "
@@ -499,7 +503,7 @@ if OPENTELEMETRY_AVAILABLE and ENTERPRISE_CONFIG["monitoring"]["opentelemetry_en
 # ============ ENTERPRISE EXCEPTION HANDLERS ============
 
 @app.exception_handler(HTTPException)
-async def http_exception_handler(request, exc):
+async def http_exception_handler(request, exc) -> None:
     """Enhanced HTTP exception handler with enterprise features"""
     request_id = getattr(request.state, 'request_id', str(uuid.uuid4()))
     
@@ -522,7 +526,7 @@ async def http_exception_handler(request, exc):
     )
 
 @app.exception_handler(500)
-async def internal_server_error_handler(request, exc):
+async def internal_server_error_handler(request, exc) -> None:
     """Enhanced internal server error handler"""
     request_id = getattr(request.state, 'request_id', str(uuid.uuid4()))
     
@@ -553,7 +557,7 @@ app.include_router(api_router)
 
 # Custom Swagger UI with enterprise theming
 @app.get("/docs", include_in_schema=False, tags=["📚 Documentation"])
-async def enterprise_swagger_ui():
+async def enterprise_swagger_ui() -> None:
     """Enterprise Swagger UI with enhanced security and theming"""
     return get_swagger_ui_html(
         openapi_url=app.openapi_url,
@@ -578,7 +582,7 @@ async def enterprise_swagger_ui():
 
 # Custom ReDoc with enterprise features
 @app.get("/redoc", include_in_schema=False, tags=["📚 Documentation"])
-async def enterprise_redoc():
+async def enterprise_redoc() -> None:
     """Enterprise ReDoc documentation with enhanced features"""
     return get_redoc_html(
         openapi_url=app.openapi_url,
@@ -592,7 +596,7 @@ async def enterprise_redoc():
 
 # Enhanced root endpoint with enterprise features
 @app.get("/", tags=["🔗 System"], summary="Enterprise API Gateway")
-async def enterprise_root():
+async def enterprise_root() -> None:
     """
     Enterprise API Gateway root endpoint with comprehensive information
     """
@@ -658,7 +662,7 @@ async def enterprise_root():
 
 # Enterprise health check with comprehensive monitoring
 @app.get("/health", tags=["🔗 System"], summary="Enterprise Health Check")
-async def enterprise_health():
+async def enterprise_health() -> None:
     """
     Comprehensive enterprise health check with detailed system status
     """
@@ -721,7 +725,7 @@ async def enterprise_health():
 
 # Enhanced readiness check for container orchestration
 @app.get("/ready", tags=["🔗 System"], summary="Enterprise Readiness Check")
-async def enterprise_readiness():
+async def enterprise_readiness() -> None:
     """
     Enterprise readiness check for Kubernetes and container orchestration
     """
@@ -752,7 +756,7 @@ async def enterprise_readiness():
 
 # Application startup event
 @app.on_event("startup")
-async def startup_event():
+async def startup_event() -> None:
     """Enterprise application startup procedures"""
     logger.info("🚀 Starting Ainflue Enterprise API Platform...")
     logger.info(f"📋 Environment: {settings.app.environment}")
@@ -764,7 +768,7 @@ async def startup_event():
 
 # Application shutdown event
 @app.on_event("shutdown")
-async def shutdown_event():
+async def shutdown_event() -> None:
     """Enterprise application shutdown procedures"""
     logger.info("🔄 Shutting down Ainflue Enterprise API Platform...")
     logger.info("✅ Shutdown completed gracefully")

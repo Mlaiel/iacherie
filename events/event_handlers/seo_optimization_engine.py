@@ -72,7 +72,7 @@ class SEOOptimizationTask:
     completed_at: Optional[datetime] = None
     results: Optional[Dict[str, Any]] = None
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.target_keywords is None:
             self.target_keywords = []
         if self.optimization_config is None:
@@ -96,7 +96,7 @@ class SEOAnalysis:
     opportunities: List[str]
     analyzed_at: datetime
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.analyzed_at is None:
             self.analyzed_at = datetime.utcnow()
 
@@ -130,7 +130,7 @@ class SEOOptimizationEngine(BaseEventHandler):
                  content_analyzer=None,
                  schema_generator=None,
                  sitemap_manager=None,
-                 analytics_service=None):
+                 analytics_service=None) -> None:
         super().__init__()
         self.keyword_research_service = keyword_research_service
         self.content_analyzer = content_analyzer

@@ -1,3 +1,8 @@
+"""
+Compliance Reporting Example module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Compliance Reporting Example - Example Reporting Conformité
@@ -155,7 +160,7 @@ class ComplianceReportingExample:
     Audit trails automatiques avec regulatory compliance et risk assessment
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(f"{__name__}.ComplianceReportingExample")
         
         # Compliance data storage

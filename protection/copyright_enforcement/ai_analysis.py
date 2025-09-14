@@ -145,7 +145,7 @@ class ContentAnalysisEngine:
     """
 Ultra-advanced AI-powered content analysis engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.settings = get_settings()
         self.cache_manager = CacheManager()
         self.file_processor = FileProcessor()
@@ -937,7 +937,7 @@ Cleanup AI models and free memory"""
 class IntelligentEnforcementStrategy:
     """AI-powered enforcement strategy optimization"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.content_analyzer = ContentAnalysisEngine()
         self.settings = get_settings()
     

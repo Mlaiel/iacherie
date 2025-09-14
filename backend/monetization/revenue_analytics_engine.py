@@ -111,7 +111,7 @@ class RevenueAnalyticsConfig:
     database_url: str = "postgresql://localhost:5432/analytics"
     redis_url: str = "redis://localhost:6379"
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.alert_thresholds is None:
             self.alert_thresholds = {
                 'revenue_drop_threshold': 0.15,  # 15% drop
@@ -232,7 +232,7 @@ class EnterpriseRevenueAnalyticsEngine:
     - Cohort and segmentation analysis
     """
     
-    def __init__(self, config: Optional[RevenueAnalyticsConfig] = None):
+    def __init__(self, config -> None: Optional[RevenueAnalyticsConfig] = None) -> None:
         self.config = config or RevenueAnalyticsConfig()
         self.logger = logging.getLogger(__name__)
         self.executor = ThreadPoolExecutor(max_workers=8)
@@ -252,7 +252,7 @@ class EnterpriseRevenueAnalyticsEngine:
         self.performance_cache = {}
         self.forecast_cache = {}
         
-    def _init_forecasting_models(self):
+    def _init_forecasting_models(self) -> None:
         """Initialize ML models for forecasting"""
         try:
             self.forecasting_models = {
@@ -294,7 +294,7 @@ class EnterpriseRevenueAnalyticsEngine:
             self.logger.error(f"Forecasting models initialization failed: {e}")
             raise ForecastingError(f"Failed to initialize forecasting models: {e}")
 
-    def _init_analytics_processors(self):
+    def _init_analytics_processors(self) -> None:
         """Initialize analytics processing components"""
         try:
             self.processors = {
@@ -309,7 +309,7 @@ class EnterpriseRevenueAnalyticsEngine:
         except Exception as e:
             self.logger.warning(f"Analytics processors initialization failed: {e}")
 
-    def _init_alert_system(self):
+    def _init_alert_system(self) -> None:
         """Initialize alert monitoring system"""
         try:
             self.alert_monitors = {
@@ -323,7 +323,7 @@ class EnterpriseRevenueAnalyticsEngine:
         except Exception as e:
             self.logger.warning(f"Alert system initialization failed: {e}")
 
-    async def initialize_connections(self):
+    async def initialize_connections(self) -> None:
         """Initialize database and Redis connections"""
         try:
             # Initialize Redis
@@ -1110,7 +1110,7 @@ class EnterpriseRevenueAnalyticsEngine:
             self.logger.error(f"Charts data generation failed: {e}")
             return {'error': 'Failed to generate charts data'}
 
-    async def _store_metrics(self, metrics: RevenueMetrics):
+    async def _store_metrics(self, metrics -> None: RevenueMetrics) -> None:
         """Store metrics in database"""
         try:
             if self.db_pool:
@@ -1130,7 +1130,7 @@ class EnterpriseRevenueAnalyticsEngine:
         except Exception as e:
             self.logger.error(f"Metrics storage failed: {e}")
 
-    async def _store_report(self, report: AnalyticsReport):
+    async def _store_report(self, report -> None: AnalyticsReport) -> None:
         """Store analytics report"""
         try:
             if self.redis_client:
@@ -1142,7 +1142,7 @@ class EnterpriseRevenueAnalyticsEngine:
         except Exception as e:
             self.logger.error(f"Report storage failed: {e}")
 
-    async def _check_alert_conditions(self, metrics: RevenueMetrics):
+    async def _check_alert_conditions(self, metrics -> None: RevenueMetrics) -> None:
         """Check if metrics trigger any alerts"""
         try:
             alerts = []
@@ -1192,7 +1192,7 @@ class EnterpriseRevenueAnalyticsEngine:
         except Exception as e:
             self.logger.error(f"Alert checking failed: {e}")
 
-    async def _store_alert(self, alert: RevenueAlert):
+    async def _store_alert(self, alert -> None: RevenueAlert) -> None:
         """Store alert in system"""
         try:
             if self.redis_client:
@@ -1254,7 +1254,7 @@ class EnterpriseRevenueAnalyticsEngine:
 class RevenueAnalyticsDashboard:
     """Legacy revenue analytics dashboard interface"""
     
-    def __init__(self, engine: EnterpriseRevenueAnalyticsEngine):
+    def __init__(self, engine -> None: EnterpriseRevenueAnalyticsEngine) -> None:
         self.engine = engine
     
     async def get_dashboard_data(self, timeframe: str) -> Dict[str, Any]:
@@ -1266,7 +1266,7 @@ class RevenueAnalyticsDashboard:
 class PerformanceTrackingEngine:
     """Legacy performance tracking interface"""
     
-    def __init__(self, engine: EnterpriseRevenueAnalyticsEngine):
+    def __init__(self, engine -> None: EnterpriseRevenueAnalyticsEngine) -> None:
         self.engine = engine
     
     async def track_performance(self, metrics_data: Dict[str, Any]) -> Dict[str, Any]:
@@ -1277,7 +1277,7 @@ class PerformanceTrackingEngine:
 class RevenueForecastingAI:
     """Legacy revenue forecasting interface"""
     
-    def __init__(self, engine: EnterpriseRevenueAnalyticsEngine):
+    def __init__(self, engine -> None: EnterpriseRevenueAnalyticsEngine) -> None:
         self.engine = engine
     
     async def generate_forecast(self, metric_type: str, horizon: int) -> Dict[str, Any]:
@@ -1289,7 +1289,7 @@ class RevenueForecastingAI:
 class FinancialInsightsEngine:
     """Legacy financial insights interface"""
     
-    def __init__(self, engine: EnterpriseRevenueAnalyticsEngine):
+    def __init__(self, engine -> None: EnterpriseRevenueAnalyticsEngine) -> None:
         self.engine = engine
     
     async def generate_insights(self, data: Dict[str, Any]) -> Dict[str, Any]:
@@ -1300,7 +1300,7 @@ class FinancialInsightsEngine:
 class BusinessIntelligenceMonetization:
     """Legacy business intelligence interface"""
     
-    def __init__(self, engine: EnterpriseRevenueAnalyticsEngine):
+    def __init__(self, engine -> None: EnterpriseRevenueAnalyticsEngine) -> None:
         self.engine = engine
     
     async def generate_bi_report(self, report_config: Dict[str, Any]) -> Dict[str, Any]:

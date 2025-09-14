@@ -15,7 +15,7 @@ class PerformanceMonitor:
     """
 Monitor performance metrics"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize performance monitoring system"""
         try:
             logger.info(f"Initializing PerformanceMonitor")
@@ -52,7 +52,7 @@ Monitor performance metrics"""
         except Exception as e:
             logger.error(f"PerformanceMonitor initialization failed: {e}")
             raise
-    def set_memory_limit(self, limit_bytes: int):
+    def set_memory_limit(self, limit_bytes -> None: int) -> None:
         """
 Set memory limit"""
         try:
@@ -92,7 +92,7 @@ class RateLimiter:
     """
 Rate limiting implementation"""
     
-    def __init__(self, max_requests: int = 100, window_seconds: int = 60):
+    def __init__(self, max_requests -> None: int = 100, window_seconds -> None: int = 60) -> None:
         self.max_requests = max_requests
         self.window_seconds = window_seconds
         self.requests = {}
@@ -123,14 +123,14 @@ class CircuitBreaker:
     """
 Circuit breaker pattern implementation"""
     
-    def __init__(self, failure_threshold: int = 5, recovery_timeout: int = 60):
+    def __init__(self, failure_threshold -> None: int = 5, recovery_timeout -> None: int = 60) -> None:
         self.failure_threshold = failure_threshold
         self.recovery_timeout = recovery_timeout
         self.failure_count = 0
         self.last_failure_time = None
         self.state = "closed"  # closed, open, half-open
     
-    async def call(self, func, *args, **kwargs):
+    async def call(self, func, *args, **kwargs) -> None:
         """Execute function with circuit breaker protection"""
         if self.state == "open":
             if time.time() - self.last_failure_time > self.recovery_timeout:

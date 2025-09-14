@@ -65,7 +65,7 @@ class MigrationExecution:
 class MigrationManager:
     """Database migration execution manager."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize migration manager."""
         self._migrations: Dict[str, Migration] = {}
         self._executions: List[MigrationExecution] = []
@@ -75,7 +75,7 @@ class MigrationManager:
         # Load built-in migrations
         self._load_builtin_migrations()
     
-    def _load_builtin_migrations(self):
+    def _load_builtin_migrations(self) -> None:
         """Load built-in migrations for Ainflue platform."""
         # Initial schema migration
         initial_migration = Migration(
@@ -313,7 +313,7 @@ class MigrationManager:
         finally:
             self._locked = False
     
-    def _execute_operation(self, operation: Dict[str, Any]):
+    def _execute_operation(self, operation -> None: Dict[str, Any]) -> None:
         """Execute a single migration operation."""
         op_type = operation.get("operation")
         

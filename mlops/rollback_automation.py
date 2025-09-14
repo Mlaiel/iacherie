@@ -1,3 +1,8 @@
+"""
+Rollback Automation module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 🚀 Rollback Automation - Enterprise MLOps Platform
@@ -122,12 +127,12 @@ class RollbackExecution:
 class AnomalyDetector:
     """Détecteur d'anomalies pour déclenchement automatique de rollback"""
     
-    def __init__(self, sensitivity: float = 0.05):
+    def __init__(self, sensitivity -> None: float = 0.05) -> None:
         self.sensitivity = sensitivity
         self.baseline_metrics: Dict[str, List[float]] = {}
         self.anomaly_history: List[Dict[str, Any]] = []
         
-    def add_baseline_metric(self, metric_name: str, values: List[float]):
+    def add_baseline_metric(self, metric_name -> None: str, values -> None: List[float]) -> None:
         """Ajoute des métriques de référence"""
         self.baseline_metrics[metric_name] = values
         
@@ -224,7 +229,7 @@ class AnomalyDetector:
 class KubernetesRollbackExecutor:
     """Exécuteur de rollback Kubernetes"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         try:
             k8s_config.load_incluster_config()
         except:
@@ -302,10 +307,10 @@ class KubernetesRollbackExecutor:
     
     async def _wait_for_rollout_completion(
         self, 
-        deployment_name: str, 
-        namespace: str,
-        timeout: int = 300
-    ):
+        deployment_name -> None: str, 
+        namespace -> None: str,
+        timeout -> None: int = 300
+    ) -> None:
         """Attend la completion du rollout"""
         
         start_time = time.time()
@@ -349,7 +354,7 @@ class KubernetesRollbackExecutor:
 class DockerRollbackExecutor:
     """Exécuteur de rollback Docker"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.docker_client = docker.from_env()
         
     async def rollback_container(
@@ -406,7 +411,7 @@ class DockerRollbackExecutor:
 class GitRollbackExecutor:
     """Exécuteur de rollback Git"""
     
-    def __init__(self, repo_path: str):
+    def __init__(self, repo_path -> None: str) -> None:
         self.repo_path = repo_path
         self.repo = git.Repo(repo_path)
         
@@ -472,7 +477,7 @@ class GitRollbackExecutor:
 class RollbackAutomation:
     """Automation de rollback intelligent avec détection d'anomalies"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.anomaly_detector = AnomalyDetector(
             sensitivity=config.get('anomaly_sensitivity', 0.05)
@@ -492,7 +497,7 @@ class RollbackAutomation:
         # Monitoring
         self.is_monitoring = False
         
-    async def start_monitoring(self):
+    async def start_monitoring(self) -> None:
         """Démarre le monitoring automatique"""
         
         self.is_monitoring = True
@@ -504,7 +509,7 @@ class RollbackAutomation:
         
         logger.info("Monitoring de rollback automatique démarré")
     
-    async def stop_monitoring(self):
+    async def stop_monitoring(self) -> None:
         """Arrête le monitoring automatique"""
         
         self.is_monitoring = False
@@ -512,9 +517,9 @@ class RollbackAutomation:
     
     def add_deployment_version(
         self, 
-        service_name: str, 
-        version: DeploymentVersion
-    ):
+        service_name -> None: str, 
+        version -> None: DeploymentVersion
+    ) -> None:
         """Ajoute une version de déploiement"""
         
         if service_name not in self.deployment_versions:
@@ -528,13 +533,13 @@ class RollbackAutomation:
         
         logger.info(f"Version {version.version_tag} ajoutée pour {service_name}")
     
-    def add_metric_threshold(self, threshold: MetricThreshold):
+    def add_metric_threshold(self, threshold -> None: MetricThreshold) -> None:
         """Ajoute un seuil de métrique"""
         
         self.metric_thresholds.append(threshold)
         logger.info(f"Seuil ajouté: {threshold.metric_name} {threshold.comparison_operator} {threshold.threshold_value}")
     
-    def add_health_check(self, health_check: HealthCheck):
+    def add_health_check(self, health_check -> None: HealthCheck) -> None:
         """Ajoute un health check"""
         
         self.health_checks.append(health_check)
@@ -1037,7 +1042,7 @@ class RollbackAutomation:
             'availability_percent': random.uniform(95, 100)
         }
     
-    async def _anomaly_monitoring_loop(self):
+    async def _anomaly_monitoring_loop(self) -> None:
         """Boucle de monitoring des anomalies"""
         
         while self.is_monitoring:
@@ -1083,7 +1088,7 @@ class RollbackAutomation:
                 logger.error(f"Erreur loop monitoring anomalies: {e}")
                 await asyncio.sleep(30)
     
-    async def _health_check_loop(self):
+    async def _health_check_loop(self) -> None:
         """Boucle de health checks"""
         
         while self.is_monitoring:
@@ -1119,7 +1124,7 @@ class RollbackAutomation:
                 logger.error(f"Erreur loop health checks: {e}")
                 await asyncio.sleep(60)
     
-    async def _metric_threshold_loop(self):
+    async def _metric_threshold_loop(self) -> None:
         """Boucle de vérification des seuils de métriques"""
         
         while self.is_monitoring:
@@ -1242,7 +1247,7 @@ def create_rollback_automation(config: Dict[str, Any]) -> RollbackAutomation:
     return RollbackAutomation(config)
 
 # Exemple d'utilisation
-async def main():
+async def main() -> None:
     """Exemple d'utilisation du système de rollback automatisé"""
     
     # Configuration

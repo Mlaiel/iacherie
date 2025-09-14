@@ -1,5 +1,7 @@
 """Content Moderation Compliance Module
 
+import asyncio
+
 Enterprise content moderation compliance for regulatory standards and platform safety.
 Provides automated content moderation, violation detection, and compliance reporting.
 
@@ -117,7 +119,7 @@ class ContentModerationCompliance:
     Provides automated content moderation and regulatory compliance.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.logger = logger
         self.config = config or {}
         
@@ -144,7 +146,7 @@ class ContentModerationCompliance:
         # Initialize moderation rules
         self._initialize_moderation_rules()
     
-    def _initialize_moderation_rules(self):
+    def _initialize_moderation_rules(self) -> None:
         """Initialize content moderation rules by violation type"""
         self.moderation_rules = {
             ViolationType.HATE_SPEECH: {
@@ -333,12 +335,12 @@ class ContentModerationCompliance:
 
     async def _record_compliance_violation(
         self,
-        content_id: str,
-        user_id: int,
-        violation_type: ViolationType,
-        severity: ModerationLevel,
-        action: ModerationAction
-    ):
+        content_id -> None: str,
+        user_id -> None: int,
+        violation_type -> None: ViolationType,
+        severity -> None: ModerationLevel,
+        action -> None: ModerationAction
+    ) -> None:
         """Record compliance violation for regulatory reporting"""
         violation_id = str(uuid.uuid4())
         
@@ -361,7 +363,7 @@ class ContentModerationCompliance:
         self.violation_records[violation_id] = violation
         self.logger.info(f"Recorded compliance violation {violation_id} for content {content_id}")
 
-    async def _schedule_human_review(self, content_id: str, result: ModerationResult):
+    async def _schedule_human_review(self, content_id -> None: str, result -> None: ModerationResult) -> None:
         """Schedule content for human review"""
         # Placeholder for human review scheduling
         self.logger.info(f"Scheduled human review for content {content_id}")
@@ -430,7 +432,7 @@ class ContentModerationCompliance:
                 "message": f"Failed to process appeal: {str(e)}"
             }
 
-    async def _schedule_appeal_review(self, appeal_id: str):
+    async def _schedule_appeal_review(self, appeal_id -> None: str) -> None:
         """Schedule appeal for human review"""
         # Placeholder for appeal review scheduling
         self.logger.info(f"Scheduled appeal review for {appeal_id}")

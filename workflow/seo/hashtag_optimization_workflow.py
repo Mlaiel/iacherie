@@ -1,5 +1,7 @@
 """Hashtag Optimization Workflow - Advanced hashtag strategy and optimization for maximum reach.
 
+import logging
+
 This module provides comprehensive hashtag optimization capabilities including trending analysis,
 performance tracking, platform-specific strategies, and AI-powered hashtag recommendations
 for improved content discovery and engagement across social media platforms.
@@ -109,7 +111,7 @@ class HashtagStrategy:
 class HashtagOptimizationWorkflow:
     """Advanced hashtag optimization workflow with AI-powered analysis."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the hashtag optimization workflow."""
         self.platform_limits = {
             PlatformType.INSTAGRAM: 30,

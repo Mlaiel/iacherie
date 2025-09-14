@@ -143,7 +143,7 @@ class RewardTransaction:
 class AIRewardOptimizer:
     """🧠 AI-Powered Reward Optimization Engine (Lead Dev IA + ML Engineer)"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.optimization_models = {
             'engagement_predictor': None,
             'value_optimizer': None,
@@ -288,7 +288,7 @@ class AIRewardOptimizer:
 class FraudDetectionEngine:
     """🔒 Advanced Fraud Detection and Prevention (Security Expert)"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.fraud_rules = [
             self._check_velocity_fraud,
             self._check_pattern_anomalies,
@@ -435,7 +435,7 @@ class FraudDetectionEngine:
 class RoyaltyCalculator:
     """🎵 Music Royalty Calculation Engine (Audio Expert + Financial)"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.royalty_rates = {
             'streaming': Decimal('0.004'),  # $0.004 per stream
             'download': Decimal('0.70'),    # 70% of sale price
@@ -497,7 +497,7 @@ class RoyaltyCalculator:
 class RewardManagementService:
     """💰 Main Reward Management Service (All Expert Roles Integration)"""
     
-    def __init__(self, redis_url: str = "redis://localhost:6379"):
+    def __init__(self, redis_url -> None: str = "redis -> None://localhost -> None:6379") -> None:
         # 🏗️ Backend Senior: Enterprise architecture setup
         self.redis_client = None
         self.redis_url = redis_url
@@ -528,7 +528,7 @@ class RewardManagementService:
         
         logger.info("Reward Management Service initialized")
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """🚀 Service initialization (DevOps Expert)"""
         try:
             # Initialize Redis connection
@@ -964,7 +964,7 @@ class RewardManagementService:
         
         return final_amount, details
     
-    async def _store_calculation(self, calculation: RewardCalculation):
+    async def _store_calculation(self, calculation -> None: RewardCalculation) -> None:
         """💾 Store reward calculation"""
         calc_data = asdict(calculation)
         calc_data['calculation_timestamp'] = calculation.calculation_timestamp.isoformat()
@@ -1008,7 +1008,7 @@ class RewardManagementService:
             ai_factors=json.loads(calc_data['ai_factors'])
         )
     
-    async def _store_transaction(self, transaction: RewardTransaction):
+    async def _store_transaction(self, transaction -> None: RewardTransaction) -> None:
         """💾 Store reward transaction"""
         trans_data = asdict(transaction)
         trans_data['created_at'] = transaction.created_at.isoformat()
@@ -1073,7 +1073,7 @@ class RewardManagementService:
         except Exception as e:
             return {'success': False, 'error': str(e)}
     
-    async def _update_user_balance(self, transaction: RewardTransaction):
+    async def _update_user_balance(self, transaction -> None: RewardTransaction) -> None:
         """💰 Update user balance"""
         balance_key = self.keys['user_balance'].format(
             transaction.user_id, 
@@ -1081,7 +1081,7 @@ class RewardManagementService:
         )
         await self.redis_client.incrbyfloat(balance_key, float(transaction.amount))
     
-    async def _queue_for_manual_review(self, transaction: RewardTransaction):
+    async def _queue_for_manual_review(self, transaction -> None: RewardTransaction) -> None:
         """👥 Queue transaction for manual review"""
         review_queue_key = "manual_review:transactions"
         await self.redis_client.lpush(review_queue_key, transaction.transaction_id)
@@ -1189,7 +1189,7 @@ class RewardManagementService:
         
         return insights
     
-    async def _store_royalty_data(self, creator_id: str, period: str, royalty_data: Dict[str, Any]):
+    async def _store_royalty_data(self, creator_id -> None: str, period -> None: str, royalty_data -> None: Dict[str, Any]) -> None:
         """🎵 Store royalty data for reporting"""
         key = self.keys['royalty_data'].format(creator_id, period)
         await self.redis_client.hset(key, mapping={
@@ -1218,7 +1218,7 @@ class RewardManagementService:
             tier_bonus=json.loads(rule_data.get('tier_bonus', '{}'))
         )
     
-    async def _load_reward_rules(self):
+    async def _load_reward_rules(self) -> None:
         """📋 Load reward rules from storage"""
         for rule in self.default_rules:
             rule_data = asdict(rule)
@@ -1232,7 +1232,7 @@ class RewardManagementService:
                 mapping=rule_data
             )
     
-    async def _setup_monitoring(self):
+    async def _setup_monitoring(self) -> None:
         """⚙️ Setup monitoring and alerting"""
         logger.info("Reward system monitoring initialized")
     
@@ -1285,7 +1285,7 @@ def get_reward_metrics() -> Dict[str, Any]:
 
 if __name__ == "__main__":
     """💰 Reward Management Service Demo"""
-    async def demo():
+    async def demo() -> None:
         # Initialize service
         service = await create_reward_management_service()
         

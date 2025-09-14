@@ -136,13 +136,13 @@ class BraintreePaymentProcessor:
     
     def __init__(
         self,
-        merchant_id: str,
-        public_key: str,
-        private_key: str,
-        environment: str = "sandbox",
-        merchant_account_id: Optional[str] = None,
-        webhook_endpoint_url: Optional[str] = None
-    ):
+        merchant_id -> None: str,
+        public_key -> None: str,
+        private_key -> None: str,
+        environment -> None: str = "sandbox",
+        merchant_account_id -> None: Optional[str] = None,
+        webhook_endpoint_url -> None: Optional[str] = None
+    ) -> None:
         """Initialize Braintree payment processor.
         
         Args:
@@ -871,15 +871,15 @@ class BraintreePaymentProcessor:
             "success": disbursement_details.success
         }
 
-    async def close(self):
+    async def close(self) -> None:
         """Close the HTTP session."""
         await self.session.aclose()
 
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         """Async context manager entry."""
         return self
 
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         """Async context manager exit."""
         await self.close()
 

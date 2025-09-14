@@ -112,7 +112,7 @@ class VideoProcessingOptions:
 class VideoCodecEngine:
     """Enterprise video codec engine with hardware acceleration"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.codec_profiles = {
             VideoCodec.H264: {
                 'encoder': 'libx264',
@@ -230,7 +230,7 @@ class VideoCodecEngine:
 class VideoFormatProcessor:
     """Enterprise video format processor with AI capabilities"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.codec_engine = VideoCodecEngine()
         self.quality_analyzer = VideoQualityAnalyzer()
         self.content_analyzer = VideoContentAnalyzer()
@@ -596,7 +596,7 @@ class VideoFormatProcessor:
         
         return cmd
     
-    async def _execute_ffmpeg_conversion(self, ffmpeg_cmd: str):
+    async def _execute_ffmpeg_conversion(self, ffmpeg_cmd -> None: str) -> None:
         """Execute FFmpeg conversion with progress tracking"""
         try:
             # Execute command using asyncio

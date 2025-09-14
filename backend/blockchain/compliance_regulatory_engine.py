@@ -143,7 +143,7 @@ class RegulatoryAlert(Base):
 class KYCAMLProcessor:
     """Advanced KYC/AML processing engine"""
     
-    def __init__(self, redis_client: aioredis.Redis, encryption_key: bytes):
+    def __init__(self, redis_client -> None: aioredis.Redis, encryption_key -> None: bytes) -> None:
         self.redis = redis_client
         self.cipher = Fernet(encryption_key)
         self.risk_threshold = 0.7
@@ -355,7 +355,7 @@ class KYCAMLProcessor:
 class GDPRComplianceManager:
     """GDPR compliance manager for blockchain data"""
     
-    def __init__(self, encryption_key: bytes):
+    def __init__(self, encryption_key -> None: bytes) -> None:
         self.cipher = Fernet(encryption_key)
         self.data_retention_periods = {
             "personal_data": timedelta(days=2555),  # 7 years
@@ -453,7 +453,7 @@ class GDPRComplianceManager:
 class TaxReportingAutomator:
     """Automated tax reporting for crypto transactions"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.supported_jurisdictions = [
             Jurisdiction.US, Jurisdiction.EU, Jurisdiction.UK, 
             Jurisdiction.CA, Jurisdiction.AU, Jurisdiction.JP
@@ -563,8 +563,8 @@ class TaxReportingAutomator:
 class ComplianceEngine:
     """Main compliance engine orchestrating all compliance operations"""
     
-    def __init__(self, db_session: AsyncSession, redis_client: aioredis.Redis, 
-                 encryption_key: bytes):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: aioredis.Redis, 
+                 encryption_key -> None: bytes) -> None:
         self.db = db_session
         self.redis = redis_client
         self.encryption_key = encryption_key
@@ -879,7 +879,7 @@ class ComplianceEngine:
 class RegulatoryMonitor:
     """Advanced regulatory monitoring and alerting system"""
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client -> None: aioredis.Redis) -> None:
         self.redis = redis_client
         self.monitoring_sources = [
             "sec_gov", "cftc_gov", "finra_org", "ecb_europa_eu",

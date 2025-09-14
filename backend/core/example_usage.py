@@ -14,7 +14,7 @@ from backend.core.models import *
 from datetime import datetime
 from decimal import Decimal
 
-def example_usage():
+def example_usage() -> None:
     """Demonstrate usage of the consolidated models"""
     
     print("🎯 Consolidated Models Usage Example")

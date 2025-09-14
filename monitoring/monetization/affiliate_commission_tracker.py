@@ -125,7 +125,7 @@ class AffiliateCommissionTracker:
     - Cross-platform tracking
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.commission_rules: Dict[str, CommissionRule] = {}
         self.affiliate_metrics: Dict[str, AffiliateMetrics] = {}
@@ -140,7 +140,7 @@ class AffiliateCommissionTracker:
         
         logger.info("🎯 Affiliate Commission Tracker initialized")
     
-    def _setup_fraud_detection(self):
+    def _setup_fraud_detection(self) -> None:
         """Initialize fraud detection system."""
         self.fraud_patterns = {
             "click_spam": {
@@ -162,7 +162,7 @@ class AffiliateCommissionTracker:
         
         logger.info("🛡️ Fraud detection system initialized")
     
-    def _setup_commission_engine(self):
+    def _setup_commission_engine(self) -> None:
         """Initialize commission calculation engine."""
         # Default commission rules
         default_rule = CommissionRule(
@@ -179,7 +179,7 @@ class AffiliateCommissionTracker:
         self.commission_rules["default"] = default_rule
         logger.info("💰 Commission calculation engine initialized")
     
-    def _setup_analytics_pipeline(self):
+    def _setup_analytics_pipeline(self) -> None:
         """Initialize analytics and reporting pipeline."""
         self.analytics_config = {
             "real_time_updates": True,
@@ -712,8 +712,8 @@ class AffiliateCommissionTracker:
         # Return default rule
         return self.commission_rules["default"]
     
-    async def _update_conversion_metrics(self, affiliate_id: str, sale_amount: Decimal, 
-                                       commission_amount: Decimal):
+    async def _update_conversion_metrics(self, affiliate_id -> None: str, sale_amount -> None: Decimal, 
+                                       commission_amount -> None: Decimal) -> None:
         """Update affiliate conversion metrics."""
         if affiliate_id not in self.affiliate_metrics:
             self.affiliate_metrics[affiliate_id] = AffiliateMetrics(affiliate_id=affiliate_id)
@@ -733,7 +733,7 @@ class AffiliateCommissionTracker:
         
         metrics.last_updated = datetime.utcnow()
     
-    async def _update_monthly_metrics(self, affiliate_id: str):
+    async def _update_monthly_metrics(self, affiliate_id -> None: str) -> None:
         """Update 30-day rolling metrics."""
         thirty_days_ago = datetime.utcnow() - timedelta(days=30)
         

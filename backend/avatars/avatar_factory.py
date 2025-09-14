@@ -82,7 +82,7 @@ class AvatarCreationResult:
 class AvatarValidation:
     """Système de validation qualité et conformité"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
     
     async def validate_avatar(self, avatar_data: Dict[str, Any], 
@@ -175,7 +175,7 @@ class AvatarValidation:
 class AvatarBuilder:
     """Builder pattern pour création progressive d'avatars"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.spec = AvatarSpec(template=AvatarTemplate.CUSTOM)
         self.logger = logging.getLogger(__name__)
     
@@ -227,7 +227,7 @@ class AvatarBuilder:
 class AvatarFactory:
     """Factory principal pour orchestration complète des avatars"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
         self.metahuman_generator = MetaHumanGenerator()
         self.animation_system = AvatarAnimationSystem()

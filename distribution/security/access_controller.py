@@ -1,4 +1,6 @@
 """
+import asyncio
+
 Security Module - Access Controller
 Advanced granular access control system for Ainflue Distribution Platform
 
@@ -78,7 +80,7 @@ class AccessContext:
     mfa_verified: bool = False
     timestamp: datetime = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.timestamp is None:
             self.timestamp = datetime.now()
 
@@ -107,7 +109,7 @@ class AccessController:
     Supports RBAC, ABAC, and custom access policies
     """
     
-    def __init__(self, redis_client: redis.Redis):
+    def __init__(self, redis_client -> None: redis.Redis) -> None:
         self.redis = redis_client
         self.role_permissions = self._initialize_role_permissions()
         self.access_cache = {}
@@ -564,7 +566,7 @@ class AccessController:
         except (json.JSONDecodeError, ValueError, KeyError):
             return None
     
-    async def _cache_result(self, cache_key: str, result: AccessResult, ttl: int):
+    async def _cache_result(self, cache_key -> None: str, result -> None: AccessResult, ttl -> None: int) -> None:
         """Cache access result"""
         cache_data = {
             "granted": result.granted,
@@ -577,7 +579,7 @@ class AccessController:
         
         await self.redis.setex(cache_key, ttl, json.dumps(cache_data))
     
-    async def _log_access_event(self, request: AccessRequest, result: AccessResult):
+    async def _log_access_event(self, request -> None: AccessRequest, result -> None: AccessResult) -> None:
         """Log access control event for auditing"""
         event_data = {
             "timestamp": datetime.now().isoformat(),
@@ -598,7 +600,7 @@ class AccessController:
     
     # Admin methods for permission management
     
-    async def grant_permission(self, user_id: str, permission: Permission, ttl: Optional[int] = None):
+    async def grant_permission(self, user_id -> None: str, permission -> None: Permission, ttl -> None: Optional[int] = None) -> None:
         """Grant specific permission to user"""
         permissions_key = f"user_permissions:{user_id}"
         await self.redis.sadd(permissions_key, permission.value)
@@ -606,22 +608,22 @@ class AccessController:
         if ttl:
             await self.redis.expire(permissions_key, ttl)
     
-    async def revoke_permission(self, user_id: str, permission: Permission):
+    async def revoke_permission(self, user_id -> None: str, permission -> None: Permission) -> None:
         """Revoke specific permission from user"""
         permissions_key = f"user_permissions:{user_id}"
         await self.redis.srem(permissions_key, permission.value)
     
-    async def grant_shared_access(self, resource: str, user_id: str, ttl: int = 86400):
+    async def grant_shared_access(self, resource -> None: str, user_id -> None: str, ttl -> None: int = 86400) -> None:
         """Grant shared access to resource"""
         share_key = f"shared_access:{resource}:{user_id}"
         await self.redis.setex(share_key, ttl, "1")
     
-    async def revoke_shared_access(self, resource: str, user_id: str):
+    async def revoke_shared_access(self, resource -> None: str, user_id -> None: str) -> None:
         """Revoke shared access to resource"""
         share_key = f"shared_access:{resource}:{user_id}"
         await self.redis.delete(share_key)
     
-    async def set_time_restrictions(self, user_id: str, restrictions: List[Dict]):
+    async def set_time_restrictions(self, user_id -> None: str, restrictions -> None: List[Dict]) -> None:
         """Set time-based restrictions for user"""
         restrictions_key = f"time_restrictions:{user_id}"
         await self.redis.set(restrictions_key, json.dumps(restrictions))

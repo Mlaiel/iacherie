@@ -156,7 +156,7 @@ class WindowResult:
 class Window(ABC):
     """Abstract base class for windows"""
     
-    def __init__(self, window_id: str, start_time: datetime, end_time: datetime):
+    def __init__(self, window_id -> None: str, start_time -> None: datetime, end_time -> None: datetime) -> None:
         self.window_id = window_id
         self.start_time = start_time
         self.end_time = end_time
@@ -193,7 +193,7 @@ class Window(ABC):
         """Get all events in window"""
         return self.state.events.copy()
     
-    def update_watermark(self, watermark: datetime):
+    def update_watermark(self, watermark -> None: datetime) -> None:
         """Update window watermark"""
         self.state.watermark = watermark
 
@@ -201,7 +201,7 @@ class Window(ABC):
 class TumblingWindow(Window):
     """Tumbling (fixed) window implementation"""
     
-    def __init__(self, window_id: str, start_time: datetime, size: timedelta):
+    def __init__(self, window_id -> None: str, start_time -> None: datetime, size -> None: timedelta) -> None:
         end_time = start_time + size
         super().__init__(window_id, start_time, end_time)
         self.size = size
@@ -218,7 +218,7 @@ class TumblingWindow(Window):
 class SlidingWindow(Window):
     """Sliding window implementation"""
     
-    def __init__(self, window_id: str, start_time: datetime, size: timedelta, slide: timedelta):
+    def __init__(self, window_id -> None: str, start_time -> None: datetime, size -> None: timedelta, slide -> None: timedelta) -> None:
         end_time = start_time + size
         super().__init__(window_id, start_time, end_time)
         self.size = size
@@ -236,7 +236,7 @@ class SlidingWindow(Window):
 class SessionWindow(Window):
     """Session window implementation"""
     
-    def __init__(self, window_id: str, start_time: datetime, session_timeout: timedelta):
+    def __init__(self, window_id -> None: str, start_time -> None: datetime, session_timeout -> None: timedelta) -> None:
         super().__init__(window_id, start_time, start_time)
         self.session_timeout = session_timeout
         self.last_event_time = start_time
@@ -271,7 +271,7 @@ class SessionWindow(Window):
 class GlobalWindow(Window):
     """Global window (never closes) implementation"""
     
-    def __init__(self, window_id: str):
+    def __init__(self, window_id -> None: str) -> None:
         # Global window spans from min to max datetime
         super().__init__(
             window_id, 
@@ -291,7 +291,7 @@ class GlobalWindow(Window):
 class WatermarkGenerator:
     """Generates watermarks for event streams"""
     
-    def __init__(self, strategy: WatermarkStrategy, **kwargs):
+    def __init__(self, strategy -> None: WatermarkStrategy, **kwargs) -> None:
         self.strategy = strategy
         self.max_out_of_orderness = kwargs.get('max_out_of_orderness', timedelta(seconds=30))
         self.periodic_interval = kwargs.get('periodic_interval', timedelta(seconds=10))
@@ -338,7 +338,7 @@ class WatermarkGenerator:
 class WindowAssigner:
     """Assigns events to windows"""
     
-    def __init__(self, window_type: str, **config):
+    def __init__(self, window_type -> None: str, **config) -> None:
         self.window_type = window_type
         self.config = config
         self.windows: Dict[str, Window] = {}
@@ -496,7 +496,7 @@ class WindowAssigner:
         """Get all windows"""
         return list(self.windows.values())
     
-    def cleanup_windows(self, watermark: datetime):
+    def cleanup_windows(self, watermark -> None: datetime) -> None:
         """Clean up old windows that are beyond allowed lateness"""
         try:
             windows_to_remove = []
@@ -691,7 +691,7 @@ class CollaborationSuccessWindowFunction(WindowFunction):
 class WindowingComputationEngine:
     """Main windowing computation engine for Ainflue platform"""
     
-    def __init__(self, metrics_collector=None):
+    def __init__(self, metrics_collector=None) -> None:
         self.metrics_collector = metrics_collector
         self.window_assigners: Dict[str, WindowAssigner] = {}
         self.window_functions: Dict[str, WindowFunction] = {}
@@ -703,7 +703,7 @@ class WindowingComputationEngine:
         self._computation_task: Optional[asyncio.Task] = None
         self._shutdown_event = asyncio.Event()
         
-    async def start(self):
+    async def start(self) -> None:
         """Start the windowing computation engine"""
         try:
             logger.info("Starting Windowing Computation Engine")
@@ -720,7 +720,7 @@ class WindowingComputationEngine:
             logger.error(f"Failed to start windowing computation engine: {e}")
             raise
     
-    async def stop(self):
+    async def stop(self) -> None:
         """Stop the computation engine"""
         try:
             logger.info("Stopping Windowing Computation Engine")
@@ -738,7 +738,7 @@ class WindowingComputationEngine:
             logger.error(f"Error stopping windowing computation engine: {e}")
             raise
     
-    async def _setup_default_windows(self):
+    async def _setup_default_windows(self) -> None:
         """Setup default window assigners and functions for Ainflue"""
         try:
             # Content engagement windows
@@ -890,7 +890,7 @@ class WindowingComputationEngine:
             logger.error(f"Error computing window {window.window_id}: {e}")
             return None
     
-    async def _computation_loop(self):
+    async def _computation_loop(self) -> None:
         """Main computation monitoring loop"""
         try:
             while not self._shutdown_event.is_set():
@@ -903,7 +903,7 @@ class WindowingComputationEngine:
         except Exception as e:
             logger.error(f"Error in computation loop: {e}")
     
-    async def _perform_maintenance(self):
+    async def _perform_maintenance(self) -> None:
         """Perform routine maintenance tasks"""
         try:
             # Log system status
@@ -915,7 +915,7 @@ class WindowingComputationEngine:
         except Exception as e:
             logger.error(f"Error performing maintenance: {e}")
     
-    def add_window_assigner(self, name: str, window_type: str, **config):
+    def add_window_assigner(self, name -> None: str, window_type -> None: str, **config) -> None:
         """Add custom window assigner"""
         try:
             self.window_assigners[name] = WindowAssigner(window_type, **config)
@@ -925,7 +925,7 @@ class WindowingComputationEngine:
             logger.error(f"Error adding window assigner {name}: {e}")
             raise
     
-    def add_window_function(self, name: str, function: WindowFunction):
+    def add_window_function(self, name -> None: str, function -> None: WindowFunction) -> None:
         """Add custom window function"""
         try:
             self.window_functions[name] = function

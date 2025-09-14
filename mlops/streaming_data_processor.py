@@ -104,7 +104,7 @@ class StreamProcessor(ABC):
 class AudioStreamProcessor(StreamProcessor):
     """Audio stream processor for musicians"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         
     async def process(self, message: StreamMessage) -> ProcessingResult:
@@ -189,7 +189,7 @@ class AudioStreamProcessor(StreamProcessor):
 class TextStreamProcessor(StreamProcessor):
     """Text stream processor for bloggers and content creators"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         
     async def process(self, message: StreamMessage) -> ProcessingResult:
@@ -275,7 +275,7 @@ class TextStreamProcessor(StreamProcessor):
 class ImageStreamProcessor(StreamProcessor):
     """Image stream processor for photographers"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         
     async def process(self, message: StreamMessage) -> ProcessingResult:
@@ -362,7 +362,7 @@ class ImageStreamProcessor(StreamProcessor):
 class StreamingDataProcessor:
     """Enterprise streaming data processor for ML pipelines"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.streams: Dict[str, StreamConfiguration] = {}
         self.processors: Dict[StreamType, StreamProcessor] = {}
@@ -513,7 +513,7 @@ class StreamingDataProcessor:
             logger.error(f"Failed to get backlog: {e}")
             return 0
     
-    async def _setup_processors(self):
+    async def _setup_processors(self) -> None:
         """Setup stream processors for different data types"""
         self.processors[StreamType.AUDIO_STREAM] = AudioStreamProcessor()
         self.processors[StreamType.TEXT_STREAM] = TextStreamProcessor()
@@ -523,12 +523,12 @@ class StreamingDataProcessor:
         # self.processors[StreamType.VIDEO_STREAM] = VideoStreamProcessor()
         # self.processors[StreamType.METRIC_STREAM] = MetricStreamProcessor()
     
-    async def _setup_metrics_collection(self):
+    async def _setup_metrics_collection(self) -> None:
         """Setup metrics collection system"""
         # Start metrics collection task
         asyncio.create_task(self._collect_metrics())
     
-    async def _process_stream(self, config: StreamConfiguration):
+    async def _process_stream(self, config -> None: StreamConfiguration) -> None:
         """Process messages from stream"""
         stream_id = config.stream_id
         queue = self.message_queues[stream_id]
@@ -556,9 +556,9 @@ class StreamingDataProcessor:
             logger.error(f"Stream processing error: {e}")
     
     async def _process_real_time(self, 
-                               queue: asyncio.Queue,
-                               processor: StreamProcessor,
-                               config: StreamConfiguration):
+                               queue -> None: asyncio.Queue,
+                               processor -> None: StreamProcessor,
+                               config -> None: StreamConfiguration) -> None:
         """Process messages in real-time mode"""
         while True:
             try:
@@ -582,9 +582,9 @@ class StreamingDataProcessor:
                 await asyncio.sleep(0.1)
     
     async def _process_micro_batch(self, 
-                                 queue: asyncio.Queue,
-                                 processor: StreamProcessor,
-                                 config: StreamConfiguration):
+                                 queue -> None: asyncio.Queue,
+                                 processor -> None: StreamProcessor,
+                                 config -> None: StreamConfiguration) -> None:
         """Process messages in micro-batch mode"""
         batch_size = config.batch_size
         batch = []
@@ -638,9 +638,9 @@ class StreamingDataProcessor:
                 await asyncio.sleep(0.1)
     
     async def _process_windowed(self, 
-                              queue: asyncio.Queue,
-                              processor: StreamProcessor,
-                              config: StreamConfiguration):
+                              queue -> None: asyncio.Queue,
+                              processor -> None: StreamProcessor,
+                              config -> None: StreamConfiguration) -> None:
         """Process messages using windowing"""
         window_size = config.window_size or timedelta(seconds=10)
         window_messages = []
@@ -701,9 +701,9 @@ class StreamingDataProcessor:
                 await asyncio.sleep(0.1)
     
     async def _process_continuous(self, 
-                                queue: asyncio.Queue,
-                                processor: StreamProcessor,
-                                config: StreamConfiguration):
+                                queue -> None: asyncio.Queue,
+                                processor -> None: StreamProcessor,
+                                config -> None: StreamConfiguration) -> None:
         """Process messages in continuous mode"""
         # Similar to real-time but with different batching strategy
         await self._process_real_time(queue, processor, config)
@@ -722,7 +722,7 @@ class StreamingDataProcessor:
         
         return message
     
-    async def _handle_processing_result(self, result: ProcessingResult):
+    async def _handle_processing_result(self, result -> None: ProcessingResult) -> None:
         """Handle processing result"""
         try:
             if result.success:
@@ -734,7 +734,7 @@ class StreamingDataProcessor:
         except Exception as e:
             logger.error(f"Failed to handle processing result: {e}")
     
-    async def _update_metrics(self, stream_id: str, processing_time: float, success: bool):
+    async def _update_metrics(self, stream_id -> None: str, processing_time -> None: float, success -> None: bool) -> None:
         """Update processing metrics"""
         try:
             metrics = self.metrics[stream_id]
@@ -752,7 +752,7 @@ class StreamingDataProcessor:
         except Exception as e:
             logger.error(f"Failed to update metrics: {e}")
     
-    async def _collect_metrics(self):
+    async def _collect_metrics(self) -> None:
         """Collect and log metrics periodically"""
         while True:
             try:
@@ -767,7 +767,7 @@ class StreamingDataProcessor:
 
 
 # Example usage and testing
-async def main():
+async def main() -> None:
     """Example usage of Streaming Data Processor"""
     processor = StreamingDataProcessor()
     

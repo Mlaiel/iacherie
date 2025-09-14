@@ -1,6 +1,9 @@
 """Alert Manager"""
+import asyncio
+
 import logging
 logger = logging.getLogger(__name__)
 class AlertManager:
-    def __init__(self): logger.info("Alert manager initialized")
-    async def setup_alerts(self, config): return {'status': 'configured'}
+    """AlertManager: class implementation"""
+    def __init__(self) -> None: logger.info("Alert manager initialized")
+    async def setup_alerts(self, config) -> None: return {'status': 'configured'}

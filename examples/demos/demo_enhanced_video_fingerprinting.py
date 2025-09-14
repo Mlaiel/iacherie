@@ -59,7 +59,7 @@ class VideoCodec(Enum):
     AV1 = "av1"
     MPEG4 = "mpeg4"
 
-def demonstrate_enhanced_features():
+def demonstrate_enhanced_features() -> None:
     """Démonstration des fonctionnalités améliorées"""
     
     print("🎬 ENHANCED VIDEO FINGERPRINTING SYSTEM DEMO")

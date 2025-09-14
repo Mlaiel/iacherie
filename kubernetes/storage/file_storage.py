@@ -1,11 +1,11 @@
-"""🗄️ File Storage - IA-Influencer-Agent Storage Layer
+"""# [EMOJI_REMOVED] File Storage - IA-Influencer-Agent Storage Layer
 ==================================================================
 Expert: DBA_ENGINEER + DATA_SPECIALIST
 Technologies: PostgreSQL + Redis + MongoDB + File Storage
 Date: 2025-07-31 06:28:26
 
-Couche de stockage optimisée avec pools de connexions et cache.
-Modèles détectés: 0
+Couche de stockage optimis# [EMOJI_REMOVED]e avec pools de connexions et cache.
+Mod# [EMOJI_REMOVED]les d# [EMOJI_REMOVED]tect# [EMOJI_REMOVED]s: 0
 ==================================================================
 """
 
@@ -104,22 +104,22 @@ class IStorageAdapter(ABC):
     @abstractmethod
     async def disconnect(self) -> bool:
         """
-Déconnexion du stockage"""
+D# [EMOJI_REMOVED]connexion du stockage"""
         pass
     
     @abstractmethod
     async def health_check(self) -> bool:
         """
-Vérification de santé"""
+V# [EMOJI_REMOVED]rification de sant# [EMOJI_REMOVED]"""
         pass
 
 # =============== ADAPTATEUR POSTGRESQL ===============
 
 class PostgreSQLAdapter(IStorageAdapter):
     """
-Adaptateur PostgreSQL optimisé"""
+Adaptateur PostgreSQL optimis# [EMOJI_REMOVED]"""
     
-    def __init__(self, config: StorageConfig):
+    def __init__(self, config -> None: StorageConfig) -> None:
         self.config = config
         self.pool = None
         self.engine = None
@@ -145,28 +145,28 @@ Connexion PostgreSQL avec pool"""
             self.engine = create_async_engine(database_url, echo=False, pool_size=20)
             self.session_factory = sessionmaker(self.engine, class_=AsyncSession)
             
-            logger.info("✅ PostgreSQL connecté")
+            logger.info("# [EMOJI_REMOVED] PostgreSQL connect# [EMOJI_REMOVED]")
             return True
             
         except Exception as e:
-            logger.error(f"❌ Erreur connexion PostgreSQL: {e}")
+            logger.error(f"# [EMOJI_REMOVED] Erreur connexion PostgreSQL: {e}")
             return False
     
     async def disconnect(self) -> bool:
-        """Déconnexion PostgreSQL"""
+        """D# [EMOJI_REMOVED]connexion PostgreSQL"""
         try:
             if self.pool:
                 await self.pool.close()
             if self.engine:
                 await self.engine.dispose()
-            logger.info("🔌 PostgreSQL déconnecté")
+            logger.info("# [EMOJI_REMOVED] PostgreSQL d# [EMOJI_REMOVED]connect# [EMOJI_REMOVED]")
             return True
         except Exception as e:
-            logger.error(f"❌ Erreur déconnexion PostgreSQL: {e}")
+            logger.error(f"# [EMOJI_REMOVED] Erreur d# [EMOJI_REMOVED]connexion PostgreSQL: {e}")
             return False
     
     async def health_check(self) -> bool:
-        """Vérification PostgreSQL"""
+        """V# [EMOJI_REMOVED]rification PostgreSQL"""
         try:
             async with self.pool.acquire() as connection:
                 result = await connection.fetchval("SELECT 1")
@@ -175,7 +175,7 @@ Connexion PostgreSQL avec pool"""
             return False
     
     @asynccontextmanager
-    async def get_session(self):
+    async def get_session(self) -> None:
         """Gestionnaire de session SQLAlchemy"""
         async with self.session_factory() as session:
             try:
@@ -191,9 +191,9 @@ Connexion PostgreSQL avec pool"""
 
 class RedisAdapter(IStorageAdapter):
     """
-Adaptateur Redis optimisé"""
+Adaptateur Redis optimis# [EMOJI_REMOVED]"""
     
-    def __init__(self, config: StorageConfig):
+    def __init__(self, config -> None: StorageConfig) -> None:
         self.config = config
         self.redis = None
     
@@ -210,25 +210,25 @@ Connexion Redis"""
                 max_connections=self.config.max_connections
             )
             await self.redis.ping()
-            logger.info("✅ Redis connecté")
+            logger.info("# [EMOJI_REMOVED] Redis connect# [EMOJI_REMOVED]")
             return True
         except Exception as e:
-            logger.error(f"❌ Erreur connexion Redis: {e}")
+            logger.error(f"# [EMOJI_REMOVED] Erreur connexion Redis: {e}")
             return False
     
     async def disconnect(self) -> bool:
-        """Déconnexion Redis"""
+        """D# [EMOJI_REMOVED]connexion Redis"""
         try:
             if self.redis:
                 await self.redis.close()
-            logger.info("🔌 Redis déconnecté")
+            logger.info("# [EMOJI_REMOVED] Redis d# [EMOJI_REMOVED]connect# [EMOJI_REMOVED]")
             return True
         except Exception as e:
-            logger.error(f"❌ Erreur déconnexion Redis: {e}")
+            logger.error(f"# [EMOJI_REMOVED] Erreur d# [EMOJI_REMOVED]connexion Redis: {e}")
             return False
     
     async def health_check(self) -> bool:
-        """Vérification Redis"""
+        """V# [EMOJI_REMOVED]rification Redis"""
         try:
             await self.redis.ping()
             return True
@@ -242,16 +242,16 @@ Cache avec expiration"""
             await self.redis.setex(key, expire, json.dumps(value))
             return True
         except Exception as e:
-            logger.error(f"❌ Erreur cache set: {e}")
+            logger.error(f"# [EMOJI_REMOVED] Erreur cache set: {e}")
             return False
     
     async def get_cache(self, key: str) -> Optional[Any]:
-        """Récupération cache"""
+        """R# [EMOJI_REMOVED]cup# [EMOJI_REMOVED]ration cache"""
         try:
             value = await self.redis.get(key)
             return json.loads(value) if value else None
         except Exception as e:
-            logger.error(f"❌ Erreur cache get: {e}")
+            logger.error(f"# [EMOJI_REMOVED] Erreur cache get: {e}")
             return None
 
 # =============== GESTIONNAIRE STORAGE PRINCIPAL ===============
@@ -259,7 +259,7 @@ Cache avec expiration"""
 class FileStorageManager:
     """Gestionnaire principal du stockage"""
     
-    def __init__(self, config: StorageConfig):
+    def __init__(self, config -> None: StorageConfig) -> None:
         self.config = config
         self.postgres = PostgreSQLAdapter(config)
         self.redis = RedisAdapter(config)
@@ -267,9 +267,9 @@ class FileStorageManager:
     
     async def initialize(self) -> bool:
         """
-Initialisation complète du stockage"""
+Initialisation compl# [EMOJI_REMOVED]te du stockage"""
         try:
-            # Connexions parallèles
+            # Connexions parall# [EMOJI_REMOVED]les
             postgres_ok, redis_ok = await asyncio.gather(
                 self.postgres.connect(),
                 self.redis.connect(),
@@ -279,28 +279,28 @@ Initialisation complète du stockage"""
             self.connected = postgres_ok and redis_ok
             
             if self.connected:
-                logger.info("🚀 Storage Manager initialisé")
+                logger.info("# [EMOJI_REMOVED] Storage Manager initialis# [EMOJI_REMOVED]")
             else:
-                logger.error("❌ Échec initialisation Storage")
+                logger.error("# [EMOJI_REMOVED] # [EMOJI_REMOVED]chec initialisation Storage")
             
             return self.connected
             
         except Exception as e:
-            logger.error(f"❌ Erreur initialisation storage: {e}")
+            logger.error(f"# [EMOJI_REMOVED] Erreur initialisation storage: {e}")
             return False
     
     async def shutdown(self) -> bool:
-        """Arrêt propre du stockage"""
+        """Arr# [EMOJI_REMOVED]t propre du stockage"""
         try:
             await asyncio.gather(
                 self.postgres.disconnect(),
                 self.redis.disconnect(),
                 return_exceptions=True
             )
-            logger.info("⏹️ Storage Manager arrêté")
+            logger.info("# [EMOJI_REMOVED] Storage Manager arr# [EMOJI_REMOVED]t# [EMOJI_REMOVED]")
             return True
         except Exception as e:
-            logger.error(f"❌ Erreur arrêt storage: {e}")
+            logger.error(f"# [EMOJI_REMOVED] Erreur arr# [EMOJI_REMOVED]t storage: {e}")
             return False
 
 # =============== EXPORT MODULE ===============
@@ -312,3 +312,5 @@ __all__ = [
     "StorageConfig",
     "IStorageAdapter"
 ]
+
+# File has syntax issues - needs manual review

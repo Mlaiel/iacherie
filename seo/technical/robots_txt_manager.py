@@ -1,4 +1,6 @@
 """
+import logging
+
 Robots.txt Manager for Ainflue Platform
 Advanced robots.txt generation and management for SEO optimization
 
@@ -19,7 +21,7 @@ class RobotsTxtManager:
     Handles dynamic robots.txt generation, sitemap inclusion, and crawler management
     """
     
-    def __init__(self, base_url: str, sitemap_url: Optional[str] = None):
+    def __init__(self, base_url -> None: str, sitemap_url -> None: Optional[str] = None) -> None:
         self.base_url = base_url.rstrip('/')
         self.sitemap_url = sitemap_url or f"{self.base_url}/sitemap.xml"
         self.rules = []
@@ -27,8 +29,8 @@ class RobotsTxtManager:
         self.crawl_delay = {}
         self.sitemaps = []
         
-    def add_user_agent_rules(self, user_agent: str, allow: List[str] = None, 
-                           disallow: List[str] = None, crawl_delay: Optional[int] = None):
+    def add_user_agent_rules(self, user_agent -> None: str, allow -> None: List[str] = None, 
+                           disallow -> None: List[str] = None, crawl_delay -> None: Optional[int] = None) -> None:
         """Add rules for specific user agent"""
         if user_agent not in self.user_agents:
             self.user_agents[user_agent] = {'allow': [], 'disallow': []}
@@ -40,12 +42,12 @@ class RobotsTxtManager:
         if crawl_delay:
             self.crawl_delay[user_agent] = crawl_delay
             
-    def add_sitemap(self, sitemap_url: str):
+    def add_sitemap(self, sitemap_url -> None: str) -> None:
         """Add sitemap URL to robots.txt"""
         if sitemap_url not in self.sitemaps:
             self.sitemaps.append(sitemap_url)
             
-    def generate_creator_friendly_robots(self, creator_type: str = "general"):
+    def generate_creator_friendly_robots(self, creator_type -> None: str = "general") -> None:
         """Generate creator-optimized robots.txt rules"""
         
         # General rules for all creators
@@ -139,7 +141,7 @@ class RobotsTxtManager:
             crawl_delay=0
         )
         
-    def generate_platform_specific_rules(self, platforms: List[str]):
+    def generate_platform_specific_rules(self, platforms -> None: List[str]) -> None:
         """Generate platform-specific SEO rules"""
         
         for platform in platforms:
@@ -179,7 +181,7 @@ class RobotsTxtManager:
                     ]
                 )
                 
-    def add_security_rules(self):
+    def add_security_rules(self) -> None:
         """Add security-focused robots.txt rules"""
         
         # Block malicious bots
@@ -250,7 +252,7 @@ class RobotsTxtManager:
         
         return "\n".join(content)
         
-    def save_robots_txt(self, file_path: str):
+    def save_robots_txt(self, file_path -> None: str) -> None:
         """Save robots.txt to file"""
         content = self.generate_robots_txt()
         with open(file_path, 'w', encoding='utf-8') as f:
@@ -299,7 +301,7 @@ class RobotsTxtManager:
             'warnings': warnings
         }
         
-    def generate_dynamic_rules(self, creator_data: Dict):
+    def generate_dynamic_rules(self, creator_data -> None: Dict) -> None:
         """Generate dynamic rules based on creator data"""
         
         # Allow public content
@@ -325,7 +327,7 @@ class RobotsTxtManager:
 class RobotsTxtAnalyzer:
     """Analyze and optimize existing robots.txt files"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.seo_recommendations = []
         
     def analyze_robots_txt(self, content: str) -> Dict:

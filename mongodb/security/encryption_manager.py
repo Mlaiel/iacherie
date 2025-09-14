@@ -42,7 +42,7 @@ class EncryptionKey:
 class EncryptionManager:
     """Advanced field-level encryption manager."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize encryption manager."""
         self._keys: Dict[str, EncryptionKey] = {}
         self._current_key_id: Optional[str] = None
@@ -58,7 +58,7 @@ class EncryptionManager:
         # Initialize master key from environment or generate
         self._initialize_master_key()
     
-    def _initialize_master_key(self):
+    def _initialize_master_key(self) -> None:
         """Initialize or generate master encryption key."""
         master_key = os.getenv('AINFLUE_MASTER_KEY')
         if not master_key:
@@ -71,7 +71,7 @@ class EncryptionManager:
         # Create default encryption key
         self._create_default_key()
     
-    def _create_default_key(self):
+    def _create_default_key(self) -> None:
         """Create default encryption key."""
         key_id = "default_v1"
         key_data = Fernet.generate_key()

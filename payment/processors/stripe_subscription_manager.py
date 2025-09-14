@@ -129,10 +129,10 @@ class StripeSubscriptionManager:
     """
 
     def __init__(self, 
-                 stripe_secret_key: str,
-                 database_url: str,
-                 redis_url: str,
-                 webhook_secret: str):
+                 stripe_secret_key -> None: str,
+                 database_url -> None: str,
+                 redis_url -> None: str,
+                 webhook_secret -> None: str) -> None:
         """Initialize Stripe Subscription Manager"""
         self.stripe_secret_key = stripe_secret_key
         self.database_url = database_url

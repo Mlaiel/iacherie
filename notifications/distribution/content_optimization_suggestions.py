@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 class ContentOptimizationSuggestions:
     """AI-powered content optimization suggestion system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         logger.info("Content optimization suggestions initialized")
     
     async def suggest_optimization(self, user_id: str, content_id: str, 

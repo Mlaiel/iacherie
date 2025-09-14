@@ -1,4 +1,7 @@
 """Configuration and Settings for Copyright Enforcement Module
+import asyncio
+from datetime import datetime
+
 Professional configuration management with environment support
 """
 
@@ -409,13 +412,14 @@ class EnforcementSettings(BaseSettings):
     payment_processing: bool = Field(default=False, env="PAYMENT_PROCESSING")
     
     class Config:
+    """Config: class implementation"""
         env_file = ".env"
         env_file_encoding = "utf-8"
         case_sensitive = False
         use_enum_values = True
     
     @validator('environment')
-    def validate_environment(cls, v):
+    def validate_environment(cls, v) -> None:
         """Validate environment setting"""
         if isinstance(v, str):
             try:
@@ -425,7 +429,7 @@ class EnforcementSettings(BaseSettings):
         return v
     
     @validator('platforms')
-    def validate_platforms(cls, v):
+    def validate_platforms(cls, v) -> None:
         """
 Validate platform configurations"""
         if not v:
@@ -437,7 +441,7 @@ Validate platform configurations"""
         return v
     
     @validator('security')
-    def validate_security(cls, v, values):
+    def validate_security(cls, v, values) -> None:
         """
 Validate security configuration"""
         if values.get('environment') == EnvironmentType.PRODUCTION:
@@ -449,7 +453,7 @@ Validate security configuration"""
         """Get configuration for specific platform"""
         return self.platforms.get(platform_type.value)
     
-    def update_platform_config(self, platform_type: PlatformType, config: PlatformConfig):
+    def update_platform_config(self, platform_type -> None: PlatformType, config -> None: PlatformConfig) -> None:
         """
 Update configuration for specific platform"""
         self.platforms[platform_type.value] = config
@@ -501,7 +505,7 @@ Get Redis connection URL"""
             'legal_output': self.legal.output_path
         }
     
-    def ensure_directories(self):
+    def ensure_directories(self) -> None:
         """
 Ensure all required directories exist"""
         paths = self.get_storage_paths()
@@ -555,7 +559,7 @@ Load settings from configuration file"""
             logger.error(f"Error loading config from file {config_path}: {e}")
             return cls()
     
-    def save_to_file(self, config_path: str):
+    def save_to_file(self, config_path -> None: str) -> None:
         """Save current settings to configuration file"""
         try:
             config_data = self.to_dict()
@@ -581,7 +585,7 @@ def get_settings() -> EnforcementSettings:
     return settings
 
 
-def reload_settings():
+def reload_settings() -> None:
     """
 Reload settings from environment"""
     global settings
@@ -589,7 +593,7 @@ Reload settings from environment"""
     return settings
 
 
-def configure_logging():
+def configure_logging() -> None:
     """
 Configure logging based on settings"""
     try:
@@ -647,3 +651,5 @@ __all__ = [
     'reload_settings',
     'configure_logging'
 ]
+
+# File has syntax issues - needs manual review

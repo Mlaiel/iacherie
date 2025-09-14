@@ -115,9 +115,9 @@ class PeerReviewAutomation:
     """
     
     def __init__(self,
-                 enable_ai_analysis: bool = True,
-                 review_standards: str = "academic",
-                 language: str = "en"):
+                 enable_ai_analysis -> None: bool = True,
+                 review_standards -> None: str = "academic",
+                 language -> None: str = "en") -> None:
         """Initialize peer review automation system"""
         
         self.enable_ai_analysis = enable_ai_analysis
@@ -1022,7 +1022,7 @@ class PeerReviewAutomation:
         
         return recommendations
     
-    def _log_review_activity(self, review_report: ReviewReport):
+    def _log_review_activity(self, review_report -> None: ReviewReport) -> None:
         """🔒 Security - Log review activity for audit purposes"""
         
         log_entry = {
@@ -1096,7 +1096,7 @@ class PeerReviewAutomation:
         return report
 
 # Example usage demonstrating all expert roles
-async def example_usage():
+async def example_usage() -> None:
     """🎖️ Lead Dev IA - Example demonstrating all expert roles"""
     
     # Initialize peer review system

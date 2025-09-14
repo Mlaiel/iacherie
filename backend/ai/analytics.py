@@ -40,39 +40,48 @@ except ImportError as e:
     logging.warning(f"Using fallback implementations: {e}")
     # Fallback classes for development and testing
     class AnalyticsManager: 
-        def __init__(self, config=None): 
+    """AnalyticsManager: class implementation"""
+        def __init__(self, config=None) -> None: 
             self.config = config or {}
             
     class AnalyticsEngine: 
-        def __init__(self, config=None): 
+    """AnalyticsEngine: class implementation"""
+        def __init__(self, config=None) -> None: 
             self.config = config or {}
             
     class TrendManager: 
-        def __init__(self, config=None): 
+    """TrendManager: class implementation"""
+        def __init__(self, config=None) -> None: 
             self.config = config or {}
             
     class TrendEngine: 
-        def __init__(self, config=None): 
+    """TrendEngine: class implementation"""
+        def __init__(self, config=None) -> None: 
             self.config = config or {}
             
     class EngagementManager: 
-        def __init__(self, config=None): 
+    """EngagementManager: class implementation"""
+        def __init__(self, config=None) -> None: 
             self.config = config or {}
             
     class EngagementEngine: 
-        def __init__(self, config=None): 
+    """EngagementEngine: class implementation"""
+        def __init__(self, config=None) -> None: 
             self.config = config or {}
             
     class UserBehaviorAgent: 
-        def __init__(self, config=None): 
+    """UserBehaviorAgent: class implementation"""
+        def __init__(self, config=None) -> None: 
             self.config = config or {}
             
     class CompetitorMonitoringAgent: 
-        def __init__(self, config=None): 
+    """CompetitorMonitoringAgent: class implementation"""
+        def __init__(self, config=None) -> None: 
             self.config = config or {}
             
     class PredictiveAnalyticsManager: 
-        def __init__(self, config=None): 
+    """PredictiveAnalyticsManager: class implementation"""
+        def __init__(self, config=None) -> None: 
             self.config = config or {}
 
 logger = logging.getLogger(__name__)
@@ -105,13 +114,13 @@ class AnalyticsResponse:
 class TrendAnalyzer:
     """Consolidated Trend Analysis - equivalent to agent_trend_analyzer.py"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.trend_manager = None
         self.trend_engine = None
         self._initialize()
     
-    def _initialize(self):
+    def _initialize(self) -> None:
         """Initialize trend analysis components"""
         try:
             self.trend_manager = TrendManager(self.config)
@@ -215,13 +224,13 @@ class TrendAnalyzer:
 class EngagementPredictor:
     """Consolidated Engagement Prediction - equivalent to agent_engagement_predictor.py"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.engagement_manager = None
         self.engagement_engine = None
         self._initialize()
     
-    def _initialize(self):
+    def _initialize(self) -> None:
         """Initialize engagement prediction components"""
         try:
             self.engagement_manager = EngagementManager(self.config)
@@ -322,12 +331,12 @@ class EngagementPredictor:
 class AudienceAnalyzer:
     """Consolidated Audience Analysis - equivalent to agent_audience_analyzer.py"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.behavior_agent = None
         self._initialize()
     
-    def _initialize(self):
+    def _initialize(self) -> None:
         """Initialize audience analysis components"""
         try:
             self.behavior_agent = UserBehaviorAgent(self.config)
@@ -428,12 +437,12 @@ class AudienceAnalyzer:
 class CompetitorMonitor:
     """Consolidated Competitor Monitoring - equivalent to agent_competitor_monitor.py"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.competitor_agent = None
         self._initialize()
     
-    def _initialize(self):
+    def _initialize(self) -> None:
         """Initialize competitor monitoring components"""
         try:
             self.competitor_agent = CompetitorMonitoringAgent(self.config)
@@ -536,7 +545,7 @@ class CompetitorMonitor:
 class AnalyticsHub:
     """Unified Analytics Hub - Orchestrates all analytics agents"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         
         # Initialize all analyzers
@@ -552,7 +561,7 @@ class AnalyticsHub:
         
         logger.info("AnalyticsHub initialized with all components")
     
-    def _initialize_core_analytics(self):
+    def _initialize_core_analytics(self) -> None:
         """Initialize core analytics managers"""
         try:
             self.analytics_manager = AnalyticsManager(self.config)

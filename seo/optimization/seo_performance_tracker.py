@@ -127,7 +127,7 @@ class SEOPerformanceTracker:
     Advanced SEO performance tracking system that monitors, analyzes, and reports
     on comprehensive SEO metrics with real-time alerts and optimization recommendations.
     """
-    def __init__(self, domain: str, tracking_keywords: List[str] = None):
+    def __init__(self, domain -> None: str, tracking_keywords -> None: List[str] = None) -> None:
         """
         Initialize the SEO performance tracker.
         

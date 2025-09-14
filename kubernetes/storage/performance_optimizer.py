@@ -190,7 +190,7 @@ class StoragePerformanceOptimizer:
     - SLA compliance monitoring and alerting
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.metrics_history: deque = deque(maxlen=10000)  # Last 10k metrics
         self.baselines: Dict[str, PerformanceBaseline] = {}
         self.optimization_history: List[OptimizationRecommendation] = []
@@ -210,7 +210,7 @@ class StoragePerformanceOptimizer:
         
         logger.info("🚀 StoragePerformanceOptimizer initialized")
     
-    def _initialize_ml_models(self):
+    def _initialize_ml_models(self) -> None:
         """Initialize machine learning models for performance analysis"""
         try:
             # Anomaly detection model
@@ -1177,7 +1177,7 @@ class StoragePerformanceOptimizer:
         
         return changes
     
-    async def _rollback_configuration(self, backup_config: Dict[str, Any]):
+    async def _rollback_configuration(self, backup_config -> None: Dict[str, Any]) -> None:
         """Rollback configuration to previous state"""
         try:
             if not backup_config:
@@ -1301,7 +1301,7 @@ def create_performance_optimizer() -> StoragePerformanceOptimizer:
 
 
 # Usage Example
-async def main():
+async def main() -> None:
     """
 Example usage of StoragePerformanceOptimizer"""
     try:

@@ -1,3 +1,8 @@
+"""
+Cluster Orchestrator module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Redis Cluster Orchestrator - Ainflue Platform
@@ -92,7 +97,7 @@ class RedisClusterOrchestrator:
     - Disaster recovery
     """
 
-    def __init__(self, config_path: str = "redis/config/cluster.yaml"):
+    def __init__(self, config_path -> None: str = "redis/config/cluster.yaml") -> None:
         """Initialize cluster orchestrator"""
         self.config = self._load_config(config_path)
         self.cluster_client: Optional[RedisCluster] = None
@@ -619,14 +624,14 @@ class RedisClusterOrchestrator:
 
 
 # Example usage and testing
-async def main():
+async def main() -> None:
     """Example usage of Redis Cluster Orchestrator"""
     try:
         # Initialize orchestrator
         orchestrator = RedisClusterOrchestrator()
         
         # Register event handlers
-        async def health_event_handler(event_type: str, data: Any):
+        async def health_event_handler(event_type -> None: str, data -> None: Any) -> None:
             print(f"Health Event: {event_type}")
             if data.get('issues'):
                 print(f"Issues found: {data['issues']}")

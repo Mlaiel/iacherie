@@ -55,7 +55,7 @@ class AdvancedBoostOptimizer:
     - ROI maximization algorithms
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.active_campaigns = {}
         self.optimization_models = {}
         self.performance_history = {}

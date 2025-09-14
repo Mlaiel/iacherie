@@ -54,7 +54,7 @@ class ContentTheftAlerts:
     Provides AI-powered content protection monitoring
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize content theft alerts"""
         self.alerts: List[ContentTheftAlert] = []
         self.detection_engines = ["visual_hash", "audio_fingerprint", "metadata_analysis"]
@@ -153,7 +153,7 @@ class ContentTheftAlerts:
         else:
             return TheftSeverity.LOW
     
-    async def _send_theft_alert(self, alert: ContentTheftAlert):
+    async def _send_theft_alert(self, alert -> None: ContentTheftAlert) -> None:
         """Send content theft alert notification"""
         # Determine notification channels based on severity
         channels = ["in_app", "email"]
@@ -185,7 +185,7 @@ class ContentTheftAlerts:
         
         logger.info(f"Content theft alert prepared: {alert.alert_id}")
     
-    async def _trigger_auto_dmca(self, alert: ContentTheftAlert):
+    async def _trigger_auto_dmca(self, alert -> None: ContentTheftAlert) -> None:
         """Automatically trigger DMCA notice for critical theft"""
         dmca_data = {
             "original_content_id": alert.original_content_id,

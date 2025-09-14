@@ -1,3 +1,8 @@
+"""
+Team Formation Service module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 👥 TEAM FORMATION SERVICE
@@ -96,7 +101,7 @@ class CreatorProfile:
     personality_traits: List[str] = None
     created_at: datetime = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.personality_traits is None:
             self.personality_traits = []
         if self.created_at is None:
@@ -121,7 +126,7 @@ class ProjectRequirement:
     created_by: str = ""
     created_at: datetime = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.language_requirements is None:
             self.language_requirements = ["English"]
         if self.created_at is None:
@@ -144,7 +149,7 @@ class TeamComposition:
     recommendations: List[str]
     created_at: datetime = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.created_at is None:
             self.created_at = datetime.utcnow()
 
@@ -159,7 +164,7 @@ class FormationMetrics:
     popular_skills: Dict[str, int] = None
     top_creators: List[str] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.popular_skills is None:
             self.popular_skills = {}
         if self.top_creators is None:
@@ -168,7 +173,7 @@ class FormationMetrics:
 class TeamFormationService:
     """AI-powered team formation and optimization service"""
     
-    def __init__(self, redis_url: str = "redis://localhost:6379"):
+    def __init__(self, redis_url -> None: str = "redis -> None://localhost -> None:6379") -> None:
         self.redis_url = redis_url
         self.creator_profiles: Dict[str, CreatorProfile] = {}
         self.project_requirements: Dict[str, ProjectRequirement] = {}
@@ -822,7 +827,7 @@ class TeamFormationService:
 
 
 # Example usage and testing
-async def main():
+async def main() -> None:
     """Test the team formation service"""
     service = TeamFormationService()
     

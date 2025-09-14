@@ -63,7 +63,7 @@ class MetricsDeploymentManager:
     for enterprise-grade observability and business intelligence.
     """
     
-    def __init__(self, config: Optional[MetricsConfiguration] = None):
+    def __init__(self, config -> None: Optional[MetricsConfiguration] = None) -> None:
         self.config = config or get_metrics_config()
         self._services: Dict[str, Any] = {}
         self._collectors: Dict[str, Any] = {}
@@ -387,7 +387,7 @@ Export metrics in specified format"""
 
 # Context manager for metrics deployment
 @asynccontextmanager
-async def metrics_deployment_context(config: Optional[MetricsConfiguration] = None):
+async def metrics_deployment_context(config -> None: Optional[MetricsConfiguration] = None) -> None:
     """
 Context manager for metrics deployment lifecycle"""
     manager = MetricsDeploymentManager(config)
@@ -441,7 +441,7 @@ if __name__ == "__main__":
     """
     Direct execution for testing and debugging
     """
-    async def main():
+    async def main() -> None:
         config = get_metrics_config()
         
         async with metrics_deployment_context(config) as manager:

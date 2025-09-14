@@ -68,7 +68,7 @@ class ControlExecution:
 class DamageControlEngine:
     """Automated damage control and crisis response execution system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize damage control engine"""
         self.control_strategies = self._init_control_strategies()
         self.active_responses = {}
@@ -704,7 +704,7 @@ class DamageControlEngine:
             return 'executive_involvement'
         return None
     
-    async def _trigger_escalation(self, execution_id: str, escalation_type: str):
+    async def _trigger_escalation(self, execution_id -> None: str, escalation_type -> None: str) -> None:
         logger.warning(f"Triggering escalation {escalation_type} for execution {execution_id}")
     
     async def _calculate_overall_effectiveness(self, metrics: Dict) -> float:

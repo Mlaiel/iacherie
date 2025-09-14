@@ -218,14 +218,14 @@ class DataCollector:
     """
 Advanced data collection and ingestion system"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self._data_sources: Dict[str, Dict[str, Any]] = {}
         self._collectors: Dict[str, Callable] = {}
         self._redis: Optional[aioredis.Redis] = None
         self._elasticsearch: Optional[elasticsearch.AsyncElasticsearch] = None
         
-    async def initialize(self):
+    async def initialize(self) -> None:
         """
 Initialize data collector"""
         try:
@@ -277,12 +277,12 @@ Initialize data collector"""
             logger.error(f"Failed to register data source {source_id}: {e}")
             return False
     
-    async def _setup_database_collector(self, source_id: str, connection_config: Dict[str, Any], collection_config: Dict[str, Any]):
+    async def _setup_database_collector(self, source_id -> None: str, connection_config -> None: Dict[str, Any], collection_config -> None: Dict[str, Any]) -> None:
         """Setup database data collector"""
         try:
             engine = create_async_engine(connection_config['connection_string'])
             
-            async def collect_database_data():
+            async def collect_database_data() -> None:
                 try:
                     # Setup async session
                     async_session = sessionmaker(engine, class_=AsyncSession)
@@ -320,10 +320,10 @@ Initialize data collector"""
             logger.error(f"Failed to setup database collector: {e}")
             raise
     
-    async def _setup_api_collector(self, source_id: str, connection_config: Dict[str, Any], collection_config: Dict[str, Any]):
+    async def _setup_api_collector(self, source_id -> None: str, connection_config -> None: Dict[str, Any], collection_config -> None: Dict[str, Any]) -> None:
         """Setup API data collector"""
         try:
-            async def collect_api_data():
+            async def collect_api_data() -> None:
                 async with aiohttp.ClientSession() as session:
                     headers = connection_config.get('headers', {})
                     
@@ -415,7 +415,7 @@ Initialize data collector"""
 class KPITracker:
     """Advanced KPI tracking and calculation system"""
     
-    def __init__(self, data_collector: DataCollector):
+    def __init__(self, data_collector -> None: DataCollector) -> None:
         self.data_collector = data_collector
         self._kpi_definitions: Dict[str, KPIDefinition] = {}
         self._kpi_values: Dict[str, List[float]] = {}
@@ -503,7 +503,7 @@ Register a new KPI"""
             logger.error(f"Formula calculation failed: {e}")
             return 0.0
     
-    async def _check_kpi_alerts(self, kpi_id: str, value: float):
+    async def _check_kpi_alerts(self, kpi_id -> None: str, value -> None: float) -> None:
         """Check KPI value against thresholds and generate alerts"""
         try:
             kpi_def = self._kpi_definitions[kpi_id]
@@ -569,7 +569,7 @@ Register a new KPI"""
 class BusinessIntelligence:
     """Advanced business intelligence and predictive analytics"""
     
-    def __init__(self, data_collector: DataCollector):
+    def __init__(self, data_collector -> None: DataCollector) -> None:
         self.data_collector = data_collector
         self._models: Dict[str, Any] = {}
         self._predictions: Dict[str, Any] = {}
@@ -774,7 +774,7 @@ Create predictive analytics model"""
 class VisualizationEngine:
     """Advanced data visualization and charting engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._chart_templates = {
             VisualizationType.LINE_CHART: self._create_line_chart,
             VisualizationType.BAR_CHART: self._create_bar_chart,
@@ -983,7 +983,7 @@ class ReportGenerator:
     """
 Advanced report generation system"""
     
-    def __init__(self, visualization_engine: VisualizationEngine):
+    def __init__(self, visualization_engine -> None: VisualizationEngine) -> None:
         self.visualization_engine = visualization_engine
         self._report_templates: Dict[str, ReportTemplate] = {}
         
@@ -1135,7 +1135,7 @@ Create report template"""
 class EnterpriseAnalytics:
     """Main enterprise analytics orchestrator"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.data_collector = DataCollector(self.config)
         self.kpi_tracker = KPITracker(self.data_collector)
@@ -1144,7 +1144,7 @@ class EnterpriseAnalytics:
         self.report_generator = ReportGenerator(self.visualization_engine)
         self._dashboards: Dict[str, Dashboard] = {}
         
-    async def initialize(self):
+    async def initialize(self) -> None:
         """
 Initialize analytics system"""
         try:

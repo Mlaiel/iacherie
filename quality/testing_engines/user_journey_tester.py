@@ -1,3 +1,8 @@
+"""
+User Journey Tester module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 User Journey Tester - Ainflue Quality Platform
@@ -108,7 +113,7 @@ class UserJourneyTester:
     Enterprise user journey testing framework
     """
     
-    def __init__(self, config_path: Optional[str] = None):
+    def __init__(self, config_path -> None: Optional[str] = None) -> None:
         self.config_path = Path(config_path) if config_path else Path("config/user_journey_config.yaml")
         self.config = self._load_config()
         self.driver = None
@@ -153,7 +158,7 @@ class UserJourneyTester:
         
         return default_config
     
-    async def initialize_driver(self):
+    async def initialize_driver(self) -> None:
         """Initialize Selenium WebDriver"""
         try:
             chrome_options = Options()
@@ -177,7 +182,7 @@ class UserJourneyTester:
             logger.error(f"Failed to initialize WebDriver: {e}")
             raise
 
-    async def load_journey_definitions(self, definitions_path: str = "config/user_journeys.yaml"):
+    async def load_journey_definitions(self, definitions_path -> None: str = "config/user_journeys.yaml") -> None:
         """Load user journey definitions from YAML file"""
         try:
             definitions_file = Path(definitions_path)
@@ -211,7 +216,7 @@ class UserJourneyTester:
             logger.error(f"Failed to load journey definitions: {e}")
             raise
 
-    async def _create_default_journeys(self, file_path: Path):
+    async def _create_default_journeys(self, file_path -> None: Path) -> None:
         """Create default journey definitions"""
         default_journeys = {
             "journeys": [
@@ -387,7 +392,7 @@ class UserJourneyTester:
         self.results.append(result)
         return result
 
-    async def _execute_step(self, step: JourneyStep, journey: UserJourney):
+    async def _execute_step(self, step -> None: JourneyStep, journey -> None: UserJourney) -> None:
         """Execute individual journey step"""
         start_time = time.time()
         
@@ -426,7 +431,7 @@ class UserJourneyTester:
         except Exception as e:
             raise Exception(f"Step execution failed: {step.step_name} - {e}")
 
-    async def _verify_expected_result(self, expected_result: str):
+    async def _verify_expected_result(self, expected_result -> None: str) -> None:
         """Verify step expected result"""
         # Simple text-based verification
         if "visible" in expected_result.lower():
@@ -549,26 +554,26 @@ class UserJourneyTester:
             }
         }
 
-    async def _verify_preconditions(self, preconditions: List[str]):
+    async def _verify_preconditions(self, preconditions -> None: List[str]) -> None:
         """Verify journey preconditions"""
         for condition in preconditions:
             logger.info(f"Verifying precondition: {condition}")
             # Implementation depends on specific conditions
 
-    async def _verify_postconditions(self, postconditions: List[str]):
+    async def _verify_postconditions(self, postconditions -> None: List[str]) -> None:
         """Verify journey postconditions"""
         for condition in postconditions:
             logger.info(f"Verifying postcondition: {condition}")
             # Implementation depends on specific conditions
 
-    async def _validate_step(self, step: JourneyStep):
+    async def _validate_step(self, step -> None: JourneyStep) -> None:
         """Validate step-specific criteria"""
         if step.validation_criteria:
             for criterion, expected in step.validation_criteria.items():
                 # Implement specific validation logic
                 pass
 
-    async def _execute_api_call(self, step: JourneyStep):
+    async def _execute_api_call(self, step -> None: JourneyStep) -> None:
         """Execute API call step"""
         if not step.data:
             raise ValueError("API call step requires data")
@@ -588,21 +593,21 @@ class UserJourneyTester:
 user_journey_tester = UserJourneyTester()
 
 # Convenience functions
-async def test_creator_journey():
+async def test_creator_journey() -> None:
     """Test creator upload journey"""
     return await user_journey_tester.execute_journey("creator_upload_flow")
 
-async def test_viewer_journey():
+async def test_viewer_journey() -> None:
     """Test viewer discovery journey"""
     return await user_journey_tester.execute_journey("viewer_content_discovery")
 
-async def run_all_journeys():
+async def run_all_journeys() -> None:
     """Run all defined user journeys"""
     return await user_journey_tester.run_journey_suite()
 
 if __name__ == "__main__":
     # Example usage
-    async def main():
+    async def main() -> None:
         suite_results = await run_all_journeys()
         print(json.dumps(suite_results["summary"], indent=2))
     

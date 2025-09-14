@@ -21,6 +21,7 @@ from typing import Dict, List, Optional, Any
 import redis.asyncio as redis
 
 class TaxRegion(Enum):
+    """TaxRegion class implementation"""
     EU = "eu"
     US = "us"
     UK = "uk"
@@ -29,6 +30,7 @@ class TaxRegion(Enum):
     CA = "ca"
 
 class ComplianceType(Enum):
+    """ComplianceType class implementation"""
     GDPR = "gdpr"
     CCPA = "ccpa"
     PCI_DSS = "pci_dss"
@@ -36,6 +38,7 @@ class ComplianceType(Enum):
     ANTI_MONEY_LAUNDERING = "aml"
 
 class TaxType(Enum):
+    """TaxType class implementation"""
     VAT = "vat"
     SALES_TAX = "sales_tax"
     INCOME_TAX = "income_tax"
@@ -43,6 +46,7 @@ class TaxType(Enum):
 
 @dataclass
 class TaxRule:
+    """TaxRule: class implementation"""
     region: TaxRegion
     tax_type: TaxType
     rate: Decimal
@@ -52,6 +56,7 @@ class TaxRule:
 
 @dataclass
 class ComplianceCheck:
+    """ComplianceCheck: class implementation"""
     check_id: str
     compliance_type: ComplianceType
     entity_id: str
@@ -62,6 +67,7 @@ class ComplianceCheck:
 
 @dataclass
 class TaxCalculation:
+    """TaxCalculation: class implementation"""
     calculation_id: str
     transaction_id: str
     gross_amount: Decimal
@@ -74,7 +80,7 @@ class TaxCalculation:
 class FinancialComplianceSystem:
     """Financial compliance and tax management system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
         self.redis_client = None
         

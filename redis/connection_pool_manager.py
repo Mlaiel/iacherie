@@ -1,3 +1,8 @@
+"""
+Connection Pool Manager module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
@@ -118,7 +123,7 @@ class RedisConnectionPool:
     - Audit trail connexions
     """
     
-    def __init__(self, config: ConnectionPoolConfig):
+    def __init__(self, config -> None: ConnectionPoolConfig) -> None:
         self.config = config
         self.pool: Optional[aioredis.ConnectionPool] = None
         self.sentinel: Optional[Sentinel] = None
@@ -156,7 +161,7 @@ class RedisConnectionPool:
             logger.error(f"❌ Erreur initialisation pool {self.config.pool_name}: {e}")
             return False
     
-    async def _initialize_standalone(self):
+    async def _initialize_standalone(self) -> None:
         """**Backend Senior**: Configuration pool standalone optimisé"""
         ssl_config = None
         if self.config.ssl_enabled:
@@ -179,7 +184,7 @@ class RedisConnectionPool:
             retry_on_timeout=self.config.retry_on_timeout
         )
     
-    async def _initialize_sentinel(self):
+    async def _initialize_sentinel(self) -> None:
         """**DevOps**: Configuration Sentinel haute disponibilité"""
         self.sentinel = Sentinel(
             self.config.sentinel_hosts,
@@ -199,7 +204,7 @@ class RedisConnectionPool:
         
         self.pool = master.connection_pool
     
-    async def _initialize_cluster(self):
+    async def _initialize_cluster(self) -> None:
         """**Backend Senior**: Configuration cluster Redis"""
         self.cluster_client = redis.RedisCluster(
             startup_nodes=self.config.cluster_nodes,
@@ -210,7 +215,7 @@ class RedisConnectionPool:
         )
     
     @asynccontextmanager
-    async def get_connection(self):
+    async def get_connection(self) -> None:
         """
         **Backend Senior**: Gestionnaire contexte connexion optimisé
         
@@ -259,7 +264,7 @@ class RedisConnectionPool:
                 del self._connection_registry[connection_id]
                 self.metrics.active_connections -= 1
     
-    def _update_response_time_metrics(self, response_time: float):
+    def _update_response_time_metrics(self, response_time -> None: float) -> None:
         """**DevOps**: Mise à jour métriques temps de réponse"""
         # Calcul moyenne mobile simple
         if self.metrics.average_response_time == 0:
@@ -269,7 +274,7 @@ class RedisConnectionPool:
                 self.metrics.average_response_time * 0.9 + response_time * 0.1
             )
     
-    async def _health_check_loop(self):
+    async def _health_check_loop(self) -> None:
         """**DevOps**: Boucle monitoring santé pool"""
         while True:
             try:
@@ -281,7 +286,7 @@ class RedisConnectionPool:
             except Exception as e:
                 logger.error(f"❌ Erreur health check pool {self.config.pool_name}: {e}")
     
-    async def _perform_health_check(self):
+    async def _perform_health_check(self) -> None:
         """**DevOps**: Vérification santé détaillée"""
         try:
             async with self.get_connection() as conn:
@@ -303,7 +308,7 @@ class RedisConnectionPool:
         except Exception as e:
             logger.error(f"❌ Health check échoué pool {self.config.pool_name}: {e}")
     
-    async def _cleanup_stale_connections(self):
+    async def _cleanup_stale_connections(self) -> None:
         """**DBA**: Nettoyage connexions orphelines"""
         current_time = time.time()
         stale_connections = []
@@ -351,7 +356,7 @@ class RedisConnectionPool:
             "health_status": "healthy" if time.time() - self.metrics.last_health_check < 60 else "unhealthy"
         }
     
-    async def close(self):
+    async def close(self) -> None:
         """**Backend Senior**: Fermeture propre pool"""
         logger.info(f"🔌 Fermeture pool Redis: {self.config.pool_name}")
         
@@ -382,7 +387,7 @@ class ConnectionPoolManager:
     **DevOps**: Monitoring global et opérations
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.pools: Dict[str, RedisConnectionPool] = {}
         self._lock = asyncio.Lock()
         logger.info("🏢 Initialisation Connection Pool Manager")
@@ -432,7 +437,7 @@ class ConnectionPoolManager:
         
         return results
     
-    async def close_all(self):
+    async def close_all(self) -> None:
         """**Backend Senior**: Fermeture propre tous pools"""
         logger.info("🔌 Fermeture tous les pools Redis")
         
@@ -467,7 +472,7 @@ async def create_redis_pool(
     )
     return await pool_manager.create_pool(pool_name, config)
 
-async def get_redis_connection(pool_name: str = "default"):
+async def get_redis_connection(pool_name -> None: str = "default") -> None:
     """**Backend Senior**: Helper connexion Redis"""
     pool = await pool_manager.get_pool(pool_name)
     if not pool:
@@ -476,7 +481,7 @@ async def get_redis_connection(pool_name: str = "default"):
     return pool.get_connection()
 
 if __name__ == "__main__":
-    async def demo():
+    async def demo() -> None:
         """Démonstration utilisation Connection Pool Manager"""
         
         # Création pool principal

@@ -136,7 +136,7 @@ class AudienceMetrics:
 class AudienceInsightsCore:
     """Enterprise audience analytics and insights system"""
     
-    def __init__(self, level: str = "enterprise"):
+    def __init__(self, level -> None: str = "enterprise") -> None:
         """Initialize audience insights core"""
         self.level = level
         self.audience_members: Dict[str, AudienceMember] = {}
@@ -160,7 +160,7 @@ class AudienceInsightsCore:
         
         logger.info(f"👥 Audience Insights Core initialized - Level: {level}")
 
-    async def add_audience_member(self, member: AudienceMember):
+    async def add_audience_member(self, member -> None: AudienceMember) -> None:
         """Add or update audience member"""
         self.audience_members[member.user_id] = member
         self.metrics.total_audience_members = len(self.audience_members)
@@ -172,12 +172,12 @@ class AudienceInsightsCore:
 
     async def record_engagement(
         self,
-        user_id: str,
-        content_id: str,
-        engagement_type: EngagementType,
-        value: float = 1.0,
-        metadata: Optional[Dict[str, Any]] = None
-    ):
+        user_id -> None: str,
+        content_id -> None: str,
+        engagement_type -> None: EngagementType,
+        value -> None: float = 1.0,
+        metadata -> None: Optional[Dict[str, Any]] = None
+    ) -> None:
         """Record audience engagement event"""
         
         engagement_event = {
@@ -202,7 +202,7 @@ class AudienceInsightsCore:
         
         logger.debug(f"Recorded engagement: {user_id} -> {content_id} ({engagement_type.value})")
 
-    async def _update_behavior_patterns(self, member: AudienceMember, engagement_event: Dict[str, Any]):
+    async def _update_behavior_patterns(self, member -> None: AudienceMember, engagement_event -> None: Dict[str, Any]) -> None:
         """Update member behavior patterns"""
         
         patterns = member.behavior_patterns
@@ -256,7 +256,7 @@ class AudienceInsightsCore:
         logger.info(f"Created audience segment: {segment_name} ({segment_id})")
         return segment_id
 
-    async def _populate_segment(self, segment: AudienceSegmentData):
+    async def _populate_segment(self, segment -> None: AudienceSegmentData) -> None:
         """Populate segment with matching audience members"""
         
         matching_members = []
@@ -385,9 +385,9 @@ class AudienceInsightsCore:
 
     async def _calculate_segment_metrics(
         self,
-        segment: AudienceSegmentData,
-        members: List[AudienceMember]
-    ):
+        segment -> None: AudienceSegmentData,
+        members -> None: List[AudienceMember]
+    ) -> None:
         """Calculate metrics for segment"""
         
         if not members:
@@ -793,7 +793,7 @@ class AudienceInsightsCore:
         
         return sorted(high_risk_users, key=lambda x: x.risk_score, reverse=True)
 
-    async def _update_member_segments(self, member: AudienceMember):
+    async def _update_member_segments(self, member -> None: AudienceMember) -> None:
         """Update member's segment memberships"""
         
         for segment in self.segments.values():

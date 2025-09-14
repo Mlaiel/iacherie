@@ -1,4 +1,6 @@
 """🚀 Platform Core Subscription - Usage Analytics System
+import asyncio
+
 =========================================================
 Module: backend/platform_core/subscription/usage_analytics.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -124,7 +126,7 @@ class PredictiveAnalytics:
 class UsageAnalytics:
     """Gestionnaire principal des analytics d'usage"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialise le gestionnaire d'analytics
         
         Args:
@@ -641,7 +643,7 @@ class UsageAnalytics:
         
         return actions
 
-    async def _cleanup_old_data(self, days_to_keep: int = 365):
+    async def _cleanup_old_data(self, days_to_keep -> None: int = 365) -> None:
         """Nettoie les anciennes données"""
         try:
             cutoff_date = datetime.now() - timedelta(days=days_to_keep)

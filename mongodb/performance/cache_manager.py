@@ -39,7 +39,7 @@ class CacheEntry:
     size_bytes: int = 0
     tags: List[str] = None
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.tags is None:
             self.tags = []
         if self.last_accessed == 0:
@@ -61,10 +61,10 @@ class CacheManager:
     """Advanced multi-level cache manager for MongoDB operations."""
     
     def __init__(self, 
-                 memory_limit_mb: int = 100,
-                 redis_config: Optional[Dict[str, Any]] = None,
-                 disk_cache_dir: Optional[str] = None,
-                 default_ttl: int = 3600):
+                 memory_limit_mb -> None: int = 100,
+                 redis_config -> None: Optional[Dict[str, Any]] = None,
+                 disk_cache_dir -> None: Optional[str] = None,
+                 default_ttl -> None: int = 3600) -> None:
         """Initialize cache manager.
         
         Args:
@@ -543,7 +543,7 @@ class CacheManager:
         except Exception:
             return 1024  # Default size estimate
     
-    def _get_disk_cache_path(self, key: str):
+    def _get_disk_cache_path(self, key -> None: str) -> None:
         """Get disk cache file path for key."""
         from pathlib import Path
         
@@ -568,15 +568,15 @@ class CacheManager:
         return hashlib.md5(key_string.encode()).hexdigest()
 
 # Cache decorators
-def cached_query(ttl: int = 3600, tags: List[str] = None):
+def cached_query(ttl -> None: int = 3600, tags -> None: List[str] = None) -> None:
     """Decorator to cache MongoDB query results.
     
     Args:
         ttl: Cache TTL in seconds
         tags: Cache tags for invalidation
     """
-    def decorator(func):
-        def wrapper(*args, **kwargs):
+    def decorator(func) -> None:
+        def wrapper(*args, **kwargs) -> None:
             # Generate cache key from function arguments
             cache_key = f"{func.__name__}:{hashlib.md5(str(args + tuple(kwargs.items())).encode()).hexdigest()}"
             

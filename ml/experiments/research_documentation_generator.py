@@ -110,9 +110,9 @@ class ResearchDocumentationGenerator:
     """
     
     def __init__(self,
-                 output_directory: str = "./research_docs",
-                 enable_ai_enhancement: bool = True,
-                 citation_style: str = "APA"):
+                 output_directory -> None: str = "./research_docs",
+                 enable_ai_enhancement -> None: bool = True,
+                 citation_style -> None: str = "APA") -> None:
         """Initialize research documentation generator"""
         
         self.output_directory = Path(output_directory)
@@ -1226,7 +1226,7 @@ Compliance with professional audio standards:
         )
 
 # Example usage demonstrating all expert roles
-async def example_usage():
+async def example_usage() -> None:
     """🎖️ Lead Dev IA - Example demonstrating all expert roles"""
     
     # Initialize documentation generator

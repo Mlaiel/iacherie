@@ -195,8 +195,8 @@ class SquareOrder:
 class SquareAPIClient:
     """Square API client."""
     
-    def __init__(self, access_token: str, environment: SquareEnvironment = SquareEnvironment.SANDBOX,
-                 webhook_signature_key: Optional[str] = None):
+    def __init__(self, access_token -> None: str, environment -> None: SquareEnvironment = SquareEnvironment.SANDBOX,
+                 webhook_signature_key -> None: Optional[str] = None) -> None:
         self.access_token = access_token
         self.environment = environment
         self.webhook_signature_key = webhook_signature_key
@@ -212,7 +212,7 @@ class SquareAPIClient:
         self.rate_limit_remaining = 1000
         self.rate_limit_reset = time.time()
     
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         """Async context manager entry."""
         self.session = aiohttp.ClientSession(
             headers={
@@ -225,7 +225,7 @@ class SquareAPIClient:
         )
         return self
     
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         """Async context manager exit."""
         if self.session:
             await self.session.close()
@@ -257,7 +257,7 @@ class SquareAPIClient:
             logger.error(f"Request failed: {str(e)}")
             raise
     
-    async def _check_rate_limit(self):
+    async def _check_rate_limit(self) -> None:
         """Check and enforce rate limiting."""
         current_time = time.time()
         
@@ -270,7 +270,7 @@ class SquareAPIClient:
                 logger.warning(f"Rate limit reached, sleeping for {sleep_time:.2f}s")
                 await asyncio.sleep(sleep_time)
     
-    def _update_rate_limit(self, headers: Dict[str, str]):
+    def _update_rate_limit(self, headers -> None: Dict[str, str]) -> None:
         """Update rate limit tracking from response headers."""
         if 'x-ratelimit-remaining' in headers:
             self.rate_limit_remaining = int(headers['x-ratelimit-remaining'])
@@ -619,8 +619,8 @@ class SquareAPIClient:
 class SquareIntegration:
     """Main Square integration for Ainflue platform."""
     
-    def __init__(self, access_token: str, environment: SquareEnvironment = SquareEnvironment.SANDBOX,
-                 webhook_signature_key: Optional[str] = None, default_location_id: Optional[str] = None):
+    def __init__(self, access_token -> None: str, environment -> None: SquareEnvironment = SquareEnvironment.SANDBOX,
+                 webhook_signature_key -> None: Optional[str] = None, default_location_id -> None: Optional[str] = None) -> None:
         self.access_token = access_token
         self.environment = environment
         self.webhook_signature_key = webhook_signature_key
@@ -928,7 +928,7 @@ class SquareIntegration:
 
 
 # Example usage
-async def main():
+async def main() -> None:
     """Example usage of Square integration."""
     square = SquareIntegration(
         access_token="your-square-access-token",

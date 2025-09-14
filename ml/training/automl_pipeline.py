@@ -106,7 +106,7 @@ class AutoMLPipeline:
     """
 Pipeline AutoML Enterprise"""
     
-    def __init__(self, config: AutoMLConfig):
+    def __init__(self, config -> None: AutoMLConfig) -> None:
         self.config = config
         self.training_jobs: Dict[str, TrainingJob] = {}
         self.model_cache: Dict[str, Any] = {}
@@ -182,7 +182,7 @@ Démarre un job d'entraînement AutoML"""
             logger.error(f"Erreur lors du démarrage de l'entraînement: {e}")
             raise
     
-    async def _train_models(self, job_id: str, X: np.ndarray, y: np.ndarray):
+    async def _train_models(self, job_id -> None: str, X -> None: np.ndarray, y -> None: np.ndarray) -> None:
         """Entraîne les modèles de façon asynchrone"""
         job = self.training_jobs[job_id]
         
@@ -400,7 +400,7 @@ Annule un job d'entraînement"""
         """Récupère l'historique des entraînements"""
         return list(self.training_jobs.values())
     
-    async def cleanup_old_jobs(self, days_old: int = 30):
+    async def cleanup_old_jobs(self, days_old -> None: int = 30) -> None:
         """
 Nettoie les anciens jobs"""
         cutoff_date = datetime.now() - timedelta(days=days_old)
@@ -464,7 +464,7 @@ Pipeline pour la protection de contenu"""
 
 
 # Exemple d'utilisation
-async def example_usage():
+async def example_usage() -> None:
     """Exemple d'utilisation du pipeline AutoML"""
     
     # Créer des données d'exemple

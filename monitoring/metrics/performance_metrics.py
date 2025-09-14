@@ -30,55 +30,60 @@ except ImportError:
     PSUTIL_AVAILABLE = False
     # Mock psutil for testing environments
     class MockProcess:
+    """MockProcess: class implementation"""
         pid = 12345
         
-        def memory_info(self):
+        def memory_info(self) -> None:
             class MemInfo:
+    """MemInfo: class implementation"""
                 rss = 1024 * 1024 * 50  # 50MB
                 vms = 1024 * 1024 * 100  # 100MB
             return MemInfo()
         
-        def cpu_percent(self):
+        def cpu_percent(self) -> None:
             return 15.5  # Mock CPU usage
         
-        def memory_percent(self):
+        def memory_percent(self) -> None:
             return 45.2  # Mock memory usage
         
-        def connections(self):
+        def connections(self) -> None:
             return []  # Mock connections list
         
-        def open_files(self):
+        def open_files(self) -> None:
             return []  # Mock open files list
         
-        def num_threads(self):
+        def num_threads(self) -> None:
             return 10  # Mock thread count
     
-    def cpu_count():
+    def cpu_count() -> None:
         return 4  # Mock CPU count
     
-    def virtual_memory():
+    def virtual_memory() -> None:
         class VirtMem:
+    """VirtMem: class implementation"""
             total = 8 * 1024 * 1024 * 1024  # 8GB
             available = 4 * 1024 * 1024 * 1024  # 4GB
             percent = 50.0
             used = 4 * 1024 * 1024 * 1024  # 4GB
         return VirtMem()
     
-    def disk_usage(path):
+    def disk_usage(path) -> None:
         class DiskUsage:
+    """DiskUsage: class implementation"""
             total = 100 * 1024 * 1024 * 1024  # 100GB
             used = 50 * 1024 * 1024 * 1024   # 50GB
             free = 50 * 1024 * 1024 * 1024   # 50GB
         return DiskUsage()
     
-    def boot_time():
+    def boot_time() -> None:
         return time.time() - 86400  # Boot time 24 hours ago
         
-    def Process(pid=None):
+    def Process(pid=None) -> None:
         return MockProcess()
     
     # Create mock psutil module
     class MockPsutil:
+    """MockPsutil: class implementation"""
         Process = Process
         cpu_count = staticmethod(cpu_count)
         virtual_memory = staticmethod(virtual_memory)
@@ -86,7 +91,7 @@ except ImportError:
         boot_time = staticmethod(boot_time)
         
         @staticmethod
-        def cpu_percent(interval=1):
+        def cpu_percent(interval=1) -> None:
             return 25.5  # Mock system CPU usage
     
     psutil = MockPsutil()
@@ -143,7 +148,7 @@ class SystemResources:
 class PerformanceMonitor:
     """Advanced performance monitoring system for Ainflue platform."""
     
-    def __init__(self, collection_interval: int = 30):
+    def __init__(self, collection_interval -> None: int = 30) -> None:
         """Initialize performance monitor.
         
         Args:
@@ -166,7 +171,7 @@ class PerformanceMonitor:
         
         logger.info("Performance monitor initialized")
     
-    async def start_monitoring(self):
+    async def start_monitoring(self) -> None:
         """Start continuous performance monitoring."""
         if self.running:
             logger.warning("Performance monitoring already running")
@@ -176,7 +181,7 @@ class PerformanceMonitor:
         self._monitor_task = asyncio.create_task(self._monitoring_loop())
         logger.info("Performance monitoring started")
     
-    async def stop_monitoring(self):
+    async def stop_monitoring(self) -> None:
         """Stop performance monitoring."""
         self.running = False
         if self._monitor_task:
@@ -187,7 +192,7 @@ class PerformanceMonitor:
                 pass
         logger.info("Performance monitoring stopped")
     
-    async def _monitoring_loop(self):
+    async def _monitoring_loop(self) -> None:
         """Main monitoring loop."""
         try:
             while self.running:
@@ -200,7 +205,7 @@ class PerformanceMonitor:
             logger.error(f"Error in monitoring loop: {e}")
             raise
     
-    async def collect_system_metrics(self):
+    async def collect_system_metrics(self) -> None:
         """Collect system-level performance metrics."""
         try:
             # CPU metrics
@@ -242,7 +247,7 @@ class PerformanceMonitor:
         except Exception as e:
             logger.error(f"Error collecting system metrics: {e}")
     
-    async def collect_application_metrics(self):
+    async def collect_application_metrics(self) -> None:
         """Collect application-specific performance metrics."""
         try:
             # Process-specific metrics
@@ -282,7 +287,7 @@ class PerformanceMonitor:
         except Exception as e:
             logger.error(f"Error collecting application metrics: {e}")
     
-    async def record_metric(self, metric: PerformanceMetric):
+    async def record_metric(self, metric -> None: PerformanceMetric) -> None:
         """Record a performance metric and check thresholds."""
         # Store metric
         self.metrics_storage[metric.name].append(metric)
@@ -296,7 +301,7 @@ class PerformanceMonitor:
         
         logger.debug(f"Recorded metric: {metric.name} = {metric.value} {metric.unit}")
     
-    async def _check_thresholds(self, metric: PerformanceMetric):
+    async def _check_thresholds(self, metric -> None: PerformanceMetric) -> None:
         """Check metric thresholds and trigger alerts."""
         alert_level = None
         
@@ -308,7 +313,7 @@ class PerformanceMonitor:
         if alert_level:
             await self._trigger_alert(metric, alert_level)
     
-    async def _trigger_alert(self, metric: PerformanceMetric, level: AlertLevel):
+    async def _trigger_alert(self, metric -> None: PerformanceMetric, level -> None: AlertLevel) -> None:
         """Trigger performance alert."""
         alert_data = {
             "metric_name": metric.name,
@@ -331,7 +336,7 @@ class PerformanceMonitor:
             except Exception as e:
                 logger.error(f"Error in alert handler: {e}")
     
-    def add_alert_handler(self, handler: Callable):
+    def add_alert_handler(self, handler -> None: Callable) -> None:
         """Add alert handler for performance notifications."""
         self.alert_handlers.append(handler)
         logger.info(f"Added performance alert handler: {handler.__name__}")
@@ -412,11 +417,11 @@ class PerformanceMonitor:
 
 
 # Performance monitoring decorators
-def monitor_execution_time(metric_name: str, monitor: PerformanceMonitor):
+def monitor_execution_time(metric_name -> None: str, monitor -> None: PerformanceMonitor) -> None:
     """Decorator to monitor function execution time."""
-    def decorator(func):
+    def decorator(func) -> None:
         @wraps(func)
-        async def async_wrapper(*args, **kwargs):
+        async def async_wrapper(*args, **kwargs) -> None:
             start_time = time.time()
             try:
                 result = await func(*args, **kwargs)
@@ -443,7 +448,7 @@ def monitor_execution_time(metric_name: str, monitor: PerformanceMonitor):
                 raise
         
         @wraps(func)
-        def sync_wrapper(*args, **kwargs):
+        def sync_wrapper(*args, **kwargs) -> None:
             start_time = time.time()
             try:
                 result = func(*args, **kwargs)
@@ -466,12 +471,12 @@ performance_monitor = PerformanceMonitor()
 
 
 # Convenience functions
-async def start_performance_monitoring():
+async def start_performance_monitoring() -> None:
     """Start global performance monitoring."""
     await performance_monitor.start_monitoring()
 
 
-async def stop_performance_monitoring():
+async def stop_performance_monitoring() -> None:
     """Stop global performance monitoring."""
     await performance_monitor.stop_monitoring()
 

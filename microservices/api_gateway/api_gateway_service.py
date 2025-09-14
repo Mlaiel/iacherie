@@ -86,7 +86,7 @@ class RouteConfiguration:
 class RateLimiter:
     """Rate limiting implementation"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.requests: Dict[str, List[float]] = {}
         
     def is_allowed(self, client_id: str, limit: int, window: int = 60) -> bool:
@@ -114,7 +114,7 @@ class RateLimiter:
 class LoadBalancer:
     """Load balancer for service instances"""
     
-    def __init__(self, strategy: LoadBalancingStrategy = LoadBalancingStrategy.ROUND_ROBIN):
+    def __init__(self, strategy -> None: LoadBalancingStrategy = LoadBalancingStrategy.ROUND_ROBIN) -> None:
         self.strategy = strategy
         self.current_index = 0
         
@@ -160,11 +160,11 @@ class LoadBalancer:
 class AuthenticationManager:
     """Authentication and authorization manager"""
     
-    def __init__(self, jwt_secret: str = "your-secret-key"):
+    def __init__(self, jwt_secret -> None: str = "your-secret-key") -> None:
         self.jwt_secret = jwt_secret
         self.api_keys: Set[str] = set()
         
-    def add_api_key(self, api_key: str):
+    def add_api_key(self, api_key -> None: str) -> None:
         """Add valid API key"""
         self.api_keys.add(api_key)
         
@@ -208,7 +208,7 @@ class AuthenticationManager:
 class CircuitBreaker:
     """Circuit breaker for service protection"""
     
-    def __init__(self, failure_threshold: int = 5, timeout: int = 60):
+    def __init__(self, failure_threshold -> None: int = 5, timeout -> None: int = 60) -> None:
         self.failure_threshold = failure_threshold
         self.timeout = timeout
         self.failure_count = 0
@@ -227,12 +227,12 @@ class CircuitBreaker:
         else:  # half-open
             return True
             
-    def record_success(self):
+    def record_success(self) -> None:
         """Record successful request"""
         self.failure_count = 0
         self.state = "closed"
         
-    def record_failure(self):
+    def record_failure(self) -> None:
         """Record failed request"""
         self.failure_count += 1
         self.last_failure_time = time.time()
@@ -244,7 +244,7 @@ class CircuitBreaker:
 class APIGatewayService:
     """Enterprise API Gateway Service"""
     
-    def __init__(self, name: str = "api_gateway"):
+    def __init__(self, name -> None: str = "api_gateway") -> None:
         self.name = name
         self.app = FastAPI(title="Ainflue API Gateway", version="1.0.0")
         self.routes: Dict[str, RouteConfiguration] = {}
@@ -263,7 +263,7 @@ class APIGatewayService:
         self._setup_middleware()
         self._setup_routes()
         
-    def _setup_middleware(self):
+    def _setup_middleware(self) -> None:
         """Setup middleware"""
         # CORS middleware
         self.app.add_middleware(
@@ -280,10 +280,10 @@ class APIGatewayService:
             allowed_hosts=["*"]  # Configure properly in production
         )
         
-    def _setup_routes(self):
+    def _setup_routes(self) -> None:
         """Setup gateway routes"""
         @self.app.get("/health")
-        async def health_check():
+        async def health_check() -> None:
             return {
                 "status": "healthy",
                 "service": self.name,
@@ -292,11 +292,11 @@ class APIGatewayService:
             }
             
         @self.app.get("/metrics")
-        async def get_metrics():
+        async def get_metrics() -> None:
             return self.metrics
             
         @self.app.api_route("/{path:path}", methods=["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS", "HEAD"])
-        async def gateway_handler(request: Request, path: str):
+        async def gateway_handler(request -> None: Request, path -> None: str) -> None:
             return await self._handle_request(request, path)
             
     async def _handle_request(self, request: Request, path: str) -> Response:
@@ -413,19 +413,19 @@ class APIGatewayService:
             headers=dict(response.headers)
         )
         
-    def add_route(self, config: RouteConfiguration):
+    def add_route(self, config -> None: RouteConfiguration) -> None:
         """Add route configuration"""
         self.routes[config.path] = config
         logger.info(f"Added route: {config.path} -> {config.service_name}")
         
-    def add_service_instance(self, service_name: str, instance: ServiceInstance):
+    def add_service_instance(self, service_name -> None: str, instance -> None: ServiceInstance) -> None:
         """Add service instance"""
         if service_name not in self.services:
             self.services[service_name] = []
         self.services[service_name].append(instance)
         logger.info(f"Added service instance: {service_name} -> {instance.host}:{instance.port}")
         
-    def remove_service_instance(self, service_name: str, instance_id: str):
+    def remove_service_instance(self, service_name -> None: str, instance_id -> None: str) -> None:
         """Remove service instance"""
         if service_name in self.services:
             self.services[service_name] = [
@@ -434,7 +434,7 @@ class APIGatewayService:
             ]
             logger.info(f"Removed service instance: {service_name} -> {instance_id}")
             
-    async def health_check_services(self):
+    async def health_check_services(self) -> None:
         """Perform health checks on all service instances"""
         import httpx
         

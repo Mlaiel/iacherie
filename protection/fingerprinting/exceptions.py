@@ -45,13 +45,13 @@ class FingerprintingBaseException(Exception):
     """Base exception for all fingerprinting-related errors."""
     
     def __init__(self, 
-                 message: str,
-                 error_code: str = "FINGERPRINT_ERROR",
-                 severity: ErrorSeverity = ErrorSeverity.MEDIUM,
-                 category: ErrorCategory = ErrorCategory.CONTENT_PROCESSING,
-                 details: Optional[Dict[str, Any]] = None,
-                 suggestions: Optional[List[str]] = None,
-                 original_exception: Optional[Exception] = None):
+                 message -> None: str,
+                 error_code -> None: str = "FINGERPRINT_ERROR",
+                 severity -> None: ErrorSeverity = ErrorSeverity.MEDIUM,
+                 category -> None: ErrorCategory = ErrorCategory.CONTENT_PROCESSING,
+                 details -> None: Optional[Dict[str, Any]] = None,
+                 suggestions -> None: Optional[List[str]] = None,
+                 original_exception -> None: Optional[Exception] = None) -> None:
         """
         Initialize base fingerprinting exception.
         
@@ -105,7 +105,7 @@ String representation of the exception."""
 class FileProcessingError(FingerprintingBaseException):
     """Exception raised when file processing fails."""
     
-    def __init__(self, file_path: str, operation: str, reason: str, **kwargs):
+    def __init__(self, file_path -> None: str, operation -> None: str, reason -> None: str, **kwargs) -> None:
         message = f"Failed to {operation} file '{file_path}': {reason}"
         details = {'file_path': file_path, 'operation': operation, 'reason': reason}
         super().__init__(
@@ -119,7 +119,7 @@ class FileProcessingError(FingerprintingBaseException):
 class UnsupportedFileFormatError(FingerprintingBaseException):
     """Exception raised when file format is not supported."""
     
-    def __init__(self, file_path: str, file_format: str, supported_formats: List[str], **kwargs):
+    def __init__(self, file_path -> None: str, file_format -> None: str, supported_formats -> None: List[str], **kwargs) -> None:
         message = f"Unsupported file format '{file_format}' for file '{file_path}'"
         details = {
             'file_path': file_path,
@@ -139,7 +139,7 @@ class UnsupportedFileFormatError(FingerprintingBaseException):
 class FileCorruptionError(FingerprintingBaseException):
     """Exception raised when file is corrupted or unreadable."""
     
-    def __init__(self, file_path: str, corruption_type: str, **kwargs):
+    def __init__(self, file_path -> None: str, corruption_type -> None: str, **kwargs) -> None:
         message = f"File '{file_path}' appears to be corrupted: {corruption_type}"
         details = {'file_path': file_path, 'corruption_type': corruption_type}
         suggestions = [
@@ -160,7 +160,7 @@ class FileCorruptionError(FingerprintingBaseException):
 class FileSizeError(FingerprintingBaseException):
     """Exception raised when file size exceeds limits."""
     
-    def __init__(self, file_path: str, file_size: int, max_size: int, **kwargs):
+    def __init__(self, file_path -> None: str, file_size -> None: int, max_size -> None: int, **kwargs) -> None:
         message = f"File '{file_path}' is too large: {file_size} bytes > {max_size} bytes"
         details = {
             'file_path': file_path,
@@ -188,7 +188,7 @@ class FileSizeError(FingerprintingBaseException):
 class AlgorithmError(FingerprintingBaseException):
     """Exception raised when fingerprinting algorithm fails."""
     
-    def __init__(self, algorithm_name: str, operation: str, reason: str, **kwargs):
+    def __init__(self, algorithm_name -> None: str, operation -> None: str, reason -> None: str, **kwargs) -> None:
         message = f"Algorithm '{algorithm_name}' failed during {operation}: {reason}"
         details = {
             'algorithm_name': algorithm_name,
@@ -207,7 +207,7 @@ class AlgorithmError(FingerprintingBaseException):
 class InsufficientDataError(FingerprintingBaseException):
     """Exception raised when content has insufficient data for processing."""
     
-    def __init__(self, content_type: str, min_requirement: str, actual: str, **kwargs):
+    def __init__(self, content_type -> None: str, min_requirement -> None: str, actual -> None: str, **kwargs) -> None:
         message = f"Insufficient {content_type} data: requires {min_requirement}, got {actual}"
         details = {
             'content_type': content_type,
@@ -231,7 +231,7 @@ class InsufficientDataError(FingerprintingBaseException):
 class ModelLoadError(FingerprintingBaseException):
     """Exception raised when ML model fails to load."""
     
-    def __init__(self, model_name: str, model_path: str, reason: str, **kwargs):
+    def __init__(self, model_name -> None: str, model_path -> None: str, reason -> None: str, **kwargs) -> None:
         message = f"Failed to load model '{model_name}' from '{model_path}': {reason}"
         details = {
             'model_name': model_name,
@@ -257,7 +257,7 @@ class ModelLoadError(FingerprintingBaseException):
 class FeatureExtractionError(FingerprintingBaseException):
     """Exception raised when feature extraction fails."""
     
-    def __init__(self, feature_type: str, content_type: str, stage: str, reason: str, **kwargs):
+    def __init__(self, feature_type -> None: str, content_type -> None: str, stage -> None: str, reason -> None: str, **kwargs) -> None:
         message = f"Failed to extract {feature_type} features from {content_type} at {stage}: {reason}"
         details = {
             'feature_type': feature_type,
@@ -278,7 +278,7 @@ class FeatureExtractionError(FingerprintingBaseException):
 class AudioProcessingError(FingerprintingBaseException):
     """Exception raised during audio processing."""
     
-    def __init__(self, file_path: str, operation: str, reason: str, **kwargs):
+    def __init__(self, file_path -> None: str, operation -> None: str, reason -> None: str, **kwargs) -> None:
         message = f"Audio processing failed for '{file_path}' during {operation}: {reason}"
         details = {
             'file_path': file_path,
@@ -297,7 +297,7 @@ class AudioProcessingError(FingerprintingBaseException):
 class UnsupportedAudioFormatError(UnsupportedFileFormatError):
     """Exception raised for unsupported audio formats."""
     
-    def __init__(self, file_path: str, file_format: str, **kwargs):
+    def __init__(self, file_path -> None: str, file_format -> None: str, **kwargs) -> None:
         supported_formats = ['.mp3', '.wav', '.flac', '.ogg', '.m4a', '.aac']
         super().__init__(file_path, file_format, supported_formats, **kwargs)
         self.error_code = "UNSUPPORTED_AUDIO_FORMAT"
@@ -305,7 +305,7 @@ class UnsupportedAudioFormatError(UnsupportedFileFormatError):
 class AudioDurationError(FingerprintingBaseException):
     """Exception raised when audio duration is insufficient."""
     
-    def __init__(self, file_path: str, duration: float, min_duration: float, **kwargs):
+    def __init__(self, file_path -> None: str, duration -> None: float, min_duration -> None: float, **kwargs) -> None:
         message = f"Audio '{file_path}' too short: {duration:.2f}s < {min_duration:.2f}s"
         details = {
             'file_path': file_path,
@@ -331,7 +331,7 @@ class AudioDurationError(FingerprintingBaseException):
 class VideoProcessingError(FingerprintingBaseException):
     """Exception raised during video processing."""
     
-    def __init__(self, file_path: str, operation: str, reason: str, **kwargs):
+    def __init__(self, file_path -> None: str, operation -> None: str, reason -> None: str, **kwargs) -> None:
         message = f"Video processing failed for '{file_path}' during {operation}: {reason}"
         details = {
             'file_path': file_path,
@@ -350,7 +350,7 @@ class VideoProcessingError(FingerprintingBaseException):
 class UnsupportedVideoFormatError(UnsupportedFileFormatError):
     """Exception raised for unsupported video formats."""
     
-    def __init__(self, file_path: str, file_format: str, **kwargs):
+    def __init__(self, file_path -> None: str, file_format -> None: str, **kwargs) -> None:
         supported_formats = ['.mp4', '.avi', '.mkv', '.mov', '.wmv', '.flv', '.webm']
         super().__init__(file_path, file_format, supported_formats, **kwargs)
         self.error_code = "UNSUPPORTED_VIDEO_FORMAT"
@@ -358,7 +358,7 @@ class UnsupportedVideoFormatError(UnsupportedFileFormatError):
 class VideoCodecError(FingerprintingBaseException):
     """Exception raised when video codec is not supported."""
     
-    def __init__(self, file_path: str, codec: str, **kwargs):
+    def __init__(self, file_path -> None: str, codec -> None: str, **kwargs) -> None:
         message = f"Unsupported video codec '{codec}' in file '{file_path}'"
         details = {'file_path': file_path, 'codec': codec}
         suggestions = [
@@ -380,7 +380,7 @@ class VideoCodecError(FingerprintingBaseException):
 class ImageProcessingError(FingerprintingBaseException):
     """Exception raised during image processing."""
     
-    def __init__(self, file_path: str, operation: str, reason: str, **kwargs):
+    def __init__(self, file_path -> None: str, operation -> None: str, reason -> None: str, **kwargs) -> None:
         message = f"Image processing failed for '{file_path}' during {operation}: {reason}"
         details = {
             'file_path': file_path,
@@ -399,7 +399,7 @@ class ImageProcessingError(FingerprintingBaseException):
 class UnsupportedImageFormatError(UnsupportedFileFormatError):
     """Exception raised for unsupported image formats."""
     
-    def __init__(self, file_path: str, file_format: str, **kwargs):
+    def __init__(self, file_path -> None: str, file_format -> None: str, **kwargs) -> None:
         supported_formats = ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.tiff', '.webp']
         super().__init__(file_path, file_format, supported_formats, **kwargs)
         self.error_code = "UNSUPPORTED_IMAGE_FORMAT"
@@ -407,7 +407,7 @@ class UnsupportedImageFormatError(UnsupportedFileFormatError):
 class ImageDimensionError(FingerprintingBaseException):
     """Exception raised when image dimensions are invalid."""
     
-    def __init__(self, file_path: str, width: int, height: int, min_size: int, **kwargs):
+    def __init__(self, file_path -> None: str, width -> None: int, height -> None: int, min_size -> None: int, **kwargs) -> None:
         message = f"Image '{file_path}' too small: {width}x{height} < {min_size}x{min_size}"
         details = {
             'file_path': file_path,
@@ -434,7 +434,7 @@ class ImageDimensionError(FingerprintingBaseException):
 class TextProcessingError(FingerprintingBaseException):
     """Exception raised during text processing."""
     
-    def __init__(self, operation: str, reason: str, **kwargs):
+    def __init__(self, operation -> None: str, reason -> None: str, **kwargs) -> None:
         message = f"Text processing failed during {operation}: {reason}"
         details = {
             'operation': operation,
@@ -452,7 +452,7 @@ class TextProcessingError(FingerprintingBaseException):
 class TextEncodingError(FingerprintingBaseException):
     """Exception raised when text encoding is problematic."""
     
-    def __init__(self, file_path: str, encoding: str, reason: str, **kwargs):
+    def __init__(self, file_path -> None: str, encoding -> None: str, reason -> None: str, **kwargs) -> None:
         message = f"Text encoding error in '{file_path}' with encoding '{encoding}': {reason}"
         details = {
             'file_path': file_path,
@@ -477,7 +477,7 @@ class TextEncodingError(FingerprintingBaseException):
 class TextLengthError(FingerprintingBaseException):
     """Exception raised when text is too short or too long."""
     
-    def __init__(self, text_length: int, min_length: int, max_length: int, **kwargs):
+    def __init__(self, text_length -> None: int, min_length -> None: int, max_length -> None: int, **kwargs) -> None:
         if text_length < min_length:
             message = f"Text too short: {text_length} < {min_length} characters"
             suggestions = ["Use longer text", "Combine multiple texts"]
@@ -504,7 +504,7 @@ class TextLengthError(FingerprintingBaseException):
 class ResourceError(FingerprintingBaseException):
     """Exception raised when system resources are insufficient."""
     
-    def __init__(self, resource_type: str, required: str, available: str, **kwargs):
+    def __init__(self, resource_type -> None: str, required -> None: str, available -> None: str, **kwargs) -> None:
         message = f"Insufficient {resource_type}: requires {required}, available {available}"
         details = {
             'resource_type': resource_type,
@@ -530,7 +530,7 @@ class ResourceError(FingerprintingBaseException):
 class MemoryError(ResourceError):
     """Exception raised when memory is insufficient."""
     
-    def __init__(self, required_mb: float, available_mb: float, **kwargs):
+    def __init__(self, required_mb -> None: float, available_mb -> None: float, **kwargs) -> None:
         super().__init__(
             resource_type="memory",
             required=f"{required_mb:.1f} MB",
@@ -542,7 +542,7 @@ class MemoryError(ResourceError):
 class GPUError(FingerprintingBaseException):
     """Exception raised when GPU operations fail."""
     
-    def __init__(self, operation: str, reason: str, **kwargs):
+    def __init__(self, operation -> None: str, reason -> None: str, **kwargs) -> None:
         message = f"GPU operation '{operation}' failed: {reason}"
         details = {'operation': operation, 'reason': reason}
         suggestions = [
@@ -566,7 +566,7 @@ class GPUError(FingerprintingBaseException):
 class ConfigurationError(FingerprintingBaseException):
     """Exception raised when configuration is invalid."""
     
-    def __init__(self, config_key: str, config_value: Any, reason: str, **kwargs):
+    def __init__(self, config_key -> None: str, config_value -> None: Any, reason -> None: str, **kwargs) -> None:
         message = f"Invalid configuration for '{config_key}' = '{config_value}': {reason}"
         details = {
             'config_key': config_key,
@@ -590,7 +590,7 @@ class ConfigurationError(FingerprintingBaseException):
 class ValidationError(FingerprintingBaseException):
     """Exception raised when data validation fails."""
     
-    def __init__(self, data_type: str, validation_rule: str, value: Any, **kwargs):
+    def __init__(self, data_type -> None: str, validation_rule -> None: str, value -> None: Any, **kwargs) -> None:
         message = f"Validation failed for {data_type}: {validation_rule} (value: {value})"
         details = {
             'data_type': data_type,
@@ -610,7 +610,7 @@ class ValidationError(FingerprintingBaseException):
 class DatabaseError(FingerprintingBaseException):
     """Exception raised when database operations fail."""
     
-    def __init__(self, operation: str, reason: str, **kwargs):
+    def __init__(self, operation -> None: str, reason -> None: str, **kwargs) -> None:
         message = f"Database operation '{operation}' failed: {reason}"
         details = {'operation': operation, 'reason': reason}
         suggestions = [
@@ -632,7 +632,7 @@ class DatabaseError(FingerprintingBaseException):
 class StorageError(FingerprintingBaseException):
     """Exception raised when storage operations fail."""
     
-    def __init__(self, operation: str, path: str, reason: str, **kwargs):
+    def __init__(self, operation -> None: str, path -> None: str, reason -> None: str, **kwargs) -> None:
         message = f"Storage operation '{operation}' failed for '{path}': {reason}"
         details = {
             'operation': operation,
@@ -659,7 +659,7 @@ class StorageError(FingerprintingBaseException):
 class TimeoutError(FingerprintingBaseException):
     """Exception raised when operations timeout."""
     
-    def __init__(self, operation: str, timeout_seconds: float, **kwargs):
+    def __init__(self, operation -> None: str, timeout_seconds -> None: float, **kwargs) -> None:
         message = f"Operation '{operation}' timed out after {timeout_seconds} seconds"
         details = {
             'operation': operation,
@@ -684,7 +684,7 @@ class TimeoutError(FingerprintingBaseException):
 class NetworkError(FingerprintingBaseException):
     """Exception raised when network operations fail."""
     
-    def __init__(self, operation: str, url: str, reason: str, **kwargs):
+    def __init__(self, operation -> None: str, url -> None: str, reason -> None: str, **kwargs) -> None:
         message = f"Network operation '{operation}' failed for '{url}': {reason}"
         details = {
             'operation': operation,
@@ -752,7 +752,7 @@ def handle_exception(exception: Exception, context: Dict[str, Any] = None) -> Fi
         original_exception=exception
     )
 
-def log_exception(exception: FingerprintingBaseException, logger=None):
+def log_exception(exception -> None: FingerprintingBaseException, logger=None) -> None:
     """Log exception with appropriate level based on severity."""
     if logger is None:
         import logging

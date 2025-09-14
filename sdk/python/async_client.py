@@ -29,7 +29,7 @@ from .exceptions import (
 class CircuitBreakerState:
     """Circuit breaker for resilient API calls"""
     
-    def __init__(self, failure_threshold: int = 5, recovery_timeout: int = 60):
+    def __init__(self, failure_threshold -> None: int = 5, recovery_timeout -> None: int = 60) -> None:
         self.failure_threshold = failure_threshold
         self.recovery_timeout = recovery_timeout
         self.failure_count = 0
@@ -48,12 +48,12 @@ class CircuitBreakerState:
         else:  # HALF_OPEN
             return True
     
-    def on_success(self):
+    def on_success(self) -> None:
         """Record successful execution"""
         self.failure_count = 0
         self.state = "CLOSED"
     
-    def on_failure(self):
+    def on_failure(self) -> None:
         """Record failed execution"""
         self.failure_count += 1
         self.last_failure_time = datetime.utcnow()
@@ -65,14 +65,14 @@ class CircuitBreakerState:
 class RequestMetrics:
     """Request metrics for monitoring (DevOps expertise)"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.total_requests = 0
         self.successful_requests = 0
         self.failed_requests = 0
         self.total_response_time = 0.0
         self.start_time = datetime.utcnow()
     
-    def record_request(self, response_time: float, success: bool):
+    def record_request(self, response_time -> None: float, success -> None: bool) -> None:
         """Record request metrics"""
         self.total_requests += 1
         self.total_response_time += response_time
@@ -113,17 +113,17 @@ class AsyncAinflueClient:
     
     def __init__(
         self,
-        base_url: str = "https://api.ainflue.com",
-        api_key: Optional[str] = None,
-        timeout: int = 30,
-        max_retries: int = 3,
-        retry_delay: float = 1.0,
-        max_connections: int = 100,
-        max_keepalive_connections: int = 20,
-        verify_ssl: bool = True,
-        custom_headers: Optional[Dict[str, str]] = None,
-        middleware: Optional[List[Callable]] = None
-    ):
+        base_url -> None: str = "https -> None://api.ainflue.com",
+        api_key -> None: Optional[str] = None,
+        timeout -> None: int = 30,
+        max_retries -> None: int = 3,
+        retry_delay -> None: float = 1.0,
+        max_connections -> None: int = 100,
+        max_keepalive_connections -> None: int = 20,
+        verify_ssl -> None: bool = True,
+        custom_headers -> None: Optional[Dict[str, str]] = None,
+        middleware -> None: Optional[List[Callable]] = None
+    ) -> None:
         self.base_url = base_url.rstrip('/')
         self.api_key = api_key
         self.timeout = timeout
@@ -185,16 +185,16 @@ class AsyncAinflueClient:
         
         return headers
     
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         """Async context manager entry"""
         await self._ensure_client()
         return self
     
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         """Async context manager exit"""
         await self.close()
     
-    async def _ensure_client(self):
+    async def _ensure_client(self) -> None:
         """Ensure HTTP client is initialized"""
         if self._client is None:
             self._client = httpx.AsyncClient(
@@ -203,13 +203,13 @@ class AsyncAinflueClient:
                 **self._client_config
             )
     
-    async def close(self):
+    async def close(self) -> None:
         """Close the HTTP client"""
         if self._client:
             await self._client.aclose()
             self._client = None
     
-    async def _check_rate_limit(self):
+    async def _check_rate_limit(self) -> None:
         """Check rate limiting (DevOps expertise)"""
         now = datetime.utcnow()
         
@@ -435,12 +435,12 @@ class AsyncAinflueClient:
     @asynccontextmanager
     async def stream(
         self,
-        method: str,
-        endpoint: str,
-        data: Optional[Dict] = None,
-        params: Optional[Dict] = None,
-        headers: Optional[Dict] = None
-    ):
+        method -> None: str,
+        endpoint -> None: str,
+        data -> None: Optional[Dict] = None,
+        params -> None: Optional[Dict] = None,
+        headers -> None: Optional[Dict] = None
+    ) -> None:
         """Make streaming request"""
         stream_generator = await self._make_request_with_retry(
             method, endpoint, data=data, params=params, headers=headers, stream=True

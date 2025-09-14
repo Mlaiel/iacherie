@@ -134,7 +134,7 @@ class BlendShape:
 class AnimationConfig:
     """Configuration for avatar animation generation"""
     
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs) -> None:
         # Basic animation parameters
         self.animation_type = kwargs.get('animation_type', AnimationType.IDLE)
         self.style = kwargs.get('style', AnimationStyle.REALISTIC)
@@ -203,7 +203,7 @@ class AvatarAnimationSystem(BaseContentGenerator):
     - Physics-based simulations
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(config or {})
         self.logger = logging.getLogger(__name__)
         self._setup_animation_engine()

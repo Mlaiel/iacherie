@@ -121,14 +121,14 @@ class AdyenPaymentProcessor:
     
     def __init__(
         self,
-        api_key: str,
-        merchant_account: str,
-        environment: str = "test",
-        client_key: Optional[str] = None,
-        hmac_key: Optional[str] = None,
-        webhook_username: Optional[str] = None,
-        webhook_password: Optional[str] = None
-    ):
+        api_key -> None: str,
+        merchant_account -> None: str,
+        environment -> None: str = "test",
+        client_key -> None: Optional[str] = None,
+        hmac_key -> None: Optional[str] = None,
+        webhook_username -> None: Optional[str] = None,
+        webhook_password -> None: Optional[str] = None
+    ) -> None:
         """Initialize Adyen payment processor.
         
         Args:
@@ -737,15 +737,15 @@ class AdyenPaymentProcessor:
             self.logger.error(f"Unexpected error getting payment details: {e}")
             raise
 
-    async def close(self):
+    async def close(self) -> None:
         """Close the HTTP session."""
         await self.session.aclose()
 
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         """Async context manager entry."""
         return self
 
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         """Async context manager exit."""
         await self.close()
 

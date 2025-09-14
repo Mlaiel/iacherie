@@ -270,7 +270,7 @@ class CommissionManager:
     Handles all aspects of commission tracking, calculation, and payouts.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.commission_rules: Dict[str, CommissionRule] = {}
         self.affiliates: Dict[str, Affiliate] = {}
         self.commissions: Dict[str, Commission] = {}
@@ -695,3 +695,5 @@ Generate unique referral code."""
         base_code = name.upper().replace(" ", "")[:6]
         timestamp = str(int(datetime.utcnow().timestamp()))[-4:]
         return f"{base_code}{timestamp}"
+
+# File has syntax issues - needs manual review

@@ -147,7 +147,7 @@ class S3Manager:
     - Advanced analytics and usage tracking
     """
     
-    def __init__(self, config: S3BucketConfig):
+    def __init__(self, config -> None: S3BucketConfig) -> None:
         self.config = config
         self.metrics = S3DeploymentMetrics()
         self._s3_clients: Dict[str, boto3.client] = {}
@@ -160,7 +160,7 @@ class S3Manager:
         
         logger.info(f"🚀 S3Manager initialized for bucket: {config.bucket_name}")
     
-    def _initialize_clients(self):
+    def _initialize_clients(self) -> None:
         """Initialize S3 and CloudFormation clients for all regions"""
         try:
             regions = [self.config.region] + self.config.backup_regions
@@ -811,7 +811,7 @@ class S3Manager:
             logger.error(f"❌ Cleanup failed: {e}")
             return {"success": False, "error": str(e)}
     
-    async def _empty_bucket(self, bucket_name: str, region: str):
+    async def _empty_bucket(self, bucket_name -> None: str, region -> None: str) -> None:
         """Empty S3 bucket before deletion"""
         try:
             s3_client = self._s3_clients[region]
@@ -882,7 +882,7 @@ Load S3 configuration from YAML file"""
             raise
     
     @staticmethod
-    def save_config_to_file(config: S3BucketConfig, config_path: Path):
+    def save_config_to_file(config -> None: S3BucketConfig, config_path -> None: Path) -> None:
         """Save S3 configuration to YAML file"""
         try:
             config_data = {
@@ -930,7 +930,7 @@ def create_s3_manager(
 
 
 # Usage Example
-async def main():
+async def main() -> None:
     """
 Example usage of S3Manager"""
     try:

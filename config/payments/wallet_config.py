@@ -1,7 +1,14 @@
+"""
+Wallet Config module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 """Ainflue Wallet Configuration Module
+import asyncio
+
 ====================================
 
 Enterprise-grade digital wallet configuration for the Ainflue platform.
@@ -484,7 +491,7 @@ class WalletAnalyticsConfig:
 class WalletConfiguration:
     """Main wallet configuration manager"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize wallet configuration"""
         # Configuration components
         self.wallet_security = WalletSecurityConfig()

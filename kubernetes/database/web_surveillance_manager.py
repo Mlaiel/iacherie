@@ -224,7 +224,7 @@ class WebSurveillanceManager:
     alerts with enterprise-grade performance and reliability.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.logger = get_logger(f"{__name__}.WebSurveillanceManager")
         self.settings = get_settings()
@@ -263,7 +263,7 @@ class WebSurveillanceManager:
             self.logger.error(f"❌ Failed to initialize Web Surveillance Manager: {e}")
             return False
     
-    async def _create_surveillance_schema(self):
+    async def _create_surveillance_schema(self) -> None:
         """Create web surveillance database schema"""
         self.logger.debug("Creating web surveillance database schema...")
         
@@ -620,7 +620,7 @@ class WebSurveillanceManager:
         
         self.logger.debug("✅ Web surveillance schema created successfully")
     
-    async def _load_active_crawls(self):
+    async def _load_active_crawls(self) -> None:
         """Load active crawl jobs from database"""
         try:
             async with self._db_manager.get_session() as session:
@@ -879,7 +879,7 @@ class WebSurveillanceManager:
             self.logger.error(f"❌ Failed to store detected content: {e}")
             raise
     
-    async def _check_alert_triggers(self, content_id: str, content: DetectedContent):
+    async def _check_alert_triggers(self, content_id -> None: str, content -> None: DetectedContent) -> None:
         """Check if content triggers any alerts"""
         try:
             # This is a simplified alert trigger system
@@ -992,7 +992,7 @@ class WebSurveillanceManager:
             self.logger.error(f"Failed to complete crawl job: {e}")
             return False
     
-    async def _update_crawl_statistics(self, job_id: str):
+    async def _update_crawl_statistics(self, job_id -> None: str) -> None:
         """Update crawl statistics"""
         try:
             async with self._db_manager.get_session() as session:
@@ -1218,7 +1218,7 @@ class WebSurveillanceManager:
                 'timestamp': datetime.utcnow().isoformat()
             }
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Shutdown the web surveillance manager"""
         try:
             self.logger.info("🚨 Shutting down Web Surveillance Manager...")

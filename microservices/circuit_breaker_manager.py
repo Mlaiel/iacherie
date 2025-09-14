@@ -1,3 +1,8 @@
+"""
+Circuit Breaker Manager module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 ⚡ CIRCUIT BREAKER MANAGER
@@ -86,7 +91,7 @@ class CallResult:
 class CircuitBreaker:
     """Circuit breaker implementation"""
     
-    def __init__(self, config: CircuitBreakerConfig):
+    def __init__(self, config -> None: CircuitBreakerConfig) -> None:
         self.config = config
         self.state = CircuitBreakerState.CLOSED
         self.failure_count = 0
@@ -194,7 +199,7 @@ class CircuitBreaker:
         
         return False
     
-    def _record_success(self, call_result: CallResult):
+    def _record_success(self, call_result -> None: CallResult) -> None:
         """Record a successful call"""
         with self.lock:
             self.success_count += 1
@@ -209,7 +214,7 @@ class CircuitBreaker:
             logger.debug(f"✅ Success recorded for '{self.config.name}' "
                         f"(successes: {self.success_count}, total: {self.total_calls})")
     
-    def _record_failure(self, call_result: CallResult):
+    def _record_failure(self, call_result -> None: CallResult) -> None:
         """Record a failed call"""
         with self.lock:
             self.failure_count += 1
@@ -246,7 +251,7 @@ class CircuitBreaker:
         
         return False
     
-    def _transition_to_open(self):
+    def _transition_to_open(self) -> None:
         """Transition circuit breaker to OPEN state"""
         old_state = self.state
         self.state = CircuitBreakerState.OPEN
@@ -255,7 +260,7 @@ class CircuitBreaker:
         logger.warning(f"🔴 Circuit breaker '{self.config.name}' transitioned "
                       f"from {old_state.value} to OPEN")
     
-    def _transition_to_half_open(self):
+    def _transition_to_half_open(self) -> None:
         """Transition circuit breaker to HALF_OPEN state"""
         old_state = self.state
         self.state = CircuitBreakerState.HALF_OPEN
@@ -266,7 +271,7 @@ class CircuitBreaker:
         logger.info(f"🟡 Circuit breaker '{self.config.name}' transitioned "
                    f"from {old_state.value} to HALF_OPEN")
     
-    def _transition_to_closed(self):
+    def _transition_to_closed(self) -> None:
         """Transition circuit breaker to CLOSED state"""
         old_state = self.state
         self.state = CircuitBreakerState.CLOSED
@@ -305,7 +310,7 @@ class CircuitBreaker:
             average_response_time=avg_response_time
         )
     
-    def reset(self):
+    def reset(self) -> None:
         """Reset circuit breaker to initial state"""
         with self.lock:
             self.state = CircuitBreakerState.CLOSED
@@ -331,7 +336,7 @@ class CircuitBreakerTimeoutException(Exception):
 class CircuitBreakerManager:
     """Circuit breaker manager for multiple circuit breakers"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.service_name = "CircuitBreakerManager"
         self.version = "1.0.0"
         self.circuit_breakers: Dict[str, CircuitBreaker] = {}
@@ -341,7 +346,7 @@ class CircuitBreakerManager:
         
         logger.info(f"✅ {self.service_name} v{self.version} initialized")
     
-    async def initialize(self, redis_url: str = "redis://localhost:6379/0"):
+    async def initialize(self, redis_url -> None: str = "redis -> None://localhost -> None:6379/0") -> None:
         """Initialize the circuit breaker manager"""
         try:
             # Initialize Redis connection
@@ -374,16 +379,16 @@ class CircuitBreakerManager:
         """Get a circuit breaker by name"""
         return self.circuit_breakers.get(name)
     
-    def circuit_breaker(self, name: str, **config_kwargs):
+    def circuit_breaker(self, name -> None: str, **config_kwargs) -> None:
         """Decorator for circuit breaker protection"""
-        def decorator(func: Callable):
+        def decorator(func -> None: Callable) -> None:
             # Create circuit breaker if it doesn't exist
             if name not in self.circuit_breakers:
                 config = CircuitBreakerConfig(name=name, **config_kwargs)
                 self.create_circuit_breaker(config)
             
             @functools.wraps(func)
-            async def wrapper(*args, **kwargs):
+            async def wrapper(*args, **kwargs) -> None:
                 cb = self.circuit_breakers[name]
                 return await cb.call(func, *args, **kwargs)
             
@@ -398,13 +403,13 @@ class CircuitBreakerManager:
         circuit_breaker = self.circuit_breakers[name]
         return await circuit_breaker.call(func, *args, **kwargs)
     
-    async def start_monitoring(self):
+    async def start_monitoring(self) -> None:
         """Start monitoring circuit breakers"""
         if self.monitoring_task is None and self.monitoring_enabled:
             self.monitoring_task = asyncio.create_task(self._monitoring_loop())
             logger.info("📊 Circuit breaker monitoring started")
     
-    async def stop_monitoring(self):
+    async def stop_monitoring(self) -> None:
         """Stop monitoring circuit breakers"""
         self.monitoring_enabled = False
         if self.monitoring_task:
@@ -420,7 +425,7 @@ class CircuitBreakerManager:
         
         logger.info("📊 Circuit breaker monitoring stopped")
     
-    async def _monitoring_loop(self):
+    async def _monitoring_loop(self) -> None:
         """Monitor circuit breakers and store metrics"""
         while self.monitoring_enabled:
             try:
@@ -488,7 +493,7 @@ class CircuitBreakerManager:
             return True
         return False
     
-    def reset_all_circuit_breakers(self):
+    def reset_all_circuit_breakers(self) -> None:
         """Reset all circuit breakers"""
         for name, cb in self.circuit_breakers.items():
             cb.reset()
@@ -512,7 +517,7 @@ class CircuitBreakerManager:
             'timestamp': datetime.now().isoformat()
         }
     
-    def create_default_circuit_breakers(self):
+    def create_default_circuit_breakers(self) -> None:
         """Create default circuit breakers for common services"""
         default_configs = [
             CircuitBreakerConfig(
@@ -554,7 +559,7 @@ class CircuitBreakerManager:
 circuit_breaker_manager = CircuitBreakerManager()
 
 # Example functions to test circuit breaker
-async def unreliable_service():
+async def unreliable_service() -> None:
     """Simulate an unreliable service"""
     import random
     
@@ -564,13 +569,13 @@ async def unreliable_service():
     await asyncio.sleep(0.1)  # Simulate work
     return "Success"
 
-async def slow_service():
+async def slow_service() -> None:
     """Simulate a slow service"""
     await asyncio.sleep(5)  # This will timeout
     return "Slow response"
 
 # Example usage
-async def main():
+async def main() -> None:
     """Example usage of the circuit breaker manager"""
     try:
         # Initialize service
@@ -603,7 +608,7 @@ async def main():
         
         # Test with decorator
         @circuit_breaker_manager.circuit_breaker("decorated_service", timeout=3.0)
-        async def decorated_unreliable_service():
+        async def decorated_unreliable_service() -> None:
             return await unreliable_service()
         
         print("\nTesting with decorator...")

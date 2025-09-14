@@ -76,7 +76,7 @@ class PriorityMessage:
     retry_count: int = 0
     aging_factor: float = 1.0
     
-    def __lt__(self, other):
+    def __lt__(self, other) -> None:
         """Comparison for heap operations"""
         # Lower priority value = higher priority
         if self.priority.value != other.priority.value:
@@ -173,9 +173,9 @@ class PriorityQueueManager:
     """
     
     def __init__(self,
-                 algorithm: SchedulingAlgorithm = SchedulingAlgorithm.WEIGHTED_FAIR,
-                 metrics_collector: Optional[MetricsCollector] = None,
-                 encryption_manager: Optional[EncryptionManager] = None):
+                 algorithm -> None: SchedulingAlgorithm = SchedulingAlgorithm.WEIGHTED_FAIR,
+                 metrics_collector -> None: Optional[MetricsCollector] = None,
+                 encryption_manager -> None: Optional[EncryptionManager] = None) -> None:
         self.algorithm = algorithm
         self.metrics = metrics_collector
         self.encryption = encryption_manager
@@ -480,7 +480,7 @@ class PriorityQueueManager:
         
         return MessagePriority(priority_value)
     
-    async def _apply_business_context(self, message: PriorityMessage):
+    async def _apply_business_context(self, message -> None: PriorityMessage) -> None:
         """Apply Ainflue business context to message"""
         event_type = message.payload.get("event_type", "")
         
@@ -495,7 +495,7 @@ class PriorityQueueManager:
         elif event_type.startswith("collaboration_urgent"):
             message.deadline = datetime.now(timezone.utc) + timedelta(minutes=15)
     
-    async def _apply_aging_mechanism(self):
+    async def _apply_aging_mechanism(self) -> None:
         """Apply aging to prevent starvation of lower priority messages"""
         current_time = time.time()
         
@@ -535,7 +535,7 @@ class PriorityQueueManager:
                 heapq.heappush(self.priority_queues[message.priority], message)
                 logger.debug(f"Aged message {message.id} from {priority.name} to {message.priority.name}")
     
-    async def _check_sla_compliance(self, message: PriorityMessage):
+    async def _check_sla_compliance(self, message -> None: PriorityMessage) -> None:
         """Check SLA compliance for processed message"""
         total_time = message.wait_time + message.processing_time
         
@@ -573,7 +573,7 @@ class PriorityQueueManager:
         # Placeholder for decryption
         return payload
     
-    async def _move_to_dlq(self, message: PriorityMessage, reason: str):
+    async def _move_to_dlq(self, message -> None: PriorityMessage, reason -> None: str) -> None:
         """Move message to dead letter queue"""
         dlq_entry = {
             "message_id": message.id,
@@ -587,7 +587,7 @@ class PriorityQueueManager:
     
     # Metrics and statistics methods
     
-    async def _update_enqueue_metrics(self, message: PriorityMessage):
+    async def _update_enqueue_metrics(self, message -> None: PriorityMessage) -> None:
         """Update enqueue metrics"""
         self.global_metrics.total_messages += 1
         
@@ -596,7 +596,7 @@ class PriorityQueueManager:
             self.global_metrics.priority_distribution[priority_name] = 0
         self.global_metrics.priority_distribution[priority_name] += 1
     
-    async def _update_dequeue_metrics(self, message: PriorityMessage):
+    async def _update_dequeue_metrics(self, message -> None: PriorityMessage) -> None:
         """Update dequeue metrics"""
         # Update wait time average
         total_wait = self.global_metrics.avg_wait_time * self.global_metrics.processed_messages
@@ -604,14 +604,14 @@ class PriorityQueueManager:
         self.global_metrics.processed_messages += 1
         self.global_metrics.avg_wait_time = total_wait / self.global_metrics.processed_messages
     
-    async def _update_ack_metrics(self, message: PriorityMessage):
+    async def _update_ack_metrics(self, message -> None: PriorityMessage) -> None:
         """Update acknowledge metrics"""
         # Update processing time average
         total_processing = self.global_metrics.avg_processing_time * (self.global_metrics.processed_messages - 1)
         total_processing += message.processing_time
         self.global_metrics.avg_processing_time = total_processing / self.global_metrics.processed_messages
     
-    async def _update_nack_metrics(self, message: PriorityMessage):
+    async def _update_nack_metrics(self, message -> None: PriorityMessage) -> None:
         """Update negative acknowledge metrics"""
         self.global_metrics.failed_messages += 1
     

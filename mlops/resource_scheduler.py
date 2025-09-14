@@ -1,3 +1,8 @@
+"""
+Resource Scheduler module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 📊 MLOps Resource Scheduler - Intelligent ML Workload Management
@@ -130,12 +135,12 @@ class SchedulingDecision:
 class WorkloadPredictor:
     """Prédicteur de comportement des workloads ML"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.historical_data: Dict[str, List[Dict[str, Any]]] = defaultdict(list)
         self.runtime_patterns: Dict[str, float] = {}
         
-    def record_workload_completion(self, workload: ScheduledWorkload, 
-                                 actual_runtime: float, resource_usage: Dict[str, float]):
+    def record_workload_completion(self, workload -> None: ScheduledWorkload, 
+                                 actual_runtime -> None: float, resource_usage -> None: Dict[str, float]) -> None:
         """Enregistre la completion d'un workload pour apprentissage"""
         workload_signature = self._get_workload_signature(workload)
         
@@ -218,7 +223,7 @@ class ResourceScheduler:
     - Workload affinity/anti-affinity
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.nodes: Dict[str, Node] = {}
         self.workload_queue: List[ScheduledWorkload] = []
@@ -249,7 +254,7 @@ class ResourceScheduler:
         
         logger.info("📊 Resource Scheduler initialized for intelligent ML workload management")
     
-    def _initialize_default_nodes(self):
+    def _initialize_default_nodes(self) -> None:
         """Initialize with default compute nodes"""
         # CPU-optimized nodes
         for i in range(3):
@@ -328,7 +333,7 @@ class ResourceScheduler:
             logger.error(f"❌ Failed to remove node {node_name}: {e}")
             return False
     
-    async def _drain_node(self, node_name: str):
+    async def _drain_node(self, node_name -> None: str) -> None:
         """Drain workloads from a node"""
         workloads_to_reschedule = [
             workload for workload in self.running_workloads.values()
@@ -557,8 +562,8 @@ class ResourceScheduler:
         
         return reasoning
     
-    async def _assign_workload_to_node(self, workload: ScheduledWorkload, 
-                                     decision: SchedulingDecision):
+    async def _assign_workload_to_node(self, workload -> None: ScheduledWorkload, 
+                                     decision -> None: SchedulingDecision) -> None:
         """Assign workload to a node"""
         node = self.nodes[decision.node_name]
         req = workload.resource_request
@@ -580,8 +585,8 @@ class ResourceScheduler:
         logger.info(f"🎯 Assigned workload {workload.name} to node {decision.node_name}")
         logger.debug(f"Reasoning: {', '.join(decision.reasoning)}")
     
-    async def complete_workload(self, workload_id: str, success: bool = True,
-                              actual_resource_usage: Optional[Dict[str, float]] = None):
+    async def complete_workload(self, workload_id -> None: str, success -> None: bool = True,
+                              actual_resource_usage -> None: Optional[Dict[str, float]] = None) -> None:
         """Mark a workload as completed"""
         if workload_id not in self.running_workloads:
             return False
@@ -617,7 +622,7 @@ class ResourceScheduler:
         logger.info(f"✅ Workload {workload.name} completed in {actual_runtime:.1f}h")
         return True
     
-    async def auto_schedule_loop(self):
+    async def auto_schedule_loop(self) -> None:
         """Continuous scheduling loop"""
         logger.info("🔄 Starting automatic scheduling loop")
         
@@ -639,7 +644,7 @@ class ResourceScheduler:
                 logger.error(f"❌ Error in scheduling loop: {e}")
                 await asyncio.sleep(5)
     
-    async def _update_metrics(self):
+    async def _update_metrics(self) -> None:
         """Update scheduler metrics"""
         # Calculate resource utilization
         for node_name, node in self.nodes.items():
@@ -661,7 +666,7 @@ class ResourceScheduler:
             ]
             self.metrics['average_wait_time'] = sum(wait_times) / len(wait_times)
     
-    async def _check_node_health(self):
+    async def _check_node_health(self) -> None:
         """Check node health and remove unhealthy nodes"""
         current_time = datetime.now()
         
@@ -761,7 +766,7 @@ class ResourceScheduler:
 
 
 # Demo function
-async def demo_resource_scheduler():
+async def demo_resource_scheduler() -> None:
     """Démonstration du scheduler de ressources"""
     print("📊 MLOps Resource Scheduler Demo")
     

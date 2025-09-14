@@ -122,7 +122,7 @@ class RoyaltyCalculator:
     structures, multi-tier rates, and international compliance.
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """
 Initialize royalty calculator with configuration."""
         self.config = config
@@ -151,7 +151,7 @@ Initialize royalty calculator with configuration."""
         self._load_platform_rates()
         self._initialize_currency_converter()
     
-    def _load_statutory_rates(self):
+    def _load_statutory_rates(self) -> None:
         """Load statutory royalty rates by jurisdiction."""
         statutory_data = {
             'us': {
@@ -184,7 +184,7 @@ Initialize royalty calculator with configuration."""
         self.statutory_rates = statutory_data
         self.logger.info(f"Loaded statutory rates for {len(statutory_data)} jurisdictions")
     
-    def _load_territory_data(self):
+    def _load_territory_data(self) -> None:
         """Load territory-specific multipliers and adjustments."""
         territory_data = {
             'north_america': {'multiplier': Decimal('1.0'), 'currencies': ['USD', 'CAD']},
@@ -198,7 +198,7 @@ Initialize royalty calculator with configuration."""
         self.territory_multipliers = territory_data
         self.logger.info(f"Loaded territory data for {len(territory_data)} regions")
     
-    def _load_platform_rates(self):
+    def _load_platform_rates(self) -> None:
         """Load platform-specific royalty rates."""
         platform_data = {
             'spotify': {
@@ -233,7 +233,7 @@ Initialize royalty calculator with configuration."""
         self.platform_rates = platform_data
         self.logger.info(f"Loaded rates for {len(platform_data)} platforms")
     
-    def _initialize_currency_converter(self):
+    def _initialize_currency_converter(self) -> None:
         """Initialize currency conversion service."""
         try:
             # This would integrate with a real currency service

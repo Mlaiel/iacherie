@@ -144,7 +144,7 @@ class SupportManager:
     """
 Gestionnaire principal du support"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.tickets: Dict[str, SupportTicket] = {}
         self.messages: Dict[str, List[TicketMessage]] = {}
@@ -507,7 +507,7 @@ Gestionnaire principal du support"""
 class KnowledgeBaseManager:
     """Gestionnaire de la base de connaissances"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.articles: Dict[str, KnowledgeBaseArticle] = {}
         self._create_default_articles()
     

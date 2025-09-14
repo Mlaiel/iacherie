@@ -37,7 +37,7 @@ class OptimizationLevel(Enum):
 class ViralOptimizationEngine:
     """Main viral optimization engine coordinating all optimization components"""
     
-    def __init__(self, optimization_level: OptimizationLevel = OptimizationLevel.ENTERPRISE):
+    def __init__(self, optimization_level -> None: OptimizationLevel = OptimizationLevel.ENTERPRISE) -> None:
         """Initialize viral optimization engine"""
         self.optimization_level = optimization_level
         self.viral_predictor = ViralPredictor()

@@ -133,7 +133,7 @@ class IntelligentAlert:
 class EnterpriseAlertingSystem:
     """Main enterprise alerting system with ML intelligence."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.alerts: Dict[str, IntelligentAlert] = {}
         self.alert_history: deque = deque(maxlen=10000)
         self.correlation_engine = AlertCorrelationEngine()
@@ -205,7 +205,7 @@ class EnterpriseAlertingSystem:
 class AlertCorrelationEngine:
     """ML-powered alert correlation engine."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.correlation_window_minutes = 15
         self.correlation_threshold = 0.7
         
@@ -578,7 +578,7 @@ class RootCauseAnalyzer:
 class NotificationRouter:
     """Route alerts to appropriate notification channels."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.channel_handlers = {
             NotificationChannel.EMAIL: self._send_email,
             NotificationChannel.SLACK: self._send_slack,
@@ -587,7 +587,7 @@ class NotificationRouter:
             NotificationChannel.SMS: self._send_sms
         }
         
-    async def route_alert(self, alert: IntelligentAlert):
+    async def route_alert(self, alert -> None: IntelligentAlert) -> None:
         """Route alert to appropriate channels based on severity and category."""
         
         # Determine channels based on alert characteristics
@@ -632,27 +632,27 @@ class NotificationRouter:
             
         return list(set(channels))  # Remove duplicates
         
-    async def _send_email(self, alert: IntelligentAlert):
+    async def _send_email(self, alert -> None: IntelligentAlert) -> None:
         """Send email notification."""
         logger.info(f"Sending email notification for alert: {alert.alert_id}")
         # Implementation would use email service
         
-    async def _send_slack(self, alert: IntelligentAlert):
+    async def _send_slack(self, alert -> None: IntelligentAlert) -> None:
         """Send Slack notification.""" 
         logger.info(f"Sending Slack notification for alert: {alert.alert_id}")
         # Implementation would use Slack API
         
-    async def _send_telegram(self, alert: IntelligentAlert):
+    async def _send_telegram(self, alert -> None: IntelligentAlert) -> None:
         """Send Telegram notification."""
         logger.info(f"Sending Telegram notification for alert: {alert.alert_id}")
         # Implementation would use Telegram Bot API
         
-    async def _send_webhook(self, alert: IntelligentAlert):
+    async def _send_webhook(self, alert -> None: IntelligentAlert) -> None:
         """Send webhook notification."""
         logger.info(f"Sending webhook notification for alert: {alert.alert_id}")
         # Implementation would POST to webhook URL
         
-    async def _send_sms(self, alert: IntelligentAlert):
+    async def _send_sms(self, alert -> None: IntelligentAlert) -> None:
         """Send SMS notification."""
         logger.info(f"Sending SMS notification for alert: {alert.alert_id}")
         # Implementation would use SMS service
@@ -660,7 +660,7 @@ class NotificationRouter:
 class EscalationManager:
     """Manage alert escalation policies."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.escalation_policies = self._initialize_escalation_policies()
         
     def _initialize_escalation_policies(self) -> Dict[AlertSeverity, Dict[str, Any]]:
@@ -683,7 +683,7 @@ class EscalationManager:
             }
         }
         
-    async def start_escalation(self, alert: IntelligentAlert):
+    async def start_escalation(self, alert -> None: IntelligentAlert) -> None:
         """Start escalation process for alert."""
         
         policy = self.escalation_policies.get(alert.severity, {})
@@ -713,7 +713,7 @@ class EscalationManager:
         }
         return timing_map.get(timing, 60)
         
-    async def _schedule_escalation_step(self, alert: IntelligentAlert, actions: List[str], delay_minutes: int):
+    async def _schedule_escalation_step(self, alert -> None: IntelligentAlert, actions -> None: List[str], delay_minutes -> None: int) -> None:
         """Schedule escalation step with delay."""
         await asyncio.sleep(delay_minutes * 60)
         
@@ -721,7 +721,7 @@ class EscalationManager:
         if alert.resolved_at is None:
             await self._execute_escalation_step(alert, actions, delay_minutes)
             
-    async def _execute_escalation_step(self, alert: IntelligentAlert, actions: List[str], delay_minutes: int):
+    async def _execute_escalation_step(self, alert -> None: IntelligentAlert, actions -> None: List[str], delay_minutes -> None: int) -> None:
         """Execute escalation step."""
         
         alert.escalation_level += 1
@@ -744,11 +744,11 @@ class EscalationManager:
             elif action == "executive_notification":
                 await self._notify_executive(alert)
                 
-    async def _notify_manager(self, alert: IntelligentAlert):
+    async def _notify_manager(self, alert -> None: IntelligentAlert) -> None:
         """Notify manager of escalated alert."""
         logger.info(f"Notifying manager of escalated alert: {alert.alert_id}")
         
-    async def _notify_executive(self, alert: IntelligentAlert):
+    async def _notify_executive(self, alert -> None: IntelligentAlert) -> None:
         """Notify executive of critically escalated alert."""
         logger.info(f"Notifying executive of critically escalated alert: {alert.alert_id}")
 
@@ -851,7 +851,7 @@ class EnterpriseAlertingSystem:
     - Real-time analytics and trend analysis
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.alerts: Dict[str, Alert] = {}
         self.alert_history: deque = deque(maxlen=10000)
         self.notification_channels: Dict[NotificationChannel, Any] = {}
@@ -859,7 +859,7 @@ class EnterpriseAlertingSystem:
         self._initialize_system()
         logger.info("Enterprise Alerting System initialized with ML-powered features")
     
-    def _initialize_system(self):
+    def _initialize_system(self) -> None:
         """Initialize enterprise alerting system components."""
         # Initialize ML models for correlation
         self.ml_models = {
@@ -968,7 +968,7 @@ class EnterpriseAlertingSystem:
         
         return noise_score > 0 or recent_similar > 10
     
-    async def _correlate_alert(self, alert: Alert):
+    async def _correlate_alert(self, alert -> None: Alert) -> None:
         """Perform ML-based alert correlation."""
         # Find recent related alerts
         recent_alerts = [
@@ -1012,7 +1012,7 @@ class EnterpriseAlertingSystem:
         else:
             return EscalationLevel.L1_SUPPORT
     
-    async def _trigger_notifications(self, alert: Alert):
+    async def _trigger_notifications(self, alert -> None: Alert) -> None:
         """Trigger intelligent notifications."""
         # Simulate notification sending
         channels = [NotificationChannel.SLACK, NotificationChannel.EMAIL]
@@ -1394,7 +1394,7 @@ class EnterpriseAlertingSystem:
         logger.info(f"Security alert created: {alert_id} ({threat_level})")
         return alert_id
     
-    async def _escalate_security_alert(self, alert_id: str, security_event: Dict[str, Any]):
+    async def _escalate_security_alert(self, alert_id -> None: str, security_event -> None: Dict[str, Any]) -> None:
         """Escalate critical security alerts immediately."""
         if alert_id in self.alerts:
             alert = self.alerts[alert_id]
@@ -1403,7 +1403,7 @@ class EnterpriseAlertingSystem:
             # Send immediate notifications to security team
             await self._send_emergency_notifications(alert, security_event)
     
-    async def _send_emergency_notifications(self, alert: Alert, security_event: Dict[str, Any]):
+    async def _send_emergency_notifications(self, alert -> None: Alert, security_event -> None: Dict[str, Any]) -> None:
         """Send emergency notifications for critical security events."""
         emergency_channels = [
             NotificationChannel.EMAIL,

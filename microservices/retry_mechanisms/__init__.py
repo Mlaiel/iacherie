@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 class retry_mechanismsService:
     """Retry_mechanisms service implementation"""
     
-    def __init__(self, service_name: str = "retry_mechanisms"):
+    def __init__(self, service_name -> None: str = "retry_mechanisms") -> None:
         self.service_name = service_name
         self.status = "initialized"
         self.created_at = time.time()

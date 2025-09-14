@@ -108,7 +108,7 @@ class DeploymentTemplateManager:
     - Blue-green and canary deployments
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """
 Initialize deployment template manager"""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
@@ -172,22 +172,22 @@ Initialize deployment template manager"""
         """Initialize Jinja2 template environment"""
         
         # Custom filters
-        def to_yaml(value, indent=2):
+        def to_yaml(value, indent=2) -> None:
             """
 Convert value to YAML"""
             return yaml.dump(value, default_flow_style=False, indent=indent)
         
-        def to_json(value, indent=2):
+        def to_json(value, indent=2) -> None:
             """
 Convert value to JSON"""
             return json.dumps(value, indent=indent)
         
-        def resource_name(name, environment):
+        def resource_name(name, environment) -> None:
             """
 Generate resource name"""
             return f"{name}-{environment}"
         
-        def namespace_name(app_name, environment):
+        def namespace_name(app_name, environment) -> None:
             """Generate namespace name"""
             return f"{app_name}-{environment}"
         

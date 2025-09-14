@@ -105,16 +105,16 @@ MODULE_INFO = {
     ]
 }
 
-def get_module_info():
+def get_module_info() -> None:
     """Get comprehensive module information"""
     return MODULE_INFO
 
-def get_version():
+def get_version() -> None:
     """
 Get module version"""
     return __version__
 
-def get_available_components():
+def get_available_components() -> None:
     """
 Get list of available load balancer components"""
     return __all__

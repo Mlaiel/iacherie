@@ -45,7 +45,7 @@ Configuration du monitoring"""
 class SystemMetrics:
     """Collecteur de métriques système"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.start_time = time.time()
         self.request_count = 0
         self.error_count = 0
@@ -92,7 +92,7 @@ Statistiques système en temps réel"""
 class HealthChecker:
     """Vérificateur de santé des services"""
     
-    def __init__(self, config: MonitoringConfig):
+    def __init__(self, config -> None: MonitoringConfig) -> None:
         self.config = config
         self.checks = {}
         self.last_check_results = {}
@@ -161,11 +161,11 @@ Enregistrer une vérification de santé"""
 
 # =============== PERFORMANCE TRACKING ===============
 
-def track_performance(metric_name: str = None):
+def track_performance(metric_name -> None: str = None) -> None:
     """Décorateur pour tracker les performances"""
-    def decorator(func):
+    def decorator(func) -> None:
         @wraps(func)
-        async def async_wrapper(*args, **kwargs):
+        async def async_wrapper(*args, **kwargs) -> None:
             start_time = time.time()
             try:
                 result = await func(*args, **kwargs)
@@ -181,7 +181,7 @@ def track_performance(metric_name: str = None):
                 raise
         
         @wraps(func)
-        def sync_wrapper(*args, **kwargs):
+        def sync_wrapper(*args, **kwargs) -> None:
             start_time = time.time()
             try:
                 result = func(*args, **kwargs)
@@ -203,7 +203,7 @@ def track_performance(metric_name: str = None):
 class StructuredLoggingManager:
     """Gestionnaire principal du monitoring"""
     
-    def __init__(self, config: MonitoringConfig):
+    def __init__(self, config -> None: MonitoringConfig) -> None:
         self.config = config
         self.metrics = SystemMetrics()
         self.health_checker = HealthChecker(config)
@@ -249,7 +249,7 @@ Démarrage du monitoring"""
             logger.error(f"❌ Erreur arrêt monitoring: {e}")
             return False
     
-    async def _monitoring_loop(self):
+    async def _monitoring_loop(self) -> None:
         """Boucle de monitoring continue"""
         while self.running:
             try:
@@ -279,7 +279,7 @@ Démarrage du monitoring"""
         stats = self.metrics.get_system_stats()
         return stats["memory"]["percent"] < self.config.alert_thresholds["memory_percent"]
     
-    async def _check_alerts(self, stats: Dict[str, Any]):
+    async def _check_alerts(self, stats -> None: Dict[str, Any]) -> None:
         """Vérification des seuils d'alerte"""
         alerts = []
         

@@ -1,5 +1,7 @@
 """Conversion Tracking Events Module
 
+import logging
+
 Advanced conversion tracking and funnel analysis for multi-format content creators.
 Provides comprehensive conversion attribution, optimization, and prediction capabilities.
 
@@ -152,7 +154,7 @@ class ConversionTrackingEventHandler(BaseEventHandler):
     """
 Handles conversion tracking events with advanced analytics"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
         self.cache_manager = CacheManager()
         self.db_manager = DatabaseManager()
@@ -299,7 +301,7 @@ class ConversionFunnelAnalyzer:
     """
 Analyzes conversion funnels and user journey optimization"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.db_manager = DatabaseManager()
         self.cache_manager = CacheManager()
         self.metrics_calculator = MetricsCalculator()
@@ -429,7 +431,7 @@ Calculate comprehensive funnel metrics"""
 class ConversionOptimizationEngine:
     """Optimizes conversion rates using ML and A/B testing insights"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.db_manager = DatabaseManager()
         self.classifier = RandomForestClassifier(n_estimators=100, random_state=42)
         self.regressor = GradientBoostingRegressor(n_estimators=100, random_state=42)
@@ -533,7 +535,7 @@ class ConversionAttributionEngine:
     """
 Advanced attribution analysis for conversions"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.db_manager = DatabaseManager()
         self.multi_touch_attribution = MultiTouchAttributionEngine()
         
@@ -733,7 +735,7 @@ Apply specific attribution model"""
 class ConversionPredictionEngine:
     """Predicts future conversions using advanced ML models"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.conversion_predictor = ConversionPredictor()
         self.db_manager = DatabaseManager()
         

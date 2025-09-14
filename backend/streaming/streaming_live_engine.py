@@ -172,7 +172,7 @@ class TranscodingJob:
 class RTMPServer:
     """RTMP server implementation for live streaming"""
     
-    def __init__(self, host: str = "0.0.0.0", port: int = 1935, redis_client: aioredis.Redis = None):
+    def __init__(self, host -> None: str = "0.0.0.0", port -> None: int = 1935, redis_client -> None: aioredis.Redis = None) -> None:
         self.host = host
         self.port = port
         self.redis = redis_client
@@ -257,7 +257,7 @@ class RTMPServer:
 class WebRTCHandler:
     """WebRTC streaming handler for low-latency streaming"""
     
-    def __init__(self, signaling_server_url: str = None):
+    def __init__(self, signaling_server_url -> None: str = None) -> None:
         self.signaling_server_url = signaling_server_url
         self.peer_connections = {}
         self.ice_servers = [
@@ -332,7 +332,7 @@ class WebRTCHandler:
 class LiveStreamManager:
     """Live stream session management"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         self.active_sessions = {}
@@ -489,7 +489,7 @@ class LiveStreamManager:
 class RealTimeContentStreamer:
     """Real-time content streaming processor"""
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client -> None: aioredis.Redis) -> None:
         self.redis = redis_client
         self.processing_queue = asyncio.Queue()
         self.encoder_pool = ThreadPoolExecutor(max_workers=50)
@@ -547,7 +547,7 @@ class RealTimeContentStreamer:
 class MultiFormatStreamingEngine:
     """Multi-format streaming engine with transcoding"""
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client -> None: aioredis.Redis) -> None:
         self.redis = redis_client
         self.transcoding_jobs = {}
         self.format_processors = {
@@ -622,7 +622,7 @@ class MultiFormatStreamingEngine:
 class StreamingLiveEngine:
     """Unified live streaming engine - Main service class"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         

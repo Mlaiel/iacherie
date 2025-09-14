@@ -118,7 +118,7 @@ class ModelMetadata:
 class ModelFormatConverter:
     """🛡️ Convertisseur de formats de modèles ML"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.converter_id = str(uuid.uuid4())
         self.conversion_history: List[ConversionResult] = []
         self.supported_conversions = self._initialize_supported_conversions()
@@ -657,7 +657,7 @@ class ModelFormatConverter:
             logger.error(f"Error generating conversion summary: {e}")
             return {}
     
-    def __del__(self):
+    def __del__(self) -> None:
         """Nettoyage du répertoire temporaire"""
         try:
             import shutil
@@ -687,7 +687,7 @@ def create_conversion_config(
         creator_type=creator_type
     )
 
-async def demo_model_format_converter():
+async def demo_model_format_converter() -> None:
     """Démo du convertisseur de formats"""
     converter = create_model_format_converter()
     

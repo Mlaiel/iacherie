@@ -101,7 +101,7 @@ class StreamProcessor(ABC):
         pass
     
     @abstractmethod
-    async def cleanup(self):
+    async def cleanup(self) -> None:
         """Cleanup processor resources"""
         pass
 
@@ -109,7 +109,7 @@ class StreamProcessor(ABC):
 class ContentUploadStreamProcessor(StreamProcessor):
     """Processor for Ainflue content upload events"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.state = {}
         self.creator_stats = defaultdict(lambda: {"upload_count": 0, "total_size": 0})
         
@@ -208,7 +208,7 @@ class ContentUploadStreamProcessor(StreamProcessor):
         stats = self.creator_stats[creator_id]
         return min(100.0, stats["upload_count"] * 10.0)  # Simple score calculation
     
-    async def cleanup(self):
+    async def cleanup(self) -> None:
         """Cleanup content upload processor"""
         self.state.clear()
         self.creator_stats.clear()
@@ -217,7 +217,7 @@ class ContentUploadStreamProcessor(StreamProcessor):
 class CollaborationMatchingProcessor(StreamProcessor):
     """Processor for collaboration matching events"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.state = {}
         self.creator_profiles = {}
         self.match_history = defaultdict(list)
@@ -317,7 +317,7 @@ class CollaborationMatchingProcessor(StreamProcessor):
             logger.error(f"Error finding collaboration matches: {e}")
             return []
     
-    async def cleanup(self):
+    async def cleanup(self) -> None:
         """Cleanup collaboration matching processor"""
         self.state.clear()
         self.creator_profiles.clear()
@@ -327,7 +327,7 @@ class CollaborationMatchingProcessor(StreamProcessor):
 class RevenueAnalyticsProcessor(StreamProcessor):
     """Processor for real-time revenue analytics"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.state = {}
         self.revenue_buckets = defaultdict(float)
         self.hourly_revenue = deque(maxlen=24)  # Last 24 hours
@@ -432,7 +432,7 @@ class RevenueAnalyticsProcessor(StreamProcessor):
         
         return 0
     
-    async def cleanup(self):
+    async def cleanup(self) -> None:
         """Cleanup revenue analytics processor"""
         self.state.clear()
         self.revenue_buckets.clear()
@@ -443,11 +443,11 @@ class StreamJoinProcessor:
     """Processor for joining multiple streams"""
     
     def __init__(self, 
-                 left_stream: str, 
-                 right_stream: str, 
-                 join_type: StreamJoinType,
-                 join_key_extractor: Callable[[StreamEvent], str],
-                 window_duration: timedelta):
+                 left_stream -> None: str, 
+                 right_stream -> None: str, 
+                 join_type -> None: StreamJoinType,
+                 join_key_extractor -> None: Callable[[StreamEvent], str],
+                 window_duration -> None: timedelta) -> None:
         self.left_stream = left_stream
         self.right_stream = right_stream
         self.join_type = join_type
@@ -526,7 +526,7 @@ class StreamJoinProcessor:
             partition_key=self.join_key_extractor(left_event)
         )
     
-    async def _cleanup_old_events(self, current_time: datetime):
+    async def _cleanup_old_events(self, current_time -> None: datetime) -> None:
         """Remove events older than window duration"""
         cutoff_time = current_time - self.window_duration
         
@@ -552,7 +552,7 @@ class StreamJoinProcessor:
 class RealtimeStreamProcessor:
     """Main real-time stream processing engine"""
     
-    def __init__(self, metrics_collector=None):
+    def __init__(self, metrics_collector=None) -> None:
         self.metrics_collector = metrics_collector
         self.processors: Dict[str, StreamProcessor] = {}
         self.join_processors: List[StreamJoinProcessor] = []
@@ -561,7 +561,7 @@ class RealtimeStreamProcessor:
         self._processor_tasks: Dict[str, asyncio.Task] = {}
         self._shutdown_event = asyncio.Event()
         
-    async def start(self):
+    async def start(self) -> None:
         """Start the real-time stream processor"""
         try:
             logger.info("Starting Real-time Stream Processor")
@@ -579,7 +579,7 @@ class RealtimeStreamProcessor:
             logger.error(f"Failed to start real-time stream processor: {e}")
             raise
     
-    async def stop(self):
+    async def stop(self) -> None:
         """Stop the stream processor"""
         try:
             logger.info("Stopping Real-time Stream Processor")
@@ -605,7 +605,7 @@ class RealtimeStreamProcessor:
             logger.error(f"Error stopping real-time stream processor: {e}")
             raise
     
-    async def _setup_default_processors(self):
+    async def _setup_default_processors(self) -> None:
         """Setup default processors for Ainflue platform"""
         try:
             # Content upload processor
@@ -695,7 +695,7 @@ class RealtimeStreamProcessor:
                 self.metrics_collector.increment_counter("stream_processing_errors")
             return []
     
-    async def add_processor(self, name: str, processor: StreamProcessor, streams: List[str]):
+    async def add_processor(self, name -> None: str, processor -> None: StreamProcessor, streams -> None: List[str]) -> None:
         """Add a new stream processor"""
         try:
             self.processors[name] = processor
@@ -714,11 +714,11 @@ class RealtimeStreamProcessor:
             raise
     
     async def add_join_processor(self, 
-                                left_stream: str, 
-                                right_stream: str, 
-                                join_type: StreamJoinType,
-                                join_key_extractor: Callable[[StreamEvent], str],
-                                window_duration: timedelta):
+                                left_stream -> None: str, 
+                                right_stream -> None: str, 
+                                join_type -> None: StreamJoinType,
+                                join_key_extractor -> None: Callable[[StreamEvent], str],
+                                window_duration -> None: timedelta) -> None:
         """Add a stream join processor"""
         try:
             join_processor = StreamJoinProcessor(

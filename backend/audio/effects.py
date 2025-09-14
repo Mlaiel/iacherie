@@ -146,8 +146,8 @@ class VintageModelingParams:
 class AudioEffectsEngine:
     """🎛️ Professional Audio Effects Engine Enterprise"""
     
-    def __init__(self, sample_rate: int = 44100, buffer_size: int = 512,
-                 quality_level: QualityLevel = QualityLevel.HIGH):
+    def __init__(self, sample_rate -> None: int = 44100, buffer_size -> None: int = 512,
+                 quality_level -> None: QualityLevel = QualityLevel.HIGH) -> None:
         self.logger = logging.getLogger(self.__class__.__name__)
         self.sample_rate = sample_rate
         self.buffer_size = buffer_size
@@ -403,7 +403,7 @@ from .effects import (
 class SpatialProcessor:
     """🌐 Professional Spatial Audio Processing Enterprise"""
     
-    def __init__(self, sample_rate: int = 44100, quality_level: QualityLevel = QualityLevel.HIGH):
+    def __init__(self, sample_rate -> None: int = 44100, quality_level -> None: QualityLevel = QualityLevel.HIGH) -> None:
         self.logger = logging.getLogger(self.__class__.__name__)
         self.sample_rate = sample_rate
         self.quality_level = quality_level
@@ -506,7 +506,7 @@ class SpatialProcessor:
 class ModulationProcessor:
     """🌊 Advanced Modulation Effects Processor"""
     
-    def __init__(self, sample_rate: int = 44100, quality_level: QualityLevel = QualityLevel.HIGH):
+    def __init__(self, sample_rate -> None: int = 44100, quality_level -> None: QualityLevel = QualityLevel.HIGH) -> None:
         self.logger = logging.getLogger(self.__class__.__name__)
         self.sample_rate = sample_rate
         self.quality_level = quality_level
@@ -653,7 +653,7 @@ class ModulationProcessor:
 class CreativeProcessor:
     """🎨 Creative Audio Effects Processor"""
     
-    def __init__(self, sample_rate: int = 44100, quality_level: QualityLevel = QualityLevel.HIGH):
+    def __init__(self, sample_rate -> None: int = 44100, quality_level -> None: QualityLevel = QualityLevel.HIGH) -> None:
         self.logger = logging.getLogger(self.__class__.__name__)
         self.sample_rate = sample_rate
         self.quality_level = quality_level
@@ -796,7 +796,7 @@ class CreativeProcessor:
 class VintageProcessor:
     """🎸 Vintage Hardware Modeling Processor"""
     
-    def __init__(self, sample_rate: int = 44100, quality_level: QualityLevel = QualityLevel.HIGH):
+    def __init__(self, sample_rate -> None: int = 44100, quality_level -> None: QualityLevel = QualityLevel.HIGH) -> None:
         self.logger = logging.getLogger(self.__class__.__name__)
         self.sample_rate = sample_rate
         self.quality_level = quality_level
@@ -805,7 +805,7 @@ class VintageProcessor:
         # Load vintage modeling curves
         self._init_vintage_curves()
     
-    def _init_vintage_curves(self):
+    def _init_vintage_curves(self) -> None:
         """Initialize vintage modeling curves"""
         # Frequency response curves for different vintage equipment
         self.vintage_curves = {
@@ -1059,7 +1059,7 @@ class VintageProcessor:
 class DynamicsProcessor:
     """🎛️ Advanced Dynamics Processing"""
     
-    def __init__(self, sample_rate: int = 44100, quality_level: QualityLevel = QualityLevel.HIGH):
+    def __init__(self, sample_rate -> None: int = 44100, quality_level -> None: QualityLevel = QualityLevel.HIGH) -> None:
         self.logger = logging.getLogger(self.__class__.__name__)
         self.sample_rate = sample_rate
         self.quality_level = quality_level

@@ -88,7 +88,7 @@ class AudioProcessingIntelligence:
     and intelligent workflow optimization for enterprise audio processing pipelines.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize audio processing intelligence system."""
         self.config = config or self._default_config()
         self.jobs_history: List[ProcessingJob] = []

@@ -1,3 +1,8 @@
+"""
+Communication Security Manager module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Communication Security Manager - Enterprise Security Component
@@ -118,7 +123,7 @@ class CommunicationSecurityManager:
     with enterprise-grade security standards and compliance.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.security_policies: Dict[str, SecurityPolicy] = {}
         self.encryption_keys: Dict[str, EncryptionKey] = {}
         self.certificates: Dict[str, SecurityCertificate] = {}
@@ -678,7 +683,7 @@ def create_communication_security_manager() -> CommunicationSecurityManager:
 
 
 # Example usage
-async def main():
+async def main() -> None:
     """Example usage of Communication Security Manager"""
     security_manager = create_communication_security_manager()
     

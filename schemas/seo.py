@@ -75,7 +75,7 @@ SEO analysis results schema."""
     conversion_probability: Optional[float] = None
     
     @validator('analysis_type')
-    def validate_analysis_type(cls, v):
+    def validate_analysis_type(cls, v) -> None:
         """Validate analysis type."""
         allowed_types = {
             "content_analysis", "keyword_research", "competitive_analysis",
@@ -124,7 +124,7 @@ class SEOOptimization(BaseSchema):
     multilingual_optimization: bool = Field(default=False)
     
     @validator('optimization_level')
-    def validate_optimization_level(cls, v):
+    def validate_optimization_level(cls, v) -> None:
         """Validate optimization level."""
         allowed_levels = {"basic", "standard", "advanced", "comprehensive", "custom"}
         if v not in allowed_levels:
@@ -183,7 +183,7 @@ class KeywordResearch(UUIDSchema, TimestampSchema):
     quick_win_opportunities: List[str] = Field(default_factory=list)
     
     @validator('research_scope')
-    def validate_research_scope(cls, v):
+    def validate_research_scope(cls, v) -> None:
         """Validate research scope."""
         allowed_scopes = {
             "comprehensive", "competitive", "niche_specific", "trend_analysis",
@@ -341,7 +341,7 @@ class MarketingCampaign(UUIDSchema, TimestampSchema, AuditSchema):
     winning_variations: List[str] = Field(default_factory=list)
     
     @validator('campaign_type')
-    def validate_campaign_type(cls, v):
+    def validate_campaign_type(cls, v) -> None:
         """Validate campaign type."""
         allowed_types = {
             "brand_awareness", "lead_generation", "product_launch", "engagement",

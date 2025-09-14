@@ -75,7 +75,7 @@ class ComplianceReport:
 class UltraAdvancedDMCAOrchestrator:
     """Main DMCA compliance orchestrator"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.notices_database = {}
         self.compliance_rules = self._initialize_compliance_rules()
         self.performance_metrics = {
@@ -96,7 +96,7 @@ class UltraAdvancedDMCAOrchestrator:
             'jurisdictions': ['US', 'EU', 'UK', 'CA']
         }
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize DMCA orchestrator"""
         logger.info("Ultra-Advanced DMCA Orchestrator initialized")
     
@@ -134,7 +134,7 @@ class UltraAdvancedDMCAOrchestrator:
             logger.error(f"DMCA notice filing failed: {e}")
             raise
     
-    async def _process_dmca_notice(self, notice: DMCANotice):
+    async def _process_dmca_notice(self, notice -> None: DMCANotice) -> None:
         """Process DMCA notice automatically"""
         try:
             # Update status to processing
@@ -172,7 +172,7 @@ class UltraAdvancedDMCAOrchestrator:
             logger.error(f"Evidence validation failed: {e}")
             return False
     
-    async def _execute_takedown(self, notice: DMCANotice):
+    async def _execute_takedown(self, notice -> None: DMCANotice) -> None:
         """Execute content takedown"""
         try:
             # Simulate takedown execution
@@ -228,7 +228,7 @@ class UltraAdvancedDMCAOrchestrator:
             'system_status': 'operational'
         }
     
-    async def close(self):
+    async def close(self) -> None:
         """Close DMCA orchestrator"""
         logger.info("DMCA Orchestrator closed")
 

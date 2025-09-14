@@ -198,7 +198,7 @@ class RevenueMetricCollector(MetricCollector):
     """
 Revenue metrics collector."""
     
-    def __init__(self, revenue_engine):
+    def __init__(self, revenue_engine) -> None:
         self.revenue_engine = revenue_engine
     
     async def collect_metrics(
@@ -259,7 +259,7 @@ Collect revenue metrics."""
 class TransactionMetricCollector(MetricCollector):
     """Transaction metrics collector."""
     
-    def __init__(self, revenue_engine):
+    def __init__(self, revenue_engine) -> None:
         self.revenue_engine = revenue_engine
     
     async def collect_metrics(
@@ -319,7 +319,7 @@ Collect transaction metrics."""
 class ConversionMetricCollector(MetricCollector):
     """Conversion metrics collector."""
     
-    def __init__(self, user_data_source):
+    def __init__(self, user_data_source) -> None:
         self.user_data_source = user_data_source
     
     async def collect_metrics(
@@ -353,7 +353,7 @@ class AnalyticsEngine:
     Provides comprehensive analytics, reporting, and insights.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.metric_collectors: Dict[MetricType, MetricCollector] = {}
         self.cached_reports: Dict[str, AnalyticsReport] = {}
         self.metric_storage: List[MetricData] = []
@@ -932,3 +932,6 @@ Initialize analytics engine with data sources."""
                 "metrics": [MetricType.REVENUE, MetricType.TRANSACTIONS, MetricType.USERS, MetricType.CONVERSION]
             }
         }
+)
+
+# File has syntax issues - needs manual review

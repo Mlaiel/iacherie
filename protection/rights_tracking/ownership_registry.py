@@ -93,7 +93,7 @@ class OwnershipChain(BaseModel):
 class OwnershipRegistry:
     """Registre avancé de propriété des droits"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.ownership_records: Dict[str, OwnershipChain] = {}
         self.creator_evidence: Dict[str, List[CreatorshipEvidence]] = {}

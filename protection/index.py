@@ -135,7 +135,7 @@ class ContentProtectionSuite:
     - Advanced analytics and predictive insights
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """
 Initialize the content protection suite"""
         self.config = config
@@ -153,7 +153,7 @@ Initialize the content protection suite"""
             "protection_score": 0.0
         }
     
-    def _initialize_subsystems(self):
+    def _initialize_subsystems(self) -> None:
         """Initialize all protection subsystems"""
         self.logger.info("Initializing content protection subsystems...")
         

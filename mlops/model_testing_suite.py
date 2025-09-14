@@ -329,7 +329,7 @@ class ModelTestingSuite:
     Enterprise model testing suite with comprehensive validation
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.test_suites: Dict[str, TestSuite] = {}
         self.test_results: Dict[str, List[TestResult]] = {}
         self.model_testers: Dict[ModelType, ModelTester] = {
@@ -1206,7 +1206,7 @@ def create_test_config(
 
 # Example usage
 if __name__ == "__main__":
-    async def main():
+    async def main() -> None:
         # Create testing suite
         testing_suite = create_model_testing_suite()
         

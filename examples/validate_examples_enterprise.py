@@ -1,5 +1,12 @@
+"""
+Validate Examples Enterprise module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
+import logging
+
 Examples Enterprise Module Validation - Final Summary
 ===================================================
 
@@ -19,7 +26,7 @@ from pathlib import Path
 project_root = Path(__file__).parent.parent
 sys.path.insert(0, str(project_root))
 
-async def validate_examples_enterprise_module():
+async def validate_examples_enterprise_module() -> None:
     """Validation complète module Examples Enterprise"""
     
     print("🚀 EXAMPLES ENTERPRISE MODULE - FINAL VALIDATION")

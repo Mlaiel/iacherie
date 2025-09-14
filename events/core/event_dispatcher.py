@@ -54,9 +54,9 @@ class EventDispatcher:
     """
     
     def __init__(self, 
-                 max_concurrent_events: int = 100,
-                 retry_attempts: int = 3,
-                 timeout_seconds: int = 300):
+                 max_concurrent_events -> None: int = 100,
+                 retry_attempts -> None: int = 3,
+                 timeout_seconds -> None: int = 300) -> None:
         self.max_concurrent_events = max_concurrent_events
         self.retry_attempts = retry_attempts
         self.timeout_seconds = timeout_seconds
@@ -192,7 +192,7 @@ class EventDispatcher:
             logger.error(f"Failed to dispatch event {event.event_id}: {e}")
             raise EventProcessingError(f"Dispatch failed: {e}")
     
-    async def _process_event_queues(self):
+    async def _process_event_queues(self) -> None:
         """Process events from priority queues"""
         async with self._processing_lock:
             if self._processing:
@@ -218,7 +218,7 @@ class EventDispatcher:
                 self._processing = False
                 self.metrics.queue_size = sum(len(q) for q in self._priority_queues.values())
     
-    async def _process_single_event(self, event: BaseEvent):
+    async def _process_single_event(self, event -> None: BaseEvent) -> None:
         """Process a single event through registered handlers"""
         processing_start = datetime.utcnow()
         event.status = EventStatus.PROCESSING
@@ -311,7 +311,7 @@ class EventDispatcher:
         active_handlers = [h for h in handlers if h.active]
         return sorted(active_handlers, key=lambda x: x.priority.value, reverse=True)
     
-    async def _handle_failed_event(self, event: BaseEvent, results: List[Dict[str, Any]]):
+    async def _handle_failed_event(self, event -> None: BaseEvent, results -> None: List[Dict[str, Any]]) -> None:
         """Handle events that failed processing"""
         # Add to dead letter queue for analysis
         self._dead_letter_queue.append({
@@ -322,7 +322,7 @@ class EventDispatcher:
         
         logger.warning(f"Event {event.event_id} added to dead letter queue")
     
-    def _update_processing_metrics(self, processing_time: float):
+    def _update_processing_metrics(self, processing_time -> None: float) -> None:
         """Update processing time metrics"""
         if self.metrics.average_processing_time == 0:
             self.metrics.average_processing_time = processing_time

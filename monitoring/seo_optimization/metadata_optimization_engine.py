@@ -122,7 +122,7 @@ class MetadataQualityScore:
 class MetadataOptimizationEngine:
     """Main metadata optimization engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.optimizations: List[MetadataOptimization] = []
         self.quality_scores: List[MetadataQualityScore] = []
         self.keyword_database = self._initialize_keyword_database()

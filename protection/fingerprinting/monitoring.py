@@ -96,7 +96,7 @@ class MetricsCollector:
     """
 Advanced metrics collection and aggregation system."""
     
-    def __init__(self, collection_interval: float = 1.0, max_history: int = 10000):
+    def __init__(self, collection_interval -> None: float = 1.0, max_history -> None: int = 10000) -> None:
         self.collection_interval = collection_interval
         self.max_history = max_history
         
@@ -117,7 +117,7 @@ Advanced metrics collection and aggregation system."""
         # Custom metric handlers
         self.custom_collectors: List[Callable] = []
         
-    def _setup_prometheus_metrics(self):
+    def _setup_prometheus_metrics(self) -> None:
         """
 Setup Prometheus metrics."""
         self.prom_counters = {
@@ -175,7 +175,7 @@ Setup Prometheus metrics."""
             )
         }
     
-    def start_collection(self):
+    def start_collection(self) -> None:
         """
 Start metrics collection."""
         if self.collecting:
@@ -186,14 +186,14 @@ Start metrics collection."""
         self.collection_thread.start()
         logger.info("Metrics collection started")
     
-    def stop_collection(self):
+    def stop_collection(self) -> None:
         """Stop metrics collection."""
         self.collecting = False
         if self.collection_thread:
             self.collection_thread.join(timeout=5.0)
         logger.info("Metrics collection stopped")
     
-    def _collection_loop(self):
+    def _collection_loop(self) -> None:
         """Main collection loop."""
         while self.collecting:
             try:
@@ -212,7 +212,7 @@ Start metrics collection."""
             except Exception as e:
                 logger.error(f"Metrics collection error: {e}")
     
-    def _collect_system_metrics(self):
+    def _collect_system_metrics(self) -> None:
         """Collect system resource metrics."""
         try:
             # CPU metrics
@@ -241,18 +241,18 @@ Start metrics collection."""
         except Exception as e:
             logger.warning(f"System metrics collection failed: {e}")
     
-    def record_counter(self, name: str, value: float = 1.0, labels: Dict[str, str] = None):
+    def record_counter(self, name -> None: str, value -> None: float = 1.0, labels -> None: Dict[str, str] = None) -> None:
         """Record counter metric."""
         self.counters[name] += value
         self._record_metric(name, value, MetricType.COUNTER, labels)
     
-    def record_gauge(self, name: str, value: float, labels: Dict[str, str] = None):
+    def record_gauge(self, name -> None: str, value -> None: float, labels -> None: Dict[str, str] = None) -> None:
         """
 Record gauge metric."""
         self.gauges[name] = value
         self._record_metric(name, value, MetricType.GAUGE, labels)
     
-    def record_histogram(self, name: str, value: float, labels: Dict[str, str] = None):
+    def record_histogram(self, name -> None: str, value -> None: float, labels -> None: Dict[str, str] = None) -> None:
         """
 Record histogram metric."""
         self.histograms[name].append(value)
@@ -260,13 +260,13 @@ Record histogram metric."""
             self.histograms[name] = self.histograms[name][-self.max_history:]
         self._record_metric(name, value, MetricType.HISTOGRAM, labels)
     
-    def record_timer(self, name: str, duration: float, labels: Dict[str, str] = None):
+    def record_timer(self, name -> None: str, duration -> None: float, labels -> None: Dict[str, str] = None) -> None:
         """
 Record timing metric."""
         self.record_histogram(f"{name}.duration", duration, labels)
     
-    def _record_metric(self, name: str, value: float, metric_type: MetricType, 
-                      labels: Dict[str, str] = None):
+    def _record_metric(self, name -> None: str, value -> None: float, metric_type -> None: MetricType, 
+                      labels -> None: Dict[str, str] = None) -> None:
         """Record metric point."""
         point = MetricPoint(
             timestamp=datetime.utcnow(),
@@ -302,7 +302,7 @@ Get statistical summary of metric over time window."""
             'p99': np.percentile(values, 99)
         }
     
-    def add_custom_collector(self, collector: Callable):
+    def add_custom_collector(self, collector -> None: Callable) -> None:
         """
 Add custom metrics collector function."""
         self.custom_collectors.append(collector)
@@ -316,7 +316,7 @@ class AlertingSystem:
     """
 Intelligent alerting system with configurable thresholds."""
     
-    def __init__(self, metrics_collector: MetricsCollector):
+    def __init__(self, metrics_collector -> None: MetricsCollector) -> None:
         self.metrics_collector = metrics_collector
         self.alert_rules: Dict[str, Dict[str, Any]] = {}
         self.active_alerts: Dict[str, Alert] = {}
@@ -326,7 +326,7 @@ Intelligent alerting system with configurable thresholds."""
         # Default alert rules
         self._setup_default_rules()
         
-    def _setup_default_rules(self):
+    def _setup_default_rules(self) -> None:
         """
 Setup default alerting rules."""
         self.alert_rules = {
@@ -360,8 +360,8 @@ Setup default alerting rules."""
             }
         }
     
-    def add_rule(self, rule_name: str, metric: str, threshold: float, 
-                operator: str, level: AlertLevel, message: str):
+    def add_rule(self, rule_name -> None: str, metric -> None: str, threshold -> None: float, 
+                operator -> None: str, level -> None: AlertLevel, message -> None: str) -> None:
         """
 Add custom alert rule."""
         self.alert_rules[rule_name] = {
@@ -372,7 +372,7 @@ Add custom alert rule."""
             'message': message
         }
     
-    def check_alerts(self):
+    def check_alerts(self) -> None:
         """
 Check all alert rules and trigger alerts if needed."""
         for rule_name, rule in self.alert_rules.items():
@@ -420,7 +420,7 @@ Check all alert rules and trigger alerts if needed."""
             except Exception as e:
                 logger.error(f"Alert check failed for rule {rule_name}: {e}")
     
-    def _send_alert(self, alert: Alert):
+    def _send_alert(self, alert -> None: Alert) -> None:
         """Send alert through configured notification handlers."""
         logger.warning(f"ALERT [{alert.level.value.upper()}]: {alert.message}")
         
@@ -430,11 +430,11 @@ Check all alert rules and trigger alerts if needed."""
             except Exception as e:
                 logger.error(f"Alert notification failed: {e}")
     
-    def add_notification_handler(self, handler: Callable[[Alert], None]):
+    def add_notification_handler(self, handler -> None: Callable[[Alert], None]) -> None:
         """Add alert notification handler."""
         self.notification_handlers.append(handler)
     
-    def acknowledge_alert(self, alert_id: str):
+    def acknowledge_alert(self, alert_id -> None: str) -> None:
         """
 Acknowledge an active alert."""
         for alert in self.active_alerts.values():
@@ -446,7 +446,7 @@ class AnalyticsEngine:
     """
 Advanced analytics and reporting engine."""
     
-    def __init__(self, metrics_collector: MetricsCollector):
+    def __init__(self, metrics_collector -> None: MetricsCollector) -> None:
         self.metrics_collector = metrics_collector
         self.reports_cache: Dict[str, PerformanceReport] = {}
         
@@ -631,7 +631,7 @@ class MonitoringDashboard:
     """
 Real-time monitoring dashboard generator."""
     
-    def __init__(self, metrics_collector: MetricsCollector, analytics_engine: AnalyticsEngine):
+    def __init__(self, metrics_collector -> None: MetricsCollector, analytics_engine -> None: AnalyticsEngine) -> None:
         self.metrics_collector = metrics_collector
         self.analytics_engine = analytics_engine
         
@@ -687,7 +687,7 @@ class FingerprintingMonitor:
     - Business intelligence reporting
     """
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.config = config or {}
         
         # Initialize components
@@ -703,7 +703,7 @@ class FingerprintingMonitor:
         # Monitoring state
         self.running = False
         
-    async def start(self):
+    async def start(self) -> None:
         """
 Start the monitoring system."""
         if self.running:
@@ -717,13 +717,13 @@ Start the monitoring system."""
         
         logger.info("Fingerprinting monitoring system started")
     
-    async def stop(self):
+    async def stop(self) -> None:
         """Stop the monitoring system."""
         self.running = False
         self.metrics_collector.stop_collection()
         logger.info("Fingerprinting monitoring system stopped")
     
-    async def _alert_check_loop(self):
+    async def _alert_check_loop(self) -> None:
         """Background loop for checking alerts."""
         while self.running:
             try:
@@ -733,8 +733,8 @@ Start the monitoring system."""
                 logger.error(f"Alert checking failed: {e}")
                 await asyncio.sleep(60)  # Wait longer on error
     
-    def record_processing_event(self, content_type: ContentType, status: ProcessingStatus,
-                               duration: float, quality_score: float = None):
+    def record_processing_event(self, content_type -> None: ContentType, status -> None: ProcessingStatus,
+                               duration -> None: float, quality_score -> None: float = None) -> None:
         """Record a processing event for monitoring."""
         # Record basic metrics
         self.metrics_collector.record_counter(

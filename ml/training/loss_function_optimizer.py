@@ -90,7 +90,7 @@ class CreatorObjectives:
 class BaseLossFunction(ABC):
     """Abstract base class for custom loss functions."""
     
-    def __init__(self, config: LossConfig):
+    def __init__(self, config -> None: LossConfig) -> None:
         self.config = config
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         
@@ -113,7 +113,7 @@ class BaseLossFunction(ABC):
 class FocalLoss(BaseLossFunction):
     """Focal Loss for handling class imbalance in creator content."""
     
-    def __init__(self, config: LossConfig, alpha: float = 1.0, gamma: float = 2.0):
+    def __init__(self, config -> None: LossConfig, alpha -> None: float = 1.0, gamma -> None: float = 2.0) -> None:
         super().__init__(config)
         self.alpha = alpha
         self.gamma = gamma
@@ -143,7 +143,7 @@ class FocalLoss(BaseLossFunction):
 class ContrastiveLoss(BaseLossFunction):
     """Contrastive loss for learning creator-specific representations."""
     
-    def __init__(self, config: LossConfig, margin: float = 1.0, temperature: float = 0.07):
+    def __init__(self, config -> None: LossConfig, margin -> None: float = 1.0, temperature -> None: float = 0.07) -> None:
         super().__init__(config)
         self.margin = margin
         self.temperature = temperature
@@ -182,7 +182,7 @@ class ContrastiveLoss(BaseLossFunction):
 class EngagementLoss(BaseLossFunction):
     """Loss function optimized for creator engagement metrics."""
     
-    def __init__(self, config: LossConfig):
+    def __init__(self, config -> None: LossConfig) -> None:
         super().__init__(config)
         self.engagement_factors = {
             'likes': 0.3,
@@ -249,7 +249,7 @@ class EngagementLoss(BaseLossFunction):
 class QualityLoss(BaseLossFunction):
     """Loss function for content quality assessment."""
     
-    def __init__(self, config: LossConfig, content_type: ContentType):
+    def __init__(self, config -> None: LossConfig, content_type -> None: ContentType) -> None:
         super().__init__(config)
         self.content_type = content_type
         
@@ -348,7 +348,7 @@ class QualityLoss(BaseLossFunction):
 class AuthenticityLoss(BaseLossFunction):
     """Loss function for maintaining creator authenticity."""
     
-    def __init__(self, config: LossConfig, creator_style_embedding: torch.Tensor):
+    def __init__(self, config -> None: LossConfig, creator_style_embedding -> None: torch.Tensor) -> None:
         super().__init__(config)
         self.creator_style_embedding = creator_style_embedding.to(self.device)
     
@@ -386,7 +386,7 @@ class AuthenticityLoss(BaseLossFunction):
 class MultiModalLoss(BaseLossFunction):
     """Loss function for multi-modal content analysis."""
     
-    def __init__(self, config: LossConfig):
+    def __init__(self, config -> None: LossConfig) -> None:
         super().__init__(config)
         self.modality_weights = {
             'audio': 0.3,
@@ -433,7 +433,7 @@ class MultiModalLoss(BaseLossFunction):
 class AdaptiveLossWeightOptimizer:
     """Optimizer for adaptive loss weight adjustment."""
     
-    def __init__(self, config: LossConfig):
+    def __init__(self, config -> None: LossConfig) -> None:
         self.config = config
         self.weight_history = []
         self.performance_history = []
@@ -487,10 +487,10 @@ class CreatorSpecificLossFunction(BaseLossFunction):
     
     def __init__(
         self,
-        config: LossConfig,
-        creator_objectives: CreatorObjectives,
-        creator_style_embedding: Optional[torch.Tensor] = None
-    ):
+        config -> None: LossConfig,
+        creator_objectives -> None: CreatorObjectives,
+        creator_style_embedding -> None: Optional[torch.Tensor] = None
+    ) -> None:
         super().__init__(config)
         self.creator_objectives = creator_objectives
         
@@ -631,7 +631,7 @@ class CreatorSpecificLossFunction(BaseLossFunction):
         
         return reg_loss
     
-    async def update_weights(self, performance_metrics: Dict[str, float]):
+    async def update_weights(self, performance_metrics -> None: Dict[str, float]) -> None:
         """Update loss weights based on performance."""
         self.current_weights = await self.weight_optimizer.update_weights(
             self.current_weights,
@@ -689,7 +689,7 @@ class CreatorSpecificLossFunction(BaseLossFunction):
 class LossFunctionOptimizer:
     """Main optimizer for creator-specific loss functions."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.loss_functions: Dict[str, CreatorSpecificLossFunction] = {}
         self.performance_tracker = {}
         
@@ -720,9 +720,9 @@ class LossFunctionOptimizer:
     
     async def optimize_for_creator(
         self,
-        creator_id: str,
-        performance_metrics: Dict[str, float]
-    ):
+        creator_id -> None: str,
+        performance_metrics -> None: Dict[str, float]
+    ) -> None:
         """Optimize loss function for specific creator."""
         if creator_id not in self.loss_functions:
             logger.warning(f"No loss function found for creator {creator_id}")
@@ -840,7 +840,7 @@ def create_creator_objectives(
 
 
 # Example usage for Ainflue creators
-async def example_loss_optimization():
+async def example_loss_optimization() -> None:
     """Example of loss function optimization for creators."""
     
     # Create loss optimizer

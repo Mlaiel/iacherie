@@ -115,7 +115,7 @@ class QueueProcessor(ABC):
 class PlatformQueueProcessor(QueueProcessor):
     """Platform-specific queue processor"""
     
-    def __init__(self, platform: str, rate_limit: int = 60):
+    def __init__(self, platform -> None: str, rate_limit -> None: int = 60) -> None:
         self.platform = platform
         self.rate_limit = rate_limit  # Requests per hour
         self.last_requests: List[datetime] = []
@@ -157,7 +157,7 @@ class PlatformQueueProcessor(QueueProcessor):
 class QueueIntelligence:
     """Intelligent queue management system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.queues: Dict[str, List[QueuedContent]] = {}
         self.priority_queues: Dict[QueuePriority, List[QueuedContent]] = {
             priority: [] for priority in QueuePriority
@@ -739,7 +739,7 @@ class QueueIntelligence:
         
         return allocation
     
-    async def _check_optimization_trigger(self):
+    async def _check_optimization_trigger(self) -> None:
         """Check if queue optimization should be triggered"""
         time_since_last = datetime.now(timezone.utc) - self.last_optimization
         
@@ -795,12 +795,12 @@ class QueueIntelligence:
             current_load=current_load
         )
     
-    def add_processor(self, platform: str, processor: QueueProcessor):
+    def add_processor(self, platform -> None: str, processor -> None: QueueProcessor) -> None:
         """Add a queue processor for a specific platform"""
         self.processors[platform] = processor
         logger.info(f"Added processor for {platform}")
     
-    def remove_processor(self, platform: str):
+    def remove_processor(self, platform -> None: str) -> None:
         """Remove a queue processor"""
         if platform in self.processors:
             del self.processors[platform]

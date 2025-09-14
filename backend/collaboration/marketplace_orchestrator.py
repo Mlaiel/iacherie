@@ -282,7 +282,7 @@ class AuctionEngine:
     - Notifications intelligentes
     """
     
-    def __init__(self, db_session=None, redis_client=None):
+    def __init__(self, db_session=None, redis_client=None) -> None:
         self.db_session = db_session
         self.redis_client = redis_client
         self.active_auctions = {}
@@ -399,7 +399,7 @@ class AuctionEngine:
             logger.error(f"Erreur lors du placement d'offre: {e}")
             raise
     
-    async def _validate_bid(self, auction: Auction, bidder_id: str, amount: Decimal):
+    async def _validate_bid(self, auction -> None: Auction, bidder_id -> None: str, amount -> None: Decimal) -> None:
         """Valide une offre"""
         # Vérifier que l'enchère est active
         if not auction.is_active:
@@ -441,7 +441,7 @@ class AuctionEngine:
             logger.error(f"Erreur traitement offre anglaise: {e}")
             return False
     
-    async def _process_proxy_bids(self, auction: Auction):
+    async def _process_proxy_bids(self, auction -> None: Auction) -> None:
         """Traite les enchères automatiques/proxy"""
         try:
             if auction.id not in self.proxy_bids:
@@ -479,7 +479,7 @@ class AuctionEngine:
         except Exception as e:
             logger.error(f"Erreur traitement proxy bids: {e}")
     
-    async def _handle_anti_sniping(self, auction: Auction, bid: Bid):
+    async def _handle_anti_sniping(self, auction -> None: Auction, bid -> None: Bid) -> None:
         """Gère l'anti-sniping en étendant l'enchère"""
         if not auction.end_time:
             return
@@ -608,7 +608,7 @@ class BiddingSystem:
     - Protection contre la manipulation
     """
     
-    def __init__(self, auction_engine, db_session=None, redis_client=None):
+    def __init__(self, auction_engine, db_session=None, redis_client=None) -> None:
         self.auction_engine = auction_engine
         self.db_session = db_session
         self.redis_client = redis_client
@@ -761,7 +761,7 @@ class BiddingSystem:
             logger.error(f"Erreur configuration auto-bidder: {e}")
             raise
     
-    async def process_auto_bids(self, auction: Auction):
+    async def process_auto_bids(self, auction -> None: Auction) -> None:
         """Traite les enchères automatiques pour une enchère"""
         try:
             for auto_bidder_id, auto_bidder in self.auto_bidders.items():
@@ -840,7 +840,7 @@ class CommissionCalculator:
     - Transparence complète des frais
     """
     
-    def __init__(self, db_session=None, redis_client=None):
+    def __init__(self, db_session=None, redis_client=None) -> None:
         self.db_session = db_session
         self.redis_client = redis_client
         self.commission_structures = self._initialize_commission_structures()

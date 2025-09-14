@@ -1,3 +1,8 @@
+"""
+Distributed Tracing module
+Enterprise implementation for Ainflue platform
+"""
+
 # Ainflue Infrastructure Module
 # =============================
 # 
@@ -82,15 +87,15 @@ class DistributedTracingConfig:
 class SpanProcessor:
     """Processes and enriches spans"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.span_processors = []
         self.enrichers = []
     
-    def add_processor(self, processor: Callable[[TraceSpan], TraceSpan]):
+    def add_processor(self, processor -> None: Callable[[TraceSpan], TraceSpan]) -> None:
         """Add span processor"""
         self.span_processors.append(processor)
     
-    def add_enricher(self, enricher: Callable[[TraceSpan], TraceSpan]):
+    def add_enricher(self, enricher -> None: Callable[[TraceSpan], TraceSpan]) -> None:
         """Add span enricher"""
         self.enrichers.append(enricher)
     
@@ -114,7 +119,7 @@ class SpanProcessor:
 class PerformanceAnalyzer:
     """Analyzes performance metrics from traces"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.service_metrics = defaultdict(lambda: {
             'request_count': 0,
             'error_count': 0,
@@ -129,7 +134,7 @@ class PerformanceAnalyzer:
             'durations': deque(maxlen=100)
         }))
     
-    def analyze_span(self, span: TraceSpan):
+    def analyze_span(self, span -> None: TraceSpan) -> None:
         """Analyze span and update metrics"""
         if span.duration_ms is None:
             return
@@ -238,11 +243,11 @@ class PerformanceAnalyzer:
 class TraceCorrelator:
     """Correlates traces across services"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.traces = {}  # trace_id -> list of spans
         self.trace_timeouts = {}  # trace_id -> timeout_time
     
-    def add_span(self, span: TraceSpan):
+    def add_span(self, span -> None: TraceSpan) -> None:
         """Add span to trace correlation"""
         trace_id = span.trace_id
         
@@ -370,7 +375,7 @@ class TraceCorrelator:
         
         return best_path
     
-    def cleanup_expired_traces(self):
+    def cleanup_expired_traces(self) -> None:
         """Clean up expired traces"""
         current_time = datetime.utcnow()
         expired_traces = [
@@ -390,7 +395,7 @@ class TraceCorrelator:
 class DistributedTracingEngine:
     """Main distributed tracing engine"""
     
-    def __init__(self, config: DistributedTracingConfig):
+    def __init__(self, config -> None: DistributedTracingConfig) -> None:
         self.config = config
         self.tracer_provider = None
         self.tracer = None
@@ -400,7 +405,7 @@ class DistributedTracingEngine:
         self.active_spans = {}
         self.is_running = False
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize distributed tracing"""
         logger.info("Initializing Ainflue Distributed Tracing Engine")
         
@@ -444,7 +449,7 @@ class DistributedTracingEngine:
             logger.error(f"Failed to initialize distributed tracing: {e}")
             raise
     
-    async def _setup_auto_instrumentation(self):
+    async def _setup_auto_instrumentation(self) -> None:
         """Setup automatic instrumentation for common libraries"""
         try:
             # Instrument HTTP requests
@@ -467,7 +472,7 @@ class DistributedTracingEngine:
         except Exception as e:
             logger.error(f"Failed to setup auto-instrumentation: {e}")
     
-    def _setup_span_processors(self):
+    def _setup_span_processors(self) -> None:
         """Setup custom span processors"""
         # Add performance analyzer
         self.span_processor.add_processor(self._performance_processor)
@@ -544,8 +549,8 @@ class DistributedTracingEngine:
             logger.error(f"Failed to start span: {e}")
             raise
     
-    async def finish_span(self, span_id: str, status: str = 'ok', 
-                         tags: Optional[Dict[str, Any]] = None):
+    async def finish_span(self, span_id -> None: str, status -> None: str = 'ok', 
+                         tags -> None: Optional[Dict[str, Any]] = None) -> None:
         """Finish a span"""
         try:
             if span_id not in self.active_spans:
@@ -574,7 +579,7 @@ class DistributedTracingEngine:
         except Exception as e:
             logger.error(f"Failed to finish span: {e}")
     
-    async def add_span_log(self, span_id: str, log_data: Dict[str, Any]):
+    async def add_span_log(self, span_id -> None: str, log_data -> None: Dict[str, Any]) -> None:
         """Add log entry to span"""
         if span_id in self.active_spans:
             span = self.active_spans[span_id]
@@ -584,7 +589,7 @@ class DistributedTracingEngine:
             }
             span.logs.append(log_entry)
     
-    async def add_span_tag(self, span_id: str, key: str, value: Any):
+    async def add_span_tag(self, span_id -> None: str, key -> None: str, value -> None: Any) -> None:
         """Add tag to span"""
         if span_id in self.active_spans:
             span = self.active_spans[span_id]
@@ -669,7 +674,7 @@ class DistributedTracingEngine:
             'total_traces': len(self.trace_correlator.traces)
         }
     
-    async def cleanup(self):
+    async def cleanup(self) -> None:
         """Cleanup expired traces and spans"""
         self.trace_correlator.cleanup_expired_traces()
         
@@ -687,22 +692,22 @@ class DistributedTracingEngine:
 class TracingContext:
     """Context manager for distributed tracing"""
     
-    def __init__(self, engine: DistributedTracingEngine, operation_name: str,
-                 parent_context: Optional[TraceContext] = None,
-                 tags: Optional[Dict[str, Any]] = None):
+    def __init__(self, engine -> None: DistributedTracingEngine, operation_name -> None: str,
+                 parent_context -> None: Optional[TraceContext] = None,
+                 tags -> None: Optional[Dict[str, Any]] = None) -> None:
         self.engine = engine
         self.operation_name = operation_name
         self.parent_context = parent_context
         self.tags = tags
         self.span_id = None
     
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         self.span_id = await self.engine.start_span(
             self.operation_name, self.parent_context, self.tags
         )
         return self
     
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         if self.span_id:
             status = 'error' if exc_type else 'ok'
             error_tags = {}
@@ -714,12 +719,12 @@ class TracingContext:
             
             await self.engine.finish_span(self.span_id, status, error_tags)
     
-    async def add_log(self, log_data: Dict[str, Any]):
+    async def add_log(self, log_data -> None: Dict[str, Any]) -> None:
         """Add log to current span"""
         if self.span_id:
             await self.engine.add_span_log(self.span_id, log_data)
     
-    async def add_tag(self, key: str, value: Any):
+    async def add_tag(self, key -> None: str, value -> None: Any) -> None:
         """Add tag to current span"""
         if self.span_id:
             await self.engine.add_span_tag(self.span_id, key, value)
@@ -730,7 +735,7 @@ class TracingContext:
             return self.engine.create_trace_context(self.span_id)
         return None
 
-async def main():
+async def main() -> None:
     """Main function for testing"""
     config = DistributedTracingConfig(
         service_name="ainflue-api",

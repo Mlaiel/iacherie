@@ -1,3 +1,8 @@
+"""
+Platform Health Dashboard module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 🚀 **Platform Health Dashboard - Enterprise ML System Health Monitoring**
@@ -138,7 +143,7 @@ class PlatformHealthDashboard:
     - Performance optimization recommendations
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.logger = logging.getLogger(__name__)
         
@@ -179,7 +184,7 @@ class PlatformHealthDashboard:
         # Initialize default components
         self._initialize_default_components()
     
-    def _initialize_default_components(self):
+    def _initialize_default_components(self) -> None:
         """Initialize default system components for monitoring"""
         default_components = [
             {
@@ -247,7 +252,7 @@ class PlatformHealthDashboard:
             )
             self.components[comp['id']] = component_health
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize the health monitoring dashboard"""
         self.logger.info("Initializing Platform Health Dashboard")
         
@@ -259,7 +264,7 @@ class PlatformHealthDashboard:
         
         self.logger.info("Platform Health Dashboard initialized successfully")
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Graceful shutdown"""
         self.logger.info("Shutting down Platform Health Dashboard")
         
@@ -329,9 +334,9 @@ class PlatformHealthDashboard:
         
         return report
     
-    async def _start_health_monitoring(self):
+    async def _start_health_monitoring(self) -> None:
         """Start health monitoring background task"""
-        async def health_monitoring_loop():
+        async def health_monitoring_loop() -> None:
             while not self.shutdown_event.is_set():
                 try:
                     await self._monitor_system_health()
@@ -343,9 +348,9 @@ class PlatformHealthDashboard:
         task = asyncio.create_task(health_monitoring_loop())
         self.monitoring_tasks.append(task)
     
-    async def _start_alert_processing(self):
+    async def _start_alert_processing(self) -> None:
         """Start alert processing background task"""
-        async def alert_processing_loop():
+        async def alert_processing_loop() -> None:
             while not self.shutdown_event.is_set():
                 try:
                     await self._process_alerts()
@@ -357,9 +362,9 @@ class PlatformHealthDashboard:
         task = asyncio.create_task(alert_processing_loop())
         self.monitoring_tasks.append(task)
     
-    async def _start_performance_analysis(self):
+    async def _start_performance_analysis(self) -> None:
         """Start performance analysis background task"""
-        async def performance_analysis_loop():
+        async def performance_analysis_loop() -> None:
             while not self.shutdown_event.is_set():
                 try:
                     await self._analyze_performance_trends()
@@ -371,9 +376,9 @@ class PlatformHealthDashboard:
         task = asyncio.create_task(performance_analysis_loop())
         self.monitoring_tasks.append(task)
     
-    async def _start_creator_impact_monitoring(self):
+    async def _start_creator_impact_monitoring(self) -> None:
         """Start creator impact monitoring background task"""
-        async def creator_impact_loop():
+        async def creator_impact_loop() -> None:
             while not self.shutdown_event.is_set():
                 try:
                     await self._monitor_creator_specific_health()
@@ -385,7 +390,7 @@ class PlatformHealthDashboard:
         task = asyncio.create_task(creator_impact_loop())
         self.monitoring_tasks.append(task)
     
-    async def _monitor_system_health(self):
+    async def _monitor_system_health(self) -> None:
         """Monitor overall system health"""
         for component_id, component in self.components.items():
             try:
@@ -396,7 +401,7 @@ class PlatformHealthDashboard:
                 component.overall_status = HealthStatus.UNKNOWN
                 component.last_checked = datetime.utcnow()
     
-    async def _check_component_health(self, component: ComponentHealth):
+    async def _check_component_health(self, component -> None: ComponentHealth) -> None:
         """Check health of individual component"""
         metrics = []
         
@@ -701,7 +706,7 @@ class PlatformHealthDashboard:
         else:
             return HealthStatus.DEGRADED
     
-    async def _check_metric_alerts(self, component: ComponentHealth, metrics: List[HealthMetric]):
+    async def _check_metric_alerts(self, component -> None: ComponentHealth, metrics -> None: List[HealthMetric]) -> None:
         """Check metrics for alert conditions"""
         for metric in metrics:
             if metric.status in [HealthStatus.WARNING, HealthStatus.CRITICAL]:
@@ -734,7 +739,7 @@ class PlatformHealthDashboard:
                 return alert
         return None
     
-    async def _process_alerts(self):
+    async def _process_alerts(self) -> None:
         """Process and manage alerts"""
         current_time = datetime.utcnow()
         
@@ -746,7 +751,7 @@ class PlatformHealthDashboard:
                     alert.resolved = True
                     self.logger.info(f"Auto-resolved old alert: {alert.alert_id}")
     
-    async def _update_all_component_health(self):
+    async def _update_all_component_health(self) -> None:
         """Update health for all components"""
         for component in self.components.values():
             await self._check_component_health(component)
@@ -990,13 +995,13 @@ class PlatformHealthDashboard:
         
         return stats
     
-    async def _analyze_performance_trends(self):
+    async def _analyze_performance_trends(self) -> None:
         """Analyze performance trends"""
         # This would analyze historical data for trends
         # For now, just log the analysis
         self.logger.debug("Analyzing performance trends")
     
-    async def _monitor_creator_specific_health(self):
+    async def _monitor_creator_specific_health(self) -> None:
         """Monitor creator-specific health endpoints"""
         for creator_type, endpoint in self.creator_endpoints.items():
             try:
@@ -1005,14 +1010,14 @@ class PlatformHealthDashboard:
             except Exception as e:
                 self.logger.error(f"Error checking {creator_type.value} endpoint health: {e}")
     
-    async def _check_creator_endpoint_health(self, creator_type: CreatorType, endpoint: str):
+    async def _check_creator_endpoint_health(self, creator_type -> None: CreatorType, endpoint -> None: str) -> None:
         """Check health of creator-specific endpoint"""
         # Simulate endpoint health check
         # In real implementation, this would make HTTP requests to endpoints
         pass
 
 # Usage example
-async def main():
+async def main() -> None:
     """Example usage of PlatformHealthDashboard"""
     config = {
         'check_interval_seconds': 30,

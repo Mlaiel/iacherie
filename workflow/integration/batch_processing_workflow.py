@@ -13,6 +13,7 @@ from datetime import datetime
 
 @dataclass
 class Batch_processingMetrics:
+    """Batch_processingMetrics: class implementation"""
     integration_health: float = 0.0
     success_rate: float = 0.0
     latency_ms: float = 0.0
@@ -22,6 +23,7 @@ class Batch_processingMetrics:
 
 @dataclass
 class Batch_processingResult:
+    """Batch_processingResult: class implementation"""
     user_id: str
     integration_status: str
     performance_metrics: Batch_processingMetrics
@@ -32,7 +34,7 @@ class Batch_processingResult:
 class Batch_processingWorkflow:
     """Batch_processing integration workflow for Ainflue platform."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize batch processing workflow."""
         self.integration_health = 0.95
         self.performance_threshold = 0.9

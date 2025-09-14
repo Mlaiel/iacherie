@@ -253,7 +253,7 @@ class QuantumAPIGateway:
     ✅ WebSocket gateway support
     """
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.config = config or {}
         
         # Configuration serveur
@@ -295,7 +295,7 @@ class QuantumAPIGateway:
         
         logger.info("🌐 Quantum API Gateway initialized")
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialisation complète gateway"""
         try:
             # Configuration SSL si activé
@@ -319,7 +319,7 @@ class QuantumAPIGateway:
             logger.error(f"❌ Failed to initialize API gateway: {e}")
             raise
     
-    async def start(self):
+    async def start(self) -> None:
         """Démarrage serveur gateway"""
         try:
             logger.info(f"🚀 Starting Quantum API Gateway on {self.host}:{self.port}")
@@ -461,7 +461,7 @@ class QuantumAPIGateway:
     # REQUEST HANDLING
     # ========================================
     
-    def _setup_routes(self):
+    def _setup_routes(self) -> None:
         """Configuration routes web application"""
         # Route catch-all pour toutes les requêtes
         self.app.router.add_route("*", "/{path:.*}", self._handle_request)
@@ -825,9 +825,9 @@ class QuantumAPIGateway:
     # MONITORING & HEALTH CHECKS
     # ========================================
     
-    async def _start_health_checks(self):
+    async def _start_health_checks(self) -> None:
         """Démarrage checks de santé"""
-        async def health_check_loop():
+        async def health_check_loop() -> None:
             while True:
                 try:
                     for endpoint in self.service_endpoints.values():
@@ -839,7 +839,7 @@ class QuantumAPIGateway:
         
         asyncio.create_task(health_check_loop())
     
-    async def _perform_health_check(self, endpoint: ServiceEndpoint):
+    async def _perform_health_check(self, endpoint -> None: ServiceEndpoint) -> None:
         """Exécution check de santé"""
         try:
             url = f"{endpoint.protocol}://{endpoint.host}:{endpoint.port}{endpoint.health_check_path}"
@@ -862,9 +862,9 @@ class QuantumAPIGateway:
             endpoint.status = ServiceStatus.UNHEALTHY
             logger.warning(f"⚠️ Health check failed for {endpoint.service_name}: {e}")
     
-    async def _start_monitoring_tasks(self):
+    async def _start_monitoring_tasks(self) -> None:
         """Démarrage tâches monitoring"""
-        async def metrics_update_loop():
+        async def metrics_update_loop() -> None:
             while True:
                 try:
                     await self._update_real_time_metrics()
@@ -875,7 +875,7 @@ class QuantumAPIGateway:
         
         asyncio.create_task(metrics_update_loop())
     
-    async def _update_real_time_metrics(self):
+    async def _update_real_time_metrics(self) -> None:
         """Mise à jour métriques temps réel"""
         try:
             # Calcul métriques depuis l'historique

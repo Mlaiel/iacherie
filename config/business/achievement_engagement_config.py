@@ -16,13 +16,15 @@ try:
     from pydantic import Field
 except ImportError:
     class BaseSettings:
-        def __init__(self, **kwargs):
+    """BaseSettings: class implementation"""
+        def __init__(self, **kwargs) -> None:
             for key, value in kwargs.items():
                 setattr(self, key, value)
         class Config:
+    """Config: class implementation"""
             env_prefix = ""
             extra = "allow"
-    def Field(**kwargs):
+    def Field(**kwargs) -> None:
         return kwargs.get('default_factory', kwargs.get('default'))()
 
 
@@ -186,6 +188,7 @@ class AchievementEngagementSettings(BaseSettings):
     )
     
     class Config:
+    """Config: class implementation"""
         env_prefix = "ACHIEVEMENT_ENGAGEMENT_"
         case_sensitive = False
         extra = "allow"

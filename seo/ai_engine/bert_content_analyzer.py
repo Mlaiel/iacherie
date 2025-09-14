@@ -111,7 +111,7 @@ class BERTContentAnalyzer:
     - Content gap identification
     """
     
-    def __init__(self, db_pool: asyncpg.Pool, model_cache_dir: str = "/tmp/bert_models"):
+    def __init__(self, db_pool -> None: asyncpg.Pool, model_cache_dir -> None: str = "/tmp/bert_models") -> None:
         self.db_pool = db_pool
         self.model_cache_dir = model_cache_dir
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -124,7 +124,7 @@ class BERTContentAnalyzer:
         # Initialize models asynchronously
         asyncio.create_task(self._initialize_models())
     
-    async def _initialize_models(self):
+    async def _initialize_models(self) -> None:
         """Initialize BERT and related models."""
         try:
             logger.info("Initializing BERT models...")
@@ -745,7 +745,7 @@ class BERTContentAnalyzer:
             logger.error(f"Error finding content gaps: {e}")
             return {}
     
-    async def _store_bert_analysis(self, result: BERTAnalysisResult):
+    async def _store_bert_analysis(self, result -> None: BERTAnalysisResult) -> None:
         """Store BERT analysis result in database."""
         try:
             async with self.db_pool.acquire() as conn:

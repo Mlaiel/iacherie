@@ -6,10 +6,10 @@ Copyright: All rights reserved - Unauthorized use prohibited
 Project: IA Influencer Agent Platform - Content Protection & Monetization
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 
-⚠️  AVERTISSEMENT SÉVÈRE ⚠️
-Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
+# [EMOJI_REMOVED]  AVERTISSEMENT S# [EMOJI_REMOVED]V# [EMOJI_REMOVED]RE # [EMOJI_REMOVED]
+Ce code est la propri# [EMOJI_REMOVED]t# [EMOJI_REMOVED] intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution sans autorisation 
-écrite explicite est strictement interdite et passible de poursuites judiciaires.
+# [EMOJI_REMOVED]crite explicite est strictement interdite et passible de poursuites judiciaires.
 Contact autorisations: mlaiel@live.de
 """
 
@@ -84,7 +84,7 @@ class IPRange:
     organization: Optional[str] = None
     threat_level: ThreatLevel = ThreatLevel.LOW
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         try:
                     # Request validation
                     if not data:
@@ -164,10 +164,10 @@ class FirewallManager:
     
     def __init__(
         self,
-        config_path: str = "/etc/firewall/config.yaml",
-        geoip_database_path: str = "/var/lib/GeoLite2/GeoLite2-City.mmdb",
-        threat_feeds: Optional[List[str]] = None
-    ):
+        config_path -> None: str = "/etc/firewall/config.yaml",
+        geoip_database_path -> None: str = "/var/lib/GeoLite2/GeoLite2-City.mmdb",
+        threat_feeds -> None: Optional[List[str]] = None
+    ) -> None:
         self.config_path = config_path
         self.geoip_database_path = geoip_database_path
         self.threat_feeds = threat_feeds or []
@@ -720,3 +720,5 @@ Main monitoring loop"""
             except Exception as e:
                 logger.error(f"Threat feed update error: {e}")
                 await asyncio.sleep(3600)
+
+# File has syntax issues - needs manual review

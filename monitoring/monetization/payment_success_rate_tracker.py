@@ -125,7 +125,7 @@ class PaymentSuccessRateTracker:
     - Cost optimization insights
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.transactions: Dict[str, List[PaymentTransaction]] = defaultdict(list)
         self.success_rate_history: Dict[str, deque] = defaultdict(lambda: deque(maxlen=100))
@@ -566,7 +566,7 @@ class PaymentSuccessRateTracker:
         else:
             return "Poor performance - immediate action required"
 
-    async def _check_alerts(self, partnership_id: str):
+    async def _check_alerts(self, partnership_id -> None: str) -> None:
         """Check for alert conditions."""
         try:
             # Get recent success rate
@@ -601,7 +601,7 @@ class PaymentSuccessRateTracker:
         except Exception as e:
             logger.error(f"Error checking alerts: {e}")
 
-    async def _trigger_alert(self, partnership_id: str, alert_type: str, message: str, data: Dict[str, Any]):
+    async def _trigger_alert(self, partnership_id -> None: str, alert_type -> None: str, message -> None: str, data -> None: Dict[str, Any]) -> None:
         """Trigger an alert for payment issues."""
         alert = {
             'partnership_id': partnership_id,
@@ -641,7 +641,7 @@ class PaymentSuccessRateTracker:
         
         return "low"
 
-    def _update_overall_success_rate(self):
+    def _update_overall_success_rate(self) -> None:
         """Update overall success rate metric."""
         all_transactions = []
         for partnership_transactions in self.transactions.values():
@@ -777,7 +777,7 @@ class PaymentSuccessRateTracker:
 
 # Example usage and testing
 if __name__ == "__main__":
-    async def test_payment_tracker():
+    async def test_payment_tracker() -> None:
         """Test payment success rate tracker."""
         tracker = PaymentSuccessRateTracker()
         

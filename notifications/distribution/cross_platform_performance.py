@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 class CrossPlatformPerformance:
     """Cross-platform performance tracking and analytics"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         logger.info("Cross-platform performance tracking initialized")
     
     async def generate_performance_report(self, user_id: str, report_type: str) -> Dict[str, Any]:

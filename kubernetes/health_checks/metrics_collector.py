@@ -87,7 +87,7 @@ class HealthMetricsCollector:
     Collects, aggregates, and analyzes health metrics from all platform
     components with real-time analytics and predictive capabilities.
     """
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """
         Initialize health metrics collector
         
@@ -124,7 +124,7 @@ class HealthMetricsCollector:
         # Metrics thresholds
         self._metric_thresholds = self.metrics_config.get("thresholds", {})
 
-    async def collect_health_metrics(self, health_results: List[HealthCheckResult]):
+    async def collect_health_metrics(self, health_results -> None: List[HealthCheckResult]) -> None:
         """
         Collect metrics from health check results
         
@@ -253,7 +253,7 @@ Extract detailed metrics from health check result details"""
         
         return metrics
 
-    async def _store_metric(self, metric: HealthMetric):
+    async def _store_metric(self, metric -> None: HealthMetric) -> None:
         """Store metric in memory and check thresholds"""
         try:
             # Check threshold breaches
@@ -291,7 +291,7 @@ Extract detailed metrics from health check result details"""
         
         return False
 
-    async def _detect_anomaly(self, metric: HealthMetric):
+    async def _detect_anomaly(self, metric -> None: HealthMetric) -> None:
         """Detect anomalies in metric values using statistical analysis"""
         try:
             service_metric_key = f"{metric.service_name}.{metric.metric_name}"
@@ -328,7 +328,7 @@ Extract detailed metrics from health check result details"""
         except Exception as e:
             self.logger.error(f"Anomaly detection failed for {metric.metric_name}: {str(e)}")
 
-    async def _handle_anomaly(self, metric: HealthMetric, historical_values: List[float]):
+    async def _handle_anomaly(self, metric -> None: HealthMetric, historical_values -> None: List[float]) -> None:
         """Handle detected anomaly"""
         mean_val = statistics.mean(historical_values)
         std_val = statistics.stdev(historical_values) if len(historical_values) > 1 else 0
@@ -631,7 +631,7 @@ Extract detailed metrics from health check result details"""
             self.logger.error(f"Failed to export Prometheus metrics: {str(e)}")
             return f"# Error exporting metrics: {str(e)}\n"
 
-    async def cleanup_old_metrics(self):
+    async def cleanup_old_metrics(self) -> None:
         """Clean up old metrics based on retention policies"""
         try:
             current_time = datetime.utcnow()

@@ -88,7 +88,7 @@ class PinterestConfig:
     rate_limit_window: int = 3600  # 1 hour
     webhook_secret: Optional[str] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if not self.scopes:
             self.scopes = [
                 PinterestScope.READ_PUBLIC,
@@ -206,7 +206,7 @@ class PinterestBusinessAPI(BaseIntegration):
     - Trend analysis and insights
     """
 
-    def __init__(self, config: PinterestConfig):
+    def __init__(self, config -> None: PinterestConfig) -> None:
         super().__init__("pinterest_business")
         self.config = config
         self.security_manager = SecurityManager()
@@ -1145,7 +1145,7 @@ def create_pinterest_business_integration(
     return PinterestBusinessAPI(config)
 
 # Example usage for Ainflue platform
-async def example_pinterest_business_flow():
+async def example_pinterest_business_flow() -> None:
     """Example Pinterest Business API integration usage"""
     
     # Initialize Pinterest Business API integration

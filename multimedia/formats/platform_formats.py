@@ -102,7 +102,7 @@ class PlatformRequirements:
 class PlatformFormatsManager:
     """Professional platform-specific formats management system"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize platform formats manager"""
         self.config = config or {}
         self.platform_requirements: Dict[Platform, PlatformRequirements] = {}
@@ -113,7 +113,7 @@ class PlatformFormatsManager:
         self._initialize_audio_platforms()
         self._initialize_device_platforms()
     
-    def _initialize_social_platforms(self):
+    def _initialize_social_platforms(self) -> None:
         """Initialize social media platform requirements"""
         try:
             # YouTube
@@ -250,7 +250,7 @@ class PlatformFormatsManager:
         except Exception as e:
             logger.error(f"Error initializing social platforms: {e}")
     
-    def _initialize_streaming_platforms(self):
+    def _initialize_streaming_platforms(self) -> None:
         """Initialize streaming platform requirements"""
         try:
             # Netflix (theoretical requirements for high-quality content)
@@ -281,7 +281,7 @@ class PlatformFormatsManager:
         except Exception as e:
             logger.error(f"Error initializing streaming platforms: {e}")
     
-    def _initialize_audio_platforms(self):
+    def _initialize_audio_platforms(self) -> None:
         """Initialize audio platform requirements"""
         try:
             # Spotify
@@ -339,7 +339,7 @@ class PlatformFormatsManager:
         except Exception as e:
             logger.error(f"Error initializing audio platforms: {e}")
     
-    def _initialize_device_platforms(self):
+    def _initialize_device_platforms(self) -> None:
         """Initialize device-specific requirements"""
         try:
             # Mobile iOS

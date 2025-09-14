@@ -109,7 +109,7 @@ class ComplianceBaseManager:
     - Cross-framework compliance coordination
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.compliance_checks = []
         self.audit_trail = []
         self.risk_assessments = {}

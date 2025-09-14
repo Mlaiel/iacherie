@@ -12,6 +12,7 @@ from datetime import datetime
 
 @dataclass
 class Content_recommendationMetrics:
+    """Content_recommendationMetrics: class implementation"""
     analysis_score: float = 0.0
     accuracy: float = 0.0
     insights_generated: int = 0
@@ -19,6 +20,7 @@ class Content_recommendationMetrics:
 
 @dataclass
 class Content_recommendationResult:
+    """Content_recommendationResult: class implementation"""
     user_id: str
     metrics: Content_recommendationMetrics
     insights: List[str]

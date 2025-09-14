@@ -1,7 +1,14 @@
+"""
+Watermarking Config module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 """Ainflue Watermarking Configuration Module
+import asyncio
+
 ===========================================
 
 Enterprise-grade watermarking configuration for the Ainflue platform.
@@ -491,7 +498,7 @@ class WatermarkDetectionResult:
 class WatermarkingConfiguration:
     """Main watermarking configuration manager"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize watermarking configuration"""
         # Data storage
         self.watermark_contents: Dict[str, WatermarkContent] = {}
@@ -565,7 +572,7 @@ class WatermarkingConfiguration:
         self._initialize_default_content()
         self._initialize_default_templates()
     
-    def _initialize_default_content(self):
+    def _initialize_default_content(self) -> None:
         """Initialize default watermark content"""
         
         # Copyright text watermark
@@ -631,7 +638,7 @@ class WatermarkingConfiguration:
         
         self.watermark_contents[signature_content.content_id] = signature_content
     
-    def _initialize_default_templates(self):
+    def _initialize_default_templates(self) -> None:
         """Initialize default watermark templates"""
         
         # Video watermark template

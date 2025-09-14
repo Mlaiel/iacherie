@@ -1,3 +1,8 @@
+"""
+Media Processor module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Media Processor - Enterprise Audio/Video Processing
@@ -53,12 +58,14 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 class MediaType(Enum):
+    """MediaType class implementation"""
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     LIVESTREAM = "livestream"
 
 class ProcessingStatus(Enum):
+    """ProcessingStatus class implementation"""
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -66,6 +73,7 @@ class ProcessingStatus(Enum):
     QUEUED = "queued"
 
 class Quality(Enum):
+    """Quality class implementation"""
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -114,7 +122,7 @@ class MediaProcessor:
     - Batch processing with queue management
     """
     
-    def __init__(self, config_path: str = "/etc/ainflue/media_config.yaml"):
+    def __init__(self, config_path -> None: str = "/etc/ainflue/media_config.yaml") -> None:
         self.config_path = config_path
         self.processing_queue: List[ProcessingJob] = []
         self.completed_jobs: List[ProcessingJob] = []
@@ -893,7 +901,7 @@ class MediaProcessor:
             logger.error(f"Report generation failed: {e}")
             raise
 
-async def main():
+async def main() -> None:
     """CLI entry point for media processor"""
     import argparse
     

@@ -29,7 +29,7 @@ class RightsTrackingOrchestrator:
     """
 Orchestrateur principal des services de suivi des droits"""
     
-    def __init__(self, config_path: Optional[str] = None):
+    def __init__(self, config_path -> None: Optional[str] = None) -> None:
         self.config = RightsTrackingConfig(config_path)
         self.services = {}
         self.running = False
@@ -88,7 +88,7 @@ Initialise tous les services du module"""
             await self.shutdown()
             return False
     
-    async def _initialize_core_services(self):
+    async def _initialize_core_services(self) -> None:
         """Initialise les services principaux"""
         initialization_order = [
             'ownership_registry',
@@ -118,7 +118,7 @@ Initialise tous les services du module"""
                 self.health_status[service_name] = 'error'
                 raise
     
-    async def _start_monitoring_tasks(self):
+    async def _start_monitoring_tasks(self) -> None:
         """Démarre les tâches de surveillance en arrière-plan"""
         try:
             # Tâche de monitoring de santé général
@@ -139,7 +139,7 @@ Initialise tous les services du module"""
             logger.error(f"Erreur démarrage tâches surveillance: {e}")
             raise
     
-    async def _load_configurations(self):
+    async def _load_configurations(self) -> None:
         """Charge les configurations spécialisées"""
         try:
             # Chargement des templates de licence
@@ -160,7 +160,7 @@ Initialise tous les services du module"""
             logger.error(f"Erreur chargement configurations: {e}")
             raise
     
-    async def _load_license_templates(self):
+    async def _load_license_templates(self) -> None:
         """Charge les templates de licence depuis fichier"""
         try:
             templates_path = Path(self.config.license_templates_path)
@@ -175,7 +175,7 @@ Initialise tous les services du module"""
         except Exception as e:
             logger.error(f"Erreur chargement templates: {e}")
     
-    async def _load_pricing_rules(self):
+    async def _load_pricing_rules(self) -> None:
         """Charge les règles de tarification"""
         try:
             rules_path = Path(self.config.pricing_rules_path)
@@ -190,7 +190,7 @@ Initialise tous les services du module"""
         except Exception as e:
             logger.error(f"Erreur chargement règles tarification: {e}")
     
-    async def _load_territory_configurations(self):
+    async def _load_territory_configurations(self) -> None:
         """Charge les configurations territoriales"""
         try:
             territory_path = Path(self.config.territory_config_path)
@@ -342,7 +342,7 @@ Initialise tous les services du module"""
             logger.error(f"Erreur calcul métriques globales: {e}")
             return {}
     
-    async def _health_monitoring_loop(self):
+    async def _health_monitoring_loop(self) -> None:
         """Boucle de surveillance de santé continue"""
         while self.running:
             try:
@@ -360,7 +360,7 @@ Initialise tous les services du module"""
             except Exception as e:
                 logger.error(f"Erreur surveillance santé: {e}")
     
-    async def _cleanup_task(self):
+    async def _cleanup_task(self) -> None:
         """Tâche de nettoyage automatique"""
         while self.running:
             try:
@@ -378,7 +378,7 @@ Initialise tous les services du module"""
             except Exception as e:
                 logger.error(f"Erreur nettoyage automatique: {e}")
     
-    async def _backup_task(self):
+    async def _backup_task(self) -> None:
         """Tâche de sauvegarde automatique"""
         while self.running:
             try:
@@ -407,7 +407,7 @@ Initialise tous les services du module"""
             except Exception as e:
                 logger.error(f"Erreur sauvegarde automatique: {e}")
     
-    async def _statistics_update_task(self):
+    async def _statistics_update_task(self) -> None:
         """Tâche de mise à jour des statistiques"""
         while self.running:
             try:
@@ -423,7 +423,7 @@ Initialise tous les services du module"""
             except Exception as e:
                 logger.error(f"Erreur mise à jour statistiques: {e}")
     
-    async def _handle_unhealthy_state(self, health_report: Dict[str, Any]):
+    async def _handle_unhealthy_state(self, health_report -> None: Dict[str, Any]) -> None:
         """Gère l'état de santé dégradé"""
         logger.error("🚨 Module en état critique - Actions correctives requises")
         
@@ -437,7 +437,7 @@ Initialise tous les services du module"""
                 except Exception as e:
                     logger.error(f"❌ Échec redémarrage {service_name}: {e}")
     
-    async def _handle_degraded_state(self, health_report: Dict[str, Any]):
+    async def _handle_degraded_state(self, health_report -> None: Dict[str, Any]) -> None:
         """Gère l'état dégradé"""
         logger.warning("🔶 Module en état dégradé - Surveillance renforcée")
         
@@ -445,7 +445,7 @@ Initialise tous les services du module"""
         # Notifications aux administrateurs
         # etc.
     
-    async def _restart_service(self, service_name: str):
+    async def _restart_service(self, service_name -> None: str) -> None:
         """Redémarre un service spécifique"""
         try:
             if service_name in self.services:
@@ -472,7 +472,7 @@ Initialise tous les services du module"""
             logger.error(f"Erreur redémarrage service {service_name}: {e}")
             raise
     
-    async def _save_statistics_snapshot(self, stats: Dict[str, Any]):
+    async def _save_statistics_snapshot(self, stats -> None: Dict[str, Any]) -> None:
         """Sauvegarde un snapshot des statistiques"""
         try:
             timestamp = datetime.utcnow().strftime('%Y%m%d_%H%M%S')
@@ -491,7 +491,7 @@ Initialise tous les services du module"""
         except Exception as e:
             logger.error(f"Erreur sauvegarde statistiques: {e}")
     
-    async def _log_startup_summary(self):
+    async def _log_startup_summary(self) -> None:
         """Log le résumé de démarrage"""
         try:
             uptime = (datetime.utcnow() - self.startup_timestamp).total_seconds()
@@ -513,7 +513,7 @@ Initialise tous les services du module"""
         except Exception as e:
             logger.error(f"Erreur log résumé démarrage: {e}")
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Arrêt propre du module"""
         try:
             logger.info("🛑 Arrêt du module Rights Tracking...")
@@ -566,7 +566,7 @@ async def initialize_rights_tracking_module(config_path: Optional[str] = None) -
         return False
 
 
-async def shutdown_rights_tracking_module():
+async def shutdown_rights_tracking_module() -> None:
     """Arrête le module de suivi des droits"""
     global _orchestrator
     
@@ -615,7 +615,7 @@ Récupère une instance de service spécifique"""
 
 
 # Interface CLI pour tests et débogage
-async def main():
+async def main() -> None:
     """
 Point d'entrée principal pour l'exécution directe du module"""
     import argparse

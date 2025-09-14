@@ -100,7 +100,7 @@ class EventCompressor:
 class EventEncryption:
     """Event encryption utilities for sensitive data"""
     
-    def __init__(self, encryption_key: str):
+    def __init__(self, encryption_key -> None: str) -> None:
         self.encryption_key = encryption_key.encode('utf-8')
     
     def encrypt_event(self, event_data: Dict[str, Any]) -> str:
@@ -173,7 +173,7 @@ class BackendAdapter(ABC):
 class PostgreSQLAdapter(BackendAdapter):
     """PostgreSQL backend adapter"""
     
-    def __init__(self, config: BackendConfig):
+    def __init__(self, config -> None: BackendConfig) -> None:
         self.config = config
         self.connection_pool = None
         self.compressor = EventCompressor()
@@ -199,7 +199,7 @@ class PostgreSQLAdapter(BackendAdapter):
             logger.error(f"Failed to initialize PostgreSQL: {e}")
             raise EventStoreError(f"PostgreSQL initialization failed: {e}")
     
-    async def _create_tables(self):
+    async def _create_tables(self) -> None:
         """Create event storage tables"""
         if self.connection_pool == "mock_pool":
             return
@@ -352,7 +352,7 @@ class PostgreSQLAdapter(BackendAdapter):
 class MongoDBAdapter(BackendAdapter):
     """MongoDB backend adapter"""
     
-    def __init__(self, config: BackendConfig):
+    def __init__(self, config -> None: BackendConfig) -> None:
         self.config = config
         self.client = None
         self.database = None
@@ -381,7 +381,7 @@ class MongoDBAdapter(BackendAdapter):
             logger.error(f"Failed to initialize MongoDB: {e}")
             raise EventStoreError(f"MongoDB initialization failed: {e}")
     
-    async def _create_indexes(self):
+    async def _create_indexes(self) -> None:
         """Create MongoDB indexes"""
         if self.client == "mock_client":
             return
@@ -498,7 +498,7 @@ class MongoDBAdapter(BackendAdapter):
 class EnterpriseEventStore(EventStoreInterface):
     """Enterprise-grade multi-backend event store"""
     
-    def __init__(self, configs: List[BackendConfig]):
+    def __init__(self, configs -> None: List[BackendConfig]) -> None:
         self.configs = configs
         self.adapters: Dict[StorageBackend, BackendAdapter] = {}
         self.primary_backend = None

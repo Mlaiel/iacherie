@@ -120,9 +120,9 @@ class ModelPerformanceMonitor:
 Moniteur de performance des modèles"""
     
     def __init__(self, 
-                 buffer_size: int = 10000,
-                 drift_detection_window: int = 1000,
-                 alert_cooldown_minutes: int = 30):
+                 buffer_size -> None: int = 10000,
+                 drift_detection_window -> None: int = 1000,
+                 alert_cooldown_minutes -> None: int = 30) -> None:
         self.buffer_size = buffer_size
         self.drift_detection_window = drift_detection_window
         self.alert_cooldown_minutes = alert_cooldown_minutes
@@ -147,7 +147,7 @@ Moniteur de performance des modèles"""
         # Callbacks pour les alertes
         self.alert_callbacks: List[Callable[[Alert], None]] = []
     
-    def _setup_default_thresholds(self):
+    def _setup_default_thresholds(self) -> None:
         """
 Configure les thresholds par défaut"""
         default_thresholds = {
@@ -161,22 +161,22 @@ Configure les thresholds par défaut"""
         # Appliquer à tous les modèles par défaut
         self.default_thresholds = default_thresholds
     
-    def set_thresholds(self, model_id: str, thresholds: Dict[MetricType, Dict[str, float]]):
+    def set_thresholds(self, model_id -> None: str, thresholds -> None: Dict[MetricType, Dict[str, float]]) -> None:
         """Configure les thresholds pour un modèle"""
         self.thresholds[model_id] = thresholds
     
-    def add_alert_callback(self, callback: Callable[[Alert], None]):
+    def add_alert_callback(self, callback -> None: Callable[[Alert], None]) -> None:
         """
 Ajoute un callback pour les alertes"""
         self.alert_callbacks.append(callback)
     
     async def record_prediction(self, 
-                               model_id: str,
-                               features: np.ndarray,
-                               prediction: Any,
-                               latency: float,
-                               actual_label: Optional[Any] = None,
-                               metadata: Optional[Dict[str, Any]] = None):
+                               model_id -> None: str,
+                               features -> None: np.ndarray,
+                               prediction -> None: Any,
+                               latency -> None: float,
+                               actual_label -> None: Optional[Any] = None,
+                               metadata -> None: Optional[Dict[str, Any]] = None) -> None:
         """
 Enregistre une prédiction et ses métriques"""
         
@@ -209,10 +209,10 @@ Enregistre une prédiction et ses métriques"""
             logger.error(f"Erreur enregistrement prédiction pour {model_id}: {e}")
     
     async def _record_metric(self, 
-                            model_id: str, 
-                            metric_type: MetricType, 
-                            value: float, 
-                            timestamp: datetime):
+                            model_id -> None: str, 
+                            metric_type -> None: MetricType, 
+                            value -> None: float, 
+                            timestamp -> None: datetime) -> None:
         """Enregistre une métrique"""
         
         metric_point = MetricPoint(timestamp=timestamp, value=value)
@@ -222,10 +222,10 @@ Enregistre une prédiction et ses métriques"""
         await self._check_thresholds(model_id, metric_type, value, timestamp)
     
     async def _check_thresholds(self, 
-                               model_id: str, 
-                               metric_type: MetricType, 
-                               value: float, 
-                               timestamp: datetime):
+                               model_id -> None: str, 
+                               metric_type -> None: MetricType, 
+                               value -> None: float, 
+                               timestamp -> None: datetime) -> None:
         """
 Vérifie les thresholds et génère des alertes"""
         
@@ -292,7 +292,7 @@ Vérifie les thresholds et génère des alertes"""
         except Exception as e:
             logger.error(f"Erreur vérification thresholds: {e}")
     
-    async def _analyze_performance(self, model_id: str):
+    async def _analyze_performance(self, model_id -> None: str) -> None:
         """Analyse la performance globale d'un modèle"""
         
         try:
@@ -316,7 +316,7 @@ Vérifie les thresholds et génère des alertes"""
         except Exception as e:
             logger.error(f"Erreur analyse performance pour {model_id}: {e}")
     
-    async def _detect_drift(self, model_id: str):
+    async def _detect_drift(self, model_id -> None: str) -> None:
         """Détecte le drift des données et du modèle"""
         
         try:
@@ -369,7 +369,7 @@ Vérifie les thresholds et génère des alertes"""
         except Exception as e:
             logger.error(f"Erreur détection drift pour {model_id}: {e}")
     
-    async def _create_reference_distribution(self, model_id: str, features: List[np.ndarray]):
+    async def _create_reference_distribution(self, model_id -> None: str, features -> None: List[np.ndarray]) -> None:
         """Crée la distribution de référence pour le drift detection"""
         
         try:
@@ -621,7 +621,7 @@ Résout une alerte"""
         
         return False
     
-    async def export_metrics(self, model_id: str, filepath: str):
+    async def export_metrics(self, model_id -> None: str, filepath -> None: str) -> None:
         """Exporte les métriques vers un fichier"""
         
         try:
@@ -663,7 +663,7 @@ Résout une alerte"""
         except Exception as e:
             logger.error(f"Erreur export métriques: {e}")
     
-    async def cleanup_old_data(self, days_old: int = 7):
+    async def cleanup_old_data(self, days_old -> None: int = 7) -> None:
         """Nettoie les anciennes données"""
         
         cutoff_date = datetime.now() - timedelta(days=days_old)
@@ -724,7 +724,7 @@ Moniteur pour production avec alertes strictes"""
 
 
 # Exemple d'utilisation enterprise-grade pour créateurs
-async def example_usage():
+async def example_usage() -> None:
         """
         Démontre l'utilisation complète du monitoring de performance
         pour les différents types de créateurs (musiciens, bloggers, photographes)
@@ -803,7 +803,7 @@ async def example_usage():
             logger.error(f"Enterprise example_usage failed: {e}")
             raise
 
-async def alert_handler():
+async def alert_handler() -> None:
     """
     Gestionnaire d'alertes enterprise pour monitoring ML
     Gère les alertes multi-niveau avec escalation automatique

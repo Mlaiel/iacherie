@@ -204,7 +204,7 @@ class AIValidationService:
     performance monitoring, bias detection, and quality assurance.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.validation_sessions: Dict[str, ModelValidationReport] = {}
         self.test_suites: Dict[ModelType, Dict[ValidationLevel, List[TestCase]]] = {}
         self.validation_templates: Dict[ModelType, Dict[str, Any]] = {}
@@ -222,7 +222,7 @@ class AIValidationService:
         
         logger.info("AIValidationService initialized successfully")
     
-    def _initialize_test_suites(self):
+    def _initialize_test_suites(self) -> None:
         """Initialize test suites for different model types and validation levels."""
         # Basic test cases for image classification
         image_classification_tests = {
@@ -329,7 +329,7 @@ class AIValidationService:
             # Add more model types...
         }
     
-    def _initialize_validation_templates(self):
+    def _initialize_validation_templates(self) -> None:
         """Initialize validation templates for different model types."""
         self.validation_templates = {
             ModelType.IMAGE_CLASSIFICATION: {
@@ -355,7 +355,7 @@ class AIValidationService:
             }
         }
     
-    def _initialize_test_data_repositories(self):
+    def _initialize_test_data_repositories(self) -> None:
         """Initialize test data repositories."""
         self.test_data_repositories = {
             "imagenet_validation": {
@@ -384,7 +384,7 @@ class AIValidationService:
             }
         }
     
-    def _initialize_performance_benchmarks(self):
+    def _initialize_performance_benchmarks(self) -> None:
         """Initialize performance benchmarks for different model types."""
         self.performance_benchmarks = {
             ModelType.IMAGE_CLASSIFICATION: {
@@ -410,7 +410,7 @@ class AIValidationService:
             }
         }
     
-    def _initialize_bias_detection(self):
+    def _initialize_bias_detection(self) -> None:
         """Initialize bias detection models and metrics."""
         self.bias_detection_models = {
             "demographic_parity": {
@@ -465,7 +465,7 @@ class AIValidationService:
             logger.error(f"Error starting model validation: {e}")
             raise
     
-    async def _execute_validation(self, validation_id: str, request: ModelValidationRequest):
+    async def _execute_validation(self, validation_id -> None: str, request -> None: ModelValidationRequest) -> None:
         """Execute the validation process."""
         try:
             report = self.validation_sessions[validation_id]
@@ -1045,7 +1045,7 @@ class AIValidationService:
             actual_output=actual_output
         )
     
-    async def _calculate_validation_metrics(self, report: ModelValidationReport):
+    async def _calculate_validation_metrics(self, report -> None: ModelValidationReport) -> None:
         """Calculate overall validation metrics."""
         if not report.test_results:
             return
@@ -1244,7 +1244,7 @@ def get_ai_validation_service() -> AIValidationService:
 
 
 # Example usage and testing
-async def example_usage():
+async def example_usage() -> None:
     """Example usage of AI Validation Service."""
     service = get_ai_validation_service()
     

@@ -136,7 +136,7 @@ class ColorIntelligence:
     """
 AI-powered color analysis and optimization"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         try:
             logger.info(f"Executing __init__")
             
@@ -266,7 +266,7 @@ Analyze color harmony type"""
             rgb2 = webcolors.hex_to_rgb(color2)
             
             # Calculate relative luminance
-            def luminance(rgb):
+            def luminance(rgb) -> None:
                 r, g, b = [c/255 for c in rgb]
                 r = r/12.92 if r <= 0.03928 else ((r+0.055)/1.055)**2.4
                 g = g/12.92 if g <= 0.03928 else ((g+0.055)/1.055)**2.4
@@ -410,7 +410,7 @@ Analyze color temperature"""
 class LogoProcessor:
     """Advanced logo processing and optimization"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._standard_sizes = {
             'favicon': [(16, 16), (32, 32), (48, 48)],
             'small': [(64, 64), (128, 128)],
@@ -623,7 +623,7 @@ class ThemeCustomizer:
     """
 Advanced theme customization and CSS generation"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._css_template = jinja2.Environment(
             loader=jinja2.DictLoader({
                 'theme_base': self._get_base_css_template()
@@ -890,7 +890,7 @@ class BrandAssetManager:
     """
 Comprehensive brand asset management system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._asset_storage: Dict[str, Any] = {}
         self._asset_metadata: Dict[str, Dict[str, Any]] = {}
     
@@ -958,7 +958,7 @@ Store brand asset with metadata"""
 class BrandingEngine:
     """Main branding engine orchestrator"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.color_intelligence = ColorIntelligence()
         self.logo_processor = LogoProcessor()

@@ -172,7 +172,7 @@ class CommunityAnalytics:
 class BaseEmergingConnector:
     """Base class for emerging platform connectors."""
     
-    def __init__(self, platform: EmergingPlatformType, credentials: Dict[str, Any]):
+    def __init__(self, platform -> None: EmergingPlatformType, credentials -> None: Dict[str, Any]) -> None:
         self.platform = platform
         self.credentials = credentials
         self.session: Optional[aiohttp.ClientSession] = None
@@ -263,7 +263,7 @@ class BaseEmergingConnector:
         # Platform-specific webhook setup
         return True
     
-    async def close(self):
+    async def close(self) -> None:
         """Close the connector and cleanup resources."""
         if self.websocket_connection:
             await self.websocket_connection.close()
@@ -274,7 +274,7 @@ class BaseEmergingConnector:
 class DiscordConnector(BaseEmergingConnector):
     """Discord Bot API connector with community management."""
     
-    def __init__(self, credentials: Dict[str, Any]):
+    def __init__(self, credentials -> None: Dict[str, Any]) -> None:
         super().__init__(EmergingPlatformType.DISCORD, credentials)
         self.api_base = "https://discord.com/api/v10"
         self.gateway_url = "wss://gateway.discord.gg/"
@@ -391,7 +391,7 @@ class DiscordConnector(BaseEmergingConnector):
 class TelegramConnector(BaseEmergingConnector):
     """Telegram Bot API connector with channel management."""
     
-    def __init__(self, credentials: Dict[str, Any]):
+    def __init__(self, credentials -> None: Dict[str, Any]) -> None:
         super().__init__(EmergingPlatformType.TELEGRAM, credentials)
         self.api_base = f"https://api.telegram.org/bot{credentials.get('bot_token')}"
     
@@ -445,7 +445,7 @@ class TelegramConnector(BaseEmergingConnector):
 class RedditConnector(BaseEmergingConnector):
     """Reddit API connector with subreddit management."""
     
-    def __init__(self, credentials: Dict[str, Any]):
+    def __init__(self, credentials -> None: Dict[str, Any]) -> None:
         super().__init__(EmergingPlatformType.REDDIT, credentials)
         self.api_base = "https://oauth.reddit.com"
         self.auth_base = "https://www.reddit.com/api/v1"
@@ -537,7 +537,7 @@ class RedditConnector(BaseEmergingConnector):
 class Web3Connector(BaseEmergingConnector):
     """Web3 and blockchain platform connector."""
     
-    def __init__(self, credentials: Dict[str, Any]):
+    def __init__(self, credentials -> None: Dict[str, Any]) -> None:
         super().__init__(EmergingPlatformType.WEB3_COLLECTIVE, credentials)
         self.blockchain_endpoints = {
             Web3PlatformType.ETHEREUM: "https://mainnet.infura.io/v3/",
@@ -592,7 +592,7 @@ class Web3Connector(BaseEmergingConnector):
 class EmergingPlatformManager:
     """Manager for all emerging platform connectors."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.connectors: Dict[EmergingPlatformType, BaseEmergingConnector] = {}
         self.community_cache: Dict[str, Dict[str, Any]] = {}
         self.logger = logging.getLogger(f"{__name__}.manager")
@@ -709,7 +709,7 @@ class EmergingPlatformManager:
         """Get list of connected platforms."""
         return list(self.connectors.keys())
     
-    async def close_all(self):
+    async def close_all(self) -> None:
         """Close all connectors."""
         for connector in self.connectors.values():
             await connector.close()

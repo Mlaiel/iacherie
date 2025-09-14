@@ -1,5 +1,7 @@
 """Audience Engagement Events Module
 
+import logging
+
 Advanced audience engagement tracking and analysis for multi-format content creators.
 Provides real-time engagement monitoring, audience segmentation, and interaction prediction.
 
@@ -121,7 +123,7 @@ class AudienceEngagementEventHandler(BaseEventHandler):
     """
 Handles audience engagement events with advanced processing"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
         self.cache_manager = CacheManager()
         self.db_manager = DatabaseManager()
@@ -267,7 +269,7 @@ class AudienceEngagementTracker:
     """
 Tracks and calculates audience engagement metrics"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.cache_manager = CacheManager()
         self.db_manager = DatabaseManager()
         self.metrics_calculator = MetricsCalculator()
@@ -322,7 +324,7 @@ class AudienceInteractionAnalyzer:
     """
 Analyzes audience interaction patterns and behavior"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.sentiment_analyzer = SentimentAnalyzer()
         self.nlp_pipeline = pipeline("text-classification", 
                                    model="cardiffnlp/twitter-roberta-base-sentiment-latest")
@@ -360,7 +362,7 @@ class AudienceSegmentationEngine:
     """
 Advanced audience segmentation using ML algorithms"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.db_manager = DatabaseManager()
         self.scaler = StandardScaler()
         self.kmeans = KMeans(n_clusters=8, random_state=42)
@@ -421,7 +423,7 @@ class EngagementPredictionEngine:
     """
 Predicts future engagement using advanced ML models"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.engagement_predictor = EngagementPredictor()
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         

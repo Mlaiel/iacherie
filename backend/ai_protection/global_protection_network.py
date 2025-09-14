@@ -166,7 +166,7 @@ class GlobalThreatIntelligence:
 class CountryProtectionNode:
     """Individual country protection node"""
     
-    def __init__(self, country_config: CountryConfiguration):
+    def __init__(self, country_config -> None: CountryConfiguration) -> None:
         self.config = country_config
         self.active_cases: Dict[str, Any] = {}
         self.violation_history: List[ViolationDetection] = []
@@ -301,7 +301,7 @@ class CountryProtectionNode:
 class GlobalCoordinationCenter:
     """Central coordination center for global protection network"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.country_nodes: Dict[CountryCode, CountryProtectionNode] = {}
         self.international_cases: Dict[str, InternationalCase] = {}
@@ -314,7 +314,7 @@ class GlobalCoordinationCenter:
         # Initialize country nodes
         self._initialize_country_nodes()
         
-    def _initialize_country_nodes(self):
+    def _initialize_country_nodes(self) -> None:
         """Initialize country-specific protection nodes"""
         
         # Define country configurations
@@ -719,7 +719,7 @@ class GlobalCoordinationCenter:
         
         return min(10, max(1, base_priority))
     
-    async def _initiate_international_coordination(self, global_violation: GlobalViolation):
+    async def _initiate_international_coordination(self, global_violation -> None: GlobalViolation) -> None:
         """Initiate international coordination process"""
         try:
             international_case_id = str(uuid.uuid4())
@@ -843,7 +843,7 @@ class GlobalCoordinationCenter:
         
         return timeline
     
-    async def share_threat_intelligence(self, intelligence: GlobalThreatIntelligence):
+    async def share_threat_intelligence(self, intelligence -> None: GlobalThreatIntelligence) -> None:
         """Share threat intelligence across the network"""
         try:
             # Store intelligence
@@ -874,8 +874,8 @@ class GlobalCoordinationCenter:
         
         return region_mapping.get(region, [])
     
-    async def _notify_country_node_of_threat(self, country: CountryCode, 
-                                           intelligence: GlobalThreatIntelligence):
+    async def _notify_country_node_of_threat(self, country -> None: CountryCode, 
+                                           intelligence -> None: GlobalThreatIntelligence) -> None:
         """Notify country node of threat intelligence"""
         try:
             if country in self.country_nodes:
@@ -930,7 +930,7 @@ class GlobalProtectionNetwork:
     managing international enforcement and cross-border collaboration.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize global protection network"""
         self.config = config or {}
         
@@ -947,7 +947,7 @@ class GlobalProtectionNetwork:
         
         logger.info("Global Protection Network initialized")
     
-    def _initialize_network(self):
+    def _initialize_network(self) -> None:
         """Initialize global protection network"""
         try:
             self.network_status = "operational"

@@ -51,7 +51,7 @@ class LocalSEOAnalysis:
 class LocalSEOWorkflow:
     """AI-powered local SEO workflow"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.metrics_collector = MetricsCollector()
         self.cache_manager = CacheManager()
         
@@ -357,7 +357,7 @@ class LocalSEOWorkflow:
         
         return recommendations[:15]  # Limit to top 15 recommendations
     
-    async def _cache_analysis(self, analysis: LocalSEOAnalysis):
+    async def _cache_analysis(self, analysis -> None: LocalSEOAnalysis) -> None:
         """Cache analysis result"""
         cache_key = f"local_seo_{analysis.analysis_id}"
         await self.cache_manager.set(cache_key, analysis, ttl=3600)

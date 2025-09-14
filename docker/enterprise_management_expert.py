@@ -1,3 +1,8 @@
+"""
+Enterprise Management Expert module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Enterprise Docker Management System
@@ -56,7 +61,7 @@ class ServiceMetrics:
 class EnterpriseDockerManager:
     """Enterprise Docker Management System combining all expert roles"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.docker_client = docker.from_env()
         self.base_path = Path("/home/runner/work/Ainflue/Ainflue")
         self.compose_files = self._discover_compose_files()
@@ -479,7 +484,7 @@ class EnterpriseDockerManager:
         
         return report
 
-async def main():
+async def main() -> None:
     """Main execution function"""
     manager = EnterpriseDockerManager()
     

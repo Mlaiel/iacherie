@@ -1,7 +1,14 @@
+"""
+Payment Fraud Config module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 """Ainflue Payment Fraud Configuration Module
+import asyncio
+
 ==========================================
 
 Enterprise-grade payment fraud detection and prevention configuration 
@@ -463,7 +470,7 @@ class FraudAnalyticsConfig:
 class PaymentFraudConfiguration:
     """Main payment fraud configuration manager"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize payment fraud configuration"""
         # Fraud configuration components
         self.fraud_detection = FraudDetectionConfig()

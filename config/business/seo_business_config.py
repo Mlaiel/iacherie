@@ -16,7 +16,8 @@ try:
 except ImportError:
     # Fallback for environments without pydantic_settings
     class BaseSettings:
-        def __init__(self, **kwargs):
+    """BaseSettings: class implementation"""
+        def __init__(self, **kwargs) -> None:
             for key, value in kwargs.items():
                 setattr(self, key, value)
 
@@ -118,7 +119,7 @@ class SEOAnalytics:
 class SEOBusinessSettings:
     """SEO business configuration settings"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         # SEO Strategies by Content Type
         self.seo_strategies = {
             ContentType.ARTICLE: {

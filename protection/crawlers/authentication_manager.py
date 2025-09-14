@@ -1,4 +1,4 @@
-"""🔐 Enterprise Authentication Manager
+"""# [EMOJI_REMOVED] Enterprise Authentication Manager
 ===================================
 
 Advanced authentication management system for multi-platform API access
@@ -6,7 +6,7 @@ with enterprise security features, automatic token refresh, and comprehensive
 credential management with encryption and secure storage.
 
 Features:
-- Multi-platform authentication support
+    - Multi-platform authentication support
 - Automatic token refresh and rotation
 - Encrypted credential storage
 - OAuth2 flow management
@@ -20,7 +20,7 @@ Features:
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT WARNING: Unauthorized use, copying, or distribution of this code 
+# [EMOJI_REMOVED] STRICT WARNING: Unauthorized use, copying, or distribution of this code 
 is strictly prohibited without explicit written permission from Fahed Mlaiel.
 Contact: mlaiel@live.de for licensing and authorization.
 """
@@ -103,7 +103,7 @@ Authentication result structure."""
 class SecureCredentialStore:
     """Secure credential storage with encryption."""
     
-    def __init__(self, storage_path: str, master_password: str):
+    def __init__(self, storage_path -> None: str, master_password -> None: str) -> None:
         try:
             logger.info(f"Executing __init__")
             
@@ -118,7 +118,7 @@ class SecureCredentialStore:
         except Exception as e:
             logger.error(f"__init__ failed: {e}")
             raise
-    async def store_credentials(self, platform: str, credentials: Dict[str, Any]):
+    async def store_credentials(self, platform -> None: str, credentials -> None: Dict[str, Any]) -> None:
         """Store encrypted credentials for platform."""
         try:
             # Encrypt credentials
@@ -189,7 +189,7 @@ class SecureCredentialStore:
 class PlatformAuthenticator:
     """Platform-specific authenticator base class."""
     
-    def __init__(self, config: AuthenticationConfig, session: aiohttp.ClientSession):
+    def __init__(self, config -> None: AuthenticationConfig, session -> None: aiohttp.ClientSession) -> None:
         self.config = config
         self.session = session
         self.current_result: Optional[AuthenticationResult] = None
@@ -444,7 +444,7 @@ class EnterpriseAuthenticationManager:
     - Security audit logging
     """
     
-    def __init__(self, storage_path: str, master_password: str):
+    def __init__(self, storage_path -> None: str, master_password -> None: str) -> None:
         """
 Initialize authentication manager."""
         self.credential_store = SecureCredentialStore(storage_path, master_password)
@@ -484,7 +484,7 @@ Initialize authentication manager."""
             )
         }
     
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         """Async context manager entry."""
         self.session = aiohttp.ClientSession()
         
@@ -501,7 +501,7 @@ Initialize authentication manager."""
         
         return self
     
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         """Async context manager exit."""
         if self.session:
             await self.session.close()
@@ -623,7 +623,7 @@ Refresh platform access token."""
                 error_message=str(e)
             )
     
-    async def _schedule_token_refresh(self, platform: str, result: AuthenticationResult):
+    async def _schedule_token_refresh(self, platform -> None: str, result -> None: AuthenticationResult) -> None:
         """Schedule automatic token refresh."""
         if not result.expires_at or not result.refresh_token:
             return
@@ -635,7 +635,7 @@ Refresh platform access token."""
         if delay > 0:
             asyncio.create_task(self._delayed_refresh(platform, result.refresh_token, delay))
     
-    async def _delayed_refresh(self, platform: str, refresh_token: str, delay: float):
+    async def _delayed_refresh(self, platform -> None: str, refresh_token -> None: str, delay -> None: float) -> None:
         """
 Perform delayed token refresh."""
         await asyncio.sleep(delay)
@@ -682,7 +682,7 @@ Validate all cached tokens."""
             logger.error(f"Failed to revoke access for {platform}: {e}")
             return False
     
-    def register_refresh_callback(self, callback: Callable):
+    def register_refresh_callback(self, callback -> None: Callable) -> None:
         """Register callback for token refresh events."""
         self.refresh_callbacks.append(callback)
     
@@ -724,3 +724,5 @@ __all__ = [
     'SecureCredentialStore',
     'TokenType'
 ]
+
+# File has syntax issues - needs manual review

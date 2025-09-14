@@ -154,23 +154,23 @@ class PaymentGatewaysIntegration:
     def __init__(
         self,
         # PayPal credentials
-        paypal_client_id: Optional[str] = None,
-        paypal_client_secret: Optional[str] = None,
-        paypal_webhook_id: Optional[str] = None,
+        paypal_client_id -> None: Optional[str] = None,
+        paypal_client_secret -> None: Optional[str] = None,
+        paypal_webhook_id -> None: Optional[str] = None,
         # Wise credentials
-        wise_api_token: Optional[str] = None,
-        wise_profile_id: Optional[str] = None,
+        wise_api_token -> None: Optional[str] = None,
+        wise_profile_id -> None: Optional[str] = None,
         # Bank transfer settings
-        bank_routing_number: Optional[str] = None,
-        bank_account_number: Optional[str] = None,
-        swift_code: Optional[str] = None,
+        bank_routing_number -> None: Optional[str] = None,
+        bank_account_number -> None: Optional[str] = None,
+        swift_code -> None: Optional[str] = None,
         # Crypto settings
-        crypto_api_key: Optional[str] = None,
-        crypto_secret: Optional[str] = None,
+        crypto_api_key -> None: Optional[str] = None,
+        crypto_secret -> None: Optional[str] = None,
         # Environment settings
-        environment: str = "sandbox",
-        timeout: int = 30
-    ):
+        environment -> None: str = "sandbox",
+        timeout -> None: int = 30
+    ) -> None:
         # Credentials storage
         self.paypal_client_id = paypal_client_id
         self.paypal_client_secret = paypal_client_secret
@@ -215,16 +215,16 @@ class PaymentGatewaysIntegration:
         
         logger.info("Payment Gateways integration initialized")
     
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         """Async context manager entry."""
         await self._ensure_session()
         return self
     
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         """Async context manager exit."""
         await self.close()
     
-    async def _ensure_session(self):
+    async def _ensure_session(self) -> None:
         """Ensure HTTP session is available."""
         if self.session is None or self.session.closed:
             headers = {
@@ -238,7 +238,7 @@ class PaymentGatewaysIntegration:
                 timeout=aiohttp.ClientTimeout(total=self.timeout)
             )
     
-    async def close(self):
+    async def close(self) -> None:
         """Close HTTP session."""
         if self.session and not self.session.closed:
             await self.session.close()
@@ -1134,7 +1134,7 @@ async def process_multi_gateway_payment(
 
 if __name__ == "__main__":
     # Example usage
-    async def main():
+    async def main() -> None:
         import os
         
         async with PaymentGatewaysIntegration(

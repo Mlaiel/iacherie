@@ -57,7 +57,7 @@ class ConfigurationManager:
     Ainflue distribution platform with enterprise security and scalability.
     """
     
-    def __init__(self, environment: ConfigEnvironment = ConfigEnvironment.PRODUCTION):
+    def __init__(self, environment -> None: ConfigEnvironment = ConfigEnvironment.PRODUCTION) -> None:
         """Initialize Configuration Manager
         
         Args:
@@ -173,7 +173,7 @@ class ConfigurationManager:
             validation_results["errors"].append(str(e))
             return validation_results
     
-    def _load_base_configuration(self):
+    def _load_base_configuration(self) -> None:
         """Load base configuration from files"""
         try:
             # Load environment-specific base configuration
@@ -207,7 +207,7 @@ class ConfigurationManager:
             config_entry.version
         )
     
-    def _audit_log(self, action: str, metadata: Dict[str, Any]):
+    def _audit_log(self, action -> None: str, metadata -> None: Dict[str, Any]) -> None:
         """Log configuration audit event"""
         audit_entry = {
             "timestamp": datetime.now().isoformat(),

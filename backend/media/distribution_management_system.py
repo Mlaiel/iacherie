@@ -226,7 +226,7 @@ class DistributionResult:
 class PlatformAdapter:
     """Adapts content for specific platform requirements"""
     
-    def __init__(self, platform: DistributionPlatform, requirements: PlatformRequirements):
+    def __init__(self, platform -> None: DistributionPlatform, requirements -> None: PlatformRequirements) -> None:
         self.platform = platform
         self.requirements = requirements
         self.adaptation_cache = {}
@@ -382,7 +382,7 @@ class PlatformAdapter:
             logger.error(f"Content analysis failed: {e}")
             return {'content_id': str(uuid.uuid4()), 'file_size': 0, 'format': 'unknown'}
     
-    async def _check_resolution_requirements(self, content_info: Dict[str, Any], adaptations_needed: List[AdaptationType]):
+    async def _check_resolution_requirements(self, content_info -> None: Dict[str, Any], adaptations_needed -> None: List[AdaptationType]) -> None:
         """Check if content meets resolution requirements"""
         content_width = content_info.get('width', 0)
         content_height = content_info.get('height', 0)
@@ -613,7 +613,7 @@ class PlatformAdapter:
 class DistributionManager:
     """Manages content distribution across multiple platforms"""
     
-    def __init__(self, config: DistributionConfig):
+    def __init__(self, config -> None: DistributionConfig) -> None:
         self.config = config
         self.platform_adapters: Dict[DistributionPlatform, PlatformAdapter] = {}
         self.distribution_queue: List[DistributionTask] = []
@@ -628,7 +628,7 @@ class DistributionManager:
         
         logger.info("📡 Distribution Manager initialized")
     
-    def _initialize_platform_requirements(self):
+    def _initialize_platform_requirements(self) -> None:
         """Initialize platform-specific requirements"""
         platform_requirements = {
             DistributionPlatform.INSTAGRAM: PlatformRequirements(
@@ -995,7 +995,7 @@ class DistributionManager:
 class DistributionManagementSystem:
     """Main distribution management system orchestrating all distribution components"""
     
-    def __init__(self, config: Optional[DistributionConfig] = None):
+    def __init__(self, config -> None: Optional[DistributionConfig] = None) -> None:
         """Initialize distribution management system"""
         self.config = config or DistributionConfig()
         self.distribution_manager = DistributionManager(self.config)
@@ -1126,14 +1126,14 @@ class DistributionManagementSystem:
 # Backward compatibility classes for existing imports
 class ContentDistributionManager_Legacy:
     """Legacy wrapper for distribution manager"""
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs) -> None:
         config = DistributionConfig()
         self.manager = DistributionManager(config)
 
 
 class PlatformAdapterSystem_Legacy:
     """Legacy wrapper for platform adapter system"""
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs) -> None:
         self.adapters = {}
         # Initialize with basic requirements
         for platform in DistributionPlatform:

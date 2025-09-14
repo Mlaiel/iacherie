@@ -24,18 +24,18 @@ from phonenumbers import carrier, geocoder, timezone
 class ValidationResult:
     """Validation result container with detailed feedback."""
     
-    def __init__(self, is_valid: bool, errors: List[str] = None, warnings: List[str] = None):
+    def __init__(self, is_valid -> None: bool, errors -> None: List[str] = None, warnings -> None: List[str] = None) -> None:
         self.is_valid = is_valid
         self.errors = errors or []
         self.warnings = warnings or []
         self.timestamp = datetime.now()
     
-    def add_error(self, error: str):
+    def add_error(self, error -> None: str) -> None:
         """Add validation error."""
         self.errors.append(error)
         self.is_valid = False
     
-    def add_warning(self, warning: str):
+    def add_warning(self, warning -> None: str) -> None:
         """Add validation warning."""
         self.warnings.append(warning)
     
@@ -62,7 +62,7 @@ class DataValidator:
     - Multi-language support
     """
     
-    def __init__(self, strict_mode: bool = True, custom_rules: Dict[str, Callable] = None):
+    def __init__(self, strict_mode -> None: bool = True, custom_rules -> None: Dict[str, Callable] = None) -> None:
         self.strict_mode = strict_mode
         self.custom_rules = custom_rules or {}
         self.logger = logging.getLogger(__name__)
@@ -309,7 +309,7 @@ class DataValidator:
         
         return result
     
-    def _validate_schema(self, data: Any, schema: Dict[str, Any], result: ValidationResult):
+    def _validate_schema(self, data -> None: Any, schema -> None: Dict[str, Any], result -> None: ValidationResult) -> None:
         """Simple schema validation helper."""
         if 'type' in schema:
             expected_type = schema['type']

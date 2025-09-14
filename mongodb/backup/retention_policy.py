@@ -32,7 +32,7 @@ class RetentionRule:
 class RetentionPolicy:
     """Intelligent backup retention policy manager."""
     
-    def __init__(self, rules: List[RetentionRule] = None):
+    def __init__(self, rules -> None: List[RetentionRule] = None) -> None:
         """Initialize retention policy.
         
         Args:

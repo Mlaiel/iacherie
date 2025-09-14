@@ -53,7 +53,7 @@ app.add_middleware(
 
 # Health check endpoint
 @app.get("/")
-async def root():
+async def root() -> None:
     return {
         "message": "Ainflue AI Platform is running!",
         "status": "online",
@@ -72,12 +72,12 @@ async def root():
     }
 
 @app.get("/health")
-async def health_check():
+async def health_check() -> None:
     return {"status": "healthy", "timestamp": "2025-01-27T17:00:00Z"}
 
 # Status endpoint
 @app.get("/status")
-async def status():
+async def status() -> None:
     return {
         "status": "online",
         "platform": "Ainflue AI Platform",
@@ -95,7 +95,7 @@ async def status():
 
 # AI Agents endpoints
 @app.get("/agents")
-async def get_agents():
+async def get_agents() -> None:
     return {
         "count": 53,
         "agents": [
@@ -108,16 +108,16 @@ async def get_agents():
     }
 
 @app.post("/agents/{agent_id}/start")
-async def start_agent(agent_id: int):
+async def start_agent(agent_id -> None: int) -> None:
     return {"agent_id": agent_id, "status": "started", "message": f"Agent {agent_id} successfully started"}
 
 @app.post("/agents/{agent_id}/stop")
-async def stop_agent(agent_id: int):
+async def stop_agent(agent_id -> None: int) -> None:
     return {"agent_id": agent_id, "status": "stopped", "message": f"Agent {agent_id} successfully stopped"}
 
 # Crawlers endpoints
 @app.get("/crawlers")
-async def get_crawlers():
+async def get_crawlers() -> None:
     return {
         "count": 117,
         "platforms": [
@@ -135,16 +135,16 @@ async def get_crawlers():
     }
 
 @app.post("/crawlers/{platform}/start")
-async def start_crawler(platform: str):
+async def start_crawler(platform -> None: str) -> None:
     return {"platform": platform, "status": "started", "message": f"{platform} crawler successfully started"}
 
 @app.post("/crawlers/{platform}/stop")
-async def stop_crawler(platform: str):
+async def stop_crawler(platform -> None: str) -> None:
     return {"platform": platform, "status": "stopped", "message": f"{platform} crawler successfully stopped"}
 
 # Analytics endpoints
 @app.get("/analytics/revenue")
-async def get_revenue_analytics():
+async def get_revenue_analytics() -> None:
     return {
         "total_revenue": 125000,
         "monthly_growth": 15.2,
@@ -156,7 +156,7 @@ async def get_revenue_analytics():
     }
 
 @app.get("/analytics/performance")
-async def get_performance_analytics():
+async def get_performance_analytics() -> None:
     return {
         "total_views": 5420000,
         "engagement_rate": 8.7,
@@ -169,7 +169,7 @@ async def get_performance_analytics():
 
 # Social Media Distribution endpoints
 @app.post("/distribution/publish")
-async def publish_content():
+async def publish_content() -> None:
     return {
         "status": "success",
         "published_to": ["Facebook", "Instagram", "Twitter", "TikTok", "YouTube"],
@@ -178,7 +178,7 @@ async def publish_content():
     }
 
 @app.get("/distribution/status")
-async def get_distribution_status():
+async def get_distribution_status() -> None:
     return {
         "active_campaigns": 12,
         "scheduled_posts": 45,
@@ -188,7 +188,7 @@ async def get_distribution_status():
 
 # Content Protection endpoints
 @app.get("/protection/threats")
-async def get_threats():
+async def get_threats() -> None:
     return {
         "active_threats": 3,
         "blocked_attempts": 127,
@@ -200,12 +200,12 @@ async def get_threats():
     }
 
 @app.post("/protection/block")
-async def block_threat():
+async def block_threat() -> None:
     return {"status": "blocked", "message": "Threat successfully blocked and reported"}
 
 # Validation endpoints
 @app.post("/validate")
-async def validate_data(data: Dict[str, Any]):
+async def validate_data(data -> None: Dict[str, Any]) -> None:
     return {
         "valid": True,
         "errors": [],
@@ -219,7 +219,7 @@ if __name__ == "__main__":
     import signal
     import sys
     
-    def signal_handler(sig, frame):
+    def signal_handler(sig, frame) -> None:
         logger.info("🛑 Arrêt du serveur demandé")
         sys.exit(0)
     

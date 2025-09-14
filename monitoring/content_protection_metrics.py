@@ -103,7 +103,7 @@ class ContentProtectionTracker:
     - Compliance monitoring
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """
 Initialize content protection tracker"""
         

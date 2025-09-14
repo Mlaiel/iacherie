@@ -157,7 +157,7 @@ class NeuralEmbedding(BaseModel):
     created_at: datetime = Field(default_factory=datetime.utcnow)
     
     @validator('primary_embedding')
-    def validate_embedding_dimension(cls, v, values):
+    def validate_embedding_dimension(cls, v, values) -> None:
         if 'embedding_dimension' in values:
             expected_dim = values['embedding_dimension'].value
             if len(v) != expected_dim:
@@ -168,7 +168,7 @@ class NeuralEmbedding(BaseModel):
 class NeuralSimilarityEngine:
     """🧠 Lead Dev IA: Ultra-sophisticated neural similarity computation engine"""
     
-    def __init__(self, engine_config: Dict[str, Any]):
+    def __init__(self, engine_config -> None: Dict[str, Any]) -> None:
         self.config = engine_config
         self.neural_models = {}
         self.similarity_caches = {}
@@ -194,7 +194,7 @@ class NeuralSimilarityEngine:
         
         logger.info("🧠 Neural Similarity Engine initialized with multi-expert architecture")
     
-    def _initialize_neural_infrastructure(self):
+    def _initialize_neural_infrastructure(self) -> None:
         """🏗️ Backend Senior: Setup distributed neural computation infrastructure"""
         try:
             # Initialize neural model configurations
@@ -212,7 +212,7 @@ class NeuralSimilarityEngine:
             logger.error(f"❌ Neural infrastructure initialization failed: {e}")
             raise
     
-    def _setup_neural_models(self):
+    def _setup_neural_models(self) -> None:
         """🤖 ML Engineer: Configure advanced neural model architectures"""
         
         # Transformer-based similarity model
@@ -306,7 +306,7 @@ class NeuralSimilarityEngine:
         
         logger.info("✅ Neural models configured with advanced architectures")
     
-    def _setup_computation_optimizers(self):
+    def _setup_computation_optimizers(self) -> None:
         """⚙️ DevOps: Setup neural computation optimization engines"""
         
         self.computation_optimizers = {
@@ -332,7 +332,7 @@ class NeuralSimilarityEngine:
         
         logger.info("✅ Computation optimizers configured")
     
-    def _setup_similarity_caches(self):
+    def _setup_similarity_caches(self) -> None:
         """🗄️ DBA: Setup high-performance similarity computation caching"""
         
         self.similarity_caches = {
@@ -759,11 +759,11 @@ class NeuralSimilarityEngine:
     
     def _update_neural_metrics(
         self,
-        neural_architecture: NeuralArchitecture,
-        computation_mode: SimilarityComputationMode,
-        computation_time: float,
-        results_count: int
-    ):
+        neural_architecture -> None: NeuralArchitecture,
+        computation_mode -> None: SimilarityComputationMode,
+        computation_time -> None: float,
+        results_count -> None: int
+    ) -> None:
         """⚙️ DevOps: Update neural computation performance metrics"""
         
         self.neural_metrics['computations_performed'] += 1

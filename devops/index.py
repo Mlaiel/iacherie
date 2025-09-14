@@ -84,7 +84,7 @@ class ScalingRequest(BaseModel):
 class DevOpsServiceState:
     """DevOps service state management"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.start_time = datetime.now()
         self.is_ready = False
         self.is_shutting_down = False
@@ -103,7 +103,7 @@ service_state = DevOpsServiceState()
 
 # Service lifecycle management
 @asynccontextmanager
-async def lifespan(app: FastAPI):
+async def lifespan(app -> None: FastAPI) -> None:
     """FastAPI lifespan context manager"""
     
     logger.info("🚀 Starting Ainflue DevOps Service...")
@@ -170,7 +170,7 @@ app.add_middleware(GZipMiddleware, minimum_size=1000)
 
 # Custom middleware for logging and monitoring
 @app.middleware("http")
-async def logging_middleware(request, call_next):
+async def logging_middleware(request, call_next) -> None:
     """Log all HTTP requests and responses"""
     start_time = datetime.now()
     
@@ -187,7 +187,7 @@ async def logging_middleware(request, call_next):
     return response
 
 # Dependency injection
-async def get_devops_service():
+async def get_devops_service() -> None:
     """Get DevOps service dependency"""
     devops_system = get_devops_system()
     if not devops_system:
@@ -199,7 +199,7 @@ async def get_devops_service():
 
 # Health and readiness endpoints
 @app.get("/health", response_model=HealthResponse, tags=["Health"])
-async def health_check():
+async def health_check() -> None:
     """
     Health check endpoint
     
@@ -241,7 +241,7 @@ async def health_check():
         )
 
 @app.get("/ready", tags=["Health"])
-async def readiness_check():
+async def readiness_check() -> None:
     """
     Readiness check endpoint
     
@@ -440,7 +440,7 @@ async def get_container_status(devops_system = Depends(get_devops_service)):
         )
 
 # Background monitoring tasks
-async def infrastructure_monitoring_task():
+async def infrastructure_monitoring_task() -> None:
     """Background task for infrastructure monitoring"""
     logger.info("Starting infrastructure monitoring task")
     
@@ -460,7 +460,7 @@ async def infrastructure_monitoring_task():
     
     logger.info("Infrastructure monitoring task stopped")
 
-async def deployment_monitoring_task():
+async def deployment_monitoring_task() -> None:
     """Background task for deployment monitoring"""
     logger.info("Starting deployment monitoring task")
     
@@ -477,7 +477,7 @@ async def deployment_monitoring_task():
     
     logger.info("Deployment monitoring task stopped")
 
-async def health_monitoring_task():
+async def health_monitoring_task() -> None:
     """Background task for health monitoring"""
     logger.info("Starting health monitoring task")
     
@@ -497,7 +497,7 @@ async def health_monitoring_task():
 
 # Error handlers
 @app.exception_handler(DevOpsException)
-async def devops_exception_handler(request, exc: DevOpsException):
+async def devops_exception_handler(request, exc -> None: DevOpsException) -> None:
     """Handle DevOps-specific exceptions"""
     return JSONResponse(
         status_code=400,
@@ -509,7 +509,7 @@ async def devops_exception_handler(request, exc: DevOpsException):
     )
 
 @app.exception_handler(HTTPException)
-async def http_exception_handler(request, exc: HTTPException):
+async def http_exception_handler(request, exc -> None: HTTPException) -> None:
     """Handle HTTP exceptions with enhanced logging"""
     logger.warning(f"HTTP exception: {exc.status_code} - {exc.detail}")
     return JSONResponse(
@@ -521,7 +521,7 @@ async def http_exception_handler(request, exc: HTTPException):
     )
 
 # Signal handlers for graceful shutdown
-def handle_shutdown_signal(signum, frame):
+def handle_shutdown_signal(signum, frame) -> None:
     """Handle shutdown signals"""
     logger.info(f"Received shutdown signal: {signum}")
     service_state.is_shutting_down = True
@@ -530,7 +530,7 @@ signal.signal(signal.SIGTERM, handle_shutdown_signal)
 signal.signal(signal.SIGINT, handle_shutdown_signal)
 
 # Development server entry point
-def run_development_server():
+def run_development_server() -> None:
     """Run development server with hot reload"""
     uvicorn.run(
         "devops.index:app",
@@ -542,7 +542,7 @@ def run_development_server():
     )
 
 # Production server entry point
-def run_production_server():
+def run_production_server() -> None:
     """Run production server with optimized settings"""
     uvicorn.run(
         "devops.index:app",

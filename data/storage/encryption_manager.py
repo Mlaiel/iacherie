@@ -7,21 +7,21 @@ Responsibility: Multi-layer encryption for content protection & security complia
 Technologies: Python, AES-256, RSA, Cryptographic APIs, Key management
 ==============================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-© 2025 Fahed Mlaiel. Tous droits réservés.
-Usage non autorisé strictement interdit et passible de poursuites judiciaires.
+# [EMOJI_REMOVED]  PROPRI# [EMOJI_REMOVED]T# [EMOJI_REMOVED] INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL # [EMOJI_REMOVED]
+# [EMOJI_REMOVED] 2025 Fahed Mlaiel. Tous droits r# [EMOJI_REMOVED]serv# [EMOJI_REMOVED]s.
+Usage non autoris# [EMOJI_REMOVED] strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 
-ÉQUIPE PROJET:
-- Lead Dev IA + Architecte: Fahed Mlaiel
+# [EMOJI_REMOVED]QUIPE PROJET:
+    - Lead Dev IA + Architecte: Fahed Mlaiel
 - Backend Senior + ML Engineer: Expertise multi-domaines  
-- Audio + DevOps + DBA + Sécurité: Compétences industrielles
-- Microservices + IA Prompt Engineer: Innovation avancée
+- Audio + DevOps + DBA + S# [EMOJI_REMOVED]curit# [EMOJI_REMOVED]: Comp# [EMOJI_REMOVED]tences industrielles
+- Microservices + IA Prompt Engineer: Innovation avanc# [EMOJI_REMOVED]e
 
-LOGIQUE MÉTIER INTÉGRÉE:
-Key Generation → Encryption Processing → Secure Storage → 
-Key Rotation → Access Control → Decryption → Audit Logging → 
-Compliance Validation → Multi-tier Security → Recovery Management
+LOGIQUE M# [EMOJI_REMOVED]TIER INT# [EMOJI_REMOVED]GR# [EMOJI_REMOVED]E:
+    Key Generation # [EMOJI_REMOVED] Encryption Processing # [EMOJI_REMOVED] Secure Storage # [EMOJI_REMOVED] 
+Key Rotation # [EMOJI_REMOVED] Access Control # [EMOJI_REMOVED] Decryption # [EMOJI_REMOVED] Audit Logging # [EMOJI_REMOVED] 
+Compliance Validation # [EMOJI_REMOVED] Multi-tier Security # [EMOJI_REMOVED] Recovery Management
 """
 import asyncio
 import logging
@@ -135,7 +135,7 @@ class EncryptionManager:
     and compliance features for content protection.
     """
     
-    def __init__(self, config: EncryptionConfig, master_key: bytes = None):
+    def __init__(self, config -> None: EncryptionConfig, master_key -> None: bytes = None) -> None:
         """
         Initialize EncryptionManager.
         
@@ -179,7 +179,7 @@ class EncryptionManager:
         if self.rotation_enabled:
             asyncio.create_task(self._key_rotation_scheduler())
     
-    def _initialize_default_keys(self):
+    def _initialize_default_keys(self) -> None:
         """Initialize default encryption keys"""
         try:
             # Generate default symmetric key
@@ -757,7 +757,7 @@ class EncryptionManager:
             self.logger.error(f"Error importing key: {str(e)}")
             return None
     
-    async def _key_rotation_scheduler(self):
+    async def _key_rotation_scheduler(self) -> None:
         """Background task for automatic key rotation"""
         while self.rotation_enabled:
             try:
@@ -817,14 +817,14 @@ class EncryptionManager:
             self.logger.error(f"Error decrypting key data: {str(e)}")
             raise
     
-    def _schedule_key_rotation(self, key_id: str):
+    def _schedule_key_rotation(self, key_id -> None: str) -> None:
         """Schedule key for rotation"""
         if key_id in self.keys:
             key = self.keys[key_id]
             if key.expires_at:
                 self.rotation_schedule[key_id] = key.expires_at
     
-    def _log_key_operation(self, operation: str, key_id: str, metadata: Dict[str, Any]):
+    def _log_key_operation(self, operation -> None: str, key_id -> None: str, metadata -> None: Dict[str, Any]) -> None:
         """Log key operation for audit"""
         log_entry = {
             'timestamp': datetime.utcnow().isoformat(),
@@ -971,3 +971,5 @@ __all__ = [
     'KeyType',
     'SecurityLevel'
 ]
+
+# File has syntax issues - needs manual review

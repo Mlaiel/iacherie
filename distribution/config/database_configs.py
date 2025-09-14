@@ -141,7 +141,7 @@ class DatabaseConfiguration:
     - Comprehensive monitoring and alerting
     """
 
-    def __init__(self, config_file: Optional[str] = None):
+    def __init__(self, config_file -> None: Optional[str] = None) -> None:
         self.config_file = config_file
         self.databases = {}
         self.connection_pools = {}
@@ -154,7 +154,7 @@ class DatabaseConfiguration:
         # Load configuration
         self._load_configuration()
 
-    def _load_configuration(self):
+    def _load_configuration(self) -> None:
         """Load database configuration from environment and config files"""
         
         # Primary PostgreSQL database for core data
@@ -230,7 +230,7 @@ class DatabaseConfiguration:
         self._initialize_sharding_configs()
         self._initialize_caching_configs()
 
-    def _initialize_connection_pools(self):
+    def _initialize_connection_pools(self) -> None:
         """Initialize connection pool configurations"""
         
         # PostgreSQL connection pool
@@ -267,7 +267,7 @@ class DatabaseConfiguration:
             command_timeout=int(os.getenv('REDIS_COMMAND_TIMEOUT', '5'))
         )
 
-    def _initialize_query_optimizations(self):
+    def _initialize_query_optimizations(self) -> None:
         """Initialize query optimization settings"""
         
         # PostgreSQL optimizations
@@ -292,7 +292,7 @@ class DatabaseConfiguration:
             enable_auto_vacuum=False  # MongoDB handles this differently
         )
 
-    def _initialize_backup_settings(self):
+    def _initialize_backup_settings(self) -> None:
         """Initialize backup configurations"""
         
         # PostgreSQL backups
@@ -321,7 +321,7 @@ class DatabaseConfiguration:
             backup_verification=True
         )
 
-    def _initialize_replication_configs(self):
+    def _initialize_replication_configs(self) -> None:
         """Initialize replication configurations"""
         
         # PostgreSQL replication
@@ -344,7 +344,7 @@ class DatabaseConfiguration:
             auto_failover=True
         )
 
-    def _initialize_sharding_configs(self):
+    def _initialize_sharding_configs(self) -> None:
         """Initialize sharding configurations"""
         
         # PostgreSQL sharding (manual)
@@ -367,7 +367,7 @@ class DatabaseConfiguration:
             auto_rebalancing=True  # MongoDB supports auto-balancing
         )
 
-    def _initialize_caching_configs(self):
+    def _initialize_caching_configs(self) -> None:
         """Initialize caching configurations"""
         
         # Application-level caching

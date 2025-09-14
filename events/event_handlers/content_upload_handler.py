@@ -59,7 +59,7 @@ class ContentUploadHandler(BaseEventHandler):
                  storage_service=None,
                  metadata_extractor=None,
                  validator=None,
-                 ai_orchestrator=None):
+                 ai_orchestrator=None) -> None:
         super().__init__()
         self.storage_service = storage_service
         self.metadata_extractor = metadata_extractor

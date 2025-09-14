@@ -122,7 +122,7 @@ class GatewayHealthMonitor:
     with real-time monitoring, alerting, and SLA tracking.
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """Initialize gateway health monitor"""
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -152,7 +152,7 @@ class GatewayHealthMonitor:
         # HTTP session for health checks
         self.http_session = None
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize the health monitor"""
         try:
             # Create HTTP session
@@ -175,7 +175,7 @@ class GatewayHealthMonitor:
             self.logger.error(f"Failed to initialize health monitor: {e}")
             raise
     
-    async def start_monitoring(self):
+    async def start_monitoring(self) -> None:
         """Start health monitoring"""
         if self.is_monitoring:
             return
@@ -184,7 +184,7 @@ class GatewayHealthMonitor:
         self.monitoring_task = asyncio.create_task(self._monitoring_loop())
         self.logger.info("Health monitoring started")
     
-    async def stop_monitoring(self):
+    async def stop_monitoring(self) -> None:
         """Stop health monitoring"""
         self.is_monitoring = False
         
@@ -200,7 +200,7 @@ class GatewayHealthMonitor:
         
         self.logger.info("Health monitoring stopped")
     
-    async def _monitoring_loop(self):
+    async def _monitoring_loop(self) -> None:
         """Main monitoring loop"""
         while self.is_monitoring:
             try:
@@ -233,7 +233,7 @@ class GatewayHealthMonitor:
                 self.logger.error(f"Error in monitoring loop: {e}")
                 await asyncio.sleep(60)
     
-    async def _perform_health_check(self, provider_name: str, config: HealthCheckConfig):
+    async def _perform_health_check(self, provider_name -> None: str, config -> None: HealthCheckConfig) -> None:
         """Perform health check for a provider"""
         try:
             start_time = time.time()
@@ -307,9 +307,9 @@ class GatewayHealthMonitor:
         
         return True
     
-    async def _record_health_check_result(self, provider_name: str, success: bool, 
-                                        response_time: float, status_code: int,
-                                        error_message: Optional[str] = None):
+    async def _record_health_check_result(self, provider_name -> None: str, success -> None: bool, 
+                                        response_time -> None: float, status_code -> None: int,
+                                        error_message -> None: Optional[str] = None) -> None:
         """Record health check result"""
         timestamp = datetime.now()
         
@@ -360,7 +360,7 @@ class GatewayHealthMonitor:
         # Update metrics
         await self._update_provider_metrics(provider_name)
     
-    async def _update_provider_metrics(self, provider_name: str):
+    async def _update_provider_metrics(self, provider_name -> None: str) -> None:
         """Update calculated metrics for provider"""
         history = list(self.performance_history[provider_name])
         if not history:
@@ -416,8 +416,8 @@ class GatewayHealthMonitor:
         
         return HealthStatus.HEALTHY
     
-    async def _check_metric_thresholds(self, provider_name: str, 
-                                     health_status: ProviderHealthStatus):
+    async def _check_metric_thresholds(self, provider_name -> None: str, 
+                                     health_status -> None: ProviderHealthStatus) -> None:
         """Check metrics against thresholds and create alerts"""
         thresholds = {
             'success_rate': {'warning': 95.0, 'critical': 90.0},
@@ -474,9 +474,9 @@ class GatewayHealthMonitor:
                         metric_name, current_value, values['warning']
                     )
     
-    async def _create_alert(self, provider_name: str, alert_level: AlertLevel,
-                          message: str, metric_name: str, current_value: float,
-                          threshold_value: float):
+    async def _create_alert(self, provider_name -> None: str, alert_level -> None: AlertLevel,
+                          message -> None: str, metric_name -> None: str, current_value -> None: float,
+                          threshold_value -> None: float) -> None:
         """Create health alert"""
         alert_id = f"alert_{provider_name}_{metric_name}_{int(time.time())}"
         
@@ -521,12 +521,12 @@ class GatewayHealthMonitor:
                 return alert
         return None
     
-    async def _update_health_status(self):
+    async def _update_health_status(self) -> None:
         """Update overall health status"""
         for provider_name in self.provider_health:
             await self._update_provider_metrics(provider_name)
     
-    async def _check_sla_compliance(self):
+    async def _check_sla_compliance(self) -> None:
         """Check SLA compliance for all providers"""
         for provider_name, targets in self.sla_targets.items():
             if provider_name not in self.provider_health:
@@ -579,7 +579,7 @@ class GatewayHealthMonitor:
         
         return 100.0
     
-    async def _cleanup_old_alerts(self):
+    async def _cleanup_old_alerts(self) -> None:
         """Clean up old resolved alerts"""
         cutoff_time = datetime.now() - timedelta(days=7)  # Keep alerts for 7 days
         
@@ -618,11 +618,11 @@ class GatewayHealthMonitor:
                     return True
         return False
     
-    def add_alert_callback(self, callback: Callable):
+    def add_alert_callback(self, callback -> None: Callable) -> None:
         """Add callback function to be called when alerts are created"""
         self.alert_callbacks.append(callback)
     
-    async def _load_health_check_configs(self):
+    async def _load_health_check_configs(self) -> None:
         """Load health check configurations"""
         # This would typically load from database or configuration files
         # For now, providing a basic example
@@ -638,7 +638,7 @@ class GatewayHealthMonitor:
         
         self.health_check_configs.update(default_configs)
     
-    async def _load_sla_targets(self):
+    async def _load_sla_targets(self) -> None:
         """Load SLA targets"""
         # Default SLA targets
         default_targets = {

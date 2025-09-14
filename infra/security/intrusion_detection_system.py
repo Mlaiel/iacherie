@@ -1,3 +1,8 @@
+"""
+Intrusion Detection System module
+Enterprise implementation for Ainflue platform
+"""
+
 # Ainflue Infrastructure Module
 # =============================
 # 
@@ -91,14 +96,14 @@ class NetworkFlow:
 class NetworkMonitor:
     """Monitors network traffic for suspicious activities"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.monitoring = False
         self.flow_cache = {}
         self.suspicious_ips = set()
         self.rate_limiters = defaultdict(lambda: deque(maxlen=100))
         self.connection_tracking = defaultdict(lambda: {'count': 0, 'last_seen': datetime.utcnow()})
     
-    async def start_network_monitoring(self):
+    async def start_network_monitoring(self) -> None:
         """Start network traffic monitoring"""
         self.monitoring = True
         logger.info("Starting network monitoring")
@@ -111,11 +116,11 @@ class NetworkMonitor:
         
         await asyncio.gather(*tasks)
     
-    def stop_monitoring(self):
+    def stop_monitoring(self) -> None:
         """Stop network monitoring"""
         self.monitoring = False
     
-    async def _packet_capture_loop(self):
+    async def _packet_capture_loop(self) -> None:
         """Capture and analyze network packets"""
         while self.monitoring:
             try:
@@ -128,7 +133,7 @@ class NetworkMonitor:
                 logger.error(f"Error in packet capture: {e}")
                 await asyncio.sleep(5)
     
-    async def _simulate_network_flows(self):
+    async def _simulate_network_flows(self) -> None:
         """Simulate network flow detection for demo purposes"""
         import random
         
@@ -279,7 +284,7 @@ class NetworkMonitor:
         except:
             return False
     
-    async def _flow_analysis_loop(self):
+    async def _flow_analysis_loop(self) -> None:
         """Periodic analysis of accumulated flows"""
         while self.monitoring:
             try:
@@ -290,7 +295,7 @@ class NetworkMonitor:
                 logger.error(f"Error in flow analysis: {e}")
                 await asyncio.sleep(60)
     
-    async def _analyze_traffic_patterns(self):
+    async def _analyze_traffic_patterns(self) -> None:
         """Analyze traffic patterns for anomalies"""
         # Analyze flows for behavioral anomalies
         current_time = datetime.utcnow()
@@ -311,7 +316,7 @@ class NetworkMonitor:
         # Detect unusual connection patterns
         await self._detect_connection_anomalies(recent_flows)
     
-    async def _detect_traffic_anomalies(self, flows: List[NetworkFlow]):
+    async def _detect_traffic_anomalies(self, flows -> None: List[NetworkFlow]) -> None:
         """Detect traffic volume anomalies"""
         # Calculate average traffic volumes
         total_bytes = sum(flow.bytes_sent + flow.bytes_received for flow in flows)
@@ -323,7 +328,7 @@ class NetworkMonitor:
             if flow_size > avg_flow_size * 10:  # 10x average
                 logger.warning(f"Anomalous traffic volume detected: {flow_size} bytes in flow {flow.flow_id}")
     
-    async def _detect_connection_anomalies(self, flows: List[NetworkFlow]):
+    async def _detect_connection_anomalies(self, flows -> None: List[NetworkFlow]) -> None:
         """Detect unusual connection patterns"""
         # Group flows by source IP
         ip_flows = defaultdict(list)
@@ -337,7 +342,7 @@ class NetworkMonitor:
                 if unique_destinations > 20:  # Connecting to many different hosts
                     logger.warning(f"Suspicious connection pattern from {source_ip}: {len(ip_flow_list)} connections to {unique_destinations} hosts")
     
-    async def _cleanup_loop(self):
+    async def _cleanup_loop(self) -> None:
         """Clean up old data"""
         while self.monitoring:
             try:
@@ -397,7 +402,7 @@ class NetworkMonitor:
 class HostBasedDetection:
     """Host-based intrusion detection"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.file_watchers = {}
         self.process_monitors = {}
         self.log_analyzers = {}
@@ -405,7 +410,7 @@ class HostBasedDetection:
         self.process_baseline = {}
         self.file_integrity_baseline = {}
     
-    async def establish_baseline(self):
+    async def establish_baseline(self) -> None:
         """Establish baseline for normal system behavior"""
         logger.info("Establishing host-based detection baseline")
         
@@ -418,7 +423,7 @@ class HostBasedDetection:
         self.baseline_established = True
         logger.info("Baseline established")
     
-    async def _baseline_processes(self):
+    async def _baseline_processes(self) -> None:
         """Create baseline of normal running processes"""
         try:
             import psutil
@@ -456,7 +461,7 @@ class HostBasedDetection:
         except Exception as e:
             logger.error(f"Error establishing process baseline: {e}")
     
-    async def _baseline_file_integrity(self):
+    async def _baseline_file_integrity(self) -> None:
         """Create baseline for critical file integrity"""
         critical_paths = [
             '/etc/passwd',
@@ -631,7 +636,7 @@ class HostBasedDetection:
 class LogAnalyzer:
     """Analyzes system logs for security events"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.log_patterns = {
             'failed_login': [
                 r'Failed password for .* from (\d+\.\d+\.\d+\.\d+)',
@@ -791,7 +796,7 @@ class LogAnalyzer:
 class ResponseEngine:
     """Automated response to security events"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.response_rules = {
             'brute_force': ['block_ip', 'notify_admin'],
             'port_scan': ['block_ip', 'log_detail'],
@@ -973,7 +978,7 @@ class ResponseEngine:
 class IntrusionDetectionSystem:
     """Main Intrusion Detection System engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.network_monitor = NetworkMonitor()
         self.host_monitor = HostBasedDetection()
         self.log_analyzer = LogAnalyzer()
@@ -987,7 +992,7 @@ class IntrusionDetectionSystem:
             'start_time': None
         }
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize the IDS"""
         logger.info("Initializing Ainflue Intrusion Detection System")
         
@@ -997,7 +1002,7 @@ class IntrusionDetectionSystem:
         self.statistics['start_time'] = datetime.utcnow()
         logger.info("IDS initialization complete")
     
-    async def start_detection(self):
+    async def start_detection(self) -> None:
         """Start intrusion detection"""
         self.detection_enabled = True
         logger.info("Starting intrusion detection")
@@ -1011,17 +1016,17 @@ class IntrusionDetectionSystem:
         
         await asyncio.gather(*detection_tasks)
     
-    def stop_detection(self):
+    def stop_detection(self) -> None:
         """Stop intrusion detection"""
         self.detection_enabled = False
         self.network_monitor.stop_monitoring()
         logger.info("Intrusion detection stopped")
     
-    async def _network_detection_loop(self):
+    async def _network_detection_loop(self) -> None:
         """Network-based detection loop"""
         await self.network_monitor.start_network_monitoring()
     
-    async def _host_detection_loop(self):
+    async def _host_detection_loop(self) -> None:
         """Host-based detection loop"""
         while self.detection_enabled:
             try:
@@ -1041,7 +1046,7 @@ class IntrusionDetectionSystem:
                 logger.error(f"Error in host detection loop: {e}")
                 await asyncio.sleep(60)
     
-    async def _log_analysis_loop(self):
+    async def _log_analysis_loop(self) -> None:
         """Log analysis loop"""
         while self.detection_enabled:
             try:
@@ -1055,12 +1060,12 @@ class IntrusionDetectionSystem:
                 logger.error(f"Error in log analysis loop: {e}")
                 await asyncio.sleep(300)
     
-    async def _queue_event(self, event: SecurityEvent):
+    async def _queue_event(self, event -> None: SecurityEvent) -> None:
         """Queue security event for processing"""
         self.event_queue.append(event)
         self.statistics['events_detected'] += 1
     
-    async def _event_processing_loop(self):
+    async def _event_processing_loop(self) -> None:
         """Process queued security events"""
         while self.detection_enabled:
             try:
@@ -1074,7 +1079,7 @@ class IntrusionDetectionSystem:
                 logger.error(f"Error processing event: {e}")
                 await asyncio.sleep(1)
     
-    async def _process_event(self, event: SecurityEvent):
+    async def _process_event(self, event -> None: SecurityEvent) -> None:
         """Process a single security event"""
         try:
             # Log the event
@@ -1095,7 +1100,7 @@ class IntrusionDetectionSystem:
         except Exception as e:
             logger.error(f"Error processing security event: {e}")
     
-    async def _store_event(self, event: SecurityEvent):
+    async def _store_event(self, event -> None: SecurityEvent) -> None:
         """Store security event for later analysis"""
         try:
             event_data = asdict(event)
@@ -1154,7 +1159,7 @@ class IntrusionDetectionSystem:
         
         return sorted(events, key=lambda x: x['timestamp'], reverse=True)
 
-async def main():
+async def main() -> None:
     """Main function for testing"""
     ids = IntrusionDetectionSystem()
     

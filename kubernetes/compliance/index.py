@@ -1,3 +1,8 @@
+"""
+Index module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """IA Influencer Agent - Compliance Module Index
 Main entry point for compliance system initialization and management
@@ -49,7 +54,7 @@ class ComplianceSystemManager:
     Main compliance system manager orchestrating all compliance components
     and providing unified access to compliance functionality.
     """
-    def __init__(self):
+    def __init__(self) -> None:
         self.initialized = False
         self.components = {}
         self.status = "initializing"
@@ -372,7 +377,7 @@ async def get_compliance_system() -> ComplianceSystemManager:
     return compliance_system
 
 
-async def main():
+async def main() -> None:
     """
 Main entry point for compliance system"""
     try:

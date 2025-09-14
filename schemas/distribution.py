@@ -61,7 +61,7 @@ Content distribution request schema."""
     press_release_generation: bool = Field(default=False)
     
     @validator('distribution_type')
-    def validate_distribution_type(cls, v):
+    def validate_distribution_type(cls, v) -> None:
         """Validate distribution type."""
         allowed_types = {
             "single_release", "album_release", "ep_release", "compilation",
@@ -176,7 +176,7 @@ Platform integration configuration schema."""
     compliance_requirements: List[str] = Field(default_factory=list)
     
     @validator('platform_name')
-    def validate_platform_name(cls, v):
+    def validate_platform_name(cls, v) -> None:
         """Validate platform name."""
         allowed_platforms = {
             "spotify", "apple_music", "youtube", "youtube_music", "amazon_music",
@@ -230,7 +230,7 @@ class ContentDelivery(UUIDSchema, TimestampSchema):
     storage_costs: Decimal = Field(default=Decimal('0.00'), ge=0)
     
     @validator('delivery_method')
-    def validate_delivery_method(cls, v):
+    def validate_delivery_method(cls, v) -> None:
         """Validate delivery method."""
         allowed_methods = {
             "progressive_download", "adaptive_streaming", "live_streaming",
@@ -389,7 +389,7 @@ class MultiPlatformSync(UUIDSchema, TimestampSchema):
     conflict_logs: List[Dict[str, Any]] = Field(default_factory=list)
     
     @validator('sync_frequency')
-    def validate_sync_frequency(cls, v):
+    def validate_sync_frequency(cls, v) -> None:
         """Validate sync frequency."""
         allowed_frequencies = {
             "real_time", "every_15_minutes", "hourly", "daily", 
@@ -446,7 +446,7 @@ class DistributionCampaign(UUIDSchema, TimestampSchema, AuditSchema):
     budget_status: Dict[str, Decimal] = Field(default_factory=dict)
     
     @validator('campaign_type')
-    def validate_campaign_type(cls, v):
+    def validate_campaign_type(cls, v) -> None:
         """Validate campaign type."""
         allowed_types = {
             "album_launch", "single_release", "promotional_campaign", "brand_partnership",

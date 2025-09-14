@@ -250,10 +250,10 @@ except ImportError as e:
     class EventPriority: pass
     class EventStatus: pass  
     class EventCategory: pass
-    def create_engagement_event(*args, **kwargs): return {}
-    def create_revenue_event(*args, **kwargs): return {}
-    def create_content_event(*args, **kwargs): return {}
-    def create_protection_event(*args, **kwargs): return {}
+    def create_engagement_event(*args, **kwargs) -> None: return {}
+    def create_revenue_event(*args, **kwargs) -> None: return {}
+    def create_content_event(*args, **kwargs) -> None: return {}
+    def create_protection_event(*args, **kwargs) -> None: return {}
     global_event_processor = None
     class EngagementAnalyticsEventHandler: pass
     class ProtectionAnalyticsEventHandler: pass
@@ -263,10 +263,10 @@ except ImportError as e:
     class RevenueAnalyticsEventHandler: pass
     analytics_config = {}
     class AnalyticsConfig: pass
-    def calculate_engagement_metrics(*args, **kwargs): return {}
-    def calculate_revenue_metrics(*args, **kwargs): return {}
+    def calculate_engagement_metrics(*args, **kwargs) -> None: return {}
+    def calculate_revenue_metrics(*args, **kwargs) -> None: return {}
     class StatisticalAnalyzer: pass
-    def run_comprehensive_test_suite(*args, **kwargs): return True
+    def run_comprehensive_test_suite(*args, **kwargs) -> None: return True
 
 # Event types for IA Influencer business logic
 class EventType(Enum):

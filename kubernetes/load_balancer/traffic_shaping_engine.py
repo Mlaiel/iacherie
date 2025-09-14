@@ -7,7 +7,7 @@ with priority-based resource allocation and adaptive throttling.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ WARNING: This code is proprietary and confidential.
+# [EMOJI_REMOVED] WARNING: This code is proprietary and confidential.
 Unauthorized copying, distribution, or use without explicit written
 permission from Fahed Mlaiel is strictly prohibited and may result
 in legal action.
@@ -153,7 +153,7 @@ Bandwidth resource pool for traffic classes"""
     borrowing_ratio: float = 0.2
     lending_ratio: float = 0.3
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         try:
                     # Request validation
                     if not data:
@@ -210,10 +210,10 @@ class TrafficShapingEngine:
     
     def __init__(
         self,
-        config_file: Optional[str] = None,
-        redis_client: Optional[redis.Redis] = None,
-        enable_metrics: bool = True
-    ):
+        config_file -> None: Optional[str] = None,
+        redis_client -> None: Optional[redis.Redis] = None,
+        enable_metrics -> None: bool = True
+    ) -> None:
         self.config_file = config_file
         self.redis_client = redis_client
         self.enable_metrics = enable_metrics
@@ -953,7 +953,7 @@ class TrafficShapingEngine:
         try:
             self._monitoring_active = True
             
-            async def monitor_traffic():
+            async def monitor_traffic() -> None:
                 while self._monitoring_active:
                     try:
                         await self._update_traffic_statistics()
@@ -1251,3 +1251,5 @@ async def shape_ai_agent_traffic(
     except Exception as e:
         logger.error(f"Failed to shape AI agent traffic: {e}")
         return {"error": str(e)}
+
+# File has syntax issues - needs manual review

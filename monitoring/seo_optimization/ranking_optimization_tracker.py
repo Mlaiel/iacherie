@@ -155,7 +155,7 @@ class RankingOptimizationTracker:
     - Local SEO optimization for creator discovery
     """
     
-    def __init__(self, db_url: str = None, api_keys: Dict[str, str] = None):
+    def __init__(self, db_url -> None: str = None, api_keys -> None: Dict[str, str] = None) -> None:
         """Initialize ranking optimization tracker"""
         self.db_url = db_url
         self.api_keys = api_keys or {}
@@ -1360,7 +1360,7 @@ class RankingOptimizationTracker:
             return {}
 
 # Usage example
-async def main():
+async def main() -> None:
     """Test the ranking optimization tracker"""
     try:
         # Initialize tracker

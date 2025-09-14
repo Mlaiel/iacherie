@@ -51,7 +51,7 @@ class StreamMessage:
     offset: Optional[int] = None
     correlation_id: Optional[str] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if not self.message_id:
             self.message_id = str(uuid4())
         if not self.timestamp:
@@ -77,8 +77,8 @@ class StreamProducer:
     """
 High-performance stream producer"""
     
-    def __init__(self, redis_manager: RedisManager, 
-                 metrics_collector: MetricsCollector):
+    def __init__(self, redis_manager -> None: RedisManager, 
+                 metrics_collector -> None: MetricsCollector) -> None:
         self.redis = redis_manager
         self.metrics = metrics_collector
         self._buffer: Queue = Queue(maxsize=10000)
@@ -87,14 +87,14 @@ High-performance stream producer"""
         self._producer_task: Optional[Task] = None
         self._shutdown_event = Event()
     
-    async def start(self):
+    async def start(self) -> None:
         """
 Start the producer"""
         if self._producer_task is None:
             self._producer_task = create_task(self._producer_loop())
             logger.info("Stream producer started")
     
-    async def stop(self):
+    async def stop(self) -> None:
         """Stop the producer gracefully"""
         self._shutdown_event.set()
         if self._producer_task:
@@ -114,7 +114,7 @@ Start the producer"""
             logger.error(f"Error sending message to stream {stream_name}: {str(e)}")
             raise EventStreamingError(f"Failed to send message: {str(e)}")
     
-    async def _producer_loop(self):
+    async def _producer_loop(self) -> None:
         try:
             logger.info(f"Executing _producer_loop")
             
@@ -131,7 +131,7 @@ Start the producer"""
             raise
             await self._flush_batch(batch)
     
-    async def _flush_batch(self, batch: List[Dict[str, Any]]):
+    async def _flush_batch(self, batch -> None: List[Dict[str, Any]]) -> None:
         """Flush a batch of messages to Redis streams"""
         try:
             # Group messages by stream
@@ -153,8 +153,8 @@ Start the producer"""
             logger.error(f"Error flushing batch: {str(e)}")
             raise
     
-    async def _send_batch_to_stream(self, stream_name: str, 
-                                  messages: List[StreamMessage]):
+    async def _send_batch_to_stream(self, stream_name -> None: str, 
+                                  messages -> None: List[StreamMessage]) -> None:
         """Send a batch of messages to a specific stream"""
         try:
             pipeline = self.redis.pipeline()
@@ -185,9 +185,9 @@ Start the producer"""
 class StreamConsumer:
     """High-performance stream consumer with consumer groups"""
     
-    def __init__(self, redis_manager: RedisManager, 
-                 config: StreamConsumerConfig,
-                 metrics_collector: MetricsCollector):
+    def __init__(self, redis_manager -> None: RedisManager, 
+                 config -> None: StreamConsumerConfig,
+                 metrics_collector -> None: MetricsCollector) -> None:
         self.redis = redis_manager
         self.config = config
         self.metrics = metrics_collector
@@ -195,12 +195,12 @@ class StreamConsumer:
         self._consumer_task: Optional[Task] = None
         self._message_handlers: Dict[str, Callable] = {}
     
-    def register_handler(self, event_type: str, handler: Callable):
+    def register_handler(self, event_type -> None: str, handler -> None: Callable) -> None:
         """
 Register a message handler for specific event type"""
         self._message_handlers[event_type] = handler
     
-    async def start(self, streams: List[str]):
+    async def start(self, streams -> None: List[str]) -> None:
         """
 Start consuming from streams"""
         if self._running:
@@ -236,7 +236,7 @@ Start consuming from streams"""
             logger.error(f"start failed: {e}")
             raise
     
-    async def _process_messages(self, raw_messages: List):
+    async def _process_messages(self, raw_messages -> None: List) -> None:
         """Process received messages"""
         try:
             for stream_name, stream_messages in raw_messages:
@@ -289,7 +289,7 @@ Start consuming from streams"""
             logger.error(f"Error parsing message: {str(e)}")
             raise EventStreamingError(f"Failed to parse message: {str(e)}")
     
-    async def _handle_message(self, message: StreamMessage):
+    async def _handle_message(self, message -> None: StreamMessage) -> None:
         """Handle a parsed message"""
         try:
             handler = self._message_handlers.get(message.event_type)
@@ -305,7 +305,7 @@ Start consuming from streams"""
             await self._send_to_dead_letter_queue(message, str(e))
             raise
     
-    async def _send_to_dead_letter_queue(self, message: StreamMessage, error: str):
+    async def _send_to_dead_letter_queue(self, message -> None: StreamMessage, error -> None: str) -> None:
         """Send failed message to dead letter queue"""
         try:
             dlq_stream = f"{message.stream_name}:dlq"
@@ -359,8 +359,8 @@ Start consuming from streams"""
 class EventStream:
     """High-level event stream abstraction"""
     
-    def __init__(self, stream_name: str, redis_manager: RedisManager,
-                 metrics_collector: MetricsCollector):
+    def __init__(self, stream_name -> None: str, redis_manager -> None: RedisManager,
+                 metrics_collector -> None: MetricsCollector) -> None:
         self.stream_name = stream_name
         self.redis = redis_manager
         self.metrics = metrics_collector
@@ -418,20 +418,20 @@ Get stream information"""
 class StreamProcessor:
     """Advanced stream processing capabilities"""
     
-    def __init__(self, redis_manager: RedisManager,
-                 metrics_collector: MetricsCollector):
+    def __init__(self, redis_manager -> None: RedisManager,
+                 metrics_collector -> None: MetricsCollector) -> None:
         self.redis = redis_manager
         self.metrics = metrics_collector
         self._processors: Dict[str, Callable] = {}
     
-    def register_processor(self, name: str, processor: Callable):
+    def register_processor(self, name -> None: str, processor -> None: Callable) -> None:
         """
 Register a stream processor"""
         self._processors[name] = processor
     
-    async def process_stream(self, input_stream: str, output_stream: str,
-                           processor_name: str, 
-                           consumer_config: StreamConsumerConfig):
+    async def process_stream(self, input_stream -> None: str, output_stream -> None: str,
+                           processor_name -> None: str, 
+                           consumer_config -> None: StreamConsumerConfig) -> None:
         """
 Process messages from input stream to output stream"""
         processor = self._processors.get(processor_name)
@@ -441,7 +441,7 @@ Process messages from input stream to output stream"""
         consumer = StreamConsumer(self.redis, consumer_config, self.metrics)
         producer = StreamProducer(self.redis, self.metrics)
         
-        async def process_message(message: StreamMessage):
+        async def process_message(message -> None: StreamMessage) -> None:
             try:
                 # Process the message
                 result = await processor(message)
@@ -479,9 +479,9 @@ Process messages from input stream to output stream"""
 class StreamingEngine:
     """Main engine for managing event streams"""
     
-    def __init__(self, redis_manager: RedisManager,
-                 security_manager: SecurityManager,
-                 metrics_collector: MetricsCollector):
+    def __init__(self, redis_manager -> None: RedisManager,
+                 security_manager -> None: SecurityManager,
+                 metrics_collector -> None: MetricsCollector) -> None:
         self.redis = redis_manager
         self.security = security_manager
         self.metrics = metrics_collector
@@ -498,7 +498,7 @@ Create or get an event stream"""
             )
         return self._streams[stream_name]
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """
 Shutdown all streams and consumers"""
         # Stop all consumers

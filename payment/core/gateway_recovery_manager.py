@@ -135,7 +135,7 @@ class RecoveryConfiguration:
 class GatewayRecoveryManager:
     """Enterprise gateway recovery management system"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.failed_transactions: Dict[str, FailedTransaction] = {}
         self.recovery_attempts: Dict[str, List[RecoveryAttempt]] = {}
         self.manual_interventions: Dict[str, ManualIntervention] = {}
@@ -164,7 +164,7 @@ class GatewayRecoveryManager:
             'avg_recovery_time': 0.0
         }
 
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize recovery manager"""
         # Start recovery workers
         for i in range(self.worker_count):
@@ -225,7 +225,7 @@ class GatewayRecoveryManager:
         
         return transaction_id
 
-    async def _recovery_worker(self, worker_id: str):
+    async def _recovery_worker(self, worker_id -> None: str) -> None:
         """Recovery worker that processes failed transactions"""
         logger.info(f"Recovery worker {worker_id} started")
         
@@ -243,7 +243,7 @@ class GatewayRecoveryManager:
                 logger.error(f"Recovery worker {worker_id} error: {e}")
                 await asyncio.sleep(1)
 
-    async def _process_recovery(self, transaction_id: str):
+    async def _process_recovery(self, transaction_id -> None: str) -> None:
         """Process recovery for a failed transaction"""
         
         failed_tx = self.failed_transactions.get(transaction_id)
@@ -488,7 +488,7 @@ class GatewayRecoveryManager:
         
         return False  # Customer contact doesn't immediately resolve
 
-    async def _handle_successful_recovery(self, transaction_id: str, attempt: RecoveryAttempt):
+    async def _handle_successful_recovery(self, transaction_id -> None: str, attempt -> None: RecoveryAttempt) -> None:
         """Handle successful recovery"""
         self.recovery_stats['total_recoveries'] += 1
         self.recovery_stats['success_rate'] = (
@@ -497,7 +497,7 @@ class GatewayRecoveryManager:
         
         logger.info(f"Transaction {transaction_id} successfully recovered with {attempt.strategy.value}")
 
-    async def _handle_failed_recovery(self, transaction_id: str, attempt: RecoveryAttempt):
+    async def _handle_failed_recovery(self, transaction_id -> None: str, attempt -> None: RecoveryAttempt) -> None:
         """Handle failed recovery attempt"""
         failed_tx = self.failed_transactions[transaction_id]
         
@@ -514,7 +514,7 @@ class GatewayRecoveryManager:
         
         logger.info(f"Recovery attempt failed for transaction {transaction_id}. Retry {failed_tx.retry_count}/{failed_tx.max_retries}")
 
-    async def _handle_max_retries_exceeded(self, transaction_id: str):
+    async def _handle_max_retries_exceeded(self, transaction_id -> None: str) -> None:
         """Handle when max retries are exceeded"""
         failed_tx = self.failed_transactions[transaction_id]
         
@@ -531,7 +531,7 @@ class GatewayRecoveryManager:
         
         logger.warning(f"Max retries exceeded for transaction {transaction_id}. Manual review required.")
 
-    async def _monitor_recovery_timeouts(self):
+    async def _monitor_recovery_timeouts(self) -> None:
         """Monitor and handle recovery timeouts"""
         while True:
             try:
@@ -557,7 +557,7 @@ class GatewayRecoveryManager:
                 logger.error(f"Recovery timeout monitoring error: {e}")
                 await asyncio.sleep(60)
 
-    async def _handle_recovery_timeout(self, transaction_id: str):
+    async def _handle_recovery_timeout(self, transaction_id -> None: str) -> None:
         """Handle recovery timeout"""
         logger.warning(f"Recovery timeout for transaction {transaction_id}")
         
@@ -694,7 +694,7 @@ class GatewayRecoveryManager:
             'active_workers': len(self.workers)
         }
 
-    async def cleanup(self):
+    async def cleanup(self) -> None:
         """Cleanup recovery manager"""
         # Cancel all workers
         for worker in self.workers:

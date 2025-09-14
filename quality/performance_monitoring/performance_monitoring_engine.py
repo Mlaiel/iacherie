@@ -166,11 +166,11 @@ class PerformanceMonitoringEngine:
     
     def __init__(
         self,
-        collection_interval: int = 30,
-        retention_hours: int = 24,
-        enable_auto_optimization: bool = True,
-        max_alert_rate: int = 10
-    ):
+        collection_interval -> None: int = 30,
+        retention_hours -> None: int = 24,
+        enable_auto_optimization -> None: bool = True,
+        max_alert_rate -> None: int = 10
+    ) -> None:
         """
         Initialise le moteur de monitoring de performance
         
@@ -777,7 +777,7 @@ class PerformanceMonitoringEngine:
             "last_update": datetime.now().isoformat()
         }
     
-    def cleanup(self):
+    def cleanup(self) -> None:
         """Nettoyage des ressources"""
         self.stop_monitoring()
         self.executor.shutdown(wait=True)
@@ -842,11 +842,11 @@ def get_global_monitoring_engine() -> PerformanceMonitoringEngine:
 
 if __name__ == "__main__":
     # Example usage for testing
-    def test_monitoring():
+    def test_monitoring() -> None:
         engine = MonitoringEngineFactory.create_development_engine()
         
         # Add custom alert callback
-        def custom_alert_handler(alert: PerformanceAlert):
+        def custom_alert_handler(alert -> None: PerformanceAlert) -> None:
             print(f"🚨 Custom Alert: {alert.title} - {alert.current_value} {alert.metadata}")
         
         engine.add_alert_callback(custom_alert_handler)

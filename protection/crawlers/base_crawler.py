@@ -1,4 +1,4 @@
-"""🔍 Enterprise Base Platform Crawler Infrastructure
+"""# [EMOJI_REMOVED] Enterprise Base Platform Crawler Infrastructure
 =================================================
 
 Advanced abstract base class and standardized structures for enterprise-grade 
@@ -6,7 +6,7 @@ platform crawlers. Provides comprehensive interface for multi-platform content
 discovery with industrial-strength monitoring, rate limiting, and analytics.
 
 Enterprise Features:
-- Standardized crawling interface across all platforms
+    - Standardized crawling interface across all platforms
 - Advanced rate limiting with exponential backoff
 - Real-time monitoring with webhook notifications
 - Performance analytics and metrics collection
@@ -19,7 +19,7 @@ Enterprise Features:
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT WARNING: Unauthorized use, copying, or distribution of this code 
+# [EMOJI_REMOVED] STRICT WARNING: Unauthorized use, copying, or distribution of this code 
 is strictly prohibited without explicit written permission from Fahed Mlaiel.
 Contact: mlaiel@live.de for licensing and authorization.
 """
@@ -132,7 +132,7 @@ Circuit breaker pattern implementation for fault tolerance."""
 class PerformanceMetrics:
     """Advanced performance monitoring and analytics."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.request_times: deque = deque(maxlen=1000)
         self.error_rates: Dict[str, int] = defaultdict(int)
         self.success_count = 0
@@ -141,7 +141,7 @@ class PerformanceMetrics:
         self.cache_hits = 0
         self.cache_misses = 0
         
-    def record_request(self, duration: float, success: bool, error_type: str = None):
+    def record_request(self, duration -> None: float, success -> None: bool, error_type -> None: str = None) -> None:
         """
 Record request performance metrics."""
         self.request_times.append(duration)
@@ -185,7 +185,7 @@ class BasePlatformCrawler(ABC):
         requests_per_day=10000
     )
     
-    def __init__(self, platform: str, config: Dict[str, Any]):
+    def __init__(self, platform -> None: str, config -> None: Dict[str, Any]) -> None:
         """
 Initialize enhanced base crawler with enterprise features."""
         self.platform = platform
@@ -401,7 +401,7 @@ Generate SHA-256 hash for content deduplication."""
 Check if content has been seen before."""
         return content_hash in self.seen_content_hashes
     
-    def _add_to_content_cache(self, result: CrawlResult):
+    def _add_to_content_cache(self, result -> None: CrawlResult) -> None:
         """
 Add result to content cache with size management."""
         if len(self.content_cache) > 10000:  # Limit cache size
@@ -413,7 +413,7 @@ Add result to content cache with size management."""
         cache_key = f"{result.platform}:{result.url}"
         self.content_cache[cache_key] = result
     
-    async def _trigger_webhooks(self, event_type: str, data: Dict[str, Any]):
+    async def _trigger_webhooks(self, event_type -> None: str, data -> None: Dict[str, Any]) -> None:
         """Trigger registered webhook callbacks for events."""
         for callback in self.webhook_callbacks:
             try:
@@ -512,11 +512,11 @@ Add result to content cache with size management."""
     
     async def _continuous_monitor(
         self,
-        monitor_id: str,
-        search_queries: List[str],
-        callback_func: callable,
-        interval_minutes: int
-    ):
+        monitor_id -> None: str,
+        search_queries -> None: List[str],
+        callback_func -> None: callable,
+        interval_minutes -> None: int
+    ) -> None:
         """
         Continuous monitoring loop.
         
@@ -602,7 +602,7 @@ Add result to content cache with size management."""
         
         return True
     
-    def _update_stats(self, success: bool):
+    def _update_stats(self, success -> None: bool) -> None:
         """Update crawler statistics."""
         self.total_requests += 1
         if success:
@@ -668,7 +668,7 @@ Add result to content cache with size management."""
             fingerprint_candidates=fingerprint_candidates
         )
     
-    async def cleanup(self):
+    async def cleanup(self) -> None:
         """
         Cleanup crawler resources.
         
@@ -702,3 +702,6 @@ __all__ = [
     'CrawlResult',
     'CrawlerStatus'
 ]
+)
+
+# File has syntax issues - needs manual review

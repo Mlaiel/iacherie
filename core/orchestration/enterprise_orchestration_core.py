@@ -148,7 +148,7 @@ class OrchestrationMetrics:
 class ServiceRegistry:
     """Service discovery and health monitoring"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.services = {}
         self.health_check_interval = 30  # seconds
         self.health_check_timeout = 5  # seconds
@@ -214,20 +214,20 @@ class ServiceRegistry:
         
         return services
 
-    async def start_health_monitoring(self):
+    async def start_health_monitoring(self) -> None:
         """Start continuous health monitoring"""
         if self._health_check_task is None:
             self._health_check_task = asyncio.create_task(self._health_check_loop())
             logger.info("Health monitoring started")
 
-    async def stop_health_monitoring(self):
+    async def stop_health_monitoring(self) -> None:
         """Stop health monitoring"""
         if self._health_check_task:
             self._health_check_task.cancel()
             self._health_check_task = None
             logger.info("Health monitoring stopped")
 
-    async def _health_check_loop(self):
+    async def _health_check_loop(self) -> None:
         """Continuous health check loop"""
         while True:
             try:
@@ -238,7 +238,7 @@ class ServiceRegistry:
             except Exception as e:
                 logger.error(f"Health check loop error: {str(e)}")
 
-    async def _check_all_services_health(self):
+    async def _check_all_services_health(self) -> None:
         """Check health of all registered services"""
         tasks = []
         for service in self.services.values():
@@ -248,7 +248,7 @@ class ServiceRegistry:
         if tasks:
             await asyncio.gather(*tasks, return_exceptions=True)
 
-    async def _check_service_health(self, service: Service):
+    async def _check_service_health(self, service -> None: Service) -> None:
         """Check health of individual service"""
         try:
             start_time = datetime.utcnow()
@@ -280,7 +280,7 @@ class ServiceRegistry:
 class TaskExecutor:
     """Task execution engine"""
     
-    def __init__(self, service_registry: ServiceRegistry):
+    def __init__(self, service_registry -> None: ServiceRegistry) -> None:
         self.service_registry = service_registry
         self.executor = ThreadPoolExecutor(max_workers=10)
         self.running_tasks = {}
@@ -423,7 +423,7 @@ class TaskExecutor:
 class WorkflowEngine:
     """Workflow orchestration engine"""
     
-    def __init__(self, task_executor: TaskExecutor):
+    def __init__(self, task_executor -> None: TaskExecutor) -> None:
         self.task_executor = task_executor
         self.workflows = {}
         self.workflow_templates = {}
@@ -687,14 +687,14 @@ class WorkflowEngine:
 class EventBus:
     """Event-driven orchestration communication"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.subscribers = {}
         self.event_history = []
         self.max_history = 1000
         
         logger.info("Event Bus initialized")
 
-    def subscribe(self, event_type: OrchestrationEvent, callback: Callable):
+    def subscribe(self, event_type -> None: OrchestrationEvent, callback -> None: Callable) -> None:
         """Subscribe to orchestration events"""
         if event_type not in self.subscribers:
             self.subscribers[event_type] = []
@@ -702,7 +702,7 @@ class EventBus:
         self.subscribers[event_type].append(callback)
         logger.info(f"Subscribed to event: {event_type.value}")
 
-    def unsubscribe(self, event_type: OrchestrationEvent, callback: Callable):
+    def unsubscribe(self, event_type -> None: OrchestrationEvent, callback -> None: Callable) -> None:
         """Unsubscribe from orchestration events"""
         if event_type in self.subscribers:
             try:
@@ -711,7 +711,7 @@ class EventBus:
             except ValueError:
                 pass
 
-    async def publish(self, event_type: OrchestrationEvent, event_data: Dict[str, Any]):
+    async def publish(self, event_type -> None: OrchestrationEvent, event_data -> None: Dict[str, Any]) -> None:
         """Publish orchestration event"""
         try:
             event = {
@@ -755,7 +755,7 @@ class EventBus:
 class EnterpriseOrchestrationCore:
     """Main Enterprise Orchestration Core System"""
     
-    def __init__(self, level: str = "enterprise"):
+    def __init__(self, level -> None: str = "enterprise") -> None:
         self.version = "2.1.0"
         self.level = level
         self.service_registry = ServiceRegistry()
@@ -769,25 +769,25 @@ class EnterpriseOrchestrationCore:
         
         logger.info("Enterprise Orchestration Core initialized")
 
-    def _setup_event_handlers(self):
+    def _setup_event_handlers(self) -> None:
         """Setup internal event handlers"""
         self.event_bus.subscribe(OrchestrationEvent.WORKFLOW_STARTED, self._on_workflow_started)
         self.event_bus.subscribe(OrchestrationEvent.WORKFLOW_COMPLETED, self._on_workflow_completed)
         self.event_bus.subscribe(OrchestrationEvent.WORKFLOW_FAILED, self._on_workflow_failed)
 
-    async def _on_workflow_started(self, event: Dict[str, Any]):
+    async def _on_workflow_started(self, event -> None: Dict[str, Any]) -> None:
         """Handle workflow started event"""
         logger.info(f"Workflow started: {event['data']['workflow_id']}")
 
-    async def _on_workflow_completed(self, event: Dict[str, Any]):
+    async def _on_workflow_completed(self, event -> None: Dict[str, Any]) -> None:
         """Handle workflow completed event"""
         logger.info(f"Workflow completed: {event['data']['workflow_id']}")
 
-    async def _on_workflow_failed(self, event: Dict[str, Any]):
+    async def _on_workflow_failed(self, event -> None: Dict[str, Any]) -> None:
         """Handle workflow failed event"""
         logger.warning(f"Workflow failed: {event['data']['workflow_id']}")
 
-    async def start_orchestration(self):
+    async def start_orchestration(self) -> None:
         """Start orchestration system"""
         try:
             # Start health monitoring
@@ -799,7 +799,7 @@ class EnterpriseOrchestrationCore:
             logger.error(f"Error starting orchestration: {str(e)}")
             raise
 
-    async def stop_orchestration(self):
+    async def stop_orchestration(self) -> None:
         """Stop orchestration system"""
         try:
             # Stop health monitoring

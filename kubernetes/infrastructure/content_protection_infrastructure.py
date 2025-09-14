@@ -6,11 +6,11 @@ and violation detection across multiple platforms and media types.
 Project: IA Influencer Agent + Content Protection Platform
 Author: Fahed Mlaiel <mlaiel@live.de>
 
-⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
-⚠️  This software is protected by international copyright laws.         ⚠️
-⚠️  Unauthorized reproduction, distribution, or use is strictly        ⚠️
-⚠️  prohibited and may result in severe civil and criminal penalties.  ⚠️
-⚠️  All rights reserved to Fahed Mlaiel (mlaiel@live.de).             ⚠️
+# [EMOJI_REMOVED]  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED # [EMOJI_REMOVED]
+# [EMOJI_REMOVED]  This software is protected by international copyright laws.         # [EMOJI_REMOVED]
+# [EMOJI_REMOVED]  Unauthorized reproduction, distribution, or use is strictly        # [EMOJI_REMOVED]
+# [EMOJI_REMOVED]  prohibited and may result in severe civil and criminal penalties.  # [EMOJI_REMOVED]
+# [EMOJI_REMOVED]  All rights reserved to Fahed Mlaiel (mlaiel@live.de).             # [EMOJI_REMOVED]
 """
 
 import asyncio
@@ -143,7 +143,7 @@ class ProtectionInfrastructureSpec:
 class AudioFingerprintEngine:
     """Advanced audio fingerprinting engine using Chromaprint + Essentia"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.sample_rate = 22050
         self.hop_size = 512
         self.frame_size = 1024
@@ -190,7 +190,7 @@ Generate audio fingerprint using multiple algorithms"""
 class VideoFingerprintEngine:
     """Advanced video fingerprinting using OpenCV + perceptual hashing"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.frame_sample_rate = 1.0  # Sample 1 frame per second
         self.hash_size = 64
         
@@ -254,7 +254,7 @@ Generate video fingerprint using frame analysis and perceptual hashing"""
 class ImageFingerprintEngine:
     """Advanced image fingerprinting using CLIP embeddings + perceptual hashing"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         try:
             logger.info(f"Executing __init__")
             
@@ -349,7 +349,7 @@ class ImageFingerprintEngine:
 class TextFingerprintEngine:
     """Advanced text fingerprinting using BERT embeddings + n-gram analysis"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         try:
             self.sentence_model = SentenceTransformer('all-MiniLM-L6-v2')
         except Exception:
@@ -412,7 +412,7 @@ class ContentProtectionInfrastructureManager:
     and automated protection workflows for multi-format content.
     """
     
-    def __init__(self, spec: ProtectionInfrastructureSpec):
+    def __init__(self, spec -> None: ProtectionInfrastructureSpec) -> None:
         self.spec = spec
         self.audio_engine = AudioFingerprintEngine()
         self.video_engine = VideoFingerprintEngine()
@@ -711,7 +711,7 @@ Initialize complete content protection infrastructure"""
         elif protection_level == ProtectionLevel.ULTRA_SECURE:
             return base_features + ["real_time_alerts", "evidence_collection", "automated_takedowns", "legal_integration", "advanced_analytics", "ai_prediction"]
 
-    async def _store_fingerprint(self, fingerprint: ContentFingerprint):
+    async def _store_fingerprint(self, fingerprint -> None: ContentFingerprint) -> None:
         """Store fingerprint in vector database"""
         # In production, store in actual vector database
         self.fingerprint_storage[fingerprint.content_id] = fingerprint
@@ -728,7 +728,7 @@ Process and rank violation alerts"""
         # Sort by similarity score and confidence level
         return sorted(violations, key=lambda x: (x.similarity_score, x.confidence_level), reverse=True)
 
-    async def _monitor_platform_continuously(self, platform: Platform):
+    async def _monitor_platform_continuously(self, platform -> None: Platform) -> None:
         """
 Continuously monitor a platform for violations"""
         while self.monitoring_active:
@@ -791,3 +791,5 @@ __all__ = [
     'ViolationAlert',
     'ProtectionInfrastructureSpec'
 ]
+
+# File has syntax issues - needs manual review

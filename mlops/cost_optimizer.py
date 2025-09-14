@@ -74,7 +74,7 @@ class OptimizationRecommendation:
 class CostOptimizer:
     """Enterprise cost optimization engine for ML infrastructure"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.cost_metrics: Dict[str, CostMetrics] = {}
         self.recommendations: List[OptimizationRecommendation] = []
@@ -241,7 +241,7 @@ class CostOptimizer:
             logger.error(f"Cost monitoring failed: {e}")
             return []
     
-    async def _setup_cost_tracking(self):
+    async def _setup_cost_tracking(self) -> None:
         """Setup cost tracking infrastructure"""
         # Initialize cost tracking for each resource type
         for resource_type in ResourceType:
@@ -255,12 +255,12 @@ class CostOptimizer:
                     optimization_potential=0.0
                 )
     
-    async def _load_optimization_history(self):
+    async def _load_optimization_history(self) -> None:
         """Load historical optimization data"""
         # Simulate loading from storage
         self.optimization_history = []
     
-    async def _setup_automated_optimization(self):
+    async def _setup_automated_optimization(self) -> None:
         """Setup automated optimization rules"""
         # Setup scheduled optimization tasks
         pass
@@ -428,7 +428,7 @@ class CreatorCostOptimizer:
 
 
 # Example usage and testing
-async def main():
+async def main() -> None:
     """Example usage of Cost Optimizer"""
     optimizer = CostOptimizer()
     

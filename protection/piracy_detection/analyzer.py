@@ -1,4 +1,6 @@
 """🔬 Violation Analysis Engine
+import asyncio
+
 ===========================
 
 Advanced AI-powered analysis of detected piracy violations.
@@ -73,7 +75,7 @@ class ViolationAnalyzer:
     similarity scoring, evidence validation, and risk assessment.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Violation Analyzer.
         

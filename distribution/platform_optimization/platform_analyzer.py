@@ -82,7 +82,7 @@ class PlatformAnalyzer:
     - ROI and monetization analysis
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.platform_configs = {}
         self.analysis_models = {}
         self.performance_trackers = {}

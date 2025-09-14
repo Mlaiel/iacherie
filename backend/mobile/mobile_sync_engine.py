@@ -141,10 +141,10 @@ class OfflineSyncManager:
     
     def __init__(
         self,
-        db_path: str = ":memory:",
-        config: Optional[SyncConfiguration] = None,
-        api_client: Optional[Any] = None
-    ):
+        db_path -> None: str = " -> None:memory -> None:",
+        config -> None: Optional[SyncConfiguration] = None,
+        api_client -> None: Optional[Any] = None
+    ) -> None:
         self.db_path = db_path
         self.config = config or SyncConfiguration()
         self.api_client = api_client
@@ -169,19 +169,19 @@ class OfflineSyncManager:
         
         logger.info("Offline sync manager initialized")
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize the sync manager."""
         await self._setup_database()
         await self._load_pending_operations()
         await self._load_conflicts()
         logger.info("Offline sync manager ready")
     
-    async def close(self):
+    async def close(self) -> None:
         """Close the sync manager."""
         if self.db_connection:
             await self.db_connection.close()
     
-    async def _setup_database(self):
+    async def _setup_database(self) -> None:
         """Setup SQLite database for offline storage."""
         self.db_connection = await aiosqlite.connect(self.db_path)
         
@@ -241,7 +241,7 @@ class OfflineSyncManager:
         
         await self.db_connection.commit()
     
-    async def _load_pending_operations(self):
+    async def _load_pending_operations(self) -> None:
         """Load pending operations from database."""
         cursor = await self.db_connection.execute(
             "SELECT * FROM offline_operations WHERE status IN ('pending', 'failed')"
@@ -266,7 +266,7 @@ class OfflineSyncManager:
         
         logger.info(f"Loaded {len(self.pending_operations)} pending operations")
     
-    async def _load_conflicts(self):
+    async def _load_conflicts(self) -> None:
         """Load unresolved conflicts from database."""
         cursor = await self.db_connection.execute(
             "SELECT * FROM sync_conflicts WHERE resolution IS NULL"
@@ -747,7 +747,7 @@ class OfflineSyncManager:
         logger.info(f"Conflict resolved: {conflict_id}")
         return True
     
-    async def _remove_operation(self, operation_id: str):
+    async def _remove_operation(self, operation_id -> None: str) -> None:
         """Remove completed operation."""
         await self.db_connection.execute(
             "DELETE FROM offline_operations WHERE operation_id = ?",
@@ -758,7 +758,7 @@ class OfflineSyncManager:
         if operation_id in self.pending_operations:
             del self.pending_operations[operation_id]
     
-    async def _update_operation_status(self, operation_id: str, status: SyncStatus):
+    async def _update_operation_status(self, operation_id -> None: str, status -> None: SyncStatus) -> None:
         """Update operation status."""
         await self.db_connection.execute(
             "UPDATE offline_operations SET status = ? WHERE operation_id = ?",
@@ -769,7 +769,7 @@ class OfflineSyncManager:
         if operation_id in self.pending_operations:
             self.pending_operations[operation_id].status = status
     
-    async def _update_operation(self, operation: OfflineOperation):
+    async def _update_operation(self, operation -> None: OfflineOperation) -> None:
         """Update operation in database."""
         await self.db_connection.execute("""
             UPDATE offline_operations 
@@ -782,7 +782,7 @@ class OfflineSyncManager:
         ))
         await self.db_connection.commit()
     
-    async def _update_session(self, session: SyncSession):
+    async def _update_session(self, session -> None: SyncSession) -> None:
         """Update session in database."""
         await self.db_connection.execute("""
             UPDATE sync_sessions 
@@ -800,10 +800,10 @@ class OfflineSyncManager:
     
     async def _notify_sync_progress(
         self, 
-        session: SyncSession, 
-        operation: OfflineOperation, 
-        result: Dict[str, Any]
-    ):
+        session -> None: SyncSession, 
+        operation -> None: OfflineOperation, 
+        result -> None: Dict[str, Any]
+    ) -> None:
         """Notify sync progress to handlers."""
         for handler in self.sync_progress_handlers:
             try:
@@ -811,11 +811,11 @@ class OfflineSyncManager:
             except Exception as e:
                 logger.error(f"Progress handler error: {e}")
     
-    def add_conflict_handler(self, entity_type: str, handler: Callable):
+    def add_conflict_handler(self, entity_type -> None: str, handler -> None: Callable) -> None:
         """Add conflict resolution handler for entity type."""
         self.conflict_handlers[entity_type] = handler
     
-    def add_progress_handler(self, handler: Callable):
+    def add_progress_handler(self, handler -> None: Callable) -> None:
         """Add sync progress handler."""
         self.sync_progress_handlers.append(handler)
     
@@ -928,7 +928,7 @@ async def quick_sync_operation(
 
 if __name__ == "__main__":
     # Example usage
-    async def main():
+    async def main() -> None:
         config = SyncConfiguration(
             sync_interval_seconds=60,
             auto_resolve_conflicts=True,

@@ -106,7 +106,7 @@ class AchievementProgress:
 class RealTimeAchievementEngine:
     """Moteur d'achievements temps réel."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.achievements: Dict[str, Achievement] = {}
         self.user_achievements: Dict[str, List[UserAchievement]] = defaultdict(list)
         self.achievement_progress: Dict[str, Dict[str, AchievementProgress]] = defaultdict(dict)
@@ -114,7 +114,7 @@ class RealTimeAchievementEngine:
         
         self._initialize_default_achievements()
     
-    def _initialize_default_achievements(self):
+    def _initialize_default_achievements(self) -> None:
         """Initialise les achievements par défaut."""
         # Achievement première publication
         first_post = Achievement(
@@ -374,7 +374,7 @@ class EngagementScore:
 class AIEngagementScorer:
     """Scorer d'engagement alimenté par IA."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.engagement_history: Dict[str, List[EngagementData]] = defaultdict(list)
         self.user_scores: Dict[str, EngagementScore] = {}
         self.ai_models: Dict[str, Any] = {}
@@ -383,7 +383,7 @@ class AIEngagementScorer:
         self._initialize_ai_models()
         self._calculate_baseline_metrics()
     
-    def _initialize_ai_models(self):
+    def _initialize_ai_models(self) -> None:
         """Initialise les modèles IA."""
         # TODO: Implémentation modèles ML réels
         self.ai_models = {
@@ -393,7 +393,7 @@ class AIEngagementScorer:
             "content_quality_scorer": None
         }
     
-    def _calculate_baseline_metrics(self):
+    def _calculate_baseline_metrics(self) -> None:
         """Calcule les métriques de base."""
         self.baseline_metrics = {
             "average_engagement_rate": 0.05,  # 5%
@@ -680,7 +680,7 @@ class ChallengeSubmission:
 class CompetitiveChallengeEngine:
     """Moteur de défis compétitifs."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.challenges: Dict[str, Challenge] = {}
         self.participations: Dict[str, List[ChallengeParticipation]] = defaultdict(list)
         self.submissions: Dict[str, ChallengeSubmission] = {}
@@ -688,7 +688,7 @@ class CompetitiveChallengeEngine:
         
         self._initialize_default_challenges()
     
-    def _initialize_default_challenges(self):
+    def _initialize_default_challenges(self) -> None:
         """Initialise les défis par défaut."""
         # Défi création vidéo hebdomadaire
         weekly_video = Challenge(
@@ -884,7 +884,7 @@ class CompetitiveChallengeEngine:
         # TODO: Implémentation vérifications spécifiques
         return True
     
-    async def _evaluate_content_challenge(self, challenge: Challenge, submissions: List[ChallengeSubmission]):
+    async def _evaluate_content_challenge(self, challenge -> None: Challenge, submissions -> None: List[ChallengeSubmission]) -> None:
         """Évalue un défi de création de contenu."""
         for submission in submissions:
             # TODO: Récupération métriques réelles du contenu
@@ -905,7 +905,7 @@ class CompetitiveChallengeEngine:
                     participation.score = final_score
                     break
     
-    async def _evaluate_engagement_challenge(self, challenge: Challenge, submissions: List[ChallengeSubmission]):
+    async def _evaluate_engagement_challenge(self, challenge -> None: Challenge, submissions -> None: List[ChallengeSubmission]) -> None:
         """Évalue un défi d'engagement."""
         for submission in submissions:
             # TODO: Calcul engagement réel basé sur métriques
@@ -917,7 +917,7 @@ class CompetitiveChallengeEngine:
                     participation.score = engagement_score
                     break
     
-    async def _update_challenge_leaderboard(self, challenge_id: str):
+    async def _update_challenge_leaderboard(self, challenge_id -> None: str) -> None:
         """Met à jour le classement d'un défi."""
         try:
             # Collecte scores participants
@@ -999,7 +999,7 @@ class UserReward:
 class RewardOptimizer:
     """Optimiseur de récompenses."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.rewards: Dict[str, Reward] = {}
         self.user_rewards: Dict[str, List[UserReward]] = defaultdict(list)
         self.user_points: Dict[str, int] = defaultdict(int)
@@ -1007,7 +1007,7 @@ class RewardOptimizer:
         
         self._initialize_default_rewards()
     
-    def _initialize_default_rewards(self):
+    def _initialize_default_rewards(self) -> None:
         """Initialise les récompenses par défaut."""
         # Badge créateur
         creator_badge = Reward(
@@ -1125,7 +1125,7 @@ class RewardOptimizer:
         # TODO: Implémentation vérifications spécifiques
         return True
     
-    def _update_reward_analytics(self, reward_id: str):
+    def _update_reward_analytics(self, reward_id -> None: str) -> None:
         """Met à jour les analytics d'une récompense."""
         if reward_id not in self.reward_analytics:
             self.reward_analytics[reward_id] = {
@@ -1164,7 +1164,7 @@ class RewardOptimizer:
 class EdgeGamificationEngine:
     """Moteur principal de gamification edge."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.achievement_engine = RealTimeAchievementEngine()
         self.engagement_scorer = AIEngagementScorer()
         self.challenge_engine = CompetitiveChallengeEngine()
@@ -1173,10 +1173,10 @@ class EdgeGamificationEngine:
         self.is_initialized = False
         self._setup_integrations()
     
-    def _setup_integrations(self):
+    def _setup_integrations(self) -> None:
         """Configure les intégrations entre composants."""
         # Listener achievements -> récompenses
-        async def achievement_reward_listener(user_id: str, achievement: Achievement, user_achievement: UserAchievement):
+        async def achievement_reward_listener(user_id -> None: str, achievement -> None: Achievement, user_achievement -> None: UserAchievement) -> None:
             # Attribution points
             await self.reward_optimizer.award_points(user_id, achievement.points, f"achievement_{achievement.achievement_id}")
             

@@ -77,18 +77,18 @@ class TwitterAPIv2:
     """
 Twitter API v2 integration"""
     
-    def __init__(self, rate_limiter: Optional[APIRateLimiter] = None):
+    def __init__(self, rate_limiter -> None: Optional[APIRateLimiter] = None) -> None:
         self.session = None
         self.rate_limiter = rate_limiter or APIRateLimiter()
         self.base_url = "https://api.twitter.com/2"
         
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         """Async context manager entry"""
         self.session = aiohttp.ClientSession()
         await self.rate_limiter.__aenter__()
         return self
         
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         """
 Async context manager exit"""
         if self.session:

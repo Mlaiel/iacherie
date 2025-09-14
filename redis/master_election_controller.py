@@ -84,7 +84,7 @@ class MasterElectionController:
     Backend Senior + Microservices implementation with Raft-like consensus
     """
     
-    def __init__(self, redis_settings: RedisSettings, node_id: Optional[str] = None):
+    def __init__(self, redis_settings -> None: RedisSettings, node_id -> None: Optional[str] = None) -> None:
         self.redis_settings = redis_settings
         self.node_id = node_id or self._generate_node_id()
         self.redis_client: Optional[redis.Redis] = None
@@ -137,7 +137,7 @@ class MasterElectionController:
         random_id = uuid.uuid4().hex[:8]
         return f"{hostname}-{timestamp}-{random_id}"
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize the master election controller"""
         try:
             # Connect to Redis
@@ -172,7 +172,7 @@ class MasterElectionController:
             logger.error(f"Failed to initialize Master Election Controller: {e}")
             raise
     
-    async def _load_cluster_state(self):
+    async def _load_cluster_state(self) -> None:
         """Load current cluster state from Redis"""
         try:
             # Load nodes
@@ -211,7 +211,7 @@ class MasterElectionController:
         except Exception as e:
             logger.error(f"Error loading cluster state: {e}")
     
-    async def _register_node(self):
+    async def _register_node(self) -> None:
         """Register this node in the cluster"""
         try:
             # Update node information
@@ -237,7 +237,7 @@ class MasterElectionController:
         except Exception as e:
             logger.error(f"Error registering node: {e}")
     
-    async def _heartbeat_loop(self):
+    async def _heartbeat_loop(self) -> None:
         """Send periodic heartbeats"""
         while self._running:
             try:
@@ -254,7 +254,7 @@ class MasterElectionController:
                 logger.error(f"Error in heartbeat loop: {e}")
                 await asyncio.sleep(1)
     
-    async def _send_master_heartbeat(self):
+    async def _send_master_heartbeat(self) -> None:
         """Send master heartbeat to all nodes"""
         try:
             if not self.current_master or self.current_master.node_id != self.node_id:
@@ -279,7 +279,7 @@ class MasterElectionController:
         except Exception as e:
             logger.error(f"Error sending master heartbeat: {e}")
     
-    async def _send_node_heartbeat(self):
+    async def _send_node_heartbeat(self) -> None:
         """Send node heartbeat"""
         try:
             # Update node information
@@ -289,7 +289,7 @@ class MasterElectionController:
         except Exception as e:
             logger.error(f"Error sending node heartbeat: {e}")
     
-    async def _update_node_metrics(self):
+    async def _update_node_metrics(self) -> None:
         """Update node health metrics"""
         try:
             # Get Redis info for metrics
@@ -321,7 +321,7 @@ class MasterElectionController:
         except Exception as e:
             logger.error(f"Error updating node metrics: {e}")
     
-    async def _monitor_cluster(self):
+    async def _monitor_cluster(self) -> None:
         """Monitor cluster health and detect master failures"""
         while self._running:
             try:
@@ -343,7 +343,7 @@ class MasterElectionController:
                 logger.error(f"Error in cluster monitor: {e}")
                 await asyncio.sleep(1)
     
-    async def _check_master_health(self):
+    async def _check_master_health(self) -> None:
         """Check if current master is healthy"""
         try:
             if not self.current_master:
@@ -375,7 +375,7 @@ class MasterElectionController:
         except Exception as e:
             logger.error(f"Error checking master health: {e}")
     
-    async def _handle_master_failure(self):
+    async def _handle_master_failure(self) -> None:
         """Handle master failure detection"""
         try:
             if self.current_master:
@@ -399,7 +399,7 @@ class MasterElectionController:
         except Exception as e:
             logger.error(f"Error handling master failure: {e}")
     
-    async def _cleanup_stale_nodes(self):
+    async def _cleanup_stale_nodes(self) -> None:
         """Remove stale nodes from cluster view"""
         try:
             now = datetime.utcnow()
@@ -421,7 +421,7 @@ class MasterElectionController:
         except Exception as e:
             logger.error(f"Error cleaning up stale nodes: {e}")
     
-    async def _update_cluster_view(self):
+    async def _update_cluster_view(self) -> None:
         """Update cluster view from Redis"""
         try:
             nodes_data = await self.redis_client.hgetall(self.cluster_key)
@@ -445,7 +445,7 @@ class MasterElectionController:
         except Exception as e:
             logger.error(f"Error updating cluster view: {e}")
     
-    async def _election_manager(self):
+    async def _election_manager(self) -> None:
         """Manage election process"""
         while self._running:
             try:
@@ -468,7 +468,7 @@ class MasterElectionController:
                 logger.error(f"Error in election manager: {e}")
                 await asyncio.sleep(1)
     
-    async def _start_election(self):
+    async def _start_election(self) -> None:
         """Start a new election"""
         try:
             # Only start election if we're eligible
@@ -539,7 +539,7 @@ class MasterElectionController:
             logger.error(f"Error checking election eligibility: {e}")
             return False
     
-    async def _request_votes(self):
+    async def _request_votes(self) -> None:
         """Request votes from other nodes"""
         try:
             if not self.current_election:
@@ -567,7 +567,7 @@ class MasterElectionController:
         except Exception as e:
             logger.error(f"Error requesting votes: {e}")
     
-    async def _process_election(self):
+    async def _process_election(self) -> None:
         """Process ongoing election"""
         try:
             if not self.current_election:
@@ -592,7 +592,7 @@ class MasterElectionController:
         except Exception as e:
             logger.error(f"Error processing election: {e}")
     
-    async def _process_vote_requests(self):
+    async def _process_vote_requests(self) -> None:
         """Process vote requests from candidates"""
         try:
             # Get all vote requests
@@ -659,7 +659,7 @@ class MasterElectionController:
             logger.error(f"Error calculating candidate score: {e}")
             return 0.0
     
-    async def _cast_vote(self, candidate_id: str):
+    async def _cast_vote(self, candidate_id -> None: str) -> None:
         """Cast vote for candidate"""
         try:
             if not self.current_election:
@@ -688,7 +688,7 @@ class MasterElectionController:
         except Exception as e:
             logger.error(f"Error casting vote: {e}")
     
-    async def _count_votes(self):
+    async def _count_votes(self) -> None:
         """Count votes for current election"""
         try:
             if not self.current_election or self.my_state != NodeState.CANDIDATE:
@@ -736,7 +736,7 @@ class MasterElectionController:
         except Exception as e:
             logger.error(f"Error counting votes: {e}")
     
-    async def _become_master(self):
+    async def _become_master(self) -> None:
         """Become the master node"""
         try:
             # Create master info
@@ -791,7 +791,7 @@ class MasterElectionController:
         except Exception as e:
             logger.error(f"Error becoming master: {e}")
     
-    async def _handle_election_timeout(self):
+    async def _handle_election_timeout(self) -> None:
         """Handle election timeout"""
         try:
             logger.warning(f"Election {self.current_election.election_id} timed out")
@@ -811,7 +811,7 @@ class MasterElectionController:
         except Exception as e:
             logger.error(f"Error handling election timeout: {e}")
     
-    async def _store_election_info(self):
+    async def _store_election_info(self) -> None:
         """Store election information in Redis"""
         try:
             if not self.current_election:
@@ -837,7 +837,7 @@ class MasterElectionController:
         except Exception as e:
             logger.error(f"Error storing election info: {e}")
     
-    async def _load_election_state(self):
+    async def _load_election_state(self) -> None:
         """Load current election state from Redis"""
         try:
             election_data = await self.redis_client.get(self.election_key)
@@ -864,7 +864,7 @@ class MasterElectionController:
         except Exception as e:
             logger.error(f"Error loading election state: {e}")
     
-    async def _cleanup_election(self):
+    async def _cleanup_election(self) -> None:
         """Clean up election data"""
         try:
             # Remove election data
@@ -885,7 +885,7 @@ class MasterElectionController:
         except Exception as e:
             logger.error(f"Error cleaning up election: {e}")
     
-    async def _health_monitor(self):
+    async def _health_monitor(self) -> None:
         """Monitor overall cluster health"""
         while self._running:
             try:
@@ -903,7 +903,7 @@ class MasterElectionController:
                 logger.error(f"Error in health monitor: {e}")
                 await asyncio.sleep(1)
     
-    async def _check_split_brain(self):
+    async def _check_split_brain(self) -> None:
         """Check for split brain scenario (multiple masters)"""
         try:
             # Look for multiple master heartbeats
@@ -920,7 +920,7 @@ class MasterElectionController:
         except Exception as e:
             logger.error(f"Error checking split brain: {e}")
     
-    async def _resolve_split_brain(self):
+    async def _resolve_split_brain(self) -> None:
         """Resolve split brain scenario"""
         try:
             # Simple resolution: master with highest term wins
@@ -954,7 +954,7 @@ class MasterElectionController:
         except Exception as e:
             logger.error(f"Error resolving split brain: {e}")
     
-    async def _step_down(self):
+    async def _step_down(self) -> None:
         """Step down from master role"""
         try:
             # Clear master state
@@ -1003,7 +1003,7 @@ class MasterElectionController:
             logger.error(f"Error getting cluster status: {e}")
             return {'error': str(e)}
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Shutdown the master election controller"""
         try:
             self._running = False

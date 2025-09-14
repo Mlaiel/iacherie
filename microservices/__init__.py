@@ -21,7 +21,7 @@ __all__ = [
 class MicroserviceBase:
     """Base class for all microservices in the Ainflue platform"""
     
-    def __init__(self, service_name: str, service_id: str = None):
+    def __init__(self, service_name -> None: str, service_id -> None: str = None) -> None:
         self.service_name = service_name
         self.service_id = service_id or f"{service_name}-{id(self)}"
         self.status = "initializing"
@@ -51,7 +51,7 @@ class MicroserviceBase:
 class ServiceRegistry:
     """Central registry for managing microservices"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._services: Dict[str, Dict[str, Any]] = {}
         
     def register(self, service_name: str, service_info: Dict[str, Any]) -> bool:

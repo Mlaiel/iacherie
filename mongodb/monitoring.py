@@ -25,9 +25,12 @@ except ImportError:
     MONGODB_AVAILABLE = False
     # Create mock classes to prevent NameError
     class motor:
+    """motor: class implementation"""
         class motor_asyncio:
+    """motor_asyncio: class implementation"""
             pass
     class pymongo:
+    """pymongo: class implementation"""
         pass
 
 from .connection import MongoDBConnection, get_connection
@@ -84,7 +87,7 @@ class HealthCheckResult:
 class MongoDBMonitor:
     """MongoDB monitoring and health checking system."""
     
-    def __init__(self, connection: Optional[MongoDBConnection] = None):
+    def __init__(self, connection -> None: Optional[MongoDBConnection] = None) -> None:
         """Initialize MongoDB monitor."""
         if not MONGODB_AVAILABLE:
             raise ImportError("MongoDB dependencies not available")
@@ -293,7 +296,7 @@ class MongoDBMonitor:
             logger.error(f"Failed to get collection stats for {collection_name}: {e}")
             return {}
     
-    async def start_monitoring(self, interval_seconds: int = 60):
+    async def start_monitoring(self, interval_seconds -> None: int = 60) -> None:
         """Start continuous monitoring."""
         if self._monitoring:
             logger.warning("Monitoring already started")
@@ -303,7 +306,7 @@ class MongoDBMonitor:
         self._monitor_task = asyncio.create_task(self._monitoring_loop(interval_seconds))
         logger.info(f"Started MongoDB monitoring with {interval_seconds}s interval")
     
-    async def stop_monitoring(self):
+    async def stop_monitoring(self) -> None:
         """Stop continuous monitoring."""
         self._monitoring = False
         if self._monitor_task:
@@ -314,7 +317,7 @@ class MongoDBMonitor:
                 pass
         logger.info("Stopped MongoDB monitoring")
     
-    async def _monitoring_loop(self, interval_seconds: int):
+    async def _monitoring_loop(self, interval_seconds -> None: int) -> None:
         """Main monitoring loop."""
         while self._monitoring:
             try:
@@ -356,11 +359,11 @@ class MongoDBMonitor:
                 logger.error(f"Monitoring loop error: {e}")
                 await asyncio.sleep(interval_seconds)
     
-    def add_health_callback(self, callback: Callable[[HealthCheckResult], None]):
+    def add_health_callback(self, callback -> None: Callable[[HealthCheckResult], None]) -> None:
         """Add health status callback."""
         self._health_callbacks.append(callback)
     
-    def remove_health_callback(self, callback: Callable[[HealthCheckResult], None]):
+    def remove_health_callback(self, callback -> None: Callable[[HealthCheckResult], None]) -> None:
         """Remove health status callback."""
         if callback in self._health_callbacks:
             self._health_callbacks.remove(callback)
@@ -406,7 +409,7 @@ def get_monitor(connection: Optional[MongoDBConnection] = None) -> MongoDBMonito
     return _default_monitor
 
 # Health check callback example
-def default_health_callback(result: HealthCheckResult):
+def default_health_callback(result -> None: HealthCheckResult) -> None:
     """Default health status callback."""
     if result.status == HealthStatus.CRITICAL:
         logger.error(f"MongoDB CRITICAL: {result.message}")

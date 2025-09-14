@@ -102,11 +102,11 @@ class EventBus:
     """Enterprise-grade event bus for distributed systems"""
     
     def __init__(self, 
-                 mode: EventBusMode = EventBusMode.IN_MEMORY,
-                 namespace: str = "events",
-                 max_workers: int = 10,
-                 batch_size: int = 100,
-                 enable_metrics: bool = True):
+                 mode -> None: EventBusMode = EventBusMode.IN_MEMORY,
+                 namespace -> None: str = "events",
+                 max_workers -> None: int = 10,
+                 batch_size -> None: int = 100,
+                 enable_metrics -> None: bool = True) -> None:
         """Initialize event bus
         
         Args:

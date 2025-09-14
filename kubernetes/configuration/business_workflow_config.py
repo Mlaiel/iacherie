@@ -360,7 +360,7 @@ class BusinessWorkflowConfigManager:
     7. Monitoring and monetization
     """
     
-    def __init__(self, config_path: Optional[str] = None):
+    def __init__(self, config_path -> None: Optional[str] = None) -> None:
         """
 Initialize business workflow configuration manager"""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")

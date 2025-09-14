@@ -1,3 +1,8 @@
+"""
+  Init   module
+Enterprise implementation for Ainflue platform
+"""
+
 # Ainflue Infrastructure Module
 # =============================
 # 
@@ -62,7 +67,7 @@ METRICS_RETENTION = {
     "long_term": "1y"
 }
 
-def get_monitoring_info():
+def get_monitoring_info() -> None:
     """Get monitoring module information."""
     return {
         "version": __version__,

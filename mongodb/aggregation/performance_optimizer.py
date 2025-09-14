@@ -18,7 +18,7 @@ logger = logging.getLogger(__name__)
 class PerformanceOptimizer:
     """Aggregation pipeline performance optimizer."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize performance optimizer."""
         self._query_cache: Dict[str, Any] = {}
         self._performance_stats: Dict[str, List[float]] = {}
@@ -118,7 +118,7 @@ class PerformanceOptimizer:
         pipeline_str = str(sorted(str(stage) for stage in pipeline))
         return hashlib.md5(pipeline_str.encode()).hexdigest()
     
-    def record_performance(self, pipeline_hash: str, execution_time_ms: float):
+    def record_performance(self, pipeline_hash -> None: str, execution_time_ms -> None: float) -> None:
         """Record pipeline performance metrics."""
         if pipeline_hash not in self._performance_stats:
             self._performance_stats[pipeline_hash] = []

@@ -131,7 +131,7 @@ class CollaborationSecurityManager:
     - Security audit and forensics
     - Incident response and recovery
     """
-    def __init__(self, config: Any):
+    def __init__(self, config -> None: Any) -> None:
         """
 Initialize the collaboration security manager."""
         self.config = config
@@ -714,7 +714,7 @@ class CollaborationSecurityManager:
     - Security auditing
     """
     
-    def __init__(self, deployment_config):
+    def __init__(self, deployment_config) -> None:
         """
 Initialize security manager."""
         self.deployment_config = deployment_config

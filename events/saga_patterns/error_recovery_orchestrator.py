@@ -1,3 +1,8 @@
+"""
+Error Recovery Orchestrator module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """Error Recovery Orchestrator - Intelligent Error Recovery
 ==========================================================
@@ -88,7 +93,7 @@ class RecoveryExecution:
 class ErrorRecoveryOrchestrator:
     """Main orchestrator for error recovery"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.active_recoveries: Dict[str, RecoveryExecution] = {}
         self.recovery_strategies: Dict[RecoveryStrategy, Callable] = {}
         self.error_patterns: Dict[str, RecoveryStrategy] = {}
@@ -98,7 +103,7 @@ class ErrorRecoveryOrchestrator:
         self._setup_recovery_strategies()
         self._setup_error_patterns()
     
-    def _setup_recovery_strategies(self):
+    def _setup_recovery_strategies(self) -> None:
         """Setup recovery strategy implementations"""
         self.recovery_strategies = {
             RecoveryStrategy.RETRY: self._execute_retry_strategy,
@@ -109,7 +114,7 @@ class ErrorRecoveryOrchestrator:
             RecoveryStrategy.GRACEFUL_DEGRADATION: self._execute_graceful_degradation
         }
     
-    def _setup_error_patterns(self):
+    def _setup_error_patterns(self) -> None:
         """Setup error pattern to recovery strategy mapping"""
         self.error_patterns = {
             "TimeoutError": RecoveryStrategy.RETRY,
@@ -189,7 +194,7 @@ class ErrorRecoveryOrchestrator:
             escalation_threshold=2
         )
     
-    async def _execute_recovery(self, execution: RecoveryExecution):
+    async def _execute_recovery(self, execution -> None: RecoveryExecution) -> None:
         """Execute recovery plan"""
         try:
             execution.status = "running"
@@ -467,7 +472,7 @@ class ErrorRecoveryOrchestrator:
         
         return base_timeout
     
-    async def _learn_from_recovery(self, execution: RecoveryExecution):
+    async def _learn_from_recovery(self, execution -> None: RecoveryExecution) -> None:
         """Learn from recovery execution to improve future decisions"""
         # In real implementation, would update ML models or rule engines
         success = execution.result.get("success", False)

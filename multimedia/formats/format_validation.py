@@ -84,7 +84,7 @@ class FormatValidationReport:
 class IntegrityChecker:
     """File integrity and corruption detection"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.chunk_size = 8192
         self.max_scan_size = 100 * 1024 * 1024  # 100MB max scan
     
@@ -278,7 +278,7 @@ class IntegrityChecker:
 class SecurityValidator:
     """Security validation for multimedia files"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.max_file_size = 10 * 1024 * 1024 * 1024  # 10GB
         self.blocked_extensions = {'.exe', '.bat', '.cmd', '.scr', '.com', '.pif'}
         self.suspicious_patterns = [
@@ -449,7 +449,7 @@ class SecurityValidator:
 class FormatValidator:
     """Main format validation engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.format_detector = AIFormatDetector()
         self.integrity_checker = IntegrityChecker()
         self.security_validator = SecurityValidator()

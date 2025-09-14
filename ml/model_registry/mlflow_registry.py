@@ -104,7 +104,7 @@ class DeploymentInfo:
 class MLflowModelRegistry:
     """Registre de modèles MLflow Enterprise"""
     
-    def __init__(self, config: ModelRegistryConfig):
+    def __init__(self, config -> None: ModelRegistryConfig) -> None:
         self.config = config
         self.client = None
         self.experiment_id = None
@@ -116,7 +116,7 @@ class MLflowModelRegistry:
         self.model_cache: Dict[str, Any] = {}
         self.deployment_cache: Dict[str, DeploymentInfo] = {}
     
-    def _initialize_mlflow(self):
+    def _initialize_mlflow(self) -> None:
         """
 Initialise la connexion MLflow"""
         try:
@@ -320,7 +320,7 @@ Initialise la connexion MLflow"""
             logger.error(f"Erreur promotion modèle {model_name} v{version}: {e}")
             return False
     
-    async def _archive_production_models(self, model_name: str):
+    async def _archive_production_models(self, model_name -> None: str) -> None:
         """Archive les modèles actuellement en production"""
         
         try:
@@ -633,7 +633,7 @@ class ModelRegistryFactory:
 
 
 # Exemple d'utilisation
-async def example_usage():
+async def example_usage() -> None:
     """Exemple d'utilisation du model registry"""
     
     from sklearn.ensemble import RandomForestClassifier

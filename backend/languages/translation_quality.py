@@ -157,7 +157,7 @@ class TranslationQualityEngine:
     quality metrics and human feedback integration
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize quality assessment engine"""
         self.config = config or {}
         self.quality_cache = {}
@@ -733,7 +733,7 @@ class TranslationQualityEngine:
         
         return statistics.mean(confidence_factors) if confidence_factors else 0.5
     
-    async def _update_error_patterns(self, feedback: HumanFeedback):
+    async def _update_error_patterns(self, feedback -> None: HumanFeedback) -> None:
         """Update error patterns based on human feedback"""
         for error in feedback.specific_errors:
             pattern_key = f"{error.error_type.value}_{error.location}"

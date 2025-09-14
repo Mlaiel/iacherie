@@ -65,7 +65,7 @@ class MonitoringConfig:
 class MonitoringSetup:
     """MongoDB monitoring setup manager."""
     
-    def __init__(self, config: MonitoringConfig):
+    def __init__(self, config -> None: MonitoringConfig) -> None:
         """Initialize monitoring setup."""
         self.config = config
         self.setup_dir = Path(f"monitoring-setup/{config.cluster_name}")
@@ -1246,7 +1246,7 @@ Description: {{ .Annotations.description }}
 
 
 # Example usage
-async def setup_mongodb_monitoring():
+async def setup_mongodb_monitoring() -> None:
     """Example monitoring setup."""
     config = MonitoringConfig(
         cluster_name="mongodb-prod",

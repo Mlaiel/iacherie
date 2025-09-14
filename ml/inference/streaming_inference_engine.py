@@ -141,10 +141,10 @@ class StreamingInferenceEngine:
     """Moteur d'inférence streaming enterprise"""
     
     def __init__(self,
-                 max_concurrent_streams: int = 100,
-                 global_buffer_size: int = 100000,
-                 prediction_timeout_ms: int = 5000,
-                 enable_adaptive_windowing: bool = True):
+                 max_concurrent_streams -> None: int = 100,
+                 global_buffer_size -> None: int = 100000,
+                 prediction_timeout_ms -> None: int = 5000,
+                 enable_adaptive_windowing -> None: bool = True) -> None:
         
         self.max_concurrent_streams = max_concurrent_streams
         self.global_buffer_size = global_buffer_size
@@ -188,7 +188,7 @@ class StreamingInferenceEngine:
         # Adaptive windowing
         self.adaptive_configs: Dict[str, Dict[str, Any]] = {}
     
-    async def start(self):
+    async def start(self) -> None:
         """Démarre le moteur de streaming"""
         try:
             self.is_running = True
@@ -207,7 +207,7 @@ class StreamingInferenceEngine:
             logger.error(f"Erreur démarrage moteur streaming: {e}")
             raise
     
-    async def stop(self):
+    async def stop(self) -> None:
         """Arrête le moteur de streaming"""
         try:
             logger.info("Arrêt du moteur de streaming...")
@@ -360,7 +360,7 @@ class StreamingInferenceEngine:
             logger.error(f"Erreur push échantillon stream {stream_id}: {e}")
             return False
     
-    async def _process_stream(self, stream_id: str):
+    async def _process_stream(self, stream_id -> None: str) -> None:
         """Traite un stream en continu"""
         config = self.streams[stream_id]
         current_window: Optional[StreamWindow] = None
@@ -568,7 +568,7 @@ class StreamingInferenceEngine:
         # Implémentation similaire à tumbling mais avec intervalles fixes
         return await self._handle_tumbling_window(config, sample, current_window)
     
-    async def _process_window(self, window: StreamWindow):
+    async def _process_window(self, window -> None: StreamWindow) -> None:
         """Traite une fenêtre complète"""
         try:
             config = self.streams[window.stream_id]
@@ -761,7 +761,7 @@ class StreamingInferenceEngine:
                 'confidence': None
             }
     
-    async def _monitoring_loop(self):
+    async def _monitoring_loop(self) -> None:
         """Boucle de monitoring"""
         while self.is_running:
             try:
@@ -816,7 +816,7 @@ class StreamingInferenceEngine:
             except Exception as e:
                 logger.error(f"Erreur boucle monitoring: {e}")
     
-    async def _cleanup_loop(self):
+    async def _cleanup_loop(self) -> None:
         """Boucle de nettoyage"""
         while self.is_running:
             try:
@@ -839,7 +839,7 @@ class StreamingInferenceEngine:
             except Exception as e:
                 logger.error(f"Erreur boucle nettoyage: {e}")
     
-    async def _adaptive_windowing_loop(self):
+    async def _adaptive_windowing_loop(self) -> None:
         """Boucle d'ajustement adaptatif des fenêtres"""
         while self.is_running:
             try:
@@ -869,15 +869,15 @@ class StreamingInferenceEngine:
     
     # API publique
     
-    def add_prediction_callback(self, stream_id: str, callback: Callable[[StreamPrediction], None]):
+    def add_prediction_callback(self, stream_id -> None: str, callback -> None: Callable[[StreamPrediction], None]) -> None:
         """Ajoute un callback pour les prédictions"""
         self.prediction_callbacks[stream_id].append(callback)
     
-    def add_window_callback(self, stream_id: str, callback: Callable[[StreamWindow], None]):
+    def add_window_callback(self, stream_id -> None: str, callback -> None: Callable[[StreamWindow], None]) -> None:
         """Ajoute un callback pour les fenêtres"""
         self.window_callbacks[stream_id].append(callback)
     
-    def add_error_callback(self, callback: Callable[[Exception, Any], None]):
+    def add_error_callback(self, callback -> None: Callable[[Exception, Any], None]) -> None:
         """Ajoute un callback pour les erreurs"""
         self.error_callbacks.append(callback)
     
@@ -959,7 +959,7 @@ class StreamingEngineFactory:
 
 
 # Exemple d'utilisation
-async def example_usage():
+async def example_usage() -> None:
     """Exemple d'utilisation du moteur de streaming"""
     
     from sklearn.ensemble import RandomForestClassifier
@@ -977,11 +977,11 @@ async def example_usage():
     engine = StreamingEngineFactory.create_development_engine()
     
     # Callbacks
-    async def prediction_callback(prediction: StreamPrediction):
+    async def prediction_callback(prediction -> None: StreamPrediction) -> None:
         print(f"Prédiction reçue: {prediction.prediction} "
               f"(confiance: {prediction.confidence}, latence: {prediction.latency_ms:.2f}ms)")
     
-    async def window_callback(window: StreamWindow):
+    async def window_callback(window -> None: StreamWindow) -> None:
         print(f"Fenêtre traitée: {window.window_id} avec {len(window.samples)} échantillons")
     
     try:

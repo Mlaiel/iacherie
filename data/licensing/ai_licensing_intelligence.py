@@ -125,7 +125,7 @@ class AILicensingIntelligenceEngine:
     - Platform-specific optimization strategies
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the AI Licensing Intelligence Engine with 53 agents."""
         self.agents: Dict[str, AIAgent] = {}
         self.intelligence_cache: Dict[str, Any] = {}

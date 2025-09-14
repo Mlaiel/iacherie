@@ -175,7 +175,7 @@ class AdvancedMicroservicesArchitect:
     - API gateway functionality
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         # Service registry
         self.service_registry: Dict[str, List[ServiceInstance]] = defaultdict(list)
         self.service_routes: Dict[str, ServiceRoute] = {}
@@ -221,7 +221,7 @@ class AdvancedMicroservicesArchitect:
         
         logger.info("AdvancedMicroservicesArchitect initialized")
 
-    def _initialize_microservices_system(self):
+    def _initialize_microservices_system(self) -> None:
         """Initialize microservices system components"""
         
         # Initialize built-in services
@@ -238,7 +238,7 @@ class AdvancedMicroservicesArchitect:
         
         logger.info("Microservices system components initialized")
 
-    def _register_core_services(self):
+    def _register_core_services(self) -> None:
         """Register core platform services"""
         
         core_services = [
@@ -311,7 +311,7 @@ class AdvancedMicroservicesArchitect:
                 service_name=service_config["name"]
             )
 
-    def _initialize_api_gateway(self):
+    def _initialize_api_gateway(self) -> None:
         """Initialize API gateway routes"""
         
         gateway_routes = [
@@ -370,7 +370,7 @@ class AdvancedMicroservicesArchitect:
             
             self.service_routes[route_config["path"]] = route
 
-    def _initialize_service_mesh(self):
+    def _initialize_service_mesh(self) -> None:
         """Initialize service mesh components"""
         
         # Service dependencies mapping
@@ -390,7 +390,7 @@ class AdvancedMicroservicesArchitect:
                 "request_count": 0
             }
 
-    def _initialize_monitoring(self):
+    def _initialize_monitoring(self) -> None:
         """Initialize distributed monitoring"""
         
         # Prometheus metrics (if available)
@@ -709,10 +709,10 @@ class AdvancedMicroservicesArchitect:
 
     async def _update_service_metrics(
         self,
-        service_name: str,
-        duration_ms: float,
-        success: bool
-    ):
+        service_name -> None: str,
+        duration_ms -> None: float,
+        success -> None: bool
+    ) -> None:
         """Update service performance metrics"""
         
         if service_name not in self.service_metrics:
@@ -759,7 +759,7 @@ class AdvancedMicroservicesArchitect:
                 method="HTTP"
             ).observe(duration_ms / 1000)
 
-    async def _update_circuit_breaker(self, service_name: str, success: bool):
+    async def _update_circuit_breaker(self, service_name -> None: str, success -> None: bool) -> None:
         """Update circuit breaker state"""
         
         if service_name not in self.circuit_breakers:
@@ -807,11 +807,11 @@ class AdvancedMicroservicesArchitect:
 
     async def _complete_trace(
         self,
-        trace: DistributedTrace,
-        duration_ms: float,
-        status: str,
-        error_message: Optional[str] = None
-    ):
+        trace -> None: DistributedTrace,
+        duration_ms -> None: float,
+        status -> None: str,
+        error_message -> None: Optional[str] = None
+    ) -> None:
         """Complete distributed trace"""
         
         trace.end_time = datetime.now()
@@ -869,9 +869,9 @@ class AdvancedMicroservicesArchitect:
 
     async def subscribe_to_messages(
         self,
-        service_name: str,
-        message_handler: Callable[[ServiceMessage], None]
-    ):
+        service_name -> None: str,
+        message_handler -> None: Callable[[ServiceMessage], None]
+    ) -> None:
         """Subscribe service to receive messages"""
         
         self.message_handlers[service_name].append(message_handler)
@@ -912,7 +912,7 @@ class AdvancedMicroservicesArchitect:
             self.unhealthy_services.add(instance.service_id)
             return False
 
-    async def _health_check_loop(self):
+    async def _health_check_loop(self) -> None:
         """Background health check loop"""
         while True:
             try:
@@ -930,7 +930,7 @@ class AdvancedMicroservicesArchitect:
             except Exception as e:
                 logger.error(f"Health check loop error: {str(e)}")
 
-    async def _message_processing_loop(self):
+    async def _message_processing_loop(self) -> None:
         """Background message processing loop"""
         while True:
             try:
@@ -959,7 +959,7 @@ class AdvancedMicroservicesArchitect:
             except Exception as e:
                 logger.error(f"Message processing loop error: {str(e)}")
 
-    async def _metrics_collection_loop(self):
+    async def _metrics_collection_loop(self) -> None:
         """Background metrics collection loop"""
         while True:
             try:
@@ -982,7 +982,7 @@ class AdvancedMicroservicesArchitect:
             except Exception as e:
                 logger.error(f"Metrics collection loop error: {str(e)}")
 
-    async def _service_discovery_loop(self):
+    async def _service_discovery_loop(self) -> None:
         """Background service discovery and cleanup loop"""
         while True:
             try:
@@ -1132,7 +1132,7 @@ class AdvancedMicroservicesArchitect:
             logger.error(f"Service scaling failed: {str(e)}")
             return False
 
-    async def _create_service_instance(self, service_name: str, reason: str):
+    async def _create_service_instance(self, service_name -> None: str, reason -> None: str) -> None:
         """Create new service instance"""
         
         # Get base configuration from existing instance

@@ -98,7 +98,7 @@ class FederationMetrics:
 class GraphQLFederationCore:
     """Enterprise GraphQL federation system"""
     
-    def __init__(self, level: str = "enterprise"):
+    def __init__(self, level -> None: str = "enterprise") -> None:
         """Initialize GraphQL federation core"""
         self.level = level
         self.services: Dict[str, FederatedService] = {}
@@ -139,14 +139,14 @@ class GraphQLFederationCore:
         
         logger.info(f"🔗 GraphQL Federation Core initialized - Level: {level}")
 
-    def _start_health_monitoring(self):
+    def _start_health_monitoring(self) -> None:
         """Start health monitoring for federated services"""
         if self._health_check_task and not self._health_check_task.done():
             return
         
         self._health_check_task = asyncio.create_task(self._health_monitor_loop())
 
-    async def _health_monitor_loop(self):
+    async def _health_monitor_loop(self) -> None:
         """Health monitoring loop"""
         while not self._shutdown_event.is_set():
             try:
@@ -183,7 +183,7 @@ class GraphQLFederationCore:
             logger.error(f"Failed to register service {service.service_name}: {str(e)}")
             raise
 
-    async def _validate_service_schema(self, service: FederatedService):
+    async def _validate_service_schema(self, service -> None: FederatedService) -> None:
         """Validate service GraphQL schema"""
         
         if not GRAPHQL_AVAILABLE:
@@ -204,7 +204,7 @@ class GraphQLFederationCore:
         except Exception as e:
             raise ValueError(f"Invalid GraphQL schema: {str(e)}")
 
-    async def _rebuild_federated_schema(self):
+    async def _rebuild_federated_schema(self) -> None:
         """Rebuild the federated schema from all services"""
         
         if not GRAPHQL_AVAILABLE:
@@ -299,7 +299,7 @@ class GraphQLFederationCore:
         
         return '\n'.join(merged_parts)
 
-    async def unregister_service(self, service_id: str):
+    async def unregister_service(self, service_id -> None: str) -> None:
         """Unregister a federated service"""
         
         if service_id in self.services:
@@ -555,13 +555,13 @@ class GraphQLFederationCore:
                 "errors": [{"message": f"Service error: {str(e)}"}]
             }
 
-    async def _check_services_health(self):
+    async def _check_services_health(self) -> None:
         """Check health of all federated services"""
         
         for service in self.services.values():
             await self._check_service_health(service)
 
-    async def _check_service_health(self, service: FederatedService):
+    async def _check_service_health(self, service -> None: FederatedService) -> None:
         """Check health of specific service"""
         
         try:
@@ -587,7 +587,7 @@ class GraphQLFederationCore:
             
             service.status = ServiceStatus.ERROR
 
-    def _update_avg_execution_time(self, execution_time: float):
+    def _update_avg_execution_time(self, execution_time -> None: float) -> None:
         """Update average execution time"""
         self.metrics.avg_execution_time = (
             self.metrics.avg_execution_time * 0.9 + execution_time * 0.1
@@ -666,7 +666,7 @@ class GraphQLFederationCore:
             logger.error(f"GraphQL federation health check failed: {str(e)}")
             return False
 
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Shutdown GraphQL federation"""
         logger.info("🛑 Shutting down GraphQL federation")
         

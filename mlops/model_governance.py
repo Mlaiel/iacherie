@@ -126,7 +126,7 @@ class GovernancePolicy:
 class NotificationService:
     """Service for sending notifications"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         try:
             logger.info(f"Executing __init__")
             
@@ -141,19 +141,19 @@ class NotificationService:
         except Exception as e:
             logger.error(f"__init__ failed: {e}")
             raise
-    def register_callback(self, notification_type: str, callback: Callable):
+    def register_callback(self, notification_type -> None: str, callback -> None: Callable) -> None:
         """Register a notification callback"""
         self.notification_callbacks[notification_type] = callback
         logger.info(f"Registered notification callback for {notification_type}")
     
     async def send_notification(
         self,
-        notification_type: str,
-        recipients: List[str],
-        subject: str,
-        message: str,
-        metadata: Optional[Dict] = None
-    ):
+        notification_type -> None: str,
+        recipients -> None: List[str],
+        subject -> None: str,
+        message -> None: str,
+        metadata -> None: Optional[Dict] = None
+    ) -> None:
         """Send a notification"""
         try:
             if notification_type in self.notification_callbacks:
@@ -168,7 +168,7 @@ class NotificationService:
 class ComplianceChecker:
     """Check compliance requirements"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.compliance_rules: Dict[str, Callable] = {}
         self.compliance_policies: List[GovernancePolicy] = []
         try:
@@ -190,7 +190,7 @@ class ComplianceChecker:
 class ModelGovernanceEngine:
     """Core model governance engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.users: Dict[str, User] = {}
         self.approval_rules: Dict[GovernanceAction, ApprovalRule] = {}
         self.approval_requests: Dict[str, ApprovalRequest] = {}
@@ -203,17 +203,17 @@ class ModelGovernanceEngine:
         self.enable_auto_approval = True
         self.auto_approval_callbacks: Dict[str, Callable] = {}
     
-    def register_user(self, user: User):
+    def register_user(self, user -> None: User) -> None:
         """Register a user in the governance system"""
         self.users[user.user_id] = user
         logger.info(f"Registered user {user.name} ({user.user_id}) with roles {[r.value for r in user.roles]}")
     
-    def add_approval_rule(self, rule: ApprovalRule):
+    def add_approval_rule(self, rule -> None: ApprovalRule) -> None:
         """Add an approval rule"""
         self.approval_rules[rule.action_type] = rule
         logger.info(f"Added approval rule for {rule.action_type.value}")
     
-    def add_policy(self, policy: GovernancePolicy):
+    def add_policy(self, policy -> None: GovernancePolicy) -> None:
         """Add a governance policy"""
         self.policies.append(policy)
         self.compliance_checker.add_policy(policy)
@@ -465,7 +465,7 @@ class ModelGovernanceEngine:
             if request.status == ApprovalStatus.PENDING
         ]
     
-    async def expire_old_requests(self):
+    async def expire_old_requests(self) -> None:
         """Expire old requests that have passed their expiry time"""
         current_time = datetime.now()
         expired_count = 0
@@ -563,7 +563,7 @@ class ModelGovernanceEngine:
         logger.info(f"Request {request.request_id} auto-approved")
         return True
     
-    async def _execute_approved_action(self, request: ApprovalRequest):
+    async def _execute_approved_action(self, request -> None: ApprovalRequest) -> None:
         """Execute the approved action"""
         action_type = request.action_type.value
         
@@ -577,12 +577,12 @@ class ModelGovernanceEngine:
         else:
             logger.info(f"No executor configured for action type {action_type}")
     
-    def register_action_executor(self, action_type: str, callback: Callable):
+    def register_action_executor(self, action_type -> None: str, callback -> None: Callable) -> None:
         """Register a callback for executing approved actions"""
         self.auto_approval_callbacks[action_type] = callback
         logger.info(f"Registered action executor for {action_type}")
     
-    async def _notify_approvers(self, request: ApprovalRequest):
+    async def _notify_approvers(self, request -> None: ApprovalRequest) -> None:
         """Notify required approvers about new request"""
         approver_emails = []
         for approver_id in request.required_approvers:
@@ -604,7 +604,7 @@ class ModelGovernanceEngine:
                 {"request_id": request.request_id}
             )
     
-    async def _notify_approval_completion(self, request: ApprovalRequest):
+    async def _notify_approval_completion(self, request -> None: ApprovalRequest) -> None:
         """Notify about approval completion"""
         requestor_email = self.users[request.requestor_id].email
         
@@ -620,7 +620,7 @@ class ModelGovernanceEngine:
             {"request_id": request.request_id}
         )
     
-    async def _notify_rejection(self, request: ApprovalRequest):
+    async def _notify_rejection(self, request -> None: ApprovalRequest) -> None:
         """Notify about rejection"""
         requestor_email = self.users[request.requestor_id].email
         
@@ -636,7 +636,7 @@ class ModelGovernanceEngine:
             {"request_id": request.request_id}
         )
     
-    async def _notify_expiration(self, request: ApprovalRequest):
+    async def _notify_expiration(self, request -> None: ApprovalRequest) -> None:
         """Notify about request expiration"""
         requestor_email = self.users[request.requestor_id].email
         
@@ -651,7 +651,7 @@ class ModelGovernanceEngine:
             {"request_id": request.request_id}
         )
     
-    async def _notify_comment_added(self, request: ApprovalRequest, comment_data: Dict):
+    async def _notify_comment_added(self, request -> None: ApprovalRequest, comment_data -> None: Dict) -> None:
         """Notify about new comment"""
         # Notify all stakeholders (requestor + approvers)
         emails = [self.users[request.requestor_id].email]
@@ -675,7 +675,7 @@ class ModelGovernanceEngine:
             {"request_id": request.request_id}
         )
     
-    async def _log_audit_event(self, event_type: str, event_data: Dict):
+    async def _log_audit_event(self, event_type -> None: str, event_data -> None: Dict) -> None:
         """Log an audit event"""
         audit_entry = {
             "event_id": str(uuid.uuid4()),

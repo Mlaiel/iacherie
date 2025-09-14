@@ -1,8 +1,8 @@
-"""⚖️ Compliance Manager - Legal Compliance Engine
+"""# [EMOJI_REMOVED] Compliance Manager - Legal Compliance Engine
 ==============================================
 
 Professional legal compliance management system:
-- Multi-jurisdiction legal validation
+    - Multi-jurisdiction legal validation
 - Automated compliance checking
 - Risk assessment and mitigation
 - Regulatory requirement tracking
@@ -93,13 +93,13 @@ Comprehensive compliance assessment report"""
 
 class ComplianceManager:
     """
-    🚀 Professional legal compliance management system
+    # [EMOJI_REMOVED] Professional legal compliance management system
     
     Advanced system for ensuring legal compliance across multiple
     jurisdictions with automated validation and risk assessment.
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         try:
             logger.info(f"Executing __init__")
             
@@ -114,7 +114,7 @@ class ComplianceManager:
         except Exception as e:
             logger.error(f"__init__ failed: {e}")
             raise
-    def _load_compliance_rules(self):
+    def _load_compliance_rules(self) -> None:
         """Load comprehensive compliance rules database."""
         compliance_rules_data = {
             # International Copyright Rules
@@ -188,7 +188,7 @@ class ComplianceManager:
                 description='German moral rights protection',
                 requirement='Must preserve moral rights under Urheberrechtsgesetz',
                 penalty_severity=RiskLevel.HIGH,
-                validation_pattern=r'(?i)(moral\s*rights|urheberpersönlichkeits)',
+                validation_pattern=r'(?i)(moral\s*rights|urheberpers# [EMOJI_REMOVED]nlichkeits)',
                 exemptions=[],
                 last_updated=datetime.now()
             ),
@@ -209,7 +209,7 @@ class ComplianceManager:
         self.compliance_rules = compliance_rules_data
         self.logger.info(f"Loaded {len(compliance_rules_data)} compliance rules")
     
-    def _load_jurisdiction_requirements(self):
+    def _load_jurisdiction_requirements(self) -> None:
         """Load jurisdiction-specific legal requirements."""
         jurisdiction_data = {
             'international': {
@@ -245,7 +245,7 @@ class ComplianceManager:
         self.jurisdiction_requirements = jurisdiction_data
         self.logger.info(f"Loaded requirements for {len(jurisdiction_data)} jurisdictions")
     
-    def _load_risk_matrices(self):
+    def _load_risk_matrices(self) -> None:
         """Load risk assessment matrices."""
         risk_data = {
             'financial_risk': {
@@ -278,7 +278,7 @@ class ComplianceManager:
         compliance_level: ComplianceLevel = ComplianceLevel.STANDARD
     ) -> ComplianceReport:
         """
-        ⚖️ Validate license compliance across all applicable rules
+        # [EMOJI_REMOVED] Validate license compliance across all applicable rules
         
         Args:
             license_data: License document to validate
@@ -732,3 +732,5 @@ Generate list of required actions to achieve compliance."""
             ),
             'timestamp': datetime.now().isoformat()
         }
+
+# File has syntax issues - needs manual review

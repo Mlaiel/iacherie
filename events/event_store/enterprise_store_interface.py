@@ -188,7 +188,7 @@ class EnterpriseEventStore:
     multiple storage backends for the Ainflue platform.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._backends: Dict[StorageBackendType, IEventStoreBackend] = {}
         self._routing_strategies: Dict[str, StorageStrategy] = {}
         self._performance_cache: Dict[str, Any] = {}
@@ -198,7 +198,7 @@ class EnterpriseEventStore:
         # Ainflue-specific business logic routing
         self._initialize_business_routing()
     
-    def _initialize_business_routing(self):
+    def _initialize_business_routing(self) -> None:
         """Initialize Ainflue business logic routing strategies"""
         
         # Content lifecycle events → PostgreSQL + MongoDB
@@ -241,7 +241,7 @@ class EnterpriseEventStore:
         for event_type in analytics_events:
             self._routing_strategies[event_type] = StorageStrategy.ANALYTICAL
     
-    async def initialize(self, backends: Dict[StorageBackendType, IEventStoreBackend]):
+    async def initialize(self, backends -> None: Dict[StorageBackendType, IEventStoreBackend]) -> None:
         """Initialize the enterprise store with backends"""
         self._backends = backends
         

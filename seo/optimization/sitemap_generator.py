@@ -96,7 +96,7 @@ class SitemapGenerator:
     and comprehensive SEO optimization for better search engine indexing.
     """
     
-    def __init__(self, base_url: str, max_urls_per_sitemap: int = 50000):
+    def __init__(self, base_url -> None: str, max_urls_per_sitemap -> None: int = 50000) -> None:
         """
         Initialize the sitemap generator.
         

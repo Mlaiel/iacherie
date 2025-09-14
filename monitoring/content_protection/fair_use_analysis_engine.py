@@ -116,7 +116,7 @@ class FairUseAnalysisResult:
 class FairUseAnalysisEngine:
     """Enterprise fair use analysis engine."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.analysis_cache = {}
         self.legal_precedents_db = {}
         self.factor_weights = {
@@ -131,7 +131,7 @@ class FairUseAnalysisEngine:
         # Initialize scoring models
         self._initialize_scoring_models()
     
-    def _initialize_scoring_models(self):
+    def _initialize_scoring_models(self) -> None:
         """Initialize fair use scoring models."""
         
         # Use type scores (higher = more likely fair use)
@@ -161,7 +161,7 @@ class FairUseAnalysisEngine:
         # Load legal precedents database
         self._load_legal_precedents()
     
-    def _load_legal_precedents(self):
+    def _load_legal_precedents(self) -> None:
         """Load legal precedents database."""
         
         # Simulated legal precedents database

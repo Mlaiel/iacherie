@@ -91,7 +91,7 @@ class PlatformIntegrationManager:
     Central manager for all platform integrations
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
         
@@ -109,7 +109,7 @@ class PlatformIntegrationManager:
         # Initialize built-in platform configurations
         self._initialize_platforms()
     
-    def _initialize_platforms(self):
+    def _initialize_platforms(self) -> None:
         """
 Initialize built-in platform configurations"""
         
@@ -244,7 +244,7 @@ Initialize built-in platform configurations"""
             }
         )
     
-    def add_platform_credentials(self, platform_id: str, credentials: APICredentials):
+    def add_platform_credentials(self, platform_id -> None: str, credentials -> None: APICredentials) -> None:
         """Add credentials for a platform"""
         self.credentials[platform_id] = credentials
         self.logger.info(f"Credentials added for platform: {platform_id}")
@@ -276,14 +276,14 @@ Initialize built-in platform configurations"""
             self.logger.error(f"Failed to initialize session for {platform_id}: {e}")
             return False
     
-    async def close_session(self, platform_id: str):
+    async def close_session(self, platform_id -> None: str) -> None:
         """Close HTTP session for a platform"""
         if platform_id in self.sessions:
             await self.sessions[platform_id].close()
             del self.sessions[platform_id]
             self.logger.info(f"Session closed for platform: {platform_id}")
     
-    async def close_all_sessions(self):
+    async def close_all_sessions(self) -> None:
         """Close all HTTP sessions"""
         for platform_id in list(self.sessions.keys()):
             await self.close_session(platform_id)
@@ -390,10 +390,10 @@ Initialize built-in platform configurations"""
     
     async def _add_authentication(
         self,
-        platform_id: str,
-        params: Dict[str, Any],
-        headers: Dict[str, str]
-    ):
+        platform_id -> None: str,
+        params -> None: Dict[str, Any],
+        headers -> None: Dict[str, str]
+    ) -> None:
         """Add authentication to request"""
         platform_config = self.platforms[platform_id]
         credentials = self.credentials.get(platform_id)
@@ -417,7 +417,7 @@ Initialize built-in platform configurations"""
             if credentials.expires_at and datetime.utcnow() >= credentials.expires_at:
                 await self._refresh_oauth_token(platform_id)
     
-    async def _refresh_oauth_token(self, platform_id: str):
+    async def _refresh_oauth_token(self, platform_id -> None: str) -> None:
         """Refresh OAuth token for a platform"""
         credentials = self.credentials.get(platform_id)
         if not credentials or not credentials.refresh_token:
@@ -446,7 +446,7 @@ Initialize built-in platform configurations"""
         remaining = rate_limit_info.get("remaining", float('inf'))
         return remaining > 0
     
-    def _update_rate_limit_tracking(self, platform_id: str, response_headers: Dict[str, str]):
+    def _update_rate_limit_tracking(self, platform_id -> None: str, response_headers -> None: Dict[str, str]) -> None:
         """Update rate limit tracking from response headers"""
         # Common rate limit header patterns
         remaining_headers = [

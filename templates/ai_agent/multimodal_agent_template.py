@@ -86,6 +86,7 @@ class MultiModalInput(BaseModel):
     timestamp: datetime = Field(default_factory=datetime.utcnow)
     
     class Config:
+    """Config: class implementation"""
         arbitrary_types_allowed = True
 
 
@@ -102,6 +103,7 @@ class MultiModalOutput(BaseModel):
     created_at: datetime = Field(default_factory=datetime.utcnow)
     
     class Config:
+    """Config: class implementation"""
         arbitrary_types_allowed = True
 
 
@@ -134,7 +136,7 @@ class MultiModalConfig(BaseModel):
 class ModalityProcessor:
     """Base class for modality-specific processors"""
     
-    def __init__(self, modality_type: ModalityType):
+    def __init__(self, modality_type -> None: ModalityType) -> None:
         self.modality_type = modality_type
         self.embedding_dim = 512
     
@@ -154,7 +156,7 @@ class ModalityProcessor:
 class TextModalityProcessor(ModalityProcessor):
     """Text modality processor"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__(ModalityType.TEXT)
         self.tokenizer = AutoTokenizer.from_pretrained("sentence-transformers/all-MiniLM-L6-v2")
         self.model = AutoModel.from_pretrained("sentence-transformers/all-MiniLM-L6-v2")
@@ -241,7 +243,7 @@ class TextModalityProcessor(ModalityProcessor):
 class ImageModalityProcessor(ModalityProcessor):
     """Image modality processor"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__(ModalityType.IMAGE)
         self.clip_model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
         self.clip_processor = CLIPProcessor.from_pretrained("openai/clip-vit-base-patch32")
@@ -363,7 +365,7 @@ class ImageModalityProcessor(ModalityProcessor):
 class AudioModalityProcessor(ModalityProcessor):
     """Audio modality processor"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__(ModalityType.AUDIO)
         self.speech_processor = Wav2Vec2Processor.from_pretrained("facebook/wav2vec2-base-960h")
         self.speech_model = Wav2Vec2ForCTC.from_pretrained("facebook/wav2vec2-base-960h")
@@ -504,10 +506,10 @@ class {{agent_class_name}}(BaseAIAgent):
     
     def __init__(
         self,
-        name: str = "{{agent_name}}",
-        config: Optional[MultiModalConfig] = None,
+        name -> None: str = "{{agent_name}}",
+        config -> None: Optional[MultiModalConfig] = None,
         **kwargs
-    ):
+    ) -> None:
         super().__init__(name=name, **kwargs)
         self.config = config or MultiModalConfig()
         
@@ -890,3 +892,5 @@ class {{agent_class_name}}(BaseAIAgent):
     def get_metrics(self) -> Dict[str, Any]:
         """Get multi-modal metrics"""
         return self.metrics.get_summary()
+
+# File has syntax issues - needs manual review

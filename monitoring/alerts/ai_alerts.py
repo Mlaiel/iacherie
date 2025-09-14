@@ -145,7 +145,7 @@ class AIAlertManager:
     - Business impact assessment
     """
     
-    def __init__(self, alert_manager: IntelligentAlertManager):
+    def __init__(self, alert_manager -> None: IntelligentAlertManager) -> None:
         """
 Initialize AI alert manager"""
         self.alert_manager = alert_manager
@@ -182,7 +182,7 @@ Initialize AI alert manager"""
         self._initialize_ai_rules()
         logger.info("AIAlertManager initialized")
     
-    def _initialize_ai_rules(self):
+    def _initialize_ai_rules(self) -> None:
         """Initialize AI/ML specific alert rules"""
         
         # Model Drift Detection
@@ -618,7 +618,7 @@ Initialize AI alert manager"""
         """Get baseline metrics for a model"""
         return self.model_baselines.get(model_id)
     
-    async def _update_model_baseline(self, metrics: ModelMetrics):
+    async def _update_model_baseline(self, metrics -> None: ModelMetrics) -> None:
         """
 Update model baseline if performance is good"""
         try:

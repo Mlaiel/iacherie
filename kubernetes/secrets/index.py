@@ -105,11 +105,11 @@ class InfluencerSecretsManager:
     
     def __init__(
         self,
-        config: Optional[SecretsConfig] = None,
-        vault_url: Optional[str] = None,
-        vault_token: Optional[str] = None,
-        environment: str = "production"
-    ):
+        config -> None: Optional[SecretsConfig] = None,
+        vault_url -> None: Optional[str] = None,
+        vault_token -> None: Optional[str] = None,
+        environment -> None: str = "production"
+    ) -> None:
         """
         Initialize IA Influencer secrets manager.
         

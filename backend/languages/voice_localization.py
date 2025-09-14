@@ -195,7 +195,7 @@ class VoiceLocalizationEngine:
     text-to-speech in 644+ languages with cultural adaptation
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize voice localization engine"""
         self.config = config or {}
         self.voice_profiles = {}

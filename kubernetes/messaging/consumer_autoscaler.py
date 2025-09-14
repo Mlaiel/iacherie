@@ -58,7 +58,7 @@ class ConsumerInfo:
     last_activity: datetime = None
     status: str = "running"  # running, idle, stopping
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.last_activity is None:
             self.last_activity = datetime.utcnow()
 
@@ -74,7 +74,7 @@ class ScalingDecision:
     confidence: float  # 0.0 to 1.0
     timestamp: datetime = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.timestamp is None:
             self.timestamp = datetime.utcnow()
 
@@ -83,9 +83,9 @@ class ConsumerAutoScaler:
     """Automatic consumer scaling system"""
     
     def __init__(self, 
-                 messaging_system: UnifiedMessagingSystem, 
-                 monitor: QueueMonitor,
-                 config: Optional[MessagingConfig] = None):
+                 messaging_system -> None: UnifiedMessagingSystem, 
+                 monitor -> None: QueueMonitor,
+                 config -> None: Optional[MessagingConfig] = None) -> None:
         self.messaging_system = messaging_system
         self.monitor = monitor
         self.config = config or MessagingConfig.from_env()

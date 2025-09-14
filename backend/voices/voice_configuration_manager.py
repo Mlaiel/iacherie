@@ -114,7 +114,7 @@ class ConfigurationHistory:
 class ConfigurationEngine:
     """Core configuration management engine"""
     
-    def __init__(self, config_dir: str = "/config"):
+    def __init__(self, config_dir -> None: str = "/config") -> None:
         """Initialize configuration engine"""
         self.config_dir = Path(config_dir)
         self.configurations = {}
@@ -407,9 +407,9 @@ class ConfigurationEngine:
     
     async def _validate_configuration(
         self,
-        values: Dict[str, Any],
-        schema_id: str
-    ):
+        values -> None: Dict[str, Any],
+        schema_id -> None: str
+    ) -> None:
         """Validate configuration against schema"""
         try:
             schema = self.schemas.get(schema_id)
@@ -433,10 +433,10 @@ class ConfigurationEngine:
     
     async def _validate_field(
         self,
-        field_name: str,
-        value: Any,
-        field_schema: Dict[str, Any]
-    ):
+        field_name -> None: str,
+        value -> None: Any,
+        field_schema -> None: Dict[str, Any]
+    ) -> None:
         """Validate individual field"""
         try:
             # Type validation
@@ -550,7 +550,7 @@ class ConfigurationEngine:
             logger.error(f"Failed to decrypt value: {e}")
             return encrypted_value
     
-    async def _load_configurations(self):
+    async def _load_configurations(self) -> None:
         """Load configurations from files"""
         try:
             config_files = self.config_dir.glob("**/*.json")
@@ -572,7 +572,7 @@ class ConfigurationEngine:
         except Exception as e:
             logger.error(f"Failed to load configurations: {e}")
     
-    async def _save_configuration_to_file(self, config: Configuration):
+    async def _save_configuration_to_file(self, config -> None: Configuration) -> None:
         """Save configuration to file"""
         try:
             config_file = self.config_dir / f"{config.config_type.value}" / f"{config.name}.json"
@@ -603,7 +603,7 @@ class ConfigurationEngine:
         except Exception as e:
             logger.error(f"Failed to save configuration to file: {e}")
     
-    async def _save_schema_to_file(self, schema: ConfigurationSchema):
+    async def _save_schema_to_file(self, schema -> None: ConfigurationSchema) -> None:
         """Save schema to file"""
         try:
             schema_file = self.config_dir / "schemas" / f"{schema.name}.json"
@@ -627,7 +627,7 @@ class ConfigurationEngine:
         except Exception as e:
             logger.error(f"Failed to save schema to file: {e}")
     
-    async def _cache_configuration(self, config: Configuration):
+    async def _cache_configuration(self, config -> None: Configuration) -> None:
         """Cache configuration in Redis"""
         try:
             cache_key = f"config:{config.config_id}"
@@ -661,7 +661,7 @@ class ConfigurationEngine:
             logger.warning(f"Failed to get cached configuration: {e}")
             return None
     
-    async def _remove_from_cache(self, config_id: str):
+    async def _remove_from_cache(self, config_id -> None: str) -> None:
         """Remove configuration from cache"""
         try:
             cache_key = f"config:{config_id}"
@@ -670,7 +670,7 @@ class ConfigurationEngine:
         except Exception as e:
             logger.warning(f"Failed to remove from cache: {e}")
     
-    async def _archive_configuration_file(self, config: Configuration):
+    async def _archive_configuration_file(self, config -> None: Configuration) -> None:
         """Archive configuration file"""
         try:
             config_file = self.config_dir / f"{config.config_type.value}" / f"{config.name}.json"
@@ -685,14 +685,14 @@ class ConfigurationEngine:
     
     async def _record_history(
         self,
-        config_id: str,
-        action: str,
-        old_values: Optional[Dict[str, Any]],
-        new_values: Optional[Dict[str, Any]],
-        changed_fields: List[str] = None,
-        change_reason: Optional[str] = None,
-        changed_by: Optional[str] = None
-    ):
+        config_id -> None: str,
+        action -> None: str,
+        old_values -> None: Optional[Dict[str, Any]],
+        new_values -> None: Optional[Dict[str, Any]],
+        changed_fields -> None: List[str] = None,
+        change_reason -> None: Optional[str] = None,
+        changed_by -> None: Optional[str] = None
+    ) -> None:
         """Record configuration change history"""
         try:
             history_id = f"history_{config_id}_{int(time.time())}"
@@ -716,14 +716,15 @@ class ConfigurationEngine:
         except Exception as e:
             logger.error(f"Failed to record history: {e}")
     
-    def _start_file_watcher(self):
+    def _start_file_watcher(self) -> None:
         """Start file system watcher for configuration changes"""
         try:
             class ConfigFileHandler(FileSystemEventHandler):
-                def __init__(self, engine):
+    """ConfigFileHandler class implementation"""
+                def __init__(self, engine) -> None:
                     self.engine = engine
                 
-                def on_modified(self, event):
+                def on_modified(self, event) -> None:
                     if not event.is_directory and event.src_path.endswith('.json'):
                         asyncio.create_task(self.engine._reload_configuration_file(event.src_path))
             
@@ -737,7 +738,7 @@ class ConfigurationEngine:
         except Exception as e:
             logger.error(f"Failed to start file watcher: {e}")
     
-    async def _reload_configuration_file(self, file_path: str):
+    async def _reload_configuration_file(self, file_path -> None: str) -> None:
         """Reload configuration from modified file"""
         try:
             with open(file_path, 'r') as f:
@@ -757,7 +758,7 @@ class ConfigurationEngine:
 class SettingsManager:
     """Application settings management"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize settings manager"""
         self.user_settings = {}
         self.default_settings = {}
@@ -767,7 +768,7 @@ class SettingsManager:
 class VoiceSettings:
     """Voice-specific settings management"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize voice settings"""
         self.voice_profiles = {}
         self.synthesis_settings = {}
@@ -777,7 +778,7 @@ class VoiceSettings:
 class ConfigurationAnalytics:
     """Configuration usage analytics"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize configuration analytics"""
         self.usage_metrics = {}
         self.performance_stats = {}
@@ -787,7 +788,7 @@ class ConfigurationAnalytics:
 class SettingsOptimization:
     """Settings optimization engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize settings optimization"""
         self.optimization_rules = {}
         
@@ -796,7 +797,7 @@ class SettingsOptimization:
 class ConfigurationManagement:
     """Configuration management system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize configuration management"""
         self.config_policies = {}
         
@@ -805,7 +806,7 @@ class ConfigurationManagement:
 class VoiceConfigurationManager:
     """Main voice configuration manager"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         """Initialize voice configuration manager"""
         self.config = config or {}
         self.configuration_engine = ConfigurationEngine()
@@ -859,7 +860,7 @@ class VoiceConfigurationManager:
             logger.error(f"Failed to get voice config: {e}")
             return None
     
-    async def _initialize_voice_configurations(self):
+    async def _initialize_voice_configurations(self) -> None:
         """Initialize default voice configurations"""
         try:
             # Voice engine configuration

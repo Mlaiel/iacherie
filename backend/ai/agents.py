@@ -66,7 +66,7 @@ class AgentResponse:
 class BaseConversationalAgent(ABC):
     """Base class for all conversational agents"""
     
-    def __init__(self, agent_type: AgentType, capabilities: List[AgentCapability]):
+    def __init__(self, agent_type -> None: AgentType, capabilities -> None: List[AgentCapability]) -> None:
         self.agent_type = agent_type
         self.capabilities = capabilities
         self.created_at = datetime.now()
@@ -89,14 +89,14 @@ class BaseConversationalAgent(ABC):
         self.logger.info(f"Shutting down {self.agent_type.value} agent")
         return True
     
-    def update_activity(self):
+    def update_activity(self) -> None:
         """Update last activity timestamp"""
         self.last_activity = datetime.now()
 
 class ChatOrchestrationAgent(BaseConversationalAgent):
     """Multi-platform chat coordination agent"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__(
             AgentType.CHAT_ORCHESTRATOR,
             [AgentCapability.CONVERSATION, AgentCapability.INTEGRATION, AgentCapability.AUTOMATION]
@@ -167,7 +167,7 @@ class ChatOrchestrationAgent(BaseConversationalAgent):
 class BusinessAdvisorAgent(BaseConversationalAgent):
     """Business strategy and advice agent"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__(
             AgentType.BUSINESS_ADVISOR,
             [AgentCapability.ANALYSIS, AgentCapability.RECOMMENDATION, AgentCapability.CONVERSATION]
@@ -250,7 +250,7 @@ class BusinessAdvisorAgent(BaseConversationalAgent):
 class ContentCreatorAgent(BaseConversationalAgent):
     """Content creation assistance agent"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__(
             AgentType.CONTENT_CREATOR,
             [AgentCapability.CONVERSATION, AgentCapability.RECOMMENDATION, AgentCapability.ANALYSIS]
@@ -343,7 +343,7 @@ class ContentCreatorAgent(BaseConversationalAgent):
 class CollaborationMatcherAgent(BaseConversationalAgent):
     """Creator collaboration matching agent"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__(
             AgentType.COLLABORATION_MATCHER,
             [AgentCapability.ANALYSIS, AgentCapability.RECOMMENDATION, AgentCapability.CONVERSATION]
@@ -435,7 +435,7 @@ class CollaborationMatcherAgent(BaseConversationalAgent):
 class MonetizationAssistantAgent(BaseConversationalAgent):
     """Monetization strategy assistant agent"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__(
             AgentType.MONETIZATION_ASSISTANT,
             [AgentCapability.ANALYSIS, AgentCapability.RECOMMENDATION, AgentCapability.CONVERSATION]
@@ -537,7 +537,7 @@ class MonetizationAssistantAgent(BaseConversationalAgent):
 class ProtectionAdvisorAgent(BaseConversationalAgent):
     """Content protection advisory agent"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__(
             AgentType.PROTECTION_ADVISOR,
             [AgentCapability.ANALYSIS, AgentCapability.RECOMMENDATION, AgentCapability.CONVERSATION]
@@ -633,11 +633,11 @@ class ProtectionAdvisorAgent(BaseConversationalAgent):
 class ConversationalAgentManager:
     """Manager for all conversational agents"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.agents: Dict[AgentType, BaseConversationalAgent] = {}
         self.initialize_agents()
     
-    def initialize_agents(self):
+    def initialize_agents(self) -> None:
         """Initialize all conversational agents"""
         self.agents[AgentType.CHAT_ORCHESTRATOR] = ChatOrchestrationAgent()
         self.agents[AgentType.BUSINESS_ADVISOR] = BusinessAdvisorAgent()

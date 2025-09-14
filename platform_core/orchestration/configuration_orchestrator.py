@@ -1,3 +1,8 @@
+"""
+Configuration Orchestrator module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Configuration Orchestrator - Enterprise Core Component
@@ -141,12 +146,12 @@ class ConfigProvider(ABC):
 class FileConfigProvider(ConfigProvider):
     """File-based configuration provider"""
     
-    def __init__(self, config_dir: str = "config"):
+    def __init__(self, config_dir -> None: str = "config") -> None:
         self.config_dir = Path(config_dir)
         self.configs: Dict[str, Dict[str, Any]] = {}
         self._load_configs()
     
-    def _load_configs(self):
+    def _load_configs(self) -> None:
         """Load configurations from files"""
         try:
             self.config_dir.mkdir(exist_ok=True)
@@ -164,7 +169,7 @@ class FileConfigProvider(ConfigProvider):
             for scope in ConfigScope:
                 self.configs[scope.value] = {}
     
-    def _save_configs(self):
+    def _save_configs(self) -> None:
         """Save configurations to files"""
         try:
             for scope_name, config_data in self.configs.items():
@@ -219,7 +224,7 @@ class ConfigurationOrchestrator:
     configuration orchestration across the entire platform.
     """
     
-    def __init__(self, provider: Optional[ConfigProvider] = None, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, provider -> None: Optional[ConfigProvider] = None, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.provider = provider or FileConfigProvider()
         self.environments: Dict[str, ConfigEnvironment] = {}
@@ -851,11 +856,11 @@ class ConfigurationOrchestrator:
                 await asyncio.sleep(3600)
     
     # Context Manager Support
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         await self.start()
         return self
     
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         await self.stop()
 
 
@@ -872,7 +877,7 @@ async def config_watcher(key: str, new_value: Any, old_value: Any) -> None:
 
 
 # Example usage
-async def main():
+async def main() -> None:
     """Example usage of Configuration Orchestrator"""
     async with create_configuration_orchestrator() as orchestrator:
         # Register a configuration watcher

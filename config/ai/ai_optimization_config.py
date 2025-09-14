@@ -107,7 +107,7 @@ class PruningConfig:
 class AIOptimizationConfiguration:
     """Enterprise AI optimization configuration management"""
     
-    def __init__(self, level: str = "enterprise"):
+    def __init__(self, level -> None: str = "enterprise") -> None:
         self.level = level
         self.optimization_enabled = True
         self.auto_optimization = True
@@ -139,7 +139,7 @@ class AIOptimizationConfiguration:
         self._configure_hardware_specific()
         self._configure_monitoring()
     
-    def _configure_optimization_profiles(self):
+    def _configure_optimization_profiles(self) -> None:
         """Configure optimization profiles for different use cases"""
         self.optimization_profiles = {
             "high_performance": OptimizationProfile(
@@ -220,7 +220,7 @@ class AIOptimizationConfiguration:
             )
         }
     
-    def _configure_quantization(self):
+    def _configure_quantization(self) -> None:
         """Configure quantization settings"""
         self.quantization_configs = {
             "aggressive": QuantizationConfig(
@@ -255,7 +255,7 @@ class AIOptimizationConfiguration:
             )
         }
     
-    def _configure_pruning(self):
+    def _configure_pruning(self) -> None:
         """Configure pruning settings"""
         self.pruning_configs = {
             "aggressive": PruningConfig(
@@ -283,7 +283,7 @@ class AIOptimizationConfiguration:
             )
         }
     
-    def _configure_distillation(self):
+    def _configure_distillation(self) -> None:
         """Configure knowledge distillation settings"""
         self.distillation_config = {
             "enabled": True,
@@ -300,7 +300,7 @@ class AIOptimizationConfiguration:
             "progressive_distillation": True
         }
     
-    def _configure_hardware_specific(self):
+    def _configure_hardware_specific(self) -> None:
         """Configure hardware-specific optimizations"""
         self.hardware_optimizations = {
             HardwareTarget.GPU_NVIDIA: {
@@ -347,7 +347,7 @@ class AIOptimizationConfiguration:
             }
         }
     
-    def _configure_monitoring(self):
+    def _configure_monitoring(self) -> None:
         """Configure optimization monitoring"""
         self.monitoring_config = {
             "enabled": True,

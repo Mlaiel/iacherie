@@ -25,7 +25,7 @@ logger = logging.getLogger(__name__)
 class DiscordServer:
     """Discord server (guild) management"""
     
-    def __init__(self, guild_id: str, name: str, owner_id: str):
+    def __init__(self, guild_id -> None: str, name -> None: str, owner_id -> None: str) -> None:
         self.guild_id = guild_id
         self.name = name
         self.owner_id = owner_id
@@ -37,7 +37,7 @@ class DiscordServer:
 class DiscordMember:
     """Discord server member management"""
     
-    def __init__(self, user_id: str, guild_id: str, username: str):
+    def __init__(self, user_id -> None: str, guild_id -> None: str, username -> None: str) -> None:
         self.user_id = user_id
         self.guild_id = guild_id
         self.username = username
@@ -50,7 +50,7 @@ class DiscordMember:
 class DiscordChannel:
     """Discord channel management"""
     
-    def __init__(self, channel_id: str, guild_id: str, name: str, channel_type: int):
+    def __init__(self, channel_id -> None: str, guild_id -> None: str, name -> None: str, channel_type -> None: int) -> None:
         self.channel_id = channel_id
         self.guild_id = guild_id
         self.name = name
@@ -62,7 +62,7 @@ class DiscordChannel:
 class DiscordMessage:
     """Discord message management"""
     
-    def __init__(self, message_id: str, channel_id: str, author_id: str, content: str):
+    def __init__(self, message_id -> None: str, channel_id -> None: str, author_id -> None: str, content -> None: str) -> None:
         self.message_id = message_id
         self.channel_id = channel_id
         self.author_id = author_id
@@ -90,7 +90,7 @@ class DiscordBotAPI:
     - Integration with other platforms
     """
     
-    def __init__(self, bot_token: str, client_id: str, client_secret: str):
+    def __init__(self, bot_token -> None: str, client_id -> None: str, client_secret -> None: str) -> None:
         self.bot_token = bot_token
         self.client_id = client_id
         self.client_secret = client_secret
@@ -102,17 +102,17 @@ class DiscordBotAPI:
             'reset_time': time.time() + 1
         }
         
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         """Async context manager entry"""
         self.session = aiohttp.ClientSession()
         return self
         
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         """Async context manager exit"""
         if self.session:
             await self.session.close()
 
-    def _check_rate_limit(self):
+    def _check_rate_limit(self) -> None:
         """Check and enforce rate limiting"""
         current_time = time.time()
         
@@ -885,7 +885,7 @@ class DiscordBotAPI:
     # For brevity, including core structure and key methods
 
 # Example usage and testing
-async def main():
+async def main() -> None:
     """Example usage of Discord Bot API integration"""
     
     # Initialize the API client

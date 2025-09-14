@@ -67,7 +67,7 @@ class AlertRule:
 class CriticalBusinessMonitoring:
     """Critical business operations monitoring configuration"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.sla_targets = self._define_sla_targets()
         self.alert_rules = self._define_alert_rules()
         self.monitoring_dashboards = self._define_monitoring_dashboards()

@@ -1,4 +1,6 @@
 """🔧 Technical Debt Tracker - Ainflue Platform
+import asyncio
+
 ================================================================
 Expert: QUALITY_ENGINEER + SOFTWARE_ARCHITECT
 Created: 2025-01-XX
@@ -75,7 +77,7 @@ class TechnicalDebtTracker:
     Comprehensive technical debt tracking system
     """
     
-    def __init__(self, project_root: Optional[str] = None):
+    def __init__(self, project_root -> None: Optional[str] = None) -> None:
         try:
             logger.info(f"Executing __init__")
             
@@ -112,7 +114,7 @@ class TechnicalDebtTracker:
         
         return summary
 
-    async def _analyze_file(self, file_path: Path):
+    async def _analyze_file(self, file_path -> None: Path) -> None:
         """Analyze a single file for technical debt"""
         try:
             with open(file_path, 'r', encoding='utf-8') as f:
@@ -132,18 +134,19 @@ class TechnicalDebtTracker:
         except Exception as e:
             self.logger.error(f"Error reading {file_path}: {e}")
 
-    async def _analyze_ast(self, tree: ast.AST, file_path: Path, lines: List[str]):
+    async def _analyze_ast(self, tree -> None: ast.AST, file_path -> None: Path, lines -> None: List[str]) -> None:
         """Analyze AST for structural debt"""
         
         class DebtVisitor(ast.NodeVisitor):
-            def __init__(self, tracker, file_path, lines):
+    """DebtVisitor class implementation"""
+            def __init__(self, tracker, file_path, lines) -> None:
                 self.tracker = tracker
                 self.file_path = file_path
                 self.lines = lines
                 self.current_class = None
                 self.current_method = None
             
-            def visit_ClassDef(self, node):
+            def visit_ClassDef(self, node) -> None:
                 old_class = self.current_class
                 self.current_class = node.name
                 
@@ -178,7 +181,7 @@ class TechnicalDebtTracker:
                 self.generic_visit(node)
                 self.current_class = old_class
             
-            def visit_FunctionDef(self, node):
+            def visit_FunctionDef(self, node) -> None:
                 old_method = self.current_method
                 self.current_method = node.name
                 
@@ -230,7 +233,7 @@ class TechnicalDebtTracker:
                 self.generic_visit(node)
                 self.current_method = old_method
             
-            def _count_code_lines(self, node):
+            def _count_code_lines(self, node) -> None:
                 """Count non-empty, non-comment lines in a node"""
                 start_line = node.lineno - 1
                 end_line = getattr(node, 'end_lineno', len(self.lines)) or len(self.lines)
@@ -242,7 +245,7 @@ class TechnicalDebtTracker:
                         count += 1
                 return count
             
-            def _calculate_complexity(self, node):
+            def _calculate_complexity(self, node) -> None:
                 """Calculate cyclomatic complexity"""
                 complexity = 1  # Base complexity
                 
@@ -259,7 +262,7 @@ class TechnicalDebtTracker:
         visitor = DebtVisitor(self, file_path, lines)
         visitor.visit(tree)
 
-    async def _analyze_lines(self, lines: List[str], file_path: Path):
+    async def _analyze_lines(self, lines -> None: List[str], file_path -> None: Path) -> None:
         """Analyze file line by line for debt patterns"""
         
         for line_num, line in enumerate(lines, 1):
@@ -309,17 +312,17 @@ class TechnicalDebtTracker:
 
     def _add_debt_item(
         self, 
-        debt_type: DebtType, 
-        severity: DebtSeverity, 
-        description: str,
-        file_path: Path,
-        line_number: Optional[int] = None,
-        method_name: Optional[str] = None,
-        class_name: Optional[str] = None,
-        effort_estimate: int = 1,
-        impact_score: float = 1.0,
-        metadata: Optional[Dict[str, Any]] = None
-    ):
+        debt_type -> None: DebtType, 
+        severity -> None: DebtSeverity, 
+        description -> None: str,
+        file_path -> None: Path,
+        line_number -> None: Optional[int] = None,
+        method_name -> None: Optional[str] = None,
+        class_name -> None: Optional[str] = None,
+        effort_estimate -> None: int = 1,
+        impact_score -> None: float = 1.0,
+        metadata -> None: Optional[Dict[str, Any]] = None
+    ) -> None:
         """Add a technical debt item"""
         item = DebtItem(
             debt_type=debt_type,

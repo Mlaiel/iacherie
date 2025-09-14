@@ -1,3 +1,8 @@
+"""
+Latency Analyzer module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Advanced Latency Analysis Engine for Ainflue Platform
@@ -165,7 +170,7 @@ class LatencyAnalyzer:
     - Advanced performance profiling
     """
     
-    def __init__(self, config_path: Optional[str] = None):
+    def __init__(self, config_path -> None: Optional[str] = None) -> None:
         """Initialize latency analysis engine."""
         self.logger = self._setup_logging()
         self.config = self._load_config(config_path)
@@ -732,7 +737,7 @@ class LatencyMLAnalyzer:
     and intelligent latency optimization insights.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize ML analyzer."""
         self.logger = logging.getLogger("LatencyMLAnalyzer")
         self.scaler = StandardScaler()
@@ -966,7 +971,7 @@ class LatencyAnomalyDetector:
     statistical methods, and pattern recognition.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize anomaly detector."""
         self.logger = logging.getLogger("LatencyAnomalyDetector")
         self.isolation_forest = IsolationForest(contamination=0.1, random_state=42)
@@ -1123,7 +1128,7 @@ class LatencyTrendAnalyzer:
     and predictive forecasting for latency performance.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize trend analyzer."""
         self.logger = logging.getLogger("LatencyTrendAnalyzer")
         
@@ -1295,7 +1300,7 @@ if __name__ == "__main__":
     import asyncio
     import random
     
-    async def main():
+    async def main() -> None:
         """Example latency analysis execution."""
         
         # Initialize analyzer

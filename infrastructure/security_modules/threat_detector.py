@@ -101,7 +101,7 @@ class ThreatDetector:
     - Real-time collaboration security monitoring
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize threat detection system"""
         self.detection_engines = {
             DetectionEngine.ML_BEHAVIORAL: True,

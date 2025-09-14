@@ -687,7 +687,7 @@ class PricingOptimization(Base):
 # EXPORT FUNCTIONS
 # ================================
 
-def get_monetization_enterprise_models():
+def get_monetization_enterprise_models() -> None:
     """Get all monetization and enterprise models."""
     return [
         RevenueTracking,
@@ -703,7 +703,7 @@ def get_monetization_enterprise_models():
     ]
 
 
-def create_monetization_enterprise_tables(engine):
+def create_monetization_enterprise_tables(engine) -> None:
     """Create all monetization and enterprise tables."""
     try:
         Base.metadata.create_all(engine, tables=[model.__table__ for model in get_monetization_enterprise_models()])

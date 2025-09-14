@@ -94,7 +94,7 @@ Result of format conversion"""
 class BaseConverter(ABC):
     """Abstract base class for format converters"""
     
-    def __init__(self, temp_dir: Optional[Path] = None):
+    def __init__(self, temp_dir -> None: Optional[Path] = None) -> None:
         self.temp_dir = temp_dir or Path(tempfile.gettempdir())
         self.temp_dir.mkdir(exist_ok=True)
         
@@ -148,7 +148,7 @@ Generate output file path"""
             return 0.0
         return converted_size / original_size
     
-    async def cleanup_temp_files(self, keep_files: Optional[List[Path]] = None):
+    async def cleanup_temp_files(self, keep_files -> None: Optional[List[Path]] = None) -> None:
         """
 Clean up temporary files"""
         keep_files = keep_files or []
@@ -242,8 +242,8 @@ Convert audio to target format"""
         result.conversion_time = (datetime.now() - start_time).total_seconds()
         return result
     
-    async def _convert_to_uncompressed(self, input_path: Path, output_path: Path, 
-                                     settings: ConversionSettings):
+    async def _convert_to_uncompressed(self, input_path -> None: Path, output_path -> None: Path, 
+                                     settings -> None: ConversionSettings) -> None:
         """Convert to uncompressed formats (WAV, FLAC)"""
         # Load audio
         audio, sr = librosa.load(str(input_path), sr=settings.sample_rate)
@@ -258,8 +258,8 @@ Convert audio to target format"""
         elif settings.target_format == 'flac':
             sf.write(str(output_path), audio, sr, format='FLAC')
     
-    async def _convert_to_mp3(self, input_path: Path, output_path: Path, 
-                            settings: ConversionSettings):
+    async def _convert_to_mp3(self, input_path -> None: Path, output_path -> None: Path, 
+                            settings -> None: ConversionSettings) -> None:
         """
 Convert to MP3 format"""
         # Determine bitrate based on quality
@@ -294,8 +294,8 @@ Convert to MP3 format"""
             None, lambda: ffmpeg.run(output_stream, overwrite_output=True, quiet=True)
         )
     
-    async def _convert_to_aac(self, input_path: Path, output_path: Path, 
-                            settings: ConversionSettings):
+    async def _convert_to_aac(self, input_path -> None: Path, output_path -> None: Path, 
+                            settings -> None: ConversionSettings) -> None:
         """
 Convert to AAC format"""
         quality_bitrates = {
@@ -328,8 +328,8 @@ Convert to AAC format"""
             None, lambda: ffmpeg.run(output_stream, overwrite_output=True, quiet=True)
         )
     
-    async def _convert_to_ogg(self, input_path: Path, output_path: Path, 
-                            settings: ConversionSettings):
+    async def _convert_to_ogg(self, input_path -> None: Path, output_path -> None: Path, 
+                            settings -> None: ConversionSettings) -> None:
         """
 Convert to OGG Vorbis format"""
         quality_levels = {
@@ -361,8 +361,8 @@ Convert to OGG Vorbis format"""
             None, lambda: ffmpeg.run(output_stream, overwrite_output=True, quiet=True)
         )
     
-    async def _convert_with_ffmpeg(self, input_path: Path, output_path: Path, 
-                                 settings: ConversionSettings):
+    async def _convert_with_ffmpeg(self, input_path -> None: Path, output_path -> None: Path, 
+                                 settings -> None: ConversionSettings) -> None:
         """
 Generic conversion using ffmpeg"""
         input_stream = ffmpeg.input(str(input_path))
@@ -574,8 +574,8 @@ Convert video to target format"""
         
         return params
     
-    async def _convert_with_ffmpeg(self, input_path: Path, output_path: Path, 
-                                 params: Dict[str, Any]):
+    async def _convert_with_ffmpeg(self, input_path -> None: Path, output_path -> None: Path, 
+                                 params -> None: Dict[str, Any]) -> None:
         """
 Perform video conversion using ffmpeg"""
         input_stream = ffmpeg.input(str(input_path))
@@ -793,7 +793,7 @@ Optimize image for web delivery"""
         
         return image
     
-    async def _save_image(self, image: Image.Image, output_path: Path, settings: ConversionSettings):
+    async def _save_image(self, image -> None: Image.Image, output_path -> None: Path, settings -> None: ConversionSettings) -> None:
         """
 Save image with format-specific options"""
         save_kwargs = {}
@@ -911,7 +911,7 @@ Assess quality of converted image"""
 class FormatConverter:
     """Universal multimedia format converter"""
     
-    def __init__(self, temp_dir: Optional[Path] = None):
+    def __init__(self, temp_dir -> None: Optional[Path] = None) -> None:
         self.temp_dir = temp_dir or Path(tempfile.gettempdir())
         self.converters = {
             ContentFormat.AUDIO: AudioConverter(temp_dir),
@@ -1024,7 +1024,7 @@ Convert multiple files to target format"""
         
         return processed_results
     
-    async def cleanup_all_temp_files(self):
+    async def cleanup_all_temp_files(self) -> None:
         """
 Clean up temporary files from all converters"""
         for converter in self.converters.values():

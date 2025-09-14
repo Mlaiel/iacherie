@@ -1,4 +1,6 @@
 """Video Module
+import asyncio
+
 Professional video functionality for multimedia processing.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -25,14 +27,14 @@ class VideoResult:
     data: Dict[str, Any] = None
     error_message: Optional[str] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.data is None:
             self.data = {}
 
 class VideoManager:
     """Main video manager class"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logger
         self.config = {}
     
@@ -61,14 +63,14 @@ class VideoProcessingResult:
     metadata: Dict[str, Any] = None
     processing_time: float = 0.0
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.metadata is None:
             self.metadata = {}
 
 class VideoProcessor:
     """Advanced video processing"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logger
     
     async def process_video(self, input_path: Path, output_path: Path, operations: List[str]) -> VideoProcessingResult:
@@ -113,7 +115,7 @@ class VideoProcessor:
 class VideoAnalyzer:
     """Analyze video content"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logger
     
     async def analyze_quality(self, video_path: Path) -> Dict[str, float]:

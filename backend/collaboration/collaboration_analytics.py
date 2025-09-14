@@ -161,7 +161,7 @@ class CollaborationAnalytics:
     - Recommandations d'optimisation
     """
     
-    def __init__(self, db_session=None, redis_client=None):
+    def __init__(self, db_session=None, redis_client=None) -> None:
         self.db_session = db_session
         self.redis_client = redis_client
         self.metrics_buffer = defaultdict(list)
@@ -173,7 +173,7 @@ class CollaborationAnalytics:
         # Initialiser les composants
         self._initialize_analytics_engine()
     
-    def _initialize_analytics_engine(self):
+    def _initialize_analytics_engine(self) -> None:
         """Initialise le moteur d'analytics"""
         # Règles d'alerte par défaut
         self.alert_rules = {
@@ -469,7 +469,7 @@ class PerformanceAnalyzer:
     - Scoring de performance contextuel
     """
     
-    def __init__(self, analytics_engine):
+    def __init__(self, analytics_engine) -> None:
         self.analytics_engine = analytics_engine
         self.performance_models = {}
         self.benchmark_data = {}
@@ -584,7 +584,7 @@ class PredictiveIntelligence:
     - Recommandations prédictives
     """
     
-    def __init__(self, analytics_engine):
+    def __init__(self, analytics_engine) -> None:
         self.analytics_engine = analytics_engine
         self.prediction_models = {}
         self.feature_extractors = {}

@@ -187,7 +187,7 @@ class DistributedTracingConfig:
 class ServiceRegistry:
     """Service discovery and registry system"""
     
-    def __init__(self, discovery_config: ServiceDiscoveryConfig):
+    def __init__(self, discovery_config -> None: ServiceDiscoveryConfig) -> None:
         self.config = discovery_config
         self.registered_services: Dict[str, List[ServiceEndpoint]] = {}
         self.service_health: Dict[str, Dict[str, bool]] = {}
@@ -316,7 +316,7 @@ class ServiceRegistry:
     
     async def start_health_monitoring(self) -> None:
         """Start continuous health monitoring"""
-        async def health_monitor_loop():
+        async def health_monitor_loop() -> None:
             while True:
                 try:
                     for service_name, endpoints in self.registered_services.items():
@@ -363,7 +363,7 @@ class ServiceRegistry:
 class LoadBalancer:
     """Service load balancer with multiple strategies"""
     
-    def __init__(self, config: LoadBalancerConfig, service_registry: ServiceRegistry):
+    def __init__(self, config -> None: LoadBalancerConfig, service_registry -> None: ServiceRegistry) -> None:
         self.config = config
         self.service_registry = service_registry
         self.round_robin_counters: Dict[str, int] = {}
@@ -541,7 +541,7 @@ class LoadBalancer:
 class APIGateway:
     """API Gateway for microservices"""
     
-    def __init__(self, config: APIGatewayConfig, load_balancer: LoadBalancer):
+    def __init__(self, config -> None: APIGatewayConfig, load_balancer -> None: LoadBalancer) -> None:
         self.config = config
         self.load_balancer = load_balancer
         self.route_mappings: Dict[str, str] = {}
@@ -743,7 +743,7 @@ class APIGateway:
 class MicroservicesConfigManager:
     """Main microservices configuration and management system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         # Configuration objects
         self.discovery_config = ServiceDiscoveryConfig()
         self.load_balancer_config = LoadBalancerConfig()

@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 class SuspiciousActivityAlerts:
     """Suspicious activity detection and alerting system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         logger.info("Suspicious activity alerts initialized")
     
     async def notify_suspicious_behavior(self, user_id: str, activity_data: Dict[str, Any]) -> bool:

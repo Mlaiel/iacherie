@@ -69,7 +69,7 @@ class AssertionGroup:
 class AssertionError(Exception):
     """Custom assertion error with enhanced information"""
     
-    def __init__(self, message: str, result: AssertionResult):
+    def __init__(self, message -> None: str, result -> None: AssertionResult) -> None:
         super().__init__(message)
         self.result = result
 
@@ -78,7 +78,7 @@ class AssertionEngine:
     Enterprise assertion engine with enhanced capabilities
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize assertion engine"""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self.assertion_history: List[AssertionResult] = []
@@ -89,7 +89,7 @@ class AssertionEngine:
         # Register built-in assertions
         self._register_builtin_assertions()
 
-    def _register_builtin_assertions(self):
+    def _register_builtin_assertions(self) -> None:
         """Register built-in assertion methods"""
         # Core assertions
         self.custom_assertions["assert_equal"] = self._assert_equal
@@ -156,18 +156,19 @@ class AssertionEngine:
         self.assertion_groups[name] = group
         return group
 
-    def with_context(self, **context):
+    def with_context(self, **context) -> None:
         """Context manager for adding context to assertions"""
         class ContextManager:
-            def __init__(self, engine, context_data):
+    """ContextManager: class implementation"""
+            def __init__(self, engine, context_data) -> None:
                 self.engine = engine
                 self.context_data = context_data
             
-            def __enter__(self):
+            def __enter__(self) -> None:
                 self.engine.context_stack.append(self.context_data)
                 return self.engine
             
-            def __exit__(self, exc_type, exc_val, exc_tb):
+            def __exit__(self, exc_type, exc_val, exc_tb) -> None:
                 if self.engine.context_stack:
                     self.engine.context_stack.pop()
         
@@ -872,12 +873,12 @@ class AssertionEngine:
 
         return md
 
-    def register_custom_assertion(self, name: str, assertion_func: Callable):
+    def register_custom_assertion(self, name -> None: str, assertion_func -> None: Callable) -> None:
         """Register a custom assertion function"""
         self.custom_assertions[name] = assertion_func
         self.logger.info(f"Registered custom assertion: {name}")
 
-    def clear_history(self):
+    def clear_history(self) -> None:
         """Clear assertion history"""
         self.assertion_history.clear()
         self.logger.info("Cleared assertion history")

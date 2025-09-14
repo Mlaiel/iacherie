@@ -37,7 +37,7 @@ class PaginationRequest(BaseModel):
     sort_direction: SortDirection = Field(default=SortDirection.ASC, description="Sort direction")
     
     @validator('page_size')
-    def validate_page_size(cls, v):
+    def validate_page_size(cls, v) -> None:
         """Validate page size limits"""
         if v > 100:
             raise ValueError("Page size cannot exceed 100 items")
@@ -49,7 +49,7 @@ class OffsetPaginationRequest(PaginationRequest):
     offset: Optional[int] = Field(None, ge=0, description="Number of items to skip")
     
     @validator('offset')
-    def validate_offset(cls, v, values):
+    def validate_offset(cls, v, values) -> None:
         """Calculate offset from page if not provided"""
         if v is None and 'page' in values and 'page_size' in values:
             return (values['page'] - 1) * values['page_size']
@@ -189,7 +189,7 @@ class InfiniteScrollResponse(BaseModel, Generic[T]):
 class PaginationBuilder:
     """Builder class for creating pagination responses"""
     
-    def __init__(self, config: Optional[PaginationConfig] = None):
+    def __init__(self, config -> None: Optional[PaginationConfig] = None) -> None:
         self.config = config or PaginationConfig()
     
     def build_offset_pagination(

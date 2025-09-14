@@ -167,7 +167,7 @@ class PredictiveFailureDetector:
     """
 AI-powered predictive failure detection system"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.anomaly_models: Dict[str, IsolationForest] = {}
         self.feature_scalers: Dict[str, StandardScaler] = {}
@@ -177,7 +177,7 @@ AI-powered predictive failure detection system"""
         # Initialize prediction models
         self._initialize_prediction_models()
     
-    def _initialize_prediction_models(self):
+    def _initialize_prediction_models(self) -> None:
         """
 Initialize machine learning models for failure prediction"""
         
@@ -489,7 +489,7 @@ Get recommended actions to prevent failure"""
 class AutomatedRecoverySystem:
     """Automated recovery and self-healing system"""
     
-    def __init__(self, redis_client: redis.Redis, config: Dict[str, Any]):
+    def __init__(self, redis_client -> None: redis.Redis, config -> None: Dict[str, Any]) -> None:
         self.redis_client = redis_client
         self.config = config
         self.recovery_actions: Dict[str, Callable] = {}
@@ -499,7 +499,7 @@ class AutomatedRecoverySystem:
         # Initialize recovery actions
         self._register_recovery_actions()
     
-    def _register_recovery_actions(self):
+    def _register_recovery_actions(self) -> None:
         """
 Register available recovery actions"""
         
@@ -795,6 +795,7 @@ Assess if business continuity has been restored"""
 
 
 class CacheHealthMonitor:
+    """CacheHealthMonitor: class implementation"""
     CPU_USAGE = "cpu_usage"
     NETWORK_LATENCY = "network_latency"
     ERROR_RATE = "error_rate"
@@ -888,9 +889,9 @@ class CacheHealthMonitor:
     """
     def __init__(
         self,
-        config: CacheConfiguration,
-        metrics_collector: CacheMetricsCollector
-    ):
+        config -> None: CacheConfiguration,
+        metrics_collector -> None: CacheMetricsCollector
+    ) -> None:
         """
         Initialize cache health monitor.
         
@@ -1253,7 +1254,7 @@ class CacheHealthMonitor:
             self._circuit_breakers[component] = True
             
             # Schedule automatic disable
-            async def disable_later():
+            async def disable_later() -> None:
                 await asyncio.sleep(duration_minutes * 60)
                 if component in self._circuit_breakers:
                     del self._circuit_breakers[component]

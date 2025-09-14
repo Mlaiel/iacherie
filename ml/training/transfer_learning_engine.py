@@ -60,7 +60,7 @@ class TransferLearningEngine:
     - Feature map similarity analysis
     """
     
-    def __init__(self, model_registry_path: str = "model_registry/"):
+    def __init__(self, model_registry_path -> None: str = "model_registry/") -> None:
         self.logger = logging.getLogger(__name__)
         self.model_registry_path = Path(model_registry_path)
         self.model_registry_path.mkdir(exist_ok=True)
@@ -450,7 +450,7 @@ class TransferLearningEngine:
             raise
 
 # Example usage and testing
-async def main():
+async def main() -> None:
     """Example usage of TransferLearningEngine."""
     engine = TransferLearningEngine()
     

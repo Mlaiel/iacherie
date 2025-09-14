@@ -111,7 +111,7 @@ class ExplainabilityAssessment(BaseModel):
 class AIEthicsFramework:
     """AI ethics framework implementation"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.ethical_principles = [
             "Human-centered AI design",
             "Fairness and non-discrimination",
@@ -187,7 +187,7 @@ class AIEthicsFramework:
 class BiasDetectionEngine:
     """Advanced bias detection and mitigation engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.detection_methods = {
             AIBiasType.DEMOGRAPHIC: self._detect_demographic_bias,
             AIBiasType.HISTORICAL: self._detect_historical_bias,
@@ -397,7 +397,7 @@ class BiasDetectionEngine:
 class ExplainabilityEngine:
     """AI explainability and interpretability engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.explanation_methods = [
             "SHAP (SHapley Additive exPlanations)",
             "LIME (Local Interpretable Model-agnostic Explanations)",
@@ -515,7 +515,7 @@ class ExplainabilityEngine:
 class AIComplianceOrchestrator:
     """Central orchestrator for AI compliance management"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.ethics_framework = AIEthicsFramework()
         self.bias_detector = BiasDetectionEngine()
         self.explainability_engine = ExplainabilityEngine()

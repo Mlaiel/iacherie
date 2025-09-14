@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 class PublishingStatusNotifications:
     """Content publishing status notification system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         logger.info("Publishing status notifications initialized")
     
     async def notify_publishing_success(self, user_id: str, content_id: str, 

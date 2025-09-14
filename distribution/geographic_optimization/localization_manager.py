@@ -115,7 +115,7 @@ class TranslationMemory:
 class LocalizationManager:
     """Advanced multi-language content localization engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize localization manager"""
         self.language_profiles = {}
         self.localization_rules = {}

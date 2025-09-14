@@ -97,7 +97,7 @@ class StripeWebhookManager:
     - 🤖 IA Prompt Engineer: Intelligent routing + automated responses + smart notifications
     """
     
-    def __init__(self, webhook_secret: str, redis_client=None, db_pool=None):
+    def __init__(self, webhook_secret -> None: str, redis_client=None, db_pool=None) -> None:
         """Initialize Stripe Webhook Manager with enterprise features"""
         self.webhook_secret = webhook_secret
         self.redis_client = redis_client
@@ -132,7 +132,7 @@ class StripeWebhookManager:
         
         logger.info("🏆 Stripe Webhook Manager initialized with multi-role expertise")
     
-    def _initialize_default_handlers(self):
+    def _initialize_default_handlers(self) -> None:
         """Initialize default event handlers for common scenarios"""
         # Payment success handler
         self.register_handler(
@@ -160,7 +160,7 @@ class StripeWebhookManager:
         
         logger.info("🔧 Default webhook handlers initialized")
     
-    def register_handler(self, event_type: str, handler: Callable):
+    def register_handler(self, event_type -> None: str, handler -> None: Callable) -> None:
         """
         🔧 Microservices: Register event handler for distributed processing
         """
@@ -459,9 +459,9 @@ class StripeWebhookManager:
     
     async def _store_webhook_event(
         self,
-        webhook_event: WebhookEvent,
-        processing_result: WebhookProcessingResult
-    ):
+        webhook_event -> None: WebhookEvent,
+        processing_result -> None: WebhookProcessingResult
+    ) -> None:
         """
         🗄️ DBA: Store webhook event with optimized database operations
         """
@@ -491,7 +491,7 @@ class StripeWebhookManager:
     
     # Default event handlers
     
-    async def _handle_payment_success(self, context: Dict[str, Any]):
+    async def _handle_payment_success(self, context -> None: Dict[str, Any]) -> None:
         """Handle successful payment events"""
         webhook_event = context['event']
         logger.info(f"💰 Payment succeeded: {webhook_event.data['object']['id']}")
@@ -502,7 +502,7 @@ class StripeWebhookManager:
         # Send success notifications
         await self._send_payment_notification(webhook_event.data['object'], 'success')
     
-    async def _handle_payment_failure(self, context: Dict[str, Any]):
+    async def _handle_payment_failure(self, context -> None: Dict[str, Any]) -> None:
         """Handle failed payment events"""
         webhook_event = context['event']
         logger.warning(f"❌ Payment failed: {webhook_event.data['object']['id']}")
@@ -513,7 +513,7 @@ class StripeWebhookManager:
         # Send failure notifications
         await self._send_payment_notification(webhook_event.data['object'], 'failure')
     
-    async def _handle_subscription_created(self, context: Dict[str, Any]):
+    async def _handle_subscription_created(self, context -> None: Dict[str, Any]) -> None:
         """Handle subscription creation events"""
         webhook_event = context['event']
         logger.info(f"📅 Subscription created: {webhook_event.data['object']['id']}")
@@ -521,7 +521,7 @@ class StripeWebhookManager:
         # Initialize subscription tracking
         await self._initialize_subscription_tracking(webhook_event.data['object'])
     
-    async def _handle_dispute_created(self, context: Dict[str, Any]):
+    async def _handle_dispute_created(self, context -> None: Dict[str, Any]) -> None:
         """
         🔒 Security: Handle dispute creation with security analysis
         """
@@ -553,9 +553,9 @@ class StripeWebhookManager:
     
     async def _process_audio_event(
         self,
-        webhook_event: WebhookEvent,
-        event_analysis: Dict[str, Any]
-    ):
+        webhook_event -> None: WebhookEvent,
+        event_analysis -> None: Dict[str, Any]
+    ) -> None:
         """🎵 Audio Engineer: Process audio-specific webhook events"""
         logger.info(f"🎵 Processing audio-related event: {webhook_event.id}")
         
@@ -564,27 +564,27 @@ class StripeWebhookManager:
     
     # Helper methods (placeholder implementations)
     
-    async def _trigger_revenue_tracking(self, payment_object: Dict):
+    async def _trigger_revenue_tracking(self, payment_object -> None: Dict) -> None:
         """Trigger revenue tracking for successful payments"""
         pass
     
-    async def _send_payment_notification(self, payment_object: Dict, status: str):
+    async def _send_payment_notification(self, payment_object -> None: Dict, status -> None: str) -> None:
         """Send payment status notifications"""
         pass
     
-    async def _analyze_payment_failure(self, payment_object: Dict):
+    async def _analyze_payment_failure(self, payment_object -> None: Dict) -> None:
         """Analyze payment failure patterns"""
         pass
     
-    async def _initialize_subscription_tracking(self, subscription_object: Dict):
+    async def _initialize_subscription_tracking(self, subscription_object -> None: Dict) -> None:
         """Initialize subscription tracking"""
         pass
     
-    async def _analyze_dispute_patterns(self, dispute_object: Dict):
+    async def _analyze_dispute_patterns(self, dispute_object -> None: Dict) -> None:
         """Analyze dispute patterns for security insights"""
         pass
     
-    async def _send_security_alert(self, object_data: Dict, alert_type: str):
+    async def _send_security_alert(self, object_data -> None: Dict, alert_type -> None: str) -> None:
         """Send security alerts to appropriate teams"""
         pass
     

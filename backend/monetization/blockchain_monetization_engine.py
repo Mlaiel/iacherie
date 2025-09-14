@@ -21,6 +21,7 @@ from typing import Dict, List, Optional, Any
 import redis.asyncio as redis
 
 class BlockchainNetwork(Enum):
+    """BlockchainNetwork class implementation"""
     ETHEREUM = "ethereum"
     POLYGON = "polygon"
     BSC = "bsc"
@@ -28,6 +29,7 @@ class BlockchainNetwork(Enum):
     OPTIMISM = "optimism"
 
 class CryptoCurrency(Enum):
+    """CryptoCurrency class implementation"""
     ETH = "eth"
     MATIC = "matic"
     BNB = "bnb"
@@ -35,6 +37,7 @@ class CryptoCurrency(Enum):
     USDT = "usdt"
 
 class NFTType(Enum):
+    """NFTType class implementation"""
     SINGLE = "single"
     COLLECTION = "collection"
     LIMITED_EDITION = "limited_edition"
@@ -42,6 +45,7 @@ class NFTType(Enum):
 
 @dataclass
 class NFTMetadata:
+    """NFTMetadata: class implementation"""
     name: str
     description: str
     image_url: str
@@ -51,6 +55,7 @@ class NFTMetadata:
 
 @dataclass
 class SmartContract:
+    """SmartContract: class implementation"""
     contract_address: str
     network: BlockchainNetwork
     abi: List[Dict[str, Any]]
@@ -60,6 +65,7 @@ class SmartContract:
 
 @dataclass
 class NFTListing:
+    """NFTListing: class implementation"""
     nft_id: str
     contract_address: str
     token_id: int
@@ -73,6 +79,7 @@ class NFTListing:
 
 @dataclass
 class CryptoTransaction:
+    """CryptoTransaction: class implementation"""
     transaction_id: str
     from_address: str
     to_address: str
@@ -88,7 +95,7 @@ class CryptoTransaction:
 class BlockchainMonetizationEngine:
     """Blockchain monetization and NFT management system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
         self.redis_client = None
         

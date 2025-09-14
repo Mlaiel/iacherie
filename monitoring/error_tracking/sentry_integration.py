@@ -77,7 +77,7 @@ class SentryErrorTracker:
     Handles error capturing, filtering, and context enrichment
     """
     
-    def __init__(self, dsn: Optional[str] = None, environment: str = "production"):
+    def __init__(self, dsn -> None: Optional[str] = None, environment -> None: str = "production") -> None:
         """
         Initialize Sentry error tracker
         
@@ -99,7 +99,7 @@ class SentryErrorTracker:
             
         self._initialize_sentry()
     
-    def _initialize_sentry(self):
+    def _initialize_sentry(self) -> None:
         """Initialize Sentry SDK with comprehensive configuration"""
         try:
             integrations = [
@@ -346,8 +346,8 @@ class SentryErrorTracker:
             logger.error(f"Failed to capture message to Sentry: {e}")
             return None
     
-    def set_user_context(self, user_id: str, email: Optional[str] = None, 
-                        additional_data: Optional[Dict[str, Any]] = None):
+    def set_user_context(self, user_id -> None: str, email -> None: Optional[str] = None, 
+                        additional_data -> None: Optional[Dict[str, Any]] = None) -> None:
         """Set user context for error tracking"""
         if not self.initialized:
             return
@@ -364,8 +364,8 @@ class SentryErrorTracker:
         except Exception as e:
             logger.error(f"Failed to set user context: {e}")
     
-    def add_breadcrumb(self, message: str, category: str = "custom", 
-                      level: str = "info", data: Optional[Dict[str, Any]] = None):
+    def add_breadcrumb(self, message -> None: str, category -> None: str = "custom", 
+                      level -> None: str = "info", data -> None: Optional[Dict[str, Any]] = None) -> None:
         """Add breadcrumb for error context"""
         if not self.initialized:
             return
@@ -380,7 +380,7 @@ class SentryErrorTracker:
         except Exception as e:
             logger.error(f"Failed to add breadcrumb: {e}")
     
-    def flush(self, timeout: int = 2):
+    def flush(self, timeout -> None: int = 2) -> None:
         """Flush pending events to Sentry"""
         if not self.initialized:
             return

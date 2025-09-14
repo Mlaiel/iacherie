@@ -164,7 +164,7 @@ class DashboardData:
 class DataAggregator:
     """Enterprise data aggregation engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.cache: Dict[str, Any] = {}
         self.aggregation_jobs: Dict[str, AggregationJob] = {}
         self.executor = ThreadPoolExecutor(max_workers=20)
@@ -304,7 +304,7 @@ class DataAggregator:
 class DashboardManager:
     """Enterprise dashboard management"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.dashboards: Dict[str, DashboardDefinition] = {}
         self.aggregator = DataAggregator()
         self.refresh_scheduler = {}
@@ -596,7 +596,7 @@ class DashboardManager:
 class DashboardAggregationEventHandler:
     """Main event handler for dashboard aggregation events"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.dashboard_manager = DashboardManager()
     
     async def handle_dashboard_creation(self, dashboard_def: DashboardDefinition) -> str:

@@ -74,7 +74,7 @@ class SocialOptimizationConfig:
     redis_url: str = "redis://localhost:6379"
     platform_apis: Dict[str, Dict[str, str]] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.target_platforms is None:
             self.target_platforms = [
                 SocialPlatform.TIKTOK,
@@ -170,7 +170,7 @@ class EnterpriseSocialOptimizer:
     - Performance prediction and analytics
     """
     
-    def __init__(self, config: Optional[SocialOptimizationConfig] = None):
+    def __init__(self, config -> None: Optional[SocialOptimizationConfig] = None) -> None:
         self.config = config or SocialOptimizationConfig()
         self.logger = logging.getLogger(__name__)
         self.executor = ThreadPoolExecutor(max_workers=4)
@@ -185,7 +185,7 @@ class EnterpriseSocialOptimizer:
         # Initialize trending analysis
         self._initialize_trending_data()
     
-    def _initialize_platform_specs(self):
+    def _initialize_platform_specs(self) -> None:
         """Initialize platform-specific content specifications"""
         self.platform_specs = {
             SocialPlatform.TIKTOK: PlatformSpecification(
@@ -292,7 +292,7 @@ class EnterpriseSocialOptimizer:
             )
         }
 
-    def _initialize_ml_models(self):
+    def _initialize_ml_models(self) -> None:
         """Initialize ML models for audience targeting"""
         try:
             # Placeholder for ML model initialization
@@ -308,7 +308,7 @@ class EnterpriseSocialOptimizer:
             self.logger.warning(f"ML models initialization failed: {e}")
             self.ml_models = {}
 
-    def _initialize_trending_data(self):
+    def _initialize_trending_data(self) -> None:
         """Initialize trending data sources"""
         self.trending_data = {
             SocialPlatform.TIKTOK: {
@@ -328,7 +328,7 @@ class EnterpriseSocialOptimizer:
             }
         }
 
-    async def initialize_redis(self):
+    async def initialize_redis(self) -> None:
         """Initialize Redis connection for caching"""
         try:
             self.redis_client = redis.from_url(self.config.redis_url)
@@ -1065,7 +1065,7 @@ class EnterpriseSocialOptimizer:
 class SocialMediaFormatOptimizer:
     """Legacy social media format optimization interface"""
     
-    def __init__(self, optimizer: EnterpriseSocialOptimizer):
+    def __init__(self, optimizer -> None: EnterpriseSocialOptimizer) -> None:
         self.optimizer = optimizer
     
     async def optimize_format(
@@ -1090,7 +1090,7 @@ class SocialMediaFormatOptimizer:
 class AudienceTargetingProcessor:
     """Legacy audience targeting interface"""
     
-    def __init__(self, optimizer: EnterpriseSocialOptimizer):
+    def __init__(self, optimizer -> None: EnterpriseSocialOptimizer) -> None:
         self.optimizer = optimizer
     
     async def target_audience(

@@ -63,7 +63,7 @@ class RealTimeCollaboration:
     WebSocket management et synchronisation état.
     """
     
-    def __init__(self, config: Optional[Dict] = None):
+    def __init__(self, config -> None: Optional[Dict] = None) -> None:
         """Initialise le système de collaboration."""
         self.config = config or {}
         self.active_sessions: Dict[str, CollaborationSession] = {}
@@ -264,11 +264,11 @@ class RealTimeCollaboration:
     
     async def _emit_event(
         self,
-        session_id: str,
-        event_type: CollaborationEventType,
-        user_id: str,
-        data: Dict[str, Any]
-    ):
+        session_id -> None: str,
+        event_type -> None: CollaborationEventType,
+        user_id -> None: str,
+        data -> None: Dict[str, Any]
+    ) -> None:
         """Émet un événement à tous les participants."""
         event = CollaborationEvent(
             event_id=str(uuid.uuid4()),
@@ -292,9 +292,9 @@ class RealTimeCollaboration:
     
     async def _broadcast_to_session(
         self,
-        session_id: str,
-        event: CollaborationEvent
-    ):
+        session_id -> None: str,
+        event -> None: CollaborationEvent
+    ) -> None:
         """Broadcast un événement à tous les utilisateurs de la session."""
         if session_id not in self.active_sessions:
             return
@@ -315,7 +315,7 @@ class RealTimeCollaboration:
             if user.is_active:
                 await self._send_to_user(user.user_id, event_data)
     
-    async def _send_to_user(self, user_id: str, data: Dict[str, Any]):
+    async def _send_to_user(self, user_id -> None: str, data -> None: Dict[str, Any]) -> None:
         """Envoie des données à un utilisateur spécifique."""
         # Simulation WebSocket send
         if user_id in self.websocket_connections:
@@ -327,9 +327,9 @@ class RealTimeCollaboration:
     
     def register_event_handler(
         self,
-        event_type: CollaborationEventType,
+        event_type -> None: CollaborationEventType,
         handler
-    ):
+    ) -> None:
         """Enregistre un handler pour un type d'événement."""
         if event_type not in self.event_handlers:
             self.event_handlers[event_type] = []
@@ -359,7 +359,7 @@ class RealTimeCollaboration:
             "status": session.status
         }
     
-    async def cleanup_inactive_sessions(self, inactive_threshold_minutes: int = 30):
+    async def cleanup_inactive_sessions(self, inactive_threshold_minutes -> None: int = 30) -> None:
         """Nettoie les sessions inactives."""
         current_time = datetime.now()
         threshold = current_time.timestamp() - (inactive_threshold_minutes * 60)
@@ -379,7 +379,7 @@ class RealTimeCollaboration:
             del self.active_sessions[session_id]
             logger.info(f"Session inactive supprimée: {session_id}")
     
-    async def _cleanup_session(self, session_id: str):
+    async def _cleanup_session(self, session_id -> None: str) -> None:
         """Nettoie les ressources d'une session."""
         if session_id in self.active_sessions:
             session = self.active_sessions[session_id]

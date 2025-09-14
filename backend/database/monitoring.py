@@ -55,6 +55,7 @@ except ImportError:
     PROMETHEUS_AVAILABLE = False
     # Mock CollectorRegistry for when prometheus is not available
     class CollectorRegistry:
+    """CollectorRegistry: class implementation"""
         pass
 
 try:
@@ -178,12 +179,12 @@ class PrometheusMonitoringProvider(IMonitoringProvider):
     Integration with Prometheus for metrics collection and alerting.
     """
     
-    def __init__(self, registry: Optional[CollectorRegistry] = None):
+    def __init__(self, registry -> None: Optional[CollectorRegistry] = None) -> None:
         self.registry = registry or CollectorRegistry()
         self._metrics: Dict[str, Any] = {}
         self._initialized = False
         
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize Prometheus provider."""
         if not PROMETHEUS_AVAILABLE:
             raise RuntimeError("Prometheus client not available")
@@ -196,7 +197,7 @@ class PrometheusMonitoringProvider(IMonitoringProvider):
         self._initialized = True
         logger.info("✅ Prometheus Monitoring Provider initialized")
     
-    def _create_default_metrics(self):
+    def _create_default_metrics(self) -> None:
         """Create default Prometheus metrics."""
         # Database connection metrics
         self._metrics['db_connections_active'] = Gauge(
@@ -297,7 +298,7 @@ class DatabaseHealthMonitor:
     recovery and intelligent alerting.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._health_checks: Dict[str, HealthCheck] = {}
         self._health_status: Dict[str, HealthStatus] = {}
         self._health_history: Dict[str, deque] = defaultdict(lambda: deque(maxlen=100))
@@ -305,7 +306,7 @@ class DatabaseHealthMonitor:
         self._alert_handlers: List[Callable[[Alert], None]] = []
         self._system_metrics = SystemMetrics()
         
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize health monitor."""
         logger.info("🏥 Initializing Database Health Monitor...")
         
@@ -323,7 +324,7 @@ class DatabaseHealthMonitor:
         
         logger.info("✅ Database Health Monitor initialized")
     
-    async def _setup_default_health_checks(self):
+    async def _setup_default_health_checks(self) -> None:
         """Setup default health checks."""
         # Database connection health check
         connection_check = HealthCheck(
@@ -358,7 +359,7 @@ class DatabaseHealthMonitor:
         )
         self._health_checks["system_resources"] = system_check
     
-    async def _health_check_loop(self):
+    async def _health_check_loop(self) -> None:
         """Main health check monitoring loop."""
         while True:
             try:
@@ -417,8 +418,8 @@ class DatabaseHealthMonitor:
         else:
             return HealthStatus.HEALTHY
     
-    async def _generate_health_alert(self, check_name: str, status: HealthStatus, 
-                                   value: float, health_check: HealthCheck):
+    async def _generate_health_alert(self, check_name -> None: str, status -> None: HealthStatus, 
+                                   value -> None: float, health_check -> None: HealthCheck) -> None:
         """Generate health alert."""
         severity = AlertSeverity.CRITICAL if status == HealthStatus.UNHEALTHY else AlertSeverity.WARNING
         
@@ -495,7 +496,7 @@ class DatabaseHealthMonitor:
             logger.error(f"System resource check failed: {e}")
             return 100.0  # Return critical value on error
     
-    async def _system_metrics_collector(self):
+    async def _system_metrics_collector(self) -> None:
         """Collect system metrics periodically."""
         while True:
             try:
@@ -533,7 +534,7 @@ class DatabaseHealthMonitor:
             except Exception as e:
                 logger.error(f"System metrics collector error: {e}")
     
-    def add_alert_handler(self, handler: Callable[[Alert], None]):
+    def add_alert_handler(self, handler -> None: Callable[[Alert], None]) -> None:
         """Add alert handler."""
         self._alert_handlers.append(handler)
     
@@ -570,7 +571,7 @@ class DatabaseHealthMonitor:
             "last_updated": datetime.now(timezone.utc).isoformat()
         }
     
-    async def close(self):
+    async def close(self) -> None:
         """Close health monitor."""
         logger.info("🔌 Closing Database Health Monitor...")
         
@@ -593,14 +594,14 @@ class DatabaseMonitoringManager:
     monitoring, alerting, and health management for all database operations.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.health_monitor = DatabaseHealthMonitor()
         self._monitoring_providers: List[IMonitoringProvider] = []
         self._metrics_buffer: deque = deque(maxlen=10000)
         self._alerts_history: deque = deque(maxlen=1000)
         self._monitoring_tasks: List[asyncio.Task] = []
         
-    async def initialize(self, enable_prometheus: bool = True, enable_datadog: bool = False):
+    async def initialize(self, enable_prometheus -> None: bool = True, enable_datadog -> None: bool = False) -> None:
         """Initialize monitoring manager."""
         logger.info("🏢 Initializing Enterprise Database Monitoring Manager...")
         
@@ -624,7 +625,7 @@ class DatabaseMonitoringManager:
         
         logger.info("✅ Enterprise Database Monitoring Manager initialized")
     
-    async def _metrics_processor(self):
+    async def _metrics_processor(self) -> None:
         """Process metrics from buffer."""
         while True:
             try:
@@ -646,7 +647,7 @@ class DatabaseMonitoringManager:
             except Exception as e:
                 logger.error(f"Metrics processor error: {e}")
     
-    async def _handle_alert(self, alert: Alert):
+    async def _handle_alert(self, alert -> None: Alert) -> None:
         """Handle incoming alerts."""
         self._alerts_history.append(alert)
         
@@ -663,8 +664,8 @@ class DatabaseMonitoringManager:
             f"🚨 ALERT [{alert.severity.value.upper()}]: {alert.name} - {alert.message}"
         )
     
-    async def record_metric(self, name: str, value: float, metric_type: MetricType = MetricType.GAUGE, 
-                           labels: Optional[Dict[str, str]] = None, description: str = "", unit: str = ""):
+    async def record_metric(self, name -> None: str, value -> None: float, metric_type -> None: MetricType = MetricType.GAUGE, 
+                           labels -> None: Optional[Dict[str, str]] = None, description -> None: str = "", unit -> None: str = "") -> None:
         """Record a monitoring metric."""
         metric = MonitoringMetric(
             name=name,
@@ -679,7 +680,7 @@ class DatabaseMonitoringManager:
         # Add to buffer for processing
         self._metrics_buffer.append(metric)
     
-    async def record_database_query(self, query_type: str, duration_ms: float, database: str = "postgresql"):
+    async def record_database_query(self, query_type -> None: str, duration_ms -> None: float, database -> None: str = "postgresql") -> None:
         """Record database query performance."""
         await self.record_metric(
             name="db_query_duration_ms",
@@ -690,7 +691,7 @@ class DatabaseMonitoringManager:
             unit="milliseconds"
         )
     
-    async def record_connection_count(self, count: int, database_type: str):
+    async def record_connection_count(self, count -> None: int, database_type -> None: str) -> None:
         """Record active connection count."""
         await self.record_metric(
             name="db_connections_active",
@@ -701,7 +702,7 @@ class DatabaseMonitoringManager:
             unit="connections"
         )
     
-    async def record_error(self, error_type: str, database: str = "postgresql"):
+    async def record_error(self, error_type -> None: str, database -> None: str = "postgresql") -> None:
         """Record database error."""
         await self.record_metric(
             name="db_errors_total",
@@ -741,7 +742,7 @@ class DatabaseMonitoringManager:
         
         return dashboard
     
-    async def close(self):
+    async def close(self) -> None:
         """Close monitoring manager."""
         logger.info("🔌 Closing Database Monitoring Manager...")
         

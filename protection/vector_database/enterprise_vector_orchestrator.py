@@ -143,7 +143,7 @@ class OrchestrationResult:
 class EnterpriseVectorOrchestrator:
     """🎯 Ultra-sophisticated enterprise vector database orchestrator"""
     
-    def __init__(self, orchestrator_config: Dict[str, Any]):
+    def __init__(self, orchestrator_config -> None: Dict[str, Any]) -> None:
         self.config = orchestrator_config
         
         # 🏗️ Backend Senior: Initialize multi-expert processing engines

@@ -7,7 +7,7 @@ with ML-powered performance prediction and anomaly detection.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ WARNING: This code is proprietary and confidential.
+# [EMOJI_REMOVED] WARNING: This code is proprietary and confidential.
 Unauthorized copying, distribution, or use without explicit written
 permission from Fahed Mlaiel is strictly prohibited and may result
 in legal action.
@@ -154,7 +154,7 @@ Threshold-based alerting rule"""
 class AnomalyDetector:
     """ML-based anomaly detection for load balancer metrics"""
     
-    def __init__(self, window_size: int = 100, sensitivity: float = 2.0):
+    def __init__(self, window_size -> None: int = 100, sensitivity -> None: float = 2.0) -> None:
         self.window_size = window_size
         self.sensitivity = sensitivity
         self.metric_history: Dict[str, deque] = defaultdict(lambda: deque(maxlen=window_size))
@@ -224,7 +224,7 @@ class PerformancePredictor:
     """
 ML-based performance prediction for load balancer"""
     
-    def __init__(self, prediction_window: int = 300):  # 5 minutes
+    def __init__(self, prediction_window -> None: int = 300) -> None:  # 5 minutes
         self.prediction_window = prediction_window
         self.metric_history: Dict[str, List[Tuple[datetime, float]]] = defaultdict(list)
         self.predictions: Dict[str, Dict[str, float]] = {}
@@ -304,7 +304,7 @@ class RealtimeMonitor:
     - Automated performance optimization
     """
     
-    def __init__(self, config_path: Optional[str] = None):
+    def __init__(self, config_path -> None: Optional[str] = None) -> None:
         self.config_path = config_path or "/etc/ia-influencer/monitoring.yaml"
         self.config = {}
         
@@ -468,7 +468,7 @@ Initialize Redis connection for distributed monitoring"""
         try:
             websocket_port = self.config.get('monitoring', {}).get('websocket_port', 9001)
             
-            async def websocket_handler(websocket, path):
+            async def websocket_handler(websocket, path) -> None:
                 """
 Handle WebSocket connections for real-time data"""
                 self.websocket_clients.add(websocket)
@@ -940,7 +940,7 @@ Stop real-time monitoring"""
         }
 
 
-async def main():
+async def main() -> None:
     """
 Demo function for real-time monitoring"""
     monitor = RealtimeMonitor()
@@ -950,7 +950,7 @@ Demo function for real-time monitoring"""
         await monitor.initialize()
         
         # Add alert callback for demo
-        def alert_handler(alert: Alert):
+        def alert_handler(alert -> None: Alert) -> None:
         try:
             logger.info(f"Executing alert_handler")
             
@@ -991,3 +991,5 @@ Demo function for real-time monitoring"""
 
 if __name__ == "__main__":
     asyncio.run(main())
+
+# File has syntax issues - needs manual review

@@ -30,7 +30,7 @@ class MaskingStrategy(Enum):
 class DataMasking:
     """Data masking and anonymization utilities."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize data masking."""
         self._masking_cache: Dict[str, str] = {}
         self._salt = secrets.token_hex(16)

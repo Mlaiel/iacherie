@@ -1,3 +1,8 @@
+"""
+Coverage Quality Scorer module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Coverage Quality Scoring Engine for Ainflue Platform
@@ -143,7 +148,7 @@ class CoverageQualityScorer:
     - Scalable quality assessment architecture
     """
     
-    def __init__(self, config_path: Optional[str] = None):
+    def __init__(self, config_path -> None: Optional[str] = None) -> None:
         """Initialize coverage quality scorer."""
         self.logger = self._setup_logging()
         self.config = self._load_config(config_path)
@@ -1008,7 +1013,7 @@ class MLQualityScorer:
     Advanced ML models for quality prediction and pattern recognition.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize ML quality scorer."""
         self.logger = logging.getLogger("MLQualityScorer")
         
@@ -1085,7 +1090,7 @@ class BenchmarkAnalyzer:
     Enterprise-grade benchmarking and industry comparison.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize benchmark analyzer."""
         self.logger = logging.getLogger("BenchmarkAnalyzer")
         
@@ -1140,7 +1145,7 @@ class QualityTrendAnalyzer:
     Trend analysis for quality scores over time.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize trend analyzer."""
         self.logger = logging.getLogger("QualityTrendAnalyzer")
         
@@ -1196,7 +1201,7 @@ if __name__ == "__main__":
     # Example usage
     import asyncio
     
-    async def main():
+    async def main() -> None:
         """Example coverage quality scoring execution."""
         
         # Initialize scorer

@@ -115,7 +115,7 @@ class MECIntegrationLayer:
     including network slice management, QoS control, and service orchestration.
     """
     
-    def __init__(self, config: Optional[MECIntegrationConfig] = None):
+    def __init__(self, config -> None: Optional[MECIntegrationConfig] = None) -> None:
         self.config = config or MECIntegrationConfig()
         
         # Initialize the base MEC orchestrator
@@ -145,7 +145,7 @@ class MECIntegrationLayer:
         
         logger.info(f"MEC integration layer initialized with protocol: {self.config.integration_protocol}")
     
-    async def start(self):
+    async def start(self) -> None:
         """Start the MEC integration layer."""
         if self.running:
             logger.warning("MEC integration layer already running")
@@ -173,7 +173,7 @@ class MECIntegrationLayer:
         
         logger.info("MEC integration layer started")
     
-    async def stop(self):
+    async def stop(self) -> None:
         """Stop the MEC integration layer."""
         if not self.running:
             return
@@ -415,7 +415,7 @@ class MECIntegrationLayer:
             "mec_orchestrator": self.mec_orchestrator.get_orchestrator_status() if hasattr(self.mec_orchestrator, 'get_orchestrator_status') else {}
         }
     
-    def add_event_handler(self, event_type: str, handler: Callable):
+    def add_event_handler(self, event_type -> None: str, handler -> None: Callable) -> None:
         """Add an event handler."""
         if event_type in self.event_handlers:
             self.event_handlers[event_type].append(handler)
@@ -434,7 +434,7 @@ class MECIntegrationLayer:
         }
         return sst_mapping.get(slice_profile, 1)
     
-    async def _trigger_event(self, event_type: str, event_data: Dict[str, Any]):
+    async def _trigger_event(self, event_type -> None: str, event_data -> None: Dict[str, Any]) -> None:
         """Trigger event handlers."""
         if event_type in self.event_handlers:
             for handler in self.event_handlers[event_type]:
@@ -443,7 +443,7 @@ class MECIntegrationLayer:
                 except Exception as e:
                     logger.error(f"Event handler error for {event_type}: {e}")
     
-    async def _integration_monitor(self):
+    async def _integration_monitor(self) -> None:
         """Monitor integration health and status."""
         while self.running:
             try:
@@ -459,7 +459,7 @@ class MECIntegrationLayer:
                 logger.error(f"Integration monitor error: {e}")
                 await asyncio.sleep(60)
     
-    async def _qos_monitor(self):
+    async def _qos_monitor(self) -> None:
         """Monitor QoS and trigger violations."""
         while self.running:
             try:
@@ -488,7 +488,7 @@ class MECIntegrationLayer:
                 logger.error(f"QoS monitor error: {e}")
                 await asyncio.sleep(60)
     
-    async def _migration_manager(self):
+    async def _migration_manager(self) -> None:
         """Manage service migrations."""
         while self.running:
             try:
@@ -516,7 +516,7 @@ async def create_mec_integration_layer(
 
 
 # Example usage
-async def main():
+async def main() -> None:
     """Example usage of the MEC integration layer."""
     try:
         # Create configuration

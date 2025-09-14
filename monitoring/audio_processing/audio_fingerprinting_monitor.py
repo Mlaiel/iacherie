@@ -95,7 +95,7 @@ class AudioFingerprintingMonitor:
     - Performance trends and optimization opportunities
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.fingerprint_metrics: List[FingerprintMetrics] = []
         self.match_results: List[MatchResult] = []
@@ -111,7 +111,7 @@ class AudioFingerprintingMonitor:
         
         logger.info("Audio Fingerprinting Monitor initialized")
     
-    def _initialize_thresholds(self):
+    def _initialize_thresholds(self) -> None:
         """Initialize performance thresholds."""
         self.thresholds = {
             'generation_time_warning_ms': 5000,
@@ -208,7 +208,7 @@ class AudioFingerprintingMonitor:
         else:
             return MatchConfidence.NO_MATCH
     
-    def _update_search_performance(self, match_time_ms: float):
+    def _update_search_performance(self, match_time_ms -> None: float) -> None:
         """Update running average of search performance."""
         if hasattr(self, '_search_times'):
             self._search_times.append(match_time_ms)
@@ -219,7 +219,7 @@ class AudioFingerprintingMonitor:
         
         self.database_state.search_performance_ms = statistics.mean(self._search_times)
     
-    async def _check_generation_performance(self, metrics: FingerprintMetrics):
+    async def _check_generation_performance(self, metrics -> None: FingerprintMetrics) -> None:
         """Check fingerprint generation performance and alert if needed."""
         if not metrics.generation_success:
             logger.error(f"Fingerprint generation failed: {metrics.error_message}")
@@ -232,7 +232,7 @@ class AudioFingerprintingMonitor:
             logger.warning(f"Warning: Slow fingerprint generation {metrics.generation_time_ms:.1f}ms "
                           f"for {metrics.fingerprint_type.value}")
     
-    async def _trigger_copyright_alert(self, match_result: MatchResult):
+    async def _trigger_copyright_alert(self, match_result -> None: MatchResult) -> None:
         """Trigger copyright detection alert."""
         logger.warning(f"Potential copyright match detected: {match_result.similarity_score:.3f} "
                       f"similarity between {match_result.query_fingerprint_id} and "
@@ -393,7 +393,7 @@ class AudioFingerprintingMonitor:
             'optimization_timestamp': self.database_state.last_optimization.isoformat()
         }
     
-    def clear_old_metrics(self, days: int = 30):
+    def clear_old_metrics(self, days -> None: int = 30) -> None:
         """Clear metrics older than specified days."""
         cutoff_time = datetime.utcnow() - timedelta(days=days)
         

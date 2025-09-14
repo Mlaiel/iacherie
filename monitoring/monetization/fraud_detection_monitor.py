@@ -129,7 +129,7 @@ class FraudDetectionMonitor:
     and prevent fraudulent transactions in real-time.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the fraud detection monitor."""
         self.customer_profiles: Dict[str, CustomerProfile] = {}
         self.fraud_alerts: List[FraudAlert] = []
@@ -145,7 +145,7 @@ class FraudDetectionMonitor:
         self._setup_ml_models()
         self._load_threat_intelligence()
     
-    def _initialize_fraud_rules(self):
+    def _initialize_fraud_rules(self) -> None:
         """Initialize fraud detection rules."""
         self.fraud_rules = [
             {
@@ -209,7 +209,7 @@ class FraudDetectionMonitor:
             }
         ]
     
-    def _setup_ml_models(self):
+    def _setup_ml_models(self) -> None:
         """Setup machine learning models for fraud detection."""
         self.ml_models = {
             "behavioral_anomaly": {
@@ -247,7 +247,7 @@ class FraudDetectionMonitor:
             }
         }
     
-    def _load_threat_intelligence(self):
+    def _load_threat_intelligence(self) -> None:
         """Load threat intelligence data."""
         # Sample threat intelligence (in production, this would come from external sources)
         
@@ -786,7 +786,7 @@ class FraudDetectionMonitor:
         else:
             return FraudType.PAYMENT_FRAUD
     
-    def _update_customer_profile(self, customer_profile: CustomerProfile, transaction: TransactionContext):
+    def _update_customer_profile(self, customer_profile -> None: CustomerProfile, transaction -> None: TransactionContext) -> None:
         """Update customer profile with transaction data."""
         
         customer_profile.total_transactions += 1

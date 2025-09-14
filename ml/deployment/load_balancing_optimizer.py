@@ -157,7 +157,7 @@ class LoadBalancingOptimizer:
     - Real-time performance monitoring and adaptation
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize load balancing optimizer"""
         self.config = config or {}
         
@@ -195,7 +195,7 @@ class LoadBalancingOptimizer:
         
         logger.info("⚖️ ML-Aware Load Balancing Optimizer initialized")
 
-    async def add_backend_node(self, node: BackendNode):
+    async def add_backend_node(self, node -> None: BackendNode) -> None:
         """Add backend node to load balancer"""
         self.backend_nodes[node.node_id] = node
         
@@ -208,7 +208,7 @@ class LoadBalancingOptimizer:
         
         logger.info(f"⚖️ Added backend node: {node.node_id} ({node.endpoint}:{node.port})")
 
-    async def remove_backend_node(self, node_id: str):
+    async def remove_backend_node(self, node_id -> None: str) -> None:
         """Remove backend node from load balancer"""
         if node_id in self.backend_nodes:
             del self.backend_nodes[node_id]
@@ -793,7 +793,7 @@ class LoadBalancingOptimizer:
         elif strategy == RoutingStrategy.RESOURCE_BALANCED:
             # Select node with most balanced resource utilization
             if available_nodes:
-                def balance_score(node):
+                def balance_score(node) -> None:
                     cpu = node.performance_metrics.get("cpu_utilization", 50)
                     memory = node.performance_metrics.get("memory_utilization", 50)
                     gpu = node.performance_metrics.get("gpu_utilization", 0)
@@ -847,7 +847,7 @@ class LoadBalancingOptimizer:
         
         return max(0.1, min(1.0, confidence))
 
-    async def _update_routing_stats(self, decision: RoutingDecision, request_context: RequestContext):
+    async def _update_routing_stats(self, decision -> None: RoutingDecision, request_context -> None: RequestContext) -> None:
         """Update routing statistics"""
         
         self.stats.total_requests += 1
@@ -875,7 +875,7 @@ class LoadBalancingOptimizer:
         else:
             self.stats.failed_routings += 1
 
-    async def _rebuild_consistent_hash_ring(self):
+    async def _rebuild_consistent_hash_ring(self) -> None:
         """Rebuild consistent hash ring for consistent hashing"""
         
         self.consistent_hash_ring = []
@@ -890,7 +890,7 @@ class LoadBalancingOptimizer:
         # Sort by hash value
         self.consistent_hash_ring.sort()
 
-    async def update_node_metrics(self, node_id: str, metrics: PerformanceMetrics):
+    async def update_node_metrics(self, node_id -> None: str, metrics -> None: PerformanceMetrics) -> None:
         """Update performance metrics for a node"""
         
         if node_id not in self.backend_nodes:
@@ -918,7 +918,7 @@ class LoadBalancingOptimizer:
         # Update health status based on metrics
         await self._update_node_health_status(node_id, metrics)
 
-    async def _update_node_health_status(self, node_id: str, metrics: PerformanceMetrics):
+    async def _update_node_health_status(self, node_id -> None: str, metrics -> None: PerformanceMetrics) -> None:
         """Update node health status based on metrics"""
         
         node = self.backend_nodes[node_id]

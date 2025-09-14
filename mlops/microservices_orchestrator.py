@@ -116,12 +116,12 @@ class MicroservicesOrchestrator:
     
     def __init__(
         self,
-        cluster_name: str,
-        service_discovery_enabled: bool = True,
-        load_balancing_enabled: bool = True,
-        circuit_breaker_enabled: bool = True,
-        health_check_interval: int = 30
-    ):
+        cluster_name -> None: str,
+        service_discovery_enabled -> None: bool = True,
+        load_balancing_enabled -> None: bool = True,
+        circuit_breaker_enabled -> None: bool = True,
+        health_check_interval -> None: int = 30
+    ) -> None:
         """Initialize Microservices Orchestrator
         
         Args:
@@ -801,7 +801,7 @@ class MicroservicesOrchestrator:
 class CreatorMicroservice:
     """Base class for creator-specific microservices"""
     
-    def __init__(self, service_name: str, creator_type: str, port: int):
+    def __init__(self, service_name -> None: str, creator_type -> None: str, port -> None: int) -> None:
         self.service_name = service_name
         self.creator_type = creator_type
         self.port = port

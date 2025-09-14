@@ -421,11 +421,11 @@ class ContentValidator:
     
     def __init__(
         self,
-        config: Optional[Dict[str, Any]] = None,
-        enable_ai_analysis: bool = True,
-        enable_fingerprinting: bool = True,
-        cache_enabled: bool = True
-    ):
+        config -> None: Optional[Dict[str, Any]] = None,
+        enable_ai_analysis -> None: bool = True,
+        enable_fingerprinting -> None: bool = True,
+        cache_enabled -> None: bool = True
+    ) -> None:
         """
         Initialize advanced content validator.
         
@@ -2410,7 +2410,7 @@ class ContentValidator:
                 "version": self.VERSION
             }
     
-    def __del__(self):
+    def __del__(self) -> None:
         """Cleanup resources."""
         try:
             if hasattr(self, '_executor'):
@@ -2555,7 +2555,7 @@ async def validate_content(
         try:
             semaphore = asyncio.Semaphore(max_workers)
             
-            async def validate_item(item):
+            async def validate_item(item) -> None:
                 async with semaphore:
                     return await self.validate_content(
                         file_path=item.get("file_path"),
@@ -2714,11 +2714,11 @@ async def validate_content(
     
     async def _validate_by_level(
         self,
-        file_data: bytes,
-        metadata: ContentMetadata,
-        result: ValidationResult,
-        level: ValidationLevel
-    ):
+        file_data -> None: bytes,
+        metadata -> None: ContentMetadata,
+        result -> None: ValidationResult,
+        level -> None: ValidationLevel
+    ) -> None:
         """Perform validation based on specified level."""
         try:
             # Basic validation (all levels)
@@ -2746,10 +2746,10 @@ async def validate_content(
     
     async def _validate_basic(
         self,
-        file_data: bytes,
-        metadata: ContentMetadata,
-        result: ValidationResult
-    ):
+        file_data -> None: bytes,
+        metadata -> None: ContentMetadata,
+        result -> None: ValidationResult
+    ) -> None:
         """Basic validation checks."""
         # File size validation
         max_size = self.config.get("max_file_size", 100 * 1024 * 1024)  # 100MB default
@@ -2782,10 +2782,10 @@ async def validate_content(
     
     async def _validate_standard(
         self,
-        file_data: bytes,
-        metadata: ContentMetadata,
-        result: ValidationResult
-    ):
+        file_data -> None: bytes,
+        metadata -> None: ContentMetadata,
+        result -> None: ValidationResult
+    ) -> None:
         """Standard validation checks."""
         # Format validation
         if metadata.content_type != ContentType.UNKNOWN:
@@ -2811,10 +2811,10 @@ async def validate_content(
     
     async def _validate_strict(
         self,
-        file_data: bytes,
-        metadata: ContentMetadata,
-        result: ValidationResult
-    ):
+        file_data -> None: bytes,
+        metadata -> None: ContentMetadata,
+        result -> None: ValidationResult
+    ) -> None:
         """Strict validation checks."""
         # Quality thresholds
         if metadata.quality_score is not None:
@@ -2832,10 +2832,10 @@ async def validate_content(
     
     async def _validate_enterprise(
         self,
-        file_data: bytes,
-        metadata: ContentMetadata,
-        result: ValidationResult
-    ):
+        file_data -> None: bytes,
+        metadata -> None: ContentMetadata,
+        result -> None: ValidationResult
+    ) -> None:
         """Enterprise-level validation checks."""
         # Security validation
         await self._validate_security(file_data, metadata, result)
@@ -2849,10 +2849,10 @@ async def validate_content(
     
     async def _validate_content_specific(
         self,
-        file_data: bytes,
-        metadata: ContentMetadata,
-        result: ValidationResult
-    ):
+        file_data -> None: bytes,
+        metadata -> None: ContentMetadata,
+        result -> None: ValidationResult
+    ) -> None:
         """Content-type specific validation."""
         try:
             if metadata.content_type == ContentType.AUDIO:
@@ -2903,7 +2903,7 @@ async def validate_content(
         
         return ContentType.UNKNOWN
     
-    async def _extract_audio_metadata(self, file_data: bytes, metadata: ContentMetadata):
+    async def _extract_audio_metadata(self, file_data -> None: bytes, metadata -> None: ContentMetadata) -> None:
         """Extract audio-specific metadata."""
         try:
             # This would integrate with audio processing libraries
@@ -2917,7 +2917,7 @@ async def validate_content(
         except Exception as e:
             logger.warning(f"Audio metadata extraction failed: {str(e)}")
     
-    async def _extract_video_metadata(self, file_data: bytes, metadata: ContentMetadata):
+    async def _extract_video_metadata(self, file_data -> None: bytes, metadata -> None: ContentMetadata) -> None:
         """Extract video-specific metadata."""
         try:
             # This would integrate with video processing libraries
@@ -2930,7 +2930,7 @@ async def validate_content(
         except Exception as e:
             logger.warning(f"Video metadata extraction failed: {str(e)}")
     
-    async def _extract_image_metadata(self, file_data: bytes, metadata: ContentMetadata):
+    async def _extract_image_metadata(self, file_data -> None: bytes, metadata -> None: ContentMetadata) -> None:
         """Extract image-specific metadata."""
         try:
             # This would integrate with image processing libraries
@@ -2941,7 +2941,7 @@ async def validate_content(
         except Exception as e:
             logger.warning(f"Image metadata extraction failed: {str(e)}")
     
-    async def _extract_text_metadata(self, file_data: bytes, metadata: ContentMetadata):
+    async def _extract_text_metadata(self, file_data -> None: bytes, metadata -> None: ContentMetadata) -> None:
         """Extract text-specific metadata."""
         try:
             # Basic text analysis
@@ -3041,7 +3041,7 @@ async def validate_content(
         except Exception:
             return True
     
-    async def _validate_technical_requirements(self, metadata: ContentMetadata, result: ValidationResult):
+    async def _validate_technical_requirements(self, metadata -> None: ContentMetadata, result -> None: ValidationResult) -> None:
         """Validate technical requirements."""
         # Audio requirements
         if metadata.content_type == ContentType.AUDIO and metadata.bitrate:
@@ -3063,7 +3063,7 @@ async def validate_content(
                     suggestion="Consider using at least 720p resolution"
                 ))
     
-    async def _validate_security(self, file_data: bytes, metadata: ContentMetadata, result: ValidationResult):
+    async def _validate_security(self, file_data -> None: bytes, metadata -> None: ContentMetadata, result -> None: ValidationResult) -> None:
         """Security validation."""
         # File signature validation
         if not await self._validate_file_signature(file_data, metadata):
@@ -3073,7 +3073,7 @@ async def validate_content(
                 message="File signature mismatch or suspicious content detected"
             ))
     
-    async def _validate_compliance(self, metadata: ContentMetadata, result: ValidationResult):
+    async def _validate_compliance(self, metadata -> None: ContentMetadata, result -> None: ValidationResult) -> None:
         """Compliance validation."""
         # Check for required metadata
         if not metadata.has_metadata and metadata.content_type in [ContentType.AUDIO, ContentType.VIDEO]:
@@ -3084,12 +3084,12 @@ async def validate_content(
                 suggestion="Add title, description, and tags"
             ))
     
-    async def _validate_brand_safety(self, file_data: bytes, metadata: ContentMetadata, result: ValidationResult):
+    async def _validate_brand_safety(self, file_data -> None: bytes, metadata -> None: ContentMetadata, result -> None: ValidationResult) -> None:
         """Brand safety validation using AI."""
         # This would integrate with AI content moderation
         pass
     
-    async def _validate_audio_specific(self, file_data: bytes, metadata: ContentMetadata, result: ValidationResult):
+    async def _validate_audio_specific(self, file_data -> None: bytes, metadata -> None: ContentMetadata, result -> None: ValidationResult) -> None:
         """Audio-specific validation."""
         if metadata.channels and metadata.channels > 8:
             result.warnings.append(ValidationIssue(
@@ -3099,7 +3099,7 @@ async def validate_content(
                 suggestion="Verify audio configuration"
             ))
     
-    async def _validate_video_specific(self, file_data: bytes, metadata: ContentMetadata, result: ValidationResult):
+    async def _validate_video_specific(self, file_data -> None: bytes, metadata -> None: ContentMetadata, result -> None: ValidationResult) -> None:
         """Video-specific validation."""
         if metadata.duration and metadata.duration > 3600:  # 1 hour
             result.warnings.append(ValidationIssue(
@@ -3109,7 +3109,7 @@ async def validate_content(
                 suggestion="Consider splitting into shorter segments"
             ))
     
-    async def _validate_image_specific(self, file_data: bytes, metadata: ContentMetadata, result: ValidationResult):
+    async def _validate_image_specific(self, file_data -> None: bytes, metadata -> None: ContentMetadata, result -> None: ValidationResult) -> None:
         """Image-specific validation."""
         if metadata.resolution:
             width, height = metadata.resolution
@@ -3121,7 +3121,7 @@ async def validate_content(
                     suggestion="Use higher resolution for better quality"
                 ))
     
-    async def _validate_text_specific(self, file_data: bytes, metadata: ContentMetadata, result: ValidationResult):
+    async def _validate_text_specific(self, file_data -> None: bytes, metadata -> None: ContentMetadata, result -> None: ValidationResult) -> None:
         """Text-specific validation."""
         if "word_count" in metadata.extra_data:
             word_count = metadata.extra_data["word_count"]
@@ -3150,7 +3150,7 @@ async def validate_content(
         
         return True  # Default to valid for unknown signatures
     
-    async def _assess_quality(self, file_data: bytes, metadata: ContentMetadata, result: ValidationResult):
+    async def _assess_quality(self, file_data -> None: bytes, metadata -> None: ContentMetadata, result -> None: ValidationResult) -> None:
         """AI-powered quality assessment."""
         try:
             # Simulate quality assessment
@@ -3186,7 +3186,7 @@ async def validate_content(
             logger.error(f"Quality assessment failed: {str(e)}")
             metadata.quality_score = 50.0
     
-    async def _check_platform_compatibility(self, metadata: ContentMetadata, result: ValidationResult):
+    async def _check_platform_compatibility(self, metadata -> None: ContentMetadata, result -> None: ValidationResult) -> None:
         """Check compatibility with major platforms."""
         result.platform_compatibility = {}
         
@@ -3211,7 +3211,7 @@ async def validate_content(
             
             result.platform_compatibility[platform] = compatible
     
-    async def _generate_recommendations(self, result: ValidationResult):
+    async def _generate_recommendations(self, result -> None: ValidationResult) -> None:
         """Generate optimization recommendations."""
         recommendations = []
         

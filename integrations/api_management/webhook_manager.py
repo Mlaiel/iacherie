@@ -118,7 +118,7 @@ class WebhookManager:
     ensuring secure, reliable, and scalable event processing.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize webhook manager."""
         self.logger = logging.getLogger(__name__)
         
@@ -149,31 +149,31 @@ class WebhookManager:
         """Initialize default webhook event handlers."""
         # Business logic event handlers for Ainflue workflow
         
-        async def handle_user_authenticated(payload: WebhookPayload):
+        async def handle_user_authenticated(payload -> None: WebhookPayload) -> None:
             """Handle user authentication event."""
             self.logger.info(f"User authenticated: {payload.user_id} on {payload.integration_name}")
             # Trigger user onboarding workflow
             await self._trigger_internal_event("user_onboarding_started", payload.data)
         
-        async def handle_content_uploaded(payload: WebhookPayload):
+        async def handle_content_uploaded(payload -> None: WebhookPayload) -> None:
             """Handle content upload event."""
             self.logger.info(f"Content uploaded: {payload.data.get('content_id')} by {payload.user_id}")
             # Trigger AI processing workflow
             await self._trigger_internal_event("ai_processing_queued", payload.data)
         
-        async def handle_content_processed(payload: WebhookPayload):
+        async def handle_content_processed(payload -> None: WebhookPayload) -> None:
             """Handle content processing completion."""
             self.logger.info(f"Content processed: {payload.data.get('content_id')}")
             # Trigger protection and SEO workflow
             await self._trigger_internal_event("protection_analysis_started", payload.data)
         
-        async def handle_payment_completed(payload: WebhookPayload):
+        async def handle_payment_completed(payload -> None: WebhookPayload) -> None:
             """Handle successful payment."""
             self.logger.info(f"Payment completed: {payload.data.get('payment_id')}")
             # Trigger revenue distribution workflow
             await self._trigger_internal_event("revenue_distribution_started", payload.data)
         
-        async def handle_collaboration_requested(payload: WebhookPayload):
+        async def handle_collaboration_requested(payload -> None: WebhookPayload) -> None:
             """Handle collaboration request."""
             self.logger.info(f"Collaboration requested: {payload.data.get('collaboration_id')}")
             # Trigger matching algorithm
@@ -606,7 +606,7 @@ class WebhookManager:
         # Schedule retry with exponential backoff
         retry_delay = delay * (2 ** (delivery.attempts - 1))
         
-        async def retry_task():
+        async def retry_task() -> None:
             await asyncio.sleep(retry_delay)
             await self.outgoing_queue.put(delivery)
         

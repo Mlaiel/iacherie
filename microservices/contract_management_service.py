@@ -1,3 +1,8 @@
+"""
+Contract Management Service module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 🔐 CONTRACT MANAGEMENT SERVICE
@@ -122,7 +127,7 @@ class Contract:
     updated_at: datetime = None
     metadata: Dict[str, Any] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.created_at is None:
             self.created_at = datetime.utcnow()
         if self.updated_at is None:
@@ -144,7 +149,7 @@ class ContractTemplate:
     created_by: str
     created_at: datetime = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.created_at is None:
             self.created_at = datetime.utcnow()
 
@@ -159,14 +164,14 @@ class ContractAnalytics:
     revenue_under_contract: float = 0.0
     upcoming_renewals: int = 0
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.contracts_by_type is None:
             self.contracts_by_type = {}
 
 class ContractManagementService:
     """Enterprise contract management service"""
     
-    def __init__(self, redis_url: str = "redis://localhost:6379"):
+    def __init__(self, redis_url -> None: str = "redis -> None://localhost -> None:6379") -> None:
         self.redis_url = redis_url
         self.contracts: Dict[str, Contract] = {}
         self.templates: Dict[str, ContractTemplate] = {}
@@ -740,7 +745,7 @@ class ContractManagementService:
 
 
 # Example usage and testing
-async def main():
+async def main() -> None:
     """Test the contract management service"""
     service = ContractManagementService()
     

@@ -319,7 +319,7 @@ class CollaborationGamificationEngine:
     Orchestrates all collaboration matching and gamification systems
     """
     
-    def __init__(self, db_session: AsyncSession, redis_client: Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: Redis) -> None:
         self.db_session = db_session
         self.redis_client = redis_client
         self.logger = logging.getLogger(__name__)
@@ -466,7 +466,7 @@ class CreatorMatchingEngine:
     AI-powered creator matching for optimal collaborations
     """
     
-    def __init__(self, db_session: AsyncSession, redis_client: Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: Redis) -> None:
         self.db_session = db_session
         self.redis_client = redis_client
         self.logger = logging.getLogger(__name__)
@@ -877,7 +877,7 @@ class GamificationEngine:
     Comprehensive gamification system with achievements, challenges, and rewards
     """
     
-    def __init__(self, db_session: AsyncSession, redis_client: Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: Redis) -> None:
         self.db_session = db_session
         self.redis_client = redis_client
         self.logger = logging.getLogger(__name__)
@@ -1168,7 +1168,7 @@ class SocialGraphAnalyzer:
     Social graph analysis for network insights and influence mapping
     """
     
-    def __init__(self, db_session: AsyncSession, redis_client: Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: Redis) -> None:
         self.db_session = db_session
         self.redis_client = redis_client
         self.logger = logging.getLogger(__name__)
@@ -1303,7 +1303,7 @@ class CollaborationImpactMeasurer:
     Measure and analyze the impact of collaborations
     """
     
-    def __init__(self, db_session: AsyncSession, redis_client: Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: Redis) -> None:
         self.db_session = db_session
         self.redis_client = redis_client
         self.logger = logging.getLogger(__name__)
@@ -1392,7 +1392,7 @@ class TrustScoreCalculator:
     Calculate and manage trust scores between creators
     """
     
-    def __init__(self, db_session: AsyncSession, redis_client: Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: Redis) -> None:
         self.db_session = db_session
         self.redis_client = redis_client
         self.logger = logging.getLogger(__name__)
@@ -1441,7 +1441,7 @@ class CommunityEngagementTracker:
     Track and analyze community engagement metrics
     """
     
-    def __init__(self, db_session: AsyncSession, redis_client: Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: Redis) -> None:
         self.db_session = db_session
         self.redis_client = redis_client
         self.logger = logging.getLogger(__name__)

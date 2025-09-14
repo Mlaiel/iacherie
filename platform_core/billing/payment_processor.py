@@ -136,7 +136,7 @@ Convertit la réponse en dictionnaire"""
 class PaymentProcessor:
     """Processeur de paiements abstrait"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.name = "base_processor"
         self.supported_currencies = [Currency.USD, Currency.EUR]
@@ -342,7 +342,7 @@ class StripeProcessor(PaymentProcessor):
     """
 Processeur de paiements Stripe"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         super().__init__(config)
         self.name = "stripe"
         self.api_key = config.get("stripe_secret_key")
@@ -585,7 +585,7 @@ Processeur de paiements Stripe"""
 class PayPalProcessor(PaymentProcessor):
     """Processeur de paiements PayPal"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         super().__init__(config)
         self.name = "paypal"
         self.client_id = config.get("paypal_client_id")

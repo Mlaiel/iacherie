@@ -41,7 +41,7 @@ class PipelineConfig:
 class DeploymentManager:
     """Unified deployment management interface"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.cicd_manager = CICDManager()
         self.pipeline_manager = PipelineManager()
         self.release_manager = ReleaseManager()
@@ -50,7 +50,7 @@ class DeploymentManager:
 class CICDManager:
     """CI/CD management"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.pipelines = {}
         self.logger = logging.getLogger(__name__)
     
@@ -88,7 +88,7 @@ class CICDManager:
 class PipelineManager:
     """Pipeline execution management"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.active_pipelines = {}
         self.logger = logging.getLogger(__name__)
     
@@ -164,7 +164,7 @@ class PipelineManager:
 class ReleaseManager:
     """Release management"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.releases = {}
         self.logger = logging.getLogger(__name__)
     
@@ -230,7 +230,7 @@ class ReleaseManager:
 class GitHubActionsManager:
     """GitHub Actions workflow management"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.workflows = {}
         self.logger = logging.getLogger(__name__)
     

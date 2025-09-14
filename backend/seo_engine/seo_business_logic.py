@@ -158,7 +158,7 @@ class SEOBusinessLogic:
     protection, monétisation, gamification et collaboration.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialise la logique métier SEO
         
@@ -209,7 +209,7 @@ class SEOBusinessLogic:
         
         self.logger.info("SEO Business Logic initialisé avec succès")
     
-    def _initialize_default_business_rules(self):
+    def _initialize_default_business_rules(self) -> None:
         """Initialise les règles métier par défaut"""
         
         # Règle de monétisation automatique
@@ -272,7 +272,7 @@ class SEOBusinessLogic:
             implementation_cost="Medium"
         ))
     
-    def add_business_rule(self, rule: BusinessRule):
+    def add_business_rule(self, rule -> None: BusinessRule) -> None:
         """
         Ajoute une nouvelle règle métier
         

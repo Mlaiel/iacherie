@@ -1,3 +1,8 @@
+"""
+Session Security Validator module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
@@ -123,7 +128,7 @@ class SessionSecurityValidator:
     **DevOps**: Monitoring automatisé et alertes temps réel
     """
     
-    def __init__(self, redis_pool, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, redis_pool, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.redis_pool = redis_pool
         self.config = config or self._get_default_config()
         
@@ -190,7 +195,7 @@ class SessionSecurityValidator:
             'threat_retention_days': 30
         }
     
-    async def start_background_services(self):
+    async def start_background_services(self) -> None:
         """**DevOps**: Démarrage services sécurité background"""
         
         # Initialisation modèle IA
@@ -207,7 +212,7 @@ class SessionSecurityValidator:
         
         logger.info("🚀 Services sécurité background démarrés")
     
-    async def stop_background_services(self):
+    async def stop_background_services(self) -> None:
         """**DevOps**: Arrêt services background"""
         
         tasks = [self.cleanup_task, self.ml_training_task]
@@ -220,7 +225,7 @@ class SessionSecurityValidator:
         
         logger.info("🛑 Services sécurité background arrêtés")
     
-    async def _initialize_ml_models(self):
+    async def _initialize_ml_models(self) -> None:
         """**Lead Dev IA**: Initialisation modèles ML détection anomalies"""
         try:
             self.anomaly_detector = IsolationForest(
@@ -238,7 +243,7 @@ class SessionSecurityValidator:
         except Exception as e:
             logger.error(f"❌ Erreur initialisation ML sécurité: {e}")
     
-    async def _train_initial_models(self):
+    async def _train_initial_models(self) -> None:
         """**Lead Dev IA**: Entraînement initial modèles avec données simulées"""
         try:
             # Génération données d'entraînement normales
@@ -389,9 +394,9 @@ class SessionSecurityValidator:
     
     async def _enrich_security_context(
         self, 
-        context: SecurityContext, 
-        additional: Optional[Dict[str, Any]]
-    ):
+        context -> None: SecurityContext, 
+        additional -> None: Optional[Dict[str, Any]]
+    ) -> None:
         """**Lead Dev IA**: Enrichissement contexte sécurité**"""
         
         # Géolocalisation IP
@@ -798,10 +803,10 @@ class SessionSecurityValidator:
     
     async def _take_security_actions(
         self,
-        result: ValidationResult,
-        threat: Optional[ThreatEvent],
-        context: SecurityContext
-    ):
+        result -> None: ValidationResult,
+        threat -> None: Optional[ThreatEvent],
+        context -> None: SecurityContext
+    ) -> None:
         """**Sécurité**: Actions sécurité selon résultat**"""
         
         actions_taken = []
@@ -836,7 +841,7 @@ class SessionSecurityValidator:
             if threat.severity > 0.8:
                 await self._send_security_alert(threat)
     
-    async def _send_security_alert(self, threat: ThreatEvent):
+    async def _send_security_alert(self, threat -> None: ThreatEvent) -> None:
         """**DevOps**: Envoi alerte sécurité"""
         
         alert_data = {
@@ -861,22 +866,22 @@ class SessionSecurityValidator:
         logger.debug(f"🔐 Token CSRF généré pour session {session_id}")
         return token
     
-    def add_custom_validator(self, validator: Callable):
+    def add_custom_validator(self, validator -> None: Callable) -> None:
         """**Backend Senior**: Ajout validateur personnalisé"""
         self.custom_validators.append(validator)
         logger.info("🔧 Validateur personnalisé ajouté")
     
-    def add_trusted_ip(self, ip_address: str):
+    def add_trusted_ip(self, ip_address -> None: str) -> None:
         """**Sécurité**: Ajout IP de confiance"""
         self.trusted_ips.add(ip_address)
         logger.info(f"✅ IP ajoutée à whitelist: {ip_address}")
     
-    def remove_trusted_ip(self, ip_address: str):
+    def remove_trusted_ip(self, ip_address -> None: str) -> None:
         """**Sécurité**: Suppression IP de confiance"""
         self.trusted_ips.discard(ip_address)
         logger.info(f"❌ IP supprimée de whitelist: {ip_address}")
     
-    def block_ip(self, ip_address: str, duration_seconds: int = None):
+    def block_ip(self, ip_address -> None: str, duration_seconds -> None: int = None) -> None:
         """**Sécurité**: Blocage IP manuel"""
         self.blocked_ips.add(ip_address)
         
@@ -886,7 +891,7 @@ class SessionSecurityValidator:
         
         logger.info(f"🚫 IP bloquée: {ip_address}")
     
-    async def _auto_unblock_ip(self, ip_address: str, duration: int):
+    async def _auto_unblock_ip(self, ip_address -> None: str, duration -> None: int) -> None:
         """**DevOps**: Déblocage automatique IP"""
         await asyncio.sleep(duration)
         self.blocked_ips.discard(ip_address)
@@ -903,7 +908,7 @@ class SessionSecurityValidator:
             logger.error(f"❌ Erreur récupération localisation {user_id}: {e}")
         return None
     
-    async def _store_user_location(self, user_id: str, location: Dict[str, Any]):
+    async def _store_user_location(self, user_id -> None: str, location -> None: Dict[str, Any]) -> None:
         """**DBA**: Stockage localisation utilisateur"""
         try:
             async with self.redis_pool.get_connection() as redis_conn:
@@ -925,7 +930,7 @@ class SessionSecurityValidator:
             logger.error(f"❌ Erreur récupération fingerprints {user_id}: {e}")
             return set()
     
-    async def _store_user_fingerprint(self, user_id: str, fingerprint: str):
+    async def _store_user_fingerprint(self, user_id -> None: str, fingerprint -> None: str) -> None:
         """**DBA**: Stockage empreinte utilisateur"""
         try:
             async with self.redis_pool.get_connection() as redis_conn:
@@ -934,7 +939,7 @@ class SessionSecurityValidator:
         except Exception as e:
             logger.error(f"❌ Erreur stockage fingerprint {user_id}: {e}")
     
-    async def _update_security_metrics(self, result: ValidationResult, start_time: float):
+    async def _update_security_metrics(self, result -> None: ValidationResult, start_time -> None: float) -> None:
         """**DevOps**: Mise à jour métriques sécurité"""
         
         self.metrics.total_validations += 1
@@ -954,7 +959,7 @@ class SessionSecurityValidator:
         elif result == ValidationResult.BLOCKED:
             self.metrics.blocked_sessions += 1
     
-    async def _cleanup_loop(self):
+    async def _cleanup_loop(self) -> None:
         """**DevOps**: Boucle nettoyage données anciennes"""
         while True:
             try:
@@ -965,7 +970,7 @@ class SessionSecurityValidator:
                 logger.error(f"❌ Erreur nettoyage sécurité: {e}")
                 await asyncio.sleep(60)
     
-    async def _cleanup_old_data(self):
+    async def _cleanup_old_data(self) -> None:
         """**DevOps**: Nettoyage données anciennes**"""
         current_time = datetime.now(timezone.utc)
         
@@ -994,7 +999,7 @@ class SessionSecurityValidator:
         if expired_tokens or expired_threats:
             logger.debug(f"🧹 Nettoyage sécurité: {len(expired_tokens)} tokens, {len(expired_threats)} threats")
     
-    async def _ml_training_loop(self):
+    async def _ml_training_loop(self) -> None:
         """**Lead Dev IA**: Boucle re-entraînement ML**"""
         while True:
             try:
@@ -1005,7 +1010,7 @@ class SessionSecurityValidator:
                 logger.error(f"❌ Erreur re-entraînement ML: {e}")
                 await asyncio.sleep(300)
     
-    async def _retrain_ml_models(self):
+    async def _retrain_ml_models(self) -> None:
         """**Lead Dev IA**: Re-entraînement modèles ML**"""
         
         if not self.anomaly_detector or len(self.behavioral_patterns) < 100:
@@ -1101,19 +1106,20 @@ class SessionSecurityValidator:
         }
 
 # Factory function
-async def create_session_security_validator(redis_pool, config: Optional[Dict[str, Any]] = None):
+async def create_session_security_validator(redis_pool, config -> None: Optional[Dict[str, Any]] = None) -> None:
     """**Sécurité**: Factory création validateur sécurité sessions"""
     validator = SessionSecurityValidator(redis_pool, config)
     await validator.start_background_services()
     return validator
 
 if __name__ == "__main__":
-    async def demo():
+    async def demo() -> None:
         """Démonstration Session Security Validator"""
         
         # Configuration Redis simulée
         class MockRedisPool:
-            def get_connection(self):
+    """MockRedisPool: class implementation"""
+            def get_connection(self) -> None:
                 from unittest.mock import AsyncMock
                 mock = AsyncMock()
                 mock.get.return_value = None

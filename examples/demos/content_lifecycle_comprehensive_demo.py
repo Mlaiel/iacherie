@@ -1,3 +1,8 @@
+"""
+Content Lifecycle Comprehensive Demo module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Content Lifecycle Comprehensive Demo for Ainflue Platform
@@ -80,7 +85,7 @@ class ContentLifecycleComprehensiveDemo:
     Interactive demonstration with real-time metrics and performance monitoring
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = self._setup_logging()
         self.demo_state = {
             "started_at": None,
@@ -968,14 +973,14 @@ class ContentLifecycleComprehensiveDemo:
         
         return logger
     
-    def _update_demo_stage(self, stage: str):
+    def _update_demo_stage(self, stage -> None: str) -> None:
         """Update current demo stage"""
         self.demo_state["current_stage"] = stage
         self.logger.info(f"🔄 Demo Stage: {stage}")
 
 
 if __name__ == "__main__":
-    async def main():
+    async def main() -> None:
         """Main demo execution"""
         print("🎯 Content Lifecycle Comprehensive Demo")
         print("=" * 60)

@@ -114,7 +114,7 @@ class TextSimilarity:
 class LanguageDetector:
     """Advanced language detection with confidence scoring"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.supported_languages = {
             'en': 'English',
             'es': 'Spanish',
@@ -183,7 +183,7 @@ class LanguageDetector:
 class TextNormalizer:
     """Advanced text normalization and cleaning"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.url_pattern = re.compile(
             r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\(\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+'
         )
@@ -274,7 +274,7 @@ class TextNormalizer:
 class SentimentAnalyzer:
     """Advanced sentiment analysis with multiple approaches"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.positive_words = {
             'excellent', 'amazing', 'wonderful', 'fantastic', 'great', 'good', 'nice',
             'awesome', 'brilliant', 'perfect', 'outstanding', 'superb', 'magnificent',
@@ -363,7 +363,7 @@ class SentimentAnalyzer:
 class KeywordExtractor:
     """Advanced keyword and key phrase extraction"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.stop_words = {
             'a', 'an', 'and', 'are', 'as', 'at', 'be', 'by', 'for', 'from',
             'has', 'he', 'in', 'is', 'it', 'its', 'of', 'on', 'that', 'the',
@@ -496,7 +496,7 @@ class KeywordExtractor:
 class ContentModerator:
     """Advanced content moderation and safety checking"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.profanity_words = {
             # Basic profanity detection (implement with external list for production)
             'damn', 'hell', 'crap', 'stupid', 'idiot', 'moron', 'fool'
@@ -609,7 +609,7 @@ class ContentModerator:
 class TextSimilarityCalculator:
     """Calculate similarity between texts using multiple algorithms"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.stop_words = {
             'a', 'an', 'and', 'are', 'as', 'at', 'be', 'by', 'for', 'from',
             'has', 'he', 'in', 'is', 'it', 'its', 'of', 'on', 'that', 'the',
@@ -744,7 +744,7 @@ class TextSimilarityCalculator:
 class TextProcessor:
     """Main text processing class combining all capabilities"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.config = config or {}
         self.language_detector = LanguageDetector()
         self.normalizer = TextNormalizer()
@@ -764,7 +764,7 @@ class TextProcessor:
         if NLTK_AVAILABLE:
             self._initialize_nltk()
     
-    def _initialize_nltk(self):
+    def _initialize_nltk(self) -> None:
         """Initialize NLTK data"""
         try:
             nltk.download('punkt', quiet=True)

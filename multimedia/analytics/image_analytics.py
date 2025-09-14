@@ -80,7 +80,7 @@ class ImageMetrics:
 class ColorAnalyzer:
     """Advanced color analysis and harmony assessment"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.logger = logger.getChild(self.__class__.__name__)
         
@@ -240,7 +240,7 @@ class ColorAnalyzer:
 class CompositionAnalyzer:
     """Advanced composition analysis and aesthetic evaluation"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.logger = logger.getChild(self.__class__.__name__)
         
@@ -424,7 +424,7 @@ class CompositionAnalyzer:
 class ImageAnalyzer:
     """Comprehensive image analysis engine"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.logger = logger.getChild(self.__class__.__name__)
         

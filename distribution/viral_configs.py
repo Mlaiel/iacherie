@@ -133,7 +133,7 @@ class ViralAnalyticsConfig:
 class ViralConfigManager:
     """Manager for viral optimization configurations"""
     
-    def __init__(self, config_file: Optional[str] = None):
+    def __init__(self, config_file -> None: Optional[str] = None) -> None:
         self.config_file = config_file or "viral_config.json"
         self.strategy = ViralStrategy.BALANCED
         self.trigger_config = ViralTriggerConfig()
@@ -149,7 +149,7 @@ class ViralConfigManager:
         if os.path.exists(self.config_file):
             self.load_config()
     
-    def _initialize_default_platforms(self):
+    def _initialize_default_platforms(self) -> None:
         """Initialize default platform configurations"""
         # Instagram configuration
         self.platform_configs["instagram"] = PlatformViralConfig(
@@ -225,13 +225,13 @@ class ViralConfigManager:
         """Get current viral strategy"""
         return self.strategy
     
-    def set_viral_strategy(self, strategy: ViralStrategy):
+    def set_viral_strategy(self, strategy -> None: ViralStrategy) -> None:
         """Set viral optimization strategy"""
         self.strategy = strategy
         self._update_configs_for_strategy()
         logger.info(f"Viral strategy updated to: {strategy.value}")
     
-    def _update_configs_for_strategy(self):
+    def _update_configs_for_strategy(self) -> None:
         """Update configurations based on selected strategy"""
         if self.strategy == ViralStrategy.AGGRESSIVE:
             # Aggressive settings
@@ -264,7 +264,7 @@ class ViralConfigManager:
         """Get configuration for specific platform"""
         return self.platform_configs.get(platform.lower())
     
-    def update_platform_config(self, platform: str, config: PlatformViralConfig):
+    def update_platform_config(self, platform -> None: str, config -> None: PlatformViralConfig) -> None:
         """Update configuration for specific platform"""
         self.platform_configs[platform.lower()] = config
         logger.info(f"Updated viral config for platform: {platform}")
@@ -449,7 +449,7 @@ class ViralConfigManager:
             }
         }
     
-    def save_config(self, filename: Optional[str] = None):
+    def save_config(self, filename -> None: Optional[str] = None) -> None:
         """Save configuration to file"""
         try:
             filename = filename or self.config_file
@@ -464,7 +464,7 @@ class ViralConfigManager:
             logger.error(f"Failed to save viral configuration: {e}")
             raise
     
-    def load_config(self, filename: Optional[str] = None):
+    def load_config(self, filename -> None: Optional[str] = None) -> None:
         """Load configuration from file"""
         try:
             filename = filename or self.config_file

@@ -127,7 +127,7 @@ class BasePredictiveModel(ABC):
 class EngagementPredictionModel(BasePredictiveModel):
     """Model for predicting engagement rates"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.model_weights = {
             # Content features
             "content_length": 0.15,
@@ -303,7 +303,7 @@ class EngagementPredictionModel(BasePredictiveModel):
         
         return prediction
     
-    async def _update_weights(self, feature_matrix: np.ndarray, targets: np.ndarray):
+    async def _update_weights(self, feature_matrix -> None: np.ndarray, targets -> None: np.ndarray) -> None:
         """Update model weights (simplified)"""
         # In production, use proper ML algorithms
         # This is a simplified weight update
@@ -390,7 +390,7 @@ class EngagementPredictionModel(BasePredictiveModel):
 class ViralPotentialModel(BasePredictiveModel):
     """Model for predicting viral potential"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.viral_indicators = {
             "share_velocity": 0.30,
             "early_engagement": 0.25,
@@ -498,7 +498,7 @@ class ViralPotentialModel(BasePredictiveModel):
 class PredictiveAnalyticsEngine:
     """Main predictive analytics engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.models: Dict[PredictionType, BasePredictiveModel] = {
             PredictionType.ENGAGEMENT_RATE: EngagementPredictionModel(),
             PredictionType.VIRAL_POTENTIAL: ViralPotentialModel()
@@ -692,7 +692,7 @@ class PredictiveAnalyticsEngine:
         
         return str(hash(feature_str))
     
-    def _cache_prediction(self, cache_key: str, result: PredictionResult):
+    def _cache_prediction(self, cache_key -> None: str, result -> None: PredictionResult) -> None:
         """Cache a prediction result"""
         if len(self.prediction_cache) >= self.max_cache_size:
             # Remove oldest entries
@@ -706,7 +706,7 @@ class PredictiveAnalyticsEngine:
         
         self.prediction_cache[cache_key] = result
     
-    def _clear_cache_for_type(self, prediction_type: PredictionType):
+    def _clear_cache_for_type(self, prediction_type -> None: PredictionType) -> None:
         """Clear cache for specific prediction type"""
         keys_to_remove = []
         
@@ -734,7 +734,7 @@ class PredictiveAnalyticsEngine:
         """Get list of supported prediction types"""
         return list(self.models.keys())
     
-    def clear_all_cache(self):
+    def clear_all_cache(self) -> None:
         """Clear all cached predictions"""
         self.prediction_cache.clear()
 

@@ -107,7 +107,7 @@ class RevenueTransaction:
     payment_status: PaymentStatus = PaymentStatus.PENDING
     metadata: Dict[str, Any] = field(default_factory=dict)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         """
 Calculate net amount after fees and taxes."""
         self.net_amount = self.gross_amount - self.platform_fee - self.taxes
@@ -173,7 +173,7 @@ class RevenueEngine:
     - Blockchain-based transparency
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """
 Initialize the Revenue Engine."""
         self.config = config

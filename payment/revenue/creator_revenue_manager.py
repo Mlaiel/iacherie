@@ -222,7 +222,7 @@ class CreatorRevenueManager:
     monetization workflow automation and optimization.
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """Initialize creator revenue manager"""
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -266,7 +266,7 @@ class CreatorRevenueManager:
         self.analytics_updater_task = None
         self.tier_updater_task = None
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize the creator revenue manager"""
         try:
             # Initialize revenue calculator
@@ -289,7 +289,7 @@ class CreatorRevenueManager:
             self.logger.error(f"Failed to initialize creator revenue manager: {e}")
             raise
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Shutdown the revenue manager"""
         try:
             # Cancel background tasks
@@ -703,14 +703,14 @@ class CreatorRevenueManager:
         
         return suggestions
     
-    async def _check_automatic_payout(self, creator: CreatorProfile):
+    async def _check_automatic_payout(self, creator -> None: CreatorProfile) -> None:
         """Check if creator is eligible for automatic payout"""
         available_balance = await self._calculate_available_balance(creator.creator_id)
         
         if available_balance >= creator.payout_threshold:
             await self.request_payout(creator.creator_id, available_balance)
     
-    async def _update_creator_tier(self, creator: CreatorProfile):
+    async def _update_creator_tier(self, creator -> None: CreatorProfile) -> None:
         """Update creator tier based on lifetime revenue"""
         current_tier = creator.tier
         new_tier = current_tier
@@ -724,7 +724,7 @@ class CreatorRevenueManager:
             creator.revenue_share_percentage = self.tier_revenue_shares[new_tier]
             self.logger.info(f"Creator tier updated: {creator.creator_id} -> {new_tier.value}")
     
-    async def _payout_processor_loop(self):
+    async def _payout_processor_loop(self) -> None:
         """Background task to process pending payouts"""
         while True:
             try:
@@ -740,7 +740,7 @@ class CreatorRevenueManager:
             except Exception as e:
                 self.logger.error(f"Error in payout processor loop: {e}")
     
-    async def _process_payout(self, payout: PayoutRequest):
+    async def _process_payout(self, payout -> None: PayoutRequest) -> None:
         """Process individual payout"""
         try:
             # Simulate payout processing
@@ -763,7 +763,7 @@ class CreatorRevenueManager:
             payout.status = PayoutStatus.FAILED
             self.logger.error(f"Payout processing failed: {payout.payout_id} - {e}")
     
-    async def _analytics_updater_loop(self):
+    async def _analytics_updater_loop(self) -> None:
         """Background task to update analytics"""
         while True:
             try:
@@ -777,7 +777,7 @@ class CreatorRevenueManager:
             except Exception as e:
                 self.logger.error(f"Error in analytics updater loop: {e}")
     
-    async def _tier_updater_loop(self):
+    async def _tier_updater_loop(self) -> None:
         """Background task to update creator tiers"""
         while True:
             try:
@@ -791,7 +791,7 @@ class CreatorRevenueManager:
             except Exception as e:
                 self.logger.error(f"Error in tier updater loop: {e}")
     
-    async def _load_creator_profiles(self):
+    async def _load_creator_profiles(self) -> None:
         """Load creator profiles from storage"""
         # This would load from database
         # For demo, creating sample profiles
@@ -818,7 +818,7 @@ class CreatorRevenueManager:
             )
             self.creator_profiles[creator.creator_id] = creator
     
-    async def _load_content_revenue(self):
+    async def _load_content_revenue(self) -> None:
         """Load content revenue data from storage"""
         # This would load from database
         pass

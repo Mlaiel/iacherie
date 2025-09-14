@@ -1,3 +1,8 @@
+"""
+Backup Management module
+Enterprise implementation for Ainflue platform
+"""
+
 # Ainflue Infrastructure Module
 # =============================
 # 
@@ -124,7 +129,7 @@ class BackupManager:
     support, automated scheduling, and enterprise-grade features.
     """
     
-    def __init__(self, config_path: str = "/etc/ainflue/backup"):
+    def __init__(self, config_path -> None: str = "/etc/ainflue/backup") -> None:
         self.config_path = Path(config_path)
         self.config_path.mkdir(parents=True, exist_ok=True)
         self.logger = self._setup_logging()
@@ -161,7 +166,7 @@ class BackupManager:
         
         return logger
     
-    def _load_configuration(self):
+    def _load_configuration(self) -> None:
         """Load backup configuration from files"""
         try:
             # Load backup targets
@@ -194,7 +199,7 @@ class BackupManager:
         except Exception as e:
             self.logger.error(f"Failed to load backup configuration: {str(e)}")
     
-    def _init_storage_providers(self):
+    def _init_storage_providers(self) -> None:
         """Initialize storage provider connections"""
         try:
             # Initialize AWS S3
@@ -907,7 +912,7 @@ class BackupManager:
             self.logger.error(f"Failed to delete backup file {job.storage_path}: {str(e)}")
             return False
     
-    def _save_backup_targets(self):
+    def _save_backup_targets(self) -> None:
         """Save backup targets to file"""
         targets_file = self.config_path / "backup_targets.yaml"
         
@@ -932,7 +937,7 @@ class BackupManager:
         with open(targets_file, 'w') as f:
             yaml.dump(targets_data, f, default_flow_style=False)
     
-    def _save_backup_jobs(self):
+    def _save_backup_jobs(self) -> None:
         """Save backup jobs to file"""
         jobs_file = self.config_path / "backup_jobs.yaml"
         

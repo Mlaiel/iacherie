@@ -103,9 +103,9 @@ class AudioProcessor:
     """Advanced audio processing engine"""
     
     def __init__(self, 
-                 enable_ai_enhancement: bool = True,
-                 default_sample_rate: int = 44100,
-                 default_quality: QualityLevel = QualityLevel.HIGH):
+                 enable_ai_enhancement -> None: bool = True,
+                 default_sample_rate -> None: int = 44100,
+                 default_quality -> None: QualityLevel = QualityLevel.HIGH) -> None:
         """
         Initialize audio processor
         
@@ -709,7 +709,7 @@ class AudioProcessor:
             # Return original as fallback
             return (audio_array * 32767).astype(np.int16).tobytes()
     
-    def _load_enhancement_models(self):
+    def _load_enhancement_models(self) -> None:
         """Load AI enhancement models"""
         # Placeholder for loading AI models
         # In production, this would load pre-trained enhancement models

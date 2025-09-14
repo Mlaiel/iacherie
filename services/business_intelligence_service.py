@@ -1,4 +1,6 @@
 """
+import logging
+
 📊 Business Intelligence Service
 Enterprise business intelligence platform with real-time analytics and ML-powered insights
 
@@ -160,7 +162,7 @@ class Dashboard(BaseModel):
 class MLModel(ABC):
     """Abstract base class for ML models"""
     
-    def __init__(self, model_id: str, name: str):
+    def __init__(self, model_id -> None: str, name -> None: str) -> None:
         self.model_id = model_id
         self.name = name
         self.is_trained = False
@@ -185,7 +187,7 @@ class MLModel(ABC):
 class TimeSeriesForecaster(MLModel):
     """Time series forecasting model for business metrics"""
     
-    def __init__(self, model_id: str, name: str = "Time Series Forecaster"):
+    def __init__(self, model_id -> None: str, name -> None: str = "Time Series Forecaster") -> None:
         super().__init__(model_id, name)
         self.seasonal_periods = 7  # Weekly seasonality
         self.trend_components = None
@@ -328,7 +330,7 @@ class TimeSeriesForecaster(MLModel):
 class AnomalyDetector(MLModel):
     """Anomaly detection model for business metrics"""
     
-    def __init__(self, model_id: str, name: str = "Anomaly Detector"):
+    def __init__(self, model_id -> None: str, name -> None: str = "Anomaly Detector") -> None:
         super().__init__(model_id, name)
         self.threshold_factor = 2.5  # Standard deviations for anomaly threshold
         self.historical_stats = None
@@ -471,7 +473,7 @@ class BusinessIntelligenceService:
     - Backend Senior: Complex data processing, async operations, caching strategies
     """
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.config = config or {}
         self.metrics_registry: Dict[str, MetricDefinition] = {}
         self.kpi_targets: Dict[str, KPITarget] = {}
@@ -500,7 +502,7 @@ class BusinessIntelligenceService:
         logger.info("Business Intelligence Service initialized",
                    config=self.config)
     
-    def _initialize_ml_models(self):
+    def _initialize_ml_models(self) -> None:
         """Initialize default ML models"""
         self.ml_models['revenue_forecaster'] = TimeSeriesForecaster(
             'revenue_forecaster', 'Revenue Forecasting Model'
@@ -512,7 +514,7 @@ class BusinessIntelligenceService:
             'anomaly_detector', 'General Anomaly Detection Model'
         )
     
-    def _start_background_tasks(self):
+    def _start_background_tasks(self) -> None:
         """Start background processing tasks"""
         # In production, would start proper background tasks
         pass
@@ -892,7 +894,7 @@ class BusinessIntelligenceService:
         
         return comparisons
     
-    async def _check_for_anomalies(self, metric_id: str, data_points: List[DataPoint]):
+    async def _check_for_anomalies(self, metric_id -> None: str, data_points -> None: List[DataPoint]) -> None:
         """Check for anomalies in real-time data"""
         try:
             anomaly_detector = self.ml_models.get('anomaly_detector')
@@ -970,7 +972,7 @@ class BusinessIntelligenceService:
         
         return None
     
-    def _cache_result(self, cache_key: str, result: AnalyticsResult):
+    def _cache_result(self, cache_key -> None: str, result -> None: AnalyticsResult) -> None:
         """Cache query result"""
         self.query_cache[cache_key] = (result, datetime.now())
         
@@ -981,7 +983,7 @@ class BusinessIntelligenceService:
             for old_key, _ in sorted_cache[:100]:  # Remove oldest 100
                 del self.query_cache[old_key]
     
-    def _update_average_query_time(self, execution_time: float):
+    def _update_average_query_time(self, execution_time -> None: float) -> None:
         """Update average query execution time"""
         total = self.metrics['total_queries']
         if total <= 1:
@@ -1046,7 +1048,7 @@ class BusinessIntelligenceService:
         }
 
 # Example usage and testing
-async def example_usage():
+async def example_usage() -> None:
     """Example usage of the Business Intelligence Service"""
     
     # Initialize service

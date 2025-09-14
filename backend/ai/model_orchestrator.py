@@ -117,7 +117,7 @@ class AIOrchestrator:
     - Intelligent error handling and fallback mechanisms
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.models: Dict[str, Any] = {}
         self.model_metrics: Dict[str, AIModelMetrics] = {}
         self.processing_queue: deque = deque()
@@ -137,7 +137,7 @@ class AIOrchestrator:
         
         logger.info("AdvancedAIOrchestrator initialized - Lead Developer IA")
 
-    def _initialize_ensemble_configs(self):
+    def _initialize_ensemble_configs(self) -> None:
         """Initialize ensemble configurations for different content types"""
         self.ensemble_configs = {
             "content_classification": {
@@ -166,7 +166,7 @@ class AIOrchestrator:
             }
         }
 
-    def _initialize_default_models(self):
+    def _initialize_default_models(self) -> None:
         """Initialize default AI models"""
         # Content Classification Model
         self.models["content_classifier_v1"] = ContentClassificationModelV1()
@@ -560,10 +560,10 @@ class AIOrchestrator:
 
     async def _update_model_metrics(
         self, 
-        model_ids: List[str], 
-        predictions: Dict[str, Dict],
-        total_processing_time: float
-    ):
+        model_ids -> None: List[str], 
+        predictions -> None: Dict[str, Dict],
+        total_processing_time -> None: float
+    ) -> None:
         """Update performance metrics for models"""
         
         for model_id in model_ids:
@@ -673,7 +673,7 @@ class AIOrchestrator:
         
         return report
 
-    async def optimize_model_performance(self):
+    async def optimize_model_performance(self) -> None:
         """Optimize model performance based on historical data"""
         logger.info("Starting model performance optimization...")
         
@@ -703,7 +703,7 @@ class AIOrchestrator:
 class ContentClassificationModelV1:
     """Advanced content classification model"""
     
-    async def predict_async(self, content):
+    async def predict_async(self, content) -> None:
         # Simulate processing
         await asyncio.sleep(0.1)
         return {
@@ -715,7 +715,7 @@ class ContentClassificationModelV1:
 class SentimentAnalyzer:
     """Enhanced sentiment analysis with emotion detection"""
     
-    async def predict_async(self, content):
+    async def predict_async(self, content) -> None:
         await asyncio.sleep(0.05)
         return {
             "prediction": "positive",
@@ -726,7 +726,7 @@ class SentimentAnalyzer:
 class TrendPredictor:
     """Advanced trend prediction with viral potential scoring"""
     
-    async def predict_async(self, content):
+    async def predict_async(self, content) -> None:
         await asyncio.sleep(0.15)
         return {
             "prediction": 7.8,  # Trend score out of 10
@@ -738,7 +738,7 @@ class TrendPredictor:
 class CopyrightDetectionSystem:
     """Advanced copyright detection with fingerprinting"""
     
-    async def predict_async(self, content):
+    async def predict_async(self, content) -> None:
         await asyncio.sleep(0.08)
         return {
             "prediction": "original",
@@ -750,7 +750,7 @@ class CopyrightDetectionSystem:
 class ContentQualityAssessor:
     """Content quality assessment with technical metrics"""
     
-    async def predict_async(self, content):
+    async def predict_async(self, content) -> None:
         await asyncio.sleep(0.06)
         return {
             "prediction": 8.5,  # Quality score out of 10

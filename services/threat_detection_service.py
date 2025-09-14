@@ -101,7 +101,7 @@ class ThreatDetectionService:
     - Threat intelligence integration
     """
 
-    def __init__(self, redis_url: str = "redis://localhost:6379"):
+    def __init__(self, redis_url -> None: str = "redis -> None://localhost -> None:6379") -> None:
         self.logger = logging.getLogger(__name__)
         self.redis_url = redis_url
         self.redis_client: Optional[aioredis.Redis] = None
@@ -144,7 +144,7 @@ class ThreatDetectionService:
         
         self.logger.info("Threat Detection Service initialized with ML-powered analysis")
 
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize threat detection service with Redis and ML models"""
         try:
             self.redis_client = aioredis.from_url(
@@ -168,7 +168,7 @@ class ThreatDetectionService:
             self.logger.error(f"Failed to initialize Threat Detection Service: {e}")
             raise
 
-    def _initialize_threat_signatures(self):
+    def _initialize_threat_signatures(self) -> None:
         """Initialize threat signatures for known attack patterns"""
         
         signatures = [
@@ -713,8 +713,8 @@ class ThreatDetectionService:
         
         return profile
 
-    async def _update_behavioral_profile(self, user_id: str, 
-                                       current_features: Dict[str, float]):
+    async def _update_behavioral_profile(self, user_id -> None: str, 
+                                       current_features -> None: Dict[str, float]) -> None:
         """Update user's behavioral profile with new data"""
         
         profile = self.behavioral_profiles.get(user_id)
@@ -796,7 +796,7 @@ class ThreatDetectionService:
         
         return suggestions
 
-    async def _store_threat_detection(self, detection: ThreatDetection):
+    async def _store_threat_detection(self, detection -> None: ThreatDetection) -> None:
         """Store threat detection result"""
         
         detection_data = {
@@ -827,7 +827,7 @@ class ThreatDetectionService:
         # Keep only last 500 detections
         await self.redis_client.ltrim("threat_detections_timeline", 0, 499)
 
-    async def _update_threat_patterns(self, detection: ThreatDetection):
+    async def _update_threat_patterns(self, detection -> None: ThreatDetection) -> None:
         """Update threat patterns for learning"""
         
         pattern_key = f"threat_pattern:{detection.threat_category.value}"
@@ -842,7 +842,7 @@ class ThreatDetectionService:
         await self.redis_client.lpush(pattern_key, json.dumps(pattern_data))
         await self.redis_client.ltrim(pattern_key, 0, 99)  # Keep last 100 patterns
 
-    def _update_detection_stats(self, detection: ThreatDetection):
+    def _update_detection_stats(self, detection -> None: ThreatDetection) -> None:
         """Update detection statistics"""
         
         self.detection_stats["total_detections"] += 1
@@ -861,7 +861,7 @@ class ThreatDetectionService:
         if total > 0:
             self.detection_stats["accuracy_rate"] = (total - fp) / total
 
-    async def _load_ml_models(self):
+    async def _load_ml_models(self) -> None:
         """Load pre-trained ML models from storage"""
         
         try:
@@ -882,7 +882,7 @@ class ThreatDetectionService:
         except Exception as e:
             self.logger.warning(f"Could not load ML models: {e}")
 
-    async def _load_behavioral_profiles(self):
+    async def _load_behavioral_profiles(self) -> None:
         """Load behavioral profiles from storage"""
         
         try:
@@ -907,7 +907,7 @@ class ThreatDetectionService:
         except Exception as e:
             self.logger.warning(f"Could not load behavioral profiles: {e}")
 
-    async def _load_threat_signatures(self):
+    async def _load_threat_signatures(self) -> None:
         """Load threat signatures from storage"""
         
         try:
@@ -933,7 +933,7 @@ class ThreatDetectionService:
         except Exception as e:
             self.logger.warning(f"Could not load threat signatures: {e}")
 
-    async def _initialize_threat_intelligence(self):
+    async def _initialize_threat_intelligence(self) -> None:
         """Initialize threat intelligence feeds"""
         
         # Initialize threat intelligence sources
@@ -969,7 +969,7 @@ class ThreatDetectionService:
             "last_updated": datetime.utcnow().isoformat()
         }
 
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Shutdown threat detection service"""
         
         if self.redis_client:
@@ -979,7 +979,7 @@ class ThreatDetectionService:
 
 
 # Example usage
-async def main():
+async def main() -> None:
     """Example usage of Threat Detection Service"""
     
     threat_detector = ThreatDetectionService()

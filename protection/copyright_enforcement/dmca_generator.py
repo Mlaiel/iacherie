@@ -4,7 +4,7 @@ Ultra-advanced automated generation of DMCA takedown notices with platform-speci
 AI-powered legal compliance validation, automated submission tracking, and intelligent escalation.
 
 Features:
-- Multi-platform DMCA template management (YouTube, Instagram, TikTok, Facebook, Twitter, etc.)
+    - Multi-platform DMCA template management (YouTube, Instagram, TikTok, Facebook, Twitter, etc.)
 - AI-powered legal text generation and validation
 - Automated form submission with browser automation
 - Smart retry mechanisms and status tracking
@@ -148,7 +148,7 @@ class DMCARequest:
     damages_claimed: Optional[float] = None
     currency: str = "USD"
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         """Validate request data after initialization"""
         if not self.violation_case_id:
             self.violation_case_id = str(uuid.uuid4())
@@ -177,7 +177,7 @@ class DMCATemplate:
     multi_language_support: bool = False
     supported_languages: List[str] = field(default_factory=list)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         """Initialize template configuration"""
         if not self.supported_languages:
             self.supported_languages = ["en"]
@@ -218,7 +218,7 @@ class DMCASubmissionResult(BaseModel):
 class DMCATemplateManager:
     """Ultra-advanced DMCA template management system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.templates: Dict[PlatformType, DMCATemplate] = {}
         self.template_env = jinja2.Environment(
             loader=jinja2.DictLoader({}),
@@ -273,7 +273,7 @@ class DMCATemplateManager:
                 "success_url_pattern": "/copyright/complaint/submitted"
             },
             validation_rules={
-                "url_pattern": r"^https?://(?:www\.|m\.)?youtube\.com/watch\?v=[\w-]+",
+                "url_pattern": r"^https?://(?:www.|m.)?youtube.com/watch\?v=[\w-]+",
                 "description_min_length": 100,
                 "required_legal_statements": ["sworn_statement", "good_faith_belief"]
             },
@@ -397,23 +397,23 @@ Dear YouTube Legal Team,
 I am the copyright owner (or authorized to act on behalf of the copyright owner) of the original work described below. I have a good faith belief that the use of the material described herein is not authorized by the copyright owner, its agent, or the law.
 
 ORIGINAL COPYRIGHTED WORK:
-Title: {{ original_work_title }}
+    Title: {{ original_work_title }}
 Description: {{ original_work_description }}
 {% if content_evidence.original_url %}Original URL: {{ content_evidence.original_url }}{% endif %}
 {% if content_evidence.fingerprint_hash %}Content Fingerprint: {{ content_evidence.fingerprint_hash }}{% endif %}
 
 INFRINGING MATERIAL:
-YouTube URL: {{ violation_url }}
+    YouTube URL: {{ violation_url }}
 Content Type: {{ content_type }}
 {% if content_evidence.similarity_score %}Similarity Score: {{ content_evidence.similarity_score * 100 }}%{% endif %}
 Discovery Date: {{ content_evidence.discovery_date.strftime('%B %d, %Y') if content_evidence.discovery_date else 'N/A' }}
 
 DETAILED INFRINGEMENT DESCRIPTION:
-{{ infringement_description }}
+    {{ infringement_description }}
 
 {% if legal_basis %}
 LEGAL BASIS:
-{% for basis in legal_basis %}
+    {% for basis in legal_basis %}
 - {{ basis }}
 {% endfor %}
 {% endif %}
@@ -423,19 +423,19 @@ CLAIMED DAMAGES: {{ damages_claimed }} {{ currency }}
 {% endif %}
 
 SWORN STATEMENTS:
-{% if sworn_statement %}✓{% else %}✗{% endif %} I swear, under penalty of perjury, that the information in this notification is accurate and that I am the copyright owner, or am authorized to act on behalf of the owner, of an exclusive right that is allegedly infringed.
+    {% if sworn_statement %}# [EMOJI_REMOVED]{% else %}# [EMOJI_REMOVED]{% endif %} I swear, under penalty of perjury, that the information in this notification is accurate and that I am the copyright owner, or am authorized to act on behalf of the owner, of an exclusive right that is allegedly infringed.
 
-{% if good_faith_belief %}✓{% else %}✗{% endif %} I have a good faith belief that use of the copyrighted materials described above on the infringing web pages is not authorized by the copyright owner, or its agent, or the law.
+{% if good_faith_belief %}# [EMOJI_REMOVED]{% else %}# [EMOJI_REMOVED]{% endif %} I have a good faith belief that use of the copyrighted materials described above on the infringing web pages is not authorized by the copyright owner, or its agent, or the law.
 
-{% if accuracy_statement %}✓{% else %}✗{% endif %} I certify that the information contained in this notice is both true and accurate.
+{% if accuracy_statement %}# [EMOJI_REMOVED]{% else %}# [EMOJI_REMOVED]{% endif %} I certify that the information contained in this notice is both true and accurate.
 
-{% if perjury_acknowledgment %}✓{% else %}✗{% endif %} I acknowledge that making false claims may result in liability for damages, costs, and attorney fees.
+{% if perjury_acknowledgment %}# [EMOJI_REMOVED]{% else %}# [EMOJI_REMOVED]{% endif %} I acknowledge that making false claims may result in liability for damages, costs, and attorney fees.
 
 ELECTRONIC SIGNATURE: {{ electronic_signature }}
 Date: {{ submission_date.strftime('%B %d, %Y') }}
 
 Contact Information:
-Name: {{ copyright_owner.name }}
+    Name: {{ copyright_owner.name }}
 {% if copyright_owner.title %}Title: {{ copyright_owner.title }}{% endif %}
 {% if copyright_owner.organization %}Organization: {{ copyright_owner.organization }}{% endif %}
 Email: {{ copyright_owner.email }}
@@ -456,22 +456,22 @@ Date: {{ submission_date.strftime('%B %d, %Y') }}
 Case ID: {{ violation_case_id }}
 
 ORIGINAL WORK INFORMATION:
-Title: {{ original_work_title }}
+    Title: {{ original_work_title }}
 Description: {{ original_work_description }}
 {% if content_evidence.original_url %}Original Location: {{ content_evidence.original_url }}{% endif %}
 
 INFRINGING CONTENT:
-Instagram URL: {{ violation_url }}
+    Instagram URL: {{ violation_url }}
 Content Type: {{ content_type }}
 Infringement Details: {{ infringement_description }}
 
 CONTACT INFORMATION:
-Full Name: {{ copyright_owner.name }}
+    Full Name: {{ copyright_owner.name }}
 Email Address: {{ copyright_owner.email }}
 {% if copyright_owner.organization %}Company/Organization: {{ copyright_owner.organization }}{% endif %}
 
 LEGAL DECLARATIONS:
-- I have a good faith belief that the reported use is not authorized by the copyright owner, its agent, or the law.
+    - I have a good faith belief that the reported use is not authorized by the copyright owner, its agent, or the law.
 - The information provided is accurate to the best of my knowledge.
 - I am authorized to act on behalf of the copyright owner.
 
@@ -493,23 +493,23 @@ Dear TikTok Legal Team,
 I am writing to report copyright infringement on your platform.
 
 COPYRIGHT OWNER INFORMATION:
-Name: {{ copyright_owner.name }}
+    Name: {{ copyright_owner.name }}
 {% if copyright_owner.organization %}Organization: {{ copyright_owner.organization }}{% endif %}
 Email: {{ copyright_owner.email }}
 {% if copyright_owner.phone %}Phone: {{ copyright_owner.phone }}{% endif %}
 
 ORIGINAL COPYRIGHTED WORK:
-Title: {{ original_work_title }}
+    Title: {{ original_work_title }}
 Description: {{ original_work_description }}
 {% if content_evidence.original_url %}Original URL: {{ content_evidence.original_url }}{% endif %}
 
 INFRINGING CONTENT ON TIKTOK:
-TikTok URL: {{ violation_url }}
+    TikTok URL: {{ violation_url }}
 Content Type: {{ content_type }}
 Description of Infringement: {{ infringement_description }}
 
 DMCA STATEMENTS:
-1. I have a good faith belief that the use of the copyrighted material is not authorized by the copyright owner, its agent, or the law.
+    1. I have a good faith belief that the use of the copyrighted material is not authorized by the copyright owner, its agent, or the law.
 2. The information in this notice is accurate.
 3. Under penalty of perjury, I am authorized to act on behalf of the copyright owner.
 
@@ -530,24 +530,24 @@ Date: {{ submission_date.strftime('%B %d, %Y') }}
 Report ID: {{ violation_case_id }}
 
 COPYRIGHTED WORK DETAILS:
-Work Title: {{ original_work_title }}
+    Work Title: {{ original_work_title }}
 Work Description: {{ original_work_description }}
 {% if content_evidence.original_url %}Original Source: {{ content_evidence.original_url }}{% endif %}
 
 INFRINGING FACEBOOK CONTENT:
-Facebook URL: {{ violation_url }}
+    Facebook URL: {{ violation_url }}
 Content Type: {{ content_type }}
 Infringement Description: {{ infringement_description }}
 
 COPYRIGHT OWNER CONTACT:
-Name: {{ copyright_owner.name }}
+    Name: {{ copyright_owner.name }}
 Email: {{ copyright_owner.email }}
 {% if copyright_owner.organization %}Organization: {{ copyright_owner.organization }}{% endif %}
 
 SWORN STATEMENTS:
-✓ I have a good faith belief that the use is not authorized
-✓ This information is accurate under penalty of perjury
-✓ I am authorized to act on behalf of the copyright owner
+    # [EMOJI_REMOVED] I have a good faith belief that the use is not authorized
+# [EMOJI_REMOVED] This information is accurate under penalty of perjury
+# [EMOJI_REMOVED] I am authorized to act on behalf of the copyright owner
 
 Signature: {{ electronic_signature }}
 Submission Date: {{ submission_date.strftime('%B %d, %Y') }}
@@ -563,22 +563,22 @@ Date: {{ submission_date.strftime('%B %d, %Y') }}
 Case Reference: {{ violation_case_id }}
 
 ORIGINAL WORK:
-Title: {{ original_work_title }}
+    Title: {{ original_work_title }}
 Description: {{ original_work_description }}
 {% if content_evidence.original_url %}Source: {{ content_evidence.original_url }}{% endif %}
 
 INFRINGING TWEET:
-Twitter URL: {{ violation_url }}
+    Twitter URL: {{ violation_url }}
 Content Type: {{ content_type }}
 Infringement Details: {{ infringement_description }}
 
 COMPLAINANT INFORMATION:
-Full Name: {{ copyright_owner.name }}
+    Full Name: {{ copyright_owner.name }}
 Email: {{ copyright_owner.email }}
 {% if copyright_owner.organization %}Company: {{ copyright_owner.organization }}{% endif %}
 
 LEGAL STATEMENTS:
-- Good faith belief that use is unauthorized
+    - Good faith belief that use is unauthorized
 - Information provided is accurate under penalty of perjury
 - Authorized to act on behalf of copyright owner
 
@@ -598,24 +598,24 @@ Reference: {{ violation_case_id }}
 Dear Spotify Legal Team,
 
 ORIGINAL MUSICAL WORK:
-Track Title: {{ original_work_title }}
+    Track Title: {{ original_work_title }}
 Artist/Creator: {{ copyright_owner.name }}
 {% if copyright_owner.organization %}Label/Publisher: {{ copyright_owner.organization }}{% endif %}
 Description: {{ original_work_description }}
 {% if content_evidence.original_url %}Official Release: {{ content_evidence.original_url }}{% endif %}
 
 INFRINGING SPOTIFY CONTENT:
-Spotify Track URL: {{ violation_url }}
+    Spotify Track URL: {{ violation_url }}
 Infringement Type: {{ content_type }}
 Details: {{ infringement_description }}
 
 COPYRIGHT HOLDER INFORMATION:
-Name: {{ copyright_owner.name }}
+    Name: {{ copyright_owner.name }}
 Email: {{ copyright_owner.email }}
 {% if copyright_owner.organization %}Organization: {{ copyright_owner.organization }}{% endif %}
 
 DMCA COMPLIANCE STATEMENTS:
-1. I am the copyright owner or authorized representative
+    1. I am the copyright owner or authorized representative
 2. Good faith belief that use is not authorized
 3. Information provided is accurate under penalty of perjury
 
@@ -723,14 +723,14 @@ Original Work: {{ original_work_title }}
 {% if original_work_url %}Source: {{ original_work_url }}{% endif %}
 
 Infringing Content:
-Instagram URL: {{ violation_url }}
+    Instagram URL: {{ violation_url }}
 Content Type: {{ content_type }}
 
 Infringement Details:
-{{ description }}
+    {{ description }}
 
 Legal Statements:
-- I have good faith belief this use is unauthorized
+    - I have good faith belief this use is unauthorized
 - Information herein is accurate under penalty of perjury
 - I am authorized to act on behalf of copyright owner
 
@@ -765,19 +765,19 @@ Submission Date: {{ submission_date }}
 I am reporting copyright infringement on TikTok.
 
 ORIGINAL WORK INFORMATION:
-Title: {{ original_work_title }}
+    Title: {{ original_work_title }}
 {% if original_work_url %}URL: {{ original_work_url }}{% endif %}
 Copyright Owner: {{ copyright_owner }}
 
 INFRINGING CONTENT:
-TikTok URL: {{ violation_url }}
+    TikTok URL: {{ violation_url }}
 Content Type: {{ content_type }}
 Description: {{ description }}
 
 LEGAL CERTIFICATIONS:
-✓ I have good faith belief the use is not authorized
-✓ Information provided is accurate under penalty of perjury  
-✓ I am authorized to act for the copyright owner
+    # [EMOJI_REMOVED] I have good faith belief the use is not authorized
+# [EMOJI_REMOVED] Information provided is accurate under penalty of perjury  
+# [EMOJI_REMOVED] I am authorized to act for the copyright owner
 
 Contact Information: {{ contact_email }}
 Electronic Signature: {{ signature }}
@@ -836,7 +836,7 @@ Date: {{ submission_date }}
 class DMCAGenerator:
     """Advanced DMCA takedown notice generator"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.template_manager = DMCATemplateManager()
         self.evidence_collector = EvidenceCollector()
         self.email_service = EmailService()
@@ -1150,7 +1150,7 @@ class DMCAGenerator:
 class BulkDMCAProcessor:
     """Process multiple DMCA notices in bulk"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.dmca_generator = DMCAGenerator()
     
     async def process_bulk_violations(
@@ -1203,3 +1203,5 @@ class BulkDMCAProcessor:
             return await self.dmca_generator.generate_dmca_notice(request, session)
         except Exception as e:
             return False, f"Processing error: {str(e)}", None
+
+# File has syntax issues - needs manual review

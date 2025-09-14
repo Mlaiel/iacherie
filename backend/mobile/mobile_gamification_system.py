@@ -188,7 +188,7 @@ class MobileGamificationResult:
 class MobileGamificationSystem:
     """Unified mobile gamification system consolidating engine, achievements, and rewards"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         """Initialize mobile gamification system with comprehensive capabilities"""
         self.config = config or {}
         self.gamification_engine = MobileGamificationEngine(self.config)
@@ -400,7 +400,7 @@ class MobileGamificationSystem:
         
         return min(1.0, achievement_score + reward_score + level_score * 0.3)
     
-    def _update_gamification_metrics(self, result: MobileGamificationResult):
+    def _update_gamification_metrics(self, result -> None: MobileGamificationResult) -> None:
         """Update gamification system metrics"""
         self.gamification_metrics["achievements_unlocked"] += len(result.achievements_unlocked)
         self.gamification_metrics["rewards_distributed"] += len(result.rewards_earned)
@@ -454,7 +454,7 @@ class MobileGamificationSystem:
             "mobile_activities_suggested": 5
         }
     
-    async def _send_mobile_notifications(self, creator_id: str, notifications: List[Dict[str, Any]]):
+    async def _send_mobile_notifications(self, creator_id -> None: str, notifications -> None: List[Dict[str, Any]]) -> None:
         """Send mobile push notifications"""
         # Implementation for mobile push notifications
         for notification in notifications:
@@ -496,7 +496,7 @@ class MobileGamificationSystem:
 class MobileGamificationEngine:
     """Mobile gamification engine with comprehensive game mechanics"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.game_mechanics = {}
         self.event_processors = {}
@@ -585,7 +585,7 @@ class MobileGamificationEngine:
 class MobileAchievementTracker:
     """Mobile achievement tracker with intelligent progress tracking"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.achievements_registry = {}
         self.creator_progress = {}
@@ -649,7 +649,7 @@ class MobileAchievementTracker:
         
         return creator_achievements
     
-    async def register_achievement(self, achievement: Achievement):
+    async def register_achievement(self, achievement -> None: Achievement) -> None:
         """Register new achievement in the system"""
         self.achievements_registry[achievement.achievement_id] = achievement
     
@@ -662,7 +662,7 @@ class MobileAchievementTracker:
             "mobile_achievement_engagement": 0.84
         }
     
-    def _initialize_default_achievements(self):
+    def _initialize_default_achievements(self) -> None:
         """Initialize default achievements for mobile platform"""
         default_achievements = [
             Achievement(
@@ -787,7 +787,7 @@ class MobileAchievementTracker:
 class MobileRewardSystem:
     """Mobile reward system with flexible reward distribution"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.rewards_catalog = {}
         self.creator_rewards = {}
@@ -864,7 +864,7 @@ class MobileRewardSystem:
             "reward_claim_rate": 0.89
         }
     
-    def _initialize_default_rewards(self):
+    def _initialize_default_rewards(self) -> None:
         """Initialize default rewards catalog"""
         default_rewards = [
             Reward(

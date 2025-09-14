@@ -170,7 +170,7 @@ class LegalDispute:
 class LegalFrameworkEngine:
     """Legal framework management and compliance system"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.config = config or {}
         self.legal_templates: Dict[str, LegalTemplate] = {}
         self.legal_contracts: Dict[str, LegalContract] = {}
@@ -189,7 +189,7 @@ class LegalFrameworkEngine:
         
         logger.info("⚖️ Legal Framework Engine initialized")
     
-    def _initialize_default_templates(self):
+    def _initialize_default_templates(self) -> None:
         """Initialize default legal document templates"""
         try:
             templates = [
@@ -319,7 +319,7 @@ Last updated: {last_updated}
         except Exception as e:
             logger.error(f"Legal templates initialization error: {e}")
     
-    def _initialize_compliance_rules(self):
+    def _initialize_compliance_rules(self) -> None:
         """Initialize compliance rules for different jurisdictions"""
         try:
             rules = [

@@ -1,4 +1,6 @@
 """Ainflue Core Infrastructure - Enterprise Infrastructure Management
+import asyncio
+
 ================================================================
 
 Core infrastructure management providing database, caching, message queuing,
@@ -32,23 +34,25 @@ try:
     from .database_core import DatabaseCore
 except ImportError:
     class DatabaseCore:
-        def __init__(self, level="enterprise"):
+    """DatabaseCore: class implementation"""
+        def __init__(self, level="enterprise") -> None:
             self.level = level
-        async def initialize(self): return True
-        async def start(self): return True
-        async def stop(self): return True
-        async def health_check(self): return True
+        async def initialize(self) -> None: return True
+        async def start(self) -> None: return True
+        async def stop(self) -> None: return True
+        async def health_check(self) -> None: return True
 
 try:
     from .cache_core import CacheCore
 except ImportError:
     class CacheCore:
-        def __init__(self, level="enterprise"):
+    """CacheCore: class implementation"""
+        def __init__(self, level="enterprise") -> None:
             self.level = level
-        async def initialize(self): return True
-        async def start(self): return True
-        async def stop(self): return True
-        async def health_check(self): return True
+        async def initialize(self) -> None: return True
+        async def start(self) -> None: return True
+        async def stop(self) -> None: return True
+        async def health_check(self) -> None: return True
 
 try:
     from .message_queue_core import MessageQueueCore

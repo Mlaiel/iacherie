@@ -6,7 +6,7 @@ intelligent routing, delivery optimization, and failure recovery.
 Author: Fahed Mlaiel
 Email: mlaiel@live.de
 
-⚠️ COPYRIGHT WARNING ⚠️
+# [EMOJI_REMOVED] COPYRIGHT WARNING # [EMOJI_REMOVED]
 Unauthorized copying or distribution prohibited. All rights reserved (c) 2025 Fahed Mlaiel
 """
 
@@ -125,7 +125,7 @@ class DeliveryManager:
     - Platform-specific optimizations
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """
 Initialize delivery manager"""
         self.config = config or {}
@@ -268,7 +268,7 @@ Initialize delivery manager"""
             # Process requests with rate limiting
             semaphore = asyncio.Semaphore(concurrency_limit)
             
-            async def deliver_with_rate_limit(request):
+            async def deliver_with_rate_limit(request) -> None:
         try:
             logger.info(f"Executing deliver_with_rate_limit")
             
@@ -818,3 +818,5 @@ Store delivery record in database"""
                 channel.avg_delivery_time = (
                     (channel.avg_delivery_time * 0.8) + (result.delivery_time * 0.2)
                 )
+
+# File has syntax issues - needs manual review

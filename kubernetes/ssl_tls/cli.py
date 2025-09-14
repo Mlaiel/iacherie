@@ -45,7 +45,7 @@ logger = logging.getLogger(__name__)
 class SSLCLIManager:
     """Industrial-grade SSL/TLS Command Line Interface Manager"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.cert_manager = None
         self.letsencrypt_manager = None
         self.tls_config_manager = None
@@ -56,7 +56,7 @@ class SSLCLIManager:
         self.test_server = None
         self._setup_components()
     
-    def _setup_components(self):
+    def _setup_components(self) -> None:
         """Initialize all SSL/TLS components"""
         try:
             self.cert_manager = create_certificate_manager()
@@ -74,7 +74,7 @@ class SSLCLIManager:
 @config.command()
 @click.argument('config_file')
 @click.pass_context
-def create(ctx, config_file):
+def create(ctx, config_file) -> None:
     """Create TLS configuration file"""
     ssl_manager = ctx.obj['ssl_manager']
     config_path = Path(config_file)
@@ -133,7 +133,7 @@ def setup_logging(level: str = "INFO", log_file: Optional[str] = None) -> None:
 @click.option('--log-level', default='INFO', help='Logging level')
 @click.option('--log-file', default=None, help='Log file path')
 @click.pass_context
-def cli(ctx, log_level, log_file):
+def cli(ctx, log_level, log_file) -> None:
     """IA Influencer Agent SSL/TLS Management CLI"""
     ctx.ensure_object(dict)
     setup_logging(log_level, log_file)
@@ -141,7 +141,7 @@ def cli(ctx, log_level, log_file):
 
 
 @cli.group()
-def certificate():
+def certificate() -> None:
     """Certificate management commands"""
     console.print("🔐 [bold blue]Certificate Management Commands[/bold blue]")
     console.print("Available subcommands:")
@@ -154,7 +154,7 @@ def certificate():
 
 
 @cli.group()
-def scan():
+def scan() -> None:
     """SSL/TLS security scanning commands"""
     console.print("🔍 [bold blue]SSL/TLS Security Scanning[/bold blue]")
     console.print("Available subcommands:")
@@ -167,7 +167,7 @@ def scan():
 
 
 @cli.group()
-def config():
+def config() -> None:
     """TLS configuration management commands"""
     console.print("⚙️  [bold blue]TLS Configuration Management[/bold blue]")
     console.print("Available subcommands:")
@@ -181,7 +181,7 @@ def config():
 
 
 @cli.group()
-def monitor():
+def monitor() -> None:
     """Certificate monitoring commands"""
     console.print("📊 [bold blue]Certificate Monitoring[/bold blue]")
     console.print("Available subcommands:")
@@ -195,7 +195,7 @@ def monitor():
 
 
 @cli.group()
-def convert():
+def convert() -> None:
     """Certificate conversion commands"""
     console.print("🔄 [bold blue]Certificate Conversion[/bold blue]")
     console.print("Available subcommands:")
@@ -209,7 +209,7 @@ def convert():
 
 
 @cli.group()
-def test():
+def test() -> None:
         try:
             logger.info(f"Executing test")
             
@@ -231,7 +231,7 @@ def test():
 @click.option('--email', required=True, help='Email for registration')
 @click.option('--staging', is_flag=True, help='Use staging environment')
 @click.pass_context
-def issue(ctx, domain, provider, challenge, email, staging):
+def issue(ctx, domain, provider, challenge, email, staging) -> None:
     """Issue a new SSL certificate"""
     ssl_manager = ctx.obj['ssl_manager']
     
@@ -278,7 +278,7 @@ def issue(ctx, domain, provider, challenge, email, staging):
 @click.argument('domain')
 @click.option('--days', default=30, help='Days until expiry to renew')
 @click.pass_context
-def renew(ctx, domain, days):
+def renew(ctx, domain, days) -> None:
     """Renew SSL certificate"""
     ssl_manager = ctx.obj['ssl_manager']
     
@@ -306,7 +306,7 @@ def renew(ctx, domain, days):
 @certificate.command()
 @click.argument('domain')
 @click.pass_context
-def revoke(ctx, domain):
+def revoke(ctx, domain) -> None:
     """Revoke SSL certificate"""
     ssl_manager = ctx.obj['ssl_manager']
     
@@ -329,7 +329,7 @@ def revoke(ctx, domain):
 
 @certificate.command()
 @click.pass_context
-def list_certs(ctx):
+def list_certs(ctx) -> None:
     """List all managed certificates"""
     ssl_manager = ctx.obj['ssl_manager']
     
@@ -376,7 +376,7 @@ def list_certs(ctx):
 @click.option('--organization', default='IA Influencer Agent', help='Organization')
 @click.option('--unit', default='IT Department', help='Organizational unit')
 @click.pass_context
-def self_signed(ctx, domain, key_size, validity_days, country, state, city, organization, unit):
+def self_signed(ctx, domain, key_size, validity_days, country, state, city, organization, unit) -> None:
     """Create self-signed certificate"""
     ssl_manager = ctx.obj['ssl_manager']
     
@@ -424,7 +424,7 @@ def self_signed(ctx, domain, key_size, validity_days, country, state, city, orga
 @click.option('--port', default=443, help='Port to scan')
 @click.option('--timeout', default=10, help='Connection timeout')
 @click.pass_context
-def host(ctx, host, port, timeout):
+def host(ctx, host, port, timeout) -> None:
     """Scan SSL/TLS configuration of a host"""
     ssl_manager = ctx.obj['ssl_manager']
     
@@ -493,7 +493,7 @@ def host(ctx, host, port, timeout):
 @scan.command()
 @click.argument('config_file')
 @click.pass_context
-def bulk(ctx, config_file):
+def bulk(ctx, config_file) -> None:
     """Scan multiple hosts from configuration file"""
     ssl_manager = ctx.obj['ssl_manager']
     config_path = Path(config_file)

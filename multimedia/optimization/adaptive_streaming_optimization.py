@@ -38,7 +38,7 @@ class StreamingProfile:
 class AdaptiveStreamingOptimizer:
     """Professional adaptive streaming optimization system"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize adaptive streaming optimizer"""
         self.config = config or {}
         self.streaming_profiles = self._initialize_streaming_profiles()

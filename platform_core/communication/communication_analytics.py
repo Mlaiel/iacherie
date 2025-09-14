@@ -1,3 +1,8 @@
+"""
+Communication Analytics module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Communication Analytics Engine - Enterprise Analytics Component
@@ -114,7 +119,7 @@ class CommunicationAnalyticsEngine:
     and real-time insights for optimization and troubleshooting.
     """
     
-    def __init__(self, retention_hours: int = 168):  # 7 days default
+    def __init__(self, retention_hours -> None: int = 168) -> None:  # 7 days default
         self.metrics: Dict[str, List[CommunicationMetric]] = defaultdict(list)
         self.message_flows: List[MessageFlowEvent] = []
         self.patterns: Dict[str, CommunicationPattern] = {}
@@ -718,7 +723,7 @@ def create_communication_analytics_engine(retention_hours: int = 168) -> Communi
 
 
 # Example usage
-async def main():
+async def main() -> None:
     """Example usage of Communication Analytics Engine"""
     analytics = create_communication_analytics_engine()
     

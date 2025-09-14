@@ -1,3 +1,8 @@
+"""
+Affiliate Demo module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Affiliate Service Demo - Demonstration of Module d'Affiliation functionality
@@ -31,7 +36,7 @@ from backend.services.affiliate import (
 )
 
 
-async def demonstrate_affiliate_service():
+async def demonstrate_affiliate_service() -> None:
     """Démonstration complète du service d'affiliation"""
     
     print("=" * 60)
@@ -227,7 +232,7 @@ async def demonstrate_affiliate_service():
     return True
 
 
-async def main():
+async def main() -> None:
     """Point d'entrée principal"""
     try:
         success = await demonstrate_affiliate_service()

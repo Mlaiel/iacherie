@@ -173,7 +173,7 @@ class SEOPerformanceEngine:
     - Alertes prédictives automatisées
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialise le moteur de performance SEO"""
         self.config = config or {}
         self.session: Optional[aiohttp.ClientSession] = None
@@ -889,7 +889,7 @@ class IntelligentLinkBuildingEngine:
     - Automatisation des outreach
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialise le moteur de link building"""
         self.config = config or {}
         self.session: Optional[aiohttp.ClientSession] = None
@@ -1714,7 +1714,7 @@ __all__ = [
 
 if __name__ == "__main__":
     # Test des moteurs
-    async def test_performance_and_link_engines():
+    async def test_performance_and_link_engines() -> None:
         # Test moteur de performance
         await seo_performance_engine.initialize()
         

@@ -154,7 +154,7 @@ class DeploymentManager:
     - Cross-environment deployment coordination
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         # Deployment state
         self.active_deployments: Dict[str, Deployment] = {}
         self.deployment_history: List[Deployment] = []
@@ -184,7 +184,7 @@ class DeploymentManager:
         
         logger.info("DeploymentManager initialized")
 
-    def _initialize_deployment_manager(self):
+    def _initialize_deployment_manager(self) -> None:
         """Initialize deployment manager"""
         
         # Start background tasks
@@ -200,7 +200,7 @@ class DeploymentManager:
         
         logger.info("Deployment manager initialization complete")
 
-    def _setup_default_configs(self):
+    def _setup_default_configs(self) -> None:
         """Setup default deployment configurations"""
         
         self.deployment_configs = {
@@ -250,7 +250,7 @@ class DeploymentManager:
             )
         }
 
-    def _setup_health_check_configs(self):
+    def _setup_health_check_configs(self) -> None:
         """Setup health check configurations"""
         
         self.health_check_configs = {
@@ -274,7 +274,7 @@ class DeploymentManager:
             }
         }
 
-    def _setup_approval_policies(self):
+    def _setup_approval_policies(self) -> None:
         """Setup deployment approval policies"""
         
         self.approval_policies = {
@@ -408,7 +408,7 @@ class DeploymentManager:
             logger.error(f"Deployment approval failed: {str(e)}")
             return False
 
-    async def _execute_deployment(self, deployment: Deployment):
+    async def _execute_deployment(self, deployment -> None: Deployment) -> None:
         """Execute deployment based on strategy"""
         
         try:
@@ -850,7 +850,7 @@ class DeploymentManager:
             logger.error(f"Success criteria evaluation failed: {str(e)}")
             return False
 
-    async def _switch_traffic(self, deployment: Deployment, percentage: float):
+    async def _switch_traffic(self, deployment -> None: Deployment, percentage -> None: float) -> None:
         """Switch traffic to new deployment version"""
         
         try:
@@ -877,7 +877,7 @@ class DeploymentManager:
             logger.error(f"Traffic switching failed: {str(e)}")
             raise
 
-    async def _execute_rollback(self, deployment: Deployment, reason: str):
+    async def _execute_rollback(self, deployment -> None: Deployment, reason -> None: str) -> None:
         """Execute deployment rollback"""
         
         try:
@@ -1005,7 +1005,7 @@ class DeploymentManager:
             return None
 
     # Background monitoring tasks
-    async def _deployment_monitoring_loop(self):
+    async def _deployment_monitoring_loop(self) -> None:
         """Background deployment monitoring loop"""
         while True:
             try:
@@ -1023,7 +1023,7 @@ class DeploymentManager:
             except Exception as e:
                 logger.error(f"Deployment monitoring loop error: {str(e)}")
 
-    async def _health_check_loop(self):
+    async def _health_check_loop(self) -> None:
         """Background health check loop"""
         while True:
             try:
@@ -1037,7 +1037,7 @@ class DeploymentManager:
             except Exception as e:
                 logger.error(f"Health check loop error: {str(e)}")
 
-    async def _metrics_collection_loop(self):
+    async def _metrics_collection_loop(self) -> None:
         """Background metrics collection loop"""
         while True:
             try:
@@ -1051,7 +1051,7 @@ class DeploymentManager:
             except Exception as e:
                 logger.error(f"Metrics collection loop error: {str(e)}")
 
-    async def _traffic_monitoring_loop(self):
+    async def _traffic_monitoring_loop(self) -> None:
         """Background traffic monitoring loop"""
         while True:
             try:

@@ -1,4 +1,6 @@
 """
+import asyncio
+
 ⚡ MULTIMEDIA OPTIMIZATION MODULE - ENTERPRISE ARCHITECTURE
 ==========================================================
 
@@ -175,7 +177,7 @@ ENTERPRISE_CONFIG = {
     'logging_level': 'INFO'
 }
 
-def get_module_info():
+def get_module_info() -> None:
     """Get comprehensive module information"""
     return {
         'name': 'Multimedia Optimization',
@@ -221,7 +223,7 @@ async def quick_seo_optimize(file_path: str, keywords: list = None) -> dict:
     return await optimizer.optimize_for_seo(file_path, keywords or [])
 
 # Performance monitoring utilities
-def start_performance_monitoring():
+def start_performance_monitoring() -> None:
     """Start global performance monitoring"""
     profiler = PerformanceProfiler()
     return profiler.start_monitoring()
@@ -232,7 +234,7 @@ def get_performance_metrics() -> dict:
     return profiler.get_current_metrics()
 
 # Module initialization
-def initialize_optimization_module():
+def initialize_optimization_module() -> None:
     """Initialize the optimization module"""
     try:
         # Initialize GPU acceleration if available

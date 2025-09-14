@@ -60,7 +60,7 @@ class AutomationOrchestrator:
     the complete creator ecosystem including AI processing, content protection,
     and monetization services.
     """
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.logger = logging.getLogger(__name__)
         

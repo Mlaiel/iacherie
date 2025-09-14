@@ -1,3 +1,8 @@
+"""
+Index module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """IA-Influencer-Agent CI/CD Deployment Module - Main Entry Point
 
@@ -115,7 +120,7 @@ class IAInfluencerCICDOrchestrator:
     - Multi-platform distribution automation
     """
     
-    def __init__(self, config_path: Optional[str] = None):
+    def __init__(self, config_path -> None: Optional[str] = None) -> None:
         """
 Initialize CI/CD orchestrator with creator platform configuration."""
         self.config_path = config_path or self._get_default_config_path()
@@ -528,7 +533,7 @@ Initialize CI/CD orchestrator with creator platform configuration."""
             }
 
 
-def main():
+def main() -> None:
     """Main entry point for IA-Influencer-Agent CI/CD operations."""
     import argparse
     
@@ -560,7 +565,7 @@ def main():
     # Initialize orchestrator
     orchestrator = IAInfluencerCICDOrchestrator(args.config)
     
-    async def run_command():
+    async def run_command() -> None:
         try:
             logger.info(f"Executing run_command")
             

@@ -57,11 +57,11 @@ class GamificationOrchestrator:
     achievements, and social features across the platform.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.services = {}
         self._initialize_services()
     
-    def _initialize_services(self):
+    def _initialize_services(self) -> None:
         """Initialize all gamification microservices"""
         logger.info("Initializing gamification services orchestrator")
         
@@ -195,7 +195,7 @@ async def health_check() -> Dict[str, str]:
 
 if __name__ == "__main__":
     # Example usage
-    async def main():
+    async def main() -> None:
         status = await gamification_orchestrator.get_creator_engagement_status("creator_123")
         print(f"Engagement Status: {status}")
     

@@ -43,7 +43,7 @@ class CopyrightProtectionAlerts:
     Manages copyright protection notifications and infringement alerts
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize copyright protection alerts"""
         self.alert_history: List[CopyrightAlert] = []
         logger.info("Copyright protection alerts system initialized")
@@ -126,7 +126,7 @@ class CopyrightProtectionAlerts:
             logger.error(f"Error sending infringement notification: {str(e)}")
             return False
     
-    async def _send_protection_notification(self, alert: CopyrightAlert):
+    async def _send_protection_notification(self, alert -> None: CopyrightAlert) -> None:
         """Send copyright protection notification via multiple channels"""
         notification_data = {
             "title": "🛡️ Copyright Protection Activated",
@@ -142,7 +142,7 @@ class CopyrightProtectionAlerts:
         # await self.notification_service.send_notification(notification_data)
         logger.info(f"Copyright protection notification prepared: {alert.alert_id}")
     
-    async def _send_infringement_notification(self, alert: CopyrightAlert):
+    async def _send_infringement_notification(self, alert -> None: CopyrightAlert) -> None:
         """Send infringement notification via urgent channels"""
         notification_data = {
             "title": "🚨 Copyright Infringement Detected",

@@ -120,7 +120,7 @@ class AIContentAnalyzer:
     - Real-time performance optimization
     """
 
-    def __init__(self, redis_url: str = "redis://localhost:6379"):
+    def __init__(self, redis_url -> None: str = "redis -> None://localhost -> None:6379") -> None:
         self.logger = logging.getLogger(__name__)
         self.redis_url = redis_url
         self.redis_client: Optional[aioredis.Redis] = None
@@ -153,7 +153,7 @@ class AIContentAnalyzer:
         
         self.logger.info("AI Content Analyzer initialized with multi-provider support")
 
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize AI content analyzer"""
         try:
             self.redis_client = aioredis.from_url(
@@ -175,7 +175,7 @@ class AIContentAnalyzer:
             self.logger.error(f"Failed to initialize AI Content Analyzer: {e}")
             raise
 
-    def _initialize_ai_providers(self):
+    def _initialize_ai_providers(self) -> None:
         """Initialize AI provider configurations"""
         
         # OpenAI configuration
@@ -200,7 +200,7 @@ class AIContentAnalyzer:
             "timeout": 25
         }
 
-    def _initialize_prompt_templates(self):
+    def _initialize_prompt_templates(self) -> None:
         """Initialize advanced prompt templates for different analysis types"""
         
         # Sentiment Analysis Prompt
@@ -292,7 +292,7 @@ Analyze:
 Provide JSON with scores (0-1), monetization_score, revenue_strategies, and market_insights."""
         }
 
-    async def _initialize_provider_connections(self):
+    async def _initialize_provider_connections(self) -> None:
         """Initialize connections to AI providers"""
         
         try:
@@ -857,7 +857,7 @@ Provide JSON with scores (0-1), monetization_score, revenue_strategies, and mark
         
         return None
 
-    async def _cache_analysis_result(self, cache_key: str, report: ContentAnalysisReport):
+    async def _cache_analysis_result(self, cache_key -> None: str, report -> None: ContentAnalysisReport) -> None:
         """Cache analysis result"""
         
         try:
@@ -935,7 +935,7 @@ Provide JSON with scores (0-1), monetization_score, revenue_strategies, and mark
             created_at=datetime.fromisoformat(data["created_at"])
         )
 
-    async def _update_performance_metrics(self, processing_time: float, provider: AIProvider):
+    async def _update_performance_metrics(self, processing_time -> None: float, provider -> None: AIProvider) -> None:
         """Update performance metrics"""
         
         self.performance_metrics["total_analyses"] += 1
@@ -963,7 +963,7 @@ Provide JSON with scores (0-1), monetization_score, revenue_strategies, and mark
             current_perf * 0.8 + time_score * 0.2
         )
 
-    async def _load_prompt_configurations(self):
+    async def _load_prompt_configurations(self) -> None:
         """Load custom prompt configurations from cache"""
         
         try:
@@ -989,7 +989,7 @@ Provide JSON with scores (0-1), monetization_score, revenue_strategies, and mark
             "last_updated": datetime.utcnow().isoformat()
         }
 
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Shutdown AI content analyzer"""
         
         if self.redis_client:
@@ -999,7 +999,7 @@ Provide JSON with scores (0-1), monetization_score, revenue_strategies, and mark
 
 
 # Example usage
-async def main():
+async def main() -> None:
     """Example usage of AI Content Analyzer"""
     
     analyzer = AIContentAnalyzer()

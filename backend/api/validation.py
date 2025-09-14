@@ -1,4 +1,7 @@
 """Validation - Request/Response Validation
+import asyncio
+import logging
+
 Consolidated validation functionality for API requests and responses.
 
 This module consolidates validation from:
@@ -26,8 +29,9 @@ try:
 except ImportError:
     # Mock magic module if not available
     class magic:
+    """magic: class implementation"""
         @staticmethod
-        def from_buffer(content, mime=True):
+        def from_buffer(content, mime=True) -> None:
             return "application/octet-stream"
 from pathlib import Path
 
@@ -71,6 +75,7 @@ class BaseValidatedModel(BaseModel):
     """Base model with common validation rules"""
     
     class Config:
+    """Config: class implementation"""
         validate_assignment = True
         use_enum_values = True
         populate_by_name = True
@@ -83,7 +88,7 @@ class PaginationParams(BaseValidatedModel):
     offset: Optional[int] = Field(default=None, ge=0, description="Offset for pagination")
     
     @model_validator(mode='after')
-    def validate_pagination(self):
+    def validate_pagination(self) -> None:
         if self.offset is None:
             self.offset = (self.page - 1) * self.limit
         return self
@@ -107,14 +112,14 @@ class UserValidation(BaseValidatedModel):
     
     @field_validator('username')
     @classmethod
-    def validate_username(cls, v):
+    def validate_username(cls, v) -> None:
         if v.lower() in ['admin', 'root', 'system', 'api', 'test']:
             raise ValueError('Username not allowed')
         return v.lower()
     
     @field_validator('first_name', 'last_name')
     @classmethod
-    def validate_names(cls, v):
+    def validate_names(cls, v) -> None:
         # Remove any HTML tags and sanitize
         cleaned = bleach.clean(v, tags=[], strip=True)
         if len(cleaned.strip()) == 0:
@@ -127,7 +132,7 @@ class PasswordValidation(BaseValidatedModel):
     confirm_password: str = Field(..., min_length=8, max_length=128)
     
     @model_validator(mode="after")
-    def validate_passwords_match(self):
+    def validate_passwords_match(self) -> None:
         password = self.password
         confirm_password = self.confirm_password
         
@@ -165,7 +170,7 @@ class ContentMetadataValidation(BaseValidatedModel):
     
     @field_validator('title', 'description')
     @classmethod
-    def sanitize_text_fields(cls, v):
+    def sanitize_text_fields(cls, v) -> None:
         if v is None:
             return v
         # Remove HTML tags and sanitize
@@ -173,7 +178,7 @@ class ContentMetadataValidation(BaseValidatedModel):
     
     @field_validator('tags')
     @classmethod
-    def validate_tags(cls, v):
+    def validate_tags(cls, v) -> None:
         if not v:
             return v
         
@@ -195,7 +200,7 @@ class FileUploadValidation(BaseValidatedModel):
     
     @field_validator('filename')
     @classmethod
-    def validate_filename(cls, v):
+    def validate_filename(cls, v) -> None:
         # Remove path traversal attempts
         cleaned = Path(v).name
         
@@ -207,7 +212,7 @@ class FileUploadValidation(BaseValidatedModel):
     
     @field_validator('content_type')
     @classmethod
-    def validate_content_type(cls, v):
+    def validate_content_type(cls, v) -> None:
         allowed_types = {
             'image/jpeg', 'image/png', 'image/gif', 'image/webp',
             'video/mp4', 'video/mpeg', 'video/quicktime', 'video/webm',
@@ -233,7 +238,7 @@ class MonetizationValidation(BaseValidatedModel):
     
     @field_validator('currency')
     @classmethod
-    def validate_currency(cls, v):
+    def validate_currency(cls, v) -> None:
         allowed_currencies = {'USD', 'EUR', 'GBP', 'CAD', 'AUD', 'JPY'}
         if v not in allowed_currencies:
             raise ValueError(f'Currency {v} not supported')
@@ -248,12 +253,12 @@ class CollaborationValidation(BaseValidatedModel):
     
     @field_validator('message')
     @classmethod
-    def sanitize_message(cls, v):
+    def sanitize_message(cls, v) -> None:
         return bleach.clean(v, tags=[], strip=True)
     
     @field_validator('revenue_split')
     @classmethod
-    def validate_revenue_split(cls, v):
+    def validate_revenue_split(cls, v) -> None:
         if v is None:
             return v
         
@@ -274,7 +279,7 @@ class CollaborationValidation(BaseValidatedModel):
 class FileValidationService:
     """Service for comprehensive file validation"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.max_file_size = 500_000_000  # 500MB
         self.allowed_mime_types = {
             'image/jpeg', 'image/png', 'image/gif', 'image/webp',
@@ -396,19 +401,19 @@ class InputSanitizer:
 # VALIDATION DECORATORS
 # ========================================
 
-def validate_request_size(max_size: int = 10_000_000):
+def validate_request_size(max_size -> None: int = 10_000_000) -> None:
     """Decorator to validate request size"""
     def decorator(func: Callable) -> Callable:
-        async def wrapper(*args, **kwargs):
+        async def wrapper(*args, **kwargs) -> None:
             # Implementation would check request size
             return await func(*args, **kwargs)
         return wrapper
     return decorator
 
-def validate_rate_limit(max_requests: int = 100, window_seconds: int = 60):
+def validate_rate_limit(max_requests -> None: int = 100, window_seconds -> None: int = 60) -> None:
     """Decorator to validate rate limits"""
     def decorator(func: Callable) -> Callable:
-        async def wrapper(*args, **kwargs):
+        async def wrapper(*args, **kwargs) -> None:
             # Implementation would check rate limits
             return await func(*args, **kwargs)
         return wrapper
@@ -421,7 +426,7 @@ def validate_rate_limit(max_requests: int = 100, window_seconds: int = 60):
 class ValidationService:
     """Main validation service consolidating all validation functionality"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.file_validator = FileValidationService()
         self.sanitizer = InputSanitizer()
     
@@ -496,12 +501,12 @@ class RuleSeverity(str, Enum):
 class BusinessRuleEngine:
     """Advanced business rules validation engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.rules = {}
         self.rule_cache = {}
         self.validation_history = defaultdict(list)
         
-    def register_rule(self, rule_id: str, rule_config: Dict[str, Any]):
+    def register_rule(self, rule_id -> None: str, rule_config -> None: Dict[str, Any]) -> None:
         """Register a new business rule"""
         self.rules[rule_id] = rule_config
         
@@ -812,12 +817,12 @@ class BusinessRuleEngine:
 class EnhancedValidationService(ValidationService):
     """Enhanced validation service with business rules"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
         self.business_rule_engine = BusinessRuleEngine()
         self._register_default_rules()
     
-    def _register_default_rules(self):
+    def _register_default_rules(self) -> None:
         """Register default business rules"""
         self.business_rule_engine.register_rule("revenue_limits", {
             "type": BusinessRuleType.REVENUE_LIMIT,
@@ -872,7 +877,7 @@ class EnhancedValidationService(ValidationService):
 class ComplianceValidationEngine:
     """Enterprise compliance validation for GDPR, CCPA, SOX, and other regulations"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.compliance_frameworks = {
             "GDPR": GDPRComplianceValidator(),
             "CCPA": CCPAComplianceValidator(),
@@ -1113,7 +1118,7 @@ class PCIDSSComplianceValidator:
 class RealTimeValidationEngine:
     """Real-time validation with instant feedback and progressive validation"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.validation_cache = {}
         self.progressive_validators = {
             "email": self._validate_email_progressive,

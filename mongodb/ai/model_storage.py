@@ -51,7 +51,7 @@ class ModelVersion:
 class ModelStorage:
     """Advanced AI model storage with versioning and metadata management."""
     
-    def __init__(self, client: MongoClient, database_name: str):
+    def __init__(self, client -> None: MongoClient, database_name -> None: str) -> None:
         """Initialize model storage.
         
         Args:

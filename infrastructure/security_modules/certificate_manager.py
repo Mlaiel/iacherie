@@ -1,4 +1,6 @@
 """Certificate Manager - SSL/TLS Certificate Automation"""
+import asyncio
+
 import logging
 from typing import Dict, List, Optional, Any
 from datetime import datetime, timedelta
@@ -6,7 +8,8 @@ from datetime import datetime, timedelta
 logger = logging.getLogger(__name__)
 
 class CertificateManager:
-    def __init__(self):
+    """CertificateManager: class implementation"""
+    def __init__(self) -> None:
         self.certificates = {}
         self.providers = {"letsencrypt": True, "digicert": True, "cloudflare": True}
         logger.info("Certificate manager initialized")

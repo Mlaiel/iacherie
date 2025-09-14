@@ -40,17 +40,17 @@ class Notification:
 class NotificationService:
     """Enterprise notification service"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.notifications: List[Notification] = []
         self.subscribers: Dict[str, List[callable]] = {}
     
-    def subscribe(self, event_type: str, callback: callable):
+    def subscribe(self, event_type -> None: str, callback -> None: callable) -> None:
         """Subscribe to notification events"""
         if event_type not in self.subscribers:
             self.subscribers[event_type] = []
         self.subscribers[event_type].append(callback)
     
-    async def send_notification(self, notification: Notification):
+    async def send_notification(self, notification -> None: Notification) -> None:
         """Send notification to subscribers"""
         self.notifications.append(notification)
         

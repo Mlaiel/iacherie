@@ -87,7 +87,7 @@ class EngagementOptimizationEngine:
     personalized recommendations, and automated A/B testing for gamification mechanics.
     """
     
-    def __init__(self, config: Optional[Dict] = None):
+    def __init__(self, config -> None: Optional[Dict] = None) -> None:
         """Initialize the engagement optimization engine."""
         self.config = config or {}
         self.active_sessions: Dict[str, EngagementData] = {}
@@ -98,7 +98,7 @@ class EngagementOptimizationEngine:
         
         logger.info("EngagementOptimizationEngine initialized")
     
-    async def start_monitoring(self):
+    async def start_monitoring(self) -> None:
         """Start the engagement optimization monitoring system."""
         try:
             logger.info("Starting engagement optimization monitoring...")
@@ -272,7 +272,7 @@ class EngagementOptimizationEngine:
     
     # Private helper methods
     
-    async def _initialize_models(self):
+    async def _initialize_models(self) -> None:
         """Initialize ML models for engagement optimization."""
         # Placeholder for ML model initialization
         self.optimization_models = {
@@ -346,7 +346,7 @@ class EngagementOptimizationEngine:
         
         return min(score * 100, 100)  # Convert to 0-100 scale
     
-    async def _real_time_optimization_loop(self):
+    async def _real_time_optimization_loop(self) -> None:
         """Background loop for real-time engagement optimization."""
         while True:
             try:
@@ -357,7 +357,7 @@ class EngagementOptimizationEngine:
                 logger.error(f"Error in real-time optimization loop: {e}")
                 await asyncio.sleep(5)
     
-    async def _pattern_analysis_loop(self):
+    async def _pattern_analysis_loop(self) -> None:
         """Background loop for pattern analysis."""
         while True:
             try:
@@ -368,7 +368,7 @@ class EngagementOptimizationEngine:
                 logger.error(f"Error in pattern analysis loop: {e}")
                 await asyncio.sleep(60)
     
-    async def _a_b_test_management_loop(self):
+    async def _a_b_test_management_loop(self) -> None:
         """Background loop for A/B test management."""
         while True:
             try:
@@ -379,7 +379,7 @@ class EngagementOptimizationEngine:
                 logger.error(f"Error in A/B test management loop: {e}")
                 await asyncio.sleep(300)
     
-    async def _process_optimization_queue(self):
+    async def _process_optimization_queue(self) -> None:
         """Process the optimization queue."""
         try:
             while True:
@@ -414,7 +414,7 @@ class EngagementOptimizationEngine:
             logger.error(f"Critical error in optimization queue processing: {e}")
             raise
     
-    async def _analyze_global_patterns(self):
+    async def _analyze_global_patterns(self) -> None:
         """Analyze global engagement patterns."""
         try:
             # Collect global engagement data
@@ -450,7 +450,7 @@ class EngagementOptimizationEngine:
             logger.error(f"Error in global pattern analysis: {e}")
             raise
     
-    async def _update_a_b_test_results(self):
+    async def _update_a_b_test_results(self) -> None:
         """Update A/B test results."""
         try:
             # Get active A/B tests
@@ -583,7 +583,7 @@ class EngagementOptimizationEngine:
         else:
             return 3  # Low priority
     
-    async def _update_a_b_test_assignment(self, user_id: str, engagement_data: EngagementData):
+    async def _update_a_b_test_assignment(self, user_id -> None: str, engagement_data -> None: EngagementData) -> None:
         """Update A/B test assignments."""
         try:
             # Get user's current A/B test assignments
@@ -716,31 +716,31 @@ class EngagementOptimizationEngine:
             }
         ]
     
-    async def _apply_engagement_boost(self, task: Dict[str, Any]):
+    async def _apply_engagement_boost(self, task -> None: Dict[str, Any]) -> None:
         """Apply engagement boost optimization."""
         logger.info(f"Applying engagement boost for {task['target_id']}")
         # Implementation would apply specific engagement mechanics
     
-    async def _adjust_challenge_difficulty(self, task: Dict[str, Any]):
+    async def _adjust_challenge_difficulty(self, task -> None: Dict[str, Any]) -> None:
         """Adjust challenge difficulty based on task parameters."""
         logger.info(f"Adjusting challenge difficulty for {task['target_id']}")
         # Implementation would modify challenge parameters
     
-    async def _optimize_reward_system(self, task: Dict[str, Any]):
+    async def _optimize_reward_system(self, task -> None: Dict[str, Any]) -> None:
         """Optimize reward system parameters."""
         logger.info(f"Optimizing reward system for {task['target_id']}")
         # Implementation would adjust reward mechanisms
     
-    async def _enhance_social_proof(self, task: Dict[str, Any]):
+    async def _enhance_social_proof(self, task -> None: Dict[str, Any]) -> None:
         """Enhance social proof elements."""
         logger.info(f"Enhancing social proof for {task['target_id']}")
         # Implementation would boost social proof visibility
     
-    async def _mark_task_completed(self, task_id: str):
+    async def _mark_task_completed(self, task_id -> None: str) -> None:
         """Mark optimization task as completed."""
         logger.info(f"Task {task_id} marked as completed")
     
-    async def _mark_task_failed(self, task_id: str, error: str):
+    async def _mark_task_failed(self, task_id -> None: str, error -> None: str) -> None:
         """Mark optimization task as failed."""
         logger.error(f"Task {task_id} failed: {error}")
     
@@ -810,11 +810,11 @@ class EngagementOptimizationEngine:
             }
         ]
     
-    async def _store_global_patterns(self, trends: Dict[str, Any], insights: List[Dict[str, Any]]):
+    async def _store_global_patterns(self, trends -> None: Dict[str, Any], insights -> None: List[Dict[str, Any]]) -> None:
         """Store global patterns for future use."""
         logger.info(f"Stored {len(insights)} global insights")
     
-    async def _update_recommendation_models(self, insights: List[Dict[str, Any]]):
+    async def _update_recommendation_models(self, insights -> None: List[Dict[str, Any]]) -> None:
         """Update ML recommendation models with new insights."""
         logger.info(f"Updated recommendation models with {len(insights)} insights")
     
@@ -857,11 +857,11 @@ class EngagementOptimizationEngine:
             'variant_1': test_data['variants'][0]['engagement_score']
         }
     
-    async def _conclude_ab_test(self, test_id: str, results: Dict[str, Any]):
+    async def _conclude_ab_test(self, test_id -> None: str, results -> None: Dict[str, Any]) -> None:
         """Conclude an A/B test and implement winner."""
         logger.info(f"Concluding A/B test {test_id}")
     
-    async def _update_ab_test_progress(self, test_id: str, results: Dict[str, Any]):
+    async def _update_ab_test_progress(self, test_id -> None: str, results -> None: Dict[str, Any]) -> None:
         """Update A/B test progress tracking."""
         logger.info(f"Updated A/B test {test_id} progress")
     
@@ -875,7 +875,7 @@ class EngagementOptimizationEngine:
             }
         ]
     
-    async def _store_ab_test_insights(self, test_id: str, insights: List[Dict[str, Any]]):
+    async def _store_ab_test_insights(self, test_id -> None: str, insights -> None: List[Dict[str, Any]]) -> None:
         """Store A/B test insights."""
         logger.info(f"Stored {len(insights)} insights for test {test_id}")
     
@@ -903,15 +903,15 @@ class EngagementOptimizationEngine:
         import random
         return random.choice(['control', 'variant_a', 'variant_b'])
     
-    async def _store_ab_assignment(self, assignment: Dict[str, Any]):
+    async def _store_ab_assignment(self, assignment -> None: Dict[str, Any]) -> None:
         """Store A/B test assignment."""
         logger.info(f"Stored A/B assignment for user {assignment['user_id']}")
     
-    async def _track_ab_assignment_event(self, user_id: str, test_id: str, variant: str):
+    async def _track_ab_assignment_event(self, user_id -> None: str, test_id -> None: str, variant -> None: str) -> None:
         """Track A/B assignment event for analytics."""
         logger.info(f"Tracked A/B assignment: {user_id} -> {test_id}:{variant}")
     
-    async def _update_assignment_engagement_data(self, assignment_id: str, engagement_data: EngagementData):
+    async def _update_assignment_engagement_data(self, assignment_id -> None: str, engagement_data -> None: EngagementData) -> None:
         """Update assignment with new engagement data."""
         logger.info(f"Updated assignment {assignment_id} with new engagement data")
 

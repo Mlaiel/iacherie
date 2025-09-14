@@ -186,7 +186,7 @@ class InferenceResult:
 class ModelInstance(ABC):
     """Abstract AI model instance"""
     
-    def __init__(self, spec: ModelSpec):
+    def __init__(self, spec -> None: ModelSpec) -> None:
         self.spec = spec
         self.model = None
         self.is_loaded = False
@@ -246,7 +246,7 @@ class ModelInstance(ABC):
         # For now, return None to indicate no warm-up needed
         return None
     
-    def update_performance_stats(self, inference_time: float, success: bool = True):
+    def update_performance_stats(self, inference_time -> None: float, success -> None: bool = True) -> None:
         """Update model performance statistics"""
         with self.lock:
             self.inference_count += 1
@@ -349,7 +349,7 @@ class DummyModelInstance(ModelInstance):
 class ResourceManager:
     """Manages compute resources for inference"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.available_resources: Dict[ResourceType, int] = {
             ResourceType.CPU: psutil.cpu_count(),
             ResourceType.GPU: 0,  # Will be detected if available
@@ -369,7 +369,7 @@ class ResourceManager:
         # Try to detect GPU
         self._detect_gpu_resources()
     
-    def _detect_gpu_resources(self):
+    def _detect_gpu_resources(self) -> None:
         """Detect available GPU resources"""
         try:
             # Try to detect NVIDIA GPUs
@@ -403,7 +403,7 @@ class ResourceManager:
             
             return True
     
-    def deallocate_resources(self, requirements: Dict[ResourceType, int]):
+    def deallocate_resources(self, requirements -> None: Dict[ResourceType, int]) -> None:
         """Deallocate resources"""
         with self.resource_lock:
             for resource_type, required in requirements.items():
@@ -425,7 +425,7 @@ class ResourceManager:
 class InferenceQueue:
     """Priority queue for inference requests"""
     
-    def __init__(self, maxsize: int = 10000):
+    def __init__(self, maxsize -> None: int = 10000) -> None:
         self.queue = queue.PriorityQueue(maxsize=maxsize)
         self.request_map: Dict[str, InferenceRequest] = {}
         self.lock = threading.RLock()
@@ -503,9 +503,9 @@ class AIInferenceEngine(BaseEventHandler):
     """
     
     def __init__(self, 
-                 max_workers: int = 8,
-                 max_queue_size: int = 10000,
-                 max_models: int = 20):
+                 max_workers -> None: int = 8,
+                 max_queue_size -> None: int = 10000,
+                 max_models -> None: int = 20) -> None:
         super().__init__()
         
         self.max_workers = max_workers
@@ -535,7 +535,7 @@ class AIInferenceEngine(BaseEventHandler):
         
         logger.info(f"AI Inference Engine initialized with {max_workers} workers")
     
-    async def start_engine(self):
+    async def start_engine(self) -> None:
         """Start the inference engine"""
         self.is_running = True
         
@@ -551,7 +551,7 @@ class AIInferenceEngine(BaseEventHandler):
         
         logger.info("AI Inference Engine started")
     
-    async def stop_engine(self):
+    async def stop_engine(self) -> None:
         """Stop the inference engine"""
         self.is_running = False
         
@@ -718,7 +718,7 @@ class AIInferenceEngine(BaseEventHandler):
             logger.error(f"Request validation error: {str(e)}")
             return False
     
-    async def _worker_loop(self, worker_id: str):
+    async def _worker_loop(self, worker_id -> None: str) -> None:
         """Main worker loop for processing inference requests"""
         logger.info(f"Worker {worker_id} started")
         
@@ -845,14 +845,14 @@ class AIInferenceEngine(BaseEventHandler):
         
         return result
     
-    def _update_model_usage(self, model_id: str):
+    def _update_model_usage(self, model_id -> None: str) -> None:
         """Update model usage order for LRU tracking"""
         with self.lock:
             if model_id in self.model_load_order:
                 self.model_load_order.remove(model_id)
                 self.model_load_order.append(model_id)
     
-    def _update_performance_metrics(self, result: InferenceResult):
+    def _update_performance_metrics(self, result -> None: InferenceResult) -> None:
         """Update engine performance metrics"""
         # Update average queue time
         if self.total_requests > 0:
@@ -863,7 +863,7 @@ class AIInferenceEngine(BaseEventHandler):
             self.average_processing_time = (alpha * result.processing_time + 
                                           (1 - alpha) * self.average_processing_time)
     
-    async def _free_resources_for_model(self, spec: ModelSpec):
+    async def _free_resources_for_model(self, spec -> None: ModelSpec) -> None:
         """Free resources by unloading LRU models"""
         with self.lock:
             models_to_unload = []
@@ -898,7 +898,7 @@ class AIInferenceEngine(BaseEventHandler):
             logger.info(f"Unloading LRU model {model_id} to free resources")
             await self.unload_model(model_id)
     
-    async def _monitor_performance(self):
+    async def _monitor_performance(self) -> None:
         """Monitor engine performance"""
         while self.is_running:
             try:
@@ -923,7 +923,7 @@ class AIInferenceEngine(BaseEventHandler):
                 logger.error(f"Error in performance monitoring: {str(e)}")
                 await asyncio.sleep(60)
     
-    async def _cleanup_expired_requests(self):
+    async def _cleanup_expired_requests(self) -> None:
         """Clean up expired requests from queue"""
         while self.is_running:
             try:
@@ -935,7 +935,7 @@ class AIInferenceEngine(BaseEventHandler):
                 logger.error(f"Error in request cleanup: {str(e)}")
                 await asyncio.sleep(30)
     
-    async def _optimize_model_allocation(self):
+    async def _optimize_model_allocation(self) -> None:
         """Optimize model allocation based on usage patterns"""
         while self.is_running:
             try:

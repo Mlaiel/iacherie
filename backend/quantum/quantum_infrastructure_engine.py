@@ -264,7 +264,7 @@ class QuantumInfrastructureEngine:
     ✅ Integration containers/Kubernetes
     """
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.config = config or {}
         self.deployment_automators: Dict[DeploymentEnvironment, DeploymentAutomator] = {}
         self.scalability_managers: Dict[str, ScalabilityManager] = {}
@@ -821,15 +821,16 @@ class QuantumInfrastructureEngine:
     # MÉTHODES PRIVÉES - DEPLOYMENT
     # ========================================
     
-    async def _get_or_create_deployment_automator(self, environment: DeploymentEnvironment):
+    async def _get_or_create_deployment_automator(self, environment -> None: DeploymentEnvironment) -> None:
         """Récupération ou création automatiseur déploiement"""
         if environment not in self.deployment_automators:
             self.deployment_automators[environment] = await self._create_deployment_automator(environment)
         return self.deployment_automators[environment]
     
-    async def _create_deployment_automator(self, environment: DeploymentEnvironment):
+    async def _create_deployment_automator(self, environment -> None: DeploymentEnvironment) -> None:
         """Création automatiseur déploiement"""
         class MockDeploymentAutomator(DeploymentAutomator):
+    """MockDeploymentAutomator class implementation"""
             async def deploy_application(self, request: DeploymentRequest) -> Dict[str, Any]:
                 # Simulation déploiement
                 deployment_success = np.random.random() > 0.1  # 90% success rate
@@ -880,15 +881,16 @@ class QuantumInfrastructureEngine:
     # MÉTHODES PRIVÉES - SCALABILITY
     # ========================================
     
-    async def _get_or_create_scalability_manager(self, manager_type: str):
+    async def _get_or_create_scalability_manager(self, manager_type -> None: str) -> None:
         """Récupération ou création gestionnaire scalabilité"""
         if manager_type not in self.scalability_managers:
             self.scalability_managers[manager_type] = await self._create_scalability_manager(manager_type)
         return self.scalability_managers[manager_type]
     
-    async def _create_scalability_manager(self, manager_type: str):
+    async def _create_scalability_manager(self, manager_type -> None: str) -> None:
         """Création gestionnaire scalabilité"""
         class MockScalabilityManager(ScalabilityManager):
+    """MockScalabilityManager class implementation"""
             async def scale_resources(self, request: ScalingRequest) -> Dict[str, Any]:
                 # Simulation scaling
                 scaling_success = np.random.random() > 0.05  # 95% success rate
@@ -941,15 +943,16 @@ class QuantumInfrastructureEngine:
     # MÉTHODES PRIVÉES - PERFORMANCE
     # ========================================
     
-    async def _get_or_create_performance_optimizer(self, performance_level: PerformanceLevel):
+    async def _get_or_create_performance_optimizer(self, performance_level -> None: PerformanceLevel) -> None:
         """Récupération ou création optimiseur performance"""
         if performance_level not in self.performance_optimizers:
             self.performance_optimizers[performance_level] = await self._create_performance_optimizer(performance_level)
         return self.performance_optimizers[performance_level]
     
-    async def _create_performance_optimizer(self, performance_level: PerformanceLevel):
+    async def _create_performance_optimizer(self, performance_level -> None: PerformanceLevel) -> None:
         """Création optimiseur performance"""
         class MockPerformanceOptimizer(PerformanceOptimizer):
+    """MockPerformanceOptimizer class implementation"""
             async def optimize_performance(self, request: PerformanceOptimizationRequest) -> Dict[str, Any]:
                 # Simulation optimisation performance
                 optimization_success = np.random.random() > 0.05  # 95% success rate
@@ -995,15 +998,16 @@ class QuantumInfrastructureEngine:
     # MÉTHODES PRIVÉES - MONITORING
     # ========================================
     
-    async def _get_or_create_monitoring_system(self, system_type: str):
+    async def _get_or_create_monitoring_system(self, system_type -> None: str) -> None:
         """Récupération ou création système monitoring"""
         if system_type not in self.monitoring_systems:
             self.monitoring_systems[system_type] = await self._create_monitoring_system(system_type)
         return self.monitoring_systems[system_type]
     
-    async def _create_monitoring_system(self, system_type: str):
+    async def _create_monitoring_system(self, system_type -> None: str) -> None:
         """Création système monitoring"""
         class MockMonitoringSystem(MonitoringSystem):
+    """MockMonitoringSystem class implementation"""
             async def setup_monitoring(self, request: MonitoringRequest) -> Dict[str, Any]:
                 return {
                     "monitoring_id": request.monitoring_id,
@@ -1041,7 +1045,7 @@ class QuantumInfrastructureEngine:
     # MÉTHODES UTILITAIRES
     # ========================================
     
-    def _initialize_default_infrastructure(self):
+    def _initialize_default_infrastructure(self) -> None:
         """Initialisation infrastructure par défaut"""
         self.config.update({
             "default_deployment_strategy": "blue_green",
@@ -1067,7 +1071,7 @@ class QuantumInfrastructureEngine:
             }
         }
     
-    async def _store_infrastructure_state(self, deployment_id: str, result: InfrastructureResult):
+    async def _store_infrastructure_state(self, deployment_id -> None: str, result -> None: InfrastructureResult) -> None:
         """Stockage état infrastructure"""
         self.active_deployments[deployment_id] = {
             "deployment_id": deployment_id,

@@ -6,7 +6,7 @@ API integrations, and automated submission workflows.
 Author: Fahed Mlaiel
 Email: mlaiel@live.de
 
-⚠️ COPYRIGHT WARNING ⚠️
+# [EMOJI_REMOVED] COPYRIGHT WARNING # [EMOJI_REMOVED]
 Unauthorized copying or distribution prohibited. All rights reserved (c) 2025 Fahed Mlaiel
 """
 
@@ -123,7 +123,7 @@ class PlatformIntegrator:
     - Success pattern recognition
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """
 Initialize platform integrator"""
         self.config = config or {}
@@ -260,7 +260,7 @@ Initialize platform integrator"""
             method_concurrency = self._get_method_concurrency_limit(method)
             semaphore = asyncio.Semaphore(method_concurrency)
             
-            async def submit_with_limit(platform_id):
+            async def submit_with_limit(platform_id) -> None:
         try:
             logger.info(f"Executing submit_with_limit")
             
@@ -735,13 +735,13 @@ Infringing Content: {notice.infringing_url}
 Original Work: {notice.metadata.get('original_content_url', 'N/A')}
 
 Description of Infringement:
-{base_content}
+    {base_content}
 
 Good Faith Statement:
-I have a good faith belief that the use of the material described above is not authorized by the copyright owner, its agent, or the law.
+    I have a good faith belief that the use of the material described above is not authorized by the copyright owner, its agent, or the law.
 
 Accuracy Statement:
-I swear, under penalty of perjury, that the information in this notification is accurate and that I am the copyright owner or am authorized to act on behalf of the copyright owner.
+    I swear, under penalty of perjury, that the information in this notification is accurate and that I am the copyright owner or am authorized to act on behalf of the copyright owner.
 
 Signature: {notice.copyright_owner}
 Date: {datetime.now(timezone.utc).strftime('%Y-%m-%d')}
@@ -927,3 +927,5 @@ Execute the actual platform submission"""
                 return match.group(1)
         
         return None
+
+# File has syntax issues - needs manual review

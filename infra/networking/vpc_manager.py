@@ -129,7 +129,7 @@ class EnterpriseVPCManager:
     - Disaster recovery networking
     """
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
         
@@ -826,7 +826,7 @@ class EnterpriseVPCManager:
 class AWSVPCManager:
     """AWS-specific VPC management"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
     
     async def provision_vpc(self, vpc: VPCConfiguration) -> None:
@@ -847,7 +847,7 @@ class AWSVPCManager:
 class GCPVPCManager:
     """GCP-specific VPC management"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
     
     async def provision_vpc(self, vpc: VPCConfiguration) -> None:
@@ -861,7 +861,7 @@ class GCPVPCManager:
 class AzureVPCManager:
     """Azure-specific VPC management"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
     
     async def provision_vpc(self, vpc: VPCConfiguration) -> None:
@@ -911,7 +911,7 @@ class VPCPeeringManager:
         }
 
 # Example usage
-async def main():
+async def main() -> None:
     """Example usage of the Enterprise VPC Manager"""
     vpc_manager = EnterpriseVPCManager()
     

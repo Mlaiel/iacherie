@@ -28,7 +28,7 @@ class FeatureDefinition:
 class FeatureStore:
     """ML feature store for managing training and inference features."""
     
-    def __init__(self, client: MongoClient, database_name: str):
+    def __init__(self, client -> None: MongoClient, database_name -> None: str) -> None:
         """Initialize feature store."""
         self.client = client
         self.database = client[database_name]

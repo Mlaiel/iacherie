@@ -281,7 +281,7 @@ class BusinessImpact:
 class RevenueIntelligenceEngine:
     """Moteur d'intelligence de revenus avec ML avancé"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.config = config or {}
         self.ml_models = {}
         self.scalers = {}
@@ -290,7 +290,7 @@ class RevenueIntelligenceEngine:
         self.market_data = {}
         self._initialize_ml_models()
     
-    def _initialize_ml_models(self):
+    def _initialize_ml_models(self) -> None:
         """Initialise les modèles ML pour prédiction de revenus avec gestion d'erreurs"""
         try:
             if tf and Sequential and Dense:
@@ -327,7 +327,7 @@ class RevenueIntelligenceEngine:
         except Exception as e:
             logger.error(f"Erreur initialisation modèles revenus: {e}")
     
-    def _create_revenue_predictor(self):
+    def _create_revenue_predictor(self) -> None:
         """Crée le modèle de prédiction de revenus avec gestion d'erreurs"""
         if not (tf and Sequential and Dense and BatchNormalization and Dropout):
             return None
@@ -349,7 +349,7 @@ class RevenueIntelligenceEngine:
             logger.error(f"Erreur création modèle revenus: {e}")
             return None
     
-    def _create_ltv_predictor(self):
+    def _create_ltv_predictor(self) -> None:
         """Crée le modèle de prédiction Customer Lifetime Value avec gestion d'erreurs"""
         if not RandomForestRegressor:
             return None
@@ -363,7 +363,7 @@ class RevenueIntelligenceEngine:
             logger.error(f"Erreur création modèle LTV: {e}")
             return None
     
-    def _create_churn_predictor(self):
+    def _create_churn_predictor(self) -> None:
         """Crée le modèle de prédiction de churn avec gestion d'erreurs"""
         if not GradientBoostingRegressor:
             return None
@@ -378,7 +378,7 @@ class RevenueIntelligenceEngine:
             logger.error(f"Erreur création modèle churn: {e}")
             return None
     
-    def _create_price_optimizer(self):
+    def _create_price_optimizer(self) -> None:
         """Crée le modèle d'optimisation des prix avec gestion d'erreurs"""
         if not xgb:
             return None
@@ -606,7 +606,7 @@ class RevenueIntelligenceEngine:
 class MonetizationSEOOptimizationEngine:
     """Moteur d'optimisation SEO de monétisation ultra-avancé avec IA"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.config = config or {}
         self.revenue_intelligence = RevenueIntelligenceEngine(config)
         self.pricing_optimizer = DynamicPricingOptimizer()
@@ -617,7 +617,7 @@ class MonetizationSEOOptimizationEngine:
         self.ml_models = {}
         self._initialize_monetization_models()
     
-    def _initialize_monetization_models(self):
+    def _initialize_monetization_models(self) -> None:
         """Initialise les modèles de monétisation"""
         try:
             # Modèle de scoring de revenus
@@ -633,7 +633,7 @@ class MonetizationSEOOptimizationEngine:
         except Exception as e:
             logger.error(f"Erreur initialisation modèles monétisation: {e}")
     
-    def _create_revenue_scoring_model(self):
+    def _create_revenue_scoring_model(self) -> None:
         """Crée le modèle de scoring de revenus"""
         return lgb.LGBMRegressor(
             n_estimators=200,
@@ -642,7 +642,7 @@ class MonetizationSEOOptimizationEngine:
             random_state=42
         )
     
-    def _create_offer_optimization_model(self):
+    def _create_offer_optimization_model(self) -> None:
         """Crée le modèle d'optimisation d'offres"""
         model = Sequential([
             Dense(128, activation='relu'),
@@ -656,7 +656,7 @@ class MonetizationSEOOptimizationEngine:
         model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
         return model
     
-    def _create_customer_value_model(self):
+    def _create_customer_value_model(self) -> None:
         """Crée le modèle de valeur client"""
         return RandomForestRegressor(
             n_estimators=150,
@@ -1134,7 +1134,7 @@ class MonetizationSEOOptimizationEngine:
 class DynamicPricingOptimizer:
     """Optimiseur de prix dynamique"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.price_history = []
         self.demand_models = {}
         self.elasticity_models = {}
@@ -1268,7 +1268,7 @@ class DynamicPricingOptimizer:
 class ConversionPredictor:
     """Prédicteur de conversion avancé"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.conversion_models = {}
         self.historical_data = []
         self.feature_importance = {}
@@ -1425,7 +1425,7 @@ class ConversionPredictor:
 class MarketAnalyzer:
     """Analyseur de marché avancé"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.market_data_cache = {}
         self.trend_models = {}
@@ -1662,7 +1662,7 @@ class MarketAnalyzer:
 class CompetitorIntelligence:
     """Intelligence compétitive avancée"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.competitor_data = {}
         self.analysis_cache = {}
@@ -1899,7 +1899,7 @@ class CompetitorIntelligence:
 class AttributionEngine:
     """Moteur d'attribution multi-touch"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.attribution_models = {}
         self.touchpoint_data = []
     
@@ -2090,13 +2090,13 @@ class AttributionEngine:
 class RevenueDrivenKeywordStrategy:
     """Stratégie de mots-clés basée sur le potentiel de revenus."""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.revenue_models = {}
         self.keyword_cache = {}
         self._setup_revenue_models()
     
-    def _setup_revenue_models(self):
+    def _setup_revenue_models(self) -> None:
         """Configure les modèles de prédiction de revenus."""
         try:
             from sklearn.ensemble import RandomForestRegressor
@@ -2142,7 +2142,7 @@ class RevenueDrivenKeywordStrategy:
 class ConversionSEOOptimizer:
     """Conversion SEO optimizer"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.config = config or {}
     
     async def optimize_for_conversions(
@@ -2216,7 +2216,7 @@ class ConversionSEOOptimizer:
 class BusinessSEOOptimizer:
     """Main business SEO optimizer"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.config = config or {}
         
         # Initialize sub-components

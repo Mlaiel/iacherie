@@ -1,3 +1,8 @@
+"""
+Revenue Distribution module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """Revenue Distribution Engine
 
@@ -153,7 +158,7 @@ class RevenueDistribution:
     - Performance-based reallocation
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize the revenue distribution engine"""
         self.config = config or {}
         self.revenue_streams: List[RevenueStream] = []

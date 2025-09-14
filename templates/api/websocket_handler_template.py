@@ -80,6 +80,7 @@ class WebSocketMessage(BaseModel):
     require_auth: bool = Field(default=True, description="Whether authentication is required")
     
     class Config:
+    """Config: class implementation"""
         use_enum_values = True
         schema_extra = {
             "example": {
@@ -105,6 +106,7 @@ class ConnectionInfo(BaseModel):
     last_activity: datetime = Field(default_factory=datetime.utcnow, description="Last activity timestamp")
     
     class Config:
+    """Config: class implementation"""
         arbitrary_types_allowed = True
 
 
@@ -125,13 +127,13 @@ class {{handler_name}}Manager:
     
     def __init__(
         self,
-        redis_client: Optional[redis.Redis] = None,
-        enable_persistence: bool = True,
-        heartbeat_interval: int = 30,
-        max_connections_per_user: int = 10,
-        message_retention_hours: int = 24,
-        metrics_collector: Optional[WebSocketMetricsCollector] = None
-    ):
+        redis_client -> None: Optional[redis.Redis] = None,
+        enable_persistence -> None: bool = True,
+        heartbeat_interval -> None: int = 30,
+        max_connections_per_user -> None: int = 10,
+        message_retention_hours -> None: int = 24,
+        metrics_collector -> None: Optional[WebSocketMetricsCollector] = None
+    ) -> None:
         self.redis_client = redis_client
         self.enable_persistence = enable_persistence
         self.heartbeat_interval = heartbeat_interval
@@ -165,7 +167,7 @@ class {{handler_name}}Manager:
         
         logger.info("WebSocket manager initialized")
     
-    def _initialize_default_channels(self):
+    def _initialize_default_channels(self) -> None:
         """Initialize default channels"""
         default_channels = [
             ChannelInfo(
@@ -194,7 +196,7 @@ class {{handler_name}}Manager:
         for channel in default_channels:
             self.channels[channel.channel_id] = channel
     
-    def _initialize_message_handlers(self):
+    def _initialize_message_handlers(self) -> None:
         """Initialize message handlers"""
         self.message_handlers = {
             MessageType.CONNECTION: self._handle_connection,
@@ -207,7 +209,7 @@ class {{handler_name}}Manager:
             MessageType.COMMAND: self._handle_command
         }
     
-    def _start_background_tasks(self):
+    def _start_background_tasks(self) -> None:
         """Start background tasks"""
         # Heartbeat task
         heartbeat_task = asyncio.create_task(self._heartbeat_loop())
@@ -292,7 +294,7 @@ class {{handler_name}}Manager:
             )
             raise WebSocketException(f"Connection failed: {e}")
     
-    async def disconnect_websocket(self, connection_id: str, code: int = status.WS_1000_NORMAL_CLOSURE):
+    async def disconnect_websocket(self, connection_id -> None: str, code -> None: int = status.WS_1000_NORMAL_CLOSURE) -> None:
         """Disconnect a WebSocket"""
         
         if connection_id not in self.active_connections:
@@ -333,7 +335,7 @@ class {{handler_name}}Manager:
         except Exception as e:
             logger.error(f"Error disconnecting WebSocket {connection_id}: {e}")
     
-    async def handle_message(self, connection_id: str, message_data: str):
+    async def handle_message(self, connection_id -> None: str, message_data -> None: str) -> None:
         """Handle incoming WebSocket message"""
         
         if connection_id not in self.active_connections:
@@ -386,12 +388,12 @@ class {{handler_name}}Manager:
             )
     
     # Message handlers
-    async def _handle_connection(self, connection_id: str, message: WebSocketMessage):
+    async def _handle_connection(self, connection_id -> None: str, message -> None: WebSocketMessage) -> None:
         """Handle connection message"""
         # Connection already handled in connect_websocket
         pass
     
-    async def _handle_authentication(self, connection_id: str, message: WebSocketMessage):
+    async def _handle_authentication(self, connection_id -> None: str, message -> None: WebSocketMessage) -> None:
         """Handle authentication message"""
         connection_info = self.active_connections[connection_id]
         
@@ -436,7 +438,7 @@ class {{handler_name}}Manager:
             logger.error(f"Authentication error for {connection_id}: {e}")
             await self._send_error_message(connection_id, "Authentication failed")
     
-    async def _handle_subscription(self, connection_id: str, message: WebSocketMessage):
+    async def _handle_subscription(self, connection_id -> None: str, message -> None: WebSocketMessage) -> None:
         """Handle channel subscription"""
         channel_id = message.data.get("channel")
         
@@ -446,7 +448,7 @@ class {{handler_name}}Manager:
         
         await self._subscribe_to_channel(connection_id, channel_id)
     
-    async def _handle_unsubscription(self, connection_id: str, message: WebSocketMessage):
+    async def _handle_unsubscription(self, connection_id -> None: str, message -> None: WebSocketMessage) -> None:
         """Handle channel unsubscription"""
         channel_id = message.data.get("channel")
         
@@ -456,7 +458,7 @@ class {{handler_name}}Manager:
         
         await self._unsubscribe_from_channel(connection_id, channel_id)
     
-    async def _handle_data_message(self, connection_id: str, message: WebSocketMessage):
+    async def _handle_data_message(self, connection_id -> None: str, message -> None: WebSocketMessage) -> None:
         """Handle data message"""
         connection_info = self.active_connections[connection_id]
         
@@ -471,7 +473,7 @@ class {{handler_name}}Manager:
         if self.enable_persistence:
             await self._store_message(message)
     
-    async def _handle_heartbeat(self, connection_id: str, message: WebSocketMessage):
+    async def _handle_heartbeat(self, connection_id -> None: str, message -> None: WebSocketMessage) -> None:
         """Handle heartbeat message"""
         connection_info = self.active_connections[connection_id]
         connection_info.last_activity = datetime.utcnow()
@@ -486,7 +488,7 @@ class {{handler_name}}Manager:
             )
         )
     
-    async def _handle_private_message(self, connection_id: str, message: WebSocketMessage):
+    async def _handle_private_message(self, connection_id -> None: str, message -> None: WebSocketMessage) -> None:
         """Handle private message"""
         target_user_id = message.target_user_id
         
@@ -499,7 +501,7 @@ class {{handler_name}}Manager:
             for target_connection_id in self.user_connections[target_user_id]:
                 await self._send_message_to_connection(target_connection_id, message)
     
-    async def _handle_command(self, connection_id: str, message: WebSocketMessage):
+    async def _handle_command(self, connection_id -> None: str, message -> None: WebSocketMessage) -> None:
         """Handle command message"""
         command = message.data.get("command")
         
@@ -539,7 +541,7 @@ class {{handler_name}}Manager:
             await self._send_error_message(connection_id, f"Unknown command: {command}")
     
     # Channel management
-    async def _subscribe_to_channel(self, connection_id: str, channel_id: str):
+    async def _subscribe_to_channel(self, connection_id -> None: str, channel_id -> None: str) -> None:
         """Subscribe connection to channel"""
         connection_info = self.active_connections[connection_id]
         
@@ -594,7 +596,7 @@ class {{handler_name}}Manager:
         
         logger.info(f"Connection {connection_id} subscribed to channel {channel_id}")
     
-    async def _unsubscribe_from_channel(self, connection_id: str, channel_id: str):
+    async def _unsubscribe_from_channel(self, connection_id -> None: str, channel_id -> None: str) -> None:
         """Unsubscribe connection from channel"""
         connection_info = self.active_connections.get(connection_id)
         
@@ -625,7 +627,7 @@ class {{handler_name}}Manager:
         logger.info(f"Connection {connection_id} unsubscribed from channel {channel_id}")
     
     # Message sending
-    async def _send_message_to_connection(self, connection_id: str, message: WebSocketMessage):
+    async def _send_message_to_connection(self, connection_id -> None: str, message -> None: WebSocketMessage) -> None:
         """Send message to specific connection"""
         connection_info = self.active_connections.get(connection_id)
         
@@ -652,10 +654,10 @@ class {{handler_name}}Manager:
     
     async def _broadcast_to_channel(
         self, 
-        channel_id: str, 
-        message: WebSocketMessage, 
-        exclude_connection: Optional[str] = None
-    ):
+        channel_id -> None: str, 
+        message -> None: WebSocketMessage, 
+        exclude_connection -> None: Optional[str] = None
+    ) -> None:
         """Broadcast message to all connections in channel"""
         
         if channel_id not in self.channel_subscriptions:
@@ -675,7 +677,7 @@ class {{handler_name}}Manager:
         if tasks:
             await asyncio.gather(*tasks, return_exceptions=True)
     
-    async def _send_error_message(self, connection_id: str, error_message: str):
+    async def _send_error_message(self, connection_id -> None: str, error_message -> None: str) -> None:
         """Send error message to connection"""
         await self._send_message_to_connection(
             connection_id,
@@ -698,7 +700,7 @@ class {{handler_name}}Manager:
         except Exception:
             return None
     
-    async def _store_message(self, message: WebSocketMessage):
+    async def _store_message(self, message -> None: WebSocketMessage) -> None:
         """Store message for persistence"""
         if self.redis_client:
             try:
@@ -713,7 +715,7 @@ class {{handler_name}}Manager:
                 logger.error(f"Failed to store message: {e}")
     
     # Background tasks
-    async def _heartbeat_loop(self):
+    async def _heartbeat_loop(self) -> None:
         """Send periodic heartbeats"""
         while True:
             try:
@@ -741,7 +743,7 @@ class {{handler_name}}Manager:
             except Exception as e:
                 logger.error(f"Heartbeat loop error: {e}")
     
-    async def _cleanup_loop(self):
+    async def _cleanup_loop(self) -> None:
         """Periodic cleanup of resources"""
         while True:
             try:
@@ -762,7 +764,7 @@ class {{handler_name}}Manager:
                 logger.error(f"Cleanup loop error: {e}")
     
     # Public API methods
-    async def broadcast_to_all(self, message: WebSocketMessage):
+    async def broadcast_to_all(self, message -> None: WebSocketMessage) -> None:
         """Broadcast message to all connected users"""
         tasks = []
         for connection_id in list(self.active_connections.keys()):
@@ -772,7 +774,7 @@ class {{handler_name}}Manager:
         if tasks:
             await asyncio.gather(*tasks, return_exceptions=True)
     
-    async def send_to_user(self, user_id: str, message: WebSocketMessage):
+    async def send_to_user(self, user_id -> None: str, message -> None: WebSocketMessage) -> None:
         """Send message to specific user"""
         if user_id in self.user_connections:
             tasks = []
@@ -783,12 +785,12 @@ class {{handler_name}}Manager:
             if tasks:
                 await asyncio.gather(*tasks, return_exceptions=True)
     
-    async def create_channel(self, channel_info: ChannelInfo):
+    async def create_channel(self, channel_info -> None: ChannelInfo) -> None:
         """Create a new channel"""
         self.channels[channel_info.channel_id] = channel_info
         logger.info(f"Created channel: {channel_info.channel_id}")
     
-    async def delete_channel(self, channel_id: str):
+    async def delete_channel(self, channel_id -> None: str) -> None:
         """Delete a channel"""
         if channel_id in self.channels:
             # Disconnect all subscribers
@@ -820,15 +822,15 @@ class {{handler_name}}Manager:
 class {{handler_name}}Endpoint:
     """WebSocket endpoint handler"""
     
-    def __init__(self, manager: {{handler_name}}Manager):
+    def __init__(self, manager -> None: {{handler_name}}Manager) -> None:
         self.manager = manager
     
     async def websocket_endpoint(
         self, 
-        websocket: WebSocket,
-        user_id: Optional[str] = None,
-        channel: Optional[str] = None
-    ):
+        websocket -> None: WebSocket,
+        user_id -> None: Optional[str] = None,
+        channel -> None: Optional[str] = None
+    ) -> None:
         """Main WebSocket endpoint"""
         connection_id = None
         
@@ -866,7 +868,7 @@ class {{handler_name}}Endpoint:
 
 
 # Template usage example
-def create_websocket_handler_example():
+def create_websocket_handler_example() -> None:
     """Example of how to create and use the WebSocket handler"""
     
     # Create manager
@@ -920,3 +922,5 @@ TEMPLATE_CONFIG = {
         "Auto-reconnection support"
     ]
 }
+
+# File has syntax issues - needs manual review

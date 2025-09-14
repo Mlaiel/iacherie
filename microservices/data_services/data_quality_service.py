@@ -1,3 +1,8 @@
+"""
+Data Quality Service module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 🎯 DataQualityService - Enterprise Data Quality Management & Validation
@@ -90,7 +95,7 @@ class DataQualityService:
     automated cleansing, and real-time quality monitoring.
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.redis_client = redis.Redis(
             host=config.get('redis_host', 'localhost'),
@@ -404,9 +409,9 @@ class DataQualityService:
             self.logger.error(f"Error detecting anomalies: {str(e)}")
             return {'anomalies_detected': 0, 'anomaly_indices': [], 'error': str(e)}
 
-    async def _store_quality_assessment(self, dataset_id: str, 
-                                      quality_results: Dict[str, QualityMetrics],
-                                      anomalies: Dict[str, Any]):
+    async def _store_quality_assessment(self, dataset_id -> None: str, 
+                                      quality_results -> None: Dict[str, QualityMetrics],
+                                      anomalies -> None: Dict[str, Any]) -> None:
         """🗄️ DBA: Store quality assessment results"""
         try:
             assessment_id = str(uuid.uuid4())
@@ -648,7 +653,7 @@ class DataQualityService:
         )
 
 # Usage Example
-async def main():
+async def main() -> None:
     """🎯 Example usage of DataQualityService"""
     config = {
         'redis_host': 'localhost',

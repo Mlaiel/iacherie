@@ -181,7 +181,7 @@ class AudioMetadata:
 class AudioBuffer:
     """Thread-safe audio buffer for real-time processing"""
     
-    def __init__(self, max_size: int = 8192):
+    def __init__(self, max_size -> None: int = 8192) -> None:
         self.buffer = queue.Queue(maxsize=max_size)
         self.lock = threading.Lock()
         self.overflow_count = 0
@@ -203,7 +203,7 @@ class AudioBuffer:
         except queue.Empty:
             return None
     
-    def clear(self):
+    def clear(self) -> None:
         """Clear buffer"""
         with self.lock:
             while not self.buffer.empty():
@@ -220,7 +220,7 @@ class AudioBuffer:
 class AudioProcessor:
     """Core audio processing engine"""
     
-    def __init__(self, config: AudioConfig):
+    def __init__(self, config -> None: AudioConfig) -> None:
         self.config = config
         self.logger = logging.getLogger(__name__)
         self.temp_dir = Path(config.temp_dir)
@@ -242,7 +242,7 @@ class AudioProcessor:
         self.transcription_model = None
         self.music_analyzer = None
         
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize audio processor"""
         # Load transcription model if enabled
         if self.config.enable_transcription:
@@ -258,7 +258,7 @@ class AudioProcessor:
         
         self.logger.info("Audio processor initialized")
     
-    async def _load_transcription_model(self):
+    async def _load_transcription_model(self) -> None:
         """Load speech recognition model"""
         try:
             if self.config.transcription_model.startswith("whisper"):
@@ -277,7 +277,7 @@ class AudioProcessor:
         except Exception as e:
             self.logger.error(f"Failed to load transcription model: {e}")
     
-    def _initialize_music_analyzer(self):
+    def _initialize_music_analyzer(self) -> None:
         """Initialize music analysis components"""
         try:
             # Essentia extractors
@@ -291,7 +291,7 @@ class AudioProcessor:
         except Exception as e:
             self.logger.error(f"Failed to initialize music analyzer: {e}")
     
-    def _setup_real_time_processing(self):
+    def _setup_real_time_processing(self) -> None:
         """Setup real-time audio processing"""
         try:
             self.pyaudio_instance = pyaudio.PyAudio()
@@ -312,7 +312,7 @@ class AudioProcessor:
         except Exception as e:
             self.logger.error(f"Failed to setup real-time processing: {e}")
     
-    def _audio_callback(self, in_data, frame_count, time_info, status):
+    def _audio_callback(self, in_data, frame_count, time_info, status) -> None:
         """Real-time audio callback"""
         if status:
             self.logger.warning(f"Audio callback status: {status}")
@@ -678,7 +678,7 @@ class AudioProcessor:
             self.logger.warning(f"Error in spatial processing: {e}")
             return audio_data
     
-    async def _save_audio(self, audio_data: np.ndarray, output_path: str, sample_rate: int):
+    async def _save_audio(self, audio_data -> None: np.ndarray, output_path -> None: str, sample_rate -> None: int) -> None:
         """Save processed audio to file"""
         try:
             output_path_obj = Path(output_path)
@@ -783,7 +783,7 @@ class AudioProcessor:
             self.logger.error(f"Error generating detailed fingerprint: {e}")
             return ""
     
-    def start_real_time_processing(self):
+    def start_real_time_processing(self) -> None:
         """Start real-time audio processing"""
         if not self.config.enable_real_time or self.is_processing:
             return
@@ -797,7 +797,7 @@ class AudioProcessor:
         
         self.logger.info("Started real-time audio processing")
     
-    def stop_real_time_processing(self):
+    def stop_real_time_processing(self) -> None:
         """Stop real-time audio processing"""
         self.is_processing = False
         
@@ -809,7 +809,7 @@ class AudioProcessor:
         
         self.logger.info("Stopped real-time audio processing")
     
-    def _real_time_processing_loop(self):
+    def _real_time_processing_loop(self) -> None:
         """Real-time processing loop"""
         while self.is_processing:
             audio_chunk = self.audio_buffer.get(timeout=0.1)
@@ -833,7 +833,7 @@ class AudioProcessor:
             
             time.sleep(0.001)  # Small delay to prevent busy waiting
     
-    async def cleanup(self):
+    async def cleanup(self) -> None:
         """Cleanup audio processor"""
         self.stop_real_time_processing()
         
@@ -849,17 +849,17 @@ class AudioProcessor:
 class AudioStreamServer:
     """WebSocket server for real-time audio streaming"""
     
-    def __init__(self, config: AudioConfig, processor: AudioProcessor):
+    def __init__(self, config -> None: AudioConfig, processor -> None: AudioProcessor) -> None:
         self.config = config
         self.processor = processor
         self.clients = set()
         self.logger = logging.getLogger(__name__)
     
-    async def start_server(self, host: str = "localhost", port: int = 8765):
+    async def start_server(self, host -> None: str = "localhost", port -> None: int = 8765) -> None:
         """Start WebSocket server"""
         self.logger.info(f"Starting audio stream server on {host}:{port}")
         
-        async def handle_client(websocket, path):
+        async def handle_client(websocket, path) -> None:
             self.clients.add(websocket)
             try:
                 await self._handle_audio_stream(websocket)
@@ -868,7 +868,7 @@ class AudioStreamServer:
         
         return await websockets.serve(handle_client, host, port)
     
-    async def _handle_audio_stream(self, websocket):
+    async def _handle_audio_stream(self, websocket) -> None:
         """Handle audio streaming for a client"""
         try:
             async for message in websocket:
@@ -891,7 +891,7 @@ class AudioStreamServer:
 
 
 # Usage example and test functions
-async def main():
+async def main() -> None:
     """Example usage of AudioProcessor"""
     
     # Configure audio processor

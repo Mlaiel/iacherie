@@ -17,20 +17,22 @@ try:
 except ImportError:
     # Fallback for environments without pydantic_settings
     class BaseSettings:
-        def __init__(self, **kwargs):
+    """BaseSettings: class implementation"""
+        def __init__(self, **kwargs) -> None:
             for key, value in kwargs.items():
                 setattr(self, key, value)
         
         class Config:
+    """Config: class implementation"""
             env_prefix = ""
             case_sensitive = False
             extra = "allow"
     
-    def Field(**kwargs):
+    def Field(**kwargs) -> None:
         return kwargs.get('default_factory', kwargs.get('default'))()
     
-    def validator(field_name):
-        def decorator(func):
+    def validator(field_name) -> None:
+        def decorator(func) -> None:
             return func
         return decorator
 
@@ -439,6 +441,7 @@ class CreatorMatchingSettings(BaseSettings):
     )
     
     class Config:
+    """Config: class implementation"""
         env_prefix = "CREATOR_MATCHING_"
         case_sensitive = False
         extra = "allow"
@@ -552,7 +555,7 @@ class CreatorMatchingSettings(BaseSettings):
                     errors.append(f"Algorithm '{algorithm_name}' has invalid max results")
         
         # Validate matching weights
-        def validate_weights(weights: MatchingWeights, context: str):
+        def validate_weights(weights -> None: MatchingWeights, context -> None: str) -> None:
             total = (weights.genre_compatibility + weights.audience_overlap + 
                     weights.engagement_rate + weights.content_quality + 
                     weights.collaboration_history + weights.geographic_proximity + 

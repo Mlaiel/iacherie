@@ -71,7 +71,7 @@ class CompetitorProfile:
 class MarketIntelligenceCore:
     """Advanced Market Intelligence Core System"""
     
-    def __init__(self, level: str = "enterprise"):
+    def __init__(self, level -> None: str = "enterprise") -> None:
         self.version = "2.1.0"
         self.level = level
         self.market_data = {}

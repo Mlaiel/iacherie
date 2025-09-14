@@ -71,7 +71,7 @@ class NeuralArchitectureSearch:
     - Knowledge transfer between search tasks
     """
     
-    def __init__(self, search_cache_path: str = "nas_cache/"):
+    def __init__(self, search_cache_path -> None: str = "nas_cache/") -> None:
         self.logger = logging.getLogger(__name__)
         self.search_cache_path = Path(search_cache_path)
         self.search_cache_path.mkdir(exist_ok=True)
@@ -850,7 +850,7 @@ class NeuralArchitectureSearch:
         return search_space
 
 # Example usage and testing
-async def main():
+async def main() -> None:
     """Example usage of NeuralArchitectureSearch."""
     nas = NeuralArchitectureSearch()
     

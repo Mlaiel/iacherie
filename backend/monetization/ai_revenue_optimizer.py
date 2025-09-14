@@ -101,7 +101,7 @@ class AIRevenueConfig:
     market_data_sources: List[str] = None
     redis_url: str = "redis://localhost:6379"
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.market_data_sources is None:
             self.market_data_sources = [
                 'competitor_api',
@@ -210,7 +210,7 @@ class EnterpriseAIRevenueOptimizer:
     - Automated model retraining and optimization
     """
     
-    def __init__(self, config: Optional[AIRevenueConfig] = None):
+    def __init__(self, config -> None: Optional[AIRevenueConfig] = None) -> None:
         self.config = config or AIRevenueConfig()
         self.logger = logging.getLogger(__name__)
         self.executor = ThreadPoolExecutor(max_workers=8)
@@ -231,7 +231,7 @@ class EnterpriseAIRevenueOptimizer:
         # Cache for predictions and optimizations
         self.prediction_cache = {}
         
-    def _init_ai_models(self):
+    def _init_ai_models(self) -> None:
         """Initialize AI models for revenue optimization"""
         try:
             self.ai_models = {
@@ -302,7 +302,7 @@ class EnterpriseAIRevenueOptimizer:
             self.logger.error(f"AI models initialization failed: {e}")
             raise ModelTrainingError(f"Failed to initialize AI models: {e}")
 
-    def _init_scalers(self):
+    def _init_scalers(self) -> None:
         """Initialize feature scalers"""
         try:
             self.scalers = {
@@ -314,7 +314,7 @@ class EnterpriseAIRevenueOptimizer:
         except Exception as e:
             self.logger.warning(f"Scaler initialization failed: {e}")
 
-    def _init_market_data_collectors(self):
+    def _init_market_data_collectors(self) -> None:
         """Initialize market data collection systems"""
         try:
             self.market_collectors = {
@@ -327,7 +327,7 @@ class EnterpriseAIRevenueOptimizer:
         except Exception as e:
             self.logger.warning(f"Market data collectors initialization failed: {e}")
 
-    async def initialize_connections(self):
+    async def initialize_connections(self) -> None:
         """Initialize Redis and other connections"""
         try:
             self.redis_client = redis.from_url(self.config.redis_url)
@@ -1284,7 +1284,7 @@ class EnterpriseAIRevenueOptimizer:
 class AIRevenueOptimizationEngine:
     """Legacy AI revenue optimization interface"""
     
-    def __init__(self, optimizer: EnterpriseAIRevenueOptimizer):
+    def __init__(self, optimizer -> None: EnterpriseAIRevenueOptimizer) -> None:
         self.optimizer = optimizer
     
     async def optimize_revenue(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
@@ -1296,7 +1296,7 @@ class AIRevenueOptimizationEngine:
 class DynamicPricingAIEngine:
     """Legacy dynamic pricing interface"""
     
-    def __init__(self, optimizer: EnterpriseAIRevenueOptimizer):
+    def __init__(self, optimizer -> None: EnterpriseAIRevenueOptimizer) -> None:
         self.optimizer = optimizer
     
     async def calculate_dynamic_price(self, content_id: str, market_conditions: Dict[str, Any]) -> Dict[str, Any]:
@@ -1311,7 +1311,7 @@ class DynamicPricingAIEngine:
 class IntelligentPricingOrchestrator:
     """Legacy intelligent pricing orchestrator interface"""
     
-    def __init__(self, optimizer: EnterpriseAIRevenueOptimizer):
+    def __init__(self, optimizer -> None: EnterpriseAIRevenueOptimizer) -> None:
         self.optimizer = optimizer
     
     async def orchestrate_pricing_strategy(self, strategy_config: Dict[str, Any]) -> Dict[str, Any]:
@@ -1326,7 +1326,7 @@ class IntelligentPricingOrchestrator:
 class ContentValuePredictionAI:
     """Legacy content value prediction interface"""
     
-    def __init__(self, optimizer: EnterpriseAIRevenueOptimizer):
+    def __init__(self, optimizer -> None: EnterpriseAIRevenueOptimizer) -> None:
         self.optimizer = optimizer
     
     async def predict_content_value(self, content_features: Dict[str, Any]) -> Dict[str, Any]:
@@ -1341,7 +1341,7 @@ class ContentValuePredictionAI:
 class MonetizationStrategyAI:
     """Legacy monetization strategy AI interface"""
     
-    def __init__(self, optimizer: EnterpriseAIRevenueOptimizer):
+    def __init__(self, optimizer -> None: EnterpriseAIRevenueOptimizer) -> None:
         self.optimizer = optimizer
     
     async def recommend_strategy(self, business_goals: Dict[str, Any]) -> Dict[str, Any]:

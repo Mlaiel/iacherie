@@ -98,7 +98,7 @@ class ComplianceRule:
 class ComplianceValidator:
     """GDPR/CCPA compliance validation system."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize compliance validator."""
         self._data_subjects: Dict[str, DataSubject] = {}
         self._processing_records: List[DataProcessingRecord] = []
@@ -129,7 +129,7 @@ class ComplianceValidator:
             'ip_address': r'\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b'
         }
     
-    def _initialize_compliance_rules(self):
+    def _initialize_compliance_rules(self) -> None:
         """Initialize standard compliance rules."""
         
         # GDPR Rules

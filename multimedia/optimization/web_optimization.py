@@ -80,7 +80,7 @@ class CoreWebVitals:
 class ResponsiveDeliveryEngine:
     """Responsive multimedia delivery engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.breakpoints = {
             'mobile': 576,
             'tablet': 768,
@@ -226,7 +226,7 @@ class ResponsiveDeliveryEngine:
 class WebOptimizer:
     """Main web optimization engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.responsive_engine = ResponsiveDeliveryEngine()
         self.optimization_cache = {}
         

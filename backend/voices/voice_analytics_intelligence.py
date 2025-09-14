@@ -203,7 +203,7 @@ class TrendAnalysis:
 class CreatorVoiceAnalytics:
     """Creator-specific voice analytics system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize creator voice analytics"""
         self.analytics_data = {}
         self.performance_metrics = {}
@@ -331,7 +331,7 @@ class CreatorVoiceAnalytics:
         else:
             return MetricTrend.DECREASING
     
-    async def _cache_analytics(self, analytics: PerformanceAnalytics):
+    async def _cache_analytics(self, analytics -> None: PerformanceAnalytics) -> None:
         """Cache analytics data in Redis"""
         try:
             cache_key = f"analytics:{analytics.creator_id}:{analytics.analytics_id}"
@@ -459,7 +459,7 @@ class CreatorVoiceAnalytics:
 class VoiceAnalyticsDashboard:
     """Voice analytics dashboard and visualization"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize analytics dashboard"""
         self.dashboard_configs = {}
         self.visualization_cache = {}
@@ -531,9 +531,9 @@ class VoiceAnalyticsDashboard:
     
     async def _generate_dashboard_components(
         self,
-        dashboard_id: str,
-        config: Dict[str, Any]
-    ):
+        dashboard_id -> None: str,
+        config -> None: Dict[str, Any]
+    ) -> None:
         """Generate dashboard components"""
         try:
             components = config.get("components", [])
@@ -549,17 +549,17 @@ class VoiceAnalyticsDashboard:
         except Exception as e:
             logger.error(f"Failed to generate dashboard components: {e}")
     
-    async def _generate_chart_component(self, dashboard_id: str, component: Dict[str, Any]):
+    async def _generate_chart_component(self, dashboard_id -> None: str, component -> None: Dict[str, Any]) -> None:
         """Generate chart component"""
         # Implementation would generate specific chart types
         pass
     
-    async def _generate_metric_component(self, dashboard_id: str, component: Dict[str, Any]):
+    async def _generate_metric_component(self, dashboard_id -> None: str, component -> None: Dict[str, Any]) -> None:
         """Generate metric component"""
         # Implementation would generate metric displays
         pass
     
-    async def _generate_table_component(self, dashboard_id: str, component: Dict[str, Any]):
+    async def _generate_table_component(self, dashboard_id -> None: str, component -> None: Dict[str, Any]) -> None:
         """Generate table component"""
         # Implementation would generate data tables
         pass
@@ -656,7 +656,7 @@ class VoiceAnalyticsDashboard:
 class VoiceAudienceTargeting:
     """Voice audience targeting and segmentation"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize audience targeting"""
         self.audience_segments = {}
         self.targeting_models = {}
@@ -832,7 +832,7 @@ class VoiceAudienceTargeting:
 class VoiceAnalyticsIntelligence:
     """Main voice analytics intelligence system"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         """Initialize voice analytics intelligence"""
         self.config = config or {}
         self.creator_analytics = CreatorVoiceAnalytics()

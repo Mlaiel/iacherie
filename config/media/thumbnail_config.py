@@ -1,7 +1,14 @@
+"""
+Thumbnail Config module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 """Ainflue Thumbnail Configuration Module
+import asyncio
+
 ========================================
 
 Enterprise-grade thumbnail generation configuration for the Ainflue platform.
@@ -92,7 +99,7 @@ class ThumbnailDimension:
     min_width: Optional[int] = None
     min_height: Optional[int] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         """Calculate aspect ratio if not provided"""
         if not self.aspect_ratio and self.width > 0 and self.height > 0:
             from math import gcd
@@ -360,18 +367,18 @@ class ThumbnailJob:
     created_date: datetime = field(default_factory=datetime.now)
     priority: ProcessingPriority = ProcessingPriority.NORMAL
     
-    def start_processing(self):
+    def start_processing(self) -> None:
         """Mark job as started"""
         self.status = "processing"
         self.started_at = datetime.now()
         self.progress = 0.0
     
-    def update_progress(self, progress: float):
+    def update_progress(self, progress -> None: float) -> None:
         """Update job progress"""
         self.progress = max(0.0, min(1.0, progress))
     
-    def complete_processing(self, output_files: List[str], file_sizes: Dict[str, int], 
-                           processing_cost: float = 0.0):
+    def complete_processing(self, output_files -> None: List[str], file_sizes -> None: Dict[str, int], 
+                           processing_cost -> None: float = 0.0) -> None:
         """Mark job as completed"""
         self.status = "completed"
         self.completed_at = datetime.now()
@@ -383,7 +390,7 @@ class ThumbnailJob:
         if self.started_at:
             self.processing_time = (self.completed_at - self.started_at).total_seconds()
     
-    def fail_processing(self, error_message: str):
+    def fail_processing(self, error_message -> None: str) -> None:
         """Mark job as failed"""
         self.status = "failed"
         self.completed_at = datetime.now()
@@ -396,7 +403,7 @@ class ThumbnailJob:
         """Check if job can be retried"""
         return self.status == "failed" and self.retry_count < self.max_retries
     
-    def retry(self):
+    def retry(self) -> None:
         """Retry failed job"""
         if self.can_retry():
             self.retry_count += 1
@@ -438,7 +445,7 @@ class ThumbnailJob:
 class ThumbnailConfiguration:
     """Main thumbnail configuration manager"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize thumbnail configuration"""
         # Data storage
         self.templates: Dict[str, ThumbnailTemplate] = {}
@@ -510,7 +517,7 @@ class ThumbnailConfiguration:
         # Initialize default templates
         self._initialize_default_templates()
     
-    def _initialize_default_templates(self):
+    def _initialize_default_templates(self) -> None:
         """Initialize default thumbnail templates"""
         
         # Micro thumbnails for icons

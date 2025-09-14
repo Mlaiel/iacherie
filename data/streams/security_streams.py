@@ -39,9 +39,10 @@ try:
 except ImportError:
     HAS_CRYPTOGRAPHY = False
     class Fernet:
-        def __init__(self, key): self.key = key
-        def encrypt(self, data): return data
-        def decrypt(self, data): return data
+    """Fernet: class implementation"""
+        def __init__(self, key) -> None: self.key = key
+        def encrypt(self, data) -> None: return data
+        def decrypt(self, data) -> None: return data
 
 try:
     import jwt
@@ -49,10 +50,11 @@ try:
 except ImportError:
     HAS_JWT = False
     class jwt:
+    """jwt: class implementation"""
         @staticmethod
-        def encode(payload, key, algorithm='HS256'): return "fake_token"
+        def encode(payload, key, algorithm='HS256') -> None: return "fake_token"
         @staticmethod
-        def decode(token, key, algorithms=None): return {"user": "test"}
+        def decode(token, key, algorithms=None) -> None: return {"user": "test"}
 
 logger = logging.getLogger(__name__)
 
@@ -200,11 +202,11 @@ class SecurityStreams:
     
     def __init__(
         self,
-        enable_real_time_monitoring: bool = True,
-        enable_audit_trails: bool = True,
-        enable_threat_detection: bool = True,
-        max_events_per_minute: int = 10000
-    ):
+        enable_real_time_monitoring -> None: bool = True,
+        enable_audit_trails -> None: bool = True,
+        enable_threat_detection -> None: bool = True,
+        max_events_per_minute -> None: int = 10000
+    ) -> None:
         # Configuration
         self.enable_real_time_monitoring = enable_real_time_monitoring
         self.enable_audit_trails = enable_audit_trails

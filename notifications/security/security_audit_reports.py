@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 class SecurityAuditReports:
     """Security audit and reporting system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         logger.info("Security audit reports initialized")
     
     async def log_critical_event(self, event_data: Dict[str, Any]) -> bool:

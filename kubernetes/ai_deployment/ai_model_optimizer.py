@@ -8,7 +8,7 @@ optimizations for maximum performance and efficiency.
 Project: IA Influencer Agent + Content Protection Platform
 Author: Fahed Mlaiel <mlaiel@live.de>
 
-⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
+# [EMOJI_REMOVED]  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED # [EMOJI_REMOVED]
 This software is protected by international copyright laws.
 Contact: mlaiel@live.de for licensing inquiries.
 """
@@ -103,7 +103,7 @@ class OptimizationConfig:
     mixed_precision: bool = True
     replicas: int = 3
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.techniques is None:
             self.techniques = [
                 OptimizationTechnique.QUANTIZATION,
@@ -135,7 +135,7 @@ class AIModelOptimizer:
     - Model deployment optimization
     """
     
-    def __init__(self, namespace: str = "ia-influencer-optimization"):
+    def __init__(self, namespace -> None: str = "ia-influencer-optimization") -> None:
         """
         Initialize AI model optimizer
         
@@ -427,7 +427,7 @@ class AIModelOptimizer:
             # Process models in parallel with controlled concurrency
             semaphore = asyncio.Semaphore(3)  # Limit concurrent optimizations
             
-            async def optimize_single_model(model_request):
+            async def optimize_single_model(model_request) -> None:
         try:
             logger.info(f"Executing optimize_single_model")
             
@@ -1249,3 +1249,6 @@ class AIModelOptimizer:
         except Exception as e:
             logger.error(f"Model optimization cleanup failed: {e}")
             raise
+}
+
+# File has syntax issues - needs manual review

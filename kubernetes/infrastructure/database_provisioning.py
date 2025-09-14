@@ -1,12 +1,14 @@
 """Database Provisioning System
 
+from datetime import datetime
+
 Provides comprehensive database management for PostgreSQL, Redis, MongoDB,
 Elasticsearch and Vector databases with high availability configurations.
 
 Project: IA Influencer Agent + Content Protection Platform
 Author: Fahed Mlaiel <mlaiel@live.de>
 
-⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
+# [EMOJI_REMOVED]  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED # [EMOJI_REMOVED]
 """
 
 import asyncio
@@ -153,7 +155,7 @@ class PostgreSQLProvisioner(DatabaseProvisionerInterface):
     """
 PostgreSQL database provisioner"""
     
-    def __init__(self, k8s_client=None):
+    def __init__(self, k8s_client=None) -> None:
         self.k8s_client = k8s_client
         self.apps_v1 = client.AppsV1Api() if k8s_client else None
         self.core_v1 = client.CoreV1Api() if k8s_client else None
@@ -399,7 +401,7 @@ Provision PostgreSQL database"""
 class RedisProvisioner(DatabaseProvisionerInterface):
     """Redis database provisioner"""
     
-    def __init__(self, k8s_client=None):
+    def __init__(self, k8s_client=None) -> None:
         self.k8s_client = k8s_client
         self.apps_v1 = client.AppsV1Api() if k8s_client else None
         self.core_v1 = client.CoreV1Api() if k8s_client else None
@@ -528,7 +530,7 @@ Provision Redis database"""
 class MongoDBProvisioner(DatabaseProvisionerInterface):
     """MongoDB database provisioner"""
     
-    def __init__(self, k8s_client=None):
+    def __init__(self, k8s_client=None) -> None:
         self.k8s_client = k8s_client
         self.apps_v1 = client.AppsV1Api() if k8s_client else None
         self.core_v1 = client.CoreV1Api() if k8s_client else None
@@ -603,7 +605,7 @@ Provision MongoDB database"""
 class ElasticsearchProvisioner(DatabaseProvisionerInterface):
     """Elasticsearch provisioner"""
     
-    def __init__(self, k8s_client=None):
+    def __init__(self, k8s_client=None) -> None:
         self.k8s_client = k8s_client
         self.apps_v1 = client.AppsV1Api() if k8s_client else None
         self.core_v1 = client.CoreV1Api() if k8s_client else None
@@ -653,7 +655,7 @@ Provision Elasticsearch cluster"""
 class DatabaseProvisioner:
     """Main database provisioner manager"""
     
-    def __init__(self, k8s_client=None):
+    def __init__(self, k8s_client=None) -> None:
         self.k8s_client = k8s_client
         self.provisioners = {
             DatabaseType.POSTGRESQL: PostgreSQLProvisioner(k8s_client),
@@ -799,3 +801,6 @@ Provision database based on type"""
         except Exception as e:
             logger.error(f"Failed to backup database: {e}")
             return {'status': 'error', 'message': str(e)}
+}
+
+# File has syntax issues - needs manual review

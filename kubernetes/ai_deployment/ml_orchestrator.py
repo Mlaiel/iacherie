@@ -79,7 +79,7 @@ class AIDeploymentConfig:
     gpu_limit: int = 2
     storage_size: str = "1Ti"
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.workload_types is None:
             self.workload_types = [AIWorkloadType.TRAINING, AIWorkloadType.INFERENCE, AIWorkloadType.REAL_TIME]
         if self.frameworks is None:
@@ -101,7 +101,7 @@ class MLOrchestrator:
     - Monitoring and observability
     """
     
-    def __init__(self, namespace: str = "ia-influencer-ai"):
+    def __init__(self, namespace -> None: str = "ia-influencer-ai") -> None:
         """
         Initialize AI/ML orchestrator
         
@@ -1266,3 +1266,5 @@ class MLOrchestrator:
         except Exception as e:
             logger.error(f"AI/ML stack cleanup failed: {e}")
             raise
+
+# File has syntax issues - needs manual review

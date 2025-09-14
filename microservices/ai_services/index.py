@@ -1,3 +1,8 @@
+"""
+Index module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 🤖 AI SERVICES MODULE - ENTERPRISE AI & ML SERVICES ENTRY POINT
@@ -64,7 +69,7 @@ class AIServicesModule:
     Provides service discovery, health monitoring, and orchestration.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize AI services module."""
         self.services: Dict[str, AIServiceInfo] = {}
         self.is_initialized = False
@@ -76,7 +81,7 @@ class AIServicesModule:
         logger.info("🤖 AI Services Module initialized")
         logger.info(f"📊 AI Services: {len(self.services)} services defined")
     
-    def _define_ai_services(self):
+    def _define_ai_services(self) -> None:
         """Define all AI services in the module."""
         self.services = {
             'ai_inference': AIServiceInfo(
@@ -172,7 +177,7 @@ class AIServicesModule:
             logger.error(f"❌ Failed to initialize AI services: {e}")
             return False
     
-    async def _load_service(self, service_name: str, service_info: AIServiceInfo):
+    async def _load_service(self, service_name -> None: str, service_info -> None: AIServiceInfo) -> None:
         """Load a specific AI service."""
         try:
             # Import the service module
@@ -264,17 +269,17 @@ class AIServicesModule:
 ai_services_module = AIServicesModule()
 
 
-async def start_services():
+async def start_services() -> None:
     """Start all AI services."""
     return await ai_services_module.start_services()
 
 
-def get_services():
+def get_services() -> None:
     """Get list of AI services."""
     return ai_services_module.get_services()
 
 
-async def main():
+async def main() -> None:
     """Main entry point for AI services module."""
     print("🤖 AI SERVICES MODULE - ENTERPRISE AI & ML")
     print("=" * 45)

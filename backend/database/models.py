@@ -1,4 +1,6 @@
 """🗃️ Backend Database Models - Consolidated Enterprise Data Models
+import logging
+
 ====================================================================
 Module: backend/database/models.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -220,7 +222,7 @@ class User(Base):
         Index('idx_users_active_verified', 'is_active', 'is_verified'),
     )
     
-    def __repr__(self):
+    def __repr__(self) -> None:
         return f"<User(id={self.id}, email={self.email}, creator_type={self.creator_type.value})>"
 
 
@@ -283,7 +285,7 @@ class ContentFingerprint(Base):
         Index('idx_fingerprints_created', 'created_at'),
     )
     
-    def __repr__(self):
+    def __repr__(self) -> None:
         return f"<ContentFingerprint(id={self.id}, type={self.content_type.value}, status={self.processing_status.value})>"
 
 
@@ -338,7 +340,7 @@ class ProtectionAlert(Base):
         Index('idx_alerts_created', 'created_at'),
     )
     
-    def __repr__(self):
+    def __repr__(self) -> None:
         return f"<ProtectionAlert(id={self.id}, type={self.alert_type.value}, severity={self.severity.value})>"
 
 
@@ -394,7 +396,7 @@ class RevenueTracking(Base):
         Index('idx_revenue_transaction', 'transaction_id'),
     )
     
-    def __repr__(self):
+    def __repr__(self) -> None:
         return f"<RevenueTracking(id={self.id}, amount={self.revenue_amount}, source={self.revenue_source.value})>"
 
 
@@ -444,7 +446,7 @@ class PaymentTransaction(Base):
         Index('idx_payments_created', 'created_at'),
     )
     
-    def __repr__(self):
+    def __repr__(self) -> None:
         return f"<PaymentTransaction(id={self.id}, amount={self.amount}, status={self.status.value})>"
 
 
@@ -504,7 +506,7 @@ class PlatformIntegration(Base):
         Index('idx_integrations_sync', 'last_sync_at'),
     )
     
-    def __repr__(self):
+    def __repr__(self) -> None:
         return f"<PlatformIntegration(id={self.id}, platform={self.platform.value}, status={self.integration_status.value})>"
 
 
@@ -573,7 +575,7 @@ class UserContent(Base):
         Index('idx_content_views', 'view_count'),
     )
     
-    def __repr__(self):
+    def __repr__(self) -> None:
         return f"<UserContent(id={self.id}, title={self.title}, type={self.content_type.value})>"
 
 
@@ -623,7 +625,7 @@ class AIAnalysis(Base):
         Index('idx_analysis_created', 'created_at'),
     )
     
-    def __repr__(self):
+    def __repr__(self) -> None:
         return f"<AIAnalysis(id={self.id}, type={self.analysis_type}, model={self.model_name})>"
 
 
@@ -685,7 +687,7 @@ class CollaborationRequest(Base):
         Index('idx_collaboration_score', 'matching_score'),
     )
     
-    def __repr__(self):
+    def __repr__(self) -> None:
         return f"<CollaborationRequest(id={self.id}, type={self.collaboration_type}, status={self.status})>"
 
 

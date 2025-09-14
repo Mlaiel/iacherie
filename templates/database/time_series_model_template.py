@@ -160,7 +160,7 @@ class TimeSeriesPoint(BaseModel):
     fields: Dict[str, Union[float, int, str, bool]]
     
     @validator('timestamp')
-    def validate_timestamp(cls, v):
+    def validate_timestamp(cls, v) -> None:
         if isinstance(v, str):
             return datetime.fromisoformat(v)
         return v
@@ -254,13 +254,13 @@ class AbstractTimeSeriesBackend(ABC):
 class InfluxDBBackend(AbstractTimeSeriesBackend):
     """InfluxDB backend implementation"""
     
-    def __init__(self, config: TimeSeriesConfig):
+    def __init__(self, config -> None: TimeSeriesConfig) -> None:
         self.config = config
         self.client = None
         self.write_api = None
         self.logger = logging.getLogger(__name__)
     
-    async def connect(self):
+    async def connect(self) -> None:
         """Connect to InfluxDB"""
         try:
             self.client = InfluxDBClientAsync(
@@ -281,7 +281,7 @@ class InfluxDBBackend(AbstractTimeSeriesBackend):
             self.logger.error(f"Failed to connect to InfluxDB: {e}")
             raise
     
-    async def disconnect(self):
+    async def disconnect(self) -> None:
         """Disconnect from InfluxDB"""
         if self.client:
             await self.client.close()
@@ -444,7 +444,7 @@ class InfluxDBBackend(AbstractTimeSeriesBackend):
 class TimeSeriesAnalyzer:
     """Time series analysis utilities"""
     
-    def __init__(self, config: TimeSeriesConfig):
+    def __init__(self, config -> None: TimeSeriesConfig) -> None:
         self.config = config
         self.logger = logging.getLogger(__name__)
     
@@ -870,7 +870,7 @@ class TimeSeriesAnalyzer:
 class TimeSeriesModel:
     """Main time series model class"""
     
-    def __init__(self, config: TimeSeriesConfig):
+    def __init__(self, config -> None: TimeSeriesConfig) -> None:
         self.config = config
         self.backend = self._create_backend()
         self.analyzer = TimeSeriesAnalyzer(config)
@@ -884,7 +884,7 @@ class TimeSeriesModel:
         else:
             raise ValueError(f"Unsupported backend: {self.config.backend}")
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize time series model"""
         await self.backend.connect()
         
@@ -898,7 +898,7 @@ class TimeSeriesModel:
         
         self.logger.info("Time series model initialized")
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Shutdown time series model"""
         await self.backend.disconnect()
         if self.cache:
@@ -1052,7 +1052,7 @@ class TimeSeriesModel:
 
 
 # Usage example
-async def main():
+async def main() -> None:
     """Example usage of TimeSeriesModel"""
     
     # Configure time series model

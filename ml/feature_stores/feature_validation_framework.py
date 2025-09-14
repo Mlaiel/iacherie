@@ -79,9 +79,9 @@ class FeatureValidationFramework:
     """
     
     def __init__(self,
-                 redis_host: str = "localhost",
-                 redis_port: int = 6379,
-                 validation_cache_ttl: int = 3600):
+                 redis_host -> None: str = "localhost",
+                 redis_port -> None: int = 6379,
+                 validation_cache_ttl -> None: int = 3600) -> None:
         self.logger = logging.getLogger(__name__)
         
         # Initialize Redis for caching
@@ -597,7 +597,7 @@ class FeatureValidationFramework:
         
         return f"feature_validation:{df_hash}:{config_hash}"
     
-    def _update_validation_metrics(self, report: FeatureQualityReport, start_time: datetime):
+    def _update_validation_metrics(self, report -> None: FeatureQualityReport, start_time -> None: datetime) -> None:
         """Update validation performance metrics"""
         self.validation_metrics['total_validations'] += 1
         
@@ -621,7 +621,7 @@ class FeatureValidationFramework:
 
 # Example usage and integration
 if __name__ == "__main__":
-    async def main():
+    async def main() -> None:
         # Initialize framework
         validator = FeatureValidationFramework()
         

@@ -1,4 +1,6 @@
 """Cache & Performance Integration Example
+import asyncio
+
 Demonstrates how to integrate all the new cache and performance features
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -119,7 +121,7 @@ def create_optimized_app() -> FastAPI:
     return app, redis_client
 
 
-def setup_optimization_services(redis_client):
+def setup_optimization_services(redis_client) -> None:
     """
     Setup optimization services
     """
@@ -138,18 +140,18 @@ def setup_optimization_services(redis_client):
 
 
 # Example FastAPI routes with optimizations
-def add_optimized_routes(app: FastAPI, services: dict):
+def add_optimized_routes(app -> None: FastAPI, services -> None: dict) -> None:
     """
     Add example routes that utilize the optimization features
     """
     
     @app.get("/health")
-    async def health_check():
+    async def health_check() -> None:
         """Health check endpoint (excluded from caching)"""
         return {"status": "healthy", "timestamp": "2025-01-27"}
     
     @app.get("/api/content/{content_id}")
-    async def get_content(content_id: str, request: Request):
+    async def get_content(content_id -> None: str, request -> None: Request) -> None:
         """Get content (cached for 30 minutes)"""
         # This will be automatically cached by the middleware
         
@@ -164,7 +166,7 @@ def add_optimized_routes(app: FastAPI, services: dict):
         return content
     
     @app.post("/api/content/")
-    async def create_content(content_data: dict, request: Request):
+    async def create_content(content_data -> None: dict, request -> None: Request) -> None:
         """Create content (invalidates content cache)"""
         # This will automatically invalidate content cache patterns
         
@@ -180,7 +182,7 @@ def add_optimized_routes(app: FastAPI, services: dict):
         return new_content
     
     @app.post("/api/optimize/image")
-    async def optimize_image(image_data: dict):
+    async def optimize_image(image_data -> None: dict) -> None:
         """Optimize image using the image optimizer"""
         
         image_optimizer = services['image_optimizer']
@@ -206,7 +208,7 @@ def add_optimized_routes(app: FastAPI, services: dict):
             return {"error": str(e)}
     
     @app.post("/api/optimize/batch-images")
-    async def optimize_batch_images(batch_data: dict):
+    async def optimize_batch_images(batch_data -> None: dict) -> None:
         """Optimize multiple images in batch"""
         
         batch_optimizer = services['batch_image_optimizer']
@@ -223,7 +225,7 @@ def add_optimized_routes(app: FastAPI, services: dict):
             return {"error": str(e)}
     
     @app.get("/api/cache/stats")
-    async def get_cache_stats(request: Request):
+    async def get_cache_stats(request -> None: Request) -> None:
         """Get cache performance statistics"""
         
         # Access middleware stats through app state
@@ -252,7 +254,7 @@ def add_optimized_routes(app: FastAPI, services: dict):
         return stats
     
     @app.get("/api/user/profile")
-    async def get_user_profile(request: Request):
+    async def get_user_profile(request -> None: Request) -> None:
         """Get user profile (requires session)"""
         
         # Session middleware will ensure user is authenticated
@@ -270,7 +272,7 @@ def add_optimized_routes(app: FastAPI, services: dict):
     print("✅ Optimized routes added")
 
 
-def main():
+def main() -> None:
     """
     Main function to demonstrate the complete setup
     """

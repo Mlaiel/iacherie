@@ -23,6 +23,7 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class VectorDatabaseType(Enum):
+    """VectorDatabaseType class implementation"""
     FAISS = "faiss"
     PINECONE = "pinecone"
     WEAVIATE = "weaviate"
@@ -30,6 +31,7 @@ class VectorDatabaseType(Enum):
     QDRANT = "qdrant"
 
 class ModelType(Enum):
+    """ModelType class implementation"""
     EMBEDDING = "embedding"
     CLASSIFICATION = "classification"
     GENERATION = "generation"
@@ -37,6 +39,7 @@ class ModelType(Enum):
     DETECTION = "detection"
 
 class BlockchainNetwork(Enum):
+    """BlockchainNetwork class implementation"""
     ETHEREUM = "ethereum"
     POLYGON = "polygon"
     BINANCE = "binance"
@@ -252,10 +255,10 @@ class MongoDocumentManagement(Base):
     created_at = Column(DateTime(timezone=True), default=datetime.utcnow)
     updated_at = Column(DateTime(timezone=True), default=datetime.utcnow, onupdate=datetime.utcnow)
 
-def get_advanced_integrations_models():
+def get_advanced_integrations_models() -> None:
     return [VectorDatabaseIntegration, AIModelStorage, ElasticsearchOptimization, RedisCachingStrategies, BlockchainIntegration, RealTimeStreaming, MongoDocumentManagement]
 
-def create_advanced_integrations_tables(engine):
+def create_advanced_integrations_tables(engine) -> None:
     try:
         Base.metadata.create_all(engine, tables=[model.__table__ for model in get_advanced_integrations_models()])
         logger.info("Successfully created advanced integrations tables")

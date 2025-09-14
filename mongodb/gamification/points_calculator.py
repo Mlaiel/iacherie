@@ -1,4 +1,6 @@
 """MongoDB Points Calculator
+import asyncio
+
 =========================
 
 Advanced points and scoring system for gamification in the Ainflue platform.
@@ -72,7 +74,7 @@ class PointsTransaction:
 class PointsCalculator:
     """Enterprise-grade points calculation system."""
     
-    def __init__(self, client: MongoClient, database_name: str):
+    def __init__(self, client -> None: MongoClient, database_name -> None: str) -> None:
         """Initialize points calculator."""
         if not MONGODB_AVAILABLE:
             raise ImportError("PyMongo is required for points calculation")
@@ -95,7 +97,7 @@ class PointsCalculator:
         # Initialize default rules
         self._ensure_default_rules()
     
-    def _ensure_default_rules(self):
+    def _ensure_default_rules(self) -> None:
         """Ensure default points rules exist."""
         default_rules = [
             PointsRule(
@@ -561,14 +563,14 @@ class PointsCalculator:
         timestamp = int(time.time() * 1000000)
         return f"pts_{timestamp}"
     
-    def _record_transaction(self, transaction: PointsTransaction):
+    def _record_transaction(self, transaction -> None: PointsTransaction) -> None:
         """Record points transaction in database."""
         try:
             self.points_transactions_collection.insert_one(asdict(transaction))
         except Exception as e:
             logger.error(f"Failed to record transaction: {e}")
     
-    def _update_user_points(self, user_id: str, points: int, category: PointsCategory):
+    def _update_user_points(self, user_id -> None: str, points -> None: int, category -> None: PointsCategory) -> None:
         """Update user's total points."""
         try:
             # Update total points

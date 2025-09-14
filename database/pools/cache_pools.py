@@ -1,3 +1,8 @@
+"""
+Cache Pools module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """Cache Pools - Consolidated Redis, Vector Store, and Multi-level Cache Implementations
 ========================================================================================
@@ -67,7 +72,7 @@ class CacheMetrics:
 class RedisConnectionPool:
     """Enterprise Redis connection pool with intelligent failover"""
     
-    def __init__(self, config: CacheConfig, connection_url: str):
+    def __init__(self, config -> None: CacheConfig, connection_url -> None: str) -> None:
         self.config = config
         self.connection_url = connection_url
         self._pool = None
@@ -115,7 +120,7 @@ class RedisConnectionPool:
         }
 
     @asynccontextmanager
-    async def get_connection(self):
+    async def get_connection(self) -> None:
         """Get Redis connection with automatic resource management"""
         if not self._initialized:
             raise RuntimeError("Pool not initialized")
@@ -145,7 +150,7 @@ class RedisConnectionPool:
                 self._metrics.active_connections -= 1
                 logger.debug("🔌 Redis connection released")
 
-    async def _health_monitor(self):
+    async def _health_monitor(self) -> None:
         """Monitor Redis pool health and performance"""
         while True:
             try:
@@ -168,7 +173,7 @@ class RedisConnectionPool:
             except Exception as e:
                 logger.error(f"🔥 Redis health check failed: {e}")
 
-    async def _check_auto_scaling(self):
+    async def _check_auto_scaling(self) -> None:
         """Check if Redis pool needs scaling"""
         async with self._scaling_lock:
             utilization = (self._metrics.active_connections / 
@@ -190,7 +195,7 @@ class RedisConnectionPool:
         """Get current pool metrics"""
         return self._metrics
 
-    async def close(self):
+    async def close(self) -> None:
         """Close the Redis pool and cleanup resources"""
         logger.info("🛑 Closing Redis pool...")
         
@@ -208,7 +213,7 @@ class RedisConnectionPool:
 class VectorStoreConnectionPool:
     """AI Vector database pooling for FAISS, Pinecone, Weaviate, Chroma"""
     
-    def __init__(self, config: CacheConfig, connection_url: str):
+    def __init__(self, config -> None: CacheConfig, connection_url -> None: str) -> None:
         self.config = config
         self.connection_url = connection_url
         self._index = None
@@ -257,7 +262,7 @@ class VectorStoreConnectionPool:
         }
 
     @asynccontextmanager
-    async def get_connection(self):
+    async def get_connection(self) -> None:
         """Get Vector store index connection"""
         if not self._initialized:
             raise RuntimeError("Pool not initialized")
@@ -287,7 +292,7 @@ class VectorStoreConnectionPool:
                 self._metrics.active_connections -= 1
                 logger.debug("🔌 Vector store connection released")
 
-    async def _health_monitor(self):
+    async def _health_monitor(self) -> None:
         """Monitor Vector store pool health"""
         while True:
             try:
@@ -310,7 +315,7 @@ class VectorStoreConnectionPool:
         """Get current pool metrics"""
         return self._metrics
 
-    async def close(self):
+    async def close(self) -> None:
         """Close Vector store connections"""
         logger.info("🛑 Closing Vector store pool...")
         
@@ -328,7 +333,7 @@ class VectorStoreConnectionPool:
 class CacheConnectionPool:
     """Multi-level cache pooling with L1 memory + L2 Redis coordination"""
     
-    def __init__(self, config: CacheConfig, connection_url: str):
+    def __init__(self, config -> None: CacheConfig, connection_url -> None: str) -> None:
         self.config = config
         self.connection_url = connection_url
         self._l1_cache = {}  # In-memory cache
@@ -370,7 +375,7 @@ class CacheConnectionPool:
             raise
 
     @asynccontextmanager
-    async def get_connection(self):
+    async def get_connection(self) -> None:
         """Get multi-level cache connection"""
         if not self._initialized:
             raise RuntimeError("Pool not initialized")
@@ -401,7 +406,7 @@ class CacheConnectionPool:
                 self._metrics.active_connections -= 1
                 logger.debug("🔌 Multi-level cache connection released")
 
-    async def _health_monitor(self):
+    async def _health_monitor(self) -> None:
         """Monitor multi-level cache pool health"""
         while True:
             try:
@@ -440,7 +445,7 @@ class CacheConnectionPool:
         self._metrics.memory_usage = len(self._l1_cache) * 100  # Mock memory usage
         return self._metrics
 
-    async def close(self):
+    async def close(self) -> None:
         """Close multi-level cache connections"""
         logger.info("🛑 Closing multi-level cache pool...")
         
@@ -473,7 +478,7 @@ async def cache_get(connection: Dict[str, Any], key: str) -> Optional[Any]:
     
     return None
 
-async def cache_set(connection: Dict[str, Any], key: str, value: Any, ttl: int = 3600):
+async def cache_set(connection -> None: Dict[str, Any], key -> None: str, value -> None: Any, ttl -> None: int = 3600) -> None:
     """Set value in multi-level cache"""
     # Set in L1
     if 'l1_cache' in connection:

@@ -160,24 +160,24 @@ class CommunicationAPIsIntegration:
     def __init__(
         self,
         # SendGrid credentials
-        sendgrid_api_key: Optional[str] = None,
-        sendgrid_from_email: Optional[str] = None,
+        sendgrid_api_key -> None: Optional[str] = None,
+        sendgrid_from_email -> None: Optional[str] = None,
         # Mailchimp credentials  
-        mailchimp_api_key: Optional[str] = None,
-        mailchimp_server_prefix: Optional[str] = None,
+        mailchimp_api_key -> None: Optional[str] = None,
+        mailchimp_server_prefix -> None: Optional[str] = None,
         # Twilio credentials
-        twilio_account_sid: Optional[str] = None,
-        twilio_auth_token: Optional[str] = None,
-        twilio_phone_number: Optional[str] = None,
+        twilio_account_sid -> None: Optional[str] = None,
+        twilio_auth_token -> None: Optional[str] = None,
+        twilio_phone_number -> None: Optional[str] = None,
         # Firebase/FCM credentials
-        fcm_server_key: Optional[str] = None,
-        fcm_project_id: Optional[str] = None,
+        fcm_server_key -> None: Optional[str] = None,
+        fcm_project_id -> None: Optional[str] = None,
         # Slack credentials
-        slack_bot_token: Optional[str] = None,
-        slack_webhook_url: Optional[str] = None,
+        slack_bot_token -> None: Optional[str] = None,
+        slack_webhook_url -> None: Optional[str] = None,
         # General settings
-        timeout: int = 30
-    ):
+        timeout -> None: int = 30
+    ) -> None:
         # Credentials storage
         self.sendgrid_api_key = sendgrid_api_key
         self.sendgrid_from_email = sendgrid_from_email
@@ -229,16 +229,16 @@ class CommunicationAPIsIntegration:
         
         logger.info("Communication APIs integration initialized")
     
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         """Async context manager entry."""
         await self._ensure_session()
         return self
     
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         """Async context manager exit."""
         await self.close()
     
-    async def _ensure_session(self):
+    async def _ensure_session(self) -> None:
         """Ensure HTTP session is available."""
         if self.session is None or self.session.closed:
             headers = {
@@ -252,7 +252,7 @@ class CommunicationAPIsIntegration:
                 timeout=aiohttp.ClientTimeout(total=self.timeout)
             )
     
-    async def close(self):
+    async def close(self) -> None:
         """Close HTTP session."""
         if self.session and not self.session.closed:
             await self.session.close()
@@ -1107,7 +1107,7 @@ async def send_welcome_email_sequence(
 
 if __name__ == "__main__":
     # Example usage
-    async def main():
+    async def main() -> None:
         import os
         
         async with CommunicationAPIsIntegration(

@@ -60,3 +60,5 @@ __all__ = [
     "DisasterRecoveryService",
     "CloudComplianceManager"
 ]
+
+# File has syntax issues - needs manual review

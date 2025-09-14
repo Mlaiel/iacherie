@@ -161,7 +161,7 @@ class ModelTrainingJob:
 class MLModelManager:
     """Machine learning model management"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.models: Dict[str, Any] = {}
         self.model_configs: Dict[str, ModelConfiguration] = {}
         self.training_jobs: Dict[str, ModelTrainingJob] = {}
@@ -370,7 +370,7 @@ class MLModelManager:
         else:
             return np.array(feature_values).reshape(1, -1)
     
-    async def _create_model(self, config: ModelConfiguration):
+    async def _create_model(self, config -> None: ModelConfiguration) -> None:
         """Create ML model based on configuration"""
         if config.model_type == ModelType.LINEAR_REGRESSION:
             return LinearRegression(**config.hyperparameters)
@@ -506,7 +506,7 @@ class MLModelManager:
 class PredictiveAnalyticsEngine:
     """Main predictive analytics engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.model_manager = MLModelManager()
         self.prediction_cache: Dict[str, PredictionResult] = {}
         
@@ -613,7 +613,7 @@ class PredictiveAnalyticsEngine:
 class PredictiveAnalyticsEventHandler:
     """Main event handler for predictive analytics events"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.analytics_engine = PredictiveAnalyticsEngine()
         
     async def handle_model_training(self, config: ModelConfiguration,

@@ -1,3 +1,8 @@
+"""
+Monitoring Dashboard module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 AINFLUE INTEGRATIONS MODULE - ENTERPRISE MONITORING DASHBOARD
@@ -48,7 +53,7 @@ class MonitoringMetrics:
 class IntegrationsMonitor:
     """Enterprise monitoring for all Ainflue integrations"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.services = {}
         self.metrics_history = []
         self.thresholds = {
@@ -412,7 +417,7 @@ Monitoring: ENTERPRISE REAL-TIME DASHBOARD ACTIVE
         
         return report
     
-    async def save_monitoring_data(self, metrics: MonitoringMetrics, base_path: str = "/home/runner/work/Ainflue/Ainflue/integrations"):
+    async def save_monitoring_data(self, metrics -> None: MonitoringMetrics, base_path -> None: str = "/home/runner/work/Ainflue/Ainflue/integrations") -> None:
         """Save monitoring data to files"""
         base_path = Path(base_path)
         
@@ -440,7 +445,7 @@ Monitoring: ENTERPRISE REAL-TIME DASHBOARD ACTIVE
         logger.info(f"   Dashboard: {dashboard_path}")
         logger.info(f"   Metrics: {json_path}")
 
-async def main():
+async def main() -> None:
     """Main monitoring execution"""
     print("🚀 AINFLUE INTEGRATIONS - ENTERPRISE MONITORING")
     print("=" * 60)

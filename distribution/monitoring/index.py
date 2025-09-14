@@ -83,7 +83,7 @@ class MonitoringEngine:
     for the entire Ainflue distribution platform.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize Monitoring Engine"""
         self.metrics_store = {}
         self.alert_rules = {}
@@ -225,7 +225,7 @@ class MonitoringEngine:
                 "error": str(e)
             }
     
-    async def start_monitoring(self):
+    async def start_monitoring(self) -> None:
         """Start the monitoring engine"""
         try:
             self.start_time = time.time()
@@ -239,12 +239,12 @@ class MonitoringEngine:
         except Exception as e:
             logger.error(f"Error starting monitoring engine: {e}")
     
-    async def stop_monitoring(self):
+    async def stop_monitoring(self) -> None:
         """Stop the monitoring engine"""
         self._running = False
         logger.info("Monitoring engine stopped")
     
-    async def _check_alert_rules(self, metric: MetricValue):
+    async def _check_alert_rules(self, metric -> None: MetricValue) -> None:
         """Check if metric triggers any alert rules"""
         try:
             for rule_name, rule in self.alert_rules.items():
@@ -267,7 +267,7 @@ class MonitoringEngine:
         except Exception as e:
             logger.error(f"Error checking alert rules: {e}")
     
-    async def _trigger_alert(self, rule: AlertRule, metric: MetricValue):
+    async def _trigger_alert(self, rule -> None: AlertRule, metric -> None: MetricValue) -> None:
         """Trigger an alert"""
         try:
             alert = Alert(
@@ -290,7 +290,7 @@ class MonitoringEngine:
         except Exception as e:
             logger.error(f"Error triggering alert: {e}")
     
-    async def _resolve_alert(self, rule_name: str):
+    async def _resolve_alert(self, rule_name -> None: str) -> None:
         """Resolve an active alert"""
         try:
             if rule_name in self.active_alerts:
@@ -301,7 +301,7 @@ class MonitoringEngine:
         except Exception as e:
             logger.error(f"Error resolving alert {rule_name}: {e}")
     
-    async def _metrics_collection_loop(self):
+    async def _metrics_collection_loop(self) -> None:
         """Background metrics collection loop"""
         while self._running:
             try:
@@ -312,7 +312,7 @@ class MonitoringEngine:
                 logger.error(f"Error in metrics collection loop: {e}")
                 await asyncio.sleep(5)
     
-    async def _alert_check_loop(self):
+    async def _alert_check_loop(self) -> None:
         """Background alert checking loop"""
         while self._running:
             try:
@@ -323,7 +323,7 @@ class MonitoringEngine:
                 logger.error(f"Error in alert check loop: {e}")
                 await asyncio.sleep(5)
     
-    async def _collect_system_metrics(self):
+    async def _collect_system_metrics(self) -> None:
         """Collect basic system metrics"""
         try:
             import psutil
@@ -346,7 +346,7 @@ class MonitoringEngine:
         except Exception as e:
             logger.error(f"Error collecting system metrics: {e}")
     
-    async def _cleanup_stale_alerts(self):
+    async def _cleanup_stale_alerts(self) -> None:
         """Clean up stale alerts"""
         try:
             cutoff_time = datetime.now() - timedelta(hours=24)

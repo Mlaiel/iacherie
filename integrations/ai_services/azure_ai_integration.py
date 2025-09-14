@@ -177,7 +177,7 @@ class AzureAIConfiguration:
 class AzureAIIntegration:
     """Comprehensive Azure AI services integration."""
     
-    def __init__(self, config: AzureAIConfiguration):
+    def __init__(self, config -> None: AzureAIConfiguration) -> None:
         self.config = config
         self.session = None
         self.credential = None

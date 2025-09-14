@@ -115,7 +115,7 @@ class PaymentRouterEngine:
     based on multiple factors including cost, performance, and reliability.
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """Initialize payment router engine"""
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -426,13 +426,13 @@ class PaymentRouterEngine:
             fallback_strategy="cost_optimization"
         )
     
-    async def update_provider_metrics(self, provider: str, metrics: ProviderMetrics):
+    async def update_provider_metrics(self, provider -> None: str, metrics -> None: ProviderMetrics) -> None:
         """Update provider performance metrics"""
         self.provider_metrics[provider] = metrics
         self.logger.debug(f"Updated metrics for provider: {provider}")
     
-    async def record_transaction_result(self, provider: str, success: bool, 
-                                      response_time: float, cost: Decimal):
+    async def record_transaction_result(self, provider -> None: str, success -> None: bool, 
+                                      response_time -> None: float, cost -> None: Decimal) -> None:
         """Record transaction result for learning"""
         result = {
             'success': 1 if success else 0,
@@ -447,13 +447,13 @@ class PaymentRouterEngine:
         if len(self.performance_history[provider]) > 1000:
             self.performance_history[provider] = self.performance_history[provider][-1000:]
     
-    async def add_routing_rule(self, rule: RoutingRule):
+    async def add_routing_rule(self, rule -> None: RoutingRule) -> None:
         """Add custom routing rule"""
         self.routing_rules.append(rule)
         self.routing_rules.sort(key=lambda x: x.priority)
         self.logger.info(f"Added routing rule: {rule.name}")
     
-    async def optimize_ml_weights(self):
+    async def optimize_ml_weights(self) -> None:
         """Optimize ML weights based on historical performance"""
         # Simplified ML optimization
         # In practice, this would use more sophisticated algorithms

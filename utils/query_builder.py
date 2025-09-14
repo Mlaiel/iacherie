@@ -45,7 +45,7 @@ class QueryBuilder:
     Enterprise SQL query builder with security and optimization features
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize query builder"""
         self.reset()
         
@@ -60,7 +60,7 @@ class QueryBuilder:
         
         logger.debug("QueryBuilder initialized")
     
-    def reset(self):
+    def reset(self) -> None:
         """Reset query builder state"""
         self._select_fields = []
         self._from_table = ""

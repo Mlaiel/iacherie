@@ -1,3 +1,8 @@
+"""
+Legal Services module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Ainflue Platform - Legal Services Integration Module
@@ -98,19 +103,19 @@ class LegalResponse(BaseModel):
 class DMCAService:
     """Service spécialisé DMCA takedown"""
     
-    def __init__(self, api_key: str, base_url: str = "https://api.dmca.com/v1"):
+    def __init__(self, api_key -> None: str, base_url -> None: str = "https -> None://api.dmca.com/v1") -> None:
         self.api_key = api_key
         self.base_url = base_url
         self.session = None
         
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         self.session = aiohttp.ClientSession(
             headers={"Authorization": f"Bearer {self.api_key}"},
             timeout=aiohttp.ClientTimeout(total=30)
         )
         return self
         
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         if self.session:
             await self.session.close()
             
@@ -177,12 +182,12 @@ class DMCAService:
 class CopyrightAgentService:
     """Service pour revendications de droits d'auteur"""
     
-    def __init__(self, api_key: str, base_url: str = "https://api.copyright-agent.com/v2"):
+    def __init__(self, api_key -> None: str, base_url -> None: str = "https -> None://api.copyright-agent.com/v2") -> None:
         self.api_key = api_key
         self.base_url = base_url
         self.session = None
         
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         self.session = aiohttp.ClientSession(
             headers={
                 "Authorization": f"Bearer {self.api_key}",
@@ -192,7 +197,7 @@ class CopyrightAgentService:
         )
         return self
         
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         if self.session:
             await self.session.close()
             
@@ -244,13 +249,13 @@ class CopyrightAgentService:
 class LegalZoomIntegration:
     """Integration avec LegalZoom pour services légaux complets"""
     
-    def __init__(self, api_key: str, client_id: str, base_url: str = "https://api.legalzoom.com/v1"):
+    def __init__(self, api_key -> None: str, client_id -> None: str, base_url -> None: str = "https -> None://api.legalzoom.com/v1") -> None:
         self.api_key = api_key
         self.client_id = client_id
         self.base_url = base_url
         self.session = None
         
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         self.session = aiohttp.ClientSession(
             headers={
                 "Authorization": f"Bearer {self.api_key}",
@@ -261,7 +266,7 @@ class LegalZoomIntegration:
         )
         return self
         
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         if self.session:
             await self.session.close()
             
@@ -343,7 +348,7 @@ class LegalZoomIntegration:
 class ComplianceMonitor:
     """Monitor compliance with legal requirements"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.compliance_checks = {
             "gdpr": self._check_gdpr_compliance,
             "ccpa": self._check_ccpa_compliance,
@@ -481,13 +486,13 @@ class ComplianceMonitor:
 class LegalServicesManager:
     """Manager principal pour tous les services légaux"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.services = {}
         self.compliance_monitor = ComplianceMonitor()
         self._initialize_services()
         
-    def _initialize_services(self):
+    def _initialize_services(self) -> None:
         """Initialize available legal services"""
         try:
             # DMCA Service
@@ -720,7 +725,7 @@ if __name__ == "__main__":
     # Test the legal services integration
     import asyncio
     
-    async def test_legal_services():
+    async def test_legal_services() -> None:
         """Test legal services functionality"""
         
         test_content_url = "https://ainflue.com/content/test-video-123"

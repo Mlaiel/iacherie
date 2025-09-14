@@ -1,3 +1,8 @@
+"""
+Transaction Coordination Service module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """Transaction Coordination Service - Distributed Transaction Management
 =======================================================================
@@ -78,7 +83,7 @@ class DistributedTransaction:
 class TransactionCoordinationService:
     """Main service for distributed transaction coordination"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.active_transactions: Dict[str, DistributedTransaction] = {}
         self.completed_transactions: List[DistributedTransaction] = []
         self.coordination_locks: Dict[str, asyncio.Lock] = {}
@@ -243,7 +248,7 @@ class TransactionCoordinationService:
         
         return all_committed
     
-    async def _abort_phase(self, transaction: DistributedTransaction):
+    async def _abort_phase(self, transaction -> None: DistributedTransaction) -> None:
         """Execute abort phase"""
         abort_tasks = []
         
@@ -294,15 +299,15 @@ class TransactionCoordinationService:
     
     async def _send_abort_request(
         self,
-        participant: TransactionParticipant,
-        context: Dict[str, Any]
-    ):
+        participant -> None: TransactionParticipant,
+        context -> None: Dict[str, Any]
+    ) -> None:
         """Send abort request to participant"""
         # Mock abort request
         await asyncio.sleep(0.03)  # Simulate network delay
         logger.debug(f"Abort request sent to {participant.service_name}")
     
-    async def _monitor_transaction_timeout(self, transaction_id: str):
+    async def _monitor_transaction_timeout(self, transaction_id -> None: str) -> None:
         """Monitor transaction for timeout"""
         transaction = self.active_transactions.get(transaction_id)
         if not transaction:
@@ -327,7 +332,7 @@ class TransactionCoordinationService:
             # Timeout was cancelled (transaction completed)
             pass
     
-    async def _cleanup_transaction(self, transaction_id: str):
+    async def _cleanup_transaction(self, transaction_id -> None: str) -> None:
         """Cleanup completed transaction"""
         if transaction_id in self.active_transactions:
             transaction = self.active_transactions[transaction_id]
@@ -451,7 +456,7 @@ class TransactionCoordinationService:
 class DistributedLockManager:
     """Manager for distributed locks"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.locks: Dict[str, Dict[str, Any]] = {}
         self.lock_timeouts: Dict[str, asyncio.Task] = {}
     
@@ -503,7 +508,7 @@ class DistributedLockManager:
         logger.debug(f"Lock released for resource {resource_id} by {owner_id}")
         return True
     
-    async def _lock_timeout(self, resource_id: str, timeout_seconds: int):
+    async def _lock_timeout(self, resource_id -> None: str, timeout_seconds -> None: int) -> None:
         """Handle lock timeout"""
         try:
             await asyncio.sleep(timeout_seconds)

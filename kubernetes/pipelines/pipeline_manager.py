@@ -42,9 +42,9 @@ class PipelineStep:
     """
 Individual pipeline step definition and execution"""
     
-    def __init__(self, name: str, command: str, working_dir: Optional[str] = None,
-                 environment_vars: Optional[Dict[str, str]] = None,
-                 timeout: int = 300, retry_count: int = 1):
+    def __init__(self, name -> None: str, command -> None: str, working_dir -> None: Optional[str] = None,
+                 environment_vars -> None: Optional[Dict[str, str]] = None,
+                 timeout -> None: int = 300, retry_count -> None: int = 1) -> None:
         self.name = name
         self.command = command
         self.working_dir = working_dir
@@ -112,7 +112,7 @@ Individual pipeline step definition and execution"""
 class PipelineExecution:
     """Pipeline execution context and management"""
     
-    def __init__(self, config: PipelineConfig, execution_id: str):
+    def __init__(self, config -> None: PipelineConfig, execution_id -> None: str) -> None:
         self.config = config
         self.execution_id = execution_id
         self.status = PipelineStatus.PENDING
@@ -122,7 +122,7 @@ class PipelineExecution:
         self.artifacts: Dict[str, Any] = {}
         self.logger = logging.getLogger(f"{__name__}.{execution_id}")
         
-    def add_step(self, step: PipelineStep):
+    def add_step(self, step -> None: PipelineStep) -> None:
         """Add execution step to pipeline"""
         self.steps.append(step)
         
@@ -197,8 +197,8 @@ class AdvancedPipelineManager:
     - Real-time execution tracking
     """
     
-    def __init__(self, config_dir: Optional[Path] = None, 
-                 max_concurrent_pipelines: int = 10):
+    def __init__(self, config_dir -> None: Optional[Path] = None, 
+                 max_concurrent_pipelines -> None: int = 10) -> None:
         self.config_dir = config_dir or Path(__file__).parent / "configs"
         self.max_concurrent_pipelines = max_concurrent_pipelines
         self.logger = logging.getLogger(__name__)
@@ -215,7 +215,7 @@ class AdvancedPipelineManager:
         # Initialize configurations
         self._load_pipeline_configurations()
         
-    def _load_pipeline_configurations(self):
+    def _load_pipeline_configurations(self) -> None:
         """Load pipeline configurations from config directory"""
         if not self.config_dir.exists():
             self.config_dir.mkdir(parents=True, exist_ok=True)
@@ -261,7 +261,7 @@ class AdvancedPipelineManager:
         self.logger.info(f"Registered pipeline: {pipeline_id}")
         return pipeline_id
         
-    def add_notification_handler(self, handler: Callable):
+    def add_notification_handler(self, handler -> None: Callable) -> None:
         """Add notification handler for pipeline events"""
         self.notification_handlers.append(handler)
         
@@ -305,8 +305,8 @@ Execute pipeline with specified context"""
                 del self.active_executions[execution_id]
             raise
             
-    async def _build_execution_steps(self, execution: PipelineExecution, 
-                                   context: Dict[str, Any]):
+    async def _build_execution_steps(self, execution -> None: PipelineExecution, 
+                                   context -> None: Dict[str, Any]) -> None:
         """Build concrete execution steps from configuration"""
         config = execution.config
         
@@ -322,8 +322,8 @@ Execute pipeline with specified context"""
         elif config.pipeline_type == PipelineType.ROLLBACK:
             await self._build_steps_for_rollback(execution, context)
             
-    async def _build_steps_for_build(self, execution: PipelineExecution, 
-                                   context: Dict[str, Any]):
+    async def _build_steps_for_build(self, execution -> None: PipelineExecution, 
+                                   context -> None: Dict[str, Any]) -> None:
         """
 Build steps for application build pipeline"""
         steps = [
@@ -364,8 +364,8 @@ Build steps for application build pipeline"""
         for step in steps:
             execution.add_step(step)
             
-    async def _build_steps_for_test(self, execution: PipelineExecution, 
-                                  context: Dict[str, Any]):
+    async def _build_steps_for_test(self, execution -> None: PipelineExecution, 
+                                  context -> None: Dict[str, Any]) -> None:
         """Build steps for testing pipeline"""
         steps = [
             PipelineStep(
@@ -393,8 +393,8 @@ Build steps for application build pipeline"""
         for step in steps:
             execution.add_step(step)
             
-    async def _build_steps_for_deploy(self, execution: PipelineExecution, 
-                                    context: Dict[str, Any]):
+    async def _build_steps_for_deploy(self, execution -> None: PipelineExecution, 
+                                    context -> None: Dict[str, Any]) -> None:
         """Build steps for deployment pipeline"""
         env = execution.config.environment.value
         
@@ -425,8 +425,8 @@ Build steps for application build pipeline"""
         for step in steps:
             execution.add_step(step)
             
-    async def _build_steps_for_security(self, execution: PipelineExecution, 
-                                      context: Dict[str, Any]):
+    async def _build_steps_for_security(self, execution -> None: PipelineExecution, 
+                                      context -> None: Dict[str, Any]) -> None:
         """Build steps for security scanning pipeline"""
         steps = [
             PipelineStep(
@@ -453,8 +453,8 @@ Build steps for application build pipeline"""
         for step in steps:
             execution.add_step(step)
             
-    async def _build_steps_for_rollback(self, execution: PipelineExecution, 
-                                      context: Dict[str, Any]):
+    async def _build_steps_for_rollback(self, execution -> None: PipelineExecution, 
+                                      context -> None: Dict[str, Any]) -> None:
         """Build steps for rollback pipeline"""
         env = execution.config.environment.value
         previous_version = context.get('previous_version', 'previous')
@@ -482,7 +482,7 @@ Build steps for application build pipeline"""
         for step in steps:
             execution.add_step(step)
             
-    async def _send_notifications(self, execution: PipelineExecution, success: bool):
+    async def _send_notifications(self, execution -> None: PipelineExecution, success -> None: bool) -> None:
         """Send notifications for pipeline completion"""
         for handler in self.notification_handlers:
             try:

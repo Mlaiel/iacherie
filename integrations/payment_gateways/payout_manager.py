@@ -51,7 +51,7 @@ class TaxStatus(Enum):
 class CreatorProfile:
     """Creator profile for payout management"""
     
-    def __init__(self, creator_id: str, username: str, email: str):
+    def __init__(self, creator_id -> None: str, username -> None: str, email -> None: str) -> None:
         self.creator_id = creator_id
         self.username = username
         self.email = email
@@ -70,7 +70,7 @@ class CreatorProfile:
 class PayoutTransaction:
     """Individual payout transaction"""
     
-    def __init__(self, transaction_id: str, creator_id: str, amount: decimal.Decimal):
+    def __init__(self, transaction_id -> None: str, creator_id -> None: str, amount -> None: decimal.Decimal) -> None:
         self.transaction_id = transaction_id
         self.creator_id = creator_id
         self.amount = amount
@@ -90,7 +90,7 @@ class PayoutTransaction:
 class RevenueSource:
     """Revenue source tracking"""
     
-    def __init__(self, source_id: str, source_type: str, platform: str):
+    def __init__(self, source_id -> None: str, source_type -> None: str, platform -> None: str) -> None:
         self.source_id = source_id
         self.source_type = source_type  # 'subscription', 'one_time', 'tips', 'ads'
         self.platform = platform  # 'youtube', 'twitch', 'substack', etc.
@@ -119,7 +119,7 @@ class PayoutManager:
     - Performance analytics and insights
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.gateways = {}
         self.session = None
@@ -132,17 +132,17 @@ class PayoutManager:
         # Initialize payment gateways
         self._initialize_gateways()
         
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         """Async context manager entry"""
         self.session = aiohttp.ClientSession()
         return self
         
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         """Async context manager exit"""
         if self.session:
             await self.session.close()
 
-    def _initialize_gateways(self):
+    def _initialize_gateways(self) -> None:
         """Initialize payment gateway connections"""
         gateway_configs = self.config.get('gateways', {})
         
@@ -789,7 +789,7 @@ class PayoutManager:
     # Additional helper methods for comprehensive functionality would continue here...
 
 # Example usage and testing
-async def main():
+async def main() -> None:
     """Example usage of Payout Manager integration"""
     
     # Initialize the Payout Manager

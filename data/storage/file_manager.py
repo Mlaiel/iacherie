@@ -210,8 +210,8 @@ class FileManager:
     """
     
     def __init__(self, 
-                 storage_path: Union[str, Path] = "/tmp/ia_influencer_storage",
-                 validation_config: Optional[FileValidationConfig] = None):
+                 storage_path -> None: Union[str, Path] = "/tmp/ia_influencer_storage",
+                 validation_config -> None: Optional[FileValidationConfig] = None) -> None:
         """
         Initialize FileManager with professional configuration.
         
@@ -242,7 +242,7 @@ class FileManager:
         
         self.logger.info("🎯 FileManager initialized with industrial-grade capabilities")
     
-    def _create_storage_structure(self):
+    def _create_storage_structure(self) -> None:
         """Create organized storage directory structure"""
         directories = [
             "uploads/pending",
@@ -801,7 +801,7 @@ Malware scanning simulation (integrate with real scanner in production)"""
         except Exception as e:
             return {"valid": False, "reason": f"Image integrity check failed: {str(e)}"}
     
-    async def _quarantine_file(self, file_path: Path, file_id: str, errors: List[str]):
+    async def _quarantine_file(self, file_path -> None: Path, file_id -> None: str, errors -> None: List[str]) -> None:
         """Move suspicious or invalid files to quarantine"""
         try:
             quarantine_path = self.storage_path / "uploads" / "quarantine" / f"{file_id}_{file_path.name}"
@@ -874,7 +874,7 @@ Calculate SHA-256 hash of file"""
         
         return hash_sha256.hexdigest()
     
-    async def _extract_audio_metadata(self, file_path: Path, metadata: FileMetadata):
+    async def _extract_audio_metadata(self, file_path -> None: Path, metadata -> None: FileMetadata) -> None:
         """
 Extract audio-specific metadata"""
         try:
@@ -912,7 +912,7 @@ Extract audio-specific metadata"""
         except Exception as e:
             self.logger.warning(f"Audio metadata extraction failed: {e}")
     
-    async def _extract_video_metadata(self, file_path: Path, metadata: FileMetadata):
+    async def _extract_video_metadata(self, file_path -> None: Path, metadata -> None: FileMetadata) -> None:
         """Extract video-specific metadata"""
         try:
             cap = cv2.VideoCapture(str(file_path))
@@ -938,7 +938,7 @@ Extract audio-specific metadata"""
         except Exception as e:
             self.logger.warning(f"Video metadata extraction failed: {e}")
     
-    async def _extract_image_metadata(self, file_path: Path, metadata: FileMetadata):
+    async def _extract_image_metadata(self, file_path -> None: Path, metadata -> None: FileMetadata) -> None:
         """Extract image-specific metadata"""
         try:
             with Image.open(file_path) as img:
@@ -1229,7 +1229,7 @@ Extract audio-specific metadata"""
         
         return optimized
     
-    async def _save_metadata(self, metadata: FileMetadata):
+    async def _save_metadata(self, metadata -> None: FileMetadata) -> None:
         """Save file metadata to storage"""
         try:
             metadata_path = self.storage_path / "metadata" / f"{metadata.file_id}.json"
@@ -1276,7 +1276,7 @@ Extract audio-specific metadata"""
         except Exception as e:
             self.logger.error(f"Failed to save metadata for {metadata.file_id}: {e}")
     
-    def _update_stats(self, metadata: FileMetadata, processing_time: float):
+    def _update_stats(self, metadata -> None: FileMetadata, processing_time -> None: float) -> None:
         """Update processing statistics"""
         self.stats["files_processed"] += 1
         self.stats["total_size_processed"] += metadata.file_size
@@ -1437,7 +1437,7 @@ Extract audio-specific metadata"""
             self.logger.error(f"Failed to get processing stats: {e}")
             return self.stats.copy()
     
-    async def cleanup_temp_files(self, max_age_hours: int = 24):
+    async def cleanup_temp_files(self, max_age_hours -> None: int = 24) -> None:
         """Clean up temporary files older than specified hours"""
         try:
             cutoff_time = datetime.now() - timedelta(hours=max_age_hours)
@@ -1474,7 +1474,7 @@ Extract audio-specific metadata"""
             self.logger.error(f"Cleanup failed: {e}")
             return 0
     
-    def __del__(self):
+    def __del__(self) -> None:
         """Cleanup resources on destruction"""
         try:
             if hasattr(self, 'executor'):

@@ -113,9 +113,9 @@ class HuggingFaceIntegration:
     
     def __init__(
         self,
-        api_token: Optional[str] = None,
-        config: Optional[Dict[str, Any]] = None
-    ):
+        api_token -> None: Optional[str] = None,
+        config -> None: Optional[Dict[str, Any]] = None
+    ) -> None:
         self.api_token = api_token
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
@@ -160,7 +160,7 @@ class HuggingFaceIntegration:
         self.request_history: List[InferenceResponse] = []
         self.max_history = self.config.get('max_history', 1000)
         
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize the HuggingFace integration."""
         # Test API connectivity
         try:
@@ -635,7 +635,7 @@ class HuggingFaceIntegration:
             self.logger.error(f"Failed to load dataset {dataset_name}: {e}")
             raise
     
-    async def _update_metrics(self, response: InferenceResponse, success: bool):
+    async def _update_metrics(self, response -> None: InferenceResponse, success -> None: bool) -> None:
         """Update integration metrics."""
         self.metrics['total_requests'] += 1
         
@@ -699,7 +699,7 @@ class HuggingFaceIntegration:
             }
         }
     
-    async def clear_cache(self):
+    async def clear_cache(self) -> None:
         """Clear model cache to free memory."""
         self.loaded_pipelines.clear()
         self.loaded_models.clear()
@@ -737,7 +737,7 @@ class HuggingFaceIntegration:
                 'last_check': datetime.now().isoformat()
             }
     
-    async def cleanup(self):
+    async def cleanup(self) -> None:
         """Cleanup resources."""
         await self.clear_cache()
         await self.inference_client.aclose()
@@ -745,7 +745,7 @@ class HuggingFaceIntegration:
 
 # Example usage
 if __name__ == "__main__":
-    async def main():
+    async def main() -> None:
         # Initialize HuggingFace integration
         hf = HuggingFaceIntegration(
             api_token="your-huggingface-token"

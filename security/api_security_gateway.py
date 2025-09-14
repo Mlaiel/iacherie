@@ -1,3 +1,8 @@
+"""
+Api Security Gateway module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 🛡️ API Security Gateway - Ainflue Platform
@@ -136,7 +141,7 @@ class APISecurityGateway:
     - SSL/TLS enforcement
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.redis_client = None
         
@@ -177,7 +182,7 @@ class APISecurityGateway:
         
         logger.info("🛡️ API Security Gateway initialized")
 
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize the API security gateway"""
         try:
             # Initialize Redis connection
@@ -201,7 +206,7 @@ class APISecurityGateway:
             raise
 
     @middleware
-    async def security_middleware(self, request: aiohttp.web.Request, handler):
+    async def security_middleware(self, request -> None: aiohttp.web.Request, handler) -> None:
         """Main security middleware for API requests"""
         start_time = time.time()
         self.requests_processed += 1
@@ -724,7 +729,7 @@ class APISecurityGateway:
         
         return response
 
-    def _add_security_headers(self, response: web.Response):
+    def _add_security_headers(self, response -> None: web.Response) -> None:
         """Add security headers to response"""
         for header, value in self.security_headers.items():
             response.headers[header] = value
@@ -928,22 +933,22 @@ class APISecurityGateway:
             "insomnia",
         ]
 
-    async def _load_endpoints_config(self):
+    async def _load_endpoints_config(self) -> None:
         """Load endpoints configuration"""
         # This would typically load from database or config file
         pass
 
-    async def _load_security_rules(self):
+    async def _load_security_rules(self) -> None:
         """Load security rules from storage"""
         # This would typically load from database
         pass
 
-    async def _load_blocked_lists(self):
+    async def _load_blocked_lists(self) -> None:
         """Load blocked IPs and tokens"""
         # This would typically load from database
         pass
 
-    async def _initialize_default_endpoints(self):
+    async def _initialize_default_endpoints(self) -> None:
         """Initialize default API endpoints"""
         default_endpoints = [
             APIEndpoint(
@@ -1010,7 +1015,7 @@ class APISecurityGateway:
 
     # Logging and monitoring
 
-    async def _log_request(self, api_request: APIRequest, status: int, processing_time: float):
+    async def _log_request(self, api_request -> None: APIRequest, status -> None: int, processing_time -> None: float) -> None:
         """Log API request"""
         log_data = {
             'request_id': api_request.request_id,
@@ -1030,7 +1035,7 @@ class APISecurityGateway:
                 json.dumps(log_data)
             )
 
-    async def _handle_threats(self, threats: List[SecurityThreat]):
+    async def _handle_threats(self, threats -> None: List[SecurityThreat]) -> None:
         """Handle detected threats"""
         for threat in threats:
             # Store threat
@@ -1056,15 +1061,15 @@ class APISecurityGateway:
 
     # Public API
 
-    def add_endpoint(self, endpoint: APIEndpoint):
+    def add_endpoint(self, endpoint -> None: APIEndpoint) -> None:
         """Add API endpoint configuration"""
         self.endpoints[endpoint.path] = endpoint
 
-    def block_ip(self, ip_address: str):
+    def block_ip(self, ip_address -> None: str) -> None:
         """Block IP address"""
         self.blocked_ips.add(ip_address)
 
-    def unblock_ip(self, ip_address: str):
+    def unblock_ip(self, ip_address -> None: str) -> None:
         """Unblock IP address"""
         self.blocked_ips.discard(ip_address)
 
@@ -1080,7 +1085,7 @@ class APISecurityGateway:
             'threat_detection_rate': self.threats_detected / max(self.requests_processed, 1)
         }
 
-    async def close(self):
+    async def close(self) -> None:
         """Cleanup resources"""
         if self.redis_client:
             self.redis_client.close()
@@ -1094,7 +1099,7 @@ __all__ = [
 ]
 
 if __name__ == "__main__":
-    async def test_api_security_gateway():
+    async def test_api_security_gateway() -> None:
         """Test the API security gateway"""
         config = {
             'global_rate_limit': 100,

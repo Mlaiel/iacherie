@@ -96,9 +96,9 @@ class DependencyManagementSystem:
     """
     
     def __init__(self, 
-                 project_path: str,
-                 enable_ai_resolution: bool = True,
-                 security_scanning: bool = True):
+                 project_path -> None: str,
+                 enable_ai_resolution -> None: bool = True,
+                 security_scanning -> None: bool = True) -> None:
         """Initialize with enterprise dependency management"""
         self.project_path = Path(project_path)
         self.enable_ai_resolution = enable_ai_resolution
@@ -125,7 +125,7 @@ class DependencyManagementSystem:
         self._initialize_dependency_tracking()
         self._load_security_policies()
     
-    def _initialize_dependency_tracking(self):
+    def _initialize_dependency_tracking(self) -> None:
         """🗄️ DBA - Initialize dependency metadata tracking"""
         
         # Load existing dependency specifications
@@ -165,7 +165,7 @@ class DependencyManagementSystem:
         
         logger.info("Dependency tracking initialized")
     
-    def _load_security_policies(self):
+    def _load_security_policies(self) -> None:
         """🔒 Security - Load security policies and vulnerability data"""
         
         self.security_policies = {
@@ -197,7 +197,7 @@ class DependencyManagementSystem:
         
         logger.info("Security policies loaded")
     
-    def _load_dependency_specifications(self):
+    def _load_dependency_specifications(self) -> None:
         """🗄️ DBA - Load dependency specifications from project files"""
         
         # Load from requirements.txt
@@ -215,7 +215,7 @@ class DependencyManagementSystem:
         if ml_requirements.exists():
             self._parse_requirements_file(ml_requirements, ml_specific=True)
     
-    def _parse_requirements_file(self, file_path: Path, ml_specific: bool = False):
+    def _parse_requirements_file(self, file_path -> None: Path, ml_specific -> None: bool = False) -> None:
         """🔬 ML Engineer - Parse requirements file"""
         
         try:
@@ -255,7 +255,7 @@ class DependencyManagementSystem:
         except Exception as e:
             logger.error(f"Failed to parse requirements file {file_path}: {e}")
     
-    def _parse_setup_file(self, file_path: Path):
+    def _parse_setup_file(self, file_path -> None: Path) -> None:
         """⚙️ DevOps - Parse setup.py for dependencies"""
         # Simplified parsing - in production would use AST parsing
         logger.info(f"Parsing setup file: {file_path}")
@@ -791,7 +791,7 @@ class DependencyManagementSystem:
             "strategy_effective": resolved_count > 0
         }
     
-    async def _update_dependency_tracking(self, resolution_result: Dict):
+    async def _update_dependency_tracking(self, resolution_result -> None: Dict) -> None:
         """🗄️ DBA - Update dependency tracking"""
         
         for pkg in resolution_result["affected_packages"]:
@@ -883,7 +883,7 @@ class DependencyManagementSystem:
         return validation_result
 
 # Example usage demonstrating all expert roles
-async def example_usage():
+async def example_usage() -> None:
     """🎖️ Lead Dev IA - Example demonstrating all expert roles"""
     
     # Initialize dependency management system

@@ -1,4 +1,6 @@
 """
+import asyncio
+
 Notifications Configuration Module
 Standalone configuration for the Ainflue notifications system
 """
@@ -50,7 +52,7 @@ class NotificationConfig:
 settings = NotificationConfig()
 
 # Update from environment variables
-def load_from_env():
+def load_from_env() -> None:
     """Load configuration from environment variables"""
     settings.database_url = os.getenv("NOTIFICATIONS_DATABASE_URL", settings.database_url)
     settings.redis_url = os.getenv("NOTIFICATIONS_REDIS_URL", settings.redis_url)
@@ -76,17 +78,17 @@ def load_from_env():
 class MetricsCollector:
     """Simple metrics collector for notifications"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.metrics = {}
         self.logger = logging.getLogger(__name__)
     
-    async def increment(self, metric_name: str, tags: Optional[Dict[str, str]] = None):
+    async def increment(self, metric_name -> None: str, tags -> None: Optional[Dict[str, str]] = None) -> None:
         """Increment a counter metric"""
         key = f"{metric_name}:{':'.join(f'{k}={v}' for k, v in (tags or {}).items())}"
         self.metrics[key] = self.metrics.get(key, 0) + 1
         self.logger.debug(f"Metric incremented: {key} = {self.metrics[key]}")
     
-    async def histogram(self, metric_name: str, value: float, tags: Optional[Dict[str, str]] = None):
+    async def histogram(self, metric_name -> None: str, value -> None: float, tags -> None: Optional[Dict[str, str]] = None) -> None:
         """Record a histogram metric"""
         key = f"{metric_name}_histogram:{':'.join(f'{k}={v}' for k, v in (tags or {}).items())}"
         if key not in self.metrics:

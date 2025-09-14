@@ -129,7 +129,7 @@ class MLOpsPipelineConfig:
     max_pipeline_duration: int = 7200  # 2 hours
     retry_attempts: int = 3
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if not self.stages:
             self.stages = list(PipelineStage)
         if not self.data_validation_rules:
@@ -155,7 +155,7 @@ class MLOpsPipelineDeployment:
     - Resource optimization and scaling
     """
     
-    def __init__(self, namespace: str = "ia-influencer-mlops"):
+    def __init__(self, namespace -> None: str = "ia-influencer-mlops") -> None:
         """
         Initialize MLOps pipeline deployment
         

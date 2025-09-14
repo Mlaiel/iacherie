@@ -122,11 +122,11 @@ class GCPIntegration:
     
     def __init__(
         self,
-        project_id: str,
-        credentials_path: Optional[str] = None,
-        credentials_dict: Optional[Dict[str, Any]] = None,
-        default_region: GCPRegion = GCPRegion.US_CENTRAL1
-    ):
+        project_id -> None: str,
+        credentials_path -> None: Optional[str] = None,
+        credentials_dict -> None: Optional[Dict[str, Any]] = None,
+        default_region -> None: GCPRegion = GCPRegion.US_CENTRAL1
+    ) -> None:
         """Initialize GCP integration.
         
         Args:
@@ -169,7 +169,7 @@ class GCPIntegration:
         self.logger = logging.getLogger(__name__)
         self.session = httpx.AsyncClient(timeout=30.0)
 
-    def _init_clients(self):
+    def _init_clients(self) -> None:
         """Initialize GCP service clients."""
         try:
             # Storage client
@@ -874,15 +874,15 @@ class GCPIntegration:
             self.logger.error(f"Failed to get metrics: {e}")
             raise
 
-    async def close(self):
+    async def close(self) -> None:
         """Close HTTP session and cleanup resources."""
         await self.session.aclose()
 
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         """Async context manager entry."""
         return self
 
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         """Async context manager exit."""
         await self.close()
 

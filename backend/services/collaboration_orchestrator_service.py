@@ -136,7 +136,7 @@ class CollaborationWorkflow:
 class CollaborationManager:
     """Gestionnaire principal de collaboration"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         self.encryption_key = Fernet.generate_key()
@@ -255,7 +255,7 @@ class CollaborationManager:
 class SmartContracts:
     """Gestionnaire de contrats intelligents"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         self.encryption_key = Fernet.generate_key()
@@ -350,7 +350,7 @@ class SmartContracts:
 class RevenueSplitter:
     """Système de répartition intelligente des revenus"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         
@@ -425,7 +425,7 @@ class RevenueSplitter:
 class WorkspaceManager:
     """Gestionnaire d'espaces de travail collaboratifs"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         
@@ -510,7 +510,7 @@ class WorkspaceManager:
 class CollaborationOrchestratorService:
     """Service principal d'orchestration de collaboration"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         self.collaboration_manager = CollaborationManager(redis_client, db_session)

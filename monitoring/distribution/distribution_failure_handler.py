@@ -119,7 +119,7 @@ class FailurePattern:
 class DistributionFailureHandler:
     """Main distribution failure handling system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.failures: List[DistributionFailure] = []
         self.retry_attempts: List[RetryAttempt] = []
         self.circuit_breakers: Dict[str, CircuitBreaker] = {}
@@ -250,7 +250,7 @@ class DistributionFailureHandler:
         except:
             return None
             
-    async def _update_circuit_breaker(self, platform: str, failure_type: FailureType, success: bool):
+    async def _update_circuit_breaker(self, platform -> None: str, failure_type -> None: FailureType, success -> None: bool) -> None:
         """Update circuit breaker state"""
         breaker_key = f"{platform}_{failure_type.value}"
         
@@ -309,7 +309,7 @@ class DistributionFailureHandler:
             
         return True
         
-    async def _schedule_retry(self, failure: DistributionFailure, retry_strategy: RetryStrategy):
+    async def _schedule_retry(self, failure -> None: DistributionFailure, retry_strategy -> None: RetryStrategy) -> None:
         """Schedule a retry attempt"""
         delay = self._calculate_retry_delay(failure.retry_count, retry_strategy)
         scheduled_time = datetime.now() + timedelta(seconds=delay)
@@ -340,14 +340,14 @@ class DistributionFailureHandler:
             return self.base_retry_delay
             
     async def _execute_retry_after_delay(self, 
-                                       delay: float, 
-                                       failure: DistributionFailure, 
-                                       retry_attempt: RetryAttempt):
+                                       delay -> None: float, 
+                                       failure -> None: DistributionFailure, 
+                                       retry_attempt -> None: RetryAttempt) -> None:
         """Execute retry after specified delay"""
         await asyncio.sleep(delay)
         await self._execute_retry(failure, retry_attempt)
         
-    async def _execute_retry(self, failure: DistributionFailure, retry_attempt: RetryAttempt):
+    async def _execute_retry(self, failure -> None: DistributionFailure, retry_attempt -> None: RetryAttempt) -> None:
         """Execute a retry attempt"""
         retry_attempt.executed_at = datetime.now()
         start_time = datetime.now()
@@ -409,7 +409,7 @@ class DistributionFailureHandler:
         success_probability = 0.3 + (failure.retry_count * 0.2)
         return random.random() < success_probability
         
-    async def _send_failure_notification(self, failure: DistributionFailure):
+    async def _send_failure_notification(self, failure -> None: DistributionFailure) -> None:
         """Send failure notification to registered handlers"""
         notification_data = {
             'type': 'failure',
@@ -428,7 +428,7 @@ class DistributionFailureHandler:
             except Exception as e:
                 logger.error(f"Notification handler failed: {e}")
                 
-    async def _send_recovery_notification(self, failure: DistributionFailure):
+    async def _send_recovery_notification(self, failure -> None: DistributionFailure) -> None:
         """Send recovery notification"""
         notification_data = {
             'type': 'recovery',
@@ -445,7 +445,7 @@ class DistributionFailureHandler:
             except Exception as e:
                 logger.error(f"Recovery notification handler failed: {e}")
                 
-    async def _detect_failure_patterns(self):
+    async def _detect_failure_patterns(self) -> None:
         """Detect patterns in failures"""
         if len(self.failures) < 10:  # Need minimum data
             return
@@ -559,11 +559,11 @@ class DistributionFailureHandler:
             'circuit_breaker_status': circuit_breaker_status
         }
         
-    def register_notification_handler(self, handler: Callable):
+    def register_notification_handler(self, handler -> None: Callable) -> None:
         """Register a notification handler for failures and recoveries"""
         self.notification_handlers.append(handler)
         
-    def register_recovery_callback(self, platform: str, callback: Callable):
+    def register_recovery_callback(self, platform -> None: str, callback -> None: Callable) -> None:
         """Register a recovery callback for specific platform"""
         self.recovery_callbacks[platform] = callback
 

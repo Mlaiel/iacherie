@@ -132,7 +132,7 @@ class KPIDashboardMetrics:
 class KPIOrchestrator:
     """Enterprise KPI orchestration engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.active_kpis: Dict[str, KPIDefinition] = {}
         self.kpi_history: Dict[str, List[KPIEvent]] = {}
         self.automation_rules: Dict[str, Dict[str, Any]] = {}
@@ -558,7 +558,7 @@ class KPIOrchestrator:
 class KPIOrchestratorEventHandler:
     """Main event handler for KPI orchestration events"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.orchestrator = KPIOrchestrator()
     
     async def handle_kpi_registration(self, kpi_definition: KPIDefinition) -> str:

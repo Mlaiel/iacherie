@@ -202,7 +202,7 @@ class ViralityPrediction:
 class SocialGraphAnalyzer:
     """Social graph analysis and insights system."""
     
-    def __init__(self, redis_url: Optional[str] = None):
+    def __init__(self, redis_url -> None: Optional[str] = None) -> None:
         self.redis_client = None
         self.redis_url = redis_url
         
@@ -859,7 +859,7 @@ class SocialGraphAnalyzer:
             logger.error(f"Failed to get network statistics: {str(e)}")
             return {}
     
-    async def cleanup(self):
+    async def cleanup(self) -> None:
         """Cleanup resources."""
         try:
             # Clear caches
@@ -878,7 +878,7 @@ class SocialGraphAnalyzer:
 
 
 # Example usage
-async def main():
+async def main() -> None:
     """Example usage of social graph analyzer."""
     analyzer = SocialGraphAnalyzer()
     

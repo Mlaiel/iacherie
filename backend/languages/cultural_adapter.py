@@ -124,7 +124,7 @@ class CulturalAdapter:
     with deep cultural intelligence and sensitivity
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize cultural adapter"""
         self.config = config or {}
         self.cultural_profiles = self._load_cultural_profiles()

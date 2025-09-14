@@ -162,7 +162,7 @@ class TextData:
     complexity_level: Optional[TextComplexity] = None
     created_at: datetime = field(default_factory=datetime.now)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         """Auto-calculate basic statistics"""
         if self.word_count is None:
             self.word_count = len(self.content.split())
@@ -368,7 +368,7 @@ class NLPAnalysisResult:
 class NLPModelProcessor(ABC):
     """Abstract base class for NLP model processors"""
     
-    def __init__(self, task_type: NLPTaskType, model_type: NLPModelType):
+    def __init__(self, task_type -> None: NLPTaskType, model_type -> None: NLPModelType) -> None:
         self.task_type = task_type
         self.model_type = model_type
         self.logger = logging.getLogger(f"{__name__}.{task_type.value}")
@@ -391,7 +391,7 @@ class NLPModelProcessor(ABC):
 class SentimentAnalysisProcessor(NLPModelProcessor):
     """Sentiment analysis processor"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__(NLPTaskType.SENTIMENT_ANALYSIS, NLPModelType.ROBERTA)
     
     async def preprocess(self, text_data: TextData, config: Dict[str, Any]) -> Any:
@@ -468,7 +468,7 @@ class SentimentAnalysisProcessor(NLPModelProcessor):
 class NamedEntityRecognitionProcessor(NLPModelProcessor):
     """Named entity recognition processor"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__(NLPTaskType.NAMED_ENTITY_RECOGNITION, NLPModelType.BERT)
     
     async def preprocess(self, text_data: TextData, config: Dict[str, Any]) -> Any:
@@ -552,7 +552,7 @@ class NamedEntityRecognitionProcessor(NLPModelProcessor):
 class TextSummarizationProcessor(NLPModelProcessor):
     """Text summarization processor"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__(NLPTaskType.TEXT_SUMMARIZATION, NLPModelType.BART)
     
     async def preprocess(self, text_data: TextData, config: Dict[str, Any]) -> Any:
@@ -624,7 +624,7 @@ class NaturalLanguageProcessor(BaseEventHandler):
     workflows for the IA Influencer Agent platform.
     """
     
-    def __init__(self, max_workers: int = 4):
+    def __init__(self, max_workers -> None: int = 4) -> None:
         super().__init__()
         
         # Core components
@@ -662,7 +662,7 @@ class NaturalLanguageProcessor(BaseEventHandler):
         
         logger.info("Natural Language Processor initialized")
     
-    async def start_processor(self):
+    async def start_processor(self) -> None:
         """Start the natural language processor"""
         self.is_running = True
         
@@ -675,7 +675,7 @@ class NaturalLanguageProcessor(BaseEventHandler):
         
         logger.info("Natural Language Processor started")
     
-    async def stop_processor(self):
+    async def stop_processor(self) -> None:
         """Stop the natural language processor"""
         self.is_running = False
         self.executor.shutdown(wait=True)
@@ -721,7 +721,7 @@ class NaturalLanguageProcessor(BaseEventHandler):
             logger.error(f"Request validation error: {str(e)}")
             return False
     
-    async def _worker_loop(self, worker_id: str):
+    async def _worker_loop(self, worker_id -> None: str) -> None:
         """Main worker loop for processing NLP requests"""
         logger.info(f"NLP worker {worker_id} started")
         
@@ -920,8 +920,8 @@ class NaturalLanguageProcessor(BaseEventHandler):
         return result
     
     async def _generate_additional_analysis(self, 
-                                           result: NLPAnalysisResult, 
-                                           request: NLPAnalysisRequest):
+                                           result -> None: NLPAnalysisResult, 
+                                           request -> None: NLPAnalysisRequest) -> None:
         """Generate additional analysis results"""
         try:
             text = request.text_data.content
@@ -947,7 +947,7 @@ class NaturalLanguageProcessor(BaseEventHandler):
         except Exception as e:
             logger.error(f"Error generating additional analysis: {str(e)}")
     
-    def _update_performance_metrics(self, result: NLPAnalysisResult):
+    def _update_performance_metrics(self, result -> None: NLPAnalysisResult) -> None:
         """Update processor performance metrics"""
         # Update average processing time
         if self.total_requests > 0:
@@ -955,7 +955,7 @@ class NaturalLanguageProcessor(BaseEventHandler):
             self.average_processing_time = (alpha * result.processing_time + 
                                           (1 - alpha) * self.average_processing_time)
     
-    async def _monitor_performance(self):
+    async def _monitor_performance(self) -> None:
         """Monitor NLP processor performance"""
         while self.is_running:
             try:

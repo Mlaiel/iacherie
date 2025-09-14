@@ -115,7 +115,7 @@ class AuditQuery:
 class AuditLogger:
     """Comprehensive audit logging system."""
     
-    def __init__(self, storage_backend: str = "memory"):
+    def __init__(self, storage_backend -> None: str = "memory") -> None:
         """Initialize audit logger."""
         self.storage_backend = storage_backend
         self._events: List[AuditEvent] = []
@@ -138,7 +138,7 @@ class AuditLogger:
         # In production, this should come from secure key management
         return hashlib.sha256(b"ainflue_audit_key_v1").hexdigest()
     
-    def start(self):
+    def start(self) -> None:
         """Start audit logging worker."""
         if not self._running:
             self._running = True
@@ -146,7 +146,7 @@ class AuditLogger:
             self._worker_thread.start()
             logger.info("Audit logger started")
     
-    def stop(self):
+    def stop(self) -> None:
         """Stop audit logging worker."""
         if self._running:
             self._running = False
@@ -154,7 +154,7 @@ class AuditLogger:
                 self._worker_thread.join(timeout=5)
             logger.info("Audit logger stopped")
     
-    def _worker(self):
+    def _worker(self) -> None:
         """Background worker to process audit events."""
         while self._running:
             try:
@@ -297,7 +297,7 @@ class AuditLogger:
             error_message=error_message
         )
     
-    def _store_event(self, event: AuditEvent):
+    def _store_event(self, event -> None: AuditEvent) -> None:
         """Store audit event."""
         if self.storage_backend == "memory":
             self._events.append(event)
@@ -321,7 +321,7 @@ class AuditLogger:
         
         logger.log(log_level, f"AUDIT: {event.event_type.value} - {event.resource_name or 'N/A'} - User: {event.user_id or 'N/A'}")
     
-    def _notify_listeners(self, event: AuditEvent):
+    def _notify_listeners(self, event -> None: AuditEvent) -> None:
         """Notify registered listeners of new audit event."""
         for listener in self._listeners:
             try:
@@ -394,11 +394,11 @@ class AuditLogger:
             "is_running": self._running
         }
     
-    def add_listener(self, listener: callable):
+    def add_listener(self, listener -> None: callable) -> None:
         """Add audit event listener."""
         self._listeners.append(listener)
     
-    def remove_listener(self, listener: callable):
+    def remove_listener(self, listener -> None: callable) -> None:
         """Remove audit event listener."""
         if listener in self._listeners:
             self._listeners.remove(listener)

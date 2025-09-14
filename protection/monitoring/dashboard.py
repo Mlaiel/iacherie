@@ -45,30 +45,32 @@ except ImportError:
     FASTAPI_AVAILABLE = False
     # Simple fallback classes
     class APIRouter:
-        def __init__(self, *args, **kwargs):
+    """APIRouter: class implementation"""
+        def __init__(self, *args, **kwargs) -> None:
             self.prefix = kwargs.get('prefix', '')
             self.tags = kwargs.get('tags', [])
-        def get(self, path): 
-            def decorator(func): return func
+        def get(self, path) -> None: 
+            def decorator(func) -> None: return func
             return decorator
-        def post(self, path):
-            def decorator(func): return func
+        def post(self, path) -> None:
+            def decorator(func) -> None: return func
             return decorator
-        def put(self, path):
-            def decorator(func): return func
+        def put(self, path) -> None:
+            def decorator(func) -> None: return func
             return decorator
-        def delete(self, path):
-            def decorator(func): return func
+        def delete(self, path) -> None:
+            def decorator(func) -> None: return func
             return decorator
-        def websocket(self, path):
-            def decorator(func): return func
+        def websocket(self, path) -> None:
+            def decorator(func) -> None: return func
             return decorator
     class HTTPException(Exception): 
-        def __init__(self, *args, **kwargs):
+    """HTTPException class implementation"""
+        def __init__(self, *args, **kwargs) -> None:
             super().__init__()
     class WebSocket: pass
     class WebSocketDisconnect(Exception): pass
-    def Depends(*args, **kwargs): return None
+    def Depends(*args, **kwargs) -> None: return None
     class StreamingResponse: pass
 
 # Optional pydantic import with fallback
@@ -78,10 +80,11 @@ try:
 except ImportError:
     PYDANTIC_AVAILABLE = False
     class BaseModel:
-        def __init__(self, **kwargs):
+    """BaseModel: class implementation"""
+        def __init__(self, **kwargs) -> None:
             for key, value in kwargs.items():
                 setattr(self, key, value)
-    def Field(*args, **kwargs):
+    def Field(*args, **kwargs) -> None:
         return None
 
 # Optional SQLAlchemy import with fallback
@@ -180,12 +183,12 @@ class ConnectionManager:
     """
 Manage WebSocket connections for real-time updates."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.active_connections: Dict[str, WebSocket] = {}
         self.user_connections: Dict[int, List[str]] = {}
         self.connection_subscriptions: Dict[str, List[str]] = {}
     
-    async def connect(self, websocket: WebSocket, connection_id: str, user_id: int):
+    async def connect(self, websocket -> None: WebSocket, connection_id -> None: str, user_id -> None: int) -> None:
         """
 Accept a new WebSocket connection."""
         await websocket.accept()
@@ -197,7 +200,7 @@ Accept a new WebSocket connection."""
         
         logger.info(f"WebSocket connection established: {connection_id} for user {user_id}")
     
-    def disconnect(self, connection_id: str, user_id: int):
+    def disconnect(self, connection_id -> None: str, user_id -> None: int) -> None:
         """Remove a WebSocket connection."""
         if connection_id in self.active_connections:
             del self.active_connections[connection_id]
@@ -216,7 +219,7 @@ Accept a new WebSocket connection."""
         
         logger.info(f"WebSocket connection closed: {connection_id}")
     
-    async def send_personal_message(self, message: dict, connection_id: str):
+    async def send_personal_message(self, message -> None: dict, connection_id -> None: str) -> None:
         """Send message to specific connection."""
         if connection_id in self.active_connections:
             try:
@@ -229,24 +232,24 @@ Accept a new WebSocket connection."""
                         self.disconnect(connection_id, user_id)
                         break
     
-    async def send_user_message(self, message: dict, user_id: int):
+    async def send_user_message(self, message -> None: dict, user_id -> None: int) -> None:
         """Send message to all connections for a user."""
         if user_id in self.user_connections:
             for connection_id in self.user_connections[user_id]:
                 await self.send_personal_message(message, connection_id)
     
-    async def broadcast(self, message: dict):
+    async def broadcast(self, message -> None: dict) -> None:
         """
 Broadcast message to all connections."""
         for connection_id in self.active_connections:
             await self.send_personal_message(message, connection_id)
     
-    def subscribe_to_data(self, connection_id: str, data_types: List[str]):
+    def subscribe_to_data(self, connection_id -> None: str, data_types -> None: List[str]) -> None:
         """
 Subscribe connection to specific data types."""
         self.connection_subscriptions[connection_id] = data_types
     
-    async def send_to_subscribers(self, data_type: str, message: dict):
+    async def send_to_subscribers(self, data_type -> None: str, message -> None: dict) -> None:
         """
 Send message to connections subscribed to data type."""
         for connection_id, subscriptions in self.connection_subscriptions.items():
@@ -267,10 +270,10 @@ class DashboardController:
     
     def __init__(
         self,
-        realtime_monitor: RealTimeMonitor,
-        analytics: MonitoringAnalytics,
-        performance_optimizer: PerformanceOptimizer
-    ):
+        realtime_monitor -> None: RealTimeMonitor,
+        analytics -> None: MonitoringAnalytics,
+        performance_optimizer -> None: PerformanceOptimizer
+    ) -> None:
         """
         Initialize dashboard controller.
         
@@ -523,10 +526,10 @@ class DashboardController:
     
     async def stream_realtime_data(
         self,
-        websocket: WebSocket,
-        user_id: int,
-        subscriptions: List[str]
-    ):
+        websocket -> None: WebSocket,
+        user_id -> None: int,
+        subscriptions -> None: List[str]
+    ) -> None:
         """
         Stream real-time data to WebSocket connection.
         
@@ -655,59 +658,59 @@ class DashboardController:
     
     # Private helper methods
     
-    def _setup_routes(self):
+    def _setup_routes(self) -> None:
         """Set up FastAPI routes for dashboard API."""
         
         @self.router.get("/metrics/{user_id}")
-        async def get_dashboard_metrics_endpoint(user_id: int):
+        async def get_dashboard_metrics_endpoint(user_id -> None: int) -> None:
             """Get dashboard metrics for user."""
             return await self.get_dashboard_metrics(user_id)
         
         @self.router.get("/widget/{widget_id}/data")
         async def get_widget_data_endpoint(
-            widget_id: str,
-            user_id: int,
-            time_range: TimeRange = TimeRange.LAST_24_HOURS
-        ):
+            widget_id -> None: str,
+            user_id -> None: int,
+            time_range -> None: TimeRange = TimeRange.LAST_24_HOURS
+        ) -> None:
             """Get data for specific widget."""
             return await self.get_widget_data(widget_id, user_id, time_range)
         
         @self.router.post("/create")
         async def create_dashboard_endpoint(
-            user_id: int,
-            layout_type: DashboardLayout,
-            widgets: List[DashboardWidget]
-        ):
+            user_id -> None: int,
+            layout_type -> None: DashboardLayout,
+            widgets -> None: List[DashboardWidget]
+        ) -> None:
             """Create new dashboard configuration."""
             dashboard_id = await self.create_dashboard_config(user_id, layout_type, widgets)
             return {"dashboard_id": dashboard_id}
         
         @self.router.put("/widget/{widget_id}")
         async def update_widget_endpoint(
-            widget_id: str,
-            user_id: int,
-            config_updates: Dict[str, Any]
-        ):
+            widget_id -> None: str,
+            user_id -> None: int,
+            config_updates -> None: Dict[str, Any]
+        ) -> None:
             """Update widget configuration."""
             success = await self.update_widget_config(widget_id, user_id, config_updates)
             return {"success": success}
         
         @self.router.get("/export/{user_id}")
         async def export_dashboard_endpoint(
-            user_id: int,
-            format_type: str = "json",
-            time_range: TimeRange = TimeRange.LAST_7_DAYS
-        ):
+            user_id -> None: int,
+            format_type -> None: str = "json",
+            time_range -> None: TimeRange = TimeRange.LAST_7_DAYS
+        ) -> None:
             """Export dashboard data."""
             return await self.export_dashboard_data(user_id, format_type, time_range)
         
         @self.router.websocket("/ws/{user_id}")
-        async def websocket_endpoint(websocket: WebSocket, user_id: int):
+        async def websocket_endpoint(websocket -> None: WebSocket, user_id -> None: int) -> None:
             """WebSocket endpoint for real-time data."""
             subscriptions = ["metrics", "alerts", "violations", "performance"]
             await self.stream_realtime_data(websocket, user_id, subscriptions)
     
-    async def _load_default_configurations(self):
+    async def _load_default_configurations(self) -> None:
         """Load default dashboard configurations."""
         try:
             # Executive dashboard
@@ -771,7 +774,7 @@ class DashboardController:
         except Exception as e:
             logger.error(f"Failed to load default configurations: {e}")
     
-    async def _start_data_streaming(self):
+    async def _start_data_streaming(self) -> None:
         """Start background data streaming tasks."""
         try:
             # Start real-time metrics streaming
@@ -794,7 +797,7 @@ class DashboardController:
         except Exception as e:
             logger.error(f"Failed to start data streaming: {e}")
     
-    async def _initialize_widget_cache(self):
+    async def _initialize_widget_cache(self) -> None:
         """Initialize widget cache with default data."""
         try:
             # Pre-load common widget data
@@ -1237,10 +1240,10 @@ Calculate overall system health score."""
     
     async def _handle_websocket_message(
         self,
-        message: str,
-        connection_id: str,
-        user_id: int
-    ):
+        message -> None: str,
+        connection_id -> None: str,
+        user_id -> None: int
+    ) -> None:
         """Handle incoming WebSocket message."""
         try:
             data = json.loads(message)
@@ -1276,7 +1279,7 @@ Calculate overall system health score."""
         except Exception as e:
             logger.error(f"Failed to handle WebSocket message: {e}")
     
-    async def _stream_metrics_data(self):
+    async def _stream_metrics_data(self) -> None:
         """Stream real-time metrics data."""
         while self._initialized:
             try:
@@ -1299,7 +1302,7 @@ Calculate overall system health score."""
                 logger.error(f"Error in metrics streaming: {e}")
                 await asyncio.sleep(30)
     
-    async def _stream_alerts_data(self):
+    async def _stream_alerts_data(self) -> None:
         """Stream real-time alerts data."""
         while self._initialized:
             try:
@@ -1321,7 +1324,7 @@ Calculate overall system health score."""
                 logger.error(f"Error in alerts streaming: {e}")
                 await asyncio.sleep(60)
     
-    async def _stream_violations_data(self):
+    async def _stream_violations_data(self) -> None:
         """Stream real-time violations data."""
         while self._initialized:
             try:
@@ -1334,7 +1337,7 @@ Calculate overall system health score."""
                 logger.error(f"Error in violations streaming: {e}")
                 await asyncio.sleep(15)
     
-    async def _initialize_widget(self, widget: DashboardWidget, user_id: int):
+    async def _initialize_widget(self, widget -> None: DashboardWidget, user_id -> None: int) -> None:
         """Initialize a dashboard widget."""
         try:
             # Pre-generate initial data for widget
@@ -1410,7 +1413,7 @@ class WebSocketConnection:
     """
 WebSocket connection manager."""
     
-    def __init__(self, websocket: WebSocket, user_id: int):
+    def __init__(self, websocket -> None: WebSocket, user_id -> None: int) -> None:
         self.websocket = websocket
         self.user_id = user_id
         self.subscriptions: Set[str] = set()
@@ -1430,10 +1433,10 @@ class DashboardController:
     
     def __init__(
         self,
-        realtime_monitor: RealTimeMonitor,
-        analytics: MonitoringAnalytics,
-        performance_optimizer: PerformanceOptimizer
-    ):
+        realtime_monitor -> None: RealTimeMonitor,
+        analytics -> None: MonitoringAnalytics,
+        performance_optimizer -> None: PerformanceOptimizer
+    ) -> None:
         """
 Initialize dashboard controller."""
         self.realtime_monitor = realtime_monitor
@@ -1677,7 +1680,7 @@ Initialize dashboard controller."""
         filters: Optional[Dict[str, Any]] = None
     ) -> StreamingResponse:
         """Stream real-time data for dashboard components."""
-        async def generate_data():
+        async def generate_data() -> None:
             """
 Generate streaming data."""
             try:
@@ -2194,7 +2197,7 @@ router = APIRouter(prefix="/api/v1/dashboard", tags=["dashboard"])
 dashboard_controller: Optional[DashboardController] = None
 
 @router.get("/metrics")
-async def get_dashboard_metrics(user_id: int = 1):
+async def get_dashboard_metrics(user_id -> None: int = 1) -> None:
     """Get comprehensive dashboard metrics."""
     if not dashboard_controller:
         raise HTTPException(status_code=503, detail="Dashboard controller not available")
@@ -2202,7 +2205,7 @@ async def get_dashboard_metrics(user_id: int = 1):
     return await dashboard_controller.get_dashboard_metrics(user_id)
 
 @router.get("/layouts")
-async def get_dashboard_layouts(user_id: int = 1):
+async def get_dashboard_layouts(user_id -> None: int = 1) -> None:
     """Get dashboard layouts for user."""
     if not dashboard_controller:
         raise HTTPException(status_code=503, detail="Dashboard controller not available")
@@ -2210,7 +2213,7 @@ async def get_dashboard_layouts(user_id: int = 1):
     return await dashboard_controller.get_user_dashboard_layouts(user_id)
 
 @router.post("/layouts")
-async def create_dashboard_layout(layout_data: dict, user_id: int = 1):
+async def create_dashboard_layout(layout_data -> None: dict, user_id -> None: int = 1) -> None:
     """Create new dashboard layout."""
     if not dashboard_controller:
         raise HTTPException(status_code=503, detail="Dashboard controller not available")
@@ -2219,10 +2222,10 @@ async def create_dashboard_layout(layout_data: dict, user_id: int = 1):
 
 @router.get("/widget/{widget_type}")
 async def get_widget_data(
-    widget_type: DashboardWidgetType,
-    widget_id: str = "default",
-    config: str = "{}"
-):
+    widget_type -> None: DashboardWidgetType,
+    widget_id -> None: str = "default",
+    config -> None: str = "{}"
+) -> None:
     """Get data for dashboard widget."""
     if not dashboard_controller:
         raise HTTPException(status_code=503, detail="Dashboard controller not available")
@@ -2235,7 +2238,7 @@ async def get_widget_data(
     return await dashboard_controller.get_widget_data(widget_id, widget_type, widget_config)
 
 @router.websocket("/ws")
-async def websocket_endpoint(websocket: WebSocket, user_id: int = 1):
+async def websocket_endpoint(websocket -> None: WebSocket, user_id -> None: int = 1) -> None:
     """WebSocket endpoint for real-time dashboard updates."""
     if not dashboard_controller:
         await websocket.close(code=1011, reason="Service unavailable")

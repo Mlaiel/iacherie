@@ -70,7 +70,7 @@ class CreatorContent:
 class BaseCreatorConnector:
     """Base class for all creator platform connectors"""
     
-    def __init__(self, platform: CreatorPlatform, api_credentials: Dict[str, str]):
+    def __init__(self, platform -> None: CreatorPlatform, api_credentials -> None: Dict[str, str]) -> None:
         self.platform = platform
         self.credentials = api_credentials
         self.session = None
@@ -94,7 +94,7 @@ class BaseCreatorConnector:
 class PatreonConnector(BaseCreatorConnector):
     """Patreon API v2 connector"""
     
-    def __init__(self, api_credentials: Dict[str, str]):
+    def __init__(self, api_credentials -> None: Dict[str, str]) -> None:
         super().__init__(CreatorPlatform.PATREON, api_credentials)
         self.api_base = "https://www.patreon.com/api/oauth2/v2"
     
@@ -203,7 +203,7 @@ class PatreonConnector(BaseCreatorConnector):
 class OnlyFansConnector(BaseCreatorConnector):
     """OnlyFans API connector"""
     
-    def __init__(self, api_credentials: Dict[str, str]):
+    def __init__(self, api_credentials -> None: Dict[str, str]) -> None:
         super().__init__(CreatorPlatform.ONLYFANS, api_credentials)
         # Note: OnlyFans doesn't have public API, this is conceptual
     
@@ -225,7 +225,7 @@ class OnlyFansConnector(BaseCreatorConnector):
 class KoFiConnector(BaseCreatorConnector):
     """Ko-fi API connector"""
     
-    def __init__(self, api_credentials: Dict[str, str]):
+    def __init__(self, api_credentials -> None: Dict[str, str]) -> None:
         super().__init__(CreatorPlatform.KOFI, api_credentials)
         self.api_base = "https://ko-fi.com/api/v2"
     
@@ -247,7 +247,7 @@ class KoFiConnector(BaseCreatorConnector):
 class GumroadConnector(BaseCreatorConnector):
     """Gumroad API connector"""
     
-    def __init__(self, api_credentials: Dict[str, str]):
+    def __init__(self, api_credentials -> None: Dict[str, str]) -> None:
         super().__init__(CreatorPlatform.GUMROAD, api_credentials)
         self.api_base = "https://api.gumroad.com/v2"
     
@@ -286,7 +286,7 @@ class GumroadConnector(BaseCreatorConnector):
 class SubstackConnector(BaseCreatorConnector):
     """Substack API connector"""
     
-    def __init__(self, api_credentials: Dict[str, str]):
+    def __init__(self, api_credentials -> None: Dict[str, str]) -> None:
         super().__init__(CreatorPlatform.SUBSTACK, api_credentials)
         self.api_base = f"https://{self.credentials.get('publication_slug', 'publication')}.substack.com/api/v1"
     
@@ -321,7 +321,7 @@ class CreatorEconomyConnectors:
     unified interface for multi-platform creator content distribution.
     """
     
-    def __init__(self, platform_credentials: Dict[str, Dict[str, str]]):
+    def __init__(self, platform_credentials -> None: Dict[str, Dict[str, str]]) -> None:
         """Initialize all creator economy connectors"""
         self.connectors = {}
         self.platform_credentials = platform_credentials
@@ -331,7 +331,7 @@ class CreatorEconomyConnectors:
         
         logger.info("Creator Economy Connectors initialized")
     
-    def _initialize_connectors(self):
+    def _initialize_connectors(self) -> None:
         """Initialize individual platform connectors"""
         connector_classes = {
             # Subscription Platforms
@@ -460,7 +460,7 @@ class CreatorEconomyConnectors:
 class GhostConnector(BaseCreatorConnector):
     """Ghost publishing platform connector"""
     
-    def __init__(self, api_credentials: Dict[str, str]):
+    def __init__(self, api_credentials -> None: Dict[str, str]) -> None:
         super().__init__(CreatorPlatform.GHOST, api_credentials)
         self.api_base = api_credentials.get("api_url", "https://admin.ghost.org")
         self.admin_api_key = api_credentials.get("admin_api_key")
@@ -481,7 +481,7 @@ class GhostConnector(BaseCreatorConnector):
 class ConvertKitConnector(BaseCreatorConnector):
     """ConvertKit email marketing connector"""
     
-    def __init__(self, api_credentials: Dict[str, str]):
+    def __init__(self, api_credentials -> None: Dict[str, str]) -> None:
         super().__init__(CreatorPlatform.CONVERTKIT, api_credentials)
         self.api_base = "https://api.convertkit.com/v3"
     
@@ -501,7 +501,7 @@ class ConvertKitConnector(BaseCreatorConnector):
 class MemberfulConnector(BaseCreatorConnector):
     """Memberful membership platform connector"""
     
-    def __init__(self, api_credentials: Dict[str, str]):
+    def __init__(self, api_credentials -> None: Dict[str, str]) -> None:
         super().__init__(CreatorPlatform.MEMBERFUL, api_credentials)
         self.api_base = "https://api.memberful.com"
     
@@ -521,7 +521,7 @@ class MemberfulConnector(BaseCreatorConnector):
 class EtsyConnector(BaseCreatorConnector):
     """Etsy marketplace connector"""
     
-    def __init__(self, api_credentials: Dict[str, str]):
+    def __init__(self, api_credentials -> None: Dict[str, str]) -> None:
         super().__init__(CreatorPlatform.ETSY, api_credentials)
         self.api_base = "https://openapi.etsy.com/v3"
     
@@ -541,7 +541,7 @@ class EtsyConnector(BaseCreatorConnector):
 class CreativeMarketConnector(BaseCreatorConnector):
     """Creative Market platform connector"""
     
-    def __init__(self, api_credentials: Dict[str, str]):
+    def __init__(self, api_credentials -> None: Dict[str, str]) -> None:
         super().__init__(CreatorPlatform.CREATIVE_MARKET, api_credentials)
         self.api_base = "https://api.creativemarket.com"
     
@@ -561,7 +561,7 @@ class CreativeMarketConnector(BaseCreatorConnector):
 class EnvatoConnector(BaseCreatorConnector):
     """Envato marketplace connector"""
     
-    def __init__(self, api_credentials: Dict[str, str]):
+    def __init__(self, api_credentials -> None: Dict[str, str]) -> None:
         super().__init__(CreatorPlatform.ENVATO, api_credentials)
         self.api_base = "https://api.envato.com"
     
@@ -581,7 +581,7 @@ class EnvatoConnector(BaseCreatorConnector):
 class CircleConnector(BaseCreatorConnector):
     """Circle community platform connector"""
     
-    def __init__(self, api_credentials: Dict[str, str]):
+    def __init__(self, api_credentials -> None: Dict[str, str]) -> None:
         super().__init__(CreatorPlatform.CIRCLE, api_credentials)
         self.api_base = "https://api.circle.so/v1"
     
@@ -601,7 +601,7 @@ class CircleConnector(BaseCreatorConnector):
 class MightyNetworksConnector(BaseCreatorConnector):
     """Mighty Networks community connector"""
     
-    def __init__(self, api_credentials: Dict[str, str]):
+    def __init__(self, api_credentials -> None: Dict[str, str]) -> None:
         super().__init__(CreatorPlatform.MIGHTY_NETWORKS, api_credentials)
         self.api_base = "https://api.mightynetworks.com"
     
@@ -621,7 +621,7 @@ class MightyNetworksConnector(BaseCreatorConnector):
 class DiscordPremiumConnector(BaseCreatorConnector):
     """Discord Server Boost/Premium connector"""
     
-    def __init__(self, api_credentials: Dict[str, str]):
+    def __init__(self, api_credentials -> None: Dict[str, str]) -> None:
         super().__init__(CreatorPlatform.DISCORD_PREMIUM, api_credentials)
         self.api_base = "https://discord.com/api/v10"
     

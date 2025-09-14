@@ -113,7 +113,7 @@ class ValidationEngine:
     - Real-time validation and monitoring
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """
 Initialize validation engine"""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
@@ -877,19 +877,19 @@ Detect hardcoded secrets"""
         return issues
     
     # Placeholder implementations for other validators
-    async def _validate_tls_config(self, rule, config_data, config_path): return []
-    async def _validate_access_controls(self, rule, config_data, config_path): return []
-    async def _validate_network_security(self, rule, config_data, config_path): return []
-    async def _validate_resource_limits(self, rule, config_data, config_path): return []
-    async def _validate_cache_config(self, rule, config_data, config_path): return []
-    async def _validate_db_performance(self, rule, config_data, config_path): return []
-    async def _validate_gdpr_compliance(self, rule, config_data, config_path): return []
-    async def _validate_soc2_compliance(self, rule, config_data, config_path): return []
-    async def _validate_audit_logging(self, rule, config_data, config_path): return []
-    async def _validate_service_dependencies(self, rule, config_data, config_path): return []
-    async def _validate_version_compatibility(self, rule, config_data, config_path): return []
-    async def _validate_api_contracts(self, rule, config_data, config_path): return []
-    async def _validate_external_services(self, rule, config_data, config_path): return []
+    async def _validate_tls_config(self, rule, config_data, config_path) -> None: return []
+    async def _validate_access_controls(self, rule, config_data, config_path) -> None: return []
+    async def _validate_network_security(self, rule, config_data, config_path) -> None: return []
+    async def _validate_resource_limits(self, rule, config_data, config_path) -> None: return []
+    async def _validate_cache_config(self, rule, config_data, config_path) -> None: return []
+    async def _validate_db_performance(self, rule, config_data, config_path) -> None: return []
+    async def _validate_gdpr_compliance(self, rule, config_data, config_path) -> None: return []
+    async def _validate_soc2_compliance(self, rule, config_data, config_path) -> None: return []
+    async def _validate_audit_logging(self, rule, config_data, config_path) -> None: return []
+    async def _validate_service_dependencies(self, rule, config_data, config_path) -> None: return []
+    async def _validate_version_compatibility(self, rule, config_data, config_path) -> None: return []
+    async def _validate_api_contracts(self, rule, config_data, config_path) -> None: return []
+    async def _validate_external_services(self, rule, config_data, config_path) -> None: return []
     
     async def add_custom_rule(self, rule: ValidationRule, validator_func: Callable) -> bool:
         """

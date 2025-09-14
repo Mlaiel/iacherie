@@ -83,7 +83,7 @@ class ExtractedMetadata:
     errors: List[str] = field(default_factory=list)
     warnings: List[str] = field(default_factory=list)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.extraction_timestamp is None:
             self.extraction_timestamp = datetime.now().timestamp()
 
@@ -91,7 +91,7 @@ class ExtractedMetadata:
 class MetadataFormatsManager:
     """Professional metadata formats management system"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize metadata formats manager"""
         self.config = config or {}
         self.schemas: Dict[str, MetadataSchema] = {}
@@ -104,7 +104,7 @@ class MetadataFormatsManager:
         # Initialize format handlers
         self._initialize_format_handlers()
     
-    def _initialize_standard_schemas(self):
+    def _initialize_standard_schemas(self) -> None:
         """Initialize standard metadata schemas"""
         try:
             # Dublin Core schema
@@ -181,7 +181,7 @@ class MetadataFormatsManager:
         except Exception as e:
             logger.error(f"Error initializing standard schemas: {e}")
     
-    def _initialize_format_handlers(self):
+    def _initialize_format_handlers(self) -> None:
         """Initialize format-specific extractors and writers"""
         try:
             # Register extractors

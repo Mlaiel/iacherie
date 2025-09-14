@@ -131,12 +131,12 @@ class GeoLocationAnalyzer:
     Geographic location analysis for threat detection
     """
     
-    def __init__(self, geoip_db_path: str = None):
+    def __init__(self, geoip_db_path -> None: str = None) -> None:
         self.geoip_db_path = geoip_db_path or "GeoLite2-City.mmdb"
         self.reader = None
         self._initialize_geoip()
         
-    def _initialize_geoip(self):
+    def _initialize_geoip(self) -> None:
         """Initialize GeoIP database reader"""
         try:
             if os.path.exists(self.geoip_db_path):
@@ -218,7 +218,7 @@ class AnomalyDetector:
     Machine learning-based anomaly detection system
     """
     
-    def __init__(self, contamination: float = 0.1):
+    def __init__(self, contamination -> None: float = 0.1) -> None:
         self.contamination = contamination
         self.isolation_forest = IsolationForest(
             contamination=contamination,
@@ -288,7 +288,7 @@ class AnomalyDetector:
         
         return entropy
     
-    def train(self, training_events: List[SecurityEvent]):
+    def train(self, training_events -> None: List[SecurityEvent]) -> None:
         """
         Train anomaly detection model
         
@@ -361,7 +361,7 @@ class BehaviorAnalyzer:
     User behavior analysis and profiling system
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.behavior_profiles: Dict[str, BehaviorProfile] = {}
         self.geo_analyzer = GeoLocationAnalyzer()
         
@@ -548,7 +548,7 @@ class ThreatDetector:
     Main threat detection engine
     """
     
-    def __init__(self, redis_url: str = "redis://localhost:6379"):
+    def __init__(self, redis_url -> None: str = "redis -> None://localhost -> None:6379") -> None:
         self.redis_url = redis_url
         self.redis_pool = None
         
@@ -567,7 +567,7 @@ class ThreatDetector:
         
         logger.info("Threat detector initialized")
     
-    async def initialize_redis(self):
+    async def initialize_redis(self) -> None:
         """Initialize Redis connection"""
         try:
             self.redis_pool = aioredis.ConnectionPool.from_url(self.redis_url)
@@ -923,7 +923,7 @@ class IncidentResponse:
     Automated incident response system
     """
     
-    def __init__(self, threat_detector: ThreatDetector):
+    def __init__(self, threat_detector -> None: ThreatDetector) -> None:
         self.threat_detector = threat_detector
         self.response_actions = self._setup_response_actions()
         logger.info("Incident response system initialized")
@@ -1111,7 +1111,7 @@ class DeploymentThreatDetection:
     Main threat detection system for deployment security
     """
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.config = config or {}
         
         # Initialize components
@@ -1127,7 +1127,7 @@ class DeploymentThreatDetection:
         
         logger.info("Deployment threat detection system initialized")
     
-    async def start_monitoring(self):
+    async def start_monitoring(self) -> None:
         """Start threat monitoring background tasks"""
         try:
             await self.threat_detector.initialize_redis()
@@ -1142,7 +1142,7 @@ class DeploymentThreatDetection:
             logger.error(f"Failed to start threat monitoring: {e}")
             raise
     
-    async def stop_monitoring(self):
+    async def stop_monitoring(self) -> None:
         """Stop threat monitoring background tasks"""
         try:
             if self._monitoring_task:
@@ -1156,7 +1156,7 @@ class DeploymentThreatDetection:
         except Exception as e:
             logger.error(f"Failed to stop threat monitoring: {e}")
     
-    async def _monitoring_loop(self):
+    async def _monitoring_loop(self) -> None:
         """Background monitoring loop"""
         while True:
             try:
@@ -1172,7 +1172,7 @@ class DeploymentThreatDetection:
                 logger.error(f"Error in monitoring loop: {e}")
                 await asyncio.sleep(5)
     
-    async def _cleanup_loop(self):
+    async def _cleanup_loop(self) -> None:
         """Background cleanup loop"""
         while True:
             try:

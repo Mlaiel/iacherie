@@ -119,7 +119,7 @@ class TokenValidationResult:
 class OAuth2Handler:
     """Handles OAuth2 authentication flows"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.pending_flows: Dict[str, Dict[str, Any]] = {}
     
     async def initiate_auth_flow(
@@ -262,7 +262,7 @@ class OAuth2Handler:
 class TokenManager:
     """Manages access token lifecycle"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.token_cache: Dict[str, PlatformCredentials] = {}
         self.refresh_tasks: Dict[str, asyncio.Task] = {}
     
@@ -423,7 +423,7 @@ class TokenManager:
 class PlatformAuthManager:
     """Manages platform-specific authentication configurations"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.auth_configs: Dict[str, AuthConfig] = {}
         self._setup_platform_configs()
     
@@ -533,7 +533,7 @@ class PlatformAuthenticationService:
     - Multi-user credential isolation
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.oauth2_handler = OAuth2Handler()
         self.token_manager = TokenManager()

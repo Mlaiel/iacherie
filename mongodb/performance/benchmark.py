@@ -1,3 +1,8 @@
+"""
+Benchmark module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """MongoDB Performance Benchmarking Script
 ========================================
@@ -69,14 +74,14 @@ class BenchmarkConfig:
 class MongoDBBenchmark:
     """MongoDB performance benchmark suite."""
     
-    def __init__(self, config: BenchmarkConfig):
+    def __init__(self, config -> None: BenchmarkConfig) -> None:
         self.config = config
         self.results: List[BenchmarkResult] = []
         self.client = None
         self.database = None
         self.collection = None
     
-    async def setup(self):
+    async def setup(self) -> None:
         """Setup benchmark environment."""
         global MONGODB_AVAILABLE
         print("🚀 Setting up MongoDB benchmark environment...")
@@ -102,7 +107,7 @@ class MongoDBBenchmark:
         if not MONGODB_AVAILABLE:
             print("📝 Running in simulation mode (no actual MongoDB operations)")
     
-    async def cleanup(self):
+    async def cleanup(self) -> None:
         """Cleanup benchmark environment."""
         global MONGODB_AVAILABLE
         if self.config.cleanup_after_test and MONGODB_AVAILABLE and self.client:
@@ -113,7 +118,7 @@ class MongoDBBenchmark:
             except Exception as e:
                 print(f"⚠️  Cleanup error: {e}")
     
-    async def _create_test_indexes(self):
+    async def _create_test_indexes(self) -> None:
         """Create indexes for performance testing."""
         global MONGODB_AVAILABLE
         if not MONGODB_AVAILABLE:
@@ -157,7 +162,7 @@ class MongoDBBenchmark:
             "content": content
         }
     
-    async def _measure_operation(self, operation_func, *args, **kwargs):
+    async def _measure_operation(self, operation_func, *args, **kwargs) -> None:
         """Measure operation performance."""
         start_cpu = psutil.cpu_percent()
         start_memory = psutil.virtual_memory().used / 1024 / 1024  # MB
@@ -187,7 +192,7 @@ class MongoDBBenchmark:
             'memory_delta': end_memory - start_memory
         }
     
-    async def benchmark_insert_performance(self):
+    async def benchmark_insert_performance(self) -> None:
         """Benchmark insert operations."""
         global MONGODB_AVAILABLE
         print("📊 Benchmarking INSERT operations...")
@@ -243,7 +248,7 @@ class MongoDBBenchmark:
         self.results.append(result)
         print(f"  ✅ Completed: {result.operations_per_second:.2f} ops/sec, avg latency: {result.avg_latency_ms:.2f}ms")
     
-    async def benchmark_query_performance(self):
+    async def benchmark_query_performance(self) -> None:
         """Benchmark query operations."""
         global MONGODB_AVAILABLE
         print("📊 Benchmarking QUERY operations...")
@@ -305,7 +310,7 @@ class MongoDBBenchmark:
         self.results.append(result)
         print(f"  ✅ Completed: {result.operations_per_second:.2f} ops/sec, avg latency: {result.avg_latency_ms:.2f}ms")
     
-    async def benchmark_update_performance(self):
+    async def benchmark_update_performance(self) -> None:
         """Benchmark update operations."""
         global MONGODB_AVAILABLE
         print("📊 Benchmarking UPDATE operations...")
@@ -362,7 +367,7 @@ class MongoDBBenchmark:
         self.results.append(result)
         print(f"  ✅ Completed: {result.operations_per_second:.2f} ops/sec, avg latency: {result.avg_latency_ms:.2f}ms")
     
-    async def benchmark_aggregation_performance(self):
+    async def benchmark_aggregation_performance(self) -> None:
         """Benchmark aggregation operations."""
         global MONGODB_AVAILABLE
         print("📊 Benchmarking AGGREGATION operations...")
@@ -381,7 +386,7 @@ class MongoDBBenchmark:
             ]
             
             if MONGODB_AVAILABLE:
-                async def run_aggregation():
+                async def run_aggregation() -> None:
                     cursor = self.collection.aggregate(pipeline)
                     return await cursor.to_list(length=None)
                 
@@ -424,7 +429,7 @@ class MongoDBBenchmark:
         self.results.append(result)
         print(f"  ✅ Completed: {result.operations_per_second:.2f} ops/sec, avg latency: {result.avg_latency_ms:.2f}ms")
     
-    async def run_all_benchmarks(self):
+    async def run_all_benchmarks(self) -> None:
         """Run all performance benchmarks."""
         print("🏃‍♂️ Starting MongoDB Performance Benchmarks")
         print("=" * 60)
@@ -506,7 +511,7 @@ class MongoDBBenchmark:
         
         return analysis
     
-    def save_report(self, filename: str = None):
+    def save_report(self, filename -> None: str = None) -> None:
         """Save benchmark report to file."""
         if filename is None:
             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -520,7 +525,7 @@ class MongoDBBenchmark:
         print(f"📋 Benchmark report saved to: {filename}")
         return filename
     
-    def print_summary(self):
+    def print_summary(self) -> None:
         """Print benchmark summary."""
         if not self.results:
             print("❌ No benchmark results to display")
@@ -562,7 +567,7 @@ class MongoDBBenchmark:
             print(f"\n📝 Note: This benchmark ran in simulation mode (MongoDB not available)")
             print("   Install MongoDB and motor driver for real performance testing.")
 
-async def main():
+async def main() -> None:
     """Main benchmark execution."""
     import argparse
     

@@ -88,7 +88,7 @@ class LetsEncryptManager:
     Supports HTTP-01, DNS-01, and TLS-ALPN-01 challenges
     """
     
-    def __init__(self, config: LetsEncryptConfig):
+    def __init__(self, config -> None: LetsEncryptConfig) -> None:
         """
         Initialize Let's Encrypt manager
         

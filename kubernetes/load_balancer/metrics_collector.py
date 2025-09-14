@@ -7,7 +7,7 @@ performance monitoring, and alerting capabilities.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ WARNING: This code is proprietary and confidential.
+# [EMOJI_REMOVED] WARNING: This code is proprietary and confidential.
 Unauthorized copying, distribution, or use without explicit written
 permission from Fahed Mlaiel is strictly prohibited and may result
 in legal action.
@@ -109,7 +109,7 @@ class MetricsBuffer:
     """
 Buffered metrics storage for batch processing"""
     
-    def __init__(self, max_size: int = 10000, flush_interval: int = 30):
+    def __init__(self, max_size -> None: int = 10000, flush_interval -> None: int = 30) -> None:
         self.max_size = max_size
         self.flush_interval = flush_interval
         self.buffer: deque = deque(maxlen=max_size)
@@ -160,7 +160,7 @@ class PrometheusExporter:
     """
 Prometheus metrics exporter"""
     
-    def __init__(self, registry: Optional[CollectorRegistry] = None):
+    def __init__(self, registry -> None: Optional[CollectorRegistry] = None) -> None:
         if not PROMETHEUS_AVAILABLE:
             raise ImportError("Prometheus client not available")
         
@@ -254,7 +254,7 @@ Prometheus metrics exporter"""
 class InfluxDBExporter:
     """InfluxDB metrics exporter"""
     
-    def __init__(self, url: str, token: str, org: str, bucket: str):
+    def __init__(self, url -> None: str, token -> None: str, org -> None: str, bucket -> None: str) -> None:
         if not INFLUXDB_AVAILABLE:
             raise ImportError("InfluxDB client not available")
         
@@ -297,7 +297,7 @@ class SystemMetricsCollector:
     """
 System metrics collector using psutil"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.last_network_io = None
         self.last_disk_io = None
         self.last_cpu_times = None
@@ -421,7 +421,7 @@ Collect system metrics"""
 class ResponseTimeTracker:
     """Track response times with percentile calculations"""
     
-    def __init__(self, window_size: int = 1000):
+    def __init__(self, window_size -> None: int = 1000) -> None:
         self.window_size = window_size
         self.response_times = deque(maxlen=window_size)
         self.lock = threading.Lock()
@@ -468,9 +468,9 @@ class MetricsCollector:
 Enterprise Metrics Collector for Load Balancer"""
     
     def __init__(self, 
-                 prometheus_enabled: bool = True,
-                 influxdb_config: Optional[Dict[str, str]] = None,
-                 collection_interval: int = 30):
+                 prometheus_enabled -> None: bool = True,
+                 influxdb_config -> None: Optional[Dict[str, str]] = None,
+                 collection_interval -> None: int = 30) -> None:
         
         self.metric_definitions: Dict[str, MetricDefinition] = {}
         self.metrics_buffer = MetricsBuffer()
@@ -957,3 +957,5 @@ Collect system metrics periodically"""
                 self.influxdb_exporter.close()
         except Exception as e:
             logger.error(f"Error during cleanup: {e}")
+
+# File has syntax issues - needs manual review

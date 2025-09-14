@@ -41,7 +41,7 @@ class PostgreSQLManager:
     - Query analytics and profiling
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = get_logger(__name__)
         self.config = get_database_settings()
         self.metrics = MetricsCollector()
@@ -117,7 +117,7 @@ Initialize database connections and pools"""
             self.logger.error(f"Failed to initialize async pool: {e}")
             raise
     
-    def get_connection(self):
+    def get_connection(self) -> None:
         """Get connection from pool"""
         try:
             return self.connection_pool.getconn()
@@ -659,11 +659,11 @@ Initialize database connections and pools"""
         except Exception as e:
             self.logger.error(f"Failed to close connections: {e}")
     
-    def __enter__(self):
+    def __enter__(self) -> None:
         """Context manager entry"""
         return self
     
-    def __exit__(self, exc_type, exc_val, exc_tb):
+    def __exit__(self, exc_type, exc_val, exc_tb) -> None:
         """
 Context manager exit"""
         self.close_connections()

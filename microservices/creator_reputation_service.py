@@ -139,7 +139,7 @@ class CreatorReputationService:
     for creators with sophisticated metrics and community-driven validation.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.reputation_profiles: Dict[str, CreatorReputationProfile] = {}
         self.reputation_metrics: Dict[str, Dict[ReputationMetricType, ReputationMetric]] = {}
         self.reputation_events: List[ReputationEvent] = []
@@ -155,7 +155,7 @@ class CreatorReputationService:
         
         logger.info("CreatorReputationService initialized successfully")
     
-    def _initialize_metric_weights(self):
+    def _initialize_metric_weights(self) -> None:
         """Initialize metric weights for reputation calculation."""
         self.metric_weights = {
             ReputationMetricType.CONTENT_QUALITY: 0.20,
@@ -170,7 +170,7 @@ class CreatorReputationService:
             ReputationMetricType.REVENUE_PERFORMANCE: 0.05
         }
     
-    def _initialize_level_thresholds(self):
+    def _initialize_level_thresholds(self) -> None:
         """Initialize reputation level thresholds."""
         self.level_thresholds = {
             ReputationLevel.NEWCOMER: (0, 199),
@@ -181,7 +181,7 @@ class CreatorReputationService:
             ReputationLevel.LEGEND: (5000, float('inf'))
         }
     
-    def _initialize_badges_catalog(self):
+    def _initialize_badges_catalog(self) -> None:
         """Initialize available badges and their criteria."""
         self.badges_catalog = {
             "quality_creator": {
@@ -301,7 +301,7 @@ class CreatorReputationService:
             logger.error(f"Error recording reputation event: {e}")
             raise
     
-    async def _process_reputation_event(self, event: ReputationEvent):
+    async def _process_reputation_event(self, event -> None: ReputationEvent) -> None:
         """Process individual reputation event."""
         try:
             creator_id = event.creator_id
@@ -454,7 +454,7 @@ class CreatorReputationService:
         else:
             return "stable"
     
-    async def _update_overall_reputation_score(self, creator_id: str):
+    async def _update_overall_reputation_score(self, creator_id -> None: str) -> None:
         """Update overall reputation score based on weighted metrics."""
         try:
             profile = self.reputation_profiles[creator_id]
@@ -545,7 +545,7 @@ class CreatorReputationService:
         else:
             return TrustLevel.UNVERIFIED
     
-    async def _check_badge_eligibility(self, creator_id: str):
+    async def _check_badge_eligibility(self, creator_id -> None: str) -> None:
         """Check and award badges based on current metrics."""
         try:
             profile = self.reputation_profiles[creator_id]
@@ -831,7 +831,7 @@ def get_creator_reputation_service() -> CreatorReputationService:
 
 
 # Example usage and testing
-async def example_usage():
+async def example_usage() -> None:
     """Example usage of Creator Reputation Service."""
     service = get_creator_reputation_service()
     

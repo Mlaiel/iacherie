@@ -198,7 +198,7 @@ class DashboardConfig:
 class AdvancedVisualizationEngine:
     """Advanced visualization generation engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.chart_generators = {}
         self.styling_templates = {}
         self.color_palettes = {}
@@ -207,7 +207,7 @@ class AdvancedVisualizationEngine:
         # Initialize visualization components
         self._initialize_visualization_generators()
         
-    def _initialize_visualization_generators(self):
+    def _initialize_visualization_generators(self) -> None:
         """Initialize visualization generation components"""
         self.chart_generators = {
             VisualizationType.LINE_CHART: self._generate_line_chart,
@@ -531,7 +531,7 @@ class AdvancedVisualizationEngine:
 class ReportTemplateEngine:
     """Advanced report template engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.template_cache = {}
         self.custom_templates = {}
         self.template_variables = {}
@@ -539,7 +539,7 @@ class ReportTemplateEngine:
         # Initialize template engine
         self._initialize_templates()
         
-    def _initialize_templates(self):
+    def _initialize_templates(self) -> None:
         """Initialize report templates"""
         self.custom_templates = {
             "executive_summary": self._create_executive_template(),
@@ -740,14 +740,14 @@ class ReportTemplateEngine:
 class ReportExportEngine:
     """Advanced report export engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.exporters = {}
         self.export_cache = {}
         
         # Initialize export engines
         self._initialize_exporters()
         
-    def _initialize_exporters(self):
+    def _initialize_exporters(self) -> None:
         """Initialize export engines"""
         self.exporters = {
             ReportFormat.PDF: self._export_to_pdf,
@@ -988,7 +988,7 @@ class ReportExportEngine:
 class AnalyticsReportingService:
     """Ultra-advanced analytics reporting service"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         """Initialize analytics reporting service"""
         self.config = config or {}
         self.report_cache = {}
@@ -1017,7 +1017,7 @@ class AnalyticsReportingService:
         
         logger.info("🚀 Ultra-Advanced Analytics Reporting Service initialized")
     
-    def _start_background_tasks(self):
+    def _start_background_tasks(self) -> None:
         """Start background reporting tasks"""
         asyncio.create_task(self._scheduled_reports_worker())
         asyncio.create_task(self._report_cleanup_worker())
@@ -1256,7 +1256,7 @@ class AnalyticsReportingService:
             raise
     
     # Background workers for reporting automation
-    async def _scheduled_reports_worker(self):
+    async def _scheduled_reports_worker(self) -> None:
         """Background worker for scheduled reports"""
         while True:
             try:
@@ -1277,7 +1277,7 @@ class AnalyticsReportingService:
                 logger.error(f"Error in scheduled reports worker: {e}")
                 await asyncio.sleep(300)  # Wait 5 minutes before retrying
     
-    async def _report_cleanup_worker(self):
+    async def _report_cleanup_worker(self) -> None:
         """Background worker for report cleanup"""
         while True:
             try:
@@ -1294,7 +1294,7 @@ class AnalyticsReportingService:
                 logger.error(f"Error in report cleanup worker: {e}")
                 await asyncio.sleep(3600)  # Wait 1 hour before retrying
     
-    async def _dashboard_refresh_worker(self):
+    async def _dashboard_refresh_worker(self) -> None:
         """Background worker for dashboard refresh"""
         while True:
             try:

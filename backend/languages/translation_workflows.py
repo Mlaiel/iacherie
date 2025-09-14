@@ -195,7 +195,7 @@ class TranslationWorkflowEngine:
     complex translation processes with human translators and AI integration
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize translation workflow engine"""
         self.config = config or {}
         
@@ -642,7 +642,7 @@ class TranslationWorkflowEngine:
     
     # Private helper methods
     
-    async def _initialize_job_workflow(self, job: TranslationJob):
+    async def _initialize_job_workflow(self, job -> None: TranslationJob) -> None:
         """Initialize workflow for a job"""
         template = self.workflow_templates.get(job.workflow_type.value)
         if template:
@@ -676,7 +676,7 @@ class TranslationWorkflowEngine:
         
         return None
     
-    async def _assign_reviewer(self, job: TranslationJob):
+    async def _assign_reviewer(self, job -> None: TranslationJob) -> None:
         """Assign reviewer to a job"""
         # Find available reviewer with appropriate qualifications
         for translator_id, translator in self.translators.items():
@@ -688,8 +688,8 @@ class TranslationWorkflowEngine:
                 job.assigned_reviewer = translator_id
                 break
     
-    async def _update_workflow_step(self, job_id: str, step_name: str, 
-                                  status: str, assigned_to: Optional[str] = None):
+    async def _update_workflow_step(self, job_id -> None: str, step_name -> None: str, 
+                                  status -> None: str, assigned_to -> None: Optional[str] = None) -> None:
         """Update workflow step status"""
         job = self.translation_jobs[job_id]
         
@@ -704,7 +704,7 @@ class TranslationWorkflowEngine:
         elif step_name == "review" and status == "pending":
             job.status = WorkflowStatus.UNDER_REVIEW
     
-    async def _finalize_translation(self, job_id: str, version_id: str):
+    async def _finalize_translation(self, job_id -> None: str, version_id -> None: str) -> None:
         """Finalize approved translation"""
         job = self.translation_jobs[job_id]
         versions = self.translation_versions.get(job_id, [])
@@ -730,7 +730,7 @@ class TranslationWorkflowEngine:
         
         logger.info(f"Translation finalized for job {job_id}")
     
-    async def _request_revision(self, job_id: str, version_id: str, suggestions: List[str]):
+    async def _request_revision(self, job_id -> None: str, version_id -> None: str, suggestions -> None: List[str]) -> None:
         """Request revision from translator"""
         job = self.translation_jobs[job_id]
         job.status = WorkflowStatus.IN_PROGRESS
@@ -747,7 +747,7 @@ class TranslationWorkflowEngine:
         
         logger.info(f"Revision requested for job {job_id}")
     
-    def _initialize_workflow_templates(self):
+    def _initialize_workflow_templates(self) -> None:
         """Initialize default workflow templates"""
         # Standard workflow template
         self.workflow_templates["standard"] = WorkflowTemplate(
@@ -811,7 +811,7 @@ class TranslationWorkflowEngine:
             quality_gates=["translation_complete", "all_reviews_approved", "final_approval"]
         )
     
-    def _load_sample_translators(self):
+    def _load_sample_translators(self) -> None:
         """Load sample translator profiles"""
         sample_translators = [
             {

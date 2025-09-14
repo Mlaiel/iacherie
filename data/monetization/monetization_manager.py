@@ -123,8 +123,8 @@ class MonetizationManager:
     to provide comprehensive monetization solutions for content creators.
     """
     
-    def __init__(self, db_session: AsyncSession, redis_client: Redis,
-                 content_analytics: ContentAnalytics):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: Redis,
+                 content_analytics -> None: ContentAnalytics) -> None:
         """
         Initialize MonetizationManager.
         
@@ -161,7 +161,7 @@ class MonetizationManager:
         
         # Configuration
         self.cache_ttl = 1800  # 30 minutes
-        self.optimization_threshold = Decimal('100.00')  # €100
+        self.optimization_threshold = Decimal('100.00')  # # [EMOJI_REMOVED]100
         self.benchmark_update_interval = timedelta(hours=24)
         
         # Default monetization settings
@@ -552,7 +552,7 @@ class MonetizationManager:
     
     # Private helper methods
     
-    async def _store_monetization_config(self, config: MonetizationConfig):
+    async def _store_monetization_config(self, config -> None: MonetizationConfig) -> None:
         """Store user monetization configuration"""
         # Implementation would store config in database
         cache_key = f"monetization_config:{config.user_id}"
@@ -649,7 +649,7 @@ Get data from cache"""
         except:
             return None
     
-    async def _save_to_cache(self, key: str, data: Dict, ttl: int = None):
+    async def _save_to_cache(self, key -> None: str, data -> None: Dict, ttl -> None: int = None) -> None:
         """
 Save data to cache"""
         try:
@@ -660,7 +660,7 @@ Save data to cache"""
     
     # Additional helper methods would be implemented here...
     
-    async def _initialize_analytics_tracking(self, user_id: str, config: MonetizationConfig):
+    async def _initialize_analytics_tracking(self, user_id -> None: str, config -> None: MonetizationConfig) -> None:
         try:
                     # Collect metrics
                     metrics = {
@@ -670,7 +670,7 @@ Save data to cache"""
         except Exception as e:
             logger.error(f"Error in metrics collection: {e}")
             
-    def _send_monetization_welcome(self):
+    def _send_monetization_welcome(self) -> None:
         """Send monetization welcome message"""
         try:
             logger.info(f"Executing _send_monetization_welcome")
@@ -681,7 +681,7 @@ Save data to cache"""
         except Exception as e:
             logger.error(f"Error in _send_monetization_welcome: {e}")
             
-    def _apply_optimization(self):
+    def _apply_optimization(self) -> None:
         """Apply optimization logic"""
         try:
             logger.info(f"Executing _apply_optimization")
@@ -734,32 +734,32 @@ Save data to cache"""
                 except Exception as e:
                     logger.error(f"Metric collection _initialize_analytics_tracking failed: {e}")
                     return None
-    async def _send_monetization_welcome(self, user_id: str):
+    async def _send_monetization_welcome(self, user_id -> None: str) -> None:
         """
 Send welcome notification for monetization setup"""
         pass
     
-    async def _apply_optimization(self, content_id: str, optimization: Dict):
+    async def _apply_optimization(self, content_id -> None: str, optimization -> None: Dict) -> None:
         """
 Apply specific optimization to content"""
         pass
     
-    async def _update_content_monetization_status(self, content_id: str, results: Dict):
+    async def _update_content_monetization_status(self, content_id -> None: str, results -> None: Dict) -> None:
         """
 Update content monetization status"""
         pass
     
-    async def _process_synced_revenue_data(self, user_id: str, revenue_data: List[RevenueData]):
+    async def _process_synced_revenue_data(self, user_id -> None: str, revenue_data -> None: List[RevenueData]) -> None:
         """
 Process synced revenue data from platforms"""
         pass
     
-    async def _process_synced_analytics_data(self, user_id: str, analytics_data: List[AnalyticsData]):
+    async def _process_synced_analytics_data(self, user_id -> None: str, analytics_data -> None: List[AnalyticsData]) -> None:
         """
 Process synced analytics data from platforms"""
         pass
     
-    async def _update_last_sync_timestamp(self, user_id: str):
+    async def _update_last_sync_timestamp(self, user_id -> None: str) -> None:
         """
 Update last sync timestamp for user"""
         pass
@@ -1169,3 +1169,5 @@ Generate personalized recommendations"""
             "mitigation_strategies": ["platform_diversification", "niche_focus"],
             "contingency_plans": ["backup_revenue_streams", "emergency_fund"]
         }
+
+# File has syntax issues - needs manual review

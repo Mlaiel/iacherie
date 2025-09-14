@@ -1,4 +1,7 @@
 """Database Connection Pool Manager
+import asyncio
+import logging
+
 Advanced connection pooling and load balancing for high availability
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -75,7 +78,7 @@ class ConnectionPoolManager:
     - Performance metrics and monitoring
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = get_logger(__name__)
         self.config = get_database_settings()
         self.metrics = MetricsCollector()
@@ -276,7 +279,7 @@ Initialize connection pools"""
             return False
     
     @contextmanager
-    def get_connection(self, read_only: bool = False):
+    def get_connection(self, read_only -> None: bool = False) -> None:
         """Get database connection with automatic load balancing"""
         endpoint_id = None
         connection = None
@@ -401,7 +404,7 @@ Initialize connection pools"""
             self.logger.error(f"Load balancing failed: {e}")
             return endpoint_ids[0] if endpoint_ids else None
     
-    async def get_async_connection(self, read_only: bool = False):
+    async def get_async_connection(self, read_only -> None: bool = False) -> None:
         """Get asynchronous database connection"""
         try:
             endpoint_id = self._select_endpoint(read_only)
@@ -447,7 +450,7 @@ Initialize connection pools"""
             self.logger.error(f"Failed to create async pool for {endpoint_id}: {e}")
             raise
     
-    def get_sqlalchemy_engine(self, read_only: bool = False):
+    def get_sqlalchemy_engine(self, read_only -> None: bool = False) -> None:
         """Get SQLAlchemy engine"""
         try:
             endpoint_id = self._select_endpoint(read_only)

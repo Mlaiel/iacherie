@@ -114,14 +114,14 @@ class CohortAnalytics:
     - Automated insight generation
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.user_events: List[UserEvent] = []
         self.cohorts: Dict[str, CohortDefinition] = {}
         self.analysis_cache: Dict[str, CohortAnalysisResult] = {}
         self._user_first_seen: Dict[str, datetime] = {}
         self._user_platform_first_seen: Dict[str, Dict[str, datetime]] = defaultdict(dict)
         
-    async def add_user_events(self, events: List[UserEvent]):
+    async def add_user_events(self, events -> None: List[UserEvent]) -> None:
         """Add user events for cohort analysis"""
         for event in events:
             self.user_events.append(event)
@@ -142,7 +142,7 @@ class CohortAnalytics:
                     
         logger.info(f"Added {len(events)} user events for cohort analysis")
         
-    async def define_cohort(self, definition: CohortDefinition):
+    async def define_cohort(self, definition -> None: CohortDefinition) -> None:
         """Define a new cohort for analysis"""
         self.cohorts[definition.cohort_id] = definition
         logger.info(f"Defined cohort {definition.cohort_id} of type {definition.cohort_type.value}")
@@ -703,7 +703,7 @@ class CohortAnalytics:
             raise
 
 # Usage example
-async def example_usage():
+async def example_usage() -> None:
     """Example usage of CohortAnalytics"""
     analytics = CohortAnalytics()
     

@@ -32,7 +32,7 @@ from .base_manager import BaseDeploymentManager
 class MetricsCollector:
     """
 Mock metrics collector."""
-    def __init__(self):
+    def __init__(self) -> None:
         """
 Initialize automated deployment metrics collector"""
         self.logger = logging.getLogger(f"{__name__}.MetricsCollector")
@@ -165,11 +165,11 @@ class AutomatedDeploymentManager(BaseDeploymentManager):
     """
     def __init__(
         self,
-        kubernetes_manager: Optional[KubernetesManager] = None,
-        container_registry: Optional[ContainerRegistryManager] = None,
-        load_balancer_manager: Optional[LoadBalancerManager] = None,
-        metrics_collector: Optional[MetricsCollector] = None
-    ):
+        kubernetes_manager -> None: Optional[KubernetesManager] = None,
+        container_registry -> None: Optional[ContainerRegistryManager] = None,
+        load_balancer_manager -> None: Optional[LoadBalancerManager] = None,
+        metrics_collector -> None: Optional[MetricsCollector] = None
+    ) -> None:
         super().__init__()
         self.kubernetes_manager = kubernetes_manager or KubernetesManager()
         self.container_registry = container_registry or ContainerRegistryManager()

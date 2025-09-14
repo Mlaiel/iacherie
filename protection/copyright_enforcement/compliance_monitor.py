@@ -109,7 +109,7 @@ class ComplianceMonitor:
     """
 Advanced compliance monitoring system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.settings = get_settings()
         self.notification_service = NotificationService()
         self.regulatory_api = RegulatoryAPI()
@@ -990,7 +990,7 @@ Calculate compliance metrics for period"""
 class PolicyEnforcer:
     """Automated policy enforcement system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.settings = get_settings()
         self.compliance_monitor = ComplianceMonitor()
     
@@ -1190,7 +1190,7 @@ Enforce policy compliance for specific entity"""
 class AuditTracker:
     """Comprehensive audit trail and logging system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         try:
             logger.info(f"Executing __init__")
             

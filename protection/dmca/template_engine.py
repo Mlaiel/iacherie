@@ -1,4 +1,4 @@
-"""🚨 DMCA Template Engine - Professional Legal Document Generator
+"""# [EMOJI_REMOVED] DMCA Template Engine - Professional Legal Document Generator
 ==============================================================
 
 Enterprise-grade template system for automated DMCA notice generation with multi-language support.
@@ -7,14 +7,14 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use strictly prohibited
 
-⚠️  LEGAL WARNING - INTELLECTUAL PROPERTY PROTECTION ⚠️
+# [EMOJI_REMOVED]  LEGAL WARNING - INTELLECTUAL PROPERTY PROTECTION # [EMOJI_REMOVED]
 ====================================================
 This software and all associated concepts, algorithms, and implementations are the
 exclusive intellectual property of Fahed Mlaiel (mlaiel@live.de).
 
 Any unauthorized use, reproduction, distribution, or derivation of this work without
 explicit written permission from Fahed Mlaiel is strictly prohibited and may result in:
-- Immediate legal action under German and International copyright law
+    - Immediate legal action under German and International copyright law
 - Claims for damages and lost profits
 - Injunctive relief to prevent further infringement
 - Criminal prosecution where applicable
@@ -22,7 +22,7 @@ explicit written permission from Fahed Mlaiel is strictly prohibited and may res
 Contact: mlaiel@live.de for licensing inquiries.
 
 Project Team Specialties:
-- Lead AI Developer & Architect: Fahed Mlaiel (Advanced ML/AI systems)
+    - Lead AI Developer & Architect: Fahed Mlaiel (Advanced ML/AI systems)
 - Backend Senior Engineer: Enterprise Python/FastAPI systems
 - DevOps Engineer: Kubernetes/Cloud infrastructure
 - Security Specialist: Cybersecurity & legal compliance
@@ -73,7 +73,7 @@ class DMCATemplateEngine:
     """
 Professional DMCA template engine with multi-language support"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.templates = self._initialize_templates()
         self.jinja_env = Environment(
             loader=DictLoader(self.templates),
@@ -206,17 +206,17 @@ Generate professional DMCA notice"""
 Generate appropriate subject line"""
         if language == 'de':
             if context.priority_level >= DMCAPriority.URGENT:
-                return f"🚨 DRINGEND: DMCA Löschungsantrag - Fall {context.case_id}"
+                return f"# [EMOJI_REMOVED] DRINGEND: DMCA L# [EMOJI_REMOVED]schungsantrag - Fall {context.case_id}"
             else:
-                return f"DMCA Löschungsantrag - Fall {context.case_id}"
+                return f"DMCA L# [EMOJI_REMOVED]schungsantrag - Fall {context.case_id}"
         elif language == 'fr':
             if context.priority_level >= DMCAPriority.URGENT:
-                return f"🚨 URGENT: Demande de retrait DMCA - Cas {context.case_id}"
+                return f"# [EMOJI_REMOVED] URGENT: Demande de retrait DMCA - Cas {context.case_id}"
             else:
                 return f"Demande de retrait DMCA - Cas {context.case_id}"
         else:  # English
             if context.priority_level >= DMCAPriority.URGENT:
-                return f"🚨 URGENT: DMCA Takedown Notice - Case {context.case_id}"
+                return f"# [EMOJI_REMOVED] URGENT: DMCA Takedown Notice - Case {context.case_id}"
             else:
                 return f"DMCA Takedown Notice - Case {context.case_id}"
     
@@ -287,9 +287,9 @@ Format large numbers for display"""
 <body>
     <div class="container">
         <div class="header">
-            <h1 style="color: #dc3545; margin: 0;">🚨 URGENT DMCA TAKEDOWN NOTICE</h1>
+            <h1 style="color: #dc3545; margin: 0;"># [EMOJI_REMOVED] URGENT DMCA TAKEDOWN NOTICE</h1>
             <div class="urgent-badge">PRIORITY {{ priority_level }} - IMMEDIATE ACTION REQUIRED</div>
-            <p style="margin: 10px 0 0 0; color: #6c757d;">Digital Millennium Copyright Act § 512(c) Notice</p>
+            <p style="margin: 10px 0 0 0; color: #6c757d;">Digital Millennium Copyright Act # [EMOJI_REMOVED] 512(c) Notice</p>
         </div>
 
         <div class="section">
@@ -302,7 +302,7 @@ Format large numbers for display"""
         </div>
 
         <div class="highlight">
-            <h2 style="color: #dc3545; margin-top: 0;">⚠️ URGENT COPYRIGHT INFRINGEMENT DETECTED</h2>
+            <h2 style="color: #dc3545; margin-top: 0;"># [EMOJI_REMOVED] URGENT COPYRIGHT INFRINGEMENT DETECTED</h2>
             <p><strong>This notice concerns viral content causing significant revenue damage. Immediate action is required within {{ response_days }} day(s) to minimize further harm.</strong></p>
         </div>
 
@@ -351,7 +351,7 @@ Format large numbers for display"""
         {% endif %}
 
         <div class="highlight">
-            <h2 style="color: #dc3545; margin-top: 0;">🔥 IMMEDIATE ACTION REQUIRED</h2>
+            <h2 style="color: #dc3545; margin-top: 0;"># [EMOJI_REMOVED] IMMEDIATE ACTION REQUIRED</h2>
             <p><strong>Due to the viral nature and revenue impact of this infringement, we request immediate removal within {{ response_days }} day(s).</strong></p>
             <p>Failure to act promptly may result in escalation to legal action and claims for all damages incurred.</p>
         </div>
@@ -423,7 +423,7 @@ Format large numbers for display"""
     <div class="container">
         <div class="header">
             <h1 style="color: #007bff; margin: 0;">DMCA TAKEDOWN NOTICE</h1>
-            <p style="margin: 10px 0 0 0; color: #6c757d;">Digital Millennium Copyright Act § 512(c) Notice</p>
+            <p style="margin: 10px 0 0 0; color: #6c757d;">Digital Millennium Copyright Act # [EMOJI_REMOVED] 512(c) Notice</p>
         </div>
 
         <div class="section">
@@ -525,7 +525,7 @@ Format large numbers for display"""
 <body>
     <div class="container">
         <div class="header">
-            <h1 style="color: #fd7e14; margin: 0;">⚖️ DMCA ESCALATION NOTICE</h1>
+            <h1 style="color: #fd7e14; margin: 0;"># [EMOJI_REMOVED] DMCA ESCALATION NOTICE</h1>
             <div class="warning-badge">FORMAL ESCALATION - LEGAL ACTION PENDING</div>
             <p style="margin: 10px 0 0 0; color: #6c757d;">Follow-up to Previous DMCA Notice</p>
         </div>
@@ -693,7 +693,7 @@ Format large numbers for display"""
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>DRINGEND: DMCA Löschungsantrag</title>
+    <title>DRINGEND: DMCA L# [EMOJI_REMOVED]schungsantrag</title>
     <style>
         body { font-family: 'Arial', sans-serif; line-height: 1.6; margin: 0; padding: 40px; background: #f8f9fa; }
         .container { max-width: 800px; margin: 0 auto; background: white; padding: 40px; box-shadow: 0 0 20px rgba(0,0,0,0.1); }
@@ -709,13 +709,13 @@ Format large numbers for display"""
 <body>
     <div class="container">
         <div class="header">
-            <h1 style="color: #dc3545; margin: 0;">🚨 DRINGENDER DMCA LÖSCHUNGSANTRAG</h1>
-            <div class="urgent-badge">PRIORITÄT {{ priority_level }} - SOFORTIGE MASSNAHMEN ERFORDERLICH</div>
+            <h1 style="color: #dc3545; margin: 0;"># [EMOJI_REMOVED] DRINGENDER DMCA L# [EMOJI_REMOVED]SCHUNGSANTRAG</h1>
+            <div class="urgent-badge">PRIORIT# [EMOJI_REMOVED]T {{ priority_level }} - SOFORTIGE MASSNAHMEN ERFORDERLICH</div>
         </div>
 
         <div class="highlight">
-            <h2 style="color: #dc3545; margin-top: 0;">⚠️ DRINGENDE URHEBERRECHTSVERLETZUNG ERKANNT</h2>
-            <p><strong>Diese Mitteilung betrifft viralen Inhalt, der erheblichen Umsatzschaden verursacht. Sofortige Maßnahmen sind innerhalb von {{ response_days }} Tag(en) erforderlich.</strong></p>
+            <h2 style="color: #dc3545; margin-top: 0;"># [EMOJI_REMOVED] DRINGENDE URHEBERRECHTSVERLETZUNG ERKANNT</h2>
+            <p><strong>Diese Mitteilung betrifft viralen Inhalt, der erheblichen Umsatzschaden verursacht. Sofortige Ma# [EMOJI_REMOVED]nahmen sind innerhalb von {{ response_days }} Tag(en) erforderlich.</strong></p>
         </div>
 
         <!-- Rest of German template... -->
@@ -745,13 +745,13 @@ Format large numbers for display"""
 <body>
     <div class="container">
         <div class="header">
-            <h1 style="color: #dc3545; margin: 0;">🚨 DEMANDE DE RETRAIT DMCA URGENTE</h1>
-            <div class="urgent-badge">PRIORITÉ {{ priority_level }} - ACTION IMMÉDIATE REQUISE</div>
+            <h1 style="color: #dc3545; margin: 0;"># [EMOJI_REMOVED] DEMANDE DE RETRAIT DMCA URGENTE</h1>
+            <div class="urgent-badge">PRIORIT# [EMOJI_REMOVED] {{ priority_level }} - ACTION IMM# [EMOJI_REMOVED]DIATE REQUISE</div>
         </div>
 
         <div class="highlight">
-            <h2 style="color: #dc3545; margin-top: 0;">⚠️ VIOLATION DE DROITS D'AUTEUR URGENTE DÉTECTÉE</h2>
-            <p><strong>Cet avis concerne du contenu viral causant des dommages financiers importants. Une action immédiate est requise dans les {{ response_days }} jour(s).</strong></p>
+            <h2 style="color: #dc3545; margin-top: 0;"># [EMOJI_REMOVED] VIOLATION DE DROITS D'AUTEUR URGENTE D# [EMOJI_REMOVED]TECT# [EMOJI_REMOVED]E</h2>
+            <p><strong>Cet avis concerne du contenu viral causant des dommages financiers importants. Une action imm# [EMOJI_REMOVED]diate est requise dans les {{ response_days }} jour(s).</strong></p>
         </div>
 
         <!-- Rest of French template... -->
@@ -787,3 +787,5 @@ Format large numbers for display"""
 def create_template_engine() -> DMCATemplateEngine:
     """Factory function to create DMCA template engine"""
     return DMCATemplateEngine()
+
+# File has syntax issues - needs manual review

@@ -1,4 +1,4 @@
-"""🌐 Multi-Platform Integration Engine
+"""# [EMOJI_REMOVED] Multi-Platform Integration Engine
 =====================================
 
 Enterprise-grade platform integration system for automated DMCA submission across major content platforms.
@@ -8,7 +8,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use strictly prohibited
 
 This module provides:
-- Multi-platform API integration
+    - Multi-platform API integration
 - Automated form submission
 - Platform-specific adapters
 - Rate limiting and retry logic
@@ -91,7 +91,7 @@ class PlatformCredentials:
     password: Optional[str] = None
     additional_params: Dict[str, Any] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         try:
                     # Request validation
                     if not data:
@@ -124,7 +124,7 @@ Platform submission result"""
     response_received_at: Optional[datetime] = None
     retry_count: int = 0
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.response_data is None:
             self.response_data = {}
         if self.submitted_at is None:
@@ -135,7 +135,7 @@ class PlatformAdapter:
     """
 Base platform adapter interface"""
     
-    def __init__(self, platform: PlatformType, credentials: PlatformCredentials):
+    def __init__(self, platform -> None: PlatformType, credentials -> None: PlatformCredentials) -> None:
         self.platform = platform
         self.credentials = credentials
         self.session: Optional[aiohttp.ClientSession] = None
@@ -197,7 +197,7 @@ Get default HTTP headers"""
             'Content-Type': 'application/json'
         }
     
-    async def cleanup(self):
+    async def cleanup(self) -> None:
         """
 Clean up resources"""
         if self.session:
@@ -208,7 +208,7 @@ class YouTubeAdapter(PlatformAdapter):
     """
 YouTube platform adapter"""
     
-    def __init__(self, credentials: PlatformCredentials):
+    def __init__(self, credentials -> None: PlatformCredentials) -> None:
         super().__init__(PlatformType.YOUTUBE, credentials)
         self.api_base = "https://www.googleapis.com/youtube/v3"
         self.copyright_api = "https://youtubei.googleapis.com/youtubei/v1"
@@ -302,7 +302,7 @@ Extract YouTube video ID from URL"""
 class SpotifyAdapter(PlatformAdapter):
     """Spotify platform adapter"""
     
-    def __init__(self, credentials: PlatformCredentials):
+    def __init__(self, credentials -> None: PlatformCredentials) -> None:
         super().__init__(PlatformType.SPOTIFY, credentials)
         self.api_base = "https://api.spotify.com/v1"
         self.copyright_email = "copyright@spotify.com"
@@ -362,14 +362,14 @@ Dear Spotify Copyright Team,
 I am submitting this DMCA takedown notice pursuant to the Digital Millennium Copyright Act.
 
 NOTICE DETAILS:
-- Notice ID: {notice_data['notice_id']}
+    - Notice ID: {notice_data['notice_id']}
 - Infringing Track: {notice_data['infringing_url']}
 - Track ID: {track_id}
 - Original Work: {notice_data['original_work']['url']}
 - Similarity: {notice_data['similarity_score']}%
 
 COPYRIGHT OWNER:
-{notice_data['copyright_owner']['name']}
+    {notice_data['copyright_owner']['name']}
 {notice_data['copyright_owner']['email']}
 
 Please remove the infringing content expeditiously.
@@ -391,7 +391,7 @@ Extract Spotify track ID from URL"""
 class InstagramAdapter(PlatformAdapter):
     """Instagram/Meta platform adapter"""
     
-    def __init__(self, credentials: PlatformCredentials):
+    def __init__(self, credentials -> None: PlatformCredentials) -> None:
         super().__init__(PlatformType.INSTAGRAM, credentials)
         self.api_base = "https://graph.facebook.com/v18.0"
         self.copyright_form_url = "https://help.instagram.com/contact/372592039493026"
@@ -437,7 +437,7 @@ class InstagramAdapter(PlatformAdapter):
 class TikTokAdapter(PlatformAdapter):
     """TikTok platform adapter"""
     
-    def __init__(self, credentials: PlatformCredentials):
+    def __init__(self, credentials -> None: PlatformCredentials) -> None:
         super().__init__(PlatformType.TIKTOK, credentials)
         self.api_base = "https://open-api.tiktok.com/platform/oauth/connect"
         self.copyright_form_url = "https://www.tiktok.com/legal/copyright-policy"
@@ -507,7 +507,7 @@ class TikTokAdapter(PlatformAdapter):
 class WebFormSubmitter:
     """Automated web form submission using Selenium"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.driver: Optional[webdriver.Chrome] = None
         self.wait: Optional[WebDriverWait] = None
     
@@ -553,7 +553,7 @@ Submit DMCA form on web platform"""
         finally:
             await self._cleanup_driver()
     
-    async def _setup_driver(self):
+    async def _setup_driver(self) -> None:
         """Setup Chrome WebDriver"""
         options = Options()
         options.add_argument('--headless')
@@ -624,7 +624,7 @@ Fill platform-specific form"""
         page_text = self.driver.page_source.lower()
         return any(indicator.lower() in page_text for indicator in success_indicators)
     
-    async def _cleanup_driver(self):
+    async def _cleanup_driver(self) -> None:
         """Clean up WebDriver resources"""
         if self.driver:
             self.driver.quit()
@@ -636,7 +636,7 @@ class RateLimiter:
     """
 Platform-specific rate limiting"""
     
-    def __init__(self, platform: PlatformType):
+    def __init__(self, platform -> None: PlatformType) -> None:
         self.platform = platform
         self.last_request_time: Optional[datetime] = None
         self.request_count = 0
@@ -674,7 +674,7 @@ Get platform-specific rate limits"""
             'min_interval_seconds': 6
         })
     
-    async def wait_if_needed(self):
+    async def wait_if_needed(self) -> None:
         """
 Wait if rate limit requires it"""
         
@@ -695,12 +695,12 @@ Wait if rate limit requires it"""
 class MultiPlatformIntegrationEngine:
     """Main engine for multi-platform DMCA submissions"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.adapters: Dict[PlatformType, PlatformAdapter] = {}
         self.credentials: Dict[PlatformType, PlatformCredentials] = {}
         self.submission_history: List[SubmissionResult] = []
         
-    async def initialize(self, platform_credentials: Dict[PlatformType, PlatformCredentials]):
+    async def initialize(self, platform_credentials -> None: Dict[PlatformType, PlatformCredentials]) -> None:
         """
 Initialize all platform adapters"""
         
@@ -847,7 +847,7 @@ Check status of a submitted notice"""
         
         return stats
     
-    async def cleanup(self):
+    async def cleanup(self) -> None:
         """
 Clean up all adapter resources"""
         
@@ -891,3 +891,5 @@ __all__ = [
     'create_platform_credentials',
     'create_integration_engine'
 ]
+
+# File has syntax issues - needs manual review

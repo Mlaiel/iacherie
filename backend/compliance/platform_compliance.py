@@ -299,7 +299,7 @@ class PlatformComplianceProfileRecord(Base):
 class PlatformRequirementsManager:
     """Manages platform-specific compliance requirements"""
     
-    def __init__(self, db_session: AsyncSession, redis_client: aioredis.Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: aioredis.Redis) -> None:
         self.db = db_session
         self.redis = redis_client
         
@@ -676,7 +676,7 @@ class PlatformRequirementsManager:
 class PlatformSubmissionManager:
     """Manages platform submissions and reviews"""
     
-    def __init__(self, db_session: AsyncSession, redis_client: aioredis.Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: aioredis.Redis) -> None:
         self.db = db_session
         self.redis = redis_client
         
@@ -948,7 +948,7 @@ class PlatformSubmissionManager:
 class PlatformCompliance:
     """Main platform compliance management engine"""
     
-    def __init__(self, db_session: AsyncSession, redis_client: aioredis.Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: aioredis.Redis) -> None:
         self.db = db_session
         self.redis = redis_client
         

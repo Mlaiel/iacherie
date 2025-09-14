@@ -194,7 +194,7 @@ class ValidationConfig:
 class SecurityValidator:
     """Comprehensive security validation engine."""
     
-    def __init__(self, config: Optional[ValidationConfig] = None):
+    def __init__(self, config -> None: Optional[ValidationConfig] = None) -> None:
         """Initialize the security validator."""
         self.config = config or ValidationConfig()
         
@@ -215,7 +215,7 @@ class SecurityValidator:
         
         logger.info(f"Security validator initialized with {self.config.security_level.value} level")
     
-    def _load_security_patterns(self):
+    def _load_security_patterns(self) -> None:
         """Load security patterns for threat detection."""
         self.security_patterns = {
             'suspicious_urls': [
@@ -237,7 +237,7 @@ class SecurityValidator:
             ]
         }
     
-    def _load_threat_intelligence(self):
+    def _load_threat_intelligence(self) -> None:
         """Load threat intelligence data."""
         # This would typically load from external threat intelligence feeds
         self.threat_intelligence = {
@@ -247,7 +247,7 @@ class SecurityValidator:
             'malicious_patterns': []
         }
     
-    def _init_encryption(self):
+    def _init_encryption(self) -> None:
         """Initialize encryption capabilities."""
         try:
             # Generate a key for session encryption
@@ -423,7 +423,7 @@ class SecurityValidator:
             logger.warning(f"File hash calculation failed: {e}")
             return ""
     
-    async def _scan_malware(self, file_path: str, result: SecurityScanResult):
+    async def _scan_malware(self, file_path -> None: str, result -> None: SecurityScanResult) -> None:
         """Scan for malware and viruses."""
         try:
             malware_result = await self.malware_scanner.scan(file_path)
@@ -446,7 +446,7 @@ class SecurityValidator:
                 description=f"Malware scan error: {str(e)}"
             ))
     
-    async def _scan_content(self, file_path: str, result: SecurityScanResult):
+    async def _scan_content(self, file_path -> None: str, result -> None: SecurityScanResult) -> None:
         """Scan file content for security issues."""
         try:
             content_result = await self.content_scanner.scan(file_path, result.media_type)
@@ -472,7 +472,7 @@ class SecurityValidator:
                 description=f"Content scan error: {str(e)}"
             ))
     
-    async def _scan_privacy(self, file_path: str, result: SecurityScanResult):
+    async def _scan_privacy(self, file_path -> None: str, result -> None: SecurityScanResult) -> None:
         """Scan for privacy violations and PII exposure."""
         try:
             privacy_result = await self.privacy_scanner.scan(file_path, result.media_type)
@@ -505,7 +505,7 @@ class SecurityValidator:
                 description=f"Privacy scan error: {str(e)}"
             ))
     
-    async def _check_compliance(self, file_path: str, result: SecurityScanResult, user_context: Optional[Dict[str, Any]]):
+    async def _check_compliance(self, file_path -> None: str, result -> None: SecurityScanResult, user_context -> None: Optional[Dict[str, Any]]) -> None:
         """Check compliance with various standards."""
         try:
             compliance_result = await self.compliance_checker.check(
@@ -534,7 +534,7 @@ class SecurityValidator:
                 description=f"Compliance check error: {str(e)}"
             ))
     
-    async def _scan_metadata(self, file_path: str, result: SecurityScanResult):
+    async def _scan_metadata(self, file_path -> None: str, result -> None: SecurityScanResult) -> None:
         """Scan file metadata for security issues."""
         try:
             metadata_result = await self.metadata_scanner.scan(file_path)
@@ -589,7 +589,7 @@ class SecurityValidator:
         # File is considered safe with warnings
         return True, highest_threat
     
-    def _generate_recommendations(self, result: SecurityScanResult):
+    def _generate_recommendations(self, result -> None: SecurityScanResult) -> None:
         """Generate security recommendations based on scan results."""
         if not result.violations:
             result.recommendations.append("File passed all security checks")
@@ -709,7 +709,7 @@ class ContentScanner:
         
         return result
     
-    async def _scan_text_content(self, file_path: str, result: Dict[str, Any]):
+    async def _scan_text_content(self, file_path -> None: str, result -> None: Dict[str, Any]) -> None:
         """Scan text content for suspicious patterns."""
         try:
             with open(file_path, 'r', encoding='utf-8', errors='ignore') as f:
@@ -764,12 +764,12 @@ class ContentScanner:
         
         return len(base64_matches) > 5 or len(hex_matches) > 3
     
-    async def _scan_image_content(self, file_path: str, result: Dict[str, Any]):
+    async def _scan_image_content(self, file_path -> None: str, result -> None: Dict[str, Any]) -> None:
         """Scan image content for suspicious elements."""
         # This would implement image analysis for embedded content, steganography, etc.
         result['content_analysis'] = {'image_scan': 'placeholder'}
     
-    async def _scan_media_content(self, file_path: str, result: Dict[str, Any]):
+    async def _scan_media_content(self, file_path -> None: str, result -> None: Dict[str, Any]) -> None:
         """Scan audio/video content for suspicious elements."""
         # This would implement media analysis for embedded content, hidden data, etc.
         result['content_analysis'] = {'media_scan': 'placeholder'}
@@ -807,7 +807,7 @@ class PrivacyScanner:
         
         return result
     
-    async def _analyze_metadata_privacy(self, metadata_result, result: Dict[str, Any]):
+    async def _analyze_metadata_privacy(self, metadata_result, result -> None: Dict[str, Any]) -> None:
         """Analyze metadata for privacy violations."""
         if metadata_result.privacy_report['contains_pii']:
             result['pii_found'] = True
@@ -828,7 +828,7 @@ class PrivacyScanner:
                 result['pii_types'].append(identifier)
                 result['privacy_score'] += 0.1
     
-    async def _scan_text_pii(self, file_path: str, result: Dict[str, Any]):
+    async def _scan_text_pii(self, file_path -> None: str, result -> None: Dict[str, Any]) -> None:
         """Scan text content for PII."""
         try:
             with open(file_path, 'r', encoding='utf-8', errors='ignore') as f:
@@ -1647,7 +1647,7 @@ class SecurityService:
     access control, encryption, compliance monitoring, and incident response.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.redis_client = None
         self.cache = CacheManager()
         
@@ -1698,7 +1698,7 @@ class SecurityService:
             ]
         }
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize security service components"""
         try:
             self.redis_client = await aioredis.from_url(
@@ -2271,12 +2271,12 @@ class SecurityService:
         else:
             return ThreatLevel.LOW
     
-    async def _load_security_policies(self):
+    async def _load_security_policies(self) -> None:
         """Load security policies from database"""
         # This would load organizational security policies
         pass
     
-    async def _start_security_monitoring(self):
+    async def _start_security_monitoring(self) -> None:
         """Start background security monitoring tasks"""
         # This would start various monitoring tasks
         pass
@@ -2494,7 +2494,7 @@ class SecurityIncident:
     mitigation_applied: bool
     investigation_status: str
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if not self.incident_id:
             # Generate unique incident ID
             content = f"{self.attack_type.value}_{self.detection_time.isoformat()}_{self.confidence_score}"
@@ -2529,7 +2529,7 @@ class SecurityAlertHandler:
     - Business impact assessment for creator platform security
     """
     
-    def __init__(self, alert_manager: AlertManager):
+    def __init__(self, alert_manager -> None: AlertManager) -> None:
         """
         Initialize security alert handler.
         
@@ -2768,7 +2768,7 @@ class SecurityAlertHandler:
             timestamp=datetime.now(timezone.utc)
         )
     
-    def _cleanup_old_metrics(self):
+    def _cleanup_old_metrics(self) -> None:
         """Clean up old security metrics to prevent memory bloat."""
         cutoff_time = datetime.now(timezone.utc) - timedelta(hours=72)  # Keep 3 days
         self.security_metrics_history = [
@@ -3119,7 +3119,7 @@ class SecurityAlertHandler:
         
         return alerts
     
-    def _update_threat_level(self, metrics: SecurityMetrics):
+    def _update_threat_level(self, metrics -> None: SecurityMetrics) -> None:
         """
         Update current threat level based on security metrics.
         
@@ -3149,7 +3149,7 @@ class SecurityAlertHandler:
         else:
             self.current_threat_level = SecurityThreatLevel.LOW
     
-    async def _assess_security_business_impact(self, metrics: SecurityMetrics, alerts: List[Alert]):
+    async def _assess_security_business_impact(self, metrics -> None: SecurityMetrics, alerts -> None: List[Alert]) -> None:
         """
         Assess security business impact on creator platform.
         
@@ -3273,12 +3273,14 @@ from prometheus_client import Counter, Gauge
 logger = logging.getLogger(__name__)
 
 class ThreatLevel(Enum):
+    """ThreatLevel class implementation"""
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
 
 class AttackType(Enum):
+    """AttackType class implementation"""
     FIFTY_ONE_PERCENT = "51_percent_attack"
     DOUBLE_SPENDING = "double_spending"
     NOTHING_AT_STAKE = "nothing_at_stake"
@@ -3289,6 +3291,7 @@ class AttackType(Enum):
 
 @dataclass
 class SecurityEvent:
+    """SecurityEvent: class implementation"""
     event_id: str
     timestamp: datetime
     attack_type: AttackType
@@ -3302,6 +3305,7 @@ class SecurityEvent:
 
 @dataclass
 class SecurityMetrics:
+    """SecurityMetrics: class implementation"""
     timestamp: datetime
     attack_attempts: int
     blocked_attempts: int
@@ -3312,7 +3316,8 @@ class SecurityMetrics:
     security_score: float
 
 class SecurityMetrics:
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    """SecurityMetrics: class implementation"""
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.is_running = False
         
@@ -3335,7 +3340,7 @@ class SecurityMetrics:
             'max_consensus_deviation': 0.1
         }
 
-    async def start_monitoring(self):
+    async def start_monitoring(self) -> None:
         """Start security monitoring."""
         self.is_running = True
         
@@ -3349,11 +3354,11 @@ class SecurityMetrics:
         
         await asyncio.gather(*tasks, return_exceptions=True)
 
-    async def stop_monitoring(self):
+    async def stop_monitoring(self) -> None:
         """Stop security monitoring."""
         self.is_running = False
 
-    async def _monitor_attack_patterns(self):
+    async def _monitor_attack_patterns(self) -> None:
         """Monitor for known attack patterns."""
         while self.is_running:
             try:
@@ -3393,7 +3398,7 @@ class SecurityMetrics:
                 logger.error(f"Error monitoring attack patterns: {e}")
                 await asyncio.sleep(120)
 
-    async def _monitor_validator_behavior(self):
+    async def _monitor_validator_behavior(self) -> None:
         """Monitor validator behavior for suspicious activity."""
         while self.is_running:
             try:
@@ -3421,7 +3426,7 @@ class SecurityMetrics:
                 logger.error(f"Error monitoring validator behavior: {e}")
                 await asyncio.sleep(600)
 
-    async def _monitor_network_anomalies(self):
+    async def _monitor_network_anomalies(self) -> None:
         """Monitor network for anomalous patterns."""
         while self.is_running:
             try:
@@ -3452,7 +3457,7 @@ class SecurityMetrics:
                 logger.error(f"Error monitoring network anomalies: {e}")
                 await asyncio.sleep(360)
 
-    async def _calculate_security_scores(self):
+    async def _calculate_security_scores(self) -> None:
         """Calculate overall security scores."""
         while self.is_running:
             try:
@@ -3498,7 +3503,7 @@ class SecurityMetrics:
                 logger.error(f"Error calculating security scores: {e}")
                 await asyncio.sleep(600)
 
-    async def _detect_consensus_attacks(self):
+    async def _detect_consensus_attacks(self) -> None:
         """Detect attacks on consensus mechanisms."""
         while self.is_running:
             try:
@@ -3528,8 +3533,8 @@ class SecurityMetrics:
                 logger.error(f"Error detecting consensus attacks: {e}")
                 await asyncio.sleep(480)
 
-    async def _record_security_event(self, attack_type: AttackType, threat_level: ThreatLevel,
-                                   description: str, evidence: Dict[str, Any]):
+    async def _record_security_event(self, attack_type -> None: AttackType, threat_level -> None: ThreatLevel,
+                                   description -> None: str, evidence -> None: Dict[str, Any]) -> None:
         """Record a security event."""
         event = SecurityEvent(
             event_id=hashlib.sha256(f"{datetime.utcnow()}{description}".encode()).hexdigest()[:16],
@@ -3671,7 +3676,7 @@ class UserSession:
 class BaseUserExtractor(ABC):
     """Base class for user feature extractors"""
     
-    def __init__(self, config: Optional[UserConfig] = None):
+    def __init__(self, config -> None: Optional[UserConfig] = None) -> None:
         self.config = config or UserConfig()
         
     @abstractmethod
@@ -4106,7 +4111,7 @@ class ListeningPatternExtractor(BaseUserExtractor):
 class PreferenceFeatureExtractor(BaseUserExtractor):
     """Extract user preference features using ML techniques"""
     
-    def __init__(self, config: Optional[UserConfig] = None):
+    def __init__(self, config -> None: Optional[UserConfig] = None) -> None:
         super().__init__(config)
         self.scaler = StandardScaler()
         self.preference_model = None
@@ -4686,7 +4691,7 @@ class MetricThreshold:
 class SecurityMetricsCollector:
     """Advanced security metrics collector."""
     
-    def __init__(self, retention_days: int = 30):
+    def __init__(self, retention_days -> None: int = 30) -> None:
         """Initialize metrics collector."""
         self.retention_days = retention_days
         self.metrics: Dict[str, deque] = defaultdict(lambda: deque(maxlen=10000))
@@ -4714,7 +4719,7 @@ class SecurityMetricsCollector:
         self._cleanup_task = None
         self._start_cleanup_task()
     
-    def record_metric(self, metric: SecurityMetric):
+    def record_metric(self, metric -> None: SecurityMetric) -> None:
         """Record a security metric."""
         with self.lock:
             # Store in main metrics
@@ -4732,7 +4737,7 @@ class SecurityMetricsCollector:
             elif metric.type == MetricType.RATE:
                 self.rates[metric.name].append((metric.timestamp, metric.value))
     
-    def record_security_event(self, event_type: SecurityEvent, **kwargs):
+    def record_security_event(self, event_type -> None: SecurityEvent, **kwargs) -> None:
         """Record a security event and generate metrics."""
         timestamp = datetime.utcnow()
         tenant_id = kwargs.get('tenant_id')
@@ -4774,7 +4779,7 @@ class SecurityMetricsCollector:
         # Specific event metrics
         self._handle_specific_event_metrics(event_type, timestamp, **kwargs)
     
-    def _handle_specific_event_metrics(self, event_type: SecurityEvent, timestamp: datetime, **kwargs):
+    def _handle_specific_event_metrics(self, event_type -> None: SecurityEvent, timestamp -> None: datetime, **kwargs) -> None:
         """Handle metrics for specific event types."""
         tenant_id = kwargs.get('tenant_id')
         user_id = kwargs.get('user_id')
@@ -4876,7 +4881,7 @@ class SecurityMetricsCollector:
                 user_id=user_id
             ))
     
-    def _check_brute_force_attack(self, source_ip: str, timestamp: datetime):
+    def _check_brute_force_attack(self, source_ip -> None: str, timestamp -> None: datetime) -> None:
         """Check for potential brute force attacks."""
         if not source_ip:
             return
@@ -4905,7 +4910,7 @@ class SecurityMetricsCollector:
                     user_id=None
                 ))
     
-    def record_operation_timing(self, operation: str, duration: float, **labels):
+    def record_operation_timing(self, operation -> None: str, duration -> None: float, **labels) -> None:
         """Record operation timing metrics."""
         timestamp = datetime.utcnow()
         
@@ -5023,7 +5028,7 @@ class SecurityMetricsCollector:
             'blocked_ips': list(self.blocked_ips)[:20]  # Limit for display
         }
     
-    def cleanup_old_data(self):
+    def cleanup_old_data(self) -> None:
         """Clean up old metrics and events."""
         cutoff_time = datetime.utcnow() - timedelta(days=self.retention_days)
         
@@ -5053,9 +5058,9 @@ class SecurityMetricsCollector:
                 while failures and failures[0] < cutoff_time:
                     failures.popleft()
     
-    def _start_cleanup_task(self):
+    def _start_cleanup_task(self) -> None:
         """Start background cleanup task."""
-        def cleanup_worker():
+        def cleanup_worker() -> None:
             while True:
                 try:
                     time.sleep(3600)  # Run every hour
@@ -5070,7 +5075,7 @@ class SecurityMetricsCollector:
 class SecurityAlertsManager:
     """Advanced security alerts management system."""
     
-    def __init__(self, metrics_collector: SecurityMetricsCollector):
+    def __init__(self, metrics_collector -> None: SecurityMetricsCollector) -> None:
         """Initialize alerts manager."""
         self.metrics_collector = metrics_collector
         self.alerts: deque = deque(maxlen=10000)
@@ -5085,7 +5090,7 @@ class SecurityAlertsManager:
         self._monitoring_task = None
         self._start_monitoring_task()
     
-    def _setup_default_alert_rules(self):
+    def _setup_default_alert_rules(self) -> None:
         """Setup default security alert rules."""
         self.alert_rules = [
             MetricThreshold(
@@ -5171,7 +5176,7 @@ class SecurityAlertsManager:
         
         return False
     
-    def evaluate_alert_rules(self):
+    def evaluate_alert_rules(self) -> None:
         """Evaluate all alert rules against current metrics."""
         for rule in self.alert_rules:
             try:
@@ -5179,7 +5184,7 @@ class SecurityAlertsManager:
             except Exception as e:
                 logger.error(f"Error evaluating alert rule {rule.metric_name}: {e}")
     
-    def _evaluate_single_rule(self, rule: MetricThreshold):
+    def _evaluate_single_rule(self, rule -> None: MetricThreshold) -> None:
         """Evaluate a single alert rule."""
         summary = self.metrics_collector.get_metric_summary(
             rule.metric_name,
@@ -5207,7 +5212,7 @@ class SecurityAlertsManager:
         elif value >= rule.warning_threshold:
             self._create_threshold_alert(rule, value, AlertSeverity.HIGH)
     
-    def _create_threshold_alert(self, rule: MetricThreshold, value: float, severity: AlertSeverity):
+    def _create_threshold_alert(self, rule -> None: MetricThreshold, value -> None: float, severity -> None: AlertSeverity) -> None:
         """Create an alert for threshold violation."""
         # Check if similar alert is already active
         alert_key = f"{rule.metric_name}_{severity.value}"
@@ -5296,9 +5301,9 @@ class SecurityAlertsManager:
             'active_alerts_count': len(self.active_alerts)
         }
     
-    def _start_monitoring_task(self):
+    def _start_monitoring_task(self) -> None:
         """Start background monitoring task."""
-        def monitoring_worker():
+        def monitoring_worker() -> None:
             while True:
                 try:
                     time.sleep(60)  # Evaluate every minute
@@ -5313,7 +5318,7 @@ class SecurityAlertsManager:
 class SecurityReportGenerator:
     """Advanced security reporting system."""
     
-    def __init__(self, metrics_collector: SecurityMetricsCollector, alerts_manager: SecurityAlertsManager):
+    def __init__(self, metrics_collector -> None: SecurityMetricsCollector, alerts_manager -> None: SecurityAlertsManager) -> None:
         """Initialize report generator."""
         self.metrics_collector = metrics_collector
         self.alerts_manager = alerts_manager
@@ -5594,7 +5599,7 @@ def get_report_generator() -> SecurityReportGenerator:
 
 
 # Convenience functions
-def record_security_event(event_type: SecurityEvent, **kwargs):
+def record_security_event(event_type -> None: SecurityEvent, **kwargs) -> None:
     """Record a security event."""
     get_metrics_collector().record_security_event(event_type, **kwargs)
 
@@ -5675,7 +5680,7 @@ class EncryptionContext:
 class PostQuantumCrypto:
     """Cryptographie post-quantique (simulation des algorithmes NIST)."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.supported_algorithms = {
             'KYBER_512': {'key_size': 800, 'cipher_size': 768},
             'KYBER_768': {'key_size': 1184, 'cipher_size': 1088},
@@ -5772,13 +5777,13 @@ class PostQuantumCrypto:
 class HomomorphicEncryption:
     """Chiffrement homomorphe pour calculs sur données chiffrées."""
     
-    def __init__(self, key_size: int = 2048):
+    def __init__(self, key_size -> None: int = 2048) -> None:
         self.key_size = key_size
         self.public_key = None
         self.private_key = None
         self._generate_keys()
     
-    def _generate_keys(self):
+    def _generate_keys(self) -> None:
         """Génère les clés pour le chiffrement homomorphe."""
         # Utilisation de RSA comme approximation (pour la démo)
         # Dans une implémentation réelle, utiliser BFV, CKKS, ou BGV
@@ -5861,7 +5866,7 @@ class HomomorphicEncryption:
 class QuantumKeyDistribution:
     """Distribution quantique de clés (simulation)."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.quantum_channel_noise = 0.01  # 1% de bruit
         self.eavesdropping_threshold = 0.11  # Seuil de détection d'écoute
     
@@ -5964,7 +5969,7 @@ class QuantumKeyDistribution:
 class KeyManagementSystem:
     """Système de gestion de clés cryptographiques avancé."""
     
-    def __init__(self, redis_client: redis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: redis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         self.post_quantum = PostQuantumCrypto()
@@ -6218,7 +6223,7 @@ class KeyManagementSystem:
             logger.error(f"Erreur calcul homomorphe: {e}")
             raise
     
-    async def _store_key_securely(self, key: CryptographicKey):
+    async def _store_key_securely(self, key -> None: CryptographicKey) -> None:
         """Stocke une clé de manière sécurisée."""
         # Chiffrement de la clé avec une clé système
         system_key = await self._get_system_master_key()
@@ -6349,7 +6354,7 @@ class KeyManagementSystem:
         master_key_id = master_keys[0].decode().split(':')[1]
         return await self.derive_operational_key(master_key_id, context)
     
-    async def _increment_key_usage(self, key_id: str):
+    async def _increment_key_usage(self, key_id -> None: str) -> None:
         """Incrémente le compteur d'utilisation d'une clé."""
         if key_id in self.key_cache:
             self.key_cache[key_id].usage_count += 1
@@ -6360,14 +6365,14 @@ class KeyManagementSystem:
                 logger.warning(f"Clé {key_id} a atteint sa limite d'utilisation")
                 await self._invalidate_key(key_id)
     
-    async def _invalidate_key(self, key_id: str):
+    async def _invalidate_key(self, key_id -> None: str) -> None:
         """Invalide une clé."""
         await self.redis.delete(f"crypto_key:{key_id}")
         if key_id in self.key_cache:
             del self.key_cache[key_id]
         logger.info(f"Clé {key_id} invalidée")
     
-    async def rotate_tenant_keys(self, tenant_id: str):
+    async def rotate_tenant_keys(self, tenant_id -> None: str) -> None:
         """Effectue la rotation des clés d'un tenant."""
         try:
             logger.info(f"Début rotation clés pour tenant {tenant_id}")
@@ -6406,7 +6411,7 @@ class KeyManagementSystem:
             logger.error(f"Erreur rotation clés tenant {tenant_id}: {e}")
             raise
     
-    async def _deprecate_key(self, key_id: str):
+    async def _deprecate_key(self, key_id -> None: str) -> None:
         """Déprécie une clé (marquage pour suppression future)."""
         # Réduction drastique de la TTL
         await self.redis.expire(f"crypto_key:{key_id}", 3600)  # 1 heure
@@ -6484,7 +6489,7 @@ class KeyManagementSystem:
             logger.error(f"Erreur statistiques clés tenant {tenant_id}: {e}")
             return {'error': str(e)}
     
-    async def emergency_key_revocation(self, tenant_id: str, reason: str = "Security incident"):
+    async def emergency_key_revocation(self, tenant_id -> None: str, reason -> None: str = "Security incident") -> None:
         """Révocation d'urgence de toutes les clés d'un tenant."""
         try:
             logger.critical(f"RÉVOCATION D'URGENCE - Tenant: {tenant_id}, Raison: {reason}")
@@ -6518,7 +6523,7 @@ class KeyManagementSystem:
             logger.error(f"Erreur révocation d'urgence tenant {tenant_id}: {e}")
             raise
     
-    async def _notify_key_revocation(self, tenant_id: str, reason: str, count: int):
+    async def _notify_key_revocation(self, tenant_id -> None: str, reason -> None: str, count -> None: int) -> None:
         """Notifie la révocation de clés."""
         notification = {
             'event_type': 'emergency_key_revocation',
@@ -6533,7 +6538,7 @@ class KeyManagementSystem:
         await self.redis.lpush("security_notifications", json.dumps(notification))
         await self.redis.ltrim("security_notifications", 0, 1000)  # Garder les 1000 dernières
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Arrêt propre du système de gestion de clés."""
         logger.info("Arrêt du système de gestion de clés...")
         
@@ -6745,7 +6750,7 @@ class AuthorizationResponse:
 class PasswordPolicy:
     """Password policy configuration."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize password policy with secure defaults."""
         self.min_length = 12
         self.max_length = 128
@@ -6807,7 +6812,7 @@ class PasswordPolicy:
 class MFAManager:
     """Multi-Factor Authentication manager."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize MFA manager."""
         self.totp_window = 30  # seconds
         self.backup_codes_count = 10
@@ -6872,7 +6877,7 @@ class MFAManager:
 class AdvancedEncryptionManager:
     """Advanced encryption management for sensitive data."""
     
-    def __init__(self, master_key: Optional[bytes] = None):
+    def __init__(self, master_key -> None: Optional[bytes] = None) -> None:
         """Initialize encryption manager."""
         if master_key is None:
             master_key = os.environ.get('ENCRYPTION_MASTER_KEY', '').encode()
@@ -6973,7 +6978,7 @@ class AdvancedEncryptionManager:
 class SecurityAuditLogger:
     """Advanced security audit logging system."""
     
-    def __init__(self, redis_client: Optional[aioredis.Redis] = None):
+    def __init__(self, redis_client -> None: Optional[aioredis.Redis] = None) -> None:
         """Initialize audit logger."""
         self.redis_client = redis_client
         self.audit_events: List[Dict[str, Any]] = []
@@ -6981,15 +6986,15 @@ class SecurityAuditLogger:
         
     async def log_authentication_event(
         self,
-        user_id: str,
-        tenant_id: str,
-        event_type: str,
-        success: bool,
-        method: AuthenticationMethod,
-        ip_address: Optional[str] = None,
-        user_agent: Optional[str] = None,
-        additional_data: Optional[Dict[str, Any]] = None
-    ):
+        user_id -> None: str,
+        tenant_id -> None: str,
+        event_type -> None: str,
+        success -> None: bool,
+        method -> None: AuthenticationMethod,
+        ip_address -> None: Optional[str] = None,
+        user_agent -> None: Optional[str] = None,
+        additional_data -> None: Optional[Dict[str, Any]] = None
+    ) -> None:
         """Log authentication event."""
         event = {
             "event_id": str(uuid.uuid4()),
@@ -7010,15 +7015,15 @@ class SecurityAuditLogger:
     
     async def log_authorization_event(
         self,
-        user_id: str,
-        tenant_id: str,
-        resource: str,
-        action: str,
-        permission: str,
-        granted: bool,
-        ip_address: Optional[str] = None,
-        additional_data: Optional[Dict[str, Any]] = None
-    ):
+        user_id -> None: str,
+        tenant_id -> None: str,
+        resource -> None: str,
+        action -> None: str,
+        permission -> None: str,
+        granted -> None: bool,
+        ip_address -> None: Optional[str] = None,
+        additional_data -> None: Optional[Dict[str, Any]] = None
+    ) -> None:
         """Log authorization event."""
         event = {
             "event_id": str(uuid.uuid4()),
@@ -7039,14 +7044,14 @@ class SecurityAuditLogger:
     
     async def log_security_event(
         self,
-        event_type: str,
-        severity: str,
-        description: str,
-        user_id: Optional[str] = None,
-        tenant_id: Optional[str] = None,
-        ip_address: Optional[str] = None,
-        additional_data: Optional[Dict[str, Any]] = None
-    ):
+        event_type -> None: str,
+        severity -> None: str,
+        description -> None: str,
+        user_id -> None: Optional[str] = None,
+        tenant_id -> None: Optional[str] = None,
+        ip_address -> None: Optional[str] = None,
+        additional_data -> None: Optional[Dict[str, Any]] = None
+    ) -> None:
         """Log general security event."""
         event = {
             "event_id": str(uuid.uuid4()),
@@ -7064,7 +7069,7 @@ class SecurityAuditLogger:
         await self._store_audit_event(event)
         logger.warning(f"Security event logged: {event_type} - {description}")
     
-    async def _store_audit_event(self, event: Dict[str, Any]):
+    async def _store_audit_event(self, event -> None: Dict[str, Any]) -> None:
         """Store audit event in storage."""
         # Store in memory
         self.audit_events.append(event)
@@ -7123,7 +7128,7 @@ class SecurityAuditLogger:
 class SessionManager:
     """Advanced session management with security features."""
     
-    def __init__(self, redis_client: Optional[aioredis.Redis] = None):
+    def __init__(self, redis_client -> None: Optional[aioredis.Redis] = None) -> None:
         """Initialize session manager."""
         self.redis_client = redis_client
         self.sessions: Dict[str, Dict[str, Any]] = {}
@@ -7215,7 +7220,7 @@ class SessionManager:
         logger.info(f"Invalidated {count} sessions for user {user_id}")
         return count
     
-    async def _store_session(self, session_id: str, session_data: Dict[str, Any]):
+    async def _store_session(self, session_id -> None: str, session_data -> None: Dict[str, Any]) -> None:
         """Store session data."""
         if self.redis_client:
             try:
@@ -7271,7 +7276,7 @@ class SessionManager:
         
         return True
     
-    async def _cleanup_user_sessions(self, user_id: str):
+    async def _cleanup_user_sessions(self, user_id -> None: str) -> None:
         """Cleanup old sessions for user to enforce limits."""
         user_sessions = []
         
@@ -7322,7 +7327,7 @@ class SessionManager:
 class JWTManager:
     """JWT token manager for authentication."""
     
-    def __init__(self, secret_key: Optional[str] = None):
+    def __init__(self, secret_key -> None: Optional[str] = None) -> None:
         """Initialize JWT manager."""
         self.secret_key = secret_key or os.getenv("JWT_SECRET_KEY") or secrets.token_urlsafe(64)
         self.algorithm = "HS256"
@@ -7394,7 +7399,7 @@ class JWTManager:
 class AuthenticationManager:
     """Main authentication manager."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize authentication manager."""
         self.password_policy = PasswordPolicy()
         self.mfa_manager = MFAManager()
@@ -7407,7 +7412,7 @@ class AuthenticationManager:
         self.login_attempts: Dict[str, List[datetime]] = {}
         self.max_attempts_per_hour = 10
     
-    async def initialize(self, redis_url: str = "redis://localhost:6379"):
+    async def initialize(self, redis_url -> None: str = "redis -> None://localhost -> None:6379") -> None:
         """Initialize authentication manager with Redis."""
         try:
             self.redis_client = aioredis.from_url(redis_url)
@@ -7618,7 +7623,7 @@ class AuthenticationManager:
         
         return True
     
-    async def _record_failed_attempt(self, identifier: str, ip_address: Optional[str]):
+    async def _record_failed_attempt(self, identifier -> None: str, ip_address -> None: Optional[str]) -> None:
         """Record failed login attempt."""
         now = datetime.utcnow()
         
@@ -7631,7 +7636,7 @@ class AuthenticationManager:
                 self.login_attempts[ip_address] = []
             self.login_attempts[ip_address].append(now)
     
-    async def _handle_failed_login(self, user: User):
+    async def _handle_failed_login(self, user -> None: User) -> None:
         """Handle failed login attempt for user."""
         user.login_attempts += 1
         
@@ -7641,7 +7646,7 @@ class AuthenticationManager:
             )
             logger.warning(f"User {user.username} account locked due to failed attempts")
     
-    async def _handle_successful_login(self, user: User, request: AuthenticationRequest):
+    async def _handle_successful_login(self, user -> None: User, request -> None: AuthenticationRequest) -> None:
         """Handle successful login."""
         user.last_login = datetime.utcnow()
         user.login_attempts = 0
@@ -7703,7 +7708,7 @@ class AuthenticationManager:
 class AuthorizationManager:
     """Authorization manager for access control."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize authorization manager."""
         self.authorization_model = AuthorizationModel.RBAC
         self.resource_policies: Dict[str, Dict[str, Any]] = {}
@@ -7711,7 +7716,7 @@ class AuthorizationManager:
         # Initialize default resource policies
         self._initialize_default_policies()
     
-    def _initialize_default_policies(self):
+    def _initialize_default_policies(self) -> None:
         """Initialize default authorization policies."""
         self.resource_policies = {
             "analytics": {
@@ -7788,7 +7793,7 @@ class AuthorizationManager:
             context={"permissions_used": [perm.value for perm in required_permissions if perm in user.permissions]}
         )
     
-    def add_resource_policy(self, resource: str, actions: Dict[str, List[Permission]]):
+    def add_resource_policy(self, resource -> None: str, actions -> None: Dict[str, List[Permission]]) -> None:
         """Add custom resource policy."""
         self.resource_policies[resource] = actions
         logger.info(f"Added resource policy for {resource}")
@@ -7954,7 +7959,7 @@ class PolicyViolation:
 class SecurityPolicyEngine:
     """Advanced security policy engine for tenant management."""
     
-    def __init__(self, config_path: Optional[Path] = None):
+    def __init__(self, config_path -> None: Optional[Path] = None) -> None:
         """Initialize security policy engine."""
         self.config_path = config_path or Path(__file__).parent / "policies"
         self.policies: Dict[str, SecurityPolicy] = {}
@@ -8587,7 +8592,7 @@ class TestResult:
 class SecurityValidationSuite:
     """Comprehensive security validation and testing suite."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize security validation suite."""
         self.test_results: List[TestResult] = []
         self.test_config = {
@@ -8625,7 +8630,7 @@ class SecurityValidationSuite:
         logger.info(f"Security validation completed in {execution_time:.2f}s")
         return summary
     
-    async def _run_authentication_tests(self):
+    async def _run_authentication_tests(self) -> None:
         """Run authentication-related tests."""
         logger.info("Running authentication tests...")
         
@@ -8650,7 +8655,7 @@ class SecurityValidationSuite:
         # Test 7: Rate limiting
         await self._test_rate_limiting()
     
-    async def _test_password_validation(self):
+    async def _test_password_validation(self) -> None:
         """Test password policy validation."""
         start_time = time.time()
         
@@ -8722,7 +8727,7 @@ class SecurityValidationSuite:
                 timestamp=datetime.utcnow()
             ))
     
-    async def _test_user_creation(self):
+    async def _test_user_creation(self) -> None:
         """Test user creation functionality."""
         start_time = time.time()
         
@@ -8769,7 +8774,7 @@ class SecurityValidationSuite:
                 timestamp=datetime.utcnow()
             ))
     
-    async def _test_authentication_flow(self):
+    async def _test_authentication_flow(self) -> None:
         """Test complete authentication flow."""
         start_time = time.time()
         
@@ -8836,7 +8841,7 @@ class SecurityValidationSuite:
                 timestamp=datetime.utcnow()
             ))
     
-    async def _test_mfa_functionality(self):
+    async def _test_mfa_functionality(self) -> None:
         """Test MFA functionality."""
         start_time = time.time()
         
@@ -8888,7 +8893,7 @@ class SecurityValidationSuite:
                 timestamp=datetime.utcnow()
             ))
     
-    async def _test_jwt_validation(self):
+    async def _test_jwt_validation(self) -> None:
         """Test JWT token validation."""
         start_time = time.time()
         
@@ -8954,7 +8959,7 @@ class SecurityValidationSuite:
                 timestamp=datetime.utcnow()
             ))
     
-    async def _test_session_management(self):
+    async def _test_session_management(self) -> None:
         """Test session management functionality."""
         start_time = time.time()
         
@@ -8987,7 +8992,7 @@ class SecurityValidationSuite:
                 timestamp=datetime.utcnow()
             ))
     
-    async def _test_rate_limiting(self):
+    async def _test_rate_limiting(self) -> None:
         """Test rate limiting functionality."""
         start_time = time.time()
         
@@ -9020,7 +9025,7 @@ class SecurityValidationSuite:
                 timestamp=datetime.utcnow()
             ))
     
-    async def _run_authorization_tests(self):
+    async def _run_authorization_tests(self) -> None:
         """Run authorization-related tests."""
         logger.info("Running authorization tests...")
         
@@ -9028,7 +9033,7 @@ class SecurityValidationSuite:
         await self._test_tenant_isolation()
         await self._test_resource_access_control()
     
-    async def _test_rbac_permissions(self):
+    async def _test_rbac_permissions(self) -> None:
         """Test role-based access control permissions."""
         start_time = time.time()
         
@@ -9097,7 +9102,7 @@ class SecurityValidationSuite:
                 timestamp=datetime.utcnow()
             ))
     
-    async def _test_tenant_isolation(self):
+    async def _test_tenant_isolation(self) -> None:
         """Test tenant isolation in authorization."""
         start_time = time.time()
         
@@ -9130,7 +9135,7 @@ class SecurityValidationSuite:
                 timestamp=datetime.utcnow()
             ))
     
-    async def _test_resource_access_control(self):
+    async def _test_resource_access_control(self) -> None:
         """Test resource-level access control."""
         start_time = time.time()
         
@@ -9163,14 +9168,14 @@ class SecurityValidationSuite:
                 timestamp=datetime.utcnow()
             ))
     
-    async def _run_encryption_tests(self):
+    async def _run_encryption_tests(self) -> None:
         """Run encryption-related tests."""
         logger.info("Running encryption tests...")
         
         await self._test_data_encryption()
         await self._test_key_management()
     
-    async def _test_data_encryption(self):
+    async def _test_data_encryption(self) -> None:
         """Test data encryption functionality."""
         start_time = time.time()
         
@@ -9226,7 +9231,7 @@ class SecurityValidationSuite:
                 timestamp=datetime.utcnow()
             ))
     
-    async def _test_key_management(self):
+    async def _test_key_management(self) -> None:
         """Test encryption key management."""
         start_time = time.time()
         
@@ -9266,14 +9271,14 @@ class SecurityValidationSuite:
                 timestamp=datetime.utcnow()
             ))
     
-    async def _run_policy_enforcement_tests(self):
+    async def _run_policy_enforcement_tests(self) -> None:
         """Run policy enforcement tests."""
         logger.info("Running policy enforcement tests...")
         
         await self._test_policy_evaluation()
         await self._test_violation_detection()
     
-    async def _test_policy_evaluation(self):
+    async def _test_policy_evaluation(self) -> None:
         """Test security policy evaluation."""
         start_time = time.time()
         
@@ -9323,7 +9328,7 @@ class SecurityValidationSuite:
                 timestamp=datetime.utcnow()
             ))
     
-    async def _test_violation_detection(self):
+    async def _test_violation_detection(self) -> None:
         """Test policy violation detection."""
         start_time = time.time()
         
@@ -9365,14 +9370,14 @@ class SecurityValidationSuite:
                 timestamp=datetime.utcnow()
             ))
     
-    async def _run_threat_detection_tests(self):
+    async def _run_threat_detection_tests(self) -> None:
         """Run threat detection tests."""
         logger.info("Running threat detection tests...")
         
         await self._test_threat_intelligence()
         await self._test_anomaly_detection()
     
-    async def _test_threat_intelligence(self):
+    async def _test_threat_intelligence(self) -> None:
         """Test threat intelligence functionality."""
         start_time = time.time()
         
@@ -9424,7 +9429,7 @@ class SecurityValidationSuite:
                 timestamp=datetime.utcnow()
             ))
     
-    async def _test_anomaly_detection(self):
+    async def _test_anomaly_detection(self) -> None:
         """Test anomaly detection functionality."""
         start_time = time.time()
         
@@ -9457,14 +9462,14 @@ class SecurityValidationSuite:
                 timestamp=datetime.utcnow()
             ))
     
-    async def _run_audit_logging_tests(self):
+    async def _run_audit_logging_tests(self) -> None:
         """Run audit logging tests."""
         logger.info("Running audit logging tests...")
         
         await self._test_audit_trail()
         await self._test_log_integrity()
     
-    async def _test_audit_trail(self):
+    async def _test_audit_trail(self) -> None:
         """Test audit trail functionality."""
         start_time = time.time()
         
@@ -9497,7 +9502,7 @@ class SecurityValidationSuite:
                 timestamp=datetime.utcnow()
             ))
     
-    async def _test_log_integrity(self):
+    async def _test_log_integrity(self) -> None:
         """Test log integrity and tamper detection."""
         start_time = time.time()
         
@@ -9530,14 +9535,14 @@ class SecurityValidationSuite:
                 timestamp=datetime.utcnow()
             ))
     
-    async def _run_configuration_tests(self):
+    async def _run_configuration_tests(self) -> None:
         """Run configuration validation tests."""
         logger.info("Running configuration tests...")
         
         await self._test_config_validation()
         await self._test_security_settings()
     
-    async def _test_config_validation(self):
+    async def _test_config_validation(self) -> None:
         """Test configuration validation."""
         start_time = time.time()
         
@@ -9601,7 +9606,7 @@ class SecurityValidationSuite:
                 timestamp=datetime.utcnow()
             ))
     
-    async def _test_security_settings(self):
+    async def _test_security_settings(self) -> None:
         """Test security settings enforcement."""
         start_time = time.time()
         
@@ -9634,14 +9639,14 @@ class SecurityValidationSuite:
                 timestamp=datetime.utcnow()
             ))
     
-    async def _run_performance_tests(self):
+    async def _run_performance_tests(self) -> None:
         """Run performance-related tests."""
         logger.info("Running performance tests...")
         
         await self._test_authentication_performance()
         await self._test_encryption_performance()
     
-    async def _test_authentication_performance(self):
+    async def _test_authentication_performance(self) -> None:
         """Test authentication performance."""
         start_time = time.time()
         
@@ -9692,7 +9697,7 @@ class SecurityValidationSuite:
                 timestamp=datetime.utcnow()
             ))
     
-    async def _test_encryption_performance(self):
+    async def _test_encryption_performance(self) -> None:
         """Test encryption performance."""
         start_time = time.time()
         
@@ -10016,7 +10021,7 @@ class TenantSecurityManager:
     Spotify AI Agent deployments with advanced threat protection.
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """Initialize security manager with tenant-specific configuration."""
         self.config = config
         self.tenant_id = config.get('tenant_id')
@@ -10044,7 +10049,7 @@ class TenantSecurityManager:
         
         logger.info(f"Security Manager initialized for tenant: {self.tenant_id}")
     
-    async def _initialize_redis(self):
+    async def _initialize_redis(self) -> None:
         """Initialize Redis connection for security state."""
         try:
             redis_config = self.config.get('redis', {})
@@ -10331,7 +10336,7 @@ class TenantSecurityManager:
             logger.error(f"Failed to get user permissions: {str(e)}")
             return set()
     
-    async def _store_security_context(self, context: SecurityContext):
+    async def _store_security_context(self, context -> None: SecurityContext) -> None:
         """Store security context in Redis."""
         try:
             context_data = {
@@ -10595,14 +10600,14 @@ logger = logging.getLogger(__name__)
 class SecurityCLI:
     """Command-line interface for security management."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize security CLI."""
         self.auth_manager = None
         self.policy_engine = None
         self.threat_engine = None
         self.config_manager = get_config_manager()
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize security components."""
         logger.info("Initializing security components...")
         self.auth_manager = await get_auth_manager()
@@ -10610,7 +10615,7 @@ class SecurityCLI:
         self.threat_engine = await get_threat_engine()
         logger.info("Security components initialized")
     
-    async def create_user(self, args):
+    async def create_user(self, args) -> None:
         """Create a new user account."""
         logger.info(f"Creating user {args.username} for tenant {args.tenant_id}")
         
@@ -10650,7 +10655,7 @@ class SecurityCLI:
             logger.error(f"Failed to create user: {result}")
             return False
     
-    async def authenticate_user(self, args):
+    async def authenticate_user(self, args) -> None:
         """Authenticate a user."""
         logger.info(f"Authenticating user {args.username}")
         
@@ -10690,7 +10695,7 @@ class SecurityCLI:
             print(json.dumps(error_data, indent=2))
             return False
     
-    async def enable_mfa(self, args):
+    async def enable_mfa(self, args) -> None:
         """Enable MFA for a user."""
         logger.info(f"Enabling MFA for user ID {args.user_id}")
         
@@ -10720,7 +10725,7 @@ class SecurityCLI:
             logger.error(f"Failed to enable MFA: {e}")
             return False
     
-    def create_policy(self, args):
+    def create_policy(self, args) -> None:
         """Create a new security policy."""
         logger.info(f"Creating security policy {args.policy_id}")
         
@@ -10745,7 +10750,7 @@ class SecurityCLI:
         logger.info(f"Policy {args.policy_id} created successfully")
         return True
     
-    async def evaluate_policy(self, args):
+    async def evaluate_policy(self, args) -> None:
         """Evaluate a security policy."""
         logger.info(f"Evaluating policy {args.policy_id}")
         
@@ -10777,7 +10782,7 @@ class SecurityCLI:
         
         return is_compliant
     
-    async def threat_report(self, args):
+    async def threat_report(self, args) -> None:
         """Generate threat intelligence report."""
         logger.info(f"Generating threat report for tenant {args.tenant_id}")
         
@@ -10791,7 +10796,7 @@ class SecurityCLI:
         
         return True
     
-    async def update_threat_feeds(self, args):
+    async def update_threat_feeds(self, args) -> None:
         """Update threat intelligence feeds."""
         logger.info("Updating threat intelligence feeds...")
         
@@ -10812,7 +10817,7 @@ class SecurityCLI:
         logger.info(f"Updated {len(results)} threat feeds with {sum(results.values())} indicators")
         return True
     
-    def create_config(self, args):
+    def create_config(self, args) -> None:
         """Create default security configuration files."""
         logger.info(f"Creating default configs in {args.output_dir}")
         
@@ -10822,7 +10827,7 @@ class SecurityCLI:
         logger.info("Default configuration files created successfully")
         return True
     
-    def validate_config(self, args):
+    def validate_config(self, args) -> None:
         """Validate security configuration file."""
         logger.info(f"Validating config file {args.config_file}")
         
@@ -10854,7 +10859,7 @@ class SecurityCLI:
         
         return is_valid
     
-    async def security_audit(self, args):
+    async def security_audit(self, args) -> None:
         """Perform comprehensive security audit."""
         logger.info(f"Performing security audit for tenant {args.tenant_id}")
         
@@ -10944,7 +10949,7 @@ class SecurityCLI:
         return recommendations
 
 
-def create_parser():
+def create_parser() -> None:
     """Create command-line argument parser."""
     parser = argparse.ArgumentParser(
         description="Security utilities for Spotify AI Agent platform"
@@ -11016,7 +11021,7 @@ def create_parser():
     return parser
 
 
-async def main():
+async def main() -> None:
     """Main CLI function."""
     parser = create_parser()
     args = parser.parse_args()
@@ -11273,13 +11278,13 @@ class SecretProvider:
 class HashiCorpVaultProvider(SecretProvider):
     """HashiCorp Vault secret provider"""
     
-    def __init__(self, vault_url: str, vault_token: str = None, mount_point: str = "secret"):
+    def __init__(self, vault_url -> None: str, vault_token -> None: str = None, mount_point -> None: str = "secret") -> None:
         self.vault_url = vault_url
         self.vault_token = vault_token or os.getenv("VAULT_TOKEN")
         self.mount_point = mount_point
         self.client = None
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize Vault client"""
         try:
             self.client = hvac.Client(url=self.vault_url, token=self.vault_token)
@@ -11330,11 +11335,11 @@ class HashiCorpVaultProvider(SecretProvider):
 class AWSSecretsManagerProvider(SecretProvider):
     """AWS Secrets Manager provider"""
     
-    def __init__(self, region_name: str = "us-east-1"):
+    def __init__(self, region_name -> None: str = "us-east-1") -> None:
         self.region_name = region_name
         self.client = None
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize AWS Secrets Manager client"""
         try:
             self.client = boto3.client("secretsmanager", region_name=self.region_name)
@@ -11390,11 +11395,11 @@ class AWSSecretsManagerProvider(SecretProvider):
 class AzureKeyVaultProvider(SecretProvider):
     """Azure Key Vault provider"""
     
-    def __init__(self, vault_url: str):
+    def __init__(self, vault_url -> None: str) -> None:
         self.vault_url = vault_url
         self.client = None
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize Azure Key Vault client"""
         try:
             credential = DefaultAzureCredential()
@@ -11429,7 +11434,7 @@ class AzureKeyVaultProvider(SecretProvider):
 class EncryptionManager:
     """Advanced encryption manager supporting multiple algorithms"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.encryption_keys: Dict[str, Any] = {}
         self.key_rotation_schedule: Dict[str, datetime] = {}
         
@@ -11562,7 +11567,7 @@ class EncryptionManager:
 class AccessControlManager:
     """Role-based access control for configuration"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.users: Dict[str, Dict[str, Any]] = {}
         self.roles: Dict[str, Dict[str, Any]] = {}
         self.permissions: Dict[str, List[str]] = {}
@@ -11570,7 +11575,7 @@ class AccessControlManager:
         # Setup default roles
         self._setup_default_roles()
     
-    def _setup_default_roles(self):
+    def _setup_default_roles(self) -> None:
         """Setup default security roles"""
         self.roles = {
             "admin": {
@@ -11591,7 +11596,7 @@ class AccessControlManager:
             }
         }
     
-    def add_user(self, username: str, roles: List[str], metadata: Dict[str, Any] = None):
+    def add_user(self, username -> None: str, roles -> None: List[str], metadata -> None: Dict[str, Any] = None) -> None:
         """Add user with roles"""
         self.users[username] = {
             "roles": roles,
@@ -11635,7 +11640,7 @@ class SecureConfigManager(ConfigurationObserver):
     access control, secret management, and compliance features.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.encryption_manager = EncryptionManager()
         self.access_control = AccessControlManager()
         self.security_policies: List[SecurityPolicy] = []
@@ -11652,7 +11657,7 @@ class SecureConfigManager(ConfigurationObserver):
         # Setup default security policies
         self._setup_default_policies()
     
-    async def initialize(self, config: Dict[str, Any]):
+    async def initialize(self, config -> None: Dict[str, Any]) -> None:
         """Initialize secure configuration manager"""
         try:
             # Initialize secret providers
@@ -11772,7 +11777,7 @@ class SecureConfigManager(ConfigurationObserver):
             logger.error(f"Failed to retrieve secret {key}: {e}")
             return None
     
-    async def rotate_encryption_keys(self, force: bool = False):
+    async def rotate_encryption_keys(self, force -> None: bool = False) -> None:
         """Rotate encryption keys based on schedule"""
         try:
             rotated_keys = []
@@ -11806,7 +11811,7 @@ class SecureConfigManager(ConfigurationObserver):
             logger.error(f"Failed to rotate encryption keys: {e}")
             return []
     
-    def add_security_policy(self, policy: SecurityPolicy):
+    def add_security_policy(self, policy -> None: SecurityPolicy) -> None:
         """Add security policy"""
         self.security_policies.append(policy)
         
@@ -11833,7 +11838,7 @@ class SecureConfigManager(ConfigurationObserver):
                 return policy
         return None
     
-    def _setup_default_policies(self):
+    def _setup_default_policies(self) -> None:
         """Setup default security policies"""
         default_policies = [
             SecurityPolicy(
@@ -11865,7 +11870,7 @@ class SecureConfigManager(ConfigurationObserver):
         for policy in default_policies:
             self.add_security_policy(policy)
     
-    async def _audit_log_action(self, action: str, resource: str, metadata: Dict[str, Any]):
+    async def _audit_log_action(self, action -> None: str, resource -> None: str, metadata -> None: Dict[str, Any]) -> None:
         """Log action for audit purposes"""
         if not self.audit_enabled:
             return
@@ -11896,14 +11901,14 @@ class SecureConfigManager(ConfigurationObserver):
         return "ConfigurationManager/2.0"
     
     # ConfigurationObserver methods
-    async def on_configuration_changed(self, key: str, old_value: Any, new_value: Any):
+    async def on_configuration_changed(self, key -> None: str, old_value -> None: Any, new_value -> None: Any) -> None:
         """Handle configuration changes for security"""
         await self._audit_log_action("config_changed", key, {
             "old_value_type": type(old_value).__name__,
             "new_value_type": type(new_value).__name__
         })
     
-    async def on_configuration_deleted(self, key: str, old_value: Any):
+    async def on_configuration_deleted(self, key -> None: str, old_value -> None: Any) -> None:
         """Handle configuration deletion for security"""
         await self._audit_log_action("config_deleted", key, {
             "old_value_type": type(old_value).__name__
@@ -12108,7 +12113,7 @@ class IdentityAccessManagementEngine:
     - Session management and monitoring
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.logger = logging.getLogger(__name__)
         
@@ -12140,7 +12145,7 @@ class IdentityAccessManagementEngine:
         # Initialize default policies
         self._initialize_default_policies()
     
-    def _initialize_default_policies(self):
+    def _initialize_default_policies(self) -> None:
         """Initialize default access policies"""
         # Admin access policy
         admin_policy = AccessPolicy(
@@ -12305,7 +12310,7 @@ class IdentityAccessManagementEngine:
                 return identity
         return None
     
-    async def _create_session(self, identity: Identity, auth_context: AuthenticationContext):
+    async def _create_session(self, identity -> None: Identity, auth_context -> None: AuthenticationContext) -> None:
         """Create user session"""
         session = Session(
             session_id=auth_context.session_id,
@@ -12584,12 +12589,12 @@ class IdentityAccessManagementEngine:
 class PasswordAuthEngine:
     """Password authentication engine"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.logger = logging.getLogger(__name__)
         self._password_hashes = {}
     
-    async def set_password(self, identity_id: str, password: str):
+    async def set_password(self, identity_id -> None: str, password -> None: str) -> None:
         """Set password for identity"""
         # Hash password with bcrypt
         salt = bcrypt.gensalt()
@@ -12621,7 +12626,7 @@ class PasswordAuthEngine:
 class MFAAuthEngine:
     """Multi-factor authentication engine"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.logger = logging.getLogger(__name__)
         self._mfa_secrets = {}
@@ -12681,7 +12686,7 @@ class MFAAuthEngine:
 class RBACEngine:
     """Role-based access control engine"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.logger = logging.getLogger(__name__)
         
@@ -12716,7 +12721,7 @@ class RBACEngine:
 class ABACEngine:
     """Attribute-based access control engine"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.logger = logging.getLogger(__name__)
     
@@ -12753,7 +12758,7 @@ class ABACEngine:
 class PolicyEngine:
     """Policy evaluation engine"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.logger = logging.getLogger(__name__)
     
@@ -12853,7 +12858,7 @@ class PolicyEngine:
 class IdentityRiskEngine:
     """Identity risk assessment engine"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.logger = logging.getLogger(__name__)
     
@@ -12890,12 +12895,12 @@ class IdentityRiskEngine:
 class IdentityAnalyticsEngine:
     """Identity analytics and monitoring"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.logger = logging.getLogger(__name__)
         self._login_patterns = defaultdict(list)
     
-    async def analyze_login_patterns(self, identity_id: str):
+    async def analyze_login_patterns(self, identity_id -> None: str) -> None:
         """Analyze login patterns for anomalies"""
         patterns = self._login_patterns.get(identity_id, [])
         
@@ -12908,7 +12913,7 @@ class IdentityAnalyticsEngine:
             if current_hour not in usual_hours:
                 self.logger.warning(f"Unusual login time for identity {identity_id}")
     
-    def record_login_pattern(self, identity_id: str, login_time: datetime):
+    def record_login_pattern(self, identity_id -> None: str, login_time -> None: datetime) -> None:
         """Record login pattern"""
         pattern = {
             'timestamp': login_time,
@@ -12926,11 +12931,11 @@ class IdentityAnalyticsEngine:
 class SessionManager:
     """Session management"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.logger = logging.getLogger(__name__)
     
-    async def cleanup_expired_sessions(self, sessions: Dict[str, Session]):
+    async def cleanup_expired_sessions(self, sessions -> None: Dict[str, Session]) -> None:
         """Cleanup expired sessions"""
         current_time = datetime.utcnow()
         expired_sessions = []
@@ -12949,7 +12954,7 @@ class SessionManager:
 class FederationEngine:
     """Identity federation and SSO"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.logger = logging.getLogger(__name__)
     
@@ -12969,12 +12974,12 @@ class FederationEngine:
 class IdentityAuditLogger:
     """Identity audit logging"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.logger = logging.getLogger(__name__)
         self._audit_events = deque(maxlen=100000)
     
-    async def log_event(self, event_type: str, **kwargs):
+    async def log_event(self, event_type -> None: str, **kwargs) -> None:
         """Log identity audit event"""
         event = {
             'event_id': f"AUD_{int(time.time())}_{secrets.token_hex(8)}",
@@ -13094,7 +13099,7 @@ class SecurityResult:
 class UnifiedSecurityManager:
     """Unified security management system orchestrating all security components."""
     
-    def __init__(self, integration_level: SecurityIntegrationLevel = SecurityIntegrationLevel.ADVANCED):
+    def __init__(self, integration_level -> None: SecurityIntegrationLevel = SecurityIntegrationLevel.ADVANCED) -> None:
         """Initialize unified security manager."""
         self.integration_level = integration_level
         self.operation_mode = SecurityOperationMode.NORMAL
@@ -13149,7 +13154,7 @@ class UnifiedSecurityManager:
             "system_health": "healthy"
         }
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize all security components."""
         if self.initialized:
             return
@@ -13191,7 +13196,7 @@ class UnifiedSecurityManager:
             logger.error(f"Failed to initialize Unified Security Manager: {e}")
             raise
     
-    async def _perform_initialization_checks(self):
+    async def _perform_initialization_checks(self) -> None:
         """Perform security checks during initialization."""
         checks = []
         
@@ -13355,7 +13360,7 @@ class UnifiedSecurityManager:
             activity
         )
     
-    async def _handle_critical_threat(self, context: SecurityContext, threats: List[Dict]):
+    async def _handle_critical_threat(self, context -> None: SecurityContext, threats -> None: List[Dict]) -> None:
         """Handle critical threat detection."""
         for threat in threats:
             # Create critical alert
@@ -13419,7 +13424,7 @@ class UnifiedSecurityManager:
             logger.error(f"User authentication failed: {e}")
             return None
     
-    async def _handle_authentication_failure(self, context: SecurityContext):
+    async def _handle_authentication_failure(self, context -> None: SecurityContext) -> None:
         """Handle authentication failure."""
         record_security_event(
             SecurityEvent.LOGIN_FAILURE,
@@ -13447,7 +13452,7 @@ class UnifiedSecurityManager:
             logger.error(f"Authorization check failed: {e}")
             return False
     
-    async def _handle_authorization_failure(self, context: SecurityContext, user: User, required_permissions: Set[str]):
+    async def _handle_authorization_failure(self, context -> None: SecurityContext, user -> None: User, required_permissions -> None: Set[str]) -> None:
         """Handle authorization failure."""
         record_security_event(
             SecurityEvent.PERMISSION_DENIED,
@@ -13505,7 +13510,7 @@ class UnifiedSecurityManager:
             logger.error(f"Policy enforcement failed: {e}")
             return {"compliant": False, "applied_policies": [], "violations": [str(e)]}
     
-    async def _handle_policy_violation(self, context: SecurityContext, user: User, policy_result: Dict[str, Any]):
+    async def _handle_policy_violation(self, context -> None: SecurityContext, user -> None: User, policy_result -> None: Dict[str, Any]) -> None:
         """Handle policy violations."""
         for violation in policy_result['violations']:
             # Record violation event
@@ -13668,7 +13673,7 @@ class UnifiedSecurityManager:
         
         return security_report
     
-    def set_operation_mode(self, mode: SecurityOperationMode):
+    def set_operation_mode(self, mode -> None: SecurityOperationMode) -> None:
         """Set security operation mode."""
         logger.info(f"Changing security operation mode from {self.operation_mode.value} to {mode.value}")
         
@@ -13695,7 +13700,7 @@ class UnifiedSecurityManager:
             )
     
     @asynccontextmanager
-    async def security_context(self, context: SecurityContext, required_permissions: Set[str] = None):
+    async def security_context(self, context -> None: SecurityContext, required_permissions -> None: Set[str] = None) -> None:
         """Async context manager for security operations."""
         start_time = datetime.utcnow()
         
@@ -13758,13 +13763,13 @@ async def get_unified_security_manager(
 
 # Convenience functions
 async def secure_operation(
-    operation: str,
-    tenant_id: str,
-    user_id: Optional[str] = None,
-    source_ip: Optional[str] = None,
-    required_permissions: Set[str] = None,
+    operation -> None: str,
+    tenant_id -> None: str,
+    user_id -> None: Optional[str] = None,
+    source_ip -> None: Optional[str] = None,
+    required_permissions -> None: Set[str] = None,
     **metadata
-):
+) -> None:
     """Decorator/context manager for secure operations."""
     manager = await get_unified_security_manager()
     
@@ -13910,7 +13915,7 @@ class KubernetesSecurityManager:
     enterprise-grade security controls, policy enforcement, and monitoring.
     """
     
-    def __init__(self, config: SecurityPlatformConfig):
+    def __init__(self, config -> None: SecurityPlatformConfig) -> None:
         """Initialize Kubernetes security manager."""
         if not KUBERNETES_AVAILABLE:
             raise RuntimeError("Kubernetes client library not available")
@@ -14662,7 +14667,7 @@ class SecureAPIConnector:
     - Error handling and retry logic
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.logger = logging.getLogger(__name__)
         self._session = None
@@ -14672,7 +14677,7 @@ class SecureAPIConnector:
         # Initialize HTTP session with security settings
         self._initialize_secure_session()
     
-    def _initialize_secure_session(self):
+    def _initialize_secure_session(self) -> None:
         """Initialize secure HTTP session"""
         self._session = aiohttp.ClientSession(
             timeout=aiohttp.ClientTimeout(total=30),
@@ -14879,7 +14884,7 @@ class SecureAPIConnector:
         
         return response
     
-    async def _check_rate_limits(self, context: IntegrationContext):
+    async def _check_rate_limits(self, context -> None: IntegrationContext) -> None:
         """Check and enforce rate limits"""
         now = datetime.utcnow()
         rate_limit_key = f"{context.integration_id}_{now.strftime('%Y%m%d%H%M')}"
@@ -14894,12 +14899,12 @@ class SecureAPIConnector:
         
         self._rate_limiters[rate_limit_key] += 1
     
-    async def _update_usage_metrics(self, context: IntegrationContext):
+    async def _update_usage_metrics(self, context -> None: IntegrationContext) -> None:
         """Update integration usage metrics"""
         context.last_used = datetime.utcnow()
         # Update metrics in database/cache
     
-    async def _handle_api_error(self, context: IntegrationContext, error: Exception):
+    async def _handle_api_error(self, context -> None: IntegrationContext, error -> None: Exception) -> None:
         """Handle API errors with security implications"""
         self.logger.error(f"API error for integration {context.integration_id}: {str(error)}")
         
@@ -14908,7 +14913,7 @@ class SecureAPIConnector:
             # Potential credential compromise
             await self._revoke_credentials(context)
         
-    async def _revoke_credentials(self, context: IntegrationContext):
+    async def _revoke_credentials(self, context -> None: IntegrationContext) -> None:
         """Revoke potentially compromised credentials"""
         self.logger.warning(f"Revoking credentials for integration {context.integration_id}")
         # Implement credential revocation logic
@@ -14925,7 +14930,7 @@ class ThirdPartyValidator:
     - Compliance verification
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.logger = logging.getLogger(__name__)
         self._validation_cache = {}
@@ -15090,18 +15095,18 @@ class ComplianceIntegrator:
     - PCI DSS payment security
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.logger = logging.getLogger(__name__)
         self._compliance_rules = {}
         self._audit_trail = []
     
-    async def start_monitoring(self):
+    async def start_monitoring(self) -> None:
         """Start compliance monitoring"""
         await self._load_compliance_rules()
         self.logger.info("Compliance monitoring started")
     
-    async def _load_compliance_rules(self):
+    async def _load_compliance_rules(self) -> None:
         """Load compliance rules and requirements"""
         self._compliance_rules = {
             'gdpr': {
@@ -15166,7 +15171,7 @@ class ComplianceIntegrator:
         # Simplified SOX compliance check
         return True  # Would implement actual SOX validation
     
-    async def _log_compliance_event(self, tenant_id: str, user_id: str, compliance_flags: Dict[str, bool]):
+    async def _log_compliance_event(self, tenant_id -> None: str, user_id -> None: str, compliance_flags -> None: Dict[str, bool]) -> None:
         """Log compliance event for audit trail"""
         event = {
             'timestamp': datetime.utcnow().isoformat(),
@@ -15191,7 +15196,7 @@ class DataExchangeSecure:
     - API data validation
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.logger = logging.getLogger(__name__)
         self._encryption_key = None
@@ -15199,7 +15204,7 @@ class DataExchangeSecure:
         # Initialize encryption
         self._initialize_encryption()
     
-    def _initialize_encryption(self):
+    def _initialize_encryption(self) -> None:
         """Initialize encryption for data exchange"""
         self._encryption_key = base64.b64encode(
             hashlib.sha256(self.config.get('encryption_seed', 'default_seed').encode()).digest()
@@ -15431,7 +15436,7 @@ class EnterpriseAuthenticationConfig:
 class EnterpriseAuthenticationSuite:
     """Main enterprise authentication suite orchestrator."""
     
-    def __init__(self, config: EnterpriseAuthenticationConfig):
+    def __init__(self, config -> None: EnterpriseAuthenticationConfig) -> None:
         self.config = config
         self.is_initialized = False
         self.health_status = {}
@@ -15506,7 +15511,7 @@ class EnterpriseAuthenticationSuite:
             await self.cleanup()
             return False
     
-    async def _initialize_database_connections(self):
+    async def _initialize_database_connections(self) -> None:
         """Initialize database connections."""
         
         # Initialize Redis connection
@@ -15535,7 +15540,7 @@ class EnterpriseAuthenticationSuite:
         
         logger.info("PostgreSQL connection pool established")
     
-    async def _initialize_configuration_management(self):
+    async def _initialize_configuration_management(self) -> None:
         """Initialize enterprise configuration management."""
         
         self.config_manager = EnterpriseConfigurationManager(
@@ -15574,14 +15579,14 @@ class EnterpriseAuthenticationSuite:
         
         logger.info("Configuration management initialized")
     
-    async def _initialize_cryptographic_services(self):
+    async def _initialize_cryptographic_services(self) -> None:
         """Initialize cryptographic services."""
         
         self.crypto_service = EnterpriseCryptographicService()
         
         logger.info("Cryptographic services initialized")
     
-    async def _initialize_session_management(self):
+    async def _initialize_session_management(self) -> None:
         """Initialize session management."""
         
         self.session_storage = EnterpriseRedisSessionStorage(
@@ -15591,7 +15596,7 @@ class EnterpriseAuthenticationSuite:
         
         logger.info("Session management initialized")
     
-    async def _initialize_security_components(self):
+    async def _initialize_security_components(self) -> None:
         """Initialize security components."""
         
         if self.config.threat_detection_enabled:
@@ -15600,7 +15605,7 @@ class EnterpriseAuthenticationSuite:
             )
             logger.info("Threat detection engine initialized")
     
-    async def _initialize_directory_providers(self):
+    async def _initialize_directory_providers(self) -> None:
         """Initialize enterprise directory providers."""
         
         if self.config.ldap_enabled:
@@ -15624,7 +15629,7 @@ class EnterpriseAuthenticationSuite:
             self.directory_providers[EnterpriseAuthMethod.ACTIVE_DIRECTORY] = ad_provider
             logger.info("Active Directory provider initialized")
     
-    async def _initialize_compliance_monitoring(self):
+    async def _initialize_compliance_monitoring(self) -> None:
         """Initialize compliance monitoring."""
         
         if self.config.compliance_monitoring_enabled:
@@ -15633,7 +15638,7 @@ class EnterpriseAuthenticationSuite:
             )
             logger.info("Compliance monitoring initialized")
     
-    async def _initialize_fastapi_application(self):
+    async def _initialize_fastapi_application(self) -> None:
         """Initialize FastAPI application with enterprise endpoints."""
         
         self.app = FastAPI(
@@ -15658,16 +15663,16 @@ class EnterpriseAuthenticationSuite:
         
         logger.info("FastAPI application initialized")
     
-    def _add_enterprise_routes(self):
+    def _add_enterprise_routes(self) -> None:
         """Add enterprise API routes."""
         
         security = HTTPBearer()
         
         @self.app.post("/enterprise/auth/authenticate")
         async def authenticate_user(
-            request: Request,
-            auth_request: Dict[str, Any]
-        ):
+            request -> None: Request,
+            auth_request -> None: Dict[str, Any]
+        ) -> None:
             """Enterprise user authentication endpoint."""
             
             try:
@@ -15801,7 +15806,7 @@ class EnterpriseAuthenticationSuite:
                 raise HTTPException(status_code=500, detail="Logout failed")
         
         @self.app.get("/enterprise/health")
-        async def health_check():
+        async def health_check() -> None:
             """Enterprise health check endpoint."""
             
             health_status = await self.get_health_status()
@@ -15817,7 +15822,7 @@ class EnterpriseAuthenticationSuite:
             }
         
         @self.app.get("/enterprise/metrics")
-        async def get_metrics():
+        async def get_metrics() -> None:
             """Prometheus metrics endpoint."""
             
             if not self.config.metrics_enabled:
@@ -15931,7 +15936,7 @@ class EnterpriseAuthenticationSuite:
         else:
             return EnterpriseDeviceType.UNKNOWN
     
-    async def _start_background_services(self):
+    async def _start_background_services(self) -> None:
         """Start background services."""
         
         # Health monitoring
@@ -15950,7 +15955,7 @@ class EnterpriseAuthenticationSuite:
         
         logger.info("Background services started")
     
-    async def _health_monitoring_service(self):
+    async def _health_monitoring_service(self) -> None:
         """Background health monitoring service."""
         
         while True:
@@ -15967,7 +15972,7 @@ class EnterpriseAuthenticationSuite:
                 logger.error("Error in health monitoring service", error=str(e))
                 await asyncio.sleep(60)  # Wait before retrying
     
-    async def _session_cleanup_service(self):
+    async def _session_cleanup_service(self) -> None:
         """Background session cleanup service."""
         
         while True:
@@ -15987,7 +15992,7 @@ class EnterpriseAuthenticationSuite:
                 logger.error("Error in session cleanup service", error=str(e))
                 await asyncio.sleep(300)
     
-    async def _configuration_watching_service(self):
+    async def _configuration_watching_service(self) -> None:
         """Background configuration watching service."""
         
         try:
@@ -15998,7 +16003,7 @@ class EnterpriseAuthenticationSuite:
         except Exception as e:
             logger.error("Error in configuration watching service", error=str(e))
     
-    async def _update_component_health(self):
+    async def _update_component_health(self) -> None:
         """Update health status for all components."""
         
         # Check Redis health
@@ -16090,7 +16095,7 @@ class EnterpriseAuthenticationSuite:
         # Mock uptime calculation
         return "24h 15m 32s"
     
-    async def cleanup(self):
+    async def cleanup(self) -> None:
         """Cleanup resources."""
         
         logger.info("Cleaning up enterprise authentication suite")
@@ -16288,10 +16293,10 @@ class TokenBucket:
     
     def __init__(
         self,
-        capacity: float,
-        refill_rate: float,
-        initial_tokens: Optional[float] = None
-    ):
+        capacity -> None: float,
+        refill_rate -> None: float,
+        initial_tokens -> None: Optional[float] = None
+    ) -> None:
         self.capacity = capacity
         self.refill_rate = refill_rate  # tokens per second
         self.tokens = initial_tokens if initial_tokens is not None else capacity
@@ -16354,7 +16359,7 @@ class SlidingWindow:
     Provides precise rate limiting with sliding time windows.
     """
     
-    def __init__(self, window_size: int, max_requests: int):
+    def __init__(self, window_size -> None: int, max_requests -> None: int) -> None:
         self.window_size = window_size  # seconds
         self.max_requests = max_requests
         self.requests: List[float] = []
@@ -16415,7 +16420,7 @@ class IntelligentRateLimiter:
     - Performance optimization
     """
     
-    def __init__(self, base_policy: RateLimitPolicy):
+    def __init__(self, base_policy -> None: RateLimitPolicy) -> None:
         self.base_policy = base_policy
         
         # Adaptive parameters
@@ -16537,7 +16542,7 @@ class RateLimiter:
     - Burst handling and smoothing
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         # Rate limiting state per provider/tenant
         self.limiters: Dict[str, Dict[str, Any]] = {}
         self.policies: Dict[str, RateLimitPolicy] = {}
@@ -17180,7 +17185,7 @@ class SessionStorage(Protocol):
 class RedisSessionStorage:
     """Redis-based session storage implementation."""
     
-    def __init__(self, redis_url: str, key_prefix: str = "session:"):
+    def __init__(self, redis_url -> None: str, key_prefix -> None: str = "session -> None:") -> None:
         self.redis_url = redis_url
         self.key_prefix = key_prefix
         self.redis: Optional[aioredis.Redis] = None
@@ -17380,7 +17385,7 @@ class RedisSessionStorage:
 class InMemorySessionStorage:
     """In-memory session storage for development/testing."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.sessions: Dict[str, SessionMetadata] = {}
         self.user_sessions: Dict[str, Set[str]] = {}
         self.logger = logger.bind(component="InMemorySessionStorage")
@@ -17492,7 +17497,7 @@ class AdvancedSessionManager:
     - Real-time security assessment and threat detection
     """
     
-    def __init__(self, storage: SessionStorage, encryption_key: Optional[bytes] = None):
+    def __init__(self, storage -> None: SessionStorage, encryption_key -> None: Optional[bytes] = None) -> None:
         self.storage = storage
         self.encryption_key = encryption_key or secrets.token_bytes(32)
         self.fernet = Fernet(Fernet.generate_key()) if not encryption_key else Fernet(encryption_key)
@@ -18133,7 +18138,7 @@ class TokenStorage(Protocol):
 class InMemoryTokenStorage:
     """In-memory token storage for development/testing."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.tokens: Dict[str, TokenMetadata] = {}
         self.revoked_tokens: Set[str] = set()
         self.user_tokens: Dict[str, Set[str]] = {}
@@ -18230,7 +18235,7 @@ class InMemoryTokenStorage:
 class KeyManager:
     """Advanced key management for token signing."""
     
-    def __init__(self, config: TokenConfiguration):
+    def __init__(self, config -> None: TokenConfiguration) -> None:
         self.config = config
         self.keys: Dict[str, KeyMaterial] = {}
         self.active_key_id: Optional[str] = None
@@ -18375,7 +18380,7 @@ class AdvancedTokenManager:
     - Security features like anti-replay protection
     """
     
-    def __init__(self, config: TokenConfiguration, storage: TokenStorage):
+    def __init__(self, config -> None: TokenConfiguration, storage -> None: TokenStorage) -> None:
         self.config = config
         self.storage = storage
         self.key_manager = KeyManager(config)
@@ -18915,7 +18920,7 @@ class ProviderMetrics:
 class BaseAuthenticationProvider(ABC):
     """Base authentication provider with common functionality."""
     
-    def __init__(self, config: ProviderConfiguration):
+    def __init__(self, config -> None: ProviderConfiguration) -> None:
         self.config = config
         self.metrics = ProviderMetrics(provider_id=config.provider_id)
         self.logger = logger.bind(provider_id=config.provider_id)
@@ -19110,7 +19115,7 @@ class BaseAuthenticationProvider(ABC):
 class LocalAuthenticationProvider(BaseAuthenticationProvider):
     """Local username/password authentication provider."""
     
-    def __init__(self, config: ProviderConfiguration, user_store: Dict[str, Dict[str, Any]]):
+    def __init__(self, config -> None: ProviderConfiguration, user_store -> None: Dict[str, Dict[str, Any]]) -> None:
         super().__init__(config)
         self.user_store = user_store
     
@@ -19228,7 +19233,7 @@ class LocalAuthenticationProvider(BaseAuthenticationProvider):
 class OAuth2Provider(BaseAuthenticationProvider):
     """OAuth2/OIDC authentication provider with PKCE support."""
     
-    def __init__(self, config: ProviderConfiguration):
+    def __init__(self, config -> None: ProviderConfiguration) -> None:
         super().__init__(config)
         self.client_id = config.secrets.get("client_id")
         self.client_secret = config.secrets.get("client_secret")
@@ -19399,7 +19404,7 @@ class OAuth2Provider(BaseAuthenticationProvider):
 class MultiFactorAuthenticationProvider(BaseAuthenticationProvider):
     """Multi-factor authentication provider."""
     
-    def __init__(self, config: ProviderConfiguration):
+    def __init__(self, config -> None: ProviderConfiguration) -> None:
         super().__init__(config)
         self.totp_issuer = config.metadata.get("totp_issuer", "Spotify AI Agent")
         self.sms_provider = config.metadata.get("sms_provider")
@@ -19490,7 +19495,7 @@ class MultiFactorAuthenticationProvider(BaseAuthenticationProvider):
 class ProviderRegistry:
     """Authentication provider registry and manager."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.providers: Dict[str, BaseAuthenticationProvider] = {}
         self.provider_configs: Dict[str, ProviderConfiguration] = {}
         self.active_providers: List[str] = []
@@ -19672,7 +19677,7 @@ auth_module.integrate_with_fastapi(app)
 
 # Use authentication in endpoints
 @app.post("/api/login")
-async def login(credentials: dict):
+async def login(credentials -> None: dict) -> None:
     result = await auth_module.authenticate_user(
         user_id=credentials["username"],
         credentials=credentials
@@ -19715,7 +19720,7 @@ class AuthenticationUsageExamples:
     """
     
     @staticmethod
-    async def basic_setup_example():
+    async def basic_setup_example() -> None:
         """Basic setup and initialization example."""
         
         from .auth_module import (
@@ -19743,7 +19748,7 @@ class AuthenticationUsageExamples:
         
         # 5. Define protected endpoints
         @app.post("/api/v1/login")
-        async def login(credentials: Dict[str, Any]):
+        async def login(credentials -> None: Dict[str, Any]) -> None:
             """User login endpoint."""
             try:
                 result = await auth_module.authenticate_user(
@@ -19785,7 +19790,7 @@ class AuthenticationUsageExamples:
         return app
     
     @staticmethod
-    async def advanced_authentication_example():
+    async def advanced_authentication_example() -> None:
         """Advanced authentication with MFA and risk assessment."""
         
         from .auth_module import get_authentication_module
@@ -19795,11 +19800,11 @@ class AuthenticationUsageExamples:
         
         # Multi-factor authentication flow
         async def mfa_authentication_flow(
-            user_id: str,
-            primary_credentials: Dict[str, Any],
-            mfa_credentials: Optional[Dict[str, Any]] = None,
-            request_context: Optional[Dict[str, Any]] = None
-        ):
+            user_id -> None: str,
+            primary_credentials -> None: Dict[str, Any],
+            mfa_credentials -> None: Optional[Dict[str, Any]] = None,
+            request_context -> None: Optional[Dict[str, Any]] = None
+        ) -> None:
             """Complete MFA authentication flow."""
             
             # Step 1: Primary authentication (username/password)
@@ -19872,7 +19877,7 @@ class AuthenticationUsageExamples:
         return result
     
     @staticmethod
-    async def session_management_example():
+    async def session_management_example() -> None:
         """Advanced session management examples."""
         
         from .auth_module import get_authentication_module
@@ -19883,11 +19888,11 @@ class AuthenticationUsageExamples:
         
         # Create session with device tracking
         async def create_tracked_session(
-            user_id: str,
-            tenant_id: str,
-            device_info: Dict[str, Any],
-            location_info: Optional[Dict[str, Any]] = None
-        ):
+            user_id -> None: str,
+            tenant_id -> None: str,
+            device_info -> None: Dict[str, Any],
+            location_info -> None: Optional[Dict[str, Any]] = None
+        ) -> None:
             """Create session with comprehensive tracking."""
             
             session = await session_manager.create_session(
@@ -19909,7 +19914,7 @@ class AuthenticationUsageExamples:
             return session
         
         # Monitor session activity
-        async def monitor_session_activity(session_id: str):
+        async def monitor_session_activity(session_id -> None: str) -> None:
             """Monitor and update session activity."""
             
             # Update activity
@@ -19930,7 +19935,7 @@ class AuthenticationUsageExamples:
             return analytics
         
         # Session cleanup and management
-        async def manage_user_sessions(user_id: str, tenant_id: str):
+        async def manage_user_sessions(user_id -> None: str, tenant_id -> None: str) -> None:
             """Comprehensive session management."""
             
             # Get all user sessions
@@ -19977,7 +19982,7 @@ class AuthenticationUsageExamples:
         }
     
     @staticmethod
-    async def security_monitoring_example():
+    async def security_monitoring_example() -> None:
         """Security monitoring and threat detection examples."""
         
         from .auth_module import get_authentication_module
@@ -19987,11 +19992,11 @@ class AuthenticationUsageExamples:
         security_manager = auth_module.security_manager
         
         # Real-time threat monitoring
-        async def setup_threat_monitoring():
+        async def setup_threat_monitoring() -> None:
             """Setup comprehensive threat monitoring."""
             
             # Monitor authentication attempts
-            async def monitor_auth_attempts(user_id: str, request_data: Dict[str, Any]):
+            async def monitor_auth_attempts(user_id -> None: str, request_data -> None: Dict[str, Any]) -> None:
                 """Monitor authentication attempts for threats."""
                 
                 # Create security context
@@ -20032,7 +20037,7 @@ class AuthenticationUsageExamples:
                 return {"allowed": True, "risk_score": risk_score}
             
             # Geographic anomaly detection
-            async def detect_geographic_anomalies(user_id: str, current_location: Dict[str, Any]):
+            async def detect_geographic_anomalies(user_id -> None: str, current_location -> None: Dict[str, Any]) -> None:
                 """Detect geographic anomalies in user access patterns."""
                 
                 # Get recent user sessions
@@ -20078,7 +20083,7 @@ class AuthenticationUsageExamples:
             }
         
         # Security incident response
-        async def security_incident_response(incident_type: str, context: Dict[str, Any]):
+        async def security_incident_response(incident_type -> None: str, context -> None: Dict[str, Any]) -> None:
             """Automated security incident response."""
             
             response_actions = {
@@ -20130,7 +20135,7 @@ class AuthenticationUsageExamples:
         }
     
     @staticmethod
-    async def compliance_and_audit_example():
+    async def compliance_and_audit_example() -> None:
         """Compliance and audit logging examples."""
         
         from .auth_module import get_authentication_module
@@ -20139,7 +20144,7 @@ class AuthenticationUsageExamples:
         security_manager = auth_module.security_manager
         
         # GDPR compliance example
-        async def gdpr_compliance_operations():
+        async def gdpr_compliance_operations() -> None:
             """GDPR compliance operations."""
             
             # Data export for user
@@ -20226,7 +20231,7 @@ class AuthenticationUsageExamples:
             }
         
         # Compliance reporting
-        async def generate_compliance_reports():
+        async def generate_compliance_reports() -> None:
             """Generate comprehensive compliance reports."""
             
             # Generate monthly security report
@@ -20278,7 +20283,7 @@ class AuthenticationUsageExamples:
         }
     
     @staticmethod
-    async def performance_optimization_example():
+    async def performance_optimization_example() -> None:
         """Performance optimization examples."""
         
         from .auth_module import get_authentication_module
@@ -20286,7 +20291,7 @@ class AuthenticationUsageExamples:
         auth_module = get_authentication_module()
         
         # Caching strategies
-        async def implement_caching_strategies():
+        async def implement_caching_strategies() -> None:
             """Implement performance caching strategies."""
             
             # Token validation caching
@@ -20313,7 +20318,7 @@ class AuthenticationUsageExamples:
                 return is_valid
             
             # Session preloading
-            async def preload_user_sessions(user_id: str, tenant_id: str):
+            async def preload_user_sessions(user_id -> None: str, tenant_id -> None: str) -> None:
                 """Preload user sessions for performance."""
                 
                 # Get sessions from storage
@@ -20333,7 +20338,7 @@ class AuthenticationUsageExamples:
                         )
             
             # Permission caching
-            async def cache_user_permissions(user_id: str, tenant_id: str, permissions: List[str]):
+            async def cache_user_permissions(user_id -> None: str, tenant_id -> None: str, permissions -> None: List[str]) -> None:
                 """Cache user permissions for performance."""
                 
                 cache_key = f"permissions:{user_id}:{tenant_id}"
@@ -20350,11 +20355,11 @@ class AuthenticationUsageExamples:
             }
         
         # Connection pooling
-        async def optimize_connections():
+        async def optimize_connections() -> None:
             """Optimize database and cache connections."""
             
             # Connection health monitoring
-            async def monitor_connection_health():
+            async def monitor_connection_health() -> None:
                 """Monitor connection pool health."""
                 
                 try:
@@ -20383,7 +20388,7 @@ class AuthenticationUsageExamples:
 
 
 # Production deployment example
-async def production_deployment_example():
+async def production_deployment_example() -> None:
     """Complete production deployment example."""
     
     from fastapi import FastAPI, HTTPException, Depends, Request
@@ -20451,7 +20456,7 @@ async def production_deployment_example():
     
     # Protected endpoints
     @app.post("/api/v1/authenticate")
-    async def authenticate(request: Request, credentials: Dict[str, Any]):
+    async def authenticate(request -> None: Request, credentials -> None: Dict[str, Any]) -> None:
         """Authentication endpoint."""
         
         try:
@@ -20555,7 +20560,7 @@ async def production_deployment_example():
 if __name__ == "__main__":
     import uvicorn
     
-    async def main():
+    async def main() -> None:
         """Main application entry point."""
         
         # Create production application
@@ -20691,18 +20696,18 @@ class ComplianceCheck:
 class SecurityMonitor(ABC):
     """Abstract base class for security monitors"""
     
-    def __init__(self, name: str):
+    def __init__(self, name -> None: str) -> None:
         self.name = name
         self.is_active = False
         self.events: List[SecurityEvent] = []
         
     @abstractmethod
-    async def start_monitoring(self):
+    async def start_monitoring(self) -> None:
         """Start monitoring"""
         pass
         
     @abstractmethod
-    async def stop_monitoring(self):
+    async def stop_monitoring(self) -> None:
         """Stop monitoring"""
         pass
         
@@ -20714,17 +20719,17 @@ class SecurityMonitor(ABC):
 class AuthenticationMonitor(SecurityMonitor):
     """Monitor authentication events"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__("authentication_monitor")
         self.failed_attempts: Dict[str, List[datetime]] = {}
         self.suspicious_ips: Set[str] = set()
         
-    async def start_monitoring(self):
+    async def start_monitoring(self) -> None:
         """Start authentication monitoring"""
         self.is_active = True
         logger.info("Authentication monitoring started")
         
-    async def stop_monitoring(self):
+    async def stop_monitoring(self) -> None:
         """Stop authentication monitoring"""
         self.is_active = False
         logger.info("Authentication monitoring stopped")
@@ -20794,16 +20799,16 @@ class AuthenticationMonitor(SecurityMonitor):
 class AccessControlMonitor(SecurityMonitor):
     """Monitor access control violations"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__("access_control_monitor")
         self.permission_violations: List[Dict[str, Any]] = []
         
-    async def start_monitoring(self):
+    async def start_monitoring(self) -> None:
         """Start access control monitoring"""
         self.is_active = True
         logger.info("Access control monitoring started")
         
-    async def stop_monitoring(self):
+    async def stop_monitoring(self) -> None:
         """Stop access control monitoring"""
         self.is_active = False
         logger.info("Access control monitoring stopped")
@@ -20859,16 +20864,16 @@ class AccessControlMonitor(SecurityMonitor):
 class DataAccessMonitor(SecurityMonitor):
     """Monitor data access patterns"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__("data_access_monitor")
         self.data_access_patterns: Dict[str, List[Dict[str, Any]]] = {}
         
-    async def start_monitoring(self):
+    async def start_monitoring(self) -> None:
         """Start data access monitoring"""
         self.is_active = True
         logger.info("Data access monitoring started")
         
-    async def stop_monitoring(self):
+    async def stop_monitoring(self) -> None:
         """Stop data access monitoring"""
         self.is_active = False
         logger.info("Data access monitoring stopped")
@@ -20926,11 +20931,11 @@ class DataAccessMonitor(SecurityMonitor):
 class AnomalyDetector:
     """AI-powered anomaly detection for security"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.baseline_patterns: Dict[str, Any] = {}
         self.anomaly_threshold = 0.8
         
-    async def learn_baseline(self, historical_data: List[Dict[str, Any]]):
+    async def learn_baseline(self, historical_data -> None: List[Dict[str, Any]]) -> None:
         """Learn baseline patterns from historical data"""
         # Simplified ML-based pattern learning
         user_patterns = {}
@@ -21014,18 +21019,18 @@ class AnomalyDetector:
 class ComplianceTracker:
     """Track compliance with various frameworks"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.compliance_checks: Dict[ComplianceFramework, List[ComplianceCheck]] = {
             framework: [] for framework in ComplianceFramework
         }
         self.compliance_scores: Dict[ComplianceFramework, float] = {}
         
-    def add_compliance_check(self, check: ComplianceCheck):
+    def add_compliance_check(self, check -> None: ComplianceCheck) -> None:
         """Add a compliance check"""
         self.compliance_checks[check.framework].append(check)
         self._calculate_compliance_score(check.framework)
         
-    def _calculate_compliance_score(self, framework: ComplianceFramework):
+    def _calculate_compliance_score(self, framework -> None: ComplianceFramework) -> None:
         """Calculate compliance score for a framework"""
         checks = self.compliance_checks[framework]
         if not checks:
@@ -21063,7 +21068,7 @@ class ComplianceTracker:
 class SecurityMetricsCollector:
     """Collect security-specific metrics"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.metrics: Dict[str, Any] = {}
         
     async def collect_metrics(self, security_events: List[SecurityEvent],
@@ -21226,7 +21231,7 @@ class SecurityDashboardGenerator:
             }
         }
 
-async def create_security_monitoring_example():
+async def create_security_monitoring_example() -> None:
     """Create comprehensive security monitoring example"""
     
     # Initialize components
@@ -21494,12 +21499,13 @@ class ComplianceControl(BaseModel):
     updated_at: datetime = Field(default_factory=datetime.utcnow)
     
     @validator('compliance_threshold', 'warning_threshold')
-    def validate_percentage(cls, v):
+    def validate_percentage(cls, v) -> None:
         if not 0 <= v <= 100:
             raise ValueError('Threshold must be between 0 and 100')
         return v
     
     class Config:
+    """Config: class implementation"""
         schema_extra = {
             "example": {
                 "control_id": "soc2_cc6_1",
@@ -21561,6 +21567,7 @@ class ComplianceViolation(BaseModel):
     tags: List[str] = Field(default_factory=list, description="Tags")
     
     class Config:
+    """Config: class implementation"""
         schema_extra = {
             "example": {
                 "control_id": "soc2_cc6_1",
@@ -21613,7 +21620,7 @@ class ComplianceReport(BaseModel):
     generated_by: str = Field("automated_system", description="Généré par")
     
     @validator('overall_compliance_score')
-    def validate_score(cls, v):
+    def validate_score(cls, v) -> None:
         if not 0 <= v <= 100:
             raise ValueError('Score must be between 0 and 100')
         return v
@@ -21655,6 +21662,7 @@ class ComplianceAuditEntry(BaseModel):
     sensitive_data: bool = Field(False, description="Données sensibles")
     
     class Config:
+    """Config: class implementation"""
         schema_extra = {
             "example": {
                 "event_type": "data_access",
@@ -21706,7 +21714,7 @@ class ComplianceMetrics(BaseModel):
     timestamp: datetime = Field(default_factory=datetime.utcnow)
     
     @validator('current_score', 'target_score', 'overall_risk_score')
-    def validate_percentage(cls, v):
+    def validate_percentage(cls, v) -> None:
         if not 0 <= v <= 100:
             raise ValueError('Score must be between 0 and 100')
         return v
@@ -22297,11 +22305,11 @@ class EnterpriseSessionData:
     
     def update_activity(
         self,
-        activity_type: str,
-        activity_data: Optional[Dict[str, Any]] = None,
-        ip_address: Optional[str] = None,
-        user_agent: Optional[str] = None
-    ):
+        activity_type -> None: str,
+        activity_data -> None: Optional[Dict[str, Any]] = None,
+        ip_address -> None: Optional[str] = None,
+        user_agent -> None: Optional[str] = None
+    ) -> None:
         """Update session activity."""
         
         self.last_activity = datetime.now(timezone.utc)
@@ -22331,10 +22339,10 @@ class EnterpriseSessionData:
     
     def add_security_event(
         self,
-        event_type: str,
-        event_data: Dict[str, Any],
-        risk_score: float = 0.0
-    ):
+        event_type -> None: str,
+        event_data -> None: Dict[str, Any],
+        risk_score -> None: float = 0.0
+    ) -> None:
         """Add security event to session."""
         
         security_event = {
@@ -22461,10 +22469,10 @@ class EnterpriseRedisSessionStorage(EnterpriseSessionStorage):
     
     def __init__(
         self,
-        redis_client: aioredis.Redis,
-        key_prefix: str = "enterprise_session:",
-        default_ttl: int = 86400  # 24 hours
-    ):
+        redis_client -> None: aioredis.Redis,
+        key_prefix -> None: str = "enterprise_session -> None:",
+        default_ttl -> None: int = 86400  # 24 hours
+    ) -> None:
         self.redis_client = redis_client
         self.key_prefix = key_prefix
         self.default_ttl = default_ttl
@@ -23118,7 +23126,7 @@ class SecurityPatterns:
 class RateLimiter:
     """Advanced rate limiter with multiple algorithms."""
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client -> None: aioredis.Redis) -> None:
         self.redis = redis_client
         
     async def check_rate_limit(
@@ -23256,7 +23264,7 @@ class RateLimiter:
 class ThreatDetector:
     """Advanced threat detection engine."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.patterns = SecurityPatterns()
         self.threat_cache: Dict[str, ThreatIntelligence] = {}
         
@@ -23325,11 +23333,11 @@ class ThreatDetector:
 class SecurityHeadersMiddleware(BaseHTTPMiddleware):
     """Security headers middleware."""
     
-    def __init__(self, app, config: SecurityConfig):
+    def __init__(self, app, config -> None: SecurityConfig) -> None:
         super().__init__(app)
         self.config = config
         
-    async def dispatch(self, request: Request, call_next):
+    async def dispatch(self, request -> None: Request, call_next) -> None:
         response = await call_next(request)
         
         # Add security headers
@@ -23337,7 +23345,7 @@ class SecurityHeadersMiddleware(BaseHTTPMiddleware):
         
         return response
     
-    def _add_security_headers(self, response: Response):
+    def _add_security_headers(self, response -> None: Response) -> None:
         """Add comprehensive security headers."""
         
         if self.config.security_headers_policy == SecurityHeaderPolicy.STRICT:
@@ -23381,12 +23389,12 @@ class SecurityHeadersMiddleware(BaseHTTPMiddleware):
 class RateLimitingMiddleware(BaseHTTPMiddleware):
     """Advanced rate limiting middleware."""
     
-    def __init__(self, app, config: SecurityConfig, redis_client: aioredis.Redis):
+    def __init__(self, app, config -> None: SecurityConfig, redis_client -> None: aioredis.Redis) -> None:
         super().__init__(app)
         self.config = config
         self.rate_limiter = RateLimiter(redis_client)
         
-    async def dispatch(self, request: Request, call_next):
+    async def dispatch(self, request -> None: Request, call_next) -> None:
         if not self.config.rate_limit_enabled:
             return await call_next(request)
         
@@ -23457,12 +23465,12 @@ class RateLimitingMiddleware(BaseHTTPMiddleware):
 class InputValidationMiddleware(BaseHTTPMiddleware):
     """Advanced input validation and sanitization middleware."""
     
-    def __init__(self, app, config: SecurityConfig):
+    def __init__(self, app, config -> None: SecurityConfig) -> None:
         super().__init__(app)
         self.config = config
         self.threat_detector = ThreatDetector()
         
-    async def dispatch(self, request: Request, call_next):
+    async def dispatch(self, request -> None: Request, call_next) -> None:
         if not self.config.input_validation_enabled:
             return await call_next(request)
         
@@ -23536,7 +23544,7 @@ class InputValidationMiddleware(BaseHTTPMiddleware):
 class GeographicFilteringMiddleware(BaseHTTPMiddleware):
     """Geographic filtering middleware."""
     
-    def __init__(self, app, config: SecurityConfig, geoip_db_path: Optional[str] = None):
+    def __init__(self, app, config -> None: SecurityConfig, geoip_db_path -> None: Optional[str] = None) -> None:
         super().__init__(app)
         self.config = config
         self.geoip_reader: Optional[geoip2.database.Reader] = None
@@ -23547,7 +23555,7 @@ class GeographicFilteringMiddleware(BaseHTTPMiddleware):
             except Exception as e:
                 logger.warning("Failed to initialize GeoIP database", error=str(e))
     
-    async def dispatch(self, request: Request, call_next):
+    async def dispatch(self, request -> None: Request, call_next) -> None:
         if not self.config.geo_filtering_enabled or not self.geoip_reader:
             return await call_next(request)
         
@@ -23603,11 +23611,11 @@ class SecurityMiddleware(BaseHTTPMiddleware):
     def __init__(
         self, 
         app, 
-        config: SecurityConfig,
-        security_manager: UltraAdvancedSecurityManager,
-        redis_client: aioredis.Redis,
-        geoip_db_path: Optional[str] = None
-    ):
+        config -> None: SecurityConfig,
+        security_manager -> None: UltraAdvancedSecurityManager,
+        redis_client -> None: aioredis.Redis,
+        geoip_db_path -> None: Optional[str] = None
+    ) -> None:
         super().__init__(app)
         self.config = config
         self.security_manager = security_manager
@@ -23634,7 +23642,7 @@ class SecurityMiddleware(BaseHTTPMiddleware):
         # Logger
         self.logger = logger.bind(component="UltraAdvancedSecurityMiddleware")
     
-    async def dispatch(self, request: Request, call_next):
+    async def dispatch(self, request -> None: Request, call_next) -> None:
         """Main middleware dispatch method."""
         start_time = time.time()
         
@@ -24153,7 +24161,7 @@ class FactoryUsageExamples:
     """Comprehensive usage examples for different scenarios."""
     
     @staticmethod
-    async def example_1_basic_factory_setup():
+    async def example_1_basic_factory_setup() -> None:
         """Example 1: Basic factory setup with default configuration."""
         
         logger.info("=== Example 1: Basic Factory Setup ===")
@@ -24193,7 +24201,7 @@ class FactoryUsageExamples:
             raise
     
     @staticmethod
-    async def example_2_fortune_500_deployment():
+    async def example_2_fortune_500_deployment() -> None:
         """Example 2: Fortune 500 enterprise deployment with full features."""
         
         logger.info("=== Example 2: Fortune 500 Enterprise Deployment ===")
@@ -24321,7 +24329,7 @@ class FactoryUsageExamples:
             raise
     
     @staticmethod
-    async def example_3_manufacturing_workflow():
+    async def example_3_manufacturing_workflow() -> None:
         """Example 3: Advanced manufacturing workflow with quality control."""
         
         logger.info("=== Example 3: Advanced Manufacturing Workflow ===")
@@ -24441,7 +24449,7 @@ class FactoryUsageExamples:
             raise
     
     @staticmethod
-    async def example_4_monitoring_and_analytics():
+    async def example_4_monitoring_and_analytics() -> None:
         """Example 4: Comprehensive monitoring and analytics setup."""
         
         logger.info("=== Example 4: Monitoring and Analytics ===")
@@ -24473,7 +24481,7 @@ class FactoryUsageExamples:
                 alerting_engine.add_alert_rule(rule)
             
             # Add notification handler
-            async def alert_notification_handler(alert):
+            async def alert_notification_handler(alert) -> None:
                 logger.warning(
                     f"ALERT: {alert.alert_name}",
                     severity=alert.severity.value,
@@ -24557,7 +24565,7 @@ class FactoryUsageExamples:
             raise
     
     @staticmethod
-    async def example_5_cloud_native_deployment():
+    async def example_5_cloud_native_deployment() -> None:
         """Example 5: Cloud-native deployment with auto-scaling."""
         
         logger.info("=== Example 5: Cloud-Native Deployment ===")
@@ -24641,7 +24649,7 @@ class FactoryUsageExamples:
 class DeploymentOrchestrator:
     """Orchestrator for complete factory deployment scenarios."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.deployment_history = []
         self.active_deployments = {}
     
@@ -24846,7 +24854,7 @@ class DeploymentOrchestrator:
 
 # ================== MAIN DEMO FUNCTION ==================
 
-async def run_comprehensive_factory_demo():
+async def run_comprehensive_factory_demo() -> None:
     """Run comprehensive factory demonstration with all features."""
     
     logger.info("========================================")
@@ -24927,7 +24935,7 @@ __all__ = [
 
 # ================== QUICK START FUNCTION ==================
 
-async def quick_start_factory():
+async def quick_start_factory() -> None:
     """Quick start function for immediate factory usage."""
     
     logger.info("Quick Start: Enterprise Authentication Factory")
@@ -25096,7 +25104,7 @@ class SpotifyAudioFeatures:
 class SpotifyAuthManager:
     """Manages Spotify OAuth 2.0 authentication."""
     
-    def __init__(self, client_id: str, client_secret: str, redirect_uri: str, scope: str = None):
+    def __init__(self, client_id -> None: str, client_secret -> None: str, redirect_uri -> None: str, scope -> None: str = None) -> None:
         self.client_id = client_id
         self.client_secret = client_secret
         self.redirect_uri = redirect_uri
@@ -25247,7 +25255,7 @@ class SpotifyAuthManager:
 class SpotifyIntegration(BaseIntegration):
     """Ultra-advanced Spotify Web API integration."""
     
-    def __init__(self, config: IntegrationConfig, tenant_id: str):
+    def __init__(self, config -> None: IntegrationConfig, tenant_id -> None: str) -> None:
         super().__init__(config, tenant_id)
         
         # Extract configuration
@@ -25826,7 +25834,7 @@ class ComplianceRule:
 class SecurityEventCollector(BaseCollector):
     """Collecteur principal d'événements de sécurité."""
     
-    def __init__(self, config: CollectorConfig):
+    def __init__(self, config -> None: CollectorConfig) -> None:
         super().__init__(config)
         self.event_buffer = []
         self.threat_detector = ThreatDetector()
@@ -26039,7 +26047,7 @@ class SecurityEventCollector(BaseCollector):
 class ThreatDetector:
     """Détecteur de menaces avancé."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.known_threats = self._load_threat_signatures()
         self.ml_model = None  # Placeholder pour modèle ML
         
@@ -26223,7 +26231,7 @@ class ThreatDetector:
 class UserBehaviorAnalyzer:
     """Analyseur de comportement utilisateur."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.user_baselines = {}
         self.anomaly_threshold = 2.0  # Écart-type
         
@@ -26481,7 +26489,7 @@ class SuspiciousPatternDetector:
 class ComplianceCollector(BaseCollector):
     """Collecteur de compliance et audit."""
     
-    def __init__(self, config: CollectorConfig):
+    def __init__(self, config -> None: CollectorConfig) -> None:
         super().__init__(config)
         self.compliance_rules = self._load_compliance_rules()
         
@@ -27117,7 +27125,7 @@ class EnterpriseSecurityEvent:
 class EnterpriseCryptographicService:
     """Enterprise cryptographic service with quantum-resistant algorithms."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.encryption_keys: Dict[str, bytes] = {}
         self.key_rotation_schedule: Dict[str, datetime] = {}
         self.supported_algorithms = {
@@ -27131,7 +27139,7 @@ class EnterpriseCryptographicService:
         # Initialize default encryption keys
         asyncio.create_task(self._initialize_encryption_keys())
     
-    async def _initialize_encryption_keys(self):
+    async def _initialize_encryption_keys(self) -> None:
         """Initialize encryption keys for all supported algorithms."""
         
         # AES-256 key
@@ -27491,7 +27499,7 @@ class EnterpriseCryptographicService:
 class EnterpriseThreatDetectionEngine:
     """Advanced threat detection engine with machine learning capabilities."""
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client -> None: aioredis.Redis) -> None:
         self.redis_client = redis_client
         self.threat_models: Dict[str, Any] = {}
         self.behavioral_models: Dict[str, Any] = {}
@@ -27509,7 +27517,7 @@ class EnterpriseThreatDetectionEngine:
         # Initialize ML models
         asyncio.create_task(self._initialize_ml_models())
     
-    async def _initialize_ml_models(self):
+    async def _initialize_ml_models(self) -> None:
         """Initialize machine learning models for threat detection."""
         
         try:
@@ -27834,8 +27842,8 @@ class EnterpriseThreatDetectionEngine:
     
     async def update_behavioral_profile(
         self,
-        context: EnterpriseSecurityContext
-    ):
+        context -> None: EnterpriseSecurityContext
+    ) -> None:
         """Update user behavioral profile with new data."""
         
         try:
@@ -28138,7 +28146,7 @@ class FormattedSecurityReport:
 class BaseSecurityFormatter:
     """Base class for security event formatters."""
     
-    def __init__(self, tenant_id: str, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, tenant_id -> None: str, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.tenant_id = tenant_id
         self.config = config or {}
         self.logger = logger.bind(tenant_id=tenant_id, formatter=self.__class__.__name__)
@@ -30019,7 +30027,7 @@ logger = structlog.get_logger(__name__)
 class AuthenticationModuleConfig:
     """Comprehensive configuration for the authentication module."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         # Core configuration
         self.environment = os.getenv("ENVIRONMENT", "development")
         self.debug = os.getenv("DEBUG", "false").lower() == "true"
@@ -30118,7 +30126,7 @@ class AuthenticationModule:
     - Integration with enterprise identity providers
     """
     
-    def __init__(self, config: Optional[AuthenticationModuleConfig] = None):
+    def __init__(self, config -> None: Optional[AuthenticationModuleConfig] = None) -> None:
         self.config = config or AuthenticationModuleConfig()
         
         # Core components
@@ -30426,7 +30434,7 @@ class AuthenticationModule:
         
         # Add health check endpoints
         @app.get("/auth/health")
-        async def health_check():
+        async def health_check() -> None:
             """Health check endpoint."""
             try:
                 await self._run_health_checks()
@@ -30444,7 +30452,7 @@ class AuthenticationModule:
         
         # Add metrics endpoint
         @app.get("/auth/metrics")
-        async def get_metrics():
+        async def get_metrics() -> None:
             """Get authentication metrics."""
             if not self.config.metrics_enabled:
                 return {"error": "Metrics disabled"}
@@ -30453,7 +30461,7 @@ class AuthenticationModule:
         
         # Add status endpoint
         @app.get("/auth/status")
-        async def get_status():
+        async def get_status() -> None:
             """Get authentication module status."""
             return {
                 "initialized": self.initialized,
@@ -30963,7 +30971,7 @@ class SecurityConfig:
 class ThreatDetector:
     """AI-powered threat detection engine."""
     
-    def __init__(self, config: SecurityConfig):
+    def __init__(self, config -> None: SecurityConfig) -> None:
         self.config = config
         self.logger = logging.getLogger('ThreatDetector')
         
@@ -31332,7 +31340,7 @@ class ThreatDetector:
         else:
             return SecurityLevel.LOW
     
-    async def train_models(self, historical_data: Dict[str, List[Dict[str, Any]]]):
+    async def train_models(self, historical_data -> None: Dict[str, List[Dict[str, Any]]]) -> None:
         """Train ML models with historical data."""
         self.logger.info("Training threat detection models")
         
@@ -31374,7 +31382,7 @@ class ThreatDetector:
 class VulnerabilityScanner:
     """Comprehensive vulnerability scanner."""
     
-    def __init__(self, config: SecurityConfig):
+    def __init__(self, config -> None: SecurityConfig) -> None:
         self.config = config
         self.logger = logging.getLogger('VulnerabilityScanner')
         
@@ -31766,7 +31774,7 @@ class VulnerabilityScanner:
 class ComplianceValidator:
     """Compliance framework validator."""
     
-    def __init__(self, config: SecurityConfig):
+    def __init__(self, config -> None: SecurityConfig) -> None:
         self.config = config
         self.logger = logging.getLogger('ComplianceValidator')
         
@@ -31932,7 +31940,7 @@ class ComplianceValidator:
 class SecurityAuditor:
     """Ultra-advanced security auditor."""
     
-    def __init__(self, config_path: Optional[str] = None):
+    def __init__(self, config_path -> None: Optional[str] = None) -> None:
         """Initialize the security auditor."""
         self.config = self._load_config(config_path)
         self.logger = self._setup_logging()
@@ -31981,7 +31989,7 @@ class SecurityAuditor:
         
         return logger
     
-    async def start_monitoring(self):
+    async def start_monitoring(self) -> None:
         """Start security monitoring."""
         self.is_monitoring = True
         self.logger.info("Starting security monitoring")
@@ -32056,7 +32064,7 @@ class SecurityAuditor:
             }
         ]
     
-    async def _process_security_event(self, event: SecurityEvent):
+    async def _process_security_event(self, event -> None: SecurityEvent) -> None:
         """Process a security event."""
         self.logger.info(f"Processing security event: {event.title}")
         
@@ -32068,7 +32076,7 @@ class SecurityAuditor:
         if self.config.incident_notification:
             await self._send_security_notification(event)
     
-    async def _automated_response(self, event: SecurityEvent):
+    async def _automated_response(self, event -> None: SecurityEvent) -> None:
         """Perform automated response to security event."""
         response_actions = []
         
@@ -32094,7 +32102,7 @@ class SecurityAuditor:
         
         self.logger.info(f"Automated response executed: {response_actions}")
     
-    async def _send_security_notification(self, event: SecurityEvent):
+    async def _send_security_notification(self, event -> None: SecurityEvent) -> None:
         """Send security notification."""
         # In real implementation, this would send email/SMS/Slack notifications
         self.logger.warning(
@@ -32212,7 +32220,7 @@ class SecurityAuditor:
         
         return recommendations
     
-    def stop_monitoring(self):
+    def stop_monitoring(self) -> None:
         """Stop security monitoring."""
         self.is_monitoring = False
         self.logger.info("Security monitoring stopped")
@@ -32283,7 +32291,7 @@ if __name__ == "__main__":
     # Example usage
     import asyncio
     
-    async def main():
+    async def main() -> None:
         # Create security auditor
         auditor = SecurityAuditor()
         
@@ -32438,7 +32446,7 @@ class ContractAuditReport:
 class BlockchainSecurityManager:
     """Comprehensive blockchain security management system."""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """Initialize security manager."""
         self.config = config
         self.vulnerability_database: Dict[str, SecurityVulnerability] = {}
@@ -32452,7 +32460,7 @@ class BlockchainSecurityManager:
         self._initialize_threat_patterns()
         self._load_blacklisted_addresses()
     
-    def _initialize_threat_patterns(self):
+    def _initialize_threat_patterns(self) -> None:
         """Initialize known threat patterns."""
         self.threat_patterns = {
             "reentrancy": [
@@ -32486,7 +32494,7 @@ class BlockchainSecurityManager:
             ]
         }
     
-    def _load_blacklisted_addresses(self):
+    def _load_blacklisted_addresses(self) -> None:
         """Load known malicious addresses."""
         # In production, this would load from a threat intelligence database
         self.blacklisted_addresses = {
@@ -33117,7 +33125,7 @@ class BlockchainSecurityManager:
 class SmartContractAuditor:
     """Specialized smart contract auditing system."""
     
-    def __init__(self, security_manager: BlockchainSecurityManager):
+    def __init__(self, security_manager -> None: BlockchainSecurityManager) -> None:
         """Initialize contract auditor."""
         self.security_manager = security_manager
         self.audit_history: List[ContractAuditReport] = []
@@ -33244,13 +33252,13 @@ class SmartContractAuditor:
 class TransactionValidator:
     """Advanced transaction validation system."""
     
-    def __init__(self, security_manager: BlockchainSecurityManager):
+    def __init__(self, security_manager -> None: BlockchainSecurityManager) -> None:
         """Initialize transaction validator."""
         self.security_manager = security_manager
         self.validation_rules: Dict[str, Any] = {}
         self._initialize_validation_rules()
     
-    def _initialize_validation_rules(self):
+    def _initialize_validation_rules(self) -> None:
         """Initialize transaction validation rules."""
         self.validation_rules = {
             "max_gas_price": 1000000000000,  # 1000 Gwei
@@ -33290,13 +33298,13 @@ class TransactionValidator:
 class AntiMEVProtection:
     """Anti-MEV (Maximal Extractable Value) protection system."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize MEV protection system."""
         self.protected_transactions: Dict[str, Dict[str, Any]] = {}
         self.mev_patterns: List[str] = []
         self._initialize_mev_patterns()
     
-    def _initialize_mev_patterns(self):
+    def _initialize_mev_patterns(self) -> None:
         """Initialize known MEV patterns."""
         self.mev_patterns = [
             "sandwich_attack",
@@ -33504,7 +33512,7 @@ class SecurityIncident:
     mitigation_applied: bool
     investigation_status: str
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if not self.incident_id:
             # Generate unique incident ID
             content = f"{self.attack_type.value}_{self.detection_time.isoformat()}_{self.confidence_score}"
@@ -33539,7 +33547,7 @@ class SecurityAlertHandler:
     - Business impact assessment for creator platform security
     """
     
-    def __init__(self, alert_manager: AlertManager):
+    def __init__(self, alert_manager -> None: AlertManager) -> None:
         """
         Initialize security alert handler.
         
@@ -33778,7 +33786,7 @@ class SecurityAlertHandler:
             timestamp=datetime.now(timezone.utc)
         )
     
-    def _cleanup_old_metrics(self):
+    def _cleanup_old_metrics(self) -> None:
         """Clean up old security metrics to prevent memory bloat."""
         cutoff_time = datetime.now(timezone.utc) - timedelta(hours=72)  # Keep 3 days
         self.security_metrics_history = [
@@ -34129,7 +34137,7 @@ class SecurityAlertHandler:
         
         return alerts
     
-    def _update_threat_level(self, metrics: SecurityMetrics):
+    def _update_threat_level(self, metrics -> None: SecurityMetrics) -> None:
         """
         Update current threat level based on security metrics.
         
@@ -34159,7 +34167,7 @@ class SecurityAlertHandler:
         else:
             self.current_threat_level = SecurityThreatLevel.LOW
     
-    async def _assess_security_business_impact(self, metrics: SecurityMetrics, alerts: List[Alert]):
+    async def _assess_security_business_impact(self, metrics -> None: SecurityMetrics, alerts -> None: List[Alert]) -> None:
         """
         Assess security business impact on creator platform.
         
@@ -34440,7 +34448,7 @@ class ValidationConfig:
 class SecurityValidator:
     """Comprehensive security validation engine."""
     
-    def __init__(self, config: Optional[ValidationConfig] = None):
+    def __init__(self, config -> None: Optional[ValidationConfig] = None) -> None:
         """Initialize the security validator."""
         self.config = config or ValidationConfig()
         
@@ -34461,7 +34469,7 @@ class SecurityValidator:
         
         logger.info(f"Security validator initialized with {self.config.security_level.value} level")
     
-    def _load_security_patterns(self):
+    def _load_security_patterns(self) -> None:
         """Load security patterns for threat detection."""
         self.security_patterns = {
             'suspicious_urls': [
@@ -34483,7 +34491,7 @@ class SecurityValidator:
             ]
         }
     
-    def _load_threat_intelligence(self):
+    def _load_threat_intelligence(self) -> None:
         """Load threat intelligence data."""
         # This would typically load from external threat intelligence feeds
         self.threat_intelligence = {
@@ -34493,7 +34501,7 @@ class SecurityValidator:
             'malicious_patterns': []
         }
     
-    def _init_encryption(self):
+    def _init_encryption(self) -> None:
         """Initialize encryption capabilities."""
         try:
             # Generate a key for session encryption
@@ -34669,7 +34677,7 @@ class SecurityValidator:
             logger.warning(f"File hash calculation failed: {e}")
             return ""
     
-    async def _scan_malware(self, file_path: str, result: SecurityScanResult):
+    async def _scan_malware(self, file_path -> None: str, result -> None: SecurityScanResult) -> None:
         """Scan for malware and viruses."""
         try:
             malware_result = await self.malware_scanner.scan(file_path)
@@ -34692,7 +34700,7 @@ class SecurityValidator:
                 description=f"Malware scan error: {str(e)}"
             ))
     
-    async def _scan_content(self, file_path: str, result: SecurityScanResult):
+    async def _scan_content(self, file_path -> None: str, result -> None: SecurityScanResult) -> None:
         """Scan file content for security issues."""
         try:
             content_result = await self.content_scanner.scan(file_path, result.media_type)
@@ -34718,7 +34726,7 @@ class SecurityValidator:
                 description=f"Content scan error: {str(e)}"
             ))
     
-    async def _scan_privacy(self, file_path: str, result: SecurityScanResult):
+    async def _scan_privacy(self, file_path -> None: str, result -> None: SecurityScanResult) -> None:
         """Scan for privacy violations and PII exposure."""
         try:
             privacy_result = await self.privacy_scanner.scan(file_path, result.media_type)
@@ -34751,7 +34759,7 @@ class SecurityValidator:
                 description=f"Privacy scan error: {str(e)}"
             ))
     
-    async def _check_compliance(self, file_path: str, result: SecurityScanResult, user_context: Optional[Dict[str, Any]]):
+    async def _check_compliance(self, file_path -> None: str, result -> None: SecurityScanResult, user_context -> None: Optional[Dict[str, Any]]) -> None:
         """Check compliance with various standards."""
         try:
             compliance_result = await self.compliance_checker.check(
@@ -34780,7 +34788,7 @@ class SecurityValidator:
                 description=f"Compliance check error: {str(e)}"
             ))
     
-    async def _scan_metadata(self, file_path: str, result: SecurityScanResult):
+    async def _scan_metadata(self, file_path -> None: str, result -> None: SecurityScanResult) -> None:
         """Scan file metadata for security issues."""
         try:
             metadata_result = await self.metadata_scanner.scan(file_path)
@@ -34835,7 +34843,7 @@ class SecurityValidator:
         # File is considered safe with warnings
         return True, highest_threat
     
-    def _generate_recommendations(self, result: SecurityScanResult):
+    def _generate_recommendations(self, result -> None: SecurityScanResult) -> None:
         """Generate security recommendations based on scan results."""
         if not result.violations:
             result.recommendations.append("File passed all security checks")
@@ -34955,7 +34963,7 @@ class ContentScanner:
         
         return result
     
-    async def _scan_text_content(self, file_path: str, result: Dict[str, Any]):
+    async def _scan_text_content(self, file_path -> None: str, result -> None: Dict[str, Any]) -> None:
         """Scan text content for suspicious patterns."""
         try:
             with open(file_path, 'r', encoding='utf-8', errors='ignore') as f:
@@ -35010,12 +35018,12 @@ class ContentScanner:
         
         return len(base64_matches) > 5 or len(hex_matches) > 3
     
-    async def _scan_image_content(self, file_path: str, result: Dict[str, Any]):
+    async def _scan_image_content(self, file_path -> None: str, result -> None: Dict[str, Any]) -> None:
         """Scan image content for suspicious elements."""
         # This would implement image analysis for embedded content, steganography, etc.
         result['content_analysis'] = {'image_scan': 'placeholder'}
     
-    async def _scan_media_content(self, file_path: str, result: Dict[str, Any]):
+    async def _scan_media_content(self, file_path -> None: str, result -> None: Dict[str, Any]) -> None:
         """Scan audio/video content for suspicious elements."""
         # This would implement media analysis for embedded content, hidden data, etc.
         result['content_analysis'] = {'media_scan': 'placeholder'}
@@ -35053,7 +35061,7 @@ class PrivacyScanner:
         
         return result
     
-    async def _analyze_metadata_privacy(self, metadata_result, result: Dict[str, Any]):
+    async def _analyze_metadata_privacy(self, metadata_result, result -> None: Dict[str, Any]) -> None:
         """Analyze metadata for privacy violations."""
         if metadata_result.privacy_report['contains_pii']:
             result['pii_found'] = True
@@ -35074,7 +35082,7 @@ class PrivacyScanner:
                 result['pii_types'].append(identifier)
                 result['privacy_score'] += 0.1
     
-    async def _scan_text_pii(self, file_path: str, result: Dict[str, Any]):
+    async def _scan_text_pii(self, file_path -> None: str, result -> None: Dict[str, Any]) -> None:
         """Scan text content for PII."""
         try:
             with open(file_path, 'r', encoding='utf-8', errors='ignore') as f:
@@ -35893,7 +35901,7 @@ class SecurityService:
     access control, encryption, compliance monitoring, and incident response.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.redis_client = None
         self.cache = CacheManager()
         
@@ -35944,7 +35952,7 @@ class SecurityService:
             ]
         }
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize security service components"""
         try:
             self.redis_client = await aioredis.from_url(
@@ -36517,12 +36525,12 @@ class SecurityService:
         else:
             return ThreatLevel.LOW
     
-    async def _load_security_policies(self):
+    async def _load_security_policies(self) -> None:
         """Load security policies from database"""
         # This would load organizational security policies
         pass
     
-    async def _start_security_monitoring(self):
+    async def _start_security_monitoring(self) -> None:
         """Start background security monitoring tasks"""
         # This would start various monitoring tasks
         pass
@@ -36655,12 +36663,14 @@ from prometheus_client import Counter, Gauge
 logger = logging.getLogger(__name__)
 
 class ThreatLevel(Enum):
+    """ThreatLevel class implementation"""
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
 
 class AttackType(Enum):
+    """AttackType class implementation"""
     FIFTY_ONE_PERCENT = "51_percent_attack"
     DOUBLE_SPENDING = "double_spending"
     NOTHING_AT_STAKE = "nothing_at_stake"
@@ -36671,6 +36681,7 @@ class AttackType(Enum):
 
 @dataclass
 class SecurityEvent:
+    """SecurityEvent: class implementation"""
     event_id: str
     timestamp: datetime
     attack_type: AttackType
@@ -36684,6 +36695,7 @@ class SecurityEvent:
 
 @dataclass
 class SecurityMetrics:
+    """SecurityMetrics: class implementation"""
     timestamp: datetime
     attack_attempts: int
     blocked_attempts: int
@@ -36694,7 +36706,8 @@ class SecurityMetrics:
     security_score: float
 
 class SecurityMetrics:
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    """SecurityMetrics: class implementation"""
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.is_running = False
         
@@ -36717,7 +36730,7 @@ class SecurityMetrics:
             'max_consensus_deviation': 0.1
         }
 
-    async def start_monitoring(self):
+    async def start_monitoring(self) -> None:
         """Start security monitoring."""
         self.is_running = True
         
@@ -36731,11 +36744,11 @@ class SecurityMetrics:
         
         await asyncio.gather(*tasks, return_exceptions=True)
 
-    async def stop_monitoring(self):
+    async def stop_monitoring(self) -> None:
         """Stop security monitoring."""
         self.is_running = False
 
-    async def _monitor_attack_patterns(self):
+    async def _monitor_attack_patterns(self) -> None:
         """Monitor for known attack patterns."""
         while self.is_running:
             try:
@@ -36775,7 +36788,7 @@ class SecurityMetrics:
                 logger.error(f"Error monitoring attack patterns: {e}")
                 await asyncio.sleep(120)
 
-    async def _monitor_validator_behavior(self):
+    async def _monitor_validator_behavior(self) -> None:
         """Monitor validator behavior for suspicious activity."""
         while self.is_running:
             try:
@@ -36803,7 +36816,7 @@ class SecurityMetrics:
                 logger.error(f"Error monitoring validator behavior: {e}")
                 await asyncio.sleep(600)
 
-    async def _monitor_network_anomalies(self):
+    async def _monitor_network_anomalies(self) -> None:
         """Monitor network for anomalous patterns."""
         while self.is_running:
             try:
@@ -36834,7 +36847,7 @@ class SecurityMetrics:
                 logger.error(f"Error monitoring network anomalies: {e}")
                 await asyncio.sleep(360)
 
-    async def _calculate_security_scores(self):
+    async def _calculate_security_scores(self) -> None:
         """Calculate overall security scores."""
         while self.is_running:
             try:
@@ -36880,7 +36893,7 @@ class SecurityMetrics:
                 logger.error(f"Error calculating security scores: {e}")
                 await asyncio.sleep(600)
 
-    async def _detect_consensus_attacks(self):
+    async def _detect_consensus_attacks(self) -> None:
         """Detect attacks on consensus mechanisms."""
         while self.is_running:
             try:
@@ -36910,8 +36923,8 @@ class SecurityMetrics:
                 logger.error(f"Error detecting consensus attacks: {e}")
                 await asyncio.sleep(480)
 
-    async def _record_security_event(self, attack_type: AttackType, threat_level: ThreatLevel,
-                                   description: str, evidence: Dict[str, Any]):
+    async def _record_security_event(self, attack_type -> None: AttackType, threat_level -> None: ThreatLevel,
+                                   description -> None: str, evidence -> None: Dict[str, Any]) -> None:
         """Record a security event."""
         event = SecurityEvent(
             event_id=hashlib.sha256(f"{datetime.utcnow()}{description}".encode()).hexdigest()[:16],
@@ -37093,7 +37106,7 @@ class SecurityIncident:
     mitigation_applied: bool
     investigation_status: str
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if not self.incident_id:
             # Generate unique incident ID
             content = f"{self.attack_type.value}_{self.detection_time.isoformat()}_{self.confidence_score}"
@@ -37128,7 +37141,7 @@ class SecurityAlertHandler:
     - Business impact assessment for creator platform security
     """
     
-    def __init__(self, alert_manager: AlertManager):
+    def __init__(self, alert_manager -> None: AlertManager) -> None:
         """
         Initialize security alert handler.
         
@@ -37367,7 +37380,7 @@ class SecurityAlertHandler:
             timestamp=datetime.now(timezone.utc)
         )
     
-    def _cleanup_old_metrics(self):
+    def _cleanup_old_metrics(self) -> None:
         """Clean up old security metrics to prevent memory bloat."""
         cutoff_time = datetime.now(timezone.utc) - timedelta(hours=72)  # Keep 3 days
         self.security_metrics_history = [
@@ -37718,7 +37731,7 @@ class SecurityAlertHandler:
         
         return alerts
     
-    def _update_threat_level(self, metrics: SecurityMetrics):
+    def _update_threat_level(self, metrics -> None: SecurityMetrics) -> None:
         """
         Update current threat level based on security metrics.
         
@@ -37748,7 +37761,7 @@ class SecurityAlertHandler:
         else:
             self.current_threat_level = SecurityThreatLevel.LOW
     
-    async def _assess_security_business_impact(self, metrics: SecurityMetrics, alerts: List[Alert]):
+    async def _assess_security_business_impact(self, metrics -> None: SecurityMetrics, alerts -> None: List[Alert]) -> None:
         """
         Assess security business impact on creator platform.
         
@@ -38029,7 +38042,7 @@ class ValidationConfig:
 class SecurityValidator:
     """Comprehensive security validation engine."""
     
-    def __init__(self, config: Optional[ValidationConfig] = None):
+    def __init__(self, config -> None: Optional[ValidationConfig] = None) -> None:
         """Initialize the security validator."""
         self.config = config or ValidationConfig()
         
@@ -38050,7 +38063,7 @@ class SecurityValidator:
         
         logger.info(f"Security validator initialized with {self.config.security_level.value} level")
     
-    def _load_security_patterns(self):
+    def _load_security_patterns(self) -> None:
         """Load security patterns for threat detection."""
         self.security_patterns = {
             'suspicious_urls': [
@@ -38072,7 +38085,7 @@ class SecurityValidator:
             ]
         }
     
-    def _load_threat_intelligence(self):
+    def _load_threat_intelligence(self) -> None:
         """Load threat intelligence data."""
         # This would typically load from external threat intelligence feeds
         self.threat_intelligence = {
@@ -38082,7 +38095,7 @@ class SecurityValidator:
             'malicious_patterns': []
         }
     
-    def _init_encryption(self):
+    def _init_encryption(self) -> None:
         """Initialize encryption capabilities."""
         try:
             # Generate a key for session encryption
@@ -38258,7 +38271,7 @@ class SecurityValidator:
             logger.warning(f"File hash calculation failed: {e}")
             return ""
     
-    async def _scan_malware(self, file_path: str, result: SecurityScanResult):
+    async def _scan_malware(self, file_path -> None: str, result -> None: SecurityScanResult) -> None:
         """Scan for malware and viruses."""
         try:
             malware_result = await self.malware_scanner.scan(file_path)
@@ -38281,7 +38294,7 @@ class SecurityValidator:
                 description=f"Malware scan error: {str(e)}"
             ))
     
-    async def _scan_content(self, file_path: str, result: SecurityScanResult):
+    async def _scan_content(self, file_path -> None: str, result -> None: SecurityScanResult) -> None:
         """Scan file content for security issues."""
         try:
             content_result = await self.content_scanner.scan(file_path, result.media_type)
@@ -38307,7 +38320,7 @@ class SecurityValidator:
                 description=f"Content scan error: {str(e)}"
             ))
     
-    async def _scan_privacy(self, file_path: str, result: SecurityScanResult):
+    async def _scan_privacy(self, file_path -> None: str, result -> None: SecurityScanResult) -> None:
         """Scan for privacy violations and PII exposure."""
         try:
             privacy_result = await self.privacy_scanner.scan(file_path, result.media_type)
@@ -38340,7 +38353,7 @@ class SecurityValidator:
                 description=f"Privacy scan error: {str(e)}"
             ))
     
-    async def _check_compliance(self, file_path: str, result: SecurityScanResult, user_context: Optional[Dict[str, Any]]):
+    async def _check_compliance(self, file_path -> None: str, result -> None: SecurityScanResult, user_context -> None: Optional[Dict[str, Any]]) -> None:
         """Check compliance with various standards."""
         try:
             compliance_result = await self.compliance_checker.check(
@@ -38369,7 +38382,7 @@ class SecurityValidator:
                 description=f"Compliance check error: {str(e)}"
             ))
     
-    async def _scan_metadata(self, file_path: str, result: SecurityScanResult):
+    async def _scan_metadata(self, file_path -> None: str, result -> None: SecurityScanResult) -> None:
         """Scan file metadata for security issues."""
         try:
             metadata_result = await self.metadata_scanner.scan(file_path)
@@ -38424,7 +38437,7 @@ class SecurityValidator:
         # File is considered safe with warnings
         return True, highest_threat
     
-    def _generate_recommendations(self, result: SecurityScanResult):
+    def _generate_recommendations(self, result -> None: SecurityScanResult) -> None:
         """Generate security recommendations based on scan results."""
         if not result.violations:
             result.recommendations.append("File passed all security checks")
@@ -38544,7 +38557,7 @@ class ContentScanner:
         
         return result
     
-    async def _scan_text_content(self, file_path: str, result: Dict[str, Any]):
+    async def _scan_text_content(self, file_path -> None: str, result -> None: Dict[str, Any]) -> None:
         """Scan text content for suspicious patterns."""
         try:
             with open(file_path, 'r', encoding='utf-8', errors='ignore') as f:
@@ -38599,12 +38612,12 @@ class ContentScanner:
         
         return len(base64_matches) > 5 or len(hex_matches) > 3
     
-    async def _scan_image_content(self, file_path: str, result: Dict[str, Any]):
+    async def _scan_image_content(self, file_path -> None: str, result -> None: Dict[str, Any]) -> None:
         """Scan image content for suspicious elements."""
         # This would implement image analysis for embedded content, steganography, etc.
         result['content_analysis'] = {'image_scan': 'placeholder'}
     
-    async def _scan_media_content(self, file_path: str, result: Dict[str, Any]):
+    async def _scan_media_content(self, file_path -> None: str, result -> None: Dict[str, Any]) -> None:
         """Scan audio/video content for suspicious elements."""
         # This would implement media analysis for embedded content, hidden data, etc.
         result['content_analysis'] = {'media_scan': 'placeholder'}
@@ -38642,7 +38655,7 @@ class PrivacyScanner:
         
         return result
     
-    async def _analyze_metadata_privacy(self, metadata_result, result: Dict[str, Any]):
+    async def _analyze_metadata_privacy(self, metadata_result, result -> None: Dict[str, Any]) -> None:
         """Analyze metadata for privacy violations."""
         if metadata_result.privacy_report['contains_pii']:
             result['pii_found'] = True
@@ -38663,7 +38676,7 @@ class PrivacyScanner:
                 result['pii_types'].append(identifier)
                 result['privacy_score'] += 0.1
     
-    async def _scan_text_pii(self, file_path: str, result: Dict[str, Any]):
+    async def _scan_text_pii(self, file_path -> None: str, result -> None: Dict[str, Any]) -> None:
         """Scan text content for PII."""
         try:
             with open(file_path, 'r', encoding='utf-8', errors='ignore') as f:
@@ -39482,7 +39495,7 @@ class SecurityService:
     access control, encryption, compliance monitoring, and incident response.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.redis_client = None
         self.cache = CacheManager()
         
@@ -39533,7 +39546,7 @@ class SecurityService:
             ]
         }
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize security service components"""
         try:
             self.redis_client = await aioredis.from_url(
@@ -40106,12 +40119,12 @@ class SecurityService:
         else:
             return ThreatLevel.LOW
     
-    async def _load_security_policies(self):
+    async def _load_security_policies(self) -> None:
         """Load security policies from database"""
         # This would load organizational security policies
         pass
     
-    async def _start_security_monitoring(self):
+    async def _start_security_monitoring(self) -> None:
         """Start background security monitoring tasks"""
         # This would start various monitoring tasks
         pass
@@ -40244,12 +40257,14 @@ from prometheus_client import Counter, Gauge
 logger = logging.getLogger(__name__)
 
 class ThreatLevel(Enum):
+    """ThreatLevel class implementation"""
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
 
 class AttackType(Enum):
+    """AttackType class implementation"""
     FIFTY_ONE_PERCENT = "51_percent_attack"
     DOUBLE_SPENDING = "double_spending"
     NOTHING_AT_STAKE = "nothing_at_stake"
@@ -40260,6 +40275,7 @@ class AttackType(Enum):
 
 @dataclass
 class SecurityEvent:
+    """SecurityEvent: class implementation"""
     event_id: str
     timestamp: datetime
     attack_type: AttackType
@@ -40273,6 +40289,7 @@ class SecurityEvent:
 
 @dataclass
 class SecurityMetrics:
+    """SecurityMetrics: class implementation"""
     timestamp: datetime
     attack_attempts: int
     blocked_attempts: int
@@ -40283,7 +40300,8 @@ class SecurityMetrics:
     security_score: float
 
 class SecurityMetrics:
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    """SecurityMetrics: class implementation"""
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.is_running = False
         
@@ -40306,7 +40324,7 @@ class SecurityMetrics:
             'max_consensus_deviation': 0.1
         }
 
-    async def start_monitoring(self):
+    async def start_monitoring(self) -> None:
         """Start security monitoring."""
         self.is_running = True
         
@@ -40320,11 +40338,11 @@ class SecurityMetrics:
         
         await asyncio.gather(*tasks, return_exceptions=True)
 
-    async def stop_monitoring(self):
+    async def stop_monitoring(self) -> None:
         """Stop security monitoring."""
         self.is_running = False
 
-    async def _monitor_attack_patterns(self):
+    async def _monitor_attack_patterns(self) -> None:
         """Monitor for known attack patterns."""
         while self.is_running:
             try:
@@ -40364,7 +40382,7 @@ class SecurityMetrics:
                 logger.error(f"Error monitoring attack patterns: {e}")
                 await asyncio.sleep(120)
 
-    async def _monitor_validator_behavior(self):
+    async def _monitor_validator_behavior(self) -> None:
         """Monitor validator behavior for suspicious activity."""
         while self.is_running:
             try:
@@ -40392,7 +40410,7 @@ class SecurityMetrics:
                 logger.error(f"Error monitoring validator behavior: {e}")
                 await asyncio.sleep(600)
 
-    async def _monitor_network_anomalies(self):
+    async def _monitor_network_anomalies(self) -> None:
         """Monitor network for anomalous patterns."""
         while self.is_running:
             try:
@@ -40423,7 +40441,7 @@ class SecurityMetrics:
                 logger.error(f"Error monitoring network anomalies: {e}")
                 await asyncio.sleep(360)
 
-    async def _calculate_security_scores(self):
+    async def _calculate_security_scores(self) -> None:
         """Calculate overall security scores."""
         while self.is_running:
             try:
@@ -40469,7 +40487,7 @@ class SecurityMetrics:
                 logger.error(f"Error calculating security scores: {e}")
                 await asyncio.sleep(600)
 
-    async def _detect_consensus_attacks(self):
+    async def _detect_consensus_attacks(self) -> None:
         """Detect attacks on consensus mechanisms."""
         while self.is_running:
             try:
@@ -40499,8 +40517,8 @@ class SecurityMetrics:
                 logger.error(f"Error detecting consensus attacks: {e}")
                 await asyncio.sleep(480)
 
-    async def _record_security_event(self, attack_type: AttackType, threat_level: ThreatLevel,
-                                   description: str, evidence: Dict[str, Any]):
+    async def _record_security_event(self, attack_type -> None: AttackType, threat_level -> None: ThreatLevel,
+                                   description -> None: str, evidence -> None: Dict[str, Any]) -> None:
         """Record a security event."""
         event = SecurityEvent(
             event_id=hashlib.sha256(f"{datetime.utcnow()}{description}".encode()).hexdigest()[:16],
@@ -40591,7 +40609,7 @@ class SessionManager:
     """
     Gère les sessions utilisateur (création, validation, expiration, suppression).
     """
-    def __init__(self):
+    def __init__(self) -> None:
         self.sessions = {}  # À remplacer par Redis/DB en prod
 
     def create_session(self, user_id: str, expires_in: int = 3600) -> str:
@@ -40614,7 +40632,7 @@ class SessionManager:
             return None
         return session
 
-    def delete_session(self, session_id: str):
+    def delete_session(self, session_id -> None: str) -> None:
         """
         Supprime une session (logout, RGPD).
         """
@@ -40649,7 +40667,7 @@ class JWTManager:
     """
     Gère la création, validation et rotation des tokens JWT.
     """
-    def __init__(self, secret: str, algorithm: str = "HS256"):
+    def __init__(self, secret -> None: str, algorithm -> None: str = "HS256") -> None:
         self.secret = secret
         self.algorithm = algorithm
         self.blacklist = set()
@@ -40675,7 +40693,7 @@ class JWTManager:
         except jwt.InvalidTokenError:
             return None
 
-    def blacklist_token(self, token: str):
+    def blacklist_token(self, token -> None: str) -> None:
         """
         Ajoute un token à la blacklist (logout, révocation).
         """
@@ -40708,7 +40726,7 @@ class OAuth2Handler:
     """
     Gère le flow OAuth2 complet pour plusieurs providers.
     """
-    def __init__(self, client_configs: Dict[str, Any]):
+    def __init__(self, client_configs -> None: Dict[str, Any]) -> None:
         self.client_configs = client_configs
 
     def get_authorization_url(self, provider: str, state: str) -> str:
@@ -40762,7 +40780,7 @@ class Authenticator:
     """
     Gère l’authentification utilisateur multi-provider (Spotify, Auth0, etc.).
     """
-    def __init__(self, user_db=None):
+    def __init__(self, user_db=None) -> None:
         self.user_db = user_db  # Connexion à la base utilisateurs
 
     def authenticate(self, username: str, password: str) -> Optional[Dict[str, Any]]:
@@ -40850,7 +40868,7 @@ class ContextManager:
     """
     Gère le contexte global de session, utilisateur et API pour l’agent IA.
     """
-    def __init__(self):
+    def __init__(self) -> None:
         self.sessions = {}
 
     def start_session(self, user_id: str) -> str:
@@ -40863,7 +40881,7 @@ class ContextManager:
         """Récupère le contexte de session."""
         return self.sessions.get(session_id)
 
-    def end_session(self, session_id: str):
+    def end_session(self, session_id -> None: str) -> None:
         """Termine la session (audit, conformité)."""
         if session_id in self.sessions:
             del self.sessions[session_id]
@@ -41331,7 +41349,7 @@ ENTERPRISE_MIDDLEWARE_METRICS = {
 }
 
 # Factory functions pour créer les stacks middleware
-def create_middleware_stack(environment: str = "production"):
+def create_middleware_stack(environment -> None: str = "production") -> None:
     """Créer un stack de middleware pour un environnement donné"""
     if environment not in MIDDLEWARE_STACKS:
         raise ValueError(f"Environnement non supporté: {environment}")
@@ -41347,7 +41365,7 @@ def create_middleware_stack(environment: str = "production"):
     return middleware_stack
 
 
-def apply_middleware_to_app(app, environment: str = "production"):
+def apply_middleware_to_app(app, environment -> None: str = "production") -> None:
     """Appliquer tous les middleware à une application FastAPI"""
     middleware_stack = create_middleware_stack(environment)
     
@@ -41357,7 +41375,7 @@ def apply_middleware_to_app(app, environment: str = "production"):
 
 
 # Utilitaires de configuration
-def get_middleware_config(environment: str, middleware_name: str):
+def get_middleware_config(environment -> None: str, middleware_name -> None: str) -> None:
     """Obtenir la configuration d'un middleware spécifique"""
     config = ENTERPRISE_MIDDLEWARE_CONFIG.get(environment, {})
     return config.get(middleware_name, {})
@@ -41724,7 +41742,7 @@ class UserBehaviorProfile:
     created_at: datetime = field(default_factory=datetime.utcnow)
     updated_at: datetime = field(default_factory=datetime.utcnow)
     
-    def update_activity(self, ip: str, user_agent: str, endpoint: str, timestamp: datetime):
+    def update_activity(self, ip -> None: str, user_agent -> None: str, endpoint -> None: str, timestamp -> None: datetime) -> None:
         """Met à jour l'activité utilisateur"""
         self.usual_ips.add(ip)
         self.usual_user_agents.add(user_agent)
@@ -41787,7 +41805,7 @@ class ComplianceRule:
 class ThreatDetectionEngine:
     """Moteur de détection de menaces"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = get_logger("threat_detection")
         self.threat_indicators: Dict[str, ThreatIndicator] = {}
         self.user_profiles: Dict[str, UserBehaviorProfile] = {}
@@ -41805,7 +41823,7 @@ class ThreatDetectionEngine:
         except:
             self.logger.warning("Base GeoIP non disponible")
     
-    def _load_detection_patterns(self):
+    def _load_detection_patterns(self) -> None:
         """Charge les patterns de détection"""
         # Patterns SQL Injection
         sql_patterns = [
@@ -41838,7 +41856,7 @@ class ThreatDetectionEngine:
         all_patterns = sql_patterns + xss_patterns + path_traversal_patterns
         self.blocked_patterns = [re.compile(pattern, re.IGNORECASE) for pattern in all_patterns]
     
-    def add_threat_indicator(self, indicator: ThreatIndicator):
+    def add_threat_indicator(self, indicator -> None: ThreatIndicator) -> None:
         """Ajoute un indicateur de menace"""
         key = f"{indicator.ioc_type}:{indicator.value}"
         self.threat_indicators[key] = indicator
@@ -41912,7 +41930,7 @@ class ThreatDetectionEngine:
         
         return threats
     
-    def update_user_behavior(self, user_id: str, ip: str, user_agent: str, endpoint: str, timestamp: datetime):
+    def update_user_behavior(self, user_id -> None: str, ip -> None: str, user_agent -> None: str, endpoint -> None: str, timestamp -> None: datetime) -> None:
         """Met à jour le profil comportemental utilisateur"""
         if user_id not in self.user_profiles:
             self.user_profiles[user_id] = UserBehaviorProfile(user_id=user_id)
@@ -41951,12 +41969,12 @@ class ThreatDetectionEngine:
         """Vérifie si une IP est bloquée"""
         return ip in self.blocked_ips
     
-    def block_ip(self, ip: str, reason: str = ""):
+    def block_ip(self, ip -> None: str, reason -> None: str = "") -> None:
         """Bloque une IP"""
         self.blocked_ips.add(ip)
         self.logger.warning(f"IP bloquée: {ip} - Raison: {reason}")
     
-    def unblock_ip(self, ip: str):
+    def unblock_ip(self, ip -> None: str) -> None:
         """Débloque une IP"""
         self.blocked_ips.discard(ip)
         self.logger.info(f"IP débloquée: {ip}")
@@ -41965,7 +41983,7 @@ class ThreatDetectionEngine:
 class ComplianceMonitor:
     """Moniteur de conformité"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = get_logger("compliance_monitor")
         self.rules: Dict[str, ComplianceRule] = {}
         self.violations: List[Dict[str, Any]] = []
@@ -41979,7 +41997,7 @@ class ComplianceMonitor:
         
         self._setup_default_rules()
     
-    def _setup_default_rules(self):
+    def _setup_default_rules(self) -> None:
         """Configure les règles par défaut"""
         rules = [
             ComplianceRule(
@@ -42082,7 +42100,7 @@ class ComplianceMonitor:
 class SecurityAuditLogger:
     """Logger d'audit de sécurité"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = get_logger("security_audit")
         self.events: deque = deque(maxlen=100000)  # Garder les 100k derniers événements
         self.siem_endpoints: List[str] = []
@@ -42092,7 +42110,7 @@ class SecurityAuditLogger:
         if hasattr(settings, 'SIEM_ENDPOINTS'):
             self.siem_endpoints = settings.SIEM_ENDPOINTS
     
-    def log_security_event(self, event: SecurityEvent):
+    def log_security_event(self, event -> None: SecurityEvent) -> None:
         """Logue un événement de sécurité"""
         self.events.append(event)
         
@@ -42121,7 +42139,7 @@ class SecurityAuditLogger:
         # Envoyer vers SIEM si configuré
         asyncio.create_task(self._send_to_siem(event))
     
-    async def _send_to_siem(self, event: SecurityEvent):
+    async def _send_to_siem(self, event -> None: SecurityEvent) -> None:
         """Envoie l'événement vers les systèmes SIEM"""
         if not self.siem_endpoints:
             return
@@ -42167,10 +42185,10 @@ class AdvancedSecurityAuditMiddleware:
     """Middleware d'audit de sécurité avancé"""
     
     def __init__(self, 
-                 enable_threat_detection: bool = True,
-                 enable_behavioral_analysis: bool = True,
-                 enable_compliance_monitoring: bool = True,
-                 block_suspicious_ips: bool = True):
+                 enable_threat_detection -> None: bool = True,
+                 enable_behavioral_analysis -> None: bool = True,
+                 enable_compliance_monitoring -> None: bool = True,
+                 block_suspicious_ips -> None: bool = True) -> None:
         
         self.enable_threat_detection = enable_threat_detection
         self.enable_behavioral_analysis = enable_behavioral_analysis
@@ -42202,7 +42220,7 @@ class AdvancedSecurityAuditMiddleware:
         
         self._initialized = False
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialise le middleware"""
         if self._initialized:
             return
@@ -42219,7 +42237,7 @@ class AdvancedSecurityAuditMiddleware:
             self.logger.error(f"Erreur initialisation sécurité: {e}")
             raise
     
-    async def __call__(self, request: Request, call_next):
+    async def __call__(self, request -> None: Request, call_next) -> None:
         """Traite la requête avec audit de sécurité"""
         if not self._initialized:
             await self.initialize()
@@ -42412,7 +42430,7 @@ class AdvancedSecurityAuditMiddleware:
             self.logger.error(f"Erreur vérifications sécurité: {e}")
             return {"block": False, "reason": "", "details": {}, "risk_score": 0, "indicators": []}
     
-    async def _check_rate_limiting(self, client_ip: str, result: Dict[str, Any]):
+    async def _check_rate_limiting(self, client_ip -> None: str, result -> None: Dict[str, Any]) -> None:
         """Vérifie le rate limiting pour détecter les attaques"""
         now = datetime.utcnow()
         
@@ -42444,7 +42462,7 @@ class AdvancedSecurityAuditMiddleware:
                 if self.threat_engine:
                     self.threat_engine.block_ip(client_ip, f"Rate limit exceeded: {count_1min} req/min")
     
-    async def _post_process_analysis(self, request: Request, response: Response, client_ip: str, user_agent: str, start_time: float):
+    async def _post_process_analysis(self, request -> None: Request, response -> None: Response, client_ip -> None: str, user_agent -> None: str, start_time -> None: float) -> None:
         """Analyse post-traitement de la requête"""
         try:
             duration = time.time() - start_time
@@ -42513,7 +42531,7 @@ class AdvancedSecurityAuditMiddleware:
         except Exception as e:
             self.logger.error(f"Erreur analyse post-traitement: {e}")
     
-    async def _analyze_exception(self, request: Request, exception: Exception, client_ip: str, user_agent: str):
+    async def _analyze_exception(self, request -> None: Request, exception -> None: Exception, client_ip -> None: str, user_agent -> None: str) -> None:
         """Analyse les exceptions pour des indicateurs de sécurité"""
         try:
             # Créer un événement pour l'exception
@@ -42551,7 +42569,7 @@ class AdvancedSecurityAuditMiddleware:
         except Exception as e:
             self.logger.error(f"Erreur analyse exception: {e}")
     
-    async def _load_threat_intelligence(self):
+    async def _load_threat_intelligence(self) -> None:
         """Charge les indicateurs de menace depuis des sources externes"""
         try:
             # Ici on pourrait charger depuis:
@@ -42623,7 +42641,7 @@ class AdvancedSecurityAuditMiddleware:
             self.logger.error(f"Erreur dashboard sécurité: {e}")
             return {"error": str(e)}
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Arrête proprement le middleware"""
         try:
             self.logger.info("Arrêt du middleware d'audit de sécurité")
@@ -42753,7 +42771,7 @@ class AuthenticationMiddleware(BaseHTTPMiddleware):
     - Logging sécurisé
     """
     
-    def __init__(self, app, redis_client: Optional[redis.Redis] = None):
+    def __init__(self, app, redis_client -> None: Optional[redis.Redis] = None) -> None:
         super().__init__(app)
         self.redis_client = redis_client or redis.from_url(
             settings.REDIS_URL,
@@ -42774,7 +42792,7 @@ class AuthenticationMiddleware(BaseHTTPMiddleware):
             "/admin", "/users/all", "/system/config"
         }
 
-    async def dispatch(self, request: Request, call_next):
+    async def dispatch(self, request -> None: Request, call_next) -> None:
         """Point d'entrée principal du middleware"""
         start_time = time.time()
         
@@ -42930,7 +42948,7 @@ class AuthenticationMiddleware(BaseHTTPMiddleware):
             return json.loads(session_data)
         return None
 
-    async def _check_permissions(self, request: Request, auth_data: AuthTokenData):
+    async def _check_permissions(self, request -> None: Request, auth_data -> None: AuthTokenData) -> None:
         """Vérifier les permissions d'accès"""
         path = request.url.path
         
@@ -42972,7 +42990,7 @@ class AuthenticationMiddleware(BaseHTTPMiddleware):
         
         return permission_map.get(method, {}).get(path)
 
-    async def _check_rate_limit(self, user_id: str):
+    async def _check_rate_limit(self, user_id -> None: str) -> None:
         """Limitation de taux par utilisateur"""
         current_minute = int(time.time() // 60)
         rate_key = f"rate_limit:{user_id}:{current_minute}"
@@ -42988,7 +43006,7 @@ class AuthenticationMiddleware(BaseHTTPMiddleware):
         await self.redis_client.incr(rate_key)
         await self.redis_client.expire(rate_key, 60)
 
-    async def _update_session_activity(self, auth_data: AuthTokenData):
+    async def _update_session_activity(self, auth_data -> None: AuthTokenData) -> None:
         """Mettre à jour l'activité de la session"""
         session_key = f"session:{auth_data.session_id}"
         session_info = await self.redis_client.get(session_key)
@@ -43004,7 +43022,7 @@ class AuthenticationMiddleware(BaseHTTPMiddleware):
                 json.dumps(session_data)
             )
 
-    async def _log_user_activity(self, request: Request, auth_data: AuthTokenData):
+    async def _log_user_activity(self, request -> None: Request, auth_data -> None: AuthTokenData) -> None:
         """Logger l'activité utilisateur"""
         activity_data = {
             "user_id": auth_data.user_id,
@@ -43020,7 +43038,7 @@ class AuthenticationMiddleware(BaseHTTPMiddleware):
         await self.redis_client.lpush(activity_key, json.dumps(activity_data))
         await self.redis_client.expire(activity_key, timedelta(days=7))
 
-    async def _log_auth_failure(self, request: Request, error_msg: str):
+    async def _log_auth_failure(self, request -> None: Request, error_msg -> None: str) -> None:
         """Enregistrer les échecs d'authentification"""
         failure_data = {
             "ip_address": self._get_client_ip(request),
@@ -43038,7 +43056,7 @@ class AuthenticationMiddleware(BaseHTTPMiddleware):
         # Vérifier si l'IP doit être bloquée
         await self._check_and_block_suspicious_ip(failure_data["ip_address"])
 
-    async def _check_and_block_suspicious_ip(self, ip_address: str):
+    async def _check_and_block_suspicious_ip(self, ip_address -> None: str) -> None:
         """Vérifier et bloquer les IP suspectes"""
         failure_key = f"auth_failures:{ip_address}"
         failure_count = await self.redis_client.llen(failure_key)
@@ -43054,7 +43072,7 @@ class AuthenticationMiddleware(BaseHTTPMiddleware):
             
             logger.warning(f"IP {ip_address} bloquée pour activité suspecte")
 
-    def _add_security_headers(self, response: Response, auth_data: AuthTokenData):
+    def _add_security_headers(self, response -> None: Response, auth_data -> None: AuthTokenData) -> None:
         """Ajouter des headers de sécurité"""
         response.headers["X-Content-Type-Options"] = "nosniff"
         response.headers["X-Frame-Options"] = "DENY"
@@ -43063,8 +43081,8 @@ class AuthenticationMiddleware(BaseHTTPMiddleware):
         response.headers["X-User-ID"] = auth_data.user_id
         response.headers["X-Session-ID"] = auth_data.session_id
 
-    async def _record_metrics(self, request: Request, response: Response, 
-                            start_time: float, auth_data: AuthTokenData):
+    async def _record_metrics(self, request -> None: Request, response -> None: Response, 
+                            start_time -> None: float, auth_data -> None: AuthTokenData) -> None:
         """Enregistrer les métriques d'authentification"""
         duration = time.time() - start_time
         
@@ -43093,7 +43111,7 @@ class AuthenticationMiddleware(BaseHTTPMiddleware):
         await self.redis_client.lpush(metrics_key, json.dumps(metrics_data))
         await self.redis_client.expire(metrics_key, timedelta(days=1))
 
-    async def _log_request(self, request: Request, response: Response, start_time: float):
+    async def _log_request(self, request -> None: Request, response -> None: Response, start_time -> None: float) -> None:
         """Logger les requêtes publiques"""
         duration = time.time() - start_time
         logger.info(
@@ -43120,7 +43138,7 @@ class SpotifyAuthMiddleware:
     Gestion OAuth2 et tokens Spotify
     """
     
-    def __init__(self, redis_client: Optional[redis.Redis] = None):
+    def __init__(self, redis_client -> None: Optional[redis.Redis] = None) -> None:
         self.redis_client = redis_client or redis.from_url(
             settings.REDIS_URL,
             encoding="utf-8", 
@@ -43352,10 +43370,10 @@ class RoleBasedAuthMiddleware:
         return user_level >= required_level
 
     @classmethod
-    def require_role(cls, required_role: str):
+    def require_role(cls, required_role -> None: str) -> None:
         """Décorateur pour exiger un rôle spécifique"""
-        def decorator(func):
-            async def wrapper(request: Request, *args, **kwargs):
+        def decorator(func) -> None:
+            async def wrapper(request -> None: Request, *args, **kwargs) -> None:
                 if not hasattr(request.state, "auth_data"):
                     raise HTTPException(
                         status_code=status.HTTP_401_UNAUTHORIZED,
@@ -43380,7 +43398,7 @@ class APIKeyAuthMiddleware:
     Pour les intégrations externes et services
     """
     
-    def __init__(self, redis_client: Optional[redis.Redis] = None):
+    def __init__(self, redis_client -> None: Optional[redis.Redis] = None) -> None:
         self.redis_client = redis_client or redis.from_url(
             settings.REDIS_URL,
             encoding="utf-8",
@@ -43462,31 +43480,40 @@ class APIKeyAuthMiddleware:
 from .base_exceptions import SecurityException
 
 class AuthenticationError(SecurityException):
-    def __init__(self, message="Erreur d'authentification", code=401, details=None, locale="fr"):
+    """AuthenticationError class implementation"""
+    def __init__(self, message="Erreur d'authentification", code=401, details=None, locale="fr") -> None:
         super().__init__(message, code, details, locale)
 
 class AuthorizationError(SecurityException):
-    def __init__(self, message="Non autorisé", code=403, details=None, locale="fr"):
+    """AuthorizationError class implementation"""
+    def __init__(self, message="Non autorisé", code=403, details=None, locale="fr") -> None:
         super().__init__(message, code, details, locale)
 
 class RateLimitExceededError(SecurityException):
-    def __init__(self, message="Trop de requêtes", code=429, details=None, locale="fr"):
+    """RateLimitExceededError class implementation"""
+    def __init__(self, message="Trop de requêtes", code=429, details=None, locale="fr") -> None:
         super().__init__(message, code, details, locale)
 
 class SecurityViolationError(SecurityException):
-    def __init__(self, message="Violation de sécurité", code=403, details=None, locale="fr"):
+    """SecurityViolationError class implementation"""
+    def __init__(self, message="Violation de sécurité", code=403, details=None, locale="fr") -> None:
         super().__init__(message, code, details, locale)
 
 # Compatibilité avec les anciennes exceptions
 class AuthException(AuthenticationError):
+    """AuthException class implementation"""
     pass
 class InvalidTokenException(AuthenticationError):
+    """InvalidTokenException class implementation"""
     pass
 class PermissionDeniedException(AuthorizationError):
+    """PermissionDeniedException class implementation"""
     pass
 class MFARequiredException(AuthenticationError):
+    """MFARequiredException class implementation"""
     pass
 class OAuthException(AuthenticationError):
+    """OAuthException class implementation"""
     pass
 
 __all__ = [
@@ -43577,7 +43604,7 @@ class APIResponse:
 class RateLimiter:
     """Token bucket rate limiter"""
     
-    def __init__(self, requests_per_second: float = 10.0, burst_capacity: int = 50):
+    def __init__(self, requests_per_second -> None: float = 10.0, burst_capacity -> None: int = 50) -> None:
         self.requests_per_second = requests_per_second
         self.tokens = burst_capacity
         self.capacity = burst_capacity
@@ -43601,7 +43628,7 @@ class RateLimiter:
             
             return False
     
-    async def wait_for_token(self):
+    async def wait_for_token(self) -> None:
         """Wait until token is available"""
         while not await self.acquire():
             await asyncio.sleep(0.1)
@@ -43609,7 +43636,7 @@ class RateLimiter:
 class BaseAPIConnector:
     """Base API connector with common functionality"""
     
-    def __init__(self, name: str, base_url: str, credentials: APICredentials):
+    def __init__(self, name -> None: str, base_url -> None: str, credentials -> None: APICredentials) -> None:
         self.name = name
         self.base_url = base_url.rstrip('/')
         self.credentials = credentials
@@ -43623,12 +43650,12 @@ class BaseAPIConnector:
             'total_response_time': 0.0
         }
         
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize connector"""
         timeout = aiohttp.ClientTimeout(total=60)
         self.session = aiohttp.ClientSession(timeout=timeout)
         
-    async def cleanup(self):
+    async def cleanup(self) -> None:
         """Cleanup resources"""
         if self.session:
             await self.session.close()
@@ -43708,7 +43735,7 @@ class BaseAPIConnector:
         
         return headers
     
-    def _update_metrics(self, status_code: int, response_time: float, success: bool):
+    def _update_metrics(self, status_code -> None: int, response_time -> None: float, success -> None: bool) -> None:
         """Update connector metrics"""
         self.metrics['total_requests'] += 1
         self.metrics['total_response_time'] += response_time
@@ -43734,7 +43761,7 @@ class BaseAPIConnector:
 class SlackConnector(BaseAPIConnector):
     """Slack API connector"""
     
-    def __init__(self, token: str):
+    def __init__(self, token -> None: str) -> None:
         credentials = APICredentials(
             auth_type=AuthType.BEARER_TOKEN,
             bearer_token=token
@@ -43762,7 +43789,7 @@ class SlackConnector(BaseAPIConnector):
 class WebhookConnector(BaseAPIConnector):
     """Generic webhook connector"""
     
-    def __init__(self, webhook_url: str):
+    def __init__(self, webhook_url -> None: str) -> None:
         from urllib.parse import urlparse
         parsed = urlparse(webhook_url)
         base_url = f"{parsed.scheme}://{parsed.netloc}"
@@ -43784,11 +43811,11 @@ class WebhookConnector(BaseAPIConnector):
 class ExternalAPIManager:
     """Manager for external API integrations"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.connectors: Dict[str, BaseAPIConnector] = {}
         
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize all connectors"""
         # Initialize Slack if configured
         slack_config = self.config.get('slack')
@@ -43832,7 +43859,7 @@ class ExternalAPIManager:
         """Get metrics from all connectors"""
         return {name: connector.get_metrics() for name, connector in self.connectors.items()}
     
-    async def cleanup(self):
+    async def cleanup(self) -> None:
         """Cleanup all connectors"""
         for connector in self.connectors.values():
             await connector.cleanup()
@@ -43934,7 +43961,7 @@ class AbstractAuthenticationFactory(ABC):
 class EnterpriseAuthenticationFactory(AbstractAuthenticationFactory):
     """Enterprise-grade authentication factory."""
     
-    def __init__(self, environment: str = "production"):
+    def __init__(self, environment -> None: str = "production") -> None:
         self.environment = environment
         self.quality_gates = EnterpriseQualityGates()
         
@@ -44022,7 +44049,7 @@ class EnterpriseAuthenticationFactory(AbstractAuthenticationFactory):
 class CloudAuthenticationFactory(AbstractAuthenticationFactory):
     """Cloud-optimized authentication factory."""
     
-    def __init__(self, cloud_provider: str = "aws"):
+    def __init__(self, cloud_provider -> None: str = "aws") -> None:
         self.cloud_provider = cloud_provider
         self.quality_gates = CloudQualityGates()
     
@@ -44101,7 +44128,7 @@ class CloudAuthenticationFactory(AbstractAuthenticationFactory):
 class AuthenticationSystemBuilder:
     """Builder for creating complex authentication systems."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.config = {}
         self.components = {}
         self.middleware = []
@@ -44186,7 +44213,7 @@ class AuthenticationSystemBuilder:
         
         return system
     
-    async def _validate_configuration(self):
+    async def _validate_configuration(self) -> None:
         """Validate builder configuration."""
         
         required_components = [
@@ -44199,7 +44226,7 @@ class AuthenticationSystemBuilder:
             if component not in self.config:
                 raise ValueError(f"Required component '{component}' not configured")
     
-    async def _run_quality_checks(self):
+    async def _run_quality_checks(self) -> None:
         """Run all quality checks."""
         
         for check in self.quality_checks:
@@ -44216,11 +44243,11 @@ class AuthenticationSystemBuilder:
 class AuthenticationPrototypeRegistry:
     """Registry for authentication object prototypes."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.prototypes: Dict[str, FactoryProductProtocol] = {}
         self._lock = threading.RLock()
     
-    def register_prototype(self, name: str, prototype: FactoryProductProtocol):
+    def register_prototype(self, name -> None: str, prototype -> None: FactoryProductProtocol) -> None:
         """Register a prototype object."""
         with self._lock:
             self.prototypes[name] = prototype
@@ -44266,7 +44293,7 @@ class AuthenticationPrototypeRegistry:
             # Use standard deep copy
             return copy.deepcopy(obj)
     
-    async def _apply_customizations(self, obj: FactoryProductProtocol, customizations: Dict[str, Any]):
+    async def _apply_customizations(self, obj -> None: FactoryProductProtocol, customizations -> None: Dict[str, Any]) -> None:
         """Apply customizations to cloned object."""
         
         for attr_name, attr_value in customizations.items():
@@ -44280,7 +44307,7 @@ class AuthenticationPrototypeRegistry:
         with self._lock:
             return list(self.prototypes.keys())
     
-    def remove_prototype(self, name: str):
+    def remove_prototype(self, name -> None: str) -> None:
         """Remove a prototype from registry."""
         with self._lock:
             if name in self.prototypes:
@@ -44291,7 +44318,7 @@ class AuthenticationPrototypeRegistry:
 class PrototypeFactory(AbstractFactory):
     """Factory that uses prototypes for object creation."""
     
-    def __init__(self, specification: FactoryProductSpecification):
+    def __init__(self, specification -> None: FactoryProductSpecification) -> None:
         super().__init__(specification)
         self.registry = AuthenticationPrototypeRegistry()
         self._setup_default_prototypes()
@@ -44343,7 +44370,7 @@ class PrototypeFactory(AbstractFactory):
         
         return valid_products
     
-    def _setup_default_prototypes(self):
+    def _setup_default_prototypes(self) -> None:
         """Setup default authentication prototypes."""
         
         # This would be populated with actual prototype instances
@@ -44374,23 +44401,23 @@ class PrototypeFactory(AbstractFactory):
 class DependencyContainer:
     """IoC container for dependency injection."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.services: Dict[str, Any] = {}
         self.factories: Dict[str, Callable] = {}
         self.singletons: Dict[str, Any] = {}
         self._lock = threading.RLock()
     
-    def register_service(self, name: str, service: Any):
+    def register_service(self, name -> None: str, service -> None: Any) -> None:
         """Register a service instance."""
         with self._lock:
             self.services[name] = service
     
-    def register_factory(self, name: str, factory_func: Callable):
+    def register_factory(self, name -> None: str, factory_func -> None: Callable) -> None:
         """Register a factory function."""
         with self._lock:
             self.factories[name] = factory_func
     
-    def register_singleton(self, name: str, factory_func: Callable):
+    def register_singleton(self, name -> None: str, factory_func -> None: Callable) -> None:
         """Register a singleton factory."""
         with self._lock:
             self.factories[name] = factory_func
@@ -44457,7 +44484,7 @@ class DependencyContainer:
 class DependencyInjectionFactory(AbstractFactory):
     """Factory with dependency injection capabilities."""
     
-    def __init__(self, specification: FactoryProductSpecification, container: DependencyContainer = None):
+    def __init__(self, specification -> None: FactoryProductSpecification, container -> None: DependencyContainer = None) -> None:
         super().__init__(specification)
         self.container = container or DependencyContainer()
         self._setup_default_dependencies()
@@ -44504,7 +44531,7 @@ class DependencyInjectionFactory(AbstractFactory):
         
         return products
     
-    def _setup_default_dependencies(self):
+    def _setup_default_dependencies(self) -> None:
         """Setup default dependencies in container."""
         
         # Register factory functions for common services
@@ -44523,12 +44550,12 @@ class DependencyInjectionFactory(AbstractFactory):
             self._create_cryptographic_service
         )
     
-    async def _create_ldap_provider(self, **kwargs):
+    async def _create_ldap_provider(self, **kwargs) -> None:
         """Factory function for LDAP provider."""
         from ..providers.ldap import LDAPAuthenticationProvider
         return LDAPAuthenticationProvider(kwargs)
     
-    async def _create_redis_session_storage(self, redis_client=None, **kwargs):
+    async def _create_redis_session_storage(self, redis_client=None, **kwargs) -> None:
         """Factory function for Redis session storage."""
         from ..session.redis_storage import RedisSessionStorage
         
@@ -44538,7 +44565,7 @@ class DependencyInjectionFactory(AbstractFactory):
         
         return RedisSessionStorage(redis_client, **kwargs)
     
-    async def _create_cryptographic_service(self, **kwargs):
+    async def _create_cryptographic_service(self, **kwargs) -> None:
         """Factory function for cryptographic service."""
         from ..security.crypto import CryptographicService
         return CryptographicService(**kwargs)
@@ -44549,7 +44576,7 @@ class DependencyInjectionFactory(AbstractFactory):
 class ObjectPool(Generic[T]):
     """Generic object pool for resource management."""
     
-    def __init__(self, factory_func: Callable[[], T], initial_size: int = 10, max_size: int = 100):
+    def __init__(self, factory_func -> None: Callable[[], T], initial_size -> None: int = 10, max_size -> None: int = 100) -> None:
         self.factory_func = factory_func
         self.initial_size = initial_size
         self.max_size = max_size
@@ -44558,7 +44585,7 @@ class ObjectPool(Generic[T]):
         self._lock = threading.RLock()
         self._initialized = False
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize the object pool."""
         
         if self._initialized:
@@ -44596,7 +44623,7 @@ class ObjectPool(Generic[T]):
             # Pool exhausted
             raise RuntimeError("Object pool exhausted")
     
-    def release(self, obj: T):
+    def release(self, obj -> None: T) -> None:
         """Release an object back to the pool."""
         
         with self._lock:
@@ -44634,7 +44661,7 @@ class ObjectPool(Generic[T]):
 class ObjectPoolFactory(AbstractFactory):
     """Factory that manages object pools."""
     
-    def __init__(self, specification: FactoryProductSpecification):
+    def __init__(self, specification -> None: FactoryProductSpecification) -> None:
         super().__init__(specification)
         self.pools: Dict[str, ObjectPool] = {}
     
@@ -44686,7 +44713,7 @@ class ObjectPoolFactory(AbstractFactory):
         
         return objects
     
-    async def register_pool(self, product_type: str, factory_func: Callable, initial_size: int = 10, max_size: int = 100):
+    async def register_pool(self, product_type -> None: str, factory_func -> None: Callable, initial_size -> None: int = 10, max_size -> None: int = 100) -> None:
         """Register an object pool for a product type."""
         
         pool = ObjectPool(factory_func, initial_size, max_size)
@@ -44701,7 +44728,7 @@ class ObjectPoolFactory(AbstractFactory):
             max_size=max_size
         )
     
-    def release_object(self, product_type: str, obj: FactoryProductProtocol):
+    def release_object(self, product_type -> None: str, obj -> None: FactoryProductProtocol) -> None:
         """Release an object back to its pool."""
         
         if product_type in self.pools:
@@ -44881,7 +44908,7 @@ class CloudQualityGates(EnterpriseQualityGates):
 class CompleteAuthenticationSystem:
     """Complete authentication system."""
     
-    def __init__(self, config: Dict[str, Any], middleware: List[Dict], plugins: List[Dict]):
+    def __init__(self, config -> None: Dict[str, Any], middleware -> None: List[Dict], plugins -> None: List[Dict]) -> None:
         self.config = config
         self.middleware = middleware
         self.plugins = plugins
@@ -45060,7 +45087,7 @@ class SessionMetrics:
 class SessionSecurity:
     """Gestionnaire de sécurité des sessions"""
     
-    def __init__(self, config: SessionConfig):
+    def __init__(self, config -> None: SessionConfig) -> None:
         self.config = config
         self.encryption_key = Fernet.generate_key()
         self.fernet = Fernet(self.encryption_key)
@@ -45147,7 +45174,7 @@ class SessionSecurity:
 class SessionValidator:
     """Validateur de sessions"""
     
-    def __init__(self, config: SessionConfig):
+    def __init__(self, config -> None: SessionConfig) -> None:
         self.config = config
     
     async def validate_session_state(self, session_metadata: SessionMetadata) -> bool:
@@ -45196,7 +45223,7 @@ class SessionValidator:
 class SessionOptimizer:
     """Optimiseur de performances des sessions"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.session_cache = {}
         self.access_patterns = {}
     
@@ -45242,7 +45269,7 @@ class SessionOptimizer:
 class DistributedSession:
     """Gestionnaire de sessions distribuées"""
     
-    def __init__(self, redis_client, mongo_client, config: SessionConfig):
+    def __init__(self, redis_client, mongo_client, config -> None: SessionConfig) -> None:
         self.redis = redis_client
         self.mongo = mongo_client
         self.config = config
@@ -45305,7 +45332,7 @@ class DistributedSession:
 class SessionAnalytics:
     """Analytics ML pour les sessions"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.behavioral_patterns = {}
         self.anomaly_threshold = 0.7
     
@@ -45419,7 +45446,7 @@ class SessionAnalytics:
 class SessionManager:
     """Gestionnaire principal des sessions ultra-avancé"""
     
-    def __init__(self, config: Optional[SessionConfig] = None):
+    def __init__(self, config -> None: Optional[SessionConfig] = None) -> None:
         self.config = config or SessionConfig()
         self.security = SessionSecurity(self.config)
         self.validator = SessionValidator(self.config)
@@ -45438,8 +45465,8 @@ class SessionManager:
         
         logger.info("🎵 SessionManager ultra-avancé initialisé")
     
-    async def initialize(self, redis_url: str = "redis://localhost:6379",
-                        mongo_url: str = "mongodb://localhost:27017"):
+    async def initialize(self, redis_url -> None: str = "redis -> None://localhost -> None:6379",
+                        mongo_url -> None: str = "mongodb -> None://localhost -> None:27017") -> None:
         """Initialise les connexions et services"""
         try:
             # Connexion Redis
@@ -45917,7 +45944,7 @@ class AuditEvent:
 class EncryptionManager:
     """Gestionnaire de chiffrement"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger("security.encryption")
         
         # Symmetric encryption keys (per tenant)
@@ -46153,7 +46180,7 @@ class EncryptionManager:
 class AuthenticationManager:
     """Gestionnaire d'authentification"""
     
-    def __init__(self, jwt_secret: str):
+    def __init__(self, jwt_secret -> None: str) -> None:
         self.jwt_secret = jwt_secret
         self.logger = logging.getLogger("security.authentication")
         
@@ -46265,7 +46292,7 @@ class AuthenticationManager:
         
         return credentials
     
-    async def destroy_session(self, session_id: str):
+    async def destroy_session(self, session_id -> None: str) -> None:
         """Détruit une session"""
         if session_id in self._active_sessions:
             tenant_id = self._active_sessions[session_id].tenant_id
@@ -46280,7 +46307,7 @@ class AuthenticationManager:
         self.logger.info(f"Registered new API key for tenant {tenant_id}")
         return api_key
     
-    async def revoke_api_key(self, api_key: str):
+    async def revoke_api_key(self, api_key -> None: str) -> None:
         """Révoque une clé API"""
         if api_key in self._api_keys:
             tenant_id = self._api_keys[api_key]
@@ -46313,7 +46340,7 @@ class AuthenticationManager:
 class AuthorizationManager:
     """Gestionnaire d'autorisation"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger("security.authorization")
         
         # Policies
@@ -46329,7 +46356,7 @@ class AuthorizationManager:
         # Resource permissions cache
         self._resource_permissions: Dict[str, Dict[str, Set[PermissionType]]] = {}
     
-    async def register_policy(self, policy: SecurityPolicy):
+    async def register_policy(self, policy -> None: SecurityPolicy) -> None:
         """Enregistre une politique de sécurité"""
         self._policies[policy.name] = policy
         self.logger.info(f"Registered security policy: {policy.name}")
@@ -46450,10 +46477,10 @@ class AuthorizationManager:
     
     async def grant_resource_permission(
         self, 
-        resource: str, 
-        user_id: str, 
-        permission: PermissionType
-    ):
+        resource -> None: str, 
+        user_id -> None: str, 
+        permission -> None: PermissionType
+    ) -> None:
         """Accorde une permission sur une ressource"""
         if resource not in self._resource_permissions:
             self._resource_permissions[resource] = {}
@@ -46466,10 +46493,10 @@ class AuthorizationManager:
     
     async def revoke_resource_permission(
         self, 
-        resource: str, 
-        user_id: str, 
-        permission: PermissionType
-    ):
+        resource -> None: str, 
+        user_id -> None: str, 
+        permission -> None: PermissionType
+    ) -> None:
         """Révoque une permission sur une ressource"""
         if (resource in self._resource_permissions and 
             user_id in self._resource_permissions[resource]):
@@ -46480,7 +46507,7 @@ class AuthorizationManager:
 class AuditManager:
     """Gestionnaire d'audit"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger("security.audit")
         
         # Audit log storage
@@ -46497,18 +46524,18 @@ class AuditManager:
     
     async def log_event(
         self,
-        event_type: str,
-        tenant_id: str,
-        resource: str,
-        action: str,
-        outcome: str,
-        user_id: Optional[str] = None,
-        request_data: Optional[Dict[str, Any]] = None,
-        response_data: Optional[Dict[str, Any]] = None,
-        error_details: Optional[str] = None,
-        security_level: SecurityLevel = SecurityLevel.INTERNAL,
+        event_type -> None: str,
+        tenant_id -> None: str,
+        resource -> None: str,
+        action -> None: str,
+        outcome -> None: str,
+        user_id -> None: Optional[str] = None,
+        request_data -> None: Optional[Dict[str, Any]] = None,
+        response_data -> None: Optional[Dict[str, Any]] = None,
+        error_details -> None: Optional[str] = None,
+        security_level -> None: SecurityLevel = SecurityLevel.INTERNAL,
         **kwargs
-    ):
+    ) -> None:
         """Enregistre un événement d'audit"""
         event_id = secrets.token_hex(16)
         
@@ -46673,7 +46700,7 @@ class SecurityManager:
     - Détection d'anomalies de sécurité
     """
     
-    def __init__(self, jwt_secret: Optional[str] = None):
+    def __init__(self, jwt_secret -> None: Optional[str] = None) -> None:
         self.logger = logging.getLogger("security_manager")
         
         # Initialize sub-managers
@@ -46701,7 +46728,7 @@ class SecurityManager:
         # Compliance tracking
         self._compliance_events: List[Dict[str, Any]] = []
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialise le gestionnaire de sécurité"""
         try:
             # Register default policies
@@ -46713,7 +46740,7 @@ class SecurityManager:
             self.logger.error(f"Failed to initialize security manager: {e}")
             raise SecurityError(f"Security manager initialization failed: {e}")
     
-    async def _register_default_policies(self):
+    async def _register_default_policies(self) -> None:
         """Enregistre les politiques par défaut"""
         # Default policy for all tenants
         default_policy = SecurityPolicy(
@@ -46936,7 +46963,7 @@ class SecurityManager:
             self.logger.error(f"Decryption error for tenant {context.tenant_id}: {e}")
             raise SecurityError(f"Decryption failed: {e}")
     
-    async def _track_threat_indicator(self, identifier: str, indicator_type: str):
+    async def _track_threat_indicator(self, identifier -> None: str, indicator_type -> None: str) -> None:
         """Suit les indicateurs de menace"""
         now = datetime.now(timezone.utc)
         
@@ -46994,7 +47021,7 @@ class SecurityManager:
             "blocked_ips": len(self._blocked_ips)
         }
     
-    async def cleanup_expired_sessions(self):
+    async def cleanup_expired_sessions(self) -> None:
         """Nettoie les sessions expirées"""
         expired_sessions = []
         now = datetime.now(timezone.utc)
@@ -47010,7 +47037,7 @@ class SecurityManager:
         if expired_sessions:
             self.logger.info(f"Cleaned up {len(expired_sessions)} expired sessions")
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Arrêt propre du gestionnaire de sécurité"""
         self.logger.info("Shutting down security manager...")
         
@@ -47038,7 +47065,7 @@ async def get_security_manager() -> SecurityManager:
     return _security_manager
 
 
-async def shutdown_security_manager():
+async def shutdown_security_manager() -> None:
     """Arrête l'instance globale du gestionnaire de sécurité"""
     global _security_manager
     if _security_manager:
@@ -47243,7 +47270,7 @@ class AccessControlEngine(PolicyEngine):
 class DataEncryptionEngine(PolicyEngine):
     """Moteur de chiffrement des données"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.encryption_manager = EncryptionManager()
     
     async def evaluate(
@@ -47326,7 +47353,7 @@ class DataMaskingEngine(PolicyEngine):
 class RateLimitingEngine(PolicyEngine):
     """Moteur de limitation de débit"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.rate_counters: Dict[str, Dict[str, Any]] = {}
     
     async def evaluate(
@@ -47387,7 +47414,7 @@ class SecurityPolicyEngine:
     - Context-aware enforcement
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
         self.security_monitor = SecurityMonitor()
         
@@ -47420,7 +47447,7 @@ class SecurityPolicyEngine:
         
         self._initialize_default_policies()
     
-    def _initialize_default_policies(self):
+    def _initialize_default_policies(self) -> None:
         """Initialise les politiques par défaut"""
         
         # Politique de contrôle d'accès admin
@@ -47587,18 +47614,18 @@ class SecurityPolicyEngine:
         
         return result
     
-    async def add_policy(self, policy: SecurityPolicy):
+    async def add_policy(self, policy -> None: SecurityPolicy) -> None:
         """Ajoute une nouvelle politique"""
         self.policies[policy.policy_id] = policy
         self.logger.info(f"Policy {policy.policy_id} added: {policy.name}")
     
-    async def remove_policy(self, policy_id: str):
+    async def remove_policy(self, policy_id -> None: str) -> None:
         """Supprime une politique"""
         if policy_id in self.policies:
             del self.policies[policy_id]
             self.logger.info(f"Policy {policy_id} removed")
     
-    async def update_policy(self, policy: SecurityPolicy):
+    async def update_policy(self, policy -> None: SecurityPolicy) -> None:
         """Met à jour une politique existante"""
         policy.updated_at = datetime.now(timezone.utc)
         self.policies[policy.policy_id] = policy
@@ -47682,10 +47709,10 @@ class SecurityPolicyEngine:
     
     async def _audit_policy_evaluation(
         self,
-        context: TenantContext,
-        operation: str,
-        result: Dict[str, Any]
-    ):
+        context -> None: TenantContext,
+        operation -> None: str,
+        result -> None: Dict[str, Any]
+    ) -> None:
         """Audit de l'évaluation des politiques"""
         # Implémentation de l'audit
         pass
@@ -47700,7 +47727,7 @@ class SecurityPolicyEngine:
             'engines_count': len(self.engines)
         }
     
-    async def cleanup_threats(self, max_age_hours: int = 24):
+    async def cleanup_threats(self, max_age_hours -> None: int = 24) -> None:
         """Nettoie les anciennes menaces"""
         cutoff_time = datetime.now(timezone.utc) - timedelta(hours=max_age_hours)
         
@@ -47862,7 +47889,7 @@ class TenantSecurityManager:
     - Audit et compliance
     - Gestion des sessions
     """
-    def __init__(self):
+    def __init__(self) -> None:
         self.pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
         self.jwt_secret = settings.SECRET_KEY
         self.encryption_keys: Dict[str, Fernet] = {}
@@ -48283,13 +48310,13 @@ class TenantSecurityManager:
 
     # Méthodes privées de sécurité
 
-    async def _get_tenant_by_domain(self, domain: str):
+    async def _get_tenant_by_domain(self, domain -> None: str) -> None:
         """Récupérer un tenant par domaine"""
         # Cette méthode devrait être importée du TenantManager
         # Pour l'instant, simulation
         return type('Tenant', (), {'id': 'tenant-123', 'domain': domain})()
 
-    async def _get_tenant_user(self, tenant_id: str, email: str):
+    async def _get_tenant_user(self, tenant_id -> None: str, email -> None: str) -> None:
         """Récupérer un utilisateur d'un tenant"""
         async with get_async_session() as db:
             result = await db.execute(
@@ -48308,7 +48335,7 @@ class TenantSecurityManager:
         lockout_data = await redis_client.get(lockout_key)
         return lockout_data is not None
 
-    async def _increment_failed_attempts(self, tenant_id: str, email: str):
+    async def _increment_failed_attempts(self, tenant_id -> None: str, email -> None: str) -> None:
         """Incrémenter les tentatives échouées"""
         redis_client = await self.get_redis_client()
         attempts_key = f"failed_attempts:{tenant_id}:{email.lower()}"
@@ -48324,7 +48351,7 @@ class TenantSecurityManager:
                 "locked"
             )
 
-    async def _reset_failed_attempts(self, tenant_id: str, email: str):
+    async def _reset_failed_attempts(self, tenant_id -> None: str, email -> None: str) -> None:
         """Réinitialiser les tentatives échouées"""
         redis_client = await self.get_redis_client()
         attempts_key = f"failed_attempts:{tenant_id}:{email.lower()}"
@@ -48420,12 +48447,12 @@ class TenantSecurityManager:
 
     async def _log_security_event(
         self,
-        tenant_id: Optional[str],
-        user_id: Optional[str],
-        event_type: str,
-        description: str,
-        metadata: Dict[str, Any]
-    ):
+        tenant_id -> None: Optional[str],
+        user_id -> None: Optional[str],
+        event_type -> None: str,
+        description -> None: str,
+        metadata -> None: Dict[str, Any]
+    ) -> None:
         """Logger un événement de sécurité"""
         try:
             # En production, sauvegarder en base de données
@@ -48496,11 +48523,11 @@ class TenantSecurityManager:
 
     async def _detect_ip_change_threat(
         self,
-        tenant_id: str,
-        user_id: str,
-        old_ip: str,
-        new_ip: str
-    ):
+        tenant_id -> None: str,
+        user_id -> None: str,
+        old_ip -> None: str,
+        new_ip -> None: str
+    ) -> None:
         """Détecter un changement d'IP suspect"""
         # En production, analyser la géolocalisation et alerter si nécessaire
         await self._log_security_event(
@@ -48773,7 +48800,7 @@ class TenantSecurityManager:
     with real-time security intelligence and advanced incident response.
     """
     
-    def __init__(self, config_path: Optional[str] = None):
+    def __init__(self, config_path -> None: Optional[str] = None) -> None:
         """Initialize the tenant security manager."""
         self.config_path = config_path or "/config/tenant_security.yaml"
         self.security_policies: Dict[str, List[SecurityPolicy]] = {}
@@ -48807,7 +48834,7 @@ class TenantSecurityManager:
         # Initialize system
         asyncio.create_task(self._initialize_security_system())
     
-    async def _initialize_security_system(self):
+    async def _initialize_security_system(self) -> None:
         """Initialize the security system."""
         try:
             await self._load_configuration()
@@ -48821,7 +48848,7 @@ class TenantSecurityManager:
             logger.error(f"Failed to initialize security system: {e}")
             raise
     
-    async def _load_configuration(self):
+    async def _load_configuration(self) -> None:
         """Load security system configuration."""
         try:
             if Path(self.config_path).exists():
@@ -48922,7 +48949,7 @@ class TenantSecurityManager:
             }
         }
     
-    async def _save_configuration(self):
+    async def _save_configuration(self) -> None:
         """Save security configuration to file."""
         try:
             config_dir = Path(self.config_path).parent
@@ -48934,7 +48961,7 @@ class TenantSecurityManager:
         except Exception as e:
             logger.error(f"Failed to save security configuration: {e}")
     
-    async def _initialize_components(self):
+    async def _initialize_components(self) -> None:
         """Initialize security components."""
         await self.threat_detector.initialize(self.config)
         await self.policy_engine.initialize(self.config)
@@ -48948,7 +48975,7 @@ class TenantSecurityManager:
         await self.authz_manager.initialize(self.config)
         await self.session_manager.initialize(self.config)
     
-    async def _load_security_policies(self):
+    async def _load_security_policies(self) -> None:
         """Load existing security policies."""
         try:
             policies_dir = Path("/data/security_policies")
@@ -48970,7 +48997,7 @@ class TenantSecurityManager:
         except Exception as e:
             logger.error(f"Failed to load security policies: {e}")
     
-    async def _start_security_monitoring(self):
+    async def _start_security_monitoring(self) -> None:
         """Start security monitoring background processes."""
         asyncio.create_task(self._security_monitoring_loop())
         asyncio.create_task(self._threat_analysis_loop())
@@ -49043,10 +49070,10 @@ class TenantSecurityManager:
     
     async def _create_tenant_security_policies(
         self,
-        tenant_id: str,
-        security_level: SecurityLevel,
-        requirements: Optional[Dict[str, Any]]
-    ):
+        tenant_id -> None: str,
+        security_level -> None: SecurityLevel,
+        requirements -> None: Optional[Dict[str, Any]]
+    ) -> None:
         """Create comprehensive security policies for tenant."""
         policies = []
         
@@ -49464,7 +49491,7 @@ class TenantSecurityManager:
             return {'error': str(e)}
     
     # Background monitoring loops
-    async def _security_monitoring_loop(self):
+    async def _security_monitoring_loop(self) -> None:
         """Continuously monitor security events."""
         while True:
             try:
@@ -49483,7 +49510,7 @@ class TenantSecurityManager:
                 logger.error(f"Error in security monitoring loop: {e}")
                 await asyncio.sleep(10)
     
-    async def _threat_analysis_loop(self):
+    async def _threat_analysis_loop(self) -> None:
         """Continuously analyze threats using ML."""
         while True:
             try:
@@ -49496,7 +49523,7 @@ class TenantSecurityManager:
                 logger.error(f"Error in threat analysis loop: {e}")
                 await asyncio.sleep(60)
     
-    async def _compliance_monitoring_loop(self):
+    async def _compliance_monitoring_loop(self) -> None:
         """Continuously monitor compliance status."""
         while True:
             try:
@@ -49509,7 +49536,7 @@ class TenantSecurityManager:
                 logger.error(f"Error in compliance monitoring loop: {e}")
                 await asyncio.sleep(300)
     
-    async def _incident_response_loop(self):
+    async def _incident_response_loop(self) -> None:
         """Process incident response actions."""
         while True:
             try:
@@ -49520,7 +49547,7 @@ class TenantSecurityManager:
                 logger.error(f"Error in incident response loop: {e}")
                 await asyncio.sleep(5)
     
-    async def _security_analytics_loop(self):
+    async def _security_analytics_loop(self) -> None:
         """Process security analytics."""
         while True:
             try:
@@ -49601,13 +49628,13 @@ class TenantSecurityManager:
 class ThreatDetectionEngine:
     """AI-powered threat detection system."""
     
-    async def initialize(self, config: Dict[str, Any]):
+    async def initialize(self, config -> None: Dict[str, Any]) -> None:
         """Initialize threat detection engine."""
         self.config = config
         self.ml_models = {}
         await self._load_ml_models()
     
-    async def _load_ml_models(self):
+    async def _load_ml_models(self) -> None:
         """Load machine learning models for threat detection."""
         # Initialize Isolation Forest for anomaly detection
         self.ml_models['isolation_forest'] = IsolationForest(
@@ -49621,11 +49648,11 @@ class ThreatDetectionEngine:
             min_samples=5
         )
     
-    async def setup_tenant_monitoring(self, tenant_id: str, security_level: SecurityLevel):
+    async def setup_tenant_monitoring(self, tenant_id -> None: str, security_level -> None: SecurityLevel) -> None:
         """Setup threat monitoring for specific tenant."""
         pass
     
-    async def analyze_tenant_threats(self, tenant_id: str):
+    async def analyze_tenant_threats(self, tenant_id -> None: str) -> None:
         """Analyze threats for specific tenant."""
         pass
 
@@ -49633,7 +49660,7 @@ class ThreatDetectionEngine:
 class SecurityPolicyEngine:
     """Dynamic security policy management."""
     
-    async def initialize(self, config: Dict[str, Any]):
+    async def initialize(self, config -> None: Dict[str, Any]) -> None:
         """Initialize policy engine."""
         self.config = config
 
@@ -49641,7 +49668,7 @@ class SecurityPolicyEngine:
 class ComplianceMonitor:
     """Compliance monitoring and assessment."""
     
-    async def initialize(self, config: Dict[str, Any]):
+    async def initialize(self, config -> None: Dict[str, Any]) -> None:
         """Initialize compliance monitor."""
         self.config = config
     
@@ -49665,11 +49692,11 @@ class ComplianceMonitor:
         else:
             return []
     
-    async def setup_tenant_compliance(self, tenant_id: str, security_level: SecurityLevel):
+    async def setup_tenant_compliance(self, tenant_id -> None: str, security_level -> None: SecurityLevel) -> None:
         """Setup compliance monitoring for tenant."""
         pass
     
-    async def check_tenant_compliance(self, tenant_id: str):
+    async def check_tenant_compliance(self, tenant_id -> None: str) -> None:
         """Check compliance status for tenant."""
         pass
 
@@ -49677,11 +49704,11 @@ class ComplianceMonitor:
 class IncidentResponseSystem:
     """Automated incident response."""
     
-    async def initialize(self, config: Dict[str, Any]):
+    async def initialize(self, config -> None: Dict[str, Any]) -> None:
         """Initialize incident response system."""
         self.config = config
     
-    async def process_pending_incidents(self):
+    async def process_pending_incidents(self) -> None:
         """Process pending security incidents."""
         pass
 
@@ -49689,15 +49716,15 @@ class IncidentResponseSystem:
 class SecurityAnalyticsEngine:
     """Advanced security analytics with ML."""
     
-    async def initialize(self, config: Dict[str, Any]):
+    async def initialize(self, config -> None: Dict[str, Any]) -> None:
         """Initialize analytics engine."""
         self.config = config
     
-    async def initialize_tenant_analytics(self, tenant_id: str):
+    async def initialize_tenant_analytics(self, tenant_id -> None: str) -> None:
         """Initialize analytics for tenant."""
         pass
     
-    async def process_security_analytics(self):
+    async def process_security_analytics(self) -> None:
         """Process security analytics."""
         pass
     
@@ -49720,11 +49747,11 @@ class SecurityAnalyticsEngine:
 class EncryptionManager:
     """Advanced encryption management."""
     
-    async def initialize(self, config: Dict[str, Any]):
+    async def initialize(self, config -> None: Dict[str, Any]) -> None:
         """Initialize encryption manager."""
         self.config = config
     
-    async def setup_tenant_encryption(self, tenant_id: str, security_level: SecurityLevel):
+    async def setup_tenant_encryption(self, tenant_id -> None: str, security_level -> None: SecurityLevel) -> None:
         """Setup encryption for tenant."""
         pass
 
@@ -49732,7 +49759,7 @@ class EncryptionManager:
 class KeyManager:
     """Cryptographic key management."""
     
-    async def initialize(self, config: Dict[str, Any]):
+    async def initialize(self, config -> None: Dict[str, Any]) -> None:
         """Initialize key manager."""
         self.config = config
 
@@ -49740,7 +49767,7 @@ class KeyManager:
 class CertificateManager:
     """Digital certificate management."""
     
-    async def initialize(self, config: Dict[str, Any]):
+    async def initialize(self, config -> None: Dict[str, Any]) -> None:
         """Initialize certificate manager."""
         self.config = config
 
@@ -49748,11 +49775,11 @@ class CertificateManager:
 class AuthenticationManager:
     """Advanced authentication management."""
     
-    async def initialize(self, config: Dict[str, Any]):
+    async def initialize(self, config -> None: Dict[str, Any]) -> None:
         """Initialize authentication manager."""
         self.config = config
     
-    async def setup_tenant_authentication(self, tenant_id: str, security_level: SecurityLevel):
+    async def setup_tenant_authentication(self, tenant_id -> None: str, security_level -> None: SecurityLevel) -> None:
         """Setup authentication for tenant."""
         pass
 
@@ -49760,11 +49787,11 @@ class AuthenticationManager:
 class AuthorizationManager:
     """Advanced authorization management."""
     
-    async def initialize(self, config: Dict[str, Any]):
+    async def initialize(self, config -> None: Dict[str, Any]) -> None:
         """Initialize authorization manager."""
         self.config = config
     
-    async def setup_tenant_authorization(self, tenant_id: str, security_level: SecurityLevel):
+    async def setup_tenant_authorization(self, tenant_id -> None: str, security_level -> None: SecurityLevel) -> None:
         """Setup authorization for tenant."""
         pass
 
@@ -49772,7 +49799,7 @@ class AuthorizationManager:
 class SessionManager:
     """Session management and security."""
     
-    async def initialize(self, config: Dict[str, Any]):
+    async def initialize(self, config -> None: Dict[str, Any]) -> None:
         """Initialize session manager."""
         self.config = config
 
@@ -49791,7 +49818,8 @@ from typing import Dict, Any, Optional
 import logging
 
 class AuthService:
-    def __init__(self, user_store: Any, security_service: Any, logger: Optional[logging.Logger] = None):
+    """AuthService: class implementation"""
+    def __init__(self, user_store -> None: Any, security_service -> None: Any, logger -> None: Optional[logging.Logger] = None) -> None:
         self.user_store = user_store
         self.security_service = security_service
         self.logger = logger or logging.getLogger("AuthService")
@@ -49858,7 +49886,8 @@ import logging
 from datetime import datetime, timedelta
 
 class JWTService:
-    def __init__(self, secret_key: str, algorithm: str = "HS256", logger: Optional[logging.Logger] = None):
+    """JWTService: class implementation"""
+    def __init__(self, secret_key -> None: str, algorithm -> None: str = "HS256", logger -> None: Optional[logging.Logger] = None) -> None:
         self.secret_key = secret_key
         self.algorithm = algorithm
         self.logger = logger or logging.getLogger("JWTService")
@@ -49885,7 +49914,7 @@ class JWTService:
             self.logger.warning("Invalid JWT")
             raise ValueError("Invalid token")
 
-    def revoke_token(self, token: str):
+    def revoke_token(self, token -> None: str) -> None:
         # Implement token revocation logic (e.g. blacklist)
         self.logger.info(f"JWT revoked: {token}")
         return {"status": "revoked"}
@@ -49906,7 +49935,8 @@ import logging
 import bcrypt
 
 class SecurityService:
-    def __init__(self, mfa_provider: Any = None, logger: Optional[logging.Logger] = None):
+    """SecurityService: class implementation"""
+    def __init__(self, mfa_provider -> None: Any = None, logger -> None: Optional[logging.Logger] = None) -> None:
         self.mfa_provider = mfa_provider
         self.logger = logger or logging.getLogger("SecurityService")
 
@@ -49927,7 +49957,7 @@ class SecurityService:
         self.logger.info(f"MFA verification: {valid}")
         return valid
 
-    def send_password_reset_email(self, user: Any):
+    def send_password_reset_email(self, user -> None: Any) -> None:
         # Simulate sending email (real implementation: email provider)
         self.logger.info(f"Password reset email sent to {user.email}")
 
@@ -49947,7 +49977,8 @@ import logging
 from datetime import datetime, timedelta
 
 class SessionService:
-    def __init__(self, session_store: Any, logger: Optional[logging.Logger] = None):
+    """SessionService: class implementation"""
+    def __init__(self, session_store -> None: Any, logger -> None: Optional[logging.Logger] = None) -> None:
         self.session_store = session_store
         self.logger = logger or logging.getLogger("SessionService")
 
@@ -49962,7 +49993,7 @@ class SessionService:
         self.logger.info(f"Session validation for {session_id}: {valid}")
         return valid
 
-    def revoke_session(self, session_id: str):
+    def revoke_session(self, session_id -> None: str) -> None:
         self.session_store.revoke(session_id)
         audit_entry = {"action": "revoke_session", "session_id": session_id}
         self.logger.info(f"Session Audit: {audit_entry}")
@@ -50014,7 +50045,8 @@ from typing import Dict, Any, Optional
 import logging
 
 class OAuth2Service:
-    def __init__(self, client_id: str, client_secret: str, redirect_uri: str, provider_url: str, logger: Optional[logging.Logger] = None):
+    """OAuth2Service: class implementation"""
+    def __init__(self, client_id -> None: str, client_secret -> None: str, redirect_uri -> None: str, provider_url -> None: str, logger -> None: Optional[logging.Logger] = None) -> None:
         self.client_id = client_id
         self.client_secret = client_secret
         self.redirect_uri = redirect_uri
@@ -50140,7 +50172,7 @@ class EncryptionResult(BaseModel):
 class EncryptionManager:
     """Advanced encryption management system"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.redis_client: Optional[aioredis.Redis] = None
         
@@ -50167,7 +50199,7 @@ class EncryptionManager:
         self._key_cache: Dict[str, EncryptionKey] = {}
         self._cache_ttl = config.get("key_cache_ttl", 300)  # 5 minutes
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize encryption manager"""
         try:
             # Initialize Redis connection
@@ -50202,13 +50234,13 @@ class EncryptionManager:
         )
         return kdf.derive(password.encode())
     
-    async def _initialize_hsm(self):
+    async def _initialize_hsm(self) -> None:
         """Initialize Hardware Security Module"""
         # HSM initialization would go here
         # This is a placeholder for HSM integration
         logger.info("HSM integration placeholder - would initialize HSM here")
     
-    async def _create_default_keys(self):
+    async def _create_default_keys(self) -> None:
         """Create default encryption keys"""
         try:
             # Create data encryption key
@@ -50307,7 +50339,7 @@ class EncryptionManager:
         else:
             raise ValueError(f"Unsupported algorithm: {algorithm}")
     
-    async def _store_key(self, encryption_key: EncryptionKey):
+    async def _store_key(self, encryption_key -> None: EncryptionKey) -> None:
         """Store encryption key securely"""
         try:
             # Encrypt key data with master key
@@ -50608,7 +50640,7 @@ class EncryptionManager:
             logger.error(f"Key rotation failed for {key_id}: {e}")
             raise
     
-    async def _deactivate_key(self, key_id: str):
+    async def _deactivate_key(self, key_id -> None: str) -> None:
         """Deactivate an encryption key"""
         key_storage_key = f"encryption:key:{key_id}"
         await self.redis_client.hset(key_storage_key, "is_active", "False")
@@ -50617,7 +50649,7 @@ class EncryptionManager:
         if key_id in self._key_cache:
             del self._key_cache[key_id]
     
-    async def _key_rotation_scheduler(self):
+    async def _key_rotation_scheduler(self) -> None:
         """Background task for automatic key rotation"""
         while True:
             try:
@@ -50698,9 +50730,10 @@ import time
 from typing import Any, Dict, Optional
 
 class SpotifyAPIService:
+    """SpotifyAPIService: class implementation"""
     BASE_URL = "https://api.spotify.com/v1"
 
-    def __init__(self, client_id: str, client_secret: str, redirect_uri: str = None):
+    def __init__(self, client_id -> None: str, client_secret -> None: str, redirect_uri -> None: str = None) -> None:
         self.client_id = client_id
         self.client_secret = client_secret
         self.redirect_uri = redirect_uri
@@ -50887,7 +50920,7 @@ class AdvancedEncryption:
     Advanced encryption service with key rotation and secure key management
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.encryption_algorithm = config.get('algorithm', 'AES-256-GCM')
         self.key_rotation_interval = config.get('key_rotation_hours', 24)
@@ -51058,9 +51091,9 @@ class AdvancedEncryption:
         
         return None
 
-    def _start_key_rotation_scheduler(self):
+    def _start_key_rotation_scheduler(self) -> None:
         """Start automatic key rotation scheduler"""
-        def rotate_keys_periodic():
+        def rotate_keys_periodic() -> None:
             while True:
                 time.sleep(self.key_rotation_interval * 3600)  # Convert hours to seconds
                 try:
@@ -51078,7 +51111,7 @@ class ThreatDetector:
     Advanced threat detection and prevention system
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.redis_client = redis.Redis.from_url(config.get('redis_url', 'redis://localhost:6379'))
         
@@ -51154,7 +51187,7 @@ class ThreatDetector:
         
         return threat_level, threat_indicators
 
-    async def block_threat(self, ip_address: str, duration_minutes: int = 60, reason: str = "Security threat detected"):
+    async def block_threat(self, ip_address -> None: str, duration_minutes -> None: int = 60, reason -> None: str = "Security threat detected") -> None:
         """Block IP address for specified duration"""
         try:
             block_key = f"blocked_ip:{ip_address}"
@@ -51290,7 +51323,7 @@ class AuditLogger:
     Comprehensive audit logging system for compliance and security monitoring
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.log_file = Path(config.get('audit_log_file', 'audit.log'))
         self.retention_days = config.get('retention_days', 365)
@@ -51312,7 +51345,7 @@ class AuditLogger:
         
         logger.info(f"AuditLogger initialized with {len(self.compliance_standards)} compliance standards")
 
-    async def log_event(self, event: AuditEvent):
+    async def log_event(self, event -> None: AuditEvent) -> None:
         """Log audit event"""
         try:
             # Create structured log entry
@@ -51334,8 +51367,8 @@ class AuditLogger:
         except Exception as e:
             logger.error(f"Audit logging failed: {e}")
 
-    async def log_authentication(self, user_id: str, tenant_id: str, 
-                               ip_address: str, success: bool, method: str = "password"):
+    async def log_authentication(self, user_id -> None: str, tenant_id -> None: str, 
+                               ip_address -> None: str, success -> None: bool, method -> None: str = "password") -> None:
         """Log authentication event"""
         event = AuditEvent(
             timestamp=datetime.now(),
@@ -51353,8 +51386,8 @@ class AuditLogger:
         
         await self.log_event(event)
 
-    async def log_data_access(self, user_id: str, tenant_id: str, 
-                            resource: str, action: str, ip_address: str):
+    async def log_data_access(self, user_id -> None: str, tenant_id -> None: str, 
+                            resource -> None: str, action -> None: str, ip_address -> None: str) -> None:
         """Log data access event"""
         event = AuditEvent(
             timestamp=datetime.now(),
@@ -51410,12 +51443,12 @@ class AuditLogger:
         else:
             return "LOW"
 
-    async def _store_audit_event(self, log_entry: Dict[str, Any]):
+    async def _store_audit_event(self, log_entry -> None: Dict[str, Any]) -> None:
         """Store audit event in database for compliance reporting"""
         # Implementation would store in database
         pass
 
-    async def _check_security_alerts(self, event: AuditEvent):
+    async def _check_security_alerts(self, event -> None: AuditEvent) -> None:
         """Check if event triggers security alerts"""
         if event.threat_level in [ThreatLevel.HIGH, ThreatLevel.CRITICAL]:
             # Trigger security alert
@@ -51486,7 +51519,7 @@ class TokenManager:
     Advanced JWT and OAuth2 token management system
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.secret_key = config.get('secret_key', secrets.token_urlsafe(32))
         self.algorithm = config.get('algorithm', 'HS256')
@@ -51564,7 +51597,7 @@ class TokenManager:
         except jwt.InvalidTokenError as e:
             raise SecurityException(f"Invalid token: {str(e)}")
 
-    def revoke_token(self, token: str):
+    def revoke_token(self, token -> None: str) -> None:
         """Revoke token by adding to blacklist"""
         try:
             # Decode token to get expiration
@@ -51632,7 +51665,7 @@ class PasswordManager:
     Secure password hashing and validation
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
         self.min_length = config.get('min_length', 12)
@@ -51709,7 +51742,7 @@ class MFAManager:
     Multi-Factor Authentication manager
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.issuer_name = config.get('issuer_name', 'Spotify AI Agent')
         
@@ -51951,7 +51984,7 @@ class ComplianceRequirement:
 class EnterpriseSecurityAuditor:
     """Auditeur de sécurité enterprise avec IA"""
     
-    def __init__(self, config_path: Optional[str] = None):
+    def __init__(self, config_path -> None: Optional[str] = None) -> None:
         self.config = self._load_config(config_path)
         self.findings: List[SecurityFinding] = []
         self.compliance_status: Dict[str, ComplianceRequirement] = {}
@@ -52003,7 +52036,7 @@ class EnterpriseSecurityAuditor:
         
         return default_config
     
-    def _initialize_compliance_frameworks(self):
+    def _initialize_compliance_frameworks(self) -> None:
         """Initialise les frameworks de compliance"""
         try:
             # GDPR Requirements
@@ -52086,7 +52119,7 @@ class EnterpriseSecurityAuditor:
         except Exception as e:
             logger.error(f"Erreur initialisation compliance: {e}")
     
-    def _initialize_threat_intelligence(self):
+    def _initialize_threat_intelligence(self) -> None:
         """Initialise l'intelligence de menaces"""
         try:
             # Base de données de menaces simulée
@@ -52134,7 +52167,7 @@ class EnterpriseSecurityAuditor:
         except Exception as e:
             logger.error(f"Erreur initialisation threat intelligence: {e}")
     
-    def _initialize_ml_models(self):
+    def _initialize_ml_models(self) -> None:
         """Initialise les modèles de machine learning"""
         try:
             # Modèles simulés pour la détection d'anomalies
@@ -53032,7 +53065,7 @@ class EnterpriseSecurityAuditor:
 
 
 # Fonctions utilitaires
-async def run_security_audit():
+async def run_security_audit() -> None:
     """Lance un audit de sécurité complet"""
     auditor = EnterpriseSecurityAuditor()
     
@@ -53209,7 +53242,7 @@ class TenantSecurityManager:
     - Audit en temps réel
     """
     
-    def __init__(self, encryption_key: Optional[str] = None):
+    def __init__(self, encryption_key -> None: Optional[str] = None) -> None:
         self.encryption_key = encryption_key or self._generate_master_key()
         self.security_policies: Dict[str, SecurityPolicy] = {}
         self.access_permissions: Dict[str, List[AccessPermission]] = {}
@@ -53224,7 +53257,7 @@ class TenantSecurityManager:
         
         logger.info("TenantSecurityManager initialized")
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialise le gestionnaire de sécurité."""
         try:
             # Charger les politiques de sécurité par défaut
@@ -53571,7 +53604,7 @@ class TenantSecurityManager:
         """Génère une clé maître."""
         return secrets.token_hex(32)
     
-    async def _load_default_policies(self):
+    async def _load_default_policies(self) -> None:
         """Charge les politiques de sécurité par défaut."""
         default_rules = [
             {"rule": "data_encryption", "required": True},
@@ -53592,7 +53625,7 @@ class TenantSecurityManager:
         
         self.security_policies["default"] = default_policy
     
-    async def _validate_security_policy(self, policy: SecurityPolicy):
+    async def _validate_security_policy(self, policy -> None: SecurityPolicy) -> None:
         """Valide une politique de sécurité."""
         if not policy.rules:
             raise ValueError("Security policy must have at least one rule")
@@ -53604,11 +53637,11 @@ class TenantSecurityManager:
     
     async def _check_security_policies(
         self,
-        tenant_id: str,
-        user_id: str,
-        resource_id: str,
-        access_level: AccessLevel
-    ):
+        tenant_id -> None: str,
+        user_id -> None: str,
+        resource_id -> None: str,
+        access_level -> None: AccessLevel
+    ) -> None:
         """Vérifie les politiques de sécurité."""
         # Implémentation de la vérification des politiques
         pass
@@ -53658,7 +53691,7 @@ class TenantSecurityManager:
         
         return False
     
-    async def _record_failed_attempt(self, user_id: str):
+    async def _record_failed_attempt(self, user_id -> None: str) -> None:
         """Enregistre une tentative d'accès échouée."""
         now = datetime.utcnow()
         
@@ -53680,17 +53713,17 @@ class TenantSecurityManager:
     
     async def _log_audit_event(
         self,
-        tenant_id: str,
-        user_id: str,
-        event_type: AuditEventType,
-        resource_id: str,
-        action: str,
-        result: str,
-        details: Dict[str, Any],
-        ip_address: Optional[str] = None,
-        user_agent: Optional[str] = None,
-        session_id: Optional[str] = None
-    ):
+        tenant_id -> None: str,
+        user_id -> None: str,
+        event_type -> None: AuditEventType,
+        resource_id -> None: str,
+        action -> None: str,
+        result -> None: str,
+        details -> None: Dict[str, Any],
+        ip_address -> None: Optional[str] = None,
+        user_agent -> None: Optional[str] = None,
+        session_id -> None: Optional[str] = None
+    ) -> None:
         """Enregistre un événement d'audit."""
         event = AuditEvent(
             event_id=str(uuid.uuid4()),
@@ -53712,7 +53745,7 @@ class TenantSecurityManager:
         if len(self.audit_events) > 100000:
             self.audit_events = self.audit_events[-50000:]
     
-    async def _security_monitoring_loop(self):
+    async def _security_monitoring_loop(self) -> None:
         """Boucle de surveillance de sécurité."""
         while True:
             try:
@@ -53728,7 +53761,7 @@ class TenantSecurityManager:
                 logger.error("Error in security monitoring loop", error=str(e))
                 await asyncio.sleep(600)
     
-    async def _session_cleanup_loop(self):
+    async def _session_cleanup_loop(self) -> None:
         """Boucle de nettoyage des sessions."""
         while True:
             try:
@@ -53748,12 +53781,12 @@ class TenantSecurityManager:
                 logger.error("Error in session cleanup loop", error=str(e))
                 await asyncio.sleep(600)
     
-    async def _analyze_security_events(self):
+    async def _analyze_security_events(self) -> None:
         """Analyse les événements de sécurité pour détecter des anomalies."""
         # Implémentation de l'analyse de sécurité
         pass
     
-    async def _cleanup_expired_permissions(self):
+    async def _cleanup_expired_permissions(self) -> None:
         """Nettoie les permissions expirées."""
         now = datetime.utcnow()
         
@@ -53776,14 +53809,14 @@ class ComplianceValidator:
     - Recommendations d'amélioration
     """
     
-    def __init__(self, security_manager: TenantSecurityManager):
+    def __init__(self, security_manager -> None: TenantSecurityManager) -> None:
         self.security_manager = security_manager
         self.compliance_rules = {}
         self.reports_cache = {}
         
         logger.info("ComplianceValidator initialized")
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialise le validateur de conformité."""
         try:
             await self._load_compliance_rules()
@@ -53891,7 +53924,7 @@ class ComplianceValidator:
     
     # Méthodes privées
     
-    async def _load_compliance_rules(self):
+    async def _load_compliance_rules(self) -> None:
         """Charge les règles de conformité."""
         # Règles GDPR
         self.compliance_rules[ComplianceFramework.GDPR] = [
@@ -54038,7 +54071,7 @@ class ComplianceValidator:
             "recommendations": []
         }
     
-    async def _compliance_monitoring_loop(self):
+    async def _compliance_monitoring_loop(self) -> None:
         """Boucle de surveillance de conformité."""
         while True:
             try:
@@ -54063,13 +54096,13 @@ class GovernanceEngine:
     - Conformité réglementaire
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.data_policies = {}
         self.classification_rules = {}
         
         logger.info("GovernanceEngine initialized")
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialise le moteur de gouvernance."""
         logger.info("GovernanceEngine fully initialized")
 
@@ -54085,12 +54118,12 @@ class PolicyManager:
     - Alertes et notifications
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.active_policies = {}
         
         logger.info("PolicyManager initialized")
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialise le gestionnaire de politiques."""
         logger.info("PolicyManager fully initialized")
 
@@ -54190,7 +54223,7 @@ class DeviceInfo:
     trust_score: float = 0.0
     location_history: List[Dict] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.first_seen is None:
             self.first_seen = datetime.utcnow()
         if self.last_seen is None:
@@ -54217,7 +54250,7 @@ class SessionInfo:
     permissions: List[str] = None
     metadata: Dict[str, Any] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.authentication_methods is None:
             self.authentication_methods = []
         if self.permissions is None:
@@ -54229,7 +54262,7 @@ class SessionInfo:
 class SecureSessionManager:
     """Gestionnaire de sessions sécurisées"""
     
-    def __init__(self, redis_client: redis.Redis):
+    def __init__(self, redis_client -> None: redis.Redis) -> None:
         self.redis_client = redis_client
         self.logger = logging.getLogger(__name__)
         self.device_manager = DeviceManager(redis_client)
@@ -54379,7 +54412,7 @@ class SecureSessionManager:
             self.logger.error(f"Erreur validation session {session_id}: {exc}")
             return False, None, "Erreur interne"
     
-    async def revoke_session(self, session_id: str, reason: str = "manual"):
+    async def revoke_session(self, session_id -> None: str, reason -> None: str = "manual") -> None:
         """Révoque une session"""
         try:
             session = await self.get_session(session_id)
@@ -54400,10 +54433,10 @@ class SecureSessionManager:
     
     async def revoke_user_sessions(
         self,
-        user_id: str,
-        exclude_session_id: Optional[str] = None,
-        reason: str = "manual"
-    ):
+        user_id -> None: str,
+        exclude_session_id -> None: Optional[str] = None,
+        reason -> None: str = "manual"
+    ) -> None:
         """Révoque toutes les sessions d'un utilisateur"""
         try:
             # Récupérer toutes les sessions de l'utilisateur
@@ -54420,7 +54453,7 @@ class SecureSessionManager:
         except Exception as exc:
             self.logger.error(f"Erreur révocation sessions utilisateur {user_id}: {exc}")
     
-    async def extend_session(self, session_id: str, additional_time: Optional[int] = None):
+    async def extend_session(self, session_id -> None: str, additional_time -> None: Optional[int] = None) -> None:
         """Étend la durée d'une session"""
         try:
             session = await self.get_session(session_id)
@@ -54462,7 +54495,7 @@ class SecureSessionManager:
             self.logger.error(f"Erreur récupération sessions utilisateur {user_id}: {exc}")
             return []
     
-    async def cleanup_expired_sessions(self):
+    async def cleanup_expired_sessions(self) -> None:
         """Nettoie les sessions expirées"""
         try:
             # Cette tâche devrait être exécutée périodiquement
@@ -54652,7 +54685,7 @@ class SecureSessionManager:
             self.logger.error(f"Erreur détection hijacking: {exc}")
             return False
     
-    async def _update_session_activity(self, session: SessionInfo):
+    async def _update_session_activity(self, session -> None: SessionInfo) -> None:
         """Met à jour l'activité de la session"""
         try:
             session.last_activity = datetime.utcnow()
@@ -54664,7 +54697,7 @@ class SecureSessionManager:
         except Exception as exc:
             self.logger.error(f"Erreur mise à jour activité session: {exc}")
     
-    async def _store_session(self, session: SessionInfo):
+    async def _store_session(self, session -> None: SessionInfo) -> None:
         """Stocke une session dans Redis"""
         try:
             # Sérialiser et chiffrer
@@ -54689,7 +54722,7 @@ class SecureSessionManager:
         except Exception as exc:
             self.logger.error(f"Erreur stockage session: {exc}")
     
-    async def _enforce_session_limits(self, user_id: str):
+    async def _enforce_session_limits(self, user_id -> None: str) -> None:
         """Applique les limites de sessions par utilisateur"""
         try:
             session_ids = await self._get_user_session_ids(user_id)
@@ -54716,10 +54749,10 @@ class SecureSessionManager:
     
     async def _log_session_activity(
         self,
-        session: SessionInfo,
-        action: str,
-        metadata: Dict[str, Any] = None
-    ):
+        session -> None: SessionInfo,
+        action -> None: str,
+        metadata -> None: Dict[str, Any] = None
+    ) -> None:
         """Enregistre l'activité de session pour audit"""
         try:
             activity_log = {
@@ -54780,7 +54813,7 @@ class SecureSessionManager:
 class DeviceManager:
     """Gestionnaire de dispositifs et confiance"""
     
-    def __init__(self, redis_client: redis.Redis):
+    def __init__(self, redis_client -> None: redis.Redis) -> None:
         self.redis_client = redis_client
         self.logger = logging.getLogger(__name__)
         
@@ -54901,7 +54934,7 @@ class DeviceManager:
             self.logger.error(f"Erreur récupération dispositifs utilisateur {user_id}: {exc}")
             return []
     
-    async def cleanup_stale_devices(self):
+    async def cleanup_stale_devices(self) -> None:
         """Nettoie les dispositifs obsolètes"""
         try:
             current_time = datetime.utcnow()
@@ -54983,7 +55016,7 @@ class DeviceManager:
             self.logger.error(f"Erreur recherche dispositif par empreinte: {exc}")
             return None
     
-    async def _store_device(self, device: DeviceInfo):
+    async def _store_device(self, device -> None: DeviceInfo) -> None:
         """Stocke un dispositif dans Redis"""
         try:
             # Stocker le dispositif
@@ -55012,7 +55045,7 @@ class DeviceManager:
             self.logger.error(f"Erreur récupération dispositif {device_id}: {exc}")
             return None
     
-    async def _delete_device(self, device: DeviceInfo):
+    async def _delete_device(self, device -> None: DeviceInfo) -> None:
         """Supprime un dispositif"""
         try:
             await self.redis_client.delete(f"device:{device.device_id}")
@@ -55041,7 +55074,7 @@ class DeviceManager:
 class SessionStore:
     """Store de sessions avec différents backends"""
     
-    def __init__(self, backend_type: str = "redis", **config):
+    def __init__(self, backend_type -> None: str = "redis", **config) -> None:
         self.backend_type = backend_type
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -55051,7 +55084,7 @@ class SessionStore:
         else:
             raise ValueError(f"Backend non supporté: {backend_type}")
     
-    async def set(self, key: str, value: Any, ttl: Optional[int] = None):
+    async def set(self, key -> None: str, value -> None: Any, ttl -> None: Optional[int] = None) -> None:
         """Stocke une valeur"""
         try:
             serialized_value = json.dumps(value, default=str)
@@ -55073,7 +55106,7 @@ class SessionStore:
             self.logger.error(f"Erreur récupération {key}: {exc}")
             return None
     
-    async def delete(self, key: str):
+    async def delete(self, key -> None: str) -> None:
         """Supprime une valeur"""
         try:
             await self.redis_client.delete(key)
@@ -55195,7 +55228,7 @@ class AuthenticationContext:
     authentication_methods: List[str] = None
     session_id: Optional[str] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.timestamp is None:
             self.timestamp = datetime.utcnow()
         if self.authentication_methods is None:
@@ -55216,7 +55249,7 @@ class BiometricData:
 class AuthenticationManager:
     """Gestionnaire principal d'authentification"""
     
-    def __init__(self, redis_client: redis.Redis):
+    def __init__(self, redis_client -> None: redis.Redis) -> None:
         self.redis_client = redis_client
         self.logger = logging.getLogger(__name__)
         self.mfa_authenticator = MultiFactorAuthenticator(redis_client)
@@ -55525,9 +55558,9 @@ class AuthenticationManager:
     
     async def _record_failed_attempt(
         self,
-        user_id: str,
-        context: AuthenticationContext
-    ):
+        user_id -> None: str,
+        context -> None: AuthenticationContext
+    ) -> None:
         """Enregistre une tentative d'authentification échouée"""
         try:
             key = f"failed_attempts:{user_id}"
@@ -55548,7 +55581,7 @@ class AuthenticationManager:
         except Exception as exc:
             self.logger.error(f"Erreur enregistrement tentative échouée: {exc}")
     
-    async def _lock_account(self, user_id: str):
+    async def _lock_account(self, user_id -> None: str) -> None:
         """Verrouille temporairement un compte"""
         try:
             lock_key = f"account_lock:{user_id}"
@@ -55560,7 +55593,7 @@ class AuthenticationManager:
         except Exception as exc:
             self.logger.error(f"Erreur verrouillage compte: {exc}")
     
-    async def _clear_failed_attempts(self, user_id: str):
+    async def _clear_failed_attempts(self, user_id -> None: str) -> None:
         """Efface les tentatives d'authentification échouées"""
         try:
             key = f"failed_attempts:{user_id}"
@@ -55597,14 +55630,14 @@ class AuthenticationManager:
         except Exception:
             return None
     
-    async def _cleanup_temp_session(self, session_id: str):
+    async def _cleanup_temp_session(self, session_id -> None: str) -> None:
         """Nettoie une session temporaire"""
         try:
             await self.redis_client.delete(f"temp_session:{session_id}")
         except Exception as exc:
             self.logger.error(f"Erreur nettoyage session temporaire: {exc}")
     
-    async def _record_user_activity(self, user_id: str, context: AuthenticationContext):
+    async def _record_user_activity(self, user_id -> None: str, context -> None: AuthenticationContext) -> None:
         """Enregistre l'activité utilisateur pour l'analyse comportementale"""
         try:
             activity_data = {
@@ -55651,7 +55684,7 @@ class AuthenticationManager:
             self.logger.error(f"Erreur génération token magique: {exc}")
             raise
     
-    async def _send_magic_link(self, identifier: str, token: str):
+    async def _send_magic_link(self, identifier -> None: str, token -> None: str) -> None:
         """Envoie le lien magique par email/SMS"""
         # Implémentation de l'envoi (email/SMS service)
         pass
@@ -55669,7 +55702,7 @@ class AuthenticationManager:
 class MultiFactorAuthenticator:
     """Authentificateur multi-facteurs avancé"""
     
-    def __init__(self, redis_client: redis.Redis):
+    def __init__(self, redis_client -> None: redis.Redis) -> None:
         self.redis_client = redis_client
         self.logger = logging.getLogger(__name__)
     
@@ -55882,17 +55915,17 @@ class MultiFactorAuthenticator:
         # Implémentation avec votre base de données
         return None
     
-    async def _send_sms_code(self, user_id: str, code: str):
+    async def _send_sms_code(self, user_id -> None: str, code -> None: str) -> None:
         """Envoie un code par SMS"""
         # Implémentation avec votre service SMS
         pass
     
-    async def _send_email_code(self, user_id: str, code: str):
+    async def _send_email_code(self, user_id -> None: str, code -> None: str) -> None:
         """Envoie un code par email"""
         # Implémentation avec votre service email
         pass
     
-    async def _send_push_notification(self, user_id: str, challenge: str):
+    async def _send_push_notification(self, user_id -> None: str, challenge -> None: str) -> None:
         """Envoie une push notification"""
         # Implémentation avec votre service push
         pass
@@ -55901,13 +55934,13 @@ class MultiFactorAuthenticator:
 class BiometricAuthenticator:
     """Authentificateur biométrique avancé"""
     
-    def __init__(self, redis_client: redis.Redis):
+    def __init__(self, redis_client -> None: redis.Redis) -> None:
         self.redis_client = redis_client
         self.logger = logging.getLogger(__name__)
         self.face_model = None
         self._load_models()
     
-    def _load_models(self):
+    def _load_models(self) -> None:
         """Charge les modèles de reconnaissance biométrique"""
         try:
             # Charger le modèle de reconnaissance faciale si disponible
@@ -56061,7 +56094,7 @@ class BiometricAuthenticator:
             self.logger.error(f"Erreur comparaison templates: {exc}")
             return 0.0
     
-    async def _store_biometric_template(self, biometric_record: BiometricData):
+    async def _store_biometric_template(self, biometric_record -> None: BiometricData) -> None:
         """Stocke un template biométrique de manière sécurisée"""
         try:
             # Chiffrer le template
@@ -56104,7 +56137,7 @@ class BiometricAuthenticator:
             self.logger.error(f"Erreur récupération template biométrique: {exc}")
             return None
     
-    async def _update_biometric_usage(self, user_id: str, biometric_type: str):
+    async def _update_biometric_usage(self, user_id -> None: str, biometric_type -> None: str) -> None:
         """Met à jour la date de dernière utilisation"""
         try:
             key = f"biometric:{user_id}:{biometric_type}"
@@ -56133,13 +56166,13 @@ class BiometricAuthenticator:
 class RiskBasedAuthenticator:
     """Authentificateur basé sur l'analyse de risque"""
     
-    def __init__(self, redis_client: redis.Redis):
+    def __init__(self, redis_client -> None: redis.Redis) -> None:
         self.redis_client = redis_client
         self.logger = logging.getLogger(__name__)
         self.ml_model = None
         self._load_risk_model()
     
-    def _load_risk_model(self):
+    def _load_risk_model(self) -> None:
         """Charge le modèle ML d'analyse de risque"""
         try:
             # Charger un modèle pré-entraîné pour l'analyse de risque
@@ -56512,10 +56545,10 @@ class RiskBasedAuthenticator:
     
     async def _record_risk_analysis(
         self,
-        user_id: str,
-        context: AuthenticationContext,
-        risk_score: float
-    ):
+        user_id -> None: str,
+        context -> None: AuthenticationContext,
+        risk_score -> None: float
+    ) -> None:
         """Enregistre l'analyse de risque pour l'apprentissage"""
         try:
             analysis_data = {
@@ -56720,7 +56753,7 @@ class TokenMetadata:
     device_id: Optional[str] = None
     location: Optional[Dict[str, str]] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.ip_addresses is None:
             self.ip_addresses = []
         if self.user_agents is None:
@@ -56761,7 +56794,7 @@ class APIKey:
     webhook_url: Optional[str] = None
     metadata: Dict[str, Any] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.allowed_ips is None:
             self.allowed_ips = []
         if self.metadata is None:
@@ -56786,7 +56819,7 @@ class JWTConfig:
 class AdvancedTokenManager:
     """Gestionnaire avancé de tokens"""
     
-    def __init__(self, redis_client: redis.Redis, jwt_config: JWTConfig = None):
+    def __init__(self, redis_client -> None: redis.Redis, jwt_config -> None: JWTConfig = None) -> None:
         self.redis_client = redis_client
         self.jwt_config = jwt_config or JWTConfig()
         self.logger = logging.getLogger(__name__)
@@ -56813,7 +56846,7 @@ class AdvancedTokenManager:
             self.logger.error(f"Erreur initialisation chiffrement: {exc}")
             raise
     
-    def _generate_rsa_keys(self):
+    def _generate_rsa_keys(self) -> None:
         """Génère les clés RSA pour JWT"""
         try:
             # Générer la clé privée
@@ -57066,7 +57099,7 @@ class AdvancedTokenManager:
             self.logger.error(f"Erreur actualisation token: {exc}")
             return None, None, "Erreur interne"
     
-    async def revoke_token(self, token_id: str, reason: str = "manual"):
+    async def revoke_token(self, token_id -> None: str, reason -> None: str = "manual") -> None:
         """Révoque un token"""
         try:
             token_info = await self._get_token_info(token_id)
@@ -57153,7 +57186,7 @@ class AdvancedTokenManager:
             return []
     
     # Méthodes privées
-    async def _store_token_info(self, token_info: TokenInfo):
+    async def _store_token_info(self, token_info -> None: TokenInfo) -> None:
         """Stocke les informations d'un token"""
         try:
             # Sérialiser et chiffrer
@@ -57216,7 +57249,7 @@ class AdvancedTokenManager:
         except Exception as exc:
             return None
     
-    async def _update_token_usage(self, token_info: TokenInfo):
+    async def _update_token_usage(self, token_info -> None: TokenInfo) -> None:
         """Met à jour l'utilisation d'un token"""
         try:
             token_info.metadata.last_used = datetime.utcnow()
@@ -57227,7 +57260,7 @@ class AdvancedTokenManager:
         except Exception as exc:
             self.logger.error(f"Erreur mise à jour utilisation token: {exc}")
     
-    async def _manage_token_family(self, family_id: str, token_id: str):
+    async def _manage_token_family(self, family_id -> None: str, token_id -> None: str) -> None:
         """Gère une famille de refresh tokens"""
         try:
             # Ajouter à la famille
@@ -57258,7 +57291,7 @@ class AdvancedTokenManager:
         except Exception as exc:
             self.logger.error(f"Erreur gestion famille tokens: {exc}")
     
-    async def _revoke_token_family(self, family_id: str):
+    async def _revoke_token_family(self, family_id -> None: str) -> None:
         """Révoque tous les tokens d'une famille"""
         try:
             family_members = await self.redis_client.smembers(f"token_family:{family_id}")
@@ -57275,10 +57308,10 @@ class AdvancedTokenManager:
     
     async def _log_token_activity(
         self,
-        token_info: TokenInfo,
-        action: str,
-        metadata: Dict[str, Any] = None
-    ):
+        token_info -> None: TokenInfo,
+        action -> None: str,
+        metadata -> None: Dict[str, Any] = None
+    ) -> None:
         """Enregistre l'activité des tokens"""
         try:
             activity_log = {
@@ -57302,7 +57335,7 @@ class AdvancedTokenManager:
         except Exception as exc:
             self.logger.error(f"Erreur log activité token: {exc}")
     
-    async def _store_keys_securely(self):
+    async def _store_keys_securely(self) -> None:
         """Stocke les clés RSA de manière sécurisée"""
         try:
             # Chiffrer les clés
@@ -57320,7 +57353,7 @@ class AdvancedTokenManager:
 class APIKeyManager:
     """Gestionnaire de clés API"""
     
-    def __init__(self, redis_client: redis.Redis):
+    def __init__(self, redis_client -> None: redis.Redis) -> None:
         self.redis_client = redis_client
         self.logger = logging.getLogger(__name__)
         
@@ -57502,7 +57535,7 @@ class APIKeyManager:
             return False
     
     # Méthodes privées
-    async def _store_api_key(self, api_key: APIKey):
+    async def _store_api_key(self, api_key -> None: APIKey) -> None:
         """Stocke une clé API"""
         try:
             key_data = json.dumps(asdict(api_key), default=str)
@@ -57539,7 +57572,7 @@ class APIKeyManager:
         except Exception:
             return None
     
-    async def _update_api_key_usage(self, api_key: APIKey):
+    async def _update_api_key_usage(self, api_key -> None: APIKey) -> None:
         """Met à jour l'utilisation d'une clé API"""
         try:
             # Mettre à jour les métadonnées
@@ -57564,7 +57597,7 @@ class APIKeyManager:
 class TokenAnalytics:
     """Analyseur de tokens et métriques"""
     
-    def __init__(self, redis_client: redis.Redis):
+    def __init__(self, redis_client -> None: redis.Redis) -> None:
         self.redis_client = redis_client
         self.logger = logging.getLogger(__name__)
     
@@ -57629,7 +57662,7 @@ class TokenAnalytics:
 class TokenCleanupService:
     """Service de nettoyage des tokens"""
     
-    def __init__(self, token_manager: AdvancedTokenManager, api_key_manager: APIKeyManager):
+    def __init__(self, token_manager -> None: AdvancedTokenManager, api_key_manager -> None: APIKeyManager) -> None:
         self.token_manager = token_manager
         self.api_key_manager = api_key_manager
         self.logger = logging.getLogger(__name__)
@@ -57682,7 +57715,7 @@ class TokenCleanupService:
             self.logger.error(f"Erreur nettoyage tokens: {exc}")
             return {}
     
-    async def rotate_encryption_keys(self):
+    async def rotate_encryption_keys(self) -> None:
         """Rotation des clés de chiffrement"""
         try:
             # Implémentation de la rotation des clés
@@ -57803,7 +57836,7 @@ class OAuth2Client:
     updated_at: datetime = None
     is_active: bool = True
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.created_at is None:
             self.created_at = datetime.utcnow()
         if self.updated_at is None:
@@ -57851,7 +57884,7 @@ class RefreshToken:
 class OAuth2Provider:
     """Fournisseur OAuth2 enterprise"""
     
-    def __init__(self, redis_client: redis.Redis):
+    def __init__(self, redis_client -> None: redis.Redis) -> None:
         self.redis_client = redis_client
         self.logger = logging.getLogger(__name__)
         
@@ -57866,7 +57899,7 @@ class OAuth2Provider:
         self.public_key = None
         self._initialize_keys()
     
-    def _initialize_keys(self):
+    def _initialize_keys(self) -> None:
         """Initialise les clés cryptographiques"""
         try:
             # Générer une paire de clés RSA
@@ -58505,7 +58538,7 @@ class OAuth2Provider:
             raise
     
     # Méthodes de stockage Redis (implémentation simplifiée)
-    async def _store_client(self, client: OAuth2Client):
+    async def _store_client(self, client -> None: OAuth2Client) -> None:
         """Stocke un client OAuth2"""
         try:
             key = f"oauth2:client:{client.client_id}"
@@ -58552,7 +58585,7 @@ class OAuth2Provider:
             self.logger.error(f"Erreur authentification client: {exc}")
             return None
     
-    async def _store_authorization_code(self, auth_code: AuthorizationCode):
+    async def _store_authorization_code(self, auth_code -> None: AuthorizationCode) -> None:
         """Stocke un code d'autorisation"""
         try:
             key = f"oauth2:auth_code:{auth_code.code}"
@@ -58577,7 +58610,7 @@ class OAuth2Provider:
             self.logger.error(f"Erreur récupération code autorisation: {exc}")
             return None
     
-    async def _delete_authorization_code(self, code: str):
+    async def _delete_authorization_code(self, code -> None: str) -> None:
         """Supprime un code d'autorisation"""
         try:
             key = f"oauth2:auth_code:{code}"
@@ -58585,7 +58618,7 @@ class OAuth2Provider:
         except Exception as exc:
             self.logger.error(f"Erreur suppression code autorisation: {exc}")
     
-    async def _store_access_token(self, access_token: AccessToken):
+    async def _store_access_token(self, access_token -> None: AccessToken) -> None:
         """Stocke un access token"""
         try:
             key = f"oauth2:access_token:{access_token.token}"
@@ -58610,7 +58643,7 @@ class OAuth2Provider:
             self.logger.error(f"Erreur récupération access token: {exc}")
             return None
     
-    async def _store_refresh_token(self, refresh_token: RefreshToken):
+    async def _store_refresh_token(self, refresh_token -> None: RefreshToken) -> None:
         """Stocke un refresh token"""
         try:
             key = f"oauth2:refresh_token:{refresh_token.token}"
@@ -58635,7 +58668,7 @@ class OAuth2Provider:
             self.logger.error(f"Erreur récupération refresh token: {exc}")
             return None
     
-    async def _delete_refresh_token(self, token: str):
+    async def _delete_refresh_token(self, token -> None: str) -> None:
         """Supprime un refresh token"""
         try:
             key = f"oauth2:refresh_token:{token}"
@@ -58684,7 +58717,7 @@ class OAuth2Provider:
 class OpenIDConnectProvider:
     """Fournisseur OpenID Connect"""
     
-    def __init__(self, oauth2_provider: OAuth2Provider):
+    def __init__(self, oauth2_provider -> None: OAuth2Provider) -> None:
         self.oauth2_provider = oauth2_provider
         self.logger = logging.getLogger(__name__)
     
@@ -58785,7 +58818,7 @@ class OpenIDConnectProvider:
 class SSOManager:
     """Gestionnaire Single Sign-On"""
     
-    def __init__(self, oauth2_provider: OAuth2Provider, redis_client: redis.Redis):
+    def __init__(self, oauth2_provider -> None: OAuth2Provider, redis_client -> None: redis.Redis) -> None:
         self.oauth2_provider = oauth2_provider
         self.redis_client = redis_client
         self.logger = logging.getLogger(__name__)
@@ -58877,7 +58910,7 @@ class SSOManager:
             self.logger.error(f"Erreur création session SSO: {exc}")
             raise
     
-    async def invalidate_sso_sessions(self, user_id: str):
+    async def invalidate_sso_sessions(self, user_id -> None: str) -> None:
         """Invalide toutes les sessions SSO d'un utilisateur"""
         try:
             # Récupérer toutes les sessions de l'utilisateur
@@ -59006,7 +59039,7 @@ class PasswordPolicy:
     breach_detection: bool = True
     
     @classmethod
-    def get_enterprise_policy(cls):
+    def get_enterprise_policy(cls) -> None:
         """Politique enterprise par défaut"""
         return cls(
             min_length=12,
@@ -59052,7 +59085,7 @@ class MagicLink:
     user_agent: Optional[str] = None
     metadata: Dict[str, Any] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.metadata is None:
             self.metadata = {}
 
@@ -59077,7 +59110,7 @@ class WebAuthnCredential:
 class AdvancedPasswordManager:
     """Gestionnaire avancé de mots de passe"""
     
-    def __init__(self, redis_client: redis.Redis, password_policy: PasswordPolicy = None):
+    def __init__(self, redis_client -> None: redis.Redis, password_policy -> None: PasswordPolicy = None) -> None:
         self.redis_client = redis_client
         self.password_policy = password_policy or PasswordPolicy.get_enterprise_policy()
         self.logger = logging.getLogger(__name__)
@@ -59566,7 +59599,7 @@ class AdvancedPasswordManager:
 class PasswordlessAuthManager:
     """Gestionnaire d'authentification sans mot de passe"""
     
-    def __init__(self, redis_client: redis.Redis, email_config: Dict[str, Any] = None):
+    def __init__(self, redis_client -> None: redis.Redis, email_config -> None: Dict[str, Any] = None) -> None:
         self.redis_client = redis_client
         self.email_config = email_config or {}
         self.logger = logging.getLogger(__name__)
@@ -59820,7 +59853,7 @@ class PasswordlessAuthManager:
             return False
     
     # Méthodes privées
-    async def _store_magic_link(self, magic_link: MagicLink):
+    async def _store_magic_link(self, magic_link -> None: MagicLink) -> None:
         """Stocke un lien magique dans Redis"""
         try:
             link_data = json.dumps(asdict(magic_link), default=str)
@@ -59865,7 +59898,7 @@ class PasswordlessAuthManager:
         
         return f"{base_url}?{urlencode(params)}"
     
-    async def _send_magic_link_email(self, email: str, magic_url: str):
+    async def _send_magic_link_email(self, email -> None: str, magic_url -> None: str) -> None:
         """Envoie l'email avec le lien magique"""
         try:
             # Configuration SMTP simplifiée
@@ -59914,7 +59947,7 @@ class PasswordlessAuthManager:
         except Exception as exc:
             self.logger.error(f"Erreur envoi email: {exc}")
     
-    async def _send_push_notification(self, device_token: str, message: str, challenge_id: str):
+    async def _send_push_notification(self, device_token -> None: str, message -> None: str, challenge_id -> None: str) -> None:
         """Envoie une notification push"""
         try:
             # Implémentation simplifiée pour Firebase/APNs
@@ -59936,7 +59969,7 @@ class PasswordlessAuthManager:
 class SocialAuthManager:
     """Gestionnaire d'authentification sociale"""
     
-    def __init__(self, redis_client: redis.Redis):
+    def __init__(self, redis_client -> None: redis.Redis) -> None:
         self.redis_client = redis_client
         self.logger = logging.getLogger(__name__)
         
@@ -60424,6 +60457,7 @@ class BaseSecuritySchema(BaseModel):
     active: bool = Field(default=True, description="Objet actif")
     
     class Config:
+    """Config: class implementation"""
         use_enum_values = True
         validate_assignment = True
 
@@ -60480,7 +60514,7 @@ class TenantSecuritySchema(BaseSecuritySchema):
     api_limits: Dict[str, int] = Field(default_factory=dict)
     
     @validator('allowed_ip_ranges', 'blocked_ip_ranges')
-    def validate_ip_ranges(cls, v):
+    def validate_ip_ranges(cls, v) -> None:
         """Valide les plages d'adresses IP"""
         for ip_range in v:
             try:
@@ -60490,7 +60524,7 @@ class TenantSecuritySchema(BaseSecuritySchema):
         return v
     
     @validator('password_policy')
-    def validate_password_policy(cls, v):
+    def validate_password_policy(cls, v) -> None:
         """Valide la politique de mots de passe"""
         default_policy = {
             "min_length": 12,
@@ -60513,7 +60547,7 @@ class TenantSecuritySchema(BaseSecuritySchema):
         return v
     
     @validator('alert_channels')
-    def validate_alert_channels(cls, v):
+    def validate_alert_channels(cls, v) -> None:
         """Valide les canaux d'alertes"""
         valid_channels = ['slack', 'email', 'sms', 'webhook', 'siem', 'dashboard']
         for channel in v:
@@ -60535,7 +60569,7 @@ class SecurityRuleCondition(BaseModel):
     case_sensitive: bool = Field(default=True)
     
     @validator('operator')
-    def validate_operator(cls, v):
+    def validate_operator(cls, v) -> None:
         """Valide l'opérateur"""
         valid_operators = [
             'equals', 'not_equals', 'contains', 'not_contains',
@@ -60556,7 +60590,7 @@ class SecurityRuleAction(BaseModel):
     escalation: bool = Field(default=False)
     
     @validator('parameters')
-    def validate_parameters(cls, v, values):
+    def validate_parameters(cls, v, values) -> None:
         """Valide les paramètres selon le type d'action"""
         action_type = values.get('type')
         
@@ -60603,14 +60637,14 @@ class SecurityRuleSchema(BaseSecuritySchema):
     false_positive_count: int = Field(default=0, ge=0)
     
     @validator('conditions_logic')
-    def validate_conditions_logic(cls, v):
+    def validate_conditions_logic(cls, v) -> None:
         """Valide la logique des conditions"""
         if v not in ['AND', 'OR']:
             raise ValueError("conditions_logic must be 'AND' or 'OR'")
         return v
     
     @validator('category')
-    def validate_category(cls, v):
+    def validate_category(cls, v) -> None:
         """Valide la catégorie de la règle"""
         valid_categories = [
             'access_control', 'data_protection', 'network_security',
@@ -60623,7 +60657,7 @@ class SecurityRuleSchema(BaseSecuritySchema):
         return v
     
     @root_validator
-    def validate_effective_dates(cls, values):
+    def validate_effective_dates(cls, values) -> None:
         """Valide les dates d'efficacité"""
         effective_from = values.get('effective_from')
         effective_until = values.get('effective_until')
@@ -60649,7 +60683,7 @@ class AlertChannelConfig(BaseModel):
     rate_limit: Optional[int] = Field(None, description="Limite par heure")
     
     @validator('channel_type')
-    def validate_channel_type(cls, v):
+    def validate_channel_type(cls, v) -> None:
         """Valide le type de canal"""
         valid_types = ['slack', 'email', 'sms', 'webhook', 'siem', 'dashboard', 'push']
         if v not in valid_types:
@@ -60657,7 +60691,7 @@ class AlertChannelConfig(BaseModel):
         return v
     
     @validator('retry_policy')
-    def validate_retry_policy(cls, v):
+    def validate_retry_policy(cls, v) -> None:
         """Valide la politique de retry"""
         if not v:
             return {
@@ -60680,7 +60714,7 @@ class AlertTemplate(BaseModel):
     variables: List[str] = Field(default_factory=list, description="Variables disponibles")
     
     @validator('format_type')
-    def validate_format_type(cls, v):
+    def validate_format_type(cls, v) -> None:
         """Valide le type de format"""
         if v not in ['plain', 'markdown', 'html', 'json']:
             raise ValueError(f"Invalid format type: {v}")
@@ -60716,7 +60750,7 @@ class AlertConfigSchema(BaseSecuritySchema):
     aggregation_threshold: int = Field(default=5, ge=1, le=100)
     
     @validator('default_channel')
-    def validate_default_channel(cls, v, values):
+    def validate_default_channel(cls, v, values) -> None:
         """Valide que le canal par défaut existe"""
         channels = values.get('channels', {})
         if v not in channels:
@@ -60724,7 +60758,7 @@ class AlertConfigSchema(BaseSecuritySchema):
         return v
     
     @root_validator
-    def validate_escalation_rules(cls, values):
+    def validate_escalation_rules(cls, values) -> None:
         """Valide les règles d'escalade"""
         if values.get('escalation_enabled'):
             rules = values.get('escalation_rules', [])
@@ -60764,7 +60798,7 @@ class ResourcePermission(BaseModel):
     last_used: Optional[datetime] = Field(None)
     
     @validator('resource_type')
-    def validate_resource_type(cls, v):
+    def validate_resource_type(cls, v) -> None:
         """Valide le type de ressource"""
         valid_types = [
             'audio_file', 'playlist', 'user_data', 'ml_model',
@@ -60790,7 +60824,7 @@ class RoleDefinition(BaseModel):
     max_assignments: Optional[int] = Field(None, ge=1)
     
     @validator('name')
-    def validate_name(cls, v):
+    def validate_name(cls, v) -> None:
         """Valide le nom du rôle"""
         if not re.match(r'^[a-zA-Z0-9_-]+$', v):
             raise ValueError("Role name can only contain alphanumeric characters, underscores, and hyphens")
@@ -60822,7 +60856,7 @@ class PermissionSchema(BaseSecuritySchema):
     cache_ttl_seconds: int = Field(default=300, ge=60, le=3600)
     
     @validator('default_role')
-    def validate_default_role(cls, v, values):
+    def validate_default_role(cls, v, values) -> None:
         """Valide que le rôle par défaut existe"""
         roles = values.get('roles', {})
         if v not in roles:
@@ -60830,7 +60864,7 @@ class PermissionSchema(BaseSecuritySchema):
         return v
     
     @root_validator
-    def validate_role_inheritance(cls, values):
+    def validate_role_inheritance(cls, values) -> None:
         """Valide l'héritage des rôles"""
         roles = values.get('roles', {})
         
@@ -60920,7 +60954,7 @@ class AuditSchema(BaseSecuritySchema):
     retention_period_days: int = Field(default=365, ge=1, le=3650)
     
     @validator('source_ip')
-    def validate_source_ip(cls, v):
+    def validate_source_ip(cls, v) -> None:
         """Valide l'adresse IP source"""
         if v:
             try:
@@ -60930,7 +60964,7 @@ class AuditSchema(BaseSecuritySchema):
         return v
     
     @validator('metadata')
-    def validate_metadata(cls, v, values):
+    def validate_metadata(cls, v, values) -> None:
         """Valide les métadonnées"""
         # Vérification des données sensibles
         if values.get('sensitive_data_logged', False):
@@ -61006,7 +61040,7 @@ class AccessContext:
     timestamp: datetime = None
     metadata: Dict[str, Any] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.timestamp is None:
             self.timestamp = datetime.utcnow()
         if self.metadata is None:
@@ -61018,18 +61052,18 @@ class TenantAccessValidator:
     Validateur de contrôle d'accès tenant-specific
     """
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         self.tenant_configs: Dict[str, TenantSecurityConfig] = {}
         self._cache_ttl = 300  # 5 minutes
         
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialise le validateur"""
         await self._load_tenant_configs()
         logger.info("TenantAccessValidator initialized")
     
-    async def _load_tenant_configs(self):
+    async def _load_tenant_configs(self) -> None:
         """Charge les configurations des tenants"""
         try:
             # Chargement depuis cache Redis
@@ -61046,7 +61080,7 @@ class TenantAccessValidator:
             logger.error(f"Error loading tenant configs: {e}")
             raise
     
-    async def _load_from_database(self):
+    async def _load_from_database(self) -> None:
         """Charge depuis la base de données"""
         # Implémentation du chargement DB
         pass
@@ -61289,12 +61323,12 @@ class PermissionValidator:
     Validateur de permissions RBAC/ABAC
     """
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         self.permission_cache: Dict[str, Dict] = {}
         
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialise le validateur de permissions"""
         logger.info("PermissionValidator initialized")
     
@@ -61425,17 +61459,17 @@ class SecurityRuleValidator:
     Validateur de règles de sécurité personnalisées
     """
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         self.rules_cache: Dict[str, List[SecurityRuleSchema]] = {}
         
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialise le validateur de règles"""
         await self._load_security_rules()
         logger.info("SecurityRuleValidator initialized")
     
-    async def _load_security_rules(self):
+    async def _load_security_rules(self) -> None:
         """Charge les règles de sécurité"""
         # Chargement depuis DB et cache
         pass
@@ -61582,12 +61616,12 @@ class SecurityRuleValidator:
         except Exception:
             return False
     
-    async def _execute_rule_actions(self, rule: SecurityRuleSchema, context: AccessContext):
+    async def _execute_rule_actions(self, rule -> None: SecurityRuleSchema, context -> None: AccessContext) -> None:
         """Exécute les actions d'une règle"""
         for action in rule.actions:
             await self._execute_action(action, rule, context)
     
-    async def _execute_action(self, action, rule: SecurityRuleSchema, context: AccessContext):
+    async def _execute_action(self, action, rule -> None: SecurityRuleSchema, context -> None: AccessContext) -> None:
         """Exécute une action spécifique"""
         if action.type == SecurityAction.BLOCK:
             await self._block_user(context, action.parameters)
@@ -61596,7 +61630,7 @@ class SecurityRuleValidator:
         elif action.type == SecurityAction.MONITOR:
             await self._increase_monitoring(context, action.parameters)
     
-    async def _block_user(self, context: AccessContext, parameters: Dict[str, Any]):
+    async def _block_user(self, context -> None: AccessContext, parameters -> None: Dict[str, Any]) -> None:
         """Bloque un utilisateur"""
         duration = parameters.get("duration_minutes", 60)
         reason = parameters.get("reason", "Security rule violation")
@@ -61610,17 +61644,17 @@ class SecurityRuleValidator:
         
         await self.redis.set(block_key, json.dumps(block_data), ex=duration * 60)
     
-    async def _send_rule_alert(self, rule: SecurityRuleSchema, context: AccessContext, parameters: Dict[str, Any]):
+    async def _send_rule_alert(self, rule -> None: SecurityRuleSchema, context -> None: AccessContext, parameters -> None: Dict[str, Any]) -> None:
         """Envoie une alerte pour violation de règle"""
         # Implémentation d'envoi d'alerte
         pass
     
-    async def _increase_monitoring(self, context: AccessContext, parameters: Dict[str, Any]):
+    async def _increase_monitoring(self, context -> None: AccessContext, parameters -> None: Dict[str, Any]) -> None:
         """Augmente le niveau de monitoring"""
         # Implémentation de monitoring renforcé
         pass
     
-    async def _update_rule_metrics(self, rule: SecurityRuleSchema):
+    async def _update_rule_metrics(self, rule -> None: SecurityRuleSchema) -> None:
         """Met à jour les métriques de la règle"""
         metrics_key = f"rule_metrics:{rule.id}"
         
@@ -61634,17 +61668,17 @@ class ComplianceValidator:
     Validateur de conformité réglementaire (RGPD, SOC2, ISO27001)
     """
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         self.compliance_rules: Dict[ComplianceStandard, Dict] = {}
         
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialise le validateur de conformité"""
         await self._load_compliance_rules()
         logger.info("ComplianceValidator initialized")
     
-    async def _load_compliance_rules(self):
+    async def _load_compliance_rules(self) -> None:
         """Charge les règles de conformité"""
         # Règles RGPD
         self.compliance_rules[ComplianceStandard.GDPR] = {
@@ -61937,6 +61971,7 @@ ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
 class JWTManager:
+    """JWTManager: class implementation"""
     @staticmethod
     def create_access_token(data: Dict[str, Any], expires_delta: Optional[datetime.timedelta] = None) -> str:
         to_encode = data.copy()
@@ -63147,7 +63182,7 @@ staging:
     vulnerability_assessments: true
 """
 
-def write_environment_configs():
+def write_environment_configs() -> None:
     """Write environment configuration files"""
     
     configs = {
@@ -63179,6 +63214,7 @@ import datetime
 from typing import Dict, Optional
 
 class TokenManager:
+    """TokenManager: class implementation"""
     _store: Dict[str, Dict] = {}
 
     @staticmethod
@@ -63186,7 +63222,7 @@ class TokenManager:
         return secrets.token_urlsafe(length)
 
     @classmethod
-    def store_token(cls, token: str, user_id: str, expires_in: int = 3600):
+    def store_token(cls, token -> None: str, user_id -> None: str, expires_in -> None: int = 3600) -> None:
         hashed = hashlib.sha256(token.encode()).hexdigest()
         cls._store[hashed] = {
             "user_id": user_id,
@@ -63202,7 +63238,7 @@ class TokenManager:
         return None
 
     @classmethod
-    def revoke_token(cls, token: str):
+    def revoke_token(cls, token -> None: str) -> None:
         hashed = hashlib.sha256(token.encode()).hexdigest()
         cls._store.pop(hashed, None)
 
@@ -63303,16 +63339,16 @@ class BaseSecurityException(Exception):
     
     def __init__(
         self,
-        message: str,
-        error_code: SecurityErrorCode,
-        severity: SecurityExceptionSeverity = SecurityExceptionSeverity.MEDIUM,
-        tenant_id: Optional[str] = None,
-        user_id: Optional[str] = None,
-        resource: Optional[str] = None,
-        details: Optional[Dict[str, Any]] = None,
-        log_event: bool = True,
-        alert_required: bool = False
-    ):
+        message -> None: str,
+        error_code -> None: SecurityErrorCode,
+        severity -> None: SecurityExceptionSeverity = SecurityExceptionSeverity.MEDIUM,
+        tenant_id -> None: Optional[str] = None,
+        user_id -> None: Optional[str] = None,
+        resource -> None: Optional[str] = None,
+        details -> None: Optional[Dict[str, Any]] = None,
+        log_event -> None: bool = True,
+        alert_required -> None: bool = False
+    ) -> None:
         super().__init__(message)
         self.message = message
         self.error_code = error_code
@@ -63348,7 +63384,7 @@ class BaseSecurityException(Exception):
 class AuthenticationException(BaseSecurityException):
     """Exception générale d'authentification"""
     
-    def __init__(self, message: str = "Authentication failed", **kwargs):
+    def __init__(self, message -> None: str = "Authentication failed", **kwargs) -> None:
         super().__init__(
             message=message,
             error_code=SecurityErrorCode.AUTHENTICATION_FAILED,
@@ -63361,7 +63397,7 @@ class AuthenticationException(BaseSecurityException):
 class InvalidCredentialsException(AuthenticationException):
     """Identifiants invalides"""
     
-    def __init__(self, message: str = "Invalid credentials provided", **kwargs):
+    def __init__(self, message -> None: str = "Invalid credentials provided", **kwargs) -> None:
         super().__init__(
             message=message,
             error_code=SecurityErrorCode.INVALID_CREDENTIALS,
@@ -63372,7 +63408,7 @@ class InvalidCredentialsException(AuthenticationException):
 class AccountLockedException(AuthenticationException):
     """Compte verrouillé"""
     
-    def __init__(self, message: str = "Account is locked", lock_until: Optional[str] = None, **kwargs):
+    def __init__(self, message -> None: str = "Account is locked", lock_until -> None: Optional[str] = None, **kwargs) -> None:
         super().__init__(
             message=message,
             error_code=SecurityErrorCode.ACCOUNT_LOCKED,
@@ -63385,7 +63421,7 @@ class AccountLockedException(AuthenticationException):
 class SessionExpiredException(AuthenticationException):
     """Session expirée"""
     
-    def __init__(self, message: str = "Session has expired", **kwargs):
+    def __init__(self, message -> None: str = "Session has expired", **kwargs) -> None:
         super().__init__(
             message=message,
             error_code=SecurityErrorCode.SESSION_EXPIRED,
@@ -63397,7 +63433,7 @@ class SessionExpiredException(AuthenticationException):
 class InvalidTokenException(AuthenticationException):
     """Token invalide"""
     
-    def __init__(self, message: str = "Invalid or malformed token", token_type: str = "unknown", **kwargs):
+    def __init__(self, message -> None: str = "Invalid or malformed token", token_type -> None: str = "unknown", **kwargs) -> None:
         super().__init__(
             message=message,
             error_code=SecurityErrorCode.TOKEN_INVALID,
@@ -63409,7 +63445,7 @@ class InvalidTokenException(AuthenticationException):
 class TokenExpiredException(AuthenticationException):
     """Token expiré"""
     
-    def __init__(self, message: str = "Token has expired", expired_at: Optional[str] = None, **kwargs):
+    def __init__(self, message -> None: str = "Token has expired", expired_at -> None: Optional[str] = None, **kwargs) -> None:
         super().__init__(
             message=message,
             error_code=SecurityErrorCode.TOKEN_EXPIRED,
@@ -63425,7 +63461,7 @@ class TokenExpiredException(AuthenticationException):
 class AuthorizationException(BaseSecurityException):
     """Exception générale d'autorisation"""
     
-    def __init__(self, message: str = "Authorization failed", **kwargs):
+    def __init__(self, message -> None: str = "Authorization failed", **kwargs) -> None:
         super().__init__(
             message=message,
             error_code=SecurityErrorCode.AUTHORIZATION_FAILED,
@@ -63440,11 +63476,11 @@ class InsufficientPermissionsException(AuthorizationException):
     
     def __init__(
         self,
-        message: str = "Insufficient permissions for this operation",
-        required_permissions: Optional[List[str]] = None,
-        user_permissions: Optional[List[str]] = None,
+        message -> None: str = "Insufficient permissions for this operation",
+        required_permissions -> None: Optional[List[str]] = None,
+        user_permissions -> None: Optional[List[str]] = None,
         **kwargs
-    ):
+    ) -> None:
         super().__init__(
             message=message,
             error_code=SecurityErrorCode.INSUFFICIENT_PERMISSIONS,
@@ -63459,7 +63495,7 @@ class InsufficientPermissionsException(AuthorizationException):
 class ResourceAccessDeniedException(AuthorizationException):
     """Accès à la ressource refusé"""
     
-    def __init__(self, message: str = "Access to resource denied", resource_id: Optional[str] = None, **kwargs):
+    def __init__(self, message -> None: str = "Access to resource denied", resource_id -> None: Optional[str] = None, **kwargs) -> None:
         super().__init__(
             message=message,
             error_code=SecurityErrorCode.RESOURCE_ACCESS_DENIED,
@@ -63471,7 +63507,7 @@ class ResourceAccessDeniedException(AuthorizationException):
 class TenantAccessDeniedException(AuthorizationException):
     """Accès au tenant refusé"""
     
-    def __init__(self, message: str = "Access to tenant denied", attempted_tenant: Optional[str] = None, **kwargs):
+    def __init__(self, message -> None: str = "Access to tenant denied", attempted_tenant -> None: Optional[str] = None, **kwargs) -> None:
         super().__init__(
             message=message,
             error_code=SecurityErrorCode.TENANT_ACCESS_DENIED,
@@ -63483,7 +63519,7 @@ class TenantAccessDeniedException(AuthorizationException):
 class RoleNotFoundException(AuthorizationException):
     """Rôle non trouvé"""
     
-    def __init__(self, message: str = "Role not found", role_name: Optional[str] = None, **kwargs):
+    def __init__(self, message -> None: str = "Role not found", role_name -> None: Optional[str] = None, **kwargs) -> None:
         super().__init__(
             message=message,
             error_code=SecurityErrorCode.ROLE_NOT_FOUND,
@@ -63500,7 +63536,7 @@ class RoleNotFoundException(AuthorizationException):
 class ValidationException(BaseSecurityException):
     """Exception de validation"""
     
-    def __init__(self, message: str = "Validation failed", validation_errors: Optional[List[str]] = None, **kwargs):
+    def __init__(self, message -> None: str = "Validation failed", validation_errors -> None: Optional[List[str]] = None, **kwargs) -> None:
         super().__init__(
             message=message,
             error_code=SecurityErrorCode.VALIDATION_FAILED,
@@ -63513,7 +63549,7 @@ class ValidationException(BaseSecurityException):
 class InvalidInputException(ValidationException):
     """Entrée invalide"""
     
-    def __init__(self, message: str = "Invalid input provided", field_name: Optional[str] = None, **kwargs):
+    def __init__(self, message -> None: str = "Invalid input provided", field_name -> None: Optional[str] = None, **kwargs) -> None:
         super().__init__(
             message=message,
             error_code=SecurityErrorCode.INVALID_INPUT,
@@ -63525,7 +63561,7 @@ class InvalidInputException(ValidationException):
 class SchemaViolationException(ValidationException):
     """Violation de schéma"""
     
-    def __init__(self, message: str = "Schema validation failed", schema_errors: Optional[List[str]] = None, **kwargs):
+    def __init__(self, message -> None: str = "Schema validation failed", schema_errors -> None: Optional[List[str]] = None, **kwargs) -> None:
         super().__init__(
             message=message,
             error_code=SecurityErrorCode.SCHEMA_VIOLATION,
@@ -63537,7 +63573,7 @@ class SchemaViolationException(ValidationException):
 class ConstraintViolationException(ValidationException):
     """Violation de contrainte"""
     
-    def __init__(self, message: str = "Constraint violation", constraint_name: Optional[str] = None, **kwargs):
+    def __init__(self, message -> None: str = "Constraint violation", constraint_name -> None: Optional[str] = None, **kwargs) -> None:
         super().__init__(
             message=message,
             error_code=SecurityErrorCode.CONSTRAINT_VIOLATION,
@@ -63553,7 +63589,7 @@ class ConstraintViolationException(ValidationException):
 class EncryptionException(BaseSecurityException):
     """Exception de chiffrement"""
     
-    def __init__(self, message: str = "Encryption operation failed", **kwargs):
+    def __init__(self, message -> None: str = "Encryption operation failed", **kwargs) -> None:
         super().__init__(
             message=message,
             error_code=SecurityErrorCode.ENCRYPTION_FAILED,
@@ -63566,7 +63602,7 @@ class EncryptionException(BaseSecurityException):
 class DecryptionException(BaseSecurityException):
     """Exception de déchiffrement"""
     
-    def __init__(self, message: str = "Decryption operation failed", **kwargs):
+    def __init__(self, message -> None: str = "Decryption operation failed", **kwargs) -> None:
         super().__init__(
             message=message,
             error_code=SecurityErrorCode.DECRYPTION_FAILED,
@@ -63579,7 +63615,7 @@ class DecryptionException(BaseSecurityException):
 class KeyNotFoundException(EncryptionException):
     """Clé de chiffrement non trouvée"""
     
-    def __init__(self, message: str = "Encryption key not found", key_id: Optional[str] = None, **kwargs):
+    def __init__(self, message -> None: str = "Encryption key not found", key_id -> None: Optional[str] = None, **kwargs) -> None:
         super().__init__(
             message=message,
             error_code=SecurityErrorCode.KEY_NOT_FOUND,
@@ -63591,7 +63627,7 @@ class KeyNotFoundException(EncryptionException):
 class KeyExpiredException(EncryptionException):
     """Clé de chiffrement expirée"""
     
-    def __init__(self, message: str = "Encryption key has expired", key_id: Optional[str] = None, **kwargs):
+    def __init__(self, message -> None: str = "Encryption key has expired", key_id -> None: Optional[str] = None, **kwargs) -> None:
         super().__init__(
             message=message,
             error_code=SecurityErrorCode.KEY_EXPIRED,
@@ -63603,7 +63639,7 @@ class KeyExpiredException(EncryptionException):
 class InvalidAlgorithmException(EncryptionException):
     """Algorithme de chiffrement invalide"""
     
-    def __init__(self, message: str = "Invalid encryption algorithm", algorithm: Optional[str] = None, **kwargs):
+    def __init__(self, message -> None: str = "Invalid encryption algorithm", algorithm -> None: Optional[str] = None, **kwargs) -> None:
         super().__init__(
             message=message,
             error_code=SecurityErrorCode.INVALID_ALGORITHM,
@@ -63621,12 +63657,12 @@ class RateLimitExceededException(BaseSecurityException):
     
     def __init__(
         self,
-        message: str = "Rate limit exceeded",
-        limit: Optional[int] = None,
-        window_seconds: Optional[int] = None,
-        retry_after: Optional[int] = None,
+        message -> None: str = "Rate limit exceeded",
+        limit -> None: Optional[int] = None,
+        window_seconds -> None: Optional[int] = None,
+        retry_after -> None: Optional[int] = None,
         **kwargs
-    ):
+    ) -> None:
         super().__init__(
             message=message,
             error_code=SecurityErrorCode.RATE_LIMIT_EXCEEDED,
@@ -63645,12 +63681,12 @@ class QuotaExceededException(BaseSecurityException):
     
     def __init__(
         self,
-        message: str = "Quota exceeded",
-        quota_type: Optional[str] = None,
-        current_usage: Optional[int] = None,
-        quota_limit: Optional[int] = None,
+        message -> None: str = "Quota exceeded",
+        quota_type -> None: Optional[str] = None,
+        current_usage -> None: Optional[int] = None,
+        quota_limit -> None: Optional[int] = None,
         **kwargs
-    ):
+    ) -> None:
         super().__init__(
             message=message,
             error_code=SecurityErrorCode.QUOTA_EXCEEDED,
@@ -63671,7 +63707,7 @@ class QuotaExceededException(BaseSecurityException):
 class IPBlockedException(BaseSecurityException):
     """IP bloquée"""
     
-    def __init__(self, message: str = "IP address is blocked", ip_address: Optional[str] = None, **kwargs):
+    def __init__(self, message -> None: str = "IP address is blocked", ip_address -> None: Optional[str] = None, **kwargs) -> None:
         super().__init__(
             message=message,
             error_code=SecurityErrorCode.IP_BLOCKED,
@@ -63687,11 +63723,11 @@ class SuspiciousActivityException(BaseSecurityException):
     
     def __init__(
         self,
-        message: str = "Suspicious activity detected",
-        activity_type: Optional[str] = None,
-        risk_score: Optional[float] = None,
+        message -> None: str = "Suspicious activity detected",
+        activity_type -> None: Optional[str] = None,
+        risk_score -> None: Optional[float] = None,
         **kwargs
-    ):
+    ) -> None:
         super().__init__(
             message=message,
             error_code=SecurityErrorCode.SUSPICIOUS_ACTIVITY,
@@ -63710,10 +63746,10 @@ class GeolocationBlockedException(BaseSecurityException):
     
     def __init__(
         self,
-        message: str = "Access from this location is blocked",
-        country_code: Optional[str] = None,
+        message -> None: str = "Access from this location is blocked",
+        country_code -> None: Optional[str] = None,
         **kwargs
-    ):
+    ) -> None:
         super().__init__(
             message=message,
             error_code=SecurityErrorCode.GEOLOCATION_BLOCKED,
@@ -63732,10 +63768,10 @@ class GDPRViolationException(BaseSecurityException):
     
     def __init__(
         self,
-        message: str = "GDPR compliance violation",
-        violation_type: Optional[str] = None,
+        message -> None: str = "GDPR compliance violation",
+        violation_type -> None: Optional[str] = None,
         **kwargs
-    ):
+    ) -> None:
         super().__init__(
             message=message,
             error_code=SecurityErrorCode.GDPR_VIOLATION,
@@ -63751,10 +63787,10 @@ class DataRetentionViolationException(BaseSecurityException):
     
     def __init__(
         self,
-        message: str = "Data retention policy violation",
-        retention_period: Optional[str] = None,
+        message -> None: str = "Data retention policy violation",
+        retention_period -> None: Optional[str] = None,
         **kwargs
-    ):
+    ) -> None:
         super().__init__(
             message=message,
             error_code=SecurityErrorCode.DATA_RETENTION_VIOLATION,
@@ -63768,7 +63804,7 @@ class DataRetentionViolationException(BaseSecurityException):
 class AuditRequiredException(BaseSecurityException):
     """Audit requis"""
     
-    def __init__(self, message: str = "Audit trail is required for this operation", **kwargs):
+    def __init__(self, message -> None: str = "Audit trail is required for this operation", **kwargs) -> None:
         super().__init__(
             message=message,
             error_code=SecurityErrorCode.AUDIT_REQUIRED,
@@ -63786,10 +63822,10 @@ class InvalidConfigurationException(BaseSecurityException):
     
     def __init__(
         self,
-        message: str = "Invalid security configuration",
-        config_key: Optional[str] = None,
+        message -> None: str = "Invalid security configuration",
+        config_key -> None: Optional[str] = None,
         **kwargs
-    ):
+    ) -> None:
         super().__init__(
             message=message,
             error_code=SecurityErrorCode.INVALID_CONFIGURATION,
@@ -63804,10 +63840,10 @@ class MissingConfigurationException(BaseSecurityException):
     
     def __init__(
         self,
-        message: str = "Required security configuration is missing",
-        missing_config: Optional[str] = None,
+        message -> None: str = "Required security configuration is missing",
+        missing_config -> None: Optional[str] = None,
         **kwargs
-    ):
+    ) -> None:
         super().__init__(
             message=message,
             error_code=SecurityErrorCode.MISSING_CONFIGURATION,
@@ -63824,7 +63860,7 @@ class MissingConfigurationException(BaseSecurityException):
 class MonitoringFailedException(BaseSecurityException):
     """Échec du monitoring"""
     
-    def __init__(self, message: str = "Security monitoring failed", monitor_type: Optional[str] = None, **kwargs):
+    def __init__(self, message -> None: str = "Security monitoring failed", monitor_type -> None: Optional[str] = None, **kwargs) -> None:
         super().__init__(
             message=message,
             error_code=SecurityErrorCode.MONITORING_FAILED,
@@ -63837,7 +63873,7 @@ class MonitoringFailedException(BaseSecurityException):
 class AlertFailedException(BaseSecurityException):
     """Échec d'alerte"""
     
-    def __init__(self, message: str = "Security alert failed", alert_type: Optional[str] = None, **kwargs):
+    def __init__(self, message -> None: str = "Security alert failed", alert_type -> None: Optional[str] = None, **kwargs) -> None:
         super().__init__(
             message=message,
             error_code=SecurityErrorCode.ALERT_FAILED,
@@ -63856,11 +63892,11 @@ class SecurityPolicyViolationException(BaseSecurityException):
     
     def __init__(
         self,
-        message: str = "Security policy violation",
-        policy_name: Optional[str] = None,
-        violation_details: Optional[str] = None,
+        message -> None: str = "Security policy violation",
+        policy_name -> None: Optional[str] = None,
+        violation_details -> None: Optional[str] = None,
         **kwargs
-    ):
+    ) -> None:
         super().__init__(
             message=message,
             error_code=SecurityErrorCode.SECURITY_POLICY_VIOLATION,
@@ -63879,12 +63915,12 @@ class ThreatDetectedException(BaseSecurityException):
     
     def __init__(
         self,
-        message: str = "Security threat detected",
-        threat_type: Optional[str] = None,
-        threat_score: Optional[float] = None,
-        threat_indicators: Optional[List[str]] = None,
+        message -> None: str = "Security threat detected",
+        threat_type -> None: Optional[str] = None,
+        threat_score -> None: Optional[float] = None,
+        threat_indicators -> None: Optional[List[str]] = None,
         **kwargs
-    ):
+    ) -> None:
         super().__init__(
             message=message,
             error_code=SecurityErrorCode.THREAT_DETECTED,
@@ -63904,11 +63940,11 @@ class IntrusionDetectedException(BaseSecurityException):
     
     def __init__(
         self,
-        message: str = "Intrusion attempt detected",
-        intrusion_type: Optional[str] = None,
-        source_info: Optional[Dict[str, Any]] = None,
+        message -> None: str = "Intrusion attempt detected",
+        intrusion_type -> None: Optional[str] = None,
+        source_info -> None: Optional[Dict[str, Any]] = None,
         **kwargs
-    ):
+    ) -> None:
         super().__init__(
             message=message,
             error_code=SecurityErrorCode.INTRUSION_DETECTED,
@@ -63927,11 +63963,11 @@ class MaliciousRequestException(BaseSecurityException):
     
     def __init__(
         self,
-        message: str = "Malicious request detected",
-        request_signature: Optional[str] = None,
-        attack_pattern: Optional[str] = None,
+        message -> None: str = "Malicious request detected",
+        request_signature -> None: Optional[str] = None,
+        attack_pattern -> None: Optional[str] = None,
         **kwargs
-    ):
+    ) -> None:
         super().__init__(
             message=message,
             error_code=SecurityErrorCode.MALICIOUS_REQUEST,
@@ -64055,6 +64091,7 @@ import hashlib
 from typing import Optional
 
 class PasswordManager:
+    """PasswordManager: class implementation"""
     @staticmethod
     def hash_password(password: str) -> str:
         return hashlib.sha256(password.encode()).hexdigest()
@@ -64117,13 +64154,13 @@ class TestSQLInjectionVulnerabilities:
     """💉 SQL Injection Vulnerability Tests"""
     
     @pytest.fixture
-    async def tenant_manager(self):
+    async def tenant_manager(self) -> None:
         """Create tenant manager for security testing"""
         manager = EnterpriseTenantManager()
         yield manager
         await manager.cleanup()
     
-    async def test_tenant_creation_sql_injection_protection(self, tenant_manager):
+    async def test_tenant_creation_sql_injection_protection(self, tenant_manager) -> None:
         """Test SQL injection protection in tenant creation"""
         sql_injection_payloads = [
             "'; DROP TABLE tenants; --",
@@ -64162,7 +64199,7 @@ class TestSQLInjectionVulnerabilities:
                 # Should not cause system errors
                 pytest.fail(f"SQL injection payload caused system error: {e}")
     
-    async def test_tenant_search_sql_injection_protection(self, tenant_manager):
+    async def test_tenant_search_sql_injection_protection(self, tenant_manager) -> None:
         """Test SQL injection protection in tenant search"""
         search_injection_payloads = [
             "'; UPDATE tenants SET name='hacked'; --",
@@ -64197,7 +64234,7 @@ class TestSQLInjectionVulnerabilities:
             except Exception as e:
                 pytest.fail(f"Search SQL injection caused system error: {e}")
     
-    async def test_tenant_update_sql_injection_protection(self, tenant_manager):
+    async def test_tenant_update_sql_injection_protection(self, tenant_manager) -> None:
         """Test SQL injection protection in tenant updates"""
         # Create a test tenant first
         tenant_data = create_sample_tenant_data()
@@ -64237,7 +64274,7 @@ class TestSQLInjectionVulnerabilities:
 class TestCrossSiteScriptingXSS:
     """🔗 Cross-Site Scripting (XSS) Vulnerability Tests"""
     
-    async def test_tenant_data_xss_protection(self):
+    async def test_tenant_data_xss_protection(self) -> None:
         """Test XSS protection in tenant data fields"""
         manager = EnterpriseTenantManager()
         
@@ -64283,7 +64320,7 @@ class TestCrossSiteScriptingXSS:
         
         await manager.cleanup()
     
-    async def test_tenant_response_xss_protection(self):
+    async def test_tenant_response_xss_protection(self) -> None:
         """Test XSS protection in API responses"""
         manager = EnterpriseTenantManager()
         
@@ -64323,13 +64360,13 @@ class TestAuthenticationSecurity:
     """🔐 Authentication Security Tests"""
     
     @pytest.fixture
-    async def security_service(self):
+    async def security_service(self) -> None:
         """Create security service for testing"""
         service = TenantSecurityService()
         yield service
         await service.cleanup()
     
-    async def test_jwt_token_security(self, security_service):
+    async def test_jwt_token_security(self, security_service) -> None:
         """Test JWT token security and validation"""
         tenant_id = "auth_test_tenant"
         user_id = "test_user_123"
@@ -64366,7 +64403,7 @@ class TestAuthenticationSecurity:
             assert validation_result["valid"] is False
             assert "error" in validation_result
     
-    async def test_password_security_requirements(self, security_service):
+    async def test_password_security_requirements(self, security_service) -> None:
         """Test password security requirements and hashing"""
         weak_passwords = [
             "123456",
@@ -64415,7 +64452,7 @@ class TestAuthenticationSecurity:
             )
             assert wrong_verification is False
     
-    async def test_session_security(self, security_service):
+    async def test_session_security(self, security_service) -> None:
         """Test session management security"""
         tenant_id = "session_test_tenant"
         user_id = "session_test_user"
@@ -64462,7 +64499,7 @@ class TestAuthenticationSecurity:
 class TestAuthorizationSecurity:
     """👮 Authorization Security Tests"""
     
-    async def test_role_based_access_control(self):
+    async def test_role_based_access_control(self) -> None:
         """Test role-based access control (RBAC)"""
         security_manager = TenantSecurityManager()
         tenant_id = "rbac_test_tenant"
@@ -64509,7 +64546,7 @@ class TestAuthorizationSecurity:
         
         await security_manager.cleanup()
     
-    async def test_attribute_based_access_control(self):
+    async def test_attribute_based_access_control(self) -> None:
         """Test attribute-based access control (ABAC)"""
         security_manager = TenantSecurityManager()
         tenant_id = "abac_test_tenant"
@@ -64579,7 +64616,7 @@ class TestAuthorizationSecurity:
         
         await security_manager.cleanup()
     
-    async def test_cross_tenant_access_prevention(self):
+    async def test_cross_tenant_access_prevention(self) -> None:
         """Test prevention of cross-tenant data access"""
         security_manager = TenantSecurityManager()
         
@@ -64643,7 +64680,7 @@ class TestAuthorizationSecurity:
 class TestDataEncryptionSecurity:
     """🔒 Data Encryption Security Tests"""
     
-    async def test_data_encryption_at_rest(self):
+    async def test_data_encryption_at_rest(self) -> None:
         """Test data encryption at rest"""
         isolation_manager = QuantumDataIsolationManager()
         tenant_id = "encryption_test_tenant"
@@ -64691,7 +64728,7 @@ class TestDataEncryptionSecurity:
         
         await isolation_manager.cleanup()
     
-    async def test_data_encryption_in_transit(self):
+    async def test_data_encryption_in_transit(self) -> None:
         """Test data encryption in transit"""
         isolation_manager = QuantumDataIsolationManager()
         
@@ -64732,7 +64769,7 @@ class TestDataEncryptionSecurity:
         
         await isolation_manager.cleanup()
     
-    async def test_key_management_security(self):
+    async def test_key_management_security(self) -> None:
         """Test encryption key management security"""
         isolation_manager = QuantumDataIsolationManager()
         tenant_id = "key_management_test"
@@ -64769,7 +64806,7 @@ class TestDataEncryptionSecurity:
 class TestSecurityAuditAndCompliance:
     """🛡️ Security Audit and Compliance Tests"""
     
-    async def test_security_event_logging(self):
+    async def test_security_event_logging(self) -> None:
         """Test comprehensive security event logging"""
         security_service = TenantSecurityService()
         tenant_id = "audit_logging_test"
@@ -64822,7 +64859,7 @@ class TestSecurityAuditAndCompliance:
         
         await security_service.cleanup()
     
-    async def test_compliance_validation(self):
+    async def test_compliance_validation(self) -> None:
         """Test security compliance validation"""
         from tests_backend.app.tenancy import compliance_validator
         
@@ -64857,7 +64894,7 @@ class TestSecurityAuditAndCompliance:
         for standard, result in compliance_report.items():
             assert result["compliant"] is True, f"{standard} compliance failed"
     
-    async def test_vulnerability_scanning(self):
+    async def test_vulnerability_scanning(self) -> None:
         """Test automated vulnerability scanning"""
         tenant_id = "vulnerability_scan_test"
         
@@ -64901,7 +64938,7 @@ class TestSecurityAuditAndCompliance:
 
 # Security test fixtures
 @pytest.fixture
-def mock_security_tools():
+def mock_security_tools() -> None:
     """Mock security testing tools"""
     with patch('bandit.core.manager.BanditManager') as mock_bandit, \
          patch('safety.check') as mock_safety, \
@@ -64920,7 +64957,7 @@ def mock_security_tools():
 
 
 @pytest.fixture
-async def security_test_environment():
+async def security_test_environment() -> None:
     """Setup secure test environment"""
     # Setup test encryption keys
     test_key = Fernet.generate_key()
@@ -64938,7 +64975,7 @@ async def security_test_environment():
 
 # Security monitoring fixture
 @pytest.fixture(autouse=True)
-async def monitor_security_tests(request):
+async def monitor_security_tests(request) -> None:
     """Monitor security test execution for issues"""
     test_name = request.node.name
     security_issues = []
@@ -64946,7 +64983,7 @@ async def monitor_security_tests(request):
     # Mock to capture potential security issues
     original_warning = pytest.warn
     
-    def capture_security_warning(message):
+    def capture_security_warning(message) -> None:
         if any(keyword in str(message).lower() for keyword in 
                ['vulnerability', 'security', 'injection', 'xss', 'csrf']):
             security_issues.append(str(message))
@@ -64999,7 +65036,7 @@ logger = logging.getLogger(__name__)
 class KeyGenerator:
     """Advanced cryptographic key generator."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.generation_history = []
     
     def generate_secure_random_key(self, length: int = 32) -> bytes:
@@ -65136,11 +65173,11 @@ class KeyGenerator:
 class KeyRotationScheduler:
     """Automated key rotation scheduling and management."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.rotation_schedule = {}
         self.rotation_history = []
     
-    def schedule_rotation(self, key_id: str, interval_days: int):
+    def schedule_rotation(self, key_id -> None: str, interval_days -> None: int) -> None:
         """Schedule automatic key rotation."""
         self.rotation_schedule[key_id] = {
             'interval_days': interval_days,
@@ -65160,7 +65197,7 @@ class KeyRotationScheduler:
         
         return due_keys
     
-    def mark_rotated(self, key_id: str):
+    def mark_rotated(self, key_id -> None: str) -> None:
         """Mark a key as rotated."""
         if key_id in self.rotation_schedule:
             schedule = self.rotation_schedule[key_id]
@@ -65178,7 +65215,7 @@ class KeyRotationScheduler:
 class KeyValidator:
     """Advanced key validation and security compliance checking."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.validation_rules = {
             'minimum_length': 32,
             'maximum_age_days': 90,
@@ -65267,7 +65304,7 @@ class KeyValidator:
 class SecureKeyManager:
     """High-level secure key management interface."""
     
-    def __init__(self, storage_path: Path):
+    def __init__(self, storage_path -> None: Path) -> None:
         self.storage_path = Path(storage_path)
         self.storage_path.mkdir(parents=True, exist_ok=True)
         self.generator = KeyGenerator()
@@ -65276,7 +65313,7 @@ class SecureKeyManager:
         self.key_registry = {}
         self._load_registry()
     
-    def _load_registry(self):
+    def _load_registry(self) -> None:
         """Load key registry from storage."""
         registry_file = self.storage_path / 'key_registry.json'
         if registry_file.exists():
@@ -65287,7 +65324,7 @@ class SecureKeyManager:
                 logger.error(f"Failed to load key registry: {e}")
                 self.key_registry = {}
     
-    def _save_registry(self):
+    def _save_registry(self) -> None:
         """Save key registry to storage."""
         registry_file = self.storage_path / 'key_registry.json'
         try:
@@ -65494,7 +65531,7 @@ def validate_existing_key(key: str, key_type: str = None) -> Dict[str, any]:
     return validator.validate_key(key, key_type)
 
 
-async def automated_key_rotation(storage_path: str):
+async def automated_key_rotation(storage_path -> None: str) -> None:
     """Perform automated key rotation for due keys."""
     manager = SecureKeyManager(Path(storage_path))
     
@@ -65514,7 +65551,7 @@ async def automated_key_rotation(storage_path: str):
 
 
 # Main execution function
-async def main():
+async def main() -> None:
     """Main function for key management operations."""
     import argparse
     
@@ -65684,7 +65721,7 @@ class SecurityConfig:
     enable_audit_logging: bool = True
     audit_log_retention_days: int = 90
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.encryption_key is None:
             self.encryption_key = Fernet.generate_key()
 
@@ -65712,7 +65749,7 @@ class CryptographyManager:
     - Signatures numériques
     """
     
-    def __init__(self, config: SecurityConfig):
+    def __init__(self, config -> None: SecurityConfig) -> None:
         self.config = config
         self.fernet = Fernet(config.encryption_key)
         self.password_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
@@ -65838,7 +65875,7 @@ class JWTManager:
     - Révocation de tokens
     """
     
-    def __init__(self, config: SecurityConfig):
+    def __init__(self, config -> None: SecurityConfig) -> None:
         self.config = config
         self.logger = logging.getLogger("security.jwt")
         
@@ -65935,7 +65972,7 @@ class JWTManager:
                 detail="Invalid token"
             )
     
-    def revoke_token(self, token: str):
+    def revoke_token(self, token -> None: str) -> None:
         """Révoque un token"""
         try:
             payload = jwt.decode(
@@ -65969,7 +66006,7 @@ class OAuth2Manager:
     - Custom OAuth providers
     """
     
-    def __init__(self, config: SecurityConfig):
+    def __init__(self, config -> None: SecurityConfig) -> None:
         self.config = config
         self.logger = logging.getLogger("security.oauth2")
         
@@ -66099,7 +66136,7 @@ class RateLimitManager:
     - Analyse comportementale
     """
     
-    def __init__(self, config: SecurityConfig):
+    def __init__(self, config -> None: SecurityConfig) -> None:
         self.config = config
         self.redis_client = redis.Redis.from_url(config.rate_limit_redis_url)
         self.logger = logging.getLogger("security.ratelimit")
@@ -66141,7 +66178,7 @@ class RateLimitManager:
             self.logger.error(f"Rate limit check failed: {e}")
             return True  # Permettre en cas d'erreur
     
-    def get_rate_limit_decorator(self, requests: int, window: str):
+    def get_rate_limit_decorator(self, requests -> None: int, window -> None: str) -> None:
         """Retourne un décorateur de limitation de débit"""
         return self.limiter.limit(f"{requests}/{window}")
 
@@ -66157,7 +66194,7 @@ class SecurityAuditManager:
     - Détection d'anomalies
     """
     
-    def __init__(self, config: SecurityConfig):
+    def __init__(self, config -> None: SecurityConfig) -> None:
         self.config = config
         self.logger = structlog.get_logger("security.audit")
         
@@ -66180,7 +66217,7 @@ class SecurityAuditManager:
             cache_logger_on_first_use=True,
         )
     
-    async def log_security_event(self, event: SecurityEvent):
+    async def log_security_event(self, event -> None: SecurityEvent) -> None:
         """Enregistre un événement de sécurité"""
         try:
             self.logger.info(
@@ -66200,7 +66237,7 @@ class SecurityAuditManager:
         except Exception as e:
             self.logger.error("Failed to log security event", error=str(e))
     
-    async def _analyze_risk(self, event: SecurityEvent):
+    async def _analyze_risk(self, event -> None: SecurityEvent) -> None:
         """Analyse le risque d'un événement"""
         try:
             # Détection d'anomalies basique
@@ -66241,7 +66278,7 @@ class SecurityAuditManager:
         # Implémentation de comptage dans Redis
         return 0  # Placeholder
     
-    async def _trigger_security_alert(self, event: SecurityEvent, risk_factors: List[str]):
+    async def _trigger_security_alert(self, event -> None: SecurityEvent, risk_factors -> None: List[str]) -> None:
         """Déclenche une alerte de sécurité"""
         self.logger.warning(
             "SECURITY ALERT",
@@ -66266,7 +66303,7 @@ class SecurityFrameworkManager(BaseFramework):
     - Audit et conformité
     """
     
-    def __init__(self, config: Optional[SecurityConfig] = None):
+    def __init__(self, config -> None: Optional[SecurityConfig] = None) -> None:
         super().__init__("security", config.__dict__ if config else {})
         self.config = config or SecurityConfig()
         
@@ -66309,7 +66346,7 @@ class SecurityFrameworkManager(BaseFramework):
             self.logger.error(f"Security framework initialization failed: {e}")
             return False
     
-    async def _validate_security_config(self):
+    async def _validate_security_config(self) -> None:
         """Valide la configuration de sécurité"""
         if len(self.config.jwt_secret_key) < 32:
             raise ValueError("JWT secret key too short (minimum 32 characters)")
@@ -66317,7 +66354,7 @@ class SecurityFrameworkManager(BaseFramework):
         if not self.config.encryption_key:
             raise ValueError("Encryption key not configured")
     
-    async def _setup_security_middleware(self):
+    async def _setup_security_middleware(self) -> None:
         """Configure les middleware de sécurité"""
         # Configuration des headers de sécurité
         # Rate limiting
@@ -66395,7 +66432,7 @@ class SecurityFrameworkManager(BaseFramework):
             self.logger.error(f"Authorization check failed: {e}")
             return False
     
-    def create_permission_dependency(self, required_permissions: List[str]):
+    def create_permission_dependency(self, required_permissions -> None: List[str]) -> None:
         """Crée une dépendance FastAPI pour les permissions"""
         async def permission_checker(
             user_payload: Dict[str, Any] = Depends(self.authenticate_user)
@@ -66472,7 +66509,7 @@ def get_current_user(
     return asyncio.run(security_manager.authenticate_user(credentials))
 
 
-def require_permissions(permissions: List[str]):
+def require_permissions(permissions -> None: List[str]) -> None:
     """Décorateur pour exiger des permissions spécifiques"""
     return security_manager.create_permission_dependency(permissions)
 
@@ -66617,7 +66654,7 @@ class RateLimiter:
     and burst handling capabilities.
     """
     
-    def __init__(self, rate: float, burst: int = None):
+    def __init__(self, rate -> None: float, burst -> None: int = None) -> None:
         self.rate = rate  # requests per second
         self.burst = burst or int(rate * 2)  # burst capacity
         self.tokens = self.burst
@@ -66653,7 +66690,7 @@ class CircuitBreaker:
     Circuit breaker pattern implementation for API resilience.
     """
     
-    def __init__(self, failure_threshold: int = 5, timeout: float = 60.0):
+    def __init__(self, failure_threshold -> None: int = 5, timeout -> None: float = 60.0) -> None:
         self.failure_threshold = failure_threshold
         self.timeout = timeout
         self.failure_count = 0
@@ -66661,7 +66698,7 @@ class CircuitBreaker:
         self.state = "closed"  # closed, open, half-open
         self.lock = asyncio.Lock()
     
-    async def call(self, func: Callable, *args, **kwargs):
+    async def call(self, func -> None: Callable, *args, **kwargs) -> None:
         """Execute function with circuit breaker protection."""
         async with self.lock:
             if self.state == "open":
@@ -66695,7 +66732,7 @@ class APICache:
     Advanced caching system for API responses with TTL and LRU eviction.
     """
     
-    def __init__(self, max_size: int = 1000):
+    def __init__(self, max_size -> None: int = 1000) -> None:
         self.max_size = max_size
         self.cache = {}
         self.access_times = {}
@@ -66746,12 +66783,12 @@ class ExternalAPIClient:
     
     def __init__(
         self,
-        base_url: str,
-        credentials: APICredentials,
-        default_timeout: float = 30.0,
-        max_retries: int = 3,
-        cache_size: int = 1000
-    ):
+        base_url -> None: str,
+        credentials -> None: APICredentials,
+        default_timeout -> None: float = 30.0,
+        max_retries -> None: int = 3,
+        cache_size -> None: int = 1000
+    ) -> None:
         self.base_url = base_url.rstrip('/')
         self.credentials = credentials
         self.default_timeout = default_timeout
@@ -67110,7 +67147,7 @@ class APIIntegrationManager:
     centralized configuration and monitoring.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.clients: Dict[str, ExternalAPIClient] = {}
         self.configurations: Dict[str, Dict[str, Any]] = {}
         self.health_status: Dict[str, bool] = {}
@@ -67322,7 +67359,7 @@ class EncryptionKey:
 class EncryptionManager:
     """Advanced encryption and key management."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.keys: Dict[str, EncryptionKey] = {}
         self.active_keys: Dict[SecurityLevel, str] = {}
         self._master_key = self._generate_master_key()
@@ -67369,7 +67406,7 @@ class EncryptionManager:
         
         return key_id
     
-    def _store_encrypted_key(self, key_id: str, key_data: bytes):
+    def _store_encrypted_key(self, key_id -> None: str, key_data -> None: bytes) -> None:
         """Store encrypted key securely."""
         # In production: use AWS KMS, Azure Key Vault, or HashiCorp Vault
         # For demo: encrypt with master key
@@ -67422,7 +67459,7 @@ class EncryptionManager:
         
         return fernet.decrypt(encrypted_bytes)
     
-    def rotate_keys(self):
+    def rotate_keys(self) -> None:
         """Rotate encryption keys."""
         
         for level in SecurityLevel:
@@ -67438,7 +67475,7 @@ class EncryptionManager:
 class DataAnonymizer:
     """Data anonymization and pseudonymization."""
     
-    def __init__(self, encryption_manager: EncryptionManager):
+    def __init__(self, encryption_manager -> None: EncryptionManager) -> None:
         self.encryption_manager = encryption_manager
         self.anonymization_salt = secrets.token_bytes(32)
     
@@ -67509,7 +67546,7 @@ class DataAnonymizer:
 class AccessControlManager:
     """Role-based access control system."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.roles: Dict[str, Dict[str, Any]] = self._initialize_roles()
         self.user_roles: Dict[str, List[str]] = {}
         self.resource_permissions: Dict[str, SecurityLevel] = {}
@@ -67564,7 +67601,7 @@ class AccessControlManager:
             }
         }
     
-    def assign_role(self, user_id: str, role: str):
+    def assign_role(self, user_id -> None: str, role -> None: str) -> None:
         """Assign role to user."""
         
         if role not in self.roles:
@@ -67620,7 +67657,7 @@ class AccessControlManager:
 class ComplianceManager:
     """Compliance and audit management."""
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client -> None: aioredis.Redis) -> None:
         self.redis_client = redis_client
         self.audit_events: List[AuditEvent] = []
         
@@ -67637,7 +67674,7 @@ class ComplianceManager:
             ['regulation', 'violation_type']
         )
     
-    async def log_audit_event(self, event: AuditEvent):
+    async def log_audit_event(self, event -> None: AuditEvent) -> None:
         """Log audit event for compliance."""
         
         # Store in memory
@@ -67832,7 +67869,7 @@ class ComplianceManager:
 class ThreatDetectionEngine:
     """Advanced threat detection and prevention."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.threat_patterns = self._initialize_threat_patterns()
         self.suspicious_activities = []
         
@@ -68118,7 +68155,7 @@ class EnterpriseConfigurationValidator:
     - Automated fix suggestions
     """
     
-    def __init__(self, validation_level: ValidationLevel = ValidationLevel.COMPREHENSIVE):
+    def __init__(self, validation_level -> None: ValidationLevel = ValidationLevel.COMPREHENSIVE) -> None:
         self.validation_level = validation_level
         self.logger = logging.getLogger(__name__)
         self.validators: Dict[str, List[Callable]] = {
@@ -68131,7 +68168,7 @@ class EnterpriseConfigurationValidator:
         }
         self._register_validators()
     
-    def _register_validators(self):
+    def _register_validators(self) -> None:
         """Register all validation functions"""
         # Syntax validators
         self.validators['syntax'].extend([
@@ -68951,7 +68988,7 @@ class EnterpriseConfigurationValidator:
 class ConfigurationTestSuite:
     """Test suite for configuration validation"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.validator = EnterpriseConfigurationValidator(ValidationLevel.EXHAUSTIVE)
     
     async def run_comprehensive_tests(self, config: Dict[str, Any]) -> ValidationReport:
@@ -69166,16 +69203,16 @@ class ValidationResult:
     performance_warnings: List[str]
     validation_score: float = 0.0
     
-    def add_error(self, message: str, validation_type: ValidationType = ValidationType.SYNTAX):
+    def add_error(self, message -> None: str, validation_type -> None: ValidationType = ValidationType.SYNTAX) -> None:
         """Ajoute une erreur."""
         self.errors.append(f"[{validation_type.value.upper()}] {message}")
         self.is_valid = False
     
-    def add_warning(self, message: str, validation_type: ValidationType = ValidationType.SYNTAX):
+    def add_warning(self, message -> None: str, validation_type -> None: ValidationType = ValidationType.SYNTAX) -> None:
         """Ajoute un avertissement."""
         self.warnings.append(f"[{validation_type.value.upper()}] {message}")
     
-    def add_security_issue(self, message: str, severity: SecurityLevel = SecurityLevel.MEDIUM):
+    def add_security_issue(self, message -> None: str, severity -> None: SecurityLevel = SecurityLevel.MEDIUM) -> None:
         """Ajoute un problème de sécurité."""
         self.security_issues.append(f"[{severity.value.upper()}] {message}")
         if severity in [SecurityLevel.HIGH, SecurityLevel.CRITICAL]:
@@ -69197,7 +69234,7 @@ class UnifiedTemplateValidator:
     - Supporter tous les formats
     """
     
-    def __init__(self, security_level: SecurityLevel = SecurityLevel.MEDIUM):
+    def __init__(self, security_level -> None: SecurityLevel = SecurityLevel.MEDIUM) -> None:
         self.security_level = security_level
         self.validation_rules = {}
         self.security_rules = {}
@@ -69276,21 +69313,21 @@ class UnifiedTemplateValidator:
     
     def register_custom_validator(
         self,
-        name: str,
-        validator_func: callable,
-        validation_type: ValidationType = ValidationType.BUSINESS
-    ):
+        name -> None: str,
+        validator_func -> None: callable,
+        validation_type -> None: ValidationType = ValidationType.BUSINESS
+    ) -> None:
         """Enregistre un validateur personnalisé."""
         self.custom_validators[name] = {
             'func': validator_func,
             'type': validation_type
         }
     
-    def add_validation_rule(self, rule_name: str, rule_schema: Dict[str, Any]):
+    def add_validation_rule(self, rule_name -> None: str, rule_schema -> None: Dict[str, Any]) -> None:
         """Ajoute une règle de validation."""
         self.validation_rules[rule_name] = rule_schema
     
-    def add_security_rule(self, rule_name: str, rule_func: callable):
+    def add_security_rule(self, rule_name -> None: str, rule_func -> None: callable) -> None:
         """Ajoute une règle de sécurité."""
         self.security_rules[rule_name] = rule_func
     
@@ -69298,7 +69335,7 @@ class UnifiedTemplateValidator:
     # MÉTHODES DE VALIDATION PRIVÉES
     # =============================================================================
     
-    def _validate_syntax(self, content: str, template_type: str, result: ValidationResult):
+    def _validate_syntax(self, content -> None: str, template_type -> None: str, result -> None: ValidationResult) -> None:
         """Validation syntaxique."""
         try:
             # Validation JSON si applicable
@@ -69311,7 +69348,7 @@ class UnifiedTemplateValidator:
         if len(content) > 10000:
             result.add_warning("Template content is very long (>10KB)", ValidationType.PERFORMANCE)
     
-    def _validate_semantics(self, content: str, template_type: str, result: ValidationResult):
+    def _validate_semantics(self, content -> None: str, template_type -> None: str, result -> None: ValidationResult) -> None:
         """Validation sémantique."""
         # Vérifier les variables non définies
         undefined_vars = re.findall(r'\{\{\s*(\w+)\s*\}\}', content)
@@ -69325,7 +69362,7 @@ class UnifiedTemplateValidator:
         elif template_type == 'email':
             self._validate_email_semantics(content, result)
     
-    def _validate_security(self, content: str, result: ValidationResult):
+    def _validate_security(self, content -> None: str, result -> None: ValidationResult) -> None:
         """Validation de sécurité."""
         # Détection d'injection de scripts
         script_patterns = [
@@ -69351,7 +69388,7 @@ class UnifiedTemplateValidator:
         if self.security_level == SecurityLevel.CRITICAL:
             self._apply_critical_security_checks(content, result)
     
-    def _validate_performance(self, content: str, result: ValidationResult):
+    def _validate_performance(self, content -> None: str, result -> None: ValidationResult) -> None:
         """Validation de performance."""
         # Vérifier la complexité du template
         complexity_score = len(re.findall(r'\{[%{].*?[%}]\}', content))
@@ -69365,7 +69402,7 @@ class UnifiedTemplateValidator:
             result.add_warning("Template has many loops (>5), consider optimization", 
                              ValidationType.PERFORMANCE)
     
-    def _validate_business_rules(self, content: str, template_type: str, result: ValidationResult):
+    def _validate_business_rules(self, content -> None: str, template_type -> None: str, result -> None: ValidationResult) -> None:
         """Validation des règles business."""
         # Appliquer les validateurs personnalisés
         for name, validator in self.custom_validators.items():
@@ -69379,7 +69416,7 @@ class UnifiedTemplateValidator:
             except Exception as e:
                 result.add_warning(f"Custom validator '{name}' failed: {e}", ValidationType.BUSINESS)
     
-    def _validate_slack_semantics(self, content: str, result: ValidationResult):
+    def _validate_slack_semantics(self, content -> None: str, result -> None: ValidationResult) -> None:
         """Validation sémantique spécifique à Slack."""
         try:
             data = json.loads(content)
@@ -69397,13 +69434,13 @@ class UnifiedTemplateValidator:
         except json.JSONDecodeError:
             pass  # Déjà géré dans la validation syntaxique
     
-    def _validate_email_semantics(self, content: str, result: ValidationResult):
+    def _validate_email_semantics(self, content -> None: str, result -> None: ValidationResult) -> None:
         """Validation sémantique spécifique aux emails."""
         # Vérifier la présence d'un sujet
         if 'subject' not in content.lower():
             result.add_warning("Email template should include a subject", ValidationType.SEMANTIC)
     
-    def _validate_data_security(self, data: Dict[str, Any], result: ValidationResult):
+    def _validate_data_security(self, data -> None: Dict[str, Any], result -> None: ValidationResult) -> None:
         """Validation de sécurité des données."""
         for key, value in data.items():
             if isinstance(value, str):
@@ -69423,7 +69460,7 @@ class UnifiedTemplateValidator:
         except Exception:
             return False
     
-    def _apply_critical_security_checks(self, content: str, result: ValidationResult):
+    def _apply_critical_security_checks(self, content -> None: str, result -> None: ValidationResult) -> None:
         """Applique les vérifications de sécurité critiques."""
         # Vérifications supplémentaires pour niveau critique
         if len(content) > 100000:  # 100KB
@@ -69442,7 +69479,7 @@ class UnifiedTemplateValidator:
         
         return max(0.0, score)
     
-    def _setup_default_rules(self):
+    def _setup_default_rules(self) -> None:
         """Configure les règles de validation par défaut."""
         # Schéma Slack basique
         self.validation_rules['slack'] = {
@@ -69455,7 +69492,7 @@ class UnifiedTemplateValidator:
             }
         }
     
-    def _setup_security_rules(self):
+    def _setup_security_rules(self) -> None:
         """Configure les règles de sécurité par défaut."""
         self.security_rules['no_scripts'] = lambda content: '<script' not in content.lower()
         self.security_rules['no_eval'] = lambda content: 'eval(' not in content.lower()
@@ -69552,7 +69589,7 @@ class EncryptionConfig:
 class SecurityConfigManager:
     """Gestionnaire principal de la configuration de sécurité"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.policies: Dict[str, SecurityPolicy] = {}
         self.encryption_keys: Dict[str, bytes] = {}
         self.active_tokens: Dict[str, Dict] = {}
@@ -69580,7 +69617,7 @@ class SecurityConfigManager:
             logger.error(f"Failed to initialize security: {e}")
             return False
     
-    async def _generate_master_keys(self):
+    async def _generate_master_keys(self) -> None:
         """Génère les clés de chiffrement maîtres"""
         for tenant in ["spotify-premium", "spotify-free", "spotify-family", "spotify-student"]:
             # Génération d'une clé unique par tenant
@@ -69590,13 +69627,13 @@ class SecurityConfigManager:
             # Sauvegarde sécurisée (en production, utiliser un HSM)
             await self._store_key_securely(tenant, key)
     
-    async def _store_key_securely(self, tenant: str, key: bytes):
+    async def _store_key_securely(self, tenant -> None: str, key -> None: bytes) -> None:
         """Stocke une clé de manière sécurisée"""
         # En production: intégration avec HashiCorp Vault ou AWS KMS
         logger.info(f"Storing encryption key for tenant {tenant}")
         # Implementation would integrate with actual key management service
     
-    async def _load_default_policies(self):
+    async def _load_default_policies(self) -> None:
         """Charge les politiques de sécurité par défaut"""
         
         # Politique Premium - Sécurité maximale
@@ -69738,13 +69775,13 @@ class SecurityConfigManager:
             await self._audit_action("token_invalid", tenant, "unknown")
             raise ValueError("Invalid token")
     
-    async def revoke_token(self, jti: str, tenant: str):
+    async def revoke_token(self, jti -> None: str, tenant -> None: str) -> None:
         """Révoque un token JWT"""
         if jti in self.active_tokens:
             del self.active_tokens[jti]
             await self._audit_action("token_revoked", tenant, jti)
     
-    async def rotate_encryption_keys(self, tenant: str):
+    async def rotate_encryption_keys(self, tenant -> None: str) -> None:
         """Effectue la rotation des clés de chiffrement"""
         try:
             logger.info(f"Starting key rotation for tenant {tenant}")
@@ -69768,7 +69805,7 @@ class SecurityConfigManager:
             logger.error(f"Key rotation failed for tenant {tenant}: {e}")
             raise
     
-    async def _audit_action(self, action: str, tenant: str, user: str):
+    async def _audit_action(self, action -> None: str, tenant -> None: str, user -> None: str) -> None:
         """Enregistre une action dans l'audit trail"""
         audit_entry = {
             "timestamp": datetime.utcnow().isoformat(),
@@ -69784,7 +69821,7 @@ class SecurityConfigManager:
         # En production: persistance dans une base de données d'audit
         logger.info(f"Audit: {action} by {user} for {tenant}")
     
-    async def _validate_security_config(self):
+    async def _validate_security_config(self) -> None:
         """Valide la configuration de sécurité"""
         # Validation des politiques
         for tenant, policy in self.policies.items():
@@ -69800,7 +69837,7 @@ class SecurityConfigManager:
         """Récupère la politique de sécurité d'un tenant"""
         return self.policies.get(tenant)
     
-    async def update_security_policy(self, tenant: str, policy: SecurityPolicy):
+    async def update_security_policy(self, tenant -> None: str, policy -> None: SecurityPolicy) -> None:
         """Met à jour la politique de sécurité d'un tenant"""
         self.policies[tenant] = policy
         await self._audit_action("policy_updated", tenant, "admin")
@@ -69869,7 +69906,7 @@ from unittest.mock import Mock
 import pytest
 
 # Tests générés automatiquement avec logique métier réelle
-def test_registerrequest_class():
+def test_registerrequest_class() -> None:
     # Instanciation réelle
     try:
         from backend.app.schemas.request import auth_schemas
@@ -69878,7 +69915,7 @@ def test_registerrequest_class():
     except Exception as exc:
         pytest.fail('Erreur lors de l\'instanciation réelle : {}'.format(exc))
 
-def test_registerresponse_class():
+def test_registerresponse_class() -> None:
     # Instanciation réelle
     try:
         from backend.app.schemas.request import auth_schemas
@@ -69887,7 +69924,7 @@ def test_registerresponse_class():
     except Exception as exc:
         pytest.fail('Erreur lors de l\'instanciation réelle : {}'.format(exc))
 
-def test_loginrequest_class():
+def test_loginrequest_class() -> None:
     # Instanciation réelle
     try:
         from backend.app.schemas.request import auth_schemas
@@ -69896,7 +69933,7 @@ def test_loginrequest_class():
     except Exception as exc:
         pytest.fail('Erreur lors de l\'instanciation réelle : {}'.format(exc))
 
-def test_loginresponse_class():
+def test_loginresponse_class() -> None:
     # Instanciation réelle
     try:
         from backend.app.schemas.request import auth_schemas
@@ -69905,7 +69942,7 @@ def test_loginresponse_class():
     except Exception as exc:
         pytest.fail('Erreur lors de l\'instanciation réelle : {}'.format(exc))
 
-def test_passwordresetrequest_class():
+def test_passwordresetrequest_class() -> None:
     # Instanciation réelle
     try:
         from backend.app.schemas.request import auth_schemas
@@ -69914,7 +69951,7 @@ def test_passwordresetrequest_class():
     except Exception as exc:
         pytest.fail('Erreur lors de l\'instanciation réelle : {}'.format(exc))
 
-def test_passwordresetresponse_class():
+def test_passwordresetresponse_class() -> None:
     # Instanciation réelle
     try:
         from backend.app.schemas.request import auth_schemas
@@ -69923,7 +69960,7 @@ def test_passwordresetresponse_class():
     except Exception as exc:
         pytest.fail('Erreur lors de l\'instanciation réelle : {}'.format(exc))
 
-def test_consentupdaterequest_class():
+def test_consentupdaterequest_class() -> None:
     # Instanciation réelle
     try:
         from backend.app.schemas.request import auth_schemas
@@ -69932,7 +69969,7 @@ def test_consentupdaterequest_class():
     except Exception as exc:
         pytest.fail('Erreur lors de l\'instanciation réelle : {}'.format(exc))
 
-def test_consentupdateresponse_class():
+def test_consentupdateresponse_class() -> None:
     # Instanciation réelle
     try:
         from backend.app.schemas.request import auth_schemas
@@ -69941,7 +69978,7 @@ def test_consentupdateresponse_class():
     except Exception as exc:
         pytest.fail('Erreur lors de l\'instanciation réelle : {}'.format(exc))
 
-def test_privacysettingsupdaterequest_class():
+def test_privacysettingsupdaterequest_class() -> None:
     # Instanciation réelle
     try:
         from backend.app.schemas.request import auth_schemas
@@ -69950,7 +69987,7 @@ def test_privacysettingsupdaterequest_class():
     except Exception as exc:
         pytest.fail('Erreur lors de l\'instanciation réelle : {}'.format(exc))
 
-def test_privacysettingsupdateresponse_class():
+def test_privacysettingsupdateresponse_class() -> None:
     # Instanciation réelle
     try:
         from backend.app.schemas.request import auth_schemas
@@ -69982,7 +70019,7 @@ except ImportError:
 from unittest.mock import Mock
 from sqlalchemy import inspect
 
-def test_add_analytics_audit_security(db_engine):
+def test_add_analytics_audit_security(db_engine) -> None:
     """Vérifie l’ajout des tables analytics, audit et security, et la conformité des logs."""
     inspector = inspect(db_engine)
     # Vérification des tables critiques
@@ -70015,7 +70052,7 @@ from unittest.mock import Mock
 import pytest
 
 # Tests générés automatiquement avec logique métier réelle
-def test_securityutils_class():
+def test_securityutils_class() -> None:
     # Instanciation réelle
     try:
         from backend.app.utils import security
@@ -70082,7 +70119,7 @@ class TestCryptoUtils:
     """Tests pour le module crypto_utils"""
     
     @security_test
-    def test_generate_salt_basic(self):
+    def test_generate_salt_basic(self) -> None:
         """Test génération salt basique"""
         salt = generate_salt()
         
@@ -70090,7 +70127,7 @@ class TestCryptoUtils:
         assert len(salt) > 0
     
     @security_test
-    def test_generate_salt_length(self):
+    def test_generate_salt_length(self) -> None:
         """Test génération salt avec longueur"""
         salt = generate_salt(length=32)
         
@@ -70102,7 +70139,7 @@ class TestCryptoUtils:
             assert len(salt) == 32
     
     @security_test
-    def test_generate_salt_uniqueness(self):
+    def test_generate_salt_uniqueness(self) -> None:
         """Test unicité des salts"""
         salt1 = generate_salt()
         salt2 = generate_salt()
@@ -70110,7 +70147,7 @@ class TestCryptoUtils:
         assert salt1 != salt2  # Doivent être différents
     
     @security_test
-    def test_hash_password_basic(self):
+    def test_hash_password_basic(self) -> None:
         """Test hachage mot de passe basique"""
         password = "securepassword123"
         hashed = hash_password(password)
@@ -70120,7 +70157,7 @@ class TestCryptoUtils:
         assert hashed != password  # Ne doit pas être en clair
     
     @security_test
-    def test_hash_password_with_salt(self):
+    def test_hash_password_with_salt(self) -> None:
         """Test hachage avec salt personnalisé"""
         password = "testpassword"
         salt = generate_salt()
@@ -70131,7 +70168,7 @@ class TestCryptoUtils:
         assert hashed != password
     
     @security_test
-    def test_hash_password_consistency(self):
+    def test_hash_password_consistency(self) -> None:
         """Test consistance hachage"""
         password = "testpassword"
         salt = generate_salt()
@@ -70142,7 +70179,7 @@ class TestCryptoUtils:
         assert hash1 == hash2  # Même input, même hash
     
     @security_test
-    def test_verify_password_correct(self):
+    def test_verify_password_correct(self) -> None:
         """Test vérification mot de passe correct"""
         password = "correctpassword"
         hashed = hash_password(password)
@@ -70152,7 +70189,7 @@ class TestCryptoUtils:
         assert result is True
     
     @security_test
-    def test_verify_password_incorrect(self):
+    def test_verify_password_incorrect(self) -> None:
         """Test vérification mot de passe incorrect"""
         password = "correctpassword"
         wrong_password = "wrongpassword"
@@ -70163,7 +70200,7 @@ class TestCryptoUtils:
         assert result is False
     
     @security_test
-    def test_verify_password_timing_attack_resistance(self):
+    def test_verify_password_timing_attack_resistance(self) -> None:
         """Test résistance aux attaques temporelles"""
         password = "testpassword"
         hashed = hash_password(password)
@@ -70184,7 +70221,7 @@ class TestCryptoUtils:
         assert time_ratio < 2.0  # Pas plus de 2x de différence
     
     @security_test
-    def test_generate_token_basic(self):
+    def test_generate_token_basic(self) -> None:
         """Test génération token basique"""
         token = generate_token()
         
@@ -70192,7 +70229,7 @@ class TestCryptoUtils:
         assert len(token) > 0
     
     @security_test
-    def test_generate_token_length(self):
+    def test_generate_token_length(self) -> None:
         """Test génération token avec longueur"""
         token = generate_token(length=64)
         
@@ -70200,7 +70237,7 @@ class TestCryptoUtils:
         assert len(token) >= 60  # Au moins proche de la longueur demandée
     
     @security_test
-    def test_generate_token_uniqueness(self):
+    def test_generate_token_uniqueness(self) -> None:
         """Test unicité des tokens"""
         token1 = generate_token()
         token2 = generate_token()
@@ -70208,7 +70245,7 @@ class TestCryptoUtils:
         assert token1 != token2
     
     @security_test
-    def test_verify_token_valid(self):
+    def test_verify_token_valid(self) -> None:
         """Test vérification token valide"""
         # Token avec expiration
         token = generate_token(expires_in=3600)  # 1 heure
@@ -70219,7 +70256,7 @@ class TestCryptoUtils:
         assert 'payload' in result
     
     @security_test
-    def test_verify_token_expired(self):
+    def test_verify_token_expired(self) -> None:
         """Test vérification token expiré"""
         # Token avec expiration très courte
         token = generate_token(expires_in=1)
@@ -70234,7 +70271,7 @@ class TestCryptoUtils:
         assert 'expired' in result['error'].lower()
     
     @security_test
-    def test_verify_token_invalid(self):
+    def test_verify_token_invalid(self) -> None:
         """Test vérification token invalide"""
         invalid_token = "invalid.token.string"
         
@@ -70243,7 +70280,7 @@ class TestCryptoUtils:
         assert result['valid'] is False
     
     @security_test
-    def test_encrypt_decrypt_data_basic(self):
+    def test_encrypt_decrypt_data_basic(self) -> None:
         """Test chiffrement/déchiffrement basique"""
         data = "sensitive information"
         key = Fernet.generate_key()
@@ -70255,7 +70292,7 @@ class TestCryptoUtils:
         assert decrypted == data   # Doit être identique après déchiffrement
     
     @security_test
-    def test_encrypt_decrypt_binary_data(self):
+    def test_encrypt_decrypt_binary_data(self) -> None:
         """Test chiffrement données binaires"""
         data = b"binary data content"
         key = Fernet.generate_key()
@@ -70267,7 +70304,7 @@ class TestCryptoUtils:
         assert decrypted == data
     
     @security_test
-    def test_encrypt_data_different_keys(self):
+    def test_encrypt_data_different_keys(self) -> None:
         """Test chiffrement avec clés différentes"""
         data = "test data"
         key1 = Fernet.generate_key()
@@ -70279,7 +70316,7 @@ class TestCryptoUtils:
         assert encrypted1 != encrypted2  # Différentes clés = différents chiffrements
     
     @security_test
-    def test_decrypt_data_wrong_key(self):
+    def test_decrypt_data_wrong_key(self) -> None:
         """Test déchiffrement avec mauvaise clé"""
         data = "test data"
         key1 = Fernet.generate_key()
@@ -70295,7 +70332,7 @@ class TestCryptoUtils:
             assert True  # Exception attendue
     
     @security_test
-    def test_generate_key_pair_basic(self):
+    def test_generate_key_pair_basic(self) -> None:
         """Test génération paire de clés"""
         private_key, public_key = generate_key_pair()
         
@@ -70305,7 +70342,7 @@ class TestCryptoUtils:
         assert len(public_key) > 0
     
     @security_test
-    def test_generate_key_pair_uniqueness(self):
+    def test_generate_key_pair_uniqueness(self) -> None:
         """Test unicité paires de clés"""
         private1, public1 = generate_key_pair()
         private2, public2 = generate_key_pair()
@@ -70314,7 +70351,7 @@ class TestCryptoUtils:
         assert public1 != public2
     
     @security_test
-    def test_encrypt_decrypt_with_rsa_keys(self):
+    def test_encrypt_decrypt_with_rsa_keys(self) -> None:
         """Test chiffrement RSA asymétrique"""
         data = "secret message"
         private_key, public_key = generate_key_pair()
@@ -70326,7 +70363,7 @@ class TestCryptoUtils:
         assert decrypted == data           # Doit être identique après déchiffrement
     
     @security_test
-    def test_encrypt_rsa_data_too_large(self):
+    def test_encrypt_rsa_data_too_large(self) -> None:
         """Test chiffrement RSA données trop grandes"""
         # RSA a une limite de taille
         large_data = "a" * 500  # Trop grand pour RSA-2048
@@ -70342,7 +70379,7 @@ class TestCryptoUtils:
             assert True
     
     @security_test
-    def test_sign_verify_data_basic(self):
+    def test_sign_verify_data_basic(self) -> None:
         """Test signature/vérification basique"""
         data = "message to sign"
         private_key, public_key = generate_key_pair()
@@ -70354,7 +70391,7 @@ class TestCryptoUtils:
         assert is_valid is True
     
     @security_test
-    def test_verify_signature_tampered_data(self):
+    def test_verify_signature_tampered_data(self) -> None:
         """Test vérification signature données modifiées"""
         data = "original message"
         tampered_data = "tampered message"
@@ -70366,7 +70403,7 @@ class TestCryptoUtils:
         assert is_valid is False  # Signature invalide
     
     @security_test
-    def test_verify_signature_wrong_key(self):
+    def test_verify_signature_wrong_key(self) -> None:
         """Test vérification signature mauvaise clé"""
         data = "message"
         private_key1, public_key1 = generate_key_pair()
@@ -70378,7 +70415,7 @@ class TestCryptoUtils:
         assert is_valid is False  # Mauvaise clé publique
     
     @security_test
-    def test_secure_random_string_basic(self):
+    def test_secure_random_string_basic(self) -> None:
         """Test génération string aléatoire sécurisée"""
         random_str = secure_random_string(32)
         
@@ -70386,7 +70423,7 @@ class TestCryptoUtils:
         assert len(random_str) >= 32  # Au moins la longueur demandée
     
     @security_test
-    def test_secure_random_string_uniqueness(self):
+    def test_secure_random_string_uniqueness(self) -> None:
         """Test unicité strings aléatoires"""
         str1 = secure_random_string(16)
         str2 = secure_random_string(16)
@@ -70394,7 +70431,7 @@ class TestCryptoUtils:
         assert str1 != str2
     
     @security_test
-    def test_secure_random_string_charset(self):
+    def test_secure_random_string_charset(self) -> None:
         """Test jeu de caractères string aléatoire"""
         # Alphanumerique seulement
         alnum_str = secure_random_string(20, charset='alphanumeric')
@@ -70404,7 +70441,7 @@ class TestCryptoUtils:
         hex_str = secure_random_string(20, charset='hex')
         assert all(c in '0123456789abcdefABCDEF' for c in hex_str)
     
-    def test_calculate_checksum_basic(self):
+    def test_calculate_checksum_basic(self) -> None:
         """Test calcul checksum basique"""
         data = "test data for checksum"
         checksum = calculate_checksum(data)
@@ -70412,7 +70449,7 @@ class TestCryptoUtils:
         assert isinstance(checksum, str)
         assert len(checksum) > 0
     
-    def test_calculate_checksum_consistency(self):
+    def test_calculate_checksum_consistency(self) -> None:
         """Test consistance checksum"""
         data = "consistent data"
         checksum1 = calculate_checksum(data)
@@ -70420,7 +70457,7 @@ class TestCryptoUtils:
         
         assert checksum1 == checksum2
     
-    def test_calculate_checksum_different_data(self):
+    def test_calculate_checksum_different_data(self) -> None:
         """Test checksum données différentes"""
         data1 = "data one"
         data2 = "data two"
@@ -70430,7 +70467,7 @@ class TestCryptoUtils:
         
         assert checksum1 != checksum2
     
-    def test_verify_checksum_valid(self):
+    def test_verify_checksum_valid(self) -> None:
         """Test vérification checksum valide"""
         data = "data to verify"
         checksum = calculate_checksum(data)
@@ -70439,7 +70476,7 @@ class TestCryptoUtils:
         
         assert is_valid is True
     
-    def test_verify_checksum_invalid(self):
+    def test_verify_checksum_invalid(self) -> None:
         """Test vérification checksum invalide"""
         data = "original data"
         tampered_data = "tampered data"
@@ -70450,7 +70487,7 @@ class TestCryptoUtils:
         assert is_valid is False
     
     @security_test
-    def test_derive_key_basic(self):
+    def test_derive_key_basic(self) -> None:
         """Test dérivation de clé basique"""
         password = "userpassword"
         salt = generate_salt()
@@ -70461,7 +70498,7 @@ class TestCryptoUtils:
         assert len(key) > 0
     
     @security_test
-    def test_derive_key_consistency(self):
+    def test_derive_key_consistency(self) -> None:
         """Test consistance dérivation clé"""
         password = "password"
         salt = generate_salt()
@@ -70472,7 +70509,7 @@ class TestCryptoUtils:
         assert key1 == key2  # Même input, même clé
     
     @security_test
-    def test_derive_key_different_passwords(self):
+    def test_derive_key_different_passwords(self) -> None:
         """Test dérivation clés différentes"""
         salt = generate_salt()
         
@@ -70482,7 +70519,7 @@ class TestCryptoUtils:
         assert key1 != key2
     
     @security_test
-    def test_derive_key_different_salts(self):
+    def test_derive_key_different_salts(self) -> None:
         """Test dérivation salts différents"""
         password = "password"
         
@@ -70492,7 +70529,7 @@ class TestCryptoUtils:
         assert key1 != key2
     
     @security_test
-    def test_constant_time_compare_equal(self):
+    def test_constant_time_compare_equal(self) -> None:
         """Test comparaison temps constant - égaux"""
         str1 = "identical"
         str2 = "identical"
@@ -70502,7 +70539,7 @@ class TestCryptoUtils:
         assert result is True
     
     @security_test
-    def test_constant_time_compare_different(self):
+    def test_constant_time_compare_different(self) -> None:
         """Test comparaison temps constant - différents"""
         str1 = "string one"
         str2 = "string two"
@@ -70512,7 +70549,7 @@ class TestCryptoUtils:
         assert result is False
     
     @security_test
-    def test_constant_time_compare_timing(self):
+    def test_constant_time_compare_timing(self) -> None:
         """Test résistance attaque temporelle"""
         # Strings de longueurs différentes
         short = "short"
@@ -70535,7 +70572,7 @@ class TestCryptoUtils:
         assert time_short >= 0 and time_long >= 0
     
     @security_test
-    def test_obfuscate_deobfuscate_data(self):
+    def test_obfuscate_deobfuscate_data(self) -> None:
         """Test obfuscation/désobfuscation"""
         data = "sensitive data to obfuscate"
         key = "obfuscation_key"
@@ -70547,7 +70584,7 @@ class TestCryptoUtils:
         assert deobfuscated == data      # Doit être identique après désobfuscation
     
     @security_test
-    def test_obfuscate_data_different_keys(self):
+    def test_obfuscate_data_different_keys(self) -> None:
         """Test obfuscation clés différentes"""
         data = "data"
         key1 = "key1"
@@ -70559,7 +70596,7 @@ class TestCryptoUtils:
         assert obfuscated1 != obfuscated2
     
     @security_test
-    def test_generate_otp_basic(self):
+    def test_generate_otp_basic(self) -> None:
         """Test génération OTP basique"""
         secret = "shared_secret"
         otp = generate_otp(secret)
@@ -70569,7 +70606,7 @@ class TestCryptoUtils:
         assert len(otp) >= 6  # Au moins 6 chiffres
     
     @security_test
-    def test_generate_otp_time_based(self):
+    def test_generate_otp_time_based(self) -> None:
         """Test OTP basé sur le temps (TOTP)"""
         secret = "time_secret"
         
@@ -70586,7 +70623,7 @@ class TestCryptoUtils:
         assert isinstance(otp2, str)
     
     @security_test
-    def test_verify_otp_valid(self):
+    def test_verify_otp_valid(self) -> None:
         """Test vérification OTP valide"""
         secret = "verification_secret"
         otp = generate_otp(secret)
@@ -70596,7 +70633,7 @@ class TestCryptoUtils:
         assert is_valid is True
     
     @security_test
-    def test_verify_otp_invalid(self):
+    def test_verify_otp_invalid(self) -> None:
         """Test vérification OTP invalide"""
         secret = "verification_secret"
         wrong_otp = "000000"
@@ -70606,7 +70643,7 @@ class TestCryptoUtils:
         assert is_valid is False
     
     @security_test
-    def test_verify_otp_expired(self):
+    def test_verify_otp_expired(self) -> None:
         """Test vérification OTP expiré"""
         secret = "expiry_secret"
         
@@ -70619,7 +70656,7 @@ class TestCryptoUtils:
         assert is_valid is False
     
     @security_test
-    def test_encrypt_decrypt_json_basic(self):
+    def test_encrypt_decrypt_json_basic(self) -> None:
         """Test chiffrement/déchiffrement JSON"""
         data = {
             'user_id': 12345,
@@ -70635,7 +70672,7 @@ class TestCryptoUtils:
         assert decrypted == data       # Doit être identique après déchiffrement
     
     @security_test
-    def test_encrypt_json_complex_data(self):
+    def test_encrypt_json_complex_data(self) -> None:
         """Test chiffrement JSON données complexes"""
         complex_data = {
             'nested': {
@@ -70657,7 +70694,7 @@ class TestCryptoUtils:
         assert decrypted == complex_data
     
     @security_test
-    def test_decrypt_json_wrong_password(self):
+    def test_decrypt_json_wrong_password(self) -> None:
         """Test déchiffrement JSON mauvais mot de passe"""
         data = {'test': 'data'}
         password = "correct_password"
@@ -70672,11 +70709,11 @@ class TestCryptoUtils:
             assert True  # Exception attendue
     
     @performance_test
-    def test_hashing_performance(self):
+    def test_hashing_performance(self) -> None:
         """Test performance hachage"""
         passwords = [f"password{i}" for i in range(100)]
         
-        def hash_many_passwords():
+        def hash_many_passwords() -> None:
             for password in passwords:
                 hash_password(password)
             return len(passwords)
@@ -70684,12 +70721,12 @@ class TestCryptoUtils:
         TestUtils.assert_performance(hash_many_passwords, max_time_ms=2000)
     
     @performance_test
-    def test_encryption_performance(self):
+    def test_encryption_performance(self) -> None:
         """Test performance chiffrement"""
         data = "test data " * 100  # Données moyennes
         key = Fernet.generate_key()
         
-        def encrypt_decrypt_cycle():
+        def encrypt_decrypt_cycle() -> None:
             encrypted = encrypt_data(data, key)
             decrypted = decrypt_data(encrypted, key)
             return len(decrypted)
@@ -70697,12 +70734,12 @@ class TestCryptoUtils:
         TestUtils.assert_performance(encrypt_decrypt_cycle, max_time_ms=100)
     
     @performance_test
-    def test_rsa_operations_performance(self):
+    def test_rsa_operations_performance(self) -> None:
         """Test performance opérations RSA"""
         private_key, public_key = generate_key_pair()
         data = "test message"
         
-        def rsa_operations():
+        def rsa_operations() -> None:
             encrypted = encrypt_with_public_key(data, public_key)
             decrypted = decrypt_with_private_key(encrypted, private_key)
             signature = sign_data(data, private_key)
@@ -70712,7 +70749,7 @@ class TestCryptoUtils:
         TestUtils.assert_performance(rsa_operations, max_time_ms=500)
     
     @integration_test
-    def test_complete_crypto_workflow(self):
+    def test_complete_crypto_workflow(self) -> None:
         """Test workflow cryptographique complet"""
         # Scénario: Authentification et chiffrement utilisateur
         
@@ -70785,7 +70822,7 @@ class TestCryptoSecurityAdvanced:
     """Tests de sécurité avancés"""
     
     @security_test
-    def test_password_hash_collision_resistance(self):
+    def test_password_hash_collision_resistance(self) -> None:
         """Test résistance collisions hash"""
         passwords = [
             "password1",
@@ -70801,7 +70838,7 @@ class TestCryptoSecurityAdvanced:
         assert len(set(hashes)) == len(hashes)
     
     @security_test
-    def test_encryption_key_separation(self):
+    def test_encryption_key_separation(self) -> None:
         """Test séparation des clés"""
         data = "test data"
         
@@ -70815,7 +70852,7 @@ class TestCryptoSecurityAdvanced:
         assert len(set(encrypted_versions)) == len(encrypted_versions)
     
     @security_test
-    def test_timing_attack_resistance_comprehensive(self):
+    def test_timing_attack_resistance_comprehensive(self) -> None:
         """Test résistance attaques temporelles complet"""
         import time
         import statistics
@@ -70850,7 +70887,7 @@ class TestCryptoSecurityAdvanced:
             assert cv < 0.5, f"Trop de variance temporelle: {cv}"
     
     @security_test
-    def test_random_quality(self):
+    def test_random_quality(self) -> None:
         """Test qualité de l'aléatoire"""
         # Générer beaucoup de données aléatoires
         random_data = [secure_random_string(10) for _ in range(1000)]
@@ -70902,7 +70939,7 @@ from unittest.mock import Mock
 import pytest
 
 # Tests générés automatiquement avec logique métier réelle
-def test_oauth2handler_class():
+def test_oauth2handler_class() -> None:
     # Instanciation réelle
     try:
         from backend.app.api.v1.auth import oauth2_handlers
@@ -70935,7 +70972,7 @@ import pytest
 from unittest.mock import Mock
 
 # Tests générés automatiquement avec logique métier réelle
-def test_securitymiddleware_class():
+def test_securitymiddleware_class() -> None:
     # Instanciation réelle
     try:
         from backend.app.api.v1.auth import security_middleware
@@ -70968,7 +71005,7 @@ from unittest.mock import Mock
 import pytest
 
 # Tests générés automatiquement avec logique métier réelle
-def test_sessionmanager_class():
+def test_sessionmanager_class() -> None:
     # Instanciation réelle
     try:
         from backend.app.api.v1.auth import session_manager
@@ -71001,7 +71038,7 @@ from unittest.mock import Mock
 import pytest
 
 # Tests générés automatiquement avec logique métier réelle
-def test_authorizer_class():
+def test_authorizer_class() -> None:
     # Instanciation réelle
     try:
         from backend.app.api.v1.auth import authorization
@@ -71034,7 +71071,7 @@ from unittest.mock import Mock
 import pytest
 
 # Tests générés automatiquement avec logique métier réelle
-def test_authenticator_class():
+def test_authenticator_class() -> None:
     # Instanciation réelle
     try:
         from backend.app.api.v1.auth import authentication
@@ -71067,7 +71104,7 @@ from unittest.mock import Mock
 import pytest
 
 # Tests générés automatiquement avec logique métier réelle
-def test_jwtmanager_class():
+def test_jwtmanager_class() -> None:
     # Instanciation réelle
     try:
         from backend.app.api.v1.auth import jwt_manager
@@ -71100,7 +71137,7 @@ from unittest.mock import Mock
 import pytest
 
 # Tests générés automatiquement avec logique métier réelle
-def test_authtokendata_class():
+def test_authtokendata_class() -> None:
     # Instanciation réelle
     try:
         from app.api.middleware import auth_middleware
@@ -71118,7 +71155,7 @@ def test_authtokendata_class():
     except Exception as exc:
         pytest.fail('Erreur lors de l\'instanciation réelle : {}'.format(exc))
 
-def test_spotifyauthdata_class():
+def test_spotifyauthdata_class() -> None:
     # Instanciation réelle
     try:
         from app.api.middleware import auth_middleware
@@ -71128,7 +71165,7 @@ def test_spotifyauthdata_class():
     except Exception as exc:
         pytest.fail('Erreur lors de l\'instanciation réelle : {}'.format(exc))
 
-def test_authenticationmiddleware_class():
+def test_authenticationmiddleware_class() -> None:
     # Instanciation réelle
     try:
         from app.api.middleware import auth_middleware
@@ -71136,6 +71173,7 @@ def test_authenticationmiddleware_class():
         from unittest.mock import patch, MagicMock
         valid_fernet_key = b'X1Z2b3J5QWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXo='  # 32 bytes base64
         class DummySettings:
+    """DummySettings: class implementation"""
             SECRET_KEY = valid_fernet_key
             REDIS_URL = 'redis://localhost:6379/0'
         with patch('backend.app.api.middleware.auth_middleware.redis.from_url', return_value=MagicMock()), \
@@ -71145,7 +71183,7 @@ def test_authenticationmiddleware_class():
     except Exception as exc:
         pytest.fail('Erreur lors de l\'instanciation réelle : {}'.format(exc))
 
-def test_spotifyauthmiddleware_class():
+def test_spotifyauthmiddleware_class() -> None:
     # Instanciation réelle
     try:
         from app.api.middleware import auth_middleware
@@ -71158,7 +71196,7 @@ def test_spotifyauthmiddleware_class():
     except Exception as exc:
         pytest.fail('Erreur lors de l\'instanciation réelle : {}'.format(exc))
 
-def test_jwtauthmiddleware_class():
+def test_jwtauthmiddleware_class() -> None:
     # Instanciation réelle
     try:
         from app.api.middleware import auth_middleware
@@ -71170,7 +71208,7 @@ def test_jwtauthmiddleware_class():
     except Exception as exc:
         pytest.fail('Erreur lors de l\'instanciation réelle : {}'.format(exc))
 
-def test_rolebasedauthmiddleware_class():
+def test_rolebasedauthmiddleware_class() -> None:
     # Instanciation réelle
     try:
         from app.api.middleware import auth_middleware
@@ -71179,7 +71217,7 @@ def test_rolebasedauthmiddleware_class():
     except Exception as exc:
         pytest.fail('Erreur lors de l\'instanciation réelle : {}'.format(exc))
 
-def test_apikeyauthmiddleware_class():
+def test_apikeyauthmiddleware_class() -> None:
     # Instanciation réelle
     try:
         from app.api.middleware import auth_middleware
@@ -71248,7 +71286,7 @@ from app.api.middleware.security_audit_middleware import (
 # =============================================================================
 
 @pytest.fixture
-def security_config():
+def security_config() -> None:
     """Configuration enterprise sécurité pour tests."""
     return SecurityConfig(
         threat_detection_enabled=True,
@@ -71285,7 +71323,7 @@ def security_config():
     )
 
 @pytest.fixture
-def mock_threat_intelligence():
+def mock_threat_intelligence() -> None:
     """Mock client threat intelligence."""
     client = Mock()
     
@@ -71311,10 +71349,10 @@ def mock_threat_intelligence():
         }
     }
     
-    async def check_threat_indicator(indicator, indicator_type):
+    async def check_threat_indicator(indicator, indicator_type) -> None:
         return threat_indicators.get(indicator)
     
-    async def bulk_check_indicators(indicators):
+    async def bulk_check_indicators(indicators) -> None:
         results = {}
         for indicator in indicators:
             threat = threat_indicators.get(indicator)
@@ -71329,7 +71367,7 @@ def mock_threat_intelligence():
     return client
 
 @pytest.fixture
-def mock_geoip_database():
+def mock_geoip_database() -> None:
     """Mock base de données GeoIP."""
     geoip = Mock()
     
@@ -71364,7 +71402,7 @@ def mock_geoip_database():
         }
     }
     
-    def get_location(ip):
+    def get_location(ip) -> None:
         return ip_locations.get(ip, {
             'country': 'Unknown',
             'region': 'Unknown',
@@ -71377,7 +71415,7 @@ def mock_geoip_database():
     return geoip
 
 @pytest.fixture
-async def security_middleware(security_config, mock_threat_intelligence, mock_geoip_database):
+async def security_middleware(security_config, mock_threat_intelligence, mock_geoip_database) -> None:
     """Middleware de sécurité configuré pour tests."""
     with patch('app.api.middleware.security_audit_middleware.ThreatIntelligenceClient',
                return_value=mock_threat_intelligence), \
@@ -71390,7 +71428,7 @@ async def security_middleware(security_config, mock_threat_intelligence, mock_ge
         await middleware.cleanup()
 
 @pytest.fixture
-def malicious_request():
+def malicious_request() -> None:
     """Requête malveillante pour tests."""
     request = Mock()
     request.method = "POST"
@@ -71411,7 +71449,7 @@ def malicious_request():
     return request
 
 @pytest.fixture
-def legitimate_request():
+def legitimate_request() -> None:
     """Requête légitime pour tests."""
     request = Mock()
     request.method = "GET"
@@ -71439,7 +71477,7 @@ class TestSecurityAuditMiddlewareFunctionality:
     """Tests fonctionnels complets du middleware de sécurité."""
     
     @pytest.mark.asyncio
-    async def test_middleware_initialization(self, security_config):
+    async def test_middleware_initialization(self, security_config) -> None:
         """Test d'initialisation complète du middleware."""
         middleware = SecurityAuditMiddleware(security_config)
         
@@ -71463,7 +71501,7 @@ class TestSecurityAuditMiddlewareFunctionality:
             await middleware.cleanup()
     
     @pytest.mark.asyncio
-    async def test_threat_detection_malicious_request(self, security_middleware, malicious_request):
+    async def test_threat_detection_malicious_request(self, security_middleware, malicious_request) -> None:
         """Test de détection de requête malveillante."""
         # Analyser la requête
         security_analysis = await security_middleware.analyze_request_security(malicious_request)
@@ -71491,7 +71529,7 @@ class TestSecurityAuditMiddlewareFunctionality:
         assert sql_threat is not None
     
     @pytest.mark.asyncio
-    async def test_legitimate_request_processing(self, security_middleware, legitimate_request):
+    async def test_legitimate_request_processing(self, security_middleware, legitimate_request) -> None:
         """Test de traitement de requête légitime."""
         # Analyser la requête légitime
         security_analysis = await security_middleware.analyze_request_security(legitimate_request)
@@ -71510,7 +71548,7 @@ class TestSecurityAuditMiddlewareFunctionality:
         assert latest_audit['action_taken'] == 'ALLOWED'
     
     @pytest.mark.asyncio
-    async def test_zero_trust_validation(self, security_middleware, legitimate_request):
+    async def test_zero_trust_validation(self, security_middleware, legitimate_request) -> None:
         """Test de validation Zero Trust."""
         # Simuler un contexte utilisateur
         user_context = {
@@ -71540,7 +71578,7 @@ class TestSecurityAuditMiddlewareFunctionality:
         assert 'credential_trust' in factors
     
     @pytest.mark.asyncio
-    async def test_compliance_monitoring_gdpr(self, security_middleware):
+    async def test_compliance_monitoring_gdpr(self, security_middleware) -> None:
         """Test de monitoring de conformité GDPR."""
         # Simuler des événements GDPR
         gdpr_events = [
@@ -71588,7 +71626,7 @@ class TestSecurityAuditMiddlewareFunctionality:
         assert len(deletion_requests) >= 1
     
     @pytest.mark.asyncio
-    async def test_security_incident_management(self, security_middleware, malicious_request):
+    async def test_security_incident_management(self, security_middleware, malicious_request) -> None:
         """Test de gestion des incidents de sécurité."""
         # Provoquer un incident de sécurité
         security_analysis = await security_middleware.analyze_request_security(malicious_request)
@@ -71629,7 +71667,7 @@ class TestAdvancedThreatDetection:
     """Tests de détection de menaces avancées."""
     
     @pytest.mark.asyncio
-    async def test_sql_injection_detection(self, security_middleware):
+    async def test_sql_injection_detection(self, security_middleware) -> None:
         """Test de détection d'injection SQL."""
         sql_payloads = [
             "'; DROP TABLE users; --",
@@ -71666,7 +71704,7 @@ class TestAdvancedThreatDetection:
             assert 'payload' in sql_threat['details']
     
     @pytest.mark.asyncio
-    async def test_xss_detection(self, security_middleware):
+    async def test_xss_detection(self, security_middleware) -> None:
         """Test de détection XSS."""
         xss_payloads = [
             "<script>alert('XSS')</script>",
@@ -71698,7 +71736,7 @@ class TestAdvancedThreatDetection:
             assert len(xss_threats) > 0
     
     @pytest.mark.asyncio
-    async def test_command_injection_detection(self, security_middleware):
+    async def test_command_injection_detection(self, security_middleware) -> None:
         """Test de détection d'injection de commandes."""
         command_payloads = [
             "; ls -la",
@@ -71730,7 +71768,7 @@ class TestAdvancedThreatDetection:
             assert len(cmd_threats) > 0
     
     @pytest.mark.asyncio
-    async def test_brute_force_detection(self, security_middleware):
+    async def test_brute_force_detection(self, security_middleware) -> None:
         """Test de détection d'attaque par force brute."""
         # Simuler des tentatives de connexion répétées
         failed_attempts = []
@@ -71780,7 +71818,7 @@ class TestAdvancedCompliance:
     """Tests de conformité avancée pour différents frameworks."""
     
     @pytest.mark.asyncio
-    async def test_sox_compliance_monitoring(self, security_middleware):
+    async def test_sox_compliance_monitoring(self, security_middleware) -> None:
         """Test de monitoring de conformité SOX."""
         # Simuler des événements SOX (Sarbanes-Oxley)
         sox_events = [
@@ -71830,7 +71868,7 @@ class TestAdvancedCompliance:
         assert len(segregation['violations']) == 0  # Aucune violation
     
     @pytest.mark.asyncio
-    async def test_hipaa_compliance_monitoring(self, security_middleware):
+    async def test_hipaa_compliance_monitoring(self, security_middleware) -> None:
         """Test de monitoring de conformité HIPAA."""
         # Simuler des événements HIPAA
         hipaa_events = [
@@ -71881,7 +71919,7 @@ class TestAdvancedCompliance:
         assert phi_controls['role_based_access_enforced'] is True
     
     @pytest.mark.asyncio
-    async def test_pci_dss_compliance_monitoring(self, security_middleware):
+    async def test_pci_dss_compliance_monitoring(self, security_middleware) -> None:
         """Test de monitoring de conformité PCI DSS."""
         # Simuler des événements PCI DSS
         pci_events = [
@@ -71939,7 +71977,7 @@ class TestSecurityPerformance:
     """Tests de performance pour le système de sécurité."""
     
     @pytest.mark.asyncio
-    async def test_threat_detection_latency(self, security_middleware):
+    async def test_threat_detection_latency(self, security_middleware) -> None:
         """Test de latence de détection de menaces."""
         num_requests = 100
         latencies = []
@@ -71980,12 +72018,12 @@ class TestSecurityPerformance:
         print(f"Threat detection latency - Avg: {avg_latency:.2f}ms, P95: {p95_latency:.2f}ms, P99: {p99_latency:.2f}ms")
     
     @pytest.mark.asyncio
-    async def test_concurrent_threat_analysis(self, security_middleware):
+    async def test_concurrent_threat_analysis(self, security_middleware) -> None:
         """Test d'analyse de menaces concurrente."""
         num_concurrent = 50
         requests_per_task = 20
         
-        async def analyze_batch(task_id):
+        async def analyze_batch(task_id) -> None:
             """Analyser un lot de requêtes."""
             analysis_results = []
             
@@ -72023,7 +72061,7 @@ class TestSecurityPerformance:
         print(f"Concurrent threat analysis throughput: {analyses_per_second:.2f} analyses/sec")
     
     @pytest.mark.asyncio
-    async def test_memory_efficiency_security(self, security_middleware):
+    async def test_memory_efficiency_security(self, security_middleware) -> None:
         """Test d'efficacité mémoire du système de sécurité."""
         import psutil
         import gc
@@ -72080,7 +72118,7 @@ class TestSecurityIntegrationComplete:
     """Tests d'intégration complète du système de sécurité."""
     
     @pytest.mark.asyncio
-    async def test_end_to_end_security_workflow(self, security_config):
+    async def test_end_to_end_security_workflow(self, security_config) -> None:
         """Test de workflow de sécurité complet."""
         with patch('app.api.middleware.security_audit_middleware.ThreatIntelligenceClient') as mock_ti, \
              patch('app.api.middleware.security_audit_middleware.GeoIPDatabase') as mock_geo:
@@ -72180,7 +72218,7 @@ from unittest.mock import Mock
 import pytest
 
 # Tests générés automatiquement avec logique métier réelle
-def test_securityheadersmiddleware_class():
+def test_securityheadersmiddleware_class() -> None:
     # Instanciation réelle
     try:
         from backend.app.api.middleware import security_headers
@@ -72189,7 +72227,7 @@ def test_securityheadersmiddleware_class():
     except Exception as exc:
         pytest.fail('Erreur lors de l\'instanciation réelle : {}'.format(exc))
 
-def test_corsmiddleware_class():
+def test_corsmiddleware_class() -> None:
     # Instanciation réelle
     try:
         from backend.app.api.middleware import security_headers
@@ -72198,7 +72236,7 @@ def test_corsmiddleware_class():
     except Exception as exc:
         pytest.fail('Erreur lors de l\'instanciation réelle : {}'.format(exc))
 
-def test_cspmiddleware_class():
+def test_cspmiddleware_class() -> None:
     # Instanciation réelle
     try:
         from backend.app.api.middleware import security_headers
@@ -72207,7 +72245,7 @@ def test_cspmiddleware_class():
     except Exception as exc:
         pytest.fail('Erreur lors de l\'instanciation réelle : {}'.format(exc))
 
-def test_hstsmiddleware_class():
+def test_hstsmiddleware_class() -> None:
     # Instanciation réelle
     try:
         from backend.app.api.middleware import security_headers
@@ -72216,7 +72254,7 @@ def test_hstsmiddleware_class():
     except Exception as exc:
         pytest.fail('Erreur lors de l\'instanciation réelle : {}'.format(exc))
 
-def test_securityvalidationmiddleware_class():
+def test_securityvalidationmiddleware_class() -> None:
     # Instanciation réelle
     try:
         from backend.app.api.middleware import security_headers
@@ -72225,7 +72263,7 @@ def test_securityvalidationmiddleware_class():
     except Exception as exc:
         pytest.fail('Erreur lors de l\'instanciation réelle : {}'.format(exc))
 
-def test_advancedcorsmiddleware_class():
+def test_advancedcorsmiddleware_class() -> None:
     # Instanciation réelle
     try:
         from backend.app.api.middleware import security_headers
@@ -72234,7 +72272,7 @@ def test_advancedcorsmiddleware_class():
     except Exception as exc:
         pytest.fail('Erreur lors de l\'instanciation réelle : {}'.format(exc))
 
-def test_dynamiccorsmiddleware_class():
+def test_dynamiccorsmiddleware_class() -> None:
     # Instanciation réelle
     try:
         from backend.app.api.middleware import security_headers
@@ -72243,7 +72281,7 @@ def test_dynamiccorsmiddleware_class():
     except Exception as exc:
         pytest.fail('Erreur lors de l\'instanciation réelle : {}'.format(exc))
 
-def test_environmentbasedcorsmiddleware_class():
+def test_environmentbasedcorsmiddleware_class() -> None:
     # Instanciation réelle
     try:
         from backend.app.api.middleware import security_headers
@@ -72297,7 +72335,7 @@ except ImportError:
 import pytest
 
 # Tests générés automatiquement avec logique métier réelle
-def test_decode_jwt(token='fake_jwt_token'):
+def test_decode_jwt(token='fake_jwt_token') -> None:
     # Appel réel de la fonction
     result = None
     try:
@@ -72307,7 +72345,7 @@ def test_decode_jwt(token='fake_jwt_token'):
         pytest.fail('Erreur lors de l\'appel réel : {}'.format(exc))
     assert result is not None
 
-def test_require_jwt(token='fake_jwt_token'):
+def test_require_jwt(token='fake_jwt_token') -> None:
     # Appel réel de la fonction
     result = None
     try:
@@ -72341,7 +72379,7 @@ from unittest.mock import Mock
 import pytest
 
 # Tests générés automatiquement avec logique métier réelle
-def test_authenticationerror_class():
+def test_authenticationerror_class() -> None:
     # Instanciation réelle
     try:
         from backend.app.core.exceptions import auth_exceptions
@@ -72350,7 +72388,7 @@ def test_authenticationerror_class():
     except Exception as exc:
         pytest.fail('Erreur lors de l\'instanciation réelle : {}'.format(exc))
 
-def test_authorizationerror_class():
+def test_authorizationerror_class() -> None:
     # Instanciation réelle
     try:
         from backend.app.core.exceptions import auth_exceptions
@@ -72359,7 +72397,7 @@ def test_authorizationerror_class():
     except Exception as exc:
         pytest.fail('Erreur lors de l\'instanciation réelle : {}'.format(exc))
 
-def test_ratelimitexceedederror_class():
+def test_ratelimitexceedederror_class() -> None:
     # Instanciation réelle
     try:
         from backend.app.core.exceptions import auth_exceptions
@@ -72368,7 +72406,7 @@ def test_ratelimitexceedederror_class():
     except Exception as exc:
         pytest.fail('Erreur lors de l\'instanciation réelle : {}'.format(exc))
 
-def test_securityviolationerror_class():
+def test_securityviolationerror_class() -> None:
     # Instanciation réelle
     try:
         from backend.app.core.exceptions import auth_exceptions
@@ -72377,7 +72415,7 @@ def test_securityviolationerror_class():
     except Exception as exc:
         pytest.fail('Erreur lors de l\'instanciation réelle : {}'.format(exc))
 
-def test_authexception_class():
+def test_authexception_class() -> None:
     # Instanciation réelle
     try:
         from backend.app.core.exceptions import auth_exceptions
@@ -72386,7 +72424,7 @@ def test_authexception_class():
     except Exception as exc:
         pytest.fail('Erreur lors de l\'instanciation réelle : {}'.format(exc))
 
-def test_invalidtokenexception_class():
+def test_invalidtokenexception_class() -> None:
     # Instanciation réelle
     try:
         from backend.app.core.exceptions import auth_exceptions
@@ -72395,7 +72433,7 @@ def test_invalidtokenexception_class():
     except Exception as exc:
         pytest.fail('Erreur lors de l\'instanciation réelle : {}'.format(exc))
 
-def test_permissiondeniedexception_class():
+def test_permissiondeniedexception_class() -> None:
     # Instanciation réelle
     try:
         from backend.app.core.exceptions import auth_exceptions
@@ -72404,7 +72442,7 @@ def test_permissiondeniedexception_class():
     except Exception as exc:
         pytest.fail('Erreur lors de l\'instanciation réelle : {}'.format(exc))
 
-def test_mfarequiredexception_class():
+def test_mfarequiredexception_class() -> None:
     # Instanciation réelle
     try:
         from backend.app.core.exceptions import auth_exceptions
@@ -72413,7 +72451,7 @@ def test_mfarequiredexception_class():
     except Exception as exc:
         pytest.fail('Erreur lors de l\'instanciation réelle : {}'.format(exc))
 
-def test_oauthexception_class():
+def test_oauthexception_class() -> None:
     # Instanciation réelle
     try:
         from backend.app.core.exceptions import auth_exceptions
@@ -72446,7 +72484,7 @@ from unittest.mock import Mock
 import pytest
 
 # Tests générés automatiquement avec logique métier réelle
-def test_securityconfig_class():
+def test_securityconfig_class() -> None:
     # Instanciation réelle
     try:
         from backend.app.core.config import security_config
@@ -72479,7 +72517,7 @@ from unittest.mock import Mock
 import pytest
 
 # Tests générés automatiquement avec logique métier réelle
-def test_securityauditlogger_class():
+def test_securityauditlogger_class() -> None:
     # Instanciation réelle
     try:
         from backend.app.core.security import audit_logger
@@ -72512,7 +72550,7 @@ from unittest.mock import Mock
 import pytest
 
 # Tests générés automatiquement avec logique métier réelle
-def test_tokenmanager_class():
+def test_tokenmanager_class() -> None:
     # Instanciation réelle
     try:
         from backend.app.core.security import token_manager
@@ -72545,7 +72583,7 @@ from unittest.mock import Mock
 import pytest
 
 # Tests générés automatiquement avec logique métier réelle
-def test_passwordmanager_class():
+def test_passwordmanager_class() -> None:
     # Instanciation réelle
     try:
         from backend.app.core.security import password_manager
@@ -72581,11 +72619,11 @@ from app.core.security.security_utils import SecurityUtils
 class TestSecurityUtils:
     """Tests pour la classe SecurityUtils"""
     @pytest.fixture
-    def security_utils(self):
+    def security_utils(self) -> None:
         """Fixture pour SecurityUtils"""
         return SecurityUtils()
 
-    def test_security_utils_initialization(self, security_utils):
+    def test_security_utils_initialization(self, security_utils) -> None:
         """Test d'initialisation de SecurityUtils"""
         assert security_utils is not None
         assert hasattr(security_utils, 'generate_secure_token')
@@ -72595,7 +72633,7 @@ class TestSecurityUtils:
         assert hasattr(security_utils, 'sanitize_input')
         assert hasattr(security_utils, 'is_safe_redirect_url')
 
-    def test_generate_secure_token(self, security_utils):
+    def test_generate_secure_token(self, security_utils) -> None:
         """Test de génération de token sécurisé"""
         # Test avec longueur par défaut
         token = security_utils.generate_secure_token()
@@ -72611,7 +72649,7 @@ class TestSecurityUtils:
         token2 = security_utils.generate_secure_token()
         assert token1 != token2
 
-    def test_hash_password(self, security_utils):
+    def test_hash_password(self, security_utils) -> None:
         """Test de hachage de mot de passe"""
         password = "test_password_123"
         
@@ -72626,7 +72664,7 @@ class TestSecurityUtils:
         hashed2 = security_utils.hash_password(password)
         assert hashed != hashed2
 
-    def test_verify_password(self, security_utils):
+    def test_verify_password(self, security_utils) -> None:
         """Test de vérification de mot de passe"""
         password = "test_password_123"
         wrong_password = "wrong_password"
@@ -72640,7 +72678,7 @@ class TestSecurityUtils:
         # Test vérification incorrecte
         assert security_utils.verify_password(wrong_password, hashed) is False
 
-    def test_hash_token(self, security_utils):
+    def test_hash_token(self, security_utils) -> None:
         """Test de hachage de token"""
         token = "test_token_12345"
         
@@ -72653,7 +72691,7 @@ class TestSecurityUtils:
         hashed2 = security_utils.hash_token(token)
         assert hashed == hashed2
 
-    def test_sanitize_input(self, security_utils):
+    def test_sanitize_input(self, security_utils) -> None:
         """Test de nettoyage des entrées utilisateur"""
         # Test nettoyage caractères dangereux
         dirty_input = "<script>alert('xss')</script>Hello World"
@@ -72672,7 +72710,7 @@ class TestSecurityUtils:
         clean_special = security_utils.sanitize_input(special_chars)
         assert clean_special == ""
 
-    def test_is_safe_redirect_url(self, security_utils):
+    def test_is_safe_redirect_url(self, security_utils) -> None:
         """Test de validation d'URL de redirection sûre"""
         # URLs sûres
         assert security_utils.is_safe_redirect_url("/dashboard") is True
@@ -72686,7 +72724,7 @@ class TestSecurityUtils:
         assert security_utils.is_safe_redirect_url("https://evil.com/phishing") is False
         assert security_utils.is_safe_redirect_url("javascript:alert('xss')") is False
 
-    def test_security_methods_edge_cases(self, security_utils):
+    def test_security_methods_edge_cases(self, security_utils) -> None:
         """Test de cas limites"""
         # Test avec chaînes vides
         empty_password = ""
@@ -72702,7 +72740,7 @@ class TestSecurityUtils:
         min_token = security_utils.generate_secure_token(1)
         assert len(min_token) > 0
 
-    def test_hash_consistency(self, security_utils):
+    def test_hash_consistency(self, security_utils) -> None:
         """Test de cohérence des fonctions de hachage"""
         # Token hashing doit être déterministe
         token = "consistent_token_123"
@@ -72720,7 +72758,7 @@ class TestSecurityUtils:
         assert security_utils.verify_password(password, password_hash1) is True
         assert security_utils.verify_password(password, password_hash2) is True
 
-    def test_input_sanitization_comprehensive(self, security_utils):
+    def test_input_sanitization_comprehensive(self, security_utils) -> None:
         """Test complet de nettoyage d'entrées"""
         test_cases = [
             # (input, expected_result_should_contain)
@@ -72737,7 +72775,7 @@ class TestSecurityUtils:
             result = security_utils.sanitize_input(input_str)
             assert result == expected_result, f"Input: '{input_str}' -> Expected: '{expected_result}' -> Got: '{result}'"
 
-    def test_url_validation_comprehensive(self, security_utils):
+    def test_url_validation_comprehensive(self, security_utils) -> None:
         """Test complet de validation d'URL"""
         safe_urls = [
             "/",
@@ -72768,11 +72806,11 @@ class TestSecurityUtils:
 class TestSecurityUtilsIntegration:
     """Tests d'intégration pour SecurityUtils"""
     @pytest.fixture
-    def security_utils(self):
+    def security_utils(self) -> None:
         """Fixture pour SecurityUtils"""
         return SecurityUtils()
 
-    def test_complete_authentication_flow(self, security_utils):
+    def test_complete_authentication_flow(self, security_utils) -> None:
         """Test de flux d'authentification complet"""
         # 1. Générer un mot de passe et le hacher
         password = "TestPassword123!"
@@ -72789,7 +72827,7 @@ class TestSecurityUtilsIntegration:
         token_hash = security_utils.hash_token(token)
         assert len(token_hash) == 64
 
-    def test_input_processing_flow(self, security_utils):
+    def test_input_processing_flow(self, security_utils) -> None:
         """Test de flux de traitement d'entrées"""
         # 1. Nettoyer les entrées utilisateur
         user_input = "<script>alert('test')</script>Clean Content"
@@ -72805,7 +72843,7 @@ class TestSecurityUtilsIntegration:
         dangerous_url = "https://phishing.com"
         assert security_utils.is_safe_redirect_url(dangerous_url) is False
 
-    def test_security_token_management(self, security_utils):
+    def test_security_token_management(self, security_utils) -> None:
         """Test de gestion des tokens de sécurité"""
         # 1. Générer plusieurs tokens uniques
         tokens = [security_utils.generate_secure_token() for _ in range(5)]
@@ -72819,7 +72857,7 @@ class TestSecurityUtilsIntegration:
         for token, token_hash in zip(tokens, token_hashes):
             assert security_utils.hash_token(token) == token_hash
 
-    def test_password_security_levels(self, security_utils):
+    def test_password_security_levels(self, security_utils) -> None:
         """Test de différents niveaux de sécurité des mots de passe"""
         passwords = [
             "simple",
@@ -72867,7 +72905,7 @@ from unittest.mock import Mock
 import pytest
 
 # Tests générés automatiquement avec logique métier réelle
-def test_encryptionmanager_class():
+def test_encryptionmanager_class() -> None:
     # Instanciation réelle
     try:
         from backend.app.core.security import encryption
@@ -72900,7 +72938,7 @@ from unittest.mock import Mock
 import pytest
 
 # Tests générés automatiquement avec logique métier réelle
-def test_jwtmanager_class():
+def test_jwtmanager_class() -> None:
     # Instanciation réelle
     try:
         from backend.app.core.security import jwt_manager
@@ -72951,13 +72989,13 @@ class TestSQLInjectionVulnerabilities:
     """💉 SQL Injection Vulnerability Tests"""
     
     @pytest.fixture
-    async def tenant_manager(self):
+    async def tenant_manager(self) -> None:
         """Create tenant manager for security testing"""
         manager = EnterpriseTenantManager()
         yield manager
         await manager.cleanup()
     
-    async def test_tenant_creation_sql_injection_protection(self, tenant_manager):
+    async def test_tenant_creation_sql_injection_protection(self, tenant_manager) -> None:
         """Test SQL injection protection in tenant creation"""
         sql_injection_payloads = [
             "'; DROP TABLE tenants; --",
@@ -72996,7 +73034,7 @@ class TestSQLInjectionVulnerabilities:
                 # Should not cause system errors
                 pytest.fail(f"SQL injection payload caused system error: {e}")
     
-    async def test_tenant_search_sql_injection_protection(self, tenant_manager):
+    async def test_tenant_search_sql_injection_protection(self, tenant_manager) -> None:
         """Test SQL injection protection in tenant search"""
         search_injection_payloads = [
             "'; UPDATE tenants SET name='hacked'; --",
@@ -73031,7 +73069,7 @@ class TestSQLInjectionVulnerabilities:
             except Exception as e:
                 pytest.fail(f"Search SQL injection caused system error: {e}")
     
-    async def test_tenant_update_sql_injection_protection(self, tenant_manager):
+    async def test_tenant_update_sql_injection_protection(self, tenant_manager) -> None:
         """Test SQL injection protection in tenant updates"""
         # Create a test tenant first
         tenant_data = create_sample_tenant_data()
@@ -73071,7 +73109,7 @@ class TestSQLInjectionVulnerabilities:
 class TestCrossSiteScriptingXSS:
     """🔗 Cross-Site Scripting (XSS) Vulnerability Tests"""
     
-    async def test_tenant_data_xss_protection(self):
+    async def test_tenant_data_xss_protection(self) -> None:
         """Test XSS protection in tenant data fields"""
         manager = EnterpriseTenantManager()
         
@@ -73117,7 +73155,7 @@ class TestCrossSiteScriptingXSS:
         
         await manager.cleanup()
     
-    async def test_tenant_response_xss_protection(self):
+    async def test_tenant_response_xss_protection(self) -> None:
         """Test XSS protection in API responses"""
         manager = EnterpriseTenantManager()
         
@@ -73157,13 +73195,13 @@ class TestAuthenticationSecurity:
     """🔐 Authentication Security Tests"""
     
     @pytest.fixture
-    async def security_service(self):
+    async def security_service(self) -> None:
         """Create security service for testing"""
         service = TenantSecurityService()
         yield service
         await service.cleanup()
     
-    async def test_jwt_token_security(self, security_service):
+    async def test_jwt_token_security(self, security_service) -> None:
         """Test JWT token security and validation"""
         tenant_id = "auth_test_tenant"
         user_id = "test_user_123"
@@ -73200,7 +73238,7 @@ class TestAuthenticationSecurity:
             assert validation_result["valid"] is False
             assert "error" in validation_result
     
-    async def test_password_security_requirements(self, security_service):
+    async def test_password_security_requirements(self, security_service) -> None:
         """Test password security requirements and hashing"""
         weak_passwords = [
             "123456",
@@ -73249,7 +73287,7 @@ class TestAuthenticationSecurity:
             )
             assert wrong_verification is False
     
-    async def test_session_security(self, security_service):
+    async def test_session_security(self, security_service) -> None:
         """Test session management security"""
         tenant_id = "session_test_tenant"
         user_id = "session_test_user"
@@ -73296,7 +73334,7 @@ class TestAuthenticationSecurity:
 class TestAuthorizationSecurity:
     """👮 Authorization Security Tests"""
     
-    async def test_role_based_access_control(self):
+    async def test_role_based_access_control(self) -> None:
         """Test role-based access control (RBAC)"""
         security_manager = TenantSecurityManager()
         tenant_id = "rbac_test_tenant"
@@ -73343,7 +73381,7 @@ class TestAuthorizationSecurity:
         
         await security_manager.cleanup()
     
-    async def test_attribute_based_access_control(self):
+    async def test_attribute_based_access_control(self) -> None:
         """Test attribute-based access control (ABAC)"""
         security_manager = TenantSecurityManager()
         tenant_id = "abac_test_tenant"
@@ -73413,7 +73451,7 @@ class TestAuthorizationSecurity:
         
         await security_manager.cleanup()
     
-    async def test_cross_tenant_access_prevention(self):
+    async def test_cross_tenant_access_prevention(self) -> None:
         """Test prevention of cross-tenant data access"""
         security_manager = TenantSecurityManager()
         
@@ -73477,7 +73515,7 @@ class TestAuthorizationSecurity:
 class TestDataEncryptionSecurity:
     """🔒 Data Encryption Security Tests"""
     
-    async def test_data_encryption_at_rest(self):
+    async def test_data_encryption_at_rest(self) -> None:
         """Test data encryption at rest"""
         isolation_manager = QuantumDataIsolationManager()
         tenant_id = "encryption_test_tenant"
@@ -73525,7 +73563,7 @@ class TestDataEncryptionSecurity:
         
         await isolation_manager.cleanup()
     
-    async def test_data_encryption_in_transit(self):
+    async def test_data_encryption_in_transit(self) -> None:
         """Test data encryption in transit"""
         isolation_manager = QuantumDataIsolationManager()
         
@@ -73566,7 +73604,7 @@ class TestDataEncryptionSecurity:
         
         await isolation_manager.cleanup()
     
-    async def test_key_management_security(self):
+    async def test_key_management_security(self) -> None:
         """Test encryption key management security"""
         isolation_manager = QuantumDataIsolationManager()
         tenant_id = "key_management_test"
@@ -73603,7 +73641,7 @@ class TestDataEncryptionSecurity:
 class TestSecurityAuditAndCompliance:
     """🛡️ Security Audit and Compliance Tests"""
     
-    async def test_security_event_logging(self):
+    async def test_security_event_logging(self) -> None:
         """Test comprehensive security event logging"""
         security_service = TenantSecurityService()
         tenant_id = "audit_logging_test"
@@ -73656,7 +73694,7 @@ class TestSecurityAuditAndCompliance:
         
         await security_service.cleanup()
     
-    async def test_compliance_validation(self):
+    async def test_compliance_validation(self) -> None:
         """Test security compliance validation"""
         from tests_backend.app.tenancy import compliance_validator
         
@@ -73691,7 +73729,7 @@ class TestSecurityAuditAndCompliance:
         for standard, result in compliance_report.items():
             assert result["compliant"] is True, f"{standard} compliance failed"
     
-    async def test_vulnerability_scanning(self):
+    async def test_vulnerability_scanning(self) -> None:
         """Test automated vulnerability scanning"""
         tenant_id = "vulnerability_scan_test"
         
@@ -73735,7 +73773,7 @@ class TestSecurityAuditAndCompliance:
 
 # Security test fixtures
 @pytest.fixture
-def mock_security_tools():
+def mock_security_tools() -> None:
     """Mock security testing tools"""
     with patch('bandit.core.manager.BanditManager') as mock_bandit, \
          patch('safety.check') as mock_safety, \
@@ -73754,7 +73792,7 @@ def mock_security_tools():
 
 
 @pytest.fixture
-async def security_test_environment():
+async def security_test_environment() -> None:
     """Setup secure test environment"""
     # Setup test encryption keys
     test_key = Fernet.generate_key()
@@ -73772,7 +73810,7 @@ async def security_test_environment():
 
 # Security monitoring fixture
 @pytest.fixture(autouse=True)
-async def monitor_security_tests(request):
+async def monitor_security_tests(request) -> None:
     """Monitor security test execution for issues"""
     test_name = request.node.name
     security_issues = []
@@ -73780,7 +73818,7 @@ async def monitor_security_tests(request):
     # Mock to capture potential security issues
     original_warning = pytest.warn
     
-    def capture_security_warning(message):
+    def capture_security_warning(message) -> None:
         if any(keyword in str(message).lower() for keyword in 
                ['vulnerability', 'security', 'injection', 'xss', 'csrf']):
             security_issues.append(str(message))
@@ -73836,7 +73874,7 @@ from unittest.mock import Mock
 import pytest
 
 # Tests générés automatiquement avec logique métier réelle
-def test_securityservice_class():
+def test_securityservice_class() -> None:
     # Instanciation réelle
     try:
         from backend.app.services.auth import security_service
@@ -73882,7 +73920,7 @@ from unittest.mock import Mock
 import pytest
 
 # Tests générés automatiquement avec logique métier réelle
-def test_sessionservice_class():
+def test_sessionservice_class() -> None:
     # Instanciation réelle
     try:
         from backend.app.services.auth import session_service
@@ -73928,7 +73966,7 @@ from unittest.mock import Mock
 import pytest
 
 # Tests générés automatiquement avec logique métier réelle
-def test_authservice_class():
+def test_authservice_class() -> None:
     # Instanciation réelle
     try:
         from backend.app.services.auth import auth_service
@@ -73974,7 +74012,7 @@ from unittest.mock import Mock
 import pytest
 
 # Tests générés automatiquement avec logique métier réelle
-def test_jwtservice_class():
+def test_jwtservice_class() -> None:
     # Instanciation réelle
     try:
         from backend.app.services.auth import jwt_service
@@ -74020,7 +74058,7 @@ from unittest.mock import Mock
 import pytest
 
 # Tests générés automatiquement avec logique métier réelle
-def test_oauth2service_class():
+def test_oauth2service_class() -> None:
     # Instanciation réelle
     try:
         from backend.app.services.auth import oauth2_service
@@ -74066,7 +74104,7 @@ class TestSecurityMonitor:
     """Tests unitaires pour SecurityMonitor"""
     
     @pytest.mark.asyncio
-    async def test_security_event_detection(self, security_monitor):
+    async def test_security_event_detection(self, security_monitor) -> None:
         """Test détection d'événements de sécurité"""
         event_data = {
             "user_id": "user_123",
@@ -74101,7 +74139,7 @@ class TestSecurityMonitor:
         assert "block_request" in result["recommended_actions"]
     
     @pytest.mark.asyncio
-    async def test_brute_force_detection(self, security_monitor):
+    async def test_brute_force_detection(self, security_monitor) -> None:
         """Test détection d'attaques par force brute"""
         ip_address = "198.51.100.1"
         
@@ -74140,7 +74178,7 @@ class TestSecurityMonitor:
         assert "block_ip" in result["recommended_actions"]
     
     @pytest.mark.asyncio
-    async def test_anomaly_detection_ml(self, security_monitor):
+    async def test_anomaly_detection_ml(self, security_monitor) -> None:
         """Test détection d'anomalies par ML"""
         user_behavior = {
             "user_id": "user_456",
@@ -74187,7 +74225,7 @@ class TestSecurityMonitor:
         assert result["risk_factors"]["behavioral_risk"] > 0.9
     
     @pytest.mark.asyncio
-    async def test_threat_intelligence_integration(self, security_monitor):
+    async def test_threat_intelligence_integration(self, security_monitor) -> None:
         """Test intégration de la threat intelligence"""
         suspicious_indicators = [
             "203.0.113.1",  # IP suspecte
@@ -74243,7 +74281,7 @@ class TestSecurityMonitor:
         assert ip_threat["confidence"] > 0.9
     
     @pytest.mark.asyncio
-    async def test_security_incident_creation(self, security_monitor):
+    async def test_security_incident_creation(self, security_monitor) -> None:
         """Test création d'incident de sécurité"""
         security_events = [
             {
@@ -74297,7 +74335,7 @@ class TestSecurityMonitor:
         assert len(incident["timeline"]) == 3
     
     @pytest.mark.asyncio
-    async def test_real_time_monitoring(self, security_monitor):
+    async def test_real_time_monitoring(self, security_monitor) -> None:
         """Test surveillance en temps réel"""
         # Simuler flux d'événements en temps réel
         real_time_events = [
@@ -74310,7 +74348,7 @@ class TestSecurityMonitor:
         with patch.object(security_monitor, '_process_real_time_event') as mock_process:
             alert_triggered = False
             
-            async def mock_process_event(event):
+            async def mock_process_event(event) -> None:
                 if event["type"] == "privilege_escalation":
                     return {
                         "alert_triggered": True,
@@ -74336,7 +74374,7 @@ class TestRiskAssessment:
     """Tests pour l'évaluation des risques"""
     
     @pytest.mark.asyncio
-    async def test_user_risk_scoring(self, security_monitor):
+    async def test_user_risk_scoring(self, security_monitor) -> None:
         """Test scoring de risque utilisateur"""
         user_profile = {
             "user_id": "user_789",
@@ -74379,7 +74417,7 @@ class TestRiskAssessment:
         assert "require_additional_mfa" in risk_assessment["recommendations"]
     
     @pytest.mark.asyncio
-    async def test_session_risk_evaluation(self, security_monitor):
+    async def test_session_risk_evaluation(self, security_monitor) -> None:
         """Test évaluation du risque de session"""
         session_context = {
             "session_id": "session_abc123",
@@ -74430,7 +74468,7 @@ class TestMonitoringPerformance:
     """Tests de performance pour la surveillance"""
     
     @pytest.mark.asyncio
-    async def test_event_processing_performance(self, security_monitor):
+    async def test_event_processing_performance(self, security_monitor) -> None:
         """Test performance traitement d'événements"""
         event = {
             "user_id": "user_123",
@@ -74454,7 +74492,7 @@ class TestMonitoringPerformance:
         print(f"🔍 Temps analyse événement: {execution_time:.3f}s")
     
     @pytest.mark.asyncio
-    async def test_high_volume_monitoring(self, security_monitor):
+    async def test_high_volume_monitoring(self, security_monitor) -> None:
         """Test surveillance à haut volume"""
         # Simuler 1000 événements par seconde
         events = [
@@ -74494,7 +74532,7 @@ class TestMonitoringSecurity:
     """Tests de sécurité pour la surveillance"""
     
     @pytest.mark.asyncio
-    async def test_false_positive_rate(self, security_monitor):
+    async def test_false_positive_rate(self, security_monitor) -> None:
         """Test taux de faux positifs"""
         # Événements normaux qui ne devraient pas déclencher d'alertes
         normal_events = [
@@ -74537,7 +74575,7 @@ class TestMonitoringSecurity:
         print(f"📊 Taux faux positifs: {false_positive_rate:.2%}")
     
     @pytest.mark.asyncio
-    async def test_monitoring_system_integrity(self, security_monitor):
+    async def test_monitoring_system_integrity(self, security_monitor) -> None:
         """Test intégrité du système de surveillance"""
         # Vérifier que le système de surveillance ne peut pas être contourné
         with patch.object(security_monitor, '_check_monitoring_health') as mock_health:
@@ -74561,7 +74599,7 @@ class TestMonitoringSecurity:
         assert all(status == "running" for status in health_check["components"].values())
     
     @pytest.mark.asyncio
-    async def test_alert_tampering_protection(self, security_monitor):
+    async def test_alert_tampering_protection(self, security_monitor) -> None:
         """Test protection contre la falsification d'alertes"""
         alert = {
             "alert_id": "alert_001",
@@ -74799,14 +74837,14 @@ class EnterpriseSecurityFramework:
     for enterprise-grade security validation and threat simulation.
     """
     
-    def __init__(self, config: SecurityTestConfig = None):
+    def __init__(self, config -> None: SecurityTestConfig = None) -> None:
         self.config = config or SecurityTestConfig()
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self.test_results: Dict[str, Any] = {}
         self.threat_intelligence: Dict[str, Any] = {}
         self.compliance_results: Dict[str, Any] = {}
         
-    async def initialize_framework(self):
+    async def initialize_framework(self) -> None:
         """Initialize the enterprise security framework"""
         self.logger.info("🚀 Initializing Enterprise Security Framework by Mlaiel Team")
         
@@ -74821,7 +74859,7 @@ class EnterpriseSecurityFramework:
         
         self.logger.info("✅ Enterprise Security Framework initialized successfully")
     
-    async def _initialize_threat_intelligence(self):
+    async def _initialize_threat_intelligence(self) -> None:
         """Initialize threat intelligence system"""
         self.threat_intelligence = {
             "known_vulnerabilities": await self._load_vulnerability_database(),
@@ -74831,7 +74869,7 @@ class EnterpriseSecurityFramework:
             "security_advisories": await self._load_security_advisories()
         }
         
-    async def _setup_compliance_monitoring(self):
+    async def _setup_compliance_monitoring(self) -> None:
         """Setup compliance monitoring for various standards"""
         self.compliance_results = {
             standard.value: {
@@ -74845,7 +74883,7 @@ class EnterpriseSecurityFramework:
             for standard in self.config.compliance_standards
         }
     
-    async def _initialize_security_tools(self):
+    async def _initialize_security_tools(self) -> None:
         """Initialize security testing tools"""
         self.security_tools = {
             "vulnerability_scanner": VulnerabilityScanner(),
@@ -74866,7 +74904,7 @@ class VulnerabilityScanner:
     designed by Mlaiel's security specialists.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self.vulnerability_database = self._load_vulnerability_signatures()
     
@@ -74995,7 +75033,7 @@ class PenetrationTester:
     Mlaiel's elite security team for comprehensive security assessment.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self.attack_scenarios = self._load_attack_scenarios()
     
@@ -75092,7 +75130,7 @@ class ThreatSimulator:
     to test defense mechanisms against real-world attack scenarios.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self.threat_scenarios = self._load_threat_scenarios()
     
@@ -75177,7 +75215,7 @@ class ComplianceValidator:
     for validating adherence to security standards and regulations.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self.compliance_frameworks = self._load_compliance_frameworks()
     
@@ -75258,7 +75296,7 @@ class SecurityMonitor:
     Mlaiel's team for continuous security posture assessment.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self.monitoring_rules = self._load_monitoring_rules()
         self.active_monitors = {}
@@ -75319,7 +75357,7 @@ class QuantumCryptoTester:
     to evaluate quantum-resistant security implementations.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self.quantum_algorithms = self._load_quantum_algorithms()
     
@@ -75389,7 +75427,7 @@ class SecurityTestSuite:
     for executing comprehensive security assessments.
     """
     
-    def __init__(self, config: SecurityTestConfig = None):
+    def __init__(self, config -> None: SecurityTestConfig = None) -> None:
         self.config = config or SecurityTestConfig()
         self.framework = EnterpriseSecurityFramework(self.config)
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
@@ -75569,7 +75607,7 @@ class TestEncryptionManager:
     """Tests unitaires pour EncryptionManager"""
     
     @pytest.mark.asyncio
-    async def test_symmetric_encryption_aes256(self, encryption_manager):
+    async def test_symmetric_encryption_aes256(self, encryption_manager) -> None:
         """Test chiffrement symétrique AES-256"""
         plaintext = "Données sensibles à chiffrer - Test 2024!"
         
@@ -75603,7 +75641,7 @@ class TestEncryptionManager:
         assert result.encrypted_at is not None
     
     @pytest.mark.asyncio
-    async def test_symmetric_decryption_aes256(self, encryption_manager):
+    async def test_symmetric_decryption_aes256(self, encryption_manager) -> None:
         """Test déchiffrement symétrique AES-256"""
         encrypted_data = {
             "ciphertext": base64.b64encode(b"encrypted_content").decode(),
@@ -75634,7 +75672,7 @@ class TestEncryptionManager:
         assert result["decrypted_at"] is not None
     
     @pytest.mark.asyncio
-    async def test_asymmetric_encryption_rsa(self, encryption_manager):
+    async def test_asymmetric_encryption_rsa(self, encryption_manager) -> None:
         """Test chiffrement asymétrique RSA"""
         plaintext = "Message secret pour chiffrement RSA"
         
@@ -75662,7 +75700,7 @@ class TestEncryptionManager:
         assert result["padding"] == "OAEP"
     
     @pytest.mark.asyncio
-    async def test_asymmetric_decryption_rsa(self, encryption_manager):
+    async def test_asymmetric_decryption_rsa(self, encryption_manager) -> None:
         """Test déchiffrement asymétrique RSA"""
         encrypted_data = {
             "ciphertext": base64.b64encode(b"rsa_encrypted_content").decode(),
@@ -75689,7 +75727,7 @@ class TestEncryptionManager:
         assert result["decrypted_at"] is not None
     
     @pytest.mark.asyncio
-    async def test_data_at_rest_encryption(self, encryption_manager):
+    async def test_data_at_rest_encryption(self, encryption_manager) -> None:
         """Test chiffrement de données au repos"""
         sensitive_data = {
             "user_id": "user_123",
@@ -75741,7 +75779,7 @@ class TestEncryptionManager:
         assert "user_id" not in result["encrypted_fields"]
     
     @pytest.mark.asyncio
-    async def test_data_in_transit_encryption(self, encryption_manager):
+    async def test_data_in_transit_encryption(self, encryption_manager) -> None:
         """Test chiffrement de données en transit"""
         payload = {"message": "Données confidentielles en transit", "timestamp": time.time()}
         
@@ -75773,7 +75811,7 @@ class TestHSMKeyManager:
     """Tests pour la gestion des clés HSM"""
     
     @pytest.mark.asyncio
-    async def test_hsm_key_generation(self, encryption_manager):
+    async def test_hsm_key_generation(self, encryption_manager) -> None:
         """Test génération de clés dans HSM"""
         with patch.object(encryption_manager.hsm_manager, 'generate_key') as mock_generate:
             mock_generate.return_value = {
@@ -75800,7 +75838,7 @@ class TestHSMKeyManager:
         assert result["fips_140_2_level"] == 3
     
     @pytest.mark.asyncio
-    async def test_hsm_key_rotation(self, encryption_manager):
+    async def test_hsm_key_rotation(self, encryption_manager) -> None:
         """Test rotation de clés HSM"""
         old_key_id = "hsm_key_001"
         
@@ -75828,7 +75866,7 @@ class TestHSMKeyManager:
         assert len(result["re_encryption_jobs"]) == 2
     
     @pytest.mark.asyncio
-    async def test_hsm_key_backup_recovery(self, encryption_manager):
+    async def test_hsm_key_backup_recovery(self, encryption_manager) -> None:
         """Test sauvegarde et récupération de clés HSM"""
         key_id = "hsm_key_001"
         
@@ -75878,7 +75916,7 @@ class TestComplianceEncryption:
     """Tests pour le chiffrement conforme aux réglementations"""
     
     @pytest.mark.asyncio
-    async def test_pci_dss_encryption(self, encryption_manager):
+    async def test_pci_dss_encryption(self, encryption_manager) -> None:
         """Test chiffrement conforme PCI DSS"""
         credit_card_data = {
             "pan": "4532123456789012",
@@ -75913,7 +75951,7 @@ class TestComplianceEncryption:
         assert "cardholder_name" not in result  # Pas chiffré ou traité séparément
     
     @pytest.mark.asyncio
-    async def test_hipaa_phi_encryption(self, encryption_manager):
+    async def test_hipaa_phi_encryption(self, encryption_manager) -> None:
         """Test chiffrement conforme HIPAA pour PHI"""
         phi_data = {
             "patient_id": "patient_789",
@@ -75949,7 +75987,7 @@ class TestComplianceEncryption:
         assert result["phi_category"] == "medical_records"
     
     @pytest.mark.asyncio
-    async def test_gdpr_pii_encryption(self, encryption_manager):
+    async def test_gdpr_pii_encryption(self, encryption_manager) -> None:
         """Test chiffrement conforme GDPR pour données personnelles"""
         pii_data = {
             "user_id": "user_123",
@@ -75994,7 +76032,7 @@ class TestEncryptionPerformance:
     """Tests de performance pour le chiffrement"""
     
     @pytest.mark.asyncio
-    async def test_symmetric_encryption_performance(self, encryption_manager):
+    async def test_symmetric_encryption_performance(self, encryption_manager) -> None:
         """Test performance chiffrement symétrique"""
         data_1kb = "x" * 1024  # 1KB de données
         
@@ -76019,7 +76057,7 @@ class TestEncryptionPerformance:
         print(f"🔐 Temps chiffrement 1KB: {execution_time:.3f}s")
     
     @pytest.mark.asyncio
-    async def test_bulk_encryption_performance(self, encryption_manager):
+    async def test_bulk_encryption_performance(self, encryption_manager) -> None:
         """Test performance chiffrement en lot"""
         # Simuler 1000 enregistrements de 100 bytes chacun
         records = [f"record_{i}_" + "x" * 90 for i in range(1000)]
@@ -76046,11 +76084,11 @@ class TestEncryptionPerformance:
         print(f"📊 Débit chiffrement lot: {result['throughput_mbps']:.1f} MB/s")
     
     @pytest.mark.asyncio
-    async def test_concurrent_encryption_operations(self, encryption_manager):
+    async def test_concurrent_encryption_operations(self, encryption_manager) -> None:
         """Test opérations de chiffrement concurrentes"""
         data_samples = [f"concurrent_data_{i}" for i in range(20)]
         
-        async def encrypt_sample(data):
+        async def encrypt_sample(data) -> None:
             with patch.object(encryption_manager, 'encrypt_data') as mock_encrypt:
                 mock_encrypt.return_value = EncryptionResult(
                     success=True,
@@ -76083,7 +76121,7 @@ class TestEncryptionSecurity:
     """Tests de sécurité pour le chiffrement"""
     
     @pytest.mark.asyncio
-    async def test_key_derivation_security(self, encryption_manager):
+    async def test_key_derivation_security(self, encryption_manager) -> None:
         """Test sécurité de la dérivation de clés"""
         password = "user_password_123"
         salt = TestUtils.generate_random_bytes(32)
@@ -76109,7 +76147,7 @@ class TestEncryptionSecurity:
         assert len(base64.b64decode(result["salt"])) >= 32  # Salt suffisant
     
     @pytest.mark.asyncio
-    async def test_iv_uniqueness(self, encryption_manager):
+    async def test_iv_uniqueness(self, encryption_manager) -> None:
         """Test unicité des vecteurs d'initialisation"""
         ivs = []
         
@@ -76136,7 +76174,7 @@ class TestEncryptionSecurity:
         print(f"🔐 Entropie des IVs: {entropy:.2f} bits")
     
     @pytest.mark.asyncio
-    async def test_authentication_tag_validation(self, encryption_manager):
+    async def test_authentication_tag_validation(self, encryption_manager) -> None:
         """Test validation des tags d'authentification"""
         ciphertext = "encrypted_data_with_auth"
         correct_tag = "correct_authentication_tag"
@@ -76168,7 +76206,7 @@ class TestEncryptionSecurity:
         assert result["tampering_detected"] is True
     
     @pytest.mark.asyncio
-    async def test_side_channel_protection(self, encryption_manager):
+    async def test_side_channel_protection(self, encryption_manager) -> None:
         """Test protection contre les attaques par canal auxiliaire"""
         data1 = "short"
         data2 = "this_is_a_much_longer_piece_of_data_to_encrypt"
@@ -76247,7 +76285,7 @@ class TestSessionManager:
     """Tests unitaires pour SessionManager"""
     
     @pytest.mark.asyncio
-    async def test_create_session(self, session_manager):
+    async def test_create_session(self, session_manager) -> None:
         """Test création de session"""
         user_data = TestDataFactory.create_test_user()
         device_info = TestDataFactory.create_device_info()
@@ -76274,7 +76312,7 @@ class TestSessionManager:
         assert session.is_trusted_device is True
     
     @pytest.mark.asyncio
-    async def test_validate_session(self, session_manager):
+    async def test_validate_session(self, session_manager) -> None:
         """Test validation de session"""
         session_data = TestDataFactory.create_session()
         
@@ -76309,7 +76347,7 @@ class TestSessionManager:
         assert result["reason"] == "expired"
     
     @pytest.mark.asyncio
-    async def test_device_trust_management(self, session_manager):
+    async def test_device_trust_management(self, session_manager) -> None:
         """Test gestion de la confiance des appareils"""
         user_data = TestDataFactory.create_test_user()
         device_info = TestDataFactory.create_device_info()
@@ -76356,7 +76394,7 @@ class TestSessionManager:
         assert trust_result["requires_verification"] is False
     
     @pytest.mark.asyncio
-    async def test_session_hijacking_detection(self, session_manager):
+    async def test_session_hijacking_detection(self, session_manager) -> None:
         """Test détection de piratage de session"""
         session_data = TestDataFactory.create_session()
         
@@ -76404,7 +76442,7 @@ class TestSessionManager:
         assert "location_change" in security_check["anomalies"]
     
     @pytest.mark.asyncio
-    async def test_concurrent_session_management(self, session_manager):
+    async def test_concurrent_session_management(self, session_manager) -> None:
         """Test gestion des sessions concurrentes"""
         user_data = TestDataFactory.create_test_user()
         
@@ -76444,7 +76482,7 @@ class TestSessionManager:
         assert len(limit_result["terminated_sessions"]) == 1
     
     @pytest.mark.asyncio
-    async def test_session_refresh(self, session_manager):
+    async def test_session_refresh(self, session_manager) -> None:
         """Test renouvellement de session"""
         session_data = TestDataFactory.create_session()
         
@@ -76463,7 +76501,7 @@ class TestSessionManager:
         assert refresh_result["extended"] is True
     
     @pytest.mark.asyncio
-    async def test_terminate_session(self, session_manager):
+    async def test_terminate_session(self, session_manager) -> None:
         """Test terminaison de session"""
         session_data = TestDataFactory.create_session()
         
@@ -76484,7 +76522,7 @@ class TestSessionManager:
         assert result["reason"] == "user_logout"
     
     @pytest.mark.asyncio
-    async def test_bulk_session_operations(self, session_manager):
+    async def test_bulk_session_operations(self, session_manager) -> None:
         """Test opérations en lot sur les sessions"""
         user_data = TestDataFactory.create_test_user()
         session_ids = [f"session_{i}" for i in range(5)]
@@ -76514,7 +76552,7 @@ class TestDeviceManagement:
     """Tests pour la gestion des appareils"""
     
     @pytest.mark.asyncio
-    async def test_device_fingerprinting(self, session_manager):
+    async def test_device_fingerprinting(self, session_manager) -> None:
         """Test empreinte d'appareil"""
         device_info = TestDataFactory.create_device_info()
         
@@ -76539,7 +76577,7 @@ class TestDeviceManagement:
         assert "timezone" in fingerprint["components"]
     
     @pytest.mark.asyncio
-    async def test_device_risk_assessment(self, session_manager):
+    async def test_device_risk_assessment(self, session_manager) -> None:
         """Test évaluation du risque d'appareil"""
         device_info = TestDataFactory.create_device_info()
         
@@ -76588,7 +76626,7 @@ class TestSessionPerformance:
     """Tests de performance pour les sessions"""
     
     @pytest.mark.asyncio
-    async def test_session_creation_performance(self, session_manager):
+    async def test_session_creation_performance(self, session_manager) -> None:
         """Test performance création de session"""
         user_data = TestDataFactory.create_test_user()
         device_info = TestDataFactory.create_device_info()
@@ -76609,7 +76647,7 @@ class TestSessionPerformance:
         print(f"🔐 Temps création session: {execution_time:.3f}s")
     
     @pytest.mark.asyncio
-    async def test_session_validation_performance(self, session_manager):
+    async def test_session_validation_performance(self, session_manager) -> None:
         """Test performance validation de session"""
         session_data = TestDataFactory.create_session()
         
@@ -76628,11 +76666,11 @@ class TestSessionPerformance:
         print(f"✅ Temps validation session: {execution_time:.3f}s")
     
     @pytest.mark.asyncio
-    async def test_concurrent_session_operations(self, session_manager):
+    async def test_concurrent_session_operations(self, session_manager) -> None:
         """Test opérations de session concurrentes"""
         sessions = [TestDataFactory.create_session(f"session_{i}") for i in range(20)]
         
-        async def validate_session(session_data):
+        async def validate_session(session_data) -> None:
             with patch.object(session_manager, '_get_session', return_value=session_data):
                 return await session_manager.validate_session(
                     session_id=session_data["session_id"],
@@ -76659,7 +76697,7 @@ class TestSessionSecurity:
     """Tests de sécurité pour les sessions"""
     
     @pytest.mark.asyncio
-    async def test_session_fixation_protection(self, session_manager):
+    async def test_session_fixation_protection(self, session_manager) -> None:
         """Test protection contre la fixation de session"""
         user_data = TestDataFactory.create_test_user()
         
@@ -76681,7 +76719,7 @@ class TestSessionSecurity:
         assert result["security_elevated"] is True
     
     @pytest.mark.asyncio
-    async def test_brute_force_protection(self, session_manager):
+    async def test_brute_force_protection(self, session_manager) -> None:
         """Test protection contre les attaques par force brute"""
         ip_address = "203.0.113.1"
         
@@ -76713,7 +76751,7 @@ class TestSessionSecurity:
         assert blocked_result["reason"] == "ip_blocked"
     
     @pytest.mark.asyncio
-    async def test_session_token_security(self, session_manager):
+    async def test_session_token_security(self, session_manager) -> None:
         """Test sécurité des tokens de session"""
         session_data = TestDataFactory.create_session()
         
@@ -76792,7 +76830,7 @@ class TestTokenManager:
     """Tests unitaires pour TokenManager"""
     
     @pytest.mark.asyncio
-    async def test_generate_access_token(self, token_manager):
+    async def test_generate_access_token(self, token_manager) -> None:
         """Test génération de token d'accès"""
         user_data = TestDataFactory.create_test_user()
         
@@ -76824,7 +76862,7 @@ class TestTokenManager:
         assert decoded["exp"] > int(time.time())
     
     @pytest.mark.asyncio
-    async def test_generate_refresh_token(self, token_manager):
+    async def test_generate_refresh_token(self, token_manager) -> None:
         """Test génération de token de rafraîchissement"""
         user_data = TestDataFactory.create_test_user()
         
@@ -76845,7 +76883,7 @@ class TestTokenManager:
         assert refresh_token.status == TokenStatus.ACTIVE
     
     @pytest.mark.asyncio
-    async def test_validate_token(self, token_manager):
+    async def test_validate_token(self, token_manager) -> None:
         """Test validation de token"""
         token_data = TestDataFactory.create_access_token()
         
@@ -76891,7 +76929,7 @@ class TestTokenManager:
         assert result["reason"] == "insufficient_scope"
     
     @pytest.mark.asyncio
-    async def test_refresh_access_token(self, token_manager):
+    async def test_refresh_access_token(self, token_manager) -> None:
         """Test rafraîchissement de token d'accès"""
         refresh_token_data = TestDataFactory.create_refresh_token()
         
@@ -76923,7 +76961,7 @@ class TestTokenManager:
         assert result["refresh_token"] != refresh_token_data["token_value"]
     
     @pytest.mark.asyncio
-    async def test_revoke_token(self, token_manager):
+    async def test_revoke_token(self, token_manager) -> None:
         """Test révocation de token"""
         token_data = TestDataFactory.create_access_token()
         
@@ -76953,7 +76991,7 @@ class TestTokenManager:
         assert validation_result["reason"] == "revoked"
     
     @pytest.mark.asyncio
-    async def test_token_introspection(self, token_manager):
+    async def test_token_introspection(self, token_manager) -> None:
         """Test introspection de token (RFC 7662)"""
         token_data = TestDataFactory.create_access_token()
         
@@ -76988,7 +77026,7 @@ class TestAPIKeyManagement:
     """Tests pour la gestion des clés API"""
     
     @pytest.mark.asyncio
-    async def test_create_api_key(self, token_manager):
+    async def test_create_api_key(self, token_manager) -> None:
         """Test création de clé API"""
         user_data = TestDataFactory.create_test_user()
         
@@ -77016,7 +77054,7 @@ class TestAPIKeyManagement:
         assert api_key.key_value.startswith("spa_")  # Préfixe Spotify AI Agent
     
     @pytest.mark.asyncio
-    async def test_validate_api_key(self, token_manager):
+    async def test_validate_api_key(self, token_manager) -> None:
         """Test validation de clé API"""
         api_key_data = TestDataFactory.create_api_key()
         
@@ -77050,7 +77088,7 @@ class TestAPIKeyManagement:
         assert result["reason"] == "expired"
     
     @pytest.mark.asyncio
-    async def test_api_key_rotation(self, token_manager):
+    async def test_api_key_rotation(self, token_manager) -> None:
         """Test rotation de clé API"""
         api_key_data = TestDataFactory.create_api_key()
         
@@ -77076,7 +77114,7 @@ class TestAPIKeyManagement:
         assert result["old_key_expires_at"] > datetime.utcnow() + timedelta(days=6)
     
     @pytest.mark.asyncio
-    async def test_api_key_rate_limiting(self, token_manager):
+    async def test_api_key_rate_limiting(self, token_manager) -> None:
         """Test limitation de taux pour les clés API"""
         api_key_data = TestDataFactory.create_api_key()
         api_key_data["rate_limit"] = 10  # 10 requêtes par minute
@@ -77120,7 +77158,7 @@ class TestJWTOperations:
     """Tests pour les opérations JWT"""
     
     @pytest.mark.asyncio
-    async def test_jwt_creation_and_validation(self, token_manager):
+    async def test_jwt_creation_and_validation(self, token_manager) -> None:
         """Test création et validation JWT"""
         user_data = TestDataFactory.create_test_user()
         
@@ -77158,7 +77196,7 @@ class TestJWTOperations:
         assert validation["claims"]["scope"] == ["read", "write"]
     
     @pytest.mark.asyncio
-    async def test_jwt_signature_algorithms(self, token_manager):
+    async def test_jwt_signature_algorithms(self, token_manager) -> None:
         """Test algorithmes de signature JWT"""
         claims = {
             "sub": "test_user",
@@ -77191,7 +77229,7 @@ class TestJWTOperations:
         assert es256_token == "es256_signed_token"
     
     @pytest.mark.asyncio
-    async def test_jwt_key_rotation(self, token_manager):
+    async def test_jwt_key_rotation(self, token_manager) -> None:
         """Test rotation des clés de signature JWT"""
         # Générer nouvelle paire de clés
         with patch.object(token_manager, '_generate_key_pair') as mock_generate:
@@ -77234,7 +77272,7 @@ class TestTokenPerformance:
     """Tests de performance pour les tokens"""
     
     @pytest.mark.asyncio
-    async def test_token_generation_performance(self, token_manager):
+    async def test_token_generation_performance(self, token_manager) -> None:
         """Test performance génération de tokens"""
         user_data = TestDataFactory.create_test_user()
         
@@ -77253,7 +77291,7 @@ class TestTokenPerformance:
         print(f"🎫 Temps génération token: {execution_time:.3f}s")
     
     @pytest.mark.asyncio
-    async def test_token_validation_performance(self, token_manager):
+    async def test_token_validation_performance(self, token_manager) -> None:
         """Test performance validation de tokens"""
         token_data = TestDataFactory.create_access_token()
         
@@ -77271,11 +77309,11 @@ class TestTokenPerformance:
         print(f"✅ Temps validation token: {execution_time:.3f}s")
     
     @pytest.mark.asyncio
-    async def test_concurrent_token_operations(self, token_manager):
+    async def test_concurrent_token_operations(self, token_manager) -> None:
         """Test opérations de tokens concurrentes"""
         tokens = [TestDataFactory.create_access_token() for i in range(50)]
         
-        async def validate_token(token_data):
+        async def validate_token(token_data) -> None:
             with patch.object(token_manager, '_get_token', return_value=token_data):
                 return await token_manager.validate_token(
                     token=token_data["jwt_token"]
@@ -77299,7 +77337,7 @@ class TestTokenSecurity:
     """Tests de sécurité pour les tokens"""
     
     @pytest.mark.asyncio
-    async def test_token_entropy(self, token_manager):
+    async def test_token_entropy(self, token_manager) -> None:
         """Test entropie des tokens"""
         user_data = TestDataFactory.create_test_user()
         
@@ -77323,7 +77361,7 @@ class TestTokenSecurity:
         print(f"🔐 Entropie des tokens: {entropy:.2f} bits")
     
     @pytest.mark.asyncio
-    async def test_jwt_tampering_detection(self, token_manager):
+    async def test_jwt_tampering_detection(self, token_manager) -> None:
         """Test détection de falsification JWT"""
         valid_jwt = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJ0ZXN0In0.signature"
         
@@ -77350,7 +77388,7 @@ class TestTokenSecurity:
         assert result["reason"] == "invalid_signature"
     
     @pytest.mark.asyncio
-    async def test_token_scope_validation(self, token_manager):
+    async def test_token_scope_validation(self, token_manager) -> None:
         """Test validation stricte des scopes"""
         token_data = TestDataFactory.create_access_token()
         token_data["scopes"] = ["read", "profile"]
@@ -77439,7 +77477,7 @@ class TestOAuth2Provider:
     """Tests unitaires pour OAuth2Provider"""
     
     @pytest.mark.asyncio
-    async def test_register_client(self, oauth2_provider):
+    async def test_register_client(self, oauth2_provider) -> None:
         """Test enregistrement d'un client OAuth2"""
         client_data = TestDataFactory.create_oauth2_client()
         
@@ -77460,7 +77498,7 @@ class TestOAuth2Provider:
         assert result.created_at is not None
     
     @pytest.mark.asyncio
-    async def test_authorization_code_flow_complete(self, oauth2_provider):
+    async def test_authorization_code_flow_complete(self, oauth2_provider) -> None:
         """Test flux Authorization Code complet"""
         client_data = TestDataFactory.create_oauth2_client()
         user_data = TestDataFactory.create_test_user()
@@ -77538,7 +77576,7 @@ class TestOAuth2Provider:
         assert token_response["expires_in"] > 0
     
     @pytest.mark.asyncio
-    async def test_pkce_validation(self, oauth2_provider):
+    async def test_pkce_validation(self, oauth2_provider) -> None:
         """Test validation PKCE (Proof Key for Code Exchange)"""
         client_data = TestDataFactory.create_oauth2_client()
         
@@ -77573,7 +77611,7 @@ class TestOAuth2Provider:
         assert result is False
     
     @pytest.mark.asyncio
-    async def test_client_credentials_flow(self, oauth2_provider):
+    async def test_client_credentials_flow(self, oauth2_provider) -> None:
         """Test flux Client Credentials"""
         client_data = TestDataFactory.create_oauth2_client()
         client_data["grant_types"] = [GrantType.CLIENT_CREDENTIALS.value]
@@ -77604,7 +77642,7 @@ class TestOAuth2Provider:
         assert "refresh_token" not in token_response  # Pas de refresh token en client_credentials
     
     @pytest.mark.asyncio
-    async def test_refresh_token_flow(self, oauth2_provider):
+    async def test_refresh_token_flow(self, oauth2_provider) -> None:
         """Test flux de rafraîchissement de token"""
         client_data = TestDataFactory.create_oauth2_client()
         user_data = TestDataFactory.create_test_user()
@@ -77640,7 +77678,7 @@ class TestOAuth2Provider:
         assert token_response["refresh_token"] != refresh_token  # Nouveau refresh token
     
     @pytest.mark.asyncio
-    async def test_token_introspection(self, oauth2_provider):
+    async def test_token_introspection(self, oauth2_provider) -> None:
         """Test introspection de token (RFC 7662)"""
         client_data = TestDataFactory.create_oauth2_client()
         access_token = f"access_{TestUtils.generate_random_string(32)}"
@@ -77669,7 +77707,7 @@ class TestOAuth2Provider:
         assert introspection_result["exp"] > int(time.time())
     
     @pytest.mark.asyncio
-    async def test_token_revocation(self, oauth2_provider):
+    async def test_token_revocation(self, oauth2_provider) -> None:
         """Test révocation de token (RFC 7009)"""
         client_data = TestDataFactory.create_oauth2_client()
         access_token = f"access_{TestUtils.generate_random_string(32)}"
@@ -77694,7 +77732,7 @@ class TestOpenIDConnect:
     """Tests pour OpenID Connect"""
     
     @pytest.mark.asyncio
-    async def test_discovery_document(self, oauth2_provider):
+    async def test_discovery_document(self, oauth2_provider) -> None:
         """Test document de découverte OpenID Connect"""
         with patch.object(oauth2_provider, '_get_discovery_document') as mock_discovery:
             mock_discovery.return_value = {
@@ -77721,7 +77759,7 @@ class TestOpenIDConnect:
         assert "authorization_code" in discovery["grant_types_supported"]
     
     @pytest.mark.asyncio
-    async def test_jwks_endpoint(self, oauth2_provider):
+    async def test_jwks_endpoint(self, oauth2_provider) -> None:
         """Test endpoint JWKS (JSON Web Key Set)"""
         with patch.object(oauth2_provider, '_get_jwks') as mock_jwks:
             mock_jwks.return_value = {
@@ -77749,7 +77787,7 @@ class TestOpenIDConnect:
             assert "alg" in key
     
     @pytest.mark.asyncio
-    async def test_id_token_generation(self, oauth2_provider):
+    async def test_id_token_generation(self, oauth2_provider) -> None:
         """Test génération d'ID Token"""
         client_data = TestDataFactory.create_oauth2_client()
         user_data = TestDataFactory.create_test_user()
@@ -77789,7 +77827,7 @@ class TestOpenIDConnect:
         assert decoded_payload["email"] == user_data["email"]
     
     @pytest.mark.asyncio
-    async def test_userinfo_endpoint(self, oauth2_provider):
+    async def test_userinfo_endpoint(self, oauth2_provider) -> None:
         """Test endpoint UserInfo"""
         user_data = TestDataFactory.create_test_user()
         access_token = f"access_{TestUtils.generate_random_string(32)}"
@@ -77821,7 +77859,7 @@ class TestOAuth2Performance:
     """Tests de performance OAuth2"""
     
     @pytest.mark.asyncio
-    async def test_token_generation_performance(self, oauth2_provider):
+    async def test_token_generation_performance(self, oauth2_provider) -> None:
         """Test performance génération de tokens"""
         client_data = TestDataFactory.create_oauth2_client()
         
@@ -77847,11 +77885,11 @@ class TestOAuth2Performance:
         print(f"🎫 Temps génération token: {execution_time:.3f}s")
     
     @pytest.mark.asyncio
-    async def test_concurrent_token_requests(self, oauth2_provider):
+    async def test_concurrent_token_requests(self, oauth2_provider) -> None:
         """Test requêtes de tokens concurrentes"""
         clients = [TestDataFactory.create_oauth2_client(f"client_{i}") for i in range(10)]
         
-        async def get_token(client_data):
+        async def get_token(client_data) -> None:
             with patch.object(oauth2_provider, '_validate_client_credentials', return_value={"valid": True}):
                 with patch.object(oauth2_provider, '_generate_access_token') as mock_token:
                     mock_token.return_value = {
@@ -77884,7 +77922,7 @@ class TestOAuth2Security:
     """Tests de sécurité OAuth2"""
     
     @pytest.mark.asyncio
-    async def test_client_authentication_security(self, oauth2_provider):
+    async def test_client_authentication_security(self, oauth2_provider) -> None:
         """Test sécurité authentification client"""
         client_data = TestDataFactory.create_oauth2_client()
         
@@ -77915,7 +77953,7 @@ class TestOAuth2Security:
         assert result["error"] == "invalid_client"
     
     @pytest.mark.asyncio
-    async def test_scope_validation(self, oauth2_provider):
+    async def test_scope_validation(self, oauth2_provider) -> None:
         """Test validation des scopes"""
         client_data = TestDataFactory.create_oauth2_client()
         client_data["scopes"] = ["read"]  # Scope limité
@@ -77948,7 +77986,7 @@ class TestOAuth2Security:
         assert result["error"] == "invalid_scope"
     
     @pytest.mark.asyncio
-    async def test_redirect_uri_validation(self, oauth2_provider):
+    async def test_redirect_uri_validation(self, oauth2_provider) -> None:
         """Test validation des redirect URIs"""
         client_data = TestDataFactory.create_oauth2_client()
         client_data["redirect_uris"] = ["https://app.example.com/callback"]
@@ -77979,7 +78017,7 @@ class TestOAuth2Security:
         assert result["error"] == "invalid_request"
     
     @pytest.mark.asyncio
-    async def test_authorization_code_replay_protection(self, oauth2_provider):
+    async def test_authorization_code_replay_protection(self, oauth2_provider) -> None:
         """Test protection contre la réutilisation de codes d'autorisation"""
         client_data = TestDataFactory.create_oauth2_client()
         auth_code = f"auth_code_{TestUtils.generate_random_string(16)}"
@@ -78258,7 +78296,7 @@ class SecurityTestScenarios:
     """
     
     @staticmethod
-    async def test_brute_force_attack(auth_service, max_attempts: int = 5):
+    async def test_brute_force_attack(auth_service, max_attempts -> None: int = 5) -> None:
         """Simulate brute force attack"""
         user_email = "victim@example.com"
         wrong_password = "wrongpassword"
@@ -78274,7 +78312,7 @@ class SecurityTestScenarios:
         return attempts
     
     @staticmethod
-    async def test_session_hijacking(session_manager, valid_session_id: str):
+    async def test_session_hijacking(session_manager, valid_session_id -> None: str) -> None:
         """Test session hijacking scenarios"""
         scenarios = [
             "session_fixation",
@@ -78335,7 +78373,7 @@ class PerformanceTestSuite:
     """
     
     @staticmethod
-    async def benchmark_authentication(auth_service, iterations: int = 1000):
+    async def benchmark_authentication(auth_service, iterations -> None: int = 1000) -> None:
         """Benchmark authentication performance"""
         import time
         
@@ -78367,12 +78405,12 @@ class PerformanceTestSuite:
     
     @staticmethod
     async def stress_test_token_validation(token_service, 
-                                         concurrent_requests: int = 100):
+                                         concurrent_requests -> None: int = 100) -> None:
         """Stress test token validation"""
         import asyncio
         import time
         
-        async def validate_token_task():
+        async def validate_token_task() -> None:
             token = AuthTestHelper.generate_test_token(
                 AuthTestHelper.generate_test_user()
             )
@@ -78447,7 +78485,7 @@ class TestPasswordManager:
     """Tests unitaires pour PasswordManager"""
     
     @pytest.mark.asyncio
-    async def test_hash_password(self, password_manager):
+    async def test_hash_password(self, password_manager) -> None:
         """Test hachage de mot de passe"""
         password = "SecurePassword123!"
         
@@ -78472,7 +78510,7 @@ class TestPasswordManager:
         assert hashed["salt"] != hashed2["salt"]
     
     @pytest.mark.asyncio
-    async def test_verify_password(self, password_manager):
+    async def test_verify_password(self, password_manager) -> None:
         """Test vérification de mot de passe"""
         password = "TestPassword456!"
         
@@ -78515,7 +78553,7 @@ class TestPasswordManager:
         assert result["valid"] is False
     
     @pytest.mark.asyncio
-    async def test_password_strength_validation(self, password_manager):
+    async def test_password_strength_validation(self, password_manager) -> None:
         """Test validation de la force du mot de passe"""
         # Mot de passe faible
         weak_password = "123456"
@@ -78546,7 +78584,7 @@ class TestPasswordManager:
         assert len(strength["issues"]) == 0
     
     @pytest.mark.asyncio
-    async def test_password_policy_enforcement(self, password_manager):
+    async def test_password_policy_enforcement(self, password_manager) -> None:
         """Test application des politiques de mot de passe"""
         policy = PasswordPolicy(
             min_length=12,
@@ -78594,7 +78632,7 @@ class TestPasswordManager:
         assert "require_special_chars" in result["violations"]
     
     @pytest.mark.asyncio
-    async def test_password_history_management(self, password_manager):
+    async def test_password_history_management(self, password_manager) -> None:
         """Test gestion de l'historique des mots de passe"""
         user_data = TestDataFactory.create_test_user()
         
@@ -78645,7 +78683,7 @@ class TestPasswordManager:
         assert result["last_used"] is not None
     
     @pytest.mark.asyncio
-    async def test_password_breach_detection(self, password_manager):
+    async def test_password_breach_detection(self, password_manager) -> None:
         """Test détection de mots de passe compromis"""
         # Mot de passe non compromis
         safe_password = "MyUniqueSecurePassword2024!"
@@ -78682,7 +78720,7 @@ class TestPasswordManager:
         assert result["severity"] == "high"
     
     @pytest.mark.asyncio
-    async def test_password_expiration(self, password_manager):
+    async def test_password_expiration(self, password_manager) -> None:
         """Test expiration des mots de passe"""
         user_data = TestDataFactory.create_test_user()
         
@@ -78729,7 +78767,7 @@ class TestPasswordlessAuth:
     """Tests pour l'authentification sans mot de passe"""
     
     @pytest.mark.asyncio
-    async def test_webauthn_registration(self, password_manager):
+    async def test_webauthn_registration(self, password_manager) -> None:
         """Test enregistrement WebAuthn"""
         user_data = TestDataFactory.create_test_user()
         
@@ -78789,7 +78827,7 @@ class TestPasswordlessAuth:
         assert result["verified"] is True
     
     @pytest.mark.asyncio
-    async def test_webauthn_authentication(self, password_manager):
+    async def test_webauthn_authentication(self, password_manager) -> None:
         """Test authentification WebAuthn"""
         user_data = TestDataFactory.create_test_user()
         
@@ -78844,7 +78882,7 @@ class TestPasswordlessAuth:
         assert result["credential_id"] == "credential_123"
     
     @pytest.mark.asyncio
-    async def test_biometric_authentication(self, password_manager):
+    async def test_biometric_authentication(self, password_manager) -> None:
         """Test authentification biométrique"""
         user_data = TestDataFactory.create_test_user()
         
@@ -78901,7 +78939,7 @@ class TestPasswordPerformance:
     """Tests de performance pour les mots de passe"""
     
     @pytest.mark.asyncio
-    async def test_password_hashing_performance(self, password_manager):
+    async def test_password_hashing_performance(self, password_manager) -> None:
         """Test performance hachage de mot de passe"""
         password = "PerformanceTestPassword123!"
         
@@ -78926,7 +78964,7 @@ class TestPasswordPerformance:
         print(f"🔐 Temps hachage mot de passe: {execution_time:.3f}s")
     
     @pytest.mark.asyncio
-    async def test_password_verification_performance(self, password_manager):
+    async def test_password_verification_performance(self, password_manager) -> None:
         """Test performance vérification de mot de passe"""
         password = "VerificationTestPassword456!"
         hashed = "hashed_password_value"
@@ -78955,7 +78993,7 @@ class TestPasswordSecurity:
     """Tests de sécurité pour les mots de passe"""
     
     @pytest.mark.asyncio
-    async def test_timing_attack_protection(self, password_manager):
+    async def test_timing_attack_protection(self, password_manager) -> None:
         """Test protection contre les attaques par timing"""
         valid_password = "ValidPassword123!"
         invalid_password = "InvalidPassword456!"
@@ -78992,7 +79030,7 @@ class TestPasswordSecurity:
         print(f"⏱️  Différence timing: {time_difference:.4f}s")
     
     @pytest.mark.asyncio
-    async def test_salt_uniqueness(self, password_manager):
+    async def test_salt_uniqueness(self, password_manager) -> None:
         """Test unicité des sels"""
         password = "TestPassword789!"
         salts = []
@@ -79085,7 +79123,7 @@ from backend.app.frameworks import TEST_CONFIG, clean_frameworks, logger
 
 
 @pytest.fixture
-def security_config():
+def security_config() -> None:
     """Configuration sécurité pour les tests."""
     return SecurityConfig(
         jwt_secret_key=TEST_CONFIG["test_jwt_secret"],
@@ -79103,7 +79141,7 @@ def security_config():
 
 
 @pytest.fixture
-def sample_user_credentials():
+def sample_user_credentials() -> None:
     """Identifiants utilisateur d'exemple."""
     return UserCredentials(
         user_id="test_user_123",
@@ -79116,7 +79154,7 @@ def sample_user_credentials():
 
 
 @pytest.fixture
-def mock_redis():
+def mock_redis() -> None:
     """Mock Redis pour les tests."""
     redis_mock = AsyncMock()
     redis_mock.get.return_value = None
@@ -79131,7 +79169,7 @@ def mock_redis():
 class TestSecurityConfig:
     """Tests de la configuration sécurité."""
     
-    def test_security_config_creation(self):
+    def test_security_config_creation(self) -> None:
         """Test création configuration sécurité."""
         config = SecurityConfig(
             jwt_secret_key="test-secret",
@@ -79143,7 +79181,7 @@ class TestSecurityConfig:
         assert config.rate_limit_requests == 1000
         assert config.enable_audit_logging is True
         
-    def test_security_config_validation(self):
+    def test_security_config_validation(self) -> None:
         """Test validation configuration."""
         # Secret JWT trop court
         with pytest.raises(ValueError, match="JWT secret key too short"):
@@ -79156,7 +79194,7 @@ class TestSecurityConfig:
                 redis_url="invalid-redis-url"
             )
             
-    def test_security_config_encryption_key_generation(self):
+    def test_security_config_encryption_key_generation(self) -> None:
         """Test génération clé de chiffrement."""
         config = SecurityConfig(jwt_secret_key="test-secret-key-long-enough")
         
@@ -79164,7 +79202,7 @@ class TestSecurityConfig:
         assert config.encryption_key is not None
         assert len(config.encryption_key) == 44  # Longueur clé Fernet base64
         
-    def test_security_config_oauth2_validation(self):
+    def test_security_config_oauth2_validation(self) -> None:
         """Test validation OAuth2."""
         config = SecurityConfig(
             jwt_secret_key="test-secret-key-long-enough",
@@ -79180,7 +79218,7 @@ class TestSecurityConfig:
 class TestJWTManager:
     """Tests du gestionnaire JWT."""
     
-    def test_jwt_manager_creation(self, security_config):
+    def test_jwt_manager_creation(self, security_config) -> None:
         """Test création gestionnaire JWT."""
         jwt_manager = JWTManager(security_config)
         
@@ -79188,7 +79226,7 @@ class TestJWTManager:
         assert jwt_manager.access_token_expire_minutes == 30
         assert jwt_manager.refresh_token_expire_days == 7
         
-    def test_jwt_token_generation(self, security_config, sample_user_credentials):
+    def test_jwt_token_generation(self, security_config, sample_user_credentials) -> None:
         """Test génération tokens JWT."""
         jwt_manager = JWTManager(security_config)
         
@@ -79216,7 +79254,7 @@ class TestJWTManager:
         assert payload["roles"] == sample_user_credentials.roles
         assert "exp" in payload
         
-    def test_jwt_token_validation(self, security_config, sample_user_credentials):
+    def test_jwt_token_validation(self, security_config, sample_user_credentials) -> None:
         """Test validation tokens JWT."""
         jwt_manager = JWTManager(security_config)
         
@@ -79231,7 +79269,7 @@ class TestJWTManager:
         assert payload is not None
         assert payload["sub"] == sample_user_credentials.user_id
         
-    def test_jwt_token_expiration(self, security_config):
+    def test_jwt_token_expiration(self, security_config) -> None:
         """Test expiration tokens JWT."""
         jwt_manager = JWTManager(security_config)
         
@@ -79245,7 +79283,7 @@ class TestJWTManager:
         payload = jwt_manager.validate_token(expired_token)
         assert payload is None
         
-    def test_jwt_refresh_token(self, security_config, sample_user_credentials):
+    def test_jwt_refresh_token(self, security_config, sample_user_credentials) -> None:
         """Test refresh token."""
         jwt_manager = JWTManager(security_config)
         
@@ -79265,7 +79303,7 @@ class TestJWTManager:
         payload = jwt_manager.validate_token(new_access_token)
         assert payload["sub"] == sample_user_credentials.user_id
         
-    def test_jwt_token_blacklist(self, security_config):
+    def test_jwt_token_blacklist(self, security_config) -> None:
         """Test blacklist tokens."""
         jwt_manager = JWTManager(security_config)
         
@@ -79283,7 +79321,7 @@ class TestJWTManager:
 class TestCryptoManager:
     """Tests du gestionnaire cryptographique."""
     
-    def test_crypto_manager_creation(self, security_config):
+    def test_crypto_manager_creation(self, security_config) -> None:
         """Test création gestionnaire crypto."""
         crypto_manager = CryptoManager(security_config)
         
@@ -79291,7 +79329,7 @@ class TestCryptoManager:
         assert crypto_manager.rsa_private_key is not None
         assert crypto_manager.rsa_public_key is not None
         
-    def test_symmetric_encryption_decryption(self, security_config):
+    def test_symmetric_encryption_decryption(self, security_config) -> None:
         """Test chiffrement/déchiffrement symétrique."""
         crypto_manager = CryptoManager(security_config)
         
@@ -79307,7 +79345,7 @@ class TestCryptoManager:
         decrypted_data = crypto_manager.decrypt_data(encrypted_data)
         assert decrypted_data == sensitive_data
         
-    def test_asymmetric_encryption_decryption(self, security_config):
+    def test_asymmetric_encryption_decryption(self, security_config) -> None:
         """Test chiffrement/déchiffrement asymétrique."""
         crypto_manager = CryptoManager(security_config)
         
@@ -79322,7 +79360,7 @@ class TestCryptoManager:
         decrypted_message = crypto_manager.decrypt_rsa(encrypted_message)
         assert decrypted_message.decode() == message
         
-    def test_password_hashing_verification(self, security_config):
+    def test_password_hashing_verification(self, security_config) -> None:
         """Test hachage/vérification mots de passe."""
         crypto_manager = CryptoManager(security_config)
         
@@ -79341,7 +79379,7 @@ class TestCryptoManager:
         is_invalid = crypto_manager.verify_password("mauvais_password", hashed_password)
         assert is_invalid is False
         
-    def test_digital_signature(self, security_config):
+    def test_digital_signature(self, security_config) -> None:
         """Test signature/vérification numérique."""
         crypto_manager = CryptoManager(security_config)
         
@@ -79366,7 +79404,7 @@ class TestRateLimiter:
     """Tests du limiteur de débit."""
     
     @pytest.mark.asyncio
-    async def test_rate_limiter_creation(self, security_config):
+    async def test_rate_limiter_creation(self, security_config) -> None:
         """Test création limiteur de débit."""
         with patch('redis.asyncio.from_url') as mock_redis_factory:
             mock_redis_factory.return_value = AsyncMock()
@@ -79379,7 +79417,7 @@ class TestRateLimiter:
             assert rate_limiter.window_seconds == security_config.rate_limit_window_seconds
             
     @pytest.mark.asyncio
-    async def test_rate_limiting_allow(self, security_config, mock_redis):
+    async def test_rate_limiting_allow(self, security_config, mock_redis) -> None:
         """Test autorisation requête sous limite."""
         with patch('redis.asyncio.from_url', return_value=mock_redis):
             rate_limiter = RateLimiter(security_config)
@@ -79393,7 +79431,7 @@ class TestRateLimiter:
             assert is_allowed is True
             
     @pytest.mark.asyncio
-    async def test_rate_limiting_deny(self, security_config, mock_redis):
+    async def test_rate_limiting_deny(self, security_config, mock_redis) -> None:
         """Test refus requête au-dessus limite."""
         with patch('redis.asyncio.from_url', return_value=mock_redis):
             rate_limiter = RateLimiter(security_config)
@@ -79407,7 +79445,7 @@ class TestRateLimiter:
             assert is_allowed is False
             
     @pytest.mark.asyncio
-    async def test_rate_limiting_record_request(self, security_config, mock_redis):
+    async def test_rate_limiting_record_request(self, security_config, mock_redis) -> None:
         """Test enregistrement requête."""
         with patch('redis.asyncio.from_url', return_value=mock_redis):
             rate_limiter = RateLimiter(security_config)
@@ -79423,7 +79461,7 @@ class TestRateLimiter:
             mock_redis.expire.assert_called()
             
     @pytest.mark.asyncio
-    async def test_rate_limiting_get_remaining(self, security_config, mock_redis):
+    async def test_rate_limiting_get_remaining(self, security_config, mock_redis) -> None:
         """Test obtention requêtes restantes."""
         with patch('redis.asyncio.from_url', return_value=mock_redis):
             rate_limiter = RateLimiter(security_config)
@@ -79440,7 +79478,7 @@ class TestAuditLogger:
     """Tests du logger d'audit."""
     
     @pytest.mark.asyncio
-    async def test_audit_logger_creation(self, security_config):
+    async def test_audit_logger_creation(self, security_config) -> None:
         """Test création logger d'audit."""
         audit_logger = AuditLogger(security_config)
         
@@ -79448,7 +79486,7 @@ class TestAuditLogger:
         assert audit_logger.events == []
         
     @pytest.mark.asyncio
-    async def test_audit_log_security_event(self, security_config):
+    async def test_audit_log_security_event(self, security_config) -> None:
         """Test log événement sécurité."""
         audit_logger = AuditLogger(security_config)
         
@@ -79469,7 +79507,7 @@ class TestAuditLogger:
         assert logged_event.user_id == "user_123"
         
     @pytest.mark.asyncio
-    async def test_audit_log_suspicious_activity(self, security_config):
+    async def test_audit_log_suspicious_activity(self, security_config) -> None:
         """Test log activité suspecte."""
         audit_logger = AuditLogger(security_config)
         
@@ -79490,7 +79528,7 @@ class TestAuditLogger:
         assert event.level == SecurityLevel.WARNING
         
     @pytest.mark.asyncio
-    async def test_audit_log_filtering_by_level(self, security_config):
+    async def test_audit_log_filtering_by_level(self, security_config) -> None:
         """Test filtrage par niveau."""
         # Logger avec niveau ERROR seulement
         security_config.audit_log_level = SecurityLevel.ERROR
@@ -79517,7 +79555,7 @@ class TestAuditLogger:
         assert len(audit_logger.events) == 1
         
     @pytest.mark.asyncio
-    async def test_audit_log_export(self, security_config):
+    async def test_audit_log_export(self, security_config) -> None:
         """Test export logs d'audit."""
         audit_logger = AuditLogger(security_config)
         
@@ -79543,14 +79581,14 @@ class TestAuditLogger:
 class TestOAuth2Manager:
     """Tests du gestionnaire OAuth2."""
     
-    def test_oauth2_manager_creation(self, security_config):
+    def test_oauth2_manager_creation(self, security_config) -> None:
         """Test création gestionnaire OAuth2."""
         oauth2_manager = OAuth2Manager(security_config)
         
         assert oauth2_manager.spotify_client_id == security_config.oauth2_spotify_client_id
         assert oauth2_manager.spotify_client_secret == security_config.oauth2_spotify_client_secret
         
-    def test_spotify_authorization_url(self, security_config):
+    def test_spotify_authorization_url(self, security_config) -> None:
         """Test génération URL autorisation Spotify."""
         oauth2_manager = OAuth2Manager(security_config)
         
@@ -79566,7 +79604,7 @@ class TestOAuth2Manager:
         assert state in auth_url
         
     @pytest.mark.asyncio
-    async def test_spotify_token_exchange(self, security_config):
+    async def test_spotify_token_exchange(self, security_config) -> None:
         """Test échange code contre token Spotify."""
         oauth2_manager = OAuth2Manager(security_config)
         
@@ -79592,7 +79630,7 @@ class TestOAuth2Manager:
         assert token_data["refresh_token"] == mock_response["refresh_token"]
         
     @pytest.mark.asyncio
-    async def test_spotify_token_refresh(self, security_config):
+    async def test_spotify_token_refresh(self, security_config) -> None:
         """Test refresh token Spotify."""
         oauth2_manager = OAuth2Manager(security_config)
         
@@ -79615,7 +79653,7 @@ class TestOAuth2Manager:
         assert new_token_data["access_token"] == mock_response["access_token"]
         
     @pytest.mark.asyncio
-    async def test_google_oauth2_flow(self, security_config):
+    async def test_google_oauth2_flow(self, security_config) -> None:
         """Test flux OAuth2 Google."""
         oauth2_manager = OAuth2Manager(security_config)
         
@@ -79638,7 +79676,7 @@ class TestSecurityFramework:
     """Tests du framework de sécurité complet."""
     
     @pytest.mark.asyncio
-    async def test_security_framework_initialization(self, security_config, clean_frameworks):
+    async def test_security_framework_initialization(self, security_config, clean_frameworks) -> None:
         """Test initialisation framework sécurité."""
         security_framework = SecurityFramework(security_config)
         
@@ -79654,7 +79692,7 @@ class TestSecurityFramework:
         assert security_framework.oauth2_manager is not None
         
     @pytest.mark.asyncio
-    async def test_security_framework_authenticate_user(self, security_config, sample_user_credentials, clean_frameworks):
+    async def test_security_framework_authenticate_user(self, security_config, sample_user_credentials, clean_frameworks) -> None:
         """Test authentification utilisateur."""
         security_framework = SecurityFramework(security_config)
         
@@ -79678,7 +79716,7 @@ class TestSecurityFramework:
         assert user["username"] == sample_user_credentials.username
         
     @pytest.mark.asyncio
-    async def test_security_framework_login_workflow(self, security_config, sample_user_credentials, clean_frameworks):
+    async def test_security_framework_login_workflow(self, security_config, sample_user_credentials, clean_frameworks) -> None:
         """Test workflow complet de login."""
         security_framework = SecurityFramework(security_config)
         
@@ -79705,7 +79743,7 @@ class TestSecurityFramework:
         assert login_event.event_type == "login_success"
         
     @pytest.mark.asyncio
-    async def test_security_framework_rate_limiting_integration(self, security_config, clean_frameworks):
+    async def test_security_framework_rate_limiting_integration(self, security_config, clean_frameworks) -> None:
         """Test intégration rate limiting."""
         security_framework = SecurityFramework(security_config)
         
@@ -79725,7 +79763,7 @@ class TestSecurityFramework:
         assert is_denied is False
         
     @pytest.mark.asyncio
-    async def test_security_framework_health_check(self, security_config, clean_frameworks):
+    async def test_security_framework_health_check(self, security_config, clean_frameworks) -> None:
         """Test health check framework sécurité."""
         security_framework = SecurityFramework(security_config)
         
@@ -79747,7 +79785,7 @@ class TestSecurityFrameworkIntegration:
     """Tests d'intégration framework sécurité."""
     
     @pytest.mark.asyncio
-    async def test_full_authentication_flow(self, security_config, clean_frameworks):
+    async def test_full_authentication_flow(self, security_config, clean_frameworks) -> None:
         """Test flux d'authentification complet."""
         security_framework = SecurityFramework(security_config)
         
@@ -79803,7 +79841,7 @@ class TestSecurityFrameworkPerformance:
     """Tests de performance framework sécurité."""
     
     @pytest.mark.asyncio
-    async def test_concurrent_authentication(self, security_config, clean_frameworks):
+    async def test_concurrent_authentication(self, security_config, clean_frameworks) -> None:
         """Test authentifications concurrentes."""
         security_framework = SecurityFramework(security_config)
         
@@ -79815,7 +79853,7 @@ class TestSecurityFrameworkPerformance:
             mock_validate.return_value = {"sub": "user_123", "username": "testuser"}
             
             # Lancer authentifications concurrentes
-            async def authenticate():
+            async def authenticate() -> None:
                 return await security_framework.authenticate_user("valid_token")
                 
             tasks = [authenticate() for _ in range(20)]
@@ -79826,7 +79864,7 @@ class TestSecurityFrameworkPerformance:
         assert all(result is not None for result in results)
         
     @pytest.mark.asyncio
-    async def test_rate_limiting_performance(self, security_config, clean_frameworks):
+    async def test_rate_limiting_performance(self, security_config, clean_frameworks) -> None:
         """Test performance rate limiting."""
         security_framework = SecurityFramework(security_config)
         
@@ -79837,7 +79875,7 @@ class TestSecurityFrameworkPerformance:
             await security_framework.initialize()
             
         # Test nombreuses vérifications de rate limit
-        async def check_limit():
+        async def check_limit() -> None:
             return await security_framework.check_rate_limit("user_123")
             
         tasks = [check_limit() for _ in range(100)]
@@ -79897,14 +79935,14 @@ class TestAPIAuthentication:
     """Tests pour l'authentification de l'API."""
     
     @pytest.fixture
-    def client(self):
+    def client(self) -> None:
         """Client de test FastAPI."""
         with patch('ml_analytics.api.get_ml_analytics_config') as mock_config:
             mock_config.return_value = TEST_API_CONFIG
             return TestClient(app)
     
     @pytest.fixture
-    def valid_token(self):
+    def valid_token(self) -> None:
         """Token JWT valide pour les tests."""
         from jose import jwt
         payload = {
@@ -79915,7 +79953,7 @@ class TestAPIAuthentication:
         return jwt.encode(payload, TEST_API_CONFIG["jwt_secret"], algorithm="HS256")
     
     @pytest.fixture
-    def expired_token(self):
+    def expired_token(self) -> None:
         """Token JWT expiré pour les tests."""
         from jose import jwt
         payload = {
@@ -79925,7 +79963,7 @@ class TestAPIAuthentication:
         }
         return jwt.encode(payload, TEST_API_CONFIG["jwt_secret"], algorithm="HS256")
     
-    def test_health_endpoint_no_auth(self, client):
+    def test_health_endpoint_no_auth(self, client) -> None:
         """Test l'endpoint de santé sans authentification."""
         response = client.get("/ml-analytics/health")
         
@@ -79935,28 +79973,28 @@ class TestAPIAuthentication:
         assert "timestamp" in data
         assert "version" in data
     
-    def test_protected_endpoint_no_token(self, client):
+    def test_protected_endpoint_no_token(self, client) -> None:
         """Test d'accès à un endpoint protégé sans token."""
         response = client.post("/ml-analytics/recommendations")
         
         assert response.status_code == status.HTTP_401_UNAUTHORIZED
         assert "detail" in response.json()
     
-    def test_protected_endpoint_invalid_token(self, client):
+    def test_protected_endpoint_invalid_token(self, client) -> None:
         """Test d'accès avec un token invalide."""
         headers = {"Authorization": "Bearer invalid_token"}
         response = client.post("/ml-analytics/recommendations", headers=headers)
         
         assert response.status_code == status.HTTP_401_UNAUTHORIZED
     
-    def test_protected_endpoint_expired_token(self, client, expired_token):
+    def test_protected_endpoint_expired_token(self, client, expired_token) -> None:
         """Test d'accès avec un token expiré."""
         headers = {"Authorization": f"Bearer {expired_token}"}
         response = client.post("/ml-analytics/recommendations", headers=headers)
         
         assert response.status_code == status.HTTP_401_UNAUTHORIZED
     
-    def test_protected_endpoint_valid_token(self, client, valid_token):
+    def test_protected_endpoint_valid_token(self, client, valid_token) -> None:
         """Test d'accès avec un token valide."""
         headers = {"Authorization": f"Bearer {valid_token}"}
         
@@ -79972,7 +80010,7 @@ class TestAPIAuthentication:
             # Devrait passer l'authentification mais peut échouer sur la logique métier
             assert response.status_code in [status.HTTP_200_OK, status.HTTP_422_UNPROCESSABLE_ENTITY]
     
-    def test_permissions_validation(self, client):
+    def test_permissions_validation(self, client) -> None:
         """Test la validation des permissions."""
         from jose import jwt
         
@@ -79999,13 +80037,13 @@ class TestRecommendationEndpoints:
     """Tests pour les endpoints de recommandation."""
     
     @pytest.fixture
-    def authenticated_client(self, client, valid_token):
+    def authenticated_client(self, client, valid_token) -> None:
         """Client authentifié."""
         client.headers = {"Authorization": f"Bearer {valid_token}"}
         return client
     
     @pytest.mark.asyncio
-    async def test_generate_recommendations_success(self, authenticated_client):
+    async def test_generate_recommendations_success(self, authenticated_client) -> None:
         """Test la génération de recommandations réussie."""
         request_data = {
             "user_id": "test_user_123",
@@ -80055,7 +80093,7 @@ class TestRecommendationEndpoints:
             assert len(data["recommendations"]) == 2
             assert data["recommendations"][0]["score"] == 0.95
     
-    def test_generate_recommendations_validation_error(self, authenticated_client):
+    def test_generate_recommendations_validation_error(self, authenticated_client) -> None:
         """Test la validation des données de recommandation."""
         # Données invalides
         invalid_data = {
@@ -80073,7 +80111,7 @@ class TestRecommendationEndpoints:
         assert "detail" in response.json()
     
     @pytest.mark.asyncio
-    async def test_get_user_recommendations_history(self, authenticated_client):
+    async def test_get_user_recommendations_history(self, authenticated_client) -> None:
         """Test la récupération de l'historique des recommandations."""
         user_id = "test_user_123"
         
@@ -80098,7 +80136,7 @@ class TestRecommendationEndpoints:
             assert len(data["history"]) == 1
     
     @pytest.mark.asyncio
-    async def test_recommendation_feedback(self, authenticated_client):
+    async def test_recommendation_feedback(self, authenticated_client) -> None:
         """Test l'enregistrement de feedback sur les recommandations."""
         feedback_data = {
             "recommendation_id": "rec_123",
@@ -80123,7 +80161,7 @@ class TestRecommendationEndpoints:
             assert "feedback_id" in data
     
     @pytest.mark.asyncio
-    async def test_contextual_recommendations(self, authenticated_client):
+    async def test_contextual_recommendations(self, authenticated_client) -> None:
         """Test les recommandations contextuelles."""
         context_data = {
             "user_id": "test_user_123",
@@ -80164,13 +80202,13 @@ class TestAudioAnalysisEndpoints:
     """Tests pour les endpoints d'analyse audio."""
     
     @pytest.fixture
-    def authenticated_client(self, client, valid_token):
+    def authenticated_client(self, client, valid_token) -> None:
         """Client authentifié."""
         client.headers = {"Authorization": f"Bearer {valid_token}"}
         return client
     
     @pytest.mark.asyncio
-    async def test_analyze_audio_file_upload(self, authenticated_client):
+    async def test_analyze_audio_file_upload(self, authenticated_client) -> None:
         """Test l'analyse d'un fichier audio uploadé."""
         # Simuler un fichier audio
         audio_content = b"fake_audio_data" * 1000  # Données audio factices
@@ -80211,7 +80249,7 @@ class TestAudioAnalysisEndpoints:
             assert data["analysis"]["tempo"] == 120.5
             assert "genre_prediction" in data["analysis"]
     
-    def test_analyze_audio_invalid_file(self, authenticated_client):
+    def test_analyze_audio_invalid_file(self, authenticated_client) -> None:
         """Test l'analyse avec un fichier invalide."""
         # Fichier non-audio
         invalid_content = b"this is not audio data"
@@ -80226,7 +80264,7 @@ class TestAudioAnalysisEndpoints:
         assert "unsupported file type" in response.json()["detail"].lower()
     
     @pytest.mark.asyncio
-    async def test_analyze_audio_url(self, authenticated_client):
+    async def test_analyze_audio_url(self, authenticated_client) -> None:
         """Test l'analyse d'un fichier audio via URL."""
         url_data = {
             "audio_url": "https://example.com/audio.mp3",
@@ -80262,7 +80300,7 @@ class TestAudioAnalysisEndpoints:
             assert "analysis" in data
     
     @pytest.mark.asyncio
-    async def test_batch_audio_analysis(self, authenticated_client):
+    async def test_batch_audio_analysis(self, authenticated_client) -> None:
         """Test l'analyse par lot de fichiers audio."""
         batch_data = {
             "audio_urls": [
@@ -80310,7 +80348,7 @@ class TestAudioAnalysisEndpoints:
             assert data["results"][2]["status"] == "error"
     
     @pytest.mark.asyncio
-    async def test_audio_similarity_comparison(self, authenticated_client):
+    async def test_audio_similarity_comparison(self, authenticated_client) -> None:
         """Test la comparaison de similarité audio."""
         comparison_data = {
             "reference_track": "spotify:track:ref123",
@@ -80361,7 +80399,7 @@ class TestModelManagementEndpoints:
     """Tests pour les endpoints de gestion des modèles."""
     
     @pytest.fixture
-    def authenticated_client(self, client, valid_token):
+    def authenticated_client(self, client, valid_token) -> None:
         """Client authentifié avec permissions admin."""
         from jose import jwt
         admin_payload = {
@@ -80374,7 +80412,7 @@ class TestModelManagementEndpoints:
         return client
     
     @pytest.mark.asyncio
-    async def test_list_models(self, authenticated_client):
+    async def test_list_models(self, authenticated_client) -> None:
         """Test la liste des modèles disponibles."""
         mock_models = [
             {
@@ -80407,7 +80445,7 @@ class TestModelManagementEndpoints:
             assert data["models"][0]["model_id"] == "recommendation_v1"
     
     @pytest.mark.asyncio
-    async def test_get_model_details(self, authenticated_client):
+    async def test_get_model_details(self, authenticated_client) -> None:
         """Test les détails d'un modèle spécifique."""
         model_id = "recommendation_v1"
         
@@ -80446,7 +80484,7 @@ class TestModelManagementEndpoints:
             assert "metrics" in data
     
     @pytest.mark.asyncio
-    async def test_train_model(self, authenticated_client):
+    async def test_train_model(self, authenticated_client) -> None:
         """Test l'entraînement d'un modèle."""
         model_id = "recommendation_v1"
         training_config = {
@@ -80479,7 +80517,7 @@ class TestModelManagementEndpoints:
             assert "job_id" in data
     
     @pytest.mark.asyncio
-    async def test_model_deployment(self, authenticated_client):
+    async def test_model_deployment(self, authenticated_client) -> None:
         """Test le déploiement d'un modèle."""
         model_id = "recommendation_v2"
         deployment_config = {
@@ -80518,13 +80556,13 @@ class TestMonitoringEndpoints:
     """Tests pour les endpoints de monitoring."""
     
     @pytest.fixture
-    def authenticated_client(self, client, valid_token):
+    def authenticated_client(self, client, valid_token) -> None:
         """Client authentifié."""
         client.headers = {"Authorization": f"Bearer {valid_token}"}
         return client
     
     @pytest.mark.asyncio
-    async def test_system_health(self, authenticated_client):
+    async def test_system_health(self, authenticated_client) -> None:
         """Test l'endpoint de santé système."""
         mock_health = {
             "healthy": True,
@@ -80549,7 +80587,7 @@ class TestMonitoringEndpoints:
             assert "components" in data
     
     @pytest.mark.asyncio
-    async def test_performance_metrics(self, authenticated_client):
+    async def test_performance_metrics(self, authenticated_client) -> None:
         """Test les métriques de performance."""
         mock_metrics = {
             "timestamp": "2024-01-15T12:00:00Z",
@@ -80584,7 +80622,7 @@ class TestMonitoringEndpoints:
             assert "model_metrics" in data
     
     @pytest.mark.asyncio
-    async def test_active_alerts(self, authenticated_client):
+    async def test_active_alerts(self, authenticated_client) -> None:
         """Test les alertes actives."""
         mock_alerts = [
             {
@@ -80625,13 +80663,13 @@ class TestAPIErrorHandling:
     """Tests pour la gestion d'erreurs de l'API."""
     
     @pytest.fixture
-    def authenticated_client(self, client, valid_token):
+    def authenticated_client(self, client, valid_token) -> None:
         """Client authentifié."""
         client.headers = {"Authorization": f"Bearer {valid_token}"}
         return client
     
     @pytest.mark.asyncio
-    async def test_internal_server_error(self, authenticated_client):
+    async def test_internal_server_error(self, authenticated_client) -> None:
         """Test la gestion d'erreur serveur interne."""
         with patch('ml_analytics.api.recommendation_service.generate_recommendations') as mock_gen:
             mock_gen.side_effect = Exception("Internal processing error")
@@ -80646,7 +80684,7 @@ class TestAPIErrorHandling:
             assert "detail" in data
             assert "internal" in data["detail"].lower()
     
-    def test_validation_error_response(self, authenticated_client):
+    def test_validation_error_response(self, authenticated_client) -> None:
         """Test la réponse d'erreur de validation."""
         # Données manquantes
         response = authenticated_client.post(
@@ -80660,7 +80698,7 @@ class TestAPIErrorHandling:
         assert isinstance(data["detail"], list)  # Liste d'erreurs de validation
     
     @pytest.mark.asyncio
-    async def test_rate_limit_error(self, authenticated_client):
+    async def test_rate_limit_error(self, authenticated_client) -> None:
         """Test la limitation de taux."""
         # Simuler dépassement de limite
         with patch('ml_analytics.api.check_rate_limit') as mock_rate_limit:
@@ -80674,7 +80712,7 @@ class TestAPIErrorHandling:
             assert response.status_code == status.HTTP_429_TOO_MANY_REQUESTS
             assert "rate limit" in response.json()["detail"].lower()
     
-    def test_not_found_error(self, authenticated_client):
+    def test_not_found_error(self, authenticated_client) -> None:
         """Test l'erreur de ressource non trouvée."""
         response = authenticated_client.get("/ml-analytics/models/nonexistent_model")
         
@@ -80687,18 +80725,18 @@ class TestAPIPerformance:
     """Tests de performance pour l'API."""
     
     @pytest.fixture
-    def authenticated_client(self, client, valid_token):
+    def authenticated_client(self, client, valid_token) -> None:
         """Client authentifié."""
         client.headers = {"Authorization": f"Bearer {valid_token}"}
         return client
     
     @pytest.mark.slow
     @pytest.mark.asyncio
-    async def test_concurrent_requests(self, authenticated_client):
+    async def test_concurrent_requests(self, authenticated_client) -> None:
         """Test les requêtes concurrentes."""
         import asyncio
         
-        async def make_request():
+        async def make_request() -> None:
             with patch('ml_analytics.api.recommendation_service.generate_recommendations') as mock_gen:
                 mock_gen.return_value = [{"track_id": "test", "score": 0.8}]
                 
@@ -80722,7 +80760,7 @@ class TestAPIPerformance:
         assert duration < 10.0
     
     @pytest.mark.asyncio
-    async def test_large_payload_handling(self, authenticated_client):
+    async def test_large_payload_handling(self, authenticated_client) -> None:
         """Test la gestion de gros payloads."""
         # Créer un gros payload de recommandation
         large_request = {
@@ -80764,13 +80802,13 @@ class TestAPIIntegration:
     """Tests d'intégration complets pour l'API."""
     
     @pytest.fixture
-    def authenticated_client(self, client, valid_token):
+    def authenticated_client(self, client, valid_token) -> None:
         """Client authentifié."""
         client.headers = {"Authorization": f"Bearer {valid_token}"}
         return client
     
     @pytest.mark.asyncio
-    async def test_full_recommendation_workflow(self, authenticated_client):
+    async def test_full_recommendation_workflow(self, authenticated_client) -> None:
         """Test complet du workflow de recommandation."""
         # 1. Obtenir des recommandations
         with patch('ml_analytics.api.recommendation_service.generate_recommendations') as mock_gen:
@@ -80814,7 +80852,7 @@ class TestAPIIntegration:
             assert len(history_response.json()["history"]) >= 0
     
     @pytest.mark.asyncio
-    async def test_cross_service_integration(self, authenticated_client):
+    async def test_cross_service_integration(self, authenticated_client) -> None:
         """Test l'intégration entre services (recommandation + audio)."""
         # 1. Analyser un fichier audio
         with patch('ml_analytics.api.audio_service.analyze_audio_file') as mock_audio:

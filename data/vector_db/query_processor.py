@@ -84,7 +84,7 @@ class QueryMetrics:
 class QueryOptimizer:
     """Optimizes query execution plans."""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """Initialize query optimizer."""
         self.config = config
         self.optimization_level = config.get('optimization_level', 'medium')
@@ -424,7 +424,7 @@ class QueryOptimizer:
 class ResultProcessor:
     """Processes and enriches query results."""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """Initialize result processor."""
         self.config = config
         self.enable_enrichment = config.get('enable_enrichment', True)
@@ -744,10 +744,10 @@ class QueryProcessor:
     
     def __init__(
         self,
-        similarity_engine: Any,
-        cache_manager: Any,
-        config: Any
-    ):
+        similarity_engine -> None: Any,
+        cache_manager -> None: Any,
+        config -> None: Any
+    ) -> None:
         """
         Initialize query processor.
         

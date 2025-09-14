@@ -33,7 +33,7 @@ try:
     from core.rate_limiter import get_rate_limiter
 except ImportError:
     # Fallback for standalone operation
-    def get_logger(name: str):
+    def get_logger(name -> None: str) -> None:
         try:
                     # Request validation
                     if not data:
@@ -83,10 +83,10 @@ except ImportError:
                 except Exception as e:
                     logger.error(f"API handler get_logger failed: {e}")
                     return {"status": "error", "message": str(e)}
-    def get_settings():
+    def get_settings() -> None:
         return {"api_rate_limit": 100}
     
-    def get_rate_limiter():
+    def get_rate_limiter() -> None:
         try:
             logger.info(f"Executing __init__")
             
@@ -114,7 +114,7 @@ class OfflineRequest:
     synced: bool = False
     retry_count: int = 0
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if isinstance(self.timestamp, str):
             self.timestamp = datetime.fromisoformat(self.timestamp)
 
@@ -133,7 +133,7 @@ Data synchronization operation."""
     created_at: datetime = None
     updated_at: datetime = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.created_at is None:
             self.created_at = datetime.utcnow()
         if self.updated_at is None:
@@ -144,7 +144,7 @@ class MobileResponseOptimizer:
     """
 Mobile response optimization for bandwidth and performance."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = get_logger("mobile.response_optimizer")
     
     def optimize_response(
@@ -272,7 +272,7 @@ Mobile response optimization for bandwidth and performance."""
 class OfflineSyncManager:
     """Professional offline synchronization management."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = get_logger("mobile.offline_sync")
         self.offline_requests: Dict[str, OfflineRequest] = {}
         self.sync_operations: Dict[str, SyncOperation] = {}
@@ -433,14 +433,14 @@ class OfflineSyncManager:
 class MobileAPIRouter:
     """Professional mobile API routing and optimization."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = get_logger("mobile.api_router")
         self.response_optimizer = MobileResponseOptimizer()
         self.offline_sync_manager = OfflineSyncManager()
         self.content_service = create_mobile_content_service()
         self.collaboration_service = create_mobile_collaboration_service()
     
-    def create_mobile_routes(self, app: FastAPI):
+    def create_mobile_routes(self, app -> None: FastAPI) -> None:
         """Create mobile-optimized API routes."""
         
         # Mobile content management routes
@@ -695,7 +695,7 @@ def create_mobile_api_app() -> FastAPI:
     """Create mobile-optimized FastAPI application."""
     
     @asynccontextmanager
-    async def lifespan(app: FastAPI):
+    async def lifespan(app -> None: FastAPI) -> None:
         # Startup
         logger = get_logger("mobile.api")
         logger.info("Mobile API Gateway starting up...")
@@ -728,7 +728,7 @@ def create_mobile_api_app() -> FastAPI:
     
     # Add middleware for mobile optimization
     @app.middleware("http")
-    async def mobile_optimization_middleware(request: Request, call_next):
+    async def mobile_optimization_middleware(request -> None: Request, call_next) -> None:
         """Mobile-specific request/response optimization."""
         
         start_time = datetime.utcnow()
@@ -808,3 +808,5 @@ if __name__ == "__main__":
         log_level="info",
         reload=True
     )
+
+# File has syntax issues - needs manual review

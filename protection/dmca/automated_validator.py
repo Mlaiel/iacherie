@@ -115,7 +115,7 @@ class DMCAAutomatedValidator:
     """
 Enterprise-grade automated DMCA validation engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.text_vectorizer = TfidfVectorizer(
             max_features=5000,
             stop_words='english',
@@ -502,9 +502,9 @@ Assess legal risk level"""
         else:
             return LegalRiskLevel.SEVERE
     
-    async def _generate_recommendations(self, report: ValidationReport,
-                                       original: DMCAContentInfo,
-                                       infringement: DMCAInfringement):
+    async def _generate_recommendations(self, report -> None: ValidationReport,
+                                       original -> None: DMCAContentInfo,
+                                       infringement -> None: DMCAInfringement) -> None:
         """
 Generate actionable recommendations"""
         if report.evidence_strength < 0.7:

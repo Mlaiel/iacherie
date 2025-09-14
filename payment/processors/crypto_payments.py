@@ -87,7 +87,7 @@ class CryptoWallet:
     is_active: bool = True
     created_at: datetime = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.created_at is None:
             self.created_at = datetime.now()
 
@@ -133,10 +133,10 @@ class CryptoPaymentsProcessor:
     
     def __init__(
         self,
-        api_keys: Dict[str, str],
-        webhook_secret: Optional[str] = None,
-        testnet: bool = False
-    ):
+        api_keys -> None: Dict[str, str],
+        webhook_secret -> None: Optional[str] = None,
+        testnet -> None: bool = False
+    ) -> None:
         """
 Initialize cryptocurrency processor"""
         self.api_keys = api_keys

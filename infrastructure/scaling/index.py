@@ -1,4 +1,6 @@
 """
+import logging
+
 Scaling Module - Ainflue Infrastructure Enterprise
 =================================================
 Point d'entrée principal pour tous les services de mise à l'échelle

@@ -124,7 +124,7 @@ class AuthenticationChallenge(BaseModel):
 class FIDO2Manager:
     """FIDO2/WebAuthn Manager for hardware security keys"""
     
-    def __init__(self, redis_url: str = "redis://localhost:6379", rp_id: str = "ainflue.com"):
+    def __init__(self, redis_url -> None: str = "redis -> None://localhost -> None:6379", rp_id -> None: str = "ainflue.com") -> None:
         self.rp_id = rp_id
         self.rp_name = "Ainflue - AI Influencer Platform"
         self.redis_client = None
@@ -138,7 +138,7 @@ class FIDO2Manager:
             {"type": "public-key", "alg": -8},   # EdDSA
         ]
         
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize Redis connection"""
         if not self.redis_client:
             self.redis_client = await aioredis.from_url(self.redis_url)
@@ -467,10 +467,10 @@ Generate FIDO2 registration challenge for new authenticator"""
             
     async def _store_user_credential(
         self,
-        user_id: str,
-        credential_id: str,
-        credential_data: Dict[str, Any]
-    ):
+        user_id -> None: str,
+        credential_id -> None: str,
+        credential_data -> None: Dict[str, Any]
+    ) -> None:
         """Store user credential in Redis"""
         credentials_key = f"fido2_credentials:{user_id}"
         
@@ -493,7 +493,7 @@ Generate FIDO2 registration challenge for new authenticator"""
         user_id = await self.redis_client.get(lookup_key)
         return user_id.decode('utf-8') if user_id else None
         
-    async def _update_credential_usage(self, user_id: str, credential_id: str):
+    async def _update_credential_usage(self, user_id -> None: str, credential_id -> None: str) -> None:
         """Update credential last used timestamp"""
         credentials = await self.get_user_credentials(user_id)
         
@@ -507,7 +507,7 @@ Generate FIDO2 registration challenge for new authenticator"""
 class FIDO2Middleware:
     """FastAPI middleware for FIDO2 authentication"""
     
-    def __init__(self, fido2_manager: FIDO2Manager):
+    def __init__(self, fido2_manager -> None: FIDO2Manager) -> None:
         try:
             logger.info(f"Executing __init__")
             

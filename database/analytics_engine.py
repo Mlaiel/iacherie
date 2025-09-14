@@ -1,4 +1,6 @@
 """📈 Analytics Engine - Real-time Analytics & Monitoring
+from datetime import datetime
+
 =======================================================
 Module: database/analytics_engine.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -203,7 +205,7 @@ class BusinessIntelligenceReport:
 class RealTimeMetricsCollector:
     """Real-time metrics collection and aggregation"""
     
-    def __init__(self, buffer_size: int = 10000):
+    def __init__(self, buffer_size -> None: int = 10000) -> None:
         self.buffer_size = buffer_size
         self.metrics_buffer: deque = deque(maxlen=buffer_size)
         self.aggregated_metrics: Dict[str, Dict[str, Any]] = defaultdict(dict)
@@ -214,8 +216,8 @@ class RealTimeMetricsCollector:
         self.connection_pool_stats: Dict[str, Any] = {}
         self.error_counts: Dict[str, int] = defaultdict(int)
         
-    def record_metric(self, metric_name: str, value: float, metric_type: MetricType,
-                     labels: Dict[str, str] = None, timestamp: datetime.datetime = None):
+    def record_metric(self, metric_name -> None: str, value -> None: float, metric_type -> None: MetricType,
+                     labels -> None: Dict[str, str] = None, timestamp -> None: datetime.datetime = None) -> None:
         """Record a metric measurement"""
         if timestamp is None:
             timestamp = datetime.datetime.utcnow()
@@ -233,8 +235,8 @@ class RealTimeMetricsCollector:
         # Update real-time aggregations
         self._update_real_time_aggregation(metric)
     
-    def record_query_performance(self, query: str, execution_time: float, 
-                                rows_affected: int = 0, connection_id: str = None):
+    def record_query_performance(self, query -> None: str, execution_time -> None: float, 
+                                rows_affected -> None: int = 0, connection_id -> None: str = None) -> None:
         """Record query performance metrics"""
         query_metric = {
             "query": query[:200],  # Truncate long queries
@@ -251,8 +253,8 @@ class RealTimeMetricsCollector:
                           {"connection": connection_id or "unknown"})
         self.record_metric("query_rows_affected", rows_affected, MetricType.COUNTER)
     
-    def record_connection_event(self, event_type: str, connection_id: str, 
-                              pool_size: int = None, active_connections: int = None):
+    def record_connection_event(self, event_type -> None: str, connection_id -> None: str, 
+                              pool_size -> None: int = None, active_connections -> None: int = None) -> None:
         """Record connection pool events"""
         timestamp = datetime.datetime.utcnow()
         
@@ -276,8 +278,8 @@ class RealTimeMetricsCollector:
         if active_connections:
             self.record_metric("active_connections", active_connections, MetricType.GAUGE)
     
-    def record_error(self, error_type: str, error_message: str = None,
-                    context: Dict[str, Any] = None):
+    def record_error(self, error_type -> None: str, error_message -> None: str = None,
+                    context -> None: Dict[str, Any] = None) -> None:
         """Record error occurrences"""
         self.error_counts[error_type] += 1
         
@@ -286,7 +288,7 @@ class RealTimeMetricsCollector:
         
         logger.warning(f"Error recorded: {error_type} - {error_message}")
     
-    def _update_real_time_aggregation(self, metric: MetricSnapshot):
+    def _update_real_time_aggregation(self, metric -> None: MetricSnapshot) -> None:
         """Update real-time metric aggregations"""
         metric_key = f"{metric.metric_name}:{':'.join(f'{k}={v}' for k, v in metric.labels.items())}"
         
@@ -342,7 +344,7 @@ class RealTimeMetricsCollector:
 class BusinessIntelligenceEngine:
     """Advanced business intelligence and analytics engine"""
     
-    def __init__(self, connection_manager=None, metrics_collector: RealTimeMetricsCollector = None):
+    def __init__(self, connection_manager=None, metrics_collector -> None: RealTimeMetricsCollector = None) -> None:
         self.connection_manager = connection_manager
         self.metrics_collector = metrics_collector or RealTimeMetricsCollector()
         
@@ -353,7 +355,7 @@ class BusinessIntelligenceEngine:
         # Event tracking
         self.events_buffer: deque = deque(maxlen=50000)
         
-    async def track_analytics_event(self, event: AnalyticsEvent):
+    async def track_analytics_event(self, event -> None: AnalyticsEvent) -> None:
         """Track analytics event for processing"""
         self.events_buffer.append(event)
         
@@ -562,7 +564,7 @@ class BusinessIntelligenceEngine:
             return {"error": str(e), "prediction_type": prediction_type}
     
     # Helper methods for analytics calculations
-    async def _process_event_for_metrics(self, event: AnalyticsEvent):
+    async def _process_event_for_metrics(self, event -> None: AnalyticsEvent) -> None:
         """Process event for real-time metrics"""
         # Record event metrics
         self.metrics_collector.record_metric(
@@ -583,7 +585,7 @@ class BusinessIntelligenceEngine:
                 {"currency": event.currency or "USD"}
             )
     
-    async def _store_event(self, event: AnalyticsEvent):
+    async def _store_event(self, event -> None: AnalyticsEvent) -> None:
         """Store event in database"""
         try:
             conn = await self.connection_manager.get_connection("postgresql")
@@ -618,7 +620,7 @@ class BusinessIntelligenceEngine:
         
         return datetime.datetime.utcnow() < expiry
     
-    def _cache_result(self, cache_key: str, result: Any, minutes: int = 15):
+    def _cache_result(self, cache_key -> None: str, result -> None: Any, minutes -> None: int = 15) -> None:
         """Cache analytics result"""
         self.analytics_cache[cache_key] = result
         self.cache_expiry[cache_key] = datetime.datetime.utcnow() + datetime.timedelta(minutes=minutes)
@@ -844,12 +846,12 @@ async def track_event(event_type: AnalyticsEventType, event_data: Dict[str, Any]
     await engine.track_analytics_event(event)
     return event_id
 
-def record_metric(name: str, value: float, metric_type: MetricType, **kwargs):
+def record_metric(name -> None: str, value -> None: float, metric_type -> None: MetricType, **kwargs) -> None:
     """Convenience function to record metric"""
     collector = get_metrics_collector()
     collector.record_metric(name, value, metric_type, **kwargs)
 
-def record_query_performance(query: str, execution_time: float, **kwargs):
+def record_query_performance(query -> None: str, execution_time -> None: float, **kwargs) -> None:
     """Convenience function to record query performance"""
     collector = get_metrics_collector()
     collector.record_query_performance(query, execution_time, **kwargs)

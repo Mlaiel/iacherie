@@ -174,7 +174,7 @@ class MarketReport:
 class MarketIntelligenceEngine:
     """Advanced market intelligence and analysis system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.market_metrics: Dict[str, MarketMetric] = {}
         self.competitors: Dict[str, CompetitorProfile] = {}
         self.opportunities: Dict[str, MarketOpportunity] = {}
@@ -186,7 +186,7 @@ class MarketIntelligenceEngine:
         # Initialize with sample data
         self._initialize_sample_data()
     
-    def _initialize_sample_data(self):
+    def _initialize_sample_data(self) -> None:
         """Initialize with sample market data"""
         # Sample competitors
         sample_competitors = [
@@ -816,7 +816,7 @@ class MarketIntelligenceEngine:
         }
 
 # Example usage
-async def main():
+async def main() -> None:
     """Example usage of MarketIntelligenceEngine"""
     intelligence = MarketIntelligenceEngine()
     

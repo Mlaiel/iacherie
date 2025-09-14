@@ -208,7 +208,7 @@ class TokenStore(ABC):
 class InMemoryTokenStore(TokenStore):
     """In-memory token store implementation"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.access_tokens: Dict[str, AccessToken] = {}
         self.refresh_tokens: Dict[str, RefreshToken] = {}
         self.authorization_codes: Dict[str, AuthorizationCode] = {}
@@ -287,7 +287,7 @@ class ClientStore(ABC):
 class InMemoryClientStore(ClientStore):
     """In-memory client store implementation"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.clients: Dict[str, OAuthClient] = {}
     
     async def get_client(self, client_id: str) -> Optional[OAuthClient]:
@@ -313,7 +313,7 @@ class InMemoryClientStore(ClientStore):
 class JWTHandler:
     """JWT token handler"""
     
-    def __init__(self, private_key: str, public_key: str, algorithm: str = "RS256"):
+    def __init__(self, private_key -> None: str, public_key -> None: str, algorithm -> None: str = "RS256") -> None:
         self.private_key = private_key
         self.public_key = public_key
         self.algorithm = algorithm
@@ -366,7 +366,7 @@ class PKCEHandler:
 class OAuthCore:
     """Core OAuth 2.0/OIDC authorization server"""
     
-    def __init__(self, level: str = "enterprise"):
+    def __init__(self, level -> None: str = "enterprise") -> None:
         self.level = level
         self.token_store = InMemoryTokenStore()
         self.client_store = InMemoryClientStore()
@@ -462,7 +462,7 @@ class OAuthCore:
             logger.error(f"Health check failed: {str(e)}")
             return False
     
-    def _initialize_default_scopes(self):
+    def _initialize_default_scopes(self) -> None:
         """Initialize default OAuth scopes"""
         self.scopes = {
             "read": OAuthScope("read", "Read access to basic resources", "api", ["read"]),
@@ -474,7 +474,7 @@ class OAuthCore:
             "offline_access": OAuthScope("offline_access", "Refresh token access", "token", ["refresh"])
         }
     
-    async def _register_default_client(self):
+    async def _register_default_client(self) -> None:
         """Register default OAuth client"""
         client = OAuthClient(
             client_id="ainflue_web_app",

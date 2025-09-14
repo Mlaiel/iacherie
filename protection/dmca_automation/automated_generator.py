@@ -94,7 +94,7 @@ class AutomatedNoticeGenerator:
     - Batch processing
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """
 Initialize automated notice generator"""
         self.config = config or {}

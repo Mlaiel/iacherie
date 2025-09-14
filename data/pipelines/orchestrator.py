@@ -97,7 +97,7 @@ class WorkflowManager:
     Advanced workflow management system for complex multi-step processes
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.redis_client = Redis.from_url(settings.REDIS_URL)
         self.celery_app = Celery('pipeline_orchestrator')
         
@@ -561,7 +561,7 @@ class PipelineMonitor:
     System monitoring and health checking for pipeline operations
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.cache_manager = CacheManager()
         self.notification_manager = NotificationManager()
         
@@ -831,11 +831,11 @@ class HealthChecker:
     Automated health checking and alerting system
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.monitor = PipelineMonitor()
         self.notification_manager = NotificationManager()
 
-    async def run_health_check_cycle(self):
+    async def run_health_check_cycle(self) -> None:
         """
         Run complete health check cycle with alerting
         """
@@ -869,7 +869,7 @@ class HealthChecker:
             
             raise MonitoringError(f"Health check failed: {str(e)}")
 
-    async def _send_health_alerts(self, alerts: List[Dict[str, Any]], health_report: Dict[str, Any]):
+    async def _send_health_alerts(self, alerts -> None: List[Dict[str, Any]], health_report -> None: Dict[str, Any]) -> None:
         """Send health alerts to administrators"""
         try:
             high_severity_alerts = [a for a in alerts if a.get("severity") == "high"]
@@ -893,7 +893,7 @@ class HealthChecker:
         except Exception as e:
             logger.error(f"Failed to send health alerts: {str(e)}")
 
-    async def _send_critical_alert(self, error_message: str):
+    async def _send_critical_alert(self, error_message -> None: str) -> None:
         """Send critical system alert"""
         try:
             await self.notification_manager.send_admin_alert(
@@ -908,7 +908,7 @@ class HealthChecker:
         except Exception as e:
             logger.error(f"Failed to send critical alert: {str(e)}")
 
-    async def _save_health_metrics(self, health_report: Dict[str, Any]):
+    async def _save_health_metrics(self, health_report -> None: Dict[str, Any]) -> None:
         """Save health metrics to database"""
         try:
             metrics = WorkflowMetrics(
@@ -934,11 +934,11 @@ class PipelineOrchestrator:
     Main orchestrator managing all pipeline operations and workflows
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.workflow_manager = WorkflowManager()
         self.health_checker = HealthChecker()
         
-    async def start_orchestration_services(self):
+    async def start_orchestration_services(self) -> None:
         """
 Start all orchestration services"""
         logger.info("Starting pipeline orchestration services")
@@ -948,7 +948,7 @@ Start all orchestration services"""
         
         logger.info("Orchestration services started successfully")
 
-    async def _health_monitoring_loop(self):
+    async def _health_monitoring_loop(self) -> None:
         """Background health monitoring loop"""
         while True:
             try:

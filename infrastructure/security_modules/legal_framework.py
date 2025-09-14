@@ -61,7 +61,7 @@ class LegalFrameworkManager(ComplianceBaseManager):
     - Platform liability management
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
         self.legal_documents = {}
         self.legal_requirements = {}

@@ -84,7 +84,7 @@ class EncryptionManager:
     hardware security modules (HSM), key rotation, and secure key derivation.
     """
     
-    def __init__(self, config: SecretsConfig = None):
+    def __init__(self, config -> None: SecretsConfig = None) -> None:
         """
         Initialize encryption manager.
         
@@ -1136,7 +1136,7 @@ class ContentProtectionEncryption(EncryptionManager):
     - User-generated content
     """
     
-    def __init__(self, config: SecretsConfig = None):
+    def __init__(self, config -> None: SecretsConfig = None) -> None:
         super().__init__(config)
         self.content_keys: Dict[str, EncryptionKey] = {}
         self.protection_algorithms = {
@@ -1861,3 +1861,6 @@ class ContentProtectionEncryption(EncryptionManager):
                 'error': str(e),
                 'key_health': 'error'
             }
+))}
+
+# File has syntax issues - needs manual review

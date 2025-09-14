@@ -101,7 +101,7 @@ class TrendingAnalyzer:
     AI-powered trending content analyzer that identifies, analyzes, and predicts
     trending topics and content patterns across multiple platforms and industries.
     """
-    def __init__(self, region: str = "US", industry: str = "general"):
+    def __init__(self, region -> None: str = "US", industry -> None: str = "general") -> None:
         """
         Initialize the trending analyzer.
         

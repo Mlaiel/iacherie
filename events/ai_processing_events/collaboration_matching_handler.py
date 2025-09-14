@@ -276,7 +276,7 @@ class CollaborationMatchingHandler(BaseEventHandler):
     compatibility analysis, and intelligent match scoring algorithms.
     """
     
-    def __init__(self, ai_engine: Any):
+    def __init__(self, ai_engine -> None: Any) -> None:
         """
 Initialize collaboration matching handler"""
         super().__init__()
@@ -296,7 +296,7 @@ Initialize collaboration matching handler"""
         self.matching_stats = defaultdict(int)
         self.performance_metrics = defaultdict(list)
     
-    def _initialize_matching_algorithms(self):
+    def _initialize_matching_algorithms(self) -> None:
         """
 Initialize machine learning models for matching"""
         try:
@@ -1094,7 +1094,7 @@ Get handler performance statistics"""
             'cache_size': len(self.match_cache)
         }
     
-    async def cleanup(self):
+    async def cleanup(self) -> None:
         """
 Cleanup handler resources"""
         logger.info("Cleaning up collaboration matching handler resources")

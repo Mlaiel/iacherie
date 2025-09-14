@@ -18,7 +18,7 @@ logger = logging.getLogger(__name__)
 class CollaborationAnalytics:
     """Collaboration analytics engine for team projects."""
     
-    def __init__(self, pipeline_builder: Optional[PipelineBuilder] = None):
+    def __init__(self, pipeline_builder -> None: Optional[PipelineBuilder] = None) -> None:
         """Initialize collaboration analytics."""
         self.pipeline_builder = pipeline_builder or get_pipeline_builder()
     

@@ -1,3 +1,8 @@
+"""
+Viral Predictor module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
@@ -176,7 +181,7 @@ class ViralPredictor:
     trend detection, and strategic content optimization recommendations.
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """Initialize viral predictor with configuration"""
         self.config = config
         self.auth_handler = AuthenticationHandler(config)
@@ -231,7 +236,7 @@ class ViralPredictor:
         
         logger.info("Viral Predictor initialized successfully")
     
-    async def _initialize_viral_models(self):
+    async def _initialize_viral_models(self) -> None:
         """Initialize viral prediction models and analyzers"""
         try:
             # Load historical viral data
@@ -750,10 +755,10 @@ class ViralPredictor:
     
     def _validate_prediction_inputs(
         self,
-        content_data: Dict[str, Any],
-        platform: str,
-        creator_profile: Dict[str, Any]
-    ):
+        content_data -> None: Dict[str, Any],
+        platform -> None: str,
+        creator_profile -> None: Dict[str, Any]
+    ) -> None:
         """Validate inputs for viral prediction"""
         if not content_data:
             raise ValueError("Content data cannot be empty")
@@ -803,7 +808,7 @@ class ViralPredictor:
 
 if __name__ == "__main__":
     # Example usage
-    async def test_viral_predictor():
+    async def test_viral_predictor() -> None:
         config = {
             'redis_url': 'redis://localhost:6379',
             'openai_api_key': 'your-api-key',

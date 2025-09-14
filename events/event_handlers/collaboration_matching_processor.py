@@ -76,7 +76,7 @@ class CreatorProfile:
     response_rate: float = 0.0
     created_at: datetime = None
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.created_at is None:
             self.created_at = datetime.utcnow()
 
@@ -97,7 +97,7 @@ class MatchingResult:
     collaboration_suggestions: List[str]
     created_at: datetime
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.created_at is None:
             self.created_at = datetime.utcnow()
 
@@ -128,7 +128,7 @@ class CollaborationMatchingProcessor(BaseEventHandler):
                  profile_analyzer=None,
                  compatibility_engine=None,
                  success_predictor=None,
-                 recommendation_service=None):
+                 recommendation_service=None) -> None:
         super().__init__()
         self.profile_analyzer = profile_analyzer
         self.compatibility_engine = compatibility_engine

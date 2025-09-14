@@ -5,7 +5,7 @@ Advanced security monitoring system with real-time threat detection,
 behavioral analysis, and automated response for content protection platform.
 
 Security Focus Areas:
-- Content protection system security
+    - Content protection system security
 - API security and rate limiting monitoring
 - User authentication and authorization tracking
 - Data privacy and GDPR compliance monitoring
@@ -115,11 +115,11 @@ class SecurityMonitor:
     
     def __init__(
         self,
-        redis_client: Optional[aioredis.Redis] = None,
-        db_engine: Optional[AsyncEngine] = None,
-        monitoring_interval: int = 60,
-        retention_days: int = 90
-    ):
+        redis_client -> None: Optional[aioredis.Redis] = None,
+        db_engine -> None: Optional[AsyncEngine] = None,
+        monitoring_interval -> None: int = 60,
+        retention_days -> None: int = 90
+    ) -> None:
         self.redis_client = redis_client
         self.db_engine = db_engine
         self.monitoring_interval = monitoring_interval
@@ -151,7 +151,7 @@ class SecurityMonitor:
         
         logger.info("Security Monitor initialized")
         
-    async def start(self):
+    async def start(self) -> None:
         """Start security monitoring"""
         if self._running:
             logger.warning("Security monitor already running")
@@ -173,7 +173,7 @@ class SecurityMonitor:
             self._running = False
             raise
             
-    async def stop(self):
+    async def stop(self) -> None:
         try:
             logger.info(f"Executing stop")
             
@@ -188,7 +188,7 @@ class SecurityMonitor:
         except Exception as e:
             logger.error(f"stop failed: {e}")
             raise
-    def _initialize_threat_patterns(self):
+    def _initialize_threat_patterns(self) -> None:
         """Initialize built-in threat patterns"""
         
         # Authentication failure pattern
@@ -246,7 +246,7 @@ class SecurityMonitor:
             auto_block=False
         )
         
-    async def _monitoring_loop(self):
+    async def _monitoring_loop(self) -> None:
         """Main security monitoring loop"""
         
         while self._running:
@@ -277,7 +277,7 @@ class SecurityMonitor:
                 logger.error(f"Error in security monitoring loop: {e}")
                 await asyncio.sleep(30)  # Backoff on error
                 
-    async def analyze_security_event(self, event_data: Dict[str, Any]):
+    async def analyze_security_event(self, event_data -> None: Dict[str, Any]) -> None:
         """Analyze a security event in real-time"""
         
         try:
@@ -359,7 +359,7 @@ class SecurityMonitor:
             
         return base_level
         
-    async def _immediate_response(self, event: SecurityEvent):
+    async def _immediate_response(self, event -> None: SecurityEvent) -> None:
         """
 Implement immediate response to high-threat events"""
         
@@ -384,7 +384,7 @@ Implement immediate response to high-threat events"""
         except Exception as e:
             logger.error(f"Error in immediate response: {e}")
             
-    async def _block_ip(self, ip_address: str, reason: str, duration: Optional[int] = None):
+    async def _block_ip(self, ip_address -> None: str, reason -> None: str, duration -> None: Optional[int] = None) -> None:
         """Block an IP address"""
         
         try:
@@ -421,7 +421,7 @@ Implement immediate response to high-threat events"""
         except Exception as e:
             logger.error(f"Error blocking IP {ip_address}: {e}")
             
-    async def _suspend_user(self, user_id: str, reason: str, duration: Optional[int] = None):
+    async def _suspend_user(self, user_id -> None: str, reason -> None: str, duration -> None: Optional[int] = None) -> None:
         """Suspend a user account"""
         
         try:
@@ -460,7 +460,7 @@ Implement immediate response to high-threat events"""
         except Exception as e:
             logger.error(f"Error suspending user {user_id}: {e}")
             
-    async def _send_security_alert(self, event: SecurityEvent):
+    async def _send_security_alert(self, event -> None: SecurityEvent) -> None:
         """Send security alert to administrators"""
         
         try:
@@ -489,14 +489,14 @@ Implement immediate response to high-threat events"""
         except Exception as e:
             logger.error(f"Error sending security alert: {e}")
             
-    async def _send_external_alert(self, alert_data: Dict[str, Any]):
+    async def _send_external_alert(self, alert_data -> None: Dict[str, Any]) -> None:
         """Send alert to external systems"""
         
         # Implementation for external alerting
         # This could include webhooks, email, Slack, PagerDuty, etc.
         logger.info(f"External security alert: {alert_data['event_type']}")
         
-    async def _analyze_security_events(self):
+    async def _analyze_security_events(self) -> None:
         """Analyze recent security events for patterns"""
         
         if not self.db_engine:
@@ -530,7 +530,7 @@ Implement immediate response to high-threat events"""
         except Exception as e:
             logger.error(f"Error analyzing security events: {e}")
             
-    async def _check_threat_patterns(self):
+    async def _check_threat_patterns(self) -> None:
         """Check for known threat patterns"""
         
         try:
@@ -569,7 +569,7 @@ Implement immediate response to high-threat events"""
         except Exception as e:
             logger.error(f"Error checking threat patterns: {e}")
             
-    async def _update_behavioral_profiles(self):
+    async def _update_behavioral_profiles(self) -> None:
         """Update user behavioral profiles"""
         
         if not self.db_engine:
@@ -632,7 +632,7 @@ Implement immediate response to high-threat events"""
         except Exception as e:
             logger.error(f"Error updating behavioral profiles: {e}")
             
-    async def _check_behavioral_anomaly(self, event: SecurityEvent):
+    async def _check_behavioral_anomaly(self, event -> None: SecurityEvent) -> None:
         """Check for behavioral anomalies"""
         
         if not event.user_id:
@@ -681,7 +681,7 @@ Implement immediate response to high-threat events"""
         except Exception as e:
             logger.error(f"Error checking behavioral anomaly: {e}")
             
-    async def _monitor_rate_limits(self):
+    async def _monitor_rate_limits(self) -> None:
         """Monitor and enforce rate limits"""
         
         try:
@@ -734,7 +734,7 @@ Implement immediate response to high-threat events"""
         
         return count > rate_limits.get(limit_type, 1000)
         
-    async def _collect_security_metrics(self):
+    async def _collect_security_metrics(self) -> None:
         """
 Collect security monitoring metrics"""
         
@@ -795,7 +795,7 @@ Collect security monitoring metrics"""
         except Exception as e:
             logger.error(f"Error collecting security metrics: {e}")
             
-    async def _cleanup_old_data(self):
+    async def _cleanup_old_data(self) -> None:
         """Cleanup old security data"""
         
         try:
@@ -831,7 +831,7 @@ Collect security monitoring metrics"""
         except Exception as e:
             logger.error(f"Error cleaning up old data: {e}")
             
-    async def _store_security_event(self, event: SecurityEvent):
+    async def _store_security_event(self, event -> None: SecurityEvent) -> None:
         """Store security event"""
         
         try:
@@ -878,7 +878,7 @@ Collect security monitoring metrics"""
         except Exception as e:
             logger.error(f"Error storing security event: {e}")
             
-    async def _load_security_data(self):
+    async def _load_security_data(self) -> None:
         """Load security data from storage"""
         
         try:
@@ -898,7 +898,7 @@ Collect security monitoring metrics"""
         except Exception as e:
             logger.error(f"Error loading security data: {e}")
             
-    async def _save_security_data(self):
+    async def _save_security_data(self) -> None:
         """Save security data to storage"""
         
         # Data is automatically saved in real-time through Redis and database
@@ -1018,7 +1018,7 @@ Get recent security events"""
                 
         return False
         
-    async def unblock_ip(self, ip_address: str, reason: str = "Manual unblock"):
+    async def unblock_ip(self, ip_address -> None: str, reason -> None: str = "Manual unblock") -> None:
         """Unblock an IP address"""
         
         try:
@@ -1045,7 +1045,7 @@ Get recent security events"""
         except Exception as e:
             logger.error(f"Error unblocking IP {ip_address}: {e}")
             
-    async def unsuspend_user(self, user_id: str, reason: str = "Manual unsuspension"):
+    async def unsuspend_user(self, user_id -> None: str, reason -> None: str = "Manual unsuspension") -> None:
         """Unsuspend a user account"""
         
         try:
@@ -1075,3 +1075,5 @@ Get recent security events"""
             
         except Exception as e:
             logger.error(f"Error unsuspending user {user_id}: {e}")
+
+# File has syntax issues - needs manual review

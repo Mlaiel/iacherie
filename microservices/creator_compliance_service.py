@@ -111,7 +111,7 @@ class ContentModerationResult:
 class CreatorComplianceService:
     """Enterprise creator compliance and verification service."""
     
-    def __init__(self, config_path: Optional[str] = None):
+    def __init__(self, config_path -> None: Optional[str] = None) -> None:
         """Initialize the creator compliance service.
         
         Args:
@@ -990,7 +990,7 @@ class CreatorComplianceService:
 
 
 # Example usage and testing
-async def main():
+async def main() -> None:
     """Example usage of the CreatorComplianceService."""
     # Initialize service
     service = CreatorComplianceService()

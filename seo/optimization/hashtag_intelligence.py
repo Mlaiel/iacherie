@@ -86,7 +86,7 @@ class HashtagIntelligence:
     AI-powered hashtag intelligence system that generates optimized hashtag strategies
     for social media content across multiple platforms.
     """
-    def __init__(self, language: str = "en", region: str = "US"):
+    def __init__(self, language -> None: str = "en", region -> None: str = "US") -> None:
         """
         Initialize the hashtag intelligence system.
         

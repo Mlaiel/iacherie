@@ -132,7 +132,7 @@ class DisasterRecoveryService:
     """
 Enterprise disaster recovery and business continuity service"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """
 Initialize disaster recovery service"""
         self.logger = logging.getLogger(self.__class__.__name__)
@@ -163,7 +163,7 @@ Initialize disaster recovery service"""
         
         self.logger.info("Disaster Recovery Service initialized")
 
-    async def initialize_monitoring(self):
+    async def initialize_monitoring(self) -> None:
         """Initialize monitoring and health checks"""
         try:
             # Initialize cloud clients
@@ -197,7 +197,7 @@ Initialize disaster recovery service"""
             self.logger.error(f"Failed to initialize monitoring: {e}")
             raise
 
-    async def _initialize_cloud_clients(self):
+    async def _initialize_cloud_clients(self) -> None:
         """Initialize cloud provider clients"""
         try:
             # AWS client initialization
@@ -337,7 +337,7 @@ Initialize disaster recovery service"""
         
         return procedures
 
-    async def _setup_resource_monitoring(self, dr_plan: DisasterRecoveryPlan):
+    async def _setup_resource_monitoring(self, dr_plan -> None: DisasterRecoveryPlan) -> None:
         """
 Setup monitoring for protected resources"""
         try:
@@ -373,7 +373,7 @@ Setup monitoring for protected resources"""
             self.logger.error(f"Failed to setup resource monitoring: {e}")
             raise
 
-    async def _continuous_health_monitoring(self):
+    async def _continuous_health_monitoring(self) -> None:
         """Continuous health monitoring of protected resources"""
         while True:
             try:
@@ -481,7 +481,7 @@ Setup monitoring for protected resources"""
         except Exception:
             return False
 
-    async def _trigger_disaster_event(self, resource_id: str, health_check: Dict[str, Any]):
+    async def _trigger_disaster_event(self, resource_id -> None: str, health_check -> None: Dict[str, Any]) -> None:
         """Trigger disaster event when resource fails"""
         try:
             event_id = f"disaster_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
@@ -533,7 +533,7 @@ Setup monitoring for protected resources"""
                     return plan
         return None
 
-    async def _initiate_automated_recovery(self, event: DisasterEvent, dr_plan: DisasterRecoveryPlan):
+    async def _initiate_automated_recovery(self, event -> None: DisasterEvent, dr_plan -> None: DisasterRecoveryPlan) -> None:
         """
 Initiate automated disaster recovery"""
         try:
@@ -559,7 +559,7 @@ Initiate automated disaster recovery"""
         except Exception as e:
             self.logger.error(f"Failed to initiate automated recovery: {e}")
 
-    async def _execute_recovery_procedures(self, recovery_op: RecoveryOperation, dr_plan: DisasterRecoveryPlan):
+    async def _execute_recovery_procedures(self, recovery_op -> None: RecoveryOperation, dr_plan -> None: DisasterRecoveryPlan) -> None:
         """Execute recovery procedures"""
         try:
             recovery_op.status = RecoveryStatus.RECOVERY_IN_PROGRESS
@@ -629,7 +629,7 @@ Initiate automated disaster recovery"""
             
             self.logger.error(f"Recovery failed: {recovery_op.operation_id} - {e}")
 
-    async def _execute_recovery_actions(self, actions: List[str], recovery_op: RecoveryOperation):
+    async def _execute_recovery_actions(self, actions -> None: List[str], recovery_op -> None: RecoveryOperation) -> None:
         """Execute recovery actions"""
         for action in actions:
             recovery_op.logs.append(f"Executing action: {action}")
@@ -698,7 +698,7 @@ Initiate automated disaster recovery"""
             self.logger.error(f"DR plan test failed: {e}")
             raise
 
-    async def _send_disaster_notification(self, event: DisasterEvent):
+    async def _send_disaster_notification(self, event -> None: DisasterEvent) -> None:
         """Send disaster event notification"""
         try:
             message = f"Disaster Event Detected: {event.disaster_type.value} affecting {len(event.affected_resources)} resources"
@@ -710,7 +710,7 @@ Initiate automated disaster recovery"""
         except Exception as e:
             self.logger.error(f"Failed to send disaster notification: {e}")
 
-    async def _send_recovery_completion_notification(self, recovery_op: RecoveryOperation, dr_plan: DisasterRecoveryPlan):
+    async def _send_recovery_completion_notification(self, recovery_op -> None: RecoveryOperation, dr_plan -> None: DisasterRecoveryPlan) -> None:
         """Send recovery completion notification"""
         try:
             message = f"Recovery Completed: {recovery_op.operation_id} in {recovery_op.metrics['total_recovery_time_minutes']:.1f} minutes"

@@ -1,3 +1,8 @@
+"""
+Latency Monitor module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 ⚡ Latency Monitor - Enterprise MLOps Platform
@@ -104,9 +109,9 @@ class LatencyMonitor:
     """
     
     def __init__(self, 
-                 db_path: str = "/tmp/latency_monitor.db",
-                 retention_days: int = 30,
-                 measurement_buffer_size: int = 10000):
+                 db_path -> None: str = "/tmp/latency_monitor.db",
+                 retention_days -> None: int = 30,
+                 measurement_buffer_size -> None: int = 10000) -> None:
         self.db_path = db_path
         self.retention_days = retention_days
         self.measurement_buffer_size = measurement_buffer_size
@@ -151,7 +156,7 @@ class LatencyMonitor:
         self._setup_database()
         logger.info("⚡ LatencyMonitor initialized for enterprise performance optimization")
     
-    def _setup_database(self):
+    def _setup_database(self) -> None:
         """Initialisation de la base de données SQLite"""
         try:
             with sqlite3.connect(self.db_path) as conn:
@@ -262,7 +267,7 @@ class LatencyMonitor:
             logger.error(f"❌ Error measuring latency for {model_id}: {e}")
             raise
     
-    async def _update_real_time_stats(self, buffer_key: str, measurement: LatencyMeasurement):
+    async def _update_real_time_stats(self, buffer_key -> None: str, measurement -> None: LatencyMeasurement) -> None:
         """Mise à jour des statistiques temps réel"""
         try:
             buffer = self.measurement_buffer[buffer_key]
@@ -289,10 +294,10 @@ class LatencyMonitor:
         except Exception as e:
             logger.error(f"❌ Error updating real-time stats: {e}")
     
-    async def _save_measurement(self, measurement: LatencyMeasurement):
+    async def _save_measurement(self, measurement -> None: LatencyMeasurement) -> None:
         """Sauvegarde asynchrone d'une mesure"""
         try:
-            def save_to_db():
+            def save_to_db() -> None:
                 with sqlite3.connect(self.db_path) as conn:
                     cursor = conn.cursor()
                     cursor.execute("""
@@ -327,7 +332,7 @@ class LatencyMonitor:
         except Exception as e:
             logger.error(f"❌ Error saving measurement: {e}")
     
-    async def _check_latency_alerts(self, measurement: LatencyMeasurement):
+    async def _check_latency_alerts(self, measurement -> None: LatencyMeasurement) -> None:
         """Vérification et déclenchement d'alertes de latence"""
         try:
             target = self.latency_targets.get(measurement.creator_workload)
@@ -396,7 +401,7 @@ class LatencyMonitor:
         except Exception as e:
             logger.error(f"❌ Error checking latency alerts: {e}")
     
-    async def _generate_optimization_recommendations(self, measurement: LatencyMeasurement):
+    async def _generate_optimization_recommendations(self, measurement -> None: LatencyMeasurement) -> None:
         """Génération de recommandations d'optimisation"""
         try:
             recommendations = []
@@ -573,17 +578,17 @@ class LatencyMonitor:
         else:
             return {"error": "No real-time data available"}
     
-    def add_alert_callback(self, callback: Callable):
+    def add_alert_callback(self, callback -> None: Callable) -> None:
         """Ajouter un callback pour les alertes de latence"""
         self.alert_callbacks.append(callback)
         logger.info(f"📢 Latency alert callback added. Total callbacks: {len(self.alert_callbacks)}")
     
-    def add_optimization_callback(self, callback: Callable):
+    def add_optimization_callback(self, callback -> None: Callable) -> None:
         """Ajouter un callback pour les recommandations d'optimisation"""
         self.optimization_callbacks.append(callback)
         logger.info(f"🚀 Optimization callback added. Total callbacks: {len(self.optimization_callbacks)}")
     
-    async def cleanup_old_data(self):
+    async def cleanup_old_data(self) -> None:
         """Nettoyage des données anciennes"""
         try:
             cutoff_date = datetime.now() - timedelta(days=self.retention_days)
@@ -611,11 +616,11 @@ class LatencyMeasureContext:
     """Context manager pour mesure automatique de latence"""
     
     def __init__(self, 
-                 monitor: LatencyMonitor,
-                 model_id: str,
-                 operation_type: str,
-                 creator_workload: CreatorWorkload = CreatorWorkload.INFLUENCER_INTERACTIVE,
-                 **kwargs):
+                 monitor -> None: LatencyMonitor,
+                 model_id -> None: str,
+                 operation_type -> None: str,
+                 creator_workload -> None: CreatorWorkload = CreatorWorkload.INFLUENCER_INTERACTIVE,
+                 **kwargs) -> None:
         self.monitor = monitor
         self.model_id = model_id
         self.operation_type = operation_type
@@ -624,11 +629,11 @@ class LatencyMeasureContext:
         self.start_time = None
         self.end_time = None
     
-    def __enter__(self):
+    def __enter__(self) -> None:
         self.start_time = time.time()
         return self
     
-    def __exit__(self, exc_type, exc_val, exc_tb):
+    def __exit__(self, exc_type, exc_val, exc_tb) -> None:
         self.end_time = time.time()
         
         # Mesure asynchrone de la latence
@@ -644,16 +649,16 @@ class LatencyMeasureContext:
 
 
 # Exemple d'utilisation pour démonstration
-async def main():
+async def main() -> None:
     """Démonstration des capacités du LatencyMonitor"""
     monitor = LatencyMonitor()
     
     # Callback d'exemple pour les alertes
-    async def latency_alert_handler(alert_data):
+    async def latency_alert_handler(alert_data) -> None:
         print(f"🚨 LATENCY ALERT: {alert_data['alert']['message']}")
     
     # Callback d'exemple pour les optimisations
-    async def optimization_handler(opt_data):
+    async def optimization_handler(opt_data) -> None:
         print(f"💡 OPTIMIZATION: {len(opt_data['recommendations'])} recommendations generated")
         for rec in opt_data['recommendations']:
             print(f"   - {rec.strategy.value}: {rec.description}")

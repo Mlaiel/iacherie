@@ -100,7 +100,7 @@ class HandlerInstance:
 class MiddlewareManager:
     """Manage middleware pipeline for command handlers"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._middleware_registry: Dict[str, Callable] = {}
         self._pipeline_cache: Dict[str, List[Callable]] = {}
     
@@ -150,7 +150,7 @@ class MiddlewareManager:
 class DependencyInjector:
     """Dependency injection container for handlers"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._services: Dict[str, Any] = {}
         self._factories: Dict[str, Callable] = {}
         self._singletons: Dict[str, Any] = {}
@@ -247,7 +247,7 @@ class HandlerValidator:
 class HandlerDiscovery:
     """Discover and auto-register command handlers"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._discovered_handlers: Dict[str, Type[CommandHandler]] = {}
     
     def discover_handlers_in_module(self, module_name: str) -> List[Type[CommandHandler]]:
@@ -280,12 +280,12 @@ class HandlerDiscovery:
 
 
 # Decorator for automatic handler registration
-def command_handler(command_type: str, version: str = "1.0.0", description: str = "",
-                   tags: List[str] = None, middleware: List[str] = None,
-                   timeout_seconds: int = 30, max_retries: int = 3):
+def command_handler(command_type -> None: str, version -> None: str = "1.0.0", description -> None: str = "",
+                   tags -> None: List[str] = None, middleware -> None: List[str] = None,
+                   timeout_seconds -> None: int = 30, max_retries -> None: int = 3) -> None:
     """Decorator for automatic command handler registration"""
     
-    def decorator(handler_class: Type[CommandHandler]):
+    def decorator(handler_class -> None: Type[CommandHandler]) -> None:
         # Store metadata in class
         handler_class._command_metadata = HandlerMetadata(
             handler_id=f"{command_type}_handler_{version}",
@@ -311,7 +311,7 @@ def command_handler(command_type: str, version: str = "1.0.0", description: str 
 class EnterpriseCommandHandlerRegistry:
     """Enterprise command handler registry with advanced features"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._handlers: Dict[str, HandlerInstance] = {}
         self._command_type_mapping: Dict[str, List[str]] = defaultdict(list)
         self._middleware_manager = MiddlewareManager()

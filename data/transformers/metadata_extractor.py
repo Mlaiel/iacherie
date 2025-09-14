@@ -143,7 +143,7 @@ class MetadataMapping:
 class MetadataExtractor:
     """Advanced metadata extraction and enrichment engine."""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize metadata extractor with configuration."""
         self.config = config or {}
         
@@ -169,7 +169,7 @@ class MetadataExtractor:
         
         logger.info("MetadataExtractor initialized")
     
-    def _load_extraction_patterns(self):
+    def _load_extraction_patterns(self) -> None:
         """Load patterns for extracting metadata from different formats."""
         self.extraction_patterns = {
             "exif": {
@@ -196,7 +196,7 @@ class MetadataExtractor:
             }
         }
     
-    def _load_metadata_mappings(self):
+    def _load_metadata_mappings(self) -> None:
         """Load mappings between different metadata standards."""
         mappings = [
             MetadataMapping(
@@ -227,7 +227,7 @@ class MetadataExtractor:
             key = f"{mapping.source_standard.value}_to_{mapping.target_standard.value}"
             self.metadata_mappings[key] = mapping
     
-    def _load_enrichment_rules(self):
+    def _load_enrichment_rules(self) -> None:
         """Load rules for metadata enrichment."""
         rules = [
             EnrichmentRule(
@@ -271,7 +271,7 @@ class MetadataExtractor:
         for rule in rules:
             self.enrichment_rules[rule.rule_id] = rule
     
-    def _initialize_format_extractors(self):
+    def _initialize_format_extractors(self) -> None:
         """Initialize format-specific metadata extractors."""
         self.format_extractors = {
             "image": ImageMetadataExtractor(),
@@ -281,7 +281,7 @@ class MetadataExtractor:
             "archive": ArchiveMetadataExtractor()
         }
     
-    def _load_validation_schemas(self):
+    def _load_validation_schemas(self) -> None:
         """Load validation schemas for metadata fields."""
         self.validation_schemas = {
             "datetime": {
@@ -417,8 +417,8 @@ class MetadataExtractor:
         return content_type_map.get(extension, 'application/octet-stream')
     
     async def _extract_with_method(
-        self, file_path: Path, method: ExtractionMethod, result: ExtractedMetadata
-    ):
+        self, file_path -> None: Path, method -> None: ExtractionMethod, result -> None: ExtractedMetadata
+    ) -> None:
         """Extract metadata using specific method."""
         try:
             if method == ExtractionMethod.HEADER_PARSING:
@@ -437,7 +437,7 @@ class MetadataExtractor:
         except Exception as e:
             result.errors.append(f"Extraction method {method.value} failed: {str(e)}")
     
-    async def _extract_from_headers(self, file_path: Path, result: ExtractedMetadata):
+    async def _extract_from_headers(self, file_path -> None: Path, result -> None: ExtractedMetadata) -> None:
         """Extract metadata from file headers."""
         with open(file_path, 'rb') as f:
             header_data = f.read(8192)  # Read first 8KB
@@ -487,7 +487,7 @@ class MetadataExtractor:
         elif "video" in content_type:
             await self._extract_video_headers(header_data, result)
     
-    async def _extract_image_headers(self, header_data: bytes, result: ExtractedMetadata):
+    async def _extract_image_headers(self, header_data -> None: bytes, result -> None: ExtractedMetadata) -> None:
         """Extract image-specific header metadata."""
         # JPEG EXIF extraction (simplified)
         if header_data.startswith(b'\xFF\xD8\xFF'):
@@ -526,7 +526,7 @@ class MetadataExtractor:
             )
             result.technical_metadata["format"] = format_field
     
-    async def _extract_audio_headers(self, header_data: bytes, result: ExtractedMetadata):
+    async def _extract_audio_headers(self, header_data -> None: bytes, result -> None: ExtractedMetadata) -> None:
         """Extract audio-specific header metadata."""
         # MP3 ID3 tags
         if header_data.startswith(b'ID3'):
@@ -564,7 +564,7 @@ class MetadataExtractor:
             )
             result.technical_metadata["format"] = format_field
     
-    async def _extract_video_headers(self, header_data: bytes, result: ExtractedMetadata):
+    async def _extract_video_headers(self, header_data -> None: bytes, result -> None: ExtractedMetadata) -> None:
         """Extract video-specific header metadata."""
         # MP4/QuickTime
         if b'ftyp' in header_data[:20]:
@@ -590,7 +590,7 @@ class MetadataExtractor:
             )
             result.technical_metadata["format"] = format_field
     
-    async def _extract_embedded_metadata(self, file_path: Path, result: ExtractedMetadata):
+    async def _extract_embedded_metadata(self, file_path -> None: Path, result -> None: ExtractedMetadata) -> None:
         """Extract embedded metadata using format-specific extractors."""
         content_type = result.content_type or ""
         
@@ -611,7 +611,7 @@ class MetadataExtractor:
             if extractor:
                 await extractor.extract(file_path, result)
     
-    async def _extract_from_content_analysis(self, file_path: Path, result: ExtractedMetadata):
+    async def _extract_from_content_analysis(self, file_path -> None: Path, result -> None: ExtractedMetadata) -> None:
         """Extract metadata through content analysis."""
         # Read file content for analysis
         with open(file_path, 'rb') as f:
@@ -704,7 +704,7 @@ class MetadataExtractor:
         
         return ascii_ratio > 0.7 and null_ratio < 0.1
     
-    async def _extract_with_ml(self, file_path: Path, result: ExtractedMetadata):
+    async def _extract_with_ml(self, file_path -> None: Path, result -> None: ExtractedMetadata) -> None:
         """Extract metadata using ML inference."""
         # Placeholder for ML-based metadata extraction
         # Would use trained models for content recognition, tagging, etc.
@@ -730,7 +730,7 @@ class MetadataExtractor:
             )
             result.descriptive_metadata[key] = metadata_field
     
-    async def _extract_with_external_api(self, file_path: Path, result: ExtractedMetadata):
+    async def _extract_with_external_api(self, file_path -> None: Path, result -> None: ExtractedMetadata) -> None:
         """Extract metadata using external APIs."""
         # Placeholder for external API metadata extraction
         # Would integrate with services like Google Vision, AWS Rekognition, etc.
@@ -753,7 +753,7 @@ class MetadataExtractor:
             )
             result.descriptive_metadata[key] = metadata_field
     
-    async def _extract_hybrid(self, file_path: Path, result: ExtractedMetadata):
+    async def _extract_hybrid(self, file_path -> None: Path, result -> None: ExtractedMetadata) -> None:
         """Extract metadata using hybrid approach."""
         # Combine multiple extraction methods
         await self._extract_from_headers(file_path, result)
@@ -763,7 +763,7 @@ class MetadataExtractor:
         # Add ML inference for additional insights
         await self._extract_with_ml(file_path, result)
     
-    async def _enrich_metadata(self, result: ExtractedMetadata):
+    async def _enrich_metadata(self, result -> None: ExtractedMetadata) -> None:
         """Enrich metadata using enrichment rules."""
         for rule_id, rule in self.enrichment_rules.items():
             if not rule.enabled:
@@ -869,7 +869,7 @@ class MetadataExtractor:
         
         return min(1.0, score)
     
-    async def _validate_metadata(self, result: ExtractedMetadata):
+    async def _validate_metadata(self, result -> None: ExtractedMetadata) -> None:
         """Validate extracted metadata against schemas."""
         validation_results = {}
         
@@ -927,7 +927,7 @@ class MetadataExtractor:
         
         return {"valid": True}
     
-    async def _calculate_quality_scores(self, result: ExtractedMetadata):
+    async def _calculate_quality_scores(self, result -> None: ExtractedMetadata) -> None:
         """Calculate quality and completeness scores."""
         # Calculate completeness score
         total_possible_fields = 20  # Baseline expected fields
@@ -997,7 +997,7 @@ class MetadataExtractor:
 class ImageMetadataExtractor:
     """Image-specific metadata extractor."""
     
-    async def extract(self, file_path: Path, result: ExtractedMetadata):
+    async def extract(self, file_path -> None: Path, result -> None: ExtractedMetadata) -> None:
         """Extract image-specific metadata."""
         # Placeholder - would implement EXIF, IPTC, XMP extraction
         pass
@@ -1006,7 +1006,7 @@ class ImageMetadataExtractor:
 class AudioMetadataExtractor:
     """Audio-specific metadata extractor."""
     
-    async def extract(self, file_path: Path, result: ExtractedMetadata):
+    async def extract(self, file_path -> None: Path, result -> None: ExtractedMetadata) -> None:
         """Extract audio-specific metadata."""
         # Placeholder - would implement ID3, Vorbis Comment extraction
         pass
@@ -1015,7 +1015,7 @@ class AudioMetadataExtractor:
 class VideoMetadataExtractor:
     """Video-specific metadata extractor."""
     
-    async def extract(self, file_path: Path, result: ExtractedMetadata):
+    async def extract(self, file_path -> None: Path, result -> None: ExtractedMetadata) -> None:
         """Extract video-specific metadata."""
         # Placeholder - would implement QuickTime, AVI metadata extraction
         pass
@@ -1024,7 +1024,7 @@ class VideoMetadataExtractor:
 class DocumentMetadataExtractor:
     """Document-specific metadata extractor."""
     
-    async def extract(self, file_path: Path, result: ExtractedMetadata):
+    async def extract(self, file_path -> None: Path, result -> None: ExtractedMetadata) -> None:
         """Extract document-specific metadata."""
         # Placeholder - would implement PDF, Office document metadata extraction
         pass
@@ -1033,7 +1033,7 @@ class DocumentMetadataExtractor:
 class ArchiveMetadataExtractor:
     """Archive-specific metadata extractor."""
     
-    async def extract(self, file_path: Path, result: ExtractedMetadata):
+    async def extract(self, file_path -> None: Path, result -> None: ExtractedMetadata) -> None:
         """Extract archive-specific metadata."""
         # Placeholder - would implement ZIP, RAR metadata extraction
         pass

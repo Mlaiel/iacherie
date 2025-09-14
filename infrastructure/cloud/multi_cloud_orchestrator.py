@@ -88,10 +88,10 @@ class MultiCloudOrchestrator:
     """
     
     def __init__(self, 
-                 aws_credentials: Optional[AWSCredentials] = None,
-                 gcp_credentials: Optional[GCPCredentials] = None,
-                 azure_credentials: Optional[AzureCredentials] = None,
-                 config: Optional[MultiCloudConfig] = None):
+                 aws_credentials -> None: Optional[AWSCredentials] = None,
+                 gcp_credentials -> None: Optional[GCPCredentials] = None,
+                 azure_credentials -> None: Optional[AzureCredentials] = None,
+                 config -> None: Optional[MultiCloudConfig] = None) -> None:
         """Initialize multi-cloud orchestrator"""
         
         self.config = config or MultiCloudConfig()
@@ -450,7 +450,7 @@ class MultiCloudOrchestrator:
         
         return resources
         
-    async def _configure_cross_cloud_networking(self, deployments: Dict[str, Any]):
+    async def _configure_cross_cloud_networking(self, deployments -> None: Dict[str, Any]) -> None:
         """Configure networking between clouds"""
         
         logger.info("Configuring cross-cloud networking")
@@ -480,7 +480,7 @@ class MultiCloudOrchestrator:
             
         return networking_config
         
-    async def _setup_monitoring(self, deployments: Dict[str, Any]):
+    async def _setup_monitoring(self, deployments -> None: Dict[str, Any]) -> None:
         """Setup cross-cloud monitoring and alerting"""
         
         logger.info("Setting up multi-cloud monitoring")
@@ -508,7 +508,7 @@ class MultiCloudOrchestrator:
         
         return monitoring_config
         
-    async def _configure_disaster_recovery(self, deployments: Dict[str, Any]):
+    async def _configure_disaster_recovery(self, deployments -> None: Dict[str, Any]) -> None:
         """Configure disaster recovery across clouds"""
         
         logger.info("Configuring disaster recovery")
@@ -625,7 +625,7 @@ class MultiCloudOrchestrator:
             
         return scaling_result
         
-    def _start_monitoring(self):
+    def _start_monitoring(self) -> None:
         """Start background monitoring of all clouds"""
         # This would start background tasks for monitoring
         # For now, just log that monitoring is started

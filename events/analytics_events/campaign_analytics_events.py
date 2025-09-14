@@ -1,5 +1,7 @@
 """Campaign Analytics Events Module
 
+import logging
+
 Advanced campaign performance tracking and optimization for multi-format content creators.
 Provides comprehensive campaign analytics, ROI measurement, and attribution analysis.
 
@@ -130,7 +132,7 @@ class CampaignAnalyticsEventHandler(BaseEventHandler):
     """
 Handles campaign analytics events with advanced processing"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
         self.cache_manager = CacheManager()
         self.db_manager = DatabaseManager()
@@ -334,7 +336,7 @@ Generate actionable campaign insights"""
 class CampaignPerformanceTracker:
     """Tracks comprehensive campaign performance metrics"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.cache_manager = CacheManager()
         self.db_manager = DatabaseManager()
         self.statistical_analyzer = StatisticalAnalyzer()
@@ -451,7 +453,7 @@ class CampaignOptimizationEngine:
     """
 Optimizes campaign parameters using machine learning"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.db_manager = DatabaseManager()
         self.campaign_optimizer = CampaignOptimizer()
         self.scaler = StandardScaler()
@@ -543,7 +545,7 @@ class CampaignROICalculator:
     """
 Calculates campaign ROI and attribution"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.db_manager = DatabaseManager()
         self.roi_calculator = ROICalculator()
         
@@ -608,7 +610,7 @@ class CampaignAttributionAnalyzer:
     """
 Analyzes campaign attribution across touchpoints"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.db_manager = DatabaseManager()
         self.attribution_engine = AttributionEngine()
         

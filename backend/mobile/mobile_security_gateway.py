@@ -97,7 +97,7 @@ class ThreatDetectionResult:
 class MobileSecurityGateway:
     """Advanced mobile security gateway system"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         """Initialize mobile security gateway"""
         self.config = config or {}
         self.biometric_auth = BiometricAuth(self.config)
@@ -257,7 +257,7 @@ class MobileSecurityGateway:
             "encryption_analytics": await self.encryption_manager.get_analytics()
         }
     
-    def _initialize_default_policies(self):
+    def _initialize_default_policies(self) -> None:
         """Initialize default security policies"""
         policies = [
             SecurityPolicy(
@@ -287,7 +287,7 @@ class MobileSecurityGateway:
         for policy in policies:
             self.security_policies[policy.policy_id] = policy
     
-    async def _create_security_session(self, user_id: str, device_id: str, auth_result: BiometricAuthResult):
+    async def _create_security_session(self, user_id -> None: str, device_id -> None: str, auth_result -> None: BiometricAuthResult) -> None:
         """Create security session after successful authentication"""
         session_id = f"session_{uuid.uuid4().hex[:8]}"
         
@@ -303,7 +303,7 @@ class MobileSecurityGateway:
         
         self.active_sessions[device_id] = session
     
-    async def _apply_policy_settings(self, policy: SecurityPolicy, device_id: str, user_id: str):
+    async def _apply_policy_settings(self, policy -> None: SecurityPolicy, device_id -> None: str, user_id -> None: str) -> None:
         """Apply security policy settings"""
         # Apply policy-specific settings
         if policy.biometric_required:
@@ -348,7 +348,7 @@ class MobileSecurityGateway:
 class BiometricAuth:
     """Biometric authentication system"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.biometric_templates = {}
         
@@ -389,7 +389,7 @@ class BiometricAuth:
             "most_used_biometric": "fingerprint"
         }
     
-    async def enable_biometric_requirement(self, device_id: str):
+    async def enable_biometric_requirement(self, device_id -> None: str) -> None:
         """Enable biometric requirement for device"""
         # Implementation for enabling biometric requirement
         pass
@@ -404,7 +404,7 @@ class BiometricAuth:
 class EncryptionManager:
     """Encryption management system"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.encryption_keys = {}
         
@@ -442,7 +442,7 @@ class EncryptionManager:
             "encryption_strength": "high"
         }
     
-    async def enable_encryption_requirement(self, device_id: str):
+    async def enable_encryption_requirement(self, device_id -> None: str) -> None:
         """Enable encryption requirement for device"""
         # Implementation for enabling encryption requirement
         pass
@@ -479,7 +479,7 @@ class EncryptionManager:
 class SecurityValidator:
     """Security validation system"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         
     async def validate_security(self, device_id: str, user_id: str, 
@@ -536,7 +536,7 @@ class SecurityValidator:
 class ThreatDetection:
     """Threat detection system"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.threat_patterns = {}
         
@@ -567,7 +567,7 @@ class ThreatDetection:
         
         return threats
     
-    async def enable_monitoring(self, device_id: str):
+    async def enable_monitoring(self, device_id -> None: str) -> None:
         """Enable threat monitoring for device"""
         # Implementation for enabling threat monitoring
         pass

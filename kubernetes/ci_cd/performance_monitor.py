@@ -294,7 +294,7 @@ class CreatorPerformanceTracker:
     """
 Advanced creator experience performance tracking"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self.creator_sessions: Dict[str, CreatorExperienceMetrics] = {}
         self.creator_analytics: Dict[str, List[CreatorExperienceMetrics]] = defaultdict(list)
@@ -326,12 +326,12 @@ Advanced creator experience performance tracking"""
     
     async def track_workflow_stage(
         self,
-        session_id: str,
-        stage: str,
-        start_time: datetime,
-        end_time: datetime,
-        quality_metrics: Dict[str, float] = None
-    ):
+        session_id -> None: str,
+        stage -> None: str,
+        start_time -> None: datetime,
+        end_time -> None: datetime,
+        quality_metrics -> None: Dict[str, float] = None
+    ) -> None:
         """Track individual workflow stage performance"""
         if session_id not in self.creator_sessions:
             self.logger.warning(f"Session not found: {session_id}")
@@ -509,7 +509,7 @@ Advanced creator experience performance tracking"""
 class AIProcessingPerformanceMonitor:
     """Specialized monitoring for AI processing performance"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self.model_metrics: Dict[str, List[AIModelPerformanceMetrics]] = defaultdict(list)
         self.model_baselines: Dict[str, Dict[str, float]] = {}
@@ -732,7 +732,7 @@ class AIProcessingPerformanceMonitor:
 class PerformanceMonitor:
     """Enterprise performance monitoring system for IA Influencer platform"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """
 Initialize performance monitor"""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")

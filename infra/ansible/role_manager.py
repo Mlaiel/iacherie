@@ -1,3 +1,8 @@
+"""
+Role Manager module
+Enterprise implementation for Ainflue platform
+"""
+
 # Ainflue Infrastructure Module
 # =============================
 # 
@@ -63,7 +68,7 @@ class RoleManager:
     Provides role generation, dependency management, and deployment coordination.
     """
     
-    def __init__(self, roles_path: str = "/home/runner/work/Ainflue/Ainflue/infra/ansible/roles"):
+    def __init__(self, roles_path -> None: str = "/home/runner/work/Ainflue/Ainflue/infra/ansible/roles") -> None:
         self.roles_path = Path(roles_path)
         self.roles_path.mkdir(parents=True, exist_ok=True)
         self.logger = self._setup_logging()
@@ -125,28 +130,28 @@ class RoleManager:
             self.logger.error(f"Failed to create role {role.name}: {str(e)}")
             return False
     
-    def _create_tasks_main(self, role_path: Path, tasks: List[Dict[str, Any]]):
+    def _create_tasks_main(self, role_path -> None: Path, tasks -> None: List[Dict[str, Any]]) -> None:
         """Create tasks/main.yml"""
         tasks_file = role_path / "tasks" / "main.yml"
         
         with open(tasks_file, 'w') as f:
             yaml.dump(tasks, f, default_flow_style=False, sort_keys=False)
     
-    def _create_handlers_main(self, role_path: Path, handlers: List[Dict[str, Any]]):
+    def _create_handlers_main(self, role_path -> None: Path, handlers -> None: List[Dict[str, Any]]) -> None:
         """Create handlers/main.yml"""
         handlers_file = role_path / "handlers" / "main.yml"
         
         with open(handlers_file, 'w') as f:
             yaml.dump(handlers, f, default_flow_style=False, sort_keys=False)
     
-    def _create_vars_main(self, role_path: Path, variables: Dict[str, Any]):
+    def _create_vars_main(self, role_path -> None: Path, variables -> None: Dict[str, Any]) -> None:
         """Create vars/main.yml"""
         vars_file = role_path / "vars" / "main.yml"
         
         with open(vars_file, 'w') as f:
             yaml.dump(variables, f, default_flow_style=False, sort_keys=False)
     
-    def _create_defaults_main(self, role_path: Path, variables: Dict[str, Any]):
+    def _create_defaults_main(self, role_path -> None: Path, variables -> None: Dict[str, Any]) -> None:
         """Create defaults/main.yml"""
         defaults_file = role_path / "defaults" / "main.yml"
         
@@ -156,7 +161,7 @@ class RoleManager:
         with open(defaults_file, 'w') as f:
             yaml.dump(defaults, f, default_flow_style=False, sort_keys=False)
     
-    def _create_meta_main(self, role_path: Path, meta: Dict[str, Any], dependencies: List[str]):
+    def _create_meta_main(self, role_path -> None: Path, meta -> None: Dict[str, Any], dependencies -> None: List[str]) -> None:
         """Create meta/main.yml"""
         meta_file = role_path / "meta" / "main.yml"
         
@@ -185,7 +190,7 @@ class RoleManager:
         with open(meta_file, 'w') as f:
             yaml.dump(meta_content, f, default_flow_style=False, sort_keys=False)
     
-    def _copy_role_assets(self, role_path: Path, templates: List[str], files: List[str]):
+    def _copy_role_assets(self, role_path -> None: Path, templates -> None: List[str], files -> None: List[str]) -> None:
         """Copy templates and files to role"""
         # For now, create placeholder files
         # In a real implementation, these would be copied from a template repository

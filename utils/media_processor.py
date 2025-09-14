@@ -63,7 +63,7 @@ class MediaProcessor:
     - Batch processing
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize media processor"""
         self.processing_jobs: Dict[str, ProcessingJob] = {}
         self.processed_files: Dict[str, MediaFile] = {}
@@ -168,7 +168,7 @@ class MediaProcessor:
             logger.error(f"Failed to start processing job: {e}")
             raise
     
-    async def _execute_processing_job(self, job_id: str):
+    async def _execute_processing_job(self, job_id -> None: str) -> None:
         """Execute media processing job"""
         try:
             job = self.processing_jobs[job_id]
@@ -208,8 +208,8 @@ class MediaProcessor:
             self.stats['failed_jobs'] += 1
             logger.error(f"Processing job failed: {job_id} - {e}")
     
-    async def _execute_operation(self, media_file: MediaFile, operation_type: str, 
-                                params: Dict[str, Any]):
+    async def _execute_operation(self, media_file -> None: MediaFile, operation_type -> None: str, 
+                                params -> None: Dict[str, Any]) -> None:
         """Execute a single processing operation"""
         if operation_type == "transcode":
             await self._transcode_media(media_file, params)
@@ -224,7 +224,7 @@ class MediaProcessor:
         else:
             logger.warning(f"Unknown operation type: {operation_type}")
     
-    async def _transcode_media(self, media_file: MediaFile, params: Dict[str, Any]):
+    async def _transcode_media(self, media_file -> None: MediaFile, params -> None: Dict[str, Any]) -> None:
         """Transcode media to different format"""
         target_format = params.get('format')
         quality = params.get('quality', 'medium')
@@ -234,7 +234,7 @@ class MediaProcessor:
         # Mock transcoding process
         await asyncio.sleep(1.0)
     
-    async def _generate_thumbnail(self, media_file: MediaFile, params: Dict[str, Any]):
+    async def _generate_thumbnail(self, media_file -> None: MediaFile, params -> None: Dict[str, Any]) -> None:
         """Generate thumbnail for video/image"""
         timestamp = params.get('timestamp', 0.0)
         size = params.get('size', '320x240')
@@ -244,7 +244,7 @@ class MediaProcessor:
         # Mock thumbnail generation
         await asyncio.sleep(0.5)
     
-    async def _normalize_audio(self, media_file: MediaFile, params: Dict[str, Any]):
+    async def _normalize_audio(self, media_file -> None: MediaFile, params -> None: Dict[str, Any]) -> None:
         """Normalize audio levels"""
         target_lufs = params.get('target_lufs', -23.0)
         
@@ -253,7 +253,7 @@ class MediaProcessor:
         # Mock audio normalization
         await asyncio.sleep(0.8)
     
-    async def _resize_image(self, media_file: MediaFile, params: Dict[str, Any]):
+    async def _resize_image(self, media_file -> None: MediaFile, params -> None: Dict[str, Any]) -> None:
         """Resize image"""
         width = params.get('width', 800)
         height = params.get('height', 600)
@@ -263,7 +263,7 @@ class MediaProcessor:
         # Mock image resizing
         await asyncio.sleep(0.3)
     
-    async def _optimize_media(self, media_file: MediaFile, params: Dict[str, Any]):
+    async def _optimize_media(self, media_file -> None: MediaFile, params -> None: Dict[str, Any]) -> None:
         """Optimize media for web delivery"""
         compression_level = params.get('compression', 85)
         

@@ -118,7 +118,7 @@ class DataProtectionResult:
 class PIIDetector:
     """Détecteur d'informations personnelles"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
         
         # Patterns de détection PII
@@ -264,7 +264,7 @@ class PIIDetector:
 class AdvancedEncryption:
     """Système de chiffrement avancé"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
         self.keys: Dict[str, EncryptionKey] = {}
         self.default_method = EncryptionMethod.AES_256_GCM
@@ -459,7 +459,7 @@ class AdvancedEncryption:
         self.logger.info(f"Key rotated: {old_key_id} -> {new_key.key_id}")
         return new_key
     
-    def cleanup_expired_keys(self):
+    def cleanup_expired_keys(self) -> None:
         """Nettoyage des clés expirées"""
         now = datetime.utcnow()
         expired_keys = [
@@ -477,7 +477,7 @@ class AdvancedEncryption:
 class DataAnonymizer:
     """Anonymiseur de données"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
         self.faker = faker.Faker()
         
@@ -603,7 +603,7 @@ class DataAnonymizer:
 class AdvancedDataProtection:
     """Système de protection de données avancé"""
     
-    def __init__(self, privacy_level: PrivacyLevel = PrivacyLevel.HIGH):
+    def __init__(self, privacy_level -> None: PrivacyLevel = PrivacyLevel.HIGH) -> None:
         self.privacy_level = privacy_level
         self.pii_detector = PIIDetector()
         self.encryption = AdvancedEncryption()
@@ -947,7 +947,7 @@ __all__ = [
 
 # Exemple d'utilisation
 if __name__ == "__main__":
-    async def main():
+    async def main() -> None:
         # Configuration logging
         logging.basicConfig(level=logging.INFO)
         

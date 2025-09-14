@@ -110,9 +110,9 @@ class VideoProcessor:
     """Advanced 4K/8K video processing engine"""
     
     def __init__(self,
-                 enable_gpu_acceleration: bool = True,
-                 enable_ai_enhancement: bool = True,
-                 max_resolution: VideoResolution = VideoResolution.UHD_4K):
+                 enable_gpu_acceleration -> None: bool = True,
+                 enable_ai_enhancement -> None: bool = True,
+                 max_resolution -> None: VideoResolution = VideoResolution.UHD_4K) -> None:
         """
         Initialize video processor
         
@@ -888,7 +888,7 @@ class VideoProcessor:
         
         return enhancement_map.get(mode, [])
     
-    def _load_enhancement_models(self):
+    def _load_enhancement_models(self) -> None:
         """Load AI enhancement models"""
         # Placeholder for loading AI models
         logger.info("Video enhancement models loading placeholder")

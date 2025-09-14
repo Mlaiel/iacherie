@@ -118,18 +118,18 @@ class Alert(BaseModel):
 class HealthCheckManager:
     """Manages health checks for different system components"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.health_checks: Dict[str, HealthCheck] = {}
         self.check_intervals: Dict[str, int] = {}  # component -> interval in seconds
         self.running_checks: Dict[str, bool] = {}
     
     def register_health_check(
         self, 
-        component: str, 
-        check_func: Callable, 
-        interval: int = 60,
-        component_type: ComponentType = ComponentType.EXTERNAL_API
-    ):
+        component -> None: str, 
+        check_func -> None: Callable, 
+        interval -> None: int = 60,
+        component_type -> None: ComponentType = ComponentType.EXTERNAL_API
+    ) -> None:
         """Register a health check for a component"""
         self.check_intervals[component] = interval
         self.running_checks[component] = False
@@ -137,7 +137,7 @@ class HealthCheckManager:
         # Run initial check
         asyncio.create_task(self._run_health_check(component, check_func))
     
-    async def _run_health_check(self, component: str, check_func: Callable):
+    async def _run_health_check(self, component -> None: str, check_func -> None: Callable) -> None:
         """Run health check for a component"""
         start_time = time.time()
         
@@ -277,7 +277,7 @@ class HealthCheckManager:
 class MetricsCollector:
     """Collects and stores application metrics"""
     
-    def __init__(self, redis_client: Optional[redis.Redis] = None):
+    def __init__(self, redis_client -> None: Optional[redis.Redis] = None) -> None:
         self.redis = redis_client
         self.metrics_buffer: Dict[str, deque] = defaultdict(lambda: deque(maxlen=1000))
         
@@ -289,7 +289,7 @@ class MetricsCollector:
         self.system_memory = Gauge('system_memory_usage_percent', 'System memory usage')
         self.system_disk = Gauge('system_disk_usage_percent', 'System disk usage')
     
-    async def record_api_request(self, metrics: APIMetrics):
+    async def record_api_request(self, metrics -> None: APIMetrics) -> None:
         """Record API request metrics"""
         # Update Prometheus metrics
         self.request_counter.labels(
@@ -318,7 +318,7 @@ class MetricsCollector:
                 86400 * 7  # Keep for 7 days
             )
     
-    async def record_system_metrics(self):
+    async def record_system_metrics(self) -> None:
         """Record system-level metrics"""
         # Get system metrics
         cpu_percent = psutil.cpu_percent(interval=1)
@@ -423,19 +423,19 @@ class MetricsCollector:
 class AlertManager:
     """Manages alerts and notifications"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.alerts: Dict[str, Alert] = {}
         self.alert_rules: List[Dict[str, Any]] = []
         self.notification_handlers: List[Callable] = []
     
     def add_alert_rule(
         self, 
-        name: str, 
-        condition: Callable[[Dict[str, Any]], bool],
-        severity: AlertSeverity,
-        component: str,
-        description: str
-    ):
+        name -> None: str, 
+        condition -> None: Callable[[Dict[str, Any]], bool],
+        severity -> None: AlertSeverity,
+        component -> None: str,
+        description -> None: str
+    ) -> None:
         """Add alert rule"""
         self.alert_rules.append({
             "name": name,
@@ -445,11 +445,11 @@ class AlertManager:
             "description": description
         })
     
-    def add_notification_handler(self, handler: Callable[[Alert], None]):
+    def add_notification_handler(self, handler -> None: Callable[[Alert], None]) -> None:
         """Add notification handler"""
         self.notification_handlers.append(handler)
     
-    async def check_alerts(self, metrics: Dict[str, Any]):
+    async def check_alerts(self, metrics -> None: Dict[str, Any]) -> None:
         """Check metrics against alert rules"""
         for rule in self.alert_rules:
             try:
@@ -463,7 +463,7 @@ class AlertManager:
             except Exception as e:
                 print(f"Error checking alert rule {rule['name']}: {e}")
     
-    async def _trigger_alert(self, title: str, description: str, severity: AlertSeverity, component: str):
+    async def _trigger_alert(self, title -> None: str, description -> None: str, severity -> None: AlertSeverity, component -> None: str) -> None:
         """Trigger an alert"""
         alert_id = f"{component}:{title}".lower().replace(" ", "_")
         
@@ -515,11 +515,11 @@ class AlertManager:
 class MonitoringMiddleware:
     """Middleware for collecting monitoring data"""
     
-    def __init__(self, metrics_collector: MetricsCollector, alert_manager: AlertManager):
+    def __init__(self, metrics_collector -> None: MetricsCollector, alert_manager -> None: AlertManager) -> None:
         self.metrics_collector = metrics_collector
         self.alert_manager = alert_manager
     
-    async def __call__(self, request: Request, call_next):
+    async def __call__(self, request -> None: Request, call_next) -> None:
         """Collect metrics for each request"""
         start_time = time.time()
         
@@ -576,10 +576,10 @@ class MonitoringEndpoints:
     
     def __init__(
         self, 
-        health_manager: HealthCheckManager,
-        metrics_collector: MetricsCollector,
-        alert_manager: AlertManager
-    ):
+        health_manager -> None: HealthCheckManager,
+        metrics_collector -> None: MetricsCollector,
+        alert_manager -> None: AlertManager
+    ) -> None:
         self.health_manager = health_manager
         self.metrics_collector = metrics_collector
         self.alert_manager = alert_manager
@@ -633,7 +633,7 @@ class MonitoringEndpoints:
 class MonitoringService:
     """Main monitoring service"""
     
-    def __init__(self, redis_client: Optional[redis.Redis] = None):
+    def __init__(self, redis_client -> None: Optional[redis.Redis] = None) -> None:
         self.health_manager = HealthCheckManager()
         self.metrics_collector = MetricsCollector(redis_client)
         self.alert_manager = AlertManager()
@@ -647,7 +647,7 @@ class MonitoringService:
         self._setup_default_health_checks()
         self._setup_default_alert_rules()
     
-    def _setup_default_health_checks(self):
+    def _setup_default_health_checks(self) -> None:
         """Setup default health checks"""
         self.health_manager.register_health_check(
             "database",
@@ -667,7 +667,7 @@ class MonitoringService:
             interval=60
         )
     
-    def _setup_default_alert_rules(self):
+    def _setup_default_alert_rules(self) -> None:
         """Setup default alert rules"""
         # High CPU usage alert
         self.alert_manager.add_alert_rule(
@@ -696,7 +696,7 @@ class MonitoringService:
             description="API error rate is above 5%"
         )
     
-    def setup_monitoring(self, app: FastAPI):
+    def setup_monitoring(self, app -> None: FastAPI) -> None:
         """Setup monitoring for FastAPI app"""
         # Add middleware
         app.middleware("http")(self.middleware)
@@ -713,7 +713,7 @@ class MonitoringService:
         # Start background tasks
         asyncio.create_task(self._background_monitoring())
     
-    async def _background_monitoring(self):
+    async def _background_monitoring(self) -> None:
         """Background monitoring tasks"""
         while True:
             try:
@@ -765,7 +765,7 @@ class AnalyticsTimeframe(str, Enum):
 class BusinessIntelligence:
     """Advanced business intelligence and analytics"""
     
-    def __init__(self, metrics_collector: MetricsCollector):
+    def __init__(self, metrics_collector -> None: MetricsCollector) -> None:
         self.metrics_collector = metrics_collector
         self.ml_predictions = {}
         self.anomaly_detector = AnomalyDetector()
@@ -1086,7 +1086,7 @@ class BusinessIntelligence:
 class AnomalyDetector:
     """ML-based anomaly detection for business metrics"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.models = {}
         self.thresholds = {
             "revenue": {"min_change": 0.2, "max_change": 2.0},
@@ -1160,7 +1160,7 @@ class AnomalyDetector:
 class PredictiveAnalyticsEngine:
     """Enterprise predictive analytics with machine learning models"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.models = {
             "revenue_forecast": RevenueForecaster(),
             "churn_prediction": ChurnPredictor(),

@@ -91,17 +91,23 @@ except (ImportError, SyntaxError) as e:
     NOTIFICATION_ENGINE_AVAILABLE = False
     # Create fallback classes
     class NotificationEngine:
-        def __init__(self, *args, **kwargs): pass
+    """NotificationEngine: class implementation"""
+        def __init__(self, *args, **kwargs) -> None: pass
     class NotificationChannel:
-        def __init__(self, *args, **kwargs): pass
+    """NotificationChannel: class implementation"""
+        def __init__(self, *args, **kwargs) -> None: pass
     class NotificationTemplate:
-        def __init__(self, *args, **kwargs): pass
+    """NotificationTemplate: class implementation"""
+        def __init__(self, *args, **kwargs) -> None: pass
     class DeliveryResult:
-        def __init__(self, *args, **kwargs): pass
+    """DeliveryResult: class implementation"""
+        def __init__(self, *args, **kwargs) -> None: pass
     class NotificationBatch:
-        def __init__(self, *args, **kwargs): pass
+    """NotificationBatch: class implementation"""
+        def __init__(self, *args, **kwargs) -> None: pass
     class ChannelConfig:
-        def __init__(self, *args, **kwargs): pass
+    """ChannelConfig: class implementation"""
+        def __init__(self, *args, **kwargs) -> None: pass
 
 from .escalation_engine import (
     EscalationEngine,

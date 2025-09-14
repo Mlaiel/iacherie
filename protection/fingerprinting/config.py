@@ -1,4 +1,6 @@
-"""⚙️ Configuration Management for Content Fingerprinting System
+"""# [EMOJI_REMOVED] Configuration Management for Content Fingerprinting System
+import logging
+
 =============================================================
 
 Centralized configuration system for multi-modal content fingerprinting.
@@ -438,7 +440,7 @@ class FingerprintingConfig:
             logger.error(f"from_environment failed: {e}")
             raise
     @staticmethod
-    def _set_nested_attr(obj: Any, path: str, value: Any):
+    def _set_nested_attr(obj -> None: Any, path -> None: str, value -> None: Any) -> None:
         """Set nested attribute using dot notation."""
         parts = path.split('.')
         for part in parts[:-1]:
@@ -609,7 +611,7 @@ def merge_configs(base_config: FingerprintingConfig,
     merged = copy.deepcopy(base_config)
     override_dict = override_config.to_dict()
     
-    def _merge_dict(base_dict: Dict[str, Any], override_dict: Dict[str, Any]):
+    def _merge_dict(base_dict -> None: Dict[str, Any], override_dict -> None: Dict[str, Any]) -> None:
         for key, value in override_dict.items():
             if isinstance(value, dict) and key in base_dict and isinstance(base_dict[key], dict):
                 _merge_dict(base_dict[key], value)
@@ -672,3 +674,5 @@ __all__ = [
     "load_config",
     "merge_configs"
 ]
+
+# File has syntax issues - needs manual review

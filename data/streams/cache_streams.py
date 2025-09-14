@@ -185,10 +185,10 @@ class CacheStreams:
     
     def __init__(
         self,
-        default_config: Optional[CacheConfig] = None,
-        enable_edge_computing: bool = True,
-        enable_distributed_cache: bool = True
-    ):
+        default_config -> None: Optional[CacheConfig] = None,
+        enable_edge_computing -> None: bool = True,
+        enable_distributed_cache -> None: bool = True
+    ) -> None:
         # Configuration
         self.default_config = default_config or CacheConfig(cache_id="default")
         self.enable_edge_computing = enable_edge_computing

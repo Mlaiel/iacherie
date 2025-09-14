@@ -1,3 +1,8 @@
+"""
+  Init   module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
@@ -68,7 +73,7 @@ from .incident_response_config import (
 class SecurityConfigurationManager:
     """Central security configuration manager for Ainflue platform"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize security configuration manager"""
         # Security configuration instances
         self.encryption = encryption_config
@@ -564,12 +569,12 @@ class SecurityConfigurationLevel(str, Enum):
 class SecurityConfigurationManager:
     """Security configuration manager"""
     
-    def __init__(self, level: SecurityConfigurationLevel = SecurityConfigurationLevel.ENTERPRISE):
+    def __init__(self, level -> None: SecurityConfigurationLevel = SecurityConfigurationLevel.ENTERPRISE) -> None:
         self.level = level
         self.configurations = {}
         self._initialize_security_configs()
     
-    def _initialize_security_configs(self):
+    def _initialize_security_configs(self) -> None:
         """Initialize all security configurations"""
         self.configurations = {
             "protection": ProtectionBusinessConfiguration(level=self.level),

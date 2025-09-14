@@ -117,7 +117,7 @@ class EnterpriseSecurityAuditEngine:
     - Continuous compliance monitoring
     """
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
         self.audit_history: Dict[str, AuditReport] = {}
@@ -537,7 +537,7 @@ class AISecurityAuditor:
         return []  # Placeholder
 
 # Example usage
-async def main():
+async def main() -> None:
     """Example usage of the Enterprise Security Audit Engine"""
     audit_engine = EnterpriseSecurityAuditEngine()
     

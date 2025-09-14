@@ -82,7 +82,7 @@ class CreatorProfile:
 class CreatorSpecificFeatures:
     """Enterprise Creator-Specific Feature Engineering"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         
         # Feature definitions
@@ -109,7 +109,7 @@ class CreatorSpecificFeatures:
         
         logger.info("🎵 Creator Specific Features initialized")
     
-    def _initialize_feature_definitions(self):
+    def _initialize_feature_definitions(self) -> None:
         """Initialize feature definitions for all creator types"""
         
         # MUSICIAN FEATURES
@@ -832,7 +832,7 @@ class CreatorSpecificFeatures:
         
         return None
     
-    def _cache_profile(self, creator_id: str, profile: CreatorProfile):
+    def _cache_profile(self, creator_id -> None: str, profile -> None: CreatorProfile) -> None:
         """Cache creator profile"""
         self.creator_profiles[creator_id] = profile
         
@@ -847,7 +847,7 @@ class CreatorSpecificFeatures:
             for creator_id, _ in sorted_profiles[:200]:
                 del self.creator_profiles[creator_id]
     
-    async def _update_extraction_metrics(self, extraction_time: float, success: bool):
+    async def _update_extraction_metrics(self, extraction_time -> None: float, success -> None: bool) -> None:
         """Update extraction metrics"""
         try:
             self.extraction_metrics['total_extractions'] += 1
@@ -896,7 +896,7 @@ class CreatorSpecificFeatures:
 creator_features = CreatorSpecificFeatures()
 
 
-async def main():
+async def main() -> None:
     """Test the Creator Specific Features"""
     features_engine = CreatorSpecificFeatures()
     

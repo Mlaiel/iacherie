@@ -124,7 +124,7 @@ class SEOMonitoringSystem:
     métriques temps réel et observabilité avancée.
     """
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         """Initialize SEO monitoring system"""
         self.config = config or {}
         self.monitoring_level = MonitoringLevel(
@@ -164,7 +164,7 @@ class SEOMonitoringSystem:
         
         logger.info(f"🔍 SEO Monitoring System initialized - Level: {self.monitoring_level.value}")
     
-    async def start_monitoring(self):
+    async def start_monitoring(self) -> None:
         """Démarrer le système de monitoring"""
         try:
             if self.monitoring_active:
@@ -190,19 +190,19 @@ class SEOMonitoringSystem:
             self.monitoring_active = False
             raise
     
-    async def stop_monitoring(self):
+    async def stop_monitoring(self) -> None:
         """Arrêter le système de monitoring"""
         self.monitoring_active = False
         logger.info("🛑 SEO Monitoring System stopped")
     
     async def record_metric(
         self, 
-        name: str, 
-        value: float, 
-        metric_type: MetricType,
-        unit: str = "",
-        tags: Dict[str, str] = None
-    ):
+        name -> None: str, 
+        value -> None: float, 
+        metric_type -> None: MetricType,
+        unit -> None: str = "",
+        tags -> None: Dict[str, str] = None
+    ) -> None:
         """Enregistrer une métrique SEO"""
         try:
             metric = SEOMetric(
@@ -232,13 +232,13 @@ class SEOMonitoringSystem:
     
     async def create_alert_rule(
         self,
-        name: str,
-        metric_name: str,
-        condition: str,  # "greater_than", "less_than", "equals"
-        threshold: float,
-        severity: AlertSeverity,
-        enabled: bool = True
-    ):
+        name -> None: str,
+        metric_name -> None: str,
+        condition -> None: str,  # "greater_than", "less_than", "equals"
+        threshold -> None: float,
+        severity -> None: AlertSeverity,
+        enabled -> None: bool = True
+    ) -> None:
         """Créer une règle d'alerte"""
         rule = {
             "name": name,
@@ -334,7 +334,7 @@ class SEOMonitoringSystem:
     
     # === MÉTHODES PRIVÉES ===
     
-    async def _real_time_monitoring(self):
+    async def _real_time_monitoring(self) -> None:
         """Monitoring en temps réel"""
         while self.monitoring_active:
             try:
@@ -348,7 +348,7 @@ class SEOMonitoringSystem:
                 logger.error(f"Real-time monitoring error: {e}")
                 await asyncio.sleep(5)
     
-    async def _periodic_health_checks(self):
+    async def _periodic_health_checks(self) -> None:
         """Vérifications de santé périodiques"""
         while self.monitoring_active:
             try:
@@ -362,7 +362,7 @@ class SEOMonitoringSystem:
                 logger.error(f"Health check error: {e}")
                 await asyncio.sleep(30)
     
-    async def _alert_processing(self):
+    async def _alert_processing(self) -> None:
         """Traitement des alertes"""
         while self.monitoring_active:
             try:
@@ -378,7 +378,7 @@ class SEOMonitoringSystem:
                 logger.error(f"Alert processing error: {e}")
                 await asyncio.sleep(10)
     
-    async def _performance_analysis(self):
+    async def _performance_analysis(self) -> None:
         """Analyse de performance"""
         while self.monitoring_active:
             try:
@@ -394,7 +394,7 @@ class SEOMonitoringSystem:
                 logger.error(f"Performance analysis error: {e}")
                 await asyncio.sleep(60)
     
-    async def _collect_real_time_metrics(self):
+    async def _collect_real_time_metrics(self) -> None:
         """Collecter les métriques en temps réel"""
         # Simulation de collecte de métriques (à remplacer par vraies sources)
         current_time = datetime.utcnow()
@@ -405,7 +405,7 @@ class SEOMonitoringSystem:
         await self.record_metric("organic_traffic", 1250, MetricType.TRAFFIC, "visitors")
         await self.record_metric("conversion_rate", 3.4, MetricType.CONVERSION, "percent")
     
-    async def _check_metric_thresholds(self, metric: SEOMetric):
+    async def _check_metric_thresholds(self, metric -> None: SEOMetric) -> None:
         """Vérifier les seuils des métriques"""
         alerts_to_create = []
         
@@ -442,7 +442,7 @@ class SEOMonitoringSystem:
             self.alerts_store[alert.id] = alert
             logger.warning(f"🚨 Alert created: {alert.title}")
     
-    async def _calculate_metric_trend(self, metric_name: str):
+    async def _calculate_metric_trend(self, metric_name -> None: str) -> None:
         """Calculer la tendance d'une métrique"""
         if metric_name not in self.metrics_store:
             return
@@ -541,7 +541,7 @@ class SEOMonitoringSystem:
         uptime_percentage = max(0, (total_time - downtime) / total_time * 100)
         return min(100, uptime_percentage)
     
-    async def _perform_health_check(self):
+    async def _perform_health_check(self) -> None:
         """Effectuer une vérification de santé"""
         self.last_health_check = datetime.utcnow()
         
@@ -568,12 +568,12 @@ class SEOMonitoringSystem:
         # Simulation de vérification (à remplacer par vrais health checks)
         return True
     
-    async def _process_pending_alerts(self):
+    async def _process_pending_alerts(self) -> None:
         """Traiter les alertes en attente"""
         # Logique de traitement des alertes
         pass
     
-    async def _auto_resolve_alerts(self):
+    async def _auto_resolve_alerts(self) -> None:
         """Résoudre automatiquement certaines alertes"""
         current_time = datetime.utcnow()
         
@@ -609,12 +609,12 @@ class SEOMonitoringSystem:
         
         return False
     
-    async def _analyze_performance_trends(self):
+    async def _analyze_performance_trends(self) -> None:
         """Analyser les tendances de performance"""
         # Analyser les tendances pour détecter des patterns
         pass
     
-    async def _detect_performance_anomalies(self):
+    async def _detect_performance_anomalies(self) -> None:
         """Détecter les anomalies de performance"""
         # Utiliser des algorithmes de détection d'anomalies
         pass
@@ -719,7 +719,7 @@ class AlertSystem:
     notification multi-canal et résolution intelligente.
     """
     
-    def __init__(self, monitoring_system: SEOMonitoringSystem):
+    def __init__(self, monitoring_system -> None: SEOMonitoringSystem) -> None:
         self.monitoring_system = monitoring_system
         self.notification_channels = {}
         self.escalation_rules = {}
@@ -729,10 +729,10 @@ class AlertSystem:
     
     async def setup_notification_channel(
         self, 
-        name: str, 
-        channel_type: str, 
-        config: Dict[str, Any]
-    ):
+        name -> None: str, 
+        channel_type -> None: str, 
+        config -> None: Dict[str, Any]
+    ) -> None:
         """Configurer un canal de notification"""
         self.notification_channels[name] = {
             "type": channel_type,  # email, slack, webhook, sms
@@ -741,7 +741,7 @@ class AlertSystem:
         }
         logger.info(f"📢 Notification channel configured: {name}")
     
-    async def send_alert_notification(self, alert: SEOAlert, channels: List[str] = None):
+    async def send_alert_notification(self, alert -> None: SEOAlert, channels -> None: List[str] = None) -> None:
         """Envoyer une notification d'alerte"""
         channels = channels or list(self.notification_channels.keys())
         
@@ -751,7 +751,7 @@ class AlertSystem:
                 if channel["enabled"]:
                     await self._send_notification(alert, channel)
     
-    async def _send_notification(self, alert: SEOAlert, channel: Dict[str, Any]):
+    async def _send_notification(self, alert -> None: SEOAlert, channel -> None: Dict[str, Any]) -> None:
         """Envoyer une notification via un canal spécifique"""
         try:
             channel_type = channel["type"]
@@ -770,22 +770,22 @@ class AlertSystem:
         except Exception as e:
             logger.error(f"Failed to send notification via {channel['type']}: {e}")
     
-    async def _send_email_notification(self, alert: SEOAlert, config: Dict[str, Any]):
+    async def _send_email_notification(self, alert -> None: SEOAlert, config -> None: Dict[str, Any]) -> None:
         """Envoyer notification par email"""
         # Implémentation email (placeholder)
         logger.info(f"📧 Email notification: {alert.title}")
     
-    async def _send_slack_notification(self, alert: SEOAlert, config: Dict[str, Any]):
+    async def _send_slack_notification(self, alert -> None: SEOAlert, config -> None: Dict[str, Any]) -> None:
         """Envoyer notification Slack"""
         # Implémentation Slack (placeholder)
         logger.info(f"💬 Slack notification: {alert.title}")
     
-    async def _send_webhook_notification(self, alert: SEOAlert, config: Dict[str, Any]):
+    async def _send_webhook_notification(self, alert -> None: SEOAlert, config -> None: Dict[str, Any]) -> None:
         """Envoyer notification webhook"""
         # Implémentation webhook (placeholder)
         logger.info(f"🔗 Webhook notification: {alert.title}")
     
-    async def _send_sms_notification(self, alert: SEOAlert, config: Dict[str, Any]):
+    async def _send_sms_notification(self, alert -> None: SEOAlert, config -> None: Dict[str, Any]) -> None:
         """Envoyer notification SMS"""
         # Implémentation SMS (placeholder)
         logger.info(f"📱 SMS notification: {alert.title}")
@@ -801,7 +801,7 @@ class PerformanceTracker:
     benchmarking et analyse prédictive.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.performance_data = defaultdict(list)
         self.benchmarks = {}
         self.performance_goals = {}
@@ -810,10 +810,10 @@ class PerformanceTracker:
     
     async def track_performance(
         self, 
-        metric_name: str, 
-        value: float, 
-        context: Dict[str, Any] = None
-    ):
+        metric_name -> None: str, 
+        value -> None: float, 
+        context -> None: Dict[str, Any] = None
+    ) -> None:
         """Traquer une métrique de performance"""
         performance_point = {
             "timestamp": datetime.utcnow(),
@@ -828,10 +828,10 @@ class PerformanceTracker:
     
     async def set_performance_goal(
         self, 
-        metric_name: str, 
-        target_value: float, 
-        deadline: datetime
-    ):
+        metric_name -> None: str, 
+        target_value -> None: float, 
+        deadline -> None: datetime
+    ) -> None:
         """Définir un objectif de performance"""
         self.performance_goals[metric_name] = {
             "target": target_value,
@@ -861,7 +861,7 @@ class PerformanceTracker:
             "goal_progress": await self._calculate_goal_progress(metric_name)
         }
     
-    async def _check_performance_records(self, metric_name: str, value: float):
+    async def _check_performance_records(self, metric_name -> None: str, value -> None: float) -> None:
         """Vérifier si c'est un nouveau record de performance"""
         data_points = self.performance_data[metric_name]
         

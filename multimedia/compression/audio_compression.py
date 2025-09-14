@@ -38,7 +38,7 @@ class AudioCompressionConfig:
 class AudioCompressionEngine:
     """High-performance audio compression with AI optimization."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the audio compression engine."""
         self.supported_codecs = list(AudioCodec)
         self.compression_profiles = self._load_compression_profiles()

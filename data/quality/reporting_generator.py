@@ -113,7 +113,7 @@ class GeneratedReport:
 class QualityReportGenerator:
     """Générateur de rapports qualité"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
     
     def generate_quality_summary(self, quality_data: List[Dict[str, Any]], 
@@ -223,7 +223,7 @@ class QualityReportGenerator:
 class PerformanceReportGenerator:
     """Générateur de rapports performance"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
     
     def generate_performance_analysis(self, performance_data: List[Dict[str, Any]]) -> ReportSection:
@@ -310,7 +310,7 @@ class PerformanceReportGenerator:
 class BusinessReportGenerator:
     """Générateur de rapports business"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
     
     def generate_business_intelligence(self, business_data: Dict[str, Any]) -> ReportSection:
@@ -410,7 +410,7 @@ class BusinessReportGenerator:
 class DashboardGenerator:
     """Générateur de dashboards interactifs"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
     
     def create_executive_dashboard(self, data_sources: Dict[str, Any]) -> str:
@@ -550,7 +550,7 @@ class DashboardGenerator:
 class ReportExporter:
     """Exporteur de rapports vers différents formats"""
     
-    def __init__(self, output_dir: str = "/tmp/reports"):
+    def __init__(self, output_dir -> None: str = "/tmp/reports") -> None:
         self.output_dir = Path(output_dir)
         self.output_dir.mkdir(exist_ok=True)
         self.logger = logging.getLogger(__name__)
@@ -738,7 +738,7 @@ class ReportExporter:
 class AdvancedReportingEngine:
     """Moteur de reporting avancé enterprise"""
     
-    def __init__(self, output_dir: str = "/tmp/reports"):
+    def __init__(self, output_dir -> None: str = "/tmp/reports") -> None:
         self.quality_generator = QualityReportGenerator()
         self.performance_generator = PerformanceReportGenerator()
         self.business_generator = BusinessReportGenerator()
@@ -840,7 +840,7 @@ class AdvancedReportingEngine:
             self.logger.error(f"Error generating real-time dashboard: {e}")
             raise
     
-    def schedule_report(self, report_id: str, config: ReportConfig):
+    def schedule_report(self, report_id -> None: str, config -> None: ReportConfig) -> None:
         """Planification rapport automatique"""
         self.scheduled_reports[report_id] = config
         self.logger.info(f"Report scheduled: {report_id} - {config.frequency.value}")
@@ -899,7 +899,7 @@ __all__ = [
 
 # Exemple d'utilisation
 if __name__ == "__main__":
-    async def main():
+    async def main() -> None:
         # Configuration logging
         logging.basicConfig(level=logging.INFO)
         

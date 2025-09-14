@@ -12,6 +12,7 @@ from datetime import datetime
 
 @dataclass
 class PredictiveModels:
+    """PredictiveModels: class implementation"""
     model_name: str
     accuracy: float
     confidence: float
@@ -20,6 +21,7 @@ class PredictiveModels:
 
 @dataclass 
 class ForecastResults:
+    """ForecastResults: class implementation"""
     user_id: str
     predictions: Dict[str, float]
     confidence_intervals: Dict[str, tuple]

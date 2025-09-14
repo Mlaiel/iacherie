@@ -66,7 +66,7 @@ class TemplateConfig:
     secrets: Dict[str, str]
     tags: Dict[str, str]
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         """
 Add default tags"""
         self.tags.update({
@@ -81,7 +81,7 @@ class BaseTemplate(ABC):
     """
 Abstract base class for infrastructure templates"""
     
-    def __init__(self, config: TemplateConfig):
+    def __init__(self, config -> None: TemplateConfig) -> None:
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self.template_env = jinja2.Environment(
@@ -1530,11 +1530,11 @@ class TemplateManager:
     """
 Manager for infrastructure templates"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.templates: Dict[str, BaseTemplate] = {}
         self.logger = logging.getLogger(__name__)
         
-    def register_template(self, name: str, template: BaseTemplate):
+    def register_template(self, name -> None: str, template -> None: BaseTemplate) -> None:
         """
 Register a template"""
         self.templates[name] = template

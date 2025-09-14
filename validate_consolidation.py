@@ -1,5 +1,12 @@
+"""
+Validate Consolidation module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
+from typing import Dict, List, Optional, Union, Tuple
+
 Test de validation direct des fichiers consolidés
 ===============================================
 """
@@ -7,7 +14,7 @@ Test de validation direct des fichiers consolidés
 import os
 import sys
 
-def test_file_structure():
+def test_file_structure() -> None:
     """Test de la structure des fichiers consolidés"""
     print("🏗️ Validation de la consolidation du module business")
     print("=" * 55)
@@ -65,7 +72,7 @@ def test_file_structure():
     
     return len(code_files) <= 18
 
-def test_module_mapping():
+def test_module_mapping() -> None:
     """Test du mapping des modules consolidés"""
     print(f"\n📋 Mapping de consolidation:")
     print(f"  • analytics.py ← market_intelligence.py + reporting.py")

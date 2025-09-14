@@ -1,3 +1,8 @@
+"""
+Demo Enhanced Music Monitoring module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Enhanced Music Platform Copyright Monitoring Demo
@@ -27,7 +32,7 @@ from typing import List, Dict
 # Add project root to path
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-async def demo_enhanced_monitoring():
+async def demo_enhanced_monitoring() -> None:
     """
 Demonstrate the enhanced music platform monitoring capabilities"""
     

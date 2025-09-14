@@ -45,7 +45,7 @@ class AuthenticationStrategy(str, Enum):
 class APIGatewayConfiguration:
     """API Gateway configuration"""
     
-    def __init__(self, level: GatewayLevel = GatewayLevel.ENTERPRISE):
+    def __init__(self, level -> None: GatewayLevel = GatewayLevel.ENTERPRISE) -> None:
         self.level = level
         self.routing_config = self._get_routing_config()
         self.load_balancing_config = self._get_load_balancing_config()

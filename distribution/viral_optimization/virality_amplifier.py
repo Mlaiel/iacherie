@@ -1,5 +1,7 @@
 """Virality Amplifier - Content Amplification Engine
 
+import asyncio
+
 Amplifies content virality potential through strategic boosting, engagement
 optimization, and viral multiplication techniques.
 
@@ -46,7 +48,7 @@ class AmplificationResults:
 class ViralityAmplifier:
     """Content virality amplification engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize virality amplifier"""
         self.amplification_models = self._load_amplification_models()
         self.boost_algorithms = self._initialize_boost_algorithms()

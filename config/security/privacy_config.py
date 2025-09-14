@@ -1,7 +1,14 @@
+"""
+Privacy Config module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 """Ainflue Privacy Configuration Module
+import asyncio
+
 ====================================
 
 Enterprise-grade privacy configuration for the Ainflue platform.
@@ -461,7 +468,7 @@ class PrivacyByDesignConfig:
 class PrivacyConfiguration:
     """Main privacy configuration manager"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize privacy configuration"""
         # Privacy components
         self.consent_management = ConsentManagementConfig()

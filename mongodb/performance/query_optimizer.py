@@ -41,7 +41,7 @@ class IndexRecommendation:
 class QueryOptimizer:
     """Advanced MongoDB query optimizer with machine learning insights."""
     
-    def __init__(self, client: MongoClient):
+    def __init__(self, client -> None: MongoClient) -> None:
         """Initialize query optimizer.
         
         Args:

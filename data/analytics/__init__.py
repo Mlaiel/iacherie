@@ -1,4 +1,7 @@
 """🚀 Analytics Module - IA-Influencer-Agent Enterprise Data Management - CONSOLIDATED
+import logging
+from typing import Dict, List, Optional, Union, Tuple
+
 ========================================================================================
 
 Module analytics professionnel consolidé pour créateurs multi-format avec business intelligence avancée.
@@ -347,7 +350,7 @@ class AnalyticsEngineFactory:
     """
     
     @staticmethod
-    def create_complete_analytics_suite(db_session, redis_client, storage_manager=None, vector_db=None):
+    def create_complete_analytics_suite(db_session, redis_client, storage_manager=None, vector_db=None) -> None:
         """
         Create complete consolidated analytics suite with all 6 engines.
         
@@ -364,7 +367,7 @@ class AnalyticsEngineFactory:
         }
     
     @staticmethod
-    def create_creator_optimized_suite(db_session, redis_client, creator_type: str = "all", **kwargs):
+    def create_creator_optimized_suite(db_session, redis_client, creator_type -> None: str = "all", **kwargs) -> None:
         """
         Create analytics suite optimized for specific creator type.
         
@@ -381,7 +384,7 @@ class AnalyticsEngineFactory:
         return suite
     
     @staticmethod
-    def get_supported_creator_types():
+    def get_supported_creator_types() -> None:
         """Get supported creator types."""
         return ['musician', 'influencer', 'photographer', 'blogger', 'comedian', 'all']
 
@@ -469,7 +472,7 @@ __consolidation_ratio__ = "21:12"  # Files reduced from 21 to 12
 
 # ========== UTILITY FUNCTIONS ==========
 
-def get_analytics_summary():
+def get_analytics_summary() -> None:
     """Get complete analytics capabilities summary."""
     return {
         "module_version": __version__,
@@ -483,7 +486,7 @@ def get_analytics_summary():
         "currencies_supported": __currencies_supported__
     }
 
-def create_analytics_for_creator(creator_type: str, **kwargs):
+def create_analytics_for_creator(creator_type -> None: str, **kwargs) -> None:
     """
     Helper function to create analytics optimized for creator type.
     
@@ -504,7 +507,7 @@ def create_analytics_for_creator(creator_type: str, **kwargs):
 
 # ========== MODULE VALIDATION ==========
 
-def validate_consolidation():
+def validate_consolidation() -> None:
     """Validate successful consolidation."""
     return {
         "consolidation_complete": True,
@@ -523,7 +526,7 @@ if not _consolidation_status["consolidation_complete"]:
 
 # ========== ENTERPRISE UTILITY FUNCTIONS ==========
 
-def create_analytics_for_platform(platform_type: str, **kwargs):
+def create_analytics_for_platform(platform_type -> None: str, **kwargs) -> None:
     """
     Create analytics optimized for specific platform type.
     
@@ -552,7 +555,7 @@ def create_analytics_for_platform(platform_type: str, **kwargs):
     )
 
 
-def validate_analytics_data(data: dict, validation_type: str = "comprehensive"):
+def validate_analytics_data(data -> None: dict, validation_type -> None: str = "comprehensive") -> None:
     """
     Validate analytics data using enterprise validators.
     
@@ -577,7 +580,7 @@ def validate_analytics_data(data: dict, validation_type: str = "comprehensive"):
         raise ValueError(f"Unknown validation type: {validation_type}")
 
 
-def get_supported_languages_summary():
+def get_supported_languages_summary() -> None:
     """Get summary of supported languages with details."""
     config = get_analytics_config()
     languages = config.supported_languages
@@ -593,7 +596,7 @@ def get_supported_languages_summary():
     return summary
 
 
-def get_platform_capabilities_matrix():
+def get_platform_capabilities_matrix() -> None:
     """Get comprehensive platform capabilities matrix."""
     config = get_analytics_config()
     
@@ -612,7 +615,7 @@ def get_platform_capabilities_matrix():
     return matrix
 
 
-def _get_platform_recommendations(platform_type):
+def _get_platform_recommendations(platform_type) -> None:
     """Get creator type recommendations for platform."""
     recommendations = {
         'youtube': ['musician', 'comedian', 'blogger', 'influencer'],
@@ -627,7 +630,7 @@ def _get_platform_recommendations(platform_type):
     return recommendations.get(platform_type.value, [])
 
 
-def get_analytics_performance_metrics():
+def get_analytics_performance_metrics() -> None:
     """Get comprehensive analytics performance metrics."""
     config = get_analytics_config()
     
@@ -648,7 +651,7 @@ def get_analytics_performance_metrics():
     }
 
 
-def create_enterprise_dashboard_data():
+def create_enterprise_dashboard_data() -> None:
     """Create enterprise dashboard data summary."""
     config = get_analytics_config()
     performance_metrics = get_analytics_performance_metrics()
@@ -700,7 +703,7 @@ def create_enterprise_dashboard_data():
     return dashboard
 
 
-def check_system_health():
+def check_system_health() -> None:
     """Comprehensive system health check."""
     try:
         config = get_analytics_config()
@@ -744,7 +747,7 @@ def check_system_health():
         }
 
 
-def get_creator_type_analytics_mapping():
+def get_creator_type_analytics_mapping() -> None:
     """Get mapping of creator types to recommended analytics engines."""
     return {
         "musician": {
@@ -785,7 +788,7 @@ def get_creator_type_analytics_mapping():
     }
 
 
-def optimize_analytics_for_creator(creator_type: str, creator_data: dict = None):
+def optimize_analytics_for_creator(creator_type -> None: str, creator_data -> None: dict = None) -> None:
     """
     Optimize analytics configuration for specific creator type.
     
@@ -837,7 +840,7 @@ def optimize_analytics_for_creator(creator_type: str, creator_data: dict = None)
 
 # ========== ENTERPRISE MONITORING FUNCTIONS ==========
 
-def get_module_statistics():
+def get_module_statistics() -> None:
     """Get comprehensive module statistics."""
     return {
         "module_info": {
@@ -870,7 +873,7 @@ def get_module_statistics():
     }
 
 
-def generate_integration_report():
+def generate_integration_report() -> None:
     """Generate comprehensive integration report."""
     config = get_analytics_config()
     stats = get_module_statistics()
@@ -922,7 +925,7 @@ def generate_integration_report():
     return report
 
 
-def _generate_integration_recommendations(config, health):
+def _generate_integration_recommendations(config, health) -> None:
     """Generate integration recommendations based on current state."""
     recommendations = []
     

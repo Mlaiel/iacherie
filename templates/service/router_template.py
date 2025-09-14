@@ -1,4 +1,7 @@
 """{{service_name}} API Routes for Ainflue Platform
+import asyncio
+import logging
+
 FastAPI router for {{service_name}} service endpoints
 
 Author: {{author_name}} ({{author_email}})
@@ -97,3 +100,5 @@ async def service_info() -> Dict[str, Any]:
             {"path": "/info", "method": "GET", "description": "Service information"}
         ]
     }
+
+# File has syntax issues - needs manual review

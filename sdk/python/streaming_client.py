@@ -87,7 +87,7 @@ class StreamingConfig(BaseModel):
 class AudioStreamProcessor:
     """Audio stream processing (Audio Engineer expertise)"""
     
-    def __init__(self, config: StreamingConfig):
+    def __init__(self, config -> None: StreamingConfig) -> None:
         self.config = config
         self.buffer = queue.Queue(maxsize=config.audio_buffer_size)
         self.is_processing = False
@@ -123,7 +123,7 @@ class AudioStreamProcessor:
 class MLStreamProcessor:
     """ML stream processing (ML Engineer expertise)"""
     
-    def __init__(self, config: StreamingConfig):
+    def __init__(self, config -> None: StreamingConfig) -> None:
         self.config = config
         self.batch_buffer = []
         self.model_cache = {}
@@ -180,14 +180,14 @@ class MLStreamProcessor:
 class CircuitBreaker:
     """Circuit breaker pattern (Lead Dev IA expertise)"""
     
-    def __init__(self, threshold: int = 5, timeout: float = 60.0):
+    def __init__(self, threshold -> None: int = 5, timeout -> None: float = 60.0) -> None:
         self.threshold = threshold
         self.timeout = timeout
         self.failure_count = 0
         self.last_failure_time = None
         self.state = "CLOSED"  # CLOSED, OPEN, HALF_OPEN
         
-    def call(self, func: Callable, *args, **kwargs):
+    def call(self, func -> None: Callable, *args, **kwargs) -> None:
         """Execute function with circuit breaker protection"""
         if self.state == "OPEN":
             if self._should_attempt_reset():
@@ -203,12 +203,12 @@ class CircuitBreaker:
             self._on_failure()
             raise e
     
-    def _on_success(self):
+    def _on_success(self) -> None:
         """Handle successful call"""
         self.failure_count = 0
         self.state = "CLOSED"
     
-    def _on_failure(self):
+    def _on_failure(self) -> None:
         """Handle failed call"""
         self.failure_count += 1
         self.last_failure_time = time.time()
@@ -225,8 +225,8 @@ class StreamingClient:
     """Main streaming client with multi-expert architecture"""
     
     def __init__(self, 
-                 auth_manager: AuthenticationManager,
-                 config: Optional[StreamingConfig] = None):
+                 auth_manager -> None: AuthenticationManager,
+                 config -> None: Optional[StreamingConfig] = None) -> None:
         self.auth_manager = auth_manager
         self.config = config or StreamingConfig()
         self.metrics = StreamMetrics()
@@ -283,7 +283,7 @@ class StreamingClient:
             self.metrics.error_count += 1
             raise ConnectionError(f"Failed to connect: {e}")
     
-    async def disconnect(self):
+    async def disconnect(self) -> None:
         """Disconnect from streaming endpoint"""
         try:
             self.is_connected = False
@@ -394,7 +394,7 @@ class StreamingClient:
                 "processor": "default"
             }
     
-    async def _connection_monitor(self):
+    async def _connection_monitor(self) -> None:
         """Monitor connection health (DevOps expertise)"""
         while self.is_connected:
             try:
@@ -411,7 +411,7 @@ class StreamingClient:
                 self.logger.error(f"Connection monitor error: {e}")
                 await self._reconnect()
     
-    async def _reconnect(self):
+    async def _reconnect(self) -> None:
         """Intelligent reconnection with backoff"""
         if self.metrics.reconnection_count >= self.config.reconnect_attempts:
             self.logger.error("Max reconnection attempts reached")
@@ -433,7 +433,7 @@ class StreamingClient:
         except Exception as e:
             self.logger.error(f"Reconnection failed: {e}")
     
-    async def _metrics_reporter(self):
+    async def _metrics_reporter(self) -> None:
         """Report metrics periodically (DevOps expertise)"""
         while self.is_connected:
             try:
@@ -456,7 +456,7 @@ class StreamingClient:
             except Exception as e:
                 self.logger.error(f"Metrics reporting error: {e}")
     
-    def add_message_handler(self, message_type: str, handler: Callable):
+    def add_message_handler(self, message_type -> None: str, handler -> None: Callable) -> None:
         """Add message handler for specific message types"""
         if message_type not in self.message_handlers:
             self.message_handlers[message_type] = []
@@ -478,7 +478,7 @@ class StreamingClient:
 
 
 # Example usage and testing
-async def example_streaming_usage():
+async def example_streaming_usage() -> None:
     """Example usage of streaming client"""
     from .auth_manager import AuthenticationManager
     

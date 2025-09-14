@@ -1,4 +1,6 @@
 """
+import asyncio
+
 AI Agents Routes - 53 Specialized Agents
 """
 
@@ -75,7 +77,7 @@ AGENTS_DATABASE = [
 ]
 
 @router.get("/")
-async def get_all_agents():
+async def get_all_agents() -> None:
     """Get all 53 AI agents"""
     return {
         "agents": AGENTS_DATABASE,
@@ -91,7 +93,7 @@ async def get_all_agents():
     }
 
 @router.get("/category/{category}")
-async def get_agents_by_category(category: str):
+async def get_agents_by_category(category -> None: str) -> None:
     """Get agents by category"""
     agents = [a for a in AGENTS_DATABASE if a["category"] == category]
     if not agents:
@@ -99,7 +101,7 @@ async def get_agents_by_category(category: str):
     return {"agents": agents, "total": len(agents)}
 
 @router.get("/{agent_id}")
-async def get_agent_details(agent_id: str):
+async def get_agent_details(agent_id -> None: str) -> None:
     """Get detailed information about a specific agent"""
     agent = next((a for a in AGENTS_DATABASE if a["id"] == agent_id), None)
     if not agent:
@@ -121,7 +123,7 @@ async def get_agent_details(agent_id: str):
     }
 
 @router.post("/{agent_id}/run")
-async def run_agent(agent_id: str, payload: Dict[str, Any] = None):
+async def run_agent(agent_id -> None: str, payload -> None: Dict[str, Any] = None) -> None:
     """Execute a specific agent"""
     agent = next((a for a in AGENTS_DATABASE if a["id"] == agent_id), None)
     if not agent:
@@ -141,7 +143,7 @@ async def run_agent(agent_id: str, payload: Dict[str, Any] = None):
     }
 
 @router.post("/{agent_id}/configure")
-async def configure_agent(agent_id: str, config: Dict[str, Any]):
+async def configure_agent(agent_id -> None: str, config -> None: Dict[str, Any]) -> None:
     """Configure agent settings"""
     agent = next((a for a in AGENTS_DATABASE if a["id"] == agent_id), None)
     if not agent:
@@ -154,7 +156,7 @@ async def configure_agent(agent_id: str, config: Dict[str, Any]):
     }
 
 @router.get("/{agent_id}/status")
-async def get_agent_status(agent_id: str):
+async def get_agent_status(agent_id -> None: str) -> None:
     """Get agent runtime status"""
     agent = next((a for a in AGENTS_DATABASE if a["id"] == agent_id), None)
     if not agent:

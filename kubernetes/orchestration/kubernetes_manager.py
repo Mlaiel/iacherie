@@ -1,4 +1,6 @@
 """IA Influencer Agent - Kubernetes Orchestration Manager
+from pathlib import Path
+
 Enterprise Kubernetes cluster management and deployment automation
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -34,7 +36,7 @@ from .base_manager import BaseDeploymentManager
 class MetricsCollector:
     """
 Mock metrics collector."""
-    def __init__(self):
+    def __init__(self) -> None:
         """
 Initialize Kubernetes metrics collector with monitoring capabilities"""
         self.logger = logging.getLogger(f"{__name__}.MetricsCollector")
@@ -104,10 +106,10 @@ class KubernetesManager(BaseDeploymentManager):
     """
     def __init__(
         self,
-        cluster_config: Optional[str] = None,
-        namespace: str = "ia-influencer-agent",
-        metrics_collector: Optional[MetricsCollector] = None
-    ):
+        cluster_config -> None: Optional[str] = None,
+        namespace -> None: str = "ia-influencer-agent",
+        metrics_collector -> None: Optional[MetricsCollector] = None
+    ) -> None:
         super().__init__()
         self.namespace = namespace
         self.cluster_config = cluster_config

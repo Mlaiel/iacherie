@@ -99,8 +99,8 @@ class ContentProtectionPipelineManager:
     - Cross-platform monitoring orchestration
     """
     
-    def __init__(self, base_pipeline_manager: AdvancedPipelineManager,
-                 storage_path: Optional[Path] = None):
+    def __init__(self, base_pipeline_manager -> None: AdvancedPipelineManager,
+                 storage_path -> None: Optional[Path] = None) -> None:
         self.base_manager = base_pipeline_manager
         self.storage_path = storage_path or Path(__file__).parent / "protection_data"
         self.logger = logging.getLogger(__name__)
@@ -116,7 +116,7 @@ class ContentProtectionPipelineManager:
         # Register protection-specific pipeline templates
         self._register_protection_pipelines()
         
-    def _register_protection_pipelines(self):
+    def _register_protection_pipelines(self) -> None:
         """Register content protection pipeline configurations"""
         # Audio fingerprinting pipeline
         audio_fingerprint_config = PipelineConfig(

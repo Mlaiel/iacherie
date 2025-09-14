@@ -157,12 +157,12 @@ class LegalTemplateEngine:
     """
 Generates legal documents from templates."""
     
-    def __init__(self, templates_path: str):
+    def __init__(self, templates_path -> None: str) -> None:
         self.templates_path = Path(templates_path)
         self.templates = {}
         self._load_templates()
     
-    def _load_templates(self):
+    def _load_templates(self) -> None:
         """
 Load legal document templates."""
         # DMCA Takedown Notice Template
@@ -311,7 +311,7 @@ Generate legal document from template."""
 class ComplianceValidator:
     """Validates compliance with legal frameworks."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         try:
             logger.info(f"Executing __init__")
             
@@ -425,7 +425,7 @@ Load compliance requirements by framework."""
 class LegalDocumentManager:
     """Manages legal document lifecycle."""
     
-    def __init__(self, storage_path: str, email_config: Dict[str, Any]):
+    def __init__(self, storage_path -> None: str, email_config -> None: Dict[str, Any]) -> None:
         self.storage_path = Path(storage_path)
         self.storage_path.mkdir(parents=True, exist_ok=True)
         self.email_config = email_config
@@ -524,7 +524,7 @@ Create a new legal document."""
             logger.error(f"Document sending failed: {e}")
             return False
     
-    async def _save_document(self, document: LegalDocument):
+    async def _save_document(self, document -> None: LegalDocument) -> None:
         """Save document to storage."""
         try:
             file_path = self.storage_path / f"{document.document_id}.json"
@@ -555,7 +555,7 @@ class LegalComplianceProcessor:
     with multi-jurisdictional support and automated document generation.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Legal Compliance Processor.
         

@@ -156,7 +156,7 @@ class AnalyticsImplementation:
     performance monitoring, trend analysis, and predictive insights.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
         
@@ -545,7 +545,7 @@ class AnalyticsImplementation:
     
     # Private helper methods
     
-    def _initialize_core_metrics(self):
+    def _initialize_core_metrics(self) -> None:
         """Initialize core Ainflue platform metrics"""
         
         core_metrics = [
@@ -820,7 +820,7 @@ class AnalyticsImplementation:
             "confidence_interval": confidence_interval
         }
     
-    async def _check_metric_alerts(self, metric_id: str, value: float):
+    async def _check_metric_alerts(self, metric_id -> None: str, value -> None: float) -> None:
         """Check if metric value triggers any alerts"""
         
         metric_def = self.metric_definitions[metric_id]
@@ -836,7 +836,7 @@ class AnalyticsImplementation:
             if alert_triggered:
                 await self._trigger_alert(metric_id, threshold_type, value, threshold_value)
     
-    async def _trigger_alert(self, metric_id: str, threshold_type: str, value: float, threshold: float):
+    async def _trigger_alert(self, metric_id -> None: str, threshold_type -> None: str, value -> None: float, threshold -> None: float) -> None:
         """Trigger an alert for a metric threshold violation"""
         
         self.system_metrics["alerts_triggered"] += 1

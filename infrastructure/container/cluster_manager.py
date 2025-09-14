@@ -103,7 +103,7 @@ class ClusterManager:
     - Cost optimization and resource allocation
     """
     
-    def __init__(self, kubeconfig_path: Optional[str] = None):
+    def __init__(self, kubeconfig_path -> None: Optional[str] = None) -> None:
         """Initialize cluster manager"""
         self.clusters = {}
         self.active_cluster = None
@@ -520,7 +520,7 @@ class ClusterManager:
         }
         
     # Additional helper methods
-    async def _ensure_namespace_exists(self, namespace: str):
+    async def _ensure_namespace_exists(self, namespace -> None: str) -> None:
         """Ensure namespace exists"""
         if KUBERNETES_AVAILABLE and self.k8s_core_v1:
             try:

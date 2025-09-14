@@ -153,7 +153,7 @@ class SSLTLSManager:
         >>> scan_result = ssl_manager.scan_host("example.com", 443)
     """
     
-    def __init__(self, config_path: Optional[str] = None):
+    def __init__(self, config_path -> None: Optional[str] = None) -> None:
         """
         Initialize SSL/TLS manager with configuration
         
@@ -228,7 +228,7 @@ def create_ssl_manager(config: Optional[Dict[str, Any]] = None) -> SSLTLSManager
     return SSLTLSManager(config)
 
 
-def main():
+def main() -> None:
     """
     Main entry point for SSL/TLS operations
     Can be called directly or via CLI

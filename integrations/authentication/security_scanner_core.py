@@ -147,12 +147,12 @@ class SecurityScanner:
     
     def __init__(
         self,
-        scan_interval: int = 86400,  # 24 hours
-        max_concurrent_scans: int = 5,
-        vulnerability_db_update_interval: int = 3600,  # 1 hour
-        enable_real_time_monitoring: bool = True,
-        compliance_standards: Optional[List[SecurityStandard]] = None
-    ):
+        scan_interval -> None: int = 86400,  # 24 hours
+        max_concurrent_scans -> None: int = 5,
+        vulnerability_db_update_interval -> None: int = 3600,  # 1 hour
+        enable_real_time_monitoring -> None: bool = True,
+        compliance_standards -> None: Optional[List[SecurityStandard]] = None
+    ) -> None:
         self.scan_interval = scan_interval
         self.max_concurrent_scans = max_concurrent_scans
         self.vulnerability_db_update_interval = vulnerability_db_update_interval

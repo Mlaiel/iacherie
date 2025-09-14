@@ -80,7 +80,7 @@ class KubernetesConfigManager:
     """
 Professional Kubernetes configuration manager"""
     
-    def __init__(self, config_path: str = "/app/config/kubernetes", namespace: str = "ia-influencer"):
+    def __init__(self, config_path -> None: str = "/app/config/kubernetes", namespace -> None: str = "ia-influencer") -> None:
         self.config_path = Path(config_path)
         self.namespace = namespace
         self.k8s_client = None
@@ -911,7 +911,7 @@ Professional Kubernetes configuration manager"""
 class KubernetesDeploymentManager:
     """Professional Kubernetes deployment manager"""
     
-    def __init__(self, config_manager: KubernetesConfigManager):
+    def __init__(self, config_manager -> None: KubernetesConfigManager) -> None:
         self.config_manager = config_manager
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
     
@@ -967,7 +967,7 @@ class KubernetesDeploymentManager:
 class KubernetesPodManager:
     """Professional Kubernetes pod manager"""
     
-    def __init__(self, config_manager: KubernetesConfigManager):
+    def __init__(self, config_manager -> None: KubernetesConfigManager) -> None:
         self.config_manager = config_manager
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
     

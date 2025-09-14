@@ -44,7 +44,7 @@ class RemixGenerator:
     """
 AI-powered remix and music generation engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.remix_history = {}
         self.style_templates = {
             "electronic": {"tempo_multiplier": 1.2, "effects": ["reverb", "filter"]},

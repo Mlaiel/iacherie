@@ -29,7 +29,7 @@ class ValidationResult:
 class BackupValidator:
     """Backup integrity validator with checksums and structure validation."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize backup validator."""
         pass
     

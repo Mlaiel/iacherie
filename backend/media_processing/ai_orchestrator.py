@@ -1,3 +1,8 @@
+"""
+Ai Orchestrator module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """🎯 AI Orchestrator - Central IA Processing Coordination Engine
 ================================================================================
@@ -137,7 +142,7 @@ class AIProcessingResult:
 class AIModelManager:
     """Manages AI model lifecycle and inference"""
     
-    def __init__(self, config: Dict[str, AIModelConfig]):
+    def __init__(self, config -> None: Dict[str, AIModelConfig]) -> None:
         self.config = config
         self.models: Dict[str, Any] = {}
         self.processors: Dict[str, Any] = {}
@@ -230,7 +235,7 @@ class AIModelManager:
                 cause=e
             )
     
-    async def unload_model(self, model_name: str):
+    async def unload_model(self, model_name -> None: str) -> None:
         """Unload model to free memory"""
         if model_name in self.models:
             del self.models[model_name]
@@ -256,7 +261,7 @@ class AIModelManager:
 class AIOrchestrator:
     """Central AI processing coordination engine"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize AI orchestrator"""
         self.config = config or self._get_default_config()
         
@@ -964,7 +969,7 @@ class AIOrchestrator:
             'cache_size': len(self.understanding_cache)
         }
     
-    async def cleanup(self):
+    async def cleanup(self) -> None:
         """Cleanup resources"""
         # Unload all models
         for model_name in list(self.model_manager.models.keys()):

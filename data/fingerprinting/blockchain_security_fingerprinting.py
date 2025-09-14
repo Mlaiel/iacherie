@@ -215,7 +215,7 @@ class ProofOfCreation:
 class CryptographicSecurityEngine:
     """Moteur de sécurité cryptographique avancé."""
     
-    def __init__(self, config: BlockchainConfig):
+    def __init__(self, config -> None: BlockchainConfig) -> None:
         self.config = config
         self.logger = logging.getLogger(__name__)
         
@@ -384,7 +384,7 @@ class CryptographicSecurityEngine:
 class ProofOfCreationEngine:
     """Moteur de preuve de création blockchain."""
     
-    def __init__(self, config: BlockchainConfig, crypto_engine: CryptographicSecurityEngine):
+    def __init__(self, config -> None: BlockchainConfig, crypto_engine -> None: CryptographicSecurityEngine) -> None:
         self.config = config
         self.crypto_engine = crypto_engine
         self.logger = logging.getLogger(__name__)
@@ -564,7 +564,7 @@ class ProofOfCreationEngine:
 class NFTIntegrationEngine:
     """Moteur d'intégration NFT pour fingerprints."""
     
-    def __init__(self, config: BlockchainConfig):
+    def __init__(self, config -> None: BlockchainConfig) -> None:
         self.config = config
         self.logger = logging.getLogger(__name__)
         
@@ -769,7 +769,7 @@ class NFTIntegrationEngine:
 class SmartContractEngine:
     """Moteur de smart contracts pour automation."""
     
-    def __init__(self, config: BlockchainConfig):
+    def __init__(self, config -> None: BlockchainConfig) -> None:
         self.config = config
         self.logger = logging.getLogger(__name__)
         
@@ -939,8 +939,8 @@ class BlockchainSecurityFingerprintingEngine:
     pour une protection complète des contenus sur blockchain.
     """
     
-    def __init__(self, db_session: Any = None, redis_client: Any = None,
-                 config: Optional[Dict[str, Any]] = None):
+    def __init__(self, db_session -> None: Any = None, redis_client -> None: Any = None,
+                 config -> None: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialise le moteur de fingerprinting blockchain.
         
@@ -1140,7 +1140,7 @@ class BlockchainSecurityFingerprintingEngine:
             self.logger.error(f"❌ Erreur vérification fingerprint: {str(e)}")
             return {'verified': False, 'error': str(e)}
     
-    async def _deploy_core_contracts(self):
+    async def _deploy_core_contracts(self) -> None:
         """Déploie les contrats principaux si nécessaire."""
         try:
             # Vérification si contrats déjà déployés

@@ -131,9 +131,9 @@ class RevenueRecoveryProcessor:
     
     def __init__(
         self,
-        config: Dict[str, Any],
-        ml_model_endpoint: Optional[str] = None
-    ):
+        config -> None: Dict[str, Any],
+        ml_model_endpoint -> None: Optional[str] = None
+    ) -> None:
         """
 Initialize revenue recovery processor"""
         self.config = config

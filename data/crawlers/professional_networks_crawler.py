@@ -265,7 +265,7 @@ class CompanyIntelligence:
 class BaseProfessionalCrawler(ABC):
     """Abstract base class for professional platform crawlers"""
     
-    def __init__(self, platform: ProfessionalPlatform, config: Dict[str, Any]):
+    def __init__(self, platform -> None: ProfessionalPlatform, config -> None: Dict[str, Any]) -> None:
         self.platform = platform
         self.config = config
         self.session_manager = None
@@ -346,7 +346,7 @@ class BaseProfessionalCrawler(ABC):
 class LinkedInAdvancedCrawler(BaseProfessionalCrawler):
     """Advanced LinkedIn crawler for business intelligence"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         super().__init__(ProfessionalPlatform.LINKEDIN, config)
         self.access_token = config.get('access_token')
         self.base_url = "https://api.linkedin.com/v2"
@@ -571,7 +571,7 @@ class LinkedInAdvancedCrawler(BaseProfessionalCrawler):
 class GlassdoorCrawler(BaseProfessionalCrawler):
     """Glassdoor crawler for company reviews and salary data"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         super().__init__(ProfessionalPlatform.GLASSDOOR, config)
         self.partner_id = config.get('partner_id')
         self.base_url = "https://api.glassdoor.com/api/api.htm"
@@ -733,7 +733,7 @@ class GlassdoorCrawler(BaseProfessionalCrawler):
 class AngelListCrawler(BaseProfessionalCrawler):
     """AngelList crawler for startup ecosystem tracking"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         super().__init__(ProfessionalPlatform.ANGELLIST, config)
         self.access_token = config.get('access_token')
         self.base_url = "https://api.angel.co/1"
@@ -939,7 +939,7 @@ class AngelListCrawler(BaseProfessionalCrawler):
 class ProfessionalNetworkManager:
     """Unified manager for all professional network crawlers"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.crawlers: Dict[ProfessionalPlatform, BaseProfessionalCrawler] = {}
         self.career_intelligence = CareerIntelligenceEngine()
         self.company_analyzer = CompanyAnalyticsEngine()
@@ -1333,7 +1333,7 @@ class ProfessionalNetworkManager:
 class CareerIntelligenceEngine:
     """Career opportunity and development intelligence"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.career_paths: Dict[str, List[str]] = {}
         self.skill_recommendations: Dict[str, List[str]] = {}
         
@@ -1344,7 +1344,7 @@ class CareerIntelligenceEngine:
 class CompanyAnalyticsEngine:
     """Company performance and culture analytics"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.company_metrics: Dict[str, Dict] = {}
         
     async def initialize(self) -> None:
@@ -1392,7 +1392,7 @@ class CompanyAnalyticsEngine:
 class NetworkingOpportunityDetector:
     """Detect networking opportunities for professionals"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.opportunity_patterns: Dict[str, Any] = {}
         
     async def initialize(self) -> None:
@@ -1516,7 +1516,7 @@ __all__ = [
 
 if __name__ == "__main__":
     # Example usage
-    async def main():
+    async def main() -> None:
         # Create and initialize professional manager
         manager = await create_professional_manager()
         

@@ -96,9 +96,9 @@ class RealTimeOptimizer:
     """Advanced real-time optimizer for edge computing."""
     
     def __init__(self, 
-                 strategy: OptimizationStrategy = OptimizationStrategy.ADAPTIVE,
-                 optimization_interval: float = 1.0,
-                 metrics_window: int = 100):
+                 strategy -> None: OptimizationStrategy = OptimizationStrategy.ADAPTIVE,
+                 optimization_interval -> None: float = 1.0,
+                 metrics_window -> None: int = 100) -> None:
         self.strategy = strategy
         self.optimization_interval = optimization_interval
         self.metrics_window = metrics_window
@@ -123,7 +123,7 @@ class RealTimeOptimizer:
         
         logger.info(f"RealTimeOptimizer initialized with strategy: {strategy}")
     
-    async def start(self):
+    async def start(self) -> None:
         """Start the real-time optimization engine."""
         if self.running:
             logger.warning("Optimizer already running")
@@ -133,7 +133,7 @@ class RealTimeOptimizer:
         self.optimization_task = asyncio.create_task(self._optimization_loop())
         logger.info("Real-time optimizer started")
     
-    async def stop(self):
+    async def stop(self) -> None:
         """Stop the real-time optimization engine."""
         self.running = False
         
@@ -150,7 +150,7 @@ class RealTimeOptimizer:
         
         logger.info("Real-time optimizer stopped")
     
-    async def add_metric(self, metric: PerformanceMetric):
+    async def add_metric(self, metric -> None: PerformanceMetric) -> None:
         """Add a performance metric for optimization."""
         metric_key = f"{metric.source}_{metric.metric_type.value}"
         
@@ -165,7 +165,7 @@ class RealTimeOptimizer:
         await self.anomaly_detector.update(metric)
         await self.prediction_engine.update(metric)
     
-    def add_optimization_target(self, target: OptimizationTarget):
+    def add_optimization_target(self, target -> None: OptimizationTarget) -> None:
         """Add an optimization target."""
         self.optimization_targets.append(target)
         logger.info(f"Added optimization target: {target.metric_type.value} = {target.target_value}")
@@ -219,7 +219,7 @@ class RealTimeOptimizer:
                 metrics_after={}
             )
     
-    async def _optimization_loop(self):
+    async def _optimization_loop(self) -> None:
         """Main optimization loop."""
         while self.running:
             try:
@@ -308,7 +308,7 @@ class RealTimeOptimizer:
         
         return results
     
-    async def _execute_single_action(self, action: Dict[str, Any]):
+    async def _execute_single_action(self, action -> None: Dict[str, Any]) -> None:
         """Execute a single optimization action."""
         action_type = action['type']
         
@@ -467,27 +467,27 @@ class RealTimeOptimizer:
         return improvements
     
     # Placeholder implementation methods
-    async def _adjust_resource_allocation(self, parameters: Dict[str, Any]):
+    async def _adjust_resource_allocation(self, parameters -> None: Dict[str, Any]) -> None:
         """Adjust resource allocation."""
         logger.info(f"Adjusting resource allocation: {parameters}")
         # Implementation would integrate with resource manager
     
-    async def _optimize_caching(self, parameters: Dict[str, Any]):
+    async def _optimize_caching(self, parameters -> None: Dict[str, Any]) -> None:
         """Optimize caching strategy."""
         logger.info(f"Optimizing caching: {parameters}")
         # Implementation would integrate with edge cache
     
-    async def _optimize_load_balancing(self, parameters: Dict[str, Any]):
+    async def _optimize_load_balancing(self, parameters -> None: Dict[str, Any]) -> None:
         """Optimize load balancing."""
         logger.info(f"Optimizing load balancing: {parameters}")
         # Implementation would integrate with load balancer
     
-    async def _scale_resources(self, parameters: Dict[str, Any]):
+    async def _scale_resources(self, parameters -> None: Dict[str, Any]) -> None:
         """Scale resources up or down."""
         logger.info(f"Scaling resources: {parameters}")
         # Implementation would integrate with orchestration
     
-    async def _tune_parameters(self, parameters: Dict[str, Any]):
+    async def _tune_parameters(self, parameters -> None: Dict[str, Any]) -> None:
         """Tune system parameters."""
         logger.info(f"Tuning parameters: {parameters}")
         # Implementation would tune various system parameters
@@ -496,10 +496,10 @@ class RealTimeOptimizer:
 class TrendAnalyzer:
     """Analyze performance trends."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.trends: Dict[str, List[float]] = defaultdict(list)
     
-    async def update(self, metric: PerformanceMetric):
+    async def update(self, metric -> None: PerformanceMetric) -> None:
         """Update trend analysis with new metric."""
         key = f"{metric.source}_{metric.metric_type.value}"
         self.trends[key].append(metric.value)
@@ -554,12 +554,12 @@ class TrendAnalyzer:
 class AnomalyDetector:
     """Detect performance anomalies."""
     
-    def __init__(self, sensitivity: float = 2.0):
+    def __init__(self, sensitivity -> None: float = 2.0) -> None:
         self.sensitivity = sensitivity
         self.baseline_stats: Dict[str, Dict[str, float]] = {}
         self.recent_anomalies: List[Dict[str, Any]] = []
     
-    async def update(self, metric: PerformanceMetric):
+    async def update(self, metric -> None: PerformanceMetric) -> None:
         """Update anomaly detection with new metric."""
         key = f"{metric.source}_{metric.metric_type.value}"
         
@@ -610,10 +610,10 @@ class AnomalyDetector:
 class PredictionEngine:
     """Predict future performance metrics."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.metric_history: Dict[str, List[Tuple[datetime, float]]] = defaultdict(list)
     
-    async def update(self, metric: PerformanceMetric):
+    async def update(self, metric -> None: PerformanceMetric) -> None:
         """Update prediction engine with new metric."""
         key = f"{metric.source}_{metric.metric_type.value}"
         self.metric_history[key].append((metric.timestamp, metric.value))
@@ -665,7 +665,7 @@ def create_real_time_optimizer(
 
 # Example usage and testing
 if __name__ == "__main__":
-    async def test_optimizer():
+    async def test_optimizer() -> None:
         """Test the real-time optimizer."""
         optimizer = create_real_time_optimizer()
         

@@ -124,7 +124,7 @@ class ContentOptimizer(ABC):
 class VideoStreamingOptimizer(ContentOptimizer):
     """Optimiseur streaming vidéo."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.encoding_presets = {
             QualityPreset.LOW: {"crf": 28, "preset": "fast"},
             QualityPreset.MEDIUM: {"crf": 23, "preset": "medium"},
@@ -232,7 +232,7 @@ class VideoStreamingOptimizer(ContentOptimizer):
 class AudioQualityEnhancer(ContentOptimizer):
     """Améliorateur qualité audio."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.audio_presets = {
             QualityPreset.LOW: {"bitrate": 96, "sample_rate": 22050},
             QualityPreset.MEDIUM: {"bitrate": 128, "sample_rate": 44100},
@@ -317,7 +317,7 @@ class AudioQualityEnhancer(ContentOptimizer):
 class ImageSmartCompressor(ContentOptimizer):
     """Compresseur intelligent d'images."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.compression_algorithms = ["JPEG", "WebP", "AVIF", "HEIF"]
     
     async def compress_images_smart(self, image_content: Any, 
@@ -403,7 +403,7 @@ class ImageSmartCompressor(ContentOptimizer):
 class ContentAdaptationEngine:
     """Moteur d'adaptation de contenu par device."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.device_profiles = {
             DeviceType.MOBILE: {
                 "max_resolution": (1080, 1920),
@@ -548,7 +548,7 @@ class PersonalizedDeliveryEngine:
 class EdgeContentOptimizer:
     """Optimiseur contenu edge ultra-performant."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.video_optimizer = VideoStreamingOptimizer()
         self.audio_enhancer = AudioQualityEnhancer()
         self.image_compressor = ImageSmartCompressor()
@@ -627,7 +627,7 @@ class EdgeContentOptimizer:
         else:
             return self.image_compressor  # Default fallback
     
-    def _update_performance_metrics(self, format_type: ContentFormat, result: OptimizationResult):
+    def _update_performance_metrics(self, format_type -> None: ContentFormat, result -> None: OptimizationResult) -> None:
         """Met à jour les métriques de performance."""
         if format_type.value not in self.performance_metrics:
             self.performance_metrics[format_type.value] = {
@@ -657,7 +657,7 @@ class EdgeContentOptimizer:
             "total_optimizations": sum(m["total_optimizations"] for m in self.performance_metrics.values())
         }
     
-    async def clear_cache(self):
+    async def clear_cache(self) -> None:
         """Vide le cache d'optimisation."""
         self.optimization_cache.clear()
 

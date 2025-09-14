@@ -1,4 +1,6 @@
 """
+import asyncio
+
 Ingress Controller
 Kubernetes ingress management for Ainflue infrastructure
 
@@ -15,7 +17,7 @@ logger = logging.getLogger(__name__)
 class IngressController:
     """Kubernetes ingress controller management"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize ingress controller"""
         logger.info("Ingress controller initialized")
         

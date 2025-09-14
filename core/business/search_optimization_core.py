@@ -159,7 +159,7 @@ class SearchOptimizationCore:
     competitor analysis, and intelligent search strategy optimization.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize search optimization core"""
         self.config = config or {}
         self.performance_data: Dict[str, List[SearchPerformanceData]] = {}
@@ -362,9 +362,9 @@ class SearchOptimizationCore:
     
     def _update_performance_analytics(
         self, 
-        content_id: str, 
-        performance_data: SearchPerformanceData
-    ):
+        content_id -> None: str, 
+        performance_data -> None: SearchPerformanceData
+    ) -> None:
         """Update performance analytics and trends"""
         try:
             # Update ranking history
@@ -398,7 +398,7 @@ class SearchOptimizationCore:
         except Exception as e:
             logger.error(f"Error updating performance analytics: {e}")
     
-    async def _check_performance_alerts(self, content_id: str):
+    async def _check_performance_alerts(self, content_id -> None: str) -> None:
         """Check for performance alerts and notify if needed"""
         try:
             historical_data = self.performance_data.get(content_id, [])

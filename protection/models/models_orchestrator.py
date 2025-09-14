@@ -74,7 +74,7 @@ class AnalyticsModel:
 class UltraAdvancedDataModelsOrchestrator:
     """Main data models orchestrator"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.models_registry = {}
         self.model_schemas = self._initialize_schemas()
         self.performance_metrics = {
@@ -103,7 +103,7 @@ class UltraAdvancedDataModelsOrchestrator:
             }
         }
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize data models orchestrator"""
         logger.info("Ultra-Advanced Data Models Orchestrator initialized")
     
@@ -192,7 +192,7 @@ class UltraAdvancedDataModelsOrchestrator:
             }
         }
     
-    async def close(self):
+    async def close(self) -> None:
         """Close data models orchestrator"""
         logger.info("Data Models Orchestrator closed")
 

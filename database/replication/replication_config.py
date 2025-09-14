@@ -169,7 +169,7 @@ class PerformanceConfig:
 class ReplicationConfig:
     """Comprehensive replication configuration."""
     
-    def __init__(self, config_file: Optional[str] = None, **kwargs):
+    def __init__(self, config_file -> None: Optional[str] = None, **kwargs) -> None:
         """Initialize configuration from file or parameters."""
         
         # Default values
@@ -204,7 +204,7 @@ class ReplicationConfig:
         if config_file:
             self.load_from_file(config_file)
     
-    def load_from_file(self, config_file: str):
+    def load_from_file(self, config_file -> None: str) -> None:
         """Load configuration from YAML or JSON file."""
         try:
             config_path = Path(config_file)
@@ -227,7 +227,7 @@ class ReplicationConfig:
             logger.error(f"❌ Failed to load configuration from {config_file}: {e}")
             raise
     
-    def _merge_config(self, config_data: Dict[str, Any]):
+    def _merge_config(self, config_data -> None: Dict[str, Any]) -> None:
         """Merge configuration data into current config."""
         try:
             # Update basic settings
@@ -295,7 +295,7 @@ class ReplicationConfig:
             logger.error(f"❌ Failed to create topology from data: {e}")
             raise
     
-    def save_to_file(self, config_file: str, format: str = 'yaml'):
+    def save_to_file(self, config_file -> None: str, format -> None: str = 'yaml') -> None:
         """Save current configuration to file."""
         try:
             config_data = self.to_dict()
@@ -406,13 +406,13 @@ class ReplicationConfig:
 class TopologyManager:
     """Manages replication topology and network configuration."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._config: Optional[ReplicationConfig] = None
         self._topology_cache: Dict[str, Any] = {}
         self._network_optimizer = NetworkOptimizer()
         self._security_manager = SecurityManager()
     
-    async def initialize(self, config: ReplicationConfig):
+    async def initialize(self, config -> None: ReplicationConfig) -> None:
         """Initialize topology manager."""
         try:
             self._config = config
@@ -450,7 +450,7 @@ class TopologyManager:
             logger.error(f"❌ Failed to get optimal topology for {db_type}: {e}")
             return None
     
-    async def update_topology(self, db_type: DatabaseType, topology: ReplicationTopology):
+    async def update_topology(self, db_type -> None: DatabaseType, topology -> None: ReplicationTopology) -> None:
         """Update topology for a database type."""
         try:
             if not self._config:
@@ -469,7 +469,7 @@ class TopologyManager:
             logger.error(f"❌ Failed to update topology for {db_type}: {e}")
             raise
     
-    async def close(self):
+    async def close(self) -> None:
         """Close topology manager."""
         try:
             if self._network_optimizer:
@@ -483,10 +483,10 @@ class TopologyManager:
 class NetworkOptimizer:
     """Optimizes network configuration for replication."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._config: Optional[NetworkConfig] = None
     
-    async def initialize(self, config: NetworkConfig):
+    async def initialize(self, config -> None: NetworkConfig) -> None:
         """Initialize network optimizer."""
         self._config = config
         logger.info("✅ Network optimizer initialized")
@@ -511,18 +511,18 @@ class NetworkOptimizer:
             logger.error(f"❌ Network optimization failed: {e}")
             return topology
     
-    async def close(self):
+    async def close(self) -> None:
         """Close network optimizer."""
         pass
 
 class SecurityManager:
     """Manages security configuration and credentials."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._config: Optional[SecurityConfig] = None
         self._ssl_context: Optional[ssl.SSLContext] = None
     
-    async def initialize(self, config: SecurityConfig):
+    async def initialize(self, config -> None: SecurityConfig) -> None:
         """Initialize security manager."""
         try:
             self._config = config
@@ -561,7 +561,7 @@ class SecurityManager:
             logger.error(f"❌ Credential encryption failed: {e}")
             return credential
     
-    async def close(self):
+    async def close(self) -> None:
         """Close security manager."""
         pass
 

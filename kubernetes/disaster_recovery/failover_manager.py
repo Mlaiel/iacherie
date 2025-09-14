@@ -112,7 +112,7 @@ class FailoverManager:
     - Automated rollback on failover failure
     - Service dependency chain management
     """
-    def __init__(self, config: Config):
+    def __init__(self, config -> None: Config) -> None:
         self.config = config
         self.logger = logging.getLogger(__name__)
         self.db_manager = DatabaseManager(config)
@@ -179,7 +179,7 @@ class FailoverManager:
             self.logger.error(f"Failed to register service {failover_config.service_name}: {e}")
             return False
 
-    async def _monitor_service_health(self, config: FailoverConfig):
+    async def _monitor_service_health(self, config -> None: FailoverConfig) -> None:
         """Continuously monitor service health and trigger failover if needed"""
         service_name = config.service_name
         
@@ -257,9 +257,9 @@ class FailoverManager:
                 'error': str(e)
             }
 
-    async def _evaluate_failover_trigger(self, config: FailoverConfig, 
-                                       previous_state: ServiceState, 
-                                       current_state: ServiceState):
+    async def _evaluate_failover_trigger(self, config -> None: FailoverConfig, 
+                                       previous_state -> None: ServiceState, 
+                                       current_state -> None: ServiceState) -> None:
         """Evaluate if failover should be triggered based on service state changes"""
         service_name = config.service_name
         
@@ -316,7 +316,7 @@ class FailoverManager:
             self.logger.error(f"Failed to trigger failover for {service_name}: {e}")
             raise
 
-    async def _execute_failover(self, failover_event: FailoverEvent):
+    async def _execute_failover(self, failover_event -> None: FailoverEvent) -> None:
         """Execute the complete failover process"""
         service_name = failover_event.service_name
         config = self.service_configs[service_name]
@@ -583,7 +583,7 @@ Generate unique failover event identifier"""
         
         return max(0, base_score)
 
-    def _update_average_failover_time(self, new_time: float):
+    def _update_average_failover_time(self, new_time -> None: float) -> None:
         """
 Update rolling average failover time"""
         total_failovers = self.failover_metrics['total_failovers']

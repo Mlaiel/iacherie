@@ -158,7 +158,7 @@ class ModerationQueue:
 class TextAnalyzer:
     """Text content analyzer"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.toxic_keywords = self._load_toxic_keywords()
         self.spam_patterns = self._load_spam_patterns()
         self.compiled_regex = {}
@@ -357,7 +357,7 @@ class ImageAnalyzer:
 class ContentModerationCore:
     """Core content moderation system"""
     
-    def __init__(self, level: str = "enterprise"):
+    def __init__(self, level -> None: str = "enterprise") -> None:
         self.level = level
         self.rules: Dict[str, ModerationRule] = {}
         self.queues: Dict[str, ModerationQueue] = {}
@@ -430,7 +430,7 @@ class ContentModerationCore:
             logger.error(f"Health check failed: {str(e)}")
             return False
     
-    def _initialize_default_rules(self):
+    def _initialize_default_rules(self) -> None:
         """Initialize default moderation rules"""
         default_rules = [
             ModerationRule(
@@ -479,7 +479,7 @@ class ContentModerationCore:
         for rule in default_rules:
             self.rules[rule.id] = rule
     
-    async def _create_default_queues(self):
+    async def _create_default_queues(self) -> None:
         """Create default moderation queues"""
         queues = [
             ModerationQueue(
@@ -714,7 +714,7 @@ class ContentModerationCore:
         
         return False
     
-    async def _apply_moderation_action(self, submission: ContentSubmission, result: ModerationResult):
+    async def _apply_moderation_action(self, submission -> None: ContentSubmission, result -> None: ModerationResult) -> None:
         """Apply automatic moderation action"""
         try:
             result.status = ModerationStatus.FINAL
@@ -734,7 +734,7 @@ class ContentModerationCore:
         except Exception as e:
             logger.error(f"Failed to apply moderation action: {str(e)}")
     
-    async def _add_to_review_queue(self, submission: ContentSubmission, result: Optional[ModerationResult]):
+    async def _add_to_review_queue(self, submission -> None: ContentSubmission, result -> None: Optional[ModerationResult]) -> None:
         """Add submission to human review queue"""
         try:
             # Determine appropriate queue based on priority

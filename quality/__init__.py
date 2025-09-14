@@ -1,4 +1,6 @@
 """🎯 ENTERPRISE QUALITY ASSURANCE MODULE - AINFLUE PLATFORM
+import asyncio
+
 ================================================================
 
 Point d'entrée principal pour l'écosystème de contrôle qualité enterprise
@@ -51,14 +53,14 @@ __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
 
 # Global convenience functions
-async def run_enterprise_quality_analysis(project_path=None, environment="development"):
+async def run_enterprise_quality_analysis(project_path=None, environment="development") -> None:
     """Run comprehensive enterprise quality analysis"""
     return await quality_orchestrator.run_enterprise_quality_workflow({
         "project_path": project_path,
         "environment": environment
     })
 
-def get_package_info():
+def get_package_info() -> None:
     """Get package information"""
     return {
         "name": "Ainflue Enterprise Quality Assurance",

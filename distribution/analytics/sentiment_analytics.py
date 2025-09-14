@@ -107,7 +107,7 @@ class BaseSentimentAnalyzer(ABC):
 class RuleBasedSentimentAnalyzer(BaseSentimentAnalyzer):
     """Rule-based sentiment analyzer using lexicons"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         # Simplified lexicons (in production, use comprehensive databases)
         self.positive_words = {
             "amazing", "awesome", "brilliant", "excellent", "fantastic", 
@@ -341,7 +341,7 @@ class RuleBasedSentimentAnalyzer(BaseSentimentAnalyzer):
 class SentimentAnalyticsEngine:
     """Main sentiment analytics engine"""
     
-    def __init__(self, analyzer: Optional[BaseSentimentAnalyzer] = None):
+    def __init__(self, analyzer -> None: Optional[BaseSentimentAnalyzer] = None) -> None:
         self.analyzer = analyzer or RuleBasedSentimentAnalyzer()
         self.sentiment_history: List[SentimentResult] = []
         self.trend_cache: Dict[str, SentimentTrend] = {}
@@ -616,7 +616,7 @@ class SentimentAnalyticsEngine:
             logger.error(f"Failed to get real-time sentiment: {e}")
             return {"status": "error", "message": str(e)}
     
-    def _add_to_history(self, result: SentimentResult):
+    def _add_to_history(self, result -> None: SentimentResult) -> None:
         """Add sentiment result to history"""
         self.sentiment_history.append(result)
         
@@ -726,7 +726,7 @@ class SentimentAnalyticsEngine:
         
         return distribution
     
-    def clear_history(self):
+    def clear_history(self) -> None:
         """Clear sentiment analysis history"""
         self.sentiment_history.clear()
         self.trend_cache.clear()

@@ -93,7 +93,7 @@ class UserJourneyGamificationMonitor:
     - Behavioral pattern recognition
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize user journey gamification monitor"""
         self.config = config or {}
         self.user_profiles: Dict[str, UserJourneyProfile] = {}
@@ -107,7 +107,7 @@ class UserJourneyGamificationMonitor:
         self._initialize_gamification_engine()
         logger.info("User Journey Gamification Monitor initialized")
     
-    def _initialize_gamification_engine(self):
+    def _initialize_gamification_engine(self) -> None:
         """Initialize gamification engine components"""
         try:
             # Initialize default journey stages
@@ -125,7 +125,7 @@ class UserJourneyGamificationMonitor:
             logger.error(f"Failed to initialize gamification engine: {e}")
             raise
     
-    def _setup_default_triggers(self):
+    def _setup_default_triggers(self) -> None:
         """Setup default gamification triggers for journey stages"""
         default_triggers = [
             {
@@ -161,7 +161,7 @@ class UserJourneyGamificationMonitor:
             trigger = GamificationTrigger(**trigger_config)
             self.gamification_triggers[trigger.trigger_id] = trigger
     
-    def _initialize_ml_models(self):
+    def _initialize_ml_models(self) -> None:
         """Initialize ML models for user behavior analysis"""
         try:
             # Initialize clustering model for user segmentation
@@ -171,7 +171,7 @@ class UserJourneyGamificationMonitor:
         except Exception as e:
             logger.error(f"Failed to initialize ML models: {e}")
     
-    def _setup_journey_analytics(self):
+    def _setup_journey_analytics(self) -> None:
         """Setup journey analytics tracking"""
         self.journey_metrics = {
             "stage_conversion_rates": {},
@@ -359,7 +359,7 @@ class UserJourneyGamificationMonitor:
         
         return False
     
-    async def _update_engagement_metrics(self, user_id: str, event_data: Dict[str, Any]):
+    async def _update_engagement_metrics(self, user_id -> None: str, event_data -> None: Dict[str, Any]) -> None:
         """Update user engagement metrics"""
         if user_id not in self.engagement_history:
             self.engagement_history[user_id] = []
@@ -718,7 +718,7 @@ class UserJourneyGamificationMonitor:
 
 # Example usage and testing
 if __name__ == "__main__":
-    async def test_user_journey_gamification():
+    async def test_user_journey_gamification() -> None:
         """Test user journey gamification functionality"""
         monitor = UserJourneyGamificationMonitor()
         

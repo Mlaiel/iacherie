@@ -167,7 +167,7 @@ class DistributionBusinessCore:
     and intelligent distribution strategy management.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize distribution business core"""
         self.config = config or {}
         self.distribution_plans: Dict[str, DistributionPlan] = {}

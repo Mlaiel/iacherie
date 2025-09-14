@@ -16,11 +16,11 @@ logger = logging.getLogger(__name__)
 class RollbackManager:
     """Migration rollback management."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize rollback manager."""
         self._rollback_stack: List[Dict[str, Any]] = []
     
-    def prepare_rollback(self, migration_id: str, rollback_data: Dict[str, Any]):
+    def prepare_rollback(self, migration_id -> None: str, rollback_data -> None: Dict[str, Any]) -> None:
         """Prepare rollback data for migration."""
         self._rollback_stack.append({
             "migration_id": migration_id,
@@ -41,7 +41,7 @@ class RollbackManager:
 class MigrationTemplates:
     """Pre-built migration templates."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize migration templates."""
         self._templates = self._load_templates()
     
@@ -72,7 +72,7 @@ class MigrationTemplates:
 class TestingFramework:
     """Migration testing framework."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize testing framework."""
         self._test_results: List[Dict[str, Any]] = []
     

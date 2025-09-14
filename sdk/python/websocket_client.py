@@ -49,7 +49,7 @@ class WebSocketMessage:
 class ConnectionMetrics:
     """Connection metrics for monitoring (DevOps expertise)"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.connected_at: Optional[datetime] = None
         self.disconnected_at: Optional[datetime] = None
         self.total_messages_sent = 0
@@ -58,32 +58,32 @@ class ConnectionMetrics:
         self.last_heartbeat: Optional[datetime] = None
         self.connection_errors = 0
     
-    def record_connection(self):
+    def record_connection(self) -> None:
         """Record successful connection"""
         self.connected_at = datetime.utcnow()
         self.disconnected_at = None
     
-    def record_disconnection(self):
+    def record_disconnection(self) -> None:
         """Record disconnection"""
         self.disconnected_at = datetime.utcnow()
     
-    def record_message_sent(self):
+    def record_message_sent(self) -> None:
         """Record sent message"""
         self.total_messages_sent += 1
     
-    def record_message_received(self):
+    def record_message_received(self) -> None:
         """Record received message"""
         self.total_messages_received += 1
     
-    def record_reconnection(self):
+    def record_reconnection(self) -> None:
         """Record reconnection attempt"""
         self.total_reconnections += 1
     
-    def record_heartbeat(self):
+    def record_heartbeat(self) -> None:
         """Record heartbeat"""
         self.last_heartbeat = datetime.utcnow()
     
-    def record_error(self):
+    def record_error(self) -> None:
         """Record connection error"""
         self.connection_errors += 1
     
@@ -123,16 +123,16 @@ class WebSocketClient:
     
     def __init__(
         self,
-        url: str,
-        api_key: Optional[str] = None,
-        protocols: Optional[List[str]] = None,
-        heartbeat_interval: int = 30,
-        reconnect_interval: float = 1.0,
-        max_reconnect_attempts: int = 10,
-        message_queue_size: int = 1000,
-        ping_timeout: int = 10,
-        close_timeout: int = 10
-    ):
+        url -> None: str,
+        api_key -> None: Optional[str] = None,
+        protocols -> None: Optional[List[str]] = None,
+        heartbeat_interval -> None: int = 30,
+        reconnect_interval -> None: float = 1.0,
+        max_reconnect_attempts -> None: int = 10,
+        message_queue_size -> None: int = 1000,
+        ping_timeout -> None: int = 10,
+        close_timeout -> None: int = 10
+    ) -> None:
         self.url = url
         self.api_key = api_key
         self.protocols = protocols or []
@@ -239,7 +239,7 @@ class WebSocketClient:
             
             return False
     
-    async def disconnect(self):
+    async def disconnect(self) -> None:
         """Disconnect from WebSocket server"""
         if self.state == ConnectionState.DISCONNECTED:
             return
@@ -299,7 +299,7 @@ class WebSocketClient:
             await self._queue_message(message)
             return False
     
-    async def _queue_message(self, message: WebSocketMessage):
+    async def _queue_message(self, message -> None: WebSocketMessage) -> None:
         """Queue message for later delivery"""
         if len(self._message_queue) >= self.message_queue_size:
             # Remove oldest message
@@ -308,7 +308,7 @@ class WebSocketClient:
         self._message_queue.append(message)
         self.logger.debug(f"Queued message: {message.type}")
     
-    async def _send_queued_messages(self):
+    async def _send_queued_messages(self) -> None:
         """Send all queued messages"""
         if not self._message_queue:
             return
@@ -324,18 +324,18 @@ class WebSocketClient:
                 # Re-queue if failed
                 await self._queue_message(message)
     
-    def on(self, event: str, handler: Callable):
+    def on(self, event -> None: str, handler -> None: Callable) -> None:
         """Register event handler"""
         if event not in self._event_handlers:
             self._event_handlers[event] = []
         
         self._event_handlers[event].append(handler)
     
-    def on_message(self, message_type: str, handler: Callable):
+    def on_message(self, message_type -> None: str, handler -> None: Callable) -> None:
         """Register message handler"""
         self._message_handlers[message_type] = handler
     
-    async def _emit_event(self, event: str, data: Dict[str, Any]):
+    async def _emit_event(self, event -> None: str, data -> None: Dict[str, Any]) -> None:
         """Emit event to registered handlers"""
         if event in self._event_handlers:
             for handler in self._event_handlers[event]:
@@ -347,7 +347,7 @@ class WebSocketClient:
                 except Exception as e:
                     self.logger.error(f"Event handler error for {event}: {str(e)}")
     
-    async def _start_background_tasks(self):
+    async def _start_background_tasks(self) -> None:
         """Start background tasks"""
         # Start message receiving task
         self._receive_task = asyncio.create_task(self._receive_loop())
@@ -356,7 +356,7 @@ class WebSocketClient:
         if self.heartbeat_interval > 0:
             self._heartbeat_task = asyncio.create_task(self._heartbeat_loop())
     
-    async def _stop_background_tasks(self):
+    async def _stop_background_tasks(self) -> None:
         """Stop background tasks"""
         tasks = [self._receive_task, self._heartbeat_task, self._reconnect_task]
         
@@ -372,7 +372,7 @@ class WebSocketClient:
         self._heartbeat_task = None
         self._reconnect_task = None
     
-    async def _receive_loop(self):
+    async def _receive_loop(self) -> None:
         """Message receiving loop"""
         try:
             while self.websocket and self.state == ConnectionState.CONNECTED:
@@ -417,7 +417,7 @@ class WebSocketClient:
             self.logger.error(f"Receive loop error: {str(e)}")
             await self._handle_connection_error(e)
     
-    async def _heartbeat_loop(self):
+    async def _heartbeat_loop(self) -> None:
         """Heartbeat loop"""
         try:
             while self.state == ConnectionState.CONNECTED:
@@ -437,7 +437,7 @@ class WebSocketClient:
         except asyncio.CancelledError:
             pass
     
-    async def _handle_connection_error(self, error: Exception):
+    async def _handle_connection_error(self, error -> None: Exception) -> None:
         """Handle connection errors"""
         self.state = ConnectionState.FAILED
         self.metrics.record_error()
@@ -454,14 +454,14 @@ class WebSocketClient:
         return (self._reconnect_attempts < self.max_reconnect_attempts and 
                 self.state != ConnectionState.DISCONNECTED)
     
-    async def _schedule_reconnect(self):
+    async def _schedule_reconnect(self) -> None:
         """Schedule reconnection attempt"""
         if self._reconnect_task and not self._reconnect_task.done():
             return
         
         self._reconnect_task = asyncio.create_task(self._reconnect_loop())
     
-    async def _reconnect_loop(self):
+    async def _reconnect_loop(self) -> None:
         """Reconnection loop with exponential backoff"""
         try:
             while self._should_reconnect():
@@ -503,12 +503,12 @@ class WebSocketClient:
         """Check if connected"""
         return self.state == ConnectionState.CONNECTED and self.websocket is not None
     
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         """Async context manager entry"""
         await self.connect()
         return self
     
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         """Async context manager exit"""
         await self.disconnect()
 

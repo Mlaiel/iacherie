@@ -1,3 +1,8 @@
+"""
+Tenant Provisioning Engine module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Tenant Provisioning Engine - Enterprise Core Component
@@ -140,7 +145,7 @@ class TenantProvisioningEngine:
     resource provisioning, and comprehensive tracking capabilities.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.templates: Dict[str, ProvisioningTemplate] = {}
         self.pending_requests: Dict[str, TenantRequest] = {}
         self.active_executions: Dict[str, ProvisioningExecution] = {}
@@ -407,7 +412,7 @@ class TenantProvisioningEngine:
     
     # Private methods
     
-    async def _start_provisioning(self, request_id: str):
+    async def _start_provisioning(self, request_id -> None: str) -> None:
         """Start provisioning process"""
         request = self.pending_requests.get(request_id)
         if not request:
@@ -431,7 +436,7 @@ class TenantProvisioningEngine:
         
         await self._trigger_event("provisioning_started", request_id)
     
-    async def _execute_provisioning(self, execution: ProvisioningExecution, request: TenantRequest):
+    async def _execute_provisioning(self, execution -> None: ProvisioningExecution, request -> None: TenantRequest) -> None:
         """Execute provisioning process"""
         try:
             # Get template
@@ -656,7 +661,7 @@ class TenantProvisioningEngine:
         
         return True
     
-    async def _cleanup_provisioned_resources(self, execution: ProvisioningExecution):
+    async def _cleanup_provisioned_resources(self, execution -> None: ProvisioningExecution) -> None:
         """Cleanup provisioned resources"""
         execution.logs.append("Starting resource cleanup")
         
@@ -720,7 +725,7 @@ class TenantProvisioningEngine:
         
         return True
     
-    def _load_default_templates(self):
+    def _load_default_templates(self) -> None:
         """Load default provisioning templates"""
         # Basic tier template
         basic_template = ProvisioningTemplate(
@@ -822,7 +827,7 @@ class TenantProvisioningEngine:
         
         return (total_time / len(completed_executions)) / 60  # Convert to minutes
     
-    async def _trigger_event(self, event_type: str, event_data: str):
+    async def _trigger_event(self, event_type -> None: str, event_data -> None: str) -> None:
         """Trigger event handlers"""
         handlers = self.event_handlers.get(event_type, [])
         for handler in handlers:
@@ -883,7 +888,7 @@ async def list_available_templates() -> List[Dict[str, Any]]:
 
 if __name__ == "__main__":
     # Example usage
-    async def main():
+    async def main() -> None:
         # Create tenant provisioning request
         request_id = await create_tenant_request(
             tenant_name="Acme Corporation",

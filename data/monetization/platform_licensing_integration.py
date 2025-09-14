@@ -223,7 +223,7 @@ class PlatformLicensingIntegration:
     across 35+ content platforms with automated compliance and reporting.
     """
     
-    def __init__(self, db_session: AsyncSession, redis_client: Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: Redis) -> None:
         """
         Initialize Platform Licensing Integration Engine.
         
@@ -605,8 +605,8 @@ class PlatformLicensingIntegration:
         
         return True
     
-    async def _store_credentials(self, user_id: str, platform: str, 
-                               credentials: PlatformCredentials):
+    async def _store_credentials(self, user_id -> None: str, platform -> None: str, 
+                               credentials -> None: PlatformCredentials) -> None:
         """Store platform credentials securely"""
         cache_key = f"platform_credentials:{user_id}:{platform}"
         await self.redis.setex(
@@ -624,7 +624,7 @@ class PlatformLicensingIntegration:
             return PlatformCredentials(**data)
         return None
     
-    async def _initialize_sync(self, user_id: str, platform: str):
+    async def _initialize_sync(self, user_id -> None: str, platform -> None: str) -> None:
         """Initialize data synchronization"""
         # Set up sync schedule
         sync_config = {
@@ -638,8 +638,8 @@ class PlatformLicensingIntegration:
         cache_key = f"sync_config:{user_id}:{platform}"
         await self.redis.setex(cache_key, self.cache_ttl * 24, json.dumps(sync_config))
     
-    async def _setup_webhooks(self, user_id: str, platform: str, 
-                            credentials: PlatformCredentials):
+    async def _setup_webhooks(self, user_id -> None: str, platform -> None: str, 
+                            credentials -> None: PlatformCredentials) -> None:
         """Setup platform webhooks"""
         # Placeholder implementation
         self.logger.info(f"Setting up webhooks for {platform} user {user_id}")
@@ -648,7 +648,7 @@ class PlatformLicensingIntegration:
 class PlatformAPIs:
     """Platform API management and interaction"""
     
-    def __init__(self, db_session: AsyncSession, redis_client: Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: Redis) -> None:
         self.db_session = db_session
         self.redis = redis_client
         self.logger = logging.getLogger(__name__)
@@ -715,7 +715,7 @@ class PlatformAPIs:
 class LicensingEngine:
     """Licensing management engine"""
     
-    def __init__(self, db_session: AsyncSession, redis_client: Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: Redis) -> None:
         self.db_session = db_session
         self.redis = redis_client
         self.logger = logging.getLogger(__name__)

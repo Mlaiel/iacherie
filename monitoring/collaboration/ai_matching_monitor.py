@@ -122,7 +122,7 @@ class AIMatchingMonitor:
     - Scalable recommendation engine
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.creator_profiles: Dict[str, CreatorProfile] = {}
         self.matching_recommendations: deque = deque(maxlen=50000)
@@ -202,7 +202,7 @@ class AIMatchingMonitor:
             MatchingCriteria.COMMERCIAL_GOALS: 0.02
         }
     
-    def _initialize_ml_models(self):
+    def _initialize_ml_models(self) -> None:
         """Initialize ML models for matching algorithms."""
         self.ml_models = {
             'compatibility_predictor': {
@@ -595,9 +595,9 @@ class AIMatchingMonitor:
         
         return ". ".join(reasoning_parts) + "."
     
-    async def _record_algorithm_performance(self, algorithm: MatchingAlgorithm,
-                                          recommendations_generated: int,
-                                          processing_time_ms: float):
+    async def _record_algorithm_performance(self, algorithm -> None: MatchingAlgorithm,
+                                          recommendations_generated -> None: int,
+                                          processing_time_ms -> None: float) -> None:
         """Record performance metrics for matching algorithm."""
         # Simulate performance metrics
         metrics = MatchingPerformanceMetrics(

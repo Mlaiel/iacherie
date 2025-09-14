@@ -63,7 +63,7 @@ class SEOOptimizationConfig:
 class AIContentOptimizer:
     """Advanced AI-powered content optimization engine."""
     
-    def __init__(self, openai_api_key: Optional[str] = None):
+    def __init__(self, openai_api_key -> None: Optional[str] = None) -> None:
         """Initialize the AI Content Optimizer.
         
         Args:
@@ -82,7 +82,7 @@ class AIContentOptimizer:
         except:
             pass
             
-    def _load_models(self):
+    def _load_models(self) -> None:
         """Load AI models for content optimization."""
         try:
             # Load spaCy model for NLP processing

@@ -1,3 +1,8 @@
+"""
+Encryption Cache Layer module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
@@ -89,7 +94,7 @@ class EncryptionCacheLayer:
     **DevOps**: Monitoring automatisé et rotation clés
     """
     
-    def __init__(self, redis_pool, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, redis_pool, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.redis_pool = redis_pool
         self.config = config or self._get_default_config()
         
@@ -141,7 +146,7 @@ class EncryptionCacheLayer:
             'key_storage_backend': 'redis'  # redis, vault, hsm
         }
     
-    async def _initialize_encryption(self):
+    async def _initialize_encryption(self) -> None:
         """**Sécurité**: Initialisation systèmes chiffrement"""
         
         try:
@@ -163,7 +168,7 @@ class EncryptionCacheLayer:
             logger.error(f"❌ Erreur initialisation chiffrement: {e}")
             raise
     
-    async def _initialize_master_key(self):
+    async def _initialize_master_key(self) -> None:
         """**Sécurité**: Initialisation clé maître sécurisée"""
         
         master_password = self.config.get('master_password')
@@ -197,7 +202,7 @@ class EncryptionCacheLayer:
         self.encryption_keys["master"] = master_key_obj
         self.fernet_cipher = Fernet(master_key)
     
-    async def _generate_default_keys(self):
+    async def _generate_default_keys(self) -> None:
         """**Sécurité**: Génération clés par défaut**"""
         
         # Clé Fernet standard
@@ -227,7 +232,7 @@ class EncryptionCacheLayer:
         # Clé par défaut
         self.current_key_id = "standard"
     
-    async def _generate_rsa_keypair(self):
+    async def _generate_rsa_keypair(self) -> None:
         """**Sécurité**: Génération paire clés RSA**"""
         
         try:
@@ -275,13 +280,13 @@ class EncryptionCacheLayer:
     
     async def _store_key(
         self,
-        key_id: str,
-        key_type: KeyType,
-        algorithm: str,
-        key_data: bytes,
-        expires_at: Optional[datetime] = None,
-        metadata: Optional[Dict[str, Any]] = None
-    ):
+        key_id -> None: str,
+        key_type -> None: KeyType,
+        algorithm -> None: str,
+        key_data -> None: bytes,
+        expires_at -> None: Optional[datetime] = None,
+        metadata -> None: Optional[Dict[str, Any]] = None
+    ) -> None:
         """**DBA**: Stockage sécurisé clé chiffrement**"""
         
         encryption_key = EncryptionKey(
@@ -302,7 +307,7 @@ class EncryptionCacheLayer:
         
         logger.debug(f"🔑 Clé stockée: {key_id} ({algorithm})")
     
-    async def _store_key_in_redis(self, encryption_key: EncryptionKey):
+    async def _store_key_in_redis(self, encryption_key -> None: EncryptionKey) -> None:
         """**DBA**: Stockage clé dans Redis**"""
         
         try:
@@ -342,7 +347,7 @@ class EncryptionCacheLayer:
         except Exception as e:
             logger.error(f"❌ Erreur stockage clé Redis {encryption_key.key_id}: {e}")
     
-    async def _setup_ciphers(self):
+    async def _setup_ciphers(self) -> None:
         """**Backend Senior**: Configuration chiffreurs**"""
         
         # Multi-Fernet pour rotation clés
@@ -711,7 +716,7 @@ class EncryptionCacheLayer:
         logger.info(f"🔄 Clé rotée: {key_id} -> {new_key_id}")
         return new_key_id
     
-    async def _start_background_tasks(self):
+    async def _start_background_tasks(self) -> None:
         """**DevOps**: Démarrage tâches background**"""
         
         # Rotation automatique clés
@@ -724,7 +729,7 @@ class EncryptionCacheLayer:
         
         logger.info("🚀 Tâches background chiffrement démarrées")
     
-    async def _key_rotation_loop(self):
+    async def _key_rotation_loop(self) -> None:
         """**DevOps**: Boucle rotation automatique clés**"""
         
         while True:
@@ -739,7 +744,7 @@ class EncryptionCacheLayer:
                 logger.error(f"❌ Erreur rotation automatique: {e}")
                 await asyncio.sleep(3600)  # Retry dans 1h
     
-    async def _auto_rotate_keys(self):
+    async def _auto_rotate_keys(self) -> None:
         """**DevOps**: Rotation automatique clés anciennes**"""
         
         current_time = datetime.now(timezone.utc)
@@ -770,7 +775,7 @@ class EncryptionCacheLayer:
             except Exception as e:
                 logger.error(f"❌ Erreur rotation auto {key_id}: {e}")
     
-    async def _cleanup_loop(self):
+    async def _cleanup_loop(self) -> None:
         """**DevOps**: Boucle nettoyage**"""
         
         while True:
@@ -780,7 +785,7 @@ class EncryptionCacheLayer:
             except Exception as e:
                 logger.error(f"❌ Erreur nettoyage chiffrement: {e}")
     
-    async def _cleanup_expired_data(self):
+    async def _cleanup_expired_data(self) -> None:
         """**DevOps**: Nettoyage données expirées**"""
         
         current_time = datetime.now(timezone.utc)
@@ -854,18 +859,19 @@ class EncryptionCacheLayer:
         }
 
 # Factory function
-async def create_encryption_cache_layer(redis_pool, config: Optional[Dict[str, Any]] = None):
+async def create_encryption_cache_layer(redis_pool, config -> None: Optional[Dict[str, Any]] = None) -> None:
     """**Sécurité**: Factory création couche chiffrement cache**"""
     layer = EncryptionCacheLayer(redis_pool, config)
     return layer
 
 if __name__ == "__main__":
-    async def demo():
+    async def demo() -> None:
         """Démonstration Encryption Cache Layer"""
         
         # Configuration Redis simulée
         class MockRedisPool:
-            def get_connection(self):
+    """MockRedisPool: class implementation"""
+            def get_connection(self) -> None:
                 from unittest.mock import AsyncMock
                 mock = AsyncMock()
                 mock.hset.return_value = True

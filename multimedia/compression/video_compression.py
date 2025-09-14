@@ -47,7 +47,7 @@ class VideoCompressionConfig:
 class VideoCompressionEngine:
     """High-performance video compression with advanced codec support."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the video compression engine."""
         self.supported_codecs = list(VideoCodec)
         self.supported_containers = list(VideoContainer)

@@ -182,7 +182,7 @@ class InferenceResult:
 class EnterpriseAIInferenceConfiguration:
     """Enterprise-grade AI inference configuration management"""
     
-    def __init__(self, level: str = "enterprise"):
+    def __init__(self, level -> None: str = "enterprise") -> None:
         """Initialize AI inference configuration"""
         self.level = level
         self.model_configurations: Dict[str, ModelConfiguration] = {}
@@ -388,7 +388,7 @@ class EnterpriseAIInferenceConfiguration:
             }
         }
     
-    def _initialize_model_configurations(self):
+    def _initialize_model_configurations(self) -> None:
         """Initialize model configurations for Ainflue business logic"""
         
         # Content Recommendation Model
@@ -515,7 +515,7 @@ class EnterpriseAIInferenceConfiguration:
         
         logger.info(f"✅ Initialized {len(models)} model configurations")
     
-    def _setup_inference_pipeline(self):
+    def _setup_inference_pipeline(self) -> None:
         """Setup inference pipeline configuration"""
         self.pipeline_config = {
             "preprocessing": {
@@ -554,7 +554,7 @@ class EnterpriseAIInferenceConfiguration:
         
         logger.info("🔄 Inference pipeline configured")
     
-    def _configure_monitoring_systems(self):
+    def _configure_monitoring_systems(self) -> None:
         """Configure monitoring and observability systems"""
         self.monitoring_config = {
             "metrics_collection": {

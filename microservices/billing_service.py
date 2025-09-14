@@ -160,7 +160,7 @@ class BillingConfiguration:
 class AIBillingOptimizer:
     """AI-powered billing optimization and analytics"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.payment_models = {}
         self.churn_predictors = {}
         self.pricing_analytics = {}
@@ -581,7 +581,7 @@ class AIBillingOptimizer:
 class BillingService:
     """🎯 Enterprise Billing and Invoice Management Service"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.invoice_db = {}  # In production: Replace with PostgreSQL
         self.payment_db = {}
         self.billing_configs = {}
@@ -1060,7 +1060,7 @@ class BillingService:
         
         return min(1.0, risk_score)
     
-    async def _schedule_automated_billing(self, customer_id: str, config: BillingConfiguration):
+    async def _schedule_automated_billing(self, customer_id -> None: str, config -> None: BillingConfiguration) -> None:
         """Schedule automated billing cycles"""
         next_billing_date = self._calculate_next_billing_date(config.billing_cycle)
         
@@ -1201,7 +1201,7 @@ class BillingService:
 
 # Example usage and testing
 if __name__ == "__main__":
-    async def demo_billing_service():
+    async def demo_billing_service() -> None:
         """Demonstration of BillingService capabilities"""
         print("🎯 Billing Service Demo - Multi-Expert Implementation")
         print("=" * 65)

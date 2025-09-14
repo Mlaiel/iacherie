@@ -111,13 +111,13 @@ class SmartContractManager:
     """
 Manages smart contract interactions for content verification."""
     
-    def __init__(self, network_configs: Dict[str, Dict[str, Any]]):
+    def __init__(self, network_configs -> None: Dict[str, Dict[str, Any]]) -> None:
         self.network_configs = network_configs
         self.web3_instances = {}
         self.contract_instances = {}
         self._initialize_connections()
     
-    def _initialize_connections(self):
+    def _initialize_connections(self) -> None:
         """
 Initialize blockchain connections."""
         for network, config in self.network_configs.items():
@@ -191,12 +191,12 @@ Initialize blockchain connections."""
 class IPFSManager:
     """Manages IPFS storage for content metadata."""
     
-    def __init__(self, ipfs_config: Dict[str, Any]):
+    def __init__(self, ipfs_config -> None: Dict[str, Any]) -> None:
         self.config = ipfs_config
         self.client = None
         self._initialize_client()
     
-    def _initialize_client(self):
+    def _initialize_client(self) -> None:
         """
 Initialize IPFS client."""
         try:
@@ -244,7 +244,7 @@ Initialize IPFS client."""
 class CryptographicProcessor:
     """Handles cryptographic operations for content verification."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.private_key = rsa.generate_private_key(
             public_exponent=65537,
             key_size=2048
@@ -338,7 +338,7 @@ class BlockchainContentVerifier:
     using distributed ledger technology and cryptographic verification.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Blockchain Content Verifier.
         

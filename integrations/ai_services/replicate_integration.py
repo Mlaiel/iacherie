@@ -100,13 +100,13 @@ class ReplicateEnterpriseClient:
     
     def __init__(
         self,
-        api_token: Optional[str] = None,
-        base_url: str = "https://api.replicate.com/v1",
-        timeout: int = 300,
-        max_retries: int = 3,
-        enable_cost_optimization: bool = True,
-        enable_creator_recommendations: bool = True
-    ):
+        api_token -> None: Optional[str] = None,
+        base_url -> None: str = "https -> None://api.replicate.com/v1",
+        timeout -> None: int = 300,
+        max_retries -> None: int = 3,
+        enable_cost_optimization -> None: bool = True,
+        enable_creator_recommendations -> None: bool = True
+    ) -> None:
         """Initialize Replicate client with enterprise configuration."""
         self.api_token = api_token
         self.base_url = base_url.rstrip('/')
@@ -678,11 +678,11 @@ class ReplicateEnterpriseClient:
             
         logger.info("✅ Replicate client closed")
 
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         """Async context manager entry."""
         return self
 
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         """Async context manager exit."""
         await self.close()
 
@@ -712,7 +712,7 @@ def create_replicate_client(
 
 
 # Example usage for creator workflows
-async def example_creator_ai_workflow():
+async def example_creator_ai_workflow() -> None:
     """Example of creator-specific AI model usage."""
     try:
         client = create_replicate_client(api_token="your-api-token")

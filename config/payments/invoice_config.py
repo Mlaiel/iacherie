@@ -1,7 +1,14 @@
+"""
+Invoice Config module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 """Ainflue Invoice Configuration Module
+import asyncio
+
 ====================================
 
 Enterprise-grade invoice configuration for the Ainflue platform.
@@ -463,7 +470,7 @@ class InvoiceComplianceConfig:
 class InvoiceConfiguration:
     """Main invoice configuration manager"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize invoice configuration"""
         # Invoice configuration components
         self.invoice_generation = InvoiceGenerationConfig()

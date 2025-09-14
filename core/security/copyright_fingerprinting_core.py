@@ -131,7 +131,7 @@ class CopyrightFingerprintingCore:
     and semantic text fingerprinting with enterprise-grade accuracy and performance.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize Copyright Fingerprinting Core"""
         self.config = config or {}
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
@@ -823,8 +823,8 @@ class CopyrightFingerprintingCore:
             )
             
     def _update_fingerprinting_statistics(
-        self, fingerprints: List[ContentFingerprint], processing_time: float, success: bool
-    ):
+        self, fingerprints -> None: List[ContentFingerprint], processing_time -> None: float, success -> None: bool
+    ) -> None:
         """Update fingerprinting statistics"""
         
         self.fingerprinting_stats["total_fingerprints"] += len(fingerprints)
@@ -849,7 +849,7 @@ class CopyrightFingerprintingCore:
                 self.fingerprinting_stats["fingerprint_types_usage"].get(fp_type, 0) + 1
             )
             
-    def _update_matching_statistics(self, matches: List[FingerprintMatch], processing_time: float):
+    def _update_matching_statistics(self, matches -> None: List[FingerprintMatch], processing_time -> None: float) -> None:
         """Update matching statistics"""
         
         self.fingerprinting_stats["total_matches"] += len(matches)

@@ -117,7 +117,7 @@ class LinkOpportunity:
 class BacklinkAnalyzer:
     """Advanced backlink analysis and monitoring system"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize Backlink Analyzer
         
         Args:
@@ -800,7 +800,7 @@ class BacklinkAnalyzer:
 
 
 # Example usage
-async def main():
+async def main() -> None:
     """Example usage of Backlink Analyzer"""
     try:
         # Initialize analyzer

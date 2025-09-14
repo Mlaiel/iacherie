@@ -56,7 +56,7 @@ class TimingInfo:
     end_time: float = 0.0      # End time in seconds
     duration: float = 0.0      # Duration in seconds
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.duration == 0.0 and self.end_time > self.start_time:
             self.duration = self.end_time - self.start_time
 
@@ -109,7 +109,7 @@ class SubtitleTrack:
     created_at: Optional[float] = None
     modified_at: Optional[float] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.created_at is None:
             self.created_at = datetime.now().timestamp()
         if self.modified_at is None:
@@ -119,7 +119,7 @@ class SubtitleTrack:
 class SubtitleFormatsManager:
     """Professional subtitle formats management system"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize subtitle formats manager"""
         self.config = config or {}
         self.format_parsers: Dict[SubtitleFormat, callable] = {}
@@ -128,7 +128,7 @@ class SubtitleFormatsManager:
         # Initialize format handlers
         self._initialize_format_handlers()
     
-    def _initialize_format_handlers(self):
+    def _initialize_format_handlers(self) -> None:
         """Initialize format-specific parsers and writers"""
         try:
             # Register parsers

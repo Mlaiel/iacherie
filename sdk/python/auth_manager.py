@@ -29,7 +29,7 @@ from .exceptions import (
 class SecureTokenStorage:
     """Secure token storage with encryption (Sécurité expertise)"""
     
-    def __init__(self, storage_path: Optional[str] = None):
+    def __init__(self, storage_path -> None: Optional[str] = None) -> None:
         self.storage_path = storage_path or os.path.join(
             Path.home(), '.ainflue', 'tokens.dat'
         )
@@ -37,7 +37,7 @@ class SecureTokenStorage:
         self._lock = threading.Lock()
         self.logger = logging.getLogger(__name__)
     
-    def _ensure_storage_dir(self):
+    def _ensure_storage_dir(self) -> None:
         """Ensure storage directory exists"""
         os.makedirs(os.path.dirname(self.storage_path), exist_ok=True)
         
@@ -260,10 +260,10 @@ class AuthenticationManager:
     
     def __init__(
         self,
-        storage_path: Optional[str] = None,
-        auto_refresh: bool = True,
-        refresh_threshold: int = 300  # 5 minutes before expiry
-    ):
+        storage_path -> None: Optional[str] = None,
+        auto_refresh -> None: bool = True,
+        refresh_threshold -> None: int = 300  # 5 minutes before expiry
+    ) -> None:
         self.storage = SecureTokenStorage(storage_path)
         self.auto_refresh = auto_refresh
         self.refresh_threshold = refresh_threshold
@@ -282,11 +282,11 @@ class AuthenticationManager:
             'service': self._authenticate_service
         }
     
-    def add_auth_callback(self, callback: Callable[[str, Dict[str, Any]], None]):
+    def add_auth_callback(self, callback -> None: Callable[[str, Dict[str, Any]], None]) -> None:
         """Add callback for authentication events"""
         self._auth_callbacks.append(callback)
     
-    def _notify_auth_event(self, event_type: str, data: Dict[str, Any]):
+    def _notify_auth_event(self, event_type -> None: str, data -> None: Dict[str, Any]) -> None:
         """Notify authentication event callbacks"""
         for callback in self._auth_callbacks:
             try:

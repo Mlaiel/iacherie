@@ -215,7 +215,7 @@ class QuantumOptimizationScheduler:
     ✅ Advanced analytics & insights
     """
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.config = config or {}
         
         # État du scheduler
@@ -250,7 +250,7 @@ class QuantumOptimizationScheduler:
         
         logger.info("⚡ Quantum Optimization Scheduler initialized")
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialisation complète scheduler"""
         try:
             # Initialisation algorithmes d'optimisation
@@ -704,7 +704,7 @@ class QuantumOptimizationScheduler:
     # MÉTHODES PRIVÉES - CORE SCHEDULING
     # ========================================
     
-    async def _start_scheduling_loop(self):
+    async def _start_scheduling_loop(self) -> None:
         """Démarrage boucle principale de planification"""
         if self.scheduler_running:
             return
@@ -712,7 +712,7 @@ class QuantumOptimizationScheduler:
         self.scheduler_running = True
         asyncio.create_task(self._scheduling_loop())
     
-    async def _scheduling_loop(self):
+    async def _scheduling_loop(self) -> None:
         """Boucle principale planification"""
         while self.scheduler_running:
             try:
@@ -760,7 +760,7 @@ class QuantumOptimizationScheduler:
         
         return ready_tasks
     
-    async def _schedule_task_for_execution(self, task: ScheduledTask):
+    async def _schedule_task_for_execution(self, task -> None: ScheduledTask) -> None:
         """Planification tâche pour exécution"""
         try:
             # Allocation ressources
@@ -792,7 +792,7 @@ class QuantumOptimizationScheduler:
         except Exception as e:
             logger.error(f"❌ Failed to schedule task {task.task_id} for execution: {e}")
     
-    async def _simulate_task_execution(self, task: ScheduledTask, schedule_entry: ScheduleEntry):
+    async def _simulate_task_execution(self, task -> None: ScheduledTask, schedule_entry -> None: ScheduleEntry) -> None:
         """Simulation exécution tâche"""
         try:
             # Simulation durée d'exécution avec variabilité

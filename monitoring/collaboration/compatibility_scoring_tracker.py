@@ -115,7 +115,7 @@ class CompatibilityScoringTracker:
     - Personalized scoring weights
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.compatibility_scores: Dict[str, CompatibilityScore] = {}
         self.creator_vectors: Dict[str, CompatibilityVector] = {}
@@ -145,7 +145,7 @@ class CompatibilityScoringTracker:
         
         logger.info("CompatibilityScoringTracker initialized")
 
-    def _initialize_dimension_weights(self):
+    def _initialize_dimension_weights(self) -> None:
         """Initialize dimension weights based on importance."""
         self.dimension_weights = {
             CompatibilityDimension.CREATIVE_STYLE: 0.15,
@@ -162,7 +162,7 @@ class CompatibilityScoringTracker:
             CompatibilityDimension.GEOGRAPHICAL_PROXIMITY: 0.00
         }
 
-    def _initialize_ml_models(self):
+    def _initialize_ml_models(self) -> None:
         """Initialize ML models for compatibility scoring."""
         try:
             # Placeholder for actual ML model loading
@@ -960,7 +960,7 @@ class CompatibilityScoringTracker:
         
         return max(0.0, min(1.0, success_probability))
 
-    def _update_calculation_metrics(self, calculation_time: float):
+    def _update_calculation_metrics(self, calculation_time -> None: float) -> None:
         """Update performance metrics."""
         self.metrics['total_scores_calculated'] += 1
         
@@ -1061,7 +1061,7 @@ class CompatibilityScoringTracker:
         slope = (n * sum_xy - sum_x * sum_y) / (n * sum_x2 - sum_x**2)
         return slope
 
-    async def update_dimension_weights(self, new_weights: Dict[CompatibilityDimension, float]):
+    async def update_dimension_weights(self, new_weights -> None: Dict[CompatibilityDimension, float]) -> None:
         """Update dimension weights for compatibility calculation."""
         try:
             # Validate weights sum to 1.0
@@ -1144,7 +1144,7 @@ class CompatibilityScoringTracker:
 
 # Example usage and testing
 if __name__ == "__main__":
-    async def test_compatibility_scoring():
+    async def test_compatibility_scoring() -> None:
         """Test compatibility scoring functionality."""
         tracker = CompatibilityScoringTracker()
         

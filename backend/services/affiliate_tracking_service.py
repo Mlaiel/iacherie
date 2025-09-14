@@ -194,7 +194,7 @@ class AffiliateMetrics:
 class AffiliateManager:
     """Gestionnaire principal d'affiliation"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         self.fraud_detector = IsolationForest(contamination=0.1)
@@ -387,7 +387,7 @@ class AffiliateManager:
 class TrackingSystem:
     """Système de tracking avancé"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         self.click_buffer = []
@@ -550,7 +550,7 @@ class TrackingSystem:
 class AffiliateAnalytics:
     """Analytics d'affiliation"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         
@@ -617,7 +617,7 @@ class AffiliateAnalytics:
 class AffiliateTrackingService:
     """Service principal de tracking d'affiliation"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         self.affiliate_manager = AffiliateManager(redis_client, db_session)

@@ -83,7 +83,7 @@ class InferenceEngineConfig:
     rate_limiting: bool = True
     monitoring: bool = True
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.target_latency_ms <= 0:
             self.target_latency_ms = 100
         if self.max_throughput_rps <= 0:
@@ -103,7 +103,7 @@ class InferenceEngineDeployment:
     - Comprehensive monitoring and observability
     """
     
-    def __init__(self, namespace: str = "ia-influencer-inference"):
+    def __init__(self, namespace -> None: str = "ia-influencer-inference") -> None:
         """
         Initialize inference engine deployment
         

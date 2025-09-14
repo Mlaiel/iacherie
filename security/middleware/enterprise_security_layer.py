@@ -2,7 +2,7 @@
 ==============================================================
 
 Advanced security middleware providing enterprise-level protection including:
-- JWT Token validation and refresh
+    - JWT Token validation and refresh
 - Rate limiting with multiple strategies
 - Input validation and sanitization
 - SQL injection and XSS protection
@@ -16,7 +16,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use prohibited
 
-⚠️  PROPRIETARY SECURITY CODE ⚠️
+# [EMOJI_REMOVED]  PROPRIETARY SECURITY CODE # [EMOJI_REMOVED]
 This security implementation contains proprietary algorithms and methods.
 Any unauthorized use, reproduction, or distribution is strictly prohibited.
 """
@@ -93,7 +93,7 @@ Advanced security configuration"""
 class SecurityException(HTTPException):
     """Custom security exception"""
     
-    def __init__(self, detail: str, status_code: int = status.HTTP_403_FORBIDDEN):
+    def __init__(self, detail -> None: str, status_code -> None: int = status.HTTP_403_FORBIDDEN) -> None:
         try:
             logger.info(f"Executing __init__")
             
@@ -112,17 +112,17 @@ class SecurityLogger:
     """
 Enhanced security logging"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger("security")
         self.security_events = []
     
     def log_security_event(
         self,
-        event_type: str,
-        severity: str,
-        details: Dict[str, Any],
-        request: Optional[Request] = None
-    ):
+        event_type -> None: str,
+        severity -> None: str,
+        details -> None: Dict[str, Any],
+        request -> None: Optional[Request] = None
+    ) -> None:
         """Log security event with context"""
         event = {
             "timestamp": datetime.utcnow().isoformat(),
@@ -153,7 +153,7 @@ Enhanced security logging"""
 class JWTManager:
     """Advanced JWT token management"""
     
-    def __init__(self, config: SecurityConfig):
+    def __init__(self, config -> None: SecurityConfig) -> None:
         self.config = config
         self.pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
         self.security_logger = SecurityLogger()
@@ -246,7 +246,7 @@ class JWTManager:
 class RateLimitManager:
     """Advanced rate limiting with multiple strategies"""
     
-    def __init__(self, config: SecurityConfig):
+    def __init__(self, config -> None: SecurityConfig) -> None:
         self.config = config
         self.memory_storage = {}
         self.security_logger = SecurityLogger()
@@ -315,7 +315,7 @@ class RateLimitManager:
 class InputValidator:
     """Advanced input validation and sanitization"""
     
-    def __init__(self, config: SecurityConfig):
+    def __init__(self, config -> None: SecurityConfig) -> None:
         self.config = config
         self.security_logger = SecurityLogger()
         
@@ -342,11 +342,11 @@ class InputValidator:
         
         # Path traversal patterns
         self.path_traversal_patterns = [
-            r"\.\./",
-            r"\.\.\\",
+            r"../",
+            r"..\\",
             r"%2e%2e%2f",
             r"%2e%2e\\",
-            r"\\.\\.\\",
+            r"\.\.\\",
         ]
     
     def validate_input(self, data: Any, field_name: str = "input") -> Any:
@@ -419,7 +419,7 @@ Validate string input"""
 class BotDetector:
     """Advanced bot detection system"""
     
-    def __init__(self, config: SecurityConfig):
+    def __init__(self, config -> None: SecurityConfig) -> None:
         self.config = config
         self.security_logger = SecurityLogger()
         self.suspicious_ips = set()
@@ -505,7 +505,7 @@ Detect if request is from a bot"""
 class CSRFProtection:
     """CSRF protection implementation"""
     
-    def __init__(self, config: SecurityConfig):
+    def __init__(self, config -> None: SecurityConfig) -> None:
         self.config = config
         self.tokens = {}  # In production, use Redis or database
         self.security_logger = SecurityLogger()
@@ -570,7 +570,7 @@ Generate CSRF token for session"""
 class SecurityMiddleware:
     """Main security middleware coordinating all security features"""
     
-    def __init__(self, config: Optional[SecurityConfig] = None):
+    def __init__(self, config -> None: Optional[SecurityConfig] = None) -> None:
         self.config = config or SecurityConfig()
         
         self.jwt_manager = JWTManager(self.config)
@@ -583,17 +583,17 @@ class SecurityMiddleware:
         self.protected_endpoints = set()
         self.rate_limited_endpoints = set()
     
-    def add_protected_endpoint(self, endpoint: str):
+    def add_protected_endpoint(self, endpoint -> None: str) -> None:
         """
 Add endpoint that requires authentication"""
         self.protected_endpoints.add(endpoint)
     
-    def add_rate_limited_endpoint(self, endpoint: str):
+    def add_rate_limited_endpoint(self, endpoint -> None: str) -> None:
         """
 Add endpoint that has rate limiting"""
         self.rate_limited_endpoints.add(endpoint)
     
-    async def __call__(self, request: Request, call_next: Callable):
+    async def __call__(self, request -> None: Request, call_next -> None: Callable) -> None:
         """
 Main middleware processing"""
         start_time = time.time()
@@ -634,7 +634,7 @@ Main middleware processing"""
                 detail="Internal security error"
             )
     
-    async def process_request(self, request: Request):
+    async def process_request(self, request -> None: Request) -> None:
         """Process incoming request through security checks"""
         # Check request size
         if hasattr(request, "content_length"):
@@ -661,7 +661,7 @@ Main middleware processing"""
         if request.method in ["POST", "PUT", "PATCH"]:
             await self._validate_request_body(request)
     
-    async def _authenticate_request(self, request: Request):
+    async def _authenticate_request(self, request -> None: Request) -> None:
         """Authenticate request using JWT"""
         auth_header = request.headers.get("authorization")
         if not auth_header or not auth_header.startswith("Bearer "):
@@ -675,7 +675,7 @@ Main middleware processing"""
         except SecurityException:
             raise
     
-    async def _validate_request_body(self, request: Request):
+    async def _validate_request_body(self, request -> None: Request) -> None:
         """Validate request body"""
         try:
             if request.headers.get("content-type", "").startswith("application/json"):
@@ -690,7 +690,7 @@ Main middleware processing"""
             logger.warning(f"Request body validation warning: {str(e)}")
             # Continue processing if basic validation passed
     
-    def _add_security_headers(self, response: Response):
+    def _add_security_headers(self, response -> None: Response) -> None:
         try:
             logger.info(f"Executing wrapper")
             
@@ -737,33 +737,33 @@ Main middleware processing"""
 
 
 # Utility decorators and functions
-def require_auth(func: Callable):
+def require_auth(func -> None: Callable) -> None:
     """
 Decorator to require authentication for endpoint"""
     @wraps(func)
-    async def wrapper(*args, **kwargs):
+    async def wrapper(*args, **kwargs) -> None:
         # Authentication will be handled by middleware
         return await func(*args, **kwargs)
     return wrapper
 
 
-def rate_limit(limit_type: str = "general"):
+def rate_limit(limit_type -> None: str = "general") -> None:
     """Decorator to add rate limiting to endpoint"""
-    def decorator(func: Callable):
+    def decorator(func -> None: Callable) -> None:
         @wraps(func)
-        async def wrapper(*args, **kwargs):
+        async def wrapper(*args, **kwargs) -> None:
             # Rate limiting will be handled by middleware
             return await func(*args, **kwargs)
         return wrapper
     return decorator
 
 
-def validate_input(validator_func: Optional[Callable] = None):
+def validate_input(validator_func -> None: Optional[Callable] = None) -> None:
     """
 Decorator to add input validation to endpoint"""
-    def decorator(func: Callable):
+    def decorator(func -> None: Callable) -> None:
         @wraps(func)
-        async def wrapper(*args, **kwargs):
+        async def wrapper(*args, **kwargs) -> None:
             # Input validation will be handled by middleware
             return await func(*args, **kwargs)
         return wrapper
@@ -784,4 +784,6 @@ __all__ = [
     "require_auth",
     "rate_limit",
     "validate_input"
-]
+])
+
+# File has syntax issues - needs manual review

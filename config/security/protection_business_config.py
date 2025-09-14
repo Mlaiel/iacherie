@@ -106,7 +106,7 @@ class LegalComplianceConfig:
 class ProtectionBusinessSettings:
     """Protection business logic configuration settings"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         # Copyright Protection Configuration
         self.copyright_protection = CopyrightProtectionConfig(
             fingerprinting_algorithms=[

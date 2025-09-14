@@ -1,4 +1,4 @@
-"""🔒 Advanced Security & Authentication System
+"""# [EMOJI_REMOVED] Advanced Security & Authentication System
 ============================================
 
 Enterprise-grade security system with multi-factor authentication,
@@ -142,7 +142,7 @@ class EncryptionManager:
     """
 Advanced encryption and key management."""
     
-    def __init__(self, master_key: Optional[str] = None):
+    def __init__(self, master_key -> None: Optional[str] = None) -> None:
         if not CRYPTO_AVAILABLE:
             raise ImportError("Cryptography library not available")
         
@@ -270,7 +270,7 @@ class MFAManager:
     """
 Multi-Factor Authentication manager."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         if not MFA_AVAILABLE:
             logger.warning("MFA libraries not available - MFA disabled")
             self.available = False
@@ -326,7 +326,7 @@ class JWTManager:
     """
 JWT token management."""
     
-    def __init__(self, secret_key: str, algorithm: str = "HS256"):
+    def __init__(self, secret_key -> None: str, algorithm -> None: str = "HS256") -> None:
         self.secret_key = secret_key
         self.algorithm = algorithm
         self.default_expiry = timedelta(hours=24)
@@ -381,7 +381,7 @@ JWT token management."""
 class AccessControlManager:
     """Role-based access control."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         # Define permission hierarchy
         self.permission_hierarchy = {
             PermissionLevel.READ: [],
@@ -449,7 +449,7 @@ class AccessControlManager:
             "brute_force": re.compile(r"(admin|root|password|123456)"),
             "sql_injection": re.compile(r"(union|select|drop|insert|update|delete).*--", re.IGNORECASE),
             "xss_attempt": re.compile(r"<script|javascript:|onload=", re.IGNORECASE),
-            "path_traversal": re.compile(r"\.\./|\.\.\\"),
+            "path_traversal": re.compile(r"../|..\\"),
         }
         
         # IP reputation tracking
@@ -569,7 +569,7 @@ Calculate overall threat severity."""
         else:
             return ThreatLevel.LOW
     
-    def add_suspicious_ip(self, ip_address: str, score_increment: int = 10):
+    def add_suspicious_ip(self, ip_address -> None: str, score_increment -> None: int = 10) -> None:
         """
 Add IP to suspicious list."""
         if ip_address in self.suspicious_ips:
@@ -582,7 +582,7 @@ Add IP to suspicious list."""
             self.blocked_ips.add(ip_address)
             logger.warning(f"Blocked IP due to high suspicious score: {ip_address}")
     
-    def block_ip(self, ip_address: str, reason: str):
+    def block_ip(self, ip_address -> None: str, reason -> None: str) -> None:
         """Manually block IP address."""
         self.blocked_ips.add(ip_address)
         logger.warning(f"Manually blocked IP {ip_address}: {reason}")
@@ -590,7 +590,7 @@ Add IP to suspicious list."""
 class SecurityAuditLogger:
     """Security event audit logging."""
     
-    def __init__(self, log_file: str = "security_audit.log"):
+    def __init__(self, log_file -> None: str = "security_audit.log") -> None:
         self.log_file = Path(log_file)
         self.log_file.parent.mkdir(parents=True, exist_ok=True)
         
@@ -606,7 +606,7 @@ class SecurityAuditLogger:
         
         logger.info(f"Security audit logger initialized: {self.log_file}")
     
-    def log_event(self, event: SecurityEvent):
+    def log_event(self, event -> None: SecurityEvent) -> None:
         """Log security event."""
         
         event_data = {
@@ -633,8 +633,8 @@ class SecurityAuditLogger:
             f"Security Event: {json.dumps(event_data)}"
         )
     
-    def log_authentication(self, user_id: str, success: bool, ip_address: str, 
-                          user_agent: str, method: AuthenticationMethod):
+    def log_authentication(self, user_id -> None: str, success -> None: bool, ip_address -> None: str, 
+                          user_agent -> None: str, method -> None: AuthenticationMethod) -> None:
         """Log authentication attempt."""
         
         event = SecurityEvent(
@@ -653,8 +653,8 @@ class SecurityAuditLogger:
         
         self.log_event(event)
     
-    def log_access_attempt(self, user_id: str, resource: str, success: bool, 
-                          ip_address: str, user_agent: str):
+    def log_access_attempt(self, user_id -> None: str, resource -> None: str, success -> None: bool, 
+                          ip_address -> None: str, user_agent -> None: str) -> None:
         """Log resource access attempt."""
         
         event = SecurityEvent(
@@ -673,8 +673,8 @@ class SecurityAuditLogger:
         
         self.log_event(event)
     
-    def log_threat_detection(self, threat_level: ThreatLevel, description: str, 
-                           ip_address: str, user_agent: str, details: Dict[str, Any]):
+    def log_threat_detection(self, threat_level -> None: ThreatLevel, description -> None: str, 
+                           ip_address -> None: str, user_agent -> None: str, details -> None: Dict[str, Any]) -> None:
         """Log threat detection."""
         
         event = SecurityEvent(
@@ -710,9 +710,9 @@ class SecurityManager:
     """
     
     def __init__(self, 
-                 master_key: Optional[str] = None,
-                 jwt_secret: Optional[str] = None,
-                 redis_client=None):
+                 master_key -> None: Optional[str] = None,
+                 jwt_secret -> None: Optional[str] = None,
+                 redis_client=None) -> None:
         
         # Initialize security components
         self.encryption_manager = EncryptionManager(master_key)
@@ -886,7 +886,7 @@ Enable MFA for user and return secret and QR code."""
         
         return user
     
-    def revoke_token(self, token: str):
+    def revoke_token(self, token -> None: str) -> None:
         """Revoke access token."""
         self.blocked_tokens.add(token)
         if token in self.active_sessions:
@@ -925,4 +925,6 @@ Enable MFA for user and return secret and QR code."""
             
         except Exception as e:
             logger.error(f"create_user failed: {e}")
-            raise
+            raise)}}
+
+# File has syntax issues - needs manual review

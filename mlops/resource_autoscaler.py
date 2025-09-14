@@ -1,3 +1,8 @@
+"""
+Resource Autoscaler module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 🚀 Resource Auto-Scaler - Enterprise MLOps Platform
@@ -130,23 +135,23 @@ class AutoScalerConfig:
 class MetricsCollector:
     """Collecteur de métriques système et ML"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.docker_client = docker.from_env()
         self.metrics_buffer: List[Dict[str, Any]] = []
         self.is_collecting = False
         
-    async def start_collection(self):
+    async def start_collection(self) -> None:
         """Démarre la collecte de métriques"""
         self.is_collecting = True
         asyncio.create_task(self._collect_system_metrics())
         asyncio.create_task(self._collect_container_metrics())
         asyncio.create_task(self._collect_ml_metrics())
         
-    async def stop_collection(self):
+    async def stop_collection(self) -> None:
         """Arrête la collecte de métriques"""
         self.is_collecting = False
         
-    async def _collect_system_metrics(self):
+    async def _collect_system_metrics(self) -> None:
         """Collecte les métriques système"""
         while self.is_collecting:
             try:
@@ -178,7 +183,7 @@ class MetricsCollector:
                 logger.error(f"Erreur collecte métriques système: {e}")
                 await asyncio.sleep(10)
     
-    async def _collect_container_metrics(self):
+    async def _collect_container_metrics(self) -> None:
         """Collecte les métriques des containers"""
         while self.is_collecting:
             try:
@@ -219,7 +224,7 @@ class MetricsCollector:
                 logger.error(f"Erreur collecte métriques containers: {e}")
                 await asyncio.sleep(15)
     
-    async def _collect_ml_metrics(self):
+    async def _collect_ml_metrics(self) -> None:
         """Collecte les métriques ML spécifiques"""
         while self.is_collecting:
             try:
@@ -264,7 +269,7 @@ class MetricsCollector:
 class PredictiveEngine:
     """Engine de prédiction pour l'auto-scaling"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.models: Dict[str, PredictionModel] = {}
         self.feature_columns = [
             'cpu_percent', 'memory_percent', 'inference_rps', 
@@ -432,7 +437,7 @@ class PredictiveEngine:
 class CostOptimizer:
     """Optimiseur de coûts pour le scaling"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.cost_matrix = {
             'cpu_small': 0.05,    # $/heure
             'cpu_medium': 0.10,
@@ -526,7 +531,7 @@ class CostOptimizer:
 class ResourceAutoScaler:
     """Auto-scaler intelligent basé sur métriques ML et charge prédictive"""
     
-    def __init__(self, config: AutoScalerConfig):
+    def __init__(self, config -> None: AutoScalerConfig) -> None:
         self.config = config
         self.scaling_rules: Dict[str, ScalingRule] = {}
         self.metrics_collector = MetricsCollector()
@@ -537,7 +542,7 @@ class ResourceAutoScaler:
         self.last_scaling_action = datetime.now() - config.cooldown_global
         self.is_running = False
         
-    async def start(self):
+    async def start(self) -> None:
         """Démarre l'auto-scaler"""
         try:
             logger.info("Démarrage de l'auto-scaler intelligent")
@@ -557,24 +562,24 @@ class ResourceAutoScaler:
             logger.error(f"Erreur démarrage auto-scaler: {e}")
             raise
     
-    async def stop(self):
+    async def stop(self) -> None:
         """Arrête l'auto-scaler"""
         logger.info("Arrêt de l'auto-scaler")
         self.is_running = False
         await self.metrics_collector.stop_collection()
     
-    def add_scaling_rule(self, rule: ScalingRule):
+    def add_scaling_rule(self, rule -> None: ScalingRule) -> None:
         """Ajoute une règle de scaling"""
         self.scaling_rules[rule.rule_id] = rule
         logger.info(f"Règle de scaling ajoutée: {rule.rule_id}")
     
-    def remove_scaling_rule(self, rule_id: str):
+    def remove_scaling_rule(self, rule_id -> None: str) -> None:
         """Supprime une règle de scaling"""
         if rule_id in self.scaling_rules:
             del self.scaling_rules[rule_id]
             logger.info(f"Règle de scaling supprimée: {rule_id}")
     
-    async def _scaling_monitor(self):
+    async def _scaling_monitor(self) -> None:
         """Monitor principal de scaling"""
         while self.is_running:
             try:
@@ -605,7 +610,7 @@ class ResourceAutoScaler:
                 logger.error(f"Erreur monitor scaling: {e}")
                 await asyncio.sleep(60)
     
-    async def _reactive_scaling_analysis(self, metrics: List[Dict[str, Any]]):
+    async def _reactive_scaling_analysis(self, metrics -> None: List[Dict[str, Any]]) -> None:
         """Analyse de scaling réactive basée sur les seuils"""
         try:
             # Calcul des métriques moyennes récentes
@@ -678,7 +683,7 @@ class ResourceAutoScaler:
         except Exception as e:
             logger.error(f"Erreur analyse réactive: {e}")
     
-    async def _predictive_scaling_analysis(self, metrics: List[Dict[str, Any]]):
+    async def _predictive_scaling_analysis(self, metrics -> None: List[Dict[str, Any]]) -> None:
         """Analyse de scaling prédictive basée sur ML"""
         try:
             # Prédiction de la charge future
@@ -850,7 +855,7 @@ class ResourceAutoScaler:
         
         return len(recent_actions) < self.config.max_scaling_rate
     
-    async def _simulate_scaling_execution(self, resource_type: ResourceType, target_instances: int):
+    async def _simulate_scaling_execution(self, resource_type -> None: ResourceType, target_instances -> None: int) -> None:
         """Simule l'exécution du scaling"""
         # Simulation du temps d'exécution
         await asyncio.sleep(np.random.uniform(2, 5))
@@ -864,7 +869,7 @@ class ResourceAutoScaler:
         
         logger.info(f"Scaling simulé: {resource_type.value} -> {target_instances} instances")
     
-    async def _model_trainer(self):
+    async def _model_trainer(self) -> None:
         """Entraîne périodiquement les modèles de prédiction"""
         while self.is_running:
             try:
@@ -886,7 +891,7 @@ class ResourceAutoScaler:
                 logger.error(f"Erreur entraînement modèles: {e}")
                 await asyncio.sleep(3600)  # Retry dans 1 heure
     
-    async def _metrics_analyzer(self):
+    async def _metrics_analyzer(self) -> None:
         """Analyse continue des métriques pour optimisations"""
         while self.is_running:
             try:
@@ -903,7 +908,7 @@ class ResourceAutoScaler:
                 logger.error(f"Erreur analyse métriques: {e}")
                 await asyncio.sleep(1800)
     
-    async def _analyze_usage_patterns(self, metrics: List[Dict[str, Any]]):
+    async def _analyze_usage_patterns(self, metrics -> None: List[Dict[str, Any]]) -> None:
         """Analyse les patterns d'utilisation"""
         try:
             # Conversion en DataFrame pour analyse
@@ -928,7 +933,7 @@ class ResourceAutoScaler:
         except Exception as e:
             logger.error(f"Erreur analyse patterns: {e}")
     
-    async def _optimize_scaling_rules(self, metrics: List[Dict[str, Any]]):
+    async def _optimize_scaling_rules(self, metrics -> None: List[Dict[str, Any]]) -> None:
         """Optimise automatiquement les règles de scaling"""
         try:
             # Analyse de l'efficacité des scaling actions
@@ -1070,7 +1075,7 @@ def create_resource_auto_scaler(config: Dict[str, Any]) -> ResourceAutoScaler:
     return ResourceAutoScaler(auto_scaler_config)
 
 # Exemple d'utilisation
-async def main():
+async def main() -> None:
     """Exemple d'utilisation de l'auto-scaler intelligent"""
     
     # Configuration

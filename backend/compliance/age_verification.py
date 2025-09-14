@@ -1,5 +1,7 @@
 """Age Verification Compliance Module
 
+import asyncio
+
 Enterprise age verification compliance for child safety and regulatory requirements.
 Provides automated age verification, parental consent management, and COPPA compliance.
 
@@ -106,7 +108,7 @@ class AgeVerificationCompliance:
     Provides comprehensive age verification and COPPA compliance services.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.logger = logger
         self.config = config or {}
         
@@ -133,7 +135,7 @@ class AgeVerificationCompliance:
         # Initialize age verification rules
         self._initialize_verification_rules()
     
-    def _initialize_verification_rules(self):
+    def _initialize_verification_rules(self) -> None:
         """Initialize age verification rules and requirements"""
         self.verification_rules = {
             AgeCategory.UNDER_13: {
@@ -397,9 +399,9 @@ class AgeVerificationCompliance:
 
     async def _initiate_parental_consent_process(
         self,
-        user_id: int,
-        verification_data: Dict[str, Any]
-    ):
+        user_id -> None: int,
+        verification_data -> None: Dict[str, Any]
+    ) -> None:
         """Initiate parental consent process for children under 13"""
         try:
             parent_email = verification_data.get("parent_email")
@@ -427,7 +429,7 @@ class AgeVerificationCompliance:
         except Exception as e:
             self.logger.error(f"Error initiating parental consent: {str(e)}")
 
-    async def _send_parental_consent_email(self, consent_request: Dict[str, Any]):
+    async def _send_parental_consent_email(self, consent_request -> None: Dict[str, Any]) -> None:
         """Send parental consent email"""
         # Placeholder for email sending
         self.logger.info(f"Parental consent email sent to {consent_request['parent_email']}")

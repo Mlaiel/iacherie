@@ -155,7 +155,7 @@ class AdvancedSecurityMonitor:
     - Performance monitoring and optimization
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """Initialize advanced security monitor"""
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -911,7 +911,7 @@ class AdvancedSecurityMonitor:
             ]
         }
     
-    async def _update_security_metrics(self, security_event: SecurityEvent):
+    async def _update_security_metrics(self, security_event -> None: SecurityEvent) -> None:
         """DevOps: Update security metrics"""
         self.security_metrics.total_events_24h += 1
         

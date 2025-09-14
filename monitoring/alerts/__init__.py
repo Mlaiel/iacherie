@@ -1,4 +1,6 @@
 """🚨 Intelligent Alert System for Ainflue Platform
+import asyncio
+
 ===============================================
 
 Comprehensive intelligent alert management system providing:
@@ -128,25 +130,25 @@ def get_alert_system() -> AlertCoordinator:
 
 
 # Quick access functions
-async def evaluate_business_metrics(metrics: BusinessMetrics):
+async def evaluate_business_metrics(metrics -> None: BusinessMetrics) -> None:
     """
 Quick access to business metrics evaluation"""
     return await alert_coordinator.evaluate_all_metrics(business_metrics=metrics)
 
 
-async def evaluate_technical_metrics(metrics: TechnicalMetrics):
+async def evaluate_technical_metrics(metrics -> None: TechnicalMetrics) -> None:
     """
 Quick access to technical metrics evaluation"""
     return await alert_coordinator.evaluate_all_metrics(technical_metrics=metrics)
 
 
-async def evaluate_ai_metrics(metrics: list):
+async def evaluate_ai_metrics(metrics -> None: list) -> None:
     """
 Quick access to AI metrics evaluation"""
     return await alert_coordinator.evaluate_all_metrics(ai_metrics=metrics)
 
 
-async def get_system_health():
+async def get_system_health() -> None:
     """
 Quick access to system health status"""
     return await alert_coordinator.get_comprehensive_status()

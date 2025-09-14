@@ -124,10 +124,10 @@ class OpenAIIntegration:
     
     def __init__(
         self,
-        api_key: str,
-        organization_id: Optional[str] = None,
-        config: Optional[Dict[str, Any]] = None
-    ):
+        api_key -> None: str,
+        organization_id -> None: Optional[str] = None,
+        config -> None: Optional[Dict[str, Any]] = None
+    ) -> None:
         self.api_key = api_key
         self.organization_id = organization_id
         self.config = config or {}
@@ -170,7 +170,7 @@ class OpenAIIntegration:
         # Initialize tokenizer for cost calculation
         self.tokenizers = {}
         
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize the OpenAI integration."""
         # Load model capabilities
         await self._load_model_capabilities()
@@ -180,7 +180,7 @@ class OpenAIIntegration:
         
         self.logger.info("OpenAI integration initialized")
     
-    def _setup_tokenizers(self):
+    def _setup_tokenizers(self) -> None:
         """Setup tokenizers for different models."""
         try:
             self.tokenizers = {
@@ -191,7 +191,7 @@ class OpenAIIntegration:
         except Exception as e:
             self.logger.warning(f"Failed to setup tokenizers: {e}")
     
-    async def _load_model_capabilities(self):
+    async def _load_model_capabilities(self) -> None:
         """Load available models and their capabilities."""
         try:
             models = await self.client.models.list()
@@ -689,7 +689,7 @@ class OpenAIIntegration:
             # Fallback estimation
             return len(text.split()) * 1.3
     
-    async def _update_metrics(self, response: OpenAIResponse, success: bool):
+    async def _update_metrics(self, response -> None: OpenAIResponse, success -> None: bool) -> None:
         """Update integration metrics."""
         self.metrics['total_requests'] += 1
         
@@ -782,7 +782,7 @@ class OpenAIIntegration:
 
 # Example usage
 if __name__ == "__main__":
-    async def main():
+    async def main() -> None:
         # Initialize OpenAI integration
         openai_integration = OpenAIIntegration(
             api_key="your-openai-api-key"

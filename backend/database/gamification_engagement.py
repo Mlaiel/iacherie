@@ -806,7 +806,7 @@ class LoyaltyProgram(Base):
 # EXPORT FUNCTIONS
 # ================================
 
-def get_gamification_engagement_models():
+def get_gamification_engagement_models() -> None:
     """Get all gamification and engagement models."""
     return [
         UserGamification,
@@ -823,7 +823,7 @@ def get_gamification_engagement_models():
     ]
 
 
-def create_gamification_engagement_tables(engine):
+def create_gamification_engagement_tables(engine) -> None:
     """Create all gamification and engagement tables."""
     try:
         Base.metadata.create_all(engine, tables=[model.__table__ for model in get_gamification_engagement_models()])

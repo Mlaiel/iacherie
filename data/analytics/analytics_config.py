@@ -360,14 +360,14 @@ class AnalyticsConfig:
     ANOMALY_DETECTION_ENABLED: bool = True
     QUALITY_VALIDATION_ENABLED: bool = True
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         """Initialize default configurations after object creation"""
         self._initialize_default_platforms()
         self._initialize_default_languages()
         self._initialize_default_ai_models()
         self._initialize_feature_flags()
     
-    def _initialize_default_platforms(self):
+    def _initialize_default_platforms(self) -> None:
         """Initialize default platform configurations"""
         for platform in PlatformType:
             if platform not in self.platform_configs:
@@ -379,7 +379,7 @@ class AnalyticsConfig:
                     supports_webhooks=self._platform_supports_webhooks(platform)
                 )
     
-    def _initialize_default_languages(self):
+    def _initialize_default_languages(self) -> None:
         """Initialize default language configurations"""
         # Sample of major languages (644+ total supported)
         major_languages = {
@@ -417,7 +417,7 @@ class AnalyticsConfig:
                 )
                 self.supported_languages.append(lang_code)
     
-    def _initialize_default_ai_models(self):
+    def _initialize_default_ai_models(self) -> None:
         """Initialize default AI model configurations"""
         for model_type in AIModelType:
             if model_type not in self.ai_model_configs:
@@ -429,7 +429,7 @@ class AnalyticsConfig:
                     update_frequency=24
                 )
     
-    def _initialize_feature_flags(self):
+    def _initialize_feature_flags(self) -> None:
         """Initialize feature flags"""
         self.feature_flags.update({
             "real_time_analytics": True,
@@ -503,17 +503,17 @@ class AnalyticsConfig:
         """Check if feature flag is enabled"""
         return self.feature_flags.get(feature_name, False)
     
-    def enable_platform(self, platform: PlatformType):
+    def enable_platform(self, platform -> None: PlatformType) -> None:
         """Enable specific platform"""
         if platform not in self.enabled_platforms:
             self.enabled_platforms.append(platform)
     
-    def disable_platform(self, platform: PlatformType):
+    def disable_platform(self, platform -> None: PlatformType) -> None:
         """Disable specific platform"""
         if platform in self.enabled_platforms:
             self.enabled_platforms.remove(platform)
     
-    def update_feature_flag(self, feature_name: str, enabled: bool):
+    def update_feature_flag(self, feature_name -> None: str, enabled -> None: bool) -> None:
         """Update feature flag"""
         self.feature_flags[feature_name] = enabled
     
@@ -521,7 +521,7 @@ class AnalyticsConfig:
         """Get configuration for specific analytics engine"""
         return self.engine_configs.get(engine, {})
     
-    def set_engine_config(self, engine: AnalyticsEngine, config: Dict[str, Any]):
+    def set_engine_config(self, engine -> None: AnalyticsEngine, config -> None: Dict[str, Any]) -> None:
         """Set configuration for specific analytics engine"""
         self.engine_configs[engine] = config
     
@@ -561,7 +561,7 @@ class AnalyticsConfig:
     
     # ========== PERSISTENCE METHODS ==========
     
-    def save_to_file(self, file_path: str):
+    def save_to_file(self, file_path -> None: str) -> None:
         """Save configuration to JSON file"""
         try:
             config_dict = self._to_dict()
@@ -659,7 +659,7 @@ class AnalyticsConfigFactory:
 class AnalyticsConfigManager:
     """Manager for analytics configuration lifecycle"""
     
-    def __init__(self, config_path: Optional[str] = None):
+    def __init__(self, config_path -> None: Optional[str] = None) -> None:
         self.config_path = config_path or os.getenv("ANALYTICS_CONFIG_PATH", "config/analytics.json")
         self._config: Optional[AnalyticsConfig] = None
     
@@ -679,7 +679,7 @@ class AnalyticsConfigManager:
             self._config = AnalyticsConfigFactory.create_minimal_config()
             return self._config
     
-    def save_config(self):
+    def save_config(self) -> None:
         """Save current configuration to file"""
         if self._config:
             # Ensure directory exists
@@ -692,7 +692,7 @@ class AnalyticsConfigManager:
             return self.load_config()
         return self._config
     
-    def update_config(self, updates: Dict[str, Any]):
+    def update_config(self, updates -> None: Dict[str, Any]) -> None:
         """Update configuration with new values"""
         if self._config is None:
             self.load_config()

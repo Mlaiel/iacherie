@@ -1,3 +1,8 @@
+"""
+Serialization Engine module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
@@ -115,7 +120,7 @@ class SerializationEngine:
     **Sécurité**: Chiffrement et validation intégrité données
     """
     
-    def __init__(self, redis_pool, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, redis_pool, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.redis_pool = redis_pool
         self.config = config or self._get_default_config()
         
@@ -174,7 +179,7 @@ class SerializationEngine:
             'cache_optimal_formats': True
         }
     
-    def _initialize_format_profiles(self):
+    def _initialize_format_profiles(self) -> None:
         """**Backend Senior**: Initialisation profils formats"""
         formats = [
             (SerializationFormat.JSON, CompressionType.NONE),
@@ -225,7 +230,7 @@ class SerializationEngine:
         
         return compatibility.get(format, {})
     
-    def _initialize_encryption(self):
+    def _initialize_encryption(self) -> None:
         """**Sécurité**: Initialisation chiffrement sécurisé"""
         try:
             # En production, utiliser key management service
@@ -660,7 +665,7 @@ class SerializationEngine:
             logger.error(f"❌ Erreur désérialisation {format.value}: {e}")
             raise
     
-    def _json_serializer(self, obj):
+    def _json_serializer(self, obj) -> None:
         """**Backend Senior**: Sérialiseur JSON personnalisé**"""
         if isinstance(obj, datetime):
             return obj.isoformat()
@@ -672,7 +677,7 @@ class SerializationEngine:
             return base64.b64encode(obj).decode('ascii')
         raise TypeError(f"Object de type {type(obj)} non sérialisable JSON")
     
-    def _orjson_serializer(self, obj):
+    def _orjson_serializer(self, obj) -> None:
         """**Backend Senior**: Sérialiseur ORJSON personnalisé**"""
         if isinstance(obj, datetime):
             return obj.isoformat()
@@ -682,7 +687,7 @@ class SerializationEngine:
             return obj.to_dict()
         raise TypeError(f"Object de type {type(obj)} non sérialisable ORJSON")
     
-    def _msgpack_serializer(self, obj):
+    def _msgpack_serializer(self, obj) -> None:
         """**Backend Senior**: Sérialiseur MessagePack personnalisé**"""
         if isinstance(obj, datetime):
             return {'__datetime__': obj.isoformat()}
@@ -690,7 +695,7 @@ class SerializationEngine:
             return {'__numpy__': obj.tolist(), '__dtype__': str(obj.dtype)}
         return obj
     
-    def _cbor_serializer(self, encoder, obj):
+    def _cbor_serializer(self, encoder, obj) -> None:
         """**Backend Senior**: Sérialiseur CBOR personnalisé**"""
         if isinstance(obj, datetime):
             encoder.encode({'__datetime__': obj.isoformat()})
@@ -871,11 +876,11 @@ class SerializationEngine:
     
     async def _update_performance_profile(
         self,
-        format: SerializationFormat,
-        compression: CompressionType,
-        metrics: SerializationMetrics,
-        data_type: str
-    ):
+        format -> None: SerializationFormat,
+        compression -> None: CompressionType,
+        metrics -> None: SerializationMetrics,
+        data_type -> None: str
+    ) -> None:
         """**Lead Dev IA**: Mise à jour profil performance**"""
         
         profile_key = f"{format.value}_{compression.value}"
@@ -912,7 +917,7 @@ class SerializationEngine:
         else:
             profile.data_type_compatibility[data_type] = 0.8
     
-    def register_custom_serializer(self, data_type: Type, serializer: callable, deserializer: callable):
+    def register_custom_serializer(self, data_type -> None: Type, serializer -> None: callable, deserializer -> None: callable) -> None:
         """**Backend Senior**: Enregistrement sérialiseur personnalisé**"""
         self.custom_serializers[data_type] = serializer
         self.custom_deserializers[data_type] = deserializer
@@ -1042,17 +1047,18 @@ class SerializationEngine:
         }
 
 # Factory function
-async def create_serialization_engine(redis_pool, config: Optional[Dict[str, Any]] = None):
+async def create_serialization_engine(redis_pool, config -> None: Optional[Dict[str, Any]] = None) -> None:
     """**Backend Senior**: Factory création moteur sérialisation**"""
     return SerializationEngine(redis_pool, config)
 
 if __name__ == "__main__":
-    async def demo():
+    async def demo() -> None:
         """Démonstration Serialization Engine"""
         
         # Configuration Redis simulée
         class MockRedisPool:
-            def get_connection(self):
+    """MockRedisPool: class implementation"""
+            def get_connection(self) -> None:
                 from unittest.mock import AsyncMock
                 return AsyncMock()
         

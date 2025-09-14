@@ -79,7 +79,7 @@ class AuthUtilities:
     - OAuth integration support
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize authentication system"""
         # Session storage (in production, use Redis/database)
         self.active_sessions: Dict[str, AuthSession] = {}
@@ -427,7 +427,7 @@ class AuthUtilities:
                 del self.locked_accounts[user_id]
         return False
     
-    def _handle_failed_login(self, user_id: str, ip_address: str):
+    def _handle_failed_login(self, user_id -> None: str, ip_address -> None: str) -> None:
         """Handle failed login attempt"""
         now = datetime.now()
         
@@ -480,8 +480,8 @@ class AuthUtilities:
             issuer_name="Ainflue Platform"
         )
     
-    def _log_auth_attempt(self, user_id: str, method: AuthMethod, success: bool,
-                         ip_address: str, failure_reason: str = ""):
+    def _log_auth_attempt(self, user_id -> None: str, method -> None: AuthMethod, success -> None: bool,
+                         ip_address -> None: str, failure_reason -> None: str = "") -> None:
         """Log authentication attempt"""
         attempt = AuthAttempt(
             user_id=user_id,

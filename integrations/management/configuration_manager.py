@@ -94,11 +94,11 @@ class ConfigurationChange:
 class ConfigurationWatcher(FileSystemEventHandler):
     """File system watcher for configuration changes."""
     
-    def __init__(self, config_manager: 'ConfigurationManager'):
+    def __init__(self, config_manager -> None: 'ConfigurationManager') -> None:
         self.config_manager = config_manager
         self.logger = logging.getLogger(__name__)
     
-    def on_modified(self, event):
+    def on_modified(self, event) -> None:
         """Handle file modification events."""
         if not event.is_directory and event.src_path.endswith(('.json', '.yaml', '.yml')):
             asyncio.create_task(self.config_manager._reload_file_config(event.src_path))
@@ -110,11 +110,11 @@ class ConfigurationManager:
     
     def __init__(
         self,
-        redis_url: Optional[str] = None,
-        config_dir: Optional[str] = None,
-        encryption_key: Optional[str] = None,
-        config: Optional[Dict[str, Any]] = None
-    ):
+        redis_url -> None: Optional[str] = None,
+        config_dir -> None: Optional[str] = None,
+        encryption_key -> None: Optional[str] = None,
+        config -> None: Optional[Dict[str, Any]] = None
+    ) -> None:
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
         
@@ -155,7 +155,7 @@ class ConfigurationManager:
             'reload_count': 0
         }
         
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize the configuration manager."""
         # Connect to Redis if configured
         if self.redis_url:
@@ -179,7 +179,7 @@ class ConfigurationManager:
         
         self.logger.info(f"Configuration manager initialized for environment: {self.environment}")
     
-    async def register_configuration_set(self, config_set: ConfigurationSet):
+    async def register_configuration_set(self, config_set -> None: ConfigurationSet) -> None:
         """Register a configuration set with validation rules."""
         self.configuration_sets[config_set.name] = config_set
         
@@ -237,14 +237,14 @@ class ConfigurationManager:
     
     async def set_configuration(
         self,
-        config_name: str,
-        key: str,
-        value: Any,
-        source: ConfigurationSource = ConfigurationSource.DATABASE,
-        user: Optional[str] = None,
-        reason: Optional[str] = None,
-        persist: bool = True
-    ):
+        config_name -> None: str,
+        key -> None: str,
+        value -> None: Any,
+        source -> None: ConfigurationSource = ConfigurationSource.DATABASE,
+        user -> None: Optional[str] = None,
+        reason -> None: Optional[str] = None,
+        persist -> None: bool = True
+    ) -> None:
         """Set configuration value."""
         # Get current value for change tracking
         current_value = await self.get_configuration(config_name, key, use_cache=False)
@@ -300,7 +300,7 @@ class ConfigurationManager:
         
         self.logger.info(f"Configuration updated: {config_name}.{key}")
     
-    async def reload_configuration(self, config_name: str):
+    async def reload_configuration(self, config_name -> None: str) -> None:
         """Reload configuration from all sources."""
         # Clear cached configuration
         self.configurations.pop(config_name, None)
@@ -364,12 +364,12 @@ class ConfigurationManager:
         
         return validation_results
     
-    def add_change_listener(self, config_name: str, callback: Callable):
+    def add_change_listener(self, config_name -> None: str, callback -> None: Callable) -> None:
         """Add listener for configuration changes."""
         self.change_listeners[config_name].append(callback)
         self.logger.info(f"Added change listener for: {config_name}")
     
-    def remove_change_listener(self, config_name: str, callback: Callable):
+    def remove_change_listener(self, config_name -> None: str, callback -> None: Callable) -> None:
         """Remove configuration change listener."""
         if config_name in self.change_listeners:
             try:
@@ -403,12 +403,12 @@ class ConfigurationManager:
     
     async def import_configuration(
         self,
-        config_name: str,
-        data: str,
-        format_type: str = "json",
-        merge: bool = True,
-        validate: bool = True
-    ):
+        config_name -> None: str,
+        data -> None: str,
+        format_type -> None: str = "json",
+        merge -> None: bool = True,
+        validate -> None: bool = True
+    ) -> None:
         """Import configuration from data."""
         # Parse data
         if format_type.lower() == "json":
@@ -442,7 +442,7 @@ class ConfigurationManager:
         
         self.logger.info(f"Configuration imported: {config_name}")
     
-    async def _load_environment_configs(self):
+    async def _load_environment_configs(self) -> None:
         """Load configurations from environment variables."""
         env_configs = defaultdict(dict)
         
@@ -466,7 +466,7 @@ class ConfigurationManager:
                 self.configurations[config_name] = {}
             self._deep_merge(self.configurations[config_name], config)
     
-    async def _load_file_configs(self):
+    async def _load_file_configs(self) -> None:
         """Load configurations from files."""
         if not self.config_dir.exists():
             return
@@ -487,7 +487,7 @@ class ConfigurationManager:
         for config_file in self.config_dir.glob("*.yml"):
             await self._load_file_config(config_file)
     
-    async def _load_file_config(self, config_file: Path):
+    async def _load_file_config(self, config_file -> None: Path) -> None:
         """Load configuration from a specific file."""
         try:
             with open(config_file, 'r') as f:
@@ -508,13 +508,13 @@ class ConfigurationManager:
         except Exception as e:
             self.logger.error(f"Failed to load configuration file {config_file}: {e}")
     
-    async def _reload_file_config(self, file_path: str):
+    async def _reload_file_config(self, file_path -> None: str) -> None:
         """Reload configuration from a modified file."""
         config_file = Path(file_path)
         if config_file.is_relative_to(self.config_dir):
             await self._load_file_config(config_file)
     
-    async def _load_configuration(self, config_name: str):
+    async def _load_configuration(self, config_name -> None: str) -> None:
         """Load configuration from all sources."""
         if config_name not in self.configurations:
             self.configurations[config_name] = {}
@@ -531,7 +531,7 @@ class ConfigurationManager:
         
         self.metrics['total_configs'] = len(self.configurations)
     
-    async def _persist_configuration(self, config_name: str):
+    async def _persist_configuration(self, config_name -> None: str) -> None:
         """Persist configuration to storage backends."""
         config = self.configurations.get(config_name, {})
         
@@ -554,7 +554,7 @@ class ConfigurationManager:
         except Exception as e:
             self.logger.error(f"Failed to persist configuration to file: {e}")
     
-    async def _validate_configuration(self, config_name: str, config: Dict[str, Any]):
+    async def _validate_configuration(self, config_name -> None: str, config -> None: Dict[str, Any]) -> None:
         """Validate configuration against rules."""
         if config_name not in self.configuration_sets:
             return  # No validation rules defined
@@ -573,7 +573,7 @@ class ConfigurationManager:
             await self._validate_single_value(config_name, rule.key, 
                                              self._get_nested_value(config, rule.key))
     
-    async def _validate_single_value(self, config_name: str, key: str, value: Any):
+    async def _validate_single_value(self, config_name -> None: str, key -> None: str, value -> None: Any) -> None:
         """Validate a single configuration value."""
         if config_name not in self.configuration_sets:
             return
@@ -627,7 +627,7 @@ class ConfigurationManager:
             if not re.match(rule.pattern, value):
                 raise ValueError(f"Configuration {key} does not match pattern: {rule.pattern}")
     
-    async def _notify_change_listeners(self, config_name: str, key: str, old_value: Any, new_value: Any):
+    async def _notify_change_listeners(self, config_name -> None: str, key -> None: str, old_value -> None: Any, new_value -> None: Any) -> None:
         """Notify registered change listeners."""
         if config_name in self.change_listeners:
             for listener in self.change_listeners[config_name]:
@@ -652,7 +652,7 @@ class ConfigurationManager:
         
         return current
     
-    def _set_nested_value(self, data: Dict[str, Any], key: str, value: Any):
+    def _set_nested_value(self, data -> None: Dict[str, Any], key -> None: str, value -> None: Any) -> None:
         """Set nested value using dot notation."""
         keys = key.split('.')
         current = data
@@ -664,7 +664,7 @@ class ConfigurationManager:
         
         current[keys[-1]] = value
     
-    def _deep_merge(self, target: Dict[str, Any], source: Dict[str, Any]):
+    def _deep_merge(self, target -> None: Dict[str, Any], source -> None: Dict[str, Any]) -> None:
         """Deep merge source into target dictionary."""
         for key, value in source.items():
             if key in target and isinstance(target[key], dict) and isinstance(value, dict):
@@ -718,7 +718,7 @@ class ConfigurationManager:
             }
         }
     
-    async def cleanup(self):
+    async def cleanup(self) -> None:
         """Cleanup resources."""
         # Stop file observer
         if self.file_observer.is_alive():
@@ -732,7 +732,7 @@ class ConfigurationManager:
 
 # Example usage
 if __name__ == "__main__":
-    async def main():
+    async def main() -> None:
         # Initialize configuration manager
         config_manager = ConfigurationManager(
             redis_url="redis://localhost:6379",

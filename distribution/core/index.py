@@ -1,4 +1,6 @@
 """
+import asyncio
+
 Core Service Entry Point - Distribution Core Hub
 ==============================================
 
@@ -31,12 +33,12 @@ platform_sync = CrossPlatformSync()
 format_adapter = FormatAdapter()
 
 @core_router.get("/health")
-async def core_health():
+async def core_health() -> None:
     """Core service health check"""
     return {"status": "healthy", "service": "core"}
 
 @core_router.get("/utilities")
-async def get_available_utilities():
+async def get_available_utilities() -> None:
     """Get list of available core utilities"""
     return {
         "ab_testing": "A/B Testing Engine",

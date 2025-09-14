@@ -67,13 +67,13 @@ class OptimizationOrchestrator:
     and continuous improvement processes.
     """
     
-    def __init__(self, config: OptimizationConfig = None):
+    def __init__(self, config -> None: OptimizationConfig = None) -> None:
         """Initialize optimization orchestrator with configuration."""
         self.config = config or OptimizationConfig()
         self.workflows = {}
         self._initialize_workflows()
     
-    def _initialize_workflows(self):
+    def _initialize_workflows(self) -> None:
         """Initialize all optimization workflow instances."""
         self.workflows = {
             OptimizationWorkflowType.CONTENT_QUALITY: ContentQualityOptimizationWorkflow(),
@@ -153,13 +153,13 @@ class OptimizationOrchestrator:
         
         return sum(scores) / len(scores) if scores else 0.0
     
-    def get_workflow(self, workflow_type: OptimizationWorkflowType):
+    def get_workflow(self, workflow_type -> None: OptimizationWorkflowType) -> None:
         """Get specific optimization workflow instance."""
         return self.workflows.get(workflow_type)
 
 
 # Workflow factory function
-def create_optimization_workflow(workflow_type: OptimizationWorkflowType):
+def create_optimization_workflow(workflow_type -> None: OptimizationWorkflowType) -> None:
     """Factory function to create specific optimization workflow."""
     workflow_classes = {
         OptimizationWorkflowType.CONTENT_QUALITY: ContentQualityOptimizationWorkflow,

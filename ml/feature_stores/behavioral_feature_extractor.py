@@ -1,3 +1,8 @@
+"""
+Behavioral Feature Extractor module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
@@ -99,7 +104,7 @@ class BehavioralFeatureExtractor:
     temporal dynamics, and engagement prediction features.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize behavioral feature extractor."""
         self.config = config or {}
         self.user_behavior_history: Dict[str, List[UserBehaviorData]] = defaultdict(list)
@@ -121,7 +126,7 @@ class BehavioralFeatureExtractor:
         # Setup feature extractors
         self._initialize_feature_extractors()
     
-    def _initialize_creator_patterns(self):
+    def _initialize_creator_patterns(self) -> None:
         """Initialize creator-specific behavior patterns."""
         self.creator_behavior_patterns = {
             CreatorType.MUSICIAN: {
@@ -236,7 +241,7 @@ class BehavioralFeatureExtractor:
             }
         }
     
-    def _initialize_feature_extractors(self):
+    def _initialize_feature_extractors(self) -> None:
         """Initialize feature extraction functions."""
         self.feature_extractors = {
             FeatureCategory.TEMPORAL_PATTERNS: self._extract_temporal_features,
@@ -251,19 +256,19 @@ class BehavioralFeatureExtractor:
     
     async def log_user_behavior(
         self,
-        user_id: str,
-        behavior_type: BehaviorType,
-        timestamp: Optional[datetime] = None,
-        content_id: Optional[str] = None,
-        creator_id: Optional[str] = None,
-        creator_type: Optional[CreatorType] = None,
-        platform: Optional[str] = None,
-        session_id: Optional[str] = None,
-        duration: Optional[float] = None,
-        engagement_score: Optional[float] = None,
-        interaction_data: Optional[Dict[str, Any]] = None,
-        metadata: Optional[Dict[str, Any]] = None
-    ):
+        user_id -> None: str,
+        behavior_type -> None: BehaviorType,
+        timestamp -> None: Optional[datetime] = None,
+        content_id -> None: Optional[str] = None,
+        creator_id -> None: Optional[str] = None,
+        creator_type -> None: Optional[CreatorType] = None,
+        platform -> None: Optional[str] = None,
+        session_id -> None: Optional[str] = None,
+        duration -> None: Optional[float] = None,
+        engagement_score -> None: Optional[float] = None,
+        interaction_data -> None: Optional[Dict[str, Any]] = None,
+        metadata -> None: Optional[Dict[str, Any]] = None
+    ) -> None:
         """
         Log user behavior data for feature extraction.
         
@@ -1299,7 +1304,7 @@ __all__ = ['BehavioralFeatureExtractor', 'BehaviorType', 'CreatorType', 'Feature
 
 if __name__ == "__main__":
     # Test the behavioral feature extractor
-    async def test_behavioral_feature_extractor():
+    async def test_behavioral_feature_extractor() -> None:
         extractor = BehavioralFeatureExtractor()
         
         # Simulate user behavior data

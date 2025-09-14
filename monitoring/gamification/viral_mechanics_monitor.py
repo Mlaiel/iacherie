@@ -118,7 +118,7 @@ class ViralMechanicsMonitor:
     - Trend cascade monitoring
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize viral mechanics monitor"""
         self.config = config or {}
         self.viral_content: Dict[str, ViralContent] = {}
@@ -144,7 +144,7 @@ class ViralMechanicsMonitor:
         self._initialize_viral_monitoring()
         logger.info("Viral Mechanics Monitor initialized")
     
-    def _initialize_viral_monitoring(self):
+    def _initialize_viral_monitoring(self) -> None:
         """Initialize viral monitoring components"""
         try:
             # Setup viral detection algorithms
@@ -162,7 +162,7 @@ class ViralMechanicsMonitor:
             logger.error(f"Failed to initialize viral monitoring: {e}")
             raise
     
-    def _setup_viral_detection(self):
+    def _setup_viral_detection(self) -> None:
         """Setup viral content detection algorithms"""
         self.viral_indicators = {
             "engagement_acceleration": {
@@ -191,13 +191,13 @@ class ViralMechanicsMonitor:
             }
         }
     
-    def _initialize_network_analysis(self):
+    def _initialize_network_analysis(self) -> None:
         """Initialize social network analysis tools"""
         self.network_graph = nx.DiGraph()
         self.influence_propagation_model = None
         self.viral_path_cache = {}
     
-    def _setup_realtime_monitoring(self):
+    def _setup_realtime_monitoring(self) -> None:
         """Setup real-time viral monitoring"""
         self.monitoring_windows = {
             "immediate": timedelta(minutes=15),
@@ -260,7 +260,7 @@ class ViralMechanicsMonitor:
             logger.error(f"Failed to track content virality for {content_id}: {e}")
             return {"error": str(e)}
     
-    def _update_engagement_stream(self, content_id: str, engagement_data: Dict[str, Any]):
+    def _update_engagement_stream(self, content_id -> None: str, engagement_data -> None: Dict[str, Any]) -> None:
         """Update real-time engagement stream"""
         engagement_point = {
             "timestamp": datetime.now(),
@@ -399,7 +399,7 @@ class ViralMechanicsMonitor:
         
         return min(score, 1.0)
     
-    async def _update_viral_content(self, viral_content: ViralContent, viral_metrics: Dict[str, Any]):
+    async def _update_viral_content(self, viral_content -> None: ViralContent, viral_metrics -> None: Dict[str, Any]) -> None:
         """Update viral content with new metrics"""
         # Update metrics
         viral_content.viral_score = viral_metrics["viral_score"]
@@ -865,7 +865,7 @@ class ViralMechanicsMonitor:
 
 # Example usage and testing
 if __name__ == "__main__":
-    async def test_viral_mechanics():
+    async def test_viral_mechanics() -> None:
         """Test viral mechanics monitoring functionality"""
         monitor = ViralMechanicsMonitor()
         

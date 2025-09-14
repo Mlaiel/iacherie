@@ -145,7 +145,7 @@ class CampaignROI:
 class ROIAnalyticsEngine:
     """Main ROI analytics engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.revenue_entries: List[RevenueEntry] = []
         self.cost_entries: List[CostEntry] = []
         self.content_performance: Dict[str, ContentROI] = {}
@@ -567,7 +567,7 @@ class ROIAnalyticsEngine:
             logger.error(f"Failed to forecast ROI: {e}")
             return {"error": str(e)}
     
-    async def _update_content_roi(self, content_id: str):
+    async def _update_content_roi(self, content_id -> None: str) -> None:
         """Update ROI metrics for specific content"""
         try:
             # Get all revenue and costs for this content
@@ -608,7 +608,7 @@ class ROIAnalyticsEngine:
         except Exception as e:
             logger.error(f"Failed to update content ROI for {content_id}: {e}")
     
-    async def _update_campaign_roi(self, campaign_id: str):
+    async def _update_campaign_roi(self, campaign_id -> None: str) -> None:
         """Update ROI metrics for specific campaign"""
         try:
             # Get all revenue and costs for this campaign

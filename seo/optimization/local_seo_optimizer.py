@@ -125,17 +125,17 @@ class LocalSEOOptimizer:
     - Location-based content optimization
     """
     
-    def __init__(self, db_pool: asyncpg.Pool, api_keys: Dict[str, str]):
+    def __init__(self, db_pool -> None: asyncpg.Pool, api_keys -> None: Dict[str, str]) -> None:
         self.db_pool = db_pool
         self.api_keys = api_keys
         self.geocoder = Nominatim(user_agent="ainflue_local_seo")
         self.session = None
         
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         self.session = aiohttp.ClientSession()
         return self
         
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         if self.session:
             await self.session.close()
     
@@ -636,7 +636,7 @@ class LocalSEOOptimizer:
             ]
         }
     
-    async def _store_business_profile(self, profile: LocalBusinessProfile):
+    async def _store_business_profile(self, profile -> None: LocalBusinessProfile) -> None:
         """Store business profile in database."""
         try:
             async with self.db_pool.acquire() as conn:

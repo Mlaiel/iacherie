@@ -161,7 +161,7 @@ class EmailProvider:
     """
 Email notification provider"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         try:
             logger.info(f"Executing __init__")
             
@@ -233,7 +233,7 @@ Send email notification"""
 class WebhookProvider:
     """Webhook notification provider"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.timeout = config.get('timeout', 30)
         self.retry_delays = [1, 5, 15]  # seconds
@@ -316,7 +316,7 @@ Send webhook notification"""
 class SlackProvider:
     """Slack notification provider"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.bot_token = config.get('bot_token', '')
         self.webhook_url = config.get('webhook_url', '')
@@ -424,7 +424,7 @@ Send Slack notification"""
 class NotificationService:
     """Main notification service"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         
         # Initialize providers
@@ -460,7 +460,7 @@ class NotificationService:
         self._setup_default_templates()
         logger.info("Notification service initialized")
     
-    def _setup_default_templates(self):
+    def _setup_default_templates(self) -> None:
         """Setup default notification templates"""
         default_templates = [
             NotificationTemplate(
@@ -582,7 +582,7 @@ Immediate attention required!
         for template in default_templates:
             self.templates[template.id] = template
     
-    async def add_recipient(self, recipient: NotificationRecipient):
+    async def add_recipient(self, recipient -> None: NotificationRecipient) -> None:
         """Add notification recipient"""
         self.recipients[recipient.id] = recipient
         logger.info(f"Added notification recipient: {recipient.name} ({recipient.id})")
@@ -708,7 +708,7 @@ Immediate attention required!
             logger.error(f"Error creating message: {e}")
             return None
     
-    async def _queue_message(self, message: NotificationMessage):
+    async def _queue_message(self, message -> None: NotificationMessage) -> None:
         """Add message to processing queue"""
         try:
             # Check queue size limit
@@ -727,7 +727,7 @@ Immediate attention required!
         except Exception as e:
             logger.error(f"Error queuing message: {e}")
     
-    async def start_processing(self):
+    async def start_processing(self) -> None:
         """Start message queue processing"""
         if self.processing:
             return
@@ -736,7 +736,7 @@ Immediate attention required!
         self.processing_task = asyncio.create_task(self._process_queue())
         logger.info("Started notification queue processing")
     
-    async def stop_processing(self):
+    async def stop_processing(self) -> None:
         """Stop message queue processing"""
         self.processing = False
         if self.processing_task:
@@ -747,7 +747,7 @@ Immediate attention required!
                 pass
         logger.info("Stopped notification queue processing")
     
-    async def _process_queue(self):
+    async def _process_queue(self) -> None:
         """Process notification message queue"""
         while self.processing:
             try:
@@ -778,7 +778,7 @@ Immediate attention required!
                 logger.error(f"Error processing notification queue: {e}")
                 await asyncio.sleep(5)
     
-    async def _send_message(self, message: NotificationMessage):
+    async def _send_message(self, message -> None: NotificationMessage) -> None:
         """Send individual message"""
         try:
             # Check rate limiting
@@ -893,14 +893,14 @@ Immediate attention required!
             logger.error(f"Error getting message status: {e}")
             return None
     
-    async def mark_message_delivered(self, message_id: str):
+    async def mark_message_delivered(self, message_id -> None: str) -> None:
         """Mark message as delivered"""
         message = self.sent_messages.get(message_id)
         if message:
             message.status = NotificationStatus.DELIVERED
             message.delivered_at = datetime.utcnow()
     
-    async def mark_message_read(self, message_id: str):
+    async def mark_message_read(self, message_id -> None: str) -> None:
         """
 Mark message as read"""
         message = self.sent_messages.get(message_id)
@@ -944,7 +944,7 @@ Get notification service statistics"""
             logger.error(f"Error getting notification statistics: {e}")
             return {}
     
-    async def cleanup_old_messages(self):
+    async def cleanup_old_messages(self) -> None:
         """Clean up old messages"""
         try:
             cutoff_date = datetime.utcnow() - timedelta(days=self.message_retention_days)
@@ -974,7 +974,7 @@ Get notification service statistics"""
         except Exception as e:
             logger.error(f"Error cleaning up old messages: {e}")
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Shutdown notification service"""
         try:
             await self.stop_processing()

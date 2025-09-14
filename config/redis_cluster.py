@@ -36,7 +36,7 @@ class DistributedCache:
     Provides high-performance caching for API responses and computations
     """
     
-    def __init__(self, config: CacheConfig):
+    def __init__(self, config -> None: CacheConfig) -> None:
         self.config = config
         self.cluster: Optional[RedisCluster] = None
         self.logger = self._setup_logger()
@@ -91,7 +91,7 @@ class DistributedCache:
             self.is_healthy = False
             return False
     
-    async def close(self):
+    async def close(self) -> None:
         """Close Redis cluster connection"""
         if self.cluster:
             await self.cluster.close()
@@ -260,12 +260,12 @@ class CacheManager:
     Provides specialized caching for different components
     """
     
-    def __init__(self, cache: DistributedCache):
+    def __init__(self, cache -> None: DistributedCache) -> None:
         self.cache = cache
         self.logger = logging.getLogger("ainflue.cache_manager")
     
     # API Response Caching
-    async def cache_api_response(self, endpoint: str, params: Dict, response: Any, ttl: int = 300):
+    async def cache_api_response(self, endpoint -> None: str, params -> None: Dict, response -> None: Any, ttl -> None: int = 300) -> None:
         """Cache API response for 5 minutes by default"""
         key = self.cache._generate_key("api", endpoint, **params)
         return await self.cache.set(key, response, ttl)
@@ -276,7 +276,7 @@ class CacheManager:
         return await self.cache.get(key)
     
     # Validation Results Caching
-    async def cache_validation_result(self, content_hash: str, validation_type: str, result: Any, ttl: int = 1800):
+    async def cache_validation_result(self, content_hash -> None: str, validation_type -> None: str, result -> None: Any, ttl -> None: int = 1800) -> None:
         """Cache validation result for 30 minutes"""
         key = self.cache._generate_key("validation", f"{content_hash}_{validation_type}")
         return await self.cache.set(key, result, ttl)
@@ -287,7 +287,7 @@ class CacheManager:
         return await self.cache.get(key)
     
     # AI Model Results Caching
-    async def cache_ai_result(self, model_name: str, input_hash: str, result: Any, ttl: int = 3600):
+    async def cache_ai_result(self, model_name -> None: str, input_hash -> None: str, result -> None: Any, ttl -> None: int = 3600) -> None:
         """Cache AI model result for 1 hour"""
         key = self.cache._generate_key("ai", f"{model_name}_{input_hash}")
         return await self.cache.set(key, result, ttl)
@@ -298,7 +298,7 @@ class CacheManager:
         return await self.cache.get(key)
     
     # User Session Caching
-    async def cache_user_session(self, user_id: str, session_data: Dict, ttl: int = 7200):
+    async def cache_user_session(self, user_id -> None: str, session_data -> None: Dict, ttl -> None: int = 7200) -> None:
         """Cache user session for 2 hours"""
         key = self.cache._generate_key("session", user_id)
         return await self.cache.set(key, session_data, ttl)
@@ -314,7 +314,7 @@ class CacheManager:
         return await self.cache.delete(key)
     
     # Content Metadata Caching
-    async def cache_content_metadata(self, content_id: str, metadata: Dict, ttl: int = 86400):
+    async def cache_content_metadata(self, content_id -> None: str, metadata -> None: Dict, ttl -> None: int = 86400) -> None:
         """Cache content metadata for 24 hours"""
         key = self.cache._generate_key("content", content_id)
         return await self.cache.set(key, metadata, ttl)
@@ -325,7 +325,7 @@ class CacheManager:
         return await self.cache.get(key)
     
     # Analytics Caching
-    async def cache_analytics_data(self, query_hash: str, data: Any, ttl: int = 1800):
+    async def cache_analytics_data(self, query_hash -> None: str, data -> None: Any, ttl -> None: int = 1800) -> None:
         """Cache analytics data for 30 minutes"""
         key = self.cache._generate_key("analytics", query_hash)
         return await self.cache.set(key, data, ttl)
@@ -371,7 +371,7 @@ def create_cache_instance() -> tuple[DistributedCache, CacheManager]:
 cache_instance: Optional[DistributedCache] = None
 cache_manager: Optional[CacheManager] = None
 
-async def initialize_cache():
+async def initialize_cache() -> None:
     """Initialize global cache instances"""
     global cache_instance, cache_manager
     
@@ -385,7 +385,7 @@ async def initialize_cache():
     
     return success
 
-async def cleanup_cache():
+async def cleanup_cache() -> None:
     """Cleanup cache connections"""
     global cache_instance
     
@@ -393,10 +393,10 @@ async def cleanup_cache():
         await cache_instance.close()
 
 # Cache decorators for easy use
-def cache_result(ttl: int = 3600, namespace: str = "general"):
+def cache_result(ttl -> None: int = 3600, namespace -> None: str = "general") -> None:
     """Decorator to cache function results"""
-    def decorator(func):
-        async def wrapper(*args, **kwargs):
+    def decorator(func) -> None:
+        async def wrapper(*args, **kwargs) -> None:
             if cache_manager is None:
                 # Cache not available, execute function directly
                 if asyncio.iscoroutinefunction(func):
@@ -428,7 +428,7 @@ def cache_result(ttl: int = 3600, namespace: str = "general"):
 
 if __name__ == "__main__":
     # Example usage and testing
-    async def test_cache():
+    async def test_cache() -> None:
         cache, manager = create_cache_instance()
         
         # Initialize cache

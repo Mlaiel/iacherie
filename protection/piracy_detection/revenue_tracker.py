@@ -135,7 +135,7 @@ class MarketDataProvider:
     """
 Provides market data and industry benchmarks."""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.data_sources = {
             'spotify_api': config.get('spotify_api_key'),
@@ -222,7 +222,7 @@ class RevenueCalculator:
     """
 Calculates revenue metrics and loss estimates."""
     
-    def __init__(self, market_data_provider: MarketDataProvider):
+    def __init__(self, market_data_provider -> None: MarketDataProvider) -> None:
         try:
             logger.info(f"Executing __init__")
             
@@ -364,7 +364,7 @@ class RevenueImpactTracker:
     with market intelligence and ROI optimization capabilities.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Revenue Impact Tracker.
         

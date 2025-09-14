@@ -1,3 +1,8 @@
+"""
+Load Balancer Controller module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Enterprise Load Balancer Controller Service
@@ -131,7 +136,7 @@ class LoadBalancerController:
     - Rate limiting integration
     """
     
-    def __init__(self, config: LoadBalancerConfig):
+    def __init__(self, config -> None: LoadBalancerConfig) -> None:
         """Initialize load balancer controller"""
         self.config = config
         self.backends: Dict[str, Backend] = {}
@@ -167,7 +172,7 @@ class LoadBalancerController:
         
         logger.info("LoadBalancerController initialized for service: %s", config.service_name)
     
-    async def start(self):
+    async def start(self) -> None:
         """Start the load balancer controller"""
         try:
             # Create HTTP session
@@ -183,7 +188,7 @@ class LoadBalancerController:
             logger.error("Failed to start LoadBalancerController: %s", e)
             raise
     
-    async def stop(self):
+    async def stop(self) -> None:
         """Stop the load balancer controller"""
         try:
             self.shutdown_event.set()
@@ -205,7 +210,7 @@ class LoadBalancerController:
         except Exception as e:
             logger.error("Error stopping LoadBalancerController: %s", e)
     
-    async def add_backend(self, backend: Backend):
+    async def add_backend(self, backend -> None: Backend) -> None:
         """Add a backend server"""
         async with self._lock:
             self.backends[backend.id] = backend
@@ -217,7 +222,7 @@ class LoadBalancerController:
         
         logger.info("Added backend %s for service %s", backend.id, self.config.service_name)
     
-    async def remove_backend(self, backend_id: str):
+    async def remove_backend(self, backend_id -> None: str) -> None:
         """Remove a backend server"""
         async with self._lock:
             if backend_id in self.backends:
@@ -296,11 +301,11 @@ class LoadBalancerController:
     
     async def complete_request(
         self,
-        backend_id: str,
-        response_time: float,
-        success: bool,
-        context: RequestContext
-    ):
+        backend_id -> None: str,
+        response_time -> None: float,
+        success -> None: bool,
+        context -> None: RequestContext
+    ) -> None:
         """Mark request as completed and update metrics"""
         async with self._lock:
             backend = self.backends.get(backend_id)
@@ -561,7 +566,7 @@ class LoadBalancerController:
         
         return True
     
-    async def _update_hash_ring(self):
+    async def _update_hash_ring(self) -> None:
         """Update consistent hash ring"""
         self.hash_ring.clear()
         
@@ -591,7 +596,7 @@ class LoadBalancerController:
         history.append(current_time)
         return True
     
-    async def _cleanup_expired_sessions(self):
+    async def _cleanup_expired_sessions(self) -> None:
         """Clean up expired sessions"""
         current_time = time.time()
         expired_sessions = [
@@ -603,7 +608,7 @@ class LoadBalancerController:
             self.session_assignments.pop(session_id, None)
             self.session_timeouts.pop(session_id, None)
     
-    async def _drain_backend(self, backend_id: str):
+    async def _drain_backend(self, backend_id -> None: str) -> None:
         """Drain connections from a backend"""
         backend = self.backends.get(backend_id)
         if not backend:
@@ -624,7 +629,7 @@ class LoadBalancerController:
                 backend_id, backend.current_connections
             )
     
-    async def _health_check_loop(self):
+    async def _health_check_loop(self) -> None:
         """Health check loop for all backends"""
         while not self.shutdown_event.is_set():
             try:
@@ -636,7 +641,7 @@ class LoadBalancerController:
                 logger.error("Error in health check loop: %s", e)
                 await asyncio.sleep(self.config.health_check_interval)
     
-    async def _perform_health_checks(self):
+    async def _perform_health_checks(self) -> None:
         """Perform health checks on all backends"""
         if not self.session:
             return
@@ -686,7 +691,7 @@ async def get_load_balancer(service_name: str, config: Optional[LoadBalancerConf
     
     return _load_balancers[service_name]
 
-async def shutdown_load_balancers():
+async def shutdown_load_balancers() -> None:
     """Shutdown all load balancer instances"""
     global _load_balancers
     
@@ -696,7 +701,7 @@ async def shutdown_load_balancers():
     _load_balancers.clear()
 
 if __name__ == "__main__":
-    async def test_load_balancer():
+    async def test_load_balancer() -> None:
         """Test load balancer functionality"""
         config = LoadBalancerConfig(
             service_name="test_service",

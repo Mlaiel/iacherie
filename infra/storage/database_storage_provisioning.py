@@ -1,3 +1,8 @@
+"""
+Database Storage Provisioning module
+Enterprise implementation for Ainflue platform
+"""
+
 # Ainflue Infrastructure Module - Database Storage Provisioning
 # ============================================================
 # 
@@ -90,7 +95,7 @@ class DatabaseStorageProvisioner:
     - Cost optimization strategies
     """
     
-    def __init__(self, config_path: str = None):
+    def __init__(self, config_path -> None: str = None) -> None:
         """Initialize database storage provisioner"""
         self.config_path = config_path
         self.providers = {}
@@ -100,7 +105,7 @@ class DatabaseStorageProvisioner:
         
         logger.info("Database Storage Provisioner initialized")
     
-    async def initialize_providers(self, providers_config: Dict[str, Any]):
+    async def initialize_providers(self, providers_config -> None: Dict[str, Any]) -> None:
         """Initialize cloud providers"""
         try:
             # Initialize AWS
@@ -510,7 +515,7 @@ CREATOR_DATABASE_CONFIGS = {
 }
 
 
-async def main():
+async def main() -> None:
     """Example usage of Database Storage Provisioner"""
     provisioner = DatabaseStorageProvisioner()
     

@@ -72,7 +72,7 @@ class DashboardConfig:
 class MonitoringManager:
     """Unified monitoring infrastructure management"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.prometheus_manager = PrometheusManager()
         self.grafana_manager = GrafanaManager()
         self.alert_manager = AlertManager()
@@ -114,7 +114,7 @@ class MonitoringManager:
 class PrometheusManager:
     """Prometheus monitoring management"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.config = {}
         self.scrape_configs = []
         self.alert_rules = []
@@ -151,7 +151,7 @@ class PrometheusManager:
             self.logger.error(f"Failed to initialize Prometheus: {e}")
             return False
     
-    async def _add_default_scrape_configs(self):
+    async def _add_default_scrape_configs(self) -> None:
         """Add default scrape configurations"""
         default_configs = [
             {
@@ -177,7 +177,7 @@ class PrometheusManager:
         
         self.scrape_configs.extend(default_configs)
     
-    async def add_scrape_target(self, job_name: str, targets: List[str], labels: Optional[Dict[str, str]] = None):
+    async def add_scrape_target(self, job_name -> None: str, targets -> None: List[str], labels -> None: Optional[Dict[str, str]] = None) -> None:
         """Add scrape target to Prometheus"""
         scrape_config = {
             'job_name': job_name,
@@ -218,7 +218,7 @@ class PrometheusManager:
 class GrafanaManager:
     """Grafana dashboard management"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.dashboards = []
         self.datasources = []
         self.logger = logging.getLogger(__name__)
@@ -239,7 +239,7 @@ class GrafanaManager:
             self.logger.error(f"Failed to initialize Grafana: {e}")
             return False
     
-    async def _add_default_datasources(self):
+    async def _add_default_datasources(self) -> None:
         """Add default datasources"""
         prometheus_datasource = {
             'name': 'Prometheus',
@@ -251,7 +251,7 @@ class GrafanaManager:
         
         self.datasources.append(prometheus_datasource)
     
-    async def _create_default_dashboards(self):
+    async def _create_default_dashboards(self) -> None:
         """Create default dashboards"""
         # Infrastructure overview dashboard
         infra_dashboard = DashboardConfig(
@@ -305,7 +305,7 @@ class GrafanaManager:
 class AlertManager:
     """Alert management and notification"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.config = {}
         self.notification_channels = []
         self.active_alerts = []
@@ -339,7 +339,7 @@ class AlertManager:
             self.logger.error(f"Failed to initialize AlertManager: {e}")
             return False
     
-    async def _add_default_receivers(self):
+    async def _add_default_receivers(self) -> None:
         """Add default notification receivers"""
         default_receiver = {
             'name': 'default',
@@ -352,7 +352,7 @@ class AlertManager:
         
         self.config['receivers'].append(default_receiver)
     
-    async def send_alert(self, alert_name: str, severity: AlertSeverity, message: str, labels: Optional[Dict[str, str]] = None):
+    async def send_alert(self, alert_name -> None: str, severity -> None: AlertSeverity, message -> None: str, labels -> None: Optional[Dict[str, str]] = None) -> None:
         """Send alert notification"""
         try:
             alert = {
@@ -377,13 +377,13 @@ class AlertManager:
 class MetricsCollector:
     """Infrastructure metrics collection"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.metrics = {}
         self.collection_interval = 30  # seconds
         self.collectors = []
         self.logger = logging.getLogger(__name__)
     
-    async def start_collection(self):
+    async def start_collection(self) -> None:
         """Start metrics collection"""
         try:
             # Register default collectors
@@ -397,7 +397,7 @@ class MetricsCollector:
         except Exception as e:
             self.logger.error(f"Failed to start metrics collection: {e}")
     
-    async def _register_default_collectors(self):
+    async def _register_default_collectors(self) -> None:
         """Register default metric collectors"""
         self.collectors = [
             self._collect_system_metrics,
@@ -406,7 +406,7 @@ class MetricsCollector:
             self._collect_docker_metrics
         ]
     
-    async def _collection_loop(self):
+    async def _collection_loop(self) -> None:
         """Main metrics collection loop"""
         while True:
             try:
@@ -419,7 +419,7 @@ class MetricsCollector:
                 self.logger.error(f"Error in metrics collection: {e}")
                 await asyncio.sleep(self.collection_interval)
     
-    async def _collect_system_metrics(self):
+    async def _collect_system_metrics(self) -> None:
         """Collect system metrics"""
         # Simulate system metrics collection
         self.metrics.update({
@@ -429,7 +429,7 @@ class MetricsCollector:
             'system_network_io': 1024000
         })
     
-    async def _collect_application_metrics(self):
+    async def _collect_application_metrics(self) -> None:
         """Collect application metrics"""
         # Simulate application metrics collection
         self.metrics.update({
@@ -439,7 +439,7 @@ class MetricsCollector:
             'app_active_connections': 234
         })
     
-    async def _collect_kubernetes_metrics(self):
+    async def _collect_kubernetes_metrics(self) -> None:
         """Collect Kubernetes metrics"""
         # Simulate Kubernetes metrics collection
         self.metrics.update({
@@ -449,7 +449,7 @@ class MetricsCollector:
             'k8s_services_active': 18
         })
     
-    async def _collect_docker_metrics(self):
+    async def _collect_docker_metrics(self) -> None:
         """Collect Docker metrics"""
         # Simulate Docker metrics collection
         self.metrics.update({
@@ -462,13 +462,13 @@ class MetricsCollector:
 class LogAggregator:
     """Log aggregation and processing"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.log_sources = []
         self.log_processors = []
         self.log_storage = []
         self.logger = logging.getLogger(__name__)
     
-    async def start_aggregation(self):
+    async def start_aggregation(self) -> None:
         """Start log aggregation"""
         try:
             # Configure log sources
@@ -482,7 +482,7 @@ class LogAggregator:
         except Exception as e:
             self.logger.error(f"Failed to start log aggregation: {e}")
     
-    async def _configure_log_sources(self):
+    async def _configure_log_sources(self) -> None:
         """Configure log sources"""
         self.log_sources = [
             {'type': 'kubernetes', 'path': '/var/log/pods/*/*/*'},
@@ -491,7 +491,7 @@ class LogAggregator:
             {'type': 'system', 'path': '/var/log/syslog'}
         ]
     
-    async def _log_processing_loop(self):
+    async def _log_processing_loop(self) -> None:
         """Main log processing loop"""
         while True:
             try:
@@ -505,7 +505,7 @@ class LogAggregator:
                 self.logger.error(f"Error in log processing: {e}")
                 await asyncio.sleep(10)
     
-    async def _process_log_source(self, source: Dict[str, str]):
+    async def _process_log_source(self, source -> None: Dict[str, str]) -> None:
         """Process logs from a specific source"""
         # Simulate log processing
         self.logger.debug(f"Processing logs from {source['type']}: {source['path']}")
@@ -515,7 +515,7 @@ class LogAggregator:
 class AIAnalyticsEngine:
     """AI analytics and performance monitoring"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.metrics_collector = MetricsCollector()
         self.logger = logging.getLogger(__name__)
     
@@ -532,7 +532,7 @@ class AIAnalyticsEngine:
 class BusinessMetricsCollector:
     """Business metrics collection and monitoring"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
     
     async def collect_business_metrics(self) -> Dict[str, Any]:
@@ -548,7 +548,7 @@ class BusinessMetricsCollector:
 class SecurityMonitor:
     """Security monitoring and threat detection"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.alert_manager = AlertManager()
         self.logger = logging.getLogger(__name__)
     
@@ -572,7 +572,7 @@ class ObservabilityStack:
     - Infrastructure health monitoring
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.monitoring_manager = MonitoringManager()
         self.prometheus = PrometheusManager()
         self.grafana = GrafanaManager()
@@ -905,7 +905,7 @@ class AnalyticsInfrastructureManager:
     - Performance optimization insights
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
         self.analytics_pipeline = {
             'data_ingestion': [],

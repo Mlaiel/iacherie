@@ -152,7 +152,7 @@ class TextProcessor:
     """
 Professional text processing and NLP engine"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or self._get_default_config()
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
@@ -181,7 +181,7 @@ Professional text processing and NLP engine"""
             'similarity_threshold': 0.8
         }
     
-    def _initialize_engines(self):
+    def _initialize_engines(self) -> None:
         """
 Initialize text processing engines"""
         try:
@@ -501,7 +501,7 @@ class TextProcessor:
     """
 Professional text processing engine"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or self._get_default_config()
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
@@ -532,7 +532,7 @@ Professional text processing engine"""
             'max_keywords': 50
         }
     
-    def _initialize_engines(self):
+    def _initialize_engines(self) -> None:
         """
 Initialize text processing engines"""
         try:

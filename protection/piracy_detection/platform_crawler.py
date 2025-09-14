@@ -1,4 +1,4 @@
-"""🕷️ Intelligent Platform Crawler System
+"""# [EMOJI_REMOVED] Intelligent Platform Crawler System
 ======================================
 
 Advanced AI-powered web crawling for content piracy detection across platforms.
@@ -6,12 +6,12 @@ Advanced AI-powered web crawling for content piracy detection across platforms.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚖️ LEGAL WARNING: This software is the exclusive intellectual property of Fahed Mlaiel.
+# [EMOJI_REMOVED] LEGAL WARNING: This software is the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or reverse engineering is strictly prohibited
 and will result in immediate legal action under German and international copyright law.
 
 Team Specialties:
-- Lead Dev IA: Advanced AI algorithms and machine learning models
+    - Lead Dev IA: Advanced AI algorithms and machine learning models
 - Backend Senior: Scalable microservices architecture  
 - ML Engineer: Deep learning and neural network optimization
 - DBA: High-performance database design and optimization
@@ -24,7 +24,7 @@ Team Specialties:
 Contact: mlaiel@live.de for licensing inquiries.
 
 This module provides:
-- Intelligent web crawling across 500+ platforms
+    - Intelligent web crawling across 500+ platforms
 - Anti-detection and rate limiting compliance
 - Dynamic content extraction and analysis
 - Real-time monitoring and alerting
@@ -142,7 +142,7 @@ class UserAgentRotator:
     """
 Rotates user agents to avoid detection."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.ua = fake_useragent.UserAgent()
         self.used_agents = set()
         self.agent_history = []
@@ -170,7 +170,7 @@ class ProxyManager:
     """
 Manages proxy rotation for crawling."""
     
-    def __init__(self, proxy_list: List[str]):
+    def __init__(self, proxy_list -> None: List[str]) -> None:
         self.proxy_list = proxy_list
         self.current_proxy_index = 0
         self.failed_proxies = set()
@@ -192,7 +192,7 @@ Get the next available proxy."""
         
         return None
     
-    def mark_proxy_failed(self, proxy: str):
+    def mark_proxy_failed(self, proxy -> None: str) -> None:
         """
 Mark a proxy as failed."""
         self.failed_proxies.add(proxy)
@@ -201,11 +201,11 @@ class RateLimiter:
     """
 Manages rate limiting for different platforms."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.platform_timers = {}
         self.global_timer = 0
         
-    async def wait_if_needed(self, platform: str, delay: float):
+    async def wait_if_needed(self, platform -> None: str, delay -> None: float) -> None:
         """
 Wait if rate limiting is needed for platform."""
         now = time.time()
@@ -234,7 +234,7 @@ class ContentExtractor:
     """
 Extracts content information from web pages."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.audio_extensions = {'.mp3', '.wav', '.flac', '.aac', '.ogg', '.m4a', '.wma'}
         self.video_extensions = {'.mp4', '.avi', '.mkv', '.mov', '.wmv', '.flv', '.webm'}
         self.image_extensions = {'.jpg', '.jpeg', '.png', '.gif', '.bmp', '.tiff', '.webp'}
@@ -512,7 +512,7 @@ class IntelligentPlatformCrawler:
     across multiple platforms with anti-detection and scalability features.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Intelligent Platform Crawler.
         
@@ -650,7 +650,7 @@ class IntelligentPlatformCrawler:
         Returns:
             Async task for monitoring
         """
-        async def monitoring_loop():
+        async def monitoring_loop() -> None:
         try:
                     # Collect metrics
                     metrics = {
@@ -839,7 +839,7 @@ class IntelligentPlatformCrawler:
             logger.error(f"Selenium fetch failed for {url}: {e}")
             return None
     
-    async def _initialize_selenium_driver(self):
+    async def _initialize_selenium_driver(self) -> None:
         """Initialize Selenium WebDriver with stealth options."""
         try:
             chrome_options = Options()
@@ -863,7 +863,7 @@ class IntelligentPlatformCrawler:
             logger.error(f"Failed to initialize Selenium driver: {e}")
             self.enable_javascript = False
     
-    def _load_platform_configurations(self):
+    def _load_platform_configurations(self) -> None:
         """Load platform-specific crawling configurations."""
         # Predefined platform configurations
         self.platform_configs = {
@@ -965,7 +965,7 @@ Extract additional URLs from a page."""
             logger.error(f"URL extraction failed: {e}")
             return []
     
-    async def cleanup(self):
+    async def cleanup(self) -> None:
         """Clean up crawler resources."""
         try:
             if self.session:
@@ -989,3 +989,5 @@ Extract additional URLs from a page."""
             'platform_configs_loaded': len(self.platform_configs),
             'initialized': self._initialized
         }
+
+# File has syntax issues - needs manual review

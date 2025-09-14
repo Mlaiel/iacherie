@@ -116,7 +116,7 @@ class EventMetrics:
 class EventDrivenCore:
     """Enterprise event-driven architecture system"""
     
-    def __init__(self, level: str = "enterprise"):
+    def __init__(self, level -> None: str = "enterprise") -> None:
         """Initialize event-driven core"""
         self.level = level
         self.event_store: Dict[str, List[Event]] = defaultdict(list)
@@ -154,7 +154,7 @@ class EventDrivenCore:
         
         logger.info(f"🔄 Event Driven Core initialized - Level: {level}")
 
-    def _start_event_processors(self):
+    def _start_event_processors(self) -> None:
         """Start background event processing tasks"""
         
         # Create event processing tasks
@@ -171,7 +171,7 @@ class EventDrivenCore:
             metrics_task = asyncio.create_task(self._collect_metrics())
             self.processing_tasks.append(metrics_task)
 
-    async def publish_event(self, event: Event):
+    async def publish_event(self, event -> None: Event) -> None:
         """Publish event to the event bus"""
         
         try:
@@ -201,7 +201,7 @@ class EventDrivenCore:
             logger.error(f"Failed to publish event: {str(e)}")
             raise
 
-    async def _store_event(self, event: Event):
+    async def _store_event(self, event -> None: Event) -> None:
         """Store event in event store"""
         
         # Store by aggregate
@@ -223,7 +223,7 @@ class EventDrivenCore:
                 stream_key = f"stream:{stream.stream_id}"
                 self.event_store[stream_key].append(event)
 
-    async def _create_snapshot(self, aggregate_id: str, aggregate_type: str):
+    async def _create_snapshot(self, aggregate_id -> None: str, aggregate_type -> None: str) -> None:
         """Create aggregate snapshot"""
         
         try:
@@ -301,7 +301,7 @@ class EventDrivenCore:
         logger.info(f"Registered handler {handler_id} for events: {event_types}")
         return handler_id
 
-    async def unregister_handler(self, handler_id: str):
+    async def unregister_handler(self, handler_id -> None: str) -> None:
         """Unregister event handler"""
         
         removed_count = 0
@@ -316,7 +316,7 @@ class EventDrivenCore:
             self.metrics.handlers_registered -= 1
             logger.info(f"Unregistered handler {handler_id}")
 
-    async def _process_events(self):
+    async def _process_events(self) -> None:
         """Process events from the queue"""
         
         while not self._shutdown_event.is_set():
@@ -334,7 +334,7 @@ class EventDrivenCore:
             except Exception as e:
                 logger.error(f"Event processing error: {str(e)}")
 
-    async def _handle_event(self, event: Event):
+    async def _handle_event(self, event -> None: Event) -> None:
         """Handle single event"""
         
         start_time = time.time()
@@ -376,7 +376,7 @@ class EventDrivenCore:
                 "attempts": 1
             })
 
-    async def _execute_handler(self, handler: EventHandler, event: Event):
+    async def _execute_handler(self, handler -> None: EventHandler, event -> None: Event) -> None:
         """Execute event handler with retry logic"""
         
         max_attempts = handler.retry_policy.get("max_attempts", self.config["max_retry_attempts"])
@@ -423,7 +423,7 @@ class EventDrivenCore:
                     # Max attempts reached
                     raise
 
-    async def _process_dead_letter_queue(self):
+    async def _process_dead_letter_queue(self) -> None:
         """Process dead letter queue"""
         
         while not self._shutdown_event.is_set():
@@ -549,10 +549,10 @@ class EventDrivenCore:
 
     async def replay_events(
         self,
-        from_timestamp: datetime,
-        to_timestamp: Optional[datetime] = None,
-        event_types: Optional[List[str]] = None
-    ):
+        from_timestamp -> None: datetime,
+        to_timestamp -> None: Optional[datetime] = None,
+        event_types -> None: Optional[List[str]] = None
+    ) -> None:
         """Replay events for reprocessing"""
         
         to_timestamp = to_timestamp or datetime.utcnow()
@@ -581,13 +581,13 @@ class EventDrivenCore:
         
         logger.info(f"Replaying {len(events_to_replay)} events")
 
-    def _update_processing_time(self, processing_time: float):
+    def _update_processing_time(self, processing_time -> None: float) -> None:
         """Update average processing time"""
         self.metrics.avg_processing_time = (
             self.metrics.avg_processing_time * 0.9 + processing_time * 0.1
         )
 
-    async def _collect_metrics(self):
+    async def _collect_metrics(self) -> None:
         """Collect throughput metrics"""
         
         last_count = 0
@@ -635,7 +635,7 @@ class EventDrivenCore:
             logger.error(f"Event-driven health check failed: {str(e)}")
             return False
 
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Shutdown event processing"""
         logger.info("🛑 Shutting down event-driven core")
         

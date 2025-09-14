@@ -111,7 +111,7 @@ class StakeholderReportingSystem:
     Automated stakeholder reporting system
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
         self.recipients: Dict[str, ReportRecipient] = {}
         self.templates: Dict[str, ReportTemplate] = {}
@@ -123,7 +123,7 @@ class StakeholderReportingSystem:
         self._setup_default_recipients()
         self._setup_default_schedules()
 
-    def _setup_default_templates(self):
+    def _setup_default_templates(self) -> None:
         """Setup default report templates"""
         self.templates.update({
             "executive_weekly": ReportTemplate(
@@ -194,7 +194,7 @@ class StakeholderReportingSystem:
             )
         })
 
-    def _setup_default_recipients(self):
+    def _setup_default_recipients(self) -> None:
         """Setup default report recipients"""
         self.recipients.update({
             "ceo": ReportRecipient(
@@ -256,7 +256,7 @@ class StakeholderReportingSystem:
             )
         })
 
-    def _setup_default_schedules(self):
+    def _setup_default_schedules(self) -> None:
         """Setup default report schedules"""
         self.schedules.update({
             "daily_executive": ReportSchedule(

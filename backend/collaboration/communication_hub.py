@@ -228,7 +228,7 @@ class ActivityStream:
     - WebSocket broadcasting
     """
     
-    def __init__(self, redis_client=None, db_session=None):
+    def __init__(self, redis_client=None, db_session=None) -> None:
         self.redis_client = redis_client
         self.db_session = db_session
         self.activity_buffer = deque(maxlen=10000)
@@ -238,7 +238,7 @@ class ActivityStream:
         self.running = False
         self._setup_aggregation_rules()
     
-    def _setup_aggregation_rules(self):
+    def _setup_aggregation_rules(self) -> None:
         """Configure les règles d'agrégation d'événements"""
         self.aggregation_rules = {
             ActivityType.MESSAGE_SENT: {
@@ -253,7 +253,7 @@ class ActivityStream:
             }
         }
     
-    async def start_streaming(self):
+    async def start_streaming(self) -> None:
         """Démarre le streaming d'activités"""
         self.running = True
         logger.info("ActivityStream: Streaming démarré")
@@ -267,12 +267,12 @@ class ActivityStream:
         
         await asyncio.gather(*tasks)
     
-    async def stop_streaming(self):
+    async def stop_streaming(self) -> None:
         """Arrête le streaming"""
         self.running = False
         logger.info("ActivityStream: Streaming arrêté")
     
-    async def add_activity(self, activity: ActivityEvent):
+    async def add_activity(self, activity -> None: ActivityEvent) -> None:
         """Ajoute une nouvelle activité au stream"""
         try:
             # Validation de l'activité
@@ -343,7 +343,7 @@ class ActivityStream:
             logger.error(f"Erreur lors de la récupération du stream: {e}")
             return []
     
-    async def subscribe_to_activities(self, user_id: str, callback: Callable, filters: Optional[Dict] = None):
+    async def subscribe_to_activities(self, user_id -> None: str, callback -> None: Callable, filters -> None: Optional[Dict] = None) -> None:
         """Souscription aux activités en temps réel"""
         self.subscribers[user_id].add(callback)
         if filters:
@@ -351,14 +351,14 @@ class ActivityStream:
         
         logger.info(f"Utilisateur {user_id} souscrit aux activités")
     
-    async def unsubscribe_from_activities(self, user_id: str, callback: Callable):
+    async def unsubscribe_from_activities(self, user_id -> None: str, callback -> None: Callable) -> None:
         """Désabonnement des activités"""
         if user_id in self.subscribers:
             self.subscribers[user_id].discard(callback)
         
         logger.info(f"Utilisateur {user_id} désabonné des activités")
     
-    async def _process_activity_buffer(self):
+    async def _process_activity_buffer(self) -> None:
         """Traite le buffer d'activités en arrière-plan"""
         while self.running:
             try:
@@ -412,7 +412,7 @@ class ActivityStream:
         
         return list(aggregated.values())
     
-    async def _broadcast_to_subscribers(self, activity: ActivityEvent):
+    async def _broadcast_to_subscribers(self, activity -> None: ActivityEvent) -> None:
         """Broadcast l'activité aux abonnés concernés"""
         for user_id, callbacks in self.subscribers.items():
             # Vérifier les permissions de visibilité
@@ -499,7 +499,7 @@ class RealTimeUpdates:
     - Reconnection automatique
     """
     
-    def __init__(self, redis_client=None):
+    def __init__(self, redis_client=None) -> None:
         self.redis_client = redis_client
         self.connections = {}  # user_id -> websocket connections
         self.presence_status = {}  # user_id -> status
@@ -508,11 +508,11 @@ class RealTimeUpdates:
         self.event_handlers = defaultdict(list)
         self.running = False
     
-    async def start_realtime_service(self, host="localhost", port=8765):
+    async def start_realtime_service(self, host="localhost", port=8765) -> None:
         """Démarre le service de mises à jour temps réel"""
         self.running = True
         
-        async def handle_websocket(websocket, path):
+        async def handle_websocket(websocket, path) -> None:
             await self.handle_client_connection(websocket, path)
         
         # Démarrer le serveur WebSocket
@@ -529,7 +529,7 @@ class RealTimeUpdates:
         logger.info(f"RealTimeUpdates: Service démarré sur {host}:{port}")
         await asyncio.gather(*tasks)
     
-    async def stop_realtime_service(self):
+    async def stop_realtime_service(self) -> None:
         """Arrête le service temps réel"""
         self.running = False
         
@@ -540,7 +540,7 @@ class RealTimeUpdates:
         
         logger.info("RealTimeUpdates: Service arrêté")
     
-    async def handle_client_connection(self, websocket, path):
+    async def handle_client_connection(self, websocket, path) -> None:
         """Gère une nouvelle connexion client"""
         user_id = None
         try:
@@ -601,7 +601,7 @@ class RealTimeUpdates:
             return auth_data.get('user_id')  # Temporaire
         return None
     
-    async def _handle_client_message(self, user_id: str, message: str):
+    async def _handle_client_message(self, user_id -> None: str, message -> None: str) -> None:
         """Traite un message du client"""
         try:
             data = json.loads(message)
@@ -625,7 +625,7 @@ class RealTimeUpdates:
         except Exception as e:
             logger.error(f"Erreur lors du traitement du message client: {e}")
     
-    async def broadcast_to_channel(self, channel_id: str, event_data: Dict, sender_id: Optional[str] = None):
+    async def broadcast_to_channel(self, channel_id -> None: str, event_data -> None: Dict, sender_id -> None: Optional[str] = None) -> None:
         """Broadcast un événement à tous les utilisateurs d'un canal"""
         try:
             # Récupérer les participants du canal
@@ -641,7 +641,7 @@ class RealTimeUpdates:
         except Exception as e:
             logger.error(f"Erreur lors du broadcast au canal {channel_id}: {e}")
     
-    async def send_to_user(self, user_id: str, data: Dict):
+    async def send_to_user(self, user_id -> None: str, data -> None: Dict) -> None:
         """Envoie des données à un utilisateur spécifique"""
         if user_id in self.connections:
             message = json.dumps(data, default=str)
@@ -665,7 +665,7 @@ class RealTimeUpdates:
                 del self.connections[user_id]
                 await self.update_presence_status(user_id, "offline")
     
-    async def update_presence_status(self, user_id: str, status: str):
+    async def update_presence_status(self, user_id -> None: str, status -> None: str) -> None:
         """Met à jour le statut de présence d'un utilisateur"""
         old_status = self.presence_status.get(user_id)
         self.presence_status[user_id] = {
@@ -700,7 +700,7 @@ class RealTimeUpdates:
         
         return None
     
-    async def _handle_typing_start(self, user_id: str, channel_id: str):
+    async def _handle_typing_start(self, user_id -> None: str, channel_id -> None: str) -> None:
         """Gère le début d'écriture"""
         self.typing_indicators[channel_id].add(user_id)
         
@@ -712,7 +712,7 @@ class RealTimeUpdates:
             "timestamp": datetime.utcnow().isoformat()
         }, sender_id=user_id)
     
-    async def _handle_typing_stop(self, user_id: str, channel_id: str):
+    async def _handle_typing_stop(self, user_id -> None: str, channel_id -> None: str) -> None:
         """Gère l'arrêt d'écriture"""
         self.typing_indicators[channel_id].discard(user_id)
         
@@ -724,7 +724,7 @@ class RealTimeUpdates:
             "timestamp": datetime.utcnow().isoformat()
         }, sender_id=user_id)
     
-    async def _notify_presence_change(self, user_id: str, new_status: str):
+    async def _notify_presence_change(self, user_id -> None: str, new_status -> None: str) -> None:
         """Notifie les contacts du changement de présence"""
         # Récupérer les contacts de l'utilisateur
         contacts = await self._get_user_contacts(user_id)
@@ -767,7 +767,7 @@ class CollaborationChat:
     - Archivage et compliance
     """
     
-    def __init__(self, db_session=None, redis_client=None, real_time_updates=None):
+    def __init__(self, db_session=None, redis_client=None, real_time_updates=None) -> None:
         self.db_session = db_session
         self.redis_client = redis_client
         self.real_time_updates = real_time_updates
@@ -986,7 +986,7 @@ class CollaborationChat:
             logger.error(f"Erreur lors de la création du thread: {e}")
             raise
     
-    async def add_reaction(self, message_id: str, user_id: str, emoji: str):
+    async def add_reaction(self, message_id -> None: str, user_id -> None: str, emoji -> None: str) -> None:
         """Ajoute une réaction à un message"""
         try:
             message = await self._get_message_by_id(message_id)
@@ -1055,7 +1055,7 @@ class CollaborationChat:
         mentions = re.findall(r'@(\w+)', content)
         return mentions
     
-    async def _index_message_for_search(self, message: Message):
+    async def _index_message_for_search(self, message -> None: Message) -> None:
         """Indexe le message pour la recherche"""
         indexed_content = {
             'content': message.content.lower(),
@@ -1109,7 +1109,7 @@ class TeamMessaging:
     - Métriques de communication d'équipe
     """
     
-    def __init__(self, collaboration_chat, db_session=None):
+    def __init__(self, collaboration_chat, db_session=None) -> None:
         self.collaboration_chat = collaboration_chat
         self.db_session = db_session
         self.teams = {}
@@ -1148,8 +1148,8 @@ class TeamMessaging:
             logger.error(f"Erreur lors de la création du canal d'équipe: {e}")
             raise
     
-    async def broadcast_to_team(self, team_id: str, message: str, sender_id: str,
-                              priority: str = "normal", target_roles: Optional[List[str]] = None):
+    async def broadcast_to_team(self, team_id -> None: str, message -> None: str, sender_id -> None: str,
+                              priority -> None: str = "normal", target_roles -> None: Optional[List[str]] = None) -> None:
         """Broadcast un message à toute l'équipe"""
         try:
             if team_id not in self.teams:
@@ -1191,7 +1191,7 @@ class TeamMessaging:
             logger.error(f"Erreur lors du broadcast d'équipe: {e}")
             raise
     
-    async def add_member_to_team(self, team_id: str, user_id: str, role: str = "member"):
+    async def add_member_to_team(self, team_id -> None: str, user_id -> None: str, role -> None: str = "member") -> None:
         """Ajoute un membre à l'équipe"""
         try:
             if team_id not in self.teams:
@@ -1239,7 +1239,7 @@ class CommentEngine:
     - Notifications intelligentes
     """
     
-    def __init__(self, db_session=None, redis_client=None):
+    def __init__(self, db_session=None, redis_client=None) -> None:
         self.db_session = db_session
         self.redis_client = redis_client
         self.comments = {}
@@ -1304,7 +1304,7 @@ class CommentEngine:
             logger.error(f"Erreur lors de l'ajout du commentaire: {e}")
             raise
     
-    async def vote_comment(self, comment_id: str, user_id: str, vote_type: str):
+    async def vote_comment(self, comment_id -> None: str, user_id -> None: str, vote_type -> None: str) -> None:
         """Vote pour un commentaire (up/down)"""
         try:
             if comment_id not in self.comments:

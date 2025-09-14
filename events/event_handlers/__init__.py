@@ -33,9 +33,9 @@ logger = logging.getLogger(__name__)
 # Event handler registry for dynamic loading
 EVENT_HANDLER_REGISTRY: Dict[str, Type[BaseEventHandler]] = {}
 
-def register_handler(event_types: List[str]):
+def register_handler(event_types -> None: List[str]) -> None:
     """Decorator to register event handlers for specific event types"""
-    def decorator(handler_class: Type[BaseEventHandler]):
+    def decorator(handler_class -> None: Type[BaseEventHandler]) -> None:
         for event_type in event_types:
             EVENT_HANDLER_REGISTRY[event_type] = handler_class
         logger.info(f"Registered handler {handler_class.__name__} for events: {event_types}")

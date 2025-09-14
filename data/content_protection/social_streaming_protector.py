@@ -22,7 +22,7 @@ logger = structlog.get_logger()
 class SocialStreamingProtector:
     """Social media and streaming protection"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.redis_client = None
         self.mongo_client = None
         self.live_monitor = LiveStreamMonitor()

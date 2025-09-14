@@ -132,7 +132,7 @@ class DistributionPerformanceAnalyzer:
     - Performance-driven content routing optimization
     """
     
-    def __init__(self, db_url: str = None, redis_url: str = None):
+    def __init__(self, db_url -> None: str = None, redis_url -> None: str = None) -> None:
         """Initialize distribution performance analyzer"""
         self.db_url = db_url
         self.redis_url = redis_url
@@ -1272,7 +1272,7 @@ class DistributionPerformanceAnalyzer:
             return {}
 
 # Usage example
-async def main():
+async def main() -> None:
     """Test the distribution performance analyzer"""
     try:
         # Initialize analyzer

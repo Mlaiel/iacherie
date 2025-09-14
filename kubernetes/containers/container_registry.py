@@ -132,7 +132,7 @@ class ContainerRegistryManager:
     """
 Professional container registry manager"""
     
-    def __init__(self, config_path: str = "/app/config/registry"):
+    def __init__(self, config_path -> None: str = "/app/config/registry") -> None:
         self.config_path = Path(config_path)
         self.registries = {}
         self.docker_client = None
@@ -970,7 +970,7 @@ Professional container registry manager"""
 class ImagePipelineManager:
     """CI/CD pipeline manager for container images"""
     
-    def __init__(self, registry_manager: ContainerRegistryManager):
+    def __init__(self, registry_manager -> None: ContainerRegistryManager) -> None:
         self.registry_manager = registry_manager
         self.pipelines = {}
         self.pipeline_runs = {}
@@ -1267,7 +1267,7 @@ class ImagePipelineManager:
 class ArtifactManager:
     """Artifact management for container images and build outputs"""
     
-    def __init__(self, registry_manager: ContainerRegistryManager):
+    def __init__(self, registry_manager -> None: ContainerRegistryManager) -> None:
         self.registry_manager = registry_manager
         self.artifacts = {}
         self.retention_policies = {}

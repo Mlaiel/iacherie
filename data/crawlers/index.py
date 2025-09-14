@@ -61,7 +61,7 @@ class EnterpriseCrawlerFactory:
     Provides intelligent initialization and management across all crawler types.
     """
     
-    def __init__(self, logger: Optional[logging.Logger] = None):
+    def __init__(self, logger -> None: Optional[logging.Logger] = None) -> None:
         """
         Initialize enterprise crawler factory.
         
@@ -168,7 +168,7 @@ class EnterpriseCrawlerFactory:
         
         return health_status
     
-    async def cleanup(self):
+    async def cleanup(self) -> None:
         """Cleanup all subsystems"""
         try:
             await self.social_media_manager.cleanup()

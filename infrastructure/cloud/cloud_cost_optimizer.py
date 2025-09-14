@@ -81,7 +81,7 @@ class CloudCostOptimizer:
     across multiple cloud providers for the Ainflue platform.
     """
 
-    def __init__(self, optimization_strategy: OptimizationStrategy = OptimizationStrategy.BALANCED):
+    def __init__(self, optimization_strategy -> None: OptimizationStrategy = OptimizationStrategy.BALANCED) -> None:
         """Initialize cloud cost optimizer."""
         self.strategy = optimization_strategy
         self.logger = logging.getLogger(__name__)
@@ -108,7 +108,7 @@ class CloudCostOptimizer:
         
         self.logger.info("CloudCostOptimizer initialized successfully")
 
-    def _initialize_default_rules(self):
+    def _initialize_default_rules(self) -> None:
         """Initialize default optimization rules."""
         try:
             default_rules = [
@@ -160,7 +160,7 @@ class CloudCostOptimizer:
         except Exception as e:
             self.logger.error(f"Failed to initialize default rules: {e}")
 
-    def _initialize_default_thresholds(self):
+    def _initialize_default_thresholds(self) -> None:
         """Initialize default cost thresholds."""
         try:
             default_thresholds = {
@@ -768,7 +768,7 @@ class CloudCostOptimizer:
         else:
             return [f"{cloud}-resource-1"]
 
-    def _record_optimization_history(self, results: Dict[str, Any], total_savings: float):
+    def _record_optimization_history(self, results -> None: Dict[str, Any], total_savings -> None: float) -> None:
         """Record optimization history."""
         try:
             history_entry = {
@@ -1029,7 +1029,7 @@ class CloudCostOptimizer:
 
 # Example usage and testing
 if __name__ == "__main__":
-    async def main():
+    async def main() -> None:
         # Initialize optimizer
         optimizer = CloudCostOptimizer(OptimizationStrategy.BALANCED)
         

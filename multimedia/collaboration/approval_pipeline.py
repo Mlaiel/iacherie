@@ -78,7 +78,7 @@ class ApprovalDecision:
     attachments: List[str] = field(default_factory=list)
     confidence_score: Optional[float] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.timestamp is None:
             self.timestamp = datetime.now().timestamp()
 
@@ -112,7 +112,7 @@ class ApprovalRequest:
     conditions: List[ApprovalCondition] = field(default_factory=list)
     metadata: Dict[str, Any] = field(default_factory=dict)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.created_at is None:
             self.created_at = datetime.now().timestamp()
 
@@ -120,7 +120,7 @@ class ApprovalRequest:
 class ApprovalPipelineManager:
     """Professional multi-stage approval pipeline system"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize approval pipeline manager"""
         self.config = config or {}
         self.pipelines: Dict[str, List[ApprovalStageConfig]] = {}
@@ -132,7 +132,7 @@ class ApprovalPipelineManager:
         # Initialize default pipelines
         self._initialize_default_pipelines()
     
-    def _initialize_default_pipelines(self):
+    def _initialize_default_pipelines(self) -> None:
         """Initialize default approval pipelines"""
         # Standard content pipeline
         self.pipelines['standard_content'] = [
@@ -304,9 +304,9 @@ class ApprovalPipelineManager:
     
     async def _process_approval_decision(
         self,
-        request: ApprovalRequest,
-        decision: ApprovalDecision
-    ):
+        request -> None: ApprovalRequest,
+        decision -> None: ApprovalDecision
+    ) -> None:
         """Process an approval decision and update request status"""
         try:
             if decision.action == ApprovalAction.REJECT:
@@ -374,7 +374,7 @@ class ApprovalPipelineManager:
             logger.error(f"Error checking stage approval: {e}")
             return False
     
-    async def _advance_to_next_stage(self, request_id: str):
+    async def _advance_to_next_stage(self, request_id -> None: str) -> None:
         """Advance request to next approval stage"""
         try:
             request = self.requests[request_id]
@@ -451,9 +451,9 @@ class ApprovalPipelineManager:
     
     async def _handle_escalation(
         self,
-        request: ApprovalRequest,
-        decision: ApprovalDecision
-    ):
+        request -> None: ApprovalRequest,
+        decision -> None: ApprovalDecision
+    ) -> None:
         """Handle approval escalation"""
         try:
             # Add escalation metadata
@@ -586,9 +586,9 @@ class ApprovalPipelineManager:
     
     async def _send_approval_notification(
         self,
-        request: ApprovalRequest,
-        notification_type: str
-    ):
+        request -> None: ApprovalRequest,
+        notification_type -> None: str
+    ) -> None:
         """Send approval-related notifications"""
         try:
             notification_data = {

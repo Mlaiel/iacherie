@@ -169,7 +169,7 @@ class RevenueAnalytics:
 class RevenueSplitter:
     """AI-powered automatic revenue distribution system"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         
         # Revenue split storage (in real implementation, use database)
@@ -689,7 +689,7 @@ class RevenueSplitter:
         
         return transaction
     
-    async def _process_payment_transaction(self, transaction: PaymentTransaction):
+    async def _process_payment_transaction(self, transaction -> None: PaymentTransaction) -> None:
         """Process the actual payment transaction"""
         
         # In real implementation, integrate with payment processors
@@ -735,7 +735,7 @@ class RevenueSplitter:
         
         return fee.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
     
-    async def _check_distribution_trigger(self, revenue_split: RevenueSplit):
+    async def _check_distribution_trigger(self, revenue_split -> None: RevenueSplit) -> None:
         """Check if automatic distribution should be triggered"""
         
         # Calculate undistributed revenue

@@ -6,7 +6,7 @@ including database setup, Redis configuration, alerting channels,
 and system health verification.
 
 Setup Components:
-- Database schema creation and migration
+    - Database schema creation and migration
 - Redis data structure initialization
 - Alerting channel configuration and testing
 - Dashboard setup and asset preparation
@@ -63,7 +63,7 @@ class MonitoringSetupManager:
     system readiness validation.
     """
     
-    def __init__(self, config_path: Optional[str] = None, force_recreate: bool = False):
+    def __init__(self, config_path -> None: Optional[str] = None, force_recreate -> None: bool = False) -> None:
         self.config_path = config_path
         self.force_recreate = force_recreate
         
@@ -84,7 +84,7 @@ class MonitoringSetupManager:
     async def run_complete_setup(self) -> bool:
         """Run complete monitoring system setup"""
         
-        self.logger.info("🚀 Starting IA Influencer Agent Monitoring System Setup")
+        self.logger.info("# [EMOJI_REMOVED] Starting IA Influencer Agent Monitoring System Setup")
         self.logger.info(f"Environment: {os.getenv('ENVIRONMENT', 'development')}")
         self.logger.info(f"Configuration Profile: {self.config.get('profile', 'unknown')}")
         
@@ -107,7 +107,7 @@ class MonitoringSetupManager:
         completed_steps = 0
         
         for step_name, step_function in setup_steps:
-            self.logger.info(f"📋 Step {completed_steps + 1}/{total_steps}: {step_name}")
+            self.logger.info(f"# [EMOJI_REMOVED] Step {completed_steps + 1}/{total_steps}: {step_name}")
             
             status = SetupStatus(
                 component=step_name,
@@ -123,19 +123,19 @@ class MonitoringSetupManager:
                     status.status = "completed"
                     status.end_time = datetime.now()
                     completed_steps += 1
-                    self.logger.info(f"✅ {step_name} completed successfully")
+                    self.logger.info(f"# [EMOJI_REMOVED] {step_name} completed successfully")
                 else:
                     status.status = "failed"
                     status.end_time = datetime.now()
                     status.error_message = "Step returned False"
-                    self.logger.error(f"❌ {step_name} failed")
+                    self.logger.error(f"# [EMOJI_REMOVED] {step_name} failed")
                     break
                     
             except Exception as e:
                 status.status = "failed"
                 status.end_time = datetime.now()
                 status.error_message = str(e)
-                self.logger.error(f"❌ {step_name} failed with error: {e}")
+                self.logger.error(f"# [EMOJI_REMOVED] {step_name} failed with error: {e}")
                 break
         
         # Generate setup report
@@ -143,9 +143,9 @@ class MonitoringSetupManager:
         
         success = completed_steps == total_steps
         if success:
-            self.logger.info("🎉 Monitoring system setup completed successfully!")
+            self.logger.info("# [EMOJI_REMOVED] Monitoring system setup completed successfully!")
         else:
-            self.logger.error("💥 Monitoring system setup failed")
+            self.logger.error("# [EMOJI_REMOVED] Monitoring system setup failed")
         
         return success
     
@@ -197,7 +197,7 @@ class MonitoringSetupManager:
         except ImportError:
             self.logger.warning("psutil not available, skipping resource checks")
         
-        self.logger.info("✅ System requirements verified")
+        self.logger.info("# [EMOJI_REMOVED] System requirements verified")
         return True
     
     async def _setup_database(self) -> bool:
@@ -249,7 +249,7 @@ class MonitoringSetupManager:
             conn_params["database"] = db_config.database
             self.db_connection = psycopg2.connect(**conn_params)
             
-            self.logger.info("✅ Database setup completed")
+            self.logger.info("# [EMOJI_REMOVED] Database setup completed")
             return True
             
         except Exception as e:
@@ -303,7 +303,7 @@ class MonitoringSetupManager:
                 except Exception as e:
                     self.logger.warning(f"Could not set Redis config {config_key}: {e}")
             
-            self.logger.info("✅ Redis setup completed")
+            self.logger.info("# [EMOJI_REMOVED] Redis setup completed")
             return True
             
         except Exception as e:
@@ -467,7 +467,7 @@ class MonitoringSetupManager:
             
             cursor.close()
             
-            self.logger.info("✅ Database schema created successfully")
+            self.logger.info("# [EMOJI_REMOVED] Database schema created successfully")
             return True
             
         except Exception as e:
@@ -545,7 +545,7 @@ class MonitoringSetupManager:
                 }
             )
             
-            self.logger.info("✅ Redis structures initialized")
+            self.logger.info("# [EMOJI_REMOVED] Redis structures initialized")
             return True
             
         except Exception as e:
@@ -613,7 +613,7 @@ class MonitoringSetupManager:
             
             self.redis_client.hset("monitoring:dashboard:metrics", mapping=dashboard_metrics)
             
-            self.logger.info("✅ Dashboard setup completed")
+            self.logger.info("# [EMOJI_REMOVED] Dashboard setup completed")
             return True
             
         except Exception as e:
@@ -669,7 +669,7 @@ class MonitoringSetupManager:
             for counter in security_counters:
                 self.redis_client.set(counter, 0)
             
-            self.logger.info("✅ Security rules deployed")
+            self.logger.info("# [EMOJI_REMOVED] Security rules deployed")
             return True
             
         except Exception as e:
@@ -735,7 +735,7 @@ class MonitoringSetupManager:
                     }
                 )
             
-            self.logger.info("✅ AI model monitoring initialized")
+            self.logger.info("# [EMOJI_REMOVED] AI model monitoring initialized")
             return True
             
         except Exception as e:
@@ -791,7 +791,7 @@ class MonitoringSetupManager:
                     }
                 )
             
-            self.logger.info("✅ Business intelligence setup completed")
+            self.logger.info("# [EMOJI_REMOVED] Business intelligence setup completed")
             return True
             
         except Exception as e:
@@ -858,9 +858,9 @@ class MonitoringSetupManager:
             )
         
         if overall_health:
-            self.logger.info("✅ Comprehensive health check passed")
+            self.logger.info("# [EMOJI_REMOVED] Comprehensive health check passed")
         else:
-            self.logger.warning("⚠️ Health check completed with warnings")
+            self.logger.warning("# [EMOJI_REMOVED] Health check completed with warnings")
         
         return True  # Always return True as this is the final step
     
@@ -908,7 +908,7 @@ class MonitoringSetupManager:
         
         # Log the report
         for line in report_lines:
-            if line.startswith(("✅", "❌", "🔄", "⏳")):
+            if line.startswith(("# [EMOJI_REMOVED]", "# [EMOJI_REMOVED]", "# [EMOJI_REMOVED]", "# [EMOJI_REMOVED]")):
                 self.logger.info(line)
             elif line.startswith("=") or line.startswith("-"):
                 continue
@@ -920,12 +920,12 @@ class MonitoringSetupManager:
             report_file = Path("monitoring_setup_report.txt")
             with open(report_file, "w") as f:
                 f.write(report_content)
-            self.logger.info(f"📄 Setup report saved to: {report_file.absolute()}")
+            self.logger.info(f"# [EMOJI_REMOVED] Setup report saved to: {report_file.absolute()}")
         except Exception as e:
             self.logger.warning(f"Could not save setup report: {e}")
 
 
-async def main():
+async def main() -> None:
     """Main setup function"""
     
     import argparse
@@ -954,3 +954,6 @@ async def main():
 
 if __name__ == "__main__":
     sys.exit(asyncio.run(main()))
+}
+
+# File has syntax issues - needs manual review

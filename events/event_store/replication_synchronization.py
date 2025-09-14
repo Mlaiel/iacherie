@@ -146,7 +146,7 @@ class ReplicationSynchronization:
     - Performance optimization
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._nodes: Dict[str, ReplicationNode] = {}
         self._streams: Dict[str, ReplicationStream] = {}
         self._conflicts: Dict[str, ConflictEvent] = {}
@@ -177,7 +177,7 @@ class ReplicationSynchronization:
         # Initialize Ainflue business conflict resolution
         self._initialize_business_resolution()
     
-    def _initialize_business_resolution(self):
+    def _initialize_business_resolution(self) -> None:
         """Initialize Ainflue-specific conflict resolution strategies"""
         
         # Content events - Creator wins for content ownership
@@ -229,7 +229,7 @@ class ReplicationSynchronization:
             }
         }
     
-    async def initialize(self, nodes: List[ReplicationNode]):
+    async def initialize(self, nodes -> None: List[ReplicationNode]) -> None:
         """Initialize replication synchronization system"""
         
         # Register nodes
@@ -251,7 +251,7 @@ class ReplicationSynchronization:
         self._is_initialized = True
         logger.info(f"Replication synchronization initialized with {len(self._nodes)} nodes")
     
-    async def _build_replication_topology(self):
+    async def _build_replication_topology(self) -> None:
         """Build replication topology based on node configuration"""
         
         # Find master nodes
@@ -275,7 +275,7 @@ class ReplicationSynchronization:
         
         logger.info(f"Built replication topology with {len(self._topology)} connections")
     
-    async def _initialize_replication_streams(self):
+    async def _initialize_replication_streams(self) -> None:
         """Initialize replication streams based on topology"""
         
         for source_node_id, target_node_ids in self._topology.items():
@@ -695,7 +695,7 @@ class ReplicationSynchronization:
         # Default to last write wins
         return await self._resolve_last_write_wins(conflict)
     
-    async def _apply_resolution(self, conflict: ConflictEvent, resolution_data: Dict[str, Any]):
+    async def _apply_resolution(self, conflict -> None: ConflictEvent, resolution_data -> None: Dict[str, Any]) -> None:
         """Apply conflict resolution to all affected nodes"""
         
         # Apply resolution to all nodes involved in the conflict
@@ -707,7 +707,7 @@ class ReplicationSynchronization:
             except Exception as e:
                 logger.error(f"Failed to apply resolution to node {node_id}: {e}")
     
-    async def _update_node_data(self, node_id: str, event_id: str, data: Dict[str, Any]):
+    async def _update_node_data(self, node_id -> None: str, event_id -> None: str, data -> None: Dict[str, Any]) -> None:
         """Update data on specific node"""
         
         # Simulate updating node data
@@ -868,7 +868,7 @@ class ReplicationSynchronization:
         
         return failover_result
     
-    async def _redirect_traffic(self, failed_node_id: str, target_node_id: str):
+    async def _redirect_traffic(self, failed_node_id -> None: str, target_node_id -> None: str) -> None:
         """Redirect traffic from failed node to target node"""
         
         # In real implementation, update load balancers, DNS, etc.
@@ -876,7 +876,7 @@ class ReplicationSynchronization:
         
         logger.info(f"Redirected traffic from {failed_node_id} to {target_node_id}")
     
-    async def _update_topology_for_failover(self, failed_node_id: str, target_node_id: str):
+    async def _update_topology_for_failover(self, failed_node_id -> None: str, target_node_id -> None: str) -> None:
         """Update replication topology after failover"""
         
         # Transfer connections from failed node to target node
@@ -946,7 +946,7 @@ class ReplicationSynchronization:
             'last_updated': datetime.utcnow().isoformat()
         }
     
-    async def _heartbeat_monitor_task(self):
+    async def _heartbeat_monitor_task(self) -> None:
         """Background task for monitoring node heartbeats"""
         
         while self._is_initialized:
@@ -957,7 +957,7 @@ class ReplicationSynchronization:
                 logger.error(f"Heartbeat monitor task error: {e}")
                 await asyncio.sleep(30)
     
-    async def _check_node_heartbeats(self):
+    async def _check_node_heartbeats(self) -> None:
         """Check heartbeats from all nodes"""
         
         current_time = datetime.utcnow()
@@ -989,7 +989,7 @@ class ReplicationSynchronization:
                     node.status = ReplicationStatus.HEALTHY
                     logger.info(f"Node {node_id} recovered - heartbeat restored")
     
-    async def _trigger_automatic_failover(self, failed_node_id: str):
+    async def _trigger_automatic_failover(self, failed_node_id -> None: str) -> None:
         """Trigger automatic failover for failed node"""
         
         # Find best failover target
@@ -1033,7 +1033,7 @@ class ReplicationSynchronization:
         
         return None
     
-    async def _sync_monitor_task(self):
+    async def _sync_monitor_task(self) -> None:
         """Background task for monitoring synchronization"""
         
         while self._is_initialized:
@@ -1044,7 +1044,7 @@ class ReplicationSynchronization:
                 logger.error(f"Sync monitor task error: {e}")
                 await asyncio.sleep(60)
     
-    async def _sync_stream_task(self, stream_id: str):
+    async def _sync_stream_task(self, stream_id -> None: str) -> None:
         """Background task for individual stream synchronization"""
         
         while self._is_initialized and stream_id in self._streams:
@@ -1057,7 +1057,7 @@ class ReplicationSynchronization:
                 self._streams[stream_id].last_error = str(e)
                 await asyncio.sleep(30)  # Longer retry interval on error
     
-    async def _sync_stream(self, stream_id: str):
+    async def _sync_stream(self, stream_id -> None: str) -> None:
         """Synchronize individual stream"""
         
         if stream_id not in self._streams:
@@ -1079,7 +1079,7 @@ class ReplicationSynchronization:
         stream.events_synced += 1  # Simulate events being synced
         stream.throughput_events_per_sec = self._calculate_throughput(stream)
     
-    async def _conflict_resolution_task(self):
+    async def _conflict_resolution_task(self) -> None:
         """Background task for automatic conflict resolution"""
         
         while self._is_initialized:
@@ -1101,7 +1101,7 @@ class ReplicationSynchronization:
                 logger.error(f"Conflict resolution task error: {e}")
                 await asyncio.sleep(60)
     
-    async def _checkpoint_task(self):
+    async def _checkpoint_task(self) -> None:
         """Background task for creating synchronization checkpoints"""
         
         while self._is_initialized:
@@ -1112,7 +1112,7 @@ class ReplicationSynchronization:
                 logger.error(f"Checkpoint task error: {e}")
                 await asyncio.sleep(60)
     
-    async def _create_checkpoints(self):
+    async def _create_checkpoints(self) -> None:
         """Create synchronization checkpoints for all streams"""
         
         for stream_id, stream in self._streams.items():

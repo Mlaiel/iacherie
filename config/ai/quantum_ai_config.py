@@ -97,7 +97,7 @@ class QuantumHardwareSpec:
 class QuantumAIConfiguration:
     """Enterprise quantum AI configuration management"""
     
-    def __init__(self, level: str = "enterprise"):
+    def __init__(self, level -> None: str = "enterprise") -> None:
         self.level = level
         self.quantum_enabled = True
         self.fallback_classical = True
@@ -124,7 +124,7 @@ class QuantumAIConfiguration:
         self._configure_optimization()
         self._configure_security()
     
-    def _configure_quantum_backends(self):
+    def _configure_quantum_backends(self) -> None:
         """Configure quantum computing backends"""
         self.quantum_backends = {
             "ibm_quantum": QuantumHardwareSpec(
@@ -180,7 +180,7 @@ class QuantumAIConfiguration:
             )
         }
     
-    def _configure_quantum_algorithms(self):
+    def _configure_quantum_algorithms(self) -> None:
         """Configure quantum algorithms for AI tasks"""
         self.quantum_algorithms = {
             QuantumAlgorithm.QUANTUM_NEURAL_NETWORK: {
@@ -262,7 +262,7 @@ class QuantumAIConfiguration:
             }
         }
     
-    def _configure_hybrid_systems(self):
+    def _configure_hybrid_systems(self) -> None:
         """Configure hybrid classical-quantum systems"""
         self.hybrid_config = {
             "enabled": True,
@@ -316,7 +316,7 @@ class QuantumAIConfiguration:
             }
         }
     
-    def _configure_optimization(self):
+    def _configure_optimization(self) -> None:
         """Configure quantum optimization settings"""
         self.optimization_config = {
             "quantum_advantage_detection": {
@@ -352,7 +352,7 @@ class QuantumAIConfiguration:
             }
         }
     
-    def _configure_security(self):
+    def _configure_security(self) -> None:
         """Configure quantum security features"""
         self.quantum_security = {
             "quantum_encryption": {

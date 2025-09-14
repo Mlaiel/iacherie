@@ -270,7 +270,7 @@ class MultiFormatProcessor:
     capabilities for audio, video, image, and document content processing.
     """
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         """Initialize multi-format processor"""
         self.logger = logging.getLogger(__name__)
         self.config = config or {}
@@ -396,7 +396,7 @@ class MultiFormatProcessor:
             # Process items concurrently with semaphore control
             semaphore = asyncio.Semaphore(3)  # Limit concurrent processing
             
-            async def process_single(item):
+            async def process_single(item) -> None:
                 async with semaphore:
                     content_data, filename, options = item
                     return await self.process_content(content_data, filename, options)
@@ -903,7 +903,7 @@ class ContentTransformer:
     format optimization, and platform-specific customization capabilities.
     """
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         """Initialize content transformer"""
         self.logger = logging.getLogger(__name__)
         self.config = config or {}
@@ -979,7 +979,7 @@ class ContentTransformer:
             # Process transformations concurrently
             semaphore = asyncio.Semaphore(3)
             
-            async def transform_single(request):
+            async def transform_single(request) -> None:
                 async with semaphore:
                     content_data, filename, params = request
                     return await self.transform_content(content_data, filename, params)
@@ -1129,7 +1129,7 @@ class IntelligentContentRouter:
     requirements, audience targeting, and performance optimization strategies.
     """
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         """Initialize intelligent content router"""
         self.logger = logging.getLogger(__name__)
         self.config = config or {}
@@ -1148,7 +1148,7 @@ class IntelligentContentRouter:
             Platform.LINKEDIN: {'engagement_rate': 0.55, 'reach_multiplier': 1.2}
         }
     
-    def _initialize_default_rules(self):
+    def _initialize_default_rules(self) -> None:
         """Initialize default routing rules"""
         try:
             # Video content rules
@@ -1325,7 +1325,7 @@ class IntelligentContentRouter:
             self.logger.warning(f"Strategy optimization failed: {str(e)}")
             return RoutingStrategy.MAXIMUM_REACH
     
-    def add_routing_rule(self, rule: RoutingRule):
+    def add_routing_rule(self, rule -> None: RoutingRule) -> None:
         """Add custom routing rule"""
         rule_key = f"{rule.platform.value}_{rule.content_category.value}"
         self._routing_rules[rule_key] = rule

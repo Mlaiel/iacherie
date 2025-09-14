@@ -178,7 +178,7 @@ class IPAssessmentRecord(Base):
 class LegalDocumentManager:
     """Legal document lifecycle management"""
     
-    def __init__(self, db_session: AsyncSession, redis_client: aioredis.Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: aioredis.Redis) -> None:
         self.db = db_session
         self.redis = redis_client
         
@@ -530,7 +530,7 @@ These Terms of Service govern your use of {service_name} provided by {company_na
 class ContractAnalyzer:
     """Contract analysis and risk assessment"""
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client -> None: aioredis.Redis) -> None:
         self.redis = redis_client
         
     async def analyze_contract(self, 
@@ -777,7 +777,7 @@ class ContractAnalyzer:
 class IntellectualPropertyAnalyzer:
     """Intellectual property analysis and protection"""
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client -> None: aioredis.Redis) -> None:
         self.redis = redis_client
         
     async def assess_ip_infringement_risk(self, 
@@ -906,7 +906,7 @@ class IntellectualPropertyAnalyzer:
 class LegalFrameworkEngine:
     """Main legal framework management engine"""
     
-    def __init__(self, db_session: AsyncSession, redis_client: aioredis.Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: aioredis.Redis) -> None:
         self.db = db_session
         self.redis = redis_client
         

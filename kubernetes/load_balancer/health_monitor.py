@@ -97,11 +97,11 @@ class HealthChecker:
     """
 Individual health checker implementation"""
     
-    def __init__(self, config: HealthCheckConfig):
+    def __init__(self, config -> None: HealthCheckConfig) -> None:
         self.config = config
         self.session = None
         
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         if self.config.type in [CheckType.HTTP, CheckType.HTTPS]:
             connector = aiohttp.TCPConnector(
                 ssl=ssl.create_default_context() if self.config.ssl_verify else False
@@ -112,7 +112,7 @@ Individual health checker implementation"""
             )
         return self
     
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         try:
             logger.info(f"Executing __aexit__")
             
@@ -381,7 +381,7 @@ Perform HTTP/HTTPS health check"""
 class HealthMonitor:
     """Enterprise Health Monitor for Load Balancer Services"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.endpoints: Dict[str, ServiceEndpoint] = {}
         self.health_history: Dict[str, List[HealthCheckResult]] = {}
         self.alert_callbacks: List[Callable] = []

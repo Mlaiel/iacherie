@@ -60,7 +60,7 @@ class DatabasePerformanceTuner:
     - Multi-database cluster performance tuning
     """
     
-    def __init__(self, config: Optional[PerformanceConfig] = None):
+    def __init__(self, config -> None: Optional[PerformanceConfig] = None) -> None:
         self.config = config or PerformanceConfig(DatabaseType.POSTGRESQL)
         self.logger = logging.getLogger(__name__)
         self.performance_metrics: Dict[str, List[float]] = {}
@@ -418,7 +418,7 @@ class DatabasePerformanceTuner:
 class PerformanceTuner(DatabasePerformanceTuner):
     """Legacy performance tuner - redirects to DatabasePerformanceTuner"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
         logger.info("Database performance tuner initialized (legacy mode)")
         

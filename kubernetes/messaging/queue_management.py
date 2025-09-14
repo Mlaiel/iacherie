@@ -126,7 +126,7 @@ class QueueManager:
     Enterprise queue management system
     Handles distributed task queuing, processing, and monitoring
     """
-    def __init__(self):
+    def __init__(self) -> None:
         self.redis_client: Optional[aioredis.Redis] = None
         self.queues: Dict[str, QueueConfiguration] = {}
         self.queue_stats: Dict[str, QueueStats] = {}

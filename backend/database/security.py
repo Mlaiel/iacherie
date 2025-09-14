@@ -196,13 +196,13 @@ class DatabaseEncryptionManager:
     Supports multiple encryption algorithms and automated key rotation.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._keys: Dict[str, EncryptionKey] = {}
         self._fernet_instances: Dict[str, Fernet] = {}
         self._master_key: Optional[bytes] = None
         self._key_rotation_task: Optional[asyncio.Task] = None
         
-    async def initialize(self, master_key: Optional[str] = None):
+    async def initialize(self, master_key -> None: Optional[str] = None) -> None:
         """Initialize encryption manager."""
         logger.info("🔐 Initializing Database Encryption Manager...")
         
@@ -223,7 +223,7 @@ class DatabaseEncryptionManager:
         """Generate a new master key."""
         return secrets.token_bytes(32)  # 256-bit key
     
-    async def _generate_default_key(self):
+    async def _generate_default_key(self) -> None:
         """Generate default encryption key."""
         key_id = "default_aes_256"
         key_data = Fernet.generate_key()
@@ -313,7 +313,7 @@ class DatabaseEncryptionManager:
         
         return await self.generate_key(new_key_id, old_key.algorithm)
     
-    async def _key_rotation_monitor(self):
+    async def _key_rotation_monitor(self) -> None:
         """Monitor and perform automatic key rotation."""
         while True:
             try:
@@ -349,7 +349,7 @@ class DatabaseEncryptionManager:
             "is_active": key.is_active
         }
     
-    async def close(self):
+    async def close(self) -> None:
         """Close encryption manager."""
         if self._key_rotation_task:
             self._key_rotation_task.cancel()
@@ -366,14 +366,14 @@ class DatabaseAccessControl:
     Advanced access control and authorization management for multi-tenant database security.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._user_permissions: Dict[str, Set[PermissionType]] = {}
         self._role_permissions: Dict[str, Set[PermissionType]] = {}
         self._user_roles: Dict[str, Set[str]] = {}
         self._resource_permissions: Dict[str, Dict[str, AccessLevel]] = {}
         self._access_tokens: Dict[str, Dict[str, Any]] = {}
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize access control system."""
         logger.info("🛡️ Initializing Database Access Control...")
         
@@ -382,7 +382,7 @@ class DatabaseAccessControl:
         
         logger.info("✅ Database Access Control initialized")
     
-    async def _create_default_roles(self):
+    async def _create_default_roles(self) -> None:
         """Create default security roles."""
         # Admin role
         admin_permissions = {
@@ -522,14 +522,14 @@ class DatabaseAuditLogger:
     Comprehensive audit logging for compliance and security monitoring.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._audit_events: List[AuditEvent] = []
         self._max_events = 10000  # Keep last 10k events in memory
         
-    async def log_event(self, event_type: AuditEventType, severity: AuditSeverity, 
-                       description: str, user_id: Optional[str] = None,
-                       resource_type: ResourceType = ResourceType.DATABASE,
-                       resource_id: Optional[str] = None, **metadata):
+    async def log_event(self, event_type -> None: AuditEventType, severity -> None: AuditSeverity, 
+                       description -> None: str, user_id -> None: Optional[str] = None,
+                       resource_type -> None: ResourceType = ResourceType.DATABASE,
+                       resource_id -> None: Optional[str] = None, **metadata) -> None:
         """Log audit event."""
         event = AuditEvent(
             event_id=secrets.token_hex(16),
@@ -599,14 +599,14 @@ class DatabaseSecurityManager:
     and threat detection for the IA Influencer platform database security.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.encryption_manager = DatabaseEncryptionManager()
         self.access_control = DatabaseAccessControl()
         self.audit_logger = DatabaseAuditLogger()
         self._threat_monitor_task: Optional[asyncio.Task] = None
         self._detected_threats: List[SecurityThreat] = []
     
-    async def initialize(self, master_key: Optional[str] = None):
+    async def initialize(self, master_key -> None: Optional[str] = None) -> None:
         """Initialize complete security system."""
         logger.info("🏛️ Initializing Enterprise Database Security Manager...")
         
@@ -624,7 +624,7 @@ class DatabaseSecurityManager:
         
         logger.info("✅ Enterprise Database Security Manager initialized")
     
-    async def _threat_monitor(self):
+    async def _threat_monitor(self) -> None:
         """Monitor for security threats."""
         while True:
             try:
@@ -646,7 +646,7 @@ class DatabaseSecurityManager:
         """Verify password against hash."""
         return bcrypt.checkpw(password.encode(), hashed.encode())
     
-    async def close(self):
+    async def close(self) -> None:
         """Close security manager."""
         logger.info("🔌 Closing Database Security Manager...")
         

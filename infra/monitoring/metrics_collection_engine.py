@@ -1,3 +1,8 @@
+"""
+Metrics Collection Engine module
+Enterprise implementation for Ainflue platform
+"""
+
 # Ainflue Infrastructure Module
 # =============================
 # 
@@ -63,13 +68,13 @@ class MetricsCollectionConfig:
 class CloudMetricsCollector:
     """Multi-cloud metrics collection"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.aws_cloudwatch = None
         self.azure_monitor = None
         self.gcp_monitoring = None
         self._initialize_cloud_clients()
     
-    def _initialize_cloud_clients(self):
+    def _initialize_cloud_clients(self) -> None:
         """Initialize cloud monitoring clients"""
         try:
             # AWS CloudWatch
@@ -234,13 +239,13 @@ class CloudMetricsCollector:
 class KubernetesMetricsCollector:
     """Kubernetes cluster metrics collection"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.v1 = None
         self.apps_v1 = None
         self.metrics_v1beta1 = None
         self._initialize_k8s_client()
     
-    def _initialize_k8s_client(self):
+    def _initialize_k8s_client(self) -> None:
         """Initialize Kubernetes client"""
         try:
             config.load_incluster_config()
@@ -482,12 +487,12 @@ class KubernetesMetricsCollector:
 class ApplicationMetricsCollector:
     """Application-specific metrics collection"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.registry = prometheus_client.CollectorRegistry()
         self.custom_metrics = {}
         self._initialize_custom_metrics()
     
-    def _initialize_custom_metrics(self):
+    def _initialize_custom_metrics(self) -> None:
         """Initialize custom application metrics"""
         # API metrics
         self.api_request_counter = prometheus_client.Counter(
@@ -574,7 +579,7 @@ class ApplicationMetricsCollector:
 class MetricsCollectionEngine:
     """Main metrics collection engine coordinating all collectors"""
     
-    def __init__(self, config: MetricsCollectionConfig):
+    def __init__(self, config -> None: MetricsCollectionConfig) -> None:
         self.config = config
         self.cloud_collector = CloudMetricsCollector()
         self.k8s_collector = KubernetesMetricsCollector()
@@ -582,7 +587,7 @@ class MetricsCollectionEngine:
         self.metrics_storage = []
         self.is_running = False
     
-    async def start_collection(self):
+    async def start_collection(self) -> None:
         """Start the metrics collection process"""
         self.is_running = True
         logger.info("Starting metrics collection engine")
@@ -595,12 +600,12 @@ class MetricsCollectionEngine:
                 logger.error(f"Error in metrics collection cycle: {e}")
                 await asyncio.sleep(self.config.collection_interval)
     
-    def stop_collection(self):
+    def stop_collection(self) -> None:
         """Stop the metrics collection process"""
         self.is_running = False
         logger.info("Stopping metrics collection engine")
     
-    async def _collect_all_metrics(self):
+    async def _collect_all_metrics(self) -> None:
         """Collect metrics from all sources"""
         all_metrics = []
         
@@ -643,7 +648,7 @@ class MetricsCollectionEngine:
         
         logger.info(f"Collected {len(all_metrics)} metrics")
     
-    async def _store_metrics(self, metrics: List[MetricData]):
+    async def _store_metrics(self, metrics -> None: List[MetricData]) -> None:
         """Store metrics locally"""
         # Clean old metrics
         cutoff_time = datetime.utcnow() - timedelta(seconds=self.config.retention_period)
@@ -656,7 +661,7 @@ class MetricsCollectionEngine:
         if len(self.metrics_storage) > self.config.max_metrics_per_batch * 10:
             self.metrics_storage = self.metrics_storage[-self.config.max_metrics_per_batch * 10:]
     
-    async def _push_metrics(self, metrics: List[MetricData]):
+    async def _push_metrics(self, metrics -> None: List[MetricData]) -> None:
         """Push metrics to external systems"""
         # Push to Prometheus Push Gateway if configured
         if self.config.push_gateway_endpoint:
@@ -665,7 +670,7 @@ class MetricsCollectionEngine:
         # Save metrics to file for debugging
         await self._save_metrics_to_file(metrics)
     
-    async def _push_to_prometheus(self, metrics: List[MetricData]):
+    async def _push_to_prometheus(self, metrics -> None: List[MetricData]) -> None:
         """Push metrics to Prometheus Push Gateway"""
         try:
             from prometheus_client import push_to_gateway, CollectorRegistry
@@ -706,7 +711,7 @@ class MetricsCollectionEngine:
         except Exception as e:
             logger.error(f"Error pushing metrics to Prometheus: {e}")
     
-    async def _save_metrics_to_file(self, metrics: List[MetricData]):
+    async def _save_metrics_to_file(self, metrics -> None: List[MetricData]) -> None:
         """Save metrics to file for debugging and backup"""
         try:
             metrics_data = [asdict(metric) for metric in metrics]
@@ -742,7 +747,7 @@ class MetricsCollectionEngine:
         
         return filtered_metrics
 
-async def main():
+async def main() -> None:
     """Main function for testing"""
     config = MetricsCollectionConfig(
         collection_interval=30,

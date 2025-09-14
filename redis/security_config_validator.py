@@ -1,4 +1,6 @@
 """
+import asyncio
+
 Security Configuration Validator for Redis Enterprise
 Sécurité Expert Implementation - Comprehensive Security Validation and Compliance
 
@@ -84,7 +86,7 @@ class SecurityConfigValidator:
     Sécurité Expert implementation with compliance and threat detection
     """
     
-    def __init__(self, redis_settings: RedisSettings, security_level: SecurityLevel = SecurityLevel.STANDARD):
+    def __init__(self, redis_settings -> None: RedisSettings, security_level -> None: SecurityLevel = SecurityLevel.STANDARD) -> None:
         self.redis_settings = redis_settings
         self.security_level = security_level
         self.redis_client: Optional[redis.Redis] = None
@@ -106,7 +108,7 @@ class SecurityConfigValidator:
         self._initialize_security_policies()
         self._initialize_compliance_requirements()
     
-    def _initialize_security_policies(self):
+    def _initialize_security_policies(self) -> None:
         """Initialize security policies for different categories"""
         try:
             # Authentication policies
@@ -177,7 +179,7 @@ class SecurityConfigValidator:
         except Exception as e:
             logger.error(f"Error initializing security policies: {e}")
     
-    def _initialize_compliance_requirements(self):
+    def _initialize_compliance_requirements(self) -> None:
         """Initialize compliance requirements"""
         try:
             # GDPR requirements
@@ -246,7 +248,7 @@ class SecurityConfigValidator:
         except Exception as e:
             logger.error(f"Error initializing compliance requirements: {e}")
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize the security configuration validator"""
         try:
             # Connect to Redis
@@ -818,7 +820,7 @@ class SecurityConfigValidator:
         
         return fix_results
     
-    async def _load_security_configuration(self):
+    async def _load_security_configuration(self) -> None:
         """Load existing security configuration from Redis"""
         try:
             config_data = await self.redis_client.hgetall(self.security_config_key)
@@ -868,7 +870,7 @@ class SecurityConfigValidator:
             logger.error(f"Error getting security status: {e}")
             return {"status": "error", "message": str(e)}
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Shutdown the security configuration validator"""
         try:
             if self.redis_client:

@@ -1,3 +1,8 @@
+"""
+Ai Model Deployment module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """IA Influencer Agent - AI Model Deployment Manager
 Enterprise-grade AI model deployment and management system for multi-modal content protection,
@@ -197,7 +202,7 @@ class AIModelDeploymentManager:
     - Security and compliance enforcement
     - Resource optimization and cost management
     """
-    def __init__(self, config_path: Optional[str] = None):
+    def __init__(self, config_path -> None: Optional[str] = None) -> None:
         """
 Initialize the AI model deployment manager."""
         self.config = self._load_config(config_path)
@@ -461,7 +466,7 @@ app = FastAPI(
 model = None
 
 @app.on_event("startup")
-async def load_model():
+async def load_model() -> None:
     global model
     try:
         model_path = "/app/model"
@@ -481,15 +486,17 @@ async def load_model():
         raise
 
 class PredictionRequest(BaseModel):
+    """PredictionRequest class implementation"""
     data: Dict[str, Any]
 
 class PredictionResponse(BaseModel):
+    """PredictionResponse class implementation"""
     prediction: Any
     confidence: float
     model_version: str = "{model_config.version}"
 
 @app.post("/predict", response_model=PredictionResponse)
-async def predict(request: PredictionRequest):
+async def predict(request -> None: PredictionRequest) -> None:
     try:
         # Preprocess input
         input_data = preprocess_input(request.data)
@@ -509,11 +516,11 @@ async def predict(request: PredictionRequest):
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.get("/health")
-async def health_check():
+async def health_check() -> None:
     return {{"status": "healthy", "model": "{model_config.model_name}"}}
 
 @app.get("/metrics")
-async def get_metrics():
+async def get_metrics() -> None:
     return {{"model_name": "{model_config.model_name}", "version": "{model_config.version}"}}
 
 def preprocess_input(data: Dict[str, Any]) -> Any:
@@ -990,7 +997,7 @@ def create_text_fingerprinting_deployment() -> ModelConfig:
 
 # Main execution
 if __name__ == "__main__":
-    async def main():
+    async def main() -> None:
         """Main execution function."""
         # Initialize deployment manager
         manager = AIModelDeploymentManager()

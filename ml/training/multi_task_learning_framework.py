@@ -73,7 +73,7 @@ class MultiTaskLearningFramework:
     - Performance monitoring and task importance estimation
     """
     
-    def __init__(self, framework_config: Dict[str, Any] = None):
+    def __init__(self, framework_config -> None: Dict[str, Any] = None) -> None:
         self.logger = logging.getLogger(__name__)
         self.config = framework_config or self._get_default_config()
         
@@ -609,7 +609,7 @@ class MultiTaskLearningFramework:
         return weight_mapping.get(priority, 0.7)
 
 # Example usage and testing
-async def main():
+async def main() -> None:
     """Example usage of MultiTaskLearningFramework."""
     mtl_framework = MultiTaskLearningFramework()
     

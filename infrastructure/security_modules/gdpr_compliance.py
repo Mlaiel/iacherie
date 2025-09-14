@@ -61,7 +61,7 @@ class ConsentRecord:
 class GDPRComplianceManager:
     """GDPR compliance management for Ainflue platform"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.gdpr_requirements = self._initialize_gdpr_requirements()
         self.consent_records = {}
         self.data_portability_requests = {}

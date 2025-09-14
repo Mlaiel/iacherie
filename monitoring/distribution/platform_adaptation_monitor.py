@@ -140,7 +140,7 @@ class PlatformAdaptationMonitor:
     - Content delivery optimization
     """
     
-    def __init__(self, redis_url: str = None, max_workers: int = 10):
+    def __init__(self, redis_url -> None: str = None, max_workers -> None: int = 10) -> None:
         """Initialize platform adaptation monitor"""
         self.redis_url = redis_url
         self.max_workers = max_workers
@@ -171,7 +171,7 @@ class PlatformAdaptationMonitor:
         
         logger.info("🌍 Platform Adaptation Monitor initialized")
 
-    async def _initialize_platform_requirements(self):
+    async def _initialize_platform_requirements(self) -> None:
         """Initialize platform-specific requirements"""
         try:
             # YouTube requirements
@@ -1036,7 +1036,7 @@ class PlatformAdaptationMonitor:
             return 0
 
 # Usage example
-async def main():
+async def main() -> None:
     """Test the platform adaptation monitor"""
     try:
         # Initialize monitor

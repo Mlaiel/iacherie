@@ -46,7 +46,7 @@ class DMCANotices:
     Handles automated legal notice generation for copyright protection
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize DMCA notices system"""
         self.notices: List[DMCANotice] = []
         logger.info("DMCA notices system initialized")
@@ -169,7 +169,7 @@ Ainflue Legal Team
             logger.error(f"Error sending DMCA notice: {str(e)}")
             return False
     
-    async def _notify_owner_dmca_sent(self, notice: DMCANotice):
+    async def _notify_owner_dmca_sent(self, notice -> None: DMCANotice) -> None:
         """Notify content owner that DMCA notice was sent"""
         notification_data = {
             "title": "📄 DMCA Notice Sent",
@@ -200,7 +200,7 @@ Ainflue Legal Team
                 return True
         return False
     
-    async def _notify_status_change(self, notice: DMCANotice):
+    async def _notify_status_change(self, notice -> None: DMCANotice) -> None:
         """Notify owner of DMCA notice status change"""
         status_messages = {
             DMCAStatus.ACKNOWLEDGED: "Platform acknowledged DMCA notice",

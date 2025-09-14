@@ -116,7 +116,7 @@ class AdvancedForensicAnalyzer:
     Provides comprehensive digital forensics, evidence collection, and legal documentation.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
         self.encryption_engine = AdvancedEncryption()
         self.blockchain_recorder = EvidenceBlockchain()
@@ -124,7 +124,7 @@ class AdvancedForensicAnalyzer:
         self.evidence_storage_path = Path(settings.EVIDENCE_STORAGE_PATH)
         self.evidence_storage_path.mkdir(parents=True, exist_ok=True)
         
-    async def initialize(self):
+    async def initialize(self) -> None:
         """
 Initialize forensic analysis engine"""
         await self.blockchain_recorder.initialize()
@@ -1376,7 +1376,7 @@ Perform comprehensive legal assessment"""
             self.logger.error(f"Forensic report generation failed: {str(e)}")
             raise
     
-    async def _archive_investigation(self, investigation: ForensicInvestigation):
+    async def _archive_investigation(self, investigation -> None: ForensicInvestigation) -> None:
         """Archive completed investigation"""
         try:
             archive_path = self.evidence_storage_path / "archived_investigations"
@@ -1491,10 +1491,10 @@ Generated: {datetime.now(timezone.utc).isoformat()}
     
     async def _add_to_chain_of_custody(
         self, 
-        evidence: DigitalEvidence, 
-        action: str, 
-        actor: str
-    ):
+        evidence -> None: DigitalEvidence, 
+        action -> None: str, 
+        actor -> None: str
+    ) -> None:
         """Add entry to chain of custody"""
         try:
             custody_entry = {

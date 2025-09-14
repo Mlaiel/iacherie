@@ -51,7 +51,7 @@ class ContentSEOOptimizer:
     AI-powered content SEO optimizer that analyzes and improves content
     for better search engine optimization.
     """
-    def __init__(self, optimization_level: OptimizationLevel = OptimizationLevel.ADVANCED):
+    def __init__(self, optimization_level -> None: OptimizationLevel = OptimizationLevel.ADVANCED) -> None:
         """
         Initialize the content SEO optimizer.
         

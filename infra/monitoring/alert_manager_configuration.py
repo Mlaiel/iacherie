@@ -1,3 +1,8 @@
+"""
+Alert Manager Configuration module
+Enterprise implementation for Ainflue platform
+"""
+
 # Ainflue Infrastructure Module
 # =============================
 # 
@@ -101,7 +106,7 @@ class AlertManagerConfiguration:
     for comprehensive infrastructure and application monitoring.
     """
     
-    def __init__(self, config_path: str = "/etc/alertmanager"):
+    def __init__(self, config_path -> None: str = "/etc/alertmanager") -> None:
         self.config_path = Path(config_path)
         self.config_path.mkdir(parents=True, exist_ok=True)
         self.logger = self._setup_logging()
@@ -134,7 +139,7 @@ class AlertManagerConfiguration:
         
         return logger
     
-    def _load_configuration(self):
+    def _load_configuration(self) -> None:
         """Load existing configuration files"""
         try:
             # Load notification targets
@@ -185,7 +190,7 @@ class AlertManagerConfiguration:
             self.logger.error(f"Failed to add alert rule {rule.name}: {str(e)}")
             return False
     
-    def _save_notification_targets(self):
+    def _save_notification_targets(self) -> None:
         """Save notification targets to file"""
         targets_file = self.config_path / "notification_targets.yaml"
         
@@ -204,7 +209,7 @@ class AlertManagerConfiguration:
         with open(targets_file, 'w') as f:
             yaml.dump(targets_data, f, default_flow_style=False)
     
-    def _save_alert_rules(self):
+    def _save_alert_rules(self) -> None:
         """Save alert rules to file"""
         rules_file = self.config_path / "alert_rules.yaml"
         

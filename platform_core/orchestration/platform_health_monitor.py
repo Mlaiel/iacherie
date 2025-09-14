@@ -1,3 +1,8 @@
+"""
+Platform Health Monitor module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Platform Health Monitor - Enterprise Core Component
@@ -137,7 +142,7 @@ class PlatformHealthMonitor:
     enterprise-grade reliability and self-healing capabilities.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.health_checks: Dict[str, HealthCheck] = {}
         self.health_results: Dict[str, List[HealthResult]] = {}
@@ -994,11 +999,11 @@ class PlatformHealthMonitor:
                 await asyncio.sleep(1800)  # 30 minutes
     
     # Context Manager Support
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         await self.start()
         return self
     
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         await self.stop()
 
 
@@ -1015,7 +1020,7 @@ async def alert_handler(alert: Alert) -> None:
 
 
 # Example usage
-async def main():
+async def main() -> None:
     """Example usage of Platform Health Monitor"""
     async with create_platform_health_monitor() as monitor:
         # Subscribe to alerts

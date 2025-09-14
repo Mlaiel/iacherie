@@ -1,4 +1,6 @@
 """
+import asyncio
+
 Revenue Sharing - Collaboration Module
 =====================================
 Système automatisé de partage de revenus collaboratif.
@@ -54,7 +56,7 @@ class RevenueTransaction:
 class RevenueSharing:
     """Gestionnaire de partage de revenus."""
     
-    def __init__(self, config: Optional[Dict] = None):
+    def __init__(self, config -> None: Optional[Dict] = None) -> None:
         """Initialise le système de partage de revenus."""
         self.config = config or {}
         self.transactions: Dict[str, RevenueTransaction] = {}

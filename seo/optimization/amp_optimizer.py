@@ -75,7 +75,7 @@ class AMPOptimizer:
     mobile-optimized pages for improved performance and mobile SEO.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the AMP optimizer"""
         self.amp_version = "2.0"
         self.required_scripts = {
@@ -171,7 +171,7 @@ class AMPOptimizer:
         
         # Replace img tags with amp-img
         img_pattern = r'<img([^>]*?)src=["\']([^"\']*?)["\']([^>]*?)>'
-        def replace_img(match):
+        def replace_img(match) -> None:
             attrs_before = match.group(1)
             src = match.group(2)
             attrs_after = match.group(3)
@@ -193,7 +193,7 @@ class AMPOptimizer:
         
         # Replace video tags with amp-video
         video_pattern = r'<video([^>]*?)src=["\']([^"\']*?)["\']([^>]*?)>.*?</video>'
-        def replace_video(match):
+        def replace_video(match) -> None:
             src = match.group(2)
             return f'<amp-video src="{src}" width="640" height="360" layout="responsive" controls></amp-video>'
         
@@ -201,7 +201,7 @@ class AMPOptimizer:
         
         # Replace iframe with amp-iframe
         iframe_pattern = r'<iframe([^>]*?)src=["\']([^"\']*?)["\']([^>]*?)>.*?</iframe>'
-        def replace_iframe(match):
+        def replace_iframe(match) -> None:
             src = match.group(2)
             return f'<amp-iframe src="{src}" width="600" height="400" layout="responsive" sandbox="allow-scripts allow-same-origin"></amp-iframe>'
         

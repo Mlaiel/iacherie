@@ -146,7 +146,7 @@ class MLDRMIntelligence:
     - IA Prompt Engineer: Feature engineering and model explainability
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.models: Dict[MLModelType, Any] = {}
         self.scalers: Dict[MLModelType, Any] = {}
@@ -1006,12 +1006,12 @@ class MLDRMIntelligence:
         )
     
     # Placeholder methods for comprehensive implementation
-    async def _setup_backend_integration(self): pass
-    async def _setup_ml_security(self): pass
-    async def _setup_mlops_pipeline(self): pass
-    async def _model_training_loop(self): pass
-    async def _model_monitoring_loop(self): pass
-    async def _data_drift_detection_loop(self): pass
+    async def _setup_backend_integration(self) -> None: pass
+    async def _setup_ml_security(self) -> None: pass
+    async def _setup_mlops_pipeline(self) -> None: pass
+    async def _model_training_loop(self) -> None: pass
+    async def _model_monitoring_loop(self) -> None: pass
+    async def _data_drift_detection_loop(self) -> None: pass
 
 # Export classes
 __all__ = [

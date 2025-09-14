@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 class ComplianceNotifications:
     """Regulatory compliance notification system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         logger.info("Compliance notifications initialized")
     
     async def notify_violation(self, violation_data: Dict[str, Any]) -> bool:

@@ -1,5 +1,7 @@
 """Workflow Efficiency Optimization - Process efficiency enhancement.
 
+import asyncio
+
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Ainflue Platform. All rights reserved.
 """
@@ -10,6 +12,7 @@ from datetime import datetime
 
 @dataclass
 class EfficiencyMetrics:
+    """EfficiencyMetrics: class implementation"""
     process_speed: float
     automation_level: float
     error_rate: float
@@ -17,6 +20,7 @@ class EfficiencyMetrics:
 
 @dataclass
 class EfficiencyReport:
+    """EfficiencyReport: class implementation"""
     user_id: str
     efficiency_improvements: EfficiencyMetrics
     time_savings: float
@@ -24,6 +28,7 @@ class EfficiencyReport:
     analysis_timestamp: datetime
 
 class WorkflowEfficiencyWorkflow:
+    """WorkflowEfficiencyWorkflow: class implementation"""
     async def get_user_analytics(self, user_id: str, time_period: int = 30) -> Dict[str, Any]:
         return {
             "user_id": user_id,

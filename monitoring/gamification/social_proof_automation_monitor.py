@@ -137,7 +137,7 @@ class SocialProofAutomationMonitor:
     - Automated content generation for social proof
     """
     
-    def __init__(self, db_url: str = None, redis_url: str = None):
+    def __init__(self, db_url -> None: str = None, redis_url -> None: str = None) -> None:
         """Initialize social proof automation monitor"""
         self.db_url = db_url
         self.redis_url = redis_url
@@ -162,7 +162,7 @@ class SocialProofAutomationMonitor:
         
         logger.info("🎮 Social Proof Automation Monitor initialized")
 
-    async def _initialize_default_rules(self):
+    async def _initialize_default_rules(self) -> None:
         """Initialize default automation rules"""
         try:
             # User milestone achievements
@@ -1094,7 +1094,7 @@ class SocialProofAutomationMonitor:
             return {}
 
 # Usage example
-async def main():
+async def main() -> None:
     """Test the social proof automation monitor"""
     try:
         # Initialize monitor

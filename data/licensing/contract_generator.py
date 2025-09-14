@@ -1,4 +1,6 @@
 """Advanced Contract Generator
+import asyncio
+
 =========================
 
 AI-powered professional contract generation system with multi-language support,
@@ -100,13 +102,13 @@ class ContractGenerator:
     
     def __init__(
         self,
-        repository: LicensingRepository = None,
-        template_engine: LegalTemplateEngine = None,
-        legal_validator: LegalValidator = None,
-        language_processor: LanguageProcessor = None,
-        pdf_generator: PDFGenerator = None,
-        signature_manager: DigitalSignatureManager = None
-    ):
+        repository -> None: LicensingRepository = None,
+        template_engine -> None: LegalTemplateEngine = None,
+        legal_validator -> None: LegalValidator = None,
+        language_processor -> None: LanguageProcessor = None,
+        pdf_generator -> None: PDFGenerator = None,
+        signature_manager -> None: DigitalSignatureManager = None
+    ) -> None:
         """
 Initialize contract generator with dependencies"""
         self.repository = repository or LicensingRepository()
@@ -743,10 +745,10 @@ class ContractGenerator:
     
     def __init__(
         self,
-        repository: LicensingRepository = None,
-        legal_engine: LegalTemplateEngine = None,
-        ai_generator: AITextGenerator = None
-    ):
+        repository -> None: LicensingRepository = None,
+        legal_engine -> None: LegalTemplateEngine = None,
+        ai_generator -> None: AITextGenerator = None
+    ) -> None:
         """
 Initialize contract generator with dependencies"""
         self.repository = repository or LicensingRepository()

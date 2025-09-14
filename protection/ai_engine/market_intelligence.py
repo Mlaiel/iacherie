@@ -73,6 +73,7 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class MarketSegment(Enum):
+    """MarketSegment class implementation"""
     MUSIC_STREAMING = "music_streaming"
     CONTENT_CREATION = "content_creation"
     INFLUENCER_MARKETING = "influencer_marketing"
@@ -83,6 +84,7 @@ class MarketSegment(Enum):
     BRAND_PARTNERSHIPS = "brand_partnerships"
 
 class TrendType(Enum):
+    """TrendType class implementation"""
     EMERGING = "emerging"
     GROWING = "growing"
     STABLE = "stable"
@@ -90,6 +92,7 @@ class TrendType(Enum):
     SEASONAL = "seasonal"
 
 class CompetitorAnalysis(Base):
+    """CompetitorAnalysis class implementation"""
     __tablename__ = 'competitor_analysis'
     
     id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
@@ -107,6 +110,7 @@ class CompetitorAnalysis(Base):
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
 class MarketTrend(Base):
+    """MarketTrend class implementation"""
     __tablename__ = 'market_trends'
     
     id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
@@ -125,6 +129,7 @@ class MarketTrend(Base):
     last_updated = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
 class MarketInsight(Base):
+    """MarketInsight class implementation"""
     __tablename__ = 'market_insights'
     
     id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
@@ -143,6 +148,7 @@ class MarketInsight(Base):
 
 @dataclass
 class MarketAnalysis:
+    """MarketAnalysis: class implementation"""
     market_size: Dict[str, float]
     growth_rate: float
     key_trends: List[Dict[str, Any]]
@@ -154,6 +160,7 @@ class MarketAnalysis:
 
 @dataclass
 class CompetitiveProfile:
+    """CompetitiveProfile: class implementation"""
     competitor_id: str
     name: str
     market_position: str
@@ -166,6 +173,7 @@ class CompetitiveProfile:
 
 @dataclass
 class TrendInsight:
+    """TrendInsight: class implementation"""
     trend_name: str
     trend_type: TrendType
     growth_trajectory: Dict[str, float]
@@ -180,7 +188,7 @@ class MarketIntelligenceEngine:
     Enterprise-grade market intelligence engine for comprehensive market analysis
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.market_segments = [segment.value for segment in MarketSegment]
         
@@ -213,7 +221,7 @@ class MarketIntelligenceEngine:
         
         logger.info("Market Intelligence Engine initialized")
     
-    def _init_database(self):
+    def _init_database(self) -> None:
         """Initialize database for market intelligence data"""
         try:
             db_url = self.config.get('database_url', 'sqlite:///market_intelligence.db')
@@ -225,7 +233,7 @@ class MarketIntelligenceEngine:
             logger.error(f"Database initialization failed: {str(e)}")
             raise
     
-    def _init_redis(self):
+    def _init_redis(self) -> None:
         """Initialize Redis for caching market data"""
         try:
             redis_config = self.config.get('redis', {})
@@ -241,7 +249,7 @@ class MarketIntelligenceEngine:
             logger.warning(f"Redis initialization failed: {str(e)}")
             self.redis_client = None
     
-    def _init_ml_models(self):
+    def _init_ml_models(self) -> None:
         """Initialize machine learning models for market analysis"""
         try:
             # Clustering models for market segmentation
@@ -261,7 +269,7 @@ class MarketIntelligenceEngine:
             logger.error(f"ML model initialization failed: {str(e)}")
             raise
     
-    def _init_nlp_models(self):
+    def _init_nlp_models(self) -> None:
         """Initialize NLP models for content and sentiment analysis"""
         try:
             # Load spaCy model for text processing
@@ -882,7 +890,7 @@ class MarketIntelligenceEngine:
             market_forecasts={}
         )
     
-    async def _cache_market_analysis(self, creator_id: str, market_segment: str, analysis: MarketAnalysis):
+    async def _cache_market_analysis(self, creator_id -> None: str, market_segment -> None: str, analysis -> None: MarketAnalysis) -> None:
         """
 Cache market analysis results"""
         try:
@@ -895,11 +903,11 @@ Cache market analysis results"""
     
     # Placeholder implementations for complex analysis functions
     
-    async def _analyze_competitive_landscape(self, creator_id: str, market_segment: str, market_data: Dict[str, Any]):
+    async def _analyze_competitive_landscape(self, creator_id -> None: str, market_segment -> None: str, market_data -> None: Dict[str, Any]) -> None:
         """Analyze competitive landscape"""
         return {'competitor_count': 15, 'market_concentration': 'moderate', 'entry_barriers': 'medium'}
     
-    async def _identify_market_opportunities(self, creator_id: str, market_segment: str, market_data: Dict[str, Any], trends: List[Dict[str, Any]]):
+    async def _identify_market_opportunities(self, creator_id -> None: str, market_segment -> None: str, market_data -> None: Dict[str, Any], trends -> None: List[Dict[str, Any]]) -> None:
         """
 Identify market opportunities"""
         return [
@@ -907,27 +915,27 @@ Identify market opportunities"""
             {'opportunity': 'Cross-platform strategy', 'potential': 'medium', 'timeline': '3-6 months'}
         ]
     
-    async def _analyze_market_threats(self, creator_id: str, market_segment: str, competitive_landscape: Dict[str, Any]):
+    async def _analyze_market_threats(self, creator_id -> None: str, market_segment -> None: str, competitive_landscape -> None: Dict[str, Any]) -> None:
         """
 Analyze market threats"""
         return {'threat_level': 'moderate', 'key_threats': ['platform_changes', 'increased_competition']}
     
-    async def _analyze_target_audience(self, creator_id: str, market_segment: str, market_data: Dict[str, Any]):
+    async def _analyze_target_audience(self, creator_id -> None: str, market_segment -> None: str, market_data -> None: Dict[str, Any]) -> None:
         """
 Analyze target audience insights"""
         return {'primary_demographic': '18-34', 'engagement_preferences': ['video', 'interactive'], 'growth_segments': ['Gen Z']}
     
-    async def _generate_market_forecasts(self, market_segment: str, market_data: Dict[str, Any], trends: List[Dict[str, Any]]):
+    async def _generate_market_forecasts(self, market_segment -> None: str, market_data -> None: Dict[str, Any], trends -> None: List[Dict[str, Any]]) -> None:
         """
 Generate market forecasts"""
         return {'6_month_outlook': 'positive', '12_month_outlook': 'strong_growth', 'key_drivers': ['technology', 'audience_expansion']}
     
-    async def _get_creator_data(self, creator_id: str):
+    async def _get_creator_data(self, creator_id -> None: str) -> None:
         """
 Get creator data"""
         return {'id': creator_id, 'type': 'content_creator'}
     
-    async def _analyze_creator_content_patterns(self, creator_id: str):
+    async def _analyze_creator_content_patterns(self, creator_id -> None: str) -> None:
         """
 Analyze creator content patterns"""
         return {'primary_content_type': 'video', 'posting_frequency': 3.5}

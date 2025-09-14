@@ -1,3 +1,8 @@
+"""
+Index module
+Enterprise implementation for Ainflue platform
+"""
+
 # =============================================================================
 # AINFLUE DOCKER SERVICES INDEX
 # =============================================================================
@@ -93,11 +98,11 @@ USER_TYPE_SERVICES = {
 class DockerServiceRegistry:
     """Central registry for all Docker services."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.services = {}
         self.health_status = {}
         
-    def register_service(self, category: str, service_name: str, config: Dict[str, Any]):
+    def register_service(self, category -> None: str, service_name -> None: str, config -> None: Dict[str, Any]) -> None:
         """Register a new service in the registry."""
         if category not in self.services:
             self.services[category] = {}

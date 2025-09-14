@@ -106,10 +106,10 @@ class DynamicContentOptimizer:
     """Real-time content optimization and adaptation engine"""
     
     def __init__(self,
-                 optimization_threshold: float = 0.1,
-                 max_optimization_time_ms: float = 100.0,
-                 rollback_threshold: float = 0.95,
-                 learning_rate: float = 0.01):
+                 optimization_threshold -> None: float = 0.1,
+                 max_optimization_time_ms -> None: float = 100.0,
+                 rollback_threshold -> None: float = 0.95,
+                 learning_rate -> None: float = 0.01) -> None:
         self.optimization_threshold = optimization_threshold
         self.max_optimization_time_ms = max_optimization_time_ms
         self.rollback_threshold = rollback_threshold
@@ -988,7 +988,7 @@ class DynamicContentOptimizer:
         
         return min(max(success_probability, 0.0), 1.0)
     
-    def _update_optimization_stats(self, adjustments: ContentAdjustments):
+    def _update_optimization_stats(self, adjustments -> None: ContentAdjustments) -> None:
         """Update optimization performance statistics"""
         self.optimization_stats["total_optimizations"] += 1
         
@@ -1143,13 +1143,13 @@ class ContentOptimizerEnhancer:
     """Performance enhancement utilities for content optimization"""
     
     @staticmethod
-    def optimize_for_speed(optimizer: DynamicContentOptimizer):
+    def optimize_for_speed(optimizer -> None: DynamicContentOptimizer) -> None:
         """Optimize for maximum processing speed"""
         optimizer.max_optimization_time_ms = 50.0
         optimizer.optimization_threshold = 0.15  # Higher threshold for faster processing
     
     @staticmethod
-    def optimize_for_accuracy(optimizer: DynamicContentOptimizer):
+    def optimize_for_accuracy(optimizer -> None: DynamicContentOptimizer) -> None:
         """Optimize for maximum accuracy"""
         optimizer.max_optimization_time_ms = 200.0
         optimizer.optimization_threshold = 0.05   # Lower threshold for more optimizations

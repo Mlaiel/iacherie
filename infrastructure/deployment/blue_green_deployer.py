@@ -104,7 +104,7 @@ class BlueGreenDeployer:
     - Real-time collaboration session protection
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize blue-green deployer"""
         self.active_deployments: Dict[str, Dict[str, Any]] = {}
         self.environment_states: Dict[str, EnvironmentState] = {}

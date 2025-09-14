@@ -59,7 +59,7 @@ class AudioSEOOptimizationEvent(BaseEvent):
     optimization_suggestions: List[str]
     search_visibility: Dict[str, Any] = field(default_factory=dict)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.seo.optimization",
             data={
@@ -93,7 +93,7 @@ class AudioMetadataEnrichmentEvent(BaseEvent):
     quality_score: float
     enrichment_metadata: Dict[str, Any] = field(default_factory=dict)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.seo.metadata_enrichment",
             data={
@@ -126,7 +126,7 @@ class AudioTagGenerationEvent(BaseEvent):
     suggested_tags: List[str]
     rejected_tags: List[str] = field(default_factory=list)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.seo.tag_generation",
             data={
@@ -158,7 +158,7 @@ class AudioGamificationPointsEvent(BaseEvent):
     bonus_multiplier: float = 1.0
     transaction_metadata: Dict[str, Any] = field(default_factory=dict)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.gamification.points_awarded",
             data={
@@ -192,7 +192,7 @@ class AudioAchievementUnlockedEvent(BaseEvent):
     rarity_level: str = "common"  # common, rare, epic, legendary
     unlock_conditions: Dict[str, Any] = field(default_factory=dict)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.gamification.achievement_unlocked",
             data={
@@ -225,7 +225,7 @@ class AudioLeaderboardUpdateEvent(BaseEvent):
     percentile: float
     leaderboard_metadata: Dict[str, Any] = field(default_factory=dict)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.gamification.leaderboard_update",
             data={
@@ -259,7 +259,7 @@ class AudioBadgeEarnedEvent(BaseEvent):
     badge_benefits: List[str] = field(default_factory=list)
     display_order: int = 0
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.gamification.badge_earned",
             data={
@@ -291,7 +291,7 @@ class AudioChallengeCompletedEvent(BaseEvent):
     leaderboard_position: Optional[int] = None
     challenge_metadata: Dict[str, Any] = field(default_factory=dict)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.gamification.challenge_completed",
             data={
@@ -325,7 +325,7 @@ class AudioSocialShareEvent(BaseEvent):
     mentions: List[str] = field(default_factory=list)
     viral_potential_score: float = 0.0
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.seo.social_share",
             data={
@@ -360,7 +360,7 @@ class AudioViralityAnalysisEvent(BaseEvent):
     audience_fit: Dict[str, Any]
     recommendation_actions: List[str] = field(default_factory=list)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.seo.virality_analysis",
             data={

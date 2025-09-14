@@ -23,6 +23,7 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class ComplianceStandard(Enum):
+    """ComplianceStandard class implementation"""
     GDPR = "gdpr"
     CCPA = "ccpa"
     SOX = "sox"
@@ -31,6 +32,7 @@ class ComplianceStandard(Enum):
     ISO27001 = "iso27001"
 
 class SecurityEventType(Enum):
+    """SecurityEventType class implementation"""
     LOGIN_ATTEMPT = "login_attempt"
     DATA_ACCESS = "data_access"
     PERMISSION_CHANGE = "permission_change"
@@ -156,10 +158,10 @@ class DataAnonymization(Base):
     anonymized_at = Column(DateTime(timezone=True), default=datetime.utcnow)
     expires_at = Column(DateTime(timezone=True), nullable=True)
 
-def get_security_compliance_models():
+def get_security_compliance_models() -> None:
     return [EncryptionKeyManagement, ComplianceRecord, AuditTrail, AccessControlMatrix, SecurityIncident, DataAnonymization]
 
-def create_security_compliance_tables(engine):
+def create_security_compliance_tables(engine) -> None:
     try:
         Base.metadata.create_all(engine, tables=[model.__table__ for model in get_security_compliance_models()])
         logger.info("Successfully created security compliance tables")

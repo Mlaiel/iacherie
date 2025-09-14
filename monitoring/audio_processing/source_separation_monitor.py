@@ -72,7 +72,7 @@ class SourceSeparationMonitor:
     and provides insights for optimization and capacity planning.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize source separation monitor."""
         self.config = config or self._default_config()
         self.jobs: Dict[str, SeparationJob] = {}
@@ -127,7 +127,7 @@ class SourceSeparationMonitor:
         logger.info(f"Started separation job {job_id} with model {model.value}")
         return job_id
     
-    async def process_separation_jobs(self):
+    async def process_separation_jobs(self) -> None:
         """Process separation jobs from queue."""
         while True:
             try:
@@ -138,7 +138,7 @@ class SourceSeparationMonitor:
                 logger.error(f"Error processing separation job: {e}")
                 await asyncio.sleep(1)
     
-    async def _process_job(self, job: SeparationJob):
+    async def _process_job(self, job -> None: SeparationJob) -> None:
         """Process individual separation job."""
         try:
             job.status = "processing"
@@ -222,7 +222,7 @@ class SourceSeparationMonitor:
         
         return output_files
     
-    def _update_metrics(self, job: SeparationJob):
+    def _update_metrics(self, job -> None: SeparationJob) -> None:
         """Update separation metrics based on completed job."""
         self.metrics.total_jobs += 1
         

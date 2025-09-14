@@ -120,7 +120,7 @@ class CacheStats:
 class PaymentGatewayCache:
     """Enterprise caching system for payment gateway"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.redis_client = None
         self.is_initialized = False
@@ -165,7 +165,7 @@ class PaymentGatewayCache:
             'analytics': 900            # 15 minutes
         }
         
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize the cache system"""
         try:
             # Initialize Redis connection for L2 cache
@@ -307,11 +307,11 @@ class PaymentGatewayCache:
     
     async def _store_in_l1(
         self,
-        key: str,
-        value: Any,
-        data_type: Optional[str] = None,
-        ttl: Optional[int] = None
-    ):
+        key -> None: str,
+        value -> None: Any,
+        data_type -> None: Optional[str] = None,
+        ttl -> None: Optional[int] = None
+    ) -> None:
         """Store value in L1 (memory) cache"""
         try:
             # Check if we need to evict entries
@@ -559,7 +559,7 @@ class PaymentGatewayCache:
         key = self.key_patterns['analytics'].format(metric=metric, period=period)
         return await self.get(key, 'analytics')
     
-    async def _cleanup_expired_entries(self):
+    async def _cleanup_expired_entries(self) -> None:
         """Clean up expired cache entries"""
         while True:
             try:
@@ -585,7 +585,7 @@ class PaymentGatewayCache:
                 logger.error(f"Error in cache cleanup: {e}")
                 await asyncio.sleep(60)
     
-    async def _collect_cache_metrics(self):
+    async def _collect_cache_metrics(self) -> None:
         """Collect cache performance metrics"""
         while True:
             try:
@@ -607,7 +607,7 @@ class PaymentGatewayCache:
                 logger.error(f"Error in cache metrics collection: {e}")
                 await asyncio.sleep(60)
     
-    async def _warm_cache(self):
+    async def _warm_cache(self) -> None:
         """Warm up cache with frequently accessed data"""
         try:
             logger.info("Starting cache warming...")
@@ -818,7 +818,7 @@ class PaymentGatewayCache:
             logger.error(f"Failed to clear cache: {e}")
             return False
     
-    async def close(self):
+    async def close(self) -> None:
         """Close the cache system and cleanup resources"""
         try:
             if self.redis_client:

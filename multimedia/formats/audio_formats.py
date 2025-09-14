@@ -84,7 +84,7 @@ class AudioProcessingOptions:
 class AudioCodecRegistry:
     """Enterprise audio codec registry and management"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.codecs = {
             AudioFormat.MP3: {
                 'encoder': 'lame',
@@ -168,7 +168,7 @@ class AudioCodecRegistry:
 class AudioFormatProcessor:
     """Enterprise audio format processor with AI capabilities"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.codec_registry = AudioCodecRegistry()
         self.quality_analyzer = AudioQualityAnalyzer()
         self.compression_engine = AudioCompressionEngine()
@@ -450,9 +450,9 @@ class AudioFormatProcessor:
             logger.warning(f"Audio enhancement failed: {e}")
             return y
     
-    async def _convert_with_pydub(self, input_path: Path, output_path: Path,
-                                options: AudioProcessingOptions,
-                                conversion_settings: Dict[str, Any]):
+    async def _convert_with_pydub(self, input_path -> None: Path, output_path -> None: Path,
+                                options -> None: AudioProcessingOptions,
+                                conversion_settings -> None: Dict[str, Any]) -> None:
         """Convert audio using pydub"""
         try:
             # Load with pydub
@@ -471,8 +471,8 @@ class AudioFormatProcessor:
             logger.error(f"Pydub conversion failed: {e}")
             raise
     
-    async def _transfer_metadata(self, source_path: Path, target_path: Path,
-                               metadata: Dict[str, Any]):
+    async def _transfer_metadata(self, source_path -> None: Path, target_path -> None: Path,
+                               metadata -> None: Dict[str, Any]) -> None:
         """Transfer metadata between audio files"""
         try:
             # Load target file

@@ -135,7 +135,7 @@ class BatchJob(BaseModel):
 class DatabaseBatchOptimizer:
     """Database batch optimization (DBA expertise)"""
     
-    def __init__(self, connection_pool_size: int = 10):
+    def __init__(self, connection_pool_size -> None: int = 10) -> None:
         self.connection_pool_size = connection_pool_size
         self.connection_cache = {}
         
@@ -184,7 +184,7 @@ class DatabaseBatchOptimizer:
 class MLBatchProcessor:
     """ML batch processing optimization (ML Engineer expertise)"""
     
-    def __init__(self, model_cache_size: int = 3):
+    def __init__(self, model_cache_size -> None: int = 3) -> None:
         self.model_cache = {}
         self.model_cache_size = model_cache_size
         self.gpu_available = False  # Check GPU availability
@@ -222,7 +222,7 @@ class MLBatchProcessor:
             # CPU processing - smaller batches
             return min(32, data_size)
     
-    async def _get_model(self, model_name: str):
+    async def _get_model(self, model_name -> None: str) -> None:
         """Get model from cache or load new model"""
         if model_name in self.model_cache:
             return self.model_cache[model_name]
@@ -263,7 +263,7 @@ class MLBatchProcessor:
 class IntelligentScheduler:
     """Intelligent batch scheduling (Lead Dev IA expertise)"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.job_queue = []
         self.running_jobs = {}
         self.completed_jobs = {}
@@ -326,7 +326,7 @@ class IntelligentScheduler:
         
         return job
     
-    def complete_job(self, job_id: str, success: bool = True):
+    def complete_job(self, job_id -> None: str, success -> None: bool = True) -> None:
         """Mark job as completed"""
         if job_id in self.running_jobs:
             job = self.running_jobs.pop(job_id)
@@ -338,7 +338,7 @@ class IntelligentScheduler:
 class ResourceMonitor:
     """System resource monitoring (DevOps expertise)"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.cpu_threshold = 80.0  # CPU usage threshold
         self.memory_threshold = 85.0  # Memory usage threshold
         self.max_concurrent_jobs = 10
@@ -364,8 +364,8 @@ class BatchClient:
     """Main batch operations client with multi-expert architecture"""
     
     def __init__(self, 
-                 auth_manager: AuthenticationManager,
-                 max_concurrent_jobs: int = 5):
+                 auth_manager -> None: AuthenticationManager,
+                 max_concurrent_jobs -> None: int = 5) -> None:
         self.auth_manager = auth_manager
         self.max_concurrent_jobs = max_concurrent_jobs
         self.logger = logging.getLogger(__name__)
@@ -382,13 +382,13 @@ class BatchClient:
         # Thread pool for concurrent processing
         self.executor = ThreadPoolExecutor(max_workers=max_concurrent_jobs)
     
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         """Async context manager entry"""
         self.http_client = httpx.AsyncClient(timeout=300.0)
         self.metrics.start_time = datetime.now()
         return self
     
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         """Async context manager exit"""
         if self.http_client:
             await self.http_client.aclose()
@@ -620,7 +620,7 @@ class BatchClient:
 
 
 # Example usage
-async def example_batch_usage():
+async def example_batch_usage() -> None:
     """Example usage of batch client"""
     from .auth_manager import AuthenticationManager
     

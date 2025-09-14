@@ -121,7 +121,7 @@ class EvaluationReport:
 class MetricsCalculator:
     """Calculates various performance metrics"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.calculation_cache: Dict[str, Any] = {}
     
     async def calculate_accuracy(self, predictions: List[Any], ground_truth: List[Any]) -> float:
@@ -208,7 +208,7 @@ class MetricsCalculator:
 class TestExecutor:
     """Executes test cases and collects results"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.active_tests: Dict[str, TestResult] = {}
         self.metrics_calculator = MetricsCalculator()
     
@@ -333,13 +333,13 @@ class TestExecutor:
 class EvaluationEngine:
     """Main evaluation engine that orchestrates testing and metrics collection"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.test_executor = TestExecutor()
         self.metrics_calculator = MetricsCalculator()
         self.evaluation_suites: Dict[str, EvaluationSuite] = {}
         self.evaluation_reports: Dict[str, EvaluationReport] = {}
     
-    async def register_evaluation_suite(self, suite: EvaluationSuite):
+    async def register_evaluation_suite(self, suite -> None: EvaluationSuite) -> None:
         """Register an evaluation suite"""
         self.evaluation_suites[suite.suite_id] = suite
         logger.info(f"Registered evaluation suite: {suite.suite_id}")
@@ -500,7 +500,7 @@ class EvaluationEngine:
 class PerformanceBenchmark:
     """Performance benchmarking utilities"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.benchmark_results: Dict[str, List[float]] = {}
     
     async def benchmark_function(self, function: Callable, input_data: Any, 

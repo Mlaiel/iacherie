@@ -28,7 +28,7 @@ class BlurConfig:
 class SelectiveBlur:
     """Selective blur effects with masking."""
     
-    def __init__(self, config: BlurConfig):
+    def __init__(self, config -> None: BlurConfig) -> None:
         self.config = config
     
     def depth_of_field_blur(
@@ -131,7 +131,7 @@ class SelectiveBlur:
 class MotionBlur:
     """Motion blur effects for dynamic content."""
     
-    def __init__(self, config: BlurConfig):
+    def __init__(self, config -> None: BlurConfig) -> None:
         self.config = config
     
     def linear_motion_blur(
@@ -219,7 +219,7 @@ class MotionBlur:
 class ArtisticBlur:
     """Artistic and stylized blur effects."""
     
-    def __init__(self, config: BlurConfig):
+    def __init__(self, config -> None: BlurConfig) -> None:
         self.config = config
     
     def bokeh_blur(
@@ -356,7 +356,7 @@ class ArtisticBlur:
 class BlurEffectsEngine:
     """Enterprise blur effects engine for artistic and cinematic enhancement."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.config = BlurConfig()
         self.selective = SelectiveBlur(self.config)
         self.motion = MotionBlur(self.config)

@@ -130,7 +130,7 @@ class ContentProcessingResult:
 class TextTransformer:
     """Professional text transformation and processing engine."""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize text transformer with configuration."""
         self.config = config or {}
         self.supported_formats = [content_type.value for content_type in ContentType]
@@ -142,7 +142,7 @@ class TextTransformer:
         
         logger.info("TextTransformer initialized")
     
-    def _init_nlp_components(self):
+    def _init_nlp_components(self) -> None:
         """Initialize NLP processing components."""
         # Placeholder for NLP model initialization
         # In production, would load spaCy, transformers, etc.
@@ -484,7 +484,7 @@ class TextTransformer:
 class MetadataTransformer:
     """Professional metadata transformation and enrichment engine."""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize metadata transformer with configuration."""
         self.config = config or {}
         self.thread_pool = ThreadPoolExecutor(max_workers=2)
@@ -706,7 +706,7 @@ class MetadataTransformer:
 class ContentAnalyzer:
     """Advanced content analyzer with semantic understanding."""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize content analyzer with configuration."""
         self.config = config or {}
         self.text_transformer = TextTransformer(config)
@@ -869,7 +869,7 @@ class ContentAnalyzer:
 class LanguageProcessor:
     """Multilingual content processor for international content."""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize language processor with configuration."""
         self.config = config or {}
         self.supported_languages = [lang.value for lang in LanguageCode]
@@ -955,7 +955,7 @@ class LanguageProcessor:
 class SEOOptimizer:
     """SEO optimization engine for content enhancement."""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize SEO optimizer with configuration."""
         self.config = config or {}
         
@@ -1055,7 +1055,7 @@ class SEOOptimizer:
 class ContentClassifier:
     """ML-powered content classification engine."""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize content classifier with configuration."""
         self.config = config or {}
         

@@ -101,7 +101,7 @@ class TimezoneInsight:
 class TimezoneOptimizer:
     """Advanced timezone-aware posting optimization engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize timezone optimizer"""
         self.timezone_data = {}
         self.engagement_patterns = {}

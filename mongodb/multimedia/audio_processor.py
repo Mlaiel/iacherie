@@ -27,6 +27,7 @@ except ImportError:
     AUDIO_LIBS_AVAILABLE = False
     # Mock classes for when libraries aren't available
     class AsyncIOMotorGridFSBucket:
+    """AsyncIOMotorGridFSBucket: class implementation"""
         pass
 
 logger = logging.getLogger(__name__)
@@ -34,7 +35,7 @@ logger = logging.getLogger(__name__)
 class AudioProcessor:
     """Advanced audio processing for MongoDB storage."""
     
-    def __init__(self, database, bucket_name: str = "audio_files"):
+    def __init__(self, database, bucket_name -> None: str = "audio_files") -> None:
         """Initialize audio processor."""
         self.database = database
         self.bucket_name = bucket_name

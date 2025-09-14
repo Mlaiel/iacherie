@@ -123,7 +123,7 @@ class WorkspaceAsset:
 class CollaborativeWorkspace:
     """Main collaborative workspace manager"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.workspaces = {}  # workspace_id -> WorkspaceConfig
         self.workspace_members = defaultdict(dict)  # workspace_id -> {user_id -> WorkspaceMember}
         self.workspace_activities = defaultdict(deque)  # workspace_id -> activities
@@ -528,9 +528,9 @@ class CollaborativeWorkspace:
             logger.error(f"Failed to get workspace state: {e}")
             return {}
     
-    async def _log_activity(self, workspace_id: str, user_id: str,
-                          activity_type: ActivityType, description: str,
-                          metadata: Dict[str, Any] = None):
+    async def _log_activity(self, workspace_id -> None: str, user_id -> None: str,
+                          activity_type -> None: ActivityType, description -> None: str,
+                          metadata -> None: Dict[str, Any] = None) -> None:
         """Log workspace activity"""
         try:
             activity = WorkspaceActivity(
@@ -554,9 +554,9 @@ class CollaborativeWorkspace:
         except Exception as e:
             logger.error(f"Failed to log activity: {e}")
     
-    async def _broadcast_workspace_event(self, workspace_id: str, 
-                                       event_data: Dict[str, Any],
-                                       exclude_user: str = None):
+    async def _broadcast_workspace_event(self, workspace_id -> None: str, 
+                                       event_data -> None: Dict[str, Any],
+                                       exclude_user -> None: str = None) -> None:
         """Broadcast event to all workspace members"""
         try:
             active_users = self.workspace_channels.get(workspace_id, set())
@@ -606,7 +606,7 @@ class CollaborativeWorkspace:
         
         return False
     
-    async def _initialize_workspace_storage(self, workspace_id: str):
+    async def _initialize_workspace_storage(self, workspace_id -> None: str) -> None:
         """Initialize storage directories for workspace"""
         try:
             # Create workspace directory structure
@@ -631,7 +631,7 @@ class CollaborativeWorkspace:
             logger.error(f"Failed to store workspace file: {e}")
             raise
     
-    async def _store_workspace_redis(self, workspace_config: WorkspaceConfig):
+    async def _store_workspace_redis(self, workspace_config -> None: WorkspaceConfig) -> None:
         """Store workspace config in Redis"""
         try:
             if self.redis_client:
@@ -645,7 +645,7 @@ class CollaborativeWorkspace:
 class WorkspaceManager:
     """High-level workspace management"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.workspace_engine = CollaborativeWorkspace()
         self.workspace_templates = self._load_workspace_templates()
     
@@ -761,8 +761,8 @@ class WorkspaceManager:
             }
         }
     
-    async def _add_template_asset(self, workspace_id: str, user_id: str, 
-                                asset_info: Dict[str, Any]):
+    async def _add_template_asset(self, workspace_id -> None: str, user_id -> None: str, 
+                                asset_info -> None: Dict[str, Any]) -> None:
         """Add template asset to workspace"""
         try:
             # In production, load actual template assets

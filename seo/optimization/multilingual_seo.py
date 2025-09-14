@@ -110,7 +110,7 @@ class MultilingualSEO:
     Comprehensive multilingual SEO system that handles content localization,
     international keyword research, and technical implementation for global reach.
     """
-    def __init__(self):
+    def __init__(self) -> None:
         """
 Initialize the multilingual SEO system."""
         self.language_mappings = self._initialize_language_mappings()

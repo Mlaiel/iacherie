@@ -94,7 +94,7 @@ class WorkflowOrchestrator:
     for complex business processes across content, collaboration, and monetization.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the workflow orchestrator."""
         self.workflows: Dict[str, WorkflowDefinition] = {}
         self.executions: Dict[str, WorkflowExecution] = {}
@@ -103,7 +103,7 @@ class WorkflowOrchestrator:
         self._load_default_workflows()
         self._register_default_handlers()
     
-    def _load_default_workflows(self):
+    def _load_default_workflows(self) -> None:
         """Load default workflow definitions."""
         # Content upload workflow
         content_upload_stages = [
@@ -227,7 +227,7 @@ class WorkflowOrchestrator:
         for workflow in [content_upload_workflow, collaboration_workflow, monetization_workflow]:
             self.add_workflow(workflow)
     
-    def _register_default_handlers(self):
+    def _register_default_handlers(self) -> None:
         """Register default stage handlers."""
         self.stage_handlers.update({
             "validate_content_handler": self._validate_content_handler,

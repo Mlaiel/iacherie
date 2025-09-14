@@ -101,7 +101,7 @@ class SecretConfiguration:
 class EnterpriseEnvironmentConfiguration:
     """Enterprise-grade environment configuration management"""
     
-    def __init__(self, level: str = "enterprise"):
+    def __init__(self, level -> None: str = "enterprise") -> None:
         """Initialize environment configuration"""
         self.level = level
         self.current_environment = os.getenv("AINFLUE_ENV", "development")
@@ -208,7 +208,7 @@ class EnterpriseEnvironmentConfiguration:
             }
         }
     
-    def _initialize_environments(self):
+    def _initialize_environments(self) -> None:
         """Initialize environment configurations"""
         
         # Development Environment
@@ -490,7 +490,7 @@ class EnterpriseEnvironmentConfiguration:
         
         logger.info(f"✅ Initialized {len(self.environments)} environment configurations")
     
-    def _setup_secrets_management(self):
+    def _setup_secrets_management(self) -> None:
         """Setup secrets management configuration"""
         # Database secrets
         db_secrets = [
@@ -564,7 +564,7 @@ class EnterpriseEnvironmentConfiguration:
         
         logger.info(f"🔐 Initialized {len(all_secrets)} secret configurations")
     
-    def _load_feature_flags(self):
+    def _load_feature_flags(self) -> None:
         """Load global feature flags configuration"""
         self.feature_flags_global = {
             # Core platform features
@@ -647,7 +647,7 @@ class EnterpriseEnvironmentConfiguration:
         # Fall back to global flags
         return self.feature_flags_global.get(flag_name, False)
     
-    def set_feature_flag(self, flag_name: str, value: bool, environment: Optional[str] = None):
+    def set_feature_flag(self, flag_name -> None: str, value -> None: bool, environment -> None: Optional[str] = None) -> None:
         """Set feature flag value for specific environment"""
         target_env = environment or self.current_environment
         

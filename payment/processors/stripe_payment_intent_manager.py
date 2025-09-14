@@ -143,7 +143,7 @@ class StripePaymentIntentManager:
     - Automated failure recovery and optimization
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """Initialize Stripe Payment Intent manager"""
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -749,7 +749,7 @@ class StripePaymentIntentManager:
         
         return max(0.0, min(1.0, score))
     
-    async def _update_performance_metrics(self, result: PaymentIntentResult):
+    async def _update_performance_metrics(self, result -> None: PaymentIntentResult) -> None:
         """DevOps: Update performance metrics"""
         self.performance_metrics['total_intents_created'] += 1
         

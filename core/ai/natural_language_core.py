@@ -1,3 +1,8 @@
+"""
+Natural Language Core module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Ainflue Core AI - Advanced Natural Language Processing Engine
@@ -156,7 +161,7 @@ class NLPProcessingResult:
 class TextPreprocessor:
     """Advanced text preprocessing utilities"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.html_pattern = re.compile(r'<[^>]+>')
         self.url_pattern = re.compile(r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\(\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+')
         self.mention_pattern = re.compile(r'@[a-zA-Z0-9_]+')
@@ -218,7 +223,7 @@ class TextPreprocessor:
 class LanguageDetector:
     """Language detection using various methods"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         # Language patterns for basic detection
         self.language_patterns = {
             LanguageCode.ENGLISH: [
@@ -289,7 +294,7 @@ class LanguageDetector:
 class SentimentAnalyzer:
     """Sentiment analysis with emotion detection"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         # Simplified sentiment lexicon
         self.positive_words = {
             "excellent", "amazing", "fantastic", "wonderful", "great", "good", "nice",
@@ -363,7 +368,7 @@ class SentimentAnalyzer:
 class ContentClassifier:
     """Content classification system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         # Category keywords (simplified)
         self.category_keywords = {
             ContentCategory.ENTERTAINMENT: {
@@ -435,7 +440,7 @@ class ContentClassifier:
 class NamedEntityRecognizer:
     """Named Entity Recognition system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         # Simple patterns for entity recognition
         self.patterns = {
             "PERSON": re.compile(r'\b[A-Z][a-z]+ [A-Z][a-z]+\b'),
@@ -521,7 +526,7 @@ class QualityAssessor:
 class ToxicityDetector:
     """Toxicity and inappropriate content detection"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         # Simplified toxic word list (in production, use ML models)
         self.toxic_words = {
             "hate", "stupid", "idiot", "fool", "dumb", "moron", "loser",
@@ -574,7 +579,7 @@ class ToxicityDetector:
 class NaturalLanguageCore:
     """Advanced enterprise natural language processing core"""
     
-    def __init__(self, level: str = "enterprise"):
+    def __init__(self, level -> None: str = "enterprise") -> None:
         self.level = level
         self.preprocessor = TextPreprocessor()
         self.language_detector = LanguageDetector()

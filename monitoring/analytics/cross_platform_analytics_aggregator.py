@@ -140,7 +140,7 @@ class CrossPlatformAnalyticsAggregator:
     to provide comprehensive insights and cross-platform performance analysis.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the cross-platform analytics aggregator."""
         self.platform_metrics: Dict[Platform, List[PlatformMetric]] = defaultdict(list)
         self.aggregated_metrics: List[AggregatedMetric] = []
@@ -155,7 +155,7 @@ class CrossPlatformAnalyticsAggregator:
         self._initialize_aggregation_rules()
         self._setup_correlation_tracking()
     
-    def _setup_data_connectors(self):
+    def _setup_data_connectors(self) -> None:
         """Setup data connectors for each platform."""
         for platform in Platform:
             self.data_connectors[platform] = {
@@ -222,7 +222,7 @@ class CrossPlatformAnalyticsAggregator:
         }
         return platform_metrics.get(platform, [MetricType.ENGAGEMENT, MetricType.REACH])
     
-    def _initialize_aggregation_rules(self):
+    def _initialize_aggregation_rules(self) -> None:
         """Initialize aggregation rules for different metrics."""
         self.aggregation_rules = {
             "default_weights": {
@@ -255,7 +255,7 @@ class CrossPlatformAnalyticsAggregator:
             }
         }
     
-    def _setup_correlation_tracking(self):
+    def _setup_correlation_tracking(self) -> None:
         """Setup correlation tracking between platforms and metrics."""
         # Initialize correlation matrix
         platforms = list(Platform)
@@ -346,7 +346,7 @@ class CrossPlatformAnalyticsAggregator:
             logger.error(f"Failed to create metric: {e}")
             return None
     
-    def _trigger_aggregation_if_needed(self):
+    def _trigger_aggregation_if_needed(self) -> None:
         """Trigger aggregation if conditions are met."""
         
         # Check if we have enough recent data from multiple platforms
@@ -601,7 +601,7 @@ class CrossPlatformAnalyticsAggregator:
         
         return duration_map.get(period, timedelta(hours=1))
     
-    def _perform_periodic_aggregation(self, period: AggregationPeriod):
+    def _perform_periodic_aggregation(self, period -> None: AggregationPeriod) -> None:
         """Perform periodic aggregation for all metric types."""
         
         # Aggregate each metric type
@@ -620,7 +620,7 @@ class CrossPlatformAnalyticsAggregator:
         # Update correlations
         self._update_correlation_matrix()
     
-    def _generate_cross_platform_insights(self):
+    def _generate_cross_platform_insights(self) -> None:
         """Generate insights from cross-platform data analysis."""
         
         # Analyze recent aggregations
@@ -855,7 +855,7 @@ class CrossPlatformAnalyticsAggregator:
         
         return insights[:2]  # Return top 2 growth opportunity insights
     
-    def _update_platform_performances(self):
+    def _update_platform_performances(self) -> None:
         """Update platform performance analysis."""
         
         for platform in Platform:
@@ -1120,7 +1120,7 @@ class CrossPlatformAnalyticsAggregator:
         
         return opportunities[:5]
     
-    def _update_correlation_matrix(self):
+    def _update_correlation_matrix(self) -> None:
         """Update the correlation matrix between platforms."""
         
         # Get recent aggregations

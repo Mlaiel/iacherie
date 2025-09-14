@@ -122,7 +122,7 @@ class DigitalRightsManager:
     permissions, usage tracking, and automated compliance enforcement.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize the Digital Rights Manager"""
         self.config = config or {}
         self.rights_registry: Dict[str, DigitalRights] = {}
@@ -134,7 +134,7 @@ class DigitalRightsManager:
         # Initialize default license templates
         self._initialize_license_templates()
     
-    def _initialize_license_templates(self):
+    def _initialize_license_templates(self) -> None:
         """Initialize default license templates"""
         
         self.license_templates = {
@@ -317,10 +317,10 @@ class DigitalRightsManager:
             }
     
     async def _log_usage(self, 
-                       content_id: str,
-                       user_id: str,
-                       right_used: RightsType,
-                       context: Dict[str, Any]):
+                       content_id -> None: str,
+                       user_id -> None: str,
+                       right_used -> None: RightsType,
+                       context -> None: Dict[str, Any]) -> None:
         """Log content usage"""
         
         usage_record = {
@@ -385,7 +385,7 @@ class ContentFingerprintEngine:
     for accurate content identification and duplicate detection.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize the Content Fingerprint Engine"""
         self.config = config or {}
         self.fingerprint_database: Dict[str, ContentFingerprint] = {}
@@ -395,7 +395,7 @@ class ContentFingerprintEngine:
         # Initialize fingerprinting algorithms
         self._initialize_algorithms()
     
-    def _initialize_algorithms(self):
+    def _initialize_algorithms(self) -> None:
         """Initialize fingerprinting algorithms"""
         
         self.fingerprint_algorithms = {
@@ -633,7 +633,7 @@ class AntiPiracySystems:
     automated takedown requests, and proactive protection measures.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize the Anti-Piracy Systems"""
         self.config = config or {}
         self.monitoring_targets: Dict[str, Dict[str, Any]] = {}
@@ -850,7 +850,7 @@ class AntiPiracySystems:
                 'error': str(e)
             }
     
-    async def _send_takedown_request(self, takedown_request: Dict[str, Any]):
+    async def _send_takedown_request(self, takedown_request -> None: Dict[str, Any]) -> None:
         """Send takedown request to target platform"""
         
         # Simplified implementation
@@ -866,7 +866,7 @@ class AntiPiracySystems:
         elif source_type == 'file_sharing':
             await self._send_file_sharing_takedown_request(takedown_request)
     
-    async def _send_web_takedown_request(self, takedown_request: Dict[str, Any]):
+    async def _send_web_takedown_request(self, takedown_request -> None: Dict[str, Any]) -> None:
         """Send takedown request to website"""
         
         # Simulate sending DMCA notice to website
@@ -876,7 +876,7 @@ class AntiPiracySystems:
         takedown_request['status'] = 'sent'
         takedown_request['sent_at'] = datetime.now(timezone.utc)
     
-    async def _send_social_media_takedown_request(self, takedown_request: Dict[str, Any]):
+    async def _send_social_media_takedown_request(self, takedown_request -> None: Dict[str, Any]) -> None:
         """Send takedown request to social media platform"""
         
         # Simulate API call to social media platform
@@ -885,7 +885,7 @@ class AntiPiracySystems:
         takedown_request['status'] = 'sent'
         takedown_request['sent_at'] = datetime.now(timezone.utc)
     
-    async def _send_file_sharing_takedown_request(self, takedown_request: Dict[str, Any]):
+    async def _send_file_sharing_takedown_request(self, takedown_request -> None: Dict[str, Any]) -> None:
         """Send takedown request to file sharing platform"""
         
         # Simulate notice to file sharing platform
@@ -903,7 +903,7 @@ class ContentProtectionCore:
     across the IA Influencer Agent platform with enterprise-grade security.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize the Content Protection Core"""
         self.config = config or {}
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
@@ -939,7 +939,7 @@ class ContentProtectionCore:
             self.logger.error(f"Content Protection Core initialization failed: {e}")
             return False
     
-    async def _initialize_protection_monitoring(self):
+    async def _initialize_protection_monitoring(self) -> None:
         """Initialize protection monitoring systems"""
         
         # Set up scheduled scans

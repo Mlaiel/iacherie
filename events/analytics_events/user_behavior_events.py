@@ -1,5 +1,7 @@
 """User Behavior Events Module
 
+import logging
+
 Advanced user behavior analysis and journey tracking for multi-format content creators.
 Provides comprehensive user interaction analysis, personalization, and retention optimization.
 
@@ -177,7 +179,7 @@ class UserBehaviorEventHandler(BaseEventHandler):
     """
 Handles user behavior events with advanced analytics"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
         self.cache_manager = CacheManager()
         self.db_manager = DatabaseManager()
@@ -299,7 +301,7 @@ class UserBehaviorTracker:
     """
 Tracks and analyzes user behavior patterns"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.db_manager = DatabaseManager()
         self.cache_manager = CacheManager()
         self.metrics_calculator = MetricsCalculator()
@@ -402,7 +404,7 @@ class UserJourneyAnalyzer:
     """
 Analyzes user journey and touchpoint optimization"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         try:
             logger.info(f"Executing __init__")
             
@@ -533,7 +535,7 @@ class UserPersonalizationEngine:
     """
 Manages user personalization profiles and recommendations"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.db_manager = DatabaseManager()
         self.personalizer = UserPersonalizer()
         self.kmeans = KMeans(n_clusters=8, random_state=42)
@@ -578,7 +580,7 @@ class UserRetentionAnalyzer:
     """
 Analyzes user retention patterns and predicts churn"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.db_manager = DatabaseManager()
         self.churn_predictor = BehaviorPredictor()
         

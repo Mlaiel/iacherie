@@ -100,7 +100,7 @@ class ImageProcessingOptions:
 class ModernImageFormats:
     """Handler for next-generation image formats"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.format_specs = {
             ImageFormat.WEBP: {
                 'max_resolution': (16383, 16383),
@@ -163,7 +163,7 @@ class ModernImageFormats:
 class ImageFormatProcessor:
     """Enterprise image format processor with AI capabilities"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.modern_formats = ModernImageFormats()
         self.quality_analyzer = ImageQualityAnalyzer()
         self.content_analyzer = ImageContentAnalyzer()
@@ -173,7 +173,7 @@ class ImageFormatProcessor:
         # Initialize format plugins
         self._initialize_format_support()
     
-    def _initialize_format_support(self):
+    def _initialize_format_support(self) -> None:
         """Initialize support for various image formats"""
         try:
             # Register HEIF plugin
@@ -586,8 +586,8 @@ class ImageFormatProcessor:
         
         return params
     
-    async def _transfer_metadata(self, source_path: Path, target_path: Path,
-                               metadata: Dict[str, Any]):
+    async def _transfer_metadata(self, source_path -> None: Path, target_path -> None: Path,
+                               metadata -> None: Dict[str, Any]) -> None:
         """Transfer metadata between image files"""
         try:
             # This is format-specific and may not work for all conversions

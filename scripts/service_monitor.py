@@ -1,3 +1,8 @@
+"""
+Service Monitor module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Service Monitor - Enterprise Microservice Health Monitoring
@@ -46,6 +51,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 class ServiceStatus(Enum):
+    """ServiceStatus class implementation"""
     HEALTHY = "healthy"
     DEGRADED = "degraded"
     UNHEALTHY = "unhealthy"
@@ -53,6 +59,7 @@ class ServiceStatus(Enum):
     UNKNOWN = "unknown"
 
 class AlertLevel(Enum):
+    """AlertLevel class implementation"""
     INFO = "info"
     WARNING = "warning"
     CRITICAL = "critical"
@@ -105,14 +112,14 @@ class ServiceMonitor:
     - Real-time dashboard data
     """
     
-    def __init__(self, config_path: str = "/etc/ainflue/services.json"):
+    def __init__(self, config_path -> None: str = "/etc/ainflue/services.json") -> None:
         self.config_path = config_path
         self.services: Dict[str, ServiceEndpoint] = {}
         self.metrics_history: List[ServiceMetrics] = []
         self.active_alerts: List[Alert] = []
         self.service_registry: Dict[str, Dict] = {}
         
-    async def load_service_configuration(self):
+    async def load_service_configuration(self) -> None:
         """Load service monitoring configuration"""
         try:
             with open(self.config_path, 'r') as f:
@@ -306,7 +313,7 @@ class ServiceMonitor:
             logger.debug(f"System metrics collection failed for {service_name}: {e}")
             return 0.0, 0.0
     
-    async def monitor_all_services(self, interval: int = 30, duration: int = 3600):
+    async def monitor_all_services(self, interval -> None: int = 30, duration -> None: int = 3600) -> None:
         """Monitor all services continuously"""
         logger.info(f"Starting service monitoring (interval: {interval}s, duration: {duration}s)")
         
@@ -352,7 +359,7 @@ class ServiceMonitor:
         
         logger.info("Service monitoring completed")
     
-    async def _check_alert_conditions(self, metrics: ServiceMetrics):
+    async def _check_alert_conditions(self, metrics -> None: ServiceMetrics) -> None:
         """Check if metrics trigger any alerts"""
         alerts_to_create = []
         
@@ -392,7 +399,7 @@ class ServiceMonitor:
                 alert_info['message']
             )
     
-    async def _create_alert(self, service_name: str, level: AlertLevel, message: str):
+    async def _create_alert(self, service_name -> None: str, level -> None: AlertLevel, message -> None: str) -> None:
         """Create a new alert"""
         # Check if similar alert already exists
         for alert in self.active_alerts:
@@ -416,12 +423,12 @@ class ServiceMonitor:
         # Send notifications (implementation would include email/Slack/SMS)
         await self._send_alert_notification(alert)
     
-    async def _send_alert_notification(self, alert: Alert):
+    async def _send_alert_notification(self, alert -> None: Alert) -> None:
         """Send alert notification"""
         # Implementation would send to configured channels
         logger.info(f"Alert notification sent: {alert.alert_id}")
     
-    async def resolve_alert(self, alert_id: str):
+    async def resolve_alert(self, alert_id -> None: str) -> None:
         """Resolve an active alert"""
         for alert in self.active_alerts:
             if alert.alert_id == alert_id and not alert.resolved:
@@ -489,7 +496,7 @@ class ServiceMonitor:
                 metrics.timestamp > cutoff_time)
         ]
     
-    async def discover_services(self):
+    async def discover_services(self) -> None:
         """Discover services automatically"""
         logger.info("Starting service discovery")
         
@@ -595,7 +602,7 @@ class ServiceMonitor:
         
         return report
 
-async def main():
+async def main() -> None:
     """CLI entry point for service monitor"""
     import argparse
     

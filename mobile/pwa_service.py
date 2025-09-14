@@ -5,7 +5,7 @@ push notifications, and native app-like features.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team Specialties: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 
-⚠️ STRICT COPYRIGHT NOTICE ⚠️
+# [EMOJI_REMOVED] STRICT COPYRIGHT NOTICE # [EMOJI_REMOVED]
 This code is proprietary and confidential to Fahed Mlaiel.
 Any unauthorized use, copying, modification, or distribution
 without explicit written permission is strictly prohibited.
@@ -33,7 +33,7 @@ try:
     from mobile.push_notifications import MobilePushService
 except ImportError:
     # Fallback for standalone operation
-    def get_logger(name: str):
+    def get_logger(name -> None: str) -> None:
         try:
                     # Request validation
                     if not data:
@@ -59,7 +59,7 @@ except ImportError:
                 except Exception as e:
                     logger.error(f"API handler get_logger failed: {e}")
                     return {"status": "error", "message": str(e)}
-    def get_settings():
+    def get_settings() -> None:
         return {"pwa_enabled": True}
 
 logger = get_logger(__name__)
@@ -134,7 +134,7 @@ class MobilePWAService:
     - Installation tracking and optimization
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.settings = get_settings()
         self.logger = get_logger(__name__)
         self.install_tracking: Dict[str, PWAInstallData] = {}
@@ -431,7 +431,7 @@ self.addEventListener('fetch', (event) => {{
     }}
     
     // Handle audio/video content
-    if (url.pathname.match(/\\.(mp3|wav|mp4|webm|ogg)$/)) {{
+    if (url.pathname.match(/\.(mp3|wav|mp4|webm|ogg)$/)) {{
         event.respondWith(handleMediaRequest(event.request));
         return;
     }}
@@ -936,7 +936,7 @@ console.log('PWA Service Worker loaded successfully');
         }
         
         .features-list li:before {
-            content: "✓ ";
+            content: "# [EMOJI_REMOVED] ";
             color: #4caf50;
             font-weight: bold;
             margin-right: 0.5rem;
@@ -945,7 +945,7 @@ console.log('PWA Service Worker loaded successfully');
 </head>
 <body>
     <div class="offline-container">
-        <div class="offline-icon">📱</div>
+        <div class="offline-icon"># [EMOJI_REMOVED]</div>
         
         <h1 class="offline-title">You're Offline</h1>
         
@@ -1034,3 +1034,5 @@ Get current PWA configuration."""
 
 # Mobile PWA service instance
 mobile_pwa = MobilePWAService()
+
+# File has syntax issues - needs manual review

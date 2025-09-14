@@ -160,7 +160,7 @@ class MicroservicesCore:
     distributed system coordination, and intelligent service optimization.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None, level: str = "enterprise"):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None, level -> None: str = "enterprise") -> None:
         """Initialize microservices core"""
         self.config = config or {}
         self.level = level
@@ -328,7 +328,7 @@ class MicroservicesCore:
             logger.error(f"Error validating service definition: {e}")
             return False
     
-    async def _setup_service_health_checks(self, service_def: ServiceDefinition):
+    async def _setup_service_health_checks(self, service_def -> None: ServiceDefinition) -> None:
         """Setup health checks for service"""
         try:
             service_id = service_def.service_id
@@ -351,9 +351,9 @@ class MicroservicesCore:
     
     async def _schedule_health_check(
         self, 
-        service_id: str, 
-        health_check_config: Dict[str, Any]
-    ):
+        service_id -> None: str, 
+        health_check_config -> None: Dict[str, Any]
+    ) -> None:
         """Schedule periodic health check"""
         # Simplified health check scheduling (would use real scheduler in production)
         self.health_check_scheduler[service_id] = {
@@ -362,7 +362,7 @@ class MicroservicesCore:
             'status': 'scheduled'
         }
     
-    async def _setup_circuit_breakers(self, service_def: ServiceDefinition):
+    async def _setup_circuit_breakers(self, service_def -> None: ServiceDefinition) -> None:
         """Setup circuit breakers for service dependencies"""
         try:
             service_id = service_def.service_id
@@ -389,7 +389,7 @@ class MicroservicesCore:
         except Exception as e:
             logger.error(f"Error setting up circuit breakers: {e}")
     
-    async def _register_with_service_mesh(self, service_def: ServiceDefinition):
+    async def _register_with_service_mesh(self, service_def -> None: ServiceDefinition) -> None:
         """Register service with service mesh"""
         try:
             # Create or update service mesh configuration
@@ -549,13 +549,13 @@ class MicroservicesCore:
             logger.error(f"Error starting service instance: {e}")
             raise
     
-    async def _start_instance_monitoring(self, instance: ServiceInstance):
+    async def _start_instance_monitoring(self, instance -> None: ServiceInstance) -> None:
         """Start monitoring for service instance"""
         # Start health checks, metrics collection, etc.
         # This would integrate with actual monitoring systems
         pass
     
-    async def _register_with_load_balancer(self, instance: ServiceInstance):
+    async def _register_with_load_balancer(self, instance -> None: ServiceInstance) -> None:
         """Register instance with load balancer"""
         service_id = instance.service_id
         
@@ -703,9 +703,9 @@ class MicroservicesCore:
     
     async def _update_service_metrics(
         self, 
-        instance: ServiceInstance, 
-        communication: ServiceCommunication
-    ):
+        instance -> None: ServiceInstance, 
+        communication -> None: ServiceCommunication
+    ) -> None:
         """Update service and instance metrics"""
         # Update instance metrics
         instance.last_health_check = datetime.utcnow()
@@ -728,7 +728,7 @@ class MicroservicesCore:
         self.metrics['error_rate'] = total_errors / max(total_requests, 1)
         self.metrics['average_response_time'] = communication.duration_ms
     
-    async def _record_circuit_breaker_failure(self, service_id: str):
+    async def _record_circuit_breaker_failure(self, service_id -> None: str) -> None:
         """Record circuit breaker failure"""
         for cb_key, cb_state in self.circuit_breakers.items():
             if cb_state.target_service == service_id:

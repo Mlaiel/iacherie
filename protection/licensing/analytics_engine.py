@@ -202,7 +202,7 @@ class LicensingAnalyticsEngine:
     KPI tracking, and predictive analytics for licensing operations.
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """
 Initialize analytics engine with configuration."""
         self.config = config
@@ -234,7 +234,7 @@ Initialize analytics engine with configuration."""
         
         self.logger.info("Licensing Analytics Engine initialized successfully")
 
-    def _initialize_ai_models(self):
+    def _initialize_ai_models(self) -> None:
         """Initialize AI models for analytics insights."""
         try:
             # Trend detection model
@@ -1020,7 +1020,7 @@ Generate visualization charts for the report."""
         
         return final_score
 
-    def _update_analytics_metrics(self, generation_time: float):
+    def _update_analytics_metrics(self, generation_time -> None: float) -> None:
         """
 Update analytics engine performance metrics."""
         self.analytics_metrics['reports_generated'] += 1
@@ -1101,7 +1101,7 @@ Export report in specified format."""
         }
         
         # Convert datetime objects to strings
-        def convert_datetime(obj):
+        def convert_datetime(obj) -> None:
             if isinstance(obj, datetime):
                 return obj.isoformat()
             elif isinstance(obj, date):

@@ -202,7 +202,7 @@ class AudioWatermarker:
     """
 Filigranage audio professionnel"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.sample_rate = 44100
         self.frame_size = 1024
         
@@ -500,7 +500,7 @@ class ImageWatermarker:
     """
 Filigranage d'images professionnel"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """
 Initialize professional image watermarking system"""
         self.logger = logging.getLogger(f"{__name__}.ImageWatermarker")
@@ -689,7 +689,7 @@ class TextWatermarker:
     """
 Filigranage de texte professionnel"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize professional text watermarking system"""
         self.logger = logging.getLogger(f"{__name__}.TextWatermarker")
         
@@ -874,7 +874,7 @@ class WatermarkingService:
     """
 Service professionnel de filigranage multimédia"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.audio_watermarker = AudioWatermarker()
         self.image_watermarker = ImageWatermarker()
@@ -893,7 +893,7 @@ Service professionnel de filigranage multimédia"""
         
         self._setup_output_directory()
     
-    def _setup_output_directory(self):
+    def _setup_output_directory(self) -> None:
         """
 Configure le répertoire de sortie"""
         output_dir = self.config.get('output_directory', self.default_config['output_directory'])
@@ -1412,7 +1412,7 @@ Initialise le service de filigranage"""
         else:
             raise ValueError(f"Extension de fichier non supportée: {suffix}")
     
-    async def _backup_original(self, file_path: str):
+    async def _backup_original(self, file_path -> None: str) -> None:
         """Sauvegarde le fichier original"""
         try:
             backup_dir = Path(self.config.get('output_directory', self.default_config['output_directory'])) / 'backups'
@@ -1497,7 +1497,7 @@ Initialise le service de filigranage"""
         random_suffix = secrets.token_hex(4)
         return f"WM-{timestamp}-{random_suffix}"
     
-    async def _load_watermark_registry(self):
+    async def _load_watermark_registry(self) -> None:
         """Charge le registre des filigranes"""
         try:
             # Implementation for loading watermark registry from persistent storage
@@ -1599,7 +1599,7 @@ Traitement par lot de fichiers"""
             logger.error(f"Erreur traitement par lot: {e}")
             return []
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Arrêt propre du service"""
         try:
             logger.info("Arrêt du service de filigranage...")
@@ -1613,7 +1613,7 @@ Traitement par lot de fichiers"""
         except Exception as e:
             logger.error(f"Erreur arrêt service filigranage: {e}")
     
-    async def _save_watermark_registry(self):
+    async def _save_watermark_registry(self) -> None:
         """Sauvegarde le registre des filigranes"""
         try:
             # Implementation for saving watermark registry to persistent storage
@@ -1663,7 +1663,7 @@ Traitement par lot de fichiers"""
             logger.error(f"Erreur chargement depuis {table_name}: {e}")
             return {}
     
-    async def _save_to_database(self, table_name: str, data: Dict):
+    async def _save_to_database(self, table_name -> None: str, data -> None: Dict) -> None:
         """Save data to database"""
         try:
             # In production, would save to actual database

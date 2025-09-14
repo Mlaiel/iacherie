@@ -1,4 +1,6 @@
 """Audio Processor Module
+from datetime import datetime
+
 =====================
 
 Enterprise-grade audio processing for music creators and influencers.
@@ -85,7 +87,7 @@ class AudioProcessor:
     """
 Professional audio processing engine"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or self._get_default_config()
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
@@ -112,7 +114,7 @@ Professional audio processing engine"""
             'overlap': 512
         }
     
-    def _initialize_engines(self):
+    def _initialize_engines(self) -> None:
         """
 Initialize audio processing engines"""
         try:

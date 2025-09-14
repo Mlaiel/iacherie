@@ -54,7 +54,7 @@ class HelmReleaseConfig:
 class HelmManager:
     """Unified Helm management interface"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.chart_manager = ChartManager()
         self.release_manager = HelmReleaseManager()
         self.repository_manager = RepositoryManager()
@@ -63,7 +63,7 @@ class HelmManager:
 class ChartManager:
     """Helm chart management"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.charts = {}
         self.logger = logging.getLogger(__name__)
     
@@ -92,7 +92,7 @@ class ChartManager:
             self.logger.error(f"Failed to create chart: {e}")
             return False
     
-    async def _create_chart_yaml(self, chart_path: Path, config: HelmChartConfig):
+    async def _create_chart_yaml(self, chart_path -> None: Path, config -> None: HelmChartConfig) -> None:
         """Create Chart.yaml file"""
         chart_yaml = {
             'apiVersion': 'v2',
@@ -111,7 +111,7 @@ class ChartManager:
         with open(chart_path / 'Chart.yaml', 'w') as f:
             yaml.dump(chart_yaml, f, default_flow_style=False)
     
-    async def _create_default_templates(self, chart_path: Path):
+    async def _create_default_templates(self, chart_path -> None: Path) -> None:
         """Create default template files"""
         templates_path = chart_path / 'templates'
         templates_path.mkdir(exist_ok=True)
@@ -169,7 +169,7 @@ spec:
         with open(templates_path / 'service.yaml', 'w') as f:
             f.write(service_template)
     
-    async def _create_values_yaml(self, chart_path: Path):
+    async def _create_values_yaml(self, chart_path -> None: Path) -> None:
         """Create values.yaml file"""
         values = {
             'replicaCount': 1,
@@ -200,7 +200,7 @@ spec:
 class HelmReleaseManager:
     """Helm release management"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.releases = {}
         self.logger = logging.getLogger(__name__)
     
@@ -319,7 +319,7 @@ class HelmReleaseManager:
 class RepositoryManager:
     """Helm repository management"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.repositories = {}
         self.logger = logging.getLogger(__name__)
     

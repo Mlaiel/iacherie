@@ -38,7 +38,7 @@ class ProgressiveConfiguration:
 class ProgressiveOptimizer:
     """Professional progressive optimization system"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize progressive optimizer"""
         self.config = config or {}
         self.progressive_config = ProgressiveConfiguration()

@@ -78,7 +78,7 @@ class ProtectionPolicy:
     expiration_date: Optional[datetime] = None
     created_at: datetime = None
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.geographical_restrictions is None:
             self.geographical_restrictions = []
         if self.usage_limitations is None:
@@ -130,7 +130,7 @@ class ContentProtectionEnforcer(BaseEventHandler):
                  watermark_service=None,
                  copyright_database=None,
                  legal_service=None,
-                 monitoring_service=None):
+                 monitoring_service=None) -> None:
         super().__init__()
         self.blockchain_service = blockchain_service
         self.watermark_service = watermark_service

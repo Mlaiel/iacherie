@@ -172,19 +172,19 @@ class SecurityComplianceIntegration:
     def __init__(
         self,
         # Copyright detection services
-        copyright_detection_api_key: Optional[str] = None,
-        content_id_api_key: Optional[str] = None,
+        copyright_detection_api_key -> None: Optional[str] = None,
+        content_id_api_key -> None: Optional[str] = None,
         # Fraud detection services
-        fraud_detection_api_key: Optional[str] = None,
+        fraud_detection_api_key -> None: Optional[str] = None,
         # Blockchain verification
-        blockchain_api_key: Optional[str] = None,
-        blockchain_network: str = "ethereum",
+        blockchain_api_key -> None: Optional[str] = None,
+        blockchain_network -> None: str = "ethereum",
         # Legal services
-        legal_service_api_key: Optional[str] = None,
+        legal_service_api_key -> None: Optional[str] = None,
         # General settings
-        environment: str = "production",
-        timeout: int = 30
-    ):
+        environment -> None: str = "production",
+        timeout -> None: int = 30
+    ) -> None:
         # API credentials
         self.copyright_detection_api_key = copyright_detection_api_key
         self.content_id_api_key = content_id_api_key
@@ -231,16 +231,16 @@ class SecurityComplianceIntegration:
         
         logger.info("Security & Compliance integration initialized")
     
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         """Async context manager entry."""
         await self._ensure_session()
         return self
     
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         """Async context manager exit."""
         await self.close()
     
-    async def _ensure_session(self):
+    async def _ensure_session(self) -> None:
         """Ensure HTTP session is available."""
         if self.session is None or self.session.closed:
             headers = {
@@ -254,7 +254,7 @@ class SecurityComplianceIntegration:
                 timeout=aiohttp.ClientTimeout(total=self.timeout)
             )
     
-    async def close(self):
+    async def close(self) -> None:
         """Close HTTP session."""
         if self.session and not self.session.closed:
             await self.session.close()
@@ -447,7 +447,7 @@ class SecurityComplianceIntegration:
         logger.info(f"DMCA takedown notice submitted: {notice_id}")
         return dmca_notice
     
-    async def _submit_dmca_to_platform(self, dmca_notice: DMCANotice, platform: str):
+    async def _submit_dmca_to_platform(self, dmca_notice -> None: DMCANotice, platform -> None: str) -> None:
         """Submit DMCA notice to specific platform."""
         
         # Platform-specific DMCA submission endpoints
@@ -877,7 +877,7 @@ class SecurityComplianceIntegration:
         logger.info(f"Security incident created: {incident_id} - {title}")
         return incident
     
-    async def _trigger_automated_response(self, incident: SecurityIncident):
+    async def _trigger_automated_response(self, incident -> None: SecurityIncident) -> None:
         """Trigger automated security response."""
         
         response_actions = []
@@ -1164,7 +1164,7 @@ async def automated_security_scan(
 
 if __name__ == "__main__":
     # Example usage
-    async def main():
+    async def main() -> None:
         import os
         
         async with SecurityComplianceIntegration(

@@ -34,7 +34,7 @@ from .base_manager import BaseDeploymentManager
 class MetricsCollector:
     """
 Mock metrics collector."""
-    def __init__(self):
+    def __init__(self) -> None:
         """
 Initialize service mesh metrics collector with observability"""
         self.logger = logging.getLogger(f"{__name__}.MetricsCollector")
@@ -142,10 +142,10 @@ class ServiceMeshManager(BaseDeploymentManager):
     """
     def __init__(
         self,
-        mesh_type: ServiceMeshType = ServiceMeshType.ISTIO,
-        mesh_namespace: str = "istio-system",
-        metrics_collector: Optional[MetricsCollector] = None
-    ):
+        mesh_type -> None: ServiceMeshType = ServiceMeshType.ISTIO,
+        mesh_namespace -> None: str = "istio-system",
+        metrics_collector -> None: Optional[MetricsCollector] = None
+    ) -> None:
         super().__init__()
         self.mesh_type = mesh_type
         self.mesh_namespace = mesh_namespace

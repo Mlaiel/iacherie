@@ -80,7 +80,7 @@ class ModelArtifactManager:
     - Dependency resolution and management
     """
     
-    def __init__(self, storage_config: Dict[str, Any], cache_dir: str = "artifact_cache/"):
+    def __init__(self, storage_config -> None: Dict[str, Any], cache_dir -> None: str = "artifact_cache/") -> None:
         self.logger = logging.getLogger(__name__)
         self.cache_dir = Path(cache_dir)
         self.cache_dir.mkdir(exist_ok=True, parents=True)
@@ -701,7 +701,7 @@ class ModelArtifactManager:
                 
                 # Build complete ancestor tree
                 ancestors = set()
-                def collect_ancestors(aid):
+                def collect_ancestors(aid) -> None:
                     if aid in self.dependency_graph:
                         for parent in self.dependency_graph[aid].get("parents", []):
                             if parent not in ancestors:
@@ -713,7 +713,7 @@ class ModelArtifactManager:
                 
                 # Build complete descendant tree
                 descendants = set()
-                def collect_descendants(aid):
+                def collect_descendants(aid) -> None:
                     if aid in self.dependency_graph:
                         for child in self.dependency_graph[aid].get("children", []):
                             if child not in descendants:
@@ -772,7 +772,7 @@ class ModelArtifactManager:
             return {"direct_impact": 0, "total_impact": 0, "risk_level": "unknown"}
 
 # Example usage and testing
-async def main():
+async def main() -> None:
     """Example usage of ModelArtifactManager."""
     storage_config = {
         "backends": {

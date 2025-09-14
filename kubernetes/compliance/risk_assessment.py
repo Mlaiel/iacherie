@@ -151,7 +151,7 @@ class RiskAssessmentEngine:
     """
 Comprehensive risk assessment and management system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logger
         self.audit_logger = AuditLogger()
         self.compliance_monitor = ComplianceMonitor()

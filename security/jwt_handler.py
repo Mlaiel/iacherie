@@ -86,14 +86,14 @@ Enhanced JWT manager with token rotation and security features"""
     
     def __init__(
         self,
-        secret_key: str,
-        redis_url: str = "redis://localhost:6379",
-        algorithm: str = "HS256",
-        access_token_expire_minutes: int = 15,
-        refresh_token_expire_days: int = 30,
-        max_token_families_per_user: int = 5,
-        enable_token_rotation: bool = True
-    ):
+        secret_key -> None: str,
+        redis_url -> None: str = "redis -> None://localhost -> None:6379",
+        algorithm -> None: str = "HS256",
+        access_token_expire_minutes -> None: int = 15,
+        refresh_token_expire_days -> None: int = 30,
+        max_token_families_per_user -> None: int = 5,
+        enable_token_rotation -> None: bool = True
+    ) -> None:
         self.secret_key = secret_key
         self.algorithm = algorithm
         self.access_token_expire_minutes = access_token_expire_minutes
@@ -109,12 +109,12 @@ Enhanced JWT manager with token rotation and security features"""
         # Generate additional security keys
         self._derive_security_keys()
         
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize Redis connection"""
         if not self.redis_client:
             self.redis_client = await aioredis.from_url(self.redis_url)
             
-    def _derive_security_keys(self):
+    def _derive_security_keys(self) -> None:
         """
 Derive additional security keys from master secret"""
         # Create HMAC key for token signing
@@ -395,7 +395,7 @@ Derive additional security keys from master secret"""
         await self.redis_client.setex(usage_key, 3600, "1")  # 1 hour
         return False
         
-    async def _cleanup_old_families(self, user_id: str):
+    async def _cleanup_old_families(self, user_id -> None: str) -> None:
         """Clean up old token families for user"""
         families = await self._get_user_families(user_id)
         
@@ -416,7 +416,7 @@ Derive additional security keys from master secret"""
                 family_id = family_details[i][0]
                 await self.revoke_token_family(family_id)
                 
-    async def _store_token_family(self, family: TokenFamily):
+    async def _store_token_family(self, family -> None: TokenFamily) -> None:
         """
 Store token family in Redis"""
         family_key = f"token_family:{family.family_id}"

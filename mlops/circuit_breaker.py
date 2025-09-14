@@ -1,3 +1,8 @@
+"""
+Circuit Breaker module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 🚀 Circuit Breaker - Enterprise MLOps Platform
@@ -80,7 +85,7 @@ class CircuitMetrics:
 class CircuitBreakerException(Exception):
     """Exception levée quand le circuit est ouvert"""
     
-    def __init__(self, circuit_name: str, state: CircuitState, message: str = None):
+    def __init__(self, circuit_name -> None: str, state -> None: CircuitState, message -> None: str = None) -> None:
         self.circuit_name = circuit_name
         self.state = state
         self.message = message or f"Circuit breaker '{circuit_name}' is {state.value}"
@@ -89,7 +94,7 @@ class CircuitBreakerException(Exception):
 class MLServiceCircuitBreaker:
     """Circuit breaker spécialisé pour services ML"""
     
-    def __init__(self, name: str, config: CircuitBreakerConfig):
+    def __init__(self, name -> None: str, config -> None: CircuitBreakerConfig) -> None:
         self.name = name
         self.config = config
         self.state = CircuitState.CLOSED
@@ -108,11 +113,11 @@ class MLServiceCircuitBreaker:
         
         logger.info(f"Circuit breaker '{name}' initialisé en état {self.state.value}")
     
-    def add_listener(self, listener: Callable[[str, CircuitState, CircuitState], None]):
+    def add_listener(self, listener -> None: Callable[[str, CircuitState, CircuitState], None]) -> None:
         """Ajoute un listener pour les changements d'état"""
         self.listeners.append(listener)
     
-    def _notify_listeners(self, old_state: CircuitState, new_state: CircuitState):
+    def _notify_listeners(self, old_state -> None: CircuitState, new_state -> None: CircuitState) -> None:
         """Notifie les listeners du changement d'état"""
         for listener in self.listeners:
             try:
@@ -225,7 +230,7 @@ class MLServiceCircuitBreaker:
         else:
             return FailureType.EXCEPTION
     
-    def _record_success(self, call_result: CallResult):
+    def _record_success(self, call_result -> None: CallResult) -> None:
         """Enregistre un appel réussi"""
         with self.lock:
             self.call_history.append(call_result)
@@ -248,7 +253,7 @@ class MLServiceCircuitBreaker:
             
             self._update_metrics()
     
-    def _record_failure(self, call_result: CallResult):
+    def _record_failure(self, call_result -> None: CallResult) -> None:
         """Enregistre un appel échoué"""
         with self.lock:
             self.call_history.append(call_result)
@@ -275,7 +280,7 @@ class MLServiceCircuitBreaker:
             
             self._update_metrics()
     
-    def _record_blocked_call(self):
+    def _record_blocked_call(self) -> None:
         """Enregistre un appel bloqué par le circuit ouvert"""
         with self.lock:
             self.metrics.total_calls += 1
@@ -321,7 +326,7 @@ class MLServiceCircuitBreaker:
         elapsed = (datetime.now() - self.last_failure_time).total_seconds()
         return max(0, self.current_timeout - elapsed)
     
-    def _transition_to_open(self):
+    def _transition_to_open(self) -> None:
         """Transition vers l'état ouvert"""
         old_state = self.state
         self.state = CircuitState.OPEN
@@ -342,7 +347,7 @@ class MLServiceCircuitBreaker:
         logger.warning(f"Circuit breaker '{self.name}' OUVERT (timeout: {self.current_timeout:.1f}s)")
         self._notify_listeners(old_state, self.state)
     
-    def _transition_to_half_open(self):
+    def _transition_to_half_open(self) -> None:
         """Transition vers l'état semi-ouvert"""
         old_state = self.state
         self.state = CircuitState.HALF_OPEN
@@ -353,7 +358,7 @@ class MLServiceCircuitBreaker:
         logger.info(f"Circuit breaker '{self.name}' SEMI-OUVERT")
         self._notify_listeners(old_state, self.state)
     
-    def _transition_to_closed(self):
+    def _transition_to_closed(self) -> None:
         """Transition vers l'état fermé"""
         old_state = self.state
         self.state = CircuitState.CLOSED
@@ -369,12 +374,12 @@ class MLServiceCircuitBreaker:
         logger.info(f"Circuit breaker '{self.name}' FERMÉ")
         self._notify_listeners(old_state, self.state)
     
-    def _cleanup_old_calls(self):
+    def _cleanup_old_calls(self) -> None:
         """Nettoie les anciens appels pour maintenir la fenêtre glissante"""
         if len(self.call_history) > self.config.window_size * 2:
             self.call_history = self.call_history[-self.config.window_size:]
     
-    def _update_metrics(self):
+    def _update_metrics(self) -> None:
         """Met à jour les métriques calculées"""
         if not self.call_history:
             return
@@ -427,19 +432,19 @@ class MLServiceCircuitBreaker:
                 }
             }
     
-    def force_open(self):
+    def force_open(self) -> None:
         """Force l'ouverture du circuit (pour maintenance)"""
         with self.lock:
             if self.state != CircuitState.OPEN:
                 self._transition_to_open()
     
-    def force_closed(self):
+    def force_closed(self) -> None:
         """Force la fermeture du circuit (pour réinitialisation manuelle)"""
         with self.lock:
             if self.state != CircuitState.CLOSED:
                 self._transition_to_closed()
     
-    def reset(self):
+    def reset(self) -> None:
         """Réinitialise le circuit breaker"""
         with self.lock:
             old_state = self.state
@@ -460,7 +465,7 @@ class MLServiceCircuitBreaker:
 class CircuitBreakerRegistry:
     """Registry pour gérer plusieurs circuit breakers"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._breakers: Dict[str, MLServiceCircuitBreaker] = {}
         self._global_metrics = {
             'total_breakers': 0,
@@ -510,7 +515,7 @@ class CircuitBreakerRegistry:
                 return True
             return False
     
-    def _on_state_change(self, name: str, old_state: CircuitState, new_state: CircuitState):
+    def _on_state_change(self, name -> None: str, old_state -> None: CircuitState, new_state -> None: CircuitState) -> None:
         """Gestionnaire de changement d'état pour les métriques globales"""
         with self.lock:
             # Décrémenter l'ancien état
@@ -560,7 +565,7 @@ class CircuitBreakerRegistry:
                 }
             }
     
-    def reset_all(self):
+    def reset_all(self) -> None:
         """Réinitialise tous les circuit breakers"""
         with self.lock:
             for breaker in self._breakers.values():
@@ -590,12 +595,12 @@ class CircuitBreakerRegistry:
 _global_registry = CircuitBreakerRegistry()
 
 def circuit_breaker(
-    name: str,
-    failure_threshold: int = 5,
-    recovery_timeout: float = 60.0,
-    timeout: float = 10.0,
-    config: Optional[CircuitBreakerConfig] = None
-):
+    name -> None: str,
+    failure_threshold -> None: int = 5,
+    recovery_timeout -> None: float = 60.0,
+    timeout -> None: float = 10.0,
+    config -> None: Optional[CircuitBreakerConfig] = None
+) -> None:
     """
     Décorateur pour ajouter un circuit breaker à une fonction
     
@@ -607,7 +612,7 @@ def circuit_breaker(
         config: Configuration personnalisée complète
     """
     
-    def decorator(func):
+    def decorator(func) -> None:
         # Création ou récupération du circuit breaker
         breaker = _global_registry.get_breaker(name)
         if breaker is None:
@@ -620,12 +625,12 @@ def circuit_breaker(
         
         if asyncio.iscoroutinefunction(func):
             @wraps(func)
-            async def async_wrapper(*args, **kwargs):
+            async def async_wrapper(*args, **kwargs) -> None:
                 return await breaker.call(func, *args, **kwargs)
             return async_wrapper
         else:
             @wraps(func)
-            def sync_wrapper(*args, **kwargs):
+            def sync_wrapper(*args, **kwargs) -> None:
                 return asyncio.run(breaker.call(func, *args, **kwargs))
             return sync_wrapper
     
@@ -639,7 +644,7 @@ def get_all_circuit_breakers() -> Dict[str, Any]:
     """Récupère tous les circuit breakers et leurs métriques"""
     return _global_registry.get_all_metrics()
 
-def reset_all_circuit_breakers():
+def reset_all_circuit_breakers() -> None:
     """Réinitialise tous les circuit breakers"""
     _global_registry.reset_all()
 
@@ -647,7 +652,7 @@ def reset_all_circuit_breakers():
 class MLServiceClient:
     """Client pour service ML avec circuit breaker intégré"""
     
-    def __init__(self, service_name: str, base_url: str):
+    def __init__(self, service_name -> None: str, base_url -> None: str) -> None:
         self.service_name = service_name
         self.base_url = base_url
         
@@ -693,14 +698,14 @@ class MLServiceClient:
         except Exception:
             return False
     
-    async def _do_health_check(self):
+    async def _do_health_check(self) -> None:
         """Implémentation réelle du health check"""
         await asyncio.sleep(0.1)
         if random.random() < 0.05:  # 5% d'échecs
             raise Exception("Service indisponible")
 
 # Exemple d'utilisation
-async def main():
+async def main() -> None:
     """Exemple d'utilisation du circuit breaker pour services ML"""
     
     # Création d'un client ML avec circuit breaker
@@ -713,7 +718,7 @@ async def main():
         recovery_timeout=30.0,
         timeout=5.0
     )
-    async def preprocess_data(data):
+    async def preprocess_data(data) -> None:
         """Service de préprocessing avec circuit breaker"""
         await asyncio.sleep(random.uniform(0.1, 1.0))
         if random.random() < 0.15:  # 15% d'échecs

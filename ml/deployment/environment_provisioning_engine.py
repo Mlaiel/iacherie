@@ -94,8 +94,8 @@ class EnvironmentProvisioningEngine:
     """
     
     def __init__(self, 
-                 cloud_credentials: Dict[str, Any],
-                 default_security_config: Optional[SecurityConfiguration] = None):
+                 cloud_credentials -> None: Dict[str, Any],
+                 default_security_config -> None: Optional[SecurityConfiguration] = None) -> None:
         """Initialize with enterprise credentials and security defaults"""
         self.cloud_credentials = cloud_credentials
         self.security_config = default_security_config or SecurityConfiguration()
@@ -108,7 +108,7 @@ class EnvironmentProvisioningEngine:
         # 🔒 Security - Setup audit logging
         self._setup_audit_logging()
         
-    def _initialize_cloud_clients(self):
+    def _initialize_cloud_clients(self) -> None:
         """🛡️ Backend Senior - Initialize cloud provider clients"""
         try:
             # AWS Client
@@ -137,7 +137,7 @@ class EnvironmentProvisioningEngine:
             logger.error(f"Failed to initialize cloud clients: {e}")
             raise
     
-    def _setup_audit_logging(self):
+    def _setup_audit_logging(self) -> None:
         """🔒 Security - Setup comprehensive audit logging"""
         self.audit_logger = logging.getLogger("environment_provisioning_audit")
         handler = logging.FileHandler("ml_environment_provisioning_audit.log")
@@ -703,7 +703,7 @@ class EnvironmentProvisioningEngine:
             self.audit_logger.error(f"Environment deprovisioning failed: {environment_name} - {e}")
             raise
     
-    async def _secure_data_deletion(self, environment: Dict):
+    async def _secure_data_deletion(self, environment -> None: Dict) -> None:
         """🔒 Security - Secure data deletion with compliance"""
         
         # Cryptographic erasure
@@ -718,7 +718,7 @@ class EnvironmentProvisioningEngine:
         # Audit trail preservation
         self.audit_logger.info(f"Data securely deleted for environment: {environment['environment_name']}")
     
-    async def _cleanup_infrastructure(self, environment: Dict):
+    async def _cleanup_infrastructure(self, environment -> None: Dict) -> None:
         """⚙️ DevOps - Infrastructure cleanup"""
         
         logger.info(f"Cleaning up infrastructure for {environment['environment_name']}")
@@ -810,7 +810,7 @@ class EnvironmentProvisioningEngine:
         return round(base_cost, 4)
 
 # Example usage and testing
-async def example_usage():
+async def example_usage() -> None:
     """🎖️ Lead Dev IA - Example demonstrating all expert roles"""
     
     # Initialize with multi-cloud credentials

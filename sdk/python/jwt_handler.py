@@ -73,7 +73,7 @@ class JWTMetrics:
         successful = self.tokens_validated - self.validation_failures
         return (successful / self.tokens_validated) * 100
     
-    def update_validation_time(self, validation_time: float):
+    def update_validation_time(self, validation_time -> None: float) -> None:
         """Update average validation time"""
         self.total_validation_time += validation_time
         if self.tokens_validated > 0:
@@ -134,12 +134,12 @@ class JWTClaims(BaseModel):
 class JWTKeyManager:
     """JWT key management (Security expertise)"""
     
-    def __init__(self, config: JWTConfig):
+    def __init__(self, config -> None: JWTConfig) -> None:
         self.config = config
         self.logger = logging.getLogger(__name__)
         self._validate_keys()
     
-    def _validate_keys(self):
+    def _validate_keys(self) -> None:
         """Validate JWT signing keys configuration"""
         algorithm = self.config.algorithm
         
@@ -185,7 +185,7 @@ class JWTKeyManager:
 class JWTTokenCache:
     """JWT token caching for performance (Lead Dev IA expertise)"""
     
-    def __init__(self, max_size: int = 1000, ttl: int = 300):
+    def __init__(self, max_size -> None: int = 1000, ttl -> None: int = 300) -> None:
         self.cache = {}
         self.access_times = {}
         self.max_size = max_size
@@ -208,7 +208,7 @@ class JWTTokenCache:
         
         return cached_item["data"]
     
-    def set(self, token_hash: str, data: Dict[str, Any]):
+    def set(self, token_hash -> None: str, data -> None: Dict[str, Any]) -> None:
         """Cache token data"""
         # Evict if cache is full
         if len(self.cache) >= self.max_size:
@@ -222,7 +222,7 @@ class JWTTokenCache:
         }
         self.access_times[token_hash] = time.time()
     
-    def _evict_lru(self):
+    def _evict_lru(self) -> None:
         """Evict least recently used items"""
         if not self.access_times:
             return
@@ -231,16 +231,16 @@ class JWTTokenCache:
         lru_hash = min(self.access_times.keys(), key=lambda k: self.access_times[k])
         self._remove(lru_hash)
     
-    def _remove(self, token_hash: str):
+    def _remove(self, token_hash -> None: str) -> None:
         """Remove item from cache"""
         self.cache.pop(token_hash, None)
         self.access_times.pop(token_hash, None)
     
-    def invalidate(self, token_hash: str):
+    def invalidate(self, token_hash -> None: str) -> None:
         """Invalidate specific token in cache"""
         self._remove(token_hash)
     
-    def clear(self):
+    def clear(self) -> None:
         """Clear all cached tokens"""
         self.cache.clear()
         self.access_times.clear()
@@ -249,7 +249,7 @@ class JWTTokenCache:
 class JWTValidator:
     """JWT token validation (Security expertise)"""
     
-    def __init__(self, config: JWTConfig):
+    def __init__(self, config -> None: JWTConfig) -> None:
         self.config = config
         self.logger = logging.getLogger(__name__)
     
@@ -316,7 +316,7 @@ class JWTValidator:
 class JWTHandler:
     """Main JWT handler with multi-expert security implementation"""
     
-    def __init__(self, config: JWTConfig):
+    def __init__(self, config -> None: JWTConfig) -> None:
         self.config = config
         self.logger = logging.getLogger(__name__)
         
@@ -593,7 +593,7 @@ class JWTHandler:
             "blacklisted_tokens": len(self.blacklisted_tokens)
         }
     
-    def cleanup_expired_blacklist(self):
+    def cleanup_expired_blacklist(self) -> None:
         """Clean up expired tokens from blacklist"""
         # This would require storing expiration times with blacklisted tokens
         # Simplified implementation for now
@@ -638,7 +638,7 @@ def generate_rsa_keypair(key_size: int = 2048) -> tuple[str, str]:
 
 
 # Example usage
-def example_jwt_usage():
+def example_jwt_usage() -> None:
     """Example JWT usage"""
     # Generate RSA key pair
     private_key, public_key = generate_rsa_keypair()

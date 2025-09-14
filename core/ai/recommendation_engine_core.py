@@ -136,7 +136,7 @@ class RecommendationMetrics:
 class RecommendationEngineCore:
     """Enterprise recommendation engine system"""
     
-    def __init__(self, level: str = "enterprise"):
+    def __init__(self, level -> None: str = "enterprise") -> None:
         """Initialize recommendation engine core"""
         self.level = level
         self.user_profiles: Dict[str, UserProfile] = {}
@@ -180,7 +180,7 @@ class RecommendationEngineCore:
         
         logger.info(f"🎯 Recommendation Engine Core initialized - Level: {level}")
 
-    async def add_user_interaction(self, interaction: UserInteraction):
+    async def add_user_interaction(self, interaction -> None: UserInteraction) -> None:
         """Add user interaction for learning"""
         
         # Store interaction
@@ -202,7 +202,7 @@ class RecommendationEngineCore:
         
         logger.debug(f"Added interaction: {interaction.user_id} -> {interaction.item_id}")
 
-    async def _update_user_profile(self, interaction: UserInteraction):
+    async def _update_user_profile(self, interaction -> None: UserInteraction) -> None:
         """Update user profile based on interaction"""
         
         user_id = interaction.user_id
@@ -246,7 +246,7 @@ class RecommendationEngineCore:
                 if tag not in profile.interests:
                     profile.interests.append(tag)
 
-    async def _update_item_popularity(self, interaction: UserInteraction):
+    async def _update_item_popularity(self, interaction -> None: UserInteraction) -> None:
         """Update item popularity score"""
         
         if interaction.item_id in self.content_items:
@@ -271,7 +271,7 @@ class RecommendationEngineCore:
             decay_factor = self.config["novelty_decay"] ** time_diff
             item.popularity_score *= decay_factor
 
-    async def _online_learning_update(self, interaction: UserInteraction):
+    async def _online_learning_update(self, interaction -> None: UserInteraction) -> None:
         """Perform online learning update"""
         
         # This is a simplified online learning approach
@@ -885,18 +885,18 @@ class RecommendationEngineCore:
         
         return filtered_recs
 
-    async def add_content_item(self, content: ContentItem):
+    async def add_content_item(self, content -> None: ContentItem) -> None:
         """Add content item to the system"""
         self.content_items[content.item_id] = content
         logger.debug(f"Added content item: {content.item_id}")
 
     async def record_recommendation_feedback(
         self, 
-        user_id: str, 
-        item_id: str, 
-        feedback: str,
-        context: Optional[Dict[str, Any]] = None
-    ):
+        user_id -> None: str, 
+        item_id -> None: str, 
+        feedback -> None: str,
+        context -> None: Optional[Dict[str, Any]] = None
+    ) -> None:
         """Record feedback on recommendations"""
         
         if feedback == "clicked":
@@ -918,7 +918,7 @@ class RecommendationEngineCore:
                 self.metrics.clicked_recommendations / self.metrics.total_recommendations
             )
 
-    async def _rebuild_similarity_matrices(self):
+    async def _rebuild_similarity_matrices(self) -> None:
         """Rebuild similarity matrices for collaborative filtering"""
         
         if not SKLEARN_AVAILABLE:

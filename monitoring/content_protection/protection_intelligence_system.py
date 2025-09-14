@@ -109,7 +109,7 @@ class ProtectionIntelligenceSystem:
     - Strategic threat landscape assessment
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.threat_intelligence: deque = deque(maxlen=10000)
         self.protection_profiles: Dict[str, ProtectionProfile] = {}
@@ -552,7 +552,7 @@ class ProtectionIntelligenceSystem:
         
         return list(set(actions))  # Remove duplicates
     
-    async def _generate_intelligence_alert(self, intelligence: ThreatIntelligence):
+    async def _generate_intelligence_alert(self, intelligence -> None: ThreatIntelligence) -> None:
         """Generate high-priority intelligence alert."""
         alert_id = str(uuid.uuid4())
         
@@ -597,8 +597,8 @@ class ProtectionIntelligenceSystem:
         
         return stakeholders
     
-    async def _execute_automated_actions(self, intelligence: ThreatIntelligence,
-                                       actions: List[ResponseAction]):
+    async def _execute_automated_actions(self, intelligence -> None: ThreatIntelligence,
+                                       actions -> None: List[ResponseAction]) -> None:
         """Execute automated response actions."""
         for action in actions:
             try:
@@ -618,27 +618,27 @@ class ProtectionIntelligenceSystem:
             except Exception as e:
                 logger.error(f"Failed to execute automated action {action.value}: {e}")
     
-    async def _increase_monitoring_frequency(self):
+    async def _increase_monitoring_frequency(self) -> None:
         """Increase monitoring frequency across protection systems."""
         # Simulate increasing monitoring frequency
         logger.info("Monitoring frequency increased across all protection systems")
     
-    async def _initiate_content_blocking(self, content_ids: List[str]):
+    async def _initiate_content_blocking(self, content_ids -> None: List[str]) -> None:
         """Initiate content blocking for high-risk content."""
         # Simulate content blocking
         logger.info(f"Content blocking initiated for {len(content_ids)} items")
     
-    async def _expedite_takedown_requests(self, content_ids: List[str]):
+    async def _expedite_takedown_requests(self, content_ids -> None: List[str]) -> None:
         """Expedite takedown requests for affected content."""
         # Simulate expedited takedown processing
         logger.info(f"Takedown requests expedited for {len(content_ids)} items")
     
-    async def _notify_stakeholders(self, intelligence: ThreatIntelligence):
+    async def _notify_stakeholders(self, intelligence -> None: ThreatIntelligence) -> None:
         """Notify stakeholders about threat intelligence."""
         # Simulate stakeholder notification
         logger.info(f"Stakeholders notified about intelligence {intelligence.intelligence_id}")
     
-    async def _activate_emergency_response(self, intelligence: ThreatIntelligence):
+    async def _activate_emergency_response(self, intelligence -> None: ThreatIntelligence) -> None:
         """Activate emergency response protocol."""
         # Simulate emergency response activation
         logger.warning(f"Emergency response activated for intelligence {intelligence.intelligence_id}")

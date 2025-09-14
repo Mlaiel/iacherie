@@ -83,7 +83,7 @@ class SimilarityCalculator:
     """
 Calculate similarity between vectors using various metrics"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.SimilarityCalculator")
         self.executor = ThreadPoolExecutor(max_workers=config.get('max_workers', 4))
@@ -224,7 +224,7 @@ class SearchEngine:
     """
 Advanced similarity search engine"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.SearchEngine")
         self.similarity_calculator = SimilarityCalculator(config)
@@ -505,7 +505,7 @@ Generate cache key for search results"""
             'cache_max_size': self.cache_max_size
         }
     
-    def clear_cache(self):
+    def clear_cache(self) -> None:
         """
 Clear search result cache"""
         self.result_cache.clear()
@@ -563,7 +563,7 @@ Optimize similarity thresholds based on ground truth data"""
             self.logger.error(f"Threshold optimization failed: {e}")
             return self.default_search_config
     
-    def __del__(self):
+    def __del__(self) -> None:
         """Cleanup resources"""
         if hasattr(self.similarity_calculator, 'executor'):
             self.similarity_calculator.executor.shutdown(wait=False)

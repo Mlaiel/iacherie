@@ -1,7 +1,14 @@
+"""
+Compression Config module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 """Ainflue Compression Configuration Module
+import asyncio
+
 ==========================================
 
 Enterprise-grade compression configuration for the Ainflue platform.
@@ -614,7 +621,7 @@ class CompressionJob:
 class CompressionConfiguration:
     """Main compression configuration manager"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize compression configuration"""
         # Data storage
         self.video_profiles: Dict[str, VideoCompressionProfile] = {}
@@ -663,7 +670,7 @@ class CompressionConfiguration:
         # Initialize default profiles
         self._initialize_default_profiles()
     
-    def _initialize_default_profiles(self):
+    def _initialize_default_profiles(self) -> None:
         """Initialize default compression profiles"""
         
         # Video compression profiles

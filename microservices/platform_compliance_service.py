@@ -140,7 +140,7 @@ class ComplianceReport:
 class ComplianceRuleEngine:
     """Core compliance rule validation engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.rules: Dict[str, ComplianceRule] = {}
         self.platform_rules: Dict[str, List[str]] = {}
         self.validators: Dict[ComplianceType, Callable] = {}
@@ -495,7 +495,7 @@ class ComplianceRuleEngine:
 class ComplianceMonitor:
     """Monitors ongoing compliance status"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.monitored_content: Dict[str, ComplianceCheck] = {}
         self.violation_history: Dict[str, List[ComplianceViolation]] = {}
     
@@ -590,7 +590,7 @@ class PlatformComplianceService:
     - Integration with legal frameworks
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.rule_engine = ComplianceRuleEngine()
         self.monitor = ComplianceMonitor()

@@ -1,3 +1,8 @@
+"""
+Monitoring Dashboard module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Monitoring Dashboard Implementation
@@ -39,7 +44,7 @@ class ServiceHealth:
 class MonitoringDashboard:
     """Real-time monitoring dashboard for validation framework"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.metrics_history: List[SystemMetrics] = []
         self.service_health: Dict[str, ServiceHealth] = {}
         self.alerts: List[Dict[str, Any]] = []
@@ -299,7 +304,7 @@ class MonitoringDashboard:
         
         return filename
     
-    def print_dashboard(self):
+    def print_dashboard(self) -> None:
         """Print dashboard to console"""
         data = self.get_dashboard_data()
         
@@ -340,7 +345,7 @@ class MonitoringDashboard:
 # Global monitoring instance
 dashboard = MonitoringDashboard()
 
-async def run_monitoring_loop(duration_seconds: int = 60):
+async def run_monitoring_loop(duration_seconds -> None: int = 60) -> None:
     """Run monitoring loop for specified duration"""
     print(f"🚀 Starting monitoring loop for {duration_seconds} seconds...")
     

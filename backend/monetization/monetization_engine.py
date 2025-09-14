@@ -1,4 +1,7 @@
 """Monetization Engine Wrapper
+import asyncio
+from typing import Dict, List, Optional, Union, Tuple
+
 ============================
 
 Wrapper to provide MonetizationEngine class for backend imports.
@@ -21,7 +24,7 @@ class MonetizationEngine:
     Unified Monetization Engine that orchestrates all monetization functionality.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the monetization engine with all components."""
         self.bidding_system = BiddingSystem()
         self.auction_engine = AuctionEngine()

@@ -42,7 +42,7 @@ logger = logging.getLogger(__name__)
 class ModelRegistry:
     """Central model registry with versioning capabilities"""
     
-    def __init__(self, tracking_uri: Optional[str] = None, experiment_name: str = "ainflue_models"):
+    def __init__(self, tracking_uri -> None: Optional[str] = None, experiment_name -> None: str = "ainflue_models") -> None:
         """Initialize model registry
         
         Args:
@@ -340,7 +340,7 @@ class ModelRegistry:
 class ModelVersionComparator:
     """Compare different model versions"""
     
-    def __init__(self, registry: ModelRegistry):
+    def __init__(self, registry -> None: ModelRegistry) -> None:
         try:
             logger.info(f"Executing __init__")
             

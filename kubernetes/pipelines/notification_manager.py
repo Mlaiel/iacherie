@@ -8,7 +8,7 @@ This module provides comprehensive notification and alerting capabilities for pi
 supporting multiple channels and integration with monitoring systems.
 
 Features:
-- Multi-channel notifications (email, Slack, Teams, webhooks)
+    - Multi-channel notifications (email, Slack, Teams, webhooks)
 - Event-driven notification triggers
 - Customizable notification templates
 - Escalation policies and alert routing
@@ -91,7 +91,7 @@ Notification message structure"""
     metadata: Dict[str, Any] = None
     timestamp: datetime = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.timestamp is None:
             self.timestamp = datetime.utcnow()
         if self.metadata is None:
@@ -101,7 +101,7 @@ class NotificationTemplate:
     """
 Notification template management"""
     
-    def __init__(self, templates_dir: Optional[Path] = None):
+    def __init__(self, templates_dir -> None: Optional[Path] = None) -> None:
         self.templates_dir = templates_dir or Path(__file__).parent / "notification_templates"
         self.templates_dir.mkdir(parents=True, exist_ok=True)
         self.jinja_env = jinja2.Environment(
@@ -110,11 +110,11 @@ Notification template management"""
         )
         self._create_default_templates()
         
-    def _create_default_templates(self):
+    def _create_default_templates(self) -> None:
         """Create default notification templates"""
         templates = {
             'pipeline_started.html': '''
-            <h2>🚀 Pipeline Started</h2>
+            <h2># [EMOJI_REMOVED] Pipeline Started</h2>
             <p><strong>Pipeline:</strong> {{ pipeline_name }}</p>
             <p><strong>Environment:</strong> {{ environment }}</p>
             <p><strong>Type:</strong> {{ pipeline_type }}</p>
@@ -123,7 +123,7 @@ Notification template management"""
             ''',
             
             'pipeline_completed.html': '''
-            <h2>✅ Pipeline Completed Successfully</h2>
+            <h2># [EMOJI_REMOVED] Pipeline Completed Successfully</h2>
             <p><strong>Pipeline:</strong> {{ pipeline_name }}</p>
             <p><strong>Environment:</strong> {{ environment }}</p>
             <p><strong>Duration:</strong> {{ duration }}</p>
@@ -139,7 +139,7 @@ Notification template management"""
             ''',
             
             'pipeline_failed.html': '''
-            <h2>❌ Pipeline Failed</h2>
+            <h2># [EMOJI_REMOVED] Pipeline Failed</h2>
             <p><strong>Pipeline:</strong> {{ pipeline_name }}</p>
             <p><strong>Environment:</strong> {{ environment }}</p>
             <p><strong>Failed at:</strong> {{ end_time }}</p>
@@ -262,7 +262,7 @@ Send email notification"""
 class SlackNotificationHandler:
     """Slack notification handler"""
     
-    def __init__(self, default_webhook_url: Optional[str] = None):
+    def __init__(self, default_webhook_url -> None: Optional[str] = None) -> None:
         self.default_webhook_url = default_webhook_url
         self.logger = logging.getLogger(__name__)
         
@@ -316,7 +316,7 @@ Send Slack notification"""
 class WebhookNotificationHandler:
     """Generic webhook notification handler"""
     
-    def __init__(self, default_headers: Optional[Dict[str, str]] = None):
+    def __init__(self, default_headers -> None: Optional[Dict[str, str]] = None) -> None:
         self.default_headers = default_headers or {"Content-Type": "application/json"}
         self.logger = logging.getLogger(__name__)
         
@@ -366,7 +366,7 @@ class NotificationManager:
     - Integration with monitoring systems
     """
     
-    def __init__(self, templates_dir: Optional[Path] = None):
+    def __init__(self, templates_dir -> None: Optional[Path] = None) -> None:
         self.logger = logging.getLogger(__name__)
         self.template_manager = NotificationTemplate(templates_dir)
         
@@ -380,7 +380,7 @@ class NotificationManager:
         # Initialize default configurations
         self._load_default_configurations()
         
-    def _load_default_configurations(self):
+    def _load_default_configurations(self) -> None:
         """
 Load default notification configurations"""
         # Default configurations for different environments
@@ -413,12 +413,12 @@ Load default notification configurations"""
         
         self.configurations.extend(default_configs)
         
-    def register_handler(self, channel: NotificationChannel, handler: Any):
+    def register_handler(self, channel -> None: NotificationChannel, handler -> None: Any) -> None:
         """Register notification handler for specific channel"""
         self.handlers[channel] = handler
         self.logger.info(f"Registered notification handler for {channel.value}")
         
-    def add_configuration(self, config: NotificationConfig):
+    def add_configuration(self, config -> None: NotificationConfig) -> None:
         """Add notification configuration"""
         self.configurations.append(config)
         self.logger.info(f"Added notification configuration for {config.channel.value}")
@@ -492,11 +492,11 @@ Create notification message for pipeline event"""
         
         # Generate title
         title_map = {
-            NotificationEvent.PIPELINE_STARTED: f"🚀 Pipeline Started: {execution.config.name}",
-            NotificationEvent.PIPELINE_COMPLETED: f"✅ Pipeline Completed: {execution.config.name}",
-            NotificationEvent.PIPELINE_FAILED: f"❌ Pipeline Failed: {execution.config.name}",
-            NotificationEvent.DEPLOYMENT_SUCCESSFUL: f"🎉 Deployment Successful: {execution.config.name}",
-            NotificationEvent.DEPLOYMENT_FAILED: f"💥 Deployment Failed: {execution.config.name}"
+            NotificationEvent.PIPELINE_STARTED: f"# [EMOJI_REMOVED] Pipeline Started: {execution.config.name}",
+            NotificationEvent.PIPELINE_COMPLETED: f"# [EMOJI_REMOVED] Pipeline Completed: {execution.config.name}",
+            NotificationEvent.PIPELINE_FAILED: f"# [EMOJI_REMOVED] Pipeline Failed: {execution.config.name}",
+            NotificationEvent.DEPLOYMENT_SUCCESSFUL: f"# [EMOJI_REMOVED] Deployment Successful: {execution.config.name}",
+            NotificationEvent.DEPLOYMENT_FAILED: f"# [EMOJI_REMOVED] Deployment Failed: {execution.config.name}"
         }
         
         title = title_map.get(event, f"Pipeline Event: {execution.config.name}")
@@ -567,3 +567,6 @@ Create notification message for pipeline event"""
 
 # Global notification manager instance
 notification_manager = NotificationManager()
+)
+
+# File has syntax issues - needs manual review

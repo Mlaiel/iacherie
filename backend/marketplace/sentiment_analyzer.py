@@ -157,7 +157,7 @@ class ContentModerationResult:
 class SentimentAnalyzer:
     """Advanced sentiment analysis and brand safety system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.sentiment_analyses: Dict[str, SentimentAnalysis] = {}
         self.sentiment_trends: Dict[str, SentimentTrend] = {}
         self.moderation_results: Dict[str, ContentModerationResult] = {}
@@ -875,7 +875,7 @@ class SentimentAnalyzer:
         }
 
 # Example usage
-async def main():
+async def main() -> None:
     """Example usage of SentimentAnalyzer"""
     analyzer = SentimentAnalyzer()
     

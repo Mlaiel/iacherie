@@ -59,7 +59,7 @@ class StateSnapshot:
     metadata: Dict[str, Any]
     checksum: str = field(init=False)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         # Calculate checksum for integrity verification
         content = {
             "workflow_id": self.workflow_id,
@@ -121,10 +121,10 @@ class WorkflowStateManager:
     
     def __init__(
         self,
-        persistence_level: PersistenceLevel = PersistenceLevel.STAGE,
-        checkpoint_interval: int = 300,  # 5 minutes
-        state_retention_days: int = 30
-    ):
+        persistence_level -> None: PersistenceLevel = PersistenceLevel.STAGE,
+        checkpoint_interval -> None: int = 300,  # 5 minutes
+        state_retention_days -> None: int = 30
+    ) -> None:
         self.logger = logging.getLogger("workflow.state_manager")
         self.db_manager = DatabaseManager()
         self.metrics = MetricsCollector()
@@ -146,7 +146,7 @@ class WorkflowStateManager:
         # Distributed locking for state consistency
         self.locks = {}
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize state manager."""
         self.logger.info("Initializing workflow state manager")
         
@@ -159,7 +159,7 @@ class WorkflowStateManager:
         # Load active workflow states from persistence
         await self._load_active_states()
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Shutdown state manager."""
         self.logger.info("Shutting down workflow state manager")
         
@@ -173,7 +173,7 @@ class WorkflowStateManager:
         await self._save_all_states()
     
     @asynccontextmanager
-    async def workflow_state_lock(self, workflow_id: str):
+    async def workflow_state_lock(self, workflow_id -> None: str) -> None:
         """Get distributed lock for workflow state."""
         lock_key = f"workflow_state:{workflow_id}"
         
@@ -615,15 +615,15 @@ Update workflow state."""
     
     async def _record_state_transition(
         self,
-        workflow_id: str,
-        transition_type: StateTransitionType,
-        from_stage: Optional[str],
-        to_stage: Optional[str],
-        success: bool,
-        metadata: Optional[Dict[str, Any]] = None,
-        error: Optional[str] = None,
-        duration_ms: int = 0
-    ):
+        workflow_id -> None: str,
+        transition_type -> None: StateTransitionType,
+        from_stage -> None: Optional[str],
+        to_stage -> None: Optional[str],
+        success -> None: bool,
+        metadata -> None: Optional[Dict[str, Any]] = None,
+        error -> None: Optional[str] = None,
+        duration_ms -> None: int = 0
+    ) -> None:
         """
 Record state transition."""
         transition_id = f"{workflow_id}_{uuid.uuid4().hex[:8]}"
@@ -647,7 +647,7 @@ Record state transition."""
         if self.persistence_level != PersistenceLevel.NONE:
             await self._save_transition(transition)
     
-    async def _checkpoint_loop(self):
+    async def _checkpoint_loop(self) -> None:
         """Background checkpoint loop."""
         while True:
             try:
@@ -664,7 +664,7 @@ Record state transition."""
                 self.logger.error(f"Error in checkpoint loop: {e}")
                 await asyncio.sleep(60)  # Back off on error
     
-    async def _cleanup_loop(self):
+    async def _cleanup_loop(self) -> None:
         """Background cleanup loop."""
         while True:
             try:
@@ -699,7 +699,7 @@ Record state transition."""
             except Exception as e:
                 self.logger.error(f"Error in cleanup loop: {e}")
     
-    async def _load_active_states(self):
+    async def _load_active_states(self) -> None:
         """Load active workflow states from persistence."""
         if self.persistence_level == PersistenceLevel.NONE:
             return
@@ -711,7 +711,7 @@ Record state transition."""
         except Exception as e:
             self.logger.error(f"Error loading active states: {e}")
     
-    async def _save_state(self, workflow_id: str):
+    async def _save_state(self, workflow_id -> None: str) -> None:
         """Save workflow state to persistence."""
         if self.persistence_level == PersistenceLevel.NONE:
             return
@@ -756,12 +756,12 @@ Record state transition."""
             self.logger.error(f"Error loading state for {workflow_id}: {e}")
             return None
     
-    async def _save_all_states(self):
+    async def _save_all_states(self) -> None:
         """Save all workflow states to persistence."""
         for workflow_id in self.workflow_states.keys():
             await self._save_state(workflow_id)
     
-    async def _save_snapshot(self, snapshot: StateSnapshot):
+    async def _save_snapshot(self, snapshot -> None: StateSnapshot) -> None:
         """
 Save snapshot to persistence."""
         try:
@@ -786,7 +786,7 @@ Save snapshot to persistence."""
             self.logger.error(f"Error saving snapshot: {e}")
             raise
     
-    async def _save_transition(self, transition: StateTransition):
+    async def _save_transition(self, transition -> None: StateTransition) -> None:
         """Save state transition to persistence."""
         try:
             # Store transition in persistent storage
@@ -837,7 +837,7 @@ Save snapshot to persistence."""
             # Return most recent snapshot
             return max(workflow_snapshots, key=lambda s: s.timestamp)
     
-    async def _delete_persisted_state(self, workflow_id: str):
+    async def _delete_persisted_state(self, workflow_id -> None: str) -> None:
         """
 Delete persisted state data."""
         try:

@@ -38,7 +38,7 @@ class LoadBalancerConfig:
 class NetworkingManager:
     """Unified networking management interface"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.load_balancer_manager = LoadBalancerManager()
         self.ingress_manager = IngressManager()
         self.dns_manager = DNSManager()
@@ -48,7 +48,7 @@ class NetworkingManager:
 class LoadBalancerManager:
     """Load balancer management"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
     
     async def create_load_balancer(self, config: LoadBalancerConfig) -> bool:
@@ -64,7 +64,7 @@ class LoadBalancerManager:
 class IngressManager:
     """Ingress controller management"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
     
     async def deploy_ingress_controller(self, ingress_type: IngressType) -> bool:
@@ -80,7 +80,7 @@ class IngressManager:
 class DNSManager:
     """DNS management"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
     
     async def create_dns_record(self, domain: str, record_type: str, value: str) -> bool:
@@ -96,7 +96,7 @@ class DNSManager:
 class ServiceMeshManager:
     """Service mesh management"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
     
     async def deploy_service_mesh(self) -> bool:

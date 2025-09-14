@@ -1,3 +1,8 @@
+"""
+Security Orchestrator module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Security Orchestrator - Enterprise Core Component
@@ -176,7 +181,7 @@ class SecurityProvider(ABC):
 class MockSecurityProvider(SecurityProvider):
     """Mock security provider for testing"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.users: Dict[str, Dict[str, Any]] = {}
         self.permissions: Dict[str, Set[str]] = {}
         self.encryption_keys: Dict[str, str] = {}
@@ -184,7 +189,7 @@ class MockSecurityProvider(SecurityProvider):
         # Initialize with some test data
         self._initialize_test_data()
     
-    def _initialize_test_data(self):
+    def _initialize_test_data(self) -> None:
         """Initialize test security data"""
         self.users = {
             "admin": {
@@ -283,7 +288,7 @@ class SecurityOrchestrator:
     with enterprise-grade security capabilities.
     """
     
-    def __init__(self, security_provider: Optional[SecurityProvider] = None, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, security_provider -> None: Optional[SecurityProvider] = None, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.security_provider = security_provider or MockSecurityProvider()
         self.security_policies: Dict[str, SecurityPolicy] = {}
@@ -1135,11 +1140,11 @@ class SecurityOrchestrator:
                 await asyncio.sleep(3600)
     
     # Context Manager Support
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         await self.start()
         return self
     
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         await self.stop()
 
 
@@ -1150,7 +1155,7 @@ def create_security_orchestrator(security_provider: Optional[SecurityProvider] =
 
 
 # Example usage
-async def main():
+async def main() -> None:
     """Example usage of Security Orchestrator"""
     async with create_security_orchestrator() as orchestrator:
         # Authenticate a user

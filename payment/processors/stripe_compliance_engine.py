@@ -133,7 +133,7 @@ class StripeComplianceEngine:
     monitoring, automated rule enforcement, and intelligent risk assessment.
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.stripe_client = stripe
         self.ml_models = {}
@@ -156,7 +156,7 @@ class StripeComplianceEngine:
         # ⚙️ DevOps: Initialize monitoring
         self._initialize_monitoring()
     
-    def _initialize_ml_models(self):
+    def _initialize_ml_models(self) -> None:
         """🤖 Lead Dev IA: Initialize ML models for compliance analysis"""
         try:
             # Anomaly detection for compliance violations
@@ -179,7 +179,7 @@ class StripeComplianceEngine:
         except Exception as e:
             logger.error(f"❌ Failed to initialize ML models: {e}")
     
-    def _initialize_security_controls(self):
+    def _initialize_security_controls(self) -> None:
         """🔒 Security: Initialize advanced security controls"""
         self.security_config = {
             'encryption_key': self.config.get('encryption_key'),
@@ -190,7 +190,7 @@ class StripeComplianceEngine:
         }
         logger.info("✅ Security controls initialized")
     
-    def _initialize_compliance_rules(self):
+    def _initialize_compliance_rules(self) -> None:
         """📋 Initialize comprehensive compliance rule set"""
         
         # PCI DSS Level 1 Rules
@@ -452,7 +452,7 @@ class StripeComplianceEngine:
         
         return rules
     
-    def _initialize_monitoring(self):
+    def _initialize_monitoring(self) -> None:
         """⚙️ DevOps: Initialize compliance monitoring system"""
         self.metrics = {
             'compliance_score': 100.0,
@@ -1111,9 +1111,9 @@ class StripeComplianceEngine:
     
     async def _attempt_auto_remediation(
         self,
-        violation: ComplianceViolation,
-        rule: ComplianceRule
-    ):
+        violation -> None: ComplianceViolation,
+        rule -> None: ComplianceRule
+    ) -> None:
         """🔧 Microservices: Attempt automated violation remediation"""
         
         try:
@@ -1196,7 +1196,7 @@ class StripeComplianceEngine:
         logger.info(f"🔧 Attempting generic remediation for {rule.rule_id}")
         return False  # Most generic violations require manual intervention
     
-    async def _update_compliance_metrics(self, assessment: ComplianceAssessment):
+    async def _update_compliance_metrics(self, assessment -> None: ComplianceAssessment) -> None:
         """⚙️ DevOps: Update compliance monitoring metrics"""
         
         self.metrics['compliance_score'] = assessment.overall_score
@@ -1217,7 +1217,7 @@ class StripeComplianceEngine:
         if total_violations > 0:
             self.metrics['auto_remediation_rate'] = auto_remediated / total_violations
     
-    async def _trigger_compliance_notifications(self, assessment: ComplianceAssessment):
+    async def _trigger_compliance_notifications(self, assessment -> None: ComplianceAssessment) -> None:
         """🔧 Microservices: Trigger compliance-related notifications"""
         
         try:
@@ -1379,7 +1379,7 @@ class StripeComplianceEngine:
 
 
 # 🎖️ MULTI-ROLE EXPERT VALIDATION
-async def validate_multi_role_implementation():
+async def validate_multi_role_implementation() -> None:
     """Comprehensive validation of all 9 expert roles implementation"""
     
     print("🎖️ STRIPE COMPLIANCE ENGINE - MULTI-ROLE EXPERT VALIDATION")

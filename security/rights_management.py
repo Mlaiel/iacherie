@@ -1,4 +1,6 @@
 """Security and Rights Management Module
+from datetime import datetime
+
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
@@ -14,7 +16,7 @@ class RightsManager:
     """
 Manages content rights and protections"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         try:
             logger.info(f"Executing __init__")
             
@@ -72,7 +74,7 @@ Manages content rights and protections"""
         except Exception as e:
             logger.error(f"__init__ failed: {e}")
             raise
-    async def initialize(self):
+    async def initialize(self) -> None:
         """
 Initialize rights management system"""
         self.is_initialized = True

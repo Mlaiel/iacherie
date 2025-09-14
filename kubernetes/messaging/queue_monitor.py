@@ -32,7 +32,7 @@ class QueueMetrics:
     dlq_depth: int = 0
     timestamp: datetime = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.timestamp is None:
             self.timestamp = datetime.utcnow()
 
@@ -51,7 +51,7 @@ class AlertConfig:
 class QueueMonitor:
     """Real-time queue monitoring system"""
     
-    def __init__(self, messaging_system: UnifiedMessagingSystem, config: Optional[MessagingConfig] = None):
+    def __init__(self, messaging_system -> None: UnifiedMessagingSystem, config -> None: Optional[MessagingConfig] = None) -> None:
         self.messaging_system = messaging_system
         self.config = config or MessagingConfig.from_env()
         self.metrics_history: Dict[str, List[QueueMetrics]] = {}
@@ -308,7 +308,7 @@ def console_alert_handler(queue_name: str, message: str, alert_data: Dict[str, A
     print(f"[{timestamp}] {severity} ALERT - {queue_name}: {message}")
 
 
-async def webhook_alert_handler(webhook_url: str):
+async def webhook_alert_handler(webhook_url -> None: str) -> None:
     """Create webhook alert handler"""
     import aiohttp
     

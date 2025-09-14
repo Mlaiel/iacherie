@@ -88,7 +88,7 @@ class LicensingOperationRequest:
     priority: str = "normal"
     metadata: Optional[Dict[str, Any]] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.request_id is None:
             self.request_id = f"LIC-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}-{uuid4().hex[:8]}"
 
@@ -105,7 +105,7 @@ class LicensingOperationResult:
     execution_time: Optional[float] = None
     timestamp: datetime = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if not self.timestamp:
             self.timestamp = datetime.utcnow()
 
@@ -119,17 +119,17 @@ class LicensingDataManager:
     
     def __init__(
         self,
-        repository: LicensingRepository = None,
-        calculator: RoyaltyCalculator = None,
-        compliance_manager: ComplianceManager = None,
-        contract_generator: ContractGenerator = None,
-        usage_tracker: UsageTracker = None,
-        payment_processor: PaymentProcessor = None,
-        cache_manager: CacheManager = None,
-        audit_logger: AuditLogger = None,
-        notification_service: NotificationService = None,
-        security_manager: SecurityManager = None
-    ):
+        repository -> None: LicensingRepository = None,
+        calculator -> None: RoyaltyCalculator = None,
+        compliance_manager -> None: ComplianceManager = None,
+        contract_generator -> None: ContractGenerator = None,
+        usage_tracker -> None: UsageTracker = None,
+        payment_processor -> None: PaymentProcessor = None,
+        cache_manager -> None: CacheManager = None,
+        audit_logger -> None: AuditLogger = None,
+        notification_service -> None: NotificationService = None,
+        security_manager -> None: SecurityManager = None
+    ) -> None:
         """
 Initialize licensing data manager with all components"""
         self.repository = repository or LicensingRepository()
@@ -418,7 +418,7 @@ Initialize licensing data manager with all components"""
                 # Concurrent processing with limits
                 semaphore = asyncio.Semaphore(max_concurrency)
                 
-                async def process_with_semaphore(operation):
+                async def process_with_semaphore(operation) -> None:
                     async with semaphore:
                         return await self.execute_operation(operation)
                 
@@ -493,7 +493,7 @@ Initialize licensing data manager with all components"""
     
     # Private helper methods
     
-    def _setup_event_handlers(self):
+    def _setup_event_handlers(self) -> None:
         """Setup event handlers for licensing operations"""
         self._event_handlers = {
             LicensingEventType.LICENSE_CREATED: [
@@ -509,7 +509,7 @@ Initialize licensing data manager with all components"""
             ]
         }
     
-    async def _validate_operation_request(self, request: LicensingOperationRequest):
+    async def _validate_operation_request(self, request -> None: LicensingOperationRequest) -> None:
         """
 Validate operation request"""
         if not request.user_id:
@@ -602,7 +602,7 @@ class LicensingDataManager:
     access to all licensing operations and services.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """
 Initialize licensing data manager with all components"""
         self.repository = LicensingRepository()

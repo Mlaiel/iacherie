@@ -98,7 +98,7 @@ class MetricTimeSeries:
 class AnomalyDetector:
     """Enterprise anomaly detection system for ML operations"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.detection_rules: Dict[str, DetectionRule] = {}
         self.alerts: List[AnomalyAlert] = []
@@ -348,7 +348,7 @@ class AnomalyDetector:
             logger.error(f"Failed to add alert handler: {e}")
             return False
     
-    async def _setup_default_rules(self):
+    async def _setup_default_rules(self) -> None:
         """Setup default anomaly detection rules"""
         
         # Performance anomaly rule
@@ -387,12 +387,12 @@ class AnomalyDetector:
         )
         await self.add_detection_rule(security_rule)
     
-    async def _initialize_baseline_models(self):
+    async def _initialize_baseline_models(self) -> None:
         """Initialize baseline models for metrics"""
         # Baseline models will be calculated when sufficient data is available
         pass
     
-    async def _continuous_monitoring(self):
+    async def _continuous_monitoring(self) -> None:
         """Continuous monitoring task"""
         while True:
             try:
@@ -412,18 +412,18 @@ class AnomalyDetector:
                 logger.error(f"Continuous monitoring error: {e}")
                 await asyncio.sleep(60)
     
-    async def _setup_alert_handlers(self):
+    async def _setup_alert_handlers(self) -> None:
         """Setup default alert handlers"""
-        async def default_alert_handler(alert: AnomalyAlert):
+        async def default_alert_handler(alert -> None: AnomalyAlert) -> None:
             logger.warning(f"Anomaly detected: {alert.description} (Severity: {alert.severity.value})")
         
         await self.add_alert_handler(default_alert_handler)
     
     async def _check_for_anomalies(self, 
-                                 metric_key: str,
-                                 value: float,
-                                 timestamp: datetime,
-                                 metadata: Optional[Dict[str, Any]]):
+                                 metric_key -> None: str,
+                                 value -> None: float,
+                                 timestamp -> None: datetime,
+                                 metadata -> None: Optional[Dict[str, Any]]) -> None:
         """Check for anomalies in real-time"""
         try:
             # Get recent data for comparison
@@ -668,9 +668,9 @@ class AnomalyDetector:
         return anomalies
     
     async def _check_creator_thresholds(self, 
-                                      metric_key: str,
-                                      value: float,
-                                      timestamp: datetime):
+                                      metric_key -> None: str,
+                                      value -> None: float,
+                                      timestamp -> None: datetime) -> None:
         """Check creator-specific thresholds"""
         try:
             for creator_type, thresholds in self.creator_thresholds.items():
@@ -703,14 +703,14 @@ class AnomalyDetector:
             logger.error(f"Failed to check creator thresholds: {e}")
     
     async def _create_anomaly_alert(self, 
-                                  metric_key: str,
-                                  actual_value: float,
-                                  baseline_value: float,
-                                  timestamp: datetime,
-                                  anomaly_type: AnomalyType,
-                                  severity: AnomalySeverity,
-                                  description: str,
-                                  creator_impact: str = "unknown"):
+                                  metric_key -> None: str,
+                                  actual_value -> None: float,
+                                  baseline_value -> None: float,
+                                  timestamp -> None: datetime,
+                                  anomaly_type -> None: AnomalyType,
+                                  severity -> None: AnomalySeverity,
+                                  description -> None: str,
+                                  creator_impact -> None: str = "unknown") -> None:
         """Create and process anomaly alert"""
         try:
             deviation = ((actual_value - baseline_value) / baseline_value) * 100 if baseline_value != 0 else 0
@@ -755,7 +755,7 @@ class AnomalyDetector:
         else:
             return AnomalySeverity.LOW
     
-    async def _periodic_anomaly_check(self):
+    async def _periodic_anomaly_check(self) -> None:
         """Periodic comprehensive anomaly check"""
         try:
             # Run detection on all metrics
@@ -781,7 +781,7 @@ class AnomalyDetector:
         except Exception as e:
             logger.error(f"Periodic anomaly check failed: {e}")
     
-    async def _update_baseline_models(self):
+    async def _update_baseline_models(self) -> None:
         """Update baseline models with recent data"""
         try:
             for metric_key in self.metric_history:
@@ -790,7 +790,7 @@ class AnomalyDetector:
         except Exception as e:
             logger.error(f"Failed to update baseline models: {e}")
     
-    async def _calculate_baseline(self, metric_key: str):
+    async def _calculate_baseline(self, metric_key -> None: str) -> None:
         """Calculate baseline statistics for a metric"""
         try:
             data = list(self.metric_history[metric_key])
@@ -817,7 +817,7 @@ class AnomalyDetector:
         except Exception as e:
             logger.error(f"Failed to calculate baseline for {metric_key}: {e}")
     
-    async def _cleanup_old_data(self):
+    async def _cleanup_old_data(self) -> None:
         """Cleanup old metric data to prevent memory issues"""
         try:
             cutoff_time = datetime.utcnow() - timedelta(days=7)
@@ -905,7 +905,7 @@ class AnomalyDetector:
 
 
 # Example usage and testing
-async def main():
+async def main() -> None:
     """Example usage of Anomaly Detector"""
     detector = AnomalyDetector()
     

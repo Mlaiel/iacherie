@@ -132,7 +132,7 @@ class CurrencyConversionMonitor:
     - Automated fallback mechanisms
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.exchange_rates: Dict[str, ExchangeRate] = {}
         self.conversion_requests: Dict[str, ConversionRequest] = {}
@@ -180,7 +180,7 @@ class CurrencyConversionMonitor:
         
         logger.info("CurrencyConversionMonitor initialized")
 
-    def _initialize_providers(self):
+    def _initialize_providers(self) -> None:
         """Initialize currency conversion providers."""
         self.provider_configs = {
             ConversionProvider.FIXER_IO: {
@@ -430,11 +430,11 @@ class CurrencyConversionMonitor:
 
     def _update_provider_metrics(
         self,
-        provider: ConversionProvider,
-        success: bool,
-        processing_time: float,
-        error_message: Optional[str] = None
-    ):
+        provider -> None: ConversionProvider,
+        success -> None: bool,
+        processing_time -> None: float,
+        error_message -> None: Optional[str] = None
+    ) -> None:
         """Update performance metrics for a provider."""
         metrics = self.provider_metrics[provider]
         
@@ -548,10 +548,10 @@ class CurrencyConversionMonitor:
 
     async def _check_rate_change_alerts(
         self,
-        from_currency: str,
-        to_currency: str,
-        new_rate: ExchangeRate
-    ):
+        from_currency -> None: str,
+        to_currency -> None: str,
+        new_rate -> None: ExchangeRate
+    ) -> None:
         """Check for significant rate changes and trigger alerts."""
         try:
             cache_key = f"{from_currency}_{to_currency}"
@@ -576,12 +576,12 @@ class CurrencyConversionMonitor:
 
     async def _trigger_rate_alert(
         self,
-        from_currency: str,
-        to_currency: str,
-        old_rate: Decimal,
-        new_rate: Decimal,
-        change_percentage: float
-    ):
+        from_currency -> None: str,
+        to_currency -> None: str,
+        old_rate -> None: Decimal,
+        new_rate -> None: Decimal,
+        change_percentage -> None: float
+    ) -> None:
         """Trigger alert for significant rate change."""
         alert = {
             'type': 'rate_change',
@@ -600,7 +600,7 @@ class CurrencyConversionMonitor:
         # Here you would typically send notifications
         # await self._send_alert_notification(alert)
 
-    async def _check_conversion_alerts(self, result: ConversionResult):
+    async def _check_conversion_alerts(self, result -> None: ConversionResult) -> None:
         """Check conversion result against alert thresholds."""
         try:
             # Check processing time
@@ -624,7 +624,7 @@ class CurrencyConversionMonitor:
         except Exception as e:
             logger.error(f"Error checking conversion alerts: {e}")
 
-    async def _trigger_performance_alert(self, alert_type: str, message: str, request_id: str):
+    async def _trigger_performance_alert(self, alert_type -> None: str, message -> None: str, request_id -> None: str) -> None:
         """Trigger performance-related alert."""
         alert = {
             'type': alert_type,
@@ -846,7 +846,7 @@ class CurrencyConversionMonitor:
             logger.error(f"Error calculating accuracy score: {e}")
             return 0.0
 
-    async def optimize_provider_selection(self):
+    async def optimize_provider_selection(self) -> None:
         """Optimize provider selection based on performance metrics."""
         try:
             # Analyze provider performance
@@ -896,7 +896,7 @@ class CurrencyConversionMonitor:
 
 # Example usage and testing
 if __name__ == "__main__":
-    async def test_currency_monitor():
+    async def test_currency_monitor() -> None:
         """Test currency conversion monitor."""
         monitor = CurrencyConversionMonitor()
         

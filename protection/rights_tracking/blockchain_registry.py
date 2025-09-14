@@ -103,7 +103,7 @@ class BlockchainEvidence:
 class BlockchainRightsRegistry:
     """🧠 Lead Dev IA: Advanced blockchain rights management with neural optimization"""
     
-    def __init__(self, network_config: Dict[str, Any]):
+    def __init__(self, network_config -> None: Dict[str, Any]) -> None:
         self.network_config = network_config
         self.w3_instances = {}
         self.contract_instances = {}
@@ -127,7 +127,7 @@ class BlockchainRightsRegistry:
         
         logger.info("🔗 Blockchain Rights Registry initialized with multi-expert architecture")
     
-    def _initialize_blockchain_connections(self):
+    def _initialize_blockchain_connections(self) -> None:
         """🏗️ Backend Senior: Setup distributed blockchain infrastructure"""
         try:
             for network, config in self.network_config.items():
@@ -517,10 +517,10 @@ class BlockchainRightsRegistry:
     
     async def _index_transaction(
         self,
-        content_id: str,
-        evidence: BlockchainEvidence,
-        rights_data: Dict[str, Any]
-    ):
+        content_id -> None: str,
+        evidence -> None: BlockchainEvidence,
+        rights_data -> None: Dict[str, Any]
+    ) -> None:
         """🗄️ DBA: High-performance transaction indexing for optimized queries"""
         
         # Store in blockchain cache for fast retrieval

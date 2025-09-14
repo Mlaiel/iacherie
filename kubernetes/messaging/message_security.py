@@ -51,7 +51,7 @@ class MessageSecurityManager:
     Enterprise message security manager
     Handles encryption, signing, and security validation for messaging
     """
-    def __init__(self, config: Optional[SecurityConfig] = None):
+    def __init__(self, config -> None: Optional[SecurityConfig] = None) -> None:
         self.config = config or SecurityConfig()
         self.encryption_key: Optional[bytes] = None
         self.signing_key: Optional[rsa.RSAPrivateKey] = None

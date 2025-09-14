@@ -61,7 +61,7 @@ class InternalLinkingEngine:
     Provides intelligent link suggestions and link graph analysis
     """
     
-    def __init__(self, base_domain: str):
+    def __init__(self, base_domain -> None: str) -> None:
         self.base_domain = base_domain.rstrip('/')
         self.content_nodes: Dict[str, ContentNode] = {}
         self.link_graph: Dict[str, List[InternalLink]] = defaultdict(list)

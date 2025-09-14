@@ -180,7 +180,7 @@ class YouTubeRevenueTracker:
     """
 YouTube revenue tracking integration"""
     
-    def __init__(self, api_credentials: Dict[str, str]):
+    def __init__(self, api_credentials -> None: Dict[str, str]) -> None:
         self.api_key = api_credentials.get("api_key")
         self.client_id = api_credentials.get("client_id")
         self.client_secret = api_credentials.get("client_secret")
@@ -238,7 +238,7 @@ YouTube revenue tracking integration"""
 class SpotifyRevenueTracker:
     """Spotify revenue tracking integration"""
     
-    def __init__(self, api_credentials: Dict[str, str]):
+    def __init__(self, api_credentials -> None: Dict[str, str]) -> None:
         self.client_id = api_credentials.get("client_id")
         self.client_secret = api_credentials.get("client_secret")
         
@@ -295,7 +295,7 @@ class SpotifyRevenueTracker:
 class StripePaymentProcessor:
     """Stripe payment processing integration"""
     
-    def __init__(self, api_credentials: Dict[str, str]):
+    def __init__(self, api_credentials -> None: Dict[str, str]) -> None:
         stripe.api_key = api_credentials.get("secret_key")
         self.publishable_key = api_credentials.get("publishable_key")
         
@@ -344,7 +344,7 @@ class StripePaymentProcessor:
 class PayPalPaymentProcessor:
     """PayPal payment processing integration"""
     
-    def __init__(self, api_credentials: Dict[str, str]):
+    def __init__(self, api_credentials -> None: Dict[str, str]) -> None:
         self.client_id = api_credentials.get("client_id")
         self.client_secret = api_credentials.get("client_secret")
         self.environment = SandboxEnvironment(client_id=self.client_id, client_secret=self.client_secret)
@@ -405,7 +405,7 @@ class PayPalPaymentProcessor:
 class RevenueAnalyticsEngine:
     """Advanced revenue analytics and prediction engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         try:
             logger.info(f"Executing __init__")
             
@@ -624,7 +624,7 @@ class RevenueTrackingInfrastructureManager:
     and automated payout systems for multi-platform monetization.
     """
     
-    def __init__(self, spec: RevenueInfrastructureSpec):
+    def __init__(self, spec -> None: RevenueInfrastructureSpec) -> None:
         self.spec = spec
         self.revenue_trackers = {}
         self.payment_processors = {}
@@ -834,7 +834,7 @@ Initialize complete revenue tracking infrastructure"""
 
     # Private helper methods
     
-    def _initialize_trackers(self):
+    def _initialize_trackers(self) -> None:
         """Initialize revenue trackers"""
         credentials = self.spec.api_credentials
         
@@ -844,7 +844,7 @@ Initialize complete revenue tracking infrastructure"""
         if "spotify" in credentials:
             self.revenue_trackers[RevenueSource.SPOTIFY] = SpotifyRevenueTracker(credentials["spotify"])
 
-    def _initialize_payment_processors(self):
+    def _initialize_payment_processors(self) -> None:
         """Initialize payment processors"""
         credentials = self.spec.api_credentials
         

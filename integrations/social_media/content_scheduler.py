@@ -181,7 +181,7 @@ class SchedulingRule:
 class MultiPlatformContentScheduler:
     """Enterprise multi-platform social media content scheduler."""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """Initialize content scheduler.
         
         Args:
@@ -1188,7 +1188,7 @@ class MultiPlatformContentScheduler:
 
 
 # Example usage
-async def example_usage():
+async def example_usage() -> None:
     """Example usage of MultiPlatformContentScheduler."""
     
     config = {

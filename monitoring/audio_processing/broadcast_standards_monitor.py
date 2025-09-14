@@ -97,7 +97,7 @@ class BroadcastStandardsMonitor:
     ITU-R recommendations, and platform-specific requirements.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.measurements: List[BroadcastMeasurement] = []
         self.compliance_reports: Dict[str, BroadcastStandardsReport] = {}
         self.standard_specifications: Dict[BroadcastStandard, Dict[str, Any]] = {}
@@ -105,7 +105,7 @@ class BroadcastStandardsMonitor:
         self._initialize_standard_specifications()
         logger.info("Broadcast Standards Monitor initialized")
     
-    def _initialize_standard_specifications(self):
+    def _initialize_standard_specifications(self) -> None:
         """Initialize broadcast standard specifications"""
         self.standard_specifications = {
             BroadcastStandard.EBU_R128: {

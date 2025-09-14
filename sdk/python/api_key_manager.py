@@ -152,14 +152,14 @@ class APIKeyConfig(BaseModel):
 class KeyEncryption:
     """API key encryption utilities (Security expertise)"""
     
-    def __init__(self, encryption_key: Optional[str] = None):
+    def __init__(self, encryption_key -> None: Optional[str] = None) -> None:
         self.encryption_key = encryption_key
         self._fernet = None
         
         if encryption_key:
             self._setup_encryption()
     
-    def _setup_encryption(self):
+    def _setup_encryption(self) -> None:
         """Setup Fernet encryption"""
         if isinstance(self.encryption_key, str):
             # Derive key from password
@@ -195,7 +195,7 @@ class KeyEncryption:
 class RateLimiter:
     """Rate limiting for API keys (Backend Senior expertise)"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.request_counts = {}  # key_id -> {window_start, count}
         self.cleanup_interval = 3600  # 1 hour
         self.last_cleanup = time.time()
@@ -228,7 +228,7 @@ class RateLimiter:
         self.request_counts[key_id].append(current_time)
         return True
     
-    def _cleanup_old_entries(self):
+    def _cleanup_old_entries(self) -> None:
         """Clean up old rate limit entries"""
         current_time = time.time()
         self.last_cleanup = current_time
@@ -263,7 +263,7 @@ class RateLimiter:
 class KeyStorage:
     """API key storage abstraction (DBA expertise)"""
     
-    def __init__(self, config: APIKeyConfig):
+    def __init__(self, config -> None: APIKeyConfig) -> None:
         self.config = config
         self.logger = logging.getLogger(__name__)
         self.encryption = KeyEncryption(config.encryption_key)
@@ -374,7 +374,7 @@ class KeyStorage:
             self.logger.error(f"Failed to list API keys: {e}")
             return []
     
-    async def _persist_to_file(self):
+    async def _persist_to_file(self) -> None:
         """Persist keys to file storage"""
         if not self.config.storage_path:
             return
@@ -408,7 +408,7 @@ class KeyStorage:
 class APIKeyManager:
     """Main API key manager with multi-expert security implementation"""
     
-    def __init__(self, config: APIKeyConfig):
+    def __init__(self, config -> None: APIKeyConfig) -> None:
         self.config = config
         self.logger = logging.getLogger(__name__)
         
@@ -648,7 +648,7 @@ class APIKeyManager:
             self.logger.error(f"Failed to get key stats: {e}")
             return {}
     
-    async def _update_usage_metrics(self, api_key: APIKey, client_ip: Optional[str]):
+    async def _update_usage_metrics(self, api_key -> None: APIKey, client_ip -> None: Optional[str]) -> None:
         """Update key usage metrics"""
         try:
             # Update metrics
@@ -688,7 +688,7 @@ class APIKeyManager:
 
 
 # Example usage
-async def example_api_key_usage():
+async def example_api_key_usage() -> None:
     """Example API key management usage"""
     # Create configuration
     config = APIKeyConfig(

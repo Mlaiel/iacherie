@@ -1,3 +1,8 @@
+"""
+Database Core module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """🎯 Database Core - Consolidated Database Architecture
 ===================================================
@@ -133,7 +138,7 @@ class ClusterNode:
     memory_gb: int = 32
     storage_gb: int = 1000
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if not self.node_id:
             self.node_id = f"node_{uuid.uuid4().hex[:8]}"
 
@@ -141,7 +146,7 @@ class ClusterNode:
 class DatabaseClusterManager:
     """Enterprise database cluster management"""
     
-    def __init__(self, config: DatabaseConfig):
+    def __init__(self, config -> None: DatabaseConfig) -> None:
         self.config = config
         self.nodes: List[ClusterNode] = []
         self.engines: Dict[str, Any] = {}
@@ -170,7 +175,7 @@ class DatabaseClusterManager:
             logger.error(f"Failed to initialize cluster: {e}")
             return False
     
-    async def _setup_postgres_xl(self):
+    async def _setup_postgres_xl(self) -> None:
         """Setup PostgresXL cluster for massive scale OLTP"""
         # Create coordinator nodes
         for i in range(3):
@@ -226,7 +231,7 @@ class DatabaseClusterManager:
                 )
                 self.sessions[node.node_id] = SessionLocal
     
-    async def _setup_timescale_db(self):
+    async def _setup_timescale_db(self) -> None:
         """Setup TimescaleDB cluster for time-series analytics"""
         # Access node for queries
         access_node = ClusterNode(
@@ -261,7 +266,7 @@ class DatabaseClusterManager:
             )
             self.engines["timescale"] = engine
     
-    async def _setup_neo4j_cluster(self):
+    async def _setup_neo4j_cluster(self) -> None:
         """Setup Neo4j Enterprise causal cluster"""
         # Core servers (consensus and leader election)
         for i in range(3):
@@ -287,7 +292,7 @@ class DatabaseClusterManager:
             )
             self.nodes.append(replica)
     
-    async def _setup_pinecone_cluster(self):
+    async def _setup_pinecone_cluster(self) -> None:
         """Setup Pinecone distributed vector index"""
         # Pinecone is managed service, but we track index configurations
         for region in ["us-east-1", "eu-west-1", "ap-southeast-1"]:
@@ -312,7 +317,7 @@ class DatabaseClusterManager:
         # Return first available engine if specific type not found
         return next(iter(self.engines.values())) if self.engines else None
     
-    async def get_session(self, node_type: str = "coordinator"):
+    async def get_session(self, node_type -> None: str = "coordinator") -> None:
         """Get database session for specific node type"""
         if not self._initialized:
             await self.initialize_cluster()
@@ -407,7 +412,7 @@ class SchemaDefinition:
 class SchemaManager:
     """Enterprise schema management system"""
     
-    def __init__(self, cluster_manager: DatabaseClusterManager):
+    def __init__(self, cluster_manager -> None: DatabaseClusterManager) -> None:
         self.cluster_manager = cluster_manager
         self.schemas: Dict[str, SchemaDefinition] = {}
         self.current_version = SchemaVersion.V2_0_ENTERPRISE
@@ -415,7 +420,7 @@ class SchemaManager:
         # Initialize core schemas
         self._initialize_core_schemas()
     
-    def _initialize_core_schemas(self):
+    def _initialize_core_schemas(self) -> None:
         """Initialize core table schemas"""
         
         # Users table schema
@@ -619,7 +624,7 @@ class SchemaManager:
             logger.error(f"Failed to create schemas: {e}")
             return False
     
-    def add_schema(self, schema: SchemaDefinition):
+    def add_schema(self, schema -> None: SchemaDefinition) -> None:
         """Add custom schema definition"""
         self.schemas[schema.table_name] = schema
         logger.info(f"Added schema definition: {schema.table_name}")
@@ -642,7 +647,7 @@ class MigrationStep:
     sql_down: str
     depends_on: List[str] = field(default_factory=list)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if not self.step_id:
             self.step_id = f"step_{uuid.uuid4().hex[:8]}"
 
@@ -667,7 +672,7 @@ class Migration:
     created_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     executed_at: Optional[datetime] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if not self.migration_id:
             self.migration_id = f"migration_{uuid.uuid4().hex[:8]}"
 
@@ -675,7 +680,7 @@ class Migration:
 class MigrationManager:
     """Enterprise migration management system"""
     
-    def __init__(self, cluster_manager: DatabaseClusterManager):
+    def __init__(self, cluster_manager -> None: DatabaseClusterManager) -> None:
         self.cluster_manager = cluster_manager
         self.migrations: List[Migration] = []
         self.applied_migrations: Dict[str, Migration] = {}
@@ -683,7 +688,7 @@ class MigrationManager:
         # Initialize core migrations
         self._initialize_core_migrations()
     
-    def _initialize_core_migrations(self):
+    def _initialize_core_migrations(self) -> None:
         """Initialize core system migrations"""
         
         # Initial schema migration
@@ -896,7 +901,7 @@ class MigrationManager:
             logger.error(f"Failed to apply migrations: {e}")
             return False
     
-    def add_migration(self, migration: Migration):
+    def add_migration(self, migration -> None: Migration) -> None:
         """Add custom migration"""
         self.migrations.append(migration)
         logger.info(f"Added migration: {migration.migration_id}")
@@ -943,7 +948,7 @@ class DataSeed:
     data: List[Dict[str, Any]]
     dependencies: List[str] = field(default_factory=list)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if not self.seed_id:
             self.seed_id = f"seed_{uuid.uuid4().hex[:8]}"
 
@@ -951,7 +956,7 @@ class DataSeed:
 class DataSeedManager:
     """Enterprise data seeding system"""
     
-    def __init__(self, cluster_manager: DatabaseClusterManager):
+    def __init__(self, cluster_manager -> None: DatabaseClusterManager) -> None:
         self.cluster_manager = cluster_manager
         self.seeds: Dict[str, DataSeed] = {}
         self.applied_seeds: Dict[str, DataSeed] = {}
@@ -959,7 +964,7 @@ class DataSeedManager:
         # Initialize core seeds
         self._initialize_core_seeds()
     
-    def _initialize_core_seeds(self):
+    def _initialize_core_seeds(self) -> None:
         """Initialize core data seeds"""
         
         # Development user seeds
@@ -1189,7 +1194,7 @@ class DataSeedManager:
             logger.error(f"Failed to apply {seed_type.value} seeds: {e}")
             return False
     
-    def add_seed(self, seed: DataSeed):
+    def add_seed(self, seed -> None: DataSeed) -> None:
         """Add custom data seed"""
         self.seeds[seed.seed_id] = seed
         logger.info(f"Added seed: {seed.seed_id}")
@@ -1218,7 +1223,7 @@ class DataSeedManager:
 class DatabaseCore:
     """Unified database core system - consolidates all database functionality"""
     
-    def __init__(self, config: DatabaseConfig):
+    def __init__(self, config -> None: DatabaseConfig) -> None:
         self.config = config
         self.cluster_manager = DatabaseClusterManager(config)
         self.schema_manager = SchemaManager(self.cluster_manager)
@@ -1269,7 +1274,7 @@ class DatabaseCore:
             logger.error(f"Failed to initialize Database Core: {e}")
             return False
     
-    async def get_session(self, node_type: str = "coordinator"):
+    async def get_session(self, node_type -> None: str = "coordinator") -> None:
         """Get database session"""
         if not self._initialized:
             await self.initialize()
@@ -1495,7 +1500,7 @@ if __name__ == "__main__":
     # Example usage for testing
     import asyncio
     
-    async def main():
+    async def main() -> None:
         print("🎯 Database Core Module Test")
         print("=" * 50)
         

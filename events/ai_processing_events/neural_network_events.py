@@ -261,7 +261,7 @@ class NeuralNetworkEvent:
 class NeuralNetworkLifecycleManager:
     """Manages neural network lifecycle and state"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.networks: Dict[str, Dict[str, Any]] = {}
         self.network_states: Dict[str, str] = {}
         self.performance_history: Dict[str, List[NetworkMetrics]] = {}
@@ -337,7 +337,7 @@ class NeuralNetworkEventProcessor(BaseEventHandler):
     and performance optimization across distributed neural network architectures.
     """
     
-    def __init__(self, max_workers: int = 8):
+    def __init__(self, max_workers -> None: int = 8) -> None:
         super().__init__()
         self.lifecycle_manager = NeuralNetworkLifecycleManager()
         self.executor = ThreadPoolExecutor(max_workers=max_workers)
@@ -357,7 +357,7 @@ class NeuralNetworkEventProcessor(BaseEventHandler):
         
         logger.info("Neural Network Event Processor initialized")
     
-    def _initialize_event_handlers(self):
+    def _initialize_event_handlers(self) -> None:
         """Initialize event type handlers"""
         self.event_handlers = {
             NetworkEventType.NETWORK_CREATED: self._handle_network_created,
@@ -373,7 +373,7 @@ class NeuralNetworkEventProcessor(BaseEventHandler):
             NetworkEventType.OVERFITTING_DETECTED: self._handle_overfitting
         }
     
-    async def start_processor(self):
+    async def start_processor(self) -> None:
         """Start the neural network event processor"""
         self.is_running = True
         
@@ -384,7 +384,7 @@ class NeuralNetworkEventProcessor(BaseEventHandler):
         
         logger.info("Neural Network Event Processor started")
     
-    async def stop_processor(self):
+    async def stop_processor(self) -> None:
         """Stop the neural network event processor"""
         self.is_running = False
         self.executor.shutdown(wait=True)
@@ -401,7 +401,7 @@ class NeuralNetworkEventProcessor(BaseEventHandler):
             logger.error(f"Failed to submit neural network event: {str(e)}")
             return False
     
-    async def _process_event_queue(self):
+    async def _process_event_queue(self) -> None:
         """Process neural network events from the queue"""
         while self.is_running:
             try:
@@ -419,7 +419,7 @@ class NeuralNetworkEventProcessor(BaseEventHandler):
             except Exception as e:
                 logger.error(f"Error processing neural network event queue: {str(e)}")
     
-    async def _process_single_event(self, event: NeuralNetworkEvent):
+    async def _process_single_event(self, event -> None: NeuralNetworkEvent) -> None:
         """Process a single neural network event"""
         try:
             # Get appropriate handler
@@ -436,7 +436,7 @@ class NeuralNetworkEventProcessor(BaseEventHandler):
         except Exception as e:
             logger.error(f"Error processing neural network event {event.event_id}: {str(e)}")
     
-    async def _handle_network_created(self, event: NeuralNetworkEvent):
+    async def _handle_network_created(self, event -> None: NeuralNetworkEvent) -> None:
         """Handle network creation event"""
         try:
             self.lifecycle_manager.update_network_state(event.network_id, 'created')
@@ -450,7 +450,7 @@ class NeuralNetworkEventProcessor(BaseEventHandler):
         except Exception as e:
             logger.error(f"Error handling network creation: {str(e)}")
     
-    async def _handle_network_loaded(self, event: NeuralNetworkEvent):
+    async def _handle_network_loaded(self, event -> None: NeuralNetworkEvent) -> None:
         """Handle network loading event"""
         try:
             self.lifecycle_manager.update_network_state(event.network_id, 'loaded')
@@ -460,7 +460,7 @@ class NeuralNetworkEventProcessor(BaseEventHandler):
         except Exception as e:
             logger.error(f"Error handling network loading: {str(e)}")
     
-    async def _handle_training_started(self, event: NeuralNetworkEvent):
+    async def _handle_training_started(self, event -> None: NeuralNetworkEvent) -> None:
         """Handle training start event"""
         try:
             self.lifecycle_manager.update_network_state(event.network_id, 'training')
@@ -476,7 +476,7 @@ class NeuralNetworkEventProcessor(BaseEventHandler):
         except Exception as e:
             logger.error(f"Error handling training start: {str(e)}")
     
-    async def _handle_epoch_completed(self, event: NeuralNetworkEvent):
+    async def _handle_epoch_completed(self, event -> None: NeuralNetworkEvent) -> None:
         """Handle epoch completion event"""
         try:
             if event.metrics:
@@ -496,7 +496,7 @@ class NeuralNetworkEventProcessor(BaseEventHandler):
         except Exception as e:
             logger.error(f"Error handling epoch completion: {str(e)}")
     
-    async def _handle_training_completed(self, event: NeuralNetworkEvent):
+    async def _handle_training_completed(self, event -> None: NeuralNetworkEvent) -> None:
         """Handle training completion event"""
         try:
             self.lifecycle_manager.update_network_state(event.network_id, 'trained')
@@ -513,7 +513,7 @@ class NeuralNetworkEventProcessor(BaseEventHandler):
         except Exception as e:
             logger.error(f"Error handling training completion: {str(e)}")
     
-    async def _handle_inference_started(self, event: NeuralNetworkEvent):
+    async def _handle_inference_started(self, event -> None: NeuralNetworkEvent) -> None:
         """Handle inference start event"""
         try:
             self.lifecycle_manager.update_network_state(event.network_id, 'inferencing')
@@ -523,7 +523,7 @@ class NeuralNetworkEventProcessor(BaseEventHandler):
         except Exception as e:
             logger.error(f"Error handling inference start: {str(e)}")
     
-    async def _handle_inference_completed(self, event: NeuralNetworkEvent):
+    async def _handle_inference_completed(self, event -> None: NeuralNetworkEvent) -> None:
         """Handle inference completion event"""
         try:
             self.lifecycle_manager.update_network_state(event.network_id, 'ready')
@@ -542,7 +542,7 @@ class NeuralNetworkEventProcessor(BaseEventHandler):
         except Exception as e:
             logger.error(f"Error handling inference completion: {str(e)}")
     
-    async def _handle_performance_degradation(self, event: NeuralNetworkEvent):
+    async def _handle_performance_degradation(self, event -> None: NeuralNetworkEvent) -> None:
         """Handle performance degradation event"""
         try:
             logger.warning(f"Performance degradation detected for network {event.network_id}")
@@ -553,7 +553,7 @@ class NeuralNetworkEventProcessor(BaseEventHandler):
         except Exception as e:
             logger.error(f"Error handling performance degradation: {str(e)}")
     
-    async def _handle_memory_warning(self, event: NeuralNetworkEvent):
+    async def _handle_memory_warning(self, event -> None: NeuralNetworkEvent) -> None:
         """Handle memory usage warning"""
         try:
             logger.warning(f"High memory usage detected for network {event.network_id}")
@@ -571,7 +571,7 @@ class NeuralNetworkEventProcessor(BaseEventHandler):
         except Exception as e:
             logger.error(f"Error handling memory warning: {str(e)}")
     
-    async def _handle_gradient_explosion(self, event: NeuralNetworkEvent):
+    async def _handle_gradient_explosion(self, event -> None: NeuralNetworkEvent) -> None:
         """Handle gradient explosion event"""
         try:
             logger.error(f"Gradient explosion detected for network {event.network_id}")
@@ -589,7 +589,7 @@ class NeuralNetworkEventProcessor(BaseEventHandler):
         except Exception as e:
             logger.error(f"Error handling gradient explosion: {str(e)}")
     
-    async def _handle_overfitting(self, event: NeuralNetworkEvent):
+    async def _handle_overfitting(self, event -> None: NeuralNetworkEvent) -> None:
         """Handle overfitting detection event"""
         try:
             logger.warning(f"Overfitting detected for network {event.network_id}")
@@ -608,7 +608,7 @@ class NeuralNetworkEventProcessor(BaseEventHandler):
         except Exception as e:
             logger.error(f"Error handling overfitting: {str(e)}")
     
-    async def _check_training_performance(self, event: NeuralNetworkEvent):
+    async def _check_training_performance(self, event -> None: NeuralNetworkEvent) -> None:
         """Check for training performance issues"""
         try:
             if not event.metrics:
@@ -726,7 +726,7 @@ class NeuralNetworkEventProcessor(BaseEventHandler):
             logger.error(f"Error generating optimization recommendations: {str(e)}")
             return []
     
-    async def _monitor_network_performance(self):
+    async def _monitor_network_performance(self) -> None:
         """Monitor overall network performance"""
         while self.is_running:
             try:
@@ -749,7 +749,7 @@ class NeuralNetworkEventProcessor(BaseEventHandler):
                 logger.error(f"Error in network performance monitoring: {str(e)}")
                 await asyncio.sleep(300)
     
-    async def _optimize_network_allocation(self):
+    async def _optimize_network_allocation(self) -> None:
         """Optimize network resource allocation"""
         while self.is_running:
             try:
@@ -774,7 +774,7 @@ class NeuralNetworkEventProcessor(BaseEventHandler):
                 logger.error(f"Error in network optimization: {str(e)}")
                 await asyncio.sleep(600)
     
-    async def _initialize_network(self, network_id: str):
+    async def _initialize_network(self, network_id -> None: str) -> None:
         """Initialize a neural network"""
         try:
             # Create initialization event

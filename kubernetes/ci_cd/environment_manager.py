@@ -77,7 +77,7 @@ class NetworkConfig:
     ingress_class: str = "nginx"
     ports: List[int] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.ports is None:
             self.ports = [80, 443, 8080, 5432, 6379]
 
@@ -112,7 +112,7 @@ class EnvironmentConfiguration:
     canary_deployment: bool = False
     custom_configs: Dict[str, Any] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.custom_configs is None:
             self.custom_configs = {}
 
@@ -120,7 +120,7 @@ class EnvironmentManager:
     """
 Enterprise environment management system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """
 Initialize environment manager"""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")

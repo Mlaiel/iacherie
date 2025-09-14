@@ -67,7 +67,7 @@ class ProtectionConfig:
     memory_limit: str = "4Gi"
     storage_size: str = "1Ti"
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         try:
                     # Request validation
                     if not data:
@@ -97,7 +97,7 @@ class ProtectionOrchestrator:
     - Compliance monitoring
     """
     
-    def __init__(self, namespace: str = "ia-influencer-protection"):
+    def __init__(self, namespace -> None: str = "ia-influencer-protection") -> None:
         """
         Initialize protection orchestrator
         
@@ -1129,3 +1129,5 @@ class ProtectionOrchestrator:
         except Exception as e:
             logger.error(f"Protection stack cleanup failed: {e}")
             raise
+
+# File has syntax issues - needs manual review

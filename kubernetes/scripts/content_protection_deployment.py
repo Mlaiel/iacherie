@@ -1,3 +1,8 @@
+"""
+Content Protection Deployment module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """Content Protection Deployment Manager
 Specialized deployment automation for AI fingerprinting and content protection systems
@@ -94,7 +99,7 @@ class ContentProtectionDeploymentManager:
     for the IA Influencer Agent platform
     """
     
-    def __init__(self, config_path: Optional[str] = None):
+    def __init__(self, config_path -> None: Optional[str] = None) -> None:
         """
 Initialize content protection deployment manager"""
         self.config_path = config_path or "/etc/ia-influencer/protection-deployment.yaml"
@@ -822,7 +827,7 @@ Rollback failed protection deployment"""
             raise
 
 
-def main():
+def main() -> None:
     """Main function for CLI usage"""
     import argparse
     

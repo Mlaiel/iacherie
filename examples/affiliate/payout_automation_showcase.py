@@ -1,3 +1,8 @@
+"""
+Payout Automation Showcase module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Payout Automation Showcase - Showcase Automatisation Paiements
@@ -160,7 +165,7 @@ class PayoutAutomationShowcase_Class:
     Multi-currency avec optimization fiscale et compliance automation
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(f"{__name__}.PayoutAutomationShowcase")
         
         # Simulate service dependencies
@@ -734,7 +739,7 @@ class PayoutAutomationShowcase_Class:
         return processing_times.get(method, 24.0)
 
 
-async def demonstrate():
+async def demonstrate() -> None:
     """Main demonstration function"""
     logger.info("🎬 DÉMARRAGE DÉMONSTRATION PAYOUT AUTOMATION")
     logger.info("=" * 70)
@@ -798,7 +803,7 @@ async def demonstrate():
         return False
 
 
-async def main():
+async def main() -> None:
     """Main entry point"""
     try:
         success = await demonstrate()

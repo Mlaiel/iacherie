@@ -90,7 +90,7 @@ class EncryptionManager:
     Supports multiple algorithms, key rotation, and enterprise security standards
     """
     
-    def __init__(self, master_key: Optional[bytes] = None):
+    def __init__(self, master_key -> None: Optional[bytes] = None) -> None:
         self.master_key = master_key or self._generate_master_key()
         self.keys: Dict[str, Tuple[bytes, EncryptionKey]] = {}
         self.key_derivation_salt = secrets.token_bytes(32)
@@ -117,7 +117,7 @@ class EncryptionManager:
         """Generate cryptographically secure master key"""
         return secrets.token_bytes(32)  # 256-bit key
         
-    def _initialize_default_keys(self):
+    def _initialize_default_keys(self) -> None:
         """Initialize default encryption keys"""
         try:
             # Generate default symmetric keys for each security level
@@ -689,14 +689,14 @@ class EncryptionManager:
             logger.error(f"Key rotation failed: {e}")
             return False
             
-    def _secure_delete_key(self, key_bytes: bytes):
+    def _secure_delete_key(self, key_bytes -> None: bytes) -> None:
         """Securely delete key from memory"""
         # Overwrite key bytes with random data
         if isinstance(key_bytes, bytes):
             # This is a basic approach - in production, use more secure methods
             del key_bytes
             
-    async def rotate_expired_keys(self):
+    async def rotate_expired_keys(self) -> None:
         """Rotate all expired keys"""
         expired_keys = [
             key_id for key_id, (_, metadata) in self.keys.items()

@@ -113,7 +113,7 @@ class IAProcessingCore:
     with enterprise-grade performance, reliability, and accuracy standards.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.ai_models: Dict[str, AIModelConfig] = {}
         self.inference_queue: List[InferenceRequest] = []
         self.inference_results: Dict[str, InferenceResult] = {}
@@ -140,7 +140,7 @@ class IAProcessingCore:
             logger.error(f"❌ IA Processing Core initialization failed: {str(e)}")
             return False
     
-    async def _setup_ai_models(self):
+    async def _setup_ai_models(self) -> None:
         """Setup AI model configurations"""
         model_configs = [
             # Text Analysis Models
@@ -257,7 +257,7 @@ class IAProcessingCore:
         
         logger.info(f"✅ AI models configured: {len(self.ai_models)} models")
     
-    async def _setup_ml_pipelines(self):
+    async def _setup_ml_pipelines(self) -> None:
         """Setup ML pipeline configurations"""
         # Content Analysis Pipeline
         content_pipeline = [
@@ -342,11 +342,11 @@ class IAProcessingCore:
         
         logger.info(f"✅ ML pipelines configured: {len(self.ml_pipelines)} pipelines")
     
-    async def _setup_intelligent_analysis(self):
+    async def _setup_intelligent_analysis(self) -> None:
         """Setup intelligent analysis capabilities"""
         logger.info("✅ Intelligent analysis capabilities configured")
     
-    async def _setup_performance_monitoring(self):
+    async def _setup_performance_monitoring(self) -> None:
         """Setup performance monitoring"""
         self.performance_metrics = {
             "inference_speed_ms": 0.0,
@@ -658,9 +658,9 @@ class IAProcessingCore:
     
     async def _update_performance_metrics(
         self, 
-        result: InferenceResult, 
-        model_config: AIModelConfig
-    ):
+        result -> None: InferenceResult, 
+        model_config -> None: AIModelConfig
+    ) -> None:
         """Update system performance metrics"""
         try:
             # Update inference speed

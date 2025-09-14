@@ -1,3 +1,8 @@
+"""
+Namespace Manager module
+Enterprise implementation for Ainflue platform
+"""
+
 # Ainflue Infrastructure Module
 # =============================
 # 
@@ -68,7 +73,7 @@ class NamespaceManager:
     - Compliance and security
     """
     
-    def __init__(self, cluster_config: Optional[str] = None):
+    def __init__(self, cluster_config -> None: Optional[str] = None) -> None:
         self.cluster_config = cluster_config
         self.k8s_client = None
         self.rbac_client = None

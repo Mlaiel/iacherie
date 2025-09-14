@@ -99,7 +99,7 @@ class RealTimeAudioAnalytics:
     - Trend analysis and insights
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.analytics_results: deque = deque(maxlen=10000)
         self.feature_cache: Dict[str, Any] = {}
@@ -108,7 +108,7 @@ class RealTimeAudioAnalytics:
         
         logger.info("Real-time Audio Analytics Monitor initialized")
     
-    def _initialize_analytics_engine(self):
+    def _initialize_analytics_engine(self) -> None:
         """Initialize the analytics engine with ML models."""
         self.models = {
             'quality_assessment': {
@@ -421,8 +421,8 @@ class RealTimeAudioAnalytics:
         }
         return model_mapping.get(analytics_type, 'generic')
     
-    def _update_performance_metrics(self, analytics_type: AnalyticsType, 
-                                  processing_time_ms: float):
+    def _update_performance_metrics(self, analytics_type -> None: AnalyticsType, 
+                                  processing_time_ms -> None: float) -> None:
         """Update performance metrics for analytics type."""
         key = analytics_type.value
         self.performance_metrics[key].append(processing_time_ms)

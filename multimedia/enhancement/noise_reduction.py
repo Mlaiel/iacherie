@@ -45,7 +45,7 @@ class NoiseReductionConfig:
 class AudioDenoiser:
     """Advanced audio denoising using spectral methods and AI."""
     
-    def __init__(self, config: NoiseReductionConfig):
+    def __init__(self, config -> None: NoiseReductionConfig) -> None:
         self.config = config
         
     async def denoise_audio(
@@ -317,7 +317,7 @@ class AudioDenoiser:
 class ImageVideoDenoiser:
     """Advanced image and video denoising."""
     
-    def __init__(self, config: NoiseReductionConfig):
+    def __init__(self, config -> None: NoiseReductionConfig) -> None:
         self.config = config
         
     async def denoise_image(
@@ -417,7 +417,7 @@ class ImageVideoDenoiser:
 class NoiseReductionEngine:
     """Enterprise noise reduction engine for audio, video, and images."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.config = NoiseReductionConfig()
         self.audio_denoiser = None
         self.image_denoiser = None

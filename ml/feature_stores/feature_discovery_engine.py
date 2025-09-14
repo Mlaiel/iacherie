@@ -255,7 +255,7 @@ class FeatureEngineering:
 class CreatorFeatureGenerator:
     """Generate creator-specific features"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.creator_features = {
             CreatorType.MUSICIAN: self._musician_features,
             CreatorType.BLOGGER: self._blogger_features,
@@ -479,7 +479,7 @@ class FeatureDiscoveryEngine:
     Automated feature discovery and selection engine
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.discovered_features: Dict[str, List[Feature]] = {}
         self.feature_sets: Dict[str, FeatureSet] = {}
         self.creator_generator = CreatorFeatureGenerator()
@@ -977,7 +977,7 @@ class FeatureDiscoveryEngine:
         return recommendations
 
 # Usage Example
-async def main():
+async def main() -> None:
     """Example usage of FeatureDiscoveryEngine"""
     # Create sample data
     np.random.seed(42)

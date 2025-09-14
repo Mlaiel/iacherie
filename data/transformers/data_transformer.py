@@ -101,12 +101,12 @@ class DataTransformer:
     
     def __init__(
         self,
-        max_workers: int = 4,
-        enable_gpu: bool = True,
-        cache_enabled: bool = True,
-        temp_dir: Optional[str] = None,
-        config: Optional[Dict[str, Any]] = None
-    ):
+        max_workers -> None: int = 4,
+        enable_gpu -> None: bool = True,
+        cache_enabled -> None: bool = True,
+        temp_dir -> None: Optional[str] = None,
+        config -> None: Optional[Dict[str, Any]] = None
+    ) -> None:
         """
         Initialize data transformer with configuration.
         
@@ -150,7 +150,7 @@ class DataTransformer:
         
         logger.info(f"DataTransformer initialized with {max_workers} workers")
     
-    def _init_transformers(self):
+    def _init_transformers(self) -> None:
         """Initialize specialized transformer instances."""
         transformer_config = self.config.get("transformers", {})
         
@@ -395,7 +395,7 @@ Route transformation request to appropriate transformer."""
         else:
             raise ValueError(f"Unsupported content type: {request.content_type}")
     
-    def _validate_request(self, request: TransformationRequest):
+    def _validate_request(self, request -> None: TransformationRequest) -> None:
         """Validate transformation request."""
         if not request.input_path:
             raise ValueError("Input path is required")
@@ -436,7 +436,7 @@ Route transformation request to appropriate transformer."""
         key_string = json.dumps(key_data, sort_keys=True)
         return hashlib.md5(key_string.encode()).hexdigest()
     
-    def _update_metrics(self, result: TransformationResult, processing_time: float):
+    def _update_metrics(self, result -> None: TransformationResult, processing_time -> None: float) -> None:
         """Update transformation metrics."""
         self.metrics["total_transformations"] += 1
         self.metrics["total_processing_time"] += processing_time
@@ -465,7 +465,7 @@ Route transformation request to appropriate transformer."""
         """Get transformation metrics."""
         return self.metrics.copy()
     
-    def clear_cache(self):
+    def clear_cache(self) -> None:
         """
 Clear transformation cache."""
         if self._cache:
@@ -487,7 +487,7 @@ Clear transformation cache."""
         
         return supported_formats.get(content_type, [])
     
-    async def cleanup(self):
+    async def cleanup(self) -> None:
         """Cleanup resources and temporary files."""
         # Close thread pools
         self.thread_pool.shutdown(wait=True)
@@ -510,7 +510,7 @@ Clear transformation cache."""
         
         logger.info("DataTransformer cleanup completed")
     
-    def __del__(self):
+    def __del__(self) -> None:
         """Destructor to ensure cleanup."""
         try:
             asyncio.create_task(self.cleanup())

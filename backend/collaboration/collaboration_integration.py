@@ -28,7 +28,7 @@ class CollaborationSystemManager:
     with the broader Ainflue platform.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.orchestrator = create_collaboration_orchestrator()
         self.integration_status = "active"
         self.registered_workflows = {}

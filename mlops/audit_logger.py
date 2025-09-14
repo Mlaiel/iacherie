@@ -1,3 +1,8 @@
+"""
+Audit Logger module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 📋 MLOps Audit Logger - Enterprise Compliance System
@@ -143,11 +148,11 @@ class AuditStorage:
 class SQLiteAuditStorage(AuditStorage):
     """Stockage SQLite pour audit (dev/test)"""
     
-    def __init__(self, db_path: str = "audit.db"):
+    def __init__(self, db_path -> None: str = "audit.db") -> None:
         self.db_path = db_path
         self._init_database()
     
-    def _init_database(self):
+    def _init_database(self) -> None:
         """Initialize SQLite database"""
         conn = sqlite3.connect(self.db_path)
         conn.execute("""
@@ -308,7 +313,7 @@ class SQLiteAuditStorage(AuditStorage):
 class FileAuditStorage(AuditStorage):
     """Stockage fichier pour audit (production)"""
     
-    def __init__(self, base_path: str = "audit_logs", encrypt: bool = True):
+    def __init__(self, base_path -> None: str = "audit_logs", encrypt -> None: bool = True) -> None:
         self.base_path = Path(base_path)
         self.base_path.mkdir(exist_ok=True)
         self.encrypt = encrypt
@@ -473,7 +478,7 @@ class AuditLogger:
     - GDPR et regulatory compliance
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.storage_backends: List[AuditStorage] = []
         self.compliance_rules: Dict[str, ComplianceRule] = {}
@@ -495,7 +500,7 @@ class AuditLogger:
         
         logger.info("📋 Audit Logger initialized for enterprise compliance")
     
-    def _init_storage_backends(self):
+    def _init_storage_backends(self) -> None:
         """Initialize storage backends based on config"""
         storage_config = self.config.get('storage', {})
         
@@ -512,7 +517,7 @@ class AuditLogger:
                 encrypt=file_config.get('encrypt', True)
             ))
     
-    def _init_compliance_rules(self):
+    def _init_compliance_rules(self) -> None:
         """Initialize compliance rules"""
         # GDPR Data Access Rule
         gdpr_access_rule = ComplianceRule(
@@ -555,13 +560,13 @@ class AuditLogger:
         for rule in [gdpr_access_rule, security_incident_rule, model_deployment_rule]:
             self.compliance_rules[rule.rule_id] = rule
     
-    async def start(self):
+    async def start(self) -> None:
         """Start audit logger background tasks"""
         self.running = True
         asyncio.create_task(self._process_event_queue())
         logger.info("🚀 Audit Logger started")
     
-    async def stop(self):
+    async def stop(self) -> None:
         """Stop audit logger"""
         self.running = False
         logger.info("🛑 Audit Logger stopped")
@@ -611,7 +616,7 @@ class AuditLogger:
         
         return event_id
     
-    async def _process_event_queue(self):
+    async def _process_event_queue(self) -> None:
         """Process queued audit events"""
         while self.running:
             try:
@@ -637,7 +642,7 @@ class AuditLogger:
             except Exception as e:
                 logger.error(f"❌ Error processing audit event: {e}")
     
-    async def _check_compliance_rules(self, event: AuditEvent):
+    async def _check_compliance_rules(self, event -> None: AuditEvent) -> None:
         """Check event against compliance rules"""
         for rule in self.compliance_rules.values():
             if not rule.enabled:
@@ -685,7 +690,7 @@ class AuditLogger:
         # For demo, return True if result is FAILURE
         return event.result == "FAILURE"
     
-    async def _execute_rule_actions(self, event: AuditEvent, rule: ComplianceRule):
+    async def _execute_rule_actions(self, event -> None: AuditEvent, rule -> None: ComplianceRule) -> None:
         """Execute actions for triggered compliance rule"""
         for action in rule.actions:
             if action == "log_critical":
@@ -872,7 +877,7 @@ class AuditLogger:
 
 
 # Demo function
-async def demo_audit_logger():
+async def demo_audit_logger() -> None:
     """Démonstration du système d'audit"""
     print("📋 MLOps Audit Logger Demo")
     

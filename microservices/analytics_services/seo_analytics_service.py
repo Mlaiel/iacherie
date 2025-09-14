@@ -1,3 +1,8 @@
+"""
+Seo Analytics Service module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 📊 SEO ANALYTICS SERVICE
@@ -86,7 +91,7 @@ class SEOAnalyticsService:
     - Automated reporting and alerting
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.redis_client = None
         self.metrics_storage = defaultdict(list)
         self.reports_cache = {}
@@ -128,7 +133,7 @@ class SEOAnalyticsService:
         
         logger.info("📊 SEOAnalyticsService initialized")
     
-    async def initialize(self, redis_url: str = "redis://localhost:6379"):
+    async def initialize(self, redis_url -> None: str = "redis -> None://localhost -> None:6379") -> None:
         """Initialize the SEO analytics service"""
         try:
             self.redis_client = redis.from_url(redis_url)
@@ -178,7 +183,7 @@ class SEOAnalyticsService:
             logger.error(f"❌ Failed to collect SEO metric: {e}")
             raise
     
-    async def _detect_metric_anomalies(self, metric: SEOMetric):
+    async def _detect_metric_anomalies(self, metric -> None: SEOMetric) -> None:
         """🤖 ML Engineer: Detect anomalies in SEO metrics"""
         try:
             cache_key = f"seo_metric:{metric.metric_type}:{metric.url}"
@@ -206,7 +211,7 @@ class SEOAnalyticsService:
         except Exception as e:
             logger.error(f"❌ Anomaly detection failed: {e}")
     
-    async def _trigger_seo_alert(self, metric: SEOMetric, z_score: float):
+    async def _trigger_seo_alert(self, metric -> None: SEOMetric, z_score -> None: float) -> None:
         """⚙️ DevOps: Trigger SEO performance alert"""
         try:
             alert = {
@@ -544,7 +549,7 @@ class SEOAnalyticsService:
             logger.error(f"❌ Failed to get service health: {e}")
             return {'status': 'error', 'error': str(e)}
     
-    async def cleanup(self):
+    async def cleanup(self) -> None:
         """⚙️ DevOps: Cleanup service resources"""
         try:
             if self.redis_client:
@@ -557,7 +562,7 @@ class SEOAnalyticsService:
 
 
 # Example usage
-async def main():
+async def main() -> None:
     """Example usage of SEOAnalyticsService"""
     service = SEOAnalyticsService()
     

@@ -43,7 +43,7 @@ class AuthenticationError(AinflueSdkException):
 
 class APIError(AinflueSdkException):
     """API request failed"""
-    def __init__(self, message: str, status_code: int = None, response: Dict = None):
+    def __init__(self, message -> None: str, status_code -> None: int = None, response -> None: Dict = None) -> None:
         super().__init__(message)
         self.status_code = status_code
         self.response = response
@@ -87,7 +87,7 @@ class ContentProtectionResult(BaseModel):
 class AinflueSdk:
     """Main Ainflue SDK client"""
     
-    def __init__(self, config: AinflueSdkConfig):
+    def __init__(self, config -> None: AinflueSdkConfig) -> None:
         self.config = config
         self.logger = logging.getLogger(__name__)
         self._client = None
@@ -95,7 +95,7 @@ class AinflueSdk:
         # Initialize HTTP client
         self._init_client()
     
-    def _init_client(self):
+    def _init_client(self) -> None:
         """Initialize HTTP client"""
         headers = {
             "Authorization": f"Bearer {self.config.api_key}",
@@ -111,15 +111,15 @@ class AinflueSdk:
             verify=self.config.verify_ssl
         )
     
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         """Async context manager entry"""
         return self
     
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         """Async context manager exit"""
         await self.close()
     
-    async def close(self):
+    async def close(self) -> None:
         """Close the HTTP client"""
         if self._client:
             await self._client.aclose()
@@ -324,7 +324,7 @@ class AinflueSdk:
 class AinflueSdkSync:
     """Synchronous wrapper for Ainflue SDK"""
     
-    def __init__(self, config: AinflueSdkConfig):
+    def __init__(self, config -> None: AinflueSdkConfig) -> None:
         self.config = config
         self._async_sdk = None
     
@@ -334,7 +334,7 @@ class AinflueSdkSync:
             self._async_sdk = AinflueSdk(self.config)
         return self._async_sdk
     
-    def _run_async(self, coro):
+    def _run_async(self, coro) -> None:
         """Run async coroutine in sync context"""
         try:
             loop = asyncio.get_event_loop()
@@ -364,7 +364,7 @@ class AinflueSdkSync:
         sdk = self._get_async_sdk()
         return self._run_async(sdk.health_check())
     
-    def close(self):
+    def close(self) -> None:
         """Close connections"""
         if self._async_sdk:
             self._run_async(self._async_sdk.close())

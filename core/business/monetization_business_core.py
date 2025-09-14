@@ -124,7 +124,7 @@ class MonetizationBusinessCore:
     payment processing, and subscription management with enterprise-grade reliability.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.revenue_streams: Dict[str, RevenueStream] = {}
         self.payment_transactions: Dict[str, PaymentTransaction] = {}
         self.revenue_optimizations: Dict[str, RevenueOptimization] = {}
@@ -154,7 +154,7 @@ class MonetizationBusinessCore:
             logger.error(f"❌ Monetization Business Core initialization failed: {str(e)}")
             return False
     
-    async def _setup_monetization_policies(self):
+    async def _setup_monetization_policies(self) -> None:
         """Setup monetization policies and business rules"""
         self.monetization_policies = {
             "revenue_sharing": {
@@ -200,7 +200,7 @@ class MonetizationBusinessCore:
         
         logger.info("✅ Monetization policies configured")
     
-    async def _setup_payment_gateways(self):
+    async def _setup_payment_gateways(self) -> None:
         """Setup payment gateway configurations"""
         self.payment_gateways = {
             "stripe": {
@@ -243,7 +243,7 @@ class MonetizationBusinessCore:
         
         logger.info("✅ Payment gateways configured")
     
-    async def _setup_subscription_plans(self):
+    async def _setup_subscription_plans(self) -> None:
         """Setup default subscription plans"""
         plans = [
             SubscriptionPlan(
@@ -316,7 +316,7 @@ class MonetizationBusinessCore:
         
         logger.info(f"✅ Subscription plans configured: {len(plans)} plans")
     
-    async def _setup_revenue_optimization(self):
+    async def _setup_revenue_optimization(self) -> None:
         """Setup revenue optimization algorithms"""
         self.optimization_algorithms = {
             "pricing_optimization": {
@@ -347,7 +347,7 @@ class MonetizationBusinessCore:
         
         logger.info("✅ Revenue optimization configured")
     
-    async def _setup_performance_monitoring(self):
+    async def _setup_performance_monitoring(self) -> None:
         """Setup performance monitoring"""
         self.performance_metrics = {
             "total_revenue": Decimal('0.00'),
@@ -459,7 +459,7 @@ class MonetizationBusinessCore:
             logger.error(f"❌ Revenue model validation failed: {str(e)}")
             return False
     
-    async def _configure_revenue_stream(self, stream: RevenueStream):
+    async def _configure_revenue_stream(self, stream -> None: RevenueStream) -> None:
         """Configure stream-specific settings"""
         try:
             stream_type = stream.stream_type
@@ -651,7 +651,7 @@ class MonetizationBusinessCore:
             logger.error(f"❌ Transaction verification failed: {str(e)}")
             return False
     
-    async def _update_payment_metrics(self, transaction: PaymentTransaction):
+    async def _update_payment_metrics(self, transaction -> None: PaymentTransaction) -> None:
         """Update payment performance metrics"""
         try:
             # Update total revenue

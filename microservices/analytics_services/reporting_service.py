@@ -1,3 +1,8 @@
+"""
+Reporting Service module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 📊 REPORTING SERVICE
@@ -84,7 +89,7 @@ class ReportRequest:
     recipients: List[str] = None
     created_at: datetime = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.date_range is None:
             self.date_range = {
                 "start": (datetime.utcnow() - timedelta(days=30)).isoformat(),
@@ -114,7 +119,7 @@ class GeneratedReport:
     created_at: datetime = None
     expires_at: Optional[datetime] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.charts is None:
             self.charts = []
         if self.summary is None:
@@ -137,7 +142,7 @@ class ReportTemplate:
     created_by: str
     created_at: datetime = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.created_at is None:
             self.created_at = datetime.utcnow()
 
@@ -151,7 +156,7 @@ class ReportingMetrics:
     scheduled_reports: int = 0
     active_templates: int = 0
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.reports_by_type is None:
             self.reports_by_type = {}
         if self.reports_by_format is None:
@@ -160,7 +165,7 @@ class ReportingMetrics:
 class ReportingService:
     """Enterprise reporting service"""
     
-    def __init__(self, redis_url: str = "redis://localhost:6379"):
+    def __init__(self, redis_url -> None: str = "redis -> None://localhost -> None:6379") -> None:
         self.redis_url = redis_url
         self.reports: Dict[str, GeneratedReport] = {}
         self.templates: Dict[str, ReportTemplate] = {}
@@ -757,7 +762,7 @@ class ReportingService:
 
 
 # Example usage and testing
-async def main():
+async def main() -> None:
     """Test the reporting service"""
     service = ReportingService()
     

@@ -179,7 +179,7 @@ class CryptocurrencyWalletManager:
     - DeFi integration and yield farming capabilities
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """Initialize cryptocurrency wallet manager"""
         self.config = config
         self.logger = logging.getLogger(__name__)

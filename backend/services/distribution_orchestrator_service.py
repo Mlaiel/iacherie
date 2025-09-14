@@ -151,7 +151,7 @@ class DistributionResult:
 class DistributionEngine:
     """Moteur principal de distribution"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         self.platform_apis = {}
@@ -435,7 +435,7 @@ class DistributionEngine:
 class DistributionScheduler:
     """Planificateur de distribution avancé"""
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client -> None: aioredis.Redis) -> None:
         self.redis = redis_client
         self.scheduling_model = None
         self.audience_models = {}
@@ -508,7 +508,7 @@ class DistributionScheduler:
 class DistributionOrchestratorService:
     """Service principal d'orchestration de distribution"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         self.distribution_engine = DistributionEngine(redis_client, db_session)

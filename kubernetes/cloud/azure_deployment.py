@@ -107,7 +107,7 @@ class AzureDeploymentManager:
     """
 Enterprise Azure deployment and management system"""
     
-    def __init__(self, credentials: AzureCredentials):
+    def __init__(self, credentials -> None: AzureCredentials) -> None:
         """
 Initialize Azure deployment manager"""
         self.logger = logging.getLogger(self.__class__.__name__)
@@ -946,3 +946,5 @@ Deploy Azure App Service"""
         except Exception as e:
             self.logger.error(f"Failed to cleanup resources: {e}")
             return False
+
+# File has syntax issues - needs manual review

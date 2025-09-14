@@ -93,7 +93,7 @@ class AlgorithmTracker:
     - Predictive algorithm modeling
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.detection_models = {}
         self.impact_analyzers = {}
         self.adaptation_engines = {}

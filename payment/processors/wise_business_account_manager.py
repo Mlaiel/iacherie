@@ -97,7 +97,7 @@ class CurrencyBalance:
     total_amount: Decimal = field(init=False)
     last_updated: datetime = field(default_factory=datetime.utcnow)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         self.total_amount = self.available_amount + self.reserved_amount
 
 
@@ -173,10 +173,10 @@ class WiseBusinessAccountManager:
     """
 
     def __init__(self,
-                 wise_api_token: str,
-                 database_url: str,
-                 redis_url: str,
-                 sandbox_mode: bool = False):
+                 wise_api_token -> None: str,
+                 database_url -> None: str,
+                 redis_url -> None: str,
+                 sandbox_mode -> None: bool = False) -> None:
         """Initialize Wise Business Account Manager"""
         self.api_token = wise_api_token
         self.database_url = database_url

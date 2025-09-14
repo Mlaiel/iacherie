@@ -50,7 +50,7 @@ class OperatorConfig:
 class OperatorManager:
     """Unified operator management interface"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.crd_manager = CRDManager()
         self.custom_controller_manager = CustomControllerManager()
         self.operator_lifecycle_manager = OperatorLifecycleManager()
@@ -59,7 +59,7 @@ class OperatorManager:
 class CRDManager:
     """Custom Resource Definition management"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.crds = {}
         self.logger = logging.getLogger(__name__)
     
@@ -198,7 +198,7 @@ class CRDManager:
 class CustomControllerManager:
     """Custom controller management"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.controllers = {}
         self.logger = logging.getLogger(__name__)
     
@@ -262,7 +262,7 @@ class CustomControllerManager:
             self.logger.error(f"Failed to create controller: {e}")
             return False
     
-    async def _create_rbac_resources(self, config: OperatorConfig):
+    async def _create_rbac_resources(self, config -> None: OperatorConfig) -> None:
         """Create RBAC resources for controller"""
         
         # Service Account
@@ -326,7 +326,7 @@ class CustomControllerManager:
 class OperatorLifecycleManager:
     """Operator Lifecycle Manager (OLM) integration"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.operator_packages = {}
         self.logger = logging.getLogger(__name__)
     

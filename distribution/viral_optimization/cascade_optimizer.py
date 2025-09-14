@@ -1,5 +1,7 @@
 """Cascade Optimizer - Distribution Cascade Strategy Engine
 
+import asyncio
+
 Optimizes content distribution cascade across platforms for maximum viral reach
 using network analysis and propagation modeling.
 
@@ -47,7 +49,7 @@ class OptimalSequence:
 class CascadeOptimizer:
     """Distribution cascade optimization engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize cascade optimizer"""
         self.optimization_models = self._load_optimization_models()
         

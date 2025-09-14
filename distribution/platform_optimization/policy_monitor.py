@@ -88,7 +88,7 @@ class PolicyUpdate:
 class PolicyMonitor:
     """Advanced platform policy monitoring and compliance engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize policy monitor"""
         self.policy_database = {}
         self.compliance_patterns = {}

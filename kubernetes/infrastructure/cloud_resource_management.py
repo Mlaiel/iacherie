@@ -144,7 +144,7 @@ Cloud resource management specification"""
 class CloudResourceManager:
     """Enterprise cloud resource management and auto-scaling manager"""
     
-    def __init__(self, k8s_client=None, aws_client=None, gcp_client=None, azure_client=None):
+    def __init__(self, k8s_client=None, aws_client=None, gcp_client=None, azure_client=None) -> None:
         self.k8s_client = k8s_client
         self.aws_client = aws_client
         self.gcp_client = gcp_client

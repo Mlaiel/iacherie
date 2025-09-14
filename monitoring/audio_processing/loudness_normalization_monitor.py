@@ -94,7 +94,7 @@ class LoudnessNormalizationMonitor:
     and provides detailed analysis for broadcast and streaming platforms.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize loudness normalization monitor."""
         self.config = config or self._default_config()
         self.jobs: Dict[str, NormalizationJob] = {}
@@ -201,7 +201,7 @@ class LoudnessNormalizationMonitor:
         logger.info(f"Started normalization job {job_id} for {standard.value} -> {target.value}")
         return job_id
     
-    def _process_normalization_job(self, job: NormalizationJob):
+    def _process_normalization_job(self, job -> None: NormalizationJob) -> None:
         """Process loudness normalization job."""
         try:
             job.status = "analyzing"
@@ -355,7 +355,7 @@ class LoudnessNormalizationMonitor:
         
         return min(1.0, max(0.0, weighted_score))
     
-    def _update_metrics(self, job: NormalizationJob):
+    def _update_metrics(self, job -> None: NormalizationJob) -> None:
         """Update loudness normalization metrics."""
         self.metrics.total_jobs += 1
         

@@ -140,7 +140,7 @@ class DataProtection:
 class EncryptionManager:
     """Gestionnaire principal de chiffrement"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         self.master_keys = {}
@@ -448,7 +448,7 @@ class EncryptionManager:
 class KeyManagement:
     """Gestionnaire de clés cryptographiques"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         self.key_store = {}
@@ -641,7 +641,7 @@ class KeyManagement:
 class EncryptionVaultService:
     """Service principal du coffre de chiffrement"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         self.encryption_manager = EncryptionManager(redis_client, db_session)

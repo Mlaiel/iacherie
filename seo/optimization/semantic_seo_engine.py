@@ -55,7 +55,7 @@ class SemanticSEOEngine:
     Provides semantic analysis, entity extraction, and intent classification
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.entity_types = [
             'PERSON', 'ORGANIZATION', 'LOCATION', 'EVENT', 
             'PRODUCT', 'TECHNOLOGY', 'SKILL', 'GENRE', 'INSTRUMENT'

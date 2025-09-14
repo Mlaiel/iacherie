@@ -1,19 +1,19 @@
-"""🚀 Service Mesh & Discovery - IA Influencer Agent Platform Enterprise
+"""# [EMOJI_REMOVED] Service Mesh & Discovery - IA Influencer Agent Platform Enterprise
 ===================================================================
 Module: backend/platform_core/communication/service_mesh.py
 Author: Fahed Mlaiel (mlaiel@live.de)
 ===================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
-(c) 2025 Fahed Mlaiel. Tous droits réservés.
+# [EMOJI_REMOVED]  PROPRI# [EMOJI_REMOVED]T# [EMOJI_REMOVED] INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL # [EMOJI_REMOVED]
+(c) 2025 Fahed Mlaiel. Tous droits r# [EMOJI_REMOVED]serv# [EMOJI_REMOVED]s.
 Contact: mlaiel@live.de
 
-🎯 SERVICE MESH INTELLIGENT
-Infrastructure de communication microservices avancée
+# [EMOJI_REMOVED] SERVICE MESH INTELLIGENT
+Infrastructure de communication microservices avanc# [EMOJI_REMOVED]e
 - Service discovery automatique avec consensus
 - Traffic management et circuit breakers
 - Security policies et mTLS automatique
-- Observability complète et tracing distribué
+- Observability compl# [EMOJI_REMOVED]te et tracing distribu# [EMOJI_REMOVED]
 """
 
 import asyncio
@@ -52,7 +52,7 @@ Types de services"""
     AI_AGENT = "ai_agent"
 
 class ServiceHealth(Enum):
-    """État de santé des services"""
+    """# [EMOJI_REMOVED]tat de sant# [EMOJI_REMOVED] des services"""
 
     HEALTHY = "healthy"
     DEGRADED = "degraded"
@@ -83,25 +83,25 @@ class ServiceInstance:
     environment: str = "production"
     namespace: str = "default"
     
-    # Métadonnées
+    # M# [EMOJI_REMOVED]tadonn# [EMOJI_REMOVED]es
     tags: Dict[str, str] = field(default_factory=dict)
     metadata: Dict[str, Any] = field(default_factory=dict)
     
-    # Santé et métriques
+    # Sant# [EMOJI_REMOVED] et m# [EMOJI_REMOVED]triques
     health: ServiceHealth = ServiceHealth.STARTING
     last_heartbeat: Optional[datetime] = None
     health_check_url: Optional[str] = None
     
-    # Configuration réseau
+    # Configuration r# [EMOJI_REMOVED]seau
     protocols: List[str] = field(default_factory=lambda: ["http"])
     endpoints: Dict[str, str] = field(default_factory=dict)
     
-    # Sécurité
+    # S# [EMOJI_REMOVED]curit# [EMOJI_REMOVED]
     tls_enabled: bool = False
     cert_fingerprint: Optional[str] = None
     allowed_clients: Set[str] = field(default_factory=set)
     
-    # Découverte
+    # D# [EMOJI_REMOVED]couverte
     registered_at: datetime = field(default_factory=datetime.utcnow)
     last_seen: datetime = field(default_factory=datetime.utcnow)
     
@@ -137,13 +137,13 @@ class ServicePolicy:
     """Politique de service"""
     service_name: str
     traffic_policy: TrafficPolicy = TrafficPolicy.ROUND_ROBIN
-    rate_limit: Optional[int] = None  # Requêtes par seconde
+    rate_limit: Optional[int] = None  # Requ# [EMOJI_REMOVED]tes par seconde
     timeout_seconds: int = 30
     max_retries: int = 3
     circuit_breaker_threshold: int = 5
     circuit_breaker_timeout: int = 60
     
-    # Sécurité
+    # S# [EMOJI_REMOVED]curit# [EMOJI_REMOVED]
     require_tls: bool = False
     allowed_services: Set[str] = field(default_factory=set)
     
@@ -157,40 +157,40 @@ class ServicePolicy:
 
 class ServiceDiscovery:
     """
-Service de découverte automatique"""
+Service de d# [EMOJI_REMOVED]couverte automatique"""
     
     def __init__(self, 
-                 redis_client: aioredis.Redis,
-                 namespace: str = "service_mesh"):
+                 redis_client -> None: aioredis.Redis,
+                 namespace -> None: str = "service_mesh") -> None:
         self.redis_client = redis_client
         self.namespace = namespace
         self.services: Dict[str, Dict[str, ServiceInstance]] = {}  # service_name -> {instance_id -> instance}
         self.policies: Dict[str, ServicePolicy] = {}
         
-        # Clés Redis
+        # Cl# [EMOJI_REMOVED]s Redis
         self.registry_key = f"{namespace}:registry"
         self.policies_key = f"{namespace}:policies"
         self.heartbeat_key = f"{namespace}:heartbeats"
         
-        # Tâches
+        # T# [EMOJI_REMOVED]ches
         self._cleanup_task: Optional[asyncio.Task] = None
         self._sync_task: Optional[asyncio.Task] = None
         self._running = False
         
-    async def start(self):
-        """Démarre le service discovery"""
+    async def start(self) -> None:
+        """D# [EMOJI_REMOVED]marre le service discovery"""
         self._running = True
         
-        # Charger les données depuis Redis
+        # Charger les donn# [EMOJI_REMOVED]es depuis Redis
         await self._load_from_redis()
         
-        # Démarrer les tâches de maintenance
+        # D# [EMOJI_REMOVED]marrer les t# [EMOJI_REMOVED]ches de maintenance
         self._cleanup_task = asyncio.create_task(self._cleanup_stale_services())
         self._sync_task = asyncio.create_task(self._sync_with_redis())
         
-        logger.info("ServiceDiscovery démarré")
+        logger.info("ServiceDiscovery d# [EMOJI_REMOVED]marr# [EMOJI_REMOVED]")
         
-    async def stop(self):
+    async def stop(self) -> None:
         try:
             logger.info(f"Executing stop")
             
@@ -216,7 +216,7 @@ Service de découverte automatique"""
                 except asyncio.CancelledError:
                     pass
                     
-        logger.info("ServiceDiscovery arrêté")
+        logger.info("ServiceDiscovery arr# [EMOJI_REMOVED]t# [EMOJI_REMOVED]")
         
     async def register_service(self, service: ServiceInstance) -> str:
         """Enregistre un service dans le mesh"""
@@ -231,11 +231,11 @@ Service de découverte automatique"""
         # Persister dans Redis
         await self._persist_service(service)
         
-        logger.info(f"Service enregistré: {service_name}/{instance_id} ({service.url})")
+        logger.info(f"Service enregistr# [EMOJI_REMOVED]: {service_name}/{instance_id} ({service.url})")
         return instance_id
         
-    async def unregister_service(self, service_name: str, instance_id: str):
-        """Désenregistre un service"""
+    async def unregister_service(self, service_name -> None: str, instance_id -> None: str) -> None:
+        """D# [EMOJI_REMOVED]senregistre un service"""
         if service_name in self.services and instance_id in self.services[service_name]:
             del self.services[service_name][instance_id]
             
@@ -245,19 +245,19 @@ Service de découverte automatique"""
         # Supprimer de Redis
         await self._remove_service_from_redis(service_name, instance_id)
         
-        logger.info(f"Service désenregistré: {service_name}/{instance_id}")
+        logger.info(f"Service d# [EMOJI_REMOVED]senregistr# [EMOJI_REMOVED]: {service_name}/{instance_id}")
         
     async def discover_services(self, 
                                service_name: str,
                                tags: Optional[Dict[str, str]] = None,
                                healthy_only: bool = True) -> List[ServiceInstance]:
-        """Découvre les instances d'un service"""
+        """D# [EMOJI_REMOVED]couvre les instances d'un service"""
         if service_name not in self.services:
             return []
             
         instances = []
         for instance in self.services[service_name].values():
-            # Filtrer par santé
+            # Filtrer par sant# [EMOJI_REMOVED]
             if healthy_only and not instance.is_healthy:
                 continue
                 
@@ -270,9 +270,9 @@ Service de découverte automatique"""
             
         return instances
         
-    async def update_health(self, service_name: str, instance_id: str, health: ServiceHealth):
+    async def update_health(self, service_name -> None: str, instance_id -> None: str, health -> None: ServiceHealth) -> None:
         """
-Met à jour l'état de santé d'un service"""
+Met # [EMOJI_REMOVED] jour l'# [EMOJI_REMOVED]tat de sant# [EMOJI_REMOVED] d'un service"""
         if (service_name in self.services and 
             instance_id in self.services[service_name]):
             
@@ -284,21 +284,21 @@ Met à jour l'état de santé d'un service"""
             # Enregistrer le heartbeat dans Redis
             await self._record_heartbeat(service_name, instance_id)
             
-    async def set_service_policy(self, policy: ServicePolicy):
+    async def set_service_policy(self, policy -> None: ServicePolicy) -> None:
         """
-Définit une politique pour un service"""
+D# [EMOJI_REMOVED]finit une politique pour un service"""
         self.policies[policy.service_name] = policy
         
         # Persister dans Redis
         await self._persist_policy(policy)
         
-        logger.info(f"Politique définie pour {policy.service_name}: {policy.traffic_policy.value}")
+        logger.info(f"Politique d# [EMOJI_REMOVED]finie pour {policy.service_name}: {policy.traffic_policy.value}")
         
     async def get_service_policy(self, service_name: str) -> Optional[ServicePolicy]:
-        """Récupère la politique d'un service"""
+        """R# [EMOJI_REMOVED]cup# [EMOJI_REMOVED]re la politique d'un service"""
         return self.policies.get(service_name)
         
-    async def _persist_service(self, service: ServiceInstance):
+    async def _persist_service(self, service -> None: ServiceInstance) -> None:
         """
 Persiste un service dans Redis"""
         key = f"{self.registry_key}:{service.service_name}:{service.service_id}"
@@ -306,21 +306,21 @@ Persiste un service dans Redis"""
         
         await self.redis_client.set(key, json.dumps(data), ex=300)  # TTL 5 minutes
         
-    async def _persist_policy(self, policy: ServicePolicy):
+    async def _persist_policy(self, policy -> None: ServicePolicy) -> None:
         """Persiste une politique dans Redis"""
         key = f"{self.policies_key}:{policy.service_name}"
         data = self._serialize_policy(policy)
         
         await self.redis_client.set(key, json.dumps(data))
         
-    async def _record_heartbeat(self, service_name: str, instance_id: str):
+    async def _record_heartbeat(self, service_name -> None: str, instance_id -> None: str) -> None:
         """Enregistre un heartbeat"""
         key = f"{self.heartbeat_key}:{service_name}:{instance_id}"
         timestamp = datetime.utcnow().isoformat()
         
         await self.redis_client.set(key, timestamp, ex=120)  # TTL 2 minutes
         
-    async def _load_from_redis(self):
+    async def _load_from_redis(self) -> None:
         """Charge les services et politiques depuis Redis"""
         try:
             # Charger les services
@@ -352,11 +352,11 @@ Persiste un service dans Redis"""
         except Exception as e:
             logger.error(f"Erreur lors du chargement depuis Redis: {e}")
             
-    async def _cleanup_stale_services(self):
-        """Nettoie les services obsolètes"""
+    async def _cleanup_stale_services(self) -> None:
+        """Nettoie les services obsol# [EMOJI_REMOVED]tes"""
         while self._running:
             try:
-                await asyncio.sleep(30)  # Vérifier toutes les 30 secondes
+                await asyncio.sleep(30)  # V# [EMOJI_REMOVED]rifier toutes les 30 secondes
                 
                 stale_services = []
                 for service_name, instances in self.services.items():
@@ -365,7 +365,7 @@ Persiste un service dans Redis"""
                             stale_services.append((service_name, instance_id))
                             
                 for service_name, instance_id in stale_services:
-                    logger.info(f"Nettoyage service obsolète: {service_name}/{instance_id}")
+                    logger.info(f"Nettoyage service obsol# [EMOJI_REMOVED]te: {service_name}/{instance_id}")
                     await self.unregister_service(service_name, instance_id)
                     
             except asyncio.CancelledError:
@@ -373,8 +373,8 @@ Persiste un service dans Redis"""
             except Exception as e:
                 logger.error(f"Erreur dans le nettoyage: {e}")
                 
-    async def _sync_with_redis(self):
-        """Synchronise périodiquement avec Redis"""
+    async def _sync_with_redis(self) -> None:
+        """Synchronise p# [EMOJI_REMOVED]riodiquement avec Redis"""
         while self._running:
             try:
                 await asyncio.sleep(60)  # Sync toutes les minutes
@@ -384,7 +384,7 @@ Persiste un service dans Redis"""
             except Exception as e:
                 logger.error(f"Erreur dans la synchronisation: {e}")
                 
-    async def _remove_service_from_redis(self, service_name: str, instance_id: str):
+    async def _remove_service_from_redis(self, service_name -> None: str, instance_id -> None: str) -> None:
         """Supprime un service de Redis"""
         key = f"{self.registry_key}:{service_name}:{instance_id}"
         await self.redis_client.delete(key)
@@ -393,7 +393,7 @@ Persiste un service dans Redis"""
         await self.redis_client.delete(heartbeat_key)
         
     def _serialize_service(self, service: ServiceInstance) -> Dict[str, Any]:
-        """Sérialise un service"""
+        """S# [EMOJI_REMOVED]rialise un service"""
         data = asdict(service)
         # Convertir les enums et sets
         data['service_type'] = service.service_type.value
@@ -407,7 +407,7 @@ Persiste un service dans Redis"""
         
     def _deserialize_service(self, data: Dict[str, Any]) -> ServiceInstance:
         """
-Désérialise un service"""
+D# [EMOJI_REMOVED]s# [EMOJI_REMOVED]rialise un service"""
         # Convertir les enums et sets
         data['service_type'] = ServiceType(data['service_type'])
         data['health'] = ServiceHealth(data['health'])
@@ -420,7 +420,7 @@ Désérialise un service"""
         
     def _serialize_policy(self, policy: ServicePolicy) -> Dict[str, Any]:
         """
-Sérialise une politique"""
+S# [EMOJI_REMOVED]rialise une politique"""
         data = asdict(policy)
         data['traffic_policy'] = policy.traffic_policy.value
         data['allowed_services'] = list(policy.allowed_services)
@@ -428,14 +428,14 @@ Sérialise une politique"""
         
     def _deserialize_policy(self, data: Dict[str, Any]) -> ServicePolicy:
         """
-Désérialise une politique"""
+D# [EMOJI_REMOVED]s# [EMOJI_REMOVED]rialise une politique"""
         data['traffic_policy'] = TrafficPolicy(data['traffic_policy'])
         data['allowed_services'] = set(data['allowed_services'])
         return ServicePolicy(**data)
         
     def get_discovery_stats(self) -> Dict[str, Any]:
         """
-Retourne les statistiques de découverte"""
+Retourne les statistiques de d# [EMOJI_REMOVED]couverte"""
         return {
             "total_services": len(self.services),
             "total_instances": sum(len(instances) for instances in self.services.values()),
@@ -464,15 +464,15 @@ Retourne les statistiques de découverte"""
         }
 
 class ServiceMesh:
-    """Service Mesh principal avec fonctionnalités complètes"""
+    """Service Mesh principal avec fonctionnalit# [EMOJI_REMOVED]s compl# [EMOJI_REMOVED]tes"""
     
     def __init__(self, 
-                 redis_client: aioredis.Redis,
-                 namespace: str = "service_mesh"):
+                 redis_client -> None: aioredis.Redis,
+                 namespace -> None: str = "service_mesh") -> None:
         self.discovery = ServiceDiscovery(redis_client, namespace)
         self.namespace = namespace
         
-        # Composants intégrés
+        # Composants int# [EMOJI_REMOVED]gr# [EMOJI_REMOVED]s
         self.circuit_breakers: Dict[str, Dict] = {}
         self.rate_limiters: Dict[str, Dict] = {}
         self.metrics: Dict[str, Dict] = {}
@@ -481,15 +481,15 @@ class ServiceMesh:
         self.routing_table: Dict[str, Callable] = {}
         self.middleware: List[Callable] = []
         
-    async def start(self):
-        """Démarre le service mesh"""
+    async def start(self) -> None:
+        """D# [EMOJI_REMOVED]marre le service mesh"""
         await self.discovery.start()
-        logger.info("ServiceMesh démarré")
+        logger.info("ServiceMesh d# [EMOJI_REMOVED]marr# [EMOJI_REMOVED]")
         
-    async def stop(self):
-        """Arrête le service mesh"""
+    async def stop(self) -> None:
+        """Arr# [EMOJI_REMOVED]te le service mesh"""
         await self.discovery.stop()
-        logger.info("ServiceMesh arrêté")
+        logger.info("ServiceMesh arr# [EMOJI_REMOVED]t# [EMOJI_REMOVED]")
         
     async def register_service(self, 
                               service_name: str,
@@ -510,22 +510,22 @@ class ServiceMesh:
         if not policy:
             policy = ServicePolicy(service_name=service_name)
             
-        # Vérifier les autorisations
+        # V# [EMOJI_REMOVED]rifier les autorisations
         if policy.allowed_services and caller_service not in policy.allowed_services:
-            raise Exception(f"Service {caller_service} non autorisé à appeler {service_name}")
+            raise Exception(f"Service {caller_service} non autoris# [EMOJI_REMOVED] # [EMOJI_REMOVED] appeler {service_name}")
             
-        # Sélectionner une instance selon la politique
+        # S# [EMOJI_REMOVED]lectionner une instance selon la politique
         instance = self._select_instance(instances, policy)
         if not instance:
-            raise Exception(f"Aucune instance sélectionnable pour {service_name}")
+            raise Exception(f"Aucune instance s# [EMOJI_REMOVED]lectionnable pour {service_name}")
             
-        # Vérifier le circuit breaker
+        # V# [EMOJI_REMOVED]rifier le circuit breaker
         if self._is_circuit_breaker_open(service_name, instance.service_id):
             raise Exception(f"Circuit breaker ouvert pour {service_name}")
             
-        # Vérifier le rate limiting
+        # V# [EMOJI_REMOVED]rifier le rate limiting
         if not self._check_rate_limit(service_name, caller_service):
-            raise Exception(f"Rate limit dépassé pour {service_name}")
+            raise Exception(f"Rate limit d# [EMOJI_REMOVED]pass# [EMOJI_REMOVED] pour {service_name}")
             
         # Effectuer l'appel
         try:
@@ -548,28 +548,28 @@ class ServiceMesh:
                 async with session.request(**request_kwargs) as response:
                     response_data = await response.json()
                     
-                    # Enregistrer les métriques
+                    # Enregistrer les m# [EMOJI_REMOVED]triques
                     self._record_call_metrics(service_name, instance.service_id, True, response.status)
                     
                     return response.status, response_data
                     
         except Exception as e:
-            # Enregistrer l'échec
+            # Enregistrer l'# [EMOJI_REMOVED]chec
             self._record_call_metrics(service_name, instance.service_id, False, 0)
             self._handle_circuit_breaker(service_name, instance.service_id, False)
             raise e
             
     def _select_instance(self, instances: List[ServiceInstance], policy: ServicePolicy) -> Optional[ServiceInstance]:
-        """Sélectionne une instance selon la politique"""
+        """S# [EMOJI_REMOVED]lectionne une instance selon la politique"""
         if not instances:
             return None
             
         if policy.traffic_policy == TrafficPolicy.ROUND_ROBIN:
-            # Implémentation simple round robin
+            # Impl# [EMOJI_REMOVED]mentation simple round robin
             return instances[hash(policy.service_name) % len(instances)]
             
         elif policy.traffic_policy == TrafficPolicy.WEIGHTED:
-            # Sélection pondérée
+            # S# [EMOJI_REMOVED]lection pond# [EMOJI_REMOVED]r# [EMOJI_REMOVED]e
             weights = []
             for instance in instances:
                 weight = policy.weights.get(instance.service_id, 1.0)
@@ -578,7 +578,7 @@ class ServiceMesh:
             if not weights:
                 return instances[0]
                 
-            # Sélection pondérée simple
+            # S# [EMOJI_REMOVED]lection pond# [EMOJI_REMOVED]r# [EMOJI_REMOVED]e simple
             import random
             return random.choices(instances, weights=weights)[0]
             
@@ -591,7 +591,7 @@ class ServiceMesh:
             
     def _is_circuit_breaker_open(self, service_name: str, instance_id: str) -> bool:
         """
-Vérifie si le circuit breaker est ouvert"""
+V# [EMOJI_REMOVED]rifie si le circuit breaker est ouvert"""
         key = f"{service_name}:{instance_id}"
         if key not in self.circuit_breakers:
             return False
@@ -607,8 +607,8 @@ Vérifie si le circuit breaker est ouvert"""
             
         return False
         
-    def _handle_circuit_breaker(self, service_name: str, instance_id: str, success: bool):
-        """Gère le circuit breaker"""
+    def _handle_circuit_breaker(self, service_name -> None: str, instance_id -> None: str, success -> None: bool) -> None:
+        """G# [EMOJI_REMOVED]re le circuit breaker"""
         key = f"{service_name}:{instance_id}"
         if key not in self.circuit_breakers:
             self.circuit_breakers[key] = {
@@ -635,7 +635,7 @@ Vérifie si le circuit breaker est ouvert"""
                 cb["reset_time"] = time.time() + timeout
                 
     def _check_rate_limit(self, service_name: str, caller_service: Optional[str]) -> bool:
-        """Vérifie le rate limiting"""
+        """V# [EMOJI_REMOVED]rifie le rate limiting"""
         policy = self.discovery.policies.get(service_name)
         if not policy or not policy.rate_limit:
             return True
@@ -651,7 +651,7 @@ Vérifie si le circuit breaker est ouvert"""
             
         rl = self.rate_limiters[key]
         
-        # Reset si nouvelle fenêtre (1 seconde)
+        # Reset si nouvelle fen# [EMOJI_REMOVED]tre (1 seconde)
         if now - rl["window_start"] >= 1.0:
             rl["count"] = 0
             rl["window_start"] = now
@@ -659,8 +659,8 @@ Vérifie si le circuit breaker est ouvert"""
         rl["count"] += 1
         return rl["count"] <= policy.rate_limit
         
-    def _record_call_metrics(self, service_name: str, instance_id: str, success: bool, status_code: int):
-        """Enregistre les métriques d'appel"""
+    def _record_call_metrics(self, service_name -> None: str, instance_id -> None: str, success -> None: bool, status_code -> None: int) -> None:
+        """Enregistre les m# [EMOJI_REMOVED]triques d'appel"""
         key = f"{service_name}:{instance_id}"
         if key not in self.metrics:
             self.metrics[key] = {
@@ -681,7 +681,7 @@ Vérifie si le circuit breaker est ouvert"""
             
     def _get_active_connections(self, instance_id: str) -> int:
         """Retourne le nombre de connexions actives pour une instance"""
-        # Implémentation simplifiée - devrait être intégrée avec des métriques réelles
+        # Impl# [EMOJI_REMOVED]mentation simplifi# [EMOJI_REMOVED]e - devrait # [EMOJI_REMOVED]tre int# [EMOJI_REMOVED]gr# [EMOJI_REMOVED]e avec des m# [EMOJI_REMOVED]triques r# [EMOJI_REMOVED]elles
         return self.metrics.get(instance_id, {}).get("active_connections", 0)
         
     def get_mesh_stats(self) -> Dict[str, Any]:
@@ -710,4 +710,6 @@ Vérifie si le circuit breaker est ouvert"""
                 }
                 for key, m in self.metrics.items()
             }
-        }
+        })
+
+# File has syntax issues - needs manual review

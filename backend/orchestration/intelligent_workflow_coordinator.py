@@ -125,7 +125,7 @@ class IntelligentWorkflowCoordinator:
     - Automated workflow adaptation and continuous improvement
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.coordination_requests: Dict[str, WorkflowCoordinationRequest] = {}
         self.active_executions: Dict[str, CoordinationExecution] = {}
         self.coordination_strategies: Dict[str, Any] = {}
@@ -152,7 +152,7 @@ class IntelligentWorkflowCoordinator:
             logger.error(f"❌ Failed to initialize Intelligent Workflow Coordinator: {e}")
             return False
 
-    async def _setup_coordination_strategies(self):
+    async def _setup_coordination_strategies(self) -> None:
         """Setup workflow coordination strategies"""
         
         self.coordination_strategies = {
@@ -195,7 +195,7 @@ class IntelligentWorkflowCoordinator:
 
         logger.info(f"✅ Setup {len(self.coordination_strategies)} coordination strategies")
 
-    async def _setup_intelligence_engines(self):
+    async def _setup_intelligence_engines(self) -> None:
         """Setup AI intelligence engines for workflow coordination"""
         
         self.intelligence_engines = {
@@ -227,7 +227,7 @@ class IntelligentWorkflowCoordinator:
 
         logger.info(f"✅ Setup {len(self.intelligence_engines)} intelligence engines")
 
-    async def _setup_workflow_patterns(self):
+    async def _setup_workflow_patterns(self) -> None:
         """Setup workflow patterns for intelligent coordination"""
         
         self.workflow_patterns = {
@@ -267,7 +267,7 @@ class IntelligentWorkflowCoordinator:
 
         logger.info(f"✅ Setup {len(self.workflow_patterns)} workflow patterns")
 
-    async def _setup_optimization_rules(self):
+    async def _setup_optimization_rules(self) -> None:
         """Setup optimization rules for intelligent coordination"""
         
         self.optimization_rules = {
@@ -299,7 +299,7 @@ class IntelligentWorkflowCoordinator:
 
         logger.info("✅ Setup optimization rules for intelligent coordination")
 
-    async def _setup_business_rules(self):
+    async def _setup_business_rules(self) -> None:
         """Setup business logic rules for coordination"""
         
         self.business_rules = {
@@ -481,7 +481,7 @@ class IntelligentWorkflowCoordinator:
         else:
             return CoordinationStrategy.BALANCED
 
-    async def _execute_coordination_logic(self, execution: CoordinationExecution):
+    async def _execute_coordination_logic(self, execution -> None: CoordinationExecution) -> None:
         """Execute the intelligent coordination logic"""
         
         try:

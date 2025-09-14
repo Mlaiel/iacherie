@@ -121,14 +121,14 @@ class ValidationResult:
     validator_version: str = "1.0.0"
     metadata: Dict[str, Any] = field(default_factory=dict)
     
-    def add_issue(self, issue: ValidationIssue):
+    def add_issue(self, issue -> None: ValidationIssue) -> None:
         """Add validation issue"""
         self.issues.append(issue)
         if issue.severity in [ValidationSeverity.CRITICAL, ValidationSeverity.ERROR]:
             self.is_valid = False
         self._update_score()
     
-    def _update_score(self):
+    def _update_score(self) -> None:
         """Update overall validation score"""
         if not self.issues:
             self.overall_score = 100.0
@@ -166,7 +166,7 @@ class ComplianceReport:
 class BaseValidator:
     """Base class for all validators"""
     
-    def __init__(self, name: str, version: str = "1.0.0"):
+    def __init__(self, name -> None: str, version -> None: str = "1.0.0") -> None:
         self.name = name
         self.version = version
         self.logger = logging.getLogger(__name__)
@@ -205,7 +205,7 @@ class BaseValidator:
 class DataValidator(BaseValidator):
     """Comprehensive data validation"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__("DataValidator", "1.0.0")
         self.quality_thresholds = {
             DataQualityDimension.COMPLETENESS: 0.95,
@@ -257,7 +257,7 @@ class DataValidator(BaseValidator):
         
         return result
     
-    async def _validate_completeness(self, data: Any, result: ValidationResult):
+    async def _validate_completeness(self, data -> None: Any, result -> None: ValidationResult) -> None:
         """Validate data completeness"""
         if isinstance(data, dict):
             total_fields = len(data)
@@ -272,7 +272,7 @@ class DataValidator(BaseValidator):
                     field_path="data.completeness"
                 ))
     
-    async def _validate_accuracy(self, data: Any, result: ValidationResult):
+    async def _validate_accuracy(self, data -> None: Any, result -> None: ValidationResult) -> None:
         """Validate data accuracy"""
         if isinstance(data, dict):
             # Check for common accuracy issues
@@ -295,7 +295,7 @@ class DataValidator(BaseValidator):
                             field_path=f"data.{key}"
                         ))
     
-    async def _validate_consistency(self, data: Any, result: ValidationResult):
+    async def _validate_consistency(self, data -> None: Any, result -> None: ValidationResult) -> None:
         """Validate data consistency"""
         if isinstance(data, dict):
             # Check timestamp consistency
@@ -330,7 +330,7 @@ class DataValidator(BaseValidator):
                         field_path="data.timestamps"
                     ))
     
-    async def _validate_validity(self, data: Any, result: ValidationResult):
+    async def _validate_validity(self, data -> None: Any, result -> None: ValidationResult) -> None:
         """Validate data format validity"""
         if isinstance(data, dict):
             for key, value in data.items():
@@ -368,7 +368,7 @@ class DataValidator(BaseValidator):
                             field_path=f"data.{key}"
                         ))
     
-    async def _validate_uniqueness(self, data: Any, result: ValidationResult):
+    async def _validate_uniqueness(self, data -> None: Any, result -> None: ValidationResult) -> None:
         """Validate data uniqueness"""
         if isinstance(data, list):
             seen_values = set()
@@ -390,7 +390,7 @@ class DataValidator(BaseValidator):
                     field_path="data.duplicates"
                 ))
     
-    async def _validate_timeliness(self, data: Any, result: ValidationResult):
+    async def _validate_timeliness(self, data -> None: Any, result -> None: ValidationResult) -> None:
         """Validate data timeliness"""
         if isinstance(data, dict):
             current_time = datetime.utcnow()
@@ -436,7 +436,7 @@ class DataValidator(BaseValidator):
 class ConfigValidator(BaseValidator):
     """Configuration validation"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__("ConfigValidator", "1.0.0")
     
     async def validate(self, config: Any, context: Dict[str, Any] = None) -> ValidationResult:
@@ -474,7 +474,7 @@ class ConfigValidator(BaseValidator):
         
         return result
     
-    async def _validate_required_fields(self, config: Any, result: ValidationResult):
+    async def _validate_required_fields(self, config -> None: Any, result -> None: ValidationResult) -> None:
         """Validate required configuration fields"""
         if not isinstance(config, dict):
             result.add_issue(self.create_issue(
@@ -497,7 +497,7 @@ class ConfigValidator(BaseValidator):
                     field_path=f"config.{field}"
                 ))
     
-    async def _validate_field_types(self, config: Any, result: ValidationResult):
+    async def _validate_field_types(self, config -> None: Any, result -> None: ValidationResult) -> None:
         """Validate configuration field types"""
         type_expectations = {
             'version': str,
@@ -519,7 +519,7 @@ class ConfigValidator(BaseValidator):
                         field_path=f"config.{field}"
                     ))
     
-    async def _validate_value_ranges(self, config: Any, result: ValidationResult):
+    async def _validate_value_ranges(self, config -> None: Any, result -> None: ValidationResult) -> None:
         """Validate configuration value ranges"""
         range_validations = {
             'max_concurrent_requests': (1, 100000),
@@ -540,7 +540,7 @@ class ConfigValidator(BaseValidator):
                             field_path=f"config.{field}"
                         ))
     
-    async def _validate_dependencies(self, config: Any, result: ValidationResult):
+    async def _validate_dependencies(self, config -> None: Any, result -> None: ValidationResult) -> None:
         """Validate configuration dependencies"""
         # If security is enabled, certain fields must be present
         if config.get('security_enabled', True):
@@ -568,7 +568,7 @@ class ConfigValidator(BaseValidator):
 class ComplianceValidator(BaseValidator):
     """GDPR/CCPA and other compliance validation"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__("ComplianceValidator", "1.0.0")
         self.compliance_rules = self._load_compliance_rules()
     
@@ -630,8 +630,8 @@ class ComplianceValidator(BaseValidator):
         
         return report
     
-    async def _validate_gdpr_compliance(self, data: Any, report: ComplianceReport,
-                                      context: Dict[str, Any] = None):
+    async def _validate_gdpr_compliance(self, data -> None: Any, report -> None: ComplianceReport,
+                                      context -> None: Dict[str, Any] = None) -> None:
         """Validate GDPR compliance"""
         rules = self.compliance_rules[ComplianceStandard.GDPR]
         
@@ -672,8 +672,8 @@ class ComplianceValidator(BaseValidator):
                 suggestion="Implement data deletion functionality"
             ))
     
-    async def _validate_ccpa_compliance(self, data: Any, report: ComplianceReport,
-                                      context: Dict[str, Any] = None):
+    async def _validate_ccpa_compliance(self, data -> None: Any, report -> None: ComplianceReport,
+                                      context -> None: Dict[str, Any] = None) -> None:
         """Validate CCPA compliance"""
         rules = self.compliance_rules[ComplianceStandard.CCPA]
         
@@ -701,7 +701,7 @@ class ComplianceValidator(BaseValidator):
 class PerformanceValidator(BaseValidator):
     """Performance validation"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__("PerformanceValidator", "1.0.0")
         self.performance_thresholds = {
             'response_time_ms': 1000,      # 1 second
@@ -791,7 +791,7 @@ class AnalyticsValidators:
     including data quality, configuration, compliance, and performance validation.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
         
         # Initialize validators

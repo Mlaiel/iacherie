@@ -71,7 +71,7 @@ class BusinessAlertManager:
     - Business KPI thresholds
     """
     
-    def __init__(self, alert_manager: IntelligentAlertManager):
+    def __init__(self, alert_manager -> None: IntelligentAlertManager) -> None:
         """
 Initialize business alert manager"""
         self.alert_manager = alert_manager
@@ -96,7 +96,7 @@ Initialize business alert manager"""
         self._initialize_business_rules()
         logger.info("BusinessAlertManager initialized")
     
-    def _initialize_business_rules(self):
+    def _initialize_business_rules(self) -> None:
         """Initialize business-specific alert rules"""
         
         # Revenue Drop Alert - Critical

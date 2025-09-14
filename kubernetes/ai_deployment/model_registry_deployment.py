@@ -8,7 +8,7 @@ and performance monitoring for AI models.
 Project: IA Influencer Agent + Content Protection Platform
 Author: Fahed Mlaiel <mlaiel@live.de>
 
-⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
+# [EMOJI_REMOVED]  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED # [EMOJI_REMOVED]
 This software is protected by international copyright laws.
 Contact: mlaiel@live.de for licensing inquiries.
 """
@@ -99,7 +99,7 @@ class ModelRegistryDeployment:
     - Model governance and audit trails
     """
     
-    def __init__(self, namespace: str = "ia-influencer-registry"):
+    def __init__(self, namespace -> None: str = "ia-influencer-registry") -> None:
         """
         Initialize model registry deployment
         
@@ -1199,3 +1199,5 @@ Upload model artifacts to storage"""
         except Exception as e:
             logger.error(f"_run_stage_validations failed: {e}")
             raise
+
+# File has syntax issues - needs manual review

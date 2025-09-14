@@ -1,4 +1,6 @@
 """
+import asyncio
+
 💰 FINANCIAL SERVICES MODULE - ENTERPRISE FINANCIAL & PAYMENT SERVICES
 =======================================================================
 
@@ -18,7 +20,7 @@ __all__ = [
     'FraudDetectionService'
 ]
 
-def get_services():
+def get_services() -> None:
     """Get list of all available financial services."""
     return [
         'revenue_optimization_service.py',
@@ -30,6 +32,6 @@ def get_services():
         'fraud_detection_service.py'
     ]
 
-async def start_services():
+async def start_services() -> None:
     """Start all financial services."""
     pass

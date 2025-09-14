@@ -1,3 +1,8 @@
+"""
+Vector Database Deployment module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """IA Influencer Agent - Vector Database Deployment Manager
 Enterprise-grade vector database deployment and management for multi-modal AI similarity search,
@@ -141,7 +146,7 @@ class VectorDatabaseDeploymentManager:
     - Security and access control
     - Cost optimization
     """
-    def __init__(self, config_path: Optional[str] = None):
+    def __init__(self, config_path -> None: Optional[str] = None) -> None:
         """
 Initialize the vector database deployment manager."""
         self.config = self._load_config(config_path)
@@ -1197,7 +1202,7 @@ def create_content_similarity_vector_config() -> Tuple[VectorDBConfig, List[Coll
 
 # Main execution
 if __name__ == "__main__":
-    async def main():
+    async def main() -> None:
         """Main execution function."""
         # Initialize vector database deployment manager
         manager = VectorDatabaseDeploymentManager()

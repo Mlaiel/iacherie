@@ -23,7 +23,7 @@ from sqlalchemy.dialects import postgresql
 from datetime import datetime
 
 
-def upgrade():
+def upgrade() -> None:
     """
 Migration vers la nouvelle version - création du schéma complet"""
     
@@ -534,7 +534,7 @@ Migration vers la nouvelle version - création du schéma complet"""
     print("🔔 Triggers d'audit: Audit automatique activé sur les tables principales")
 
 
-def downgrade():
+def downgrade() -> None:
     """Migration vers la version précédente - suppression du schéma"""
     
     # Suppression des triggers

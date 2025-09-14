@@ -267,7 +267,7 @@ class QuantumContentOptimizer:
     ✅ Performance tracking et competitive analysis
     """
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.config = config or {}
         self.seo_optimizers: Dict[SEOStrategy, SEOOptimizer] = {}
         self.keyword_optimizers: Dict[str, KeywordOptimizer] = {}
@@ -769,15 +769,16 @@ class QuantumContentOptimizer:
     # MÉTHODES PRIVÉES - SEO OPTIMIZATION
     # ========================================
     
-    async def _get_or_create_seo_optimizer(self, strategy: SEOStrategy):
+    async def _get_or_create_seo_optimizer(self, strategy -> None: SEOStrategy) -> None:
         """Récupération ou création optimiseur SEO"""
         if strategy not in self.seo_optimizers:
             self.seo_optimizers[strategy] = await self._create_seo_optimizer(strategy)
         return self.seo_optimizers[strategy]
     
-    async def _create_seo_optimizer(self, strategy: SEOStrategy):
+    async def _create_seo_optimizer(self, strategy -> None: SEOStrategy) -> None:
         """Création optimiseur SEO"""
         class MockSEOOptimizer(SEOOptimizer):
+    """MockSEOOptimizer class implementation"""
             async def optimize_seo(self, request: SEOOptimizationRequest) -> Dict[str, Any]:
                 return {
                     "seo_score_improvement": np.random.uniform(0.15, 0.45),
@@ -852,15 +853,16 @@ class QuantumContentOptimizer:
     # MÉTHODES PRIVÉES - RANKING PREDICTION
     # ========================================
     
-    async def _get_or_create_ranking_predictor(self, predictor_type: str):
+    async def _get_or_create_ranking_predictor(self, predictor_type -> None: str) -> None:
         """Récupération ou création prédicteur ranking"""
         if predictor_type not in self.ranking_predictors:
             self.ranking_predictors[predictor_type] = await self._create_ranking_predictor(predictor_type)
         return self.ranking_predictors[predictor_type]
     
-    async def _create_ranking_predictor(self, predictor_type: str):
+    async def _create_ranking_predictor(self, predictor_type -> None: str) -> None:
         """Création prédicteur ranking"""
         class MockRankingPredictor(RankingPredictor):
+    """MockRankingPredictor class implementation"""
             async def predict_content_ranking(self, content_data: Dict[str, Any], keywords: List[str]) -> ContentRankingPrediction:
                 predicted_rankings = {}
                 for keyword in keywords:
@@ -909,15 +911,16 @@ class QuantumContentOptimizer:
     # MÉTHODES PRIVÉES - RECOMMENDATIONS
     # ========================================
     
-    async def _get_or_create_content_recommender(self, recommendation_type: RecommendationType):
+    async def _get_or_create_content_recommender(self, recommendation_type -> None: RecommendationType) -> None:
         """Récupération ou création système recommandation"""
         if recommendation_type not in self.content_recommenders:
             self.content_recommenders[recommendation_type] = await self._create_content_recommender(recommendation_type)
         return self.content_recommenders[recommendation_type]
     
-    async def _create_content_recommender(self, recommendation_type: RecommendationType):
+    async def _create_content_recommender(self, recommendation_type -> None: RecommendationType) -> None:
         """Création système recommandation"""
         class MockContentRecommender(ContentRecommender):
+    """MockContentRecommender class implementation"""
             async def generate_recommendations(self, user_data: Dict[str, Any], rec_type: RecommendationType) -> ContentRecommendation:
                 return ContentRecommendation(
                     recommendation_id=str(uuid.uuid4()),
@@ -958,15 +961,16 @@ class QuantumContentOptimizer:
     # MÉTHODES PRIVÉES - KEYWORD OPTIMIZATION
     # ========================================
     
-    async def _get_or_create_keyword_optimizer(self, optimizer_type: str):
+    async def _get_or_create_keyword_optimizer(self, optimizer_type -> None: str) -> None:
         """Récupération ou création optimiseur keywords"""
         if optimizer_type not in self.keyword_optimizers:
             self.keyword_optimizers[optimizer_type] = await self._create_keyword_optimizer(optimizer_type)
         return self.keyword_optimizers[optimizer_type]
     
-    async def _create_keyword_optimizer(self, optimizer_type: str):
+    async def _create_keyword_optimizer(self, optimizer_type -> None: str) -> None:
         """Création optimiseur keywords"""
         class MockKeywordOptimizer(KeywordOptimizer):
+    """MockKeywordOptimizer class implementation"""
             async def optimize_keywords(self, request: KeywordOptimizationRequest) -> Dict[str, Any]:
                 return {
                     "optimized_keywords": request.primary_keywords + [f"long_tail_{i}" for i in range(3)],
@@ -1012,15 +1016,16 @@ class QuantumContentOptimizer:
     # MÉTHODES PRIVÉES - METADATA PROCESSING
     # ========================================
     
-    async def _get_or_create_metadata_processor(self, processor_type: str):
+    async def _get_or_create_metadata_processor(self, processor_type -> None: str) -> None:
         """Récupération ou création processeur metadata"""
         if processor_type not in self.metadata_processors:
             self.metadata_processors[processor_type] = await self._create_metadata_processor(processor_type)
         return self.metadata_processors[processor_type]
     
-    async def _create_metadata_processor(self, processor_type: str):
+    async def _create_metadata_processor(self, processor_type -> None: str) -> None:
         """Création processeur metadata"""
         class MockMetadataProcessor(MetadataProcessor):
+    """MockMetadataProcessor class implementation"""
             async def process_metadata(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
                 return {
                     "title": f"Optimized Title for {content_data.get('title', 'Content')}",

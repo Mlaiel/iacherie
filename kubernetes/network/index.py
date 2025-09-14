@@ -68,9 +68,9 @@ class NetworkOrchestrator:
     
     def __init__(
         self,
-        config_path: str = "/etc/network/orchestrator.yaml",
-        provider_credentials: Optional[Dict[str, Any]] = None
-    ):
+        config_path -> None: str = "/etc/network/orchestrator.yaml",
+        provider_credentials -> None: Optional[Dict[str, Any]] = None
+    ) -> None:
         self.config_path = config_path
         self.provider_credentials = provider_credentials or {}
         
@@ -604,7 +604,7 @@ class NetworkOrchestrator:
 
 
 # Main execution
-async def main():
+async def main() -> None:
     """Main orchestrator function"""
     orchestrator = NetworkOrchestrator()
     

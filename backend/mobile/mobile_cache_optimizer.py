@@ -82,7 +82,7 @@ class CacheStats:
 class MobileCacheOptimizer:
     """Advanced mobile cache optimizer"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         """Initialize mobile cache optimizer"""
         self.config = config or {}
         self.cache_manager = CacheManager(self.config)
@@ -220,7 +220,7 @@ class MobileCacheOptimizer:
             "mobile_cache_efficiency": self._calculate_mobile_cache_efficiency()
         }
     
-    def _initialize_default_caches(self):
+    def _initialize_default_caches(self) -> None:
         """Initialize default cache configurations"""
         default_configs = {
             "mobile_content": CacheConfig(
@@ -285,7 +285,7 @@ class MobileCacheOptimizer:
         
         return entry
     
-    async def _store_in_memory_cache(self, cache_name: str, entry: CacheEntry, config: CacheConfig):
+    async def _store_in_memory_cache(self, cache_name -> None: str, entry -> None: CacheEntry, config -> None: CacheConfig) -> None:
         """Store entry in memory cache"""
         if cache_name not in self.memory_cache:
             self.memory_cache[cache_name] = {}
@@ -295,7 +295,7 @@ class MobileCacheOptimizer:
         
         self.memory_cache[cache_name][entry.key] = entry
     
-    async def _store_in_disk_cache(self, cache_name: str, entry: CacheEntry, config: CacheConfig):
+    async def _store_in_disk_cache(self, cache_name -> None: str, entry -> None: CacheEntry, config -> None: CacheConfig) -> None:
         """Store entry in disk cache"""
         if cache_name not in self.disk_cache:
             self.disk_cache[cache_name] = {}
@@ -305,15 +305,15 @@ class MobileCacheOptimizer:
         
         self.disk_cache[cache_name][entry.key] = entry
     
-    async def _store_in_hybrid_cache(self, cache_name: str, entry: CacheEntry, 
-                                   config: CacheConfig, mobile_priority: bool):
+    async def _store_in_hybrid_cache(self, cache_name -> None: str, entry -> None: CacheEntry, 
+                                   config -> None: CacheConfig, mobile_priority -> None: bool) -> None:
         """Store entry in hybrid cache (memory + disk)"""
         if mobile_priority or entry.size < 10240:  # Store small/mobile items in memory
             await self._store_in_memory_cache(cache_name, entry, config)
         else:
             await self._store_in_disk_cache(cache_name, entry, config)
     
-    async def _evict_if_necessary(self, cache_name: str, config: CacheConfig, new_entry_size: int):
+    async def _evict_if_necessary(self, cache_name -> None: str, config -> None: CacheConfig, new_entry_size -> None: int) -> None:
         """Evict cache entries if necessary"""
         current_size = self._calculate_cache_size(cache_name)
         
@@ -367,7 +367,7 @@ class MobileCacheOptimizer:
             return self.disk_cache[cache_name].get(key)
         return None
     
-    async def _promote_to_memory_cache(self, cache_name: str, key: str, entry: CacheEntry):
+    async def _promote_to_memory_cache(self, cache_name -> None: str, key -> None: str, entry -> None: CacheEntry) -> None:
         """Promote disk cache entry to memory cache"""
         if cache_name not in self.memory_cache:
             self.memory_cache[cache_name] = {}
@@ -416,7 +416,7 @@ class MobileCacheOptimizer:
             mobile_optimized=True
         )
     
-    def _update_mobile_efficiency_score(self, optimization_results: Dict[str, Any]):
+    def _update_mobile_efficiency_score(self, optimization_results -> None: Dict[str, Any]) -> None:
         """Update mobile efficiency score"""
         # Calculate efficiency based on optimization results
         efficiency_factors = [
@@ -435,14 +435,14 @@ class MobileCacheOptimizer:
 class CacheManager:
     """Cache management system"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
 
 
 class StorageOptimizer:
     """Storage optimization system"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         
     async def optimize_cache_storage(self, cache_name: str) -> Dict[str, Any]:
@@ -458,7 +458,7 @@ class StorageOptimizer:
 class StorageAnalyzer:
     """Storage analysis system"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         
     async def analyze_cache_usage(self, cache_name: str) -> Dict[str, Any]:

@@ -79,7 +79,7 @@ class MusicContent:
 class BaseMusicConnector:
     """Base class for all music platform connectors"""
     
-    def __init__(self, platform: MusicPlatform, api_credentials: Dict[str, str]):
+    def __init__(self, platform -> None: MusicPlatform, api_credentials -> None: Dict[str, str]) -> None:
         self.platform = platform
         self.credentials = api_credentials
         self.session = None
@@ -103,7 +103,7 @@ class BaseMusicConnector:
 class SpotifyConnector(BaseMusicConnector):
     """Spotify Web API connector"""
     
-    def __init__(self, api_credentials: Dict[str, str]):
+    def __init__(self, api_credentials -> None: Dict[str, str]) -> None:
         super().__init__(MusicPlatform.SPOTIFY, api_credentials)
         self.api_base = "https://api.spotify.com/v1"
         self.auth_base = "https://accounts.spotify.com/api/token"
@@ -203,7 +203,7 @@ class SpotifyConnector(BaseMusicConnector):
 class SoundCloudConnector(BaseMusicConnector):
     """SoundCloud API connector"""
     
-    def __init__(self, api_credentials: Dict[str, str]):
+    def __init__(self, api_credentials -> None: Dict[str, str]) -> None:
         super().__init__(MusicPlatform.SOUNDCLOUD, api_credentials)
         self.api_base = "https://api.soundcloud.com"
     
@@ -236,7 +236,7 @@ class SoundCloudConnector(BaseMusicConnector):
 class AppleMusicConnector(BaseMusicConnector):
     """Apple Music API connector"""
     
-    def __init__(self, api_credentials: Dict[str, str]):
+    def __init__(self, api_credentials -> None: Dict[str, str]) -> None:
         super().__init__(MusicPlatform.APPLE_MUSIC, api_credentials)
         self.api_base = "https://api.music.apple.com/v1"
     
@@ -258,7 +258,7 @@ class AppleMusicConnector(BaseMusicConnector):
 class BandcampConnector(BaseMusicConnector):
     """Bandcamp API connector"""
     
-    def __init__(self, api_credentials: Dict[str, str]):
+    def __init__(self, api_credentials -> None: Dict[str, str]) -> None:
         super().__init__(MusicPlatform.BANDCAMP, api_credentials)
     
     async def upload_track(self, content: MusicContent) -> Dict[str, Any]:
@@ -284,7 +284,7 @@ class MusicStreamingConnectors:
     unified interface for multi-platform music distribution.
     """
     
-    def __init__(self, platform_credentials: Dict[str, Dict[str, str]]):
+    def __init__(self, platform_credentials -> None: Dict[str, Dict[str, str]]) -> None:
         """Initialize all music streaming connectors"""
         self.connectors = {}
         self.platform_credentials = platform_credentials
@@ -294,7 +294,7 @@ class MusicStreamingConnectors:
         
         logger.info("Music Streaming Connectors initialized")
     
-    def _initialize_connectors(self):
+    def _initialize_connectors(self) -> None:
         """Initialize individual platform connectors"""
         connector_classes = {
             # Major Streaming Services
@@ -449,7 +449,7 @@ class MusicStreamingConnectors:
 class DeezerConnector(BaseMusicConnector):
     """Deezer API connector"""
     
-    def __init__(self, api_credentials: Dict[str, str]):
+    def __init__(self, api_credentials -> None: Dict[str, str]) -> None:
         super().__init__(MusicPlatform.DEEZER, api_credentials)
         self.api_base = "https://api.deezer.com"
     
@@ -469,7 +469,7 @@ class DeezerConnector(BaseMusicConnector):
 class TidalConnector(BaseMusicConnector):
     """Tidal API connector"""
     
-    def __init__(self, api_credentials: Dict[str, str]):
+    def __init__(self, api_credentials -> None: Dict[str, str]) -> None:
         super().__init__(MusicPlatform.TIDAL, api_credentials)
         self.api_base = "https://api.tidalhifi.com"
     
@@ -489,7 +489,7 @@ class TidalConnector(BaseMusicConnector):
 class PandoraConnector(BaseMusicConnector):
     """Pandora API connector"""
     
-    def __init__(self, api_credentials: Dict[str, str]):
+    def __init__(self, api_credentials -> None: Dict[str, str]) -> None:
         super().__init__(MusicPlatform.PANDORA, api_credentials)
         self.api_base = "https://www.pandora.com/api"
     
@@ -509,7 +509,7 @@ class PandoraConnector(BaseMusicConnector):
 class iHeartRadioConnector(BaseMusicConnector):
     """iHeartRadio API connector"""
     
-    def __init__(self, api_credentials: Dict[str, str]):
+    def __init__(self, api_credentials -> None: Dict[str, str]) -> None:
         super().__init__(MusicPlatform.IHEART_RADIO, api_credentials)
         self.api_base = "https://api.iheart.com"
     
@@ -529,7 +529,7 @@ class iHeartRadioConnector(BaseMusicConnector):
 class AudiomackConnector(BaseMusicConnector):
     """Audiomack API connector"""
     
-    def __init__(self, api_credentials: Dict[str, str]):
+    def __init__(self, api_credentials -> None: Dict[str, str]) -> None:
         super().__init__(MusicPlatform.AUDIOMACK, api_credentials)
         self.api_base = "https://api.audiomack.com"
     
@@ -549,7 +549,7 @@ class AudiomackConnector(BaseMusicConnector):
 class MixcloudConnector(BaseMusicConnector):
     """Mixcloud API connector"""
     
-    def __init__(self, api_credentials: Dict[str, str]):
+    def __init__(self, api_credentials -> None: Dict[str, str]) -> None:
         super().__init__(MusicPlatform.MIXCLOUD, api_credentials)
         self.api_base = "https://api.mixcloud.com"
     
@@ -569,7 +569,7 @@ class MixcloudConnector(BaseMusicConnector):
 class AnchorConnector(BaseMusicConnector):
     """Anchor Podcast connector"""
     
-    def __init__(self, api_credentials: Dict[str, str]):
+    def __init__(self, api_credentials -> None: Dict[str, str]) -> None:
         super().__init__(MusicPlatform.ANCHOR, api_credentials)
         self.api_base = "https://api.anchor.fm"
     
@@ -589,7 +589,7 @@ class AnchorConnector(BaseMusicConnector):
 class PodcastOneConnector(BaseMusicConnector):
     """PodcastOne API connector"""
     
-    def __init__(self, api_credentials: Dict[str, str]):
+    def __init__(self, api_credentials -> None: Dict[str, str]) -> None:
         super().__init__(MusicPlatform.PODCAST_ONE, api_credentials)
         self.api_base = "https://api.podcastone.com"
     
@@ -609,7 +609,7 @@ class PodcastOneConnector(BaseMusicConnector):
 class DistroKidConnector(BaseMusicConnector):
     """DistroKid distribution service connector"""
     
-    def __init__(self, api_credentials: Dict[str, str]):
+    def __init__(self, api_credentials -> None: Dict[str, str]) -> None:
         super().__init__(MusicPlatform.DISTROKID, api_credentials)
         self.api_base = "https://api.distrokid.com"
     
@@ -629,7 +629,7 @@ class DistroKidConnector(BaseMusicConnector):
 class CDBabyConnector(BaseMusicConnector):
     """CD Baby distribution service connector"""
     
-    def __init__(self, api_credentials: Dict[str, str]):
+    def __init__(self, api_credentials -> None: Dict[str, str]) -> None:
         super().__init__(MusicPlatform.CD_BABY, api_credentials)
         self.api_base = "https://api.cdbaby.com"
     
@@ -649,7 +649,7 @@ class CDBabyConnector(BaseMusicConnector):
 class TuneCoreConnector(BaseMusicConnector):
     """TuneCore distribution service connector"""
     
-    def __init__(self, api_credentials: Dict[str, str]):
+    def __init__(self, api_credentials -> None: Dict[str, str]) -> None:
         super().__init__(MusicPlatform.TUNECORE, api_credentials)
         self.api_base = "https://api.tunecore.com"
     
@@ -669,7 +669,7 @@ class TuneCoreConnector(BaseMusicConnector):
 class AmuseConnector(BaseMusicConnector):
     """Amuse distribution service connector"""
     
-    def __init__(self, api_credentials: Dict[str, str]):
+    def __init__(self, api_credentials -> None: Dict[str, str]) -> None:
         super().__init__(MusicPlatform.AMUSE, api_credentials)
         self.api_base = "https://api.amuse.io"
     

@@ -1,3 +1,8 @@
+"""
+Chart Deployment Engine module
+Enterprise implementation for Ainflue platform
+"""
+
 # Ainflue Infrastructure Module - Helm Chart Deployment Engine
 # ============================================================
 # 
@@ -63,7 +68,7 @@ class ChartDeployment:
 class HelmChartDeploymentEngine:
     """Enterprise Helm chart deployment engine for multi-cloud Kubernetes"""
     
-    def __init__(self, config: HelmConfig):
+    def __init__(self, config -> None: HelmConfig) -> None:
         """Initialize Helm deployment engine
         
         Args:
@@ -93,7 +98,7 @@ class HelmChartDeploymentEngine:
             
         return logger
     
-    def _initialize_k8s_client(self):
+    def _initialize_k8s_client(self) -> None:
         """Initialize Kubernetes client"""
         try:
             if self.config.kubeconfig_path:
@@ -826,7 +831,7 @@ class HelmChartDeploymentEngine:
 class AinflueHelmOrchestrator:
     """High-level Helm orchestration for Ainflue platform"""
     
-    def __init__(self, environment: str = "production"):
+    def __init__(self, environment -> None: str = "production") -> None:
         """Initialize Helm orchestrator
         
         Args:
@@ -925,7 +930,7 @@ class AinflueHelmOrchestrator:
 
 if __name__ == "__main__":
     # Example usage
-    async def main():
+    async def main() -> None:
         orchestrator = AinflueHelmOrchestrator(environment="production")
         
         # Deploy platform

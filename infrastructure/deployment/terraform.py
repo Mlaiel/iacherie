@@ -45,7 +45,7 @@ class TerraformConfig:
 class TerraformManager:
     """Unified Terraform management interface"""
     
-    def __init__(self, config: TerraformConfig):
+    def __init__(self, config -> None: TerraformConfig) -> None:
         self.config = config
         self.logger = logging.getLogger(__name__)
         self.workspace_path = Path(f"./terraform/{config.environment}")
@@ -61,7 +61,7 @@ class TerraformManager:
             self.logger.error(f"Failed to initialize Terraform: {e}")
             return False
     
-    async def _create_workspace_structure(self):
+    async def _create_workspace_structure(self) -> None:
         """Create Terraform workspace structure"""
         self.workspace_path.mkdir(parents=True, exist_ok=True)
         
@@ -70,7 +70,7 @@ class TerraformManager:
         for file in files:
             (self.workspace_path / file).touch(exist_ok=True)
     
-    async def _generate_provider_config(self):
+    async def _generate_provider_config(self) -> None:
         """Generate provider configuration"""
         provider_configs = {
             CloudProvider.AWS: self._generate_aws_config,
@@ -171,7 +171,7 @@ provider "azurerm" {{
 class InfrastructureProvisioner:
     """Infrastructure provisioning with Terraform"""
     
-    def __init__(self, terraform_manager: TerraformManager):
+    def __init__(self, terraform_manager -> None: TerraformManager) -> None:
         self.terraform_manager = terraform_manager
         self.logger = logging.getLogger(__name__)
     
@@ -196,7 +196,7 @@ class InfrastructureProvisioner:
             self.logger.error(f"Infrastructure provisioning failed: {e}")
             return False
     
-    async def _generate_terraform_config(self, resource_definitions: List[Dict[str, Any]]):
+    async def _generate_terraform_config(self, resource_definitions -> None: List[Dict[str, Any]]) -> None:
         """Generate Terraform configuration from resource definitions"""
         config_content = ""
         
@@ -220,7 +220,7 @@ class InfrastructureProvisioner:
 class CloudResourceManager:
     """Cloud resource management"""
     
-    def __init__(self, provider: CloudProvider):
+    def __init__(self, provider -> None: CloudProvider) -> None:
         self.provider = provider
         self.logger = logging.getLogger(__name__)
     
@@ -253,7 +253,7 @@ class CloudResourceManager:
 class StateManager:
     """Terraform state management"""
     
-    def __init__(self, backend_config: Dict[str, str]):
+    def __init__(self, backend_config -> None: Dict[str, str]) -> None:
         self.backend_config = backend_config
         self.logger = logging.getLogger(__name__)
     

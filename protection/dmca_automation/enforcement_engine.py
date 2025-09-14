@@ -214,7 +214,7 @@ class EnforcementEngine:
     - Regulatory compliance automation
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """
 Initialize enterprise enforcement engine"""
         self.config = config or {}
@@ -851,7 +851,7 @@ class EnforcementEngine:
     - Evidence coordination
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """
 Initialize enforcement engine"""
         self.config = config or {}

@@ -79,7 +79,7 @@ class SEOConfig:
     redis_url: str = "redis://localhost:6379"
     api_keys: Dict[str, str] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.target_languages is None:
             self.target_languages = ['en', 'fr', 'de', 'ar', 'es']
         if self.primary_regions is None:
@@ -110,7 +110,7 @@ class SEOMetadata:
     publish_date: Optional[datetime] = None
     last_updated: datetime = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.last_updated is None:
             self.last_updated = datetime.utcnow()
 
@@ -179,7 +179,7 @@ class EnterpriseSEOOptimizer:
     - Multi-language optimization
     """
     
-    def __init__(self, config: Optional[SEOConfig] = None):
+    def __init__(self, config -> None: Optional[SEOConfig] = None) -> None:
         self.config = config or SEOConfig()
         self.logger = logging.getLogger(__name__)
         self.executor = ThreadPoolExecutor(max_workers=4)
@@ -200,7 +200,7 @@ class EnterpriseSEOOptimizer:
             'ar': set()  # Arabic stopwords would be loaded separately
         }
         
-    def _initialize_nlp_tools(self):
+    def _initialize_nlp_tools(self) -> None:
         """Initialize NLP tools and models"""
         try:
             self.tfidf_vectorizer = TfidfVectorizer(
@@ -214,7 +214,7 @@ class EnterpriseSEOOptimizer:
         except Exception as e:
             self.logger.warning(f"NLP tools initialization failed: {e}")
 
-    def _initialize_trending_analysis(self):
+    def _initialize_trending_analysis(self) -> None:
         """Initialize trending analysis tools"""
         try:
             self.trending_analyzers = {
@@ -227,7 +227,7 @@ class EnterpriseSEOOptimizer:
         except Exception as e:
             self.logger.warning(f"Trending analysis initialization failed: {e}")
 
-    async def initialize_redis(self):
+    async def initialize_redis(self) -> None:
         """Initialize Redis connection for caching"""
         try:
             self.redis_client = redis.from_url(self.config.redis_url)
@@ -345,7 +345,7 @@ class EnterpriseSEOOptimizer:
         content_type: ContentType
     ) -> Dict[str, Any]:
         """Analyze content for SEO opportunities"""
-        def _analyze():
+        def _analyze() -> None:
             analysis = {
                 'file_size': content_path.stat().st_size,
                 'file_type': content_path.suffix.lower(),
@@ -1002,7 +1002,7 @@ class EnterpriseSEOOptimizer:
 class SEOMetadataProcessor:
     """Legacy SEO metadata processing interface"""
     
-    def __init__(self, optimizer: EnterpriseSEOOptimizer):
+    def __init__(self, optimizer -> None: EnterpriseSEOOptimizer) -> None:
         self.optimizer = optimizer
     
     async def process_metadata(
@@ -1033,7 +1033,7 @@ class SEOMetadataProcessor:
 class TrendingContentProcessor:
     """Legacy trending content processing interface"""
     
-    def __init__(self, optimizer: EnterpriseSEOOptimizer):
+    def __init__(self, optimizer -> None: EnterpriseSEOOptimizer) -> None:
         self.optimizer = optimizer
     
     async def analyze_trends(

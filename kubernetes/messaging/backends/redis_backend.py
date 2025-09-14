@@ -29,7 +29,7 @@ logger = logging.getLogger(__name__)
 class RedisBackend(MessageBackend):
     """Redis implementation of the message backend using redis-py with async wrapper"""
     
-    def __init__(self, config: MessagingConfig):
+    def __init__(self, config -> None: MessagingConfig) -> None:
         super().__init__(config)
         self.client: Optional[redis.Redis] = None
         self.consumer_groups: Dict[str, str] = {}

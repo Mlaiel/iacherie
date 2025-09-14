@@ -247,8 +247,8 @@ class BatchProcessingOptimizer:
     """
     
     def __init__(self,
-                 metrics_collector: Optional[MetricsCollector] = None,
-                 encryption_manager: Optional[EncryptionManager] = None):
+                 metrics_collector -> None: Optional[MetricsCollector] = None,
+                 encryption_manager -> None: Optional[EncryptionManager] = None) -> None:
         self.metrics = metrics_collector
         self.encryption = encryption_manager
         
@@ -274,7 +274,7 @@ class BatchProcessingOptimizer:
         
         logger.info("Initialized Batch Processing Optimizer")
     
-    async def register_processor(self, message_type: str, processor_func: Callable):
+    async def register_processor(self, message_type -> None: str, processor_func -> None: Callable) -> None:
         """Register a processing function for a message type"""
         self.processors[message_type] = processor_func
         
@@ -464,7 +464,7 @@ class BatchProcessingOptimizer:
     
     # Core batch processing logic
     
-    async def _check_batch_creation(self, message_type: str):
+    async def _check_batch_creation(self, message_type -> None: str) -> None:
         """Check if we should create a batch for the message type"""
         config = self._get_batch_configuration(message_type)
         pending_count = len(self.pending_items[message_type])
@@ -609,7 +609,7 @@ class BatchProcessingOptimizer:
             batch.error_details.append(str(e))
             return batch.batch_id
     
-    async def _process_sequential(self, batch: ProcessingBatch, processor: Callable):
+    async def _process_sequential(self, batch -> None: ProcessingBatch, processor -> None: Callable) -> None:
         """Process batch items sequentially"""
         for item in batch.items:
             try:
@@ -629,11 +629,11 @@ class BatchProcessingOptimizer:
                 batch.failed_items += 1
                 batch.error_details.append(f"Item {item.item_id}: {str(e)}")
     
-    async def _process_parallel(self, batch: ProcessingBatch, processor: Callable):
+    async def _process_parallel(self, batch -> None: ProcessingBatch, processor -> None: Callable) -> None:
         """Process batch items in parallel"""
         semaphore = asyncio.Semaphore(batch.configuration.max_parallel_workers)
         
-        async def process_item(item: BatchItem):
+        async def process_item(item -> None: BatchItem) -> None:
             async with semaphore:
                 try:
                     start_time = time.time()
@@ -659,7 +659,7 @@ class BatchProcessingOptimizer:
         tasks = [process_item(item) for item in batch.items]
         await asyncio.gather(*tasks, return_exceptions=True)
     
-    async def _process_pipeline(self, batch: ProcessingBatch, processor: Callable):
+    async def _process_pipeline(self, batch -> None: ProcessingBatch, processor -> None: Callable) -> None:
         """Process batch items in pipeline stages"""
         # For pipeline processing, we process items in groups through stages
         # This is a simplified implementation
@@ -676,7 +676,7 @@ class BatchProcessingOptimizer:
         for stage_items in stages:
             await self._process_parallel_stage(stage_items, processor, batch)
     
-    async def _process_parallel_stage(self, items: List[BatchItem], processor: Callable, batch: ProcessingBatch):
+    async def _process_parallel_stage(self, items -> None: List[BatchItem], processor -> None: Callable, batch -> None: ProcessingBatch) -> None:
         """Process a stage of items in parallel"""
         tasks = []
         for item in items:
@@ -685,7 +685,7 @@ class BatchProcessingOptimizer:
         
         await asyncio.gather(*tasks, return_exceptions=True)
     
-    async def _process_single_item(self, item: BatchItem, processor: Callable, batch: ProcessingBatch):
+    async def _process_single_item(self, item -> None: BatchItem, processor -> None: Callable, batch -> None: ProcessingBatch) -> None:
         """Process a single item"""
         try:
             start_time = time.time()
@@ -702,7 +702,7 @@ class BatchProcessingOptimizer:
             batch.failed_items += 1
             batch.error_details.append(f"Item {item.item_id}: {str(e)}")
     
-    async def _process_map_reduce(self, batch: ProcessingBatch, processor: Callable):
+    async def _process_map_reduce(self, batch -> None: ProcessingBatch, processor -> None: Callable) -> None:
         """Process batch using map-reduce pattern"""
         # Map phase - process items in parallel
         await self._process_parallel(batch, processor)
@@ -801,7 +801,7 @@ class BatchProcessingOptimizer:
         # Ensure within bounds
         return max(config.min_batch_size, min(best_size, config.max_batch_size))
     
-    async def _ensure_batch_timer(self, message_type: str, config: BatchConfiguration):
+    async def _ensure_batch_timer(self, message_type -> None: str, config -> None: BatchConfiguration) -> None:
         """Ensure batch timer is running for time-based batching"""
         if message_type in self.batch_timers:
             return  # Timer already running
@@ -810,7 +810,7 @@ class BatchProcessingOptimizer:
             timer_task = asyncio.create_task(self._batch_timer(message_type, config.max_wait_time))
             self.batch_timers[message_type] = timer_task
     
-    async def _batch_timer(self, message_type: str, wait_time: float):
+    async def _batch_timer(self, message_type -> None: str, wait_time -> None: float) -> None:
         """Timer for time-based batch creation"""
         try:
             await asyncio.sleep(wait_time)
@@ -828,7 +828,7 @@ class BatchProcessingOptimizer:
         except Exception as e:
             logger.error(f"Error in batch timer: {str(e)}")
     
-    async def _calculate_batch_metrics(self, batch: ProcessingBatch):
+    async def _calculate_batch_metrics(self, batch -> None: ProcessingBatch) -> None:
         """Calculate performance metrics for batch"""
         total_items = len(batch.items)
         
@@ -856,7 +856,7 @@ class BatchProcessingOptimizer:
         else:
             batch.status = BatchStatus.PARTIAL_SUCCESS
     
-    async def _update_performance_history(self, message_type: str, batch: ProcessingBatch):
+    async def _update_performance_history(self, message_type -> None: str, batch -> None: ProcessingBatch) -> None:
         """Update performance history for adaptive optimization"""
         performance_record = {
             "batch_id": batch.batch_id,
@@ -877,7 +877,7 @@ class BatchProcessingOptimizer:
         while len(history) > max_history:
             history.popleft()
     
-    async def _update_global_metrics(self, batch: ProcessingBatch):
+    async def _update_global_metrics(self, batch -> None: ProcessingBatch) -> None:
         """Update global batch metrics"""
         self.batch_metrics.total_batches += 1
         

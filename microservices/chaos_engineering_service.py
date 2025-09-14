@@ -94,7 +94,7 @@ class ChaosMetrics:
 class ChaosEngineeringService:
     """Enterprise chaos engineering service for resilience testing."""
     
-    def __init__(self, config_path: Optional[str] = None):
+    def __init__(self, config_path -> None: Optional[str] = None) -> None:
         """Initialize the chaos engineering service.
         
         Args:
@@ -1013,7 +1013,7 @@ class ChaosEngineeringService:
 
 
 # Example usage and testing
-async def main():
+async def main() -> None:
     """Example usage of the ChaosEngineeringService."""
     # Initialize service
     service = ChaosEngineeringService()

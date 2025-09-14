@@ -1,3 +1,8 @@
+"""
+Service Mesh Tester module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Service Mesh Tester - Ainflue Quality Platform
@@ -60,12 +65,12 @@ class ServiceMeshConfig:
 class IstioServiceMeshTester:
     """Istio service mesh testing implementation."""
     
-    def __init__(self, config: ServiceMeshConfig):
+    def __init__(self, config -> None: ServiceMeshConfig) -> None:
         self.config = config
         self.k8s_client = None
         self.istio_client = None
         
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize Kubernetes and Istio clients."""
         try:
             # Load Kubernetes config
@@ -282,11 +287,11 @@ class IstioServiceMeshTester:
 class ConsulServiceMeshTester:
     """Consul Connect service mesh testing implementation."""
     
-    def __init__(self, config: ServiceMeshConfig):
+    def __init__(self, config -> None: ServiceMeshConfig) -> None:
         self.config = config
         self.consul_client = None
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize Consul client."""
         try:
             self.consul_client = consul.Consul()
@@ -406,7 +411,7 @@ class ServiceMeshTester:
     Demonstrates Microservices Architect + DevOps + Backend Senior expertise.
     """
     
-    def __init__(self, config_path: Optional[str] = None):
+    def __init__(self, config_path -> None: Optional[str] = None) -> None:
         self.config = self._load_config(config_path)
         self.test_results: List[ServiceMeshTestResult] = []
         self.mesh_testers = {}
@@ -435,7 +440,7 @@ class ServiceMeshTester:
         
         return default_config
     
-    async def initialize_mesh_testers(self, mesh_configs: List[ServiceMeshConfig]):
+    async def initialize_mesh_testers(self, mesh_configs -> None: List[ServiceMeshConfig]) -> None:
         """Initialize mesh-specific testers."""
         for mesh_config in mesh_configs:
             if mesh_config.mesh_type == 'istio':
@@ -634,7 +639,7 @@ class ServiceMeshTester:
         
         return report
     
-    async def save_report(self, report: Dict[str, Any], output_path: str = "service_mesh_test_report.json"):
+    async def save_report(self, report -> None: Dict[str, Any], output_path -> None: str = "service_mesh_test_report.json") -> None:
         """Save service mesh test report to file."""
         with open(output_path, 'w') as f:
             json.dump(report, f, indent=2, default=str)
@@ -642,7 +647,7 @@ class ServiceMeshTester:
 
 
 # CLI Interface
-async def main():
+async def main() -> None:
     """Main CLI interface for service mesh testing."""
     import argparse
     

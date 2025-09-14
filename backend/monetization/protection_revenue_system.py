@@ -222,7 +222,7 @@ class ContentProtectionRevenueSystem:
     Architecture enterprise pour protection intellectuelle
     """
     
-    def __init__(self, db_session: Session, redis_client: redis.Redis):
+    def __init__(self, db_session -> None: Session, redis_client -> None: redis.Redis) -> None:
         self.db = db_session
         self.redis = redis_client
         self.logger = logging.getLogger(__name__)
@@ -246,7 +246,7 @@ class ContentProtectionRevenueSystem:
         self.antipiracy_system = AntiPiracyRevenueSystem(db_session, redis_client)
         self.watermark_engine = WatermarkMonetizationEngine(db_session, redis_client)
     
-    def _initialize_ml_models(self):
+    def _initialize_ml_models(self) -> None:
         """Initialiser les modèles ML pour détection"""
         try:
             # Modèle de détection de violations
@@ -751,7 +751,7 @@ class ContentProtectionRevenueSystem:
 class CopyrightRevenueManager:
     """Gestionnaire spécialisé pour revenus de droits d'auteur"""
     
-    def __init__(self, db_session: Session, redis_client: redis.Redis):
+    def __init__(self, db_session -> None: Session, redis_client -> None: redis.Redis) -> None:
         self.db = db_session
         self.redis = redis_client
         self.logger = logging.getLogger(__name__)
@@ -797,7 +797,7 @@ class CopyrightRevenueManager:
 class AntiPiracyRevenueSystem:
     """Système anti-piratage avec génération de revenus"""
     
-    def __init__(self, db_session: Session, redis_client: redis.Redis):
+    def __init__(self, db_session -> None: Session, redis_client -> None: redis.Redis) -> None:
         self.db = db_session
         self.redis = redis_client
         self.logger = logging.getLogger(__name__)
@@ -831,7 +831,7 @@ class AntiPiracyRevenueSystem:
 class WatermarkMonetizationEngine:
     """Moteur de monétisation des watermarks"""
     
-    def __init__(self, db_session: Session, redis_client: redis.Redis):
+    def __init__(self, db_session -> None: Session, redis_client -> None: redis.Redis) -> None:
         self.db = db_session
         self.redis = redis_client
         self.logger = logging.getLogger(__name__)

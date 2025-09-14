@@ -202,7 +202,7 @@ class FanEngagementMetrics:
 class BaseCreatorConnector:
     """Base class for creator economy platform connectors."""
     
-    def __init__(self, platform: CreatorPlatformType, credentials: Dict[str, Any]):
+    def __init__(self, platform -> None: CreatorPlatformType, credentials -> None: Dict[str, Any]) -> None:
         self.platform = platform
         self.credentials = credentials
         self.session: Optional[aiohttp.ClientSession] = None
@@ -305,7 +305,7 @@ class BaseCreatorConnector:
         # Platform-specific webhook setup
         return True
     
-    async def close(self):
+    async def close(self) -> None:
         """Close the connector and cleanup resources."""
         if self.session:
             await self.session.close()
@@ -314,7 +314,7 @@ class BaseCreatorConnector:
 class PatreonConnector(BaseCreatorConnector):
     """Patreon API connector with subscription monetization."""
     
-    def __init__(self, credentials: Dict[str, Any]):
+    def __init__(self, credentials -> None: Dict[str, Any]) -> None:
         super().__init__(CreatorPlatformType.PATREON, credentials)
         self.api_base = "https://www.patreon.com/api/oauth2/v2"
     
@@ -414,7 +414,7 @@ class PatreonConnector(BaseCreatorConnector):
 class KofiConnector(BaseCreatorConnector):
     """Ko-fi API connector with donation and shop features."""
     
-    def __init__(self, credentials: Dict[str, Any]):
+    def __init__(self, credentials -> None: Dict[str, Any]) -> None:
         super().__init__(CreatorPlatformType.KOFI, credentials)
         self.api_base = "https://ko-fi.com/api/v2"
     
@@ -448,7 +448,7 @@ class KofiConnector(BaseCreatorConnector):
 class GumroadConnector(BaseCreatorConnector):
     """Gumroad API connector with digital product sales."""
     
-    def __init__(self, credentials: Dict[str, Any]):
+    def __init__(self, credentials -> None: Dict[str, Any]) -> None:
         super().__init__(CreatorPlatformType.GUMROAD, credentials)
         self.api_base = "https://api.gumroad.com/v2"
     
@@ -507,7 +507,7 @@ class GumroadConnector(BaseCreatorConnector):
 class SubstackConnector(BaseCreatorConnector):
     """Substack API connector with newsletter monetization."""
     
-    def __init__(self, credentials: Dict[str, Any]):
+    def __init__(self, credentials -> None: Dict[str, Any]) -> None:
         super().__init__(CreatorPlatformType.SUBSTACK, credentials)
         self.api_base = "https://api.substack.com/v1"
     
@@ -573,7 +573,7 @@ class SubstackConnector(BaseCreatorConnector):
 class CreatorEconomyManager:
     """Manager for all creator economy platform connectors."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.connectors: Dict[CreatorPlatformType, BaseCreatorConnector] = {}
         self.subscription_cache: Dict[str, SubscriptionPlan] = {}
         self.analytics_cache: Dict[str, CreatorAnalytics] = {}
@@ -724,7 +724,7 @@ class CreatorEconomyManager:
         """Get list of connected creator platforms."""
         return list(self.connectors.keys())
     
-    async def close_all(self):
+    async def close_all(self) -> None:
         """Close all connectors."""
         for connector in self.connectors.values():
             await connector.close()

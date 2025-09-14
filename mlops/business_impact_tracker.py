@@ -149,7 +149,7 @@ class BusinessAlert:
 class MetricsCollector:
     """Collects business metrics from various sources"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.metric_cache = {}
         self.collection_history = []
     
@@ -294,7 +294,7 @@ class MetricsCollector:
 class ImpactCalculator:
     """Calculates business impact of ML models"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.calculation_history = []
         self.baseline_cache = {}
     
@@ -595,7 +595,7 @@ class ImpactCalculator:
 class ROICalculator:
     """Calculates Return on Investment for ML models"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.roi_history = []
     
     async def calculate_roi(self, model_id: str, investment_cost: float,
@@ -755,7 +755,7 @@ class ROICalculator:
 class BusinessImpactTracker:
     """Main business impact tracking system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.metrics_collector = MetricsCollector()
         self.impact_calculator = ImpactCalculator()
         self.roi_calculator = ROICalculator()
@@ -833,7 +833,7 @@ class BusinessImpactTracker:
         
         return impact_assessment
     
-    async def _check_for_alerts(self, tracking_id: str, impact_assessment: ImpactAssessment):
+    async def _check_for_alerts(self, tracking_id -> None: str, impact_assessment -> None: ImpactAssessment) -> None:
         """Check for business impact alerts"""
         tracking_info = self.active_tracking[tracking_id]
         

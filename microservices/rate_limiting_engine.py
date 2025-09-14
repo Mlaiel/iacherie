@@ -1,3 +1,8 @@
+"""
+Rate Limiting Engine module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Enterprise Rate Limiting Engine Service
@@ -126,7 +131,7 @@ class RateLimitingEngine:
     - Queue management for delayed requests
     """
     
-    def __init__(self, redis_url: Optional[str] = None):
+    def __init__(self, redis_url -> None: Optional[str] = None) -> None:
         """Initialize rate limiting engine"""
         self.redis_url = redis_url
         self.redis_client: Optional[aioredis.Redis] = None
@@ -166,7 +171,7 @@ class RateLimitingEngine:
         
         logger.info("RateLimitingEngine initialized")
     
-    async def start(self):
+    async def start(self) -> None:
         """Start the rate limiting engine"""
         try:
             # Connect to Redis if URL provided
@@ -184,7 +189,7 @@ class RateLimitingEngine:
             logger.error("Failed to start RateLimitingEngine: %s", e)
             raise
     
-    async def stop(self):
+    async def stop(self) -> None:
         """Stop the rate limiting engine"""
         try:
             self.shutdown_event.set()
@@ -213,14 +218,14 @@ class RateLimitingEngine:
         except Exception as e:
             logger.error("Error stopping RateLimitingEngine: %s", e)
     
-    async def add_rule(self, rule: RateLimitRule):
+    async def add_rule(self, rule -> None: RateLimitRule) -> None:
         """Add a rate limiting rule"""
         async with self._lock:
             self.rules[rule.name] = rule
         
         logger.info("Added rate limiting rule: %s", rule.name)
     
-    async def remove_rule(self, rule_name: str):
+    async def remove_rule(self, rule_name -> None: str) -> None:
         """Remove a rate limiting rule"""
         async with self._lock:
             self.rules.pop(rule_name, None)
@@ -259,7 +264,7 @@ class RateLimitingEngine:
         most_restrictive = min(results, key=lambda r: r.remaining)
         return most_restrictive
     
-    async def consume_quota(self, context: RequestContext, cost: int = 1):
+    async def consume_quota(self, context -> None: RequestContext, cost -> None: int = 1) -> None:
         """Consume quota for a request"""
         applicable_rules = await self._find_applicable_rules(context)
         
@@ -267,12 +272,12 @@ class RateLimitingEngine:
             key = await self._generate_key(rule, context)
             await self._consume_tokens(rule, key, cost)
     
-    async def increment_concurrent(self, context: RequestContext):
+    async def increment_concurrent(self, context -> None: RequestContext) -> None:
         """Increment concurrent request count"""
         async with self._lock:
             self.concurrent_counts[context.key] += 1
     
-    async def decrement_concurrent(self, context: RequestContext):
+    async def decrement_concurrent(self, context -> None: RequestContext) -> None:
         """Decrement concurrent request count"""
         async with self._lock:
             self.concurrent_counts[context.key] = max(0, self.concurrent_counts[context.key] - 1)
@@ -685,12 +690,12 @@ class RateLimitingEngine:
             # Fall back to local checking
             return await self._check_token_bucket(rule, key, cost)
     
-    async def _consume_tokens(self, rule: RateLimitRule, key: str, cost: int):
+    async def _consume_tokens(self, rule -> None: RateLimitRule, key -> None: str, cost -> None: int) -> None:
         """Consume tokens without checking (for post-request cleanup)"""
         # This is called after a successful request to ensure accurate counting
         pass
     
-    async def _cleanup_loop(self):
+    async def _cleanup_loop(self) -> None:
         """Background cleanup loop"""
         while not self.shutdown_event.is_set():
             try:
@@ -701,7 +706,7 @@ class RateLimitingEngine:
             except Exception as e:
                 logger.error("Error in cleanup loop: %s", e)
     
-    async def _cleanup_expired_data(self):
+    async def _cleanup_expired_data(self) -> None:
         """Clean up expired rate limiting data"""
         current_time = time.time()
         
@@ -734,7 +739,7 @@ class RateLimitingEngine:
                 if not windows:
                     del self.fixed_windows[key]
     
-    async def _queue_processor_loop(self):
+    async def _queue_processor_loop(self) -> None:
         """Process queued requests"""
         while not self.shutdown_event.is_set():
             try:
@@ -745,7 +750,7 @@ class RateLimitingEngine:
             except Exception as e:
                 logger.error("Error in queue processor: %s", e)
     
-    async def _process_queued_requests(self):
+    async def _process_queued_requests(self) -> None:
         """Process requests in queue"""
         # This is a placeholder for queue processing logic
         # In a full implementation, this would handle delayed requests
@@ -762,7 +767,7 @@ async def get_rate_limiter(redis_url: Optional[str] = None) -> RateLimitingEngin
         await _rate_limiter.start()
     return _rate_limiter
 
-async def shutdown_rate_limiter():
+async def shutdown_rate_limiter() -> None:
     """Shutdown global rate limiting engine"""
     global _rate_limiter
     if _rate_limiter:
@@ -770,7 +775,7 @@ async def shutdown_rate_limiter():
         _rate_limiter = None
 
 if __name__ == "__main__":
-    async def test_rate_limiter():
+    async def test_rate_limiter() -> None:
         """Test rate limiting engine functionality"""
         engine = RateLimitingEngine()
         await engine.start()

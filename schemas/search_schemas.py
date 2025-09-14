@@ -86,7 +86,7 @@ class SearchQuery(BaseSchema):
     fuzzy_distance: int = Field(2, ge=1, le=5, description="Fuzzy edit distance")
     
     @validator('query')
-    def validate_query(cls, v):
+    def validate_query(cls, v) -> None:
         """Validate search query."""
         # Remove excessive whitespace
         v = ' '.join(v.split())
@@ -108,7 +108,7 @@ class AdvancedSearchQuery(BaseSchema):
     boost: float = Field(1.0, ge=0.1, le=10.0, description="Overall query boost")
     
     @model_validator(mode='after')
-    def validate_conditions(self):
+    def validate_conditions(self) -> None:
         """Validate that at least one condition is provided."""
         if not self.must and not self.should and not self.must_not:
             raise ValueError('At least one search condition must be provided')
@@ -138,7 +138,7 @@ class DateRangeFilter(BaseSchema):
     include_end: bool = Field(True, description="Include end date")
     
     @model_validator(mode='after')
-    def validate_range(self):
+    def validate_range(self) -> None:
         """Validate date range."""
         if not self.start_date and not self.end_date and not self.relative_range:
             raise ValueError('Either date range or relative range must be specified')
@@ -159,7 +159,7 @@ class NumericRangeFilter(BaseSchema):
     include_max: bool = Field(True, description="Include maximum value")
     
     @model_validator(mode='after')
-    def validate_range(self):
+    def validate_range(self) -> None:
         """Validate numeric range."""
         if self.min_value is None and self.max_value is None:
             raise ValueError('At least one range boundary must be specified')
@@ -231,7 +231,7 @@ class SearchRequest(BaseSchema):
     timeout: int = Field(30, ge=1, le=300, description="Search timeout in seconds")
     
     @model_validator(mode='after')
-    def validate_request(self):
+    def validate_request(self) -> None:
         """Validate search request."""
         if not self.query and not self.filters:
             raise ValueError('Either query or filters must be provided')
@@ -295,7 +295,7 @@ class SearchResponse(BaseSchema):
     suggestions: List[str] = Field(default=[], description="Search suggestions")
     
     @validator('total_pages', always=True)
-    def calculate_total_pages(cls, v, values):
+    def calculate_total_pages(cls, v, values) -> None:
         """Calculate total pages from total hits and page size."""
         total_hits = values.get('total_hits', 0)
         page_size = values.get('page_size', 20)

@@ -84,7 +84,7 @@ class BusinessValidator:
     collaboration, and compliance across all business processes.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the business validator."""
         self.validation_rules: Dict[str, ValidationRule] = {}
         self.validators: Dict[str, callable] = {}
@@ -92,7 +92,7 @@ class BusinessValidator:
         self._register_default_validators()
         self._load_default_rules()
     
-    def _register_default_validators(self):
+    def _register_default_validators(self) -> None:
         """Register default validation functions."""
         self.validators.update({
             "validate_email": self._validate_email,
@@ -111,7 +111,7 @@ class BusinessValidator:
             "validate_content_metadata": self._validate_content_metadata
         })
     
-    def _load_default_rules(self):
+    def _load_default_rules(self) -> None:
         """Load default validation rules."""
         default_rules = [
             # Content validation rules

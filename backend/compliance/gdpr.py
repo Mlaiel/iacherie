@@ -110,7 +110,7 @@ class GDPRCompliance:
     Provides comprehensive GDPR compliance services for the Ainflue platform.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.logger = logger
         self.config = config or {}
         
@@ -127,7 +127,7 @@ class GDPRCompliance:
         # Personal data inventory
         self._initialize_data_inventory()
     
-    def _initialize_data_inventory(self):
+    def _initialize_data_inventory(self) -> None:
         """Initialize personal data inventory mapping"""
         self.data_inventory = {
             "user_profile": PersonalDataInventory(
@@ -443,7 +443,7 @@ class GDPRCompliance:
         # Basic validation
         return field in ["name", "email", "phone", "address"] and value is not None
 
-    def _update_user_field(self, user_id: int, field: str, value: Any):
+    def _update_user_field(self, user_id -> None: int, field -> None: str, value -> None: Any) -> None:
         """Update user field with new value"""
         # Placeholder implementation
         pass

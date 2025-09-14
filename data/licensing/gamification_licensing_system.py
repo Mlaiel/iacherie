@@ -181,7 +181,7 @@ class SocialAction:
 class GamificationLicensingSystem:
     """Advanced Gamification Licensing System with Creator Engagement & Rewards."""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         """Initialize the Gamification Licensing System."""
         self.config = config or {}
         self.creator_profiles: Dict[str, CreatorProfile] = {}

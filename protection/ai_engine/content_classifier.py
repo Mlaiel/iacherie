@@ -36,7 +36,7 @@ class ContentClassifierEngine:
     Enterprise-grade multi-modal content classifier
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
         self.models = {}
@@ -53,7 +53,7 @@ class ContentClassifierEngine:
         
         logger.info(f"Content Classifier Engine initialized on {self.device}")
     
-    def _load_models(self):
+    def _load_models(self) -> None:
         """Load all AI models for content classification"""
         try:
             # CLIP for visual content

@@ -112,7 +112,7 @@ class QualityAnomaly:
     contributing_factors: List[str] = field(default_factory=list)
     recommended_actions: List[str] = field(default_factory=list)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if not self.anomaly_id:
             self.anomaly_id = str(uuid.uuid4())
 
@@ -132,7 +132,7 @@ class QualityInsight:
     recommendations: List[str]
     timestamp: datetime = field(default_factory=datetime.utcnow)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if not self.insight_id:
             self.insight_id = str(uuid.uuid4())
 
@@ -152,7 +152,7 @@ class AnalyticsReport:
     confidence_level: float
     generated_at: datetime = field(default_factory=datetime.utcnow)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if not self.report_id:
             self.report_id = str(uuid.uuid4())
 
@@ -175,7 +175,7 @@ class IntelligencePlatform:
     machine learning predictions, anomaly detection, and actionable insights.
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """
         Initialize the intelligence platform.
         
@@ -242,11 +242,11 @@ class IntelligencePlatform:
     
     async def add_quality_data_point(
         self,
-        metric_name: str,
-        value: float,
-        timestamp: Optional[datetime] = None,
-        metadata: Optional[Dict[str, Any]] = None
-    ):
+        metric_name -> None: str,
+        value -> None: float,
+        timestamp -> None: Optional[datetime] = None,
+        metadata -> None: Optional[Dict[str, Any]] = None
+    ) -> None:
         """
         Add a quality data point for analysis.
         
@@ -725,7 +725,7 @@ class IntelligencePlatform:
     
     # Private helper methods
     
-    async def _initialize_ml_models(self):
+    async def _initialize_ml_models(self) -> None:
         """Initialize machine learning models"""
         # Placeholder for ML model initialization
         # In production, this would load pre-trained models
@@ -738,22 +738,22 @@ class IntelligencePlatform:
                 'f1_score': 0.78 + random.random() * 0.17
             }
     
-    async def _load_pattern_templates(self):
+    async def _load_pattern_templates(self) -> None:
         """Load pattern recognition templates"""
         # Placeholder for pattern template loading
         pass
     
-    async def _initialize_analytics_engines(self):
+    async def _initialize_analytics_engines(self) -> None:
         """Initialize analytics processing engines"""
         # Placeholder for analytics engine initialization
         pass
     
-    async def _warm_up_caches(self):
+    async def _warm_up_caches(self) -> None:
         """Warm up analysis caches"""
         # Placeholder for cache warming
         pass
     
-    async def _check_for_anomalies(self, metric_name: str, value: float, timestamp: datetime):
+    async def _check_for_anomalies(self, metric_name -> None: str, value -> None: float, timestamp -> None: datetime) -> None:
         """Check for real-time anomalies"""
         anomaly = await self.detect_quality_anomalies(metric_name, value)
         if anomaly:

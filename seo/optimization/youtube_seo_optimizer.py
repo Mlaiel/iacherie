@@ -63,7 +63,7 @@ class YouTubeSEOOptimizer:
     Provides comprehensive YouTube-specific SEO recommendations and optimization
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.youtube_ranking_factors = self._initialize_youtube_ranking_factors()
         self.category_guidelines = self._load_category_guidelines()
         self.title_patterns = self._load_title_patterns()

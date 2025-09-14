@@ -60,7 +60,7 @@ class QualityModuleRegistry:
     for quality management modules across the IA Influencer platform.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """
 Initialize the quality module registry"""
         self.logger = logger
@@ -75,7 +75,7 @@ Initialize the quality module registry"""
         
         self.logger.info("QualityModuleRegistry initialized")
     
-    def _register_core_components(self):
+    def _register_core_components(self) -> None:
         """Register core quality management components"""
         
         # Core orchestration components
@@ -162,12 +162,12 @@ Initialize the quality module registry"""
     
     def register_component(
         self,
-        name: str,
-        component_class: Type,
-        dependencies: Optional[List[str]] = None,
-        priority: int = 5,
-        config: Optional[Dict[str, Any]] = None
-    ):
+        name -> None: str,
+        component_class -> None: Type,
+        dependencies -> None: Optional[List[str]] = None,
+        priority -> None: int = 5,
+        config -> None: Optional[Dict[str, Any]] = None
+    ) -> None:
         """
         Register a quality component.
         
@@ -187,14 +187,14 @@ Initialize the quality module registry"""
         
         self.logger.debug(f"Registered component '{name}' with priority {priority}")
     
-    def _update_initialization_order(self):
+    def _update_initialization_order(self) -> None:
         """Update component initialization order based on dependencies and priorities"""
         
         # Topological sort with priority consideration
         order = []
         resolved = set()
         
-        def resolve_component(name: str):
+        def resolve_component(name -> None: str) -> None:
             if name in resolved:
                 return
             
@@ -237,7 +237,7 @@ Initialize the quality module registry"""
             self.logger.error(f"Error initializing quality components: {str(e)}")
             raise
     
-    async def _initialize_component(self, name: str, global_config: Dict[str, Any]):
+    async def _initialize_component(self, name -> None: str, global_config -> None: Dict[str, Any]) -> None:
         """Initialize a specific component"""
         
         try:
@@ -304,7 +304,7 @@ class QualityModuleOrchestrator:
     coordinates between different quality components.
     """
     
-    def __init__(self, registry: Optional[QualityModuleRegistry] = None):
+    def __init__(self, registry -> None: Optional[QualityModuleRegistry] = None) -> None:
         """
         Initialize the quality module orchestrator.
         

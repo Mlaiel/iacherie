@@ -139,7 +139,7 @@ class CrossPlatformSync:
 class PlatformSynchronizer:
     """Synchroniseur principal de plateformes"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         self.platform_clients = {}
@@ -372,7 +372,7 @@ class PlatformSynchronizer:
 class SyncManager:
     """Gestionnaire de synchronisation"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         self.sync_strategies = {}
@@ -451,7 +451,7 @@ class SyncManager:
 class PlatformSyncService:
     """Service principal de synchronisation de plateformes"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         self.platform_synchronizer = PlatformSynchronizer(redis_client, db_session)

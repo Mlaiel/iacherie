@@ -110,11 +110,11 @@ class CloudflareIntegration:
     
     def __init__(
         self,
-        api_token: str,
-        email: Optional[str] = None,
-        api_key: Optional[str] = None,
-        account_id: Optional[str] = None
-    ):
+        api_token -> None: str,
+        email -> None: Optional[str] = None,
+        api_key -> None: Optional[str] = None,
+        account_id -> None: Optional[str] = None
+    ) -> None:
         """Initialize Cloudflare integration.
         
         Args:
@@ -783,15 +783,15 @@ class CloudflareIntegration:
             self.logger.error(f"Unexpected error getting accounts: {e}")
             raise
 
-    async def close(self):
+    async def close(self) -> None:
         """Close HTTP session."""
         await self.session.aclose()
 
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         """Async context manager entry."""
         return self
 
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         """Async context manager exit."""
         await self.close()
 

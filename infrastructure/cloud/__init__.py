@@ -1,4 +1,6 @@
 """
+from typing import Dict, List, Optional, Union, Tuple
+
 Cloud Providers Infrastructure Orchestration Module
 © 2025 Fahed Mlaiel. All rights reserved.
 

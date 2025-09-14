@@ -167,7 +167,7 @@ class ProtectionMetrics:
 class ContentFingerprinting:
     """Content fingerprinting system"""
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client -> None: aioredis.Redis) -> None:
         self.redis = redis_client
         self.fingerprint_algorithms = {}
         self.fingerprint_database = {}
@@ -302,7 +302,7 @@ class ContentFingerprinting:
 class PiracyDetection:
     """Real-time piracy detection system"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         self.detection_engines = {}
@@ -418,7 +418,7 @@ class PiracyDetection:
 class WatermarkingSystem:
     """Digital watermarking system"""
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client -> None: aioredis.Redis) -> None:
         self.redis = redis_client
         self.watermark_algorithms = {}
         self.watermark_templates = {}
@@ -496,7 +496,7 @@ class WatermarkingSystem:
 class SecurityAnalytics:
     """Security analytics and threat intelligence"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         self.analytics_engines = {}
@@ -561,7 +561,7 @@ class SecurityAnalytics:
 class IncidentResponse:
     """Automated incident response system"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         self.response_workflows = {}
@@ -625,7 +625,7 @@ class IncidentResponse:
 class StreamingProtectionMonitor:
     """Unified streaming protection monitor - Main service class"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         

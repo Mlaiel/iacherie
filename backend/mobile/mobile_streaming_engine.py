@@ -72,7 +72,7 @@ class StreamMetrics:
 class MobileStreamingEngine:
     """Advanced mobile streaming engine"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         """Initialize mobile streaming engine"""
         self.config = config or {}
         self.live_stream_manager = LiveStreamManager(self.config)
@@ -167,7 +167,7 @@ class MobileStreamingEngine:
 class LiveStreamManager:
     """Live stream management system"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         
     async def start_stream(self, creator_id: str, streaming_config: StreamingConfig) -> Dict[str, Any]:
@@ -190,7 +190,7 @@ class LiveStreamManager:
         
         return stream_session
     
-    async def _initialize_streaming_infrastructure(self, stream_session: Dict[str, Any]):
+    async def _initialize_streaming_infrastructure(self, stream_session -> None: Dict[str, Any]) -> None:
         """Initialize streaming infrastructure"""
         # Implementation for streaming infrastructure setup
         pass
@@ -199,7 +199,7 @@ class LiveStreamManager:
 class StreamOptimizer:
     """Stream optimization system"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         
     async def apply_mobile_optimizations(self, stream_id: str) -> bool:
@@ -217,7 +217,7 @@ class StreamOptimizer:
         
         return True
     
-    async def _apply_optimization(self, stream_id: str, optimization: str):
+    async def _apply_optimization(self, stream_id -> None: str, optimization -> None: str) -> None:
         """Apply specific optimization"""
         # Implementation for specific optimization
         pass
@@ -226,7 +226,7 @@ class StreamOptimizer:
 class QualityAdaptation:
     """Quality adaptation system"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         
     async def enable_adaptive_streaming(self, stream_id: str) -> bool:
@@ -243,7 +243,7 @@ class QualityAdaptation:
 class BroadcastController:
     """Broadcast control system"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         
     async def control_broadcast(self, stream_id: str, action: str) -> bool:

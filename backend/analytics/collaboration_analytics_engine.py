@@ -265,7 +265,7 @@ class CollaborationAnalyticsEngine:
     optimization, and network analysis.
     """
     
-    def __init__(self, retention_days: int = 730):  # 2 years default retention
+    def __init__(self, retention_days -> None: int = 730) -> None:  # 2 years default retention
         """Initialize the Collaboration Analytics Engine"""
         self.retention_days = retention_days
         self.creator_profiles: Dict[str, CreatorProfile] = {}
@@ -934,7 +934,7 @@ class CollaborationAnalyticsEngine:
             logger.error(f"❌ Failed to update project status: {e}")
             return False
     
-    async def _update_creator_collaboration_history(self, project: CollaborationProject):
+    async def _update_creator_collaboration_history(self, project -> None: CollaborationProject) -> None:
         """Update creator profiles with collaboration results"""
         try:
             for creator_id in project.creators:

@@ -158,7 +158,7 @@ class BusinessKPICollector:
     Gathers critical business metrics from multiple sources across the platform.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(self.__class__.__name__)
         self.collection_cache = {}
         self.data_sources = {}
@@ -569,7 +569,7 @@ class BusinessKPICollector:
             self.logger.error(f"❌ Failed to setup collection schedules: {e}")
             raise
 
-    async def _schedule_collection_task(self, task_name: str, collection_func, interval_seconds: int):
+    async def _schedule_collection_task(self, task_name -> None: str, collection_func, interval_seconds -> None: int) -> None:
         """Schedule a periodic collection task"""
         try:
             while True:
@@ -605,7 +605,7 @@ class BusinessKPICollector:
             self.logger.error(f"❌ Collection task {task_name} failed: {e}")
             raise
 
-    async def _collect_revenue_metrics(self):
+    async def _collect_revenue_metrics(self) -> None:
         """Collect current revenue metrics"""
         try:
             # Calculate total revenue
@@ -630,7 +630,7 @@ class BusinessKPICollector:
             self.logger.error(f"Failed to collect revenue metrics: {e}")
             raise
 
-    async def _collect_user_acquisition_metrics(self):
+    async def _collect_user_acquisition_metrics(self) -> None:
         """Collect user acquisition metrics"""
         try:
             # Mock data - in production this would query actual user database
@@ -654,7 +654,7 @@ class BusinessKPICollector:
             self.logger.error(f"Failed to collect user acquisition metrics: {e}")
             raise
 
-    async def _collect_content_creation_metrics(self):
+    async def _collect_content_creation_metrics(self) -> None:
         """Collect content creation metrics"""
         try:
             # Mock data - in production this would query content database
@@ -678,7 +678,7 @@ class BusinessKPICollector:
             self.logger.error(f"Failed to collect content creation metrics: {e}")
             raise
 
-    async def _collect_platform_growth_metrics(self):
+    async def _collect_platform_growth_metrics(self) -> None:
         """Collect platform growth metrics"""
         try:
             # Calculate platform growth rate
@@ -708,7 +708,7 @@ class BusinessKPICollector:
             self.logger.error(f"Failed to collect platform growth metrics: {e}")
             raise
 
-    async def _collect_operational_efficiency_metrics(self):
+    async def _collect_operational_efficiency_metrics(self) -> None:
         """Collect operational efficiency metrics"""
         try:
             # Calculate average processing time from stored metrics
@@ -741,7 +741,7 @@ class BusinessKPIAnalyzer:
     Provides insights, trends, forecasting, and strategic recommendations.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(self.__class__.__name__)
         self.analysis_cache = {}
         self.models = {}

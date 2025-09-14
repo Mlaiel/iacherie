@@ -1,4 +1,6 @@
 """IA Influencer Agent - Logging Configuration
+import logging
+
 Default configuration for logging infrastructure
 
 Author: Fahed Mlaiel <mlaiel@live.de>

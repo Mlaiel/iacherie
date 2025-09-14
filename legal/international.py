@@ -157,7 +157,7 @@ class InternationalLegalCompliance:
     with ML-based risk assessment and automated compliance verification.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize comprehensive international legal compliance system"""
         self.jurisdictions: Dict[str, Jurisdiction] = {}
         self.treaties: Dict[str, InternationalTreaty] = {}
@@ -173,7 +173,7 @@ class InternationalLegalCompliance:
         
         logger.info("🌍 International Legal Compliance Engine initialized with global coverage")
     
-    def _initialize_global_jurisdictions(self):
+    def _initialize_global_jurisdictions(self) -> None:
         """Initialize comprehensive global jurisdiction database"""
         
         # Major jurisdictions with comprehensive legal frameworks
@@ -338,7 +338,7 @@ class InternationalLegalCompliance:
         
         logger.info(f"Initialized {len(major_jurisdictions)} major global jurisdictions")
     
-    def _initialize_international_treaties(self):
+    def _initialize_international_treaties(self) -> None:
         """Initialize international treaties and agreements database"""
         
         international_treaties = [
@@ -610,14 +610,14 @@ class InternationalRiskAssessmentEngine:
     across multiple jurisdictions with sophisticated threat modeling.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.risk_factors_db: Dict[str, Dict[str, float]] = {}
         self.ml_risk_models: Dict[str, Any] = {}
         self._initialize_risk_models()
         
         logger.info("🧠 International Risk Assessment Engine initialized")
     
-    def _initialize_risk_models(self):
+    def _initialize_risk_models(self) -> None:
         """Initialize ML-based risk assessment models"""
         
         # Risk factor weights by jurisdiction type
@@ -761,7 +761,7 @@ class TreatyComplianceMonitor:
     treaties and multilateral agreements.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.treaty_obligations: Dict[str, List[Dict[str, Any]]] = {}
         self.compliance_status: Dict[str, Dict[str, Any]] = {}
         
@@ -806,7 +806,7 @@ class CrossBorderOperationOrchestrator:
     with automated compliance verification and risk mitigation.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.cross_border_rules: Dict[str, Dict[str, Any]] = {}
         self.operation_history: List[Dict[str, Any]] = []
         
@@ -864,7 +864,7 @@ class InternationalTreatyCompliance:
     - DevOps: Automated monitoring of treaty changes and updates
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.treaty_database: Dict[str, Dict[str, Any]] = {}
         self.compliance_tracker: Dict[str, Dict[str, Any]] = {}
         self.ai_treaty_analyzer = self._initialize_treaty_ai()
@@ -1318,7 +1318,7 @@ class GlobalLegalUpdateMonitor:
     - Security: Secure legal update verification and audit trails
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.update_sources: Dict[str, Dict[str, Any]] = {}
         self.legal_updates: Dict[str, Dict[str, Any]] = {}
         self.ai_update_analyzer = self._initialize_update_ai()

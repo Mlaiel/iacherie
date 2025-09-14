@@ -123,7 +123,7 @@ class EmergencyAuthority(ABC):
 class DefaultEmergencyAuthority(EmergencyAuthority):
     """Default emergency authority implementation"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.authorized_users = {
             "admin": [EmergencyLevel.CRITICAL, EmergencyLevel.URGENT, EmergencyLevel.HIGH, EmergencyLevel.MODERATE, EmergencyLevel.LOW],
             "manager": [EmergencyLevel.URGENT, EmergencyLevel.HIGH, EmergencyLevel.MODERATE, EmergencyLevel.LOW],
@@ -165,7 +165,7 @@ class DefaultEmergencyAuthority(EmergencyAuthority):
 class EmergencyOverrideSystem:
     """Main emergency override system"""
     
-    def __init__(self, authority: Optional[EmergencyAuthority] = None):
+    def __init__(self, authority -> None: Optional[EmergencyAuthority] = None) -> None:
         self.authority = authority or DefaultEmergencyAuthority()
         self.active_overrides: Dict[str, EmergencyOverride] = {}
         self.override_history: List[EmergencyOverride] = []
@@ -560,7 +560,7 @@ class EmergencyOverrideSystem:
         
         return True
     
-    async def _cancel_override_actions(self, override: EmergencyOverride):
+    async def _cancel_override_actions(self, override -> None: EmergencyOverride) -> None:
         """Cancel or reverse override actions"""
         logger.info(f"Cancelling actions for override {override.id}")
         
@@ -575,12 +575,12 @@ class EmergencyOverrideSystem:
     
     async def _log_emergency_event(
         self,
-        override_id: str,
-        event_type: str,
-        details: Dict[str, Any],
-        severity: EmergencyLevel,
-        user_id: Optional[str] = None
-    ):
+        override_id -> None: str,
+        event_type -> None: str,
+        details -> None: Dict[str, Any],
+        severity -> None: EmergencyLevel,
+        user_id -> None: Optional[str] = None
+    ) -> None:
         """Log emergency event"""
         log_entry = EmergencyLog(
             override_id=override_id,
@@ -598,9 +598,9 @@ class EmergencyOverrideSystem:
     
     async def _send_emergency_notification(
         self,
-        override: EmergencyOverride,
-        event_type: str
-    ):
+        override -> None: EmergencyOverride,
+        event_type -> None: str
+    ) -> None:
         """Send emergency notifications"""
         try:
             notification_data = {
@@ -625,17 +625,17 @@ class EmergencyOverrideSystem:
         except Exception as e:
             logger.error(f"Failed to send emergency notification: {e}")
     
-    async def _send_to_channel(self, channel: str, data: Dict[str, Any]):
+    async def _send_to_channel(self, channel -> None: str, data -> None: Dict[str, Any]) -> None:
         """Send notification to specific channel"""
         # Implementation would integrate with notification systems
         logger.info(f"Sending emergency notification to {channel}")
     
-    async def _alert_contact(self, contact: str, data: Dict[str, Any]):
+    async def _alert_contact(self, contact -> None: str, data -> None: Dict[str, Any]) -> None:
         """Alert emergency contact"""
         # Implementation would integrate with alerting systems
         logger.info(f"Alerting emergency contact {contact}")
     
-    async def cleanup_expired_overrides(self):
+    async def cleanup_expired_overrides(self) -> None:
         """Clean up expired overrides"""
         current_time = datetime.now(timezone.utc)
         expired_ids = []
@@ -696,17 +696,17 @@ class EmergencyOverrideSystem:
         
         return logs
     
-    def add_emergency_contact(self, contact: str):
+    def add_emergency_contact(self, contact -> None: str) -> None:
         """Add emergency contact"""
         if contact not in self.emergency_contacts:
             self.emergency_contacts.append(contact)
     
-    def add_notification_channel(self, channel: str):
+    def add_notification_channel(self, channel -> None: str) -> None:
         """Add notification channel"""
         if channel not in self.notification_channels:
             self.notification_channels.append(channel)
     
-    def register_override_handler(self, override_type: OverrideType, handler: Callable):
+    def register_override_handler(self, override_type -> None: OverrideType, handler -> None: Callable) -> None:
         """Register custom override handler"""
         self.override_handlers[override_type] = handler
 

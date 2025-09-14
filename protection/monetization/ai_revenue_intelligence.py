@@ -97,7 +97,7 @@ class AIRevenueInsights:
 class NeuralRevenuePredictor(nn.Module):
     """Advanced Neural Network for Revenue Prediction"""
     
-    def __init__(self, config: NeuralNetworkConfig):
+    def __init__(self, config -> None: NeuralNetworkConfig) -> None:
         super(NeuralRevenuePredictor, self).__init__()
         self.config = config
         
@@ -122,14 +122,14 @@ class NeuralRevenuePredictor(nn.Module):
         # Initialize weights
         self._initialize_weights()
     
-    def _initialize_weights(self):
+    def _initialize_weights(self) -> None:
         """Initialize network weights using Xavier initialization"""
         for module in self.modules():
             if isinstance(module, nn.Linear):
                 nn.init.xavier_uniform_(module.weight)
                 nn.init.zeros_(module.bias)
     
-    def forward(self, x):
+    def forward(self, x) -> None:
         """Forward pass through the network"""
         return self.network(x)
 
@@ -144,7 +144,7 @@ class AIRevenueIntelligenceEngine:
     - Real-time learning and adaptation
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.models = {}
         self.feature_preprocessors = {}
@@ -158,7 +158,7 @@ class AIRevenueIntelligenceEngine:
         
         logger.info("AI Revenue Intelligence Engine initialized with neural networks")
 
-    def _initialize_ai_models(self):
+    def _initialize_ai_models(self) -> None:
         """Initialize all AI models and components"""
         # Neural network configuration
         neural_config = NeuralNetworkConfig(
@@ -198,7 +198,7 @@ class AIRevenueIntelligenceEngine:
             'label_encoder': LabelEncoder()
         }
 
-    def _load_pretrained_models(self):
+    def _load_pretrained_models(self) -> None:
         """Load pre-trained AI models"""
         try:
             # Initialize transformer pipeline for text analysis

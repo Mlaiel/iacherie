@@ -47,7 +47,7 @@ class SecurityMetric:
     details: Dict[str, Any]
     tags: List[str]
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.details is None:
             self.details = {}
         if self.tags is None:
@@ -96,7 +96,7 @@ class SecurityAnalyticsDashboard:
     Aggregates data from all security modules for comprehensive visibility.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.enabled = True
         self.widgets = self._initialize_default_widgets()
         self.metrics_history = []  # In-memory storage for demo
@@ -112,7 +112,7 @@ class SecurityAnalyticsDashboard:
                                 access_manager=None,
                                 compliance_validator=None,
                                 audit_collector=None,
-                                intrusion_prevention=None):
+                                intrusion_prevention=None) -> None:
         """Register security modules for data collection"""
         
         if threat_engine:
@@ -191,7 +191,7 @@ class SecurityAnalyticsDashboard:
             logger.error(f"Error generating dashboard data: {str(e)}")
             return self._create_error_dashboard(str(e))
     
-    async def _collect_security_metrics(self):
+    async def _collect_security_metrics(self) -> None:
         """Collect current metrics from all security modules"""
         
         current_time = datetime.utcnow()
@@ -529,7 +529,7 @@ class SecurityAnalyticsDashboard:
         
         return 0.5  # Default neutral score
     
-    def _add_metric(self, metric: SecurityMetric):
+    def _add_metric(self, metric -> None: SecurityMetric) -> None:
         """Add a metric to the history"""
         
         self.metrics_history.append(metric)
@@ -594,10 +594,10 @@ class SecurityAnalyticsDashboard:
             return {'green': 70, 'yellow': 85, 'red': 95}
     
     def add_security_alert(self,
-                          title: str,
-                          description: str,
-                          severity: str,
-                          source: str):
+                          title -> None: str,
+                          description -> None: str,
+                          severity -> None: str,
+                          source -> None: str) -> None:
         """Add a new security alert"""
         
         alert = SecurityAlert(
@@ -612,7 +612,7 @@ class SecurityAnalyticsDashboard:
         self.alerts.append(alert)
         logger.info(f"Security alert added: {title}")
     
-    def acknowledge_alert(self, alert_id: str, user_id: str):
+    def acknowledge_alert(self, alert_id -> None: str, user_id -> None: str) -> None:
         """Acknowledge a security alert"""
         
         for alert in self.alerts:
@@ -623,7 +623,7 @@ class SecurityAnalyticsDashboard:
         
         return False
     
-    def resolve_alert(self, alert_id: str, user_id: str):
+    def resolve_alert(self, alert_id -> None: str, user_id -> None: str) -> None:
         """Resolve a security alert"""
         
         for alert in self.alerts:
@@ -751,12 +751,12 @@ class SecurityAnalyticsDashboard:
             'last_updated': datetime.utcnow().isoformat()
         }
     
-    def enable_dashboard(self):
+    def enable_dashboard(self) -> None:
         """Enable security analytics dashboard"""
         self.enabled = True
         logger.info("Security analytics dashboard enabled")
     
-    def disable_dashboard(self):
+    def disable_dashboard(self) -> None:
         """Disable security analytics dashboard"""
         self.enabled = False
         logger.info("Security analytics dashboard disabled")

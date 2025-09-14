@@ -195,7 +195,7 @@ class AdaptationEvent:
 class NetworkAnalyzer:
     """Network condition analysis system"""
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client -> None: aioredis.Redis) -> None:
         self.redis = redis_client
         self.network_monitors = {}
         self.condition_history = defaultdict(deque)
@@ -335,7 +335,7 @@ class NetworkAnalyzer:
 class DeviceDetector:
     """Device capability detection system"""
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client -> None: aioredis.Redis) -> None:
         self.redis = redis_client
         self.device_profiles = {}
         self.capability_cache = {}
@@ -431,7 +431,7 @@ class DeviceDetector:
 class QualityManager:
     """Quality profile management system"""
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client -> None: aioredis.Redis) -> None:
         self.redis = redis_client
         self.quality_profiles = {}
         self.optimization_rules = {}
@@ -520,7 +520,7 @@ class QualityManager:
 class AdaptationEngine:
     """Adaptive streaming engine"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         self.adaptation_algorithms = {}
@@ -615,7 +615,7 @@ class AdaptationEngine:
 class StreamingAdaptiveController:
     """Unified streaming adaptive controller - Main service class"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         

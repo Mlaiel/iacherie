@@ -132,7 +132,7 @@ class PiracyDetectionAlertingSystem:
     - Comprehensive reporting and analytics
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.piracy_incidents: deque = deque(maxlen=100000)
         self.piracy_alerts: deque = deque(maxlen=10000)
@@ -240,7 +240,7 @@ class PiracyDetectionAlertingSystem:
             'alert_cooldown_hours': 6  # Prevent alert spam
         }
     
-    def _initialize_legal_templates(self):
+    def _initialize_legal_templates(self) -> None:
         """Initialize legal notice templates for different jurisdictions."""
         self.legal_templates = {
             'dmca_takedown': {
@@ -484,7 +484,7 @@ class PiracyDetectionAlertingSystem:
             'format': context.get('format', 'unknown')
         }
     
-    async def _evaluate_alert_conditions(self, incident: PiracyIncident):
+    async def _evaluate_alert_conditions(self, incident -> None: PiracyIncident) -> None:
         """Evaluate if an alert should be generated for the incident."""
         # Check for similar recent incidents
         recent_incidents = self._find_related_incidents(incident, hours=24)
@@ -541,9 +541,9 @@ class PiracyDetectionAlertingSystem:
         
         return AlertSeverity.LOW
     
-    async def _generate_piracy_alert(self, incident: PiracyIncident,
-                                   related_incidents: List[PiracyIncident],
-                                   severity: AlertSeverity):
+    async def _generate_piracy_alert(self, incident -> None: PiracyIncident,
+                                   related_incidents -> None: List[PiracyIncident],
+                                   severity -> None: AlertSeverity) -> None:
         """Generate piracy alert for stakeholder notification."""
         alert_id = str(uuid.uuid4())
         
@@ -657,7 +657,7 @@ class PiracyDetectionAlertingSystem:
         
         return actions[:5]  # Limit to top 5 actions
     
-    async def _notify_stakeholders(self, alert: PiracyAlert):
+    async def _notify_stakeholders(self, alert -> None: PiracyAlert) -> None:
         """Notify relevant stakeholders about piracy alert."""
         # Simulate stakeholder notification
         stakeholders = ['legal_team', 'content_owners', 'enforcement_team']
@@ -669,7 +669,7 @@ class PiracyDetectionAlertingSystem:
         
         logger.info(f"Stakeholders notified for alert {alert.alert_id}: {stakeholders}")
     
-    async def _initiate_automatic_takedown(self, incident: PiracyIncident):
+    async def _initiate_automatic_takedown(self, incident -> None: PiracyIncident) -> None:
         """Initiate automatic takedown request for high-confidence incidents."""
         request_id = str(uuid.uuid4())
         

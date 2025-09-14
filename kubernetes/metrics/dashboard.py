@@ -270,7 +270,7 @@ class MetricsDashboard:
     - Multi-language support and accessibility
     """
     
-    def __init__(self, config: Optional[MetricsConfiguration] = None):
+    def __init__(self, config -> None: Optional[MetricsConfiguration] = None) -> None:
         self.config = config or get_metrics_config()
         self.logger = logger
         

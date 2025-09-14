@@ -31,7 +31,7 @@ from .exceptions import (
 class SessionManager:
     """Thread-safe session manager for connection pooling"""
     
-    def __init__(self, max_connections: int = 10):
+    def __init__(self, max_connections -> None: int = 10) -> None:
         self._sessions = {}
         self._lock = threading.Lock()
         self.max_connections = max_connections
@@ -56,7 +56,7 @@ class SessionManager:
             
             return self._sessions[thread_id]
     
-    def close_all(self):
+    def close_all(self) -> None:
         """Close all sessions"""
         with self._lock:
             for session in self._sessions.values():
@@ -67,7 +67,7 @@ class SessionManager:
 class SyncMetrics:
     """Thread-safe metrics collection"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._lock = threading.Lock()
         self.total_requests = 0
         self.successful_requests = 0
@@ -75,7 +75,7 @@ class SyncMetrics:
         self.total_response_time = 0.0
         self.start_time = datetime.utcnow()
     
-    def record_request(self, response_time: float, success: bool):
+    def record_request(self, response_time -> None: float, success -> None: bool) -> None:
         """Record request metrics (thread-safe)"""
         with self._lock:
             self.total_requests += 1
@@ -107,13 +107,13 @@ class SyncMetrics:
 class RateLimiter:
     """Thread-safe rate limiter"""
     
-    def __init__(self, max_requests: int = 60, time_window: int = 60):
+    def __init__(self, max_requests -> None: int = 60, time_window -> None: int = 60) -> None:
         self.max_requests = max_requests
         self.time_window = time_window
         self._requests = []
         self._lock = threading.Lock()
     
-    def wait_if_needed(self):
+    def wait_if_needed(self) -> None:
         """Wait if rate limit would be exceeded"""
         with self._lock:
             now = time.time()
@@ -148,17 +148,17 @@ class SyncAinflueClient:
     
     def __init__(
         self,
-        base_url: str = "https://api.ainflue.com",
-        api_key: Optional[str] = None,
-        timeout: int = 30,
-        max_retries: int = 3,
-        retry_delay: float = 1.0,
-        max_connections: int = 10,
-        verify_ssl: bool = True,
-        custom_headers: Optional[Dict[str, str]] = None,
-        rate_limit_requests: int = 60,
-        rate_limit_window: int = 60
-    ):
+        base_url -> None: str = "https -> None://api.ainflue.com",
+        api_key -> None: Optional[str] = None,
+        timeout -> None: int = 30,
+        max_retries -> None: int = 3,
+        retry_delay -> None: float = 1.0,
+        max_connections -> None: int = 10,
+        verify_ssl -> None: bool = True,
+        custom_headers -> None: Optional[Dict[str, str]] = None,
+        rate_limit_requests -> None: int = 60,
+        rate_limit_window -> None: int = 60
+    ) -> None:
         self.base_url = base_url.rstrip('/')
         self.api_key = api_key
         self.timeout = timeout
@@ -352,7 +352,7 @@ class SyncAinflueClient:
         finally:
             response.close()
     
-    def _handle_streaming_response(self, response: requests.Response):
+    def _handle_streaming_response(self, response -> None: requests.Response) -> None:
         """Handle streaming response"""
         try:
             if response.status_code >= 400:
@@ -524,15 +524,15 @@ class SyncAinflueClient:
                 'metrics': self.get_metrics()
             }
     
-    def close(self):
+    def close(self) -> None:
         """Close all sessions and cleanup resources"""
         self.session_manager.close_all()
     
-    def __enter__(self):
+    def __enter__(self) -> None:
         """Context manager entry"""
         return self
     
-    def __exit__(self, exc_type, exc_val, exc_tb):
+    def __exit__(self, exc_type, exc_val, exc_tb) -> None:
         """Context manager exit"""
         self.close()
 

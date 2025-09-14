@@ -271,7 +271,7 @@ class ApprovalEngine:
     - Notifications intelligentes
     """
     
-    def __init__(self, db_session=None, redis_client=None):
+    def __init__(self, db_session=None, redis_client=None) -> None:
         self.db_session = db_session
         self.redis_client = redis_client
         self.approval_workflows = {}
@@ -283,7 +283,7 @@ class ApprovalEngine:
         # Initialiser les règles par défaut
         self._initialize_default_rules()
     
-    def _initialize_default_rules(self):
+    def _initialize_default_rules(self) -> None:
         """Initialise les règles d'approbation par défaut"""
         self.approval_rules = {
             'task': {
@@ -542,7 +542,7 @@ class ConsentProcessor:
     - Notifications de consentement intelligent
     """
     
-    def __init__(self, approval_engine, db_session=None):
+    def __init__(self, approval_engine, db_session=None) -> None:
         self.approval_engine = approval_engine
         self.db_session = db_session
         self.consent_templates = {}
@@ -552,7 +552,7 @@ class ConsentProcessor:
         # Initialiser les templates de consentement
         self._initialize_consent_templates()
     
-    def _initialize_consent_templates(self):
+    def _initialize_consent_templates(self) -> None:
         """Initialise les templates de consentement"""
         self.consent_templates = {
             'data_usage': {
@@ -753,7 +753,7 @@ class CollaborationWorkspace:
     - Templates et structures prédéfinies
     """
     
-    def __init__(self, db_session=None, redis_client=None):
+    def __init__(self, db_session=None, redis_client=None) -> None:
         self.db_session = db_session
         self.redis_client = redis_client
         self.active_workspaces = {}
@@ -764,7 +764,7 @@ class CollaborationWorkspace:
         # Initialiser les templates
         self._initialize_workspace_templates()
     
-    def _initialize_workspace_templates(self):
+    def _initialize_workspace_templates(self) -> None:
         """Initialise les templates d'espaces de travail"""
         self.workspace_templates = {
             'content_creation': {

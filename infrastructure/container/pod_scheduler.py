@@ -1,4 +1,6 @@
 """
+import asyncio
+
 Pod Scheduler
 Advanced Kubernetes pod scheduling for Ainflue workloads
 
@@ -15,7 +17,7 @@ logger = logging.getLogger(__name__)
 class PodScheduler:
     """Advanced pod scheduling and placement"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize pod scheduler"""
         logger.info("Pod scheduler initialized")
         

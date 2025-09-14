@@ -18,6 +18,7 @@ from ..core.base_event import BaseEvent
 
 
 class StreamingProtocol(Enum):
+    """StreamingProtocol class implementation"""
     HLS = "hls"
     DASH = "dash"
     RTMP = "rtmp"
@@ -25,6 +26,7 @@ class StreamingProtocol(Enum):
 
 
 class StreamQuality(Enum):
+    """StreamQuality class implementation"""
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -32,6 +34,7 @@ class StreamQuality(Enum):
 
 
 class StreamingPlatform(Enum):
+    """StreamingPlatform class implementation"""
     YOUTUBE = "youtube"
     TWITCH = "twitch"
     SPOTIFY = "spotify"
@@ -41,13 +44,14 @@ class StreamingPlatform(Enum):
 
 @dataclass
 class AudioStreamStartedEvent(BaseEvent):
+    """AudioStreamStartedEvent class implementation"""
     user_id: UUID
     stream_id: UUID
     file_id: UUID
     platform: str
     quality: str
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.streaming.started",
             data={
@@ -61,13 +65,14 @@ class AudioStreamStartedEvent(BaseEvent):
 
 @dataclass
 class AudioStreamEndedEvent(BaseEvent):
+    """AudioStreamEndedEvent class implementation"""
     user_id: UUID
     stream_id: UUID
     file_id: UUID
     duration: float
     listeners_count: int
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.streaming.ended",
             data={
@@ -81,12 +86,13 @@ class AudioStreamEndedEvent(BaseEvent):
 
 @dataclass
 class AudioStreamQualityChangedEvent(BaseEvent):
+    """AudioStreamQualityChangedEvent class implementation"""
     user_id: UUID
     stream_id: UUID
     old_quality: str
     new_quality: str
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.streaming.quality_changed",
             data={
@@ -99,12 +105,13 @@ class AudioStreamQualityChangedEvent(BaseEvent):
 
 @dataclass
 class AudioLiveStreamStartedEvent(BaseEvent):
+    """AudioLiveStreamStartedEvent class implementation"""
     user_id: UUID
     live_stream_id: UUID
     title: str
     expected_duration: Optional[float] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.streaming.live_started",
             data={
@@ -117,12 +124,13 @@ class AudioLiveStreamStartedEvent(BaseEvent):
 
 @dataclass
 class AudioLiveStreamEndedEvent(BaseEvent):
+    """AudioLiveStreamEndedEvent class implementation"""
     user_id: UUID
     live_stream_id: UUID
     duration: float
     max_concurrent_listeners: int
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.streaming.live_ended",
             data={
@@ -135,12 +143,13 @@ class AudioLiveStreamEndedEvent(BaseEvent):
 
 @dataclass
 class AudioStreamListenerJoinedEvent(BaseEvent):
+    """AudioStreamListenerJoinedEvent class implementation"""
     user_id: UUID
     stream_id: UUID
     listener_id: UUID
     listener_location: Optional[str] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.streaming.listener_joined",
             data={
@@ -153,12 +162,13 @@ class AudioStreamListenerJoinedEvent(BaseEvent):
 
 @dataclass
 class AudioStreamListenerLeftEvent(BaseEvent):
+    """AudioStreamListenerLeftEvent class implementation"""
     user_id: UUID
     stream_id: UUID
     listener_id: UUID
     listen_duration: float
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.streaming.listener_left",
             data={
@@ -171,12 +181,13 @@ class AudioStreamListenerLeftEvent(BaseEvent):
 
 @dataclass
 class AudioStreamBufferingEvent(BaseEvent):
+    """AudioStreamBufferingEvent class implementation"""
     user_id: UUID
     stream_id: UUID
     buffer_duration: float
     network_conditions: Dict[str, Any] = field(default_factory=dict)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.streaming.buffering",
             data={
@@ -188,11 +199,12 @@ class AudioStreamBufferingEvent(BaseEvent):
 
 @dataclass
 class AudioStreamAnalyticsEvent(BaseEvent):
+    """AudioStreamAnalyticsEvent class implementation"""
     user_id: UUID
     stream_id: UUID
     analytics_data: Dict[str, Any] = field(default_factory=dict)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.streaming.analytics",
             data={
@@ -204,12 +216,13 @@ class AudioStreamAnalyticsEvent(BaseEvent):
 
 @dataclass
 class AudioStreamErrorEvent(BaseEvent):
+    """AudioStreamErrorEvent class implementation"""
     user_id: UUID
     stream_id: UUID
     error_code: str
     error_message: str
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.streaming.error",
             data={
@@ -222,12 +235,13 @@ class AudioStreamErrorEvent(BaseEvent):
 
 @dataclass
 class AudioStreamQualityAdaptationEvent(BaseEvent):
+    """AudioStreamQualityAdaptationEvent class implementation"""
     user_id: UUID
     stream_id: UUID
     adaptation_reason: str
     new_bitrate: int
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.streaming.quality_adaptation",
             data={
@@ -240,11 +254,12 @@ class AudioStreamQualityAdaptationEvent(BaseEvent):
 
 @dataclass
 class AudioMulticastEvent(BaseEvent):
+    """AudioMulticastEvent class implementation"""
     user_id: UUID
     multicast_id: UUID
     target_platforms: List[str] = field(default_factory=list)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.streaming.multicast",
             data={
@@ -256,12 +271,13 @@ class AudioMulticastEvent(BaseEvent):
 
 @dataclass
 class AudioLatencyOptimizationEvent(BaseEvent):
+    """AudioLatencyOptimizationEvent class implementation"""
     user_id: UUID
     stream_id: UUID
     original_latency: float
     optimized_latency: float
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.streaming.latency_optimization",
             data={

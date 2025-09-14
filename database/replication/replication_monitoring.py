@@ -119,14 +119,14 @@ class MonitoringDashboard:
 class MetricsCollector:
     """Collects metrics from various sources."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._metrics_history: Dict[str, deque] = defaultdict(lambda: deque(maxlen=10000))
         self._system_metrics: Dict[str, float] = {}
         self._collection_interval = 60  # seconds
         self._is_running = False
         self._collection_task: Optional[asyncio.Task] = None
         
-    async def start_collection(self, interval_seconds: int = 60):
+    async def start_collection(self, interval_seconds -> None: int = 60) -> None:
         """Start metrics collection."""
         try:
             self._collection_interval = interval_seconds
@@ -139,7 +139,7 @@ class MetricsCollector:
             logger.error(f"❌ Failed to start metrics collection: {e}")
             raise
     
-    async def stop_collection(self):
+    async def stop_collection(self) -> None:
         """Stop metrics collection."""
         try:
             self._is_running = False
@@ -156,7 +156,7 @@ class MetricsCollector:
         except Exception as e:
             logger.error(f"❌ Error stopping metrics collection: {e}")
     
-    async def _collection_loop(self):
+    async def _collection_loop(self) -> None:
         """Main metrics collection loop."""
         while self._is_running:
             try:
@@ -172,7 +172,7 @@ class MetricsCollector:
                 logger.error(f"❌ Metrics collection error: {e}")
                 await asyncio.sleep(60)
     
-    async def _collect_system_metrics(self):
+    async def _collect_system_metrics(self) -> None:
         """Collect system-level metrics."""
         try:
             # CPU metrics
@@ -216,7 +216,7 @@ class MetricsCollector:
         except Exception as e:
             logger.error(f"❌ Failed to collect system metrics: {e}")
     
-    def record_database_metrics(self, database_name: str, metrics: ReplicationMetrics):
+    def record_database_metrics(self, database_name -> None: str, metrics -> None: ReplicationMetrics) -> None:
         """Record database-specific metrics."""
         try:
             metrics_dict = {
@@ -284,14 +284,14 @@ class MetricsCollector:
 class PerformanceAnalyzer:
     """Analyzes performance metrics and trends."""
     
-    def __init__(self, metrics_collector: MetricsCollector):
+    def __init__(self, metrics_collector -> None: MetricsCollector) -> None:
         self._metrics_collector = metrics_collector
         self._trend_cache: Dict[str, PerformanceTrend] = {}
         self._analysis_interval = 300  # 5 minutes
         self._is_running = False
         self._analysis_task: Optional[asyncio.Task] = None
         
-    async def start_analysis(self):
+    async def start_analysis(self) -> None:
         """Start performance analysis."""
         try:
             self._is_running = True
@@ -302,7 +302,7 @@ class PerformanceAnalyzer:
             logger.error(f"❌ Failed to start performance analysis: {e}")
             raise
     
-    async def stop_analysis(self):
+    async def stop_analysis(self) -> None:
         """Stop performance analysis."""
         try:
             self._is_running = False
@@ -319,7 +319,7 @@ class PerformanceAnalyzer:
         except Exception as e:
             logger.error(f"❌ Error stopping performance analysis: {e}")
     
-    async def _analysis_loop(self):
+    async def _analysis_loop(self) -> None:
         """Main performance analysis loop."""
         while self._is_running:
             try:
@@ -334,7 +334,7 @@ class PerformanceAnalyzer:
                 logger.error(f"❌ Performance analysis error: {e}")
                 await asyncio.sleep(300)
     
-    async def _analyze_all_trends(self):
+    async def _analyze_all_trends(self) -> None:
         """Analyze trends for all databases."""
         try:
             # Get list of databases from metrics history
@@ -353,7 +353,7 @@ class PerformanceAnalyzer:
         except Exception as e:
             logger.error(f"❌ Failed to analyze all trends: {e}")
     
-    async def _analyze_database_trends(self, database_name: str):
+    async def _analyze_database_trends(self, database_name -> None: str) -> None:
         """Analyze trends for a specific database."""
         try:
             # Get recent metrics
@@ -386,7 +386,7 @@ class PerformanceAnalyzer:
         except Exception as e:
             logger.error(f"❌ Failed to analyze database trends for {database_name}: {e}")
     
-    async def _analyze_system_trends(self):
+    async def _analyze_system_trends(self) -> None:
         """Analyze system-level trends."""
         try:
             # Get recent system metrics
@@ -580,18 +580,18 @@ class PerformanceAnalyzer:
 class HealthTracker:
     """Tracks health status and generates alerts."""
     
-    def __init__(self, config: MonitoringConfig):
+    def __init__(self, config -> None: MonitoringConfig) -> None:
         self._config = config
         self._alert_history: deque = deque(maxlen=10000)
         self._alert_handlers: List[Callable] = []
         self._health_status: Dict[str, DatabaseHealth] = {}
         self._alert_counters: Dict[str, int] = defaultdict(int)
         
-    def register_alert_handler(self, handler: Callable[[Alert], None]):
+    def register_alert_handler(self, handler -> None: Callable[[Alert], None]) -> None:
         """Register an alert handler."""
         self._alert_handlers.append(handler)
     
-    async def check_database_health(self, database_name: str, health: DatabaseHealth):
+    async def check_database_health(self, database_name -> None: str, health -> None: DatabaseHealth) -> None:
         """Check database health and generate alerts if needed."""
         try:
             self._health_status[database_name] = health
@@ -604,7 +604,7 @@ class HealthTracker:
         except Exception as e:
             logger.error(f"❌ Failed to check database health for {database_name}: {e}")
     
-    async def check_system_health(self, system_metrics: Dict[str, float]):
+    async def check_system_health(self, system_metrics -> None: Dict[str, float]) -> None:
         """Check system health and generate alerts if needed."""
         try:
             # Check CPU usage
@@ -649,7 +649,7 @@ class HealthTracker:
         except Exception as e:
             logger.error(f"❌ Failed to check system health: {e}")
     
-    async def _check_lag_threshold(self, database_name: str, health: DatabaseHealth):
+    async def _check_lag_threshold(self, database_name -> None: str, health -> None: DatabaseHealth) -> None:
         """Check replication lag threshold."""
         try:
             lag_threshold = self._config.alert_thresholds.get('lag_threshold_ms', 1000)
@@ -670,7 +670,7 @@ class HealthTracker:
         except Exception as e:
             logger.error(f"❌ Failed to check lag threshold: {e}")
     
-    async def _check_node_availability(self, database_name: str, health: DatabaseHealth):
+    async def _check_node_availability(self, database_name -> None: str, health -> None: DatabaseHealth) -> None:
         """Check node availability."""
         try:
             if not health.is_healthy:
@@ -697,7 +697,7 @@ class HealthTracker:
         except Exception as e:
             logger.error(f"❌ Failed to check node availability: {e}")
     
-    async def _check_error_rate(self, database_name: str, health: DatabaseHealth):
+    async def _check_error_rate(self, database_name -> None: str, health -> None: DatabaseHealth) -> None:
         """Check error rate threshold."""
         try:
             error_threshold = self._config.alert_thresholds.get('error_rate_threshold', 0.05)
@@ -720,9 +720,9 @@ class HealthTracker:
         except Exception as e:
             logger.error(f"❌ Failed to check error rate: {e}")
     
-    async def _generate_alert(self, alert_type: AlertType, severity: AlertSeverity, 
-                            message: str, database_name: str, node_name: str,
-                            metric_value: float, threshold_value: float):
+    async def _generate_alert(self, alert_type -> None: AlertType, severity -> None: AlertSeverity, 
+                            message -> None: str, database_name -> None: str, node_name -> None: str,
+                            metric_value -> None: float, threshold_value -> None: float) -> None:
         """Generate and process an alert."""
         try:
             # Create alert
@@ -819,7 +819,7 @@ class HealthTracker:
 class ReplicationMonitor:
     """Main replication monitoring coordinator."""
     
-    def __init__(self, config: Optional[ReplicationConfig] = None):
+    def __init__(self, config -> None: Optional[ReplicationConfig] = None) -> None:
         self._config = config
         self._monitoring_config = config.monitoring if config else MonitoringConfig()
         
@@ -835,7 +835,7 @@ class ReplicationMonitor:
         self._dashboard_cache: Optional[MonitoringDashboard] = None
         self._dashboard_cache_time = 0
         
-    async def initialize(self, config: ReplicationConfig):
+    async def initialize(self, config -> None: ReplicationConfig) -> None:
         """Initialize monitoring system."""
         try:
             self._config = config
@@ -850,7 +850,7 @@ class ReplicationMonitor:
             logger.error(f"❌ Failed to initialize monitoring system: {e}")
             raise
     
-    async def start_monitoring(self):
+    async def start_monitoring(self) -> None:
         """Start all monitoring components."""
         try:
             if self._is_running:
@@ -875,7 +875,7 @@ class ReplicationMonitor:
             logger.error(f"❌ Failed to start monitoring: {e}")
             raise
     
-    async def stop_monitoring(self):
+    async def stop_monitoring(self) -> None:
         """Stop all monitoring components."""
         try:
             self._is_running = False
@@ -897,7 +897,7 @@ class ReplicationMonitor:
         except Exception as e:
             logger.error(f"❌ Error stopping monitoring: {e}")
     
-    async def _monitoring_loop(self):
+    async def _monitoring_loop(self) -> None:
         """Main monitoring coordination loop."""
         while self._is_running:
             try:
@@ -918,7 +918,7 @@ class ReplicationMonitor:
                 logger.error(f"❌ Monitoring loop error: {e}")
                 await asyncio.sleep(60)
     
-    async def record_database_health(self, database_name: str, health: DatabaseHealth):
+    async def record_database_health(self, database_name -> None: str, health -> None: DatabaseHealth) -> None:
         """Record database health status."""
         try:
             # Check health and generate alerts
@@ -927,7 +927,7 @@ class ReplicationMonitor:
         except Exception as e:
             logger.error(f"❌ Failed to record database health for {database_name}: {e}")
     
-    async def record_database_metrics(self, database_name: str, metrics: ReplicationMetrics):
+    async def record_database_metrics(self, database_name -> None: str, metrics -> None: ReplicationMetrics) -> None:
         """Record database performance metrics."""
         try:
             # Store metrics
@@ -954,7 +954,7 @@ class ReplicationMonitor:
             logger.error(f"❌ Failed to get monitoring dashboard: {e}")
             return self._create_empty_dashboard()
     
-    async def _update_dashboard_cache(self):
+    async def _update_dashboard_cache(self) -> None:
         """Update dashboard cache with latest data."""
         try:
             # Get health summary
@@ -1018,7 +1018,7 @@ class ReplicationMonitor:
             performance_trends=[]
         )
     
-    async def _default_alert_handler(self, alert: Alert):
+    async def _default_alert_handler(self, alert -> None: Alert) -> None:
         """Default alert handler."""
         try:
             # Log alert
@@ -1040,7 +1040,7 @@ class ReplicationMonitor:
         except Exception as e:
             logger.error(f"❌ Default alert handler error: {e}")
     
-    async def close(self):
+    async def close(self) -> None:
         """Close monitoring system."""
         try:
             await self.stop_monitoring()

@@ -43,7 +43,7 @@ class AudienceInsights:
 class AudienceIntelligenceEngine:
     """Main audience intelligence engine coordinating all analysis components"""
     
-    def __init__(self, analysis_depth: AnalysisDepth = AnalysisDepth.COMPREHENSIVE):
+    def __init__(self, analysis_depth -> None: AnalysisDepth = AnalysisDepth.COMPREHENSIVE) -> None:
         """Initialize audience intelligence engine"""
         self.analysis_depth = analysis_depth
         self.profiler = None  # Would initialize actual profiler

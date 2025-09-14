@@ -154,7 +154,7 @@ class BlockchainLicensingEngine:
     - Automated compliance enforcement
     """
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         """Initialize the Blockchain Licensing Engine."""
         self.config = config or {}
         self.deployed_contracts: Dict[str, SmartContract] = {}

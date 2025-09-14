@@ -67,7 +67,7 @@ Comprehensive validation report."""
     info: List[ValidationResult]
     timestamp: datetime
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         self.errors = [r for r in self.results if r.level == ValidationLevel.ERROR or r.level == ValidationLevel.CRITICAL]
         self.warnings = [r for r in self.results if r.level == ValidationLevel.WARNING]
         self.info = [r for r in self.results if r.level == ValidationLevel.INFO]
@@ -120,7 +120,7 @@ Get summary of errors."""
 class WorkflowValidator:
     """Comprehensive validator for workflow components."""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.config = config or {}
         self.logger = logging.getLogger("workflow.validator")
         
@@ -323,7 +323,7 @@ Add custom validation function."""
         self.validation_rules[target_type].append(rule_func)
         self.logger.debug(f"Added validation rule for {target_type}")
     
-    def _setup_default_rules(self):
+    def _setup_default_rules(self) -> None:
         """Setup default validation rules."""
         # Pipeline validation rules
         self.add_validation_rule("pipeline", self._check_pipeline_complexity)
@@ -1072,7 +1072,7 @@ Get required fields for data type."""
     def _find_circular_dependencies(self, step_deps: Dict[str, List[str]]) -> List[List[str]]:
         """
 Find circular dependencies in step definitions."""
-        def dfs(node, path, visited):
+        def dfs(node, path, visited) -> None:
             if node in path:
                 # Found cycle
                 cycle_start = path.index(node)

@@ -1,5 +1,7 @@
 """Event Status Enumeration
 
+import logging
+
 Defines status states for event processing lifecycle management
 in the enterprise event system.
 

@@ -178,7 +178,7 @@ class PaymentGatewayAnalytics:
     analytics, reporting, and business intelligence capabilities.
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """Initialize analytics engine"""
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -213,7 +213,7 @@ class PaymentGatewayAnalytics:
         self.aggregation_task = None
         self.dashboard_updater_task = None
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize the analytics engine"""
         try:
             # Start background tasks
@@ -226,7 +226,7 @@ class PaymentGatewayAnalytics:
             self.logger.error(f"Failed to initialize analytics engine: {e}")
             raise
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Shutdown the analytics engine"""
         try:
             # Cancel background tasks
@@ -240,9 +240,9 @@ class PaymentGatewayAnalytics:
         except Exception as e:
             self.logger.error(f"Error during analytics shutdown: {e}")
     
-    async def record_metric(self, metric_type: MetricType, value: float,
-                          labels: Optional[Dict[str, str]] = None,
-                          metadata: Optional[Dict[str, Any]] = None):
+    async def record_metric(self, metric_type -> None: MetricType, value -> None: float,
+                          labels -> None: Optional[Dict[str, str]] = None,
+                          metadata -> None: Optional[Dict[str, Any]] = None) -> None:
         """Record a metric data point"""
         try:
             data_point = MetricDataPoint(
@@ -704,7 +704,7 @@ class PaymentGatewayAnalytics:
             ]
         )
     
-    async def _aggregation_loop(self):
+    async def _aggregation_loop(self) -> None:
         """Background task for metric aggregation"""
         while True:
             try:
@@ -716,7 +716,7 @@ class PaymentGatewayAnalytics:
             except Exception as e:
                 self.logger.error(f"Error in aggregation loop: {e}")
     
-    async def _dashboard_updater_loop(self):
+    async def _dashboard_updater_loop(self) -> None:
         """Background task for dashboard updates"""
         while True:
             try:
@@ -728,7 +728,7 @@ class PaymentGatewayAnalytics:
             except Exception as e:
                 self.logger.error(f"Error in dashboard updater loop: {e}")
     
-    async def _aggregate_metrics(self):
+    async def _aggregate_metrics(self) -> None:
         """Aggregate raw metrics into time series data"""
         # Process metrics from buffer
         if len(self.metrics_buffer) < 10:

@@ -200,7 +200,7 @@ class SocialPlatformOptimization:
 class MobileOptimizationEngine:
     """Unified mobile optimization engine consolidating SEO, metadata, and social optimization"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         """Initialize mobile optimization engine with comprehensive capabilities"""
         self.config = config or {}
         self.seo_orchestrator = MobileSEOOrchestrator(self.config)
@@ -440,7 +440,7 @@ class MobileOptimizationEngine:
         
         return enhancements
     
-    def _update_optimization_metrics(self, optimization_result: Dict[str, Any]):
+    def _update_optimization_metrics(self, optimization_result -> None: Dict[str, Any]) -> None:
         """Update optimization performance metrics"""
         self.optimization_metrics["seo_optimizations"] += 1
         self.optimization_metrics["metadata_optimizations"] += 1
@@ -563,7 +563,7 @@ class MobileOptimizationEngine:
 class MobileSEOOrchestrator:
     """Mobile SEO orchestrator with platform optimization"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.seo_models = {}
         self.optimization_history = {}
@@ -722,7 +722,7 @@ class MobileSEOOrchestrator:
 class MobileMetadataOptimizer:
     """Mobile metadata optimizer with intelligent metadata generation"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.metadata_templates = {}
         self.ai_models = {}
@@ -1000,7 +1000,7 @@ class MobileMetadataOptimizer:
 class MobileSocialOptimizer:
     """Mobile social optimizer with platform-specific optimization"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.platform_algorithms = {}
         self.social_trends = {}

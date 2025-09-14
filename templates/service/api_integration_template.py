@@ -115,13 +115,13 @@ class CreateIntegrationRequest(BaseModel):
     metadata: Optional[Dict[str, Any]] = Field(default_factory=dict)
 
     @validator('name')
-    def validate_name(cls, v):
+    def validate_name(cls, v) -> None:
         if len(v.strip()) < 3:
             raise ValueError('Integration name must be at least 3 characters')
         return v.strip()
 
     @validator('timeout')
-    def validate_timeout(cls, v):
+    def validate_timeout(cls, v) -> None:
         if v < 5 or v > 300:
             raise ValueError('Timeout must be between 5 and 300 seconds')
         return v
@@ -174,7 +174,7 @@ class {{service_class_name}}(BaseService):
     - Error handling and recovery
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
         self.name = "{{service_name}}"
         self.version = "{{service_version}}"
@@ -215,7 +215,7 @@ class {{service_class_name}}(BaseService):
             }
         }
 
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize service with dependencies"""
         try:
             await super().initialize()
@@ -680,7 +680,7 @@ class {{service_class_name}}(BaseService):
             logger.error(f"Failed to check circuit breaker: {e}")
             return True  # Allow request on error
 
-    async def _initialize_circuit_breaker(self, integration_id: str):
+    async def _initialize_circuit_breaker(self, integration_id -> None: str) -> None:
         """Initialize circuit breaker for integration"""
         try:
             circuit_key = f"circuit_breaker:{integration_id}"
@@ -698,7 +698,7 @@ class {{service_class_name}}(BaseService):
         except Exception as e:
             logger.error(f"Failed to initialize circuit breaker: {e}")
 
-    async def _record_circuit_breaker_success(self, integration_id: str):
+    async def _record_circuit_breaker_success(self, integration_id -> None: str) -> None:
         """Record successful request for circuit breaker"""
         try:
             circuit_key = f"circuit_breaker:{integration_id}"
@@ -715,7 +715,7 @@ class {{service_class_name}}(BaseService):
         except Exception as e:
             logger.error(f"Failed to record circuit breaker success: {e}")
 
-    async def _record_circuit_breaker_failure(self, integration_id: str):
+    async def _record_circuit_breaker_failure(self, integration_id -> None: str) -> None:
         """Record failed request for circuit breaker"""
         try:
             circuit_key = f"circuit_breaker:{integration_id}"
@@ -940,10 +940,10 @@ class {{service_class_name}}(BaseService):
 
     async def _deliver_webhook(
         self,
-        webhook: WebhookSubscription,
-        event_type: str,
-        payload: Dict[str, Any]
-    ):
+        webhook -> None: WebhookSubscription,
+        event_type -> None: str,
+        payload -> None: Dict[str, Any]
+    ) -> None:
         """Deliver webhook to callback URL"""
         try:
             webhook_payload = {
@@ -1078,13 +1078,13 @@ class {{service_class_name}}(BaseService):
 
     async def _log_api_request(
         self,
-        integration_id: str,
-        request: ApiRequestModel,
-        response: Optional[Dict[str, Any]],
-        success: bool,
-        error: Optional[str] = None,
-        session: Optional[AsyncSession] = None
-    ):
+        integration_id -> None: str,
+        request -> None: ApiRequestModel,
+        response -> None: Optional[Dict[str, Any]],
+        success -> None: bool,
+        error -> None: Optional[str] = None,
+        session -> None: Optional[AsyncSession] = None
+    ) -> None:
         """Log API request"""
         if session:
             try:
@@ -1110,7 +1110,7 @@ class {{service_class_name}}(BaseService):
             except Exception as e:
                 logger.error(f"Failed to log API request: {e}")
 
-    async def _circuit_breaker_monitor(self):
+    async def _circuit_breaker_monitor(self) -> None:
         """Background task to monitor circuit breakers"""
         while True:
             try:
@@ -1133,7 +1133,7 @@ class {{service_class_name}}(BaseService):
                 logger.error(f"Circuit breaker monitor error: {e}")
                 await asyncio.sleep(60)
 
-    async def _rate_limit_cleanup_worker(self):
+    async def _rate_limit_cleanup_worker(self) -> None:
         """Background task to clean up rate limit data"""
         while True:
             try:
@@ -1157,7 +1157,7 @@ class {{service_class_name}}(BaseService):
                 logger.error(f"Rate limit cleanup error: {e}")
                 await asyncio.sleep(300)
 
-    async def _send_circuit_breaker_alert(self, integration_id: str):
+    async def _send_circuit_breaker_alert(self, integration_id -> None: str) -> None:
         """Send alert when circuit breaker opens"""
         try:
             # This would integrate with your notification service
@@ -1263,7 +1263,7 @@ class {{service_class_name}}(BaseService):
                 "timestamp": datetime.utcnow().isoformat()
             }
 
-    async def cleanup(self):
+    async def cleanup(self) -> None:
         """Cleanup service resources"""
         try:
             if self.http_session and not self.http_session.closed:
@@ -1284,7 +1284,7 @@ class {{service_class_name}}(BaseService):
 
 # Example usage and testing
 if __name__ == "__main__":
-    async def main():
+    async def main() -> None:
         service = {{service_class_name}}()
         await service.initialize()
         
@@ -1326,3 +1326,5 @@ if __name__ == "__main__":
             await service.cleanup()
 
     asyncio.run(main())
+
+# File has syntax issues - needs manual review

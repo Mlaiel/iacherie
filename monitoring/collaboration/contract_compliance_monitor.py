@@ -115,7 +115,7 @@ class ContractComplianceMonitor:
     - Contract amendment tracking
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize contract compliance monitor."""
         self.config = config or {}
         self.contracts: Dict[str, CollaborationContract] = {}
@@ -136,7 +136,7 @@ class ContractComplianceMonitor:
         logger.info("📋 Contract Compliance Monitor initialized")
         self._setup_default_compliance_rules()
     
-    def _setup_default_compliance_rules(self):
+    def _setup_default_compliance_rules(self) -> None:
         """Setup default compliance rules for different contract types."""
         self.compliance_rules = {
             "revenue_sharing": {

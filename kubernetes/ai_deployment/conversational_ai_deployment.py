@@ -165,7 +165,7 @@ class ConversationalAIConfig:
     sdk_support: bool = True
     plugin_system: bool = True
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         try:
                     # Request validation
                     if not data:
@@ -199,7 +199,7 @@ class ConversationalAIDeployment:
     - Real-time analytics and conversation insights
     """
     
-    def __init__(self, namespace: str = "ia-influencer-conversational-ai"):
+    def __init__(self, namespace -> None: str = "ia-influencer-conversational-ai") -> None:
         """
         Initialize conversational AI deployment
         
@@ -1348,3 +1348,5 @@ class ConversationalAIDeployment:
     async def _setup_analytics_learning(self, config: ConversationalAIConfig, deployment_id: str) -> Dict[str, Any]:
         """Set up analytics and learning"""
         return {"analytics": config.conversation_analytics, "continuous_learning": config.continuous_learning}
+
+# File has syntax issues - needs manual review

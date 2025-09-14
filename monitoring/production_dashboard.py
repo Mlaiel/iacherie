@@ -15,7 +15,7 @@ class ProductionReadinessDashboard:
     - Quality: >85% test coverage, zero critical/high vulnerabilities, 100% API docs, 50+ metrics
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
         
         # Initialize monitoring components

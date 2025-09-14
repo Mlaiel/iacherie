@@ -1,7 +1,14 @@
+"""
+Backup Config module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 """Ainflue Backup Configuration Module
+import asyncio
+
 =====================================
 
 Enterprise-grade backup configuration for the Ainflue platform.
@@ -353,7 +360,7 @@ class BackupMonitoringConfig:
 class BackupConfiguration:
     """Main backup configuration manager"""
     
-    def __init__(self, storage_provider: BackupStorage = BackupStorage.AWS_S3):
+    def __init__(self, storage_provider -> None: BackupStorage = BackupStorage.AWS_S3) -> None:
         """Initialize backup configuration"""
         self.storage_provider = storage_provider
         

@@ -25,7 +25,7 @@ class QualityMetrics:
 class QualityPreservationEngine:
     """Advanced quality preservation and assessment engine."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the quality preservation engine."""
         self.quality_thresholds = self._load_quality_thresholds()
         

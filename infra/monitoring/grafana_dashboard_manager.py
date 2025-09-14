@@ -1,3 +1,8 @@
+"""
+Grafana Dashboard Manager module
+Enterprise implementation for Ainflue platform
+"""
+
 # Ainflue Infrastructure Module - Grafana Dashboard Manager
 # =======================================================
 # 
@@ -31,7 +36,7 @@ class GrafanaConfig:
 class GrafanaDashboardManager:
     """Enterprise Grafana dashboard management for multi-cloud monitoring"""
     
-    def __init__(self, config: GrafanaConfig):
+    def __init__(self, config -> None: GrafanaConfig) -> None:
         """Initialize Grafana dashboard manager
         
         Args:
@@ -659,7 +664,7 @@ class GrafanaDashboardManager:
         }
 
 # Example usage
-async def setup_ainflue_dashboards():
+async def setup_ainflue_dashboards() -> None:
     """Setup all Ainflue Grafana dashboards"""
     config = GrafanaConfig(
         url="http://grafana.ainflue.local",

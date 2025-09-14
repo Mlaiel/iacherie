@@ -12,6 +12,7 @@ from datetime import datetime
 
 @dataclass
 class CohortMetrics:
+    """CohortMetrics: class implementation"""
     cohort_id: str
     cohort_size: int
     retention_rates: Dict[str, float]
@@ -21,6 +22,7 @@ class CohortMetrics:
 
 @dataclass
 class RetentionAnalysis:
+    """RetentionAnalysis: class implementation"""
     user_id: str
     cohort_data: List[CohortMetrics]
     retention_insights: List[str]

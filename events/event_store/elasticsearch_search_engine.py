@@ -63,7 +63,7 @@ class ElasticsearchSearchEngine(IEventStoreBackend):
     - Anomaly detection and trend analysis
     """
     
-    def __init__(self, connection_config: Dict[str, Any]):
+    def __init__(self, connection_config -> None: Dict[str, Any]) -> None:
         if not ELASTICSEARCH_AVAILABLE:
             raise ImportError("Elasticsearch not available. Install with: pip install elasticsearch")
         
@@ -90,7 +90,7 @@ class ElasticsearchSearchEngine(IEventStoreBackend):
             'analytics_events': 'ainflue-analytics-events'
         }
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize Elasticsearch connection and indices"""
         try:
             # Create Elasticsearch client
@@ -139,7 +139,7 @@ class ElasticsearchSearchEngine(IEventStoreBackend):
             logger.error(f"Failed to initialize Elasticsearch search engine: {e}")
             raise
     
-    async def _initialize_indices(self):
+    async def _initialize_indices(self) -> None:
         """Initialize indices with optimized mappings for Ainflue events"""
         
         # Content events index
@@ -178,7 +178,7 @@ class ElasticsearchSearchEngine(IEventStoreBackend):
             self._get_analytics_events_mapping()
         )
     
-    async def _create_index_if_not_exists(self, index_name: str, mapping: Dict[str, Any]):
+    async def _create_index_if_not_exists(self, index_name -> None: str, mapping -> None: Dict[str, Any]) -> None:
         """Create index if it doesn't exist"""
         try:
             exists = await self.client.indices.exists(index=index_name)
@@ -456,7 +456,7 @@ class ElasticsearchSearchEngine(IEventStoreBackend):
             }
         }
     
-    async def _setup_index_templates(self):
+    async def _setup_index_templates(self) -> None:
         """Setup index templates for automatic index creation"""
         
         # Template for time-based indices
@@ -478,7 +478,7 @@ class ElasticsearchSearchEngine(IEventStoreBackend):
         except Exception as e:
             logger.warning(f"Failed to create index template: {e}")
     
-    async def _setup_index_aliases(self):
+    async def _setup_index_aliases(self) -> None:
         """Setup index aliases for easier querying"""
         
         aliases = {
@@ -1051,7 +1051,7 @@ class ElasticsearchSearchEngine(IEventStoreBackend):
             'cluster_stats': cluster_stats
         }
     
-    async def close(self):
+    async def close(self) -> None:
         """Close Elasticsearch connection"""
         if self.client:
             await self.client.close()

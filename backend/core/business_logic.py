@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 class BusinessLogicBase(ABC):
     """Base class for business logic components"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(self.__class__.__name__)
     
     @abstractmethod
@@ -27,7 +27,7 @@ class BusinessLogicBase(ABC):
 class BusinessRuleEngine:
     """Core business rule engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.rules: Dict[str, Any] = {}
         self.logger = logging.getLogger(__name__)
     
@@ -49,7 +49,7 @@ class BusinessRuleEngine:
 class WorkflowProcessor:
     """Core workflow processing engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.workflows: Dict[str, Any] = {}
         self.logger = logging.getLogger(__name__)
     
@@ -71,7 +71,7 @@ class WorkflowProcessor:
 class AinflueCoreBusinessLogic:
     """Ainflue Core Business Logic - Main orchestrator"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.rule_engine = BusinessRuleEngine()
         self.workflow_processor = WorkflowProcessor()
         self.logger = logging.getLogger(__name__)

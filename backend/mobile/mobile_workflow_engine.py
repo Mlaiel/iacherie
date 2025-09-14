@@ -173,7 +173,7 @@ class MobileWorkflowResult:
 class MobileWorkflowEngine:
     """Unified mobile workflow engine consolidating creator workflows and automation"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         """Initialize mobile workflow engine with comprehensive capabilities"""
         self.config = config or {}
         self.creator_workflow_manager = CreatorWorkflowMobile(self.config)
@@ -430,7 +430,7 @@ class MobileWorkflowEngine:
         }
         return sum(mobile_factors.values())
     
-    def _update_workflow_metrics(self, workflow_result: MobileWorkflowResult):
+    def _update_workflow_metrics(self, workflow_result -> None: MobileWorkflowResult) -> None:
         """Update workflow engine metrics"""
         # Update success/failure counts
         if workflow_result.status == WorkflowStatus.COMPLETED:
@@ -521,7 +521,7 @@ class MobileWorkflowEngine:
 class CreatorWorkflowMobile:
     """Creator workflow mobile with creator-specific workflow management"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.creator_workflows = {}
         self.workflow_states = {}
@@ -664,7 +664,7 @@ class CreatorWorkflowMobile:
         
         return result
     
-    async def _update_creator_workflow_state(self, creator_id: str, stages_completed: List[WorkflowStage]):
+    async def _update_creator_workflow_state(self, creator_id -> None: str, stages_completed -> None: List[WorkflowStage]) -> None:
         """Update creator workflow state based on completed stages"""
         # Determine new state based on completed stages
         if WorkflowStage.PERFORMANCE_MONITORING in stages_completed:
@@ -795,7 +795,7 @@ class CreatorWorkflowMobile:
 class MobileWorkflowAutomation:
     """Mobile workflow automation with intelligent automation rules"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.automation_rules = {}
         self.scheduled_workflows = {}

@@ -69,14 +69,14 @@ class AIEngineOrchestrator:
     - Real-time analytics and business intelligence
     """
     
-    def __init__(self, master_config: Dict[str, Any] = None):
+    def __init__(self, master_config -> None: Dict[str, Any] = None) -> None:
         self.master_config = master_config or {}
         self.ai_engine = None
         self.initialized = False
         
         logger.info("AI Engine Orchestrator initializing...")
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize the complete AI engine ecosystem"""
         try:
             # Create main AI engine instance

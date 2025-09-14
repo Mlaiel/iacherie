@@ -120,7 +120,7 @@ class MetadataOptimizationResult:
 class MetadataEnhancementWorkflow:
     """Advanced metadata enhancement workflow for comprehensive SEO optimization."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the metadata enhancement workflow."""
         self.title_generators = {
             "article": self._generate_article_titles,

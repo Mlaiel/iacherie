@@ -1,4 +1,6 @@
 """IA Influencer Agent - Content Protection Performance Metrics
+import logging
+
 Specialized metrics collection for content fingerprinting and protection systems
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -133,7 +135,7 @@ class ContentProtectionMetricsCollector:
     protection effectiveness across all content types
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.redis_manager = RedisManager()
         self.logger = logger
         

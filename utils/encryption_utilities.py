@@ -36,7 +36,7 @@ class EncryptionUtilities:
     - Secure key generation and management
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize encryption utilities with security best practices"""
         self.algorithm = 'HS256'
         self.token_expiry = 3600  # 1 hour default

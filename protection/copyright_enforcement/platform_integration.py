@@ -179,7 +179,7 @@ class PlatformAPIManager:
     """
 Ultra-advanced multi-platform API management system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.cache_manager = CacheManager()
         self.rate_limiter = RateLimiter()
         self.settings = get_settings()
@@ -854,7 +854,7 @@ Initialize platform-specific configurations"""
             await session.close()
         self.session_pool.clear()
     
-    def __del__(self):
+    def __del__(self) -> None:
         """
 Cleanup on destruction"""
         asyncio.create_task(self.cleanup_sessions())
@@ -864,7 +864,7 @@ class MultiPlatformMonitor:
     """
 Real-time multi-platform content monitoring system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.api_manager = PlatformAPIManager()
         self.monitoring_tasks: Dict[PlatformType, asyncio.Task] = {}
         self.is_monitoring = False

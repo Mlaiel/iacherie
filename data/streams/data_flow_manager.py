@@ -225,11 +225,11 @@ class DataFlowManager:
     
     def __init__(
         self,
-        max_buffers: int = 50,
-        max_queues: int = 20,
-        max_connections: int = 100,
-        enable_monitoring: bool = True
-    ):
+        max_buffers -> None: int = 50,
+        max_queues -> None: int = 20,
+        max_connections -> None: int = 100,
+        enable_monitoring -> None: bool = True
+    ) -> None:
         # Configuration
         self.max_buffers = max_buffers
         self.max_queues = max_queues
@@ -984,7 +984,7 @@ class DataFlowManager:
 class StreamBuffer:
     """High-performance streaming buffer with multiple storage backends"""
     
-    def __init__(self, config: BufferConfig):
+    def __init__(self, config -> None: BufferConfig) -> None:
         self.config = config
         self.items: Dict[str, BufferItem] = {}
         self.access_order: deque = deque()  # For LRU
@@ -1164,7 +1164,7 @@ class StreamBuffer:
 class StreamQueue:
     """Priority-based message queue with retry mechanisms"""
     
-    def __init__(self, queue_id: str, max_size: int = 10000):
+    def __init__(self, queue_id -> None: str, max_size -> None: int = 10000) -> None:
         self.queue_id = queue_id
         self.max_size = max_size
         self.queue = PriorityQueue(maxsize=max_size)
@@ -1225,7 +1225,7 @@ class StreamQueue:
 class HTTPConnector(BaseConnector):
     """HTTP connector implementation"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.session = None
         
     async def connect(self, config: ConnectionConfig) -> bool:
@@ -1252,7 +1252,7 @@ class HTTPConnector(BaseConnector):
 class WebSocketConnector(BaseConnector):
     """WebSocket connector implementation"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.websocket = None
         
     async def connect(self, config: ConnectionConfig) -> bool:
@@ -1371,7 +1371,7 @@ class CustomConnector(BaseConnector):
 class StreamBuffer:
     """Legacy compatibility wrapper for DataFlowManager buffer functionality"""
     
-    def __init__(self, config: BufferConfig, manager: Optional[DataFlowManager] = None):
+    def __init__(self, config -> None: BufferConfig, manager -> None: Optional[DataFlowManager] = None) -> None:
         self.config = config
         self.manager = manager or DataFlowManager()
         
@@ -1392,7 +1392,7 @@ class StreamBuffer:
 class StreamQueue:
     """Legacy compatibility wrapper for DataFlowManager queue functionality"""
     
-    def __init__(self, queue_id: str = None, max_size: int = 10000, manager: Optional[DataFlowManager] = None):
+    def __init__(self, queue_id -> None: str = None, max_size -> None: int = 10000, manager -> None: Optional[DataFlowManager] = None) -> None:
         self.queue_id = queue_id or str(uuid.uuid4())
         self.max_size = max_size
         self.manager = manager or DataFlowManager()
@@ -1411,7 +1411,7 @@ class StreamQueue:
 class StreamConnector:
     """Legacy compatibility wrapper for DataFlowManager connector functionality"""
     
-    def __init__(self, manager: Optional[DataFlowManager] = None):
+    def __init__(self, manager -> None: Optional[DataFlowManager] = None) -> None:
         self.manager = manager or DataFlowManager()
         
     async def initialize(self) -> None:

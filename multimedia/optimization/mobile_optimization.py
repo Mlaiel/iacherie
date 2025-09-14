@@ -90,7 +90,7 @@ class MobilePerformanceMetrics:
 class AdaptiveStreamingEngine:
     """Adaptive streaming engine for mobile devices"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.quality_levels = {
             NetworkType.WIFI: {
                 'video': {'resolution': (1920, 1080), 'bitrate': 5000, 'fps': 30},
@@ -207,7 +207,7 @@ class AdaptiveStreamingEngine:
 class MobileOptimizer:
     """Main mobile optimization engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.adaptive_engine = AdaptiveStreamingEngine()
         self.device_profiles = self._load_device_profiles()
         

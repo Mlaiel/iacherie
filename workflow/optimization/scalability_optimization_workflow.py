@@ -1,5 +1,7 @@
 """Scalability Optimization Workflow - System scalability enhancement.
 
+import asyncio
+
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Ainflue Platform. All rights reserved.
 """
@@ -10,18 +12,21 @@ from datetime import datetime
 
 @dataclass
 class ScalabilityMetrics:
+    """ScalabilityMetrics: class implementation"""
     scale_factor: float = 0.0
     performance_stability: float = 0.0
     resource_efficiency: float = 0.0
 
 @dataclass
 class ScalabilityPlan:
+    """ScalabilityPlan: class implementation"""
     user_id: str
     scalability_improvements: ScalabilityMetrics
     scaling_strategies: List[str]
     analysis_timestamp: datetime
 
 class ScalabilityOptimizationWorkflow:
+    """ScalabilityOptimizationWorkflow: class implementation"""
     async def get_user_analytics(self, user_id: str, time_period: int = 30) -> Dict[str, Any]:
         return {
             "user_id": user_id,

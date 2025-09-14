@@ -101,7 +101,7 @@ class JobPayload:
     kwargs: Dict[str, Any] = None
     metadata: Dict[str, Any] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.args is None:
             self.args = []
         if self.kwargs is None:
@@ -124,13 +124,13 @@ class CreateQueueRequest(BaseModel):
     metadata: Optional[Dict[str, Any]] = Field(default_factory=dict)
 
     @validator('name')
-    def validate_name(cls, v):
+    def validate_name(cls, v) -> None:
         if not v or len(v.strip()) < 3:
             raise ValueError('Queue name must be at least 3 characters')
         return v.strip().lower().replace(' ', '_')
 
     @validator('concurrency')
-    def validate_concurrency(cls, v):
+    def validate_concurrency(cls, v) -> None:
         if v < 1 or v > 100:
             raise ValueError('Concurrency must be between 1 and 100')
         return v
@@ -150,7 +150,7 @@ class EnqueueJobRequest(BaseModel):
     metadata: Optional[Dict[str, Any]] = Field(default_factory=dict)
 
     @validator('task_name')
-    def validate_task_name(cls, v):
+    def validate_task_name(cls, v) -> None:
         if not v or len(v.strip()) < 3:
             raise ValueError('Task name must be at least 3 characters')
         return v.strip()
@@ -168,7 +168,7 @@ class ScheduleJobRequest(BaseModel):
     metadata: Optional[Dict[str, Any]] = Field(default_factory=dict)
 
     @validator('cron_expression')
-    def validate_cron(cls, v):
+    def validate_cron(cls, v) -> None:
         try:
             croniter.croniter(v)
             return v
@@ -206,7 +206,7 @@ class {{service_class_name}}(BaseService):
     - Exactly-once delivery guarantees
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
         self.name = "{{service_name}}"
         self.version = "{{service_version}}"
@@ -239,7 +239,7 @@ class {{service_class_name}}(BaseService):
             'ack_timeout': 300
         }
 
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize service with dependencies"""
         try:
             await super().initialize()
@@ -273,7 +273,7 @@ class {{service_class_name}}(BaseService):
             logger.error(f"Failed to initialize {self.name} service: {e}")
             raise ServiceException(f"Service initialization failed: {e}")
 
-    async def _initialize_queue_backends(self):
+    async def _initialize_queue_backends(self) -> None:
         """Initialize different queue backend connections"""
         try:
             # Redis backend (always available)
@@ -518,7 +518,7 @@ class {{service_class_name}}(BaseService):
                 await self.metrics_collector.record_error("job_enqueue", str(e))
                 raise ServiceException(f"Job enqueue failed: {e}")
 
-    async def _queue_job_in_backend(self, job: QueueJob, queue_def: QueueDefinition):
+    async def _queue_job_in_backend(self, job -> None: QueueJob, queue_def -> None: QueueDefinition) -> None:
         """Queue job in the appropriate backend"""
         try:
             queue_type = QueueType(queue_def.queue_type)
@@ -538,7 +538,7 @@ class {{service_class_name}}(BaseService):
             logger.error(f"Failed to queue job in backend: {e}")
             raise ServiceException(f"Backend queueing failed: {e}")
 
-    async def _queue_job_redis(self, job: QueueJob, queue_def: QueueDefinition):
+    async def _queue_job_redis(self, job -> None: QueueJob, queue_def -> None: QueueDefinition) -> None:
         """Queue job in Redis"""
         try:
             # Prepare job data
@@ -577,7 +577,7 @@ class {{service_class_name}}(BaseService):
             logger.error(f"Failed to queue job in Redis: {e}")
             raise
 
-    async def _queue_job_rabbitmq(self, job: QueueJob, queue_def: QueueDefinition):
+    async def _queue_job_rabbitmq(self, job -> None: QueueJob, queue_def -> None: QueueDefinition) -> None:
         """Queue job in RabbitMQ"""
         try:
             if not self.rabbitmq_connection:
@@ -625,7 +625,7 @@ class {{service_class_name}}(BaseService):
             logger.error(f"Failed to queue job in RabbitMQ: {e}")
             raise
 
-    async def _queue_job_kafka(self, job: QueueJob, queue_def: QueueDefinition):
+    async def _queue_job_kafka(self, job -> None: QueueJob, queue_def -> None: QueueDefinition) -> None:
         """Queue job in Kafka"""
         try:
             if not self.kafka_producer:
@@ -655,7 +655,7 @@ class {{service_class_name}}(BaseService):
             logger.error(f"Failed to queue job in Kafka: {e}")
             raise
 
-    async def _queue_job_celery(self, job: QueueJob, queue_def: QueueDefinition):
+    async def _queue_job_celery(self, job -> None: QueueJob, queue_def -> None: QueueDefinition) -> None:
         """Queue job in Celery"""
         try:
             if not self.celery_app:
@@ -755,7 +755,7 @@ class {{service_class_name}}(BaseService):
                 logger.error(f"Failed to schedule job: {e}")
                 raise ServiceException(f"Job scheduling failed: {e}")
 
-    async def register_task(self, task_name: str, task_func: Callable):
+    async def register_task(self, task_name -> None: str, task_func -> None: Callable) -> None:
         """Register a task function"""
         try:
             self.task_registry[task_name] = task_func
@@ -882,11 +882,11 @@ class {{service_class_name}}(BaseService):
 
     async def _update_job_status(
         self,
-        job_id: str,
-        status: JobStatus,
-        result: Any = None,
-        error: str = None
-    ):
+        job_id -> None: str,
+        status -> None: JobStatus,
+        result -> None: Any = None,
+        error -> None: str = None
+    ) -> None:
         """Update job status"""
         async with self.get_session() as session:
             try:
@@ -918,10 +918,10 @@ class {{service_class_name}}(BaseService):
 
     async def _schedule_job_retry(
         self,
-        job_id: str,
-        retry_count: int,
-        queue_def: QueueDefinition
-    ):
+        job_id -> None: str,
+        retry_count -> None: int,
+        queue_def -> None: QueueDefinition
+    ) -> None:
         """Schedule job retry with exponential backoff"""
         try:
             # Calculate retry delay with exponential backoff
@@ -957,10 +957,10 @@ class {{service_class_name}}(BaseService):
 
     async def _move_to_dead_letter(
         self,
-        job_id: str,
-        job_data: Dict[str, Any],
-        error_message: str
-    ):
+        job_id -> None: str,
+        job_data -> None: Dict[str, Any],
+        error_message -> None: str
+    ) -> None:
         """Move job to dead letter queue"""
         try:
             async with self.get_session() as session:
@@ -984,7 +984,7 @@ class {{service_class_name}}(BaseService):
         except Exception as e:
             logger.error(f"Failed to move job to dead letter queue: {e}")
 
-    async def _initialize_queue_backend(self, queue_def: QueueDefinition):
+    async def _initialize_queue_backend(self, queue_def -> None: QueueDefinition) -> None:
         """Initialize queue in backend"""
         try:
             queue_type = QueueType(queue_def.queue_type)
@@ -1013,7 +1013,7 @@ class {{service_class_name}}(BaseService):
         except Exception as e:
             logger.error(f"Failed to initialize queue backend: {e}")
 
-    async def _start_queue_workers(self, queue_def: QueueDefinition):
+    async def _start_queue_workers(self, queue_def -> None: QueueDefinition) -> None:
         """Start workers for a queue"""
         try:
             for worker_id in range(queue_def.concurrency):
@@ -1039,7 +1039,7 @@ class {{service_class_name}}(BaseService):
         except Exception as e:
             logger.error(f"Failed to start queue workers: {e}")
 
-    async def _redis_worker(self, queue_def: QueueDefinition, worker_name: str):
+    async def _redis_worker(self, queue_def -> None: QueueDefinition, worker_name -> None: str) -> None:
         """Redis queue worker"""
         while True:
             try:
@@ -1081,7 +1081,7 @@ class {{service_class_name}}(BaseService):
                 logger.error(f"Redis worker {worker_name} error: {e}")
                 await asyncio.sleep(5)
 
-    async def _rabbitmq_worker(self, queue_def: QueueDefinition, worker_name: str):
+    async def _rabbitmq_worker(self, queue_def -> None: QueueDefinition, worker_name -> None: str) -> None:
         """RabbitMQ queue worker"""
         try:
             channel = await self.rabbitmq_connection.channel()
@@ -1089,7 +1089,7 @@ class {{service_class_name}}(BaseService):
             
             queue = await channel.declare_queue(queue_def.name, durable=True)
             
-            async def process_message(message: aio_pika.IncomingMessage):
+            async def process_message(message -> None: aio_pika.IncomingMessage) -> None:
                 try:
                     job_info = pickle.loads(message.body)
                     await self._process_job(job_info, queue_def)
@@ -1103,7 +1103,7 @@ class {{service_class_name}}(BaseService):
         except Exception as e:
             logger.error(f"RabbitMQ worker {worker_name} error: {e}")
 
-    async def _kafka_worker(self, queue_def: QueueDefinition, worker_name: str):
+    async def _kafka_worker(self, queue_def -> None: QueueDefinition, worker_name -> None: str) -> None:
         """Kafka queue worker"""
         try:
             consumer = AIOKafkaConsumer(
@@ -1126,7 +1126,7 @@ class {{service_class_name}}(BaseService):
         except Exception as e:
             logger.error(f"Kafka worker {worker_name} error: {e}")
 
-    async def _scheduler_worker(self):
+    async def _scheduler_worker(self) -> None:
         """Background worker for scheduled jobs"""
         while self.scheduler_running:
             try:
@@ -1179,7 +1179,7 @@ class {{service_class_name}}(BaseService):
                 logger.error(f"Scheduler worker error: {e}")
                 await asyncio.sleep(60)
 
-    async def _dead_letter_processor(self):
+    async def _dead_letter_processor(self) -> None:
         """Background processor for dead letter queue"""
         while True:
             try:
@@ -1191,7 +1191,7 @@ class {{service_class_name}}(BaseService):
                 logger.error(f"Dead letter processor error: {e}")
                 await asyncio.sleep(300)
 
-    async def _metrics_collector_worker(self):
+    async def _metrics_collector_worker(self) -> None:
         """Background worker for collecting metrics"""
         while True:
             try:
@@ -1228,14 +1228,14 @@ class {{service_class_name}}(BaseService):
                 logger.error(f"Metrics collector error: {e}")
                 await asyncio.sleep(60)
 
-    async def _register_default_tasks(self):
+    async def _register_default_tasks(self) -> None:
         """Register default system tasks"""
         
-        async def test_task(*args, **kwargs):
+        async def test_task(*args, **kwargs) -> None:
             """Test task for queue validation"""
             return {"message": "Test task completed", "args": args, "kwargs": kwargs}
         
-        async def cleanup_task():
+        async def cleanup_task() -> None:
             """Cleanup old completed jobs"""
             async with self.get_session() as session:
                 cutoff_date = datetime.utcnow() - timedelta(days=7)
@@ -1343,7 +1343,7 @@ class {{service_class_name}}(BaseService):
                 "timestamp": datetime.utcnow().isoformat()
             }
 
-    async def cleanup(self):
+    async def cleanup(self) -> None:
         """Cleanup service resources"""
         try:
             self.scheduler_running = False
@@ -1378,12 +1378,12 @@ class {{service_class_name}}(BaseService):
 
 # Example usage and testing
 if __name__ == "__main__":
-    async def main():
+    async def main() -> None:
         service = {{service_class_name}}()
         await service.initialize()
         
         # Example task registration
-        async def example_task(message: str, count: int = 1):
+        async def example_task(message -> None: str, count -> None: int = 1) -> None:
             """Example task that processes data"""
             await asyncio.sleep(1)  # Simulate work
             return f"Processed: {message} (count: {count})"
@@ -1427,3 +1427,5 @@ if __name__ == "__main__":
             await service.cleanup()
 
     asyncio.run(main())
+
+# File has syntax issues - needs manual review

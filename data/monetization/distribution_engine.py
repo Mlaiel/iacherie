@@ -182,8 +182,8 @@ class DistributionEngine:
     real-time distribution optimization.
     """
     
-    def __init__(self, db_session: AsyncSession, redis_client: Redis,
-                 revenue_calculator=None, payment_processor=None):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: Redis,
+                 revenue_calculator=None, payment_processor=None) -> None:
         """
         Initialize Distribution Engine.
         
@@ -721,8 +721,8 @@ class DistributionEngine:
         # Placeholder implementation
         return distributions
     
-    async def _validate_distribution_totals(self, distributions: Dict[str, Decimal],
-                                          revenue_amount: Decimal, fees: Dict[str, Decimal]):
+    async def _validate_distribution_totals(self, distributions -> None: Dict[str, Decimal],
+                                          revenue_amount -> None: Decimal, fees -> None: Dict[str, Decimal]) -> None:
         """Validate that distribution totals are correct"""
         total_distributed = sum(distributions.values())
         total_fees = sum(fees.values())
@@ -742,8 +742,8 @@ class DistributionEngine:
         except Exception as e:
             return {"success": False, "error": str(e)}
     
-    async def _create_distribution_event(self, distribution_id: str, stakeholder_id: str,
-                                       amount: Decimal, status: str):
+    async def _create_distribution_event(self, distribution_id -> None: str, stakeholder_id -> None: str,
+                                       amount -> None: Decimal, status -> None: str) -> None:
         """Create distribution event for tracking"""
         event = DistributionEvent(
             event_id=str(uuid.uuid4()),
@@ -758,7 +758,7 @@ class DistributionEngine:
         # Store event
         await self._store_distribution_event(event)
     
-    async def _store_distribution_event(self, event: DistributionEvent):
+    async def _store_distribution_event(self, event -> None: DistributionEvent) -> None:
         """Store distribution event"""
         cache_key = f"distribution_event:{event.event_id}"
         await self.redis.setex(

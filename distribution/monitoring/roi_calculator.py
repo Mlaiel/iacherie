@@ -1,3 +1,8 @@
+"""
+Roi Calculator module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Ainflue Platform - Distribution Monitoring - ROI Calculator
@@ -119,7 +124,7 @@ class DistributionROICalculator:
     Calculates comprehensive financial metrics and provides investment insights
     """
     
-    def __init__(self, config: Optional[Dict] = None):
+    def __init__(self, config -> None: Optional[Dict] = None) -> None:
         self.config = config or {}
         self.revenue_events: List[RevenueEvent] = []
         self.investment_events: List[InvestmentEvent] = []
@@ -133,7 +138,7 @@ class DistributionROICalculator:
         # Initialize with sample data
         self._initialize_sample_data()
     
-    def _initialize_sample_data(self):
+    def _initialize_sample_data(self) -> None:
         """Initialize with sample financial data"""
         
         # Generate sample revenue data for the last 12 months
@@ -254,7 +259,7 @@ class DistributionROICalculator:
         logger.debug(f"Recorded investment: {investment_type.value} - ${amount:.2f}")
         return event
     
-    async def _update_customer_metrics(self, customer_id: str, revenue_event: RevenueEvent):
+    async def _update_customer_metrics(self, customer_id -> None: str, revenue_event -> None: RevenueEvent) -> None:
         """Update customer metrics with new revenue event"""
         
         if customer_id not in self.customer_metrics:
@@ -671,7 +676,7 @@ def create_roi_calculator(config: Optional[Dict] = None) -> DistributionROICalcu
     return DistributionROICalculator(config)
 
 # Example usage
-async def main():
+async def main() -> None:
     """Example usage of ROI calculator"""
     calculator = create_roi_calculator()
     

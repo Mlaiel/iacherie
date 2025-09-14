@@ -113,7 +113,7 @@ class AutomationAction:
     failure_criteria: Dict[str, Any] = field(default_factory=dict)
     output_mapping: Dict[str, str] = field(default_factory=dict)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if not self.action_id:
             self.action_id = hashlib.md5(f"{self.name}_{time.time()}".encode()).hexdigest()[:12]
 
@@ -151,7 +151,7 @@ class AutomationWorkflow:
     max_executions: Optional[int] = None
     execution_count: int = 0
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if not self.workflow_id:
             self.workflow_id = hashlib.md5(f"{self.name}_{time.time()}".encode()).hexdigest()[:16]
 
@@ -197,7 +197,7 @@ class SEOAutomationManager:
     - Gestion avancée des erreurs et retry
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialise le gestionnaire d'automatisation"""
         self.config = config or {}
         self.session: Optional[aiohttp.ClientSession] = None
@@ -1193,7 +1193,7 @@ __all__ = [
 
 if __name__ == "__main__":
     # Test du gestionnaire d'automatisation
-    async def test_automation_manager():
+    async def test_automation_manager() -> None:
         # Initialisation
         await automation_manager.initialize()
         

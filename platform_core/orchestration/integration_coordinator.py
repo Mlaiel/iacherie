@@ -1,3 +1,8 @@
+"""
+Integration Coordinator module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Integration Coordinator - Enterprise Core Component
@@ -32,9 +37,12 @@ except ImportError:
     AIOHTTP_AVAILABLE = False
     # Create dummy class for type hints
     class aiohttp:
+    """aiohttp: class implementation"""
         class ClientSession:
+    """ClientSession: class implementation"""
             pass
         class ClientTimeout:
+    """ClientTimeout: class implementation"""
             pass
 
 # Configure logging
@@ -128,7 +136,7 @@ class IntegrationCoordinator:
     protocols, authentication methods, and enterprise-grade reliability.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.integrations: Dict[str, IntegrationInstance] = {}
         self.integration_registry: Dict[str, IntegrationConfig] = {}
         self.active_connections: Dict[str, Any] = {}
@@ -636,7 +644,7 @@ class IntegrationCoordinator:
         # Default to REST-like behavior
         return await self._send_rest_request(instance, method, url, data, headers, params)
     
-    async def _add_authentication(self, instance: IntegrationInstance, headers: Dict[str, str]):
+    async def _add_authentication(self, instance -> None: IntegrationInstance, headers -> None: Dict[str, str]) -> None:
         """Add authentication to headers"""
         auth_method = instance.config.auth_method
         credentials = instance.config.credentials
@@ -672,7 +680,7 @@ class IntegrationCoordinator:
         # In production, this would use Redis or similar
         return True
     
-    async def _update_metrics(self, instance: IntegrationInstance, start_time: datetime, success: bool):
+    async def _update_metrics(self, instance -> None: IntegrationInstance, start_time -> None: datetime, success -> None: bool) -> None:
         """Update integration metrics"""
         response_time = (datetime.utcnow() - start_time).total_seconds()
         
@@ -717,9 +725,9 @@ class IntegrationCoordinator:
         
         return None
     
-    async def _start_health_check(self, integration_id: str):
+    async def _start_health_check(self, integration_id -> None: str) -> None:
         """Start health check task"""
-        async def health_check_loop():
+        async def health_check_loop() -> None:
             while True:
                 try:
                     instance = self.integrations.get(integration_id)
@@ -746,7 +754,7 @@ class IntegrationCoordinator:
         task = asyncio.create_task(health_check_loop())
         self.health_check_tasks[integration_id] = task
     
-    async def _trigger_event(self, event_type: str, integration_id: str):
+    async def _trigger_event(self, event_type -> None: str, integration_id -> None: str) -> None:
         """Trigger event handlers"""
         handlers = self.event_handlers.get(event_type, [])
         for handler in handlers:
@@ -802,7 +810,7 @@ async def send_request(
 
 if __name__ == "__main__":
     # Example usage
-    async def main():
+    async def main() -> None:
         # Register a REST API integration
         await register_rest_api(
             "external_api",

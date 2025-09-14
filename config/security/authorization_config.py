@@ -1,7 +1,14 @@
+"""
+Authorization Config module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 """Ainflue Authorization Configuration Module
+import asyncio
+
 ===========================================
 
 Enterprise-grade authorization configuration for the Ainflue platform.
@@ -481,7 +488,7 @@ class ZeroTrustAuthConfig:
 class AuthorizationConfiguration:
     """Main authorization configuration manager"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize authorization configuration"""
         # Authorization components
         self.rbac_config = RBACConfig()

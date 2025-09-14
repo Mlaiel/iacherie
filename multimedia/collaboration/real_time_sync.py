@@ -96,7 +96,7 @@ class PeerConnection:
 class RealTimeSyncEngine:
     """Real-time synchronization engine with WebRTC support"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.active_sessions = {}  # session_id -> session_info
         self.peer_connections = {}  # peer_id -> PeerConnection
         self.websocket_connections = {}  # user_id -> websocket
@@ -248,11 +248,11 @@ class RealTimeSyncEngine:
             
             # Setup data channel handlers
             @data_channel.on("open")
-            def on_data_channel_open():
+            def on_data_channel_open() -> None:
                 logger.info(f"WebRTC data channel opened for {user_id}")
             
             @data_channel.on("message")
-            def on_data_channel_message(message):
+            def on_data_channel_message(message) -> None:
                 asyncio.create_task(self._handle_webrtc_message(session_id, user_id, message))
             
             # Store peer connection
@@ -495,8 +495,8 @@ class RealTimeSyncEngine:
             logger.error(f"Failed to get sync metrics: {e}")
             return {}
     
-    async def _broadcast_sync_event(self, session_id: str, event: SyncEvent,
-                                  exclude_user: str = None):
+    async def _broadcast_sync_event(self, session_id -> None: str, event -> None: SyncEvent,
+                                  exclude_user -> None: str = None) -> None:
         """Broadcast sync event to session participants"""
         try:
             if session_id not in self.active_sessions:
@@ -549,7 +549,7 @@ class RealTimeSyncEngine:
             logger.error(f"Failed to send via WebRTC: {e}")
             return False
     
-    async def _send_via_websocket(self, user_id: str, data: Dict[str, Any]):
+    async def _send_via_websocket(self, user_id -> None: str, data -> None: Dict[str, Any]) -> None:
         """Send data via WebSocket"""
         try:
             if user_id in self.websocket_connections:
@@ -562,7 +562,7 @@ class RealTimeSyncEngine:
             if user_id in self.websocket_connections:
                 del self.websocket_connections[user_id]
     
-    async def _handle_webrtc_message(self, session_id: str, user_id: str, message):
+    async def _handle_webrtc_message(self, session_id -> None: str, user_id -> None: str, message) -> None:
         """Handle incoming WebRTC message"""
         try:
             data = json.loads(message)
@@ -582,8 +582,8 @@ class RealTimeSyncEngine:
         except Exception as e:
             logger.error(f"Failed to handle WebRTC message: {e}")
     
-    async def _process_incoming_sync_event(self, session_id: str, user_id: str,
-                                         event_data: Dict[str, Any]):
+    async def _process_incoming_sync_event(self, session_id -> None: str, user_id -> None: str,
+                                         event_data -> None: Dict[str, Any]) -> None:
         """Process incoming synchronization event"""
         try:
             # Validate event
@@ -605,7 +605,7 @@ class RealTimeSyncEngine:
         except Exception as e:
             logger.error(f"Failed to process incoming sync event: {e}")
     
-    async def _update_user_presence(self, user_id: str, event: SyncEvent):
+    async def _update_user_presence(self, user_id -> None: str, event -> None: SyncEvent) -> None:
         """Update user presence based on sync event"""
         try:
             if user_id in self.user_presence:
@@ -622,7 +622,7 @@ class RealTimeSyncEngine:
         except Exception as e:
             logger.error(f"Failed to update user presence: {e}")
     
-    async def _send_acknowledgment(self, session_id: str, user_id: str, event_id: str):
+    async def _send_acknowledgment(self, session_id -> None: str, user_id -> None: str, event_id -> None: str) -> None:
         """Send acknowledgment for received event"""
         try:
             ack_data = {
@@ -636,7 +636,7 @@ class RealTimeSyncEngine:
         except Exception as e:
             logger.error(f"Failed to send acknowledgment: {e}")
     
-    async def _handle_heartbeat(self, session_id: str, user_id: str, data: Dict[str, Any]):
+    async def _handle_heartbeat(self, session_id -> None: str, user_id -> None: str, data -> None: Dict[str, Any]) -> None:
         """Handle heartbeat message"""
         try:
             peer_id = f"{session_id}_{user_id}"
@@ -652,7 +652,7 @@ class RealTimeSyncEngine:
         except Exception as e:
             logger.error(f"Failed to handle heartbeat: {e}")
     
-    async def _heartbeat_task(self):
+    async def _heartbeat_task(self) -> None:
         """Background task for sending heartbeats"""
         while True:
             try:
@@ -675,7 +675,7 @@ class RealTimeSyncEngine:
             except Exception as e:
                 logger.error(f"Heartbeat task error: {e}")
     
-    async def _cleanup_task(self):
+    async def _cleanup_task(self) -> None:
         """Background task for cleaning up stale connections"""
         while True:
             try:
@@ -706,7 +706,7 @@ class RealTimeSyncEngine:
             except Exception as e:
                 logger.error(f"Cleanup task error: {e}")
     
-    async def _store_session_redis(self, session_info: Dict[str, Any]):
+    async def _store_session_redis(self, session_info -> None: Dict[str, Any]) -> None:
         """Store session info in Redis"""
         try:
             if self.redis_client:
@@ -720,7 +720,7 @@ class RealTimeSyncEngine:
 class WebRTCCollaborationEngine:
     """High-level WebRTC collaboration engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.sync_engine = RealTimeSyncEngine()
         self.signaling_server = None
         

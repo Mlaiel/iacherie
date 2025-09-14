@@ -162,7 +162,7 @@ class IPProtectionResult:
 class IPProtectionService:
     """Unified IP Protection Service orchestrating all protection components"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         
         # Service components
@@ -311,10 +311,10 @@ class IPProtectionService:
     
     async def _apply_watermarking(
         self, 
-        request: IPProtectionRequest, 
-        result: IPProtectionResult,
-        content_format: ContentFormat
-    ):
+        request -> None: IPProtectionRequest, 
+        result -> None: IPProtectionResult,
+        content_format -> None: ContentFormat
+    ) -> None:
         """Apply watermarking to content"""
         
         try:
@@ -367,7 +367,7 @@ class IPProtectionService:
         except Exception as e:
             result.errors.append(f"Watermarking process failed: {str(e)}")
     
-    async def _register_on_blockchain(self, request: IPProtectionRequest, result: IPProtectionResult):
+    async def _register_on_blockchain(self, request -> None: IPProtectionRequest, result -> None: IPProtectionResult) -> None:
         """Register content on blockchain for rights certification"""
         
         try:
@@ -422,7 +422,7 @@ class IPProtectionService:
         except Exception as e:
             result.errors.append(f"Blockchain registration process failed: {str(e)}")
     
-    async def _setup_royalty_contracts(self, request: IPProtectionRequest, result: IPProtectionResult):
+    async def _setup_royalty_contracts(self, request -> None: IPProtectionRequest, result -> None: IPProtectionResult) -> None:
         """Setup smart contracts for automatic royalty distribution"""
         
         try:
@@ -478,7 +478,7 @@ class IPProtectionService:
         except Exception as e:
             result.errors.append(f"Royalty contract setup failed: {str(e)}")
     
-    async def _setup_advanced_monitoring(self, request: IPProtectionRequest, result: IPProtectionResult):
+    async def _setup_advanced_monitoring(self, request -> None: IPProtectionRequest, result -> None: IPProtectionResult) -> None:
         """Setup advanced monitoring for enterprise-level protection"""
         
         try:
@@ -807,7 +807,7 @@ class IPProtectionService:
         else:
             return ContentFormat.MULTIMEDIA  # Default fallback
     
-    async def _protection_monitor(self):
+    async def _protection_monitor(self) -> None:
         """Background task to monitor protection status"""
         
         while self.running:
@@ -837,7 +837,7 @@ class IPProtectionService:
                 logger.error(f"Protection monitoring error: {e}")
                 await asyncio.sleep(300)  # Wait 5 minutes on error
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Gracefully shutdown IP protection service"""
         
         try:

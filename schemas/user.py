@@ -1,4 +1,6 @@
 """User Management Schemas for IA Influencer Agent Platform
+import logging
+
 Professional user authentication, profile, and session management schemas
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -43,14 +45,14 @@ class UserCreate(BaseSchema):
     marketing_consent: bool = Field(default=False, description="Marketing communications consent")
     
     @validator('username')
-    def validate_username(cls, v):
+    def validate_username(cls, v) -> None:
         """Validate username format."""
         if not v.isalnum():
             raise ValueError('Username must contain only alphanumeric characters')
         return v.lower()
     
     @validator('terms_accepted', 'privacy_accepted')
-    def validate_required_consents(cls, v):
+    def validate_required_consents(cls, v) -> None:
         """
 Validate required legal consents."""
         if not v:
@@ -122,7 +124,7 @@ class UserProfile(UUIDSchema, TimestampSchema):
     content_count: int = Field(default=0, ge=0)
     
     @validator('social_links')
-    def validate_social_links(cls, v):
+    def validate_social_links(cls, v) -> None:
         """Validate social media links format."""
         allowed_platforms = {
             'twitter', 'instagram', 'facebook', 'linkedin', 
@@ -236,7 +238,7 @@ Password change request schema."""
     confirm_password: str = Field(description="Password confirmation")
     
     @validator('confirm_password')
-    def passwords_match(cls, v, values):
+    def passwords_match(cls, v, values) -> None:
         try:
             logger.info(f"Executing passwords_match")
             
@@ -266,7 +268,7 @@ class PasswordResetConfirm(BaseSchema):
     confirm_password: str = Field(description="Password confirmation")
     
     @validator('confirm_password')
-    def passwords_match(cls, v, values):
+    def passwords_match(cls, v, values) -> None:
         """Validate password confirmation matches."""
         if 'new_password' in values and v != values['new_password']:
             raise ValueError('Passwords do not match')

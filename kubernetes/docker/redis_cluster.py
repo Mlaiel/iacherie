@@ -1,4 +1,6 @@
 """🔧 Redis Cluster Configuration - IA-Influencer-Agent Platform
+import json
+
 =============================================================
 Expert: Backend Senior + Cache Specialist + Performance Engineer
 Creator: Fahed Mlaiel <mlaiel@live.de>

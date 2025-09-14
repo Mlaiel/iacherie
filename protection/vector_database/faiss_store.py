@@ -69,7 +69,7 @@ class FaissVectorStore:
     """
 FAISS-based vector storage and search engine"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         if not FAISS_AVAILABLE:
             raise ImportError("FAISS is required but not available")
         
@@ -102,7 +102,7 @@ FAISS-based vector storage and search engine"""
         self._initialize_index()
         self.logger.info(f"FaissVectorStore initialized with {self.index_type.value}")
     
-    def _initialize_index(self):
+    def _initialize_index(self) -> None:
         """Initialize FAISS index based on configuration"""
         try:
             if self.index_type == IndexType.FLAT_L2:
@@ -166,7 +166,7 @@ FAISS-based vector storage and search engine"""
             self.logger.error(f"Failed to add vector {vector_id}: {e}")
             return False
     
-    def _add_vector_sync(self, vector_id: str, vector: np.ndarray, metadata: Dict[str, Any]):
+    def _add_vector_sync(self, vector_id -> None: str, vector -> None: np.ndarray, metadata -> None: Dict[str, Any]) -> None:
         """Synchronous vector addition"""
         faiss_id = self.next_id
         
@@ -231,10 +231,10 @@ Add multiple vectors in batch"""
     
     def _add_vectors_batch_sync(
         self,
-        vector_ids: List[str],
-        vectors: np.ndarray,
-        metadatas: List[Dict[str, Any]]
-    ):
+        vector_ids -> None: List[str],
+        vectors -> None: np.ndarray,
+        metadatas -> None: List[Dict[str, Any]]
+    ) -> None:
         """Synchronous batch vector addition"""
         start_id = self.next_id
         
@@ -540,7 +540,7 @@ Get index statistics"""
             self.logger.error(f"Failed to clear index: {e}")
             return False
     
-    def __del__(self):
+    def __del__(self) -> None:
         """Cleanup resources"""
         if hasattr(self, 'executor'):
             self.executor.shutdown(wait=False)

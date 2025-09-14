@@ -165,11 +165,11 @@ class ReproducibilityValidator:
     
     def __init__(
         self,
-        storage_path: str = "data/reproducibility",
-        min_validation_runs: int = 3,
-        statistical_confidence: float = 0.95,
-        enable_detailed_logging: bool = True
-    ):
+        storage_path -> None: str = "data/reproducibility",
+        min_validation_runs -> None: int = 3,
+        statistical_confidence -> None: float = 0.95,
+        enable_detailed_logging -> None: bool = True
+    ) -> None:
         self.storage_path = Path(storage_path)
         self.storage_path.mkdir(parents=True, exist_ok=True)
         
@@ -579,7 +579,7 @@ class ReproducibilityValidator:
         
         return artifacts
     
-    async def _persist_experiment(self, experiment: ExperimentConfiguration):
+    async def _persist_experiment(self, experiment -> None: ExperimentConfiguration) -> None:
         """Persister une expérience"""
         
         exp_file = self.storage_path / f"experiments/{experiment.experiment_id}.json"
@@ -588,7 +588,7 @@ class ReproducibilityValidator:
         with open(exp_file, 'w') as f:
             json.dump(experiment.to_dict(), f, indent=2)
     
-    async def _persist_run(self, run: ExperimentRun):
+    async def _persist_run(self, run -> None: ExperimentRun) -> None:
         """Persister une exécution"""
         
         run_file = self.storage_path / f"runs/{run.experiment_id}/{run.run_id}.json"
@@ -597,7 +597,7 @@ class ReproducibilityValidator:
         with open(run_file, 'w') as f:
             json.dump(run.to_dict(), f, indent=2)
     
-    async def _persist_report(self, report: ReproducibilityReport):
+    async def _persist_report(self, report -> None: ReproducibilityReport) -> None:
         """Persister un rapport"""
         
         report_file = self.storage_path / f"reports/{report.experiment_id}_report.json"
@@ -710,7 +710,7 @@ class ReproducibilityValidator:
         }
 
 # Usage Example
-async def main():
+async def main() -> None:
     """Exemple d'utilisation du Reproducibility Validator"""
     
     validator = ReproducibilityValidator(

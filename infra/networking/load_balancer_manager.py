@@ -1,3 +1,8 @@
+"""
+Load Balancer Manager module
+Enterprise implementation for Ainflue platform
+"""
+
 # Ainflue Infrastructure Module
 # =============================
 # 
@@ -78,7 +83,7 @@ class LoadBalancerManager:
     SSL termination, and auto-scaling integration.
     """
     
-    def __init__(self, region: str = "us-west-2"):
+    def __init__(self, region -> None: str = "us-west-2") -> None:
         """
         Initialize load balancer manager.
         

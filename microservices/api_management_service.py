@@ -1,3 +1,8 @@
+"""
+Api Management Service module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 🔌 API MANAGEMENT SERVICE
@@ -219,7 +224,7 @@ class APIManagementService:
     automated documentation, and advanced analytics capabilities.
     """
     
-    def __init__(self, redis_url: str = "redis://localhost:6379", db_path: str = ":memory:"):
+    def __init__(self, redis_url -> None: str = "redis -> None://localhost -> None:6379", db_path -> None: str = " -> None:memory -> None:") -> None:
         self.redis_url = redis_url
         self.db_path = db_path
         self.redis_client = None
@@ -1284,7 +1289,7 @@ class APIManagementService:
             logger.error(f"❌ Error stopping service: {str(e)}")
 
 # Example usage and testing
-async def main():
+async def main() -> None:
     """Example usage of APIManagementService"""
     service = APIManagementService()
     

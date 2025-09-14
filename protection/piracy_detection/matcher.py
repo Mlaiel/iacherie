@@ -65,7 +65,7 @@ class ContentMatcher:
     multiple algorithms and AI-powered feature extraction.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Content Matcher.
         

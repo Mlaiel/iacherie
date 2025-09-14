@@ -106,7 +106,7 @@ class KYCVerificationSystem:
     """
 Enterprise KYC verification and compliance system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logger
         self.audit_logger = AuditLogger()
         self.automated_verification = settings.KYC_AUTOMATED_VERIFICATION

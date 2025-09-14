@@ -1,3 +1,8 @@
+"""
+Feature Engineering Engine module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 🏗️ MLOps Feature Engineering Engine - Automated ML Feature Pipeline
@@ -109,7 +114,7 @@ class FeatureSet:
 class AutoFeatureSelector:
     """Sélecteur automatique de features basé sur l'importance"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         # Importance scores for different creator types and use cases
         self.feature_importance_weights = {
             CreatorType.MUSICIAN: {
@@ -220,14 +225,14 @@ class AutoFeatureSelector:
 class FeatureTransformationEngine:
     """Engine de transformation de features"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.transformations = {}
         self.transformation_cache = {}
         
         # Initialize common transformations
         self._init_common_transformations()
     
-    def _init_common_transformations(self):
+    def _init_common_transformations(self) -> None:
         """Initialize common feature transformations"""
         
         # Text transformations for bloggers
@@ -238,7 +243,7 @@ class FeatureTransformationEngine:
             output_features=["word_count", "char_count", "sentence_count", "paragraph_count"],
             parameters={"include_stopwords": False},
             code="""
-def transform(text):
+def transform(text) -> None:
     words = len(text.split())
     chars = len(text)
     sentences = len([s for s in text.split('.') if s.strip()])
@@ -260,7 +265,7 @@ def transform(text):
             output_features=["duration", "sample_rate", "tempo_bpm", "key_signature"],
             parameters={"normalize": True},
             code="""
-def transform(audio_path):
+def transform(audio_path) -> None:
     # Simulated audio analysis
     import random
     return {
@@ -280,7 +285,7 @@ def transform(audio_path):
             output_features=["aspect_ratio", "dominant_colors", "brightness", "contrast"],
             parameters={"color_analysis": True},
             code="""
-def transform(image_path):
+def transform(image_path) -> None:
     # Simulated image analysis
     import random
     return {
@@ -300,7 +305,7 @@ def transform(image_path):
             output_features=["engagement_rate", "interaction_ratio", "viral_score"],
             parameters={"time_window": "24h"},
             code="""
-def transform(likes, comments, shares, views):
+def transform(likes, comments, shares, views) -> None:
     if views == 0:
         return {'engagement_rate': 0, 'interaction_ratio': 0, 'viral_score': 0}
     
@@ -316,7 +321,7 @@ def transform(likes, comments, shares, views):
 """
         ))
     
-    def register_transformation(self, transformation: FeatureTransformation):
+    def register_transformation(self, transformation -> None: FeatureTransformation) -> None:
         """Register a new transformation"""
         self.transformations[transformation.name] = transformation
         logger.info(f"✅ Registered transformation: {transformation.name}")
@@ -440,7 +445,7 @@ class FeatureEngineeringEngine:
     - Business logic integration Ainflue
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.feature_selector = AutoFeatureSelector()
         self.transformation_engine = FeatureTransformationEngine()
@@ -457,7 +462,7 @@ class FeatureEngineeringEngine:
         
         logger.info("🏗️ Feature Engineering Engine initialized for enterprise ML")
     
-    def _init_creator_features(self):
+    def _init_creator_features(self) -> None:
         """Initialize creator-specific feature schemas"""
         
         # Musician features
@@ -830,7 +835,7 @@ class FeatureEngineeringEngine:
 
 
 # Demo function
-async def demo_feature_engineering_engine():
+async def demo_feature_engineering_engine() -> None:
     """Démonstration du feature engineering engine"""
     print("🏗️ MLOps Feature Engineering Engine Demo")
     

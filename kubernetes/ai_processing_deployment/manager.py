@@ -129,9 +129,9 @@ class DeploymentManager:
     
     def __init__(
         self,
-        deployment_id: str,
-        config_path: Optional[str] = None
-    ):
+        deployment_id -> None: str,
+        config_path -> None: Optional[str] = None
+    ) -> None:
         """
 Initialize deployment manager."""
         self.deployment_id = deployment_id
@@ -169,7 +169,7 @@ Initialize deployment manager."""
         # Initialize manager
         asyncio.create_task(self._initialize_manager())
     
-    async def _initialize_manager(self):
+    async def _initialize_manager(self) -> None:
         """
 Initialize deployment manager components."""
         try:
@@ -201,7 +201,7 @@ Initialize deployment manager components."""
             logger.error(f"Failed to initialize deployment manager: {e}")
             raise
     
-    async def _load_configuration(self):
+    async def _load_configuration(self) -> None:
         """Load deployment configuration from file or defaults."""
         try:
             if self.config_path and os.path.exists(self.config_path):
@@ -266,7 +266,7 @@ Initialize deployment manager components."""
             logger.error(f"Failed to load configuration: {e}")
             raise
     
-    async def _initialize_infrastructure(self):
+    async def _initialize_infrastructure(self) -> None:
         """Initialize infrastructure connections."""
         try:
             # Redis connection
@@ -302,7 +302,7 @@ Initialize deployment manager components."""
             logger.error(f"Failed to initialize infrastructure: {e}")
             raise
     
-    async def _initialize_database_schema(self):
+    async def _initialize_database_schema(self) -> None:
         """Initialize database schema for deployment tracking."""
         try:
             metadata = MetaData()
@@ -336,7 +336,7 @@ Initialize deployment manager components."""
         except Exception as e:
             logger.error(f"Failed to initialize database schema: {e}")
     
-    async def _initialize_components(self):
+    async def _initialize_components(self) -> None:
         """Initialize core AI processing components."""
         try:
             # Initialize AI processing deployment
@@ -371,7 +371,7 @@ Initialize deployment manager components."""
             logger.error(f"Failed to initialize components: {e}")
             raise
     
-    async def _load_ai_models(self):
+    async def _load_ai_models(self) -> None:
         """Load AI models for processing."""
         try:
             models_config = self.deployment_config.get('models', {})
@@ -423,7 +423,7 @@ Initialize deployment manager components."""
         except Exception as e:
             logger.error(f"Failed to load AI models: {e}")
     
-    async def _start_monitoring(self):
+    async def _start_monitoring(self) -> None:
         """Start monitoring background tasks."""
         try:
             # Start monitoring tasks
@@ -439,7 +439,7 @@ Initialize deployment manager components."""
             logger.error(f"Failed to start monitoring: {e}")
             raise
     
-    async def _monitoring_loop(self):
+    async def _monitoring_loop(self) -> None:
         """Main monitoring loop for metrics collection."""
         while True:
             try:
@@ -552,7 +552,7 @@ Initialize deployment manager components."""
         except Exception:
             return 0.5  # Default score on error
     
-    async def _store_metrics_in_database(self, metrics: DeploymentMetrics):
+    async def _store_metrics_in_database(self, metrics -> None: DeploymentMetrics) -> None:
         """
 Store metrics in database for historical analysis."""
         try:
@@ -592,7 +592,7 @@ Store metrics in database for historical analysis."""
         except Exception as e:
             logger.error(f"Failed to store metrics in database: {e}")
     
-    async def _check_alerts(self, metrics: DeploymentMetrics):
+    async def _check_alerts(self, metrics -> None: DeploymentMetrics) -> None:
         """Check alert conditions and trigger notifications."""
         try:
             if not self.alert_config.enabled:
@@ -647,7 +647,7 @@ Store metrics in database for historical analysis."""
         except Exception as e:
             logger.error(f"Failed to check alerts: {e}")
     
-    async def _process_alert(self, alert: Dict[str, Any]):
+    async def _process_alert(self, alert -> None: Dict[str, Any]) -> None:
         """Process and handle an alert."""
         try:
             alert['timestamp'] = datetime.utcnow().isoformat()
@@ -673,7 +673,7 @@ Store metrics in database for historical analysis."""
         except Exception as e:
             logger.error(f"Failed to process alert: {e}")
     
-    async def _store_alert_in_database(self, alert: Dict[str, Any]):
+    async def _store_alert_in_database(self, alert -> None: Dict[str, Any]) -> None:
         """Store alert in database."""
         try:
             if not self.db_engine:
@@ -700,7 +700,7 @@ Store metrics in database for historical analysis."""
         except Exception as e:
             logger.error(f"Failed to store alert in database: {e}")
     
-    async def _send_alert_notification(self, alert: Dict[str, Any]):
+    async def _send_alert_notification(self, alert -> None: Dict[str, Any]) -> None:
         """Send alert notification to configured channels."""
         try:
             # Placeholder for notification system
@@ -710,7 +710,7 @@ Store metrics in database for historical analysis."""
         except Exception as e:
             logger.error(f"Failed to send alert notification: {e}")
     
-    async def _health_check_loop(self):
+    async def _health_check_loop(self) -> None:
         """Health check monitoring loop."""
         while True:
             try:
@@ -805,7 +805,7 @@ Check database connection health."""
         except Exception:
             return False
     
-    async def _scaling_loop(self):
+    async def _scaling_loop(self) -> None:
         """Auto-scaling monitoring and execution loop."""
         while True:
             try:
@@ -819,7 +819,7 @@ Check database connection health."""
                 logger.error(f"Error in scaling loop: {e}")
                 await asyncio.sleep(300)  # Wait longer on error
     
-    async def _evaluate_scaling_decisions(self):
+    async def _evaluate_scaling_decisions(self) -> None:
         """Evaluate and execute scaling decisions."""
         try:
             metrics = self.current_metrics
@@ -862,7 +862,7 @@ Determine if scaling down is possible."""
         
         return cpu_ok and memory_ok
     
-    async def _scale_up(self):
+    async def _scale_up(self) -> None:
         """
 Execute scale up operation."""
         try:
@@ -884,7 +884,7 @@ Execute scale up operation."""
             logger.error(f"Failed to scale up: {e}")
             self.status = DeploymentStatus.FAILED
     
-    async def _scale_down(self):
+    async def _scale_down(self) -> None:
         """Execute scale down operation."""
         try:
             self.status = DeploymentStatus.SCALING
@@ -922,7 +922,7 @@ Execute scale up operation."""
             logger.error(f"Failed to get current replicas: {e}")
             return 1
     
-    async def _set_replicas(self, target_replicas: int):
+    async def _set_replicas(self, target_replicas -> None: int) -> None:
         """Set target number of replicas."""
         try:
             if self.k8s_client:
@@ -976,7 +976,7 @@ Execute scale up operation."""
                 'timestamp': datetime.utcnow().isoformat()
             }
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Gracefully shutdown deployment manager."""
         try:
             logger.info(f"Shutting down deployment manager: {self.deployment_id}")

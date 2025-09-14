@@ -32,6 +32,7 @@ import jwt
 from collections import defaultdict, deque
 
 class APIEndpoint(Enum):
+    """APIEndpoint class implementation"""
     REVENUE_MANAGEMENT = "/api/v1/revenue"
     CONTENT_MONETIZATION = "/api/v1/content"
     PAYMENT_PROCESSING = "/api/v1/payments"
@@ -42,6 +43,7 @@ class APIEndpoint(Enum):
     BLOCKCHAIN_SERVICES = "/api/v1/blockchain"
 
 class ServiceStatus(Enum):
+    """ServiceStatus class implementation"""
     OPERATIONAL = "operational"
     DEGRADED = "degraded"
     MAINTENANCE = "maintenance"
@@ -49,6 +51,7 @@ class ServiceStatus(Enum):
 
 @dataclass
 class APIMetrics:
+    """APIMetrics: class implementation"""
     endpoint: str
     requests_count: int
     average_response_time: float
@@ -57,6 +60,7 @@ class APIMetrics:
 
 @dataclass
 class ServiceHealth:
+    """ServiceHealth: class implementation"""
     service_name: str
     status: ServiceStatus
     response_time_ms: float
@@ -64,6 +68,7 @@ class ServiceHealth:
     error_count: int
 
 class APIRequest(BaseModel):
+    """APIRequest class implementation"""
     endpoint: str
     method: str
     user_id: Optional[str] = None
@@ -71,6 +76,7 @@ class APIRequest(BaseModel):
     data: Optional[Dict[str, Any]] = None
 
 class APIResponse(BaseModel):
+    """APIResponse class implementation"""
     success: bool
     data: Optional[Dict[str, Any]] = None
     error: Optional[str] = None
@@ -80,7 +86,7 @@ class APIResponse(BaseModel):
 class RateLimiter:
     """Advanced rate limiting with sliding window"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.requests = defaultdict(deque)
         self.limits = {
             "default": (100, 3600),    # 100 requests per hour
@@ -107,7 +113,7 @@ class RateLimiter:
 class MonetizationAPIGateway:
     """Unified API Gateway for all monetization services"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.app = FastAPI(
             title="Ainflue Monetization API Gateway",
             description="Unified gateway for all monetization services",
@@ -136,7 +142,7 @@ class MonetizationAPIGateway:
         # Setup routes
         self._setup_routes()
     
-    def _setup_middleware(self):
+    def _setup_middleware(self) -> None:
         """Configure API gateway middleware"""
         
         # CORS middleware
@@ -156,7 +162,7 @@ class MonetizationAPIGateway:
         
         # Request logging middleware
         @self.app.middleware("http")
-        async def log_requests(request: Request, call_next):
+        async def log_requests(request -> None: Request, call_next) -> None:
             start_time = time.time()
             
             # Log incoming request
@@ -170,64 +176,64 @@ class MonetizationAPIGateway:
             
             return response
     
-    def _setup_routes(self):
+    def _setup_routes(self) -> None:
         """Setup API gateway routes"""
         
         @self.app.get("/health")
-        async def health_check():
+        async def health_check() -> None:
             """Gateway health check endpoint"""
             return {"status": "healthy", "timestamp": datetime.utcnow()}
         
         @self.app.get("/services/health")
-        async def services_health():
+        async def services_health() -> None:
             """Check health of all downstream services"""
             health_checks = await self.check_services_health()
             return {"services": health_checks, "timestamp": datetime.utcnow()}
         
         @self.app.get("/metrics")
-        async def api_metrics():
+        async def api_metrics() -> None:
             """Get API gateway metrics"""
             metrics = await self.get_api_metrics()
             return {"metrics": metrics, "timestamp": datetime.utcnow()}
         
         # Revenue Management Routes
         @self.app.api_route("/api/v1/revenue/{path:path}", methods=["GET", "POST", "PUT", "DELETE"])
-        async def revenue_proxy(request: Request, path: str):
+        async def revenue_proxy(request -> None: Request, path -> None: str) -> None:
             return await self.proxy_request("revenue_management", request, path)
         
         # Content Monetization Routes
         @self.app.api_route("/api/v1/content/{path:path}", methods=["GET", "POST", "PUT", "DELETE"])
-        async def content_proxy(request: Request, path: str):
+        async def content_proxy(request -> None: Request, path -> None: str) -> None:
             return await self.proxy_request("content_monetization", request, path)
         
         # Payment Processing Routes
         @self.app.api_route("/api/v1/payments/{path:path}", methods=["GET", "POST", "PUT", "DELETE"])
-        async def payment_proxy(request: Request, path: str):
+        async def payment_proxy(request -> None: Request, path -> None: str) -> None:
             return await self.proxy_request("payment_processing", request, path)
         
         # Subscription Management Routes
         @self.app.api_route("/api/v1/subscriptions/{path:path}", methods=["GET", "POST", "PUT", "DELETE"])
-        async def subscription_proxy(request: Request, path: str):
+        async def subscription_proxy(request -> None: Request, path -> None: str) -> None:
             return await self.proxy_request("subscription_management", request, path)
         
         # Payout Automation Routes
         @self.app.api_route("/api/v1/payouts/{path:path}", methods=["GET", "POST", "PUT", "DELETE"])
-        async def payout_proxy(request: Request, path: str):
+        async def payout_proxy(request -> None: Request, path -> None: str) -> None:
             return await self.proxy_request("payout_automation", request, path)
         
         # Analytics Routes
         @self.app.api_route("/api/v1/analytics/{path:path}", methods=["GET", "POST", "PUT", "DELETE"])
-        async def analytics_proxy(request: Request, path: str):
+        async def analytics_proxy(request -> None: Request, path -> None: str) -> None:
             return await self.proxy_request("analytics_reporting", request, path)
         
         # Compliance Routes
         @self.app.api_route("/api/v1/compliance/{path:path}", methods=["GET", "POST", "PUT", "DELETE"])
-        async def compliance_proxy(request: Request, path: str):
+        async def compliance_proxy(request -> None: Request, path -> None: str) -> None:
             return await self.proxy_request("compliance_reporting", request, path)
         
         # Blockchain Routes
         @self.app.api_route("/api/v1/blockchain/{path:path}", methods=["GET", "POST", "PUT", "DELETE"])
-        async def blockchain_proxy(request: Request, path: str):
+        async def blockchain_proxy(request -> None: Request, path -> None: str) -> None:
             return await self.proxy_request("blockchain_services", request, path)
     
     async def authenticate_request(
@@ -407,10 +413,10 @@ class MonetizationAPIGateway:
     
     async def log_api_request(
         self,
-        request: APIRequest,
-        response: APIResponse,
-        processing_time: float
-    ):
+        request -> None: APIRequest,
+        response -> None: APIResponse,
+        processing_time -> None: float
+    ) -> None:
         """Log API request for analytics"""
         try:
             log_entry = {

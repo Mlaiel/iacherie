@@ -60,7 +60,7 @@ class AIPromptInfrastructureOptimizer:
     IA Prompt Engineer Role: Optimize AI prompts for infrastructure automation
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
         self.prompt_templates = {}
         self.prompt_performance_metrics = {}
@@ -240,7 +240,7 @@ class AIPromptInfrastructureOptimizer:
             self.logger.error(f"Prompt generation failed: {e}")
             return f"Error generating prompt for {operation_type}: {str(e)}"
     
-    def _initialize_ainflue_prompt_templates(self):
+    def _initialize_ainflue_prompt_templates(self) -> None:
         """Initialize Ainflue-specific prompt templates"""
         templates = [
             PromptTemplate(

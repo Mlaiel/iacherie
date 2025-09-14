@@ -78,9 +78,9 @@ class PhotographerAestheticAnalyzer:
     """
     
     def __init__(self, 
-                 redis_host: str = "localhost",
-                 redis_port: int = 6379,
-                 model_cache_dir: str = "/tmp/aesthetic_models"):
+                 redis_host -> None: str = "localhost",
+                 redis_port -> None: int = 6379,
+                 model_cache_dir -> None: str = "/tmp/aesthetic_models") -> None:
         self.logger = logging.getLogger(__name__)
         
         # Initialize Redis for caching
@@ -126,7 +126,7 @@ class PhotographerAestheticAnalyzer:
             'cache_hit_rate': 0.0
         }
         
-    def _init_models(self):
+    def _init_models(self) -> None:
         """Initialize AI models for aesthetic analysis"""
         try:
             # Load pre-trained ResNet for feature extraction
@@ -152,7 +152,7 @@ class PhotographerAestheticAnalyzer:
             self.logger.error(f"❌ Failed to initialize models: {e}")
             raise
     
-    def _init_aesthetic_models(self):
+    def _init_aesthetic_models(self) -> None:
         """Initialize specialized models for aesthetic scoring"""
         # Composition analysis model (simplified for demo)
         self.composition_weights = {
@@ -678,7 +678,7 @@ class PhotographerAestheticAnalyzer:
             'market_opportunities': await self._identify_market_opportunities()
         }
     
-    def _update_metrics(self, processing_time: float):
+    def _update_metrics(self, processing_time -> None: float) -> None:
         """Update performance metrics"""
         self.analysis_metrics['total_analyses'] += 1
         self.analysis_metrics['avg_processing_time'] = (
@@ -700,7 +700,7 @@ if __name__ == "__main__":
     import asyncio
     import io
     
-    async def main():
+    async def main() -> None:
         # Initialize analyzer
         analyzer = PhotographerAestheticAnalyzer()
         

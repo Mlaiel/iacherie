@@ -14,7 +14,7 @@ from collections import defaultdict
 class CacheManager:
     """Simple in-memory cache manager"""
     
-    def __init__(self, default_ttl: int = 3600):
+    def __init__(self, default_ttl -> None: int = 3600) -> None:
         self.default_ttl = default_ttl
         self._cache = {}
         self._timestamps = {}

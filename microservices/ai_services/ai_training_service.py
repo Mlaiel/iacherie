@@ -162,7 +162,7 @@ class ModelArtifact:
 class AITrainingService:
     """Enterprise AI model training and optimization service."""
     
-    def __init__(self, config_path: Optional[str] = None):
+    def __init__(self, config_path -> None: Optional[str] = None) -> None:
         """Initialize the AI training service.
         
         Args:
@@ -1111,7 +1111,7 @@ class AITrainingService:
 
 
 # Example usage and testing
-async def main():
+async def main() -> None:
     """Example usage of the AITrainingService."""
     # Initialize service
     service = AITrainingService()

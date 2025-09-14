@@ -186,7 +186,7 @@ class AuthenticationImplementation:
     OAuth integration, biometric support, and advanced security monitoring.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
         
@@ -892,7 +892,7 @@ class AuthenticationImplementation:
         
         return len(failed_attempts) >= self.security_config["max_login_attempts"]
     
-    async def _check_and_apply_account_lockout(self, user_id: str):
+    async def _check_and_apply_account_lockout(self, user_id -> None: str) -> None:
         """Check if account should be locked and apply lockout"""
         
         if await self._is_account_locked(user_id):
@@ -937,15 +937,15 @@ class AuthenticationImplementation:
     
     async def _log_authentication_attempt(
         self,
-        attempt_id: str,
-        authentication_method: AuthenticationMethod,
-        status: AuthenticationStatus,
-        ip_address: str,
-        user_agent: str,
-        user_id: Optional[str] = None,
-        email: Optional[str] = None,
-        failure_reason: Optional[str] = None
-    ):
+        attempt_id -> None: str,
+        authentication_method -> None: AuthenticationMethod,
+        status -> None: AuthenticationStatus,
+        ip_address -> None: str,
+        user_agent -> None: str,
+        user_id -> None: Optional[str] = None,
+        email -> None: Optional[str] = None,
+        failure_reason -> None: Optional[str] = None
+    ) -> None:
         """Log authentication attempt"""
         
         attempt = AuthenticationAttempt(
@@ -971,14 +971,14 @@ class AuthenticationImplementation:
     
     async def _log_security_event(
         self,
-        event_type: str,
-        severity: str,
-        description: str,
-        metadata: Dict[str, Any],
-        user_id: Optional[str] = None,
-        ip_address: Optional[str] = None,
-        user_agent: Optional[str] = None
-    ):
+        event_type -> None: str,
+        severity -> None: str,
+        description -> None: str,
+        metadata -> None: Dict[str, Any],
+        user_id -> None: Optional[str] = None,
+        ip_address -> None: Optional[str] = None,
+        user_agent -> None: Optional[str] = None
+    ) -> None:
         """Log security event"""
         
         event = SecurityEvent(
@@ -1079,7 +1079,7 @@ class AuthenticationImplementation:
         
         return mapping.get(mfa_method, AuthenticationMethod.EMAIL_PASSWORD)
     
-    async def _trust_device(self, user_id: str, device_info: Dict[str, Any]):
+    async def _trust_device(self, user_id -> None: str, device_info -> None: Dict[str, Any]) -> None:
         """Add device to trusted devices"""
         
         device = DeviceInfo(
@@ -1103,7 +1103,7 @@ class AuthenticationImplementation:
         
         self.trusted_devices[user_id].append(device)
     
-    async def _analyze_authentication_patterns(self, user_id: str, device_info: Dict[str, Any], ip_address: str):
+    async def _analyze_authentication_patterns(self, user_id -> None: str, device_info -> None: Dict[str, Any], ip_address -> None: str) -> None:
         """Analyze authentication patterns for suspicious activity"""
         
         # Get recent authentication attempts for this user

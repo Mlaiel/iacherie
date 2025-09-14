@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 class EngagementRateNotifications:
     """Engagement rate monitoring and notification system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         logger.info("Engagement rate notifications initialized")
     
     async def notify_engagement_milestone(self, user_id: str, content_id: str, 

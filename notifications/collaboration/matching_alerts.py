@@ -90,7 +90,7 @@ class CollaborationMatchingEngine:
     Utilise des algorithmes IA/ML pour optimiser les partenariats
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialise l'engine de matching collaboration"""
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
@@ -116,7 +116,7 @@ class CollaborationMatchingEngine:
         
         self.logger.info("CollaborationMatchingEngine initialisé avec succès")
 
-    def _initialize_matching_weights(self):
+    def _initialize_matching_weights(self) -> None:
         """Initialise les poids des critères de matching"""
         self.matching_weights = {
             MatchingCriteria.AUDIENCE_OVERLAP: 0.20,
@@ -1035,7 +1035,7 @@ class CollaborationMatchingEngine:
         
         return min(1.0, engagement_score)
 
-    async def _update_engine_metrics(self, matches: List[MatchingResult]):
+    async def _update_engine_metrics(self, matches -> None: List[MatchingResult]) -> None:
         """Met à jour les métriques de l'engine"""
         self.engine_metrics['matches_generated'] += len(matches)
         

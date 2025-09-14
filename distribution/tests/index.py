@@ -89,7 +89,7 @@ class TestingEngine:
     for the entire Ainflue distribution platform.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize Testing Engine"""
         self.test_suites = {}
         self.test_results = []
@@ -310,7 +310,7 @@ class TestingEngine:
             success_count = 0
             
             # Simulate concurrent users
-            async def user_simulation():
+            async def user_simulation() -> None:
                 nonlocal response_times, error_count, success_count
                 
                 while time.time() < end_time:
@@ -444,7 +444,7 @@ class TestingEngine:
             logger.error(f"Error generating test report: {e}")
             return {'error': str(e)}
     
-    def _setup_default_suites(self):
+    def _setup_default_suites(self) -> None:
         """Setup default test suites"""
         try:
             # Distribution module test suite

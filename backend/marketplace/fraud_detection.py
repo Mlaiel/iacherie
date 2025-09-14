@@ -113,7 +113,7 @@ class BehaviorPattern:
 class FraudDetectionEngine:
     """AI-powered fraud detection and prevention system"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.config = config or {}
         self.fraud_indicators: Dict[str, FraudIndicator] = {}
         self.fraud_scores: Dict[str, FraudScore] = {}
@@ -130,7 +130,7 @@ class FraudDetectionEngine:
         
         logger.info("🛡️ Fraud Detection Engine initialized")
     
-    def _initialize_fraud_indicators(self):
+    def _initialize_fraud_indicators(self) -> None:
         """Initialize default fraud detection indicators"""
         try:
             indicators = [
@@ -620,7 +620,7 @@ class FraudDetectionEngine:
         else:
             return FraudRiskLevel.LOW
     
-    async def _create_fraud_alert(self, fraud_score: FraudScore, fraud_type: FraudType):
+    async def _create_fraud_alert(self, fraud_score -> None: FraudScore, fraud_type -> None: FraudType) -> None:
         """Create fraud detection alert"""
         try:
             # Determine recommended action
@@ -660,7 +660,7 @@ class FraudDetectionEngine:
         except Exception as e:
             logger.error(f"Fraud alert creation error: {e}")
     
-    async def _execute_fraud_action(self, alert: FraudAlert):
+    async def _execute_fraud_action(self, alert -> None: FraudAlert) -> None:
         """Execute fraud prevention action"""
         try:
             if alert.recommended_action == FraudAction.BLOCK:

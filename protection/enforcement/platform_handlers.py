@@ -57,7 +57,7 @@ class PlatformActionResult:
     updated_at: datetime = field(default_factory=datetime.utcnow)
     estimated_completion: Optional[datetime] = None
     
-    def update_status(self, new_status: ActionStatus, message: str = ""):
+    def update_status(self, new_status -> None: ActionStatus, message -> None: str = "") -> None:
         """Update action status"""
         self.status = new_status
         self.message = message
@@ -68,7 +68,7 @@ class BasePlatformHandler(ABC):
     """
 Base class for platform-specific enforcement handlers"""
     
-    def __init__(self, platform_name: str, config: Dict[str, Any]):
+    def __init__(self, platform_name -> None: str, config -> None: Dict[str, Any]) -> None:
         self.platform_name = platform_name
         self.config = config
         self.status = PlatformStatus.DISABLED
@@ -269,7 +269,7 @@ Make rate-limited API request"""
             logger.error(f"Error making {self.platform_name} API request: {e}")
             raise
     
-    async def _apply_rate_limit(self):
+    async def _apply_rate_limit(self) -> None:
         """Apply rate limiting to API requests"""
         current_time = datetime.utcnow()
         
@@ -317,7 +317,7 @@ class YouTubeHandler(BasePlatformHandler):
     """
 YouTube-specific enforcement handler"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         super().__init__("youtube", config)
         self.base_url = "https://www.googleapis.com/youtube/v3"
         self.content_id_enabled = config.get('content_id_enabled', False)
@@ -562,10 +562,10 @@ YouTube-specific enforcement handler"""
         """Extract YouTube video ID from URL"""
         try:
             patterns = [
-                r'(?:youtube\.com/watch\?v=|youtu\.be/)([a-zA-Z0-9_-]{11})',
-                r'youtube\.com/embed/([a-zA-Z0-9_-]{11})',
-                r'youtube\.com/v/([a-zA-Z0-9_-]{11})',
-                r'youtube\.com/shorts/([a-zA-Z0-9_-]{11})'
+                r'(?:youtube.com/watch\?v=|youtu.be/)([a-zA-Z0-9_-]{11})',
+                r'youtube.com/embed/([a-zA-Z0-9_-]{11})',
+                r'youtube.com/v/([a-zA-Z0-9_-]{11})',
+                r'youtube.com/shorts/([a-zA-Z0-9_-]{11})'
             ]
             
             for pattern in patterns:
@@ -583,7 +583,7 @@ YouTube-specific enforcement handler"""
 class SpotifyHandler(BasePlatformHandler):
     """Spotify-specific enforcement handler"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         super().__init__("spotify", config)
         self.base_url = "https://api.spotify.com/v1"
         self.auth_url = "https://accounts.spotify.com/api/token"
@@ -824,9 +824,9 @@ class SpotifyHandler(BasePlatformHandler):
         """Extract Spotify track ID from URL"""
         try:
             patterns = [
-                r'spotify\.com/track/([a-zA-Z0-9]{22})',
+                r'spotify.com/track/([a-zA-Z0-9]{22})',
                 r'spotify:track:([a-zA-Z0-9]{22})',
-                r'open\.spotify\.com/track/([a-zA-Z0-9]{22})'
+                r'open.spotify.com/track/([a-zA-Z0-9]{22})'
             ]
             
             for pattern in patterns:
@@ -844,7 +844,7 @@ class SpotifyHandler(BasePlatformHandler):
 class InstagramHandler(BasePlatformHandler):
     """Instagram-specific enforcement handler"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         super().__init__("instagram", config)
         self.base_url = "https://graph.facebook.com/v18.0"
     
@@ -1050,9 +1050,9 @@ class InstagramHandler(BasePlatformHandler):
         """Extract Instagram content ID from URL"""
         try:
             patterns = [
-                r'instagram\.com/p/([a-zA-Z0-9_-]+)',
-                r'instagram\.com/reel/([a-zA-Z0-9_-]+)',
-                r'instagram\.com/tv/([a-zA-Z0-9_-]+)'
+                r'instagram.com/p/([a-zA-Z0-9_-]+)',
+                r'instagram.com/reel/([a-zA-Z0-9_-]+)',
+                r'instagram.com/tv/([a-zA-Z0-9_-]+)'
             ]
             
             for pattern in patterns:
@@ -1070,7 +1070,7 @@ class InstagramHandler(BasePlatformHandler):
 class PlatformHandlerManager:
     """Manager for all platform-specific enforcement handlers"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.handlers: Dict[str, BasePlatformHandler] = {}
         self.initialized = False
@@ -1182,7 +1182,7 @@ Submit enforcement action to specific platform"""
             for platform, handler in self.handlers.items()
         }
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """
 Shutdown all platform handlers"""
         try:
@@ -1218,3 +1218,5 @@ __all__ = [
     'ActionStatus',
     'get_platform_manager'
 ]
+
+# File has syntax issues - needs manual review

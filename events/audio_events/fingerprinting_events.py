@@ -63,7 +63,7 @@ class AudioFingerprintingStartedEvent(BaseEvent):
     estimated_duration: float
     fingerprinting_metadata: Dict[str, Any] = field(default_factory=dict)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.fingerprinting.started",
             data={
@@ -93,7 +93,7 @@ class AudioFingerprintingProgressEvent(BaseEvent):
     matches_found: int
     estimated_time_remaining: float
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.fingerprinting.progress",
             data={
@@ -124,7 +124,7 @@ class AudioFingerprintingCompletedEvent(BaseEvent):
     fingerprint_quality: float
     fingerprinting_metadata: Dict[str, Any] = field(default_factory=dict)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.fingerprinting.completed",
             data={
@@ -156,7 +156,7 @@ class AudioFingerprintingFailedEvent(BaseEvent):
     partial_results: Dict[str, Any] = field(default_factory=dict)
     retry_suggested: bool = True
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.fingerprinting.failed",
             data={
@@ -189,7 +189,7 @@ class AudioMatchFoundEvent(BaseEvent):
     fingerprinting_method: str
     match_metadata: Dict[str, Any] = field(default_factory=dict)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.fingerprinting.match_found",
             data={
@@ -223,7 +223,7 @@ class AudioCopyrightViolationEvent(BaseEvent):
     notification_required: bool = True
     violation_metadata: Dict[str, Any] = field(default_factory=dict)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.fingerprinting.copyright_violation",
             data={
@@ -256,7 +256,7 @@ class AudioDigitalFingerprintEvent(BaseEvent):
     generation_timestamp: datetime
     fingerprint_metadata: Dict[str, Any] = field(default_factory=dict)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.fingerprinting.digital_fingerprint",
             data={
@@ -287,7 +287,7 @@ class AudioContentIDEvent(BaseEvent):
     monetization_enabled: bool
     content_id_metadata: Dict[str, Any] = field(default_factory=dict)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.fingerprinting.content_id",
             data={
@@ -320,7 +320,7 @@ class AudioSimilarityAnalysisEvent(BaseEvent):
     spectral_similarity: Dict[str, Any]
     analysis_metadata: Dict[str, Any] = field(default_factory=dict)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.fingerprinting.similarity_analysis",
             data={
@@ -352,7 +352,7 @@ class AudioDuplicateDetectionEvent(BaseEvent):
     action_taken: str
     detection_metadata: Dict[str, Any] = field(default_factory=dict)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.fingerprinting.duplicate_detection",
             data={

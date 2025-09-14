@@ -210,7 +210,7 @@ class RateLimitRule:
 class AuthenticationManager:
     """Handles authentication and authorization"""
     
-    def __init__(self, config: GatewayConfig):
+    def __init__(self, config -> None: GatewayConfig) -> None:
         self.config = config
         self.jwt_secret = config.jwt_secret
         self.jwt_algorithm = config.jwt_algorithm
@@ -369,7 +369,7 @@ class AuthenticationManager:
 class RateLimiter:
     """Handles rate limiting for API requests"""
     
-    def __init__(self, config: GatewayConfig):
+    def __init__(self, config -> None: GatewayConfig) -> None:
         self.config = config
         self.rate_limit_rules: Dict[str, RateLimitRule] = {}
         self.request_counts: Dict[str, deque] = defaultdict(lambda: deque())
@@ -433,7 +433,7 @@ class RateLimiter:
 class LoadBalancer:
     """Handles load balancing across service endpoints"""
     
-    def __init__(self, config: GatewayConfig):
+    def __init__(self, config -> None: GatewayConfig) -> None:
         self.config = config
         self.endpoint_counters: Dict[str, int] = defaultdict(int)
         self.endpoint_health: Dict[str, bool] = {}
@@ -547,7 +547,7 @@ class LoadBalancer:
 class CacheManager:
     """Handles response caching"""
     
-    def __init__(self, config: GatewayConfig):
+    def __init__(self, config -> None: GatewayConfig) -> None:
         self.config = config
         self.cache: Dict[str, Dict[str, Any]] = {}
         self.cache_stats = {'hits': 0, 'misses': 0, 'size': 0}
@@ -632,7 +632,7 @@ class CacheManager:
         key_string = "|".join(key_parts)
         return hashlib.md5(key_string.encode()).hexdigest()
     
-    async def _evict_oldest(self):
+    async def _evict_oldest(self) -> None:
         """Evict oldest cache entry"""
         if not self.cache:
             return
@@ -659,14 +659,14 @@ class CacheManager:
 class RequestRouter:
     """Routes requests to appropriate services"""
     
-    def __init__(self, config: GatewayConfig):
+    def __init__(self, config -> None: GatewayConfig) -> None:
         self.config = config
         self.routes: List[Route] = []
         self.service_endpoints: Dict[str, List[ServiceEndpoint]] = {}
         
         logger.info("🛣️ Request Router initialized")
     
-    def add_route(self, route: Route):
+    def add_route(self, route -> None: Route) -> None:
         """Add route configuration"""
         self.routes.append(route)
         
@@ -709,7 +709,7 @@ class RequestRouter:
 class ServiceProxy:
     """Proxies requests to backend services"""
     
-    def __init__(self, config: GatewayConfig):
+    def __init__(self, config -> None: GatewayConfig) -> None:
         self.config = config
         self.session = None
         
@@ -819,7 +819,7 @@ class ServiceProxy:
             'body': json.dumps({'error': 'HTTP client not available'}).encode()
         }
     
-    async def close(self):
+    async def close(self) -> None:
         """Close HTTP session"""
         if self.session:
             await self.session.close()
@@ -828,7 +828,7 @@ class ServiceProxy:
 class MediaAPIGateway:
     """Main API Gateway orchestrating all components"""
     
-    def __init__(self, config: Optional[GatewayConfig] = None):
+    def __init__(self, config -> None: Optional[GatewayConfig] = None) -> None:
         """Initialize media API gateway"""
         self.config = config or GatewayConfig()
         
@@ -853,7 +853,7 @@ class MediaAPIGateway:
         
         logger.info("🌐 Media API Gateway initialized")
     
-    def _setup_fastapi_app(self):
+    def _setup_fastapi_app(self) -> None:
         """Setup FastAPI application"""
         self.app = FastAPI(
             title="Media API Gateway",
@@ -879,22 +879,22 @@ class MediaAPIGateway:
         
         # Add gateway middleware
         @self.app.middleware("http")
-        async def gateway_middleware(request: Request, call_next):
+        async def gateway_middleware(request -> None: Request, call_next) -> None:
             return await self._handle_request(request, call_next)
         
         # Health check endpoint
         @self.app.get("/health")
-        async def health_check():
+        async def health_check() -> None:
             return await self.get_health_status()
         
         # Metrics endpoint
         @self.app.get("/metrics")
-        async def metrics():
+        async def metrics() -> None:
             return await self.get_metrics()
         
         # Catch-all route
         @self.app.api_route("/{path:path}", methods=["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"])
-        async def gateway_proxy(request: Request):
+        async def gateway_proxy(request -> None: Request) -> None:
             # This will be handled by middleware
             return {"message": "Request processed by gateway"}
     
@@ -1091,7 +1091,7 @@ class MediaAPIGateway:
             logger.error(f"Metrics collection failed: {e}")
             return {'error': str(e)}
     
-    def add_route(self, route: Route):
+    def add_route(self, route -> None: Route) -> None:
         """Add route to gateway"""
         self.request_router.add_route(route)
     

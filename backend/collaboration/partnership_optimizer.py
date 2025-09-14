@@ -196,7 +196,7 @@ class PartnershipOptimizer:
     - Analyse de portefeuille avancée
     """
     
-    def __init__(self, db_session=None, redis_client=None):
+    def __init__(self, db_session=None, redis_client=None) -> None:
         self.db_session = db_session
         self.redis_client = redis_client
         self.partnerships = {}
@@ -208,7 +208,7 @@ class PartnershipOptimizer:
         # Initialiser les modèles d'optimisation
         self._initialize_optimization_models()
     
-    def _initialize_optimization_models(self):
+    def _initialize_optimization_models(self) -> None:
         """Initialise les modèles d'optimisation"""
         self.optimization_models = {
             'roi_predictor': {
@@ -552,7 +552,7 @@ class PricingOptimizer:
     - Benchmarking de marché temps réel
     """
     
-    def __init__(self, partnership_optimizer):
+    def __init__(self, partnership_optimizer) -> None:
         self.partnership_optimizer = partnership_optimizer
         self.pricing_models = {}
         self.market_intelligence = {}
@@ -620,7 +620,7 @@ class ROIPredictor:
     - Recommandations d'optimisation ROI
     """
     
-    def __init__(self, partnership_optimizer):
+    def __init__(self, partnership_optimizer) -> None:
         self.partnership_optimizer = partnership_optimizer
         self.roi_models = {}
         self.historical_data = defaultdict(list)

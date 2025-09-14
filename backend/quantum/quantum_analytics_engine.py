@@ -264,7 +264,7 @@ class QuantumAnalyticsEngine:
     ✅ Competitive intelligence et market analysis
     """
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.config = config or {}
         self.performance_analyzers: Dict[str, PerformanceAnalyzer] = {}
         self.predictive_modelers: Dict[str, PredictiveModeler] = {}
@@ -732,15 +732,16 @@ class QuantumAnalyticsEngine:
     # MÉTHODES PRIVÉES - PERFORMANCE ANALYTICS
     # ========================================
     
-    async def _get_or_create_performance_analyzer(self, analyzer_type: str):
+    async def _get_or_create_performance_analyzer(self, analyzer_type -> None: str) -> None:
         """Récupération ou création analyseur performance"""
         if analyzer_type not in self.performance_analyzers:
             self.performance_analyzers[analyzer_type] = await self._create_performance_analyzer(analyzer_type)
         return self.performance_analyzers[analyzer_type]
     
-    async def _create_performance_analyzer(self, analyzer_type: str):
+    async def _create_performance_analyzer(self, analyzer_type -> None: str) -> None:
         """Création analyseur performance"""
         class MockPerformanceAnalyzer(PerformanceAnalyzer):
+    """MockPerformanceAnalyzer class implementation"""
             async def analyze_performance(self, request: AnalyticsRequest) -> Dict[str, Any]:
                 return {
                     "overall_performance_score": np.random.uniform(0.7, 0.95),
@@ -818,15 +819,16 @@ class QuantumAnalyticsEngine:
     # MÉTHODES PRIVÉES - PREDICTIVE ANALYTICS
     # ========================================
     
-    async def _get_or_create_predictive_modeler(self, modeler_type: str):
+    async def _get_or_create_predictive_modeler(self, modeler_type -> None: str) -> None:
         """Récupération ou création modélisateur prédictif"""
         if modeler_type not in self.predictive_modelers:
             self.predictive_modelers[modeler_type] = await self._create_predictive_modeler(modeler_type)
         return self.predictive_modelers[modeler_type]
     
-    async def _create_predictive_modeler(self, modeler_type: str):
+    async def _create_predictive_modeler(self, modeler_type -> None: str) -> None:
         """Création modélisateur prédictif"""
         class MockPredictiveModeler(PredictiveModeler):
+    """MockPredictiveModeler class implementation"""
             async def create_predictive_model(self, request: PredictiveRequest) -> PredictiveResult:
                 predictions = {}
                 for metric in request.target_metrics:
@@ -911,15 +913,16 @@ class QuantumAnalyticsEngine:
     # MÉTHODES PRIVÉES - BUSINESS INTELLIGENCE
     # ========================================
     
-    async def _get_or_create_business_analyzer(self, analyzer_type: str):
+    async def _get_or_create_business_analyzer(self, analyzer_type -> None: str) -> None:
         """Récupération ou création analyseur business"""
         if analyzer_type not in self.business_analyzers:
             self.business_analyzers[analyzer_type] = await self._create_business_analyzer(analyzer_type)
         return self.business_analyzers[analyzer_type]
     
-    async def _create_business_analyzer(self, analyzer_type: str):
+    async def _create_business_analyzer(self, analyzer_type -> None: str) -> None:
         """Création analyseur business"""
         class MockBusinessAnalyzer(BusinessAnalyzer):
+    """MockBusinessAnalyzer class implementation"""
             async def analyze_business_performance(self, request: BusinessIntelligenceRequest) -> BusinessIntelligenceResult:
                 return BusinessIntelligenceResult(
                     bi_request_id=request.bi_request_id,
@@ -995,15 +998,16 @@ class QuantumAnalyticsEngine:
     # MÉTHODES PRIVÉES - REVENUE ANALYTICS
     # ========================================
     
-    async def _get_or_create_revenue_analyzer(self, analyzer_type: str):
+    async def _get_or_create_revenue_analyzer(self, analyzer_type -> None: str) -> None:
         """Récupération ou création analyseur revenus"""
         if analyzer_type not in self.revenue_analyzers:
             self.revenue_analyzers[analyzer_type] = await self._create_revenue_analyzer(analyzer_type)
         return self.revenue_analyzers[analyzer_type]
     
-    async def _create_revenue_analyzer(self, analyzer_type: str):
+    async def _create_revenue_analyzer(self, analyzer_type -> None: str) -> None:
         """Création analyseur revenus"""
         class MockRevenueAnalyzer(RevenueAnalyzer):
+    """MockRevenueAnalyzer class implementation"""
             async def analyze_revenue(self, request: RevenueAnalyticsRequest) -> Dict[str, Any]:
                 return {
                     "total_revenue": np.random.uniform(50000, 500000),
@@ -1064,7 +1068,7 @@ class QuantumAnalyticsEngine:
         
         return type_advantages.get(analytics_type, base_advantage) * complexity_multiplier
     
-    async def _update_analytics_cache(self, request: AnalyticsRequest, result: AnalyticsResult):
+    async def _update_analytics_cache(self, request -> None: AnalyticsRequest, result -> None: AnalyticsResult) -> None:
         """Mise à jour cache analytics"""
         cache_key = f"{request.analytics_type.value}_{request.request_id}"
         self.analytics_cache[cache_key] = {

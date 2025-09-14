@@ -109,8 +109,8 @@ class ModelMetadataEngine:
     """🔧 Moteur de gestion des métadonnées de modèles"""
     
     def __init__(self, 
-                 db_url: str = "postgresql://user:pass@localhost:5432/ainflue_ml",
-                 redis_url: str = "redis://localhost:6379/0"):
+                 db_url -> None: str = "postgresql -> None://user -> None:pass@localhost -> None:5432/ainflue_ml",
+                 redis_url -> None: str = "redis -> None://localhost -> None:6379/0") -> None:
         self.db_url = db_url
         self.redis_url = redis_url
         self.engine = None
@@ -122,7 +122,7 @@ class ModelMetadataEngine:
         self.query_cache_hits = 0
         self.query_cache_misses = 0
         
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialise les connexions et la base de données"""
         try:
             # Database connection
@@ -141,7 +141,7 @@ class ModelMetadataEngine:
             logger.error(f"Failed to initialize ModelMetadataEngine: {e}")
             raise
     
-    async def _create_tables(self):
+    async def _create_tables(self) -> None:
         """Crée les tables de métadonnées"""
         try:
             Base = declarative_base()
@@ -445,7 +445,7 @@ class ModelMetadataEngine:
             logger.error(f"Failed to get performance stats: {e}")
             return {}
     
-    async def _cache_metadata(self, cache_key: str, metadata: ModelMetadata):
+    async def _cache_metadata(self, cache_key -> None: str, metadata -> None: ModelMetadata) -> None:
         """Cache les métadonnées dans Redis"""
         try:
             serialized = pickle.dumps(metadata)
@@ -500,7 +500,7 @@ class ModelMetadataEngine:
         )
 
 # Usage example
-async def demo_metadata_engine():
+async def demo_metadata_engine() -> None:
     """Démo du moteur de métadonnées"""
     engine = ModelMetadataEngine()
     await engine.initialize()

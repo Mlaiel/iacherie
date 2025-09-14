@@ -101,7 +101,7 @@ class LegalFramework:
 class MarketplaceComplianceManager:
     """Marketplace compliance and regulatory management system"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.config = config or {}
         self.compliance_records: Dict[str, ComplianceRecord] = {}
         self.gdpr_requests: Dict[str, GDPRRequest] = {}
@@ -112,7 +112,7 @@ class MarketplaceComplianceManager:
         
         logger.info("⚖️ Marketplace Compliance Manager initialized")
     
-    def _initialize_default_frameworks(self):
+    def _initialize_default_frameworks(self) -> None:
         """Initialize default legal frameworks"""
         try:
             # EU GDPR Framework

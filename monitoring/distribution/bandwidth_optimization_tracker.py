@@ -150,7 +150,7 @@ class QualityAdaptation:
 class BandwidthOptimizationTracker:
     """Main bandwidth optimization tracking system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.bandwidth_usage: List[BandwidthUsage] = []
         self.optimization_rules: List[OptimizationRule] = []
         self.traffic_patterns: List[TrafficPattern] = []
@@ -209,7 +209,7 @@ class BandwidthOptimizationTracker:
             "monthly_budget_usd": 5000.0
         }
         
-    async def start_monitoring(self):
+    async def start_monitoring(self) -> None:
         """Start bandwidth optimization monitoring"""
         self.monitoring_active = True
         
@@ -224,12 +224,12 @@ class BandwidthOptimizationTracker:
         
         await asyncio.gather(*monitoring_tasks)
         
-    async def stop_monitoring(self):
+    async def stop_monitoring(self) -> None:
         """Stop bandwidth optimization monitoring"""
         self.monitoring_active = False
         logger.info("Bandwidth optimization monitoring stopped")
         
-    async def _monitor_bandwidth_usage(self):
+    async def _monitor_bandwidth_usage(self) -> None:
         """Monitor real-time bandwidth usage"""
         while self.monitoring_active:
             try:
@@ -300,7 +300,7 @@ class BandwidthOptimizationTracker:
             quality_switches=random.randint(0, 5)
         )
         
-    async def _handle_bandwidth_congestion(self, usage: BandwidthUsage):
+    async def _handle_bandwidth_congestion(self, usage -> None: BandwidthUsage) -> None:
         """Handle bandwidth congestion situations"""
         logger.warning(f"Bandwidth congestion detected: {usage.total_mbps:.1f} Mbps")
         
@@ -323,7 +323,7 @@ class BandwidthOptimizationTracker:
         
         logger.info(f"Applied optimizations: {optimizations_applied}")
         
-    async def _apply_quality_reduction(self, usage: BandwidthUsage):
+    async def _apply_quality_reduction(self, usage -> None: BandwidthUsage) -> None:
         """Apply quality reduction to reduce bandwidth usage"""
         current_quality = usage.quality_level
         
@@ -363,14 +363,14 @@ class BandwidthOptimizationTracker:
         
         return max(0, old_bandwidth - new_bandwidth)
         
-    async def _increase_compression(self, usage: BandwidthUsage):
+    async def _increase_compression(self, usage -> None: BandwidthUsage) -> None:
         """Increase compression to reduce bandwidth usage"""
         current_compression = usage.compression_ratio
         target_compression = min(0.9, current_compression + 0.2)
         
         logger.info(f"Increasing compression from {current_compression:.1%} to {target_compression:.1%}")
         
-    async def _apply_traffic_shaping(self, usage: BandwidthUsage):
+    async def _apply_traffic_shaping(self, usage -> None: BandwidthUsage) -> None:
         """Apply traffic shaping rules"""
         # Prioritize different traffic types
         priority_order = [
@@ -388,7 +388,7 @@ class BandwidthOptimizationTracker:
         
         logger.info(f"Applied traffic shaping priority {traffic_priority} for {usage.traffic_type.value}")
         
-    async def _detect_traffic_patterns(self):
+    async def _detect_traffic_patterns(self) -> None:
         """Detect and analyze traffic patterns"""
         while self.monitoring_active:
             try:
@@ -403,7 +403,7 @@ class BandwidthOptimizationTracker:
                 logger.error(f"Error detecting traffic patterns: {e}")
                 await asyncio.sleep(300)
                 
-    async def _analyze_peak_hour_patterns(self):
+    async def _analyze_peak_hour_patterns(self) -> None:
         """Analyze peak hour traffic patterns"""
         # Group usage by hour of day
         hourly_usage = defaultdict(list)
@@ -444,7 +444,7 @@ class BandwidthOptimizationTracker:
                     self.traffic_patterns.append(pattern)
                     logger.info(f"Peak hour pattern detected: {peak_hours}")
                     
-    async def _analyze_seasonal_patterns(self):
+    async def _analyze_seasonal_patterns(self) -> None:
         """Analyze seasonal traffic patterns"""
         # Group usage by day of week
         daily_usage = defaultdict(list)
@@ -483,7 +483,7 @@ class BandwidthOptimizationTracker:
                 if not existing:
                     self.traffic_patterns.append(pattern)
                     
-    async def _predict_future_usage(self):
+    async def _predict_future_usage(self) -> None:
         """Predict future bandwidth usage"""
         if len(self.bandwidth_usage) < 50:
             return
@@ -528,7 +528,7 @@ class BandwidthOptimizationTracker:
                 self.traffic_patterns.append(pattern)
                 logger.warning(f"Predicted bandwidth peak: {predicted_usage:.1f} Mbps at {next_peak}")
                 
-    async def _apply_optimization_rules(self):
+    async def _apply_optimization_rules(self) -> None:
         """Apply bandwidth optimization rules"""
         while self.monitoring_active:
             try:
@@ -547,7 +547,7 @@ class BandwidthOptimizationTracker:
                 logger.error(f"Error applying optimization rules: {e}")
                 await asyncio.sleep(60)
                 
-    async def _evaluate_optimization_rule(self, rule: OptimizationRule):
+    async def _evaluate_optimization_rule(self, rule -> None: OptimizationRule) -> None:
         """Evaluate and apply optimization rule if conditions are met"""
         # Get recent usage for rule's traffic type
         relevant_usage = [
@@ -573,7 +573,7 @@ class BandwidthOptimizationTracker:
         if should_trigger:
             await self._execute_optimization_action(rule, latest_usage)
             
-    async def _execute_optimization_action(self, rule: OptimizationRule, usage: BandwidthUsage):
+    async def _execute_optimization_action(self, rule -> None: OptimizationRule, usage -> None: BandwidthUsage) -> None:
         """Execute optimization action based on rule"""
         logger.info(f"Executing optimization rule: {rule.name}")
         
@@ -586,7 +586,7 @@ class BandwidthOptimizationTracker:
         elif rule.strategy == OptimizationStrategy.CACHING:
             await self._apply_caching_optimization(rule, usage)
             
-    async def _apply_compression_optimization(self, rule: OptimizationRule, usage: BandwidthUsage):
+    async def _apply_compression_optimization(self, rule -> None: OptimizationRule, usage -> None: BandwidthUsage) -> None:
         """Apply compression optimization"""
         target_compression = rule.compression_level
         current_compression = usage.compression_ratio
@@ -594,7 +594,7 @@ class BandwidthOptimizationTracker:
         if target_compression > current_compression:
             logger.info(f"Increasing compression to {target_compression:.1%}")
             
-    async def _apply_quality_optimization(self, rule: OptimizationRule, usage: BandwidthUsage):
+    async def _apply_quality_optimization(self, rule -> None: OptimizationRule, usage -> None: BandwidthUsage) -> None:
         """Apply quality optimization"""
         target_quality = rule.target_quality
         current_quality = usage.quality_level
@@ -612,16 +612,16 @@ class BandwidthOptimizationTracker:
             
             self.quality_adaptations.append(adaptation)
             
-    async def _apply_traffic_optimization(self, rule: OptimizationRule, usage: BandwidthUsage):
+    async def _apply_traffic_optimization(self, rule -> None: OptimizationRule, usage -> None: BandwidthUsage) -> None:
         """Apply traffic shaping optimization"""
         logger.info(f"Applying traffic shaping for {usage.traffic_type.value}")
         
-    async def _apply_caching_optimization(self, rule: OptimizationRule, usage: BandwidthUsage):
+    async def _apply_caching_optimization(self, rule -> None: OptimizationRule, usage -> None: BandwidthUsage) -> None:
         """Apply caching optimization"""
         cache_duration = rule.cache_duration_hours
         logger.info(f"Optimizing cache duration to {cache_duration} hours")
         
-    async def _adaptive_quality_management(self):
+    async def _adaptive_quality_management(self) -> None:
         """Manage adaptive quality streaming"""
         while self.monitoring_active:
             try:
@@ -635,7 +635,7 @@ class BandwidthOptimizationTracker:
                 logger.error(f"Error in adaptive quality management: {e}")
                 await asyncio.sleep(120)
                 
-    async def _monitor_user_quality_experience(self):
+    async def _monitor_user_quality_experience(self) -> None:
         """Monitor user quality experience metrics"""
         if not self.quality_adaptations:
             return
@@ -654,7 +654,7 @@ class BandwidthOptimizationTracker:
             if avg_satisfaction_impact < -0.5:  # Poor user experience
                 logger.warning(f"Poor user quality experience detected: {avg_satisfaction_impact:.2f}")
                 
-    async def _optimize_quality_ladder(self):
+    async def _optimize_quality_ladder(self) -> None:
         """Optimize quality ladder based on usage patterns"""
         # Analyze quality distribution
         quality_usage = defaultdict(int)
@@ -666,7 +666,7 @@ class BandwidthOptimizationTracker:
         
         logger.debug(f"Most used quality level: {most_used_quality.value}")
         
-    async def _balance_quality_vs_bandwidth(self):
+    async def _balance_quality_vs_bandwidth(self) -> None:
         """Balance quality vs bandwidth usage"""
         if not self.bandwidth_usage:
             return
@@ -678,7 +678,7 @@ class BandwidthOptimizationTracker:
         if avg_bandwidth > self.current_bandwidth_limit * 0.85:
             logger.info("High bandwidth usage detected, recommending quality optimization")
             
-    async def _cost_optimization(self):
+    async def _cost_optimization(self) -> None:
         """Optimize bandwidth costs"""
         while self.monitoring_active:
             try:
@@ -692,7 +692,7 @@ class BandwidthOptimizationTracker:
                 logger.error(f"Error in cost optimization: {e}")
                 await asyncio.sleep(300)
                 
-    async def _monitor_cost_efficiency(self):
+    async def _monitor_cost_efficiency(self) -> None:
         """Monitor cost efficiency metrics"""
         if not self.bandwidth_usage:
             return
@@ -709,7 +709,7 @@ class BandwidthOptimizationTracker:
             if avg_cost_per_gb > self.cost_thresholds["high_cost_per_gb"]:
                 logger.warning(f"High bandwidth costs detected: ${avg_cost_per_gb:.3f}/GB")
                 
-    async def _optimize_peak_hour_costs(self):
+    async def _optimize_peak_hour_costs(self) -> None:
         """Optimize costs during peak hours"""
         # Find current peak hour patterns
         peak_patterns = [p for p in self.traffic_patterns if p.pattern_type == "peak_hours"]
@@ -721,7 +721,7 @@ class BandwidthOptimizationTracker:
             if current_hour in peak_hours:
                 logger.info("Peak hour detected, applying cost optimization strategies")
                 
-    async def _suggest_infrastructure_changes(self):
+    async def _suggest_infrastructure_changes(self) -> None:
         """Suggest infrastructure changes for cost optimization"""
         if len(self.bandwidth_usage) < 100:
             return

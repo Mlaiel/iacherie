@@ -219,7 +219,7 @@ class SEOPerformanceIntelligence:
     search ranking insights, and content optimization recommendations.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.seo_metrics: Dict[str, List[SEOPerformanceMetrics]] = defaultdict(list)
         self.keyword_analytics: Dict[str, KeywordPerformanceAnalytics] = {}
         self.optimization_recommendations: Dict[str, SEOOptimizationRecommendations] = {}
@@ -613,18 +613,18 @@ class SEOPerformanceIntelligence:
     
     async def _analyze_keyword_performance(
         self,
-        metrics: SEOPerformanceMetrics,
-        raw_data: Dict[str, Any]
-    ):
+        metrics -> None: SEOPerformanceMetrics,
+        raw_data -> None: Dict[str, Any]
+    ) -> None:
         """Analyze keyword-specific performance"""
         # Keyword performance analysis would be implemented here
         logger.info(f"Keyword performance analysis completed for {metrics.content_id}")
     
     async def _calculate_technical_seo_scores(
         self,
-        metrics: SEOPerformanceMetrics,
-        raw_data: Dict[str, Any]
-    ):
+        metrics -> None: SEOPerformanceMetrics,
+        raw_data -> None: Dict[str, Any]
+    ) -> None:
         """Calculate technical SEO performance scores"""
         # Technical SEO calculations would be implemented here
         logger.info(f"Technical SEO analysis completed for {metrics.content_id}")
@@ -641,9 +641,9 @@ class SEOPerformanceIntelligence:
     
     async def _generate_seo_recommendations(
         self,
-        content_id: str,
-        metrics: SEOPerformanceMetrics
-    ):
+        content_id -> None: str,
+        metrics -> None: SEOPerformanceMetrics
+    ) -> None:
         """Generate SEO optimization recommendations"""
         recommendations = SEOOptimizationRecommendations(content_id=content_id)
         
@@ -1038,7 +1038,7 @@ class SEOPerformanceIntelligence:
             trend_strength=abs(position_change) / 10.0
         )
     
-    async def _update_keyword_trends(self, analytics: KeywordPerformanceAnalytics):
+    async def _update_keyword_trends(self, analytics -> None: KeywordPerformanceAnalytics) -> None:
         """Update keyword trend analysis"""
         # Keyword trend updates would be implemented here
         logger.info(f"Keyword trend analysis updated for '{analytics.keyword}'")

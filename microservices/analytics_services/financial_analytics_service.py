@@ -90,7 +90,7 @@ class AIFinancialAnalyzer:
 class FinancialAnalyticsService:
     """🎯 Enterprise Financial Analytics and Performance Intelligence Service"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.metrics_db = {}
         self.ai_analyzer = AIFinancialAnalyzer()
         self.performance_metrics = {
@@ -146,7 +146,7 @@ class FinancialAnalyticsService:
 
 # Demo function
 if __name__ == "__main__":
-    async def demo():
+    async def demo() -> None:
         service = FinancialAnalyticsService()
         result = await service.generate_financial_report("monthly", {})
         print(f"Financial Analytics Demo: {result['status']}")

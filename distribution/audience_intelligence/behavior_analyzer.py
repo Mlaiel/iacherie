@@ -78,7 +78,7 @@ class AdvancedBehaviorAnalyzer:
     - Personalized content recommendations
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.scaler = StandardScaler()
         self.pca = PCA(n_components=10)
         self.kmeans = KMeans(n_clusters=8, random_state=42)

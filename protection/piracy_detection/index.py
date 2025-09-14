@@ -198,7 +198,7 @@ class EnterprisePiracyDetectionIndex:
     📈 DevOps Excellence: Real-time monitoring, auto-scaling, and performance optimization
     """
     
-    def __init__(self, config: Optional[EnterprisePiracyConfig] = None):
+    def __init__(self, config -> None: Optional[EnterprisePiracyConfig] = None) -> None:
         """
         Initialize Enterprise Piracy Detection Index with multi-expert architecture.
         
@@ -259,7 +259,7 @@ class EnterprisePiracyDetectionIndex:
         
         self.logger.info("🏢 Enterprise Piracy Detection Index initialized with multi-expert architecture")
     
-    def _init_security_infrastructure(self):
+    def _init_security_infrastructure(self) -> None:
         """Initialize enterprise security infrastructure (Sécurité Expert)."""
         try:
             # Initialize encryption for sensitive evidence
@@ -283,7 +283,7 @@ class EnterprisePiracyDetectionIndex:
             self.logger.error(f"Security infrastructure initialization failed: {e}")
             raise
     
-    def _init_database_infrastructure(self):
+    def _init_database_infrastructure(self) -> None:
         """Initialize high-performance database infrastructure (DBA Expert)."""
         try:
             # Initialize Redis for high-performance caching
@@ -311,7 +311,7 @@ class EnterprisePiracyDetectionIndex:
             self.logger.error(f"Database infrastructure initialization failed: {e}")
             raise
     
-    def _init_ai_ml_infrastructure(self):
+    def _init_ai_ml_infrastructure(self) -> None:
         """Initialize AI/ML processing infrastructure (Lead Dev IA + ML Engineer)."""
         try:
             # Initialize neural detection models
@@ -387,7 +387,7 @@ class EnterprisePiracyDetectionIndex:
             self.logger.error(f"AI/ML infrastructure initialization failed: {e}")
             raise
     
-    def _init_audio_processing_infrastructure(self):
+    def _init_audio_processing_infrastructure(self) -> None:
         """Initialize audio processing infrastructure (Audio Engineer)."""
         try:
             if self.config.advanced_audio_analysis:
@@ -422,7 +422,7 @@ class EnterprisePiracyDetectionIndex:
             self.logger.error(f"Audio processing infrastructure initialization failed: {e}")
             raise
     
-    def _init_microservices_infrastructure(self):
+    def _init_microservices_infrastructure(self) -> None:
         """Initialize microservices infrastructure (Microservices Expert)."""
         try:
             # Initialize service registry
@@ -448,7 +448,7 @@ class EnterprisePiracyDetectionIndex:
             self.logger.error(f"Microservices infrastructure initialization failed: {e}")
             raise
     
-    def _init_monitoring_infrastructure(self):
+    def _init_monitoring_infrastructure(self) -> None:
         """Initialize monitoring and DevOps infrastructure (DevOps Expert)."""
         try:
             if self.config.advanced_monitoring:

@@ -159,7 +159,7 @@ class ScheduleManager:
     multi-platform coordination, and comprehensive scheduling management.
     """
     
-    def __init__(self, database_connection=None, cache_client=None):
+    def __init__(self, database_connection=None, cache_client=None) -> None:
         """Initialize the schedule manager."""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self.db = database_connection
@@ -548,7 +548,7 @@ class ScheduleManager:
             self.logger.error(f"Error generating reasoning: {e}")
             return f"Time slot for {platform}"
     
-    async def _calculate_estimated_metrics(self, scheduled_content: ScheduledContent):
+    async def _calculate_estimated_metrics(self, scheduled_content -> None: ScheduledContent) -> None:
         """Calculate estimated metrics for scheduled content."""
         try:
             total_engagement_estimate = 0.0
@@ -581,7 +581,7 @@ class ScheduleManager:
         except Exception as e:
             self.logger.error(f"Error calculating estimated metrics: {e}")
     
-    async def _setup_recurring_schedule(self, scheduled_content: ScheduledContent):
+    async def _setup_recurring_schedule(self, scheduled_content -> None: ScheduledContent) -> None:
         """Set up recurring schedule based on configuration."""
         try:
             recurrence_config = scheduled_content.recurrence_config
@@ -599,9 +599,9 @@ class ScheduleManager:
     
     async def update_audience_insights(
         self,
-        platform: str,
-        insights: AudienceInsight
-    ):
+        platform -> None: str,
+        insights -> None: AudienceInsight
+    ) -> None:
         """Update audience insights for a platform."""
         try:
             self.audience_insights[platform] = insights
@@ -734,7 +734,7 @@ class ScheduleManager:
             self.logger.error(f"Error getting schedule analytics: {e}")
             return {}
     
-    async def process_scheduled_content(self):
+    async def process_scheduled_content(self) -> None:
         """Process content that is ready to be published."""
         try:
             current_time = datetime.utcnow()

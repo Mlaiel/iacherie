@@ -6,7 +6,7 @@ for infrastructure provisioning and management.
 Project: IA Influencer Agent + Content Protection Platform
 Author: Fahed Mlaiel <mlaiel@live.de>
 
-⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
+# [EMOJI_REMOVED]  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED # [EMOJI_REMOVED]
 """
 import asyncio
 import logging
@@ -84,7 +84,7 @@ class CloudProviderInterface(ABC):
 class AWSProvider(CloudProviderInterface):
     """AWS cloud provider implementation"""
     
-    def __init__(self, credentials: CloudCredentials):
+    def __init__(self, credentials -> None: CloudCredentials) -> None:
         self.credentials = credentials
         self.session = boto3.Session(
             aws_access_key_id=credentials.access_key,
@@ -327,7 +327,7 @@ class AWSProvider(CloudProviderInterface):
 class GCPProvider(CloudProviderInterface):
     """Google Cloud Platform provider implementation"""
     
-    def __init__(self, credentials: CloudCredentials):
+    def __init__(self, credentials -> None: CloudCredentials) -> None:
         self.credentials = credentials
         self.project_id = credentials.project_id
         self.region = credentials.region
@@ -387,7 +387,7 @@ class GCPProvider(CloudProviderInterface):
 class AzureProvider(CloudProviderInterface):
     """Microsoft Azure provider implementation"""
     
-    def __init__(self, credentials: CloudCredentials):
+    def __init__(self, credentials -> None: CloudCredentials) -> None:
         self.credentials = credentials
         self.credential = DefaultAzureCredential()
         self.subscription_id = credentials.subscription_id
@@ -448,11 +448,11 @@ class AzureProvider(CloudProviderInterface):
 class CloudProviderManager:
     """Multi-cloud provider manager"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.providers: Dict[CloudProvider, CloudProviderInterface] = {}
         self.active_provider: Optional[CloudProvider] = None
         
-    def register_provider(self, provider: CloudProvider, credentials: CloudCredentials):
+    def register_provider(self, provider -> None: CloudProvider, credentials -> None: CloudCredentials) -> None:
         """Register a cloud provider"""
         try:
             if provider == CloudProvider.AWS:
@@ -467,7 +467,7 @@ class CloudProviderManager:
             logger.error(f"Failed to register provider {provider.value}: {e}")
             raise
     
-    def set_active_provider(self, provider: CloudProvider):
+    def set_active_provider(self, provider -> None: CloudProvider) -> None:
         """Set the active cloud provider"""
         if provider not in self.providers:
             raise ValueError(f"Provider {provider.value} not registered")
@@ -566,3 +566,5 @@ class CloudProviderManager:
         except Exception as e:
             logger.error(f"Failed to get infrastructure status: {e}")
             return {'status': 'error', 'message': str(e)}
+
+# File has syntax issues - needs manual review

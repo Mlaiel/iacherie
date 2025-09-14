@@ -74,7 +74,7 @@ class SecurityConfig:
 class SecurityHardening:
     """MongoDB security hardening manager."""
     
-    def __init__(self, config: SecurityConfig):
+    def __init__(self, config -> None: SecurityConfig) -> None:
         """Initialize security hardening."""
         self.config = config
         self.security_dir = Path(f"security-hardening/{config.cluster_name}")
@@ -1227,7 +1227,7 @@ fi
 
 
 # Example usage
-async def apply_mongodb_security_hardening():
+async def apply_mongodb_security_hardening() -> None:
     """Example security hardening application."""
     config = SecurityConfig(
         cluster_name="mongodb-prod",

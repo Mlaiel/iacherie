@@ -216,7 +216,7 @@ class StreamMetrics:
 class EventProcessor:
     """Event processor with intelligent routing"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.processors = {}
         self.processing_stats = defaultdict(int)
         
@@ -449,7 +449,7 @@ class EventProcessor:
 class StreamManager:
     """Stream management and coordination"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.streams = {}
         self.subscriptions = {}
         self.metrics = defaultdict(lambda: StreamMetrics())
@@ -599,7 +599,7 @@ class StreamManager:
             'errors': notification_errors
         }
     
-    async def _default_notification(self, subscription: StreamSubscription, event: StreamEvent):
+    async def _default_notification(self, subscription -> None: StreamSubscription, event -> None: StreamEvent) -> None:
         """Default notification mechanism"""
         # This could be implemented as webhook calls, message queue publishing, etc.
         # For now, just log the notification
@@ -622,7 +622,7 @@ class EventStreamingService:
     💡 AI Prompt: Intelligent event insights, automated responses, and smart event orchestration
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.stream_manager = StreamManager()
         self.event_processor = EventProcessor()
         self.active_streams = set()
@@ -635,7 +635,7 @@ class EventStreamingService:
         
         logger.info("EventStreamingService initialized successfully")
     
-    def _initialize_default_streams(self):
+    def _initialize_default_streams(self) -> None:
         """Initialize default event streams"""
         default_streams = [
             ('user_actions', StreamType.REAL_TIME),
@@ -651,9 +651,9 @@ class EventStreamingService:
             self.stream_manager.create_stream(stream_name, stream_type)
             self.active_streams.add(stream_name)
     
-    def _start_metrics_collection(self):
+    def _start_metrics_collection(self) -> None:
         """Start background metrics collection"""
-        async def collect_metrics():
+        async def collect_metrics() -> None:
             while True:
                 try:
                     await self._update_stream_metrics()
@@ -664,7 +664,7 @@ class EventStreamingService:
         
         return asyncio.create_task(collect_metrics())
     
-    async def _update_stream_metrics(self):
+    async def _update_stream_metrics(self) -> None:
         """Update stream metrics"""
         current_time = datetime.utcnow()
         
@@ -740,7 +740,7 @@ class EventStreamingService:
     
     def _create_webhook_callback(self, webhook_url: str) -> Callable:
         """Create webhook callback function"""
-        async def webhook_callback(event: StreamEvent):
+        async def webhook_callback(event -> None: StreamEvent) -> None:
             try:
                 # In a real implementation, this would make HTTP POST to webhook_url
                 logger.info(f"Webhook callback to {webhook_url} for event {event.id}")
@@ -801,7 +801,7 @@ class EventStreamingService:
             # Process events concurrently
             semaphore = asyncio.Semaphore(10)  # Limit concurrent processing
             
-            async def process_single_event(event_data):
+            async def process_single_event(event_data) -> None:
                 async with semaphore:
                     return await self.publish(stream_name, event_data)
             
@@ -986,7 +986,7 @@ class EventStreamingService:
 
 
 # Example usage and testing
-async def main():
+async def main() -> None:
     """Example usage of the EventStreamingService"""
     service = EventStreamingService()
     

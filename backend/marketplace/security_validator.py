@@ -152,7 +152,7 @@ class TransactionContext:
 class SecurityValidator:
     """Advanced security validation and threat detection system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.security_rules: Dict[str, SecurityRule] = {}
         self.validation_results: Dict[str, SecurityValidationResult] = {}
         self.user_sessions: Dict[str, Dict[str, Any]] = {}
@@ -167,7 +167,7 @@ class SecurityValidator:
         self._initialize_default_rules()
         self._initialize_security_policies()
     
-    def _initialize_default_rules(self):
+    def _initialize_default_rules(self) -> None:
         """Initialize default security rules"""
         default_rules = [
             SecurityRule(
@@ -220,7 +220,7 @@ class SecurityValidator:
         for rule in default_rules:
             self.security_rules[rule.rule_id] = rule
     
-    def _initialize_security_policies(self):
+    def _initialize_security_policies(self) -> None:
         """Initialize security policies"""
         self.security_policies = {
             "authentication": {
@@ -662,7 +662,7 @@ class SecurityValidator:
         
         return threats
     
-    async def _log_security_event(self, result: SecurityValidationResult):
+    async def _log_security_event(self, result -> None: SecurityValidationResult) -> None:
         """Log security validation event"""
         event_data = {
             "validation_id": result.validation_id,
@@ -795,7 +795,7 @@ class SecurityValidator:
         }
 
 # Example usage
-async def main():
+async def main() -> None:
     """Example usage of SecurityValidator"""
     validator = SecurityValidator()
     

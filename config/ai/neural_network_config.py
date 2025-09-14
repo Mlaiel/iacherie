@@ -50,7 +50,7 @@ class OptimizationAlgorithm(str, Enum):
 class NeuralNetworkConfiguration:
     """Neural network configuration"""
     
-    def __init__(self, level: NeuralNetworkLevel = NeuralNetworkLevel.ENTERPRISE):
+    def __init__(self, level -> None: NeuralNetworkLevel = NeuralNetworkLevel.ENTERPRISE) -> None:
         self.level = level
         self.model_architectures = self._get_model_architectures()
         self.training_config = self._get_training_config()

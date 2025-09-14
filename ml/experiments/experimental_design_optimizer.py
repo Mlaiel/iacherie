@@ -139,7 +139,7 @@ class ExperimentResult:
 class ExperimentalDesignOptimizer:
     """Enterprise Experimental Design Optimizer"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         
         # Storage
@@ -618,7 +618,7 @@ class ExperimentalDesignOptimizer:
                     return min(trials, key=lambda t: t.objectives.get(objective.name, float('inf')))
             
             # For multiple objectives, use weighted sum
-            def weighted_score(trial):
+            def weighted_score(trial) -> None:
                 score = 0
                 for obj in objectives:
                     value = trial.objectives.get(obj.name, 0)
@@ -991,7 +991,7 @@ class ExperimentalDesignOptimizer:
             logger.error(f"❌ Error generating recommendations: {e}")
             return ["Experiment completed successfully"]
     
-    async def _update_optimizer_metrics(self, optimization_time: float, success: bool):
+    async def _update_optimizer_metrics(self, optimization_time -> None: float, success -> None: bool) -> None:
         """Update optimizer metrics"""
         try:
             self.optimizer_metrics['experiments_run'] += 1
@@ -1063,7 +1063,7 @@ class ExperimentalDesignOptimizer:
 experiment_optimizer = ExperimentalDesignOptimizer()
 
 
-async def main():
+async def main() -> None:
     """Test the Experimental Design Optimizer"""
     optimizer = ExperimentalDesignOptimizer()
     
@@ -1119,7 +1119,7 @@ async def main():
     print(f"✅ Created experiment: {experiment_id}")
     
     # Define evaluation function
-    async def evaluate_model(params):
+    async def evaluate_model(params) -> None:
         # Simulate model training and evaluation
         lr = params["learning_rate"]
         batch_size = params["batch_size"]

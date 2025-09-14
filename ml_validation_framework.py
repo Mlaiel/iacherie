@@ -1,3 +1,8 @@
+"""
+Ml Validation Framework module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """🚀 ML Module Validation Framework - Expert Multi-Role Analysis
 ================================================================
@@ -29,7 +34,7 @@ logger = logging.getLogger(__name__)
 class ExpertRoleValidator:
     """🎖️ Expert Multi-Role Validation Framework"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.validation_results = {
             "lead_dev_ia": [],
             "backend_senior": [],
@@ -77,7 +82,7 @@ class ExpertRoleValidator:
         
         return await self._generate_comprehensive_report()
     
-    async def _validate_lead_dev_ia(self):
+    async def _validate_lead_dev_ia(self) -> None:
         """🎖️ LEAD DEV IA - Architecture et Orchestration ML Enterprise"""
         
         logger.info("🎖️ Validating LEAD DEV IA role...")
@@ -134,7 +139,7 @@ class ExpertRoleValidator:
         
         self.validation_results["lead_dev_ia"] = results
     
-    async def _validate_backend_senior(self):
+    async def _validate_backend_senior(self) -> None:
         """🛡️ BACKEND SENIOR - Infrastructure Robuste et Performance"""
         
         logger.info("🛡️ Validating BACKEND SENIOR role...")
@@ -176,7 +181,7 @@ class ExpertRoleValidator:
         
         self.validation_results["backend_senior"] = results
     
-    async def _validate_ml_engineer(self):
+    async def _validate_ml_engineer(self) -> None:
         """🔬 ML ENGINEER - Algorithmes Avancés et Creator-Specific"""
         
         logger.info("🔬 Validating ML ENGINEER role...")
@@ -220,7 +225,7 @@ class ExpertRoleValidator:
         
         self.validation_results["ml_engineer"] = results
     
-    async def _validate_dba(self):
+    async def _validate_dba(self) -> None:
         """🗄️ DBA - Gouvernance Données ML et Metadata Management"""
         
         logger.info("🗄️ Validating DBA role...")
@@ -263,7 +268,7 @@ class ExpertRoleValidator:
         
         self.validation_results["dba"] = results
     
-    async def _validate_security(self):
+    async def _validate_security(self) -> None:
         """🔐 SÉCURITÉ - Protection Enterprise et Compliance"""
         
         logger.info("🔐 Validating SECURITY role...")
@@ -306,7 +311,7 @@ class ExpertRoleValidator:
         
         self.validation_results["security"] = results
     
-    async def _validate_microservices(self):
+    async def _validate_microservices(self) -> None:
         """🌐 MICROSERVICES - Architecture Distribuée"""
         
         logger.info("🌐 Validating MICROSERVICES role...")
@@ -350,7 +355,7 @@ class ExpertRoleValidator:
         
         self.validation_results["microservices"] = results
     
-    async def _validate_audio_engineer(self):
+    async def _validate_audio_engineer(self) -> None:
         """🎵 AUDIO ENGINEER - Spécialisation Créateur Musiciens"""
         
         logger.info("🎵 Validating AUDIO ENGINEER role...")
@@ -394,7 +399,7 @@ class ExpertRoleValidator:
         
         self.validation_results["audio_engineer"] = results
     
-    async def _validate_devops(self):
+    async def _validate_devops(self) -> None:
         """⚙️ DEVOPS - MLOps Enterprise et Automation"""
         
         logger.info("⚙️ Validating DEVOPS role...")
@@ -437,7 +442,7 @@ class ExpertRoleValidator:
         
         self.validation_results["devops"] = results
     
-    async def _validate_ia_prompt_engineer(self):
+    async def _validate_ia_prompt_engineer(self) -> None:
         """🤖 IA PROMPT ENGINEER - Optimisation IA et Automation"""
         
         logger.info("🤖 Validating IA PROMPT ENGINEER role...")
@@ -517,7 +522,7 @@ class ExpertRoleValidator:
         
         return report
 
-async def main():
+async def main() -> None:
     """🚀 Main validation execution"""
     
     print("🎯 ML MODULE EXPERT VALIDATION FRAMEWORK")

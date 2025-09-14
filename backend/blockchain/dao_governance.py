@@ -169,7 +169,7 @@ class DAOGovernance:
     DAO Governance system for decentralized decision-making
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """
         Initialize DAO Governance
         
@@ -732,7 +732,7 @@ class GovernanceManager:
     Manager class for coordinating multiple DAO governance instances
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """
         Initialize Governance Manager
         

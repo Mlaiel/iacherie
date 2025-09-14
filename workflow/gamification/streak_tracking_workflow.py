@@ -58,7 +58,7 @@ class StreakActivity:
 class StreakTrackingWorkflow:
     """AI-powered streak tracking workflow"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.metrics_collector = MetricsCollector()
         self.user_streaks: Dict[str, List[Streak]] = {}
         self.streak_activities: Dict[str, List[StreakActivity]] = {}
@@ -304,11 +304,11 @@ class StreakTrackingWorkflow:
     
     async def _record_streak_activity(
         self, 
-        streak: Streak, 
-        activity_type: str, 
-        activity_date: date, 
-        activity_data: Dict[str, Any]
-    ):
+        streak -> None: Streak, 
+        activity_type -> None: str, 
+        activity_date -> None: date, 
+        activity_data -> None: Dict[str, Any]
+    ) -> None:
         """Record streak activity for history"""
         
         activity_id = f"activity_{int(datetime.utcnow().timestamp())}_{streak.user_id}"

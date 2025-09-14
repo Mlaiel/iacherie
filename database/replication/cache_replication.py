@@ -180,7 +180,7 @@ class IVectorReplicationHandler(ABC):
 class RedisReplicationHandler(ICacheReplicationHandler):
     """Redis replication handler with Sentinel integration."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._topology: Optional[ReplicationTopology] = None
         self._redis_master: Optional[aioredis.Redis] = None
         self._redis_slaves: List[aioredis.Redis] = []
@@ -234,7 +234,7 @@ class RedisReplicationHandler(ICacheReplicationHandler):
             logger.error(f"❌ Failed to initialize Redis replication: {e}")
             return False
     
-    async def _setup_sentinel(self):
+    async def _setup_sentinel(self) -> None:
         """Setup Redis Sentinel for high availability."""
         try:
             # Note: This is a simplified Sentinel setup
@@ -251,7 +251,7 @@ class RedisReplicationHandler(ICacheReplicationHandler):
             logger.error(f"❌ Failed to setup Redis Sentinel: {e}")
             raise
     
-    async def _verify_replication(self):
+    async def _verify_replication(self) -> None:
         """Verify Redis replication is working."""
         try:
             # Set a test key on master
@@ -327,7 +327,7 @@ class RedisReplicationHandler(ICacheReplicationHandler):
             logger.error(f"❌ Failed to stop Redis replication: {e}")
             return False
     
-    async def _replication_monitoring_loop(self):
+    async def _replication_monitoring_loop(self) -> None:
         """Redis replication monitoring loop."""
         while self._is_running:
             try:
@@ -529,7 +529,7 @@ class RedisReplicationHandler(ICacheReplicationHandler):
 class FAISSReplicationHandler(IVectorReplicationHandler):
     """FAISS vector database replication handler."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._topology: Optional[ReplicationTopology] = None
         self._master_index: Optional[faiss.Index] = None
         self._slave_indices: List[faiss.Index] = []
@@ -624,7 +624,7 @@ class FAISSReplicationHandler(IVectorReplicationHandler):
             logger.error(f"❌ Failed to stop FAISS replication: {e}")
             return False
     
-    async def _replication_monitoring_loop(self):
+    async def _replication_monitoring_loop(self) -> None:
         """FAISS replication monitoring loop."""
         while self._is_running:
             try:
@@ -643,7 +643,7 @@ class FAISSReplicationHandler(IVectorReplicationHandler):
                 logger.error(f"❌ FAISS monitoring error: {e}")
                 await asyncio.sleep(120)
     
-    async def _sync_indices(self):
+    async def _sync_indices(self) -> None:
         """Synchronize FAISS indices."""
         try:
             if not self._master_index:
@@ -672,7 +672,7 @@ class FAISSReplicationHandler(IVectorReplicationHandler):
         except Exception as e:
             logger.error(f"❌ FAISS sync failed: {e}")
     
-    async def _save_indices(self):
+    async def _save_indices(self) -> None:
         """Save FAISS indices to disk."""
         try:
             # Save master index
@@ -800,7 +800,7 @@ class FAISSReplicationHandler(IVectorReplicationHandler):
 class CacheReplicationCoordinator:
     """Coordinates replication across cache and vector databases."""
     
-    def __init__(self, config: Optional[ReplicationConfig] = None):
+    def __init__(self, config -> None: Optional[ReplicationConfig] = None) -> None:
         self._config = config
         self._cache_handlers: Dict[str, ICacheReplicationHandler] = {}
         self._vector_handlers: Dict[str, IVectorReplicationHandler] = {}
@@ -1022,7 +1022,7 @@ class CacheReplicationCoordinator:
                 disk_usage_percent=0.0
             )
     
-    async def close(self):
+    async def close(self) -> None:
         """Close all handlers."""
         try:
             # Close cache handlers

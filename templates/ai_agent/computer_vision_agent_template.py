@@ -1,4 +1,6 @@
 """{{agent_name}} Computer Vision Agent for Ainflue Platform
+import asyncio
+
 {{agent_description}}
 
 Author: {{author_name}} ({{author_email}})
@@ -80,13 +82,13 @@ class CVModelConfig(BaseModel):
     preprocessing_config: Dict[str, Any] = Field(default_factory=dict, description="Preprocessing configuration")
     
     @validator('confidence_threshold')
-    def validate_confidence(cls, v):
+    def validate_confidence(cls, v) -> None:
         if not 0 <= v <= 1:
             raise ValueError('Confidence threshold must be between 0 and 1')
         return v
     
     @validator('max_detections')
-    def validate_max_detections(cls, v):
+    def validate_max_detections(cls, v) -> None:
         if v <= 0:
             raise ValueError('Max detections must be positive')
         return v
@@ -151,12 +153,12 @@ class {{agent_name}}Agent(BaseAIAgent):
     
     def __init__(
         self,
-        agent_id: str,
-        model_configs: Dict[str, CVModelConfig],
-        enable_gpu: bool = True,
-        cache_size: int = 1000,
+        agent_id -> None: str,
+        model_configs -> None: Dict[str, CVModelConfig],
+        enable_gpu -> None: bool = True,
+        cache_size -> None: int = 1000,
         **kwargs
-    ):
+    ) -> None:
         super().__init__(agent_id=agent_id, **kwargs)
         self.model_configs = model_configs
         self.enable_gpu = enable_gpu and torch.cuda.is_available()
@@ -180,7 +182,7 @@ class {{agent_name}}Agent(BaseAIAgent):
         
         logger.info(f"ComputerVisionAgent {agent_id} initialized with {len(model_configs)} models")
     
-    def _load_models(self):
+    def _load_models(self) -> None:
         """Load computer vision models"""
         try:
             for model_name, config in self.model_configs.items():
@@ -493,7 +495,7 @@ class {{agent_name}}Agent(BaseAIAgent):
             }
         return model_info
     
-    async def update_model_config(self, model_name: str, new_config: CVModelConfig):
+    async def update_model_config(self, model_name -> None: str, new_config -> None: CVModelConfig) -> None:
         """Update model configuration"""
         if model_name in self.model_configs:
             self.model_configs[model_name] = new_config
@@ -509,7 +511,7 @@ class {{agent_name}}Agent(BaseAIAgent):
 
 
 # Template usage example
-def create_computer_vision_agent_example():
+def create_computer_vision_agent_example() -> None:
     """Example of how to create and use a computer vision agent"""
     
     # Define model configurations
@@ -583,3 +585,5 @@ TEMPLATE_CONFIG = {
         "Batch processing"
     ]
 }
+
+# File has syntax issues - needs manual review

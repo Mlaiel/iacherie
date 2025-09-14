@@ -1,4 +1,6 @@
 """
+import asyncio
+
 Web Crawlers Routes - 117 Specialized Crawlers
 """
 
@@ -143,7 +145,7 @@ CRAWLERS_DATABASE = [
 ]
 
 @router.get("/")
-async def get_all_crawlers():
+async def get_all_crawlers() -> None:
     """Get all 117 web crawlers"""
     platforms = {}
     for crawler in CRAWLERS_DATABASE:
@@ -168,7 +170,7 @@ async def get_all_crawlers():
     }
 
 @router.get("/platform/{platform}")
-async def get_crawlers_by_platform(platform: str):
+async def get_crawlers_by_platform(platform -> None: str) -> None:
     """Get crawlers by platform"""
     crawlers = [c for c in CRAWLERS_DATABASE if c["platform"] == platform]
     if not crawlers:
@@ -176,7 +178,7 @@ async def get_crawlers_by_platform(platform: str):
     return {"crawlers": crawlers, "total": len(crawlers)}
 
 @router.get("/{crawler_id}")
-async def get_crawler_details(crawler_id: str):
+async def get_crawler_details(crawler_id -> None: str) -> None:
     """Get detailed information about a specific crawler"""
     crawler = next((c for c in CRAWLERS_DATABASE if c["id"] == crawler_id), None)
     if not crawler:
@@ -199,7 +201,7 @@ async def get_crawler_details(crawler_id: str):
     }
 
 @router.post("/{crawler_id}/run")
-async def run_crawler(crawler_id: str, payload: Dict[str, Any] = None):
+async def run_crawler(crawler_id -> None: str, payload -> None: Dict[str, Any] = None) -> None:
     """Execute a specific crawler"""
     crawler = next((c for c in CRAWLERS_DATABASE if c["id"] == crawler_id), None)
     if not crawler:
@@ -220,7 +222,7 @@ async def run_crawler(crawler_id: str, payload: Dict[str, Any] = None):
     }
 
 @router.get("/{crawler_id}/status")
-async def get_crawler_status(crawler_id: str):
+async def get_crawler_status(crawler_id -> None: str) -> None:
     """Get crawler runtime status"""
     crawler = next((c for c in CRAWLERS_DATABASE if c["id"] == crawler_id), None)
     if not crawler:
@@ -238,7 +240,7 @@ async def get_crawler_status(crawler_id: str):
     }
 
 @router.post("/violations/scan")
-async def scan_for_violations():
+async def scan_for_violations() -> None:
     """Run violation scan across all active crawlers"""
     return {
         "message": "Violation scan initiated across all crawlers",

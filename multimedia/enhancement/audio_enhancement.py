@@ -35,7 +35,7 @@ class AudioEnhancementConfig:
 class AudioEnhancementEngine:
     """Enterprise audio enhancement engine."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the audio enhancement engine."""
         self.enhancement_algorithms = self._initialize_algorithms()
         

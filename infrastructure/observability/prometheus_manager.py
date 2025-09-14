@@ -56,7 +56,7 @@ class PrometheusManager:
     DevOps Role: Complete monitoring infrastructure for creator platform
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
         self.metric_configs = {}
         self.alert_rules = {}
@@ -120,7 +120,7 @@ class PrometheusManager:
         """Legacy method - redirects to comprehensive monitoring"""
         return await self.setup_comprehensive_monitoring(config)
     
-    def _initialize_ainflue_metrics(self):
+    def _initialize_ainflue_metrics(self) -> None:
         """Initialize Ainflue-specific metric configurations"""
         metrics = [
             MetricConfig(

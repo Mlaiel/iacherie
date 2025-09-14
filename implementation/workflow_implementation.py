@@ -211,7 +211,7 @@ class WorkflowImplementation:
     task management, condition-based logic, and enterprise workflow optimization.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
         
@@ -469,14 +469,14 @@ class WorkflowImplementation:
         
         return workflow
     
-    async def register_task_handler(self, task_type: TaskType, handler: Callable):
+    async def register_task_handler(self, task_type -> None: TaskType, handler -> None: Callable) -> None:
         """Register a custom task handler"""
         
         self.task_handlers[task_type] = handler
         
         self.logger.info(f"Registered task handler for {task_type.value}")
     
-    async def add_event_listener(self, event_type: str, listener: Callable):
+    async def add_event_listener(self, event_type -> None: str, listener -> None: Callable) -> None:
         """Add an event listener for workflow events"""
         
         if event_type not in self.event_listeners:
@@ -606,7 +606,7 @@ class WorkflowImplementation:
     
     # Private methods
     
-    async def _execute_workflow_tasks(self, execution: WorkflowExecution):
+    async def _execute_workflow_tasks(self, execution -> None: WorkflowExecution) -> None:
         """Execute all tasks in a workflow"""
         
         try:
@@ -669,10 +669,10 @@ class WorkflowImplementation:
     
     async def _execute_task_graph(
         self,
-        execution: WorkflowExecution,
-        task_graph: Dict[str, Dict[str, Any]],
-        context: Dict[str, Any]
-    ):
+        execution -> None: WorkflowExecution,
+        task_graph -> None: Dict[str, Dict[str, Any]],
+        context -> None: Dict[str, Any]
+    ) -> None:
         """Execute tasks based on dependency graph"""
         
         executed_tasks = set()
@@ -727,10 +727,10 @@ class WorkflowImplementation:
     
     async def _execute_single_task(
         self,
-        execution: WorkflowExecution,
-        task: WorkflowTask,
-        context: Dict[str, Any]
-    ):
+        execution -> None: WorkflowExecution,
+        task -> None: WorkflowTask,
+        context -> None: Dict[str, Any]
+    ) -> None:
         """Execute a single workflow task"""
         
         task_execution = TaskExecution(
@@ -897,7 +897,7 @@ class WorkflowImplementation:
         
         return value
     
-    async def _validate_workflow_structure(self, tasks: List[WorkflowTask]):
+    async def _validate_workflow_structure(self, tasks -> None: List[WorkflowTask]) -> None:
         """Validate workflow structure for cycles and invalid dependencies"""
         
         # Check for circular dependencies
@@ -933,7 +933,7 @@ class WorkflowImplementation:
                 if has_cycle(task.task_id):
                     raise ValueError(f"Circular dependency detected involving task {task.task_id}")
     
-    def _initialize_task_handlers(self):
+    def _initialize_task_handlers(self) -> None:
         """Initialize built-in task handlers"""
         
         # Built-in task handlers
@@ -995,7 +995,7 @@ class WorkflowImplementation:
         
         return {"success": True, "output": {"email_sent": True, "to_email": to_email}}
     
-    async def _emit_event(self, event_type: str, event_data: Dict[str, Any]):
+    async def _emit_event(self, event_type -> None: str, event_data -> None: Dict[str, Any]) -> None:
         """Emit workflow event to listeners"""
         
         if event_type in self.event_listeners:
@@ -1005,7 +1005,7 @@ class WorkflowImplementation:
                 except Exception as e:
                     self.logger.error(f"Event listener failed for {event_type}: {e}")
     
-    def _initialize_workflow_templates(self):
+    def _initialize_workflow_templates(self) -> None:
         """Initialize built-in workflow templates"""
         
         # Content Publishing Template

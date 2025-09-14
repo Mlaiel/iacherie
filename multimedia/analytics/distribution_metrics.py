@@ -173,7 +173,7 @@ class ReachMetrics:
 class DistributionTracker:
     """Main distribution tracking system"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.logger = logger.getChild(self.__class__.__name__)
         
@@ -248,7 +248,7 @@ class DistributionTracker:
             self.logger.error(f"Failed to track distribution: {e}")
             raise
     
-    async def update_distribution_metrics(self, distribution_id: str, metrics: Dict[str, Any]):
+    async def update_distribution_metrics(self, distribution_id -> None: str, metrics -> None: Dict[str, Any]) -> None:
         """Update distribution performance metrics"""
         try:
             if distribution_id not in self.distribution_records:
@@ -330,8 +330,8 @@ class DistributionTracker:
             self.logger.error(f"Platform analytics calculation failed: {e}")
             return PlatformAnalytics(platform=platform, analysis_period=(start_time, end_time))
     
-    async def _calculate_platform_volume_metrics(self, records: List[DistributionRecord],
-                                               analytics: PlatformAnalytics):
+    async def _calculate_platform_volume_metrics(self, records -> None: List[DistributionRecord],
+                                               analytics -> None: PlatformAnalytics) -> None:
         """Calculate platform volume metrics"""
         try:
             analytics.total_content = len(records)
@@ -343,8 +343,8 @@ class DistributionTracker:
         except Exception as e:
             self.logger.error(f"Platform volume metrics calculation failed: {e}")
     
-    async def _calculate_platform_performance_metrics(self, records: List[DistributionRecord],
-                                                     analytics: PlatformAnalytics):
+    async def _calculate_platform_performance_metrics(self, records -> None: List[DistributionRecord],
+                                                     analytics -> None: PlatformAnalytics) -> None:
         """Calculate platform performance metrics"""
         try:
             published_records = [r for r in records if r.status == DistributionStatus.PUBLISHED]
@@ -366,8 +366,8 @@ class DistributionTracker:
         except Exception as e:
             self.logger.error(f"Platform performance metrics calculation failed: {e}")
     
-    async def _calculate_platform_engagement_metrics(self, records: List[DistributionRecord],
-                                                   analytics: PlatformAnalytics):
+    async def _calculate_platform_engagement_metrics(self, records -> None: List[DistributionRecord],
+                                                   analytics -> None: PlatformAnalytics) -> None:
         """Calculate platform engagement metrics"""
         try:
             published_records = [r for r in records if r.status == DistributionStatus.PUBLISHED]
@@ -397,8 +397,8 @@ class DistributionTracker:
         except Exception as e:
             self.logger.error(f"Platform engagement metrics calculation failed: {e}")
     
-    async def _calculate_platform_revenue_metrics(self, records: List[DistributionRecord],
-                                                analytics: PlatformAnalytics):
+    async def _calculate_platform_revenue_metrics(self, records -> None: List[DistributionRecord],
+                                                analytics -> None: PlatformAnalytics) -> None:
         """Calculate platform revenue metrics"""
         try:
             monetized_records = [r for r in records if r.monetization_enabled and r.revenue > 0]
@@ -415,8 +415,8 @@ class DistributionTracker:
         except Exception as e:
             self.logger.error(f"Platform revenue metrics calculation failed: {e}")
     
-    async def _calculate_platform_insights(self, records: List[DistributionRecord],
-                                         analytics: PlatformAnalytics):
+    async def _calculate_platform_insights(self, records -> None: List[DistributionRecord],
+                                         analytics -> None: PlatformAnalytics) -> None:
         """Calculate platform insights and optimization recommendations"""
         try:
             published_records = [r for r in records if r.status == DistributionStatus.PUBLISHED]
@@ -477,7 +477,7 @@ class DistributionTracker:
 class PlatformAnalytics:
     """Platform-specific analytics and optimization"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.logger = logger.getChild(self.__class__.__name__)
     
@@ -619,7 +619,7 @@ class PlatformAnalytics:
 class ReachAnalyzer:
     """Cross-platform reach analysis"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.logger = logger.getChild(self.__class__.__name__)
     
@@ -653,8 +653,8 @@ class ReachAnalyzer:
             self.logger.error(f"Cross-platform reach calculation failed: {e}")
             return ReachMetrics(analysis_period=(start_time, end_time))
     
-    async def _calculate_total_reach(self, distributions: List[DistributionRecord],
-                                   metrics: ReachMetrics):
+    async def _calculate_total_reach(self, distributions -> None: List[DistributionRecord],
+                                   metrics -> None: ReachMetrics) -> None:
         """Calculate total reach metrics"""
         try:
             # Sum unique reach (simplified - assumes no overlap)
@@ -667,8 +667,8 @@ class ReachAnalyzer:
         except Exception as e:
             self.logger.error(f"Total reach calculation failed: {e}")
     
-    async def _calculate_platform_breakdown(self, distributions: List[DistributionRecord],
-                                          metrics: ReachMetrics):
+    async def _calculate_platform_breakdown(self, distributions -> None: List[DistributionRecord],
+                                          metrics -> None: ReachMetrics) -> None:
         """Calculate platform-specific reach breakdown"""
         try:
             platform_reach = defaultdict(int)
@@ -689,8 +689,8 @@ class ReachAnalyzer:
         except Exception as e:
             self.logger.error(f"Platform breakdown calculation failed: {e}")
     
-    async def _calculate_content_reach(self, distributions: List[DistributionRecord],
-                                     metrics: ReachMetrics):
+    async def _calculate_content_reach(self, distributions -> None: List[DistributionRecord],
+                                     metrics -> None: ReachMetrics) -> None:
         """Calculate content-specific reach metrics"""
         try:
             # Top reaching content
@@ -709,8 +709,8 @@ class ReachAnalyzer:
         except Exception as e:
             self.logger.error(f"Content reach calculation failed: {e}")
     
-    async def _calculate_virality_metrics(self, distributions: List[DistributionRecord],
-                                        metrics: ReachMetrics):
+    async def _calculate_virality_metrics(self, distributions -> None: List[DistributionRecord],
+                                        metrics -> None: ReachMetrics) -> None:
         """Calculate virality and sharing metrics"""
         try:
             total_shares = sum(dist.shares for dist in distributions)

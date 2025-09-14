@@ -1,3 +1,8 @@
+"""
+  Init   module
+Enterprise implementation for Ainflue platform
+"""
+
 # Docker Configurations Module
 # Advanced configuration management for Ainflue Docker infrastructure
 # Author: Fahed Mlaiel (mlaiel@live.de)

@@ -1,3 +1,8 @@
+"""
+Maintainability Index Calculator module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Maintainability Index Calculator - Ainflue Quality Platform
@@ -129,7 +134,7 @@ class MaintainabilityIndexCalculator:
     - ML Engineer: Predictive analytics and pattern recognition
     """
     
-    def __init__(self, project_path: str = "."):
+    def __init__(self, project_path -> None: str = ".") -> None:
         self.project_path = Path(project_path)
         self.supported_extensions = {'.py', '.js', '.ts', '.java', '.cpp', '.cs', '.go'}
         self.language_mapping = {
@@ -315,17 +320,18 @@ class MaintainabilityIndexCalculator:
         
         return metrics
     
-    async def _analyze_ast(self, tree: ast.AST, metrics: CodeFileMetrics):
+    async def _analyze_ast(self, tree -> None: ast.AST, metrics -> None: CodeFileMetrics) -> None:
         """Analyze Python AST for detailed metrics (Lead Dev IA expertise)"""
         class CodeAnalyzer(ast.NodeVisitor):
-            def __init__(self):
+    """CodeAnalyzer class implementation"""
+            def __init__(self) -> None:
                 self.functions = []
                 self.classes = []
                 self.imports = []
                 self.max_nesting = 0
                 self.current_nesting = 0
                 
-            def visit_FunctionDef(self, node):
+            def visit_FunctionDef(self, node) -> None:
                 function_info = {
                     'name': node.name,
                     'line_start': node.lineno,
@@ -352,7 +358,7 @@ class MaintainabilityIndexCalculator:
                 self.generic_visit(node)
                 self.current_nesting -= 1
             
-            def visit_ClassDef(self, node):
+            def visit_ClassDef(self, node) -> None:
                 class_info = {
                     'name': node.name,
                     'line_start': node.lineno,
@@ -374,12 +380,12 @@ class MaintainabilityIndexCalculator:
                 self.generic_visit(node)
                 self.current_nesting -= 1
             
-            def visit_Import(self, node):
+            def visit_Import(self, node) -> None:
                 for alias in node.names:
                     self.imports.append(alias.name)
                 self.generic_visit(node)
             
-            def visit_ImportFrom(self, node):
+            def visit_ImportFrom(self, node) -> None:
                 if node.module:
                     for alias in node.names:
                         import_name = f"{node.module}.{alias.name}"
@@ -612,7 +618,7 @@ class MaintainabilityIndexCalculator:
         else:
             return MaintainabilityLevel.CRITICAL
     
-    async def _identify_hotspots(self, report: ProjectMaintainabilityReport):
+    async def _identify_hotspots(self, report -> None: ProjectMaintainabilityReport) -> None:
         """Identify maintainability hotspots (ML Engineer expertise)"""
         hotspots = []
         
@@ -652,7 +658,7 @@ class MaintainabilityIndexCalculator:
         
         report.hotspots = hotspots
     
-    async def _generate_recommendations(self, report: ProjectMaintainabilityReport):
+    async def _generate_recommendations(self, report -> None: ProjectMaintainabilityReport) -> None:
         """Generate maintainability recommendations (Lead Dev IA expertise)"""
         recommendations = []
         
@@ -689,7 +695,7 @@ class MaintainabilityIndexCalculator:
         
         report.recommendations = recommendations
     
-    async def _perform_risk_assessment(self, report: ProjectMaintainabilityReport):
+    async def _perform_risk_assessment(self, report -> None: ProjectMaintainabilityReport) -> None:
         """Perform maintainability risk assessment (ML Engineer + Lead Dev expertise)"""
         risk_factors = {}
         
@@ -738,7 +744,7 @@ class MaintainabilityIndexCalculator:
         else:
             return 'MINIMAL'
     
-    async def _save_report(self, report: ProjectMaintainabilityReport):
+    async def _save_report(self, report -> None: ProjectMaintainabilityReport) -> None:
         """Save maintainability report (Backend expertise)"""
         timestamp = report.generated_at.strftime("%Y%m%d_%H%M%S")
         filename = f"maintainability_report_{report.project_name}_{timestamp}.json"
@@ -901,7 +907,7 @@ class MaintainabilityIndexCalculator:
         
         return dashboard_html
     
-    async def _create_maintainability_charts(self, report: ProjectMaintainabilityReport):
+    async def _create_maintainability_charts(self, report -> None: ProjectMaintainabilityReport) -> None:
         """Create visualization charts for maintainability data (ML Engineer expertise)"""
         if not report.file_metrics:
             return
@@ -992,7 +998,7 @@ async def quick_maintainability_check(file_path: str) -> float:
 
 if __name__ == "__main__":
     # Example usage
-    async def main():
+    async def main() -> None:
         # Calculate maintainability for current project
         report = await calculate_project_maintainability(".")
         

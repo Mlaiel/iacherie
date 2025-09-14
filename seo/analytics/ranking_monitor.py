@@ -134,7 +134,7 @@ class RankingMonitor:
     - Voice search ranking tracking
     """
     
-    def __init__(self, db_pool: asyncpg.Pool, api_keys: Dict[str, str]):
+    def __init__(self, db_pool -> None: asyncpg.Pool, api_keys -> None: Dict[str, str]) -> None:
         self.db_pool = db_pool
         self.api_keys = api_keys
         self.session = None
@@ -144,11 +144,11 @@ class RankingMonitor:
             'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:89.0) Gecko/20100101 Firefox/89.0'
         ]
         
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         self.session = aiohttp.ClientSession()
         return self
         
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         if self.session:
             await self.session.close()
     
@@ -694,7 +694,7 @@ class RankingMonitor:
         variance = sum((p - mean_pos) ** 2 for p in positions) / len(positions)
         return variance ** 0.5
     
-    async def _store_tracking_project(self, project: RankingProject):
+    async def _store_tracking_project(self, project -> None: RankingProject) -> None:
         """Store tracking project in database."""
         try:
             async with self.db_pool.acquire() as conn:
@@ -724,7 +724,7 @@ class RankingMonitor:
         except Exception as e:
             logger.error(f"Error storing tracking project: {e}")
     
-    async def _store_rankings(self, rankings: List[KeywordRanking]):
+    async def _store_rankings(self, rankings -> None: List[KeywordRanking]) -> None:
         """Store keyword rankings in database."""
         try:
             async with self.db_pool.acquire() as conn:

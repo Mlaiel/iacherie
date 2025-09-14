@@ -16,6 +16,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class SecurityAlert:
+    """SecurityAlert: class implementation"""
     alert_id: str
     user_id: str
     alert_type: str
@@ -26,7 +27,7 @@ class SecurityAlert:
 class AccountSecurityAlerts:
     """Account security monitoring and alerting system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.alerts: List[SecurityAlert] = []
         logger.info("Account security alerts initialized")
     
@@ -52,7 +53,7 @@ class AccountSecurityAlerts:
             logger.error(f"Error sending security alert: {str(e)}")
             return False
     
-    async def _send_security_alert(self, alert: SecurityAlert):
+    async def _send_security_alert(self, alert -> None: SecurityAlert) -> None:
         """Send account security alert"""
         notification_data = {
             "title": "🔐 Account Security Alert",

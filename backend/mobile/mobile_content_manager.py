@@ -289,7 +289,7 @@ class ProcessingResult:
 class MobileContentManager:
     """Unified mobile content management system consolidating upload, orchestration, intelligence, and processing"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         """Initialize mobile content manager"""
         self.config = config or {}
         self.upload_sessions = {}
@@ -452,7 +452,7 @@ class MobileContentManager:
         data = f"{request.creator_id}_{request.mobile_device_id}_{datetime.utcnow().isoformat()}"
         return hashlib.sha256(data.encode()).hexdigest()[:16]
 
-    async def _validate_upload_request(self, request: ContentUploadRequest):
+    async def _validate_upload_request(self, request -> None: ContentUploadRequest) -> None:
         """Validate upload request with mobile-specific constraints"""
         # Mobile file size validation
         max_file_size = self.config.get('mobile_max_file_size', 100 * 1024 * 1024)  # 100MB default
@@ -512,7 +512,7 @@ class MobileContentManager:
             "estimated_duration": self._estimate_upload_duration(request.file_size, capabilities)
         }
 
-    async def _process_intelligent_upload(self, session: Dict[str, Any]):
+    async def _process_intelligent_upload(self, session -> None: Dict[str, Any]) -> None:
         """Process upload with intelligent mobile optimization"""
         try:
             session["status"] = UploadStatus.UPLOADING
@@ -532,7 +532,7 @@ class MobileContentManager:
             logger.error(f"Mobile upload processing failed: {e}")
             session["status"] = UploadStatus.FAILED
 
-    async def _finalize_upload_and_orchestrate(self, session: Dict[str, Any]):
+    async def _finalize_upload_and_orchestrate(self, session -> None: Dict[str, Any]) -> None:
         """Finalize upload and start intelligent content workflow"""
         try:
             # Combine all chunks with integrity verification
@@ -565,7 +565,7 @@ class MobileContentManager:
             logger.error(f"Failed to finalize mobile upload: {e}")
             session["status"] = UploadStatus.FAILED
 
-    async def _start_intelligent_content_workflow(self, session: Dict[str, Any]):
+    async def _start_intelligent_content_workflow(self, session -> None: Dict[str, Any]) -> None:
         """Start comprehensive intelligent content workflow"""
         try:
             upload_id = session["upload_id"]
@@ -646,7 +646,7 @@ class MobileContentManager:
         remaining_seconds = remaining_bytes / speed if speed > 0 else 0
         return datetime.utcnow() + timedelta(seconds=remaining_seconds)
 
-    async def _adapt_upload_settings(self, session: Dict[str, Any]):
+    async def _adapt_upload_settings(self, session -> None: Dict[str, Any]) -> None:
         """Adapt upload settings dynamically based on current conditions"""
         # Implementation for adaptive upload optimization
         pass
@@ -701,7 +701,7 @@ class MobileContentManager:
 class CreatorUploadManager:
     """Creator-specific upload management with mobile optimization"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.creator_profiles = {}
         
@@ -729,7 +729,7 @@ class CreatorUploadManager:
 class MobileContentOrchestrator:
     """Mobile content workflow orchestrator for end-to-end content processing"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.active_workflows = {}
         
@@ -791,7 +791,7 @@ class MobileContentOrchestrator:
 class ContentIntelligenceMobile:
     """Mobile content intelligence and analysis system"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         
     async def analyze_content_comprehensive(self, content_path: str, content_format: ContentFormat,
@@ -918,7 +918,7 @@ class ContentIntelligenceMobile:
 class MobileMediaProcessor:
     """Mobile media processing with format optimization and quality adaptation"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.processing_queue = asyncio.Queue()
         

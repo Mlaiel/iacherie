@@ -72,7 +72,7 @@ class CacheEntry:
             return False
         return datetime.utcnow() > self.expires_at
         
-    def touch(self):
+    def touch(self) -> None:
         """Update access time and increment access count"""
         self.accessed_at = datetime.utcnow()
         self.access_count += 1
@@ -233,7 +233,7 @@ class CacheBackendInterface(ABC):
         pass
         
     @abstractmethod
-    async def close(self):
+    async def close(self) -> None:
         """Close backend connection"""
         pass
 
@@ -241,8 +241,8 @@ class CacheBackendInterface(ABC):
 class MemoryCacheBackend(CacheBackendInterface):
     """In-memory cache backend"""
     
-    def __init__(self, max_size: int = 1000, max_memory: int = 100*1024*1024, 
-                 eviction_policy: EvictionPolicy = EvictionPolicy.LRU):
+    def __init__(self, max_size -> None: int = 1000, max_memory -> None: int = 100*1024*1024, 
+                 eviction_policy -> None: EvictionPolicy = EvictionPolicy.LRU) -> None:
         self.max_size = max_size
         self.max_memory = max_memory
         self.eviction_policy = eviction_policy
@@ -331,11 +331,11 @@ class MemoryCacheBackend(CacheBackendInterface):
         """Get cache statistics"""
         return self.stats
         
-    async def close(self):
+    async def close(self) -> None:
         """Close memory cache"""
         await self.clear()
         
-    async def _ensure_capacity(self, new_entry: CacheEntry):
+    async def _ensure_capacity(self, new_entry -> None: CacheEntry) -> None:
         """Ensure cache has capacity for new entry"""
         # Calculate current memory usage
         current_memory = sum(entry.size_bytes for entry in self.cache.values())
@@ -389,7 +389,7 @@ class MemoryCacheBackend(CacheBackendInterface):
             
         return next(iter(self.cache))  # Default fallback
         
-    def _update_stats(self):
+    def _update_stats(self) -> None:
         """Update cache statistics"""
         self.stats.entries_count = len(self.cache)
         self.stats.size_bytes = sum(entry.size_bytes for entry in self.cache.values())
@@ -398,15 +398,15 @@ class MemoryCacheBackend(CacheBackendInterface):
 class RedisCacheBackend(CacheBackendInterface):
     """Redis cache backend"""
     
-    def __init__(self, redis_url: str = "redis://localhost:6379", 
-                 prefix: str = "ainflue:", db: int = 0):
+    def __init__(self, redis_url -> None: str = "redis -> None://localhost -> None:6379", 
+                 prefix -> None: str = "ainflue -> None:", db -> None: int = 0) -> None:
         self.redis_url = redis_url
         self.prefix = prefix
         self.db = db
         self.redis = None
         self.stats = CacheStats()
         
-    async def _ensure_connection(self):
+    async def _ensure_connection(self) -> None:
         """Ensure Redis connection"""
         if self.redis is None:
             try:
@@ -481,7 +481,7 @@ class RedisCacheBackend(CacheBackendInterface):
             logger.error(f"Error setting in Redis: {str(e)}")
             return False
             
-    async def _save_entry(self, entry: CacheEntry):
+    async def _save_entry(self, entry -> None: CacheEntry) -> None:
         """Save entry to Redis"""
         redis_key = self._make_key(entry.key)
         
@@ -551,7 +551,7 @@ class RedisCacheBackend(CacheBackendInterface):
         """Get cache statistics"""
         return self.stats
         
-    async def close(self):
+    async def close(self) -> None:
         """Close Redis connection"""
         if self.redis:
             await self.redis.close()
@@ -560,7 +560,7 @@ class RedisCacheBackend(CacheBackendInterface):
 class CacheManager:
     """Cache layer manager with intelligent routing"""
     
-    def __init__(self, default_ttl: int = 3600, default_format: SerializationFormat = SerializationFormat.PICKLE):
+    def __init__(self, default_ttl -> None: int = 3600, default_format -> None: SerializationFormat = SerializationFormat.PICKLE) -> None:
         self.backends: Dict[str, CacheBackendInterface] = {}
         self.default_backend: Optional[str] = None
         self.default_ttl = default_ttl
@@ -568,14 +568,14 @@ class CacheManager:
         self.routing_rules: List[Callable[[str], Optional[str]]] = []
         self.stats = CacheStats()
         
-    def add_backend(self, name: str, backend: CacheBackendInterface, is_default: bool = False):
+    def add_backend(self, name -> None: str, backend -> None: CacheBackendInterface, is_default -> None: bool = False) -> None:
         """Add cache backend"""
         self.backends[name] = backend
         if is_default or not self.default_backend:
             self.default_backend = name
         logger.info(f"Added cache backend: {name}")
         
-    def add_routing_rule(self, rule: Callable[[str], Optional[str]]):
+    def add_routing_rule(self, rule -> None: Callable[[str], Optional[str]]) -> None:
         """Add routing rule for cache backend selection"""
         self.routing_rules.append(rule)
         
@@ -725,14 +725,14 @@ class CacheManager:
 class CacheService:
     """Distributed Cache Management Service"""
     
-    def __init__(self, name: str = "cache_service"):
+    def __init__(self, name -> None: str = "cache_service") -> None:
         self.name = name
         self.cache_manager = CacheManager()
         self.running = False
         self.cleanup_task = None
         self.cleanup_interval = 300  # 5 minutes
         
-    async def start(self):
+    async def start(self) -> None:
         """Start cache service"""
         self.running = True
         
@@ -741,7 +741,7 @@ class CacheService:
         
         logger.info(f"Started cache service: {self.name}")
         
-    async def stop(self):
+    async def stop(self) -> None:
         """Stop cache service"""
         self.running = False
         
@@ -758,21 +758,21 @@ class CacheService:
             
         logger.info(f"Stopped cache service: {self.name}")
         
-    def add_memory_backend(self, name: str = "memory", max_size: int = 1000, 
-                          max_memory: int = 100*1024*1024, 
-                          eviction_policy: EvictionPolicy = EvictionPolicy.LRU,
-                          is_default: bool = True):
+    def add_memory_backend(self, name -> None: str = "memory", max_size -> None: int = 1000, 
+                          max_memory -> None: int = 100*1024*1024, 
+                          eviction_policy -> None: EvictionPolicy = EvictionPolicy.LRU,
+                          is_default -> None: bool = True) -> None:
         """Add memory cache backend"""
         backend = MemoryCacheBackend(max_size, max_memory, eviction_policy)
         self.cache_manager.add_backend(name, backend, is_default)
         
-    def add_redis_backend(self, name: str = "redis", redis_url: str = "redis://localhost:6379",
-                         prefix: str = "ainflue:", db: int = 0, is_default: bool = False):
+    def add_redis_backend(self, name -> None: str = "redis", redis_url -> None: str = "redis -> None://localhost -> None:6379",
+                         prefix -> None: str = "ainflue -> None:", db -> None: int = 0, is_default -> None: bool = False) -> None:
         """Add Redis cache backend"""
         backend = RedisCacheBackend(redis_url, prefix, db)
         self.cache_manager.add_backend(name, backend, is_default)
         
-    def add_routing_rule(self, rule: Callable[[str], Optional[str]]):
+    def add_routing_rule(self, rule -> None: Callable[[str], Optional[str]]) -> None:
         """Add cache routing rule"""
         self.cache_manager.add_routing_rule(rule)
         
@@ -806,7 +806,7 @@ class CacheService:
         """Clear all caches"""
         return await self.cache_manager.clear_all()
         
-    async def _cleanup_expired_entries(self):
+    async def _cleanup_expired_entries(self) -> None:
         """Periodically cleanup expired entries"""
         while self.running:
             try:

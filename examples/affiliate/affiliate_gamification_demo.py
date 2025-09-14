@@ -1,3 +1,8 @@
+"""
+Affiliate Gamification Demo module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Affiliate Gamification Demo - Démonstration Gamification Affiliation
@@ -150,7 +155,7 @@ class AffiliateGamificationDemo:
     Système complet de points, badges, quêtes, et leaderboards avec engagement psychology
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(f"{__name__}.AffiliateGamificationDemo")
         
         # Gamification data

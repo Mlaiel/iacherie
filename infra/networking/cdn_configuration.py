@@ -1,3 +1,8 @@
+"""
+Cdn Configuration module
+Enterprise implementation for Ainflue platform
+"""
+
 # Ainflue Infrastructure Module - CDN Configuration
 # ================================================
 # 
@@ -60,7 +65,7 @@ class CDNConfig:
 class CDNConfigurationManager:
     """Enterprise CDN configuration management for multi-cloud environments"""
     
-    def __init__(self, config: CDNConfig):
+    def __init__(self, config -> None: CDNConfig) -> None:
         """Initialize CDN configuration manager
         
         Args:
@@ -90,7 +95,7 @@ class CDNConfigurationManager:
             
         return logger
     
-    def _initialize_cloud_clients(self):
+    def _initialize_cloud_clients(self) -> None:
         """Initialize cloud provider clients"""
         try:
             if self.config.cloud_provider.lower() == 'aws':
@@ -502,7 +507,7 @@ class CDNConfigurationManager:
         import os
         return os.getenv('GOOGLE_CLOUD_PROJECT', 'ainflue-platform')
     
-    def _wait_for_gcp_operation(self, operation, project: str):
+    def _wait_for_gcp_operation(self, operation, project -> None: str) -> None:
         """Wait for GCP operation to complete"""
         import time
         time.sleep(5)  # Simplified wait - implement proper polling in production
@@ -707,12 +712,12 @@ class CDNConfigurationManager:
             self.logger.error(f"Failed to get CloudFront metrics: {e}")
             return {}
     
-    def _get_start_time(self):
+    def _get_start_time(self) -> None:
         """Get start time for metrics (24 hours ago)"""
         from datetime import datetime, timedelta
         return datetime.utcnow() - timedelta(hours=24)
     
-    def _get_end_time(self):
+    def _get_end_time(self) -> None:
         """Get end time for metrics (now)"""
         from datetime import datetime
         return datetime.utcnow()
@@ -724,7 +729,7 @@ class CDNConfigurationManager:
 
 # Example usage
 if __name__ == "__main__":
-    async def main():
+    async def main() -> None:
         config = CDNConfig(
             environment="production",
             cloud_provider="aws",

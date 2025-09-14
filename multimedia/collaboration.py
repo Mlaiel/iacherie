@@ -31,13 +31,15 @@ try:
     import numpy as np
 except ImportError:
     class NumpyStub:
+    """NumpyStub: class implementation"""
         class ndarray:
+    """ndarray: class implementation"""
             pass
         @staticmethod
-        def array(data):
+        def array(data) -> None:
             return data
         @staticmethod
-        def zeros(shape):
+        def zeros(shape) -> None:
             return [0] * (shape[0] if isinstance(shape, (list, tuple)) else shape)
     np = NumpyStub()
 
@@ -62,13 +64,15 @@ try:
     import networkx as nx
 except ImportError:
     class NetworkXStub:
+    """NetworkXStub: class implementation"""
         class Graph:
-            def __init__(self):
+    """Graph: class implementation"""
+            def __init__(self) -> None:
                 self.nodes = []
                 self.edges = []
-            def add_node(self, *args, **kwargs):
+            def add_node(self, *args, **kwargs) -> None:
                 pass
-            def add_edge(self, *args, **kwargs):
+            def add_edge(self, *args, **kwargs) -> None:
                 pass
     nx = NetworkXStub()
 
@@ -83,46 +87,51 @@ try:
     from ..core.exceptions import CollaborationError, MatchingError
 except ImportError:
     class CollaborationError(Exception):
+    """CollaborationError class implementation"""
         pass
     class MatchingError(Exception):
+    """MatchingError class implementation"""
         pass
 
 try:
     from ..core.config import get_settings
 except ImportError:
-    def get_settings():
+    def get_settings() -> None:
         class Settings:
+    """Settings: class implementation"""
             DATABASE_URL = "sqlite:///test.db"
             AI_MODEL_PATH = "/models"
         return Settings()
 try:
     from ..core.database import get_session
 except ImportError:
-    async def get_session():
+    async def get_session() -> None:
         return None
 
 try:
     from ..utils.caching import cache_result
 except ImportError:
-    def cache_result(func):
+    def cache_result(func) -> None:
         return func
 
 try:
     from ..utils.notifications import NotificationService
 except ImportError:
     class NotificationService:
-        def __init__(self):
+    """NotificationService: class implementation"""
+        def __init__(self) -> None:
             pass
-        async def send_notification(self, *args, **kwargs):
+        async def send_notification(self, *args, **kwargs) -> None:
             pass
 
 try:
     from ..utils.recommendations import RecommendationEngine
 except ImportError:
     class RecommendationEngine:
-        def __init__(self):
+    """RecommendationEngine: class implementation"""
+        def __init__(self) -> None:
             pass
-        async def get_recommendations(self, *args, **kwargs):
+        async def get_recommendations(self, *args, **kwargs) -> None:
             return []
 
 logger = logging.getLogger(__name__)
@@ -291,14 +300,14 @@ class CreatorMatcher:
     """
 AI-powered creator matching system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.tokenizer = None
         self.model = None
         self.vectorizer = TfidfVectorizer(max_features=1000, stop_words='english')
         self.profile_vectors = {}
         self.creator_graph = nx.Graph()
         
-    async def initialize_models(self):
+    async def initialize_models(self) -> None:
         """
 Initialize AI models for matching"""
         try:
@@ -935,7 +944,7 @@ Initialize AI models for matching"""
 class CollaborationManager:
     """Manage collaboration requests and projects"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.matcher = CreatorMatcher()
         self.notification_service = NotificationService()
         
@@ -1260,7 +1269,7 @@ Get creator profile from database"""
             logger.error(f"Failed to get creator profile: {str(e)}")
             return True
     
-    async def _store_collaboration_request(self, request: CollaborationRequest):
+    async def _store_collaboration_request(self, request -> None: CollaborationRequest) -> None:
         """Store collaboration request in database"""
         try:
             async with get_session() as session:
@@ -1314,7 +1323,7 @@ Get creator profile from database"""
             logger.error(f"Failed to get collaboration request: {str(e)}")
             return True
     
-    async def _update_collaboration_request(self, request: CollaborationRequest):
+    async def _update_collaboration_request(self, request -> None: CollaborationRequest) -> None:
         """Update collaboration request in database"""
         try:
             async with get_session() as session:

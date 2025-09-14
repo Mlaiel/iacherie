@@ -244,7 +244,7 @@ class EngagementRule(BaseModel):
 class SocialMediaService:
     """📱 Enterprise Social Media Service - Multi-Expert Implementation"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize with all expert role capabilities"""
         # 🧠 Lead Dev IA: AI content optimization engines
         self.content_optimizer = self._initialize_content_ai()
@@ -602,7 +602,7 @@ class SocialMediaService:
             }
         }
 
-    def _load_sample_data(self):
+    def _load_sample_data(self) -> None:
         """Load sample social media data for demonstration"""
         # Create sample social media account
         sample_account = SocialMediaAccount(
@@ -634,7 +634,7 @@ class SocialMediaService:
         # Create sample posts
         self._create_sample_posts(sample_account.id)
 
-    def _create_sample_posts(self, account_id: str):
+    def _create_sample_posts(self, account_id -> None: str) -> None:
         """Create sample social media posts"""
         sample_posts = [
             {
@@ -747,7 +747,7 @@ class SocialMediaService:
             logger.error(f"❌ Error connecting social account: {str(e)}")
             raise HTTPException(status_code=500, detail=f"Account connection failed: {str(e)}")
 
-    async def _validate_account_credentials(self, account_data: Dict[str, Any]):
+    async def _validate_account_credentials(self, account_data -> None: Dict[str, Any]) -> None:
         """🔒 Security: Validate account credentials"""
         # Simulate credential validation
         required_fields = ["platform", "username", "account_id", "access_token"]
@@ -770,7 +770,7 @@ class SocialMediaService:
             "engagement_rate": random.uniform(0.01, 0.08)
         }
 
-    async def _setup_account_monitoring(self, account: SocialMediaAccount):
+    async def _setup_account_monitoring(self, account -> None: SocialMediaAccount) -> None:
         """⚙️ DevOps: Set up monitoring for account"""
         self.monitoring_system[account.id] = {
             "last_check": datetime.now(),
@@ -985,7 +985,7 @@ class SocialMediaService:
         
         return (base_hashtags[:3] + content_hashtags[:2])
 
-    async def _optimize_audio_content(self, post: SocialMediaPost, account: SocialMediaAccount):
+    async def _optimize_audio_content(self, post -> None: SocialMediaPost, account -> None: SocialMediaAccount) -> None:
         """🎵 Audio: Optimize audio content for platform"""
         if not post.media_urls:
             return
@@ -1048,7 +1048,7 @@ class SocialMediaService:
         current_usage = self.rate_limiters.get(account.platform, {}).get("current", 0)
         return current_usage < limit
 
-    async def _track_rate_limit_usage(self, account: SocialMediaAccount):
+    async def _track_rate_limit_usage(self, account -> None: SocialMediaAccount) -> None:
         """⚙️ DevOps: Track rate limit usage"""
         if account.platform not in self.rate_limiters:
             self.rate_limiters[account.platform] = {"current": 0, "reset_time": datetime.now() + timedelta(minutes=1)}
@@ -1163,7 +1163,7 @@ class SocialMediaService:
             )[:5]
         }
 
-    async def _notify_services(self, event_type: str, resource_id: str):
+    async def _notify_services(self, event_type -> None: str, resource_id -> None: str) -> None:
         """🌐 Microservices: Notify other services"""
         event = {
             "type": event_type,
@@ -1212,27 +1212,27 @@ app = FastAPI(
 social_service = SocialMediaService()
 
 @app.post("/accounts", response_model=Dict[str, Any])
-async def connect_social_account(account_data: Dict[str, Any]):
+async def connect_social_account(account_data -> None: Dict[str, Any]) -> None:
     """Connect new social media account"""
     return await social_service.connect_social_account(account_data)
 
 @app.post("/posts", response_model=Dict[str, Any])
-async def create_post(post: SocialMediaPost):
+async def create_post(post -> None: SocialMediaPost) -> None:
     """Create new social media post"""
     return await social_service.create_post(post)
 
 @app.get("/posts/{post_id}/analytics", response_model=ContentMetrics)
-async def get_post_analytics(post_id: str):
+async def get_post_analytics(post_id -> None: str) -> None:
     """Get post performance analytics"""
     return await social_service.get_post_analytics(post_id)
 
 @app.get("/accounts/{account_id}/analytics", response_model=Dict[str, Any])
-async def get_account_analytics(account_id: str):
+async def get_account_analytics(account_id -> None: str) -> None:
     """Get account performance analytics"""
     return await social_service.get_account_analytics(account_id)
 
 @app.get("/health")
-async def health_check():
+async def health_check() -> None:
     """Service health check"""
     return await social_service.get_service_health()
 

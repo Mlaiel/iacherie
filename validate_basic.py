@@ -1,5 +1,13 @@
+"""
+Validate Basic module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
+from datetime import datetime
+from typing import Dict, List, Optional, Union, Tuple
+
 Basic Utility Validation - Core Functionality Test
 ==================================================
 
@@ -10,7 +18,7 @@ import sys
 import tempfile
 from pathlib import Path
 
-def test_basic_imports():
+def test_basic_imports() -> None:
     """Test basic imports without external dependencies"""
     print("📋 Testing Basic Imports:")
     
@@ -40,7 +48,7 @@ def test_basic_imports():
         print(f"❌ Import failed: {e}")
         return False
 
-def test_core_functionality():
+def test_core_functionality() -> None:
     """Test core functionality that doesn't require external deps"""
     print("\n📋 Testing Core Functionality:")
     
@@ -93,7 +101,7 @@ def test_core_functionality():
         print(f"❌ Functionality test failed: {e}")
         return False
 
-def test_file_operations():
+def test_file_operations() -> None:
     """Test file operations without external dependencies"""
     print("\n📋 Testing File Operations:")
     
@@ -120,7 +128,7 @@ def test_file_operations():
         print(f"❌ File operations test failed: {e}")
         return False
 
-def main():
+def main() -> None:
     """Run validation tests"""
     print("🚀 Starting Basic Utilities Validation")
     print("=" * 50)

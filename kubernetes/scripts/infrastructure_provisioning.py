@@ -1,3 +1,8 @@
+"""
+Infrastructure Provisioning module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """Infrastructure Provisioning Manager
 Handles automated infrastructure provisioning using Infrastructure as Code
@@ -71,7 +76,7 @@ class InfrastructureProvisioner:
     Handles Infrastructure as Code using Terraform, CloudFormation, and Kubernetes
     """
     
-    def __init__(self, config_path: Optional[str] = None):
+    def __init__(self, config_path -> None: Optional[str] = None) -> None:
         """
 Initialize infrastructure provisioner"""
         self.config_path = config_path or "/etc/provisioning/config.yaml"
@@ -950,7 +955,7 @@ spec:
             return f'# {template_type.upper()} Template\n# Add your Kubernetes resources here\n'
 
 
-def main():
+def main() -> None:
     """Main function for standalone execution"""
     import argparse
     

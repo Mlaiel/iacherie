@@ -160,7 +160,7 @@ class BlockchainPaymentProcessor:
     - Advanced smart contract automation and DeFi integration
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.redis = None
         self.kafka_producer = None
@@ -179,7 +179,7 @@ class BlockchainPaymentProcessor:
         
         logger.info("Blockchain Payment Processor initialized with multi-expert architecture")
 
-    def _init_security_systems(self):
+    def _init_security_systems(self) -> None:
         """Initialize military-grade security systems (Security Expert)"""
         self.security_config = {
             'encryption': {
@@ -210,7 +210,7 @@ class BlockchainPaymentProcessor:
         # Initialize encryption key
         self.encryption_key = Fernet.generate_key()
 
-    def _init_database_optimizers(self):
+    def _init_database_optimizers(self) -> None:
         """Initialize blockchain data optimization systems (DBA Expert)"""
         self.database_optimization = {
             'blockchain_indexing': {
@@ -239,7 +239,7 @@ class BlockchainPaymentProcessor:
             }
         }
 
-    def _init_microservices_infrastructure(self):
+    def _init_microservices_infrastructure(self) -> None:
         """Initialize microservices blockchain architecture (Microservices Expert)"""
         self.microservices_config = {
             'service_architecture': {
@@ -270,7 +270,7 @@ class BlockchainPaymentProcessor:
             }
         }
 
-    def _init_blockchain_networks(self):
+    def _init_blockchain_networks(self) -> None:
         """Initialize multi-chain blockchain network connections"""
         self.network_config = {
             BlockchainNetwork.ETHEREUM: {
@@ -298,7 +298,7 @@ class BlockchainPaymentProcessor:
             }
         }
 
-    def _init_smart_contract_factory(self):
+    def _init_smart_contract_factory(self) -> None:
         """Initialize smart contract deployment factory"""
         self.smart_contract_templates = {
             SmartContractType.ROYALTY_DISTRIBUTION: {
@@ -318,7 +318,7 @@ class BlockchainPaymentProcessor:
             }
         }
 
-    def _init_defi_integrations(self):
+    def _init_defi_integrations(self) -> None:
         """Initialize DeFi protocol integrations"""
         self.defi_protocols = {
             'uniswap_v3': {
@@ -342,16 +342,16 @@ class BlockchainPaymentProcessor:
             }
         }
 
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         """Async context manager entry"""
         await self._initialize_connections()
         return self
 
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         """Async context manager exit"""
         await self._cleanup_connections()
 
-    async def _initialize_connections(self):
+    async def _initialize_connections(self) -> None:
         """Initialize blockchain and external service connections"""
         try:
             # Redis connection for caching
@@ -382,7 +382,7 @@ class BlockchainPaymentProcessor:
             logger.error(f"Failed to initialize blockchain connections: {e}")
             raise
 
-    async def _cleanup_connections(self):
+    async def _cleanup_connections(self) -> None:
         """Cleanup all connections"""
         try:
             if self.redis:
@@ -612,7 +612,7 @@ class BlockchainPaymentProcessor:
             logger.error(f"Solana payment processing failed: {e}")
             raise
 
-    async def _cache_payment(self, payment: BlockchainPayment):
+    async def _cache_payment(self, payment -> None: BlockchainPayment) -> None:
         """Cache payment data for performance (DBA Expert)"""
         if self.redis:
             cache_key = f"blockchain_payment:{payment.payment_id}"
@@ -628,7 +628,7 @@ class BlockchainPaymentProcessor:
             }
             await self.redis.setex(cache_key, 86400, json.dumps(cache_data))  # 24 hour cache
 
-    async def _publish_payment_event(self, payment: BlockchainPayment, event_type: str):
+    async def _publish_payment_event(self, payment -> None: BlockchainPayment, event_type -> None: str) -> None:
         """Publish payment event to message queue (Microservices Expert)"""
         if self.kafka_producer:
             event_data = {
@@ -645,7 +645,7 @@ class BlockchainPaymentProcessor:
             
             await self.kafka_producer.send('blockchain_payments', event_data)
 
-    async def _monitor_transaction_confirmations(self, payment: BlockchainPayment):
+    async def _monitor_transaction_confirmations(self, payment -> None: BlockchainPayment) -> None:
         """Monitor transaction confirmations and update status"""
         max_attempts = 60  # Monitor for up to 1 hour
         attempt = 0
@@ -756,7 +756,7 @@ class BlockchainPaymentProcessor:
             logger.error(f"Smart contract deployment failed: {e}")
             raise
 
-    async def _cache_contract_deployment(self, deployment: SmartContractDeployment):
+    async def _cache_contract_deployment(self, deployment -> None: SmartContractDeployment) -> None:
         """Cache smart contract deployment data"""
         if self.redis:
             cache_key = f"smart_contract:{deployment.contract_id}"
@@ -771,7 +771,7 @@ class BlockchainPaymentProcessor:
             }
             await self.redis.setex(cache_key, 86400 * 7, json.dumps(cache_data))  # 7 day cache
 
-    async def _publish_contract_event(self, deployment: SmartContractDeployment, event_type: str):
+    async def _publish_contract_event(self, deployment -> None: SmartContractDeployment, event_type -> None: str) -> None:
         """Publish smart contract event"""
         if self.kafka_producer:
             event_data = {
@@ -909,7 +909,7 @@ class BlockchainPaymentProcessor:
             logger.error(f"DeFi position creation failed: {e}")
             raise
 
-    async def _cache_defi_position(self, position: DeFiPosition):
+    async def _cache_defi_position(self, position -> None: DeFiPosition) -> None:
         """Cache DeFi position data"""
         if self.redis:
             cache_key = f"defi_position:{position.position_id}"

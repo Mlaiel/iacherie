@@ -139,9 +139,9 @@ class ConfigurationManager:
     
     def __init__(
         self,
-        config_path: str = "./config",
-        environment: ConfigurationEnvironment = ConfigurationEnvironment.DEVELOPMENT
-    ):
+        config_path -> None: str = "./config",
+        environment -> None: ConfigurationEnvironment = ConfigurationEnvironment.DEVELOPMENT
+    ) -> None:
         """Initialize configuration manager."""
         self.config_path = Path(config_path)
         self.environment = environment
@@ -158,7 +158,7 @@ class ConfigurationManager:
         
         logger.info(f"Configuration Manager initialized for {environment.value} environment")
     
-    def _initialize_encryption(self):
+    def _initialize_encryption(self) -> None:
         """Initialize encryption for sensitive configuration data."""
         key_file = self.config_path / "encryption.key"
         
@@ -382,7 +382,7 @@ Decrypt value if it's encrypted."""
             logger.error(f"Failed to decrypt configuration value: {e}")
             return None
     
-    def _apply_environment_overrides(self):
+    def _apply_environment_overrides(self) -> None:
         try:
             logger.info(f"Executing _apply_environment_overrides")
             
@@ -406,7 +406,7 @@ Decrypt value if it's encrypted."""
                 except Exception as e:
                     logger.warning(f"Failed to apply environment override {env_var}: {e}")
     
-    def _set_nested_config_value(self, path: str, value: Any):
+    def _set_nested_config_value(self, path -> None: str, value -> None: Any) -> None:
         """Set nested configuration value using dot notation."""
         parts = path.split('.')
         obj = self.config
@@ -416,7 +416,7 @@ Decrypt value if it's encrypted."""
         
         setattr(obj, parts[-1], value)
     
-    def _validate_configuration(self):
+    def _validate_configuration(self) -> None:
         """
 Validate configuration for common issues."""
         validation_errors = []

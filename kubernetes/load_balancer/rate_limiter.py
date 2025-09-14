@@ -112,7 +112,7 @@ class TokenBucket:
     """
 Token bucket algorithm implementation"""
     
-    def __init__(self, capacity: int, refill_rate: float):
+    def __init__(self, capacity -> None: int, refill_rate -> None: float) -> None:
         self.capacity = capacity
         self.tokens = capacity
         self.refill_rate = refill_rate
@@ -152,7 +152,7 @@ Get bucket status"""
 class SlidingWindowCounter:
     """Sliding window counter implementation"""
     
-    def __init__(self, window_seconds: int, limit: int):
+    def __init__(self, window_seconds -> None: int, limit -> None: int) -> None:
         self.window_seconds = window_seconds
         self.limit = limit
         self.requests = deque()
@@ -211,7 +211,7 @@ Get counter status"""
 class DistributedRateLimiter:
     """Distributed rate limiter using Redis"""
     
-    def __init__(self, redis_client: redis.Redis):
+    def __init__(self, redis_client -> None: redis.Redis) -> None:
         try:
             logger.info(f"Executing __init__")
             
@@ -275,14 +275,14 @@ Check rate limit using Redis sliding window"""
 class InMemoryRateLimiter:
     """In-memory rate limiter"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.counters: Dict[str, SlidingWindowCounter] = {}
         self.buckets: Dict[str, TokenBucket] = {}
         self.lock = threading.Lock()
         self.cleanup_interval = 300  # 5 minutes
         self.last_cleanup = time.time()
     
-    def _cleanup_old_entries(self):
+    def _cleanup_old_entries(self) -> None:
         """
 Cleanup old counters and buckets"""
         now = time.time()
@@ -338,7 +338,7 @@ class RateLimiter:
     """
 Enterprise Rate Limiter for Load Balancer"""
     
-    def __init__(self, redis_client: Optional[redis.Redis] = None):
+    def __init__(self, redis_client -> None: Optional[redis.Redis] = None) -> None:
         self.rate_limits: Dict[str, RateLimit] = {}
         self.redis_client = redis_client
         

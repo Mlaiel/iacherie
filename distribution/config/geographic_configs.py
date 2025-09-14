@@ -1,4 +1,6 @@
 """
+from datetime import datetime
+
 Geographic Optimization Configurations
 =====================================
 
@@ -84,13 +86,13 @@ class GeographicConfigs:
     - Seasonal adaptation
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.timezone_configs: Dict[str, TimezoneConfig] = {}
         self.regional_compliance: Dict[Region, RegionalComplianceConfig] = {}
         self.cultural_adaptations: Dict[Region, CulturalAdaptationConfig] = {}
         self._load_default_configurations()
         
-    def _load_default_configurations(self):
+    def _load_default_configurations(self) -> None:
         """Load default geographic configurations"""
         
         # North American timezones
@@ -441,7 +443,7 @@ class GeographicConfigs:
             if config.region == region
         ]
         
-    def export_config(self, output_path: str):
+    def export_config(self, output_path -> None: str) -> None:
         """Export configuration to JSON file"""
         config_data = {
             "timezones": {
@@ -486,7 +488,7 @@ class GeographicConfigs:
         with open(output_path, 'w', encoding='utf-8') as f:
             json.dump(config_data, f, indent=2, ensure_ascii=False)
             
-    def load_config(self, config_path: str):
+    def load_config(self, config_path -> None: str) -> None:
         """Load configuration from JSON file"""
         with open(config_path, 'r', encoding='utf-8') as f:
             config_data = json.load(f)

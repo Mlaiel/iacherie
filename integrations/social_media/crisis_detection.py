@@ -1,3 +1,8 @@
+"""
+Crisis Detection module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
@@ -189,7 +194,7 @@ class CrisisDetection:
     predictive analytics, and automated incident response coordination.
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """Initialize crisis detection system with configuration"""
         self.config = config
         self.auth_handler = AuthenticationHandler(config)
@@ -255,7 +260,7 @@ class CrisisDetection:
         
         logger.info("Crisis Detection System initialized successfully")
     
-    async def _initialize_crisis_system(self):
+    async def _initialize_crisis_system(self) -> None:
         """Initialize crisis detection models and monitoring"""
         try:
             # Load historical crisis data
@@ -863,7 +868,7 @@ class CrisisDetection:
 
 if __name__ == "__main__":
     # Example usage
-    async def test_crisis_detection():
+    async def test_crisis_detection() -> None:
         config = {
             'redis_url': 'redis://localhost:6379',
             'openai_api_key': 'your-api-key',

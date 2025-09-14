@@ -1,4 +1,6 @@
 """Multimedia Content Validators
+import asyncio
+
 Comprehensive validation for multimedia content integrity and quality
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -47,7 +49,7 @@ class ValidationResult:
 class BaseValidator(ABC):
     """Base validator class"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.validation_rules = self._initialize_rules()
         self.logger = logger
     
@@ -102,7 +104,7 @@ class BaseValidator(ABC):
 class MediaValidator(BaseValidator):
     """Universal multimedia content validator"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
     
     def supports_format(self, format_type: str) -> bool:

@@ -1,3 +1,8 @@
+"""
+Unified Converter module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
@@ -101,7 +106,7 @@ class UnifiedConverter:
     - Document: PDF, DOCX, TXT, MD, HTML
     """
     
-    def __init__(self, cache_dir: Optional[Path] = None):
+    def __init__(self, cache_dir -> None: Optional[Path] = None) -> None:
         self.logger = logging.getLogger(__name__)
         self.cache_dir = cache_dir or Path(tempfile.gettempdir()) / "ainflue_converter"
         self.cache_dir.mkdir(exist_ok=True)
@@ -125,7 +130,7 @@ class UnifiedConverter:
             'total_size_processed': 0
         }
     
-    def _init_conversion_profiles(self):
+    def _init_conversion_profiles(self) -> None:
         """Initialise les profils de conversion"""
         self.profiles = {
             # Profils audio
@@ -596,7 +601,7 @@ class UnifiedConverter:
             return 0.0
         return (input_size - output_size) / input_size * 100
     
-    def _update_stats(self, success: bool, file_size: int, format_type: str):
+    def _update_stats(self, success -> None: bool, file_size -> None: int, format_type -> None: str) -> None:
         """Met à jour les statistiques"""
         self.conversion_stats['total_conversions'] += 1
         if success:
@@ -673,7 +678,7 @@ class UnifiedConverter:
         
         return await self.convert_file(input_path, output_format, profile, output_path)
     
-    async def cleanup_cache(self, max_age_hours: int = 24):
+    async def cleanup_cache(self, max_age_hours -> None: int = 24) -> None:
         """Nettoie le cache de conversion"""
         try:
             import time
@@ -735,7 +740,7 @@ if __name__ == "__main__":
     # Test de conversion
     import sys
     
-    async def test_conversion():
+    async def test_conversion() -> None:
         if len(sys.argv) < 3:
             print("Usage: python unified_converter.py <input_file> <output_format>")
             return

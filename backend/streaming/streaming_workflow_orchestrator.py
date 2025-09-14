@@ -218,7 +218,7 @@ class TaskExecution:
 class TaskExecutor:
     """Task execution engine"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         self.task_registry = {}
@@ -359,7 +359,7 @@ class TaskExecutor:
 class WorkflowEngine:
     """Core workflow orchestration engine"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         self.active_workflows = {}
@@ -512,7 +512,7 @@ class WorkflowEngine:
 class ApprovalSystem:
     """Workflow approval and review system"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         self.approval_workflows = {}
@@ -576,7 +576,7 @@ class ApprovalSystem:
 class ContentProcessingPipeline:
     """Content processing workflow pipeline"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         self.processing_pipelines = {}
@@ -633,7 +633,7 @@ class ContentProcessingPipeline:
 class StreamingWorkflowOrchestrator:
     """Unified streaming workflow orchestrator - Main service class"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         

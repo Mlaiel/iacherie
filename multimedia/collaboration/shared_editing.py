@@ -97,7 +97,7 @@ class ConflictResolution:
 class RealTimeCollaborationManager:
     """Real-time collaboration manager for shared editing"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.active_sessions = {}
         self.operation_queue = defaultdict(deque)
         self.conflict_resolver = OperationTransformer()
@@ -371,7 +371,7 @@ class RealTimeCollaborationManager:
             logger.error(f"Operation execution failed: {e}")
             return False
     
-    async def _broadcast_operation(self, session_id: str, edit_command: EditCommand):
+    async def _broadcast_operation(self, session_id -> None: str, edit_command -> None: EditCommand) -> None:
         """Broadcast operation to all session participants"""
         try:
             edit_state = self.active_sessions.get(session_id)
@@ -393,8 +393,8 @@ class RealTimeCollaborationManager:
         except Exception as e:
             logger.error(f"Operation broadcast failed: {e}")
     
-    async def _broadcast_user_event(self, session_id: str, event_type: str, 
-                                  event_data: Dict[str, Any]):
+    async def _broadcast_user_event(self, session_id -> None: str, event_type -> None: str, 
+                                  event_data -> None: Dict[str, Any]) -> None:
         """Broadcast user events to session participants"""
         try:
             edit_state = self.active_sessions.get(session_id)
@@ -414,7 +414,7 @@ class RealTimeCollaborationManager:
         except Exception as e:
             logger.error(f"User event broadcast failed: {e}")
     
-    async def _send_to_user(self, user_id: str, data: Dict[str, Any]):
+    async def _send_to_user(self, user_id -> None: str, data -> None: Dict[str, Any]) -> None:
         """Send data to specific user via WebSocket"""
         try:
             # This would integrate with WebSocket management system
@@ -424,7 +424,7 @@ class RealTimeCollaborationManager:
         except Exception as e:
             logger.error(f"Failed to send to user {user_id}: {e}")
     
-    async def _store_session_state(self, edit_state: EditState):
+    async def _store_session_state(self, edit_state -> None: EditState) -> None:
         """Store session state in Redis"""
         try:
             if self.redis_client:
@@ -461,7 +461,7 @@ class RealTimeCollaborationManager:
 class OperationTransformer:
     """Operation transformation engine for conflict resolution"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.transformation_rules = self._build_transformation_rules()
     
     def _build_transformation_rules(self) -> Dict[str, Any]:
@@ -592,7 +592,7 @@ class OperationTransformer:
 class SharedEditingEngine:
     """Main shared editing engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.collaboration_manager = RealTimeCollaborationManager()
         self.active_sessions = {}
         

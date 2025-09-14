@@ -53,7 +53,7 @@ class PipelineRegistry:
     Central registry for all pipeline components and services
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._pipelines = {}
         self._engines = {}
         self._managers = {}
@@ -62,7 +62,7 @@ class PipelineRegistry:
         # Initialize all pipeline components
         self._initialize_pipelines()
         
-    def _initialize_pipelines(self):
+    def _initialize_pipelines(self) -> None:
         """
 Initialize all pipeline components"""
         try:
@@ -104,25 +104,25 @@ Initialize all pipeline components"""
             logger.error(f"Pipeline registry initialization failed: {str(e)}")
             raise PipelineError(f"Registry initialization failed: {str(e)}")
     
-    def get_pipeline(self, pipeline_name: str):
+    def get_pipeline(self, pipeline_name -> None: str) -> None:
         """Get pipeline by name"""
         if pipeline_name not in self._pipelines:
             raise PipelineError(f"Pipeline '{pipeline_name}' not found")
         return self._pipelines[pipeline_name]
     
-    def get_engine(self, engine_name: str):
+    def get_engine(self, engine_name -> None: str) -> None:
         """Get processing engine by name"""
         if engine_name not in self._engines:
             raise PipelineError(f"Engine '{engine_name}' not found")
         return self._engines[engine_name]
     
-    def get_manager(self, manager_name: str):
+    def get_manager(self, manager_name -> None: str) -> None:
         """Get manager component by name"""
         if manager_name not in self._managers:
             raise PipelineError(f"Manager '{manager_name}' not found")
         return self._managers[manager_name]
     
-    def get_monitor(self, monitor_name: str):
+    def get_monitor(self, monitor_name -> None: str) -> None:
         """Get monitoring component by name"""
         if monitor_name not in self._monitors:
             raise PipelineError(f"Monitor '{monitor_name}' not found")
@@ -143,7 +143,7 @@ class PipelineFactory:
     Factory class for creating and configuring pipeline workflows
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         try:
             logger.info(f"Executing __init__")
             
@@ -321,7 +321,7 @@ class PipelineService:
     High-level service interface for pipeline operations
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.factory = PipelineFactory()
         self.registry = PipelineRegistry()
     

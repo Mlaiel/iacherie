@@ -129,12 +129,12 @@ class AggregatedMetrics:
 class MetricBuffer:
     """Thread-safe buffer for storing metrics."""
     
-    def __init__(self, max_size: int = 10000):
+    def __init__(self, max_size -> None: int = 10000) -> None:
         self.max_size = max_size
         self.buffer = deque(maxlen=max_size)
         self.lock = threading.Lock()
         
-    def add(self, metric: MetricData):
+    def add(self, metric -> None: MetricData) -> None:
         """Add metric to buffer."""
         with self.lock:
             self.buffer.append(metric)
@@ -149,7 +149,7 @@ class MetricBuffer:
         with self.lock:
             return list(self.buffer)[-n:] if len(self.buffer) >= n else list(self.buffer)
     
-    def clear(self):
+    def clear(self) -> None:
         """Clear buffer."""
         with self.lock:
             self.buffer.clear()
@@ -163,7 +163,7 @@ class MetricBuffer:
 class SystemMetricsCollector:
     """Collects system metrics like GPU, memory, CPU usage."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.gpu_available = torch.cuda.is_available()
         self.device_count = torch.cuda.device_count() if self.gpu_available else 0
         
@@ -210,7 +210,7 @@ class SystemMetricsCollector:
 class ModelMetricsExtractor:
     """Extracts metrics from PyTorch models."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         pass
     
     async def extract_model_metrics(
@@ -281,7 +281,7 @@ class ModelMetricsExtractor:
 class CreatorMetricsCalculator:
     """Calculates creator-specific metrics."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.creator_histories = defaultdict(list)
         
     async def calculate_creator_metrics(
@@ -456,7 +456,7 @@ class CreatorMetricsCalculator:
 class AlertManager:
     """Manages alerts based on metric thresholds."""
     
-    def __init__(self, config: MetricConfig):
+    def __init__(self, config -> None: MetricConfig) -> None:
         self.config = config
         self.alert_history = []
         
@@ -566,11 +566,11 @@ class AlertManager:
 class MetricsVisualizer:
     """Creates real-time visualizations of training metrics."""
     
-    def __init__(self, config: MetricConfig):
+    def __init__(self, config -> None: MetricConfig) -> None:
         self.config = config
         self.plots = {}
         
-    async def create_real_time_plot(self, metrics: List[MetricData], metric_name: str):
+    async def create_real_time_plot(self, metrics -> None: List[MetricData], metric_name -> None: str) -> None:
         """Create real-time plot for a specific metric."""
         if not self.config.enable_real_time_plots:
             return
@@ -604,10 +604,10 @@ class MetricsVisualizer:
     
     async def create_comparison_plot(
         self,
-        metrics: List[MetricData],
-        metric_names: List[str],
-        group_by: str = "phase"
-    ):
+        metrics -> None: List[MetricData],
+        metric_names -> None: List[str],
+        group_by -> None: str = "phase"
+    ) -> None:
         """Create comparison plot for multiple metrics."""
         plt.figure(figsize=(12, 8))
         
@@ -641,7 +641,7 @@ class MetricsVisualizer:
 class TrainingMetricsCollector:
     """Main training metrics collector."""
     
-    def __init__(self, config: Optional[MetricConfig] = None):
+    def __init__(self, config -> None: Optional[MetricConfig] = None) -> None:
         self.config = config or MetricConfig()
         
         # Initialize components
@@ -663,12 +663,12 @@ class TrainingMetricsCollector:
         
         logger.info("Initialized TrainingMetricsCollector")
     
-    async def start_collection(self):
+    async def start_collection(self) -> None:
         """Start metrics collection."""
         self.collection_active = True
         logger.info("Started metrics collection")
     
-    async def stop_collection(self):
+    async def stop_collection(self) -> None:
         """Stop metrics collection."""
         self.collection_active = False
         await self.save_metrics()
@@ -676,17 +676,17 @@ class TrainingMetricsCollector:
     
     async def collect_batch_metrics(
         self,
-        model: nn.Module,
-        loss: torch.Tensor,
-        optimizer: torch.optim.Optimizer,
-        phase: str = "train",
-        creator_id: Optional[str] = None,
-        content_type: Optional[str] = None,
-        predictions: Optional[torch.Tensor] = None,
-        targets: Optional[torch.Tensor] = None,
-        engagement_data: Optional[Dict[str, float]] = None,
+        model -> None: nn.Module,
+        loss -> None: torch.Tensor,
+        optimizer -> None: torch.optim.Optimizer,
+        phase -> None: str = "train",
+        creator_id -> None: Optional[str] = None,
+        content_type -> None: Optional[str] = None,
+        predictions -> None: Optional[torch.Tensor] = None,
+        targets -> None: Optional[torch.Tensor] = None,
+        engagement_data -> None: Optional[Dict[str, float]] = None,
         **kwargs
-    ):
+    ) -> None:
         """Collect metrics for a training batch."""
         if not self.collection_active:
             return
@@ -790,9 +790,9 @@ class TrainingMetricsCollector:
     
     async def collect_epoch_metrics(
         self,
-        validation_metrics: Optional[Dict[str, float]] = None,
+        validation_metrics -> None: Optional[Dict[str, float]] = None,
         **kwargs
-    ):
+    ) -> None:
         """Collect metrics at the end of an epoch."""
         timestamp = datetime.now()
         
@@ -827,7 +827,7 @@ class TrainingMetricsCollector:
         self.current_epoch += 1
         logger.info(f"Collected epoch {self.current_epoch} metrics")
     
-    def _update_aggregations(self, metrics: List[MetricData]):
+    def _update_aggregations(self, metrics -> None: List[MetricData]) -> None:
         """Update metric aggregations."""
         for metric in metrics:
             if isinstance(metric.value, (int, float)):
@@ -887,7 +887,7 @@ class TrainingMetricsCollector:
             end_time=datetime.now()
         )
     
-    async def save_metrics(self):
+    async def save_metrics(self) -> None:
         """Save metrics to disk."""
         if not self.config.save_to_disk:
             return
@@ -911,7 +911,7 @@ class TrainingMetricsCollector:
         
         logger.info(f"Saved {len(metrics)} metrics to {metrics_dir}")
     
-    async def _save_json(self, metrics: List[MetricData], filepath: Path):
+    async def _save_json(self, metrics -> None: List[MetricData], filepath -> None: Path) -> None:
         """Save metrics as JSON."""
         data = []
         for metric in metrics:
@@ -930,7 +930,7 @@ class TrainingMetricsCollector:
         with open(filepath, 'w') as f:
             json.dump(data, f, indent=2)
     
-    async def _save_csv(self, metrics: List[MetricData], filepath: Path):
+    async def _save_csv(self, metrics -> None: List[MetricData], filepath -> None: Path) -> None:
         """Save metrics as CSV."""
         import csv
         
@@ -1000,7 +1000,7 @@ def create_metrics_collector(
 
 
 # Example usage for Ainflue creators
-async def example_metrics_collection():
+async def example_metrics_collection() -> None:
     """Example of metrics collection for creator training."""
     
     # Create metrics collector

@@ -32,7 +32,7 @@ class CollaborationResults:
 class CreatorCollaborationEngine:
     """Main creator collaboration engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize creator collaboration engine"""
         self.collaboration_types = [
             'cross_promotion', 'joint_content', 'challenge_collaboration',

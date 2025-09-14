@@ -107,7 +107,7 @@ class CacheConfig:
 class MockRedisClient:
     """Mock Redis client for development and testing"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.data: Dict[str, Any] = {}
         self.expiry: Dict[str, datetime] = {}
     
@@ -161,7 +161,7 @@ class MockRedisClient:
 class MarketplaceCacheManager:
     """Enterprise marketplace caching system"""
     
-    def __init__(self, config: CacheConfig = None):
+    def __init__(self, config -> None: CacheConfig = None) -> None:
         self.config = config or CacheConfig()
         
         # Cache layers
@@ -180,7 +180,7 @@ class MarketplaceCacheManager:
         
         logger.info("🗄️ Marketplace Cache Manager initialized")
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize cache connections"""
         try:
             # Initialize Redis client (mock for now)
@@ -315,7 +315,7 @@ class MarketplaceCacheManager:
         regex_pattern = pattern.replace("*", ".*")
         return bool(re.match(regex_pattern, key))
     
-    async def _store_l1(self, cache_key: CacheKey, value: Any):
+    async def _store_l1(self, cache_key -> None: CacheKey, value -> None: Any) -> None:
         """Store value in L1 memory cache"""
         try:
             serialized_value = self._serialize(value)
@@ -336,7 +336,7 @@ class MarketplaceCacheManager:
         except Exception as e:
             logger.error(f"L1 cache store error: {e}")
     
-    async def _store_l2(self, cache_key: CacheKey, value: Any):
+    async def _store_l2(self, cache_key -> None: CacheKey, value -> None: Any) -> None:
         """Store value in L2 Redis cache"""
         try:
             serialized_value = self._serialize(value)
@@ -355,7 +355,7 @@ class MarketplaceCacheManager:
         
         return (current_usage + new_entry.size_bytes) <= max_usage
     
-    async def _evict_l1_entries(self):
+    async def _evict_l1_entries(self) -> None:
         """Evict entries from L1 cache based on strategy"""
         try:
             if self.invalidation_strategy == InvalidationStrategy.LRU:
@@ -407,21 +407,21 @@ class MarketplaceCacheManager:
             logger.error(f"Deserialization error: {e}")
             return value
     
-    def _record_hit(self, start_time: datetime):
+    def _record_hit(self, start_time -> None: datetime) -> None:
         """Record cache hit statistics"""
         self.stats.hits += 1
         self.stats.total_requests += 1
         self._record_response_time(start_time)
         self._update_hit_rate()
     
-    def _record_miss(self, start_time: datetime):
+    def _record_miss(self, start_time -> None: datetime) -> None:
         """Record cache miss statistics"""
         self.stats.misses += 1
         self.stats.total_requests += 1
         self._record_response_time(start_time)
         self._update_hit_rate()
     
-    def _record_response_time(self, start_time: datetime):
+    def _record_response_time(self, start_time -> None: datetime) -> None:
         """Record response time for performance tracking"""
         response_time = (datetime.utcnow() - start_time).total_seconds() * 1000
         self.response_times.append(response_time)
@@ -433,12 +433,12 @@ class MarketplaceCacheManager:
         # Update average response time
         self.stats.avg_response_time_ms = sum(self.response_times) / len(self.response_times)
     
-    def _update_hit_rate(self):
+    def _update_hit_rate(self) -> None:
         """Update cache hit rate"""
         if self.stats.total_requests > 0:
             self.stats.hit_rate = self.stats.hits / self.stats.total_requests
     
-    async def warm_cache(self, data_loader_func, key_patterns: List[str]):
+    async def warm_cache(self, data_loader_func, key_patterns -> None: List[str]) -> None:
         """Warm cache with frequently accessed data"""
         try:
             logger.info("🔥 Starting cache warming process...")
@@ -477,7 +477,7 @@ class MarketplaceCacheManager:
             logger.error(f"Cache stats error: {e}")
             return self.stats
     
-    async def cleanup_expired(self):
+    async def cleanup_expired(self) -> None:
         """Clean up expired cache entries"""
         try:
             expired_keys = []
@@ -494,7 +494,7 @@ class MarketplaceCacheManager:
         except Exception as e:
             logger.error(f"Cache cleanup error: {e}")
     
-    async def flush_all(self):
+    async def flush_all(self) -> None:
         """Flush all cache layers"""
         try:
             # Clear L1 cache
@@ -517,10 +517,10 @@ class MarketplaceCacheManager:
 class MarketplaceCacheHelpers:
     """Helper functions for marketplace-specific caching"""
     
-    def __init__(self, cache_manager: MarketplaceCacheManager):
+    def __init__(self, cache_manager -> None: MarketplaceCacheManager) -> None:
         self.cache_manager = cache_manager
     
-    async def cache_listing(self, listing_id: str, listing_data: Dict[str, Any], ttl: int = 1800):
+    async def cache_listing(self, listing_id -> None: str, listing_data -> None: Dict[str, Any], ttl -> None: int = 1800) -> None:
         """Cache marketplace listing"""
         return await self.cache_manager.set(f"listing:{listing_id}", listing_data, ttl)
     
@@ -528,7 +528,7 @@ class MarketplaceCacheHelpers:
         """Get cached marketplace listing"""
         return await self.cache_manager.get(f"listing:{listing_id}")
     
-    async def cache_user_profile(self, user_id: str, profile_data: Dict[str, Any], ttl: int = 3600):
+    async def cache_user_profile(self, user_id -> None: str, profile_data -> None: Dict[str, Any], ttl -> None: int = 3600) -> None:
         """Cache user profile"""
         return await self.cache_manager.set(f"user:{user_id}", profile_data, ttl)
     
@@ -536,7 +536,7 @@ class MarketplaceCacheHelpers:
         """Get cached user profile"""
         return await self.cache_manager.get(f"user:{user_id}")
     
-    async def cache_search_results(self, query_hash: str, results: List[Dict[str, Any]], ttl: int = 900):
+    async def cache_search_results(self, query_hash -> None: str, results -> None: List[Dict[str, Any]], ttl -> None: int = 900) -> None:
         """Cache search results"""
         return await self.cache_manager.set(f"search:{query_hash}", results, ttl)
     
@@ -544,11 +544,11 @@ class MarketplaceCacheHelpers:
         """Get cached search results"""
         return await self.cache_manager.get(f"search:{query_hash}")
     
-    async def invalidate_user_cache(self, user_id: str):
+    async def invalidate_user_cache(self, user_id -> None: str) -> None:
         """Invalidate all cache entries for a user"""
         return await self.cache_manager.invalidate_pattern(f"user:{user_id}*")
     
-    async def invalidate_listing_cache(self, listing_id: str):
+    async def invalidate_listing_cache(self, listing_id -> None: str) -> None:
         """Invalidate all cache entries for a listing"""
         return await self.cache_manager.invalidate_pattern(f"listing:{listing_id}*")
     

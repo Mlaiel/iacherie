@@ -1,3 +1,8 @@
+"""
+Monitoring Stack Deployment module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """🔧 Monitoring Stack Deployment Manager - Ainflue Platform
 ==========================================================
@@ -76,7 +81,7 @@ class MonitoringStackDeployment:
     - Automated dashboard provisioning
     """
     
-    def __init__(self, config: MonitoringConfig):
+    def __init__(self, config -> None: MonitoringConfig) -> None:
         self.config = config
         self.kubernetes_client = None
         self.apps_v1_client = None

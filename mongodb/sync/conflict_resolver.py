@@ -48,7 +48,7 @@ class ConflictData:
 class ConflictResolver:
     """Enterprise-grade MongoDB conflict resolution system."""
     
-    def __init__(self, default_strategy: ConflictResolution = ConflictResolution.LATEST_WINS):
+    def __init__(self, default_strategy -> None: ConflictResolution = ConflictResolution.LATEST_WINS) -> None:
         """Initialize conflict resolver."""
         self.default_strategy = default_strategy
         self.conflict_history: List[ConflictData] = []
@@ -68,12 +68,12 @@ class ConflictResolver:
             'auto_resolved': 0
         }
     
-    def set_collection_strategy(self, collection: str, strategy: ConflictResolution):
+    def set_collection_strategy(self, collection -> None: str, strategy -> None: ConflictResolution) -> None:
         """Set conflict resolution strategy for a specific collection."""
         self.collection_strategies[collection] = strategy
         logger.info(f"Set conflict strategy for {collection}: {strategy.value}")
     
-    def register_custom_resolver(self, conflict_type: str, resolver: Callable):
+    def register_custom_resolver(self, conflict_type -> None: str, resolver -> None: Callable) -> None:
         """Register a custom conflict resolver function."""
         self.custom_resolvers[conflict_type] = resolver
         logger.info(f"Registered custom resolver for: {conflict_type}")
@@ -479,7 +479,7 @@ class ConflictResolver:
         
         return json.dumps(report, default=str, indent=2)
     
-    def clear_resolved_conflicts(self, older_than_days: int = 30):
+    def clear_resolved_conflicts(self, older_than_days -> None: int = 30) -> None:
         """Clear resolved conflicts older than specified days."""
         cutoff_date = datetime.now() - datetime.timedelta(days=older_than_days)
         

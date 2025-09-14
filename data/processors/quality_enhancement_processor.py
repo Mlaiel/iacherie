@@ -129,7 +129,7 @@ class EnhancementResult:
 class AudioEnhancer:
     """AI-powered audio enhancement engine"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.logger = logging.getLogger(f"{__name__}.AudioEnhancer")
         self.config = config or {}
         
@@ -414,7 +414,7 @@ class AudioEnhancer:
 class VideoEnhancer:
     """AI-powered video enhancement engine"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.logger = logging.getLogger(f"{__name__}.VideoEnhancer")
         self.config = config or {}
     
@@ -448,7 +448,7 @@ class VideoEnhancer:
 class ImageEnhancer:
     """AI-powered image enhancement engine"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.logger = logging.getLogger(f"{__name__}.ImageEnhancer")
         self.config = config or {}
     
@@ -770,7 +770,7 @@ class ImageEnhancer:
 class TextEnhancer:
     """AI-powered text enhancement engine"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.logger = logging.getLogger(f"{__name__}.TextEnhancer")
         self.config = config or {}
     
@@ -924,7 +924,7 @@ class TextEnhancer:
 class QualityMetricsAnalyzer:
     """Quality metrics analysis and benchmarking engine"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.logger = logging.getLogger(f"{__name__}.QualityMetricsAnalyzer")
         self.config = config or {}
     
@@ -1230,7 +1230,7 @@ class QualityEnhancementProcessor:
     and automated quality improvements using advanced algorithms.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.logger = logging.getLogger(f"{__name__}.QualityEnhancementProcessor")
         self.config = config or {}
         
@@ -1381,7 +1381,7 @@ class QualityEnhancementProcessor:
         
         return improvements
     
-    def _update_enhancement_stats(self, result: EnhancementResult, content_type: str):
+    def _update_enhancement_stats(self, result -> None: EnhancementResult, content_type -> None: str) -> None:
         """Update enhancement statistics"""
         self.enhancement_stats['total_enhancements'] += 1
         

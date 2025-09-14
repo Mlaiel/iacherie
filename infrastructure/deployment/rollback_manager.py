@@ -1,6 +1,9 @@
 """Rollback Manager"""
+import asyncio
+
 import logging
 logger = logging.getLogger(__name__)
 class RollbackManager:
-    def __init__(self): logger.info("Rollback manager initialized")
-    async def rollback_deployment(self, config): return {'status': 'rolled_back'}
+    """RollbackManager: class implementation"""
+    def __init__(self) -> None: logger.info("Rollback manager initialized")
+    async def rollback_deployment(self, config) -> None: return {'status': 'rolled_back'}

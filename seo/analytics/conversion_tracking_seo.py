@@ -1,4 +1,6 @@
 """SEO Conversion Tracking - Advanced Conversion Attribution for SEO
+from pathlib import Path
+
 Tracks and analyzes conversions from organic search traffic with advanced attribution models.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -89,7 +91,7 @@ class SEOConversionMetrics:
 class SEOConversionTracker:
     """Advanced SEO conversion tracking and attribution system"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """Initialize SEO conversion tracker
         
         Args:
@@ -149,7 +151,7 @@ class SEOConversionTracker:
             logger.error(f"Error tracking conversion: {str(e)}")
             raise
     
-    async def _update_conversion_path(self, conversion_event: ConversionEvent):
+    async def _update_conversion_path(self, conversion_event -> None: ConversionEvent) -> None:
         """Update user conversion path"""
         try:
             user_id = conversion_event.user_id
@@ -367,7 +369,7 @@ class SEOConversionTracker:
         # Placeholder implementation
         return 150
     
-    async def _store_conversion_event(self, event: ConversionEvent):
+    async def _store_conversion_event(self, event -> None: ConversionEvent) -> None:
         """Store conversion event to database"""
         # This would integrate with database system
         # Placeholder implementation
@@ -493,7 +495,7 @@ class SEOConversionTracker:
 class ConversionReportGenerator:
     """Generate detailed conversion reports for SEO"""
     
-    def __init__(self, tracker: SEOConversionTracker):
+    def __init__(self, tracker -> None: SEOConversionTracker) -> None:
         self.tracker = tracker
     
     async def generate_monthly_report(self, year: int, month: int) -> Dict[str, Any]:

@@ -1,3 +1,8 @@
+"""
+Node Health Monitor module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Redis Node Health Monitor - Ainflue Platform
@@ -140,7 +145,7 @@ class RedisNodeHealthMonitor:
     - Recovery recommendations
     """
 
-    def __init__(self, cluster_client: RedisCluster, config: Dict[str, Any] = None):
+    def __init__(self, cluster_client -> None: RedisCluster, config -> None: Dict[str, Any] = None) -> None:
         """Initialize health monitor"""
         self.cluster_client = cluster_client
         self.config = config or self._get_default_config()
@@ -1087,7 +1092,7 @@ class RedisNodeHealthMonitor:
 
 
 # Example usage
-async def main():
+async def main() -> None:
     """Example usage of Node Health Monitor"""
     try:
         # This would normally be initialized with actual cluster client

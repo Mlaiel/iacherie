@@ -163,7 +163,7 @@ class DeFiPortfolio:
 class DeFiIntegrator:
     """Enterprise DeFi protocol integrator"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.protocols: Dict[DeFiProtocol, DeFiProtocolConfig] = {}
         self.yield_farms: Dict[str, YieldFarmManager] = {}
@@ -193,7 +193,7 @@ class DeFiIntegrator:
             logger.error(f"Error initializing DeFi integrator: {str(e)}")
             return False
 
-    async def _setup_protocol_configs(self):
+    async def _setup_protocol_configs(self) -> None:
         """Setup DeFi protocol configurations"""
         try:
             # Uniswap V3 configuration
@@ -243,7 +243,7 @@ class DeFiIntegrator:
         except Exception as e:
             logger.error(f"Error setting up protocol configs: {str(e)}")
 
-    async def _initialize_price_feeds(self):
+    async def _initialize_price_feeds(self) -> None:
         """Initialize token price feeds"""
         try:
             # Simulate price feeds (in production, would connect to Chainlink or other oracles)
@@ -258,7 +258,7 @@ class DeFiIntegrator:
         except Exception as e:
             logger.error(f"Error initializing price feeds: {str(e)}")
 
-    async def _setup_yield_strategies(self):
+    async def _setup_yield_strategies(self) -> None:
         """Setup available yield farming strategies"""
         try:
             # Strategies would be configured based on current market conditions
@@ -608,10 +608,10 @@ class DeFiIntegrator:
 
     async def _update_user_portfolio(
         self,
-        user_address: str,
-        position_id: str,
-        position_type: str
-    ):
+        user_address -> None: str,
+        position_id -> None: str,
+        position_type -> None: str
+    ) -> None:
         """Update user's DeFi portfolio"""
         try:
             if user_address not in self.portfolios:
@@ -640,7 +640,7 @@ class DeFiIntegrator:
         except Exception as e:
             logger.error(f"Error updating user portfolio: {str(e)}")
 
-    async def _recalculate_portfolio_metrics(self, user_address: str):
+    async def _recalculate_portfolio_metrics(self, user_address -> None: str) -> None:
         """Recalculate portfolio metrics"""
         try:
             if user_address not in self.portfolios:

@@ -81,7 +81,7 @@ class PredictionModel:
 class ViralPredictor:
     """Advanced ML-powered viral content predictor"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize viral predictor with enterprise-grade ML models"""
         self.models = {
             'ensemble_neural_network': PredictionModel(

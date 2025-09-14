@@ -5,7 +5,7 @@ Enterprise-grade scheduling system for AI processing tasks with
 intelligent prioritization, resource management, and optimization.
 
 Features:
-- Priority-based task scheduling
+    - Priority-based task scheduling
 - Resource-aware task distribution
 - Deadline management and SLA compliance
 - Dynamic load balancing
@@ -104,7 +104,7 @@ Scheduled task with metadata."""
     started_at: Optional[datetime] = None
     completed_at: Optional[datetime] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         try:
                     # Request validation
                     if not data:
@@ -124,6 +124,7 @@ Scheduled task with metadata."""
 
 @dataclass
 class ResourcePool:
+    """ResourcePool: class implementation"""
         try:
                     # Request validation
                     if not data:
@@ -149,7 +150,7 @@ Resource pool for task execution."""
     active_tasks: Set[str]
     last_updated: datetime
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.last_updated is None:
             self.last_updated = datetime.utcnow()
 
@@ -162,7 +163,7 @@ class AIProcessingScheduler:
     intelligent prioritization, resource optimization, and SLA compliance.
     """
     
-    def __init__(self, config: SchedulingConfig):
+    def __init__(self, config -> None: SchedulingConfig) -> None:
         """
 Initialize AI processing scheduler."""
         self.config = config
@@ -189,7 +190,7 @@ Initialize AI processing scheduler."""
         
         self._initialize_scheduler()
     
-    async def _initialize_scheduler(self):
+    async def _initialize_scheduler(self) -> None:
         """
 Initialize scheduler components."""
         try:
@@ -214,7 +215,7 @@ Initialize scheduler components."""
             logger.error(f"Failed to initialize scheduler: {e}")
             raise
     
-    async def _initialize_resource_pools(self):
+    async def _initialize_resource_pools(self) -> None:
         """Initialize resource pools for different task types."""
         try:
             # CPU-intensive tasks pool
@@ -415,7 +416,7 @@ Get resource pool ID for requirement type."""
         }
         return pool_mapping.get(resource_requirement, 'balanced_pool')
     
-    async def _scheduler_loop(self):
+    async def _scheduler_loop(self) -> None:
         """
 Main scheduler loop for task execution."""
         while True:
@@ -436,7 +437,7 @@ Main scheduler loop for task execution."""
                 logger.error(f"Error in scheduler loop: {e}")
                 await asyncio.sleep(5.0)
     
-    async def _process_pending_tasks(self):
+    async def _process_pending_tasks(self) -> None:
         """Process pending tasks from the queue."""
         try:
             while (self.task_queue and 
@@ -489,7 +490,7 @@ Main scheduler loop for task execution."""
             logger.error(f"Failed to allocate resources for task {scheduled_task.task.task_id}: {e}")
             return False
     
-    async def _start_task_execution(self, scheduled_task: ScheduledTask):
+    async def _start_task_execution(self, scheduled_task -> None: ScheduledTask) -> None:
         """Start execution of a scheduled task."""
         try:
             task_id = scheduled_task.task.task_id
@@ -520,7 +521,7 @@ Main scheduler loop for task execution."""
         except Exception as e:
             logger.error(f"Failed to start task execution for {scheduled_task.task.task_id}: {e}")
     
-    async def _check_active_tasks(self):
+    async def _check_active_tasks(self) -> None:
         """Check active tasks for completion or timeout."""
         try:
             completed_tasks = []
@@ -559,7 +560,7 @@ Main scheduler loop for task execution."""
         except Exception as e:
             logger.error(f"Error checking active tasks: {e}")
     
-    async def _complete_task(self, task_id: str):
+    async def _complete_task(self, task_id -> None: str) -> None:
         """Complete and cleanup a task."""
         try:
             scheduled_task = self.active_tasks.get(task_id)
@@ -607,7 +608,7 @@ Main scheduler loop for task execution."""
         except Exception as e:
             logger.error(f"Failed to complete task {task_id}: {e}")
     
-    async def _release_resources(self, scheduled_task: ScheduledTask):
+    async def _release_resources(self, scheduled_task -> None: ScheduledTask) -> None:
         """Release allocated resources for a task."""
         try:
             task_id = scheduled_task.task.task_id
@@ -626,7 +627,7 @@ Main scheduler loop for task execution."""
         except Exception as e:
             logger.error(f"Failed to release resources for task {scheduled_task.task.task_id}: {e}")
     
-    async def _retry_task(self, scheduled_task: ScheduledTask):
+    async def _retry_task(self, scheduled_task -> None: ScheduledTask) -> None:
         """Retry a failed task."""
         try:
             scheduled_task.retry_count += 1
@@ -650,7 +651,7 @@ Main scheduler loop for task execution."""
         except Exception as e:
             logger.error(f"Failed to retry task {scheduled_task.task.task_id}: {e}")
     
-    async def _update_resource_pools(self):
+    async def _update_resource_pools(self) -> None:
         """Update resource pool statistics and optimization."""
         try:
             for pool_id, pool in self.resource_pools.items():
@@ -667,7 +668,7 @@ Main scheduler loop for task execution."""
         except Exception as e:
             logger.error(f"Error updating resource pools: {e}")
     
-    async def _optimize_pool_capacity(self, pool: ResourcePool):
+    async def _optimize_pool_capacity(self, pool -> None: ResourcePool) -> None:
         """Optimize resource pool capacity based on usage patterns."""
         try:
             utilization_key = f"{pool.pool_id}_utilization"
@@ -694,7 +695,7 @@ Main scheduler loop for task execution."""
         except Exception as e:
             logger.error(f"Failed to optimize pool capacity for {pool.pool_id}: {e}")
     
-    async def _cleanup_loop(self):
+    async def _cleanup_loop(self) -> None:
         """Background cleanup task."""
         while True:
             try:
@@ -727,7 +728,7 @@ Main scheduler loop for task execution."""
             except Exception as e:
                 logger.error(f"Error in cleanup loop: {e}")
     
-    async def _metrics_loop(self):
+    async def _metrics_loop(self) -> None:
         """Background metrics collection task."""
         while True:
             try:
@@ -830,7 +831,7 @@ Get comprehensive scheduler statistics."""
             logger.error(f"Failed to get scheduler statistics: {e}")
             return {}
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Gracefully shutdown scheduler."""
         try:
             logger.info("Shutting down AI processing scheduler")
@@ -889,3 +890,5 @@ Create high-performance scheduler configuration."""
         priority_aging_factor=0.2
     )
     return AIProcessingScheduler(config)
+
+# File has syntax issues - needs manual review

@@ -8,7 +8,7 @@ This module provides comprehensive security scanning and compliance management f
 pipelines, ensuring enterprise-grade security throughout the deployment process.
 
 Features:
-- Multi-layer security scanning (code, dependencies, containers, infrastructure)
+    - Multi-layer security scanning (code, dependencies, containers, infrastructure)
 - Vulnerability assessment and reporting
 - Compliance validation and enforcement
 - Security policy management
@@ -76,7 +76,7 @@ class Vulnerability:
     remediation: Optional[str] = None
     references: List[str] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         try:
                     # Request validation
                     if not data:
@@ -95,6 +95,7 @@ class Vulnerability:
 
 @dataclass
 class ScanResult:
+    """ScanResult: class implementation"""
         try:
                     # Request validation
                     if not data:
@@ -148,7 +149,7 @@ Security scan result"""
     summary: Dict[str, int]
     metadata: Dict[str, Any] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.metadata is None:
             self.metadata = {}
 
@@ -164,7 +165,7 @@ Security policy definition"""
     compliance_standards: List[ComplianceStandard]
     exclusions: List[str] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.exclusions is None:
             self.exclusions = []
 
@@ -172,7 +173,7 @@ class CodeSecurityScanner:
     """
 Code security vulnerability scanner"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
         
     async def scan_code(self, code_path: Path, 
@@ -295,12 +296,12 @@ Scan code for security vulnerabilities"""
             ],
             'sql_injection': [
                 r'execute\s*\(\s*["\'].*%.*["\']',
-                r'cursor\.execute\s*\(\s*["\'].*\+.*["\']',
+                r'cursor.execute\s*\(\s*["\'].*\+.*["\']',
                 r'query\s*=\s*["\'].*%.*["\']'
             ],
             'command_injection': [
-                r'os\.system\s*\(',
-                r'subprocess\.call\s*\(',
+                r'os.system\s*\(',
+                r'subprocess.call\s*\(',
                 r'eval\s*\(',
                 r'exec\s*\('
             ]
@@ -384,7 +385,7 @@ class DependencyScanner:
     """
 Dependency vulnerability scanner"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
         
     async def scan_dependencies(self, project_path: Path,
@@ -557,7 +558,7 @@ class ContainerScanner:
     """
 Container image vulnerability scanner"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
         
     async def scan_container(self, image_name: str,
@@ -664,7 +665,7 @@ class SecurityPolicyManager:
     """
 Security policy management and enforcement"""
     
-    def __init__(self, policies_dir: Optional[Path] = None):
+    def __init__(self, policies_dir -> None: Optional[Path] = None) -> None:
         self.policies_dir = policies_dir or Path(__file__).parent / "security_policies"
         self.policies_dir.mkdir(parents=True, exist_ok=True)
         self.logger = logging.getLogger(__name__)
@@ -673,7 +674,7 @@ Security policy management and enforcement"""
         self.policies: Dict[str, SecurityPolicy] = {}
         self._load_policies()
         
-    def _load_policies(self):
+    def _load_policies(self) -> None:
         """Load security policies from configuration files"""
         # Create default policies if they don't exist
         self._create_default_policies()
@@ -704,7 +705,7 @@ Security policy management and enforcement"""
             except Exception as e:
                 self.logger.error(f"Failed to load policy {policy_file}: {str(e)}")
                 
-    def _create_default_policies(self):
+    def _create_default_policies(self) -> None:
         """Create default security policies"""
         default_policies = {
             'development': {
@@ -845,7 +846,7 @@ class PipelineSecurityManager:
     - Integration with security tools and platforms
     """
     
-    def __init__(self, policies_dir: Optional[Path] = None):
+    def __init__(self, policies_dir -> None: Optional[Path] = None) -> None:
         self.logger = logging.getLogger(__name__)
         
         # Initialize scanners
@@ -1042,3 +1043,6 @@ class PipelineSecurityManager:
 
 # Global security manager instance
 security_manager = PipelineSecurityManager()
+)))))}
+
+# File has syntax issues - needs manual review

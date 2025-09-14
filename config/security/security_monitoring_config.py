@@ -1,7 +1,14 @@
+"""
+Security Monitoring Config module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 """Ainflue Security Monitoring Configuration Module
+import asyncio
+
 ================================================
 
 Enterprise-grade security monitoring configuration for the Ainflue platform.
@@ -522,7 +529,7 @@ class ComplianceMonitoringConfig:
 class SecurityMonitoringConfiguration:
     """Main security monitoring configuration manager"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize security monitoring configuration"""
         # Monitoring components
         self.real_time_monitoring = RealTimeMonitoringConfig()

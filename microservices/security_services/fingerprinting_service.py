@@ -554,7 +554,7 @@ class TextFingerprintingEngine(FingerprintingEngine):
 class ContentFingerprintingService:
     """Main content fingerprinting service"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.fingerprinting_engines = {
             ContentType.AUDIO: AudioFingerprintingEngine(),
             ContentType.VIDEO: AudioFingerprintingEngine(),  # Can process audio track

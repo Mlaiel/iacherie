@@ -201,7 +201,7 @@ class LogDestinationHandler(ABC):
         pass
         
     @abstractmethod
-    async def close(self):
+    async def close(self) -> None:
         """Close connection"""
         pass
 
@@ -209,7 +209,7 @@ class LogDestinationHandler(ABC):
 class ConsoleLogHandler(LogDestinationHandler):
     """Console log handler"""
     
-    def __init__(self, format: LogFormat = LogFormat.JSON):
+    def __init__(self, format -> None: LogFormat = LogFormat.JSON) -> None:
         self.format = format
         
     async def send_logs(self, logs: List[LogEntry]) -> bool:
@@ -226,7 +226,7 @@ class ConsoleLogHandler(LogDestinationHandler):
             print(f"Error sending logs to console: {str(e)}", file=sys.stderr)
             return False
             
-    async def close(self):
+    async def close(self) -> None:
         """Close console handler"""
         pass
 
@@ -234,7 +234,7 @@ class ConsoleLogHandler(LogDestinationHandler):
 class FileLogHandler(LogDestinationHandler):
     """File log handler with rotation"""
     
-    def __init__(self, file_path: str, max_size: int = 10*1024*1024, backup_count: int = 5, format: LogFormat = LogFormat.JSON):
+    def __init__(self, file_path -> None: str, max_size -> None: int = 10*1024*1024, backup_count -> None: int = 5, format -> None: LogFormat = LogFormat.JSON) -> None:
         self.file_path = Path(file_path)
         self.max_size = max_size
         self.backup_count = backup_count
@@ -242,7 +242,7 @@ class FileLogHandler(LogDestinationHandler):
         self.current_size = 0
         self._ensure_directory()
         
-    def _ensure_directory(self):
+    def _ensure_directory(self) -> None:
         """Ensure log directory exists"""
         self.file_path.parent.mkdir(parents=True, exist_ok=True)
         
@@ -271,7 +271,7 @@ class FileLogHandler(LogDestinationHandler):
             logger.error(f"Error sending logs to file: {str(e)}")
             return False
             
-    def _rotate_file(self):
+    def _rotate_file(self) -> None:
         """Rotate log file"""
         try:
             # Remove oldest backup
@@ -296,7 +296,7 @@ class FileLogHandler(LogDestinationHandler):
         except Exception as e:
             logger.error(f"Error rotating log file: {str(e)}")
             
-    async def close(self):
+    async def close(self) -> None:
         """Close file handler"""
         pass
 
@@ -304,12 +304,12 @@ class FileLogHandler(LogDestinationHandler):
 class ElasticsearchLogHandler(LogDestinationHandler):
     """Elasticsearch log handler"""
     
-    def __init__(self, elasticsearch_url: str, index: str = "ainflue-logs"):
+    def __init__(self, elasticsearch_url -> None: str, index -> None: str = "ainflue-logs") -> None:
         self.elasticsearch_url = elasticsearch_url
         self.index = index
         self.client = None
         
-    async def _ensure_client(self):
+    async def _ensure_client(self) -> None:
         """Ensure Elasticsearch client is initialized"""
         if self.client is None:
             try:
@@ -351,7 +351,7 @@ class ElasticsearchLogHandler(LogDestinationHandler):
             logger.error(f"Error sending logs to Elasticsearch: {str(e)}")
             return False
             
-    async def close(self):
+    async def close(self) -> None:
         """Close Elasticsearch client"""
         if self.client:
             await self.client.close()
@@ -360,12 +360,12 @@ class ElasticsearchLogHandler(LogDestinationHandler):
 class KafkaLogHandler(LogDestinationHandler):
     """Kafka log handler"""
     
-    def __init__(self, brokers: List[str], topic: str = "ainflue-logs"):
+    def __init__(self, brokers -> None: List[str], topic -> None: str = "ainflue-logs") -> None:
         self.brokers = brokers
         self.topic = topic
         self.producer = None
         
-    async def _ensure_producer(self):
+    async def _ensure_producer(self) -> None:
         """Ensure Kafka producer is initialized"""
         if self.producer is None:
             try:
@@ -393,7 +393,7 @@ class KafkaLogHandler(LogDestinationHandler):
             logger.error(f"Error sending logs to Kafka: {str(e)}")
             return False
             
-    async def close(self):
+    async def close(self) -> None:
         """Close Kafka producer"""
         if self.producer:
             await self.producer.stop()
@@ -402,7 +402,7 @@ class KafkaLogHandler(LogDestinationHandler):
 class LogBuffer:
     """Log buffer for batching"""
     
-    def __init__(self, max_size: int = 1000, flush_interval: int = 5):
+    def __init__(self, max_size -> None: int = 1000, flush_interval -> None: int = 5) -> None:
         self.max_size = max_size
         self.flush_interval = flush_interval
         self.buffer: List[LogEntry] = []
@@ -439,7 +439,7 @@ class LogBuffer:
 class DistributedLogger:
     """Distributed logger with multiple destinations"""
     
-    def __init__(self, config: LoggerConfiguration):
+    def __init__(self, config -> None: LoggerConfiguration) -> None:
         self.config = config
         self.handlers: List[LogDestinationHandler] = []
         self.buffer = LogBuffer(config.buffer_size, config.flush_interval)
@@ -449,7 +449,7 @@ class DistributedLogger:
         
         self._setup_handlers()
         
-    def _setup_handlers(self):
+    def _setup_handlers(self) -> None:
         """Setup log destination handlers"""
         for destination in self.config.destinations:
             handler = None
@@ -480,13 +480,13 @@ class DistributedLogger:
             if handler:
                 self.handlers.append(handler)
                 
-    async def start(self):
+    async def start(self) -> None:
         """Start the logger"""
         if not self.running:
             self.running = True
             self.flush_task = asyncio.create_task(self._flush_periodically())
             
-    async def stop(self):
+    async def stop(self) -> None:
         """Stop the logger"""
         self.running = False
         
@@ -504,7 +504,7 @@ class DistributedLogger:
         for handler in self.handlers:
             await handler.close()
             
-    def log(self, level: LogLevel, message: str, **kwargs):
+    def log(self, level -> None: LogLevel, message -> None: str, **kwargs) -> None:
         """Log a message"""
         # Check sampling rate
         if self.config.sampling_rate < 1.0:
@@ -559,7 +559,7 @@ class DistributedLogger:
                 
         return log_entry
         
-    async def _flush_buffer(self):
+    async def _flush_buffer(self) -> None:
         """Flush log buffer"""
         try:
             logs = self.buffer.get_and_clear_buffer()
@@ -577,7 +577,7 @@ class DistributedLogger:
         except Exception as e:
             print(f"Error flushing log buffer: {str(e)}", file=sys.stderr)
             
-    async def _flush_periodically(self):
+    async def _flush_periodically(self) -> None:
         """Periodically flush buffer"""
         while self.running:
             try:
@@ -593,7 +593,7 @@ class DistributedLogger:
 class LoggingService:
     """Distributed Logging Service"""
     
-    def __init__(self, name: str = "logging_service"):
+    def __init__(self, name -> None: str = "logging_service") -> None:
         self.name = name
         self.loggers: Dict[str, DistributedLogger] = {}
         self.default_config = LoggerConfiguration(
@@ -604,7 +604,7 @@ class LoggingService:
         )
         self.running = False
         
-    async def start(self):
+    async def start(self) -> None:
         """Start logging service"""
         self.running = True
         
@@ -614,7 +614,7 @@ class LoggingService:
             
         logger.info(f"Started logging service: {self.name}")
         
-    async def stop(self):
+    async def stop(self) -> None:
         """Stop logging service"""
         self.running = False
         
@@ -653,7 +653,7 @@ class LoggingService:
             
         return self.loggers[name]
         
-    def remove_logger(self, name: str):
+    def remove_logger(self, name -> None: str) -> None:
         """Remove logger"""
         if name in self.loggers:
             logger_instance = self.loggers[name]
@@ -661,7 +661,7 @@ class LoggingService:
             del self.loggers[name]
             logger.info(f"Removed logger: {name}")
             
-    def configure_logger(self, name: str, config: LoggerConfiguration):
+    def configure_logger(self, name -> None: str, config -> None: LoggerConfiguration) -> None:
         """Configure or reconfigure logger"""
         if name in self.loggers:
             # Stop existing logger
@@ -670,7 +670,7 @@ class LoggingService:
         # Create new logger with new config
         self.create_logger(config)
         
-    def set_global_level(self, level: LogLevel):
+    def set_global_level(self, level -> None: LogLevel) -> None:
         """Set global log level for all loggers"""
         for logger_instance in self.loggers.values():
             logger_instance.config.level = level

@@ -61,7 +61,7 @@ class AudioProcessingStartedEvent(BaseEvent):
     processing_priority: str = "normal"
     processing_metadata: Dict[str, Any] = field(default_factory=dict)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.processing.started",
             data={
@@ -95,7 +95,7 @@ class AudioProcessingProgressEvent(BaseEvent):
     stages_remaining: List[str]
     processing_speed: float = 0.0
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.processing.progress",
             data={
@@ -128,7 +128,7 @@ class AudioProcessingCompletedEvent(BaseEvent):
     file_size_after: int
     processing_metadata: Dict[str, Any] = field(default_factory=dict)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.processing.completed",
             data={
@@ -161,7 +161,7 @@ class AudioProcessingFailedEvent(BaseEvent):
     retry_suggested: bool
     alternative_profiles: List[str] = field(default_factory=list)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.processing.failed",
             data={
@@ -195,7 +195,7 @@ class AudioQualityAnalysisEvent(BaseEvent):
     distortion_metrics: Dict[str, Any]
     recommendations: List[str] = field(default_factory=list)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.processing.quality_analysis",
             data={
@@ -229,7 +229,7 @@ class AudioFormatConversionEvent(BaseEvent):
     file_size_change: int
     conversion_metadata: Dict[str, Any] = field(default_factory=dict)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.processing.format_conversion",
             data={
@@ -263,7 +263,7 @@ class AudioAIProcessingEvent(BaseEvent):
     computational_cost: float
     ai_metadata: Dict[str, Any] = field(default_factory=dict)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.processing.ai_processing",
             data={
@@ -296,7 +296,7 @@ class AudioMLClassificationEvent(BaseEvent):
     model_accuracy: float
     classification_metadata: Dict[str, Any] = field(default_factory=dict)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.processing.ml_classification",
             data={
@@ -329,7 +329,7 @@ class AudioNoiseReductionEvent(BaseEvent):
     processing_time: float
     before_after_comparison: Dict[str, Any] = field(default_factory=dict)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.processing.noise_reduction",
             data={
@@ -362,7 +362,7 @@ class AudioBPMDetectionEvent(BaseEvent):
     tempo_changes: List[Dict[str, Any]] = field(default_factory=list)
     detection_metadata: Dict[str, Any] = field(default_factory=dict)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.processing.bpm_detection",
             data={
@@ -395,7 +395,7 @@ class AudioKeyDetectionEvent(BaseEvent):
     harmonic_analysis: Dict[str, Any]
     detection_metadata: Dict[str, Any] = field(default_factory=dict)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.processing.key_detection",
             data={
@@ -428,7 +428,7 @@ class AudioGenreClassificationEvent(BaseEvent):
     cultural_context: Optional[Dict[str, Any]] = None
     classification_metadata: Dict[str, Any] = field(default_factory=dict)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.processing.genre_classification",
             data={

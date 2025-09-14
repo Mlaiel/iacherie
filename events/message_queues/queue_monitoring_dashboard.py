@@ -465,8 +465,8 @@ class QueueMonitoringDashboard:
     """
     
     def __init__(self,
-                 metrics_collector: Optional[MetricsCollector] = None,
-                 encryption_manager: Optional[EncryptionManager] = None):
+                 metrics_collector -> None: Optional[MetricsCollector] = None,
+                 encryption_manager -> None: Optional[EncryptionManager] = None) -> None:
         self.metrics = metrics_collector
         self.encryption = encryption_manager
         
@@ -518,7 +518,7 @@ class QueueMonitoringDashboard:
             logger.error(f"Failed to start monitoring dashboard: {str(e)}")
             raise MessageQueueError(f"Dashboard startup failed: {str(e)}")
     
-    async def stop(self):
+    async def stop(self) -> None:
         """Stop the monitoring dashboard"""
         try:
             # Stop all collection tasks
@@ -809,7 +809,7 @@ class QueueMonitoringDashboard:
     
     # Core monitoring logic
     
-    async def _load_business_configuration(self):
+    async def _load_business_configuration(self) -> None:
         """Load Ainflue business monitoring configuration"""
         # Load metric definitions
         for metric_id, metric_def in AinflueBusiness.CORE_METRICS.items():
@@ -822,12 +822,12 @@ class QueueMonitoringDashboard:
         
         logger.info("Loaded business monitoring configuration")
     
-    async def _start_metric_collection(self):
+    async def _start_metric_collection(self) -> None:
         """Start metric collection for all active metrics"""
         for metric_id in self.metric_definitions.keys():
             await self._start_metric_collection_task(metric_id)
     
-    async def _start_metric_collection_task(self, metric_id: str):
+    async def _start_metric_collection_task(self, metric_id -> None: str) -> None:
         """Start collection task for a specific metric"""
         if metric_id in self.collection_tasks:
             return  # Already collecting
@@ -839,7 +839,7 @@ class QueueMonitoringDashboard:
         task = asyncio.create_task(self._metric_collection_loop(metric_id))
         self.collection_tasks[metric_id] = task
     
-    async def _metric_collection_loop(self, metric_id: str):
+    async def _metric_collection_loop(self, metric_id -> None: str) -> None:
         """Collection loop for a metric"""
         metric_def = self.metric_definitions[metric_id]
         
@@ -861,12 +861,12 @@ class QueueMonitoringDashboard:
                 logger.error(f"Error in metric collection for {metric_id}: {str(e)}")
                 await asyncio.sleep(60)  # Back off on error
     
-    async def _start_alert_monitoring(self):
+    async def _start_alert_monitoring(self) -> None:
         """Start alert monitoring for all metrics"""
         for metric_id in self.metric_definitions.keys():
             await self._start_metric_alert_task(metric_id)
     
-    async def _start_metric_alert_task(self, metric_id: str):
+    async def _start_metric_alert_task(self, metric_id -> None: str) -> None:
         """Start alert monitoring for a specific metric"""
         if metric_id in self.alert_tasks:
             return  # Already monitoring
@@ -878,7 +878,7 @@ class QueueMonitoringDashboard:
         task = asyncio.create_task(self._alert_monitoring_loop(metric_id))
         self.alert_tasks[metric_id] = task
     
-    async def _alert_monitoring_loop(self, metric_id: str):
+    async def _alert_monitoring_loop(self, metric_id -> None: str) -> None:
         """Alert monitoring loop for a metric"""
         metric_def = self.metric_definitions[metric_id]
         
@@ -897,7 +897,7 @@ class QueueMonitoringDashboard:
                 logger.error(f"Error in alert monitoring for {metric_id}: {str(e)}")
                 await asyncio.sleep(60)
     
-    async def _check_metric_alerts(self, metric_id: str, current_value: float):
+    async def _check_metric_alerts(self, metric_id -> None: str, current_value -> None: float) -> None:
         """Check if metric value triggers alerts"""
         metric_def = self.metric_definitions[metric_id]
         
@@ -961,11 +961,11 @@ class QueueMonitoringDashboard:
                     
                     await self.resolve_alert(alert.alert_id, "system", "Metric value returned to normal")
     
-    async def _start_system_health_monitoring(self):
+    async def _start_system_health_monitoring(self) -> None:
         """Start system health monitoring"""
         asyncio.create_task(self._system_health_monitoring_loop())
     
-    async def _system_health_monitoring_loop(self):
+    async def _system_health_monitoring_loop(self) -> None:
         """System health monitoring loop"""
         while True:
             try:
@@ -978,7 +978,7 @@ class QueueMonitoringDashboard:
                 logger.error(f"Error in system health monitoring: {str(e)}")
                 await asyncio.sleep(60)
     
-    async def _update_system_health(self):
+    async def _update_system_health(self) -> None:
         """Update overall system health"""
         # Count alerts by severity
         critical_alerts = sum(1 for alert in self.alerts.values() 
@@ -1101,7 +1101,7 @@ class QueueMonitoringDashboard:
         
         return sla_compliance
     
-    async def _send_alert_notification(self, alert: Alert):
+    async def _send_alert_notification(self, alert -> None: Alert) -> None:
         """Send alert notification"""
         notification_rules = AinflueBusiness.ALERT_NOTIFICATION_RULES.get(alert.severity, {})
         
@@ -1113,7 +1113,7 @@ class QueueMonitoringDashboard:
             except Exception as e:
                 logger.error(f"Error sending alert notification: {str(e)}")
     
-    async def _notify_real_time_subscribers(self, metric_id: str, data_point: MetricDataPoint):
+    async def _notify_real_time_subscribers(self, metric_id -> None: str, data_point -> None: MetricDataPoint) -> None:
         """Notify real-time subscribers of metric updates"""
         subscribers = self.real_time_subscribers.get(metric_id, [])
         
@@ -1129,7 +1129,7 @@ class QueueMonitoringDashboard:
             except Exception as e:
                 logger.error(f"Error notifying real-time subscriber: {str(e)}")
     
-    def register_alert_callback(self, severity: AlertSeverity, callback: Callable):
+    def register_alert_callback(self, severity -> None: AlertSeverity, callback -> None: Callable) -> None:
         """Register callback for alert notifications"""
         if severity not in self.alert_callbacks:
             self.alert_callbacks[severity] = []

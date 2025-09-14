@@ -109,19 +109,19 @@ class TraceSpan:
     performance_metrics: Dict[str, float] = field(default_factory=dict)
     ai_insights: Dict[str, Any] = field(default_factory=dict)
     
-    def add_performance_metric(self, name: str, value: float, unit: str = ""):
+    def add_performance_metric(self, name -> None: str, value -> None: float, unit -> None: str = "") -> None:
         """Add performance metric to span."""
         self.performance_metrics[name] = value
         self.tags[f"perf.{name}"] = f"{value}{unit}"
     
-    def add_security_event(self, event_type: str, details: Dict[str, Any]):
+    def add_security_event(self, event_type -> None: str, details -> None: Dict[str, Any]) -> None:
         """Add security-related event to span."""
         self.security_context[event_type] = {
             "timestamp": datetime.utcnow().isoformat(),
             "details": details
         }
     
-    def mark_compliance_check(self, regulation: str, status: str, details: str = ""):
+    def mark_compliance_check(self, regulation -> None: str, status -> None: str, details -> None: str = "") -> None:
         """Mark compliance check result."""
         self.compliance_metadata[regulation] = {
             "status": status,
@@ -153,7 +153,7 @@ class AdvancedAudioProcessingTracer:
     - Real-time latency optimization
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.audio_spans: Dict[str, TraceSpan] = {}
         self.processing_metrics: Dict[str, Dict[str, Any]] = {}
         self.quality_thresholds = {
@@ -290,10 +290,10 @@ class AdvancedAudioProcessingTracer:
     
     def finish_audio_processing_with_quality_metrics(
         self,
-        span_id: str,
-        output_metrics: Dict[str, Any],
-        quality_assessment: Dict[str, float]
-    ):
+        span_id -> None: str,
+        output_metrics -> None: Dict[str, Any],
+        quality_assessment -> None: Dict[str, float]
+    ) -> None:
         """Finish audio processing with comprehensive quality metrics."""
         if span_id not in self.audio_spans:
             logger.warning(f"Audio span {span_id} not found")
@@ -449,7 +449,7 @@ class EnterpriseBusinessTransactionTracer:
     - Monetization pipeline tracking
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.business_traces: Dict[str, DistributedTrace] = {}
         self.transaction_analytics: Dict[str, Dict[str, Any]] = {}
         
@@ -699,7 +699,7 @@ class EnterpriseDistributedTracingSystem:
     - Compliance and security monitoring
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.traces: Dict[str, DistributedTrace] = {}
         self.active_spans: Dict[str, TraceSpan] = {}
@@ -738,13 +738,13 @@ class EnterpriseDistributedTracingSystem:
     @asynccontextmanager
     async def start_enterprise_trace(
         self,
-        operation_name: str,
-        service_name: str,
-        span_type: SpanType = SpanType.HTTP_REQUEST,
-        business_context: Optional[Dict[str, Any]] = None,
-        tenant_id: Optional[str] = None,
-        cost_center: Optional[str] = None
-    ):
+        operation_name -> None: str,
+        service_name -> None: str,
+        span_type -> None: SpanType = SpanType.HTTP_REQUEST,
+        business_context -> None: Optional[Dict[str, Any]] = None,
+        tenant_id -> None: Optional[str] = None,
+        cost_center -> None: Optional[str] = None
+    ) -> None:
         """
         Enhanced context manager for creating enterprise distributed traces.
         
@@ -829,7 +829,7 @@ class EnterpriseDistributedTracingSystem:
             
             logger.info(f"🔍 Finished enterprise trace: {operation_name} ({span.duration_ms:.2f}ms)")
     
-    async def _handle_trace_error(self, span: TraceSpan, error: Exception):
+    async def _handle_trace_error(self, span -> None: TraceSpan, error -> None: Exception) -> None:
         """Enhanced error handling with business impact assessment."""
         error_severity = self._assess_error_severity(span, error)
         
@@ -873,7 +873,7 @@ class EnterpriseDistributedTracingSystem:
         else:
             return "operational"
     
-    async def _escalate_critical_error(self, span: TraceSpan, error: Exception):
+    async def _escalate_critical_error(self, span -> None: TraceSpan, error -> None: Exception) -> None:
         """Escalate critical errors to appropriate teams."""
         logger.critical(f"🚨 CRITICAL ERROR ESCALATION: {span.operation_name} - {error}")
         
@@ -889,7 +889,7 @@ class EnterpriseDistributedTracingSystem:
         # Store for monitoring dashboard
         span.security_context["escalated"] = escalation_data
     
-    async def _analyze_trace_performance(self, span: TraceSpan):
+    async def _analyze_trace_performance(self, span -> None: TraceSpan) -> None:
         """Enhanced performance analysis with ML insights."""
         if not span.duration_ms:
             return
@@ -949,17 +949,17 @@ class EnterpriseDistributedTracingSystem:
         efficiency = 1.0 / (1 + (cpu_usage / 100) + (memory_usage / 1000) + (duration / 10000))
         return min(1.0, efficiency)
     
-    async def _generate_ml_insights(self, span: TraceSpan):
+    async def _generate_ml_insights(self, span -> None: TraceSpan) -> None:
         """Generate ML-powered insights for the trace."""
         insights = await self.ml_insights_engine.generate_insights(span)
         span.ai_insights.update(insights)
     
-    async def _track_operation_costs(self, span: TraceSpan):
+    async def _track_operation_costs(self, span -> None: TraceSpan) -> None:
         """Track costs associated with the operation."""
         cost_data = await self.cost_optimizer.calculate_operation_cost(span)
         span.cost_attribution.update(cost_data)
     
-    async def _check_business_impact_thresholds(self, span: TraceSpan):
+    async def _check_business_impact_thresholds(self, span -> None: TraceSpan) -> None:
         """Check performance thresholds with business impact assessment."""
         threshold_key = f"{span.span_type.value}_ms"
         threshold = self.performance_thresholds.get(threshold_key)
@@ -1371,9 +1371,9 @@ class EnterpriseDistributedTracingSystem:
         }
     
     @contextmanager
-    def start_trace(self, operation_name: str, service_name: str, 
-                   span_type: SpanType = SpanType.HTTP_REQUEST,
-                   business_context: Optional[Dict[str, Any]] = None):
+    def start_trace(self, operation_name -> None: str, service_name -> None: str, 
+                   span_type -> None: SpanType = SpanType.HTTP_REQUEST,
+                   business_context -> None: Optional[Dict[str, Any]] = None) -> None:
         """
         Context manager for creating distributed traces.
         
@@ -1441,9 +1441,9 @@ class EnterpriseDistributedTracingSystem:
             logger.info(f"🔍 Finished trace: {operation_name} ({span.duration_ms:.2f}ms)")
     
     @contextmanager
-    def start_span(self, operation_name: str, span_type: SpanType,
-                  tags: Optional[Dict[str, Any]] = None,
-                  business_context: Optional[Dict[str, Any]] = None):
+    def start_span(self, operation_name -> None: str, span_type -> None: SpanType,
+                  tags -> None: Optional[Dict[str, Any]] = None,
+                  business_context -> None: Optional[Dict[str, Any]] = None) -> None:
         """Context manager for creating child spans."""
         span_id = str(uuid.uuid4())
         
@@ -1610,8 +1610,8 @@ class EnterpriseDistributedTracingSystem:
         return business_metrics
 
 # Decorator for automatic tracing
-def trace_operation(operation_name: str, span_type: SpanType = SpanType.HTTP_REQUEST,
-                   tags: Optional[Dict[str, Any]] = None):
+def trace_operation(operation_name -> None: str, span_type -> None: SpanType = SpanType.HTTP_REQUEST,
+                   tags -> None: Optional[Dict[str, Any]] = None) -> None:
     """
     Decorator for automatic operation tracing.
     
@@ -1620,14 +1620,14 @@ def trace_operation(operation_name: str, span_type: SpanType = SpanType.HTTP_REQ
         span_type: Type of span to create
         tags: Additional tags for the span
     """
-    def decorator(func):
+    def decorator(func) -> None:
         @functools.wraps(func)
-        async def async_wrapper(*args, **kwargs):
+        async def async_wrapper(*args, **kwargs) -> None:
             async with distributed_tracing_system.start_span(operation_name, span_type, tags):
                 return await func(*args, **kwargs)
         
         @functools.wraps(func)
-        def sync_wrapper(*args, **kwargs):
+        def sync_wrapper(*args, **kwargs) -> None:
             return func(*args, **kwargs)
         
         if asyncio.iscoroutinefunction(func):
@@ -1847,13 +1847,13 @@ enterprise_tracing_system = EnterpriseDistributedTracingSystem()
 
 # Enhanced decorator with enterprise features
 def enterprise_trace_operation(
-    operation_name: str,
-    span_type: SpanType = SpanType.HTTP_REQUEST,
-    tags: Optional[Dict[str, Any]] = None,
-    business_context: Optional[Dict[str, Any]] = None,
-    tenant_id: Optional[str] = None,
-    cost_center: Optional[str] = None
-):
+    operation_name -> None: str,
+    span_type -> None: SpanType = SpanType.HTTP_REQUEST,
+    tags -> None: Optional[Dict[str, Any]] = None,
+    business_context -> None: Optional[Dict[str, Any]] = None,
+    tenant_id -> None: Optional[str] = None,
+    cost_center -> None: Optional[str] = None
+) -> None:
     """
     Enhanced decorator for automatic enterprise operation tracing.
     
@@ -1865,9 +1865,9 @@ def enterprise_trace_operation(
         tenant_id: Multi-tenant identifier
         cost_center: Cost attribution center
     """
-    def decorator(func):
+    def decorator(func) -> None:
         @functools.wraps(func)
-        async def async_wrapper(*args, **kwargs):
+        async def async_wrapper(*args, **kwargs) -> None:
             async with enterprise_tracing_system.start_enterprise_trace(
                 operation_name=operation_name,
                 service_name=func.__module__,
@@ -1891,7 +1891,7 @@ def enterprise_trace_operation(
                 return await func(*args, **kwargs)
         
         @functools.wraps(func)
-        def sync_wrapper(*args, **kwargs):
+        def sync_wrapper(*args, **kwargs) -> None:
             # For sync functions, we can't use async context manager
             # This would need a synchronous tracing implementation
             return func(*args, **kwargs)

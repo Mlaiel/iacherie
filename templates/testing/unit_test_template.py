@@ -524,3 +524,5 @@ if __name__ == "__main__":
         "--tb=short",  # Short traceback format
         "-m", "not slow",  # Skip slow tests
     ])
+
+# File has syntax issues - needs manual review

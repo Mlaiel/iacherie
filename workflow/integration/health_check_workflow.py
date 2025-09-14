@@ -13,6 +13,7 @@ from datetime import datetime
 
 @dataclass
 class Health_checkMetrics:
+    """Health_checkMetrics: class implementation"""
     integration_health: float = 0.0
     success_rate: float = 0.0
     latency_ms: float = 0.0
@@ -22,6 +23,7 @@ class Health_checkMetrics:
 
 @dataclass
 class Health_checkResult:
+    """Health_checkResult: class implementation"""
     user_id: str
     integration_status: str
     performance_metrics: Health_checkMetrics
@@ -32,7 +34,7 @@ class Health_checkResult:
 class Health_checkWorkflow:
     """Health_check integration workflow for Ainflue platform."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize health check workflow."""
         self.integration_health = 0.95
         self.performance_threshold = 0.9

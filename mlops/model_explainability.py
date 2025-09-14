@@ -58,6 +58,7 @@ else:
     NDArray = Any  # Fallback when numpy not available
     # Create mock numpy for basic compatibility
     class MockNumpy:
+    """MockNumpy: class implementation"""
         ndarray = Any
     np = MockNumpy()
 
@@ -68,6 +69,7 @@ else:
     DataFrame = Any  # Fallback when pandas not available
     # Create mock pandas for basic compatibility
     class MockPandas:
+    """MockPandas: class implementation"""
         DataFrame = Any
     pd = MockPandas()
 
@@ -108,7 +110,7 @@ class ExplanationResult:
 class BaseExplainer(ABC):
     """Base class for model explainers"""
     
-    def __init__(self, model: Any, feature_names: List[str]):
+    def __init__(self, model -> None: Any, feature_names -> None: List[str]) -> None:
         self.model = model
         self.feature_names = feature_names
     
@@ -148,7 +150,7 @@ class BaseExplainer(ABC):
 class SHAPExplainer(BaseExplainer):
     """SHAP-based explainer"""
     
-    def __init__(self, model: Any, feature_names: List[str], model_type: str = "auto"):
+    def __init__(self, model -> None: Any, feature_names -> None: List[str], model_type -> None: str = "auto") -> None:
         super().__init__(model, feature_names)
         
         if not SHAP_AVAILABLE:
@@ -158,7 +160,7 @@ class SHAPExplainer(BaseExplainer):
         self.explainer = None
         self._initialize_explainer()
     
-    def _initialize_explainer(self):
+    def _initialize_explainer(self) -> None:
         """Initialize the appropriate SHAP explainer"""
         try:
             if self.model_type == "tree" or hasattr(self.model, 'feature_importances_'):
@@ -260,7 +262,7 @@ class SHAPExplainer(BaseExplainer):
 class LIMEExplainer(BaseExplainer):
     """LIME-based explainer"""
     
-    def __init__(self, model: Any, feature_names: List[str], training_data: NDArray):
+    def __init__(self, model -> None: Any, feature_names -> None: List[str], training_data -> None: NDArray) -> None:
         super().__init__(model, feature_names)
         
         if not LIME_AVAILABLE:
@@ -388,7 +390,7 @@ class LIMEExplainer(BaseExplainer):
 class PermutationExplainer(BaseExplainer):
     """Permutation importance explainer"""
     
-    def __init__(self, model: Any, feature_names: List[str], scoring: str = 'accuracy'):
+    def __init__(self, model -> None: Any, feature_names -> None: List[str], scoring -> None: str = 'accuracy') -> None:
         super().__init__(model, feature_names)
         self.scoring = scoring
     
@@ -462,7 +464,7 @@ class PermutationExplainer(BaseExplainer):
 class ModelExplainabilityEngine:
     """Central engine for model explainability"""
     
-    def __init__(self, model: Any, feature_names: List[str], model_name: str, model_version: str):
+    def __init__(self, model -> None: Any, feature_names -> None: List[str], model_name -> None: str, model_version -> None: str) -> None:
         self.model = model
         self.feature_names = feature_names
         self.model_name = model_name
@@ -470,12 +472,12 @@ class ModelExplainabilityEngine:
         self.explainers: Dict[ExplainerType, BaseExplainer] = {}
         self.explanations: List[ExplanationResult] = []
     
-    def register_explainer(self, explainer_type: ExplainerType, explainer: BaseExplainer):
+    def register_explainer(self, explainer_type -> None: ExplainerType, explainer -> None: BaseExplainer) -> None:
         """Register an explainer"""
         self.explainers[explainer_type] = explainer
         logger.info(f"Registered {explainer_type.value} explainer")
     
-    def setup_default_explainers(self, training_data: Optional[NDArray] = None):
+    def setup_default_explainers(self, training_data -> None: Optional[NDArray] = None) -> None:
         """Setup default explainers"""
         
         # SHAP explainer

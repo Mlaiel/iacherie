@@ -29,7 +29,7 @@ SEO_OPTIMIZATION_CONFIG = {
     'competitive_analysis': ['rank_tracking', 'keyword_gaps', 'content_gaps']
 }
 
-def get_seo_manager():
+def get_seo_manager() -> None:
     """Factory pour créer le gestionnaire principal SEO."""
     return {
         'keywords': KeywordResearchEngine(),

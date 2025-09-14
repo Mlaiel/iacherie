@@ -128,15 +128,15 @@ class AzureIntegration:
     
     def __init__(
         self,
-        subscription_id: str,
-        resource_group: str,
-        tenant_id: Optional[str] = None,
-        client_id: Optional[str] = None,
-        client_secret: Optional[str] = None,
-        storage_account_name: Optional[str] = None,
-        storage_account_key: Optional[str] = None,
-        default_region: AzureRegion = AzureRegion.EAST_US
-    ):
+        subscription_id -> None: str,
+        resource_group -> None: str,
+        tenant_id -> None: Optional[str] = None,
+        client_id -> None: Optional[str] = None,
+        client_secret -> None: Optional[str] = None,
+        storage_account_name -> None: Optional[str] = None,
+        storage_account_key -> None: Optional[str] = None,
+        default_region -> None: AzureRegion = AzureRegion.EAST_US
+    ) -> None:
         """Initialize Azure integration.
         
         Args:
@@ -184,7 +184,7 @@ class AzureIntegration:
         self.logger = logging.getLogger(__name__)
         self.session = httpx.AsyncClient(timeout=30.0)
 
-    def _init_clients(self, storage_account_key: Optional[str]):
+    def _init_clients(self, storage_account_key -> None: Optional[str]) -> None:
         """Initialize Azure service clients."""
         try:
             # Storage clients
@@ -800,15 +800,15 @@ class AzureIntegration:
             self.logger.error(f"Failed to get Azure Monitor metrics: {e}")
             raise
 
-    async def close(self):
+    async def close(self) -> None:
         """Close HTTP session and cleanup resources."""
         await self.session.aclose()
 
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         """Async context manager entry."""
         return self
 
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         """Async context manager exit."""
         await self.close()
 

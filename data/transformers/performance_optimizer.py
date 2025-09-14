@@ -179,7 +179,7 @@ class OptimizationResult:
 class BatchProcessor:
     """High-performance batch processing engine with intelligent scheduling."""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize batch processor with configuration."""
         self.config = config or {}
         self.max_workers = self.config.get("max_workers", multiprocessing.cpu_count())
@@ -337,7 +337,7 @@ class BatchProcessor:
         
         return base_priority + task_factor + (age_factor * 0.1)
     
-    async def _process_job_queue(self):
+    async def _process_job_queue(self) -> None:
         """Process jobs from the priority queue."""
         while True:
             try:
@@ -357,7 +357,7 @@ class BatchProcessor:
                 logger.error(f"Error processing job queue: {str(e)}")
                 break
     
-    async def _execute_job(self, job: BatchJob):
+    async def _execute_job(self, job -> None: BatchJob) -> None:
         """Execute a batch job."""
         try:
             job.started_at = time.time()
@@ -578,7 +578,7 @@ class BatchProcessor:
             "parallelization_efficiency": len(processing_times) / sum(processing_times) if sum(processing_times) > 0 else 0
         }
     
-    def _update_performance_stats(self, result: BatchResult):
+    def _update_performance_stats(self, result -> None: BatchResult) -> None:
         """Update global performance statistics."""
         self.performance_stats["jobs_processed"] += 1
         self.performance_stats["total_processing_time"] += result.total_processing_time
@@ -636,7 +636,7 @@ class BatchProcessor:
         visited = set()
         rec_stack = set()
         
-        def has_cycle(task_id):
+        def has_cycle(task_id) -> None:
             if task_id in rec_stack:
                 return True
             if task_id in visited:
@@ -665,7 +665,7 @@ class BatchProcessor:
         """Get current performance statistics."""
         return self.performance_stats.copy()
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Shutdown the batch processor gracefully."""
         logger.info("Shutting down BatchProcessor...")
         
@@ -690,7 +690,7 @@ class BatchProcessor:
 class RealtimeConverter:
     """Real-time streaming conversion engine with adaptive quality."""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize real-time converter with configuration."""
         self.config = config or {}
         self.max_concurrent_streams = self.config.get("max_concurrent_streams", 10)
@@ -917,7 +917,7 @@ class RealtimeConverter:
         
         return processed_chunk
     
-    async def _adjust_stream_quality(self, stream_id: str, processing_time: float):
+    async def _adjust_stream_quality(self, stream_id -> None: str, processing_time -> None: float) -> None:
         """Adjust stream quality based on performance."""
         with self.stream_lock:
             if stream_id not in self.active_streams:
@@ -995,7 +995,7 @@ class RealtimeConverter:
 class QualityOptimizer:
     """Intelligent quality optimization engine with ML-driven recommendations."""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize quality optimizer with configuration."""
         self.config = config or {}
         self.optimization_history = []
@@ -1006,7 +1006,7 @@ class QualityOptimizer:
         
         logger.info("QualityOptimizer initialized")
     
-    def _init_optimization_strategies(self):
+    def _init_optimization_strategies(self) -> None:
         """Initialize optimization strategy configurations."""
         self.optimization_strategies = {
             OptimizationStrategy.PRESERVE_QUALITY: {

@@ -154,7 +154,7 @@ class ConfigurationSourceHandler(Protocol):
 class FileSystemHandler:
     """File system configuration handler"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.watched_files: Dict[str, float] = {}
         self.file_watchers: Dict[str, asyncio.Task] = {}
     
@@ -194,7 +194,7 @@ class FileSystemHandler:
         """Watch file for changes"""
         file_path = source_config["path"]
         
-        async def watch_file():
+        async def watch_file() -> None:
             last_modified = 0
             while True:
                 try:
@@ -282,7 +282,7 @@ class RemoteServiceHandler:
         """Watch remote service for changes"""
         poll_interval = source_config.get("poll_interval", 60)
         
-        async def poll_remote():
+        async def poll_remote() -> None:
             last_config = None
             while True:
                 try:
@@ -304,7 +304,7 @@ class RemoteServiceHandler:
 class ConfigurationValidator:
     """Configuration validation engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.validation_rules: Dict[str, List[Callable]] = {}
         self.schema_validators: Dict[str, Dict[str, Any]] = {}
     
@@ -390,7 +390,7 @@ class ConfigurationValidator:
 class ConfigurationVersionControl:
     """Configuration version control system"""
     
-    def __init__(self, storage_path: str = "./config_versions"):
+    def __init__(self, storage_path -> None: str = "./config_versions") -> None:
         self.storage_path = Path(storage_path)
         self.storage_path.mkdir(exist_ok=True)
         self.snapshots: Dict[str, ConfigurationSnapshot] = {}
@@ -547,7 +547,7 @@ class ConfigurationVersionControl:
 class ConfigurationDriftDetector:
     """Configuration drift detection system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.baseline_configurations: Dict[str, Dict[str, Any]] = {}
         self.drift_thresholds: Dict[str, float] = {
             "critical": 0.0,  # No tolerance for critical configs
@@ -665,7 +665,7 @@ class ConfigurationDriftDetector:
 class HotReloadManager:
     """Hot configuration reloading system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.reload_callbacks: Dict[str, List[Callable]] = {}
         self.reload_locks: Dict[str, asyncio.Lock] = {}
         self.reload_history: List[Dict[str, Any]] = []
@@ -738,7 +738,7 @@ class HotReloadManager:
 class ConfigurationOrchestrator:
     """Main configuration orchestration system"""
     
-    def __init__(self, default_validation_level: ValidationLevel = ValidationLevel.STRICT):
+    def __init__(self, default_validation_level -> None: ValidationLevel = ValidationLevel.STRICT) -> None:
         # Core components
         self.validator = ConfigurationValidator()
         self.version_control = ConfigurationVersionControl()
@@ -1047,7 +1047,7 @@ class ConfigurationOrchestrator:
         
         handler = self.source_handlers[source_type]
         
-        async def change_callback(new_config: Dict[str, Any]):
+        async def change_callback(new_config -> None: Dict[str, Any]) -> None:
             """Handle configuration changes"""
             try:
                 # Trigger hot reload for changed configurations

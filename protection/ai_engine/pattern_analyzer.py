@@ -34,7 +34,7 @@ class PatternAnalysisEngine:
     Enterprise pattern analysis and behavioral detection engine
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.scaler = StandardScaler()
         self.clustering_models = {}
@@ -416,7 +416,7 @@ class PatternAnalysisEngine:
             logger.error(f"Confidence calculation failed: {str(e)}")
             return {'overall_confidence': 0.0}
     
-    async def _update_historical_patterns(self, content_data: Dict[str, Any], analysis_result: Dict[str, Any]):
+    async def _update_historical_patterns(self, content_data -> None: Dict[str, Any], analysis_result -> None: Dict[str, Any]) -> None:
         """Update historical pattern database"""
         try:
             content_id = content_data.get('id')

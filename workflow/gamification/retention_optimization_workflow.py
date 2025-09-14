@@ -69,7 +69,7 @@ class RetentionIntervention:
 class RetentionOptimizationWorkflow:
     """AI-powered retention optimization workflow"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.metrics_collector = MetricsCollector()
         self.user_profiles: Dict[str, RetentionProfile] = {}
         self.interventions: Dict[str, List[RetentionIntervention]] = {}
@@ -427,7 +427,7 @@ class RetentionOptimizationWorkflow:
         
         return factors
     
-    async def _trigger_retention_interventions(self, profile: RetentionProfile):
+    async def _trigger_retention_interventions(self, profile -> None: RetentionProfile) -> None:
         """Automatically trigger appropriate interventions based on risk profile"""
         
         user_id = profile.user_id
@@ -504,7 +504,7 @@ class RetentionOptimizationWorkflow:
         
         return base_data
     
-    async def _execute_intervention(self, intervention: RetentionIntervention):
+    async def _execute_intervention(self, intervention -> None: RetentionIntervention) -> None:
         """Execute the intervention (send notifications, apply rewards, etc.)"""
         
         # In real implementation, this would:

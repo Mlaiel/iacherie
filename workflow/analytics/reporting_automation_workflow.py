@@ -12,6 +12,7 @@ from datetime import datetime
 
 @dataclass
 class ReportTemplates:
+    """ReportTemplates: class implementation"""
     template_id: str
     template_name: str
     metrics_included: List[str]
@@ -21,6 +22,7 @@ class ReportTemplates:
 
 @dataclass
 class AutomatedReports:
+    """AutomatedReports: class implementation"""
     user_id: str
     generated_reports: List[Dict[str, Any]]
     scheduled_reports: List[ReportTemplates]

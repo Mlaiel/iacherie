@@ -118,11 +118,11 @@ class ChainResult:
 class ValidationChain:
     """Validation chain configuration and execution."""
     
-    def __init__(self, chain_id: str, steps: List[ValidationStep],
-                 execution_mode: ChainExecutionMode = ChainExecutionMode.SEQUENTIAL,
-                 max_parallel_steps: int = 3,
-                 global_timeout_seconds: int = 300,
-                 config: Optional[Dict[str, Any]] = None):
+    def __init__(self, chain_id -> None: str, steps -> None: List[ValidationStep],
+                 execution_mode -> None: ChainExecutionMode = ChainExecutionMode.SEQUENTIAL,
+                 max_parallel_steps -> None: int = 3,
+                 global_timeout_seconds -> None: int = 300,
+                 config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize validation chain.
         
         Args:
@@ -297,7 +297,7 @@ class ValidationChain:
 class ChainValidator:
     """Main validation chain executor."""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize chain validator.
         
         Args:
@@ -833,7 +833,7 @@ class ChainValidator:
 class ValidationPipeline:
     """High-level validation pipeline manager."""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize validation pipeline.
         
         Args:

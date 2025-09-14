@@ -1,3 +1,8 @@
+"""
+Model Poisoning Detector module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 🛡️ Model Poisoning Detector - Enterprise MLOps Platform
@@ -109,9 +114,9 @@ class ModelPoisoningDetector:
     """
     
     def __init__(self,
-                 db_path: str = "/tmp/model_poisoning_detector.db",
-                 detection_sensitivity: float = 0.8,
-                 max_baseline_age_days: int = 30):
+                 db_path -> None: str = "/tmp/model_poisoning_detector.db",
+                 detection_sensitivity -> None: float = 0.8,
+                 max_baseline_age_days -> None: int = 30) -> None:
         self.db_path = db_path
         self.detection_sensitivity = detection_sensitivity
         self.max_baseline_age_days = max_baseline_age_days
@@ -171,7 +176,7 @@ class ModelPoisoningDetector:
         self._setup_database()
         logger.info("🛡️ ModelPoisoningDetector initialized for enterprise security")
     
-    def _setup_database(self):
+    def _setup_database(self) -> None:
         """Initialisation de la base de données"""
         try:
             with sqlite3.connect(self.db_path) as conn:
@@ -698,11 +703,11 @@ class ModelPoisoningDetector:
             return None
     
     async def _update_model_health(self,
-                                 model_id: str,
-                                 model_type: CreatorModelType,
-                                 baseline: SecurityBaseline,
-                                 current_predictions: np.ndarray,
-                                 detections: List[PoisoningDetection]):
+                                 model_id -> None: str,
+                                 model_type -> None: CreatorModelType,
+                                 baseline -> None: SecurityBaseline,
+                                 current_predictions -> None: np.ndarray,
+                                 detections -> None: List[PoisoningDetection]) -> None:
         """Mise à jour de la santé d'un modèle"""
         try:
             # Calcul des scores de santé
@@ -755,8 +760,8 @@ class ModelPoisoningDetector:
             logger.error(f"❌ Error updating model health: {e}")
     
     async def _trigger_automatic_mitigation(self,
-                                          model_id: str,
-                                          critical_detections: List[PoisoningDetection]):
+                                          model_id -> None: str,
+                                          critical_detections -> None: List[PoisoningDetection]) -> None:
         """Déclenchement de mitigation automatique"""
         try:
             logger.warning(f"🚨 Triggering automatic mitigation for {model_id}")
@@ -796,7 +801,7 @@ class ModelPoisoningDetector:
         except Exception as e:
             logger.error(f"❌ Error in automatic mitigation: {e}")
     
-    async def _save_baseline_to_db(self, baseline: SecurityBaseline):
+    async def _save_baseline_to_db(self, baseline -> None: SecurityBaseline) -> None:
         """Sauvegarde baseline en DB"""
         try:
             with sqlite3.connect(self.db_path) as conn:
@@ -820,7 +825,7 @@ class ModelPoisoningDetector:
         except Exception as e:
             logger.error(f"❌ Error saving baseline: {e}")
     
-    async def _save_detection_to_db(self, detection: PoisoningDetection):
+    async def _save_detection_to_db(self, detection -> None: PoisoningDetection) -> None:
         """Sauvegarde détection en DB"""
         try:
             with sqlite3.connect(self.db_path) as conn:
@@ -849,7 +854,7 @@ class ModelPoisoningDetector:
         except Exception as e:
             logger.error(f"❌ Error saving detection: {e}")
     
-    async def _save_model_health_to_db(self, health: ModelHealth):
+    async def _save_model_health_to_db(self, health -> None: ModelHealth) -> None:
         """Sauvegarde santé modèle en DB"""
         try:
             with sqlite3.connect(self.db_path) as conn:
@@ -943,31 +948,31 @@ class ModelPoisoningDetector:
             logger.error(f"❌ Error generating security report: {e}")
             return {"error": str(e)}
     
-    def add_detection_callback(self, callback: Callable):
+    def add_detection_callback(self, callback -> None: Callable) -> None:
         """Ajouter callback de détection"""
         self.detection_callbacks.append(callback)
         logger.info(f"🔍 Detection callback added. Total: {len(self.detection_callbacks)}")
     
-    def add_mitigation_callback(self, callback: Callable):
+    def add_mitigation_callback(self, callback -> None: Callable) -> None:
         """Ajouter callback de mitigation"""
         self.mitigation_callbacks.append(callback)
         logger.info(f"🛡️ Mitigation callback added. Total: {len(self.mitigation_callbacks)}")
 
 
 # Exemple d'utilisation pour démonstration
-async def main():
+async def main() -> None:
     """Démonstration des capacités du ModelPoisoningDetector"""
     
     detector = ModelPoisoningDetector(detection_sensitivity=0.7)
     
     # Callbacks de démonstration
-    async def detection_callback(detection: PoisoningDetection):
+    async def detection_callback(detection -> None: PoisoningDetection) -> None:
         print(f"🚨 THREAT DETECTED: {detection.poisoning_type.value}")
         print(f"   Model: {detection.model_id}")
         print(f"   Threat Level: {detection.threat_level.value}")
         print(f"   Confidence: {detection.confidence_score:.3f}")
     
-    async def mitigation_callback(model_id: str, detections: List[PoisoningDetection], actions: List[str]):
+    async def mitigation_callback(model_id -> None: str, detections -> None: List[PoisoningDetection], actions -> None: List[str]) -> None:
         print(f"🛡️ AUTOMATIC MITIGATION: {model_id}")
         print(f"   Detections: {len(detections)}")
         print(f"   Actions: {actions[:3]}...")  # Première actions

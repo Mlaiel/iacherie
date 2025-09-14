@@ -129,7 +129,7 @@ class StateStore(ABC):
 class MemoryStateStore(StateStore):
     """In-memory state store implementation"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.states = {}
         self.locks = defaultdict(asyncio.Lock)
     
@@ -218,12 +218,12 @@ class MemoryStateStore(StateStore):
 class RedisStateStore(StateStore):
     """Redis-based state store implementation"""
     
-    def __init__(self, redis_url: str = "redis://localhost:6379"):
+    def __init__(self, redis_url -> None: str = "redis -> None://localhost -> None:6379") -> None:
         self.redis_url = redis_url
         self.redis_pool = None
         self.key_prefix = "stateful_service:state:"
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize Redis connection"""
         try:
             self.redis_pool = aioredis.ConnectionPool.from_url(self.redis_url)
@@ -354,14 +354,14 @@ class RedisStateStore(StateStore):
             logger.error(f"Failed to list states for service {service_id}: {str(e)}")
             return []
     
-    async def _update_last_accessed(self, redis, key: str, last_accessed: datetime):
+    async def _update_last_accessed(self, redis, key -> None: str, last_accessed -> None: datetime) -> None:
         """Update last accessed timestamp"""
         await redis.hset(key, "last_accessed", last_accessed.isoformat())
 
 class StatefulService:
     """🗃️ Advanced Stateful Service for Enterprise State Management"""
     
-    def __init__(self, config: StatefulConfig, state_store: StateStore = None):
+    def __init__(self, config -> None: StatefulConfig, state_store -> None: StateStore = None) -> None:
         """Initialize Stateful Service"""
         self.config = config
         self.service_id = f"stateful_service_{config.service_name}_{int(time.time())}"
@@ -393,7 +393,7 @@ class StatefulService:
         
         logger.info(f"🗃️ Stateful Service initialized: {self.service_id}")
     
-    async def start(self):
+    async def start(self) -> None:
         """Start the stateful service"""
         logger.info(f"Starting stateful service: {self.config.service_name}")
         
@@ -414,7 +414,7 @@ class StatefulService:
         
         logger.info("✅ Stateful Service started successfully")
     
-    async def stop(self):
+    async def stop(self) -> None:
         """Stop the stateful service"""
         logger.info("Stopping Stateful Service")
         
@@ -648,7 +648,7 @@ class StatefulService:
         
         return True
     
-    async def _cleanup_loop(self):
+    async def _cleanup_loop(self) -> None:
         """Background cleanup task"""
         while self.is_running:
             try:
@@ -660,7 +660,7 @@ class StatefulService:
             except Exception as e:
                 logger.error(f"Cleanup loop error: {str(e)}")
     
-    async def _cleanup_expired_states(self):
+    async def _cleanup_expired_states(self) -> None:
         """Clean up expired states"""
         current_time = datetime.now()
         states_to_remove = []
@@ -677,7 +677,7 @@ class StatefulService:
         if states_to_remove:
             logger.info(f"Cleaned up {len(states_to_remove)} expired states")
     
-    async def _cleanup_expired_sessions(self):
+    async def _cleanup_expired_sessions(self) -> None:
         """Clean up expired sessions"""
         current_time = datetime.now()
         sessions_to_remove = []
@@ -697,14 +697,14 @@ class StatefulService:
             self.stats["sessions_expired"] += len(sessions_to_remove)
             logger.info(f"Cleaned up {len(sessions_to_remove)} expired sessions")
     
-    async def _cleanup_session_states(self, session_id: str):
+    async def _cleanup_session_states(self, session_id -> None: str) -> None:
         """Clean up states associated with a session"""
         session_states = await self.list_session_states(session_id)
         
         for state in session_states:
             await self.delete_state(state.state_id)
     
-    async def _backup_loop(self):
+    async def _backup_loop(self) -> None:
         """Background backup task"""
         while self.is_running:
             try:
@@ -715,7 +715,7 @@ class StatefulService:
             except Exception as e:
                 logger.error(f"Backup loop error: {str(e)}")
     
-    async def _create_backup(self):
+    async def _create_backup(self) -> None:
         """Create service backup"""
         try:
             backup_data = {
@@ -738,7 +738,7 @@ class StatefulService:
             logger.error(f"Failed to create backup: {str(e)}")
 
 # Usage Example and Template Testing
-async def main():
+async def main() -> None:
     """Example usage of Stateful Service Template"""
     
     # Create configuration

@@ -250,7 +250,7 @@ class StandardRoyaltyEngine(RoyaltyCalculationEngine):
     """
 Standard royalty calculation engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         try:
             logger.info(f"Executing __init__")
             
@@ -519,7 +519,7 @@ class AIRoyaltyOptimizer:
     """
 AI-powered royalty optimization and forecasting"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self.historical_data = []
         
@@ -871,7 +871,7 @@ class AdvancedRoyaltyManager:
     royalty payments across multiple platforms, territories, and rights holders.
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """
 Initialize royalty manager with configuration."""
         self.config = config
@@ -1257,7 +1257,7 @@ Optimize royalty rates for specific content using AI."""
         # In production, this would fetch from database or API
         return []
 
-    def _update_calculation_metrics(self, success: bool, processing_time: float):
+    def _update_calculation_metrics(self, success -> None: bool, processing_time -> None: float) -> None:
         """
 Update calculation performance metrics."""
         self.royalty_metrics['total_calculations'] += 1

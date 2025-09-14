@@ -1,4 +1,6 @@
 """Business Monitoring Configuration
+from datetime import datetime
+
 ==================================
 
 Configuration settings for the comprehensive business monitoring system.
@@ -19,10 +21,12 @@ except ImportError:
     # Mock enums for testing
     from enum import Enum
     class BusinessAlertType(Enum):
+    """BusinessAlertType class implementation"""
         REVENUE_DROP = "revenue_drop"
         CHURN_SPIKE = "churn_spike"
         CONVERSION_DROP = "conversion_drop"
     class BusinessMetricType(Enum):
+    """BusinessMetricType class implementation"""
         MONTHLY_RECURRING_REVENUE = "mrr"
         CHURN_RATE = "churn_rate"
         CONVERSION_RATE = "conversion_rate"
@@ -206,7 +210,7 @@ class ReportingConfig:
 class BusinessMonitoringConfig:
     """Main business monitoring configuration class"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.dashboards = self._get_default_dashboards()
         self.alerts = self._get_default_alerts()
         self.kpis = self._get_default_kpis()

@@ -111,7 +111,7 @@ class ExchangeRate:
     confidence_score: float = 1.0
     metadata: Dict[str, Any] = None
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.metadata is None:
             self.metadata = {}
         if self.inverse_rate is None and self.rate > 0:
@@ -132,7 +132,7 @@ class RateAlert:
     triggered_at: Optional[datetime] = None
     notification_settings: Dict[str, Any] = None
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.created_at is None:
             self.created_at = datetime.utcnow()
         if self.notification_settings is None:
@@ -168,9 +168,9 @@ class WiseExchangeRateManager:
     """
 
     def __init__(self, 
-                 wise_api_key: str,
-                 environment: str = "sandbox",
-                 database_url: Optional[str] = None):
+                 wise_api_key -> None: str,
+                 environment -> None: str = "sandbox",
+                 database_url -> None: Optional[str] = None) -> None:
         """Initialize Wise Exchange Rate Manager with enterprise configuration"""
         self.wise_api_key = wise_api_key
         self.environment = environment
@@ -961,7 +961,7 @@ class WiseExchangeRateManager:
 
 
 # 🧪 Example usage and testing
-async def test_wise_exchange_rate_manager():
+async def test_wise_exchange_rate_manager() -> None:
     """Test Wise Exchange Rate Manager functionality"""
     try:
         # Initialize manager

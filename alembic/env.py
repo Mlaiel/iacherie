@@ -1,4 +1,6 @@
 """
+import logging
+
 Enterprise Alembic Environment Configuration - Ainflue Platform
 Ultra-advanced database migration management with enterprise features
 
@@ -426,7 +428,7 @@ def run_async_migrations() -> None:
     """
     Run migrations asynchronously for high-performance enterprise environments
     """
-    async def async_migration_runner():
+    async def async_migration_runner() -> None:
         setup_enterprise_migration_environment()
         migration_context = get_enterprise_migration_context()
         

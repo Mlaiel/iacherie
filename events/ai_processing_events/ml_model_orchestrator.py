@@ -161,7 +161,7 @@ class InferenceResult:
 class MLModelWrapper(ABC):
     """Abstract ML model wrapper for orchestration"""
     
-    def __init__(self, metadata: ModelMetadata):
+    def __init__(self, metadata -> None: ModelMetadata) -> None:
         self.metadata = metadata
         self.status = ModelStatus.LOADING
         self.load_time = None
@@ -195,7 +195,7 @@ class MLModelWrapper(ABC):
         """Postprocess model predictions"""
         pass
     
-    def update_performance_metrics(self, inference_time: float):
+    def update_performance_metrics(self, inference_time -> None: float) -> None:
         """Update model performance metrics"""
         self.inference_count += 1
         self.last_inference_time = inference_time
@@ -223,7 +223,7 @@ class MLModelWrapper(ABC):
 class ModelPool:
     """ML model pool for efficient resource management"""
     
-    def __init__(self, max_models: int = 10):
+    def __init__(self, max_models -> None: int = 10) -> None:
         self.max_models = max_models
         self.models: Dict[str, MLModelWrapper] = {}
         self.model_queue = queue.PriorityQueue()
@@ -284,7 +284,7 @@ class ModelPool:
                     return False
             return False
     
-    async def _evict_lru_model(self):
+    async def _evict_lru_model(self) -> None:
         """Evict least recently used model"""
         if not self.usage_stats:
             return
@@ -316,7 +316,7 @@ class MLModelOrchestrator(BaseEventHandler):
     across multiple AI processing workflows in the IA Influencer Agent platform.
     """
     
-    def __init__(self, max_models: int = 20, max_workers: int = 10):
+    def __init__(self, max_models -> None: int = 20, max_workers -> None: int = 10) -> None:
         super().__init__()
         self.model_pool = ModelPool(max_models)
         self.executor = ThreadPoolExecutor(max_workers=max_workers)
@@ -334,7 +334,7 @@ class MLModelOrchestrator(BaseEventHandler):
         
         logger.info("ML Model Orchestrator initialized")
     
-    async def start_orchestrator(self):
+    async def start_orchestrator(self) -> None:
         """Start the ML model orchestrator"""
         self.is_running = True
         
@@ -345,7 +345,7 @@ class MLModelOrchestrator(BaseEventHandler):
         
         logger.info("ML Model Orchestrator started")
     
-    async def stop_orchestrator(self):
+    async def stop_orchestrator(self) -> None:
         """Stop the ML model orchestrator"""
         self.is_running = False
         
@@ -396,7 +396,7 @@ class MLModelOrchestrator(BaseEventHandler):
             self.failed_requests += 1
             raise
     
-    async def _process_inference_queue(self):
+    async def _process_inference_queue(self) -> None:
         """Process inference requests from the queue"""
         while self.is_running:
             try:
@@ -505,7 +505,7 @@ class MLModelOrchestrator(BaseEventHandler):
             self.failed_requests += 1
             return result
     
-    def _update_performance_metrics(self, processing_time: float):
+    def _update_performance_metrics(self, processing_time -> None: float) -> None:
         """Update orchestrator performance metrics"""
         if self.average_response_time == 0.0:
             self.average_response_time = processing_time
@@ -515,7 +515,7 @@ class MLModelOrchestrator(BaseEventHandler):
             self.average_response_time = (alpha * processing_time + 
                                         (1 - alpha) * self.average_response_time)
     
-    async def _monitor_performance(self):
+    async def _monitor_performance(self) -> None:
         """Monitor orchestrator and model performance"""
         while self.is_running:
             try:
@@ -537,7 +537,7 @@ class MLModelOrchestrator(BaseEventHandler):
                 logger.error(f"Error in performance monitoring: {str(e)}")
                 await asyncio.sleep(60)
     
-    async def _optimize_model_allocation(self):
+    async def _optimize_model_allocation(self) -> None:
         """Optimize model allocation and resource usage"""
         while self.is_running:
             try:

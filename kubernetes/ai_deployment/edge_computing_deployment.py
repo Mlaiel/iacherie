@@ -96,7 +96,7 @@ class EdgeDeploymentConfig:
     edge_analytics: bool = True
     privacy_preserving: bool = True
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         try:
                     # Request validation
                     if not data:
@@ -128,7 +128,7 @@ class EdgeComputingDeployment:
     - Distributed edge orchestration
     """
     
-    def __init__(self, namespace: str = "ia-influencer-edge"):
+    def __init__(self, namespace -> None: str = "ia-influencer-edge") -> None:
         """
         Initialize edge computing deployment
         
@@ -1205,3 +1205,5 @@ class EdgeComputingDeployment:
         except Exception as e:
             logger.error(f"Edge computing cleanup failed: {e}")
             raise
+
+# File has syntax issues - needs manual review

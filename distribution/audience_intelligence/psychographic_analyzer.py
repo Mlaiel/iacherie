@@ -62,7 +62,7 @@ class PsychographicAnalyzer:
     to create comprehensive psychographic profiles for better targeting.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the Psychographic Analyzer"""
         self.personality_models = self._load_personality_models()
         self.lifestyle_classifiers = self._load_lifestyle_classifiers()

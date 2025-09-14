@@ -79,7 +79,7 @@ class AudioProcessingPipelineHealthMonitor:
     - SLA compliance tracking
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.metrics_history: Dict[PipelineStage, List[PipelineMetrics]] = {
             stage: [] for stage in PipelineStage
@@ -106,7 +106,7 @@ class AudioProcessingPipelineHealthMonitor:
             'throughput_degradation_threshold': 0.3  # 30% below baseline
         }
     
-    async def start_monitoring(self, interval_seconds: int = 30):
+    async def start_monitoring(self, interval_seconds -> None: int = 30) -> None:
         """Start continuous health monitoring."""
         self._monitoring_active = True
         logger.info(f"Starting pipeline health monitoring with {interval_seconds}s interval")
@@ -120,12 +120,12 @@ class AudioProcessingPipelineHealthMonitor:
                 logger.error(f"Error in health monitoring cycle: {e}")
                 await asyncio.sleep(interval_seconds)
     
-    def stop_monitoring(self):
+    def stop_monitoring(self) -> None:
         """Stop health monitoring."""
         self._monitoring_active = False
         logger.info("Pipeline health monitoring stopped")
     
-    async def _collect_health_metrics(self):
+    async def _collect_health_metrics(self) -> None:
         """Collect real-time metrics for all pipeline stages."""
         system_metrics = self._get_system_metrics()
         
@@ -178,7 +178,7 @@ class AudioProcessingPipelineHealthMonitor:
             active_workers=min(8, max(1, hash(str(stage)) % 10))
         )
     
-    async def _analyze_health_status(self):
+    async def _analyze_health_status(self) -> None:
         """Analyze health status and generate alerts if needed."""
         for stage in PipelineStage:
             if not self.metrics_history[stage]:
@@ -233,8 +233,8 @@ class AudioProcessingPipelineHealthMonitor:
         else:
             return HealthStatus.HEALTHY
     
-    async def _generate_health_alert(self, stage: PipelineStage, 
-                                   status: HealthStatus, metrics: PipelineMetrics):
+    async def _generate_health_alert(self, stage -> None: PipelineStage, 
+                                   status -> None: HealthStatus, metrics -> None: PipelineMetrics) -> None:
         """Generate health alert for pipeline issues."""
         alert_id = str(uuid.uuid4())
         

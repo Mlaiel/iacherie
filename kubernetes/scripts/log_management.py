@@ -1,3 +1,8 @@
+"""
+Log Management module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
@@ -123,7 +128,7 @@ class LogManager:
     Handles log collection, processing, storage, and analysis
     """
     
-    def __init__(self, config_path: Optional[str] = None):
+    def __init__(self, config_path -> None: Optional[str] = None) -> None:
         """
 Initialize log manager"""
         self.config_path = config_path or "/etc/logging/config.yaml"
@@ -1007,7 +1012,7 @@ Initialize log manager"""
             logger.error(f"Log cleanup error: {e}")
 
 
-def main():
+def main() -> None:
     """Main function for standalone execution"""
     import argparse
     

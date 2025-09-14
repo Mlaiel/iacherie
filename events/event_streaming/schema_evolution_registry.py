@@ -65,7 +65,7 @@ class SchemaVersion:
     tags: List[str] = field(default_factory=list)
     checksum: Optional[str] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if not self.checksum:
             self.checksum = self._calculate_checksum()
     
@@ -184,7 +184,7 @@ class MigrationRule:
         except Exception:
             return None
     
-    def _set_nested_field(self, data: Dict[str, Any], field_path: str, value: Any):
+    def _set_nested_field(self, data -> None: Dict[str, Any], field_path -> None: str, value -> None: Any) -> None:
         """Set value for nested field path"""
         try:
             parts = field_path.split('.')
@@ -199,7 +199,7 @@ class MigrationRule:
         except Exception as e:
             logger.error(f"Error setting nested field {field_path}: {e}")
     
-    def _remove_nested_field(self, data: Dict[str, Any], field_path: str):
+    def _remove_nested_field(self, data -> None: Dict[str, Any], field_path -> None: str) -> None:
         """Remove nested field"""
         try:
             parts = field_path.split('.')
@@ -295,7 +295,7 @@ class AinflueBusinesSchemas:
 class SchemaValidator:
     """Validates data against schemas"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         # In a real implementation, would use jsonschema or similar library
         pass
     
@@ -511,7 +511,7 @@ class CompatibilityChecker:
 class SchemaEvolutionRegistry:
     """Main registry for managing schema evolution in Ainflue platform"""
     
-    def __init__(self, metrics_collector=None):
+    def __init__(self, metrics_collector=None) -> None:
         self.metrics_collector = metrics_collector
         self.schemas: Dict[str, List[SchemaVersion]] = defaultdict(list)
         self.migration_rules: Dict[str, List[MigrationRule]] = defaultdict(list)
@@ -521,7 +521,7 @@ class SchemaEvolutionRegistry:
         # Initialize with Ainflue business schemas
         self._initialize_business_schemas()
     
-    def _initialize_business_schemas(self):
+    def _initialize_business_schemas(self) -> None:
         """Initialize with predefined Ainflue business schemas"""
         try:
             # Content upload schema

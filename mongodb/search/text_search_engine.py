@@ -44,7 +44,7 @@ class SearchQuery:
 class TextSearchEngine:
     """Advanced MongoDB text search engine with relevance scoring and highlighting."""
     
-    def __init__(self, client: MongoClient, database_name: str):
+    def __init__(self, client -> None: MongoClient, database_name -> None: str) -> None:
         """Initialize text search engine.
         
         Args:

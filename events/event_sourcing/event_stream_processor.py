@@ -98,7 +98,7 @@ class ProcessingMetrics:
 class TypeFilter(EventFilter):
     """Filter events by type"""
     
-    def __init__(self, event_types: Set[str], include: bool = True):
+    def __init__(self, event_types -> None: Set[str], include -> None: bool = True) -> None:
         self.event_types = event_types
         self.include = include
     
@@ -113,7 +113,7 @@ class TypeFilter(EventFilter):
 class AggregateFilter(EventFilter):
     """Filter events by aggregate"""
     
-    def __init__(self, aggregate_ids: Set[str], include: bool = True):
+    def __init__(self, aggregate_ids -> None: Set[str], include -> None: bool = True) -> None:
         self.aggregate_ids = aggregate_ids
         self.include = include
     
@@ -128,7 +128,7 @@ class AggregateFilter(EventFilter):
 class TimeWindowFilter(EventFilter):
     """Filter events by time window"""
     
-    def __init__(self, start_time: datetime, end_time: datetime):
+    def __init__(self, start_time -> None: datetime, end_time -> None: datetime) -> None:
         self.start_time = start_time
         self.end_time = end_time
     
@@ -140,7 +140,7 @@ class TimeWindowFilter(EventFilter):
 class EnrichmentTransformer(EventTransformer):
     """Enrich events with additional data"""
     
-    def __init__(self, enrichment_func: Callable[[DomainEvent], Dict[str, Any]]):
+    def __init__(self, enrichment_func -> None: Callable[[DomainEvent], Dict[str, Any]]) -> None:
         self.enrichment_func = enrichment_func
     
     async def transform(self, event: DomainEvent) -> Optional[DomainEvent]:
@@ -168,7 +168,7 @@ class EnrichmentTransformer(EventTransformer):
 class EventBatch:
     """Batch of events for processing"""
     
-    def __init__(self, events: List[DomainEvent], batch_id: str = None):
+    def __init__(self, events -> None: List[DomainEvent], batch_id -> None: str = None) -> None:
         self.events = events
         self.batch_id = batch_id or str(uuid4())
         self.created_at = datetime.now(timezone.utc)
@@ -186,7 +186,7 @@ class EventBatch:
 class StreamCheckpoint:
     """Stream processing checkpoint"""
     
-    def __init__(self, stream_name: str, position: str, timestamp: datetime):
+    def __init__(self, stream_name -> None: str, position -> None: str, timestamp -> None: datetime) -> None:
         self.stream_name = stream_name
         self.position = position
         self.timestamp = timestamp
@@ -220,7 +220,7 @@ class StreamProcessor(ABC):
 class MemoryStreamProcessor(StreamProcessor):
     """In-memory stream processor for testing"""
     
-    def __init__(self, config: StreamConfig):
+    def __init__(self, config -> None: StreamConfig) -> None:
         self.config = config
         self.running = False
         self.event_queue = asyncio.Queue(maxsize=config.buffer_size)
@@ -284,7 +284,7 @@ class MemoryStreamProcessor(StreamProcessor):
 class KafkaStreamProcessor(StreamProcessor):
     """Kafka stream processor"""
     
-    def __init__(self, config: StreamConfig):
+    def __init__(self, config -> None: StreamConfig) -> None:
         self.config = config
         self.consumer = None
         self.producer = None
@@ -381,7 +381,7 @@ class KafkaStreamProcessor(StreamProcessor):
 class EventStreamProcessor:
     """Enterprise event stream processor"""
     
-    def __init__(self, config: StreamConfig):
+    def __init__(self, config -> None: StreamConfig) -> None:
         self.config = config
         self.processor = self._create_processor()
         self.filters: List[EventFilter] = []

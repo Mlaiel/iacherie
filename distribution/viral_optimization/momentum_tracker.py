@@ -48,7 +48,7 @@ class AccelerationPoints:
 class MomentumTracker:
     """Content momentum tracking and analysis engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize momentum tracker"""
         self.tracking_intervals = [1, 5, 15, 30, 60, 180, 360]  # minutes
         self.momentum_cache = {}

@@ -325,7 +325,7 @@ class EngagementInsight(Base):
 class EngagementAnalytics:
     """Central engagement analytics system"""
     
-    def __init__(self, redis_client: redis.Redis):
+    def __init__(self, redis_client -> None: redis.Redis) -> None:
         self.redis = redis_client
         self.behavioral_tracker = BehavioralTracker(redis_client)
         self.predictive_engine = PredictiveEngine()
@@ -537,7 +537,7 @@ class EngagementAnalytics:
             'achievements_count': 0
         }
     
-    async def _store_event(self, event: EngagementEvent):
+    async def _store_event(self, event -> None: EngagementEvent) -> None:
         """Store engagement event for processing"""
         # Store in Redis for real-time processing
         event_key = f"events:{event.user_id}:{datetime.utcnow().date().isoformat()}"
@@ -571,7 +571,7 @@ class EngagementAnalytics:
             'last_active': datetime.utcnow() - timedelta(hours=2)
         }
     
-    async def _check_engagement_milestones(self, user_id: str, event: EngagementEvent):
+    async def _check_engagement_milestones(self, user_id -> None: str, event -> None: EngagementEvent) -> None:
         """Check if user reached engagement milestones"""
         # Check for milestones like "First Purchase", "10th Achievement", etc.
         milestones_key = f"milestones:{user_id}"
@@ -595,7 +595,7 @@ class EngagementAnalytics:
         # Save updated milestones
         await self.redis.setex(milestones_key, 86400 * 365, json.dumps(milestones_data))
     
-    async def _trigger_milestone_reward(self, user_id: str, milestone_type: str):
+    async def _trigger_milestone_reward(self, user_id -> None: str, milestone_type -> None: str) -> None:
         """Trigger reward for reaching milestone"""
         logger.info(f"User {user_id} reached milestone: {milestone_type}")
         # Integration with reward system would happen here
@@ -611,7 +611,7 @@ class EngagementAnalytics:
         
         return None
     
-    async def _cache_metrics(self, user_id: str, metrics: EngagementMetrics):
+    async def _cache_metrics(self, user_id -> None: str, metrics -> None: EngagementMetrics) -> None:
         """Cache engagement metrics"""
         cache_key = f"engagement_metrics:{user_id}"
         metrics_data = {
@@ -637,12 +637,12 @@ class EngagementAnalytics:
 class BehavioralTracker:
     """Advanced behavioral pattern tracking and analysis"""
     
-    def __init__(self, redis_client: redis.Redis):
+    def __init__(self, redis_client -> None: redis.Redis) -> None:
         self.redis = redis_client
         self.patterns: Dict[str, BehavioralPattern] = {}
         logger.info("Behavioral Tracker initialized")
     
-    async def update_patterns(self, user_id: str, event: EngagementEvent):
+    async def update_patterns(self, user_id -> None: str, event -> None: EngagementEvent) -> None:
         """Update behavioral patterns based on new event"""
         try:
             # Get user's recent events
@@ -894,7 +894,7 @@ class BehavioralTracker:
 class PredictiveEngine:
     """ML-powered predictive analytics for engagement"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.models: Dict[str, Any] = {}
         self.model_accuracy: Dict[str, float] = {}
         logger.info("Predictive Engine initialized")
@@ -1000,7 +1000,7 @@ class PredictiveEngine:
             3.0     # days_since_last_activity
         ]
     
-    async def _get_churn_model(self):
+    async def _get_churn_model(self) -> None:
         """Get trained churn prediction model"""
         if 'churn' in self.models:
             return self.models['churn']
@@ -1101,7 +1101,7 @@ class PredictiveEngine:
 class ABTestingFramework:
     """Advanced A/B testing for gamification features"""
     
-    def __init__(self, redis_client: redis.Redis):
+    def __init__(self, redis_client -> None: redis.Redis) -> None:
         self.redis = redis_client
         self.active_tests: Dict[str, ABTest] = {}
         logger.info("A/B Testing Framework initialized")
@@ -1171,11 +1171,11 @@ class ABTestingFramework:
     
     async def track_test_event(
         self,
-        test_id: str,
-        user_id: str,
-        event_type: str,
-        value: Optional[float] = None
-    ):
+        test_id -> None: str,
+        user_id -> None: str,
+        event_type -> None: str,
+        value -> None: Optional[float] = None
+    ) -> None:
         """Track event for A/B test analysis"""
         try:
             # Get user's variant
@@ -1291,11 +1291,11 @@ class ABTestingFramework:
 class MetricsCollector:
     """Real-time metrics collection and aggregation"""
     
-    def __init__(self, redis_client: redis.Redis):
+    def __init__(self, redis_client -> None: redis.Redis) -> None:
         self.redis = redis_client
         logger.info("Metrics Collector initialized")
     
-    async def update_real_time_metrics(self, user_id: str, event: EngagementEvent):
+    async def update_real_time_metrics(self, user_id -> None: str, event -> None: EngagementEvent) -> None:
         """Update real-time metrics based on event"""
         try:
             # Update daily metrics
@@ -1339,7 +1339,7 @@ class MetricsCollector:
             logger.error(f"Failed to get dashboard data: {e}")
             return {}
     
-    async def _increment_metric(self, key: str, member: Optional[str] = None):
+    async def _increment_metric(self, key -> None: str, member -> None: Optional[str] = None) -> None:
         """Increment metric counter"""
         if member:
             # Use set for unique counting
@@ -1366,7 +1366,7 @@ class MetricsCollector:
 class InsightGenerator:
     """Automated insight generation from engagement data"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         logger.info("Insight Generator initialized")
     
     async def generate_insights(self, time_period: timedelta) -> List[EngagementInsight]:

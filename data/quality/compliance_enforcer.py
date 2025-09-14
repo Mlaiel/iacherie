@@ -102,7 +102,7 @@ class ComplianceResult:
 class GDPREnforcer:
     """Enforceur GDPR"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
         self.rules = self._initialize_gdpr_rules()
     
@@ -277,7 +277,7 @@ class GDPREnforcer:
 class DMCAEnforcer:
     """Enforceur DMCA"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
         self.rules = self._initialize_dmca_rules()
     
@@ -388,7 +388,7 @@ class DMCAEnforcer:
 class SOC2Enforcer:
     """Enforceur SOC 2"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
         self.rules = self._initialize_soc2_rules()
     
@@ -499,7 +499,7 @@ class SOC2Enforcer:
 class AdvancedComplianceEnforcer:
     """Enforceur de conformité avancé enterprise"""
     
-    def __init__(self, enabled_standards: Optional[List[ComplianceStandard]] = None):
+    def __init__(self, enabled_standards -> None: Optional[List[ComplianceStandard]] = None) -> None:
         self.enabled_standards = enabled_standards or [
             ComplianceStandard.GDPR,
             ComplianceStandard.DMCA,
@@ -792,7 +792,7 @@ __all__ = [
 
 # Exemple d'utilisation
 if __name__ == "__main__":
-    async def main():
+    async def main() -> None:
         # Configuration logging
         logging.basicConfig(level=logging.INFO)
         

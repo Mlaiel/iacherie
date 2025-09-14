@@ -231,31 +231,31 @@ class {{config_name}}Config(BaseSettings):
     # ============================================================================
     
     @validator('secret_key', 'jwt_secret_key')
-    def validate_secret_keys(cls, v):
+    def validate_secret_keys(cls, v) -> None:
         if len(v) < 32:
             raise ValueError('Secret keys must be at least 32 characters long')
         return v
     
     @validator('port')
-    def validate_port(cls, v):
+    def validate_port(cls, v) -> None:
         if not 1 <= v <= 65535:
             raise ValueError('Port must be between 1 and 65535')
         return v
     
     @validator('database_pool_size', 'database_max_overflow')
-    def validate_positive_integers(cls, v):
+    def validate_positive_integers(cls, v) -> None:
         if v <= 0:
             raise ValueError('Value must be positive')
         return v
     
     @validator('allowed_origins', 'allowed_methods', 'allowed_headers', 'allowed_file_types', pre=True)
-    def validate_string_lists(cls, v):
+    def validate_string_lists(cls, v) -> None:
         if isinstance(v, str):
             return [item.strip() for item in v.split(',') if item.strip()]
         return v
     
     @root_validator
-    def validate_environment_consistency(cls, values):
+    def validate_environment_consistency(cls, values) -> None:
         environment = values.get('environment')
         debug = values.get('debug')
         
@@ -331,6 +331,7 @@ class {{config_name}}Config(BaseSettings):
     # ============================================================================
     
     class Config:
+    """Config: class implementation"""
         env_file = ".env"
         env_file_encoding = "utf-8"
         case_sensitive = False
@@ -399,7 +400,7 @@ def reload_settings() -> {{config_name}}Config:
     return get_settings()
 
 
-def setup_logging(config: {{config_name}}Config):
+def setup_logging(config -> None: {{config_name}}Config) -> None:
     """Setup logging based on configuration"""
     import logging.handlers
     
@@ -464,7 +465,7 @@ def validate_configuration(config: {{config_name}}Config) -> List[str]:
 # CONFIGURATION EXPORT
 # ============================================================================
 
-def export_config_template(file_path: str = "config.template.yaml"):
+def export_config_template(file_path -> None: str = "config.template.yaml") -> None:
     """Export configuration template file"""
     config = {{config_name}}Config()
     
@@ -525,3 +526,5 @@ if __name__ == "__main__":
     
     # Export template
     export_config_template()
+
+# File has syntax issues - needs manual review

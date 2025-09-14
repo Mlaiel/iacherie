@@ -103,7 +103,7 @@ class Auction:
     metadata: Dict[str, Any] = field(default_factory=dict)
     created_at: datetime = field(default_factory=datetime.utcnow)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         """Initialize calculated fields"""
         if self.end_time is None:
             self.end_time = self.start_time + timedelta(hours=self.duration_hours)
@@ -113,7 +113,7 @@ class Auction:
 class AuctionEngine:
     """Core auction processing engine"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         """Initialize auction engine"""
         self.config = config or {}
         self.active_auctions: Dict[str, Auction] = {}
@@ -374,7 +374,7 @@ class AuctionEngine:
 class AuctionSystem:
     """High-level auction system interface"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         """Initialize auction system"""
         self.config = config or {}
         self.engine = AuctionEngine(self.config.get('engine', {}))

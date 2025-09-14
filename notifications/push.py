@@ -67,7 +67,7 @@ class PushDeliveryResult:
 class PushNotifier:
     """Enterprise Push Notification Service"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize the push notifier"""
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
@@ -143,7 +143,7 @@ class PushNotifier:
         rate_limit = self.rate_limits.get(platform, 100)
         semaphore = asyncio.Semaphore(min(rate_limit, self.max_concurrent_requests))
         
-        async def send_single(message: PushMessage):
+        async def send_single(message -> None: PushMessage) -> None:
             async with semaphore:
                 return await self.send_notification(message)
         
@@ -207,7 +207,7 @@ class PushNotifier:
         
         return result
 
-    async def _track_delivery_metrics(self, result: PushDeliveryResult):
+    async def _track_delivery_metrics(self, result -> None: PushDeliveryResult) -> None:
         """Track push notification delivery metrics"""
         await self.metrics.increment(
             "push_sent_total",

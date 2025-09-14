@@ -1,3 +1,9 @@
+"""
+Social Proof Notifications module
+Enterprise implementation for Ainflue platform
+"""
+
 # Gamification Engine: social_proof_notifications.py
 class SocialProofNotificationsEngine: 
-    def __init__(self, config=None): pass
+    """SocialProofNotificationsEngine: class implementation"""
+    def __init__(self, config=None) -> None: pass

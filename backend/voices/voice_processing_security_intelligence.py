@@ -223,7 +223,7 @@ class QualityAnalysis:
 class VoiceProcessingEngine:
     """Advanced voice processing and audio manipulation engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize voice processing engine"""
         self.processing_profiles = {}
         self.active_sessions = {}
@@ -508,11 +508,11 @@ class VoiceProcessingEngine:
     
     async def _save_audio(
         self,
-        audio: np.ndarray,
-        sample_rate: int,
-        output_path: str,
-        format: AudioFormat
-    ):
+        audio -> None: np.ndarray,
+        sample_rate -> None: int,
+        output_path -> None: str,
+        format -> None: AudioFormat
+    ) -> None:
         """Save processed audio"""
         try:
             sf.write(output_path, audio, sample_rate, format=format.value.upper())
@@ -586,7 +586,7 @@ class VoiceProcessingEngine:
 class VoiceSecurityGuardian:
     """Voice security guardian and threat detection system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize voice security guardian"""
         self.security_profiles = {}
         self.threat_detectors = {}
@@ -995,7 +995,7 @@ class VoiceSecurityGuardian:
         
         return applied_measures
     
-    async def _apply_watermark(self, audio_path: str, creator_id: str):
+    async def _apply_watermark(self, audio_path -> None: str, creator_id -> None: str) -> None:
         """Apply audio watermark"""
         try:
             # Load audio
@@ -1029,7 +1029,7 @@ class VoiceSecurityGuardian:
         else:
             return "low"
     
-    async def _log_security_analysis(self, analysis: SecurityAnalysis):
+    async def _log_security_analysis(self, analysis -> None: SecurityAnalysis) -> None:
         """Log security analysis for audit"""
         try:
             log_entry = {
@@ -1049,7 +1049,7 @@ class VoiceSecurityGuardian:
         except Exception as e:
             logger.warning(f"Failed to log security analysis: {e}")
     
-    async def _initialize_voice_fingerprint(self, creator_id: str):
+    async def _initialize_voice_fingerprint(self, creator_id -> None: str) -> None:
         """Initialize voice fingerprint placeholder"""
         # Would typically require voice samples from user
         placeholder_fingerprint = VoiceFingerprint(
@@ -1068,7 +1068,7 @@ class VoiceSecurityGuardian:
 class VoiceProcessingSecurityIntelligence:
     """Main voice processing and security intelligence system"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         """Initialize voice processing and security intelligence"""
         self.config = config or {}
         self.processing_engine = VoiceProcessingEngine()

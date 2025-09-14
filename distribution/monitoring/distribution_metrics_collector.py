@@ -91,7 +91,7 @@ class DistributionMetricsCollector:
     - Integration with Prometheus, InfluxDB, and custom backends
     """
 
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.config = config or {}
         self.metrics_buffer = defaultdict(deque)
         self.aggregations = {}
@@ -121,7 +121,7 @@ class DistributionMetricsCollector:
         # Start background tasks
         self._start_background_tasks()
 
-    def _start_background_tasks(self):
+    def _start_background_tasks(self) -> None:
         """Start background metric processing tasks"""
         
         # Start metric aggregation task
@@ -473,7 +473,7 @@ class DistributionMetricsCollector:
             logger.error(f"Error adding threshold: {e}")
             return False
 
-    async def _check_thresholds(self, metric: MetricData):
+    async def _check_thresholds(self, metric -> None: MetricData) -> None:
         """Check if metric value violates any thresholds"""
         
         try:
@@ -504,7 +504,7 @@ class DistributionMetricsCollector:
         except Exception as e:
             logger.error(f"Error checking thresholds: {e}")
 
-    async def _trigger_threshold_alert(self, metric: MetricData, threshold: MetricThreshold):
+    async def _trigger_threshold_alert(self, metric -> None: MetricData, threshold -> None: MetricThreshold) -> None:
         """Trigger alert for threshold violation"""
         
         logger.warning(
@@ -516,7 +516,7 @@ class DistributionMetricsCollector:
         # Here you would integrate with your alerting system
         # await self.alerting_system.send_alert(metric, threshold)
 
-    async def _background_aggregation_task(self):
+    async def _background_aggregation_task(self) -> None:
         """Background task for periodic metric aggregation"""
         
         while self.processing_enabled:
@@ -556,7 +556,7 @@ class DistributionMetricsCollector:
             except Exception as e:
                 logger.error(f"Error in aggregation task: {e}")
 
-    async def _background_flush_task(self):
+    async def _background_flush_task(self) -> None:
         """Background task for flushing metrics to storage backends"""
         
         while self.processing_enabled:
@@ -576,7 +576,7 @@ class DistributionMetricsCollector:
             except Exception as e:
                 logger.error(f"Error in flush task: {e}")
 
-    async def _background_cleanup_task(self):
+    async def _background_cleanup_task(self) -> None:
         """Background task for cleaning up old metrics"""
         
         while self.processing_enabled:
@@ -602,19 +602,19 @@ class DistributionMetricsCollector:
             except Exception as e:
                 logger.error(f"Error in cleanup task: {e}")
 
-    async def _flush_to_prometheus(self):
+    async def _flush_to_prometheus(self) -> None:
         """Flush metrics to Prometheus (placeholder)"""
         
         # This would integrate with prometheus_client library
         logger.debug("Flushing metrics to Prometheus")
 
-    async def _flush_to_influxdb(self):
+    async def _flush_to_influxdb(self) -> None:
         """Flush metrics to InfluxDB (placeholder)"""
         
         # This would integrate with influxdb-client library
         logger.debug("Flushing metrics to InfluxDB")
 
-    def _update_collection_rate(self):
+    def _update_collection_rate(self) -> None:
         """Update metrics collection rate statistics"""
         
         current_time = time.time()
@@ -680,7 +680,7 @@ class DistributionMetricsCollector:
             logger.error(f"Error exporting metrics: {e}")
             return "{}"
 
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Gracefully shutdown metrics collector"""
         
         logger.info("Shutting down metrics collector...")

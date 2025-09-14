@@ -144,7 +144,7 @@ class PredictionAnalytics:
 class ModelPerformanceTracker:
     """AI model performance tracking and monitoring"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.logger = logger.getChild(self.__class__.__name__)
         
@@ -166,7 +166,7 @@ class ModelPerformanceTracker:
             'error_rate_threshold': 0.02       # 2% error rate
         })
         
-    async def register_model(self, model_id: str, model_info: Dict[str, Any]):
+    async def register_model(self, model_id -> None: str, model_info -> None: Dict[str, Any]) -> None:
         """Register a new AI model for tracking"""
         try:
             self.model_registry[model_id] = {
@@ -208,8 +208,8 @@ class ModelPerformanceTracker:
             self.logger.error(f"Failed to start inference tracking: {e}")
             raise
     
-    async def update_inference_progress(self, inference_id: str, stage: ProcessingStage,
-                                      metrics: Optional[Dict[str, Any]] = None):
+    async def update_inference_progress(self, inference_id -> None: str, stage -> None: ProcessingStage,
+                                      metrics -> None: Optional[Dict[str, Any]] = None) -> None:
         """Update inference progress and metrics"""
         try:
             if inference_id not in self.active_inferences:
@@ -226,7 +226,7 @@ class ModelPerformanceTracker:
         except Exception as e:
             self.logger.error(f"Failed to update inference progress: {e}")
     
-    async def complete_inference_tracking(self, inference_id: str, results: Dict[str, Any]):
+    async def complete_inference_tracking(self, inference_id -> None: str, results -> None: Dict[str, Any]) -> None:
         """Complete inference tracking and record final metrics"""
         try:
             if inference_id not in self.active_inferences:
@@ -295,7 +295,7 @@ class ModelPerformanceTracker:
         content = f"{model_id}_{datetime.now().isoformat()}_{time.time()}"
         return hashlib.md5(content.encode()).hexdigest()[:16]
     
-    async def _check_performance_alerts(self, metrics: ModelMetrics):
+    async def _check_performance_alerts(self, metrics -> None: ModelMetrics) -> None:
         """Check for performance alerts and anomalies"""
         try:
             alerts = []
@@ -414,7 +414,7 @@ class ModelPerformanceTracker:
 class AIInsightEngine:
     """AI processing insights generation and analysis"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.logger = logger.getChild(self.__class__.__name__)
         
@@ -693,7 +693,7 @@ class AIInsightEngine:
 class PredictionAnalytics:
     """Prediction and forecasting analytics for AI processing"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.logger = logger.getChild(self.__class__.__name__)
     

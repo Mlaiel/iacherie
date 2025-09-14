@@ -1,3 +1,8 @@
+"""
+Performance Orchestrator module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Performance Orchestrator - Enterprise Core Component
@@ -146,7 +151,7 @@ class PerformanceOrchestrator:
     automated optimization capabilities.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.performance_profiles: Dict[str, PerformanceProfile] = {}
         self.metrics_store: Dict[str, deque] = defaultdict(lambda: deque(maxlen=10000))
         self.active_bottlenecks: Dict[str, BottleneckDetection] = {}
@@ -412,9 +417,9 @@ class PerformanceOrchestrator:
     
     # Private methods
     
-    async def _start_monitoring(self, service_id: str):
+    async def _start_monitoring(self, service_id -> None: str) -> None:
         """Start monitoring task for service"""
-        async def monitoring_loop():
+        async def monitoring_loop() -> None:
             while True:
                 try:
                     if service_id not in self.performance_profiles:
@@ -438,7 +443,7 @@ class PerformanceOrchestrator:
         task = asyncio.create_task(monitoring_loop())
         self.monitoring_tasks[service_id] = task
     
-    async def _collect_system_metrics(self, service_id: str):
+    async def _collect_system_metrics(self, service_id -> None: str) -> None:
         """Collect system metrics (simulated)"""
         import random
         
@@ -467,7 +472,7 @@ class PerformanceOrchestrator:
         for metric in metrics:
             await self.record_metric(metric)
     
-    async def _check_thresholds(self, metric: PerformanceMetric):
+    async def _check_thresholds(self, metric -> None: PerformanceMetric) -> None:
         """Check if metric exceeds thresholds"""
         profile = self.performance_profiles.get(metric.service_id)
         if not profile:
@@ -484,7 +489,7 @@ class PerformanceOrchestrator:
                 await self._trigger_event("threshold_exceeded", 
                                           f"{metric.service_id}:{metric.metric_type.value}:warning")
     
-    async def _update_baseline(self, metric: PerformanceMetric):
+    async def _update_baseline(self, metric -> None: PerformanceMetric) -> None:
         """Update performance baseline"""
         if metric.service_id not in self.performance_baselines:
             self.performance_baselines[metric.service_id] = {}
@@ -701,7 +706,7 @@ class PerformanceOrchestrator:
         
         return recommendations
     
-    async def _trigger_event(self, event_type: str, event_data: str):
+    async def _trigger_event(self, event_type -> None: str, event_data -> None: str) -> None:
         """Trigger event handlers"""
         handlers = self.event_handlers.get(event_type, [])
         for handler in handlers:
@@ -750,7 +755,7 @@ async def get_performance_report(service_id: Optional[str] = None) -> Performanc
 
 if __name__ == "__main__":
     # Example usage
-    async def main():
+    async def main() -> None:
         # Register a service
         await register_service("api-service")
         

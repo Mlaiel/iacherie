@@ -130,7 +130,7 @@ class SchedulerConfig:
 class ResourceManager:
     """Manages deployment resource allocation"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.allocated_resources = {}
         self.resource_lock = asyncio.Lock()
     
@@ -182,7 +182,7 @@ class ResourceManager:
                 return True
             return False
     
-    async def release_resources(self, task_id: str, environment: Environment):
+    async def release_resources(self, task_id -> None: str, environment -> None: Environment) -> None:
         """Release allocated resources"""
         async with self.resource_lock:
             if environment.value in self.allocated_resources:
@@ -263,7 +263,7 @@ class DeploymentWindowManager:
 class SmartScheduler:
     """Intelligent deployment scheduling logic"""
     
-    def __init__(self, config: SchedulerConfig):
+    def __init__(self, config -> None: SchedulerConfig) -> None:
         self.config = config
     
     def optimize_schedule(self, tasks: List[DeploymentTask]) -> List[DeploymentTask]:
@@ -358,7 +358,7 @@ class SmartScheduler:
 class DeploymentScheduler:
     """Main deployment scheduler with enterprise features"""
     
-    def __init__(self, config: SchedulerConfig):
+    def __init__(self, config -> None: SchedulerConfig) -> None:
         self.config = config
         self.task_queue = []
         self.running_tasks = {}
@@ -462,7 +462,7 @@ class DeploymentScheduler:
             
             return cancelled
     
-    async def start_scheduler(self):
+    async def start_scheduler(self) -> None:
         """Start the deployment scheduler main loop"""
         if self.is_running:
             logger.warning("Scheduler is already running")
@@ -480,7 +480,7 @@ class DeploymentScheduler:
                 logger.error(f"Scheduler error: {e}")
                 await asyncio.sleep(5)  # Brief pause before retry
     
-    async def stop_scheduler(self):
+    async def stop_scheduler(self) -> None:
         """Stop the deployment scheduler"""
         self.is_running = False
         logger.info("Stopping deployment scheduler")
@@ -490,7 +490,7 @@ class DeploymentScheduler:
             logger.info(f"Waiting for {len(self.running_tasks)} running deployments to complete")
             await asyncio.sleep(10)  # Give time for graceful shutdown
     
-    async def _process_pending_deployments(self):
+    async def _process_pending_deployments(self) -> None:
         """Process pending deployments from the queue"""
         async with self.scheduler_lock:
             current_time = datetime.now()
@@ -566,7 +566,7 @@ class DeploymentScheduler:
         
         return True
     
-    async def _execute_deployment(self, task: DeploymentTask):
+    async def _execute_deployment(self, task -> None: DeploymentTask) -> None:
         """Execute a deployment task"""
         try:
             # Allocate resources
@@ -627,7 +627,7 @@ class DeploymentScheduler:
                 "completion_time": datetime.now().isoformat()
             }
     
-    async def _check_running_deployments(self):
+    async def _check_running_deployments(self) -> None:
         """Check status of running deployments"""
         completed_task_ids = []
         

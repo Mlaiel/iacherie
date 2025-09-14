@@ -117,7 +117,7 @@ class QueryOptimizer:
     """
 Intelligent query optimization engine"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.QueryOptimizer")
         
@@ -182,7 +182,7 @@ Intelligent query optimization engine"""
         signature_str = json.dumps(signature_data, sort_keys=True)
         return hashlib.md5(signature_str.encode()).hexdigest()
     
-    async def record_performance(self, query_id: str, execution_time_ms: float, result_count: int):
+    async def record_performance(self, query_id -> None: str, execution_time_ms -> None: float, result_count -> None: int) -> None:
         """
 Record query performance for optimization learning"""
         try:
@@ -208,7 +208,7 @@ Record query performance for optimization learning"""
 class QueryCache:
     """Advanced caching system for query results"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.QueryCache")
         
@@ -255,7 +255,7 @@ class QueryCache:
             self.miss_count += 1
             return True
     
-    async def put(self, cache_key: str, result: QueryResult, ttl: Optional[float] = None):
+    async def put(self, cache_key -> None: str, result -> None: QueryResult, ttl -> None: Optional[float] = None) -> None:
         """Store query result in cache"""
         try:
             # Check cache size limit
@@ -275,7 +275,7 @@ class QueryCache:
         except Exception as e:
             self.logger.error(f"Cache put failed: {e}")
     
-    async def invalidate_pattern(self, pattern: str):
+    async def invalidate_pattern(self, pattern -> None: str) -> None:
         """Invalidate cache entries matching pattern"""
         try:
             keys_to_remove = [key for key in self.cache.keys() if pattern in key]
@@ -287,7 +287,7 @@ class QueryCache:
         except Exception as e:
             self.logger.error(f"Pattern invalidation failed: {e}")
     
-    async def _evict_lru(self):
+    async def _evict_lru(self) -> None:
         """Evict least recently used cache entry"""
         if not self.cache:
             return
@@ -300,7 +300,7 @@ class QueryCache:
         
         await self._evict(lru_key)
     
-    async def _evict(self, cache_key: str):
+    async def _evict(self, cache_key -> None: str) -> None:
         """
 Remove cache entry"""
         if cache_key in self.cache:
@@ -339,7 +339,7 @@ class QueryExecutor:
     """
 Main query execution engine with optimization and caching"""
     
-    def __init__(self, vector_store, config: Dict[str, Any]):
+    def __init__(self, vector_store, config -> None: Dict[str, Any]) -> None:
         self.vector_store = vector_store
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.QueryExecutor")

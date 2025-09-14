@@ -76,7 +76,7 @@ class MultiCloudManager:
     - Compliance management
     """
     
-    def __init__(self, provider_configs: List[CloudProviderConfig]):
+    def __init__(self, provider_configs -> None: List[CloudProviderConfig]) -> None:
         self.provider_configs = {config.provider: config for config in provider_configs}
         self.deployments = {}
         self.active_providers = set(config.provider for config in provider_configs)
@@ -96,7 +96,7 @@ class MultiCloudManager:
         
         logger.info(f"Multi-cloud manager initialized with providers: {self.active_providers}")
     
-    def _initialize_cloud_clients(self):
+    def _initialize_cloud_clients(self) -> None:
         """Initialize cloud provider clients"""
         for provider, config in self.provider_configs.items():
             try:
@@ -761,7 +761,7 @@ class MultiCloudPerformanceMonitor:
 
 # Example usage
 if __name__ == "__main__":
-    async def main():
+    async def main() -> None:
         # Example provider configurations
         aws_config = CloudProviderConfig(
             provider=CloudProvider.AWS,

@@ -177,7 +177,7 @@ class IAInfluencerInfrastructureManager:
     - Security and compliance features
     """
     
-    def __init__(self, config: IAInfluencerInfrastructureConfig):
+    def __init__(self, config -> None: IAInfluencerInfrastructureConfig) -> None:
         self.config = config
         self.cloud_manager = CloudProviderManager()
         self.container_orchestrator = ContainerOrchestrator()

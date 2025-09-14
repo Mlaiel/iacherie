@@ -107,7 +107,7 @@ class ConfigurationManager:
     - Configuration audit trail and compliance
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.configurations: Dict[str, Configuration] = {}
         self.configuration_schemas: Dict[str, ConfigurationSchema] = {}
         self.configuration_templates: Dict[str, ConfigurationTemplate] = {}
@@ -123,14 +123,14 @@ class ConfigurationManager:
         self._initialize_manager()
         logger.info("ConfigurationManager initialized")
 
-    def _initialize_manager(self):
+    def _initialize_manager(self) -> None:
         """Initialize configuration manager"""
         asyncio.create_task(self._configuration_monitoring_loop())
         asyncio.create_task(self._drift_detection_loop())
         self._setup_default_schemas()
         self._setup_default_templates()
 
-    def _setup_default_schemas(self):
+    def _setup_default_schemas(self) -> None:
         """Setup default configuration schemas"""
         
         # Application configuration schema
@@ -215,7 +215,7 @@ class ConfigurationManager:
         self.configuration_schemas[app_schema.schema_id] = app_schema
         self.configuration_schemas[db_schema.schema_id] = db_schema
 
-    def _setup_default_templates(self):
+    def _setup_default_templates(self) -> None:
         """Setup default configuration templates"""
         
         # Application configuration template
@@ -565,7 +565,7 @@ circuit_breaker:
             # Fallback to simple incrementing
             return f"{current_version}.1"
 
-    async def _notify_configuration_watchers(self, config_id: str, configuration: Configuration):
+    async def _notify_configuration_watchers(self, config_id -> None: str, configuration -> None: Configuration) -> None:
         """Notify watchers of configuration changes"""
         
         watchers = self.active_watchers.get(config_id, [])
@@ -578,9 +578,9 @@ circuit_breaker:
 
     async def register_configuration_watcher(
         self,
-        config_id: str,
-        callback: callable
-    ):
+        config_id -> None: str,
+        callback -> None: callable
+    ) -> None:
         """Register configuration change watcher"""
         
         if config_id not in self.configurations:
@@ -682,7 +682,7 @@ circuit_breaker:
             return []
 
     # Background tasks
-    async def _configuration_monitoring_loop(self):
+    async def _configuration_monitoring_loop(self) -> None:
         """Background configuration monitoring loop"""
         while True:
             try:
@@ -697,7 +697,7 @@ circuit_breaker:
             except Exception as e:
                 logger.error(f"Configuration monitoring loop error: {str(e)}")
 
-    async def _drift_detection_loop(self):
+    async def _drift_detection_loop(self) -> None:
         """Background drift detection loop"""
         while True:
             try:

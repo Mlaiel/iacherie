@@ -68,7 +68,7 @@ class QueryMetrics:
 class PostgreSQLSchemaManager:
     """Advanced schema management for PostgreSQL"""
     
-    def __init__(self, config: PostgreSQLConfig):
+    def __init__(self, config -> None: PostgreSQLConfig) -> None:
         self.config = config
         self.table_prefix = config.table_prefix
     
@@ -204,7 +204,7 @@ class PostgreSQLSchemaManager:
 class PostgreSQLEventStream:
     """Streaming event processor for PostgreSQL"""
     
-    def __init__(self, connection_pool, config: PostgreSQLConfig):
+    def __init__(self, connection_pool, config -> None: PostgreSQLConfig) -> None:
         self.connection_pool = connection_pool
         self.config = config
         self.active_streams = {}
@@ -253,7 +253,7 @@ class PostgreSQLEventStream:
 class PostgreSQLEventRepository(EventStoreInterface):
     """High-performance PostgreSQL event repository"""
     
-    def __init__(self, config: PostgreSQLConfig):
+    def __init__(self, config -> None: PostgreSQLConfig) -> None:
         self.config = config
         self.connection_pool = None
         self.schema_manager = PostgreSQLSchemaManager(config)
@@ -293,7 +293,7 @@ class PostgreSQLEventRepository(EventStoreInterface):
             logger.error(f"Failed to initialize PostgreSQL repository: {e}")
             raise
     
-    async def _initialize_schema(self):
+    async def _initialize_schema(self) -> None:
         """Initialize database schema"""
         if self.connection_pool == "mock_pool":
             return

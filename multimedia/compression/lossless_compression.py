@@ -34,7 +34,7 @@ class LosslessConfig:
 class LosslessCompressionEngine:
     """High-efficiency lossless compression engine."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the lossless compression engine."""
         self.supported_formats = list(LosslessFormat)
         

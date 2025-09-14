@@ -39,7 +39,7 @@ class ConfigurationRule:
     success_count: int = 0
     failure_count: int = 0
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.created_at is None:
             self.created_at = datetime.utcnow()
 
@@ -63,7 +63,7 @@ class DynamicConfigManager:
     Lead Dev IA + ML Engineer implementation with intelligent optimization
     """
     
-    def __init__(self, redis_settings: RedisSettings):
+    def __init__(self, redis_settings -> None: RedisSettings) -> None:
         self.redis_settings = redis_settings
         self.redis_client: Optional[redis.Redis] = None
         self.config_cache: Dict[str, Any] = {}
@@ -80,7 +80,7 @@ class DynamicConfigManager:
         self.performance_window = 3600   # 1 hour
         self.auto_rollback_threshold = 0.1  # 10% performance degradation
         
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize the dynamic configuration manager"""
         try:
             # Connect to Redis
@@ -211,7 +211,7 @@ class DynamicConfigManager:
             logger.error(f"Error adding configuration rule: {e}")
             return False
     
-    async def watch_config(self, key: str, callback: Callable[[str, Any, Any], None]):
+    async def watch_config(self, key -> None: str, callback -> None: Callable[[str, Any, Any], None]) -> None:
         """Watch configuration changes"""
         if key not in self.watchers:
             self.watchers[key] = []
@@ -239,7 +239,7 @@ class DynamicConfigManager:
             logger.error(f"Error getting performance metrics: {e}")
             return {}
     
-    async def _ai_optimization_loop(self):
+    async def _ai_optimization_loop(self) -> None:
         """AI-driven optimization loop - ML Engineer implementation"""
         while True:
             try:
@@ -295,7 +295,7 @@ class DynamicConfigManager:
             logger.error(f"Error evaluating rule condition: {e}")
             return False
     
-    async def _apply_rule_action(self, rule: ConfigurationRule):
+    async def _apply_rule_action(self, rule -> None: ConfigurationRule) -> None:
         """Apply rule action"""
         try:
             for config_key, config_value in rule.action.items():
@@ -310,7 +310,7 @@ class DynamicConfigManager:
         except Exception as e:
             logger.error(f"Error applying rule action: {e}")
     
-    async def _auto_optimize_performance(self, metrics: Dict[str, Any]):
+    async def _auto_optimize_performance(self, metrics -> None: Dict[str, Any]) -> None:
         """ML Engineer: Auto-optimize performance based on metrics"""
         try:
             # Memory optimization
@@ -340,7 +340,7 @@ class DynamicConfigManager:
         except Exception as e:
             logger.error(f"Error in auto-optimization: {e}")
     
-    async def _load_configuration(self):
+    async def _load_configuration(self) -> None:
         """Load existing configuration from Redis"""
         try:
             # Get all config keys
@@ -359,7 +359,7 @@ class DynamicConfigManager:
         except Exception as e:
             logger.error(f"Error loading configuration: {e}")
     
-    async def _load_rules(self):
+    async def _load_rules(self) -> None:
         """Load configuration rules from Redis"""
         try:
             rules_data = await self.redis_client.get(self.rules_key)
@@ -372,7 +372,7 @@ class DynamicConfigManager:
         except Exception as e:
             logger.error(f"Error loading rules: {e}")
     
-    async def _load_change_history(self):
+    async def _load_change_history(self) -> None:
         """Load change history from Redis"""
         try:
             history_data = await self.redis_client.get(self.history_key)
@@ -385,7 +385,7 @@ class DynamicConfigManager:
         except Exception as e:
             logger.error(f"Error loading change history: {e}")
     
-    async def _record_change(self, change: ConfigurationChange):
+    async def _record_change(self, change -> None: ConfigurationChange) -> None:
         """Record configuration change"""
         try:
             self.change_history.append(change)
@@ -401,7 +401,7 @@ class DynamicConfigManager:
         except Exception as e:
             logger.error(f"Error recording change: {e}")
     
-    async def _notify_watchers(self, key: str, old_value: Any, new_value: Any):
+    async def _notify_watchers(self, key -> None: str, old_value -> None: Any, new_value -> None: Any) -> None:
         """Notify configuration watchers"""
         try:
             if key in self.watchers:
@@ -443,7 +443,7 @@ class DynamicConfigManager:
             logger.error(f"Error rolling back change {change_id}: {e}")
             return False
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Shutdown the configuration manager"""
         try:
             if self.redis_client:

@@ -97,7 +97,7 @@ class CacheConfig:
 class PerformanceProfiler:
     """Advanced performance profiler for event processing"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.metrics_history: deque = deque(maxlen=10000)
         self.active_profiles: Dict[str, Dict[str, Any]] = {}
         self.resource_monitor = ResourceMonitor()
@@ -121,7 +121,7 @@ class PerformanceProfiler:
         
         return profile_id
     
-    async def add_checkpoint(self, profile_id: str, checkpoint_name: str, metadata: Optional[Dict[str, Any]] = None):
+    async def add_checkpoint(self, profile_id -> None: str, checkpoint_name -> None: str, metadata -> None: Optional[Dict[str, Any]] = None) -> None:
         """Add a performance checkpoint"""
         
         if profile_id not in self.active_profiles:
@@ -200,7 +200,7 @@ class PerformanceProfiler:
 class ResourceMonitor:
     """System resource monitoring"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         if HAS_PSUTIL:
             self.process = psutil.Process()
         else:
@@ -209,7 +209,7 @@ class ResourceMonitor:
         self.monitor_thread = None
         self.resource_history: deque = deque(maxlen=1000)
     
-    def start_monitoring(self, interval_seconds: float = 1.0):
+    def start_monitoring(self, interval_seconds -> None: float = 1.0) -> None:
         """Start continuous resource monitoring"""
         
         if self.monitoring_active:
@@ -224,14 +224,14 @@ class ResourceMonitor:
         self.monitor_thread.start()
         logger.info("Resource monitoring started")
     
-    def stop_monitoring(self):
+    def stop_monitoring(self) -> None:
         """Stop resource monitoring"""
         self.monitoring_active = False
         if self.monitor_thread:
             self.monitor_thread.join(timeout=5.0)
         logger.info("Resource monitoring stopped")
     
-    def _monitor_loop(self, interval: float):
+    def _monitor_loop(self, interval -> None: float) -> None:
         """Monitoring loop"""
         while self.monitoring_active:
             try:
@@ -322,7 +322,7 @@ class ResourceMonitor:
 class IntelligentCache:
     """Intelligent caching system with business-aware policies"""
     
-    def __init__(self, config: CacheConfig):
+    def __init__(self, config -> None: CacheConfig) -> None:
         self.config = config
         self.cache: Dict[str, Any] = {}
         self.access_times: Dict[str, datetime] = {}
@@ -335,9 +335,9 @@ class IntelligentCache:
         # Start cleanup task
         self._start_cleanup_task()
     
-    def _start_cleanup_task(self):
+    def _start_cleanup_task(self) -> None:
         """Start periodic cache cleanup"""
-        def cleanup_loop():
+        def cleanup_loop() -> None:
             while True:
                 try:
                     self._cleanup_expired_entries()
@@ -376,7 +376,7 @@ class IntelligentCache:
                 logger.debug(f"Cache miss for key: {key}")
                 return None
     
-    async def put(self, key: str, value: Any, business_priority: str = "normal", custom_ttl: Optional[int] = None):
+    async def put(self, key -> None: str, value -> None: Any, business_priority -> None: str = "normal", custom_ttl -> None: Optional[int] = None) -> None:
         """Put value in cache with business-aware storage"""
         
         with self.lock:
@@ -414,7 +414,7 @@ class IntelligentCache:
             
             logger.debug(f"Cached value for key: {key} with priority: {business_priority}")
     
-    async def _evict_entries(self, new_item_priority: str):
+    async def _evict_entries(self, new_item_priority -> None: str) -> None:
         """Evict entries based on business-aware policy"""
         
         if self.config.eviction_policy == "lru":
@@ -424,7 +424,7 @@ class IntelligentCache:
         else:
             await self._evict_random()
     
-    async def _evict_lru(self, new_item_priority: str):
+    async def _evict_lru(self, new_item_priority -> None: str) -> None:
         """Evict least recently used items"""
         
         # Sort by last access time, but protect high-priority items
@@ -445,7 +445,7 @@ class IntelligentCache:
             self._remove_key(key_to_remove)
             logger.debug(f"Evicted LRU key: {key_to_remove}")
     
-    async def _evict_business_aware(self, new_item_priority: str):
+    async def _evict_business_aware(self, new_item_priority -> None: str) -> None:
         """Evict items based on business priority and access patterns"""
         
         priority_weights = {"critical": 10, "high": 5, "medium": 2, "low": 1, "normal": 1}
@@ -470,7 +470,7 @@ class IntelligentCache:
             self._remove_key(key_to_remove)
             logger.debug(f"Evicted business-aware key: {key_to_remove}")
     
-    async def _evict_random(self):
+    async def _evict_random(self) -> None:
         """Evict random entry"""
         import random
         if self.cache:
@@ -486,7 +486,7 @@ class IntelligentCache:
         item = self.cache[key]
         return datetime.utcnow() > item["expiry"]
     
-    def _remove_key(self, key: str):
+    def _remove_key(self, key -> None: str) -> None:
         """Remove key from cache and metadata"""
         if key in self.cache:
             del self.cache[key]
@@ -495,7 +495,7 @@ class IntelligentCache:
         if key in self.access_counts:
             del self.access_counts[key]
     
-    def _cleanup_expired_entries(self):
+    def _cleanup_expired_entries(self) -> None:
         """Remove expired entries"""
         with self.lock:
             expired_keys = [key for key in self.cache if self._is_expired(key)]
@@ -525,7 +525,7 @@ class IntelligentCache:
 class ConcurrencyManager:
     """Manager for optimizing concurrent processing"""
     
-    def __init__(self, resource_limits: ResourceLimits):
+    def __init__(self, resource_limits -> None: ResourceLimits) -> None:
         self.resource_limits = resource_limits
         self.thread_pool = ThreadPoolExecutor(max_workers=min(32, resource_limits.max_concurrent_tasks))
         self.process_pool = ProcessPoolExecutor(max_workers=min(4, resource_limits.max_concurrent_tasks // 4))
@@ -596,7 +596,7 @@ class ConcurrencyManager:
         max_concurrent = max_concurrent or min(len(tasks), self.resource_limits.max_concurrent_tasks)
         semaphore = asyncio.Semaphore(max_concurrent)
         
-        async def execute_single(task_info):
+        async def execute_single(task_info) -> None:
             task_func, args, kwargs = task_info
             async with semaphore:
                 return await self.execute_with_optimization(task_func, args, kwargs)
@@ -620,7 +620,7 @@ class ConcurrencyManager:
             "resource_pressure": self.resource_monitor.get_resource_pressure()
         }
     
-    def shutdown(self):
+    def shutdown(self) -> None:
         """Shutdown thread and process pools"""
         self.thread_pool.shutdown(wait=True)
         self.process_pool.shutdown(wait=True)
@@ -629,7 +629,7 @@ class ConcurrencyManager:
 class MemoryOptimizer:
     """Memory usage optimization and management"""
     
-    def __init__(self, max_memory_mb: float = 1024.0):
+    def __init__(self, max_memory_mb -> None: float = 1024.0) -> None:
         self.max_memory_mb = max_memory_mb
         self.object_pools: Dict[str, List[Any]] = defaultdict(list)
         self.weak_references: Dict[str, List[weakref.ref]] = defaultdict(list)
@@ -693,7 +693,7 @@ class MemoryOptimizer:
             logger.debug(f"Created new object: {object_type}")
             return obj
     
-    def return_object_to_pool(self, object_type: str, obj: Any):
+    def return_object_to_pool(self, object_type -> None: str, obj -> None: Any) -> None:
         """Return object to pool for reuse"""
         
         pool = self.object_pools[object_type]
@@ -711,23 +711,23 @@ class MemoryOptimizer:
         else:
             logger.debug(f"Pool full, discarding object: {object_type}")
     
-    def register_weak_reference(self, category: str, obj: Any):
+    def register_weak_reference(self, category -> None: str, obj -> None: Any) -> None:
         """Register weak reference for automatic cleanup"""
         
         weak_ref = weakref.ref(obj, lambda ref: self._on_object_deleted(category, ref))
         self.weak_references[category].append(weak_ref)
     
-    def _on_object_deleted(self, category: str, ref: weakref.ref):
+    def _on_object_deleted(self, category -> None: str, ref -> None: weakref.ref) -> None:
         """Callback for when weakly referenced object is deleted"""
         if ref in self.weak_references[category]:
             self.weak_references[category].remove(ref)
     
-    def _cleanup_weak_references(self):
+    def _cleanup_weak_references(self) -> None:
         """Clean up dead weak references"""
         for category in self.weak_references:
             self.weak_references[category] = [ref for ref in self.weak_references[category] if ref() is not None]
     
-    def _clear_object_pools(self):
+    def _clear_object_pools(self) -> None:
         """Clear object pools to free memory"""
         total_cleared = sum(len(pool) for pool in self.object_pools.values())
         self.object_pools.clear()
@@ -776,9 +776,9 @@ class PerformanceOptimizationToolkit:
     """
     
     def __init__(self, 
-                 resource_limits: Optional[ResourceLimits] = None,
-                 cache_config: Optional[CacheConfig] = None,
-                 optimization_level: OptimizationLevel = OptimizationLevel.STANDARD):
+                 resource_limits -> None: Optional[ResourceLimits] = None,
+                 cache_config -> None: Optional[CacheConfig] = None,
+                 optimization_level -> None: OptimizationLevel = OptimizationLevel.STANDARD) -> None:
         
         self.resource_limits = resource_limits or ResourceLimits()
         self.cache_config = cache_config or CacheConfig()
@@ -1061,7 +1061,7 @@ class PerformanceOptimizationToolkit:
         
         return base_batch_size
     
-    async def _apply_pre_processing_optimizations(self):
+    async def _apply_pre_processing_optimizations(self) -> None:
         """Apply optimizations before processing"""
         
         # Memory optimization
@@ -1069,7 +1069,7 @@ class PerformanceOptimizationToolkit:
         if memory_result.success:
             self.optimization_history.append(memory_result)
     
-    async def _apply_post_processing_optimizations(self):
+    async def _apply_post_processing_optimizations(self) -> None:
         """Apply optimizations after processing"""
         
         # Force garbage collection for ultra optimization
@@ -1090,7 +1090,7 @@ class PerformanceOptimizationToolkit:
             "uptime_minutes": (datetime.utcnow() - datetime.utcnow()).total_seconds() / 60  # Simplified
         }
     
-    def shutdown(self):
+    def shutdown(self) -> None:
         """Shutdown the optimization toolkit"""
         
         self.resource_monitor.stop_monitoring()

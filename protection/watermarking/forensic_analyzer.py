@@ -73,7 +73,7 @@ class ForensicWatermarkAnalyzer:
     """
 Professional forensic analysis engine for watermarked content"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.evidence_storage = config.get('evidence_storage_path', '/tmp/forensic_evidence')
         self.chain_of_custody = []
@@ -81,7 +81,7 @@ Professional forensic analysis engine for watermarked content"""
         # Initialize forensic engines
         self._initialize_engines()
     
-    def _initialize_engines(self):
+    def _initialize_engines(self) -> None:
         """
 Initialize specialized forensic engines"""
         try:
@@ -558,7 +558,7 @@ Generates digital signature for evidence integrity"""
         except:
             return ""
     
-    async def _store_forensic_evidence(self, evidence: ForensicEvidence):
+    async def _store_forensic_evidence(self, evidence -> None: ForensicEvidence) -> None:
         """Stores forensic evidence securely"""
         try:
             # Implementation would store evidence in secure storage

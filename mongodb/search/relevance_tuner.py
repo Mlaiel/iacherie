@@ -37,11 +37,13 @@ except ImportError:
     ML_AVAILABLE = False
     # Mock classes for compatibility
     class RandomForestRegressor:
-        def fit(self, X, y): pass
-        def predict(self, X): return [0.5] * len(X)
+    """RandomForestRegressor: class implementation"""
+        def fit(self, X, y) -> None: pass
+        def predict(self, X) -> None: return [0.5] * len(X)
     class StandardScaler:
-        def fit_transform(self, X): return X
-        def transform(self, X): return X
+    """StandardScaler: class implementation"""
+        def fit_transform(self, X) -> None: return X
+        def transform(self, X) -> None: return X
 
 logger = logging.getLogger(__name__)
 
@@ -114,7 +116,7 @@ class RelevanceMetrics:
 class RelevanceTuner:
     """Enterprise search relevance optimization and tuning system."""
     
-    def __init__(self, database_connection=None, cache_backend=None):
+    def __init__(self, database_connection=None, cache_backend=None) -> None:
         """Initialize relevance tuner.
         
         Args:

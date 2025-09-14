@@ -7,7 +7,7 @@ protection, fingerprinting, and monetization services.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ WARNING: This code is proprietary and confidential.
+# [EMOJI_REMOVED] WARNING: This code is proprietary and confidential.
 Unauthorized copying, distribution, or use without explicit written
 permission from Fahed Mlaiel is strictly prohibited and may result
 in legal action.
@@ -255,11 +255,11 @@ class RequestRouter:
     
     def __init__(
         self,
-        config_file: Optional[str] = None,
-        redis_client: Optional[aioredis.Redis] = None,
-        consul_client: Optional[consul.Consul] = None,
-        enable_service_discovery: bool = True
-    ):
+        config_file -> None: Optional[str] = None,
+        redis_client -> None: Optional[aioredis.Redis] = None,
+        consul_client -> None: Optional[consul.Consul] = None,
+        enable_service_discovery -> None: bool = True
+    ) -> None:
         self.config_file = config_file
         self.redis_client = redis_client
         self.consul_client = consul_client
@@ -1176,7 +1176,7 @@ class RequestRouter:
         try:
             self._discovery_active = True
             
-            async def discover_services():
+            async def discover_services() -> None:
                 while self._discovery_active:
                     try:
                         if self.consul_client:
@@ -1275,7 +1275,7 @@ class RequestRouter:
         try:
             self._monitoring_active = True
             
-            async def monitor_health():
+            async def monitor_health() -> None:
                 while self._monitoring_active:
                     try:
                         await self._check_all_instances_health()
@@ -1547,3 +1547,5 @@ async def route_monetization_request(
     except Exception as e:
         logger.error(f"Failed to route monetization request: {e}")
         return None
+
+# File has syntax issues - needs manual review

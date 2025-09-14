@@ -200,7 +200,7 @@ class ContentValidationEngine:
     compliance checking, content policy enforcement, and AI-powered threat detection.
     """
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         """Initialize content validation engine"""
         self.logger = logging.getLogger(__name__)
         self.config = config or {}
@@ -240,7 +240,7 @@ class ContentValidationEngine:
             'quality_issues_found': 0
         }
     
-    def _init_ai_models(self):
+    def _init_ai_models(self) -> None:
         """Initialize AI models for content analysis"""
         try:
             if self.enable_ai_analysis:
@@ -297,7 +297,7 @@ class ContentValidationEngine:
             self.sentiment_analyzer = None
             self.nlp = None
     
-    def _init_validation_rules(self):
+    def _init_validation_rules(self) -> None:
         """Initialize validation rules and patterns"""
         try:
             # Malware signatures (simplified examples)
@@ -453,7 +453,7 @@ class ContentValidationEngine:
             # Process items concurrently with semaphore control
             semaphore = asyncio.Semaphore(3)  # Limit concurrent validations
             
-            async def validate_single(item):
+            async def validate_single(item) -> None:
                 async with semaphore:
                     content_data, filename, metadata = item
                     return await self.validate_content(content_data, filename, metadata)
@@ -507,7 +507,7 @@ class ContentValidationEngine:
     
     # Private validation methods
     
-    async def _validate_file_basics(self, content_data: bytes, filename: str, result: ValidationResult):
+    async def _validate_file_basics(self, content_data -> None: bytes, filename -> None: str, result -> None: ValidationResult) -> None:
         """Validate basic file properties"""
         try:
             result.metrics.total_checks_performed += 1
@@ -564,7 +564,7 @@ class ContentValidationEngine:
             self.logger.error(f"Basic file validation failed: {str(e)}")
             result.warnings.append(f"Basic validation warning: {str(e)}")
     
-    async def _validate_security(self, content_data: bytes, filename: str, result: ValidationResult):
+    async def _validate_security(self, content_data -> None: bytes, filename -> None: str, result -> None: ValidationResult) -> None:
         """Perform security validation"""
         try:
             result.metrics.total_checks_performed += 1
@@ -630,7 +630,7 @@ class ContentValidationEngine:
             self.logger.error(f"Security validation failed: {str(e)}")
             result.warnings.append(f"Security validation warning: {str(e)}")
     
-    async def _validate_content_policy(self, content_data: bytes, filename: str, result: ValidationResult):
+    async def _validate_content_policy(self, content_data -> None: bytes, filename -> None: str, result -> None: ValidationResult) -> None:
         """Validate content against policies"""
         try:
             result.metrics.total_checks_performed += 1
@@ -678,7 +678,7 @@ class ContentValidationEngine:
             self.logger.error(f"Content policy validation failed: {str(e)}")
             result.warnings.append(f"Content policy validation warning: {str(e)}")
     
-    async def _assess_quality(self, content_data: bytes, filename: str, result: ValidationResult):
+    async def _assess_quality(self, content_data -> None: bytes, filename -> None: str, result -> None: ValidationResult) -> None:
         """Assess content quality across multiple dimensions"""
         try:
             result.metrics.total_checks_performed += 1
@@ -733,7 +733,7 @@ class ContentValidationEngine:
             self.logger.error(f"Quality assessment failed: {str(e)}")
             result.warnings.append(f"Quality assessment warning: {str(e)}")
     
-    async def _assess_image_quality(self, content_data: bytes, result: ValidationResult):
+    async def _assess_image_quality(self, content_data -> None: bytes, result -> None: ValidationResult) -> None:
         """Assess image-specific quality metrics"""
         try:
             with tempfile.NamedTemporaryFile() as temp_file:
@@ -779,7 +779,7 @@ class ContentValidationEngine:
         except Exception as e:
             self.logger.warning(f"Image quality assessment failed: {str(e)}")
     
-    async def _assess_audio_quality(self, content_data: bytes, result: ValidationResult):
+    async def _assess_audio_quality(self, content_data -> None: bytes, result -> None: ValidationResult) -> None:
         """Assess audio-specific quality metrics"""
         try:
             with tempfile.NamedTemporaryFile(suffix='.wav') as temp_file:
@@ -816,7 +816,7 @@ class ContentValidationEngine:
         except Exception as e:
             self.logger.warning(f"Audio quality assessment failed: {str(e)}")
     
-    async def _assess_video_quality(self, content_data: bytes, result: ValidationResult):
+    async def _assess_video_quality(self, content_data -> None: bytes, result -> None: ValidationResult) -> None:
         """Assess video-specific quality metrics"""
         try:
             # Video quality assessment would require more complex analysis
@@ -828,7 +828,7 @@ class ContentValidationEngine:
         except Exception as e:
             self.logger.warning(f"Video quality assessment failed: {str(e)}")
     
-    async def _assess_text_quality(self, content_data: bytes, result: ValidationResult):
+    async def _assess_text_quality(self, content_data -> None: bytes, result -> None: ValidationResult) -> None:
         """Assess text-specific quality metrics"""
         try:
             text_content = content_data.decode('utf-8', errors='ignore')
@@ -875,8 +875,8 @@ class ContentValidationEngine:
         except Exception as e:
             self.logger.warning(f"Text quality assessment failed: {str(e)}")
     
-    async def _check_compliance(self, content_data: bytes, filename: str, 
-                              result: ValidationResult, metadata: Dict[str, Any] = None):
+    async def _check_compliance(self, content_data -> None: bytes, filename -> None: str, 
+                              result -> None: ValidationResult, metadata -> None: Dict[str, Any] = None) -> None:
         """Check regulatory compliance"""
         try:
             result.metrics.total_checks_performed += 1
@@ -937,7 +937,7 @@ class ContentValidationEngine:
             self.logger.error(f"Compliance checking failed: {str(e)}")
             result.warnings.append(f"Compliance checking warning: {str(e)}")
     
-    async def _ai_content_analysis(self, content_data: bytes, filename: str, result: ValidationResult):
+    async def _ai_content_analysis(self, content_data -> None: bytes, filename -> None: str, result -> None: ValidationResult) -> None:
         """Perform AI-powered content analysis"""
         try:
             result.metrics.total_checks_performed += 1
@@ -1017,7 +1017,7 @@ class ContentValidationEngine:
             self.logger.error(f"AI content analysis failed: {str(e)}")
             result.warnings.append(f"AI analysis warning: {str(e)}")
     
-    async def _calculate_final_scores(self, result: ValidationResult):
+    async def _calculate_final_scores(self, result -> None: ValidationResult) -> None:
         """Calculate final validation scores"""
         try:
             # Security score based on threat level and issues
@@ -1090,7 +1090,7 @@ class ContentValidationEngine:
         except Exception as e:
             self.logger.error(f"Final score calculation failed: {str(e)}")
     
-    async def _generate_summary_and_recommendations(self, result: ValidationResult):
+    async def _generate_summary_and_recommendations(self, result -> None: ValidationResult) -> None:
         """Generate validation summary and recommendations"""
         try:
             # Generate summary

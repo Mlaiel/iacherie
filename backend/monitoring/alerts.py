@@ -110,7 +110,7 @@ class EscalationPolicy:
 class AlertCorrelator:
     """Alert correlation and noise reduction engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.correlation_window = timedelta(minutes=5)
         self.similarity_threshold = 0.8
         self.correlation_cache = {}
@@ -156,7 +156,7 @@ class AlertCorrelator:
 class PagerDutyIntegration:
     """PagerDuty integration for alert escalation"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.integration_key = config.get("integration_key", "")
         self.service_name = config.get("service_name", "IA Influencer Agent")
@@ -223,7 +223,7 @@ class UnifiedAlertManager:
     Unified alert management system that consolidates all alerting functionality
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.alerts: Dict[str, Alert] = {}
         self.rules: Dict[str, AlertRule] = {}
@@ -242,7 +242,7 @@ class UnifiedAlertManager:
         self._initialize_default_rules()
         self._initialize_escalation_policies()
     
-    def _initialize_default_rules(self):
+    def _initialize_default_rules(self) -> None:
         """Initialize default alert rules"""
         default_rules = [
             # Business alerts
@@ -321,7 +321,7 @@ class UnifiedAlertManager:
         for rule in default_rules:
             self.rules[rule.name] = rule
     
-    def _initialize_escalation_policies(self):
+    def _initialize_escalation_policies(self) -> None:
         """Initialize escalation policies"""
         default_policies = [
             EscalationPolicy(
@@ -400,7 +400,7 @@ class UnifiedAlertManager:
         logger.info(f"Created alert {alert_id}: {title}")
         return alert_id
     
-    async def _process_alert(self, alert: Alert):
+    async def _process_alert(self, alert -> None: Alert) -> None:
         """Process alert through notification and escalation system"""
         
         # Send notifications based on severity
@@ -410,7 +410,7 @@ class UnifiedAlertManager:
         if alert.severity in [AlertSeverity.CRITICAL, AlertSeverity.EMERGENCY]:
             await self._schedule_escalation(alert)
     
-    async def _send_notifications(self, alert: Alert):
+    async def _send_notifications(self, alert -> None: Alert) -> None:
         """Send alert notifications through configured channels"""
         
         # Find applicable rules
@@ -430,7 +430,7 @@ class UnifiedAlertManager:
             except Exception as e:
                 logger.error(f"Failed to send alert {alert.id} to {channel}: {e}")
     
-    async def _send_to_channel(self, alert: Alert, channel: AlertChannel):
+    async def _send_to_channel(self, alert -> None: Alert, channel -> None: AlertChannel) -> None:
         """Send alert to specific notification channel"""
         
         if channel == AlertChannel.PAGERDUTY:
@@ -446,7 +446,7 @@ class UnifiedAlertManager:
         elif channel == AlertChannel.WEBHOOK:
             logger.info(f"Would send webhook alert: {alert.title}")
     
-    async def _schedule_escalation(self, alert: Alert):
+    async def _schedule_escalation(self, alert -> None: Alert) -> None:
         """Schedule alert escalation based on policies"""
         
         policy_name = "business_critical" if alert.category == AlertCategory.BUSINESS else "technical_standard"

@@ -112,7 +112,7 @@ class AuditLogger:
     """
 Enterprise-grade audit logging system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logger
         self.encryption_enabled = settings.AUDIT_ENCRYPTION_ENABLED
         self.retention_days = settings.AUDIT_RETENTION_DAYS

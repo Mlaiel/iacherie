@@ -1,3 +1,8 @@
+"""
+Revenue Distribution Service module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 💰 REVENUE DISTRIBUTION SERVICE
@@ -201,7 +206,7 @@ class RevenueDistributionService:
     optimization, fraud detection, and automated payment processing.
     """
     
-    def __init__(self, redis_url: str = "redis://localhost:6379"):
+    def __init__(self, redis_url -> None: str = "redis -> None://localhost -> None:6379") -> None:
         self.redis_url = redis_url
         self.redis_client = None
         self.distribution_cache = {}
@@ -1495,7 +1500,7 @@ class RevenueDistributionService:
             logger.error(f"❌ Error stopping service: {str(e)}")
 
 # Example usage and testing
-async def main():
+async def main() -> None:
     """Example usage of RevenueDistributionService"""
     service = RevenueDistributionService()
     

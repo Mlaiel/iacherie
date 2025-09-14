@@ -1,3 +1,8 @@
+"""
+Cross Platform Affiliate Example module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Cross Platform Affiliate Example - Example Affiliation Cross-Platform
@@ -118,7 +123,7 @@ class CrossPlatformAffiliateExample:
     Multi-platform synchronization avec global optimization et real-time analytics
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(f"{__name__}.CrossPlatformAffiliateExample")
         
         # Platform integrations

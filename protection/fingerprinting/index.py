@@ -83,7 +83,7 @@ class FingerprintingSystemIndex:
     coordinating between different processors, monitoring, optimization, and security.
     """
     
-    def __init__(self, config: Optional[FingerprintConfig] = None):
+    def __init__(self, config -> None: Optional[FingerprintConfig] = None) -> None:
         """
         Initialize the fingerprinting system.
         
@@ -285,7 +285,7 @@ class FingerprintingSystemIndex:
         """
         return await self.deployment_manager.deploy(environment)
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """
 Gracefully shutdown the system."""
         self.logger.info("Shutting down Content Fingerprinting System...")
@@ -372,7 +372,7 @@ async def process_content_simple(
     return await system.process_content(request)
 
 
-async def shutdown_system():
+async def shutdown_system() -> None:
     """
 Shutdown the global fingerprinting system."""
     global _system_instance
@@ -398,7 +398,7 @@ __all__ = [
 if __name__ == "__main__":
     import sys
     
-    async def main():
+    async def main() -> None:
         """Main function for testing and development."""
         try:
             # Initialize system

@@ -1,3 +1,8 @@
+"""
+Creator Onboarder module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Creator Onboarding System - Enterprise Creator Management
@@ -48,6 +53,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 class CreatorStatus(Enum):
+    """CreatorStatus class implementation"""
     PENDING = "pending"
     VERIFYING = "verifying"
     VERIFIED = "verified"
@@ -56,6 +62,7 @@ class CreatorStatus(Enum):
     ACTIVE = "active"
 
 class CreatorTier(Enum):
+    """CreatorTier class implementation"""
     BRONZE = "bronze"
     SILVER = "silver"
     GOLD = "gold"
@@ -63,6 +70,7 @@ class CreatorTier(Enum):
     DIAMOND = "diamond"
 
 class ContentType(Enum):
+    """ContentType class implementation"""
     MUSIC = "music"
     VIDEO = "video"
     PODCAST = "podcast"
@@ -71,6 +79,7 @@ class ContentType(Enum):
     LIVESTREAM = "livestream"
 
 class VerificationLevel(Enum):
+    """VerificationLevel class implementation"""
     BASIC = "basic"
     STANDARD = "standard"
     PREMIUM = "premium"
@@ -146,7 +155,7 @@ class CreatorOnboardingSystem:
     - Performance analytics and insights
     """
     
-    def __init__(self, config_path: str = "/etc/ainflue/creator_config.json"):
+    def __init__(self, config_path -> None: str = "/etc/ainflue/creator_config.json") -> None:
         self.config_path = config_path
         self.creators: Dict[str, CreatorProfile] = {}
         self.portfolios: Dict[str, List[PortfolioItem]] = {}
@@ -154,7 +163,7 @@ class CreatorOnboardingSystem:
         self.brand_partnerships: List[BrandPartnership] = []
         self.config = {}
         
-    async def load_creator_configuration(self):
+    async def load_creator_configuration(self) -> None:
         """Load creator management configuration"""
         try:
             if os.path.exists(self.config_path):
@@ -253,7 +262,7 @@ class CreatorOnboardingSystem:
             logger.error(f"Creator registration failed: {e}")
             raise
     
-    async def _initiate_verification_process(self, creator_id: str):
+    async def _initiate_verification_process(self, creator_id -> None: str) -> None:
         """Initiate the verification process for a creator"""
         try:
             verification_config = self.config['verification']
@@ -294,7 +303,7 @@ class CreatorOnboardingSystem:
         except Exception as e:
             logger.error(f"Failed to initiate verification process: {e}")
     
-    async def _create_verification_task(self, creator_id: str, task_type: str, description: str):
+    async def _create_verification_task(self, creator_id -> None: str, task_type -> None: str, description -> None: str) -> None:
         """Create a verification task"""
         task_id = f"{task_type}_{creator_id}_{int(time.time())}"
         
@@ -312,7 +321,7 @@ class CreatorOnboardingSystem:
         if task_type in ["email_verification", "phone_verification"]:
             await self._complete_verification_task(task_id, {"verified": True})
     
-    async def _complete_verification_task(self, task_id: str, result: Dict[str, Any]):
+    async def _complete_verification_task(self, task_id -> None: str, result -> None: Dict[str, Any]) -> None:
         """Complete a verification task"""
         for task in self.verification_tasks:
             if task.task_id == task_id:
@@ -325,7 +334,7 @@ class CreatorOnboardingSystem:
                 await self._check_verification_completion(creator_id)
                 break
     
-    async def _check_verification_completion(self, creator_id: str):
+    async def _check_verification_completion(self, creator_id -> None: str) -> None:
         """Check if all verification tasks are completed"""
         creator_tasks = [t for t in self.verification_tasks if t.creator_id == creator_id]
         completed_tasks = [t for t in creator_tasks if t.status == "completed"]
@@ -412,7 +421,7 @@ class CreatorOnboardingSystem:
             logger.error(f"Content quality analysis failed: {e}")
             return 0.5  # Default score
     
-    async def _analyze_creator_portfolio(self, creator_id: str):
+    async def _analyze_creator_portfolio(self, creator_id -> None: str) -> None:
         """Analyze creator portfolio and assign tier"""
         try:
             creator = self.creators[creator_id]
@@ -737,7 +746,7 @@ class CreatorOnboardingSystem:
         
         return report
 
-async def main():
+async def main() -> None:
     """CLI entry point for creator onboarding system"""
     import argparse
     

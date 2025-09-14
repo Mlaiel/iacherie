@@ -1,3 +1,8 @@
+"""
+Metrics Collector Core module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Ainflue Core Infrastructure - Advanced Metrics Collection Engine
@@ -103,14 +108,14 @@ class AggregatedMetric:
 class Counter:
     """Thread-safe counter metric"""
     
-    def __init__(self, name: str, help_text: str = "", labels: Optional[Dict[str, str]] = None):
+    def __init__(self, name -> None: str, help_text -> None: str = "", labels -> None: Optional[Dict[str, str]] = None) -> None:
         self.name = name
         self.help_text = help_text
         self.labels = labels or {}
         self._value = 0
         self._lock = threading.Lock()
     
-    def inc(self, amount: Union[int, float] = 1):
+    def inc(self, amount -> None: Union[int, float] = 1) -> None:
         """Increment counter"""
         with self._lock:
             if amount < 0:
@@ -122,7 +127,7 @@ class Counter:
         with self._lock:
             return self._value
     
-    def reset(self):
+    def reset(self) -> None:
         """Reset counter to zero"""
         with self._lock:
             self._value = 0
@@ -130,24 +135,24 @@ class Counter:
 class Gauge:
     """Thread-safe gauge metric"""
     
-    def __init__(self, name: str, help_text: str = "", labels: Optional[Dict[str, str]] = None):
+    def __init__(self, name -> None: str, help_text -> None: str = "", labels -> None: Optional[Dict[str, str]] = None) -> None:
         self.name = name
         self.help_text = help_text
         self.labels = labels or {}
         self._value = 0
         self._lock = threading.Lock()
     
-    def set(self, value: Union[int, float]):
+    def set(self, value -> None: Union[int, float]) -> None:
         """Set gauge value"""
         with self._lock:
             self._value = value
     
-    def inc(self, amount: Union[int, float] = 1):
+    def inc(self, amount -> None: Union[int, float] = 1) -> None:
         """Increment gauge"""
         with self._lock:
             self._value += amount
     
-    def dec(self, amount: Union[int, float] = 1):
+    def dec(self, amount -> None: Union[int, float] = 1) -> None:
         """Decrement gauge"""
         with self._lock:
             self._value -= amount
@@ -160,8 +165,8 @@ class Gauge:
 class Histogram:
     """Thread-safe histogram metric"""
     
-    def __init__(self, name: str, buckets: Optional[List[float]] = None, 
-                 help_text: str = "", labels: Optional[Dict[str, str]] = None):
+    def __init__(self, name -> None: str, buckets -> None: Optional[List[float]] = None, 
+                 help_text -> None: str = "", labels -> None: Optional[Dict[str, str]] = None) -> None:
         self.name = name
         self.help_text = help_text
         self.labels = labels or {}
@@ -171,7 +176,7 @@ class Histogram:
         self._count = 0
         self._lock = threading.Lock()
     
-    def observe(self, value: Union[int, float]):
+    def observe(self, value -> None: Union[int, float]) -> None:
         """Observe a value"""
         with self._lock:
             self._sum += value
@@ -216,7 +221,7 @@ class Histogram:
 class Timer:
     """Timer metric for measuring durations"""
     
-    def __init__(self, name: str, help_text: str = "", labels: Optional[Dict[str, str]] = None):
+    def __init__(self, name -> None: str, help_text -> None: str = "", labels -> None: Optional[Dict[str, str]] = None) -> None:
         self.name = name
         self.help_text = help_text
         self.labels = labels or {}
@@ -246,7 +251,7 @@ class Timer:
         return duration
     
     @asynccontextmanager
-    async def time_async(self):
+    async def time_async(self) -> None:
         """Async context manager for timing"""
         start_time = time.time()
         try:
@@ -257,7 +262,7 @@ class Timer:
     
     def time_function(self, func: Callable) -> Callable:
         """Decorator for timing functions"""
-        def wrapper(*args, **kwargs):
+        def wrapper(*args, **kwargs) -> None:
             operation_id = self.start()
             try:
                 result = func(*args, **kwargs)
@@ -265,7 +270,7 @@ class Timer:
             finally:
                 self.stop(operation_id)
         
-        async def async_wrapper(*args, **kwargs):
+        async def async_wrapper(*args, **kwargs) -> None:
             operation_id = self.start()
             try:
                 result = await func(*args, **kwargs)
@@ -281,7 +286,7 @@ class Timer:
 class MetricRegistry:
     """Registry for managing metrics"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.metrics: Dict[str, Union[Counter, Gauge, Histogram, Timer]] = {}
         self._lock = threading.Lock()
     
@@ -416,12 +421,12 @@ class MetricRegistry:
 class MetricsAggregator:
     """Aggregates metrics over time windows"""
     
-    def __init__(self, window_seconds: int = 60):
+    def __init__(self, window_seconds -> None: int = 60) -> None:
         self.window_seconds = window_seconds
         self.metric_values: Dict[str, List[MetricValue]] = collections.defaultdict(list)
         self._lock = threading.Lock()
     
-    def add_value(self, name: str, value: Union[int, float], labels: Optional[Dict[str, str]] = None):
+    def add_value(self, name -> None: str, value -> None: Union[int, float], labels -> None: Optional[Dict[str, str]] = None) -> None:
         """Add a metric value"""
         metric_value = MetricValue(value=value, labels=labels or {})
         
@@ -477,7 +482,7 @@ class MetricsAggregator:
 class SystemMetricsCollector:
     """Collects system metrics"""
     
-    def __init__(self, registry: MetricRegistry):
+    def __init__(self, registry -> None: MetricRegistry) -> None:
         self.registry = registry
         
         # Register system metrics
@@ -490,7 +495,7 @@ class SystemMetricsCollector:
         self._last_network_stats = None
         self.enabled = True
     
-    async def collect_system_metrics(self):
+    async def collect_system_metrics(self) -> None:
         """Collect system metrics"""
         if not self.enabled:
             return
@@ -527,7 +532,7 @@ class SystemMetricsCollector:
 class MetricsCollectorCore:
     """Advanced enterprise metrics collector core"""
     
-    def __init__(self, level: str = "enterprise"):
+    def __init__(self, level -> None: str = "enterprise") -> None:
         self.level = level
         self.registry = MetricRegistry()
         self.aggregator = MetricsAggregator()
@@ -574,7 +579,7 @@ class MetricsCollectorCore:
         }
         return configs.get(self.level, configs["enterprise"])
     
-    def _setup_business_metrics(self):
+    def _setup_business_metrics(self) -> None:
         """Setup business-specific metrics"""
         # API metrics
         self.api_requests_total = self.registry.register_counter(
@@ -656,7 +661,7 @@ class MetricsCollectorCore:
             logger.error(f"❌ Failed to start metrics collection: {e}")
             return False
     
-    async def _system_metrics_loop(self):
+    async def _system_metrics_loop(self) -> None:
         """System metrics collection loop"""
         while self._collection_running:
             try:
@@ -668,7 +673,7 @@ class MetricsCollectorCore:
                 logger.error(f"Error in system metrics collection: {e}")
                 await asyncio.sleep(self.performance_config["collection_interval"])
     
-    async def _aggregation_loop(self):
+    async def _aggregation_loop(self) -> None:
         """Metrics aggregation loop"""
         while self._collection_running:
             try:
@@ -681,7 +686,7 @@ class MetricsCollectorCore:
                 logger.error(f"Error in metrics aggregation: {e}")
                 await asyncio.sleep(self.performance_config["aggregation_window"])
     
-    async def _perform_aggregations(self):
+    async def _perform_aggregations(self) -> None:
         """Perform metric aggregations"""
         # This would typically store aggregated metrics to a time-series database
         # For now, we'll just log some basic aggregations
@@ -694,7 +699,7 @@ class MetricsCollectorCore:
         except Exception as e:
             logger.error(f"Aggregation error: {e}")
     
-    def record_api_request(self, method: str, endpoint: str, status_code: int, duration: float):
+    def record_api_request(self, method -> None: str, endpoint -> None: str, status_code -> None: int, duration -> None: float) -> None:
         """Record API request metrics"""
         labels = {"method": method, "endpoint": endpoint, "status": str(status_code)}
         
@@ -708,7 +713,7 @@ class MetricsCollectorCore:
         # Add to aggregator
         self.aggregator.add_value("api_requests_total", 1, labels)
     
-    def record_content_upload(self, content_type: str, status: str, processing_duration: float):
+    def record_content_upload(self, content_type -> None: str, status -> None: str, processing_duration -> None: float) -> None:
         """Record content upload metrics"""
         labels = {"type": content_type, "status": status}
         
@@ -719,7 +724,7 @@ class MetricsCollectorCore:
         
         self.aggregator.add_value("content_uploads_total", 1, labels)
     
-    def record_ai_prediction(self, model_name: str, status: str, accuracy: Optional[float] = None):
+    def record_ai_prediction(self, model_name -> None: str, status -> None: str, accuracy -> None: Optional[float] = None) -> None:
         """Record AI prediction metrics"""
         labels = {"model": model_name, "status": status}
         
@@ -730,14 +735,14 @@ class MetricsCollectorCore:
             gauge = self.registry.register_gauge("ai_model_accuracy", labels={"model": model_name})
             gauge.set(accuracy)
     
-    def record_security_violation(self, violation_type: str, severity: str):
+    def record_security_violation(self, violation_type -> None: str, severity -> None: str) -> None:
         """Record security violation metrics"""
         labels = {"type": violation_type, "severity": severity}
         
         counter = self.registry.register_counter("security_violations_total", labels=labels)
         counter.inc()
     
-    def set_active_users(self, count: int):
+    def set_active_users(self, count -> None: int) -> None:
         """Set current active users count"""
         self.active_users.set(count)
     

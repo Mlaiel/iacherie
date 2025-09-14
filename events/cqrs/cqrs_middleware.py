@@ -100,7 +100,7 @@ class AuthenticationContext:
 class BaseMiddleware:
     """Base class for CQRS middleware"""
     
-    def __init__(self, name: str, enabled: bool = True, priority: int = 0):
+    def __init__(self, name -> None: str, enabled -> None: bool = True, priority -> None: int = 0) -> None:
         self.name = name
         self.enabled = enabled
         self.priority = priority
@@ -135,7 +135,7 @@ class BaseMiddleware:
 class AuthenticationMiddleware(BaseMiddleware):
     """Authentication middleware for CQRS operations"""
     
-    def __init__(self, auth_service: Optional[Callable] = None, **kwargs):
+    def __init__(self, auth_service -> None: Optional[Callable] = None, **kwargs) -> None:
         super().__init__("authentication", **kwargs)
         self._auth_service = auth_service
         self._token_cache: Dict[str, AuthenticationContext] = {}
@@ -220,7 +220,7 @@ class AuthenticationMiddleware(BaseMiddleware):
 class AuthorizationMiddleware(BaseMiddleware):
     """Authorization middleware for CQRS operations"""
     
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs) -> None:
         super().__init__("authorization", **kwargs)
         self._permissions_cache: Dict[str, List[str]] = {}
         self._resource_permissions: Dict[str, List[str]] = {}
@@ -302,7 +302,7 @@ class AuthorizationMiddleware(BaseMiddleware):
 class ValidationMiddleware(BaseMiddleware):
     """Validation middleware for CQRS operations"""
     
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs) -> None:
         super().__init__("validation", **kwargs)
         self._validators: Dict[str, List[Callable]] = defaultdict(list)
     
@@ -373,7 +373,7 @@ class ValidationMiddleware(BaseMiddleware):
 class MetricsMiddleware(BaseMiddleware):
     """Metrics collection middleware for CQRS operations"""
     
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs) -> None:
         super().__init__("metrics", **kwargs)
         self._metrics: Dict[str, Dict[str, Any]] = defaultdict(lambda: {
             "count": 0,
@@ -468,7 +468,7 @@ class MetricsMiddleware(BaseMiddleware):
 class RateLimitingMiddleware(BaseMiddleware):
     """Rate limiting middleware for CQRS operations"""
     
-    def __init__(self, default_limit: int = 100, window_seconds: int = 60, **kwargs):
+    def __init__(self, default_limit -> None: int = 100, window_seconds -> None: int = 60, **kwargs) -> None:
         super().__init__("rate_limiting", **kwargs)
         self._default_limit = default_limit
         self._window_seconds = window_seconds
@@ -531,7 +531,7 @@ class RateLimitingMiddleware(BaseMiddleware):
 class AuditLoggingMiddleware(BaseMiddleware):
     """Audit logging middleware for CQRS operations"""
     
-    def __init__(self, audit_logger: Optional[logging.Logger] = None, **kwargs):
+    def __init__(self, audit_logger -> None: Optional[logging.Logger] = None, **kwargs) -> None:
         super().__init__("audit_logging", **kwargs)
         self._audit_logger = audit_logger or logging.getLogger(f"{__name__}.audit")
         self._audit_history: deque = deque(maxlen=10000)
@@ -631,7 +631,7 @@ class AuditLoggingMiddleware(BaseMiddleware):
 class ErrorHandlingMiddleware(BaseMiddleware):
     """Error handling middleware for CQRS operations"""
     
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs) -> None:
         super().__init__("error_handling", **kwargs)
         self._error_handlers: Dict[Type[Exception], Callable] = {}
         self._error_stats: Dict[str, int] = defaultdict(int)
@@ -696,7 +696,7 @@ class ErrorHandlingMiddleware(BaseMiddleware):
 class CQRSMiddlewarePipeline:
     """CQRS middleware pipeline manager"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._middleware: List[BaseMiddleware] = []
         self._enabled = True
     

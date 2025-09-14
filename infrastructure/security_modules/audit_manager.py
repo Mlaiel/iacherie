@@ -35,7 +35,7 @@ class AuditManager(ComplianceBaseManager):
     - Creator-specific audit requirements
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
         self.audit_trails = {}
         self.audit_reports = {}

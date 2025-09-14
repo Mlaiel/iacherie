@@ -133,7 +133,7 @@ class EnterpriseContract:
 class EnterpriseContractManagementSystem:
     """Enterprise contract management with multi-role expertise"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.contract_generator = LegalContractGenerator()
         self.signature_manager = DigitalSignatureManager()
         self.compliance_monitor = ContractComplianceMonitor()
@@ -276,7 +276,7 @@ Contact: mlaiel@live.de
 class LegalContractGenerator:
     """AI-powered legal contract generation (IA Prompt Engineer expertise)"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.generation_models = {}
         self.clause_library = {}
         
@@ -434,7 +434,7 @@ class LegalContractGenerator:
 class DigitalSignatureManager:
     """Enterprise digital signature management (Security Engineer expertise)"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.signature_keys = {}
         self.signature_verification = {}
         
@@ -469,7 +469,7 @@ class DigitalSignatureManager:
 class ContractComplianceMonitor:
     """Contract compliance monitoring (DevOps + Backend Senior expertise)"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.monitoring_active = False
         
     async def initialize(self) -> None:
@@ -499,7 +499,7 @@ class ContractComplianceMonitor:
 class MLContractAnalyzer:
     """ML-powered contract risk analysis (ML Engineer expertise)"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.risk_models = {}
         
     async def initialize(self) -> None:
@@ -540,7 +540,7 @@ class MLContractAnalyzer:
 class AudioContractSpecialist:
     """Audio industry contract specialist (Audio Engineer expertise)"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.audio_contract_templates = {}
         self.royalty_calculators = {}
         

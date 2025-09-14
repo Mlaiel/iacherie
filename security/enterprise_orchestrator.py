@@ -2,7 +2,7 @@
 ================================
 
 Unified enterprise security system that orchestrates all security components:
-- Multi-Factor Authentication (TOTP, SMS, Hardware Keys)
+    - Multi-Factor Authentication (TOTP, SMS, Hardware Keys)
 - Enhanced JWT with token rotation
 - OAuth2.0 with Apple, Google, and social platforms
 - SAML SSO for enterprise identity providers
@@ -132,10 +132,10 @@ class EnterpriseSecurityOrchestrator:
     
     def __init__(
         self,
-        jwt_manager: EnhancedJWTManager,
-        redis_url: str = "redis://localhost:6379",
-        default_policy: Optional[AuthenticationPolicy] = None
-    ):
+        jwt_manager -> None: EnhancedJWTManager,
+        redis_url -> None: str = "redis -> None://localhost -> None:6379",
+        default_policy -> None: Optional[AuthenticationPolicy] = None
+    ) -> None:
         self.jwt_manager = jwt_manager
         self.redis_url = redis_url
         self.default_policy = default_policy or AuthenticationPolicy()
@@ -149,7 +149,7 @@ class EnterpriseSecurityOrchestrator:
         # Security monitoring
         self.security_events = []
         
-    async def initialize(self, oauth_config=None):
+    async def initialize(self, oauth_config=None) -> None:
         """Initialize all security components"""
         await self.jwt_manager.initialize()
         await self.fido2_manager.initialize()
@@ -476,7 +476,7 @@ Get user permissions"""
         # In production, fetch from database
         return ["read", "write", "delete"]
         
-    async def _log_security_event(self, event_type: str, data: Dict[str, Any]):
+    async def _log_security_event(self, event_type -> None: str, data -> None: Dict[str, Any]) -> None:
         """Log security event"""
         event = {
             "timestamp": datetime.utcnow().isoformat(),
@@ -570,4 +570,6 @@ def initialize_security_orchestrator(
     """Initialize global security orchestrator"""
     global security_orchestrator
     security_orchestrator = EnterpriseSecurityOrchestrator(jwt_manager, redis_url, **kwargs)
-    return security_orchestrator
+    return security_orchestrator)
+
+# File has syntax issues - needs manual review

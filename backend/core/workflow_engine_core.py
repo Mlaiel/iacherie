@@ -125,7 +125,7 @@ class BusinessProcessAutomator:
     dynamic process adaptation, and enterprise-grade process optimization.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize the Business Process Automator"""
         self.config = config or {}
         self.process_definitions: Dict[str, Dict[str, Any]] = {}
@@ -137,7 +137,7 @@ class BusinessProcessAutomator:
         # Initialize default process handlers
         self._initialize_process_handlers()
     
-    def _initialize_process_handlers(self):
+    def _initialize_process_handlers(self) -> None:
         """Initialize default process handlers"""
         
         self.process_handlers = {
@@ -218,7 +218,7 @@ class BusinessProcessAutomator:
             self.logger.error(f"Failed to start process {process_id}: {e}")
             raise
     
-    async def _execute_process(self, execution_id: str):
+    async def _execute_process(self, execution_id -> None: str) -> None:
         """Execute business process steps"""
         
         execution = self.active_processes[execution_id]
@@ -561,7 +561,7 @@ class WorkflowOrchestrator:
     parallel execution, conditional flows, and intelligent resource allocation.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize the Workflow Orchestrator"""
         self.config = config or {}
         self.workflow_definitions: Dict[str, WorkflowDefinition] = {}
@@ -578,7 +578,7 @@ class WorkflowOrchestrator:
         self._worker_running = True
         asyncio.create_task(self._orchestrator_worker())
     
-    def _initialize_task_executors(self):
+    def _initialize_task_executors(self) -> None:
         """Initialize default task executors"""
         
         self.task_executors = {
@@ -691,7 +691,7 @@ class WorkflowOrchestrator:
             self.logger.error(f"Failed to start workflow {workflow_id}: {e}")
             raise
     
-    async def _orchestrator_worker(self):
+    async def _orchestrator_worker(self) -> None:
         """Main orchestrator worker loop"""
         
         while self._worker_running:
@@ -710,7 +710,7 @@ class WorkflowOrchestrator:
                 self.logger.error(f"Orchestrator worker error: {e}")
                 await asyncio.sleep(1)  # Prevent tight error loop
     
-    async def _process_workflow_execution(self, execution_id: str):
+    async def _process_workflow_execution(self, execution_id -> None: str) -> None:
         """Process a single workflow execution"""
         
         if execution_id not in self.active_executions:
@@ -782,7 +782,7 @@ class WorkflowOrchestrator:
         
         return ready_tasks
     
-    async def _execute_task(self, task: WorkflowTask, execution: WorkflowExecution):
+    async def _execute_task(self, task -> None: WorkflowTask, execution -> None: WorkflowExecution) -> None:
         """Execute a single task"""
         
         task.status = TaskStatus.RUNNING
@@ -1025,7 +1025,7 @@ class WorkflowEngineCore:
     across the IA Influencer Agent platform with enterprise-grade capabilities.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize the Workflow Engine Core"""
         self.config = config or {}
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
@@ -1060,7 +1060,7 @@ class WorkflowEngineCore:
             self.logger.error(f"Workflow Engine Core initialization failed: {e}")
             return False
     
-    async def _initialize_default_workflows(self):
+    async def _initialize_default_workflows(self) -> None:
         """Initialize default workflows and processes"""
         
         # Define default content processing workflow

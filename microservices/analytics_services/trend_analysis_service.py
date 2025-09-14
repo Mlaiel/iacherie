@@ -37,18 +37,21 @@ logging.basicConfig(
 logger = logging.getLogger("TrendAnalysisService")
 
 class TrendDirection(str, Enum):
+    """TrendDirection class implementation"""
     RISING = "rising"
     FALLING = "falling"
     STABLE = "stable"
     VOLATILE = "volatile"
 
 class TrendStrength(str, Enum):
+    """TrendStrength class implementation"""
     WEAK = "weak"
     MODERATE = "moderate"
     STRONG = "strong"
     EXPLOSIVE = "explosive"
 
 class TrendCategory(str, Enum):
+    """TrendCategory class implementation"""
     CONTENT = "content"
     HASHTAG = "hashtag"
     KEYWORD = "keyword"
@@ -57,6 +60,7 @@ class TrendCategory(str, Enum):
     DEMOGRAPHIC = "demographic"
 
 class TimeFrame(str, Enum):
+    """TimeFrame class implementation"""
     HOUR = "hour"
     DAY = "day"
     WEEK = "week"
@@ -126,7 +130,7 @@ class TrendAnalysisService:
     - **Lead Dev IA**: AI-powered trend discovery and recommendation system
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.trends: Dict[str, TrendModel] = {}
         self.data_streams: Dict[str, deque] = defaultdict(lambda: deque(maxlen=10000))
         self.predictions: Dict[str, TrendPredictionModel] = {}
@@ -141,7 +145,7 @@ class TrendAnalysisService:
         
         logger.info("📈 Trend Analysis Service initialized")
     
-    def _initialize_ai_models(self):
+    def _initialize_ai_models(self) -> None:
         """Initialize AI models for trend analysis"""
         self.ai_models = {
             "linear_regression": self._linear_trend_model,
@@ -152,7 +156,7 @@ class TrendAnalysisService:
             "sentiment_analysis": self._sentiment_analysis_model
         }
     
-    def _initialize_trend_keywords(self):
+    def _initialize_trend_keywords(self) -> None:
         """Initialize trending keywords and hashtags"""
         self.trend_keywords = {
             "content_creation": [
@@ -177,7 +181,7 @@ class TrendAnalysisService:
             ]
         }
     
-    def _start_real_time_monitoring(self):
+    def _start_real_time_monitoring(self) -> None:
         """Start real-time trend monitoring"""
         # This would typically connect to real data streams
         # For now, we'll simulate with periodic updates
@@ -799,7 +803,7 @@ class TrendAnalysisService:
         
         return list(set(keywords))[:10]  # Return unique keywords, max 10
     
-    async def _start_trend_monitoring(self, trend_id: str):
+    async def _start_trend_monitoring(self, trend_id -> None: str) -> None:
         """Start monitoring for a specific trend"""
         # This would typically set up real-time monitoring
         # For now, we'll just log the start
@@ -1248,42 +1252,42 @@ app = FastAPI(title="Trend Analysis Service", version="1.0.0")
 service = TrendAnalysisService()
 
 @app.post("/data-points/add")
-async def add_data_point(data_point: DataPointModel):
+async def add_data_point(data_point -> None: DataPointModel) -> None:
     """Add new data point for trend analysis"""
     return await service.add_data_point(data_point)
 
 @app.post("/trends/create")
-async def create_trend(trend: TrendModel):
+async def create_trend(trend -> None: TrendModel) -> None:
     """Create new trend for tracking"""
     return await service.create_trend(trend)
 
 @app.post("/trends/{trend_id}/analyze")
-async def analyze_trend(trend_id: str, timeframe: TimeFrame = TimeFrame.WEEK):
+async def analyze_trend(trend_id -> None: str, timeframe -> None: TimeFrame = TimeFrame.WEEK) -> None:
     """Analyze trend with AI-powered insights"""
     return await service.analyze_trend(trend_id, timeframe)
 
 @app.post("/trends/{trend_id}/predict")
-async def predict_trend(trend_id: str, timeframe: TimeFrame = TimeFrame.WEEK, prediction_days: int = 7):
+async def predict_trend(trend_id -> None: str, timeframe -> None: TimeFrame = TimeFrame.WEEK, prediction_days -> None: int = 7) -> None:
     """Predict future trend values"""
     return await service.predict_trend(trend_id, timeframe, prediction_days)
 
 @app.get("/trending")
-async def get_trending_topics(category: Optional[TrendCategory] = None, limit: int = 20):
+async def get_trending_topics(category -> None: Optional[TrendCategory] = None, limit -> None: int = 20) -> None:
     """Get currently trending topics"""
     return await service.get_trending_topics(category, limit)
 
 @app.post("/recommendations")
-async def get_trend_recommendations(user_interests: List[str], content_type: str = "general"):
+async def get_trend_recommendations(user_interests -> None: List[str], content_type -> None: str = "general") -> None:
     """Get personalized trend recommendations"""
     return await service.get_trend_recommendations(user_interests, content_type)
 
 @app.get("/metrics")
-async def get_metrics():
+async def get_metrics() -> None:
     """Get trend analysis service metrics"""
     return await service.get_trend_metrics()
 
 @app.get("/health")
-async def health_check():
+async def health_check() -> None:
     """Service health check"""
     return {
         "service": "TrendAnalysisService",

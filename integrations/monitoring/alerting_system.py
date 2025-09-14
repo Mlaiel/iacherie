@@ -50,7 +50,7 @@ class AlertNotification:
 class AlertingSystem:
     """Advanced alerting and notification system."""
     
-    def __init__(self, performance_monitor):
+    def __init__(self, performance_monitor) -> None:
         self.performance_monitor = performance_monitor
         self.alert_rules: Dict[str, AlertRule] = {}
         self.notifications: Dict[str, AlertNotification] = {}

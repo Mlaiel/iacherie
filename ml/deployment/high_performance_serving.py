@@ -93,12 +93,12 @@ class ModelWrapper:
     
     def __init__(
         self,
-        model: Any,
-        model_name: str,
-        model_version: str,
-        preprocessing_func: Optional[Callable] = None,
-        postprocessing_func: Optional[Callable] = None
-    ):
+        model -> None: Any,
+        model_name -> None: str,
+        model_version -> None: str,
+        preprocessing_func -> None: Optional[Callable] = None,
+        postprocessing_func -> None: Optional[Callable] = None
+    ) -> None:
         self.model = model
         self.model_name = model_name
         self.model_version = model_version
@@ -163,7 +163,7 @@ class ModelWrapper:
             "optimization_metadata": self.optimization_metadata
         }
     
-    def optimize_for_inference(self):
+    def optimize_for_inference(self) -> None:
         """Optimize model for inference"""
         try:
             # This would implement model-specific optimizations
@@ -185,7 +185,7 @@ class ModelWrapper:
 class PredictionWorker:
     """Worker for processing prediction requests"""
     
-    def __init__(self, worker_id: str, model_wrapper: ModelWrapper):
+    def __init__(self, worker_id -> None: str, model_wrapper -> None: ModelWrapper) -> None:
         self.worker_id = worker_id
         self.model_wrapper = model_wrapper
         self.is_busy = False
@@ -291,14 +291,14 @@ class AutoScaler:
     
     def __init__(
         self,
-        min_workers: int = 1,
-        max_workers: int = 10,
-        target_cpu_utilization: float = 70.0,
-        target_latency_ms: float = 100.0,
-        scale_up_threshold: float = 80.0,
-        scale_down_threshold: float = 40.0,
-        scaling_strategy: ScalingStrategy = ScalingStrategy.HYBRID
-    ):
+        min_workers -> None: int = 1,
+        max_workers -> None: int = 10,
+        target_cpu_utilization -> None: float = 70.0,
+        target_latency_ms -> None: float = 100.0,
+        scale_up_threshold -> None: float = 80.0,
+        scale_down_threshold -> None: float = 40.0,
+        scaling_strategy -> None: ScalingStrategy = ScalingStrategy.HYBRID
+    ) -> None:
         self.min_workers = min_workers
         self.max_workers = max_workers
         self.target_cpu_utilization = target_cpu_utilization
@@ -393,12 +393,12 @@ class HighPerformanceModelServer:
     
     def __init__(
         self,
-        serve_mode: ServeMode = ServeMode.ASYNCHRONOUS,
-        auto_scaler: Optional[AutoScaler] = None,
-        batch_size: int = 32,
-        batch_timeout_ms: float = 100.0,
-        enable_model_optimization: bool = True
-    ):
+        serve_mode -> None: ServeMode = ServeMode.ASYNCHRONOUS,
+        auto_scaler -> None: Optional[AutoScaler] = None,
+        batch_size -> None: int = 32,
+        batch_timeout_ms -> None: float = 100.0,
+        enable_model_optimization -> None: bool = True
+    ) -> None:
         self.serve_mode = serve_mode
         self.auto_scaler = auto_scaler or AutoScaler()
         self.batch_size = batch_size
@@ -464,7 +464,7 @@ class HighPerformanceModelServer:
             return True
         return False
     
-    async def start_server(self):
+    async def start_server(self) -> None:
         """Start the model serving server"""
         if self.is_running:
             logger.warning("Server is already running")
@@ -492,7 +492,7 @@ class HighPerformanceModelServer:
         except asyncio.CancelledError:
             logger.info("Server tasks cancelled")
     
-    async def stop_server(self):
+    async def stop_server(self) -> None:
         """
         Arrêt gracieux du serveur haute performance avec drainage des requêtes en cours
         """
@@ -571,7 +571,7 @@ class HighPerformanceModelServer:
             self.is_running = False  # Force stop même en cas d'erreur
             raise
     
-    async def _cleanup_model_cache(self):
+    async def _cleanup_model_cache(self) -> None:
         """Nettoie le cache de modèles"""
         try:
             if hasattr(self, 'model_cache'):
@@ -582,7 +582,7 @@ class HighPerformanceModelServer:
         except Exception as e:
             logger.error(f"Error cleaning model cache: {e}")
     
-    async def _cleanup_database_connections(self):
+    async def _cleanup_database_connections(self) -> None:
         """Ferme les connexions de base de données"""
         try:
             if hasattr(self, 'db_pool'):
@@ -592,7 +592,7 @@ class HighPerformanceModelServer:
         except Exception as e:
             logger.error(f"Error closing database connections: {e}")
     
-    async def _cleanup_redis_connections(self):
+    async def _cleanup_redis_connections(self) -> None:
         """Ferme les connexions Redis"""
         try:
             if hasattr(self, 'redis_client'):
@@ -602,7 +602,7 @@ class HighPerformanceModelServer:
         except Exception as e:
             logger.error(f"Error closing Redis connections: {e}")
     
-    async def _save_final_metrics(self):
+    async def _save_final_metrics(self) -> None:
         """Sauvegarde les métriques finales"""
         try:
             logger.info("Saving final performance metrics...")
@@ -728,7 +728,7 @@ class HighPerformanceModelServer:
         
         return results[0] if results else None
     
-    async def _request_processing_loop(self):
+    async def _request_processing_loop(self) -> None:
         """Main request processing loop"""
         while self.is_running:
             try:
@@ -753,7 +753,7 @@ class HighPerformanceModelServer:
                 logger.error(f"Error in request processing loop: {str(e)}")
                 await asyncio.sleep(1)
     
-    async def _metrics_collection_loop(self):
+    async def _metrics_collection_loop(self) -> None:
         """Collect and store performance metrics"""
         while self.is_running:
             try:
@@ -773,7 +773,7 @@ class HighPerformanceModelServer:
                 logger.error(f"Error in metrics collection: {str(e)}")
                 await asyncio.sleep(10)
     
-    async def _auto_scaling_loop(self):
+    async def _auto_scaling_loop(self) -> None:
         """Auto-scaling loop"""
         while self.is_running:
             try:
@@ -840,7 +840,7 @@ class HighPerformanceModelServer:
             active_workers=active_workers
         )
     
-    async def _scale_workers(self, desired_count: int):
+    async def _scale_workers(self, desired_count -> None: int) -> None:
         """Scale workers to desired count"""
         current_count = len(self.workers)
         
@@ -853,7 +853,7 @@ class HighPerformanceModelServer:
             for i in range(current_count - desired_count):
                 await self._remove_worker()
     
-    async def _add_worker(self):
+    async def _add_worker(self) -> None:
         """Add a new worker"""
         if not self.models:
             logger.warning("No models registered, cannot add worker")
@@ -868,7 +868,7 @@ class HighPerformanceModelServer:
         self.workers[worker_id] = worker
         logger.info(f"Added worker {worker_id}")
     
-    async def _remove_worker(self):
+    async def _remove_worker(self) -> None:
         """Remove a worker"""
         if not self.workers:
             return
@@ -923,7 +923,7 @@ class HighPerformanceModelServer:
             "queue_size": self.request_queue.qsize()
         }
     
-    def cleanup(self):
+    def cleanup(self) -> None:
         """Cleanup resources"""
         if self.executor:
             self.executor.shutdown(wait=True)

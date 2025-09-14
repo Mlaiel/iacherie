@@ -1,3 +1,8 @@
+"""
+Deployment Orchestrator module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 🚀 Deployment Orchestrator - Enterprise MLOps Platform
@@ -138,7 +143,7 @@ class DeploymentResult:
 class StepExecutor:
     """Exécuteur d'étape de déploiement"""
     
-    def __init__(self, executor_type: str):
+    def __init__(self, executor_type -> None: str) -> None:
         self.executor_type = executor_type
         
     async def execute(self, step: DeploymentStep, context: Dict[str, Any]) -> Dict[str, Any]:
@@ -148,7 +153,7 @@ class StepExecutor:
 class DockerExecutor(StepExecutor):
     """Exécuteur Docker"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__("docker")
         self.docker_client = docker.from_env()
     
@@ -278,7 +283,7 @@ class DockerExecutor(StepExecutor):
 class KubernetesExecutor(StepExecutor):
     """Exécuteur Kubernetes"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__("kubernetes")
         try:
             k8s_config.load_incluster_config()
@@ -494,7 +499,7 @@ class KubernetesExecutor(StepExecutor):
 class TestExecutor(StepExecutor):
     """Exécuteur de tests"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__("test")
     
     async def execute(self, step: DeploymentStep, context: Dict[str, Any]) -> Dict[str, Any]:
@@ -612,7 +617,7 @@ class TestExecutor(StepExecutor):
 class DeploymentOrchestrator:
     """Orchestrateur de déploiement principal avec workflows complexes"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.executors = {
             'docker': DockerExecutor(),
@@ -626,7 +631,7 @@ class DeploymentOrchestrator:
         # Chargement des templates par défaut
         self._load_default_templates()
     
-    def _load_default_templates(self):
+    def _load_default_templates(self) -> None:
         """Charge les templates de workflow par défaut"""
         
         # Template pour déploiement production
@@ -908,9 +913,9 @@ class DeploymentOrchestrator:
     
     async def _pre_deployment_validation(
         self, 
-        deployment_config: DeploymentConfig, 
-        context: Dict[str, Any]
-    ):
+        deployment_config -> None: DeploymentConfig, 
+        context -> None: Dict[str, Any]
+    ) -> None:
         """Validation préalable au déploiement"""
         
         logger.info(f"Validation préalable: {deployment_config.deployment_id}")
@@ -931,7 +936,7 @@ class DeploymentOrchestrator:
         if deployment_config.validation_level == ValidationLevel.ENTERPRISE:
             await self._security_validation(deployment_config)
     
-    async def _security_validation(self, deployment_config: DeploymentConfig):
+    async def _security_validation(self, deployment_config -> None: DeploymentConfig) -> None:
         """Validation de sécurité enterprise"""
         
         # Validation de la signature du modèle
@@ -1121,7 +1126,7 @@ class DeploymentOrchestrator:
         
         return metrics
     
-    async def _auto_rollback(self, deployment_config: DeploymentConfig, result: DeploymentResult):
+    async def _auto_rollback(self, deployment_config -> None: DeploymentConfig, result -> None: DeploymentResult) -> None:
         """Exécute un rollback automatique"""
         
         logger.warning(f"Début du rollback automatique: {deployment_config.deployment_id}")
@@ -1202,7 +1207,7 @@ def create_deployment_orchestrator(config: Dict[str, Any]) -> DeploymentOrchestr
     return DeploymentOrchestrator(config)
 
 # Exemple d'utilisation
-async def main():
+async def main() -> None:
     """Exemple d'utilisation de l'orchestrateur de déploiement"""
     
     # Configuration

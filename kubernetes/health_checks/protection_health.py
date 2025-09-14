@@ -73,7 +73,7 @@ class ProtectionServiceHealthChecker:
     Monitors all content protection components including fingerprinting
     engines, crawlers, detection systems, and enforcement automation.
     """
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """
         Initialize protection service health checker
         

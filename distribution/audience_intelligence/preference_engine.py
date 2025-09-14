@@ -101,7 +101,7 @@ class AdvancedPreferenceEngine:
     - Preference clustering and segmentation
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.preference_models = {}
         self.vectorizer = TfidfVectorizer(max_features=1000, stop_words='english')
         self.rf_classifier = RandomForestClassifier(n_estimators=100, random_state=42)
@@ -662,10 +662,10 @@ class AdvancedPreferenceEngine:
 
     async def _strengthen_matching_preferences(
         self,
-        user_id: str,
-        content_metadata: Dict[str, Any],
-        strength_boost: float
-    ):
+        user_id -> None: str,
+        content_metadata -> None: Dict[str, Any],
+        strength_boost -> None: float
+    ) -> None:
         """Strengthen preferences that match the content"""
         
         # This would update preferences in the database
@@ -681,10 +681,10 @@ class AdvancedPreferenceEngine:
         
     async def _weaken_matching_preferences(
         self,
-        user_id: str,
-        content_metadata: Dict[str, Any],
-        strength_reduction: float
-    ):
+        user_id -> None: str,
+        content_metadata -> None: Dict[str, Any],
+        strength_reduction -> None: float
+    ) -> None:
         """Weaken preferences that match the content"""
         
         # This would update preferences in the database

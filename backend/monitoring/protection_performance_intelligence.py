@@ -190,7 +190,7 @@ class ProtectionPerformanceIntelligence:
     violation detection insights, and rights management optimization.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.protection_metrics: Dict[str, List[ProtectionPerformanceMetrics]] = defaultdict(list)
         self.violation_analytics: Dict[str, ViolationAnalytics] = {}
         self.roi_analytics: Dict[str, ProtectionROIAnalytics] = {}
@@ -494,18 +494,18 @@ class ProtectionPerformanceIntelligence:
     
     async def _analyze_violation_patterns(
         self,
-        metrics: ProtectionPerformanceMetrics,
-        raw_data: Dict[str, Any]
-    ):
+        metrics -> None: ProtectionPerformanceMetrics,
+        raw_data -> None: Dict[str, Any]
+    ) -> None:
         """Analyze violation patterns and trends"""
         # Pattern analysis logic would go here
         logger.info(f"Violation pattern analysis completed for {metrics.protection_id}")
     
     async def _calculate_protection_roi(
         self,
-        metrics: ProtectionPerformanceMetrics,
-        raw_data: Dict[str, Any]
-    ):
+        metrics -> None: ProtectionPerformanceMetrics,
+        raw_data -> None: Dict[str, Any]
+    ) -> None:
         """Calculate protection system ROI"""
         roi_analytics = ProtectionROIAnalytics(
             protection_system_id=metrics.protection_id,
@@ -522,7 +522,7 @@ class ProtectionPerformanceIntelligence:
         
         self.roi_analytics[metrics.protection_id] = roi_analytics
     
-    async def _trigger_violation_response(self, analytics: ViolationAnalytics):
+    async def _trigger_violation_response(self, analytics -> None: ViolationAnalytics) -> None:
         """Trigger automated violation response based on severity"""
         if analytics.severity in [ProtectionSeverity.HIGH, ProtectionSeverity.CRITICAL]:
             # High priority response

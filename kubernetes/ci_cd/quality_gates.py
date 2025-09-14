@@ -83,7 +83,7 @@ class QualityGateValidator:
     """
 Enterprise quality gates validation engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """
 Initialize quality gate validator"""
         self.initialized = False

@@ -1,3 +1,8 @@
+"""
+Batch Inference Processor module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 🚀 Batch Inference Processor - Enterprise MLOps Platform
@@ -119,9 +124,9 @@ class BatchInferenceProcessor:
     """
     
     def __init__(self, 
-                 config: Optional[BatchProcessingConfig] = None,
-                 storage_path: str = "/tmp/batch_processor",
-                 db_path: str = "/tmp/batch_processor.db"):
+                 config -> None: Optional[BatchProcessingConfig] = None,
+                 storage_path -> None: str = "/tmp/batch_processor",
+                 db_path -> None: str = "/tmp/batch_processor.db") -> None:
         self.config = config or BatchProcessingConfig()
         self.storage_path = Path(storage_path)
         self.db_path = db_path
@@ -156,7 +161,7 @@ class BatchInferenceProcessor:
         self._setup_database()
         logger.info("🚀 BatchInferenceProcessor initialized for enterprise batch processing")
     
-    def _setup_storage(self):
+    def _setup_storage(self) -> None:
         """Initialisation du stockage"""
         try:
             self.storage_path.mkdir(parents=True, exist_ok=True)
@@ -168,7 +173,7 @@ class BatchInferenceProcessor:
             logger.error(f"❌ Storage setup error: {e}")
             raise
     
-    def _setup_database(self):
+    def _setup_database(self) -> None:
         """Initialisation de la base de données"""
         try:
             with sqlite3.connect(self.db_path) as conn:
@@ -259,7 +264,7 @@ class BatchInferenceProcessor:
             logger.error(f"❌ Error submitting batch job: {e}")
             raise
     
-    async def _process_job(self, job_id: str):
+    async def _process_job(self, job_id -> None: str) -> None:
         """Traitement d'un job batch"""
         try:
             if job_id not in self.job_queue:
@@ -360,7 +365,7 @@ class BatchInferenceProcessor:
         }
         return time_estimates.get(batch_type, 0.2)
     
-    async def _execute_processing_strategy(self, job: BatchJob):
+    async def _execute_processing_strategy(self, job -> None: BatchJob) -> None:
         """Exécution de la stratégie de traitement"""
         try:
             if job.processing_strategy == BatchProcessingStrategy.SEQUENTIAL:
@@ -377,7 +382,7 @@ class BatchInferenceProcessor:
             logger.error(f"❌ Error executing strategy {job.processing_strategy}: {e}")
             raise
     
-    async def _process_sequential(self, job: BatchJob):
+    async def _process_sequential(self, job -> None: BatchJob) -> None:
         """Traitement séquentiel"""
         for i, item in enumerate(job.items):
             try:
@@ -412,7 +417,7 @@ class BatchInferenceProcessor:
                     except Exception as e:
                         logger.error(f"❌ Progress callback error: {e}")
     
-    async def _process_parallel_threads(self, job: BatchJob):
+    async def _process_parallel_threads(self, job -> None: BatchJob) -> None:
         """Traitement parallèle avec threads"""
         try:
             # Division en chunks
@@ -525,7 +530,7 @@ class BatchInferenceProcessor:
         loop = asyncio.get_event_loop()
         return await loop.run_in_executor(None, self._process_item_sync, job, item)
     
-    async def _process_parallel_processes(self, job: BatchJob):
+    async def _process_parallel_processes(self, job -> None: BatchJob) -> None:
         """Traitement parallèle avec processus (pour très gros volumes)"""
         try:
             # Pour les processus, on doit sérialiser les données
@@ -568,7 +573,7 @@ class BatchInferenceProcessor:
             logger.error(f"❌ Parallel processes error: {e}")
             raise
     
-    async def _ensure_model_loaded(self, model_id: str, model_version: str):
+    async def _ensure_model_loaded(self, model_id -> None: str, model_version -> None: str) -> None:
         """S'assurer que le modèle est chargé"""
         model_key = f"{model_id}_{model_version}"
         
@@ -587,7 +592,7 @@ class BatchInferenceProcessor:
             
             logger.info(f"✅ Model loaded: {model_key}")
     
-    async def _save_job_to_db(self, job: BatchJob):
+    async def _save_job_to_db(self, job -> None: BatchJob) -> None:
         """Sauvegarde d'un job en base"""
         try:
             with sqlite3.connect(self.db_path) as conn:
@@ -620,7 +625,7 @@ class BatchInferenceProcessor:
         except Exception as e:
             logger.error(f"❌ Error saving job to DB: {e}")
     
-    async def _save_results(self, job: BatchJob):
+    async def _save_results(self, job -> None: BatchJob) -> None:
         """Sauvegarde des résultats d'un job"""
         try:
             results_file = self.storage_path / "results" / f"{job.job_id}_results.json"
@@ -652,7 +657,7 @@ class BatchInferenceProcessor:
         except Exception as e:
             logger.error(f"❌ Error saving results: {e}")
     
-    async def _handle_job_error(self, job_id: str, error_message: str):
+    async def _handle_job_error(self, job_id -> None: str, error_message -> None: str) -> None:
         """Gestion d'erreur de job"""
         try:
             if job_id in self.active_jobs:
@@ -676,7 +681,7 @@ class BatchInferenceProcessor:
         except Exception as e:
             logger.error(f"❌ Error handling job error: {e}")
     
-    def _update_processing_stats(self, job: BatchJob):
+    def _update_processing_stats(self, job -> None: BatchJob) -> None:
         """Mise à jour des statistiques de traitement"""
         try:
             if job.started_at and job.completed_at:
@@ -778,19 +783,19 @@ class BatchInferenceProcessor:
             "loaded_models": len(self.loaded_models)
         }
     
-    def add_progress_callback(self, callback: Callable):
+    def add_progress_callback(self, callback -> None: Callable) -> None:
         """Ajouter un callback de progrès"""
         self.progress_callbacks.append(callback)
     
-    def add_completion_callback(self, callback: Callable):
+    def add_completion_callback(self, callback -> None: Callable) -> None:
         """Ajouter un callback de completion"""
         self.completion_callbacks.append(callback)
     
-    def add_error_callback(self, callback: Callable):
+    def add_error_callback(self, callback -> None: Callable) -> None:
         """Ajouter un callback d'erreur"""
         self.error_callbacks.append(callback)
     
-    async def cleanup_old_data(self, days_back: int = 7):
+    async def cleanup_old_data(self, days_back -> None: int = 7) -> None:
         """Nettoyage des données anciennes"""
         try:
             cutoff_date = datetime.now() - timedelta(days=days_back)
@@ -866,7 +871,7 @@ def _process_chunk_file(chunk_file_path: str) -> Tuple[Dict[str, Any], List[str]
 
 
 # Exemple d'utilisation pour démonstration
-async def main():
+async def main() -> None:
     """Démonstration des capacités du BatchInferenceProcessor"""
     
     # Configuration custom
@@ -880,13 +885,13 @@ async def main():
     processor = BatchInferenceProcessor(config=config)
     
     # Callbacks de démonstration
-    async def progress_callback(job: BatchJob):
+    async def progress_callback(job -> None: BatchJob) -> None:
         print(f"📈 Progress {job.job_id}: {job.progress:.2%} ({job.processed_items}/{job.total_items})")
     
-    async def completion_callback(job: BatchJob):
+    async def completion_callback(job -> None: BatchJob) -> None:
         print(f"✅ Completed {job.job_id}: {job.processed_items} items processed")
     
-    async def error_callback(job: BatchJob, error: str):
+    async def error_callback(job -> None: BatchJob, error -> None: str) -> None:
         print(f"❌ Error in {job.job_id}: {error}")
     
     processor.add_progress_callback(progress_callback)

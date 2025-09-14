@@ -247,7 +247,7 @@ class MonitoringConfiguration(BaseModel):
 class BrandManagementService:
     """🏢 Enterprise Brand Management Service - Multi-Expert Implementation"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize with all expert role capabilities"""
         # 🧠 Lead Dev IA: AI monitoring and optimization engines
         self.ai_sentiment_analyzer = self._initialize_sentiment_ai()
@@ -548,7 +548,7 @@ class BrandManagementService:
             ]
         }
 
-    def _load_sample_data(self):
+    def _load_sample_data(self) -> None:
         """Load sample brand data for demonstration"""
         # Create sample brand identity
         sample_brand = BrandIdentity(
@@ -587,7 +587,7 @@ class BrandManagementService:
         self._generate_sample_mentions(sample_brand.id)
         self._calculate_brand_health(sample_brand.id)
 
-    def _generate_sample_mentions(self, brand_id: str):
+    def _generate_sample_mentions(self, brand_id -> None: str) -> None:
         """Generate sample brand mentions for demonstration"""
         sample_mentions = [
             {
@@ -678,7 +678,7 @@ class BrandManagementService:
             logger.error(f"❌ Error creating brand identity: {str(e)}")
             raise HTTPException(status_code=500, detail=f"Brand identity creation failed: {str(e)}")
 
-    async def _process_audio_identity(self, identity: BrandIdentity):
+    async def _process_audio_identity(self, identity -> None: BrandIdentity) -> None:
         """🎵 Audio: Process audio brand identity components"""
         if identity.audio_logo:
             # Analyze audio logo characteristics
@@ -709,7 +709,7 @@ class BrandManagementService:
             
             self.voice_analysis["brand_voice_profile"] = voice_profile
 
-    def _setup_brand_monitoring(self, brand_id: str):
+    def _setup_brand_monitoring(self, brand_id -> None: str) -> None:
         """⚙️ DevOps: Set up monitoring for new brand"""
         self.performance_metrics[brand_id] = {
             "created_at": datetime.now(),
@@ -752,7 +752,7 @@ class BrandManagementService:
             logger.error(f"❌ Error configuring monitoring: {str(e)}")
             raise HTTPException(status_code=500, detail=f"Monitoring configuration failed: {str(e)}")
 
-    async def _initialize_brand_ai_monitoring(self, config: MonitoringConfiguration):
+    async def _initialize_brand_ai_monitoring(self, config -> None: MonitoringConfiguration) -> None:
         """🧠 Lead Dev IA: Initialize AI-powered monitoring for brand"""
         # Set up sentiment analysis for brand keywords
         monitoring_setup = {
@@ -783,12 +783,12 @@ class BrandManagementService:
         }
         return frequencies.get(level, "hourly")
 
-    async def _configure_monitoring_services(self, config: MonitoringConfiguration):
+    async def _configure_monitoring_services(self, config -> None: MonitoringConfiguration) -> None:
         """🌐 Microservices: Configure monitoring service integrations"""
         # In production, this would configure external monitoring services
         logger.info(f"🌐 Configuring monitoring services for {len(config.platforms)} platforms")
 
-    async def _setup_monitoring_infrastructure(self, config: MonitoringConfiguration):
+    async def _setup_monitoring_infrastructure(self, config -> None: MonitoringConfiguration) -> None:
         """⚙️ DevOps: Set up monitoring infrastructure"""
         # Initialize data collection infrastructure
         self.dashboard_data[config.brand_id] = {
@@ -978,7 +978,7 @@ class BrandManagementService:
         
         return insights
 
-    async def _check_crisis_indicators(self, brand_id: str, metrics: BrandHealthMetrics):
+    async def _check_crisis_indicators(self, brand_id -> None: str, metrics -> None: BrandHealthMetrics) -> None:
         """🚨 Check for crisis indicators and generate alerts"""
         if metrics.crisis_risk_level > 0.7:  # High crisis risk
             crisis_alert = CrisisAlert(
@@ -1011,7 +1011,7 @@ class BrandManagementService:
             # 🌐 Microservices: Send crisis alert
             await self._send_crisis_alert(crisis_alert)
 
-    async def _send_crisis_alert(self, alert: CrisisAlert):
+    async def _send_crisis_alert(self, alert -> None: CrisisAlert) -> None:
         """🚨 Send crisis alert to stakeholders"""
         # In production, this would send real alerts via email, Slack, etc.
         logger.warning(f"🚨 CRISIS ALERT: {alert.title} for brand {alert.brand_id}")
@@ -1097,11 +1097,11 @@ class BrandManagementService:
             }
         }
 
-    def _audit_action(self, action: str, user_id: str, resource_id: str):
+    def _audit_action(self, action -> None: str, user_id -> None: str, resource_id -> None: str) -> None:
         """🔒 Security: Audit trail"""
         logger.info(f"🔒 Audit: {action} by {user_id} on {resource_id}")
 
-    async def _notify_services(self, event_type: str, resource_id: str):
+    async def _notify_services(self, event_type -> None: str, resource_id -> None: str) -> None:
         """🌐 Microservices: Notify other services"""
         logger.info(f"🌐 Event: {event_type} for {resource_id}")
 
@@ -1174,48 +1174,48 @@ app = FastAPI(
 brand_service = BrandManagementService()
 
 @app.post("/brands", response_model=Dict[str, Any])
-async def create_brand_identity(identity: BrandIdentity):
+async def create_brand_identity(identity -> None: BrandIdentity) -> None:
     """Create or update brand identity"""
     return await brand_service.create_brand_identity(identity)
 
 @app.post("/brands/{brand_id}/monitoring", response_model=Dict[str, Any])
-async def configure_monitoring(brand_id: str, config: MonitoringConfiguration):
+async def configure_monitoring(brand_id -> None: str, config -> None: MonitoringConfiguration) -> None:
     """Configure brand monitoring settings"""
     config.brand_id = brand_id
     return await brand_service.configure_monitoring(config)
 
 @app.get("/brands/{brand_id}/health", response_model=BrandHealthMetrics)
-async def analyze_brand_health(brand_id: str):
+async def analyze_brand_health(brand_id -> None: str) -> None:
     """Get comprehensive brand health analysis"""
     return await brand_service.analyze_brand_health(brand_id)
 
 @app.get("/brands/{brand_id}/mentions", response_model=List[BrandMention])
 async def get_brand_mentions(
-    brand_id: str,
-    limit: int = 100,
-    sentiment: Optional[SentimentCategory] = None,
-    platform: Optional[PlatformType] = None
-):
+    brand_id -> None: str,
+    limit -> None: int = 100,
+    sentiment -> None: Optional[SentimentCategory] = None,
+    platform -> None: Optional[PlatformType] = None
+) -> None:
     """Get brand mentions with filtering"""
     return await brand_service.get_brand_mentions(brand_id, limit, sentiment, platform)
 
 @app.get("/brands/{brand_id}/competitors", response_model=List[CompetitorAnalysis])
-async def get_competitor_analysis(brand_id: str):
+async def get_competitor_analysis(brand_id -> None: str) -> None:
     """Get comprehensive competitor analysis"""
     return await brand_service.generate_competitor_analysis(brand_id)
 
 @app.post("/brands/{brand_id}/crisis-response", response_model=Dict[str, Any])
-async def generate_crisis_response(brand_id: str, crisis_description: str):
+async def generate_crisis_response(brand_id -> None: str, crisis_description -> None: str) -> None:
     """Generate AI-powered crisis response"""
     return await brand_service.generate_crisis_response(brand_id, crisis_description)
 
 @app.get("/brands/{brand_id}/alerts", response_model=List[CrisisAlert])
-async def get_crisis_alerts(brand_id: str):
+async def get_crisis_alerts(brand_id -> None: str) -> None:
     """Get crisis alerts for brand"""
     return await brand_service.get_crisis_alerts(brand_id)
 
 @app.get("/health")
-async def health_check():
+async def health_check() -> None:
     """Service health check"""
     return await brand_service.get_service_health()
 

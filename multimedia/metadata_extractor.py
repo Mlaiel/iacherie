@@ -1,4 +1,6 @@
 """Metadata_extractor Module
+import asyncio
+
 Professional metadata_extractor functionality for multimedia processing.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -25,14 +27,14 @@ class Metadata_extractorResult:
     data: Dict[str, Any] = None
     error_message: Optional[str] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.data is None:
             self.data = {}
 
 class Metadata_extractorManager:
     """Main metadata_extractor manager class"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logger
         self.config = {}
     

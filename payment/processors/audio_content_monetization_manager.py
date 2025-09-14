@@ -174,7 +174,7 @@ class AudioContentMonetizationManager:
     - Revenue optimization for audio creators
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """Initialize audio content monetization manager"""
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -908,7 +908,7 @@ class AudioContentMonetizationManager:
             }
         }
     
-    async def _update_quality_metrics(self, assessment: AudioQualityAssessment):
+    async def _update_quality_metrics(self, assessment -> None: AudioQualityAssessment) -> None:
         """Update audio quality metrics"""
         current_avg = self.audio_metrics['average_quality_score']
         total_processed = self.audio_metrics['total_audio_processed']

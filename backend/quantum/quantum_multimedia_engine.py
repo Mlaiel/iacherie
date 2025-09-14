@@ -270,7 +270,7 @@ class QuantumMultimediaEngine:
     ✅ Métadonnées extraction automatique
     """
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.config = config or {}
         self.content_processors: Dict[MediaType, ContentProcessor] = {}
         self.format_optimizers: Dict[ContentFormat, FormatOptimizer] = {}
@@ -743,15 +743,16 @@ class QuantumMultimediaEngine:
     # MÉTHODES PRIVÉES - CONTENT PROCESSING
     # ========================================
     
-    async def _get_or_create_content_processor(self, media_type: MediaType):
+    async def _get_or_create_content_processor(self, media_type -> None: MediaType) -> None:
         """Récupération ou création processeur contenu"""
         if media_type not in self.content_processors:
             self.content_processors[media_type] = await self._create_content_processor(media_type)
         return self.content_processors[media_type]
     
-    async def _create_content_processor(self, media_type: MediaType):
+    async def _create_content_processor(self, media_type -> None: MediaType) -> None:
         """Création processeur contenu"""
         class MockContentProcessor(ContentProcessor):
+    """MockContentProcessor class implementation"""
             async def process_content(self, content: MultimediaContent, options: Dict[str, Any]) -> MultimediaContent:
                 # Simulation traitement contenu
                 processed_content = MultimediaContent(
@@ -784,15 +785,16 @@ class QuantumMultimediaEngine:
         
         return MockContentProcessor()
     
-    async def _get_or_create_format_optimizer(self, target_format: ContentFormat):
+    async def _get_or_create_format_optimizer(self, target_format -> None: ContentFormat) -> None:
         """Récupération ou création optimiseur format"""
         if target_format not in self.format_optimizers:
             self.format_optimizers[target_format] = await self._create_format_optimizer(target_format)
         return self.format_optimizers[target_format]
     
-    async def _create_format_optimizer(self, target_format: ContentFormat):
+    async def _create_format_optimizer(self, target_format -> None: ContentFormat) -> None:
         """Création optimiseur format"""
         class MockFormatOptimizer(FormatOptimizer):
+    """MockFormatOptimizer class implementation"""
             async def optimize_format(self, content: MultimediaContent, target_format: ContentFormat) -> MultimediaContent:
                 # Simulation optimisation format
                 optimized_content = MultimediaContent(
@@ -928,15 +930,16 @@ class QuantumMultimediaEngine:
     # MÉTHODES PRIVÉES - RECOMMENDATIONS
     # ========================================
     
-    async def _get_or_create_recommendation_engine(self, engine_type: str):
+    async def _get_or_create_recommendation_engine(self, engine_type -> None: str) -> None:
         """Récupération ou création moteur recommandations"""
         if engine_type not in self.recommendation_engines:
             self.recommendation_engines[engine_type] = await self._create_recommendation_engine(engine_type)
         return self.recommendation_engines[engine_type]
     
-    async def _create_recommendation_engine(self, engine_type: str):
+    async def _create_recommendation_engine(self, engine_type -> None: str) -> None:
         """Création moteur recommandations"""
         class MockRecommendationEngine(RecommendationEngine):
+    """MockRecommendationEngine class implementation"""
             async def generate_recommendations(self, request: RecommendationRequest) -> List[Dict[str, Any]]:
                 recommendations = []
                 
@@ -986,15 +989,16 @@ class QuantumMultimediaEngine:
     # MÉTHODES PRIVÉES - AUDIENCE TARGETING
     # ========================================
     
-    async def _get_or_create_audience_targeter(self, audience_segment: AudienceSegment):
+    async def _get_or_create_audience_targeter(self, audience_segment -> None: AudienceSegment) -> None:
         """Récupération ou création cibleur audience"""
         if audience_segment not in self.audience_targeters:
             self.audience_targeters[audience_segment] = await self._create_audience_targeter(audience_segment)
         return self.audience_targeters[audience_segment]
     
-    async def _create_audience_targeter(self, audience_segment: AudienceSegment):
+    async def _create_audience_targeter(self, audience_segment -> None: AudienceSegment) -> None:
         """Création cibleur audience"""
         class MockAudienceTargeter(AudienceTargeter):
+    """MockAudienceTargeter class implementation"""
             async def analyze_audience_match(self, content: MultimediaContent, audience: AudienceSegment) -> float:
                 # Simulation analyse correspondance audience
                 base_match = 0.5
@@ -1030,7 +1034,7 @@ class QuantumMultimediaEngine:
     # MÉTHODES UTILITAIRES
     # ========================================
     
-    async def _update_content_cache(self, content_id: str, result: MultimediaResult):
+    async def _update_content_cache(self, content_id -> None: str, result -> None: MultimediaResult) -> None:
         """Mise à jour cache contenu"""
         self.processing_cache[content_id] = {
             "result": result,
@@ -1047,7 +1051,7 @@ class QuantumMultimediaEngine:
             )
             self.processing_cache = dict(sorted_cache[-5000:])
     
-    async def _store_content_metadata(self, content_id: str, metadata: Dict[str, Any]):
+    async def _store_content_metadata(self, content_id -> None: str, metadata -> None: Dict[str, Any]) -> None:
         """Stockage métadonnées contenu"""
         self.content_metadata[content_id] = {
             **metadata,

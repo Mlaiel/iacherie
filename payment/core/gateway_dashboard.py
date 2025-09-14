@@ -115,7 +115,7 @@ class DashboardData:
 class PaymentGatewayDashboard:
     """Enterprise dashboard for payment gateway monitoring"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.redis_client = None
         self.active_alerts: Dict[str, DashboardAlert] = {}
@@ -133,7 +133,7 @@ class PaymentGatewayDashboard:
             'fraud_rate_max': 2.0
         })
         
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize the dashboard"""
         try:
             # Initialize Redis connection
@@ -159,7 +159,7 @@ class PaymentGatewayDashboard:
             logger.error(f"Failed to initialize Payment Gateway Dashboard: {e}")
             raise
     
-    async def _load_dashboard_data(self):
+    async def _load_dashboard_data(self) -> None:
         """Load existing dashboard data from storage"""
         try:
             # Load alerts
@@ -199,7 +199,7 @@ class PaymentGatewayDashboard:
         except Exception as e:
             logger.error(f"Failed to load dashboard data: {e}")
     
-    async def _initialize_default_kpis(self):
+    async def _initialize_default_kpis(self) -> None:
         """Initialize default KPI metrics"""
         try:
             default_kpis = [
@@ -228,7 +228,7 @@ class PaymentGatewayDashboard:
         except Exception as e:
             logger.error(f"Failed to initialize default KPIs: {e}")
     
-    async def _collect_real_time_data(self):
+    async def _collect_real_time_data(self) -> None:
         """Collect real-time data for dashboard"""
         while True:
             try:
@@ -258,7 +258,7 @@ class PaymentGatewayDashboard:
                 logger.error(f"Error in real-time data collection: {e}")
                 await asyncio.sleep(60)  # Wait 1 minute before retrying
     
-    async def _update_kpis_from_real_time_data(self):
+    async def _update_kpis_from_real_time_data(self) -> None:
         """Update KPI metrics from real-time data"""
         try:
             if not self.real_time_data:
@@ -286,7 +286,7 @@ class PaymentGatewayDashboard:
         except Exception as e:
             logger.error(f"Failed to update KPIs from real-time data: {e}")
     
-    async def _update_kpi(self, metric_id: str, new_value: float):
+    async def _update_kpi(self, metric_id -> None: str, new_value -> None: float) -> None:
         """Update a specific KPI metric"""
         try:
             if metric_id in self.kpi_metrics:
@@ -312,7 +312,7 @@ class PaymentGatewayDashboard:
         except Exception as e:
             logger.error(f"Failed to update KPI {metric_id}: {e}")
     
-    async def _check_alert_conditions(self):
+    async def _check_alert_conditions(self) -> None:
         """Check for alert conditions based on current metrics"""
         try:
             current_time = datetime.now()
@@ -347,7 +347,7 @@ class PaymentGatewayDashboard:
         except Exception as e:
             logger.error(f"Failed to check alert conditions: {e}")
     
-    async def _create_alert(self, level: AlertLevel, title: str, message: str, metadata: Dict[str, Any] = None):
+    async def _create_alert(self, level -> None: AlertLevel, title -> None: str, message -> None: str, metadata -> None: Dict[str, Any] = None) -> None:
         """Create a new dashboard alert"""
         try:
             alert_id = str(uuid.uuid4())
@@ -831,7 +831,7 @@ class PaymentGatewayDashboard:
             logger.error(f"Failed to export dashboard data: {e}")
             raise
     
-    async def _save_alerts(self):
+    async def _save_alerts(self) -> None:
         """Save alerts to storage"""
         try:
             alerts_dict = {}
@@ -856,7 +856,7 @@ class PaymentGatewayDashboard:
         except Exception as e:
             logger.error(f"Failed to save alerts: {e}")
     
-    async def _save_kpis(self):
+    async def _save_kpis(self) -> None:
         """Save KPIs to storage"""
         try:
             kpis_dict = {}
@@ -902,7 +902,7 @@ class PaymentGatewayDashboard:
             logger.error(f"Failed to get dashboard status: {e}")
             return {"error": str(e)}
     
-    async def close(self):
+    async def close(self) -> None:
         """Close the dashboard and cleanup resources"""
         try:
             if self.redis_client:

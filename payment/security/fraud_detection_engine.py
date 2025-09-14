@@ -148,7 +148,7 @@ class FraudDetectionEngine:
     analysis to detect and prevent fraudulent payment transactions.
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """Initialize fraud detection engine"""
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -195,7 +195,7 @@ class FraudDetectionEngine:
             'last_evaluation': None
         }
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize the fraud detection engine"""
         try:
             # Load ML models
@@ -688,9 +688,9 @@ class FraudDetectionEngine:
         
         return self.user_profiles[user_id]
     
-    async def _update_user_profile(self, user_profile: UserProfile, 
-                                 features: TransactionFeatures,
-                                 assessment: FraudAssessment):
+    async def _update_user_profile(self, user_profile -> None: UserProfile, 
+                                 features -> None: TransactionFeatures,
+                                 assessment -> None: FraudAssessment) -> None:
         """Update user profile with new transaction data"""
         # Add transaction to history
         transaction_record = {
@@ -732,7 +732,7 @@ class FraudDetectionEngine:
         
         user_profile.last_updated = datetime.now()
     
-    async def _update_statistics(self, assessment: FraudAssessment):
+    async def _update_statistics(self, assessment -> None: FraudAssessment) -> None:
         """Update fraud detection statistics"""
         self.fraud_stats['total_transactions'] += 1
         
@@ -760,7 +760,7 @@ class FraudDetectionEngine:
             1 if features.unusual_timing else 0
         ])
     
-    async def _load_models(self):
+    async def _load_models(self) -> None:
         """Load pre-trained ML models"""
         try:
             # In practice, these would be loaded from files
@@ -776,7 +776,7 @@ class FraudDetectionEngine:
         except Exception as e:
             self.logger.error(f"Failed to load ML models: {e}")
     
-    async def _load_blacklists(self):
+    async def _load_blacklists(self) -> None:
         """Load blacklists from storage"""
         # This would load from database/files
         # For demo purposes, adding sample entries
@@ -784,7 +784,7 @@ class FraudDetectionEngine:
         self.blacklisted_ips.add("192.168.1.100")
         self.blacklisted_emails.add("fraud@example.com")
     
-    async def _initialize_geoip(self):
+    async def _initialize_geoip(self) -> None:
         """Initialize GeoIP database"""
         try:
             # In practice, this would use a real GeoIP database
@@ -793,13 +793,13 @@ class FraudDetectionEngine:
         except Exception as e:
             self.logger.error(f"Failed to initialize GeoIP: {e}")
     
-    async def _load_user_profiles(self):
+    async def _load_user_profiles(self) -> None:
         """Load user profiles from storage"""
         # This would load from database
         # For demo, starting with empty profiles
         pass
     
-    async def report_fraud_feedback(self, transaction_id: str, is_fraud: bool):
+    async def report_fraud_feedback(self, transaction_id -> None: str, is_fraud -> None: bool) -> None:
         """Report feedback on fraud assessment for model improvement"""
         try:
             if is_fraud:

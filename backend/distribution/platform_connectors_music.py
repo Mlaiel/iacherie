@@ -159,7 +159,7 @@ class MusicStreamingAnalytics:
 class BaseMusicConnector:
     """Base class for music platform connectors."""
     
-    def __init__(self, platform: MusicPlatformType, credentials: Dict[str, Any]):
+    def __init__(self, platform -> None: MusicPlatformType, credentials -> None: Dict[str, Any]) -> None:
         self.platform = platform
         self.credentials = credentials
         self.session: Optional[aiohttp.ClientSession] = None
@@ -233,7 +233,7 @@ class BaseMusicConnector:
         
         return self.rate_limit_remaining > 0
     
-    async def cleanup(self):
+    async def cleanup(self) -> None:
         """Cleanup resources."""
         if self.session:
             await self.session.close()
@@ -242,7 +242,7 @@ class BaseMusicConnector:
 class SpotifyConnector(BaseMusicConnector):
     """Spotify Web API connector with Artist Analytics."""
     
-    def __init__(self, credentials: Dict[str, Any]):
+    def __init__(self, credentials -> None: Dict[str, Any]) -> None:
         super().__init__(MusicPlatformType.SPOTIFY, credentials)
         self.client_id = credentials.get("client_id")
         self.client_secret = credentials.get("client_secret")
@@ -434,7 +434,7 @@ class SpotifyConnector(BaseMusicConnector):
 class SoundCloudConnector(BaseMusicConnector):
     """SoundCloud API connector with direct upload support."""
     
-    def __init__(self, credentials: Dict[str, Any]):
+    def __init__(self, credentials -> None: Dict[str, Any]) -> None:
         super().__init__(MusicPlatformType.SOUNDCLOUD, credentials)
         self.client_id = credentials.get("client_id")
         self.client_secret = credentials.get("client_secret")
@@ -666,7 +666,7 @@ class SoundCloudConnector(BaseMusicConnector):
 class AppleMusicConnector(BaseMusicConnector):
     """Apple Music Connect API connector."""
     
-    def __init__(self, credentials: Dict[str, Any]):
+    def __init__(self, credentials -> None: Dict[str, Any]) -> None:
         super().__init__(MusicPlatformType.APPLE_MUSIC, credentials)
         self.team_id = credentials.get("team_id")
         self.key_id = credentials.get("key_id")
@@ -831,7 +831,7 @@ class AppleMusicConnector(BaseMusicConnector):
 class MusicPlatformManager:
     """Manager for all music platform connectors."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.connectors: Dict[MusicPlatformType, BaseMusicConnector] = {}
         self.logger = logging.getLogger(f"{__name__}.MusicPlatformManager")
     
@@ -975,7 +975,7 @@ class MusicPlatformManager:
         
         return results
     
-    async def cleanup(self):
+    async def cleanup(self) -> None:
         """Cleanup all connectors."""
         cleanup_tasks = [connector.cleanup() for connector in self.connectors.values()]
         if cleanup_tasks:

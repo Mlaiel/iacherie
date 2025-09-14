@@ -1,4 +1,6 @@
 """
+import logging
+
 Distribution Business Configuration - Enterprise Configuration Management
 Enterprise configuration for distribution business logic and multi-platform systems
 
@@ -16,7 +18,8 @@ try:
 except ImportError:
     # Fallback for environments without pydantic_settings
     class BaseSettings:
-        def __init__(self, **kwargs):
+    """BaseSettings: class implementation"""
+        def __init__(self, **kwargs) -> None:
             for key, value in kwargs.items():
                 setattr(self, key, value)
 
@@ -131,7 +134,7 @@ class GlobalDistributionSettings:
 class DistributionBusinessSettings:
     """Distribution business configuration settings"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         # Platform Configurations
         self.platform_configurations = {
             DistributionPlatform.INSTAGRAM: PlatformConfiguration(

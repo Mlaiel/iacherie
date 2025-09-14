@@ -57,7 +57,7 @@ class AuditRecord:
     data_hash: Optional[str] = None
     previous_record_hash: Optional[str] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.business_context is None:
             self.business_context = {}
         if self.security_context is None:
@@ -104,7 +104,7 @@ class ComplianceValidation:
     recommendations: List[str]
     retention_period: timedelta
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.violations is None:
             self.violations = []
         if self.recommendations is None:
@@ -129,7 +129,7 @@ class AuditTrailCollector:
     Provides immutable storage with blockchain-style validation.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.enabled = True
         self.audit_level = AuditLevel.STANDARD
         self.audit_storage = []  # In-memory storage for demo
@@ -477,7 +477,7 @@ class AuditTrailCollector:
         
         return audit_record
     
-    def _update_audit_indexes(self, audit_record: AuditRecord):
+    def _update_audit_indexes(self, audit_record -> None: AuditRecord) -> None:
         """Update indexes for fast audit trail retrieval"""
         
         # User index
@@ -503,8 +503,8 @@ class AuditTrailCollector:
         self.audit_index[date_key].append(audit_record.audit_id)
     
     async def _monitor_compliance_violations(self,
-                                           audit_record: AuditRecord,
-                                           compliance_validations: List[ComplianceValidation]):
+                                           audit_record -> None: AuditRecord,
+                                           compliance_validations -> None: List[ComplianceValidation]) -> None:
         """Monitor for compliance violations in real-time"""
         
         for validation in compliance_validations:
@@ -517,8 +517,8 @@ class AuditTrailCollector:
                 await self._trigger_compliance_alert(audit_record, validation)
     
     async def _trigger_compliance_alert(self,
-                                      audit_record: AuditRecord,
-                                      violation: ComplianceValidation):
+                                      audit_record -> None: AuditRecord,
+                                      violation -> None: ComplianceValidation) -> None:
         """Trigger alerts for compliance violations"""
         
         # In a real implementation, this would send alerts to compliance team
@@ -1006,13 +1006,13 @@ class AuditTrailCollector:
         
         return True
     
-    def enable_auditing(self, level: AuditLevel = AuditLevel.STANDARD):
+    def enable_auditing(self, level -> None: AuditLevel = AuditLevel.STANDARD) -> None:
         """Enable audit trail collection"""
         self.enabled = True
         self.audit_level = level
         logger.info(f"Audit trail collection enabled at {level.value} level")
     
-    def disable_auditing(self):
+    def disable_auditing(self) -> None:
         """Disable audit trail collection"""
         self.enabled = False
         logger.info("Audit trail collection disabled")

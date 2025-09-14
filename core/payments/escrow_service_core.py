@@ -23,7 +23,7 @@ logger = logging.getLogger(__name__)
 class EscrowServiceCore:
     """Advanced EscrowServiceCore System"""
     
-    def __init__(self, level: str = "enterprise"):
+    def __init__(self, level -> None: str = "enterprise") -> None:
         self.version = "2.1.0"
         self.level = level
         logger.info(f"EscrowServiceCore initialized - Level: {level}")

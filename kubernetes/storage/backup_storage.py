@@ -225,7 +225,7 @@ class BackupStorageManager:
     - Point-in-time recovery and versioning
     """
     
-    def __init__(self, config: BackupConfig):
+    def __init__(self, config -> None: BackupConfig) -> None:
         self.config = config
         self.metrics = BackupMetrics()
         self._active_jobs: Dict[str, BackupJob] = {}
@@ -239,7 +239,7 @@ class BackupStorageManager:
         
         logger.info(f"🚀 BackupStorageManager initialized: {config.name}")
     
-    def _initialize_clients(self):
+    def _initialize_clients(self) -> None:
         """Initialize backup destination clients"""
         try:
             if self.config.destination == BackupDestination.AWS_S3:
@@ -342,7 +342,7 @@ class BackupStorageManager:
             logger.error(f"❌ S3 backup infrastructure deployment failed: {e}")
             raise
     
-    async def _configure_s3_backup_policies(self, bucket_name: str):
+    async def _configure_s3_backup_policies(self, bucket_name -> None: str) -> None:
         """Configure S3 bucket policies for backup security"""
         try:
             # Enable versioning
@@ -394,7 +394,7 @@ class BackupStorageManager:
             logger.error(f"❌ Failed to configure S3 policies: {e}")
             raise
     
-    async def _configure_s3_lifecycle_policies(self, bucket_name: str):
+    async def _configure_s3_lifecycle_policies(self, bucket_name -> None: str) -> None:
         """Configure S3 lifecycle policies for backup retention"""
         try:
             lifecycle_rules = [
@@ -906,7 +906,7 @@ fi
             
             return job
     
-    async def _execute_s3_backup(self, job: BackupJob):
+    async def _execute_s3_backup(self, job -> None: BackupJob) -> None:
         """Execute S3 backup"""
         bucket_name = f"ia-influencer-backups-{self.config.name}"
         
@@ -944,7 +944,7 @@ fi
             # Cleanup temporary file
             Path(archive_path).unlink()
     
-    async def _execute_local_backup(self, job: BackupJob):
+    async def _execute_local_backup(self, job -> None: BackupJob) -> None:
         """Execute local backup"""
         backup_dir = Path(f"/backups/{self.config.name}/{job.backup_type.value}")
         timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
@@ -962,7 +962,7 @@ fi
             job.backup_size_bytes += backup_file.stat().st_size
             job.backup_location = str(backup_file)
     
-    async def _execute_restic_backup(self, job: BackupJob):
+    async def _execute_restic_backup(self, job -> None: BackupJob) -> None:
         try:
             logger.info(f"Executing _execute_restic_backup")
             
@@ -1110,7 +1110,7 @@ Load backup configuration from YAML file"""
             raise
     
     @staticmethod
-    def save_config_to_file(config: BackupConfig, config_path: Path):
+    def save_config_to_file(config -> None: BackupConfig, config_path -> None: Path) -> None:
         """Save backup configuration to YAML file"""
         try:
             config_data = {
@@ -1163,7 +1163,7 @@ def create_backup_manager(
 
 
 # Usage Example
-async def main():
+async def main() -> None:
     """
 Example usage of BackupStorageManager"""
     try:

@@ -192,7 +192,7 @@ class SubscriptionManager:
     Handles all aspects of subscription lifecycle and billing.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.plans: Dict[str, SubscriptionPlan] = {}
         self.subscriptions: Dict[str, Subscription] = {}
         self.billing_history: List[BillingHistory] = []

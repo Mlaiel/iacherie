@@ -98,7 +98,7 @@ class MetricSeries:
     current_value: Optional[Union[int, float]] = None
     last_updated: Optional[datetime] = None
     
-    def add_value(self, value: Union[int, float], timestamp: datetime = None, tags: Dict[str, str] = None):
+    def add_value(self, value -> None: Union[int, float], timestamp -> None: datetime = None, tags -> None: Dict[str, str] = None) -> None:
         """Add value to series"""
         timestamp = timestamp or datetime.utcnow()
         tags = tags or {}
@@ -168,7 +168,7 @@ class MetricSeries:
 class Counter:
     """Counter metric implementation"""
     
-    def __init__(self, name: str, description: str = "", labels: List[str] = None):
+    def __init__(self, name -> None: str, description -> None: str = "", labels -> None: List[str] = None) -> None:
         self.definition = MetricDefinition(
             name=name,
             type=MetricType.COUNTER,
@@ -179,7 +179,7 @@ class Counter:
         self._value = 0
         self._lock = threading.Lock()
         
-    def increment(self, amount: Union[int, float] = 1, tags: Dict[str, str] = None):
+    def increment(self, amount -> None: Union[int, float] = 1, tags -> None: Dict[str, str] = None) -> None:
         """Increment counter"""
         with self._lock:
             self._value += amount
@@ -189,7 +189,7 @@ class Counter:
         """Get current value"""
         return self._value
         
-    def reset(self):
+    def reset(self) -> None:
         """Reset counter"""
         with self._lock:
             self._value = 0
@@ -199,7 +199,7 @@ class Counter:
 class Gauge:
     """Gauge metric implementation"""
     
-    def __init__(self, name: str, description: str = "", labels: List[str] = None):
+    def __init__(self, name -> None: str, description -> None: str = "", labels -> None: List[str] = None) -> None:
         self.definition = MetricDefinition(
             name=name,
             type=MetricType.GAUGE,
@@ -210,19 +210,19 @@ class Gauge:
         self._value = 0
         self._lock = threading.Lock()
         
-    def set(self, value: Union[int, float], tags: Dict[str, str] = None):
+    def set(self, value -> None: Union[int, float], tags -> None: Dict[str, str] = None) -> None:
         """Set gauge value"""
         with self._lock:
             self._value = value
             self.series.add_value(self._value, tags=tags)
             
-    def increment(self, amount: Union[int, float] = 1, tags: Dict[str, str] = None):
+    def increment(self, amount -> None: Union[int, float] = 1, tags -> None: Dict[str, str] = None) -> None:
         """Increment gauge"""
         with self._lock:
             self._value += amount
             self.series.add_value(self._value, tags=tags)
             
-    def decrement(self, amount: Union[int, float] = 1, tags: Dict[str, str] = None):
+    def decrement(self, amount -> None: Union[int, float] = 1, tags -> None: Dict[str, str] = None) -> None:
         """Decrement gauge"""
         with self._lock:
             self._value -= amount
@@ -236,8 +236,8 @@ class Gauge:
 class Histogram:
     """Histogram metric implementation"""
     
-    def __init__(self, name: str, description: str = "", 
-                 buckets: List[float] = None, labels: List[str] = None):
+    def __init__(self, name -> None: str, description -> None: str = "", 
+                 buckets -> None: List[float] = None, labels -> None: List[str] = None) -> None:
         self.definition = MetricDefinition(
             name=name,
             type=MetricType.HISTOGRAM,
@@ -252,7 +252,7 @@ class Histogram:
         self.series = MetricSeries(self.definition)
         self._lock = threading.Lock()
         
-    def observe(self, value: Union[int, float], tags: Dict[str, str] = None):
+    def observe(self, value -> None: Union[int, float], tags -> None: Dict[str, str] = None) -> None:
         """Observe a value"""
         with self._lock:
             self.sum += value
@@ -292,7 +292,7 @@ class Histogram:
 class Timer:
     """Timer metric implementation with context manager"""
     
-    def __init__(self, name: str, description: str = "", labels: List[str] = None):
+    def __init__(self, name -> None: str, description -> None: str = "", labels -> None: List[str] = None) -> None:
         self.definition = MetricDefinition(
             name=name,
             type=MetricType.TIMER,
@@ -304,7 +304,7 @@ class Timer:
         self.series = MetricSeries(self.definition)
         self._start_time = None
         
-    def start(self):
+    def start(self) -> None:
         """Start timer"""
         self._start_time = time.time()
         
@@ -319,12 +319,12 @@ class Timer:
         self._start_time = None
         return duration
         
-    def __enter__(self):
+    def __enter__(self) -> None:
         """Enter context manager"""
         self.start()
         return self
         
-    def __exit__(self, exc_type, exc_val, exc_tb):
+    def __exit__(self, exc_type, exc_val, exc_tb) -> None:
         """Exit context manager"""
         self.stop()
 
@@ -332,7 +332,7 @@ class Timer:
 class MetricCollector:
     """Collector for organizing related metrics"""
     
-    def __init__(self, name: str, description: str = ""):
+    def __init__(self, name -> None: str, description -> None: str = "") -> None:
         self.name = name
         self.description = description
         self.metrics: Dict[str, Union[Counter, Gauge, Histogram, Timer]] = {}
@@ -395,7 +395,7 @@ class MetricsExporter(ABC):
 class PrometheusExporter(MetricsExporter):
     """Prometheus metrics exporter"""
     
-    def __init__(self, port: int = 8000, endpoint: str = "/metrics"):
+    def __init__(self, port -> None: int = 8000, endpoint -> None: str = "/metrics") -> None:
         self.port = port
         self.endpoint = endpoint
         self.app = None
@@ -429,7 +429,7 @@ class PrometheusExporter(MetricsExporter):
 class JSONExporter(MetricsExporter):
     """JSON metrics exporter"""
     
-    def __init__(self, output_file: str = None):
+    def __init__(self, output_file -> None: str = None) -> None:
         self.output_file = output_file
         
     async def export_metrics(self, metrics: Dict[str, Any]) -> bool:
@@ -455,7 +455,7 @@ class JSONExporter(MetricsExporter):
 class MetricsService:
     """Performance Metrics Collection and Analytics Service"""
     
-    def __init__(self, name: str = "metrics_service"):
+    def __init__(self, name -> None: str = "metrics_service") -> None:
         self.name = name
         self.collectors: Dict[str, MetricCollector] = {}
         self.global_metrics: Dict[str, Union[Counter, Gauge, Histogram, Timer]] = {}
@@ -468,7 +468,7 @@ class MetricsService:
         # Built-in system metrics
         self._setup_system_metrics()
         
-    def _setup_system_metrics(self):
+    def _setup_system_metrics(self) -> None:
         """Setup system-level metrics"""
         system_collector = self.create_collector("system", "System-level metrics")
         
@@ -485,7 +485,7 @@ class MetricsService:
         service_collector.gauge("active_connections", "Number of active connections")
         service_collector.counter("operations_total", "Total number of operations")
         
-    async def start(self):
+    async def start(self) -> None:
         """Start metrics service"""
         self.running = True
         
@@ -498,7 +498,7 @@ class MetricsService:
         
         logger.info(f"Started metrics service: {self.name}")
         
-    async def stop(self):
+    async def stop(self) -> None:
         """Stop metrics service"""
         self.running = False
         
@@ -525,7 +525,7 @@ class MetricsService:
         """Get metric collector"""
         return self.collectors.get(name)
         
-    def remove_collector(self, name: str):
+    def remove_collector(self, name -> None: str) -> None:
         """Remove metric collector"""
         if name in self.collectors:
             del self.collectors[name]
@@ -556,22 +556,22 @@ class MetricsService:
             self.global_metrics[name] = Timer(name, description, labels)
         return self.global_metrics[name]
         
-    def add_exporter(self, exporter: MetricsExporter):
+    def add_exporter(self, exporter -> None: MetricsExporter) -> None:
         """Add metrics exporter"""
         self.exporters.append(exporter)
         logger.info(f"Added metrics exporter: {type(exporter).__name__}")
         
-    def remove_exporter(self, exporter: MetricsExporter):
+    def remove_exporter(self, exporter -> None: MetricsExporter) -> None:
         """Remove metrics exporter"""
         if exporter in self.exporters:
             self.exporters.remove(exporter)
             logger.info(f"Removed metrics exporter: {type(exporter).__name__}")
             
-    def set_export_interval(self, interval: int):
+    def set_export_interval(self, interval -> None: int) -> None:
         """Set export interval in seconds"""
         self.export_interval = interval
         
-    async def record_request(self, duration: float, status_code: int = 200, tags: Dict[str, str] = None):
+    async def record_request(self, duration -> None: float, status_code -> None: int = 200, tags -> None: Dict[str, str] = None) -> None:
         """Record HTTP request metrics"""
         tags = tags or {}
         
@@ -588,8 +588,8 @@ class MetricsService:
             errors_counter = self.get_collector("system").counter("errors_total")
             errors_counter.increment(tags={**tags, 'status_code': str(status_code)})
             
-    async def record_operation(self, operation_name: str, duration: float, 
-                             success: bool = True, tags: Dict[str, str] = None):
+    async def record_operation(self, operation_name -> None: str, duration -> None: float, 
+                             success -> None: bool = True, tags -> None: Dict[str, str] = None) -> None:
         """Record operation metrics"""
         tags = tags or {}
         tags['operation'] = operation_name
@@ -608,7 +608,7 @@ class MetricsService:
         operation_timer = self.global_metrics[timer_name]
         operation_timer.histogram.observe(duration, tags=tags)
         
-    def update_system_metrics(self):
+    def update_system_metrics(self) -> None:
         """Update system metrics"""
         try:
             import psutil
@@ -659,7 +659,7 @@ class MetricsService:
                 
         return all_metrics
         
-    async def _export_metrics(self):
+    async def _export_metrics(self) -> None:
         """Export metrics to all exporters"""
         try:
             # Update system metrics before export
@@ -678,7 +678,7 @@ class MetricsService:
         except Exception as e:
             logger.error(f"Error exporting metrics: {str(e)}")
             
-    async def _export_periodically(self):
+    async def _export_periodically(self) -> None:
         """Periodically export metrics"""
         while self.running:
             try:

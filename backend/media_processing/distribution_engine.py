@@ -76,7 +76,7 @@ class DistributionConfig:
     redis_url: str = "redis://localhost:6379"
     platform_apis: Dict[str, Dict[str, str]] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.default_platforms is None:
             self.default_platforms = [
                 DistributionPlatform.YOUTUBE,
@@ -193,7 +193,7 @@ class EnterpriseDistributionEngine:
     - Cross-platform analytics aggregation
     """
     
-    def __init__(self, config: Optional[DistributionConfig] = None):
+    def __init__(self, config -> None: Optional[DistributionConfig] = None) -> None:
         self.config = config or DistributionConfig()
         self.logger = logging.getLogger(__name__)
         self.executor = ThreadPoolExecutor(max_workers=self.config.max_concurrent_uploads)
@@ -205,7 +205,7 @@ class EnterpriseDistributionEngine:
         # Initialize platform APIs
         self._initialize_platform_apis()
     
-    def _initialize_platform_optimizations(self):
+    def _initialize_platform_optimizations(self) -> None:
         """Initialize platform-specific optimization settings"""
         self.platform_optimizations = {
             DistributionPlatform.YOUTUBE: PlatformOptimization(
@@ -270,7 +270,7 @@ class EnterpriseDistributionEngine:
             )
         }
 
-    def _initialize_platform_apis(self):
+    def _initialize_platform_apis(self) -> None:
         """Initialize platform API clients"""
         self.platform_clients = {
             DistributionPlatform.YOUTUBE: None,  # YouTube Data API v3
@@ -281,7 +281,7 @@ class EnterpriseDistributionEngine:
         }
         # In production: Initialize actual API clients
 
-    async def initialize_redis(self):
+    async def initialize_redis(self) -> None:
         """Initialize Redis connection for job tracking"""
         try:
             self.redis_client = redis.from_url(self.config.redis_url)
@@ -509,7 +509,7 @@ class EnterpriseDistributionEngine:
         optimization: PlatformOptimization
     ) -> Optional[Path]:
         """Optimize video for platform"""
-        def _optimize():
+        def _optimize() -> None:
             try:
                 # Get optimal resolution
                 width, height = optimization.optimal_resolution
@@ -558,7 +558,7 @@ class EnterpriseDistributionEngine:
         optimization: PlatformOptimization
     ) -> Optional[Path]:
         """Optimize image for platform"""
-        def _optimize():
+        def _optimize() -> None:
             try:
                 with Image.open(input_path) as img:
                     # Convert to RGB if necessary
@@ -595,7 +595,7 @@ class EnterpriseDistributionEngine:
         optimization: PlatformOptimization
     ) -> Optional[Path]:
         """Optimize audio for platform"""
-        def _optimize():
+        def _optimize() -> None:
             try:
                 # FFmpeg audio optimization
                 stream = ffmpeg.input(str(input_path))
@@ -697,7 +697,7 @@ class EnterpriseDistributionEngine:
         
         return {}
 
-    async def _execute_distribution_job(self, job: DistributionJob):
+    async def _execute_distribution_job(self, job -> None: DistributionJob) -> None:
         """Execute distribution job across platforms"""
         try:
             job.status = DistributionStatus.IN_PROGRESS
@@ -984,7 +984,7 @@ class EnterpriseDistributionEngine:
 class ContentDistributionOrchestrator:
     """Legacy content distribution interface"""
     
-    def __init__(self, engine: EnterpriseDistributionEngine):
+    def __init__(self, engine -> None: EnterpriseDistributionEngine) -> None:
         self.engine = engine
     
     async def distribute_content(
@@ -1009,7 +1009,7 @@ class ContentDistributionOrchestrator:
 class PlatformOptimizationEngine:
     """Legacy platform optimization interface"""
     
-    def __init__(self, engine: EnterpriseDistributionEngine):
+    def __init__(self, engine -> None: EnterpriseDistributionEngine) -> None:
         self.engine = engine
     
     async def optimize_for_platform(

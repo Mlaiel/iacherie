@@ -1,5 +1,12 @@
+"""
+Infrastructure Validator module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
+from datetime import datetime
+
 🔍 Infrastructure Validator Enterprise - System Health & Compliance Checker
 ==========================================================================
 
@@ -81,7 +88,7 @@ class InfrastructureValidator:
     Comprehensive infrastructure health and compliance validation
     """
     
-    def __init__(self, config_file: str = "infrastructure_validation.yaml"):
+    def __init__(self, config_file -> None: str = "infrastructure_validation.yaml") -> None:
         """Initialize the validator"""
         self.config_file = config_file
         self.validation_rules = {}
@@ -98,7 +105,7 @@ class InfrastructureValidator:
         # Register built-in validation rules
         self._register_builtin_rules()
     
-    def _initialize_cloud_clients(self):
+    def _initialize_cloud_clients(self) -> None:
         """Initialize cloud provider clients"""
         try:
             # AWS clients
@@ -129,7 +136,7 @@ class InfrastructureValidator:
         except Exception as e:
             logger.warning(f"Failed to initialize Docker client: {e}")
     
-    def _load_validation_config(self):
+    def _load_validation_config(self) -> None:
         """Load validation configuration"""
         try:
             if os.path.exists(self.config_file):
@@ -158,7 +165,7 @@ class InfrastructureValidator:
             logger.error(f"Error loading validation config: {e}")
             self._create_default_config()
     
-    def _create_default_config(self):
+    def _create_default_config(self) -> None:
         """Create default validation configuration"""
         default_config = {
             'components': {
@@ -197,7 +204,7 @@ class InfrastructureValidator:
         # Load the configuration
         self._load_validation_config()
     
-    def _register_builtin_rules(self):
+    def _register_builtin_rules(self) -> None:
         """Register built-in validation rules"""
         builtin_rules = [
             # Security Rules
@@ -412,7 +419,7 @@ class InfrastructureValidator:
             'results': [self._result_to_dict(r) for r in self.results]
         }
     
-    async def _run_with_semaphore(self, semaphore: asyncio.Semaphore, coro):
+    async def _run_with_semaphore(self, semaphore -> None: asyncio.Semaphore, coro) -> None:
         """Run coroutine with semaphore for concurrency control"""
         async with semaphore:
             return await coro
@@ -1195,7 +1202,7 @@ class InfrastructureValidator:
         
         return markdown
 
-async def main():
+async def main() -> None:
     """Main function for command-line usage"""
     import argparse
     

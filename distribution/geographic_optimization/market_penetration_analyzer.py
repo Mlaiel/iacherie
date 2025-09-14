@@ -84,7 +84,7 @@ class CompetitiveAnalysis:
 class MarketPenetrationAnalyzer:
     """Advanced market penetration analysis engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize market penetration analyzer"""
         self.market_profiles = {}
         self.competitive_intelligence = {}

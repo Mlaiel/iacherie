@@ -325,7 +325,7 @@ class PytorchNetworkBuilder:
 class FitnessEvaluator:
     """Evaluate fitness of neural network genomes"""
     
-    def __init__(self, optimization_type: OptimizationType = OptimizationType.MULTI_OBJECTIVE):
+    def __init__(self, optimization_type -> None: OptimizationType = OptimizationType.MULTI_OBJECTIVE) -> None:
         self.optimization_type = optimization_type
         self.accuracy_weight = 0.7
         self.efficiency_weight = 0.3
@@ -441,7 +441,7 @@ class FitnessEvaluator:
 class NeuralEvolutionSystem:
     """Main neural evolution system"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.config = config or {}
         self.population_size = self.config.get('population_size', 20)
         self.generations = self.config.get('generations', 10)
@@ -786,7 +786,7 @@ class NeuralEvolutionSystem:
         return insights
 
 # Example usage and testing
-async def main():
+async def main() -> None:
     """Test neural evolution system"""
     try:
         # Initialize evolution system

@@ -1,7 +1,14 @@
+"""
+Payment Analytics Config module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 """Ainflue Payment Analytics Configuration Module
+import asyncio
+
 ===============================================
 
 Enterprise-grade payment analytics configuration for the Ainflue platform.
@@ -493,7 +500,7 @@ class PaymentMethodAnalyticsConfig:
 class PaymentAnalyticsConfiguration:
     """Main payment analytics configuration manager"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize payment analytics configuration"""
         # Configuration components
         self.revenue_analytics = RevenueAnalyticsConfig()
@@ -595,7 +602,7 @@ class PaymentAnalyticsConfiguration:
         self._initialize_default_queries()
         self._initialize_default_alerts()
     
-    def _initialize_default_queries(self):
+    def _initialize_default_queries(self) -> None:
         """Initialize default analytics queries"""
         
         # Daily revenue query
@@ -651,7 +658,7 @@ class PaymentAnalyticsConfiguration:
         
         self.queries[fraud_detection.query_id] = fraud_detection
     
-    def _initialize_default_alerts(self):
+    def _initialize_default_alerts(self) -> None:
         """Initialize default analytics alerts"""
         
         # Revenue drop alert

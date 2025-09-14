@@ -175,7 +175,7 @@ class ExperimentConfiguration:
 class TargetingEngine:
     """Advanced user targeting engine for feature flags"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.custom_evaluators: Dict[str, Callable] = {}
         self.geographic_data: Dict[str, Dict[str, Any]] = {}
         self.user_segments: Dict[str, List[str]] = {}
@@ -335,7 +335,7 @@ class TargetingEngine:
 class RolloutManager:
     """Manages gradual rollout of feature flags"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.active_rollouts: Dict[str, Dict[str, Any]] = {}
         self.rollout_schedules: Dict[str, asyncio.Task] = {}
         self.rollout_history: Dict[str, List[Dict[str, Any]]] = {}
@@ -522,7 +522,7 @@ class RolloutManager:
 class ABTestingEngine:
     """Advanced A/B testing and experimentation engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.experiments: Dict[str, ExperimentConfiguration] = {}
         self.experiment_assignments: Dict[str, Dict[str, str]] = {}  # user_id -> experiment_id -> variant
         self.experiment_results: Dict[str, Dict[str, Any]] = {}
@@ -766,7 +766,7 @@ class FeatureFlagStorage(ABC):
 class LocalFileStorage(FeatureFlagStorage):
     """Local file-based storage for feature flags"""
     
-    def __init__(self, storage_path: str = "./feature_flags"):
+    def __init__(self, storage_path -> None: str = "./feature_flags") -> None:
         self.storage_path = Path(storage_path)
         self.storage_path.mkdir(exist_ok=True)
     
@@ -942,7 +942,7 @@ class LocalFileStorage(FeatureFlagStorage):
 class FeatureFlagsManager:
     """Main feature flags management system"""
     
-    def __init__(self, storage: Optional[FeatureFlagStorage] = None):
+    def __init__(self, storage -> None: Optional[FeatureFlagStorage] = None) -> None:
         # Core components
         self.targeting_engine = TargetingEngine()
         self.rollout_manager = RolloutManager()

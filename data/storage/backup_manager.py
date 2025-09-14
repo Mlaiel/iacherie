@@ -1,3 +1,8 @@
+"""
+Backup Manager module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
@@ -185,7 +190,7 @@ class BackupManager:
     - Disaster recovery automation
     """
     
-    def __init__(self, config_path: Optional[Path] = None):
+    def __init__(self, config_path -> None: Optional[Path] = None) -> None:
         self.logger = logging.getLogger(__name__)
         self.config_path = config_path
         self.backup_configs: Dict[str, BackupConfig] = {}
@@ -472,10 +477,10 @@ class BackupManager:
     
     async def _compress_path(
         self,
-        source_path: Path,
-        output_path: Path,
-        compression: CompressionAlgorithm
-    ):
+        source_path -> None: Path,
+        output_path -> None: Path,
+        compression -> None: CompressionAlgorithm
+    ) -> None:
         """Compresse un fichier ou répertoire"""
         
         if compression == CompressionAlgorithm.GZIP:
@@ -489,7 +494,7 @@ class BackupManager:
             else:
                 await self._create_tar_archive(source_path, output_path)
     
-    async def _compress_gzip(self, source_path: Path, output_path: Path):
+    async def _compress_gzip(self, source_path -> None: Path, output_path -> None: Path) -> None:
         """Compression GZIP"""
         
         with gzip.open(output_path, 'wb') as gz_file:
@@ -503,7 +508,7 @@ class BackupManager:
                 with tarfile.open(fileobj=gz_file, mode='w') as tar:
                     tar.add(source_path, arcname=source_path.name)
     
-    async def _compress_lzma(self, source_path: Path, output_path: Path):
+    async def _compress_lzma(self, source_path -> None: Path, output_path -> None: Path) -> None:
         """Compression LZMA"""
         
         with lzma.open(output_path, 'wb', preset=6) as lzma_file:
@@ -517,12 +522,12 @@ class BackupManager:
                 with tarfile.open(fileobj=lzma_file, mode='w') as tar:
                     tar.add(source_path, arcname=source_path.name)
     
-    async def _create_tar_archive(self, source_path: Path, output_path: Path):
+    async def _create_tar_archive(self, source_path -> None: Path, output_path -> None: Path) -> None:
         """Crée une archive TAR"""
         
         import tarfile
         
-        def create_tar():
+        def create_tar() -> None:
             with tarfile.open(output_path, 'w') as tar:
                 tar.add(source_path, arcname=source_path.name)
         
@@ -531,7 +536,7 @@ class BackupManager:
             self.executor, create_tar
         )
     
-    async def _encrypt_file(self, input_path: Path, output_path: Path):
+    async def _encrypt_file(self, input_path -> None: Path, output_path -> None: Path) -> None:
         """Chiffre un fichier"""
         
         # Génération d'une clé de chiffrement
@@ -558,10 +563,10 @@ class BackupManager:
     
     async def _upload_to_destinations(
         self,
-        job: BackupJob,
-        files: List[Path],
-        manifest: Dict[str, Any]
-    ):
+        job -> None: BackupJob,
+        files -> None: List[Path],
+        manifest -> None: Dict[str, Any]
+    ) -> None:
         """Upload vers toutes les destinations configurées"""
         
         upload_tasks = []
@@ -583,7 +588,7 @@ class BackupManager:
         # Exécution parallèle avec limite
         semaphore = asyncio.Semaphore(job.config.max_parallel_uploads)
         
-        async def upload_with_semaphore(task):
+        async def upload_with_semaphore(task) -> None:
             async with semaphore:
                 return await task
         
@@ -599,11 +604,11 @@ class BackupManager:
     
     async def _upload_file_to_destination(
         self,
-        job: BackupJob,
-        file_path: Path,
-        destination: BackupDestination,
-        manifest: Dict[str, Any]
-    ):
+        job -> None: BackupJob,
+        file_path -> None: Path,
+        destination -> None: BackupDestination,
+        manifest -> None: Dict[str, Any]
+    ) -> None:
         """Upload un fichier vers une destination"""
         
         try:
@@ -625,7 +630,7 @@ class BackupManager:
             self.logger.error(f"Échec upload {file_path} vers {destination.provider}: {e}")
             raise
     
-    async def _upload_to_s3(self, file_path: Path, destination: BackupDestination, object_key: str):
+    async def _upload_to_s3(self, file_path -> None: Path, destination -> None: BackupDestination, object_key -> None: str) -> None:
         """Upload vers AWS S3"""
         
         session = aiobotocore.session.get_session()
@@ -647,7 +652,7 @@ class BackupManager:
                     StorageClass=self._get_s3_storage_class(destination.tier)
                 )
     
-    async def _upload_to_gcs(self, file_path: Path, destination: BackupDestination, object_key: str):
+    async def _upload_to_gcs(self, file_path -> None: Path, destination -> None: BackupDestination, object_key -> None: str) -> None:
         """Upload vers Google Cloud Storage"""
         
         # Implémentation GCS
@@ -655,14 +660,14 @@ class BackupManager:
         bucket = client.bucket(destination.bucket)
         blob = bucket.blob(object_key)
         
-        def upload_sync():
+        def upload_sync() -> None:
             blob.upload_from_filename(str(file_path))
         
         await asyncio.get_event_loop().run_in_executor(
             self.executor, upload_sync
         )
     
-    async def _upload_to_azure(self, file_path: Path, destination: BackupDestination, object_key: str):
+    async def _upload_to_azure(self, file_path -> None: Path, destination -> None: BackupDestination, object_key -> None: str) -> None:
         """Upload vers Azure Blob Storage"""
         
         async with BlobServiceClient(
@@ -745,7 +750,7 @@ class BackupManager:
         # Implémentation simplifiée - en production: download et vérification complète
         return True
     
-    async def _update_statistics(self, job: BackupJob, success: bool):
+    async def _update_statistics(self, job -> None: BackupJob, success -> None: bool) -> None:
         """Met à jour les statistiques de backup"""
         
         with self._lock:
@@ -800,7 +805,7 @@ class BackupManager:
         
         return restore_id
     
-    async def _execute_restore_job(self, job: RestoreJob):
+    async def _execute_restore_job(self, job -> None: RestoreJob) -> None:
         """Exécute un job de restore"""
         
         try:
@@ -893,9 +898,9 @@ class BackupManager:
     
     async def _restore_files_from_backup(
         self,
-        job: RestoreJob,
-        manifest: Dict[str, Any]
-    ):
+        job -> None: RestoreJob,
+        manifest -> None: Dict[str, Any]
+    ) -> None:
         """Restore les fichiers depuis un backup"""
         
         total_files = len(manifest['files'])
@@ -914,10 +919,10 @@ class BackupManager:
     
     async def _restore_single_file(
         self,
-        job: RestoreJob,
-        file_info: Dict[str, Any],
-        manifest: Dict[str, Any]
-    ):
+        job -> None: RestoreJob,
+        file_info -> None: Dict[str, Any],
+        manifest -> None: Dict[str, Any]
+    ) -> None:
         """Restore un fichier individuel"""
         
         # Reconstruction du nom du fichier de backup
@@ -1224,7 +1229,7 @@ class BackupManager:
         
         return stats
     
-    async def cleanup_old_backups(self, max_age_days: int = 365):
+    async def cleanup_old_backups(self, max_age_days -> None: int = 365) -> None:
         """Nettoie les anciens backups selon la politique de rétention"""
         
         cutoff_date = datetime.now() - timedelta(days=max_age_days)
@@ -1248,7 +1253,7 @@ class BackupManager:
         
         return deleted_count
     
-    async def _load_configurations(self):
+    async def _load_configurations(self) -> None:
         """Charge les configurations depuis un fichier"""
         
         try:
@@ -1265,7 +1270,7 @@ class BackupManager:
         except Exception as e:
             self.logger.error(f"Erreur chargement configurations: {e}")
     
-    async def _save_configurations(self):
+    async def _save_configurations(self) -> None:
         """Sauvegarde les configurations dans un fichier"""
         
         try:
@@ -1306,11 +1311,11 @@ class BackupManager:
         except Exception as e:
             self.logger.error(f"Erreur sauvegarde configurations: {e}")
     
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         """Context manager entry"""
         return self
     
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         """Context manager exit"""
         # Nettoyage des ressources
         self.executor.shutdown(wait=True)
@@ -1363,7 +1368,7 @@ if __name__ == "__main__":
     # Test de backup
     import sys
     
-    async def test_backup():
+    async def test_backup() -> None:
         if len(sys.argv) < 3:
             print("Usage: python backup_manager.py <source_path> <destination_bucket>")
             return

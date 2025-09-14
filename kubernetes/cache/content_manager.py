@@ -138,10 +138,10 @@ class ContentCacheManager:
     
     def __init__(
         self,
-        config: CacheConfiguration,
-        metrics_collector: CacheMetricsCollector,
-        redis_client: Optional[redis.Redis] = None
-    ):
+        config -> None: CacheConfiguration,
+        metrics_collector -> None: CacheMetricsCollector,
+        redis_client -> None: Optional[redis.Redis] = None
+    ) -> None:
         """
         Initialize content cache manager with enterprise configuration.
         

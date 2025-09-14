@@ -307,7 +307,7 @@ class AIAgentModel(Base):
         Index('idx_agent_accuracy_speed', 'current_accuracy', 'current_speed'),
     )
     
-    def __repr__(self):
+    def __repr__(self) -> None:
         return f"<AIAgentModel(id={self.id}, type={self.agent_type.value}, status={self.status.value})>"
 
 
@@ -419,7 +419,7 @@ class AgentTaskModel(Base):
         Index('idx_task_user_workflow', 'user_id', 'workflow_id'),
     )
     
-    def __repr__(self):
+    def __repr__(self) -> None:
         return f"<AgentTaskModel(id={self.id}, type={self.task_type.value}, status={self.status})>"
 
 
@@ -508,7 +508,7 @@ class AgentPerformanceModel(Base):
         Index('idx_performance_value_target', 'metric_value', 'target_value'),
     )
     
-    def __repr__(self):
+    def __repr__(self) -> None:
         return f"<AgentPerformanceModel(id={self.id}, metric={self.metric_type.value}, value={self.metric_value})>"
 
 
@@ -589,7 +589,7 @@ class IntelligenceOrchestrationModel(Base):
         Index('idx_orchestration_created_completed', 'created_at', 'completed_at'),
     )
     
-    def __repr__(self):
+    def __repr__(self) -> None:
         return f"<IntelligenceOrchestrationModel(id={self.id}, strategy={self.strategy.value}, status={self.status})>"
 
 

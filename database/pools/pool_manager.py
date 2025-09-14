@@ -1,3 +1,8 @@
+"""
+Pool Manager module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """Database Pool Manager - Central Orchestration System
 ========================================================
@@ -54,7 +59,7 @@ class PoolStats:
 class DatabasePoolManager:
     """Central database pool manager and orchestrator"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.pools: Dict[PoolType, Any] = {}
         self.pool_configs: Dict[PoolType, Any] = {}
         self.pool_stats: Dict[PoolType, PoolStats] = {}
@@ -124,7 +129,7 @@ class DatabasePoolManager:
         return pool
 
     @asynccontextmanager
-    async def get_connection(self, pool_type: PoolType):
+    async def get_connection(self, pool_type -> None: PoolType) -> None:
         """Get a connection from the specified pool"""
         pool = await self.get_pool(pool_type)
         if not pool:
@@ -206,7 +211,7 @@ class DatabasePoolManager:
         
         return stats
 
-    async def start_monitoring(self):
+    async def start_monitoring(self) -> None:
         """Start global pool monitoring"""
         if self._monitoring_task and not self._monitoring_task.done():
             logger.warning("Monitoring already running")
@@ -215,7 +220,7 @@ class DatabasePoolManager:
         self._monitoring_task = asyncio.create_task(self._monitoring_loop())
         logger.info("📊 Global pool monitoring started")
 
-    async def stop_monitoring(self):
+    async def stop_monitoring(self) -> None:
         """Stop global pool monitoring"""
         if self._monitoring_task:
             self._monitoring_task.cancel()
@@ -226,7 +231,7 @@ class DatabasePoolManager:
             self._monitoring_task = None
             logger.info("📊 Global pool monitoring stopped")
 
-    async def _monitoring_loop(self):
+    async def _monitoring_loop(self) -> None:
         """Internal monitoring loop"""
         while not self._shutdown:
             try:
@@ -252,7 +257,7 @@ class DatabasePoolManager:
             except Exception as e:
                 logger.error(f"❌ Monitoring loop error: {e}")
 
-    async def _update_pool_statistics(self):
+    async def _update_pool_statistics(self) -> None:
         """Update pool statistics"""
         for pool_type, pool in self.pools.items():
             if pool_type in self.pool_stats:
@@ -260,7 +265,7 @@ class DatabasePoolManager:
                 stats = self.pool_stats[pool_type]
                 stats.idle_connections = max(0, stats.total_connections - stats.active_connections)
 
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Shutdown all pools gracefully"""
         logger.info("🛑 Shutting down all database pools...")
         self._shutdown = True

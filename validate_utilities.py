@@ -1,5 +1,13 @@
+"""
+Validate Utilities module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
+from datetime import datetime
+from typing import Dict, List, Optional, Union, Tuple
+
 Utility Validation Script - Enterprise Utilities Test
 ====================================================
 
@@ -13,7 +21,7 @@ from pathlib import Path
 # Add utils to path
 sys.path.insert(0, str(Path(__file__).parent))
 
-def test_file_utilities():
+def test_file_utilities() -> None:
     """Test file utilities basic functionality"""
     try:
         from utils.file_utilities import FileUtilities, get_safe_filename, get_unique_filename
@@ -33,7 +41,7 @@ def test_file_utilities():
         print(f"❌ FileUtilities test failed: {e}")
         return False
 
-def test_file_validator():
+def test_file_validator() -> None:
     """Test file validator basic functionality"""
     try:
         from utils.file_validator import FileValidator, is_safe_filename, get_file_risk_score
@@ -53,7 +61,7 @@ def test_file_validator():
         print(f"❌ FileValidator test failed: {e}")
         return False
 
-def test_datetime_utilities():
+def test_datetime_utilities() -> None:
     """Test datetime utilities basic functionality"""
     try:
         from utils.datetime_utilities import DateTimeUtilities, quick_parse_date, format_relative_time
@@ -73,7 +81,7 @@ def test_datetime_utilities():
         print(f"❌ DateTimeUtilities test failed: {e}")
         return False
 
-def test_password_utilities():
+def test_password_utilities() -> None:
     """Test password utilities basic functionality"""
     try:
         from utils.password_utilities import PasswordUtilities, quick_password_check, generate_strong_password
@@ -93,7 +101,7 @@ def test_password_utilities():
         print(f"❌ PasswordUtilities test failed: {e}")
         return False
 
-def test_test_utilities():
+def test_test_utilities() -> None:
     """Test testing utilities basic functionality"""
     try:
         from utils.test_utilities import TestUtilities, compare_dictionaries, wait_for_condition
@@ -115,7 +123,7 @@ def test_test_utilities():
         print(f"❌ TestUtilities test failed: {e}")
         return False
 
-def test_video_utilities():
+def test_video_utilities() -> None:
     """Test video utilities basic functionality"""
     try:
         from utils.video_utilities import VideoUtilities, format_duration, calculate_video_bitrate
@@ -135,7 +143,7 @@ def test_video_utilities():
         print(f"❌ VideoUtilities test failed: {e}")
         return False
 
-def main():
+def main() -> None:
     """Run all utility tests"""
     print("🚀 Starting Enterprise Utilities Validation")
     print("=" * 50)

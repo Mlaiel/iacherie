@@ -77,7 +77,7 @@ class RealTimeCommunicationManager:
     Enterprise real-time communication manager
     Handles WebSocket connections, notifications, and live updates
     """
-    def __init__(self):
+    def __init__(self) -> None:
         self.connections: Dict[str, WebSocketConnection] = {}
         self.user_connections: Dict[str, List[str]] = {}  # user_id -> connection_ids
         self.channel_subscribers: Dict[str, Set[str]] = {}  # channel -> connection_ids
@@ -121,7 +121,7 @@ class RealTimeCommunicationManager:
         """Setup Socket.IO event handlers"""
         
         @self.sio_server.event
-        async def connect(sid: str, environ: Dict[str, Any], auth: Dict[str, Any]):
+        async def connect(sid -> None: str, environ -> None: Dict[str, Any], auth -> None: Dict[str, Any]) -> None:
             """
 Handle Socket.IO connection"""
             try:
@@ -161,7 +161,7 @@ Handle Socket.IO connection"""
                 return False
 
         @self.sio_server.event
-        async def disconnect(sid: str):
+        async def disconnect(sid -> None: str) -> None:
             """Handle Socket.IO disconnection"""
             try:
                 session = await self.sio_server.get_session(sid)
@@ -173,7 +173,7 @@ Handle Socket.IO connection"""
                 logger.error(f"Socket.IO disconnection error: {e}")
 
         @self.sio_server.event
-        async def subscribe_channel(sid: str, data: Dict[str, Any]):
+        async def subscribe_channel(sid -> None: str, data -> None: Dict[str, Any]) -> None:
             """Subscribe to notification channel"""
             try:
                 channel = data.get("channel")
@@ -197,7 +197,7 @@ Handle Socket.IO connection"""
                 logger.error(f"Channel subscription error: {e}")
 
         @self.sio_server.event
-        async def unsubscribe_channel(sid: str, data: Dict[str, Any]):
+        async def unsubscribe_channel(sid -> None: str, data -> None: Dict[str, Any]) -> None:
             """Unsubscribe from notification channel"""
             try:
                 channel = data.get("channel")
@@ -218,7 +218,7 @@ Handle Socket.IO connection"""
                 logger.error(f"Channel unsubscription error: {e}")
 
         @self.sio_server.event
-        async def heartbeat(sid: str):
+        async def heartbeat(sid -> None: str) -> None:
             """Handle heartbeat ping"""
             await self.sio_server.emit("heartbeat_ack", {"timestamp": time.time()}, room=sid)
 

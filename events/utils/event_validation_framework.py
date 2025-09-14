@@ -1,5 +1,7 @@
 """Event Validation Framework - Ultra-Robust for Ainflue Business Events
 
+import asyncio
+
 Comprehensive event validation framework with multi-layer validation,
 business rules enforcement, and compliance checking for Ainflue platform.
 
@@ -71,7 +73,7 @@ class EventValidationResult:
     validation_timestamp: datetime = field(default_factory=datetime.utcnow)
     
     @classmethod
-    def FAILED(cls, layer: str, results: List[ValidationResult], blocking_errors: List[BusinessRuleViolation]):
+    def FAILED(cls, layer -> None: str, results -> None: List[ValidationResult], blocking_errors -> None: List[BusinessRuleViolation]) -> None:
         """Create a failed validation result"""
         return cls(
             event_id="unknown",
@@ -116,17 +118,17 @@ class SequenceValidationResult:
     workflow_progress: Optional[float] = None
     
     @classmethod
-    def VALID(cls, message: str = "", **kwargs):
+    def VALID(cls, message -> None: str = "", **kwargs) -> None:
         """Create a valid sequence result"""
         return cls(is_valid=True, message=message, **kwargs)
     
     @classmethod
-    def INVALID(cls, violation_type: str, message: str, **kwargs):
+    def INVALID(cls, violation_type -> None: str, message -> None: str, **kwargs) -> None:
         """Create an invalid sequence result"""
         return cls(is_valid=False, violation_type=violation_type, message=message, **kwargs)
     
     @classmethod
-    def CONSTRAINT_VIOLATION(cls, violations: List[BusinessRuleViolation], message: str):
+    def CONSTRAINT_VIOLATION(cls, violations -> None: List[BusinessRuleViolation], message -> None: str) -> None:
         """Create a constraint violation result"""
         return cls(is_valid=False, violation_type="constraint_violation", message=message)
 
@@ -134,7 +136,7 @@ class SequenceValidationResult:
 class BusinessRulesEngine:
     """Engine for evaluating business rules for Ainflue platform"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.rules = self._load_ainflue_business_rules()
         logger.info("BusinessRulesEngine initialized with Ainflue rules")
     
@@ -418,7 +420,7 @@ class SchemaValidator:
 class BusinessLogicValidator:
     """Validator for Ainflue business logic rules"""
     
-    def __init__(self, business_rules_engine: BusinessRulesEngine):
+    def __init__(self, business_rules_engine -> None: BusinessRulesEngine) -> None:
         self.business_rules_engine = business_rules_engine
     
     async def validate_business_logic(self, event_data: Dict[str, Any],
@@ -589,7 +591,7 @@ class BusinessLogicValidator:
 class WorkflowSequenceValidator:
     """Validator for workflow sequence and state transitions"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.workflow_definitions = self._load_workflow_definitions()
     
     def _load_workflow_definitions(self) -> Dict[str, Dict[str, Any]]:
@@ -994,7 +996,7 @@ class EventValidationFramework:
     Multi-layer validation with business rules enforcement and compliance checking
     """
     
-    def __init__(self, business_rules_engine: Optional[BusinessRulesEngine] = None):
+    def __init__(self, business_rules_engine -> None: Optional[BusinessRulesEngine] = None) -> None:
         self.business_rules_engine = business_rules_engine or BusinessRulesEngine()
         self.schema_validator = SchemaValidator()
         self.business_validator = BusinessLogicValidator(self.business_rules_engine)

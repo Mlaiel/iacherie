@@ -27,7 +27,7 @@ logger = logging.getLogger(__name__)
 class PerformanceCollector:
     """Advanced performance data collector and analyzer."""
     
-    def __init__(self, window_size: int = 1000):
+    def __init__(self, window_size -> None: int = 1000) -> None:
         self.window_size = window_size
         self.metrics: Dict[str, deque] = defaultdict(lambda: deque(maxlen=window_size))
         self.start_time = time.time()

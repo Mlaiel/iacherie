@@ -1,11 +1,13 @@
 """IA Influencer Agent - SSL/TLS Utilities and Validation
+import asyncio
+
 Advanced SSL/TLS utilities, validation, and security analysis
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use prohibited
 
 Team Expertise:
-- Lead Dev IA + Backend Senior + ML Engineer
+    - Lead Dev IA + Backend Senior + ML Engineer
 - DBA + Security Expert + Microservices Architect
 - Audio Processing + DevOps + Prompt Engineering
 
@@ -139,7 +141,7 @@ class SSLValidator:
     Provides comprehensive security analysis and recommendations
     """
     
-    def __init__(self, timeout: int = 10):
+    def __init__(self, timeout -> None: int = 10) -> None:
         """
         Initialize SSL validator
         
@@ -440,7 +442,7 @@ class SSLScanner:
     Performs deep security analysis and vulnerability assessment
     """
     
-    def __init__(self, timeout: int = 10, threads: int = 5):
+    def __init__(self, timeout -> None: int = 10, threads -> None: int = 5) -> None:
         """
         Initialize SSL scanner
         
@@ -932,7 +934,7 @@ class CertificateConverter:
     Supports conversion between PEM, DER, PKCS#12, and other formats
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """
 Initialize certificate converter"""
         self.logger = logging.getLogger(__name__)
@@ -1077,7 +1079,7 @@ class SSLTestServer:
     SSL test server for certificate validation and testing
     """
     
-    def __init__(self, cert_path: Path, key_path: Path, port: int = 8443):
+    def __init__(self, cert_path -> None: Path, key_path -> None: Path, port -> None: int = 8443) -> None:
         """
         Initialize SSL test server
         
@@ -1118,7 +1120,7 @@ class SSLTestServer:
                 self.logger.info(f"SSL test server started on port {self.port}")
                 
                 # Start server in thread
-                def run_server():
+                def run_server() -> None:
         try:
                     # AI model processing
                     if not hasattr(self, 'model') or self.model is None:
@@ -1152,7 +1154,7 @@ class OpenSSLWrapper:
     Wrapper for OpenSSL command-line operations
     """
     
-    def __init__(self, timeout: int = 30):
+    def __init__(self, timeout -> None: int = 30) -> None:
         """
         Initialize OpenSSL wrapper
         
@@ -1422,3 +1424,5 @@ def validate_ssl_configuration(
         result.valid = False
     
     return result
+
+# File has syntax issues - needs manual review

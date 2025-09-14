@@ -192,7 +192,7 @@ class BlockchainCertificate(BaseModel):
     confirmation_count: int = 0
     
     @validator('expires_at', pre=True, always=True)
-    def set_expiration(cls, v, values):
+    def set_expiration(cls, v, values) -> None:
         if v is None and values.get('certification_type') == CertificationType.TIMESTAMP_PROOF:
             # Les preuves de timestamp expirent après 10 ans
             return values.get('created_at', datetime.utcnow()) + timedelta(days=3650)
@@ -203,7 +203,7 @@ class SmartContractInterface:
     """
 Interface pour les contrats intelligents"""
     
-    def __init__(self, network: BlockchainNetwork, config: Dict[str, Any]):
+    def __init__(self, network -> None: BlockchainNetwork, config -> None: Dict[str, Any]) -> None:
         self.network = network
         self.config = config
         self.web3_client = None
@@ -232,7 +232,7 @@ Initialise la connexion au contrat intelligent"""
             logger.error(f"Erreur initialisation contrat {self.network.value}: {e}")
             return False
     
-    async def _setup_ethereum(self):
+    async def _setup_ethereum(self) -> None:
         """Configure l'interface Ethereum"""
         try:
             # Initialize Web3.py for Ethereum integration
@@ -263,7 +263,7 @@ Initialise la connexion au contrat intelligent"""
             logger.error(f"Erreur configuration Ethereum: {e}")
             raise
     
-    async def _setup_polygon(self):
+    async def _setup_polygon(self) -> None:
         """Configure l'interface Polygon"""
         try:
             # Configuration similaire à Ethereum mais avec les paramètres Polygon
@@ -274,7 +274,7 @@ Initialise la connexion au contrat intelligent"""
             logger.error(f"Erreur configuration Polygon: {e}")
             raise
     
-    async def _setup_bsc(self):
+    async def _setup_bsc(self) -> None:
         """Configure l'interface Binance Smart Chain"""
         try:
             self.contract_address = self.config.get('contract_address')
@@ -484,7 +484,7 @@ Initialise la connexion au contrat intelligent"""
 class IPFSInterface:
     """Interface pour IPFS (InterPlanetary File System)"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.ipfs_client = None
         self.gateway_url = config.get('gateway_url', 'https://ipfs.io/ipfs/')
@@ -616,7 +616,7 @@ Initialise la connexion IPFS"""
 class BlockchainService:
     """Service professionnel d'intégration blockchain"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.smart_contracts: Dict[BlockchainNetwork, SmartContractInterface] = {}
         self.ipfs_interface: Optional[IPFSInterface] = None
@@ -1057,7 +1057,7 @@ Initialise le service blockchain"""
             logger.error(f"Erreur génération hash contenu: {e}")
             raise
     
-    async def _transaction_monitor(self):
+    async def _transaction_monitor(self) -> None:
         """Surveille les transactions blockchain en cours"""
         while self.running:
             try:
@@ -1109,7 +1109,7 @@ Initialise le service blockchain"""
         random_suffix = secrets.token_hex(4)
         return f"CERT-{timestamp}-{random_suffix}"
     
-    async def _load_certificates(self):
+    async def _load_certificates(self) -> None:
         """Charge les certificats existants depuis le stockage persistant"""
         try:
             # Database loading implementation for certificates
@@ -1265,7 +1265,7 @@ Initialise le service blockchain"""
             logger.error(f"Erreur génération rapport blockchain: {e}")
             return {}
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Arrêt propre du service"""
         try:
             logger.info("Arrêt du service blockchain...")
@@ -1287,7 +1287,7 @@ Initialise le service blockchain"""
         except Exception as e:
             logger.error(f"Erreur arrêt service blockchain: {e}")
     
-    async def _save_certificates(self):
+    async def _save_certificates(self) -> None:
         """Sauvegarde les certificats"""
         try:
             # Database saving implementation for certificates

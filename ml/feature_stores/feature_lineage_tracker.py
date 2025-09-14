@@ -120,10 +120,10 @@ class FeatureLineageTracker:
     
     def __init__(
         self,
-        storage_path: str = "data/lineage",
-        enable_real_time: bool = True,
-        max_history_days: int = 365
-    ):
+        storage_path -> None: str = "data/lineage",
+        enable_real_time -> None: bool = True,
+        max_history_days -> None: int = 365
+    ) -> None:
         self.storage_path = Path(storage_path)
         self.storage_path.mkdir(parents=True, exist_ok=True)
         
@@ -466,7 +466,7 @@ class FeatureLineageTracker:
             'compliance_status': 'COMPLIANT'  # À implémenter selon les règles business
         }
     
-    async def _persist_node(self, node: LineageNode):
+    async def _persist_node(self, node -> None: LineageNode) -> None:
         """Persister un nœud"""
         if self.enable_real_time:
             node_file = self.storage_path / f"nodes/{node.node_id}.json"
@@ -475,7 +475,7 @@ class FeatureLineageTracker:
             with open(node_file, 'w') as f:
                 json.dump(node.to_dict(), f, indent=2)
     
-    async def _persist_edge(self, edge: LineageEdge):
+    async def _persist_edge(self, edge -> None: LineageEdge) -> None:
         """Persister une arête"""
         if self.enable_real_time:
             edge_file = self.storage_path / f"edges/{edge.source_id}_{edge.target_id}_{int(edge.timestamp.timestamp())}.json"
@@ -484,7 +484,7 @@ class FeatureLineageTracker:
             with open(edge_file, 'w') as f:
                 json.dump(edge.to_dict(), f, indent=2)
     
-    async def cleanup_old_data(self):
+    async def cleanup_old_data(self) -> None:
         """Nettoyer les anciennes données"""
         cutoff_date = datetime.now() - timedelta(days=self.max_history_days)
         
@@ -511,7 +511,7 @@ class FeatureLineageTracker:
         logger.info(f"🧹 Cleaned up {len(nodes_to_remove)} nodes and {len(edges_to_remove)} edges")
 
 # Usage Example
-async def main():
+async def main() -> None:
     """Exemple d'utilisation du Feature Lineage Tracker"""
     
     tracker = FeatureLineageTracker()

@@ -36,7 +36,7 @@ class CloudBackupConfig:
 class CloudBackup:
     """Cloud backup integration with multiple providers."""
     
-    def __init__(self, config: CloudBackupConfig):
+    def __init__(self, config -> None: CloudBackupConfig) -> None:
         """Initialize cloud backup.
         
         Args:
@@ -115,7 +115,7 @@ class CloudBackup:
             logger.error(f"Failed to download backup: {e}")
             return False
     
-    def _create_client(self):
+    def _create_client(self) -> None:
         """Create cloud provider client."""
         if self.config.provider == CloudProvider.AWS_S3:
             return boto3.client(

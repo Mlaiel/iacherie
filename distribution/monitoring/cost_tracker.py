@@ -1,3 +1,8 @@
+"""
+Cost Tracker module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Ainflue Platform - Distribution Monitoring - Cost Tracker
@@ -112,7 +117,7 @@ class DistributionCostTracker:
     Monitors spending, tracks budgets, and provides optimization recommendations
     """
     
-    def __init__(self, config: Optional[Dict] = None):
+    def __init__(self, config -> None: Optional[Dict] = None) -> None:
         self.config = config or {}
         self.cost_items: List[CostItem] = []
         self.budgets: Dict[str, CostBudget] = {}
@@ -170,7 +175,7 @@ class DistributionCostTracker:
             'dist-lb-01': 'Distribution Load Balancer'
         }
     
-    def _initialize_sample_data(self):
+    def _initialize_sample_data(self) -> None:
         """Initialize with sample cost data"""
         
         # Generate cost data for the last 30 days
@@ -222,7 +227,7 @@ class DistributionCostTracker:
                 metadata={'platforms': ['youtube', 'instagram', 'tiktok']}
             ))
     
-    def _initialize_default_budgets(self):
+    def _initialize_default_budgets(self) -> None:
         """Initialize default cost budgets"""
         
         # Monthly compute budget
@@ -362,7 +367,7 @@ class DistributionCostTracker:
             'period_end': end_date.isoformat()
         }
     
-    async def _check_budget_alerts(self):
+    async def _check_budget_alerts(self) -> None:
         """Check all budgets for threshold violations"""
         
         for budget_id, budget in self.budgets.items():
@@ -433,7 +438,7 @@ class DistributionCostTracker:
         
         return min(1.0, elapsed_duration.total_seconds() / total_duration.total_seconds())
     
-    async def _send_budget_alert(self, alert: CostAlert, budget: CostBudget):
+    async def _send_budget_alert(self, alert -> None: CostAlert, budget -> None: CostBudget) -> None:
         """Send budget alert notification"""
         
         alert_message = f"""
@@ -639,7 +644,7 @@ def create_cost_tracker(config: Optional[Dict] = None) -> DistributionCostTracke
     return DistributionCostTracker(config)
 
 # Example usage
-async def main():
+async def main() -> None:
     """Example usage of cost tracker"""
     tracker = create_cost_tracker()
     

@@ -90,15 +90,15 @@ if MONETIZATION_MODELS_AVAILABLE:
         'licensing': LicensingModel
     })
 
-def get_model_by_table_name(table_name: str):
+def get_model_by_table_name(table_name -> None: str) -> None:
     """Get model class by table name"""
     return MODEL_REGISTRY.get(table_name)
 
-def get_all_models():
+def get_all_models() -> None:
     """Get all registered models"""
     return list(MODEL_REGISTRY.values())
 
-def get_model_relationships():
+def get_model_relationships() -> None:
     """Get model relationship information"""
     return RELATIONSHIP_MAPPINGS
 
@@ -118,7 +118,7 @@ class ModelManager:
     Provides utilities for model operations, validation, and introspection.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.models = MODEL_REGISTRY
         self.relationships = RELATIONSHIP_MAPPINGS
         self._session = None
@@ -275,7 +275,7 @@ Get all possible values for an enum"""
             return [item.value for item in enum_class]
         return []
     
-    def setup_database(self, database_url: str, **kwargs):
+    def setup_database(self, database_url -> None: str, **kwargs) -> None:
         """
 Setup database connection and session"""
         if not SQLALCHEMY_AVAILABLE:
@@ -287,7 +287,7 @@ Setup database connection and session"""
         
         return self._engine, self._session
     
-    def create_all_tables(self):
+    def create_all_tables(self) -> None:
         """Create all model tables in the database"""
         if not self._engine:
             raise RuntimeError("Database engine not configured. Call setup_database first.")
@@ -300,7 +300,7 @@ Setup database connection and session"""
         """Get current database session"""
         return self._session
     
-    def close_session(self):
+    def close_session(self) -> None:
         """
 Close current database session"""
         if self._session:
@@ -314,7 +314,7 @@ class ModelQueryBuilder:
     Provides common query patterns and utilities.
     """
     
-    def __init__(self, session: Session):
+    def __init__(self, session -> None: Session) -> None:
         self.session = session
         self.manager = ModelManager()
     
@@ -430,22 +430,22 @@ Get active protection alerts for user"""
 model_manager = ModelManager()
 
 # Convenience functions
-def get_model(name: str):
+def get_model(name -> None: str) -> None:
     """
 Get model class by name"""
     return model_manager.get_model(name)
 
-def create_instance(model_name: str, **kwargs):
+def create_instance(model_name -> None: str, **kwargs) -> None:
     """
 Create model instance with validation"""
     return model_manager.create_model_instance(model_name, **kwargs)
 
-def get_enum_values(enum_name: str):
+def get_enum_values(enum_name -> None: str) -> None:
     """
 Get enum values"""
     return model_manager.get_enum_values(enum_name)
 
-def setup_database(database_url: str, **kwargs):
+def setup_database(database_url -> None: str, **kwargs) -> None:
     """
 Setup database connection"""
     return model_manager.setup_database(database_url, **kwargs)

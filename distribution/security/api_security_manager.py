@@ -104,7 +104,7 @@ class APISecurityManager:
     - Security policy enforcement
     """
 
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.security_policies = {}
         self.active_incidents = {}
@@ -118,7 +118,7 @@ class APISecurityManager:
         # Initialize default security policies
         self._initialize_default_policies()
 
-    def _initialize_default_policies(self):
+    def _initialize_default_policies(self) -> None:
         """Initialize default security policies"""
         
         # Basic rate limiting policy
@@ -449,7 +449,7 @@ class APISecurityManager:
             logger.error(f"Error validating signature: {e}")
             return False, f"Signature validation error: {str(e)}"
 
-    async def _log_security_incident(self, request: APIRequest, threats: List[str]):
+    async def _log_security_incident(self, request -> None: APIRequest, threats -> None: List[str]) -> None:
         """Log security incident"""
         
         try:
@@ -497,7 +497,7 @@ class APISecurityManager:
         
         return ThreatLevel.LOW
 
-    async def _trigger_security_alert(self, incident: SecurityIncident):
+    async def _trigger_security_alert(self, incident -> None: SecurityIncident) -> None:
         """Trigger security alert for critical incidents"""
         
         # This would integrate with alerting systems
@@ -594,7 +594,7 @@ class APISecurityManager:
             logger.error(f"Error revoking API key: {e}")
             return False
 
-    async def block_ip(self, ip_address: str, reason: str = "Security violation"):
+    async def block_ip(self, ip_address -> None: str, reason -> None: str = "Security violation") -> None:
         """Block IP address"""
         
         try:
@@ -604,7 +604,7 @@ class APISecurityManager:
         except Exception as e:
             logger.error(f"Error blocking IP: {e}")
 
-    async def unblock_ip(self, ip_address: str):
+    async def unblock_ip(self, ip_address -> None: str) -> None:
         """Unblock IP address"""
         
         try:

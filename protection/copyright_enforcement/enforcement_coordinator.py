@@ -99,7 +99,7 @@ class ViolationProcessor:
     """
 Advanced violation processing and analysis system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.settings = get_settings()
         self.notification_service = NotificationService()
     
@@ -575,7 +575,7 @@ Calculate reputation impact score (0-100)"""
 class EnforcementCoordinator:
     """Central coordinator for all enforcement activities"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.dmca_generator = DMCAGenerator()
         self.legal_manager = LegalActionManager()
         self.revenue_manager = RevenueClaimManager()

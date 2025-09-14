@@ -198,7 +198,7 @@ class ChatIntegration(BaseIntegration):
     - Content monetization integration
     """
 
-    def __init__(self, config: ChatConfig):
+    def __init__(self, config -> None: ChatConfig) -> None:
         super().__init__("chat_integration")
         self.config = config
         self.security_manager = SecurityManager()
@@ -532,7 +532,7 @@ class ChatIntegration(BaseIntegration):
             logger.error("Mention extraction failed", error=str(e))
             return []
 
-    async def _send_to_platform(self, message: ChatMessage):
+    async def _send_to_platform(self, message -> None: ChatMessage) -> None:
         """Send message to external platform"""
         try:
             if message.platform == ChatPlatform.SLACK:
@@ -550,7 +550,7 @@ class ChatIntegration(BaseIntegration):
                         platform=message.platform.value,
                         error=str(e))
 
-    async def _send_to_slack(self, message: ChatMessage):
+    async def _send_to_slack(self, message -> None: ChatMessage) -> None:
         """Send message to Slack"""
         if not self.config.slack_bot_token:
             return
@@ -562,7 +562,7 @@ class ChatIntegration(BaseIntegration):
         except Exception as e:
             logger.error("Slack send failed", error=str(e))
 
-    async def _send_to_discord(self, message: ChatMessage):
+    async def _send_to_discord(self, message -> None: ChatMessage) -> None:
         """Send message to Discord"""
         if not self.config.discord_bot_token:
             return
@@ -574,7 +574,7 @@ class ChatIntegration(BaseIntegration):
         except Exception as e:
             logger.error("Discord send failed", error=str(e))
 
-    async def _send_to_teams(self, message: ChatMessage):
+    async def _send_to_teams(self, message -> None: ChatMessage) -> None:
         """Send message to Microsoft Teams"""
         if not self.config.teams_webhook_url:
             return
@@ -586,7 +586,7 @@ class ChatIntegration(BaseIntegration):
         except Exception as e:
             logger.error("Teams send failed", error=str(e))
 
-    async def _send_to_telegram(self, message: ChatMessage):
+    async def _send_to_telegram(self, message -> None: ChatMessage) -> None:
         """Send message to Telegram"""
         if not self.config.telegram_bot_token:
             return
@@ -598,7 +598,7 @@ class ChatIntegration(BaseIntegration):
         except Exception as e:
             logger.error("Telegram send failed", error=str(e))
 
-    async def _handle_ai_response(self, message: ChatMessage):
+    async def _handle_ai_response(self, message -> None: ChatMessage) -> None:
         """Handle AI-powered response to message"""
         try:
             # Simple AI trigger detection
@@ -799,7 +799,7 @@ class ChatIntegration(BaseIntegration):
             logger.error("Failed to get channel messages", error=str(e))
             return []
 
-    async def _emit_event(self, event: ChatEvent):
+    async def _emit_event(self, event -> None: ChatEvent) -> None:
         """Emit chat event to all registered handlers"""
         try:
             # Store event
@@ -827,7 +827,7 @@ class ChatIntegration(BaseIntegration):
         except Exception as e:
             logger.error("Failed to emit event", error=str(e))
 
-    async def _broadcast_event(self, event: ChatEvent):
+    async def _broadcast_event(self, event -> None: ChatEvent) -> None:
         """Broadcast event to WebSocket connections"""
         try:
             event_data = {
@@ -863,8 +863,8 @@ class ChatIntegration(BaseIntegration):
             logger.error("Event broadcast failed", error=str(e))
 
     def register_event_handler(self, 
-                             event_type: ChatEventType, 
-                             handler: Callable[[ChatEvent], None]):
+                             event_type -> None: ChatEventType, 
+                             handler -> None: Callable[[ChatEvent], None]) -> None:
         """Register event handler for specific event type"""
         if event_type not in self._event_handlers:
             self._event_handlers[event_type] = []
@@ -875,7 +875,7 @@ class ChatIntegration(BaseIntegration):
                    event_type=event_type.value,
                    handler_count=len(self._event_handlers[event_type]))
 
-    async def register_websocket(self, user_id: str, websocket: websockets.WebSocketServerProtocol):
+    async def register_websocket(self, user_id -> None: str, websocket -> None: websockets.WebSocketServerProtocol) -> None:
         """Register WebSocket connection for real-time updates"""
         try:
             self._websocket_connections[user_id] = websocket
@@ -896,7 +896,7 @@ class ChatIntegration(BaseIntegration):
                         user_id=user_id,
                         error=str(e))
 
-    async def handle_websocket_message(self, user_id: str, message: str):
+    async def handle_websocket_message(self, user_id -> None: str, message -> None: str) -> None:
         """Handle incoming WebSocket message"""
         try:
             data = json.loads(message)
@@ -976,7 +976,7 @@ def create_chat_integration(**kwargs) -> ChatIntegration:
     return ChatIntegration(config)
 
 # Example usage for Ainflue platform
-async def example_chat_integration_flow():
+async def example_chat_integration_flow() -> None:
     """Example chat integration usage"""
     
     # Initialize chat integration

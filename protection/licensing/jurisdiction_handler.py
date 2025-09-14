@@ -103,7 +103,7 @@ class JurisdictionHandler:
     jurisdictions with automated rule application and conflict resolution.
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """
 Initialize jurisdiction handler with configuration."""
         self.config = config
@@ -132,7 +132,7 @@ Initialize jurisdiction handler with configuration."""
         self._load_cross_border_rules()
         self._load_treaty_frameworks()
     
-    def _load_jurisdiction_profiles(self):
+    def _load_jurisdiction_profiles(self) -> None:
         """Load comprehensive jurisdiction legal profiles."""
         jurisdictions_data = {
             'international': JurisdictionProfile(
@@ -276,7 +276,7 @@ Initialize jurisdiction handler with configuration."""
         self.metrics['jurisdictions_supported'] = len(jurisdictions_data)
         self.logger.info(f"Loaded {len(jurisdictions_data)} jurisdiction profiles")
     
-    def _load_compliance_requirements(self):
+    def _load_compliance_requirements(self) -> None:
         """Load jurisdiction-specific compliance requirements."""
         requirements_data = {
             # US Requirements
@@ -352,7 +352,7 @@ Initialize jurisdiction handler with configuration."""
         self.compliance_requirements = requirements_data
         self.logger.info(f"Loaded {len(requirements_data)} compliance requirements")
     
-    def _load_cross_border_rules(self):
+    def _load_cross_border_rules(self) -> None:
         """Load cross-border legal recognition rules."""
         cross_border_data = {
             'us_eu_recognition': CrossBorderRule(
@@ -377,7 +377,7 @@ Initialize jurisdiction handler with configuration."""
         self.cross_border_rules = cross_border_data
         self.logger.info(f"Loaded {len(cross_border_data)} cross-border rules")
     
-    def _load_treaty_frameworks(self):
+    def _load_treaty_frameworks(self) -> None:
         """Load international treaty frameworks."""
         treaty_data = {
             'berne_convention': {

@@ -156,7 +156,7 @@ class MultiPlatformDistributionCore:
     cross-platform optimization, and intelligent distribution coordination.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize multi-platform distribution core"""
         self.config = config or {}
         self.global_distribution_plans: Dict[str, GlobalDistributionPlan] = {}

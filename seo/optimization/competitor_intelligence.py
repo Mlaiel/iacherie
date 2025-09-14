@@ -112,7 +112,7 @@ class CompetitorIntelligence:
     AI-powered competitive intelligence system that analyzes competitors,
     identifies opportunities, and provides strategic insights for SEO and content marketing.
     """
-    def __init__(self, industry: str = "general", region: str = "US"):
+    def __init__(self, industry -> None: str = "general", region -> None: str = "US") -> None:
         """
         Initialize the competitor intelligence system.
         

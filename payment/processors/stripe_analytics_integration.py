@@ -71,7 +71,7 @@ class StripeAnalyticsIntegration:
     - 🤖 IA Prompt Engineer: Intelligent automation + smart recommendations + natural language insights
     """
     
-    def __init__(self, stripe_api_key: str, redis_client=None, db_pool=None):
+    def __init__(self, stripe_api_key -> None: str, redis_client=None, db_pool=None) -> None:
         """Initialize Stripe Analytics Integration with enterprise features"""
         stripe.api_key = stripe_api_key
         self.redis_client = redis_client
@@ -90,7 +90,7 @@ class StripeAnalyticsIntegration:
         
         logger.info("🏆 Stripe Analytics Integration initialized with multi-role expertise")
     
-    def _initialize_ml_models(self):
+    def _initialize_ml_models(self) -> None:
         """Initialize ML models for analytics prediction"""
         # Revenue prediction model (ML Engineer expertise)
         self.ml_models['revenue_predictor'] = RandomForestRegressor(
@@ -478,7 +478,7 @@ class StripeAnalyticsIntegration:
             logger.warning(f"⚠️ Cache retrieval failed: {str(e)}")
             return None
     
-    async def _cache_result(self, cache_key: str, data: Dict, ttl: int = 3600):
+    async def _cache_result(self, cache_key -> None: str, data -> None: Dict, ttl -> None: int = 3600) -> None:
         """Store data in Redis cache"""
         try:
             if self.redis_client:
@@ -490,7 +490,7 @@ class StripeAnalyticsIntegration:
         except Exception as e:
             logger.warning(f"⚠️ Cache storage failed: {str(e)}")
     
-    async def _store_analytics_data(self, analytics_data: Dict):
+    async def _store_analytics_data(self, analytics_data -> None: Dict) -> None:
         """Store analytics data in database for historical analysis"""
         try:
             if self.db_pool:

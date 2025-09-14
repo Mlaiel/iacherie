@@ -219,7 +219,7 @@ class ContentFingerprintingManager:
     performance and reliability.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.logger = get_logger(f"{__name__}.ContentFingerprintingManager")
         self.settings = get_settings()
@@ -271,7 +271,7 @@ class ContentFingerprintingManager:
             self.logger.error(f"❌ Failed to initialize Content Fingerprinting Manager: {e}")
             return False
     
-    async def _create_fingerprinting_schema(self):
+    async def _create_fingerprinting_schema(self) -> None:
         """Create fingerprinting database schema"""
         self.logger.debug("Creating fingerprinting database schema...")
         
@@ -481,7 +481,7 @@ class ContentFingerprintingManager:
         
         self.logger.debug("✅ Fingerprinting schema created successfully")
     
-    async def _initialize_faiss_indices(self):
+    async def _initialize_faiss_indices(self) -> None:
         """Initialize FAISS indices for vector similarity search"""
         self.logger.debug("Initializing FAISS indices...")
         
@@ -511,7 +511,7 @@ class ContentFingerprintingManager:
             self.logger.error(f"❌ Failed to initialize FAISS indices: {e}")
             raise
     
-    async def _load_existing_fingerprints(self):
+    async def _load_existing_fingerprints(self) -> None:
         """Load existing fingerprints into FAISS indices"""
         self.logger.debug("Loading existing fingerprints into FAISS indices...")
         
@@ -584,7 +584,7 @@ class ContentFingerprintingManager:
         except Exception as e:
             self.logger.error(f"❌ Failed to load existing fingerprints: {e}")
     
-    async def _store_vector_mappings(self, fingerprint_ids: List[str], algorithm: str, index_key: str):
+    async def _store_vector_mappings(self, fingerprint_ids -> None: List[str], algorithm -> None: str, index_key -> None: str) -> None:
         """Store vector index mappings"""
         try:
             mappings = []
@@ -735,7 +735,7 @@ class ContentFingerprintingManager:
             self.logger.error(f"❌ Failed to store fingerprint: {e}")
             raise
     
-    async def _add_to_faiss_index(self, fingerprint_id: str, algorithm: FingerprintAlgorithm, vector: np.ndarray):
+    async def _add_to_faiss_index(self, fingerprint_id -> None: str, algorithm -> None: FingerprintAlgorithm, vector -> None: np.ndarray) -> None:
         """Add vector to FAISS index"""
         try:
             dimension = len(vector)
@@ -770,10 +770,10 @@ class ContentFingerprintingManager:
     
     async def _update_performance_metrics(
         self, 
-        algorithm: FingerprintAlgorithm, 
-        content_type: ContentType, 
-        metadata: Optional[FingerprintMetadata]
-    ):
+        algorithm -> None: FingerprintAlgorithm, 
+        content_type -> None: ContentType, 
+        metadata -> None: Optional[FingerprintMetadata]
+    ) -> None:
         """Update performance metrics"""
         try:
             if not metadata:
@@ -900,7 +900,7 @@ class ContentFingerprintingManager:
             self.logger.error(f"❌ Failed to find similar content: {e}")
             return []
     
-    async def _store_similarity_matches(self, matches: List[SimilarityMatch]):
+    async def _store_similarity_matches(self, matches -> None: List[SimilarityMatch]) -> None:
         """Store similarity matches in database"""
         try:
             match_data = []
@@ -1136,7 +1136,7 @@ class ContentFingerprintingManager:
             self.logger.error(f"Failed to get performance stats: {e}")
             return {'error': str(e)}
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Shutdown the fingerprinting manager"""
         try:
             self.logger.info("🚨 Shutting down Content Fingerprinting Manager...")

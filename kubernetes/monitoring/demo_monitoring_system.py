@@ -70,7 +70,7 @@ class MonitoringSystemDemo:
     revenue monitoring, security analysis, and business intelligence.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.monitoring_stack: MonitoringStack = None
         self.ai_fingerprint_collector: AIFingerprintMetricsCollector = None
         self.revenue_monitor: RealtimeRevenueMonitor = None
@@ -80,7 +80,7 @@ class MonitoringSystemDemo:
         self.demo_creators = ["creator_001", "creator_002", "creator_003"]
         self.demo_running = False
         
-    async def setup_monitoring_system(self):
+    async def setup_monitoring_system(self) -> None:
         """Setup the complete monitoring system"""
         
         logger.info("🚀 Setting up IA Influencer Agent Monitoring System...")
@@ -122,7 +122,7 @@ class MonitoringSystemDemo:
         
         logger.info("✅ Monitoring system setup completed successfully!")
         
-    async def _setup_specialized_collectors(self):
+    async def _setup_specialized_collectors(self) -> None:
         """Setup specialized monitoring collectors"""
         
         # AI Fingerprinting Metrics Collector
@@ -149,7 +149,7 @@ class MonitoringSystemDemo:
         
         logger.info("🔧 Specialized collectors initialized")
         
-    async def start_demo_simulation(self):
+    async def start_demo_simulation(self) -> None:
         """Start demo data simulation"""
         
         logger.info("🎬 Starting monitoring demo simulation...")
@@ -173,7 +173,7 @@ class MonitoringSystemDemo:
             logger.error(f"❌ Error in demo simulation: {e}")
             self.demo_running = False
     
-    async def _simulate_ai_fingerprinting(self):
+    async def _simulate_ai_fingerprinting(self) -> None:
         """Simulate AI fingerprinting operations"""
         
         while self.demo_running:
@@ -222,7 +222,7 @@ class MonitoringSystemDemo:
                 logger.error(f"Error in AI fingerprinting simulation: {e}")
                 await asyncio.sleep(5)
     
-    async def _simulate_revenue_generation(self):
+    async def _simulate_revenue_generation(self) -> None:
         """Simulate revenue generation for creators"""
         
         while self.demo_running:
@@ -270,7 +270,7 @@ class MonitoringSystemDemo:
                 logger.error(f"Error in revenue simulation: {e}")
                 await asyncio.sleep(10)
     
-    async def _simulate_content_protection(self):
+    async def _simulate_content_protection(self) -> None:
         """Simulate content protection events"""
         
         while self.demo_running:
@@ -302,7 +302,7 @@ class MonitoringSystemDemo:
                 logger.error(f"Error in content protection simulation: {e}")
                 await asyncio.sleep(15)
     
-    async def _simulate_user_activity(self):
+    async def _simulate_user_activity(self) -> None:
         """Simulate user activity and engagement"""
         
         while self.demo_running:
@@ -336,7 +336,7 @@ class MonitoringSystemDemo:
                 logger.error(f"Error in user activity simulation: {e}")
                 await asyncio.sleep(10)
     
-    async def _display_monitoring_insights(self):
+    async def _display_monitoring_insights(self) -> None:
         """Display monitoring insights and analytics"""
         
         while self.demo_running:
@@ -386,7 +386,7 @@ class MonitoringSystemDemo:
                 logger.error(f"Error displaying monitoring insights: {e}")
                 await asyncio.sleep(30)
     
-    async def demonstrate_monitoring_features(self):
+    async def demonstrate_monitoring_features(self) -> None:
         """Demonstrate specific monitoring features"""
         
         logger.info("🎯 Demonstrating Advanced Monitoring Features...")
@@ -418,7 +418,7 @@ class MonitoringSystemDemo:
         
         logger.info("✅ Advanced features demonstration completed!")
     
-    async def cleanup_demo(self):
+    async def cleanup_demo(self) -> None:
         """Cleanup demo resources"""
         
         logger.info("🧹 Cleaning up demo resources...")
@@ -443,7 +443,7 @@ class MonitoringSystemDemo:
         logger.info("✅ Demo cleanup completed!")
 
 
-async def run_monitoring_demo():
+async def run_monitoring_demo() -> None:
     """Run the complete monitoring system demo"""
     
     print("🌟" + "=" * 70 + "🌟")

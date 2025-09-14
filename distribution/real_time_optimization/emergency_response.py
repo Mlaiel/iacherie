@@ -87,7 +87,7 @@ class EmergencyResponse:
 class EmergencyResponseSystem:
     """Automated emergency response and crisis management system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize emergency response system"""
         self.active_emergencies = {}
         self.response_protocols = self._init_response_protocols()
@@ -420,7 +420,7 @@ class EmergencyResponseSystem:
             return {}
     
     # Private helper methods
-    async def _emergency_monitoring_loop(self):
+    async def _emergency_monitoring_loop(self) -> None:
         """Main emergency monitoring loop"""
         while self.monitoring_active:
             try:
@@ -642,7 +642,7 @@ class EmergencyResponseSystem:
             'details': f"Executed {action} for emergency {alert.alert_id}"
         }
     
-    async def _send_emergency_notifications(self, alert: EmergencyAlert, protocol: ResponseProtocol):
+    async def _send_emergency_notifications(self, alert -> None: EmergencyAlert, protocol -> None: ResponseProtocol) -> None:
         """Send emergency notifications through configured channels"""
         for channel in protocol.notification_channels:
             try:
@@ -650,7 +650,7 @@ class EmergencyResponseSystem:
             except Exception as e:
                 logger.error(f"Failed to send notification via {channel}: {str(e)}")
     
-    async def _send_notification(self, channel: str, alert: EmergencyAlert, protocol: ResponseProtocol):
+    async def _send_notification(self, channel -> None: str, alert -> None: EmergencyAlert, protocol -> None: ResponseProtocol) -> None:
         """Send notification through specific channel"""
         # Placeholder implementation
         logger.info(f"Sending {alert.severity.value} emergency notification via {channel}")
@@ -675,12 +675,12 @@ class EmergencyResponseSystem:
             rollback_conditions=['manual_resolution']
         )
     
-    async def _start_escalation_process(self, alert: EmergencyAlert, protocol: ResponseProtocol):
+    async def _start_escalation_process(self, alert -> None: EmergencyAlert, protocol -> None: ResponseProtocol) -> None:
         """Start escalation process for emergency"""
         logger.warning(f"Starting escalation for emergency: {alert.alert_id}")
         # Placeholder implementation
     
-    async def _store_emergency_response(self, response: EmergencyResponse):
+    async def _store_emergency_response(self, response -> None: EmergencyResponse) -> None:
         """Store emergency response record"""
         if response.alert_id not in self.emergency_history:
             self.emergency_history[response.alert_id] = []
@@ -705,17 +705,17 @@ class EmergencyResponseSystem:
         # Placeholder implementation
         return {'resolved': False, 'needs_escalation': False}
     
-    async def _resolve_emergency(self, alert_id: str, resolution_status: Dict[str, Any]):
+    async def _resolve_emergency(self, alert_id -> None: str, resolution_status -> None: Dict[str, Any]) -> None:
         """Mark emergency as resolved"""
         if alert_id in self.active_emergencies:
             del self.active_emergencies[alert_id]
         logger.info(f"Emergency resolved: {alert_id}")
     
-    async def _escalate_emergency(self, alert_id: str):
+    async def _escalate_emergency(self, alert_id -> None: str) -> None:
         """Escalate emergency to next level"""
         logger.warning(f"Escalating emergency: {alert_id}")
     
-    async def _scan_for_new_emergencies(self):
+    async def _scan_for_new_emergencies(self) -> None:
         """Scan for new emergency conditions"""
         # Placeholder implementation
         pass

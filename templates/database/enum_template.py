@@ -31,7 +31,7 @@ class ExtendedEnum(Enum):
     - Internationalization support
     """
     
-    def __new__(cls, value, description=None, metadata=None):
+    def __new__(cls, value, description=None, metadata=None) -> None:
         obj = object.__new__(cls)
         obj._value_ = value
         obj.description = description or value
@@ -63,7 +63,7 @@ class ExtendedEnum(Enum):
         return json.dumps(self.to_dict())
     
     @classmethod
-    def from_value(cls, value):
+    def from_value(cls, value) -> None:
         """Get enum member from value with validation"""
         if isinstance(value, cls):
             return value
@@ -120,17 +120,17 @@ class OrderedEnum(ExtendedEnum):
     Ordered enum that supports comparison operations
     """
     
-    def __new__(cls, value, description=None, metadata=None, order=None):
+    def __new__(cls, value, description=None, metadata=None, order=None) -> None:
         obj = super().__new__(cls, value, description, metadata)
         obj.order = order if order is not None else len(cls.__members__)
         return obj
     
-    def __lt__(self, other):
+    def __lt__(self, other) -> None:
         if self.__class__ is other.__class__:
             return self.order < other.order
         return NotImplemented
     
-    def __eq__(self, other):
+    def __eq__(self, other) -> None:
         if self.__class__ is other.__class__:
             return self.value == other.value
         return self.value == other
@@ -142,7 +142,7 @@ class StatusEnum(OrderedEnum):
     """
     
     def __new__(cls, value, description=None, metadata=None, order=None, 
-                transitions=None, is_final=False, is_error=False):
+                transitions=None, is_final=False, is_error=False) -> None:
         obj = super().__new__(cls, value, description, metadata, order)
         obj.transitions = transitions or []
         obj.is_final = is_final
@@ -262,7 +262,7 @@ class AccountStatus(StatusEnum):
     DELETED = ("deleted", "Deleted", {}, 6, [], True, False)
     
     # Define transitions after class creation
-    def __init_subclass__(cls):
+    def __init_subclass__(cls) -> None:
         super().__init_subclass__()
         # Set up state transitions
         cls.PENDING.transitions = [cls.ACTIVE, cls.DELETED]
@@ -357,7 +357,7 @@ class ContentStatus(StatusEnum):
     ARCHIVED = ("archived", "Archived", {}, 6, [], True, False)
     DELETED = ("deleted", "Deleted", {}, 7, [], True, False)
     
-    def __init_subclass__(cls):
+    def __init_subclass__(cls) -> None:
         super().__init_subclass__()
         # Set up content workflow transitions
         cls.DRAFT.transitions = [cls.PENDING_REVIEW, cls.DELETED]
@@ -432,7 +432,7 @@ class PaymentStatus(StatusEnum):
     REFUNDED = ("refunded", "Refunded", {}, 6, [], True, False)
     PARTIALLY_REFUNDED = ("partially_refunded", "Partially Refunded", {}, 7, [], False, False)
     
-    def __init_subclass__(cls):
+    def __init_subclass__(cls) -> None:
         super().__init_subclass__()
         # Set up payment status transitions
         cls.PENDING.transitions = [cls.PROCESSING, cls.CANCELLED, cls.FAILED]

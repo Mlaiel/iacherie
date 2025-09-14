@@ -324,9 +324,9 @@ class RevenueSharingCalculator:
             raise
     
     async def _validate_calculation_inputs(self,
-                                         revenue_streams: List[RevenueStream],
-                                         creator_performance: Dict[str, PerformanceMetrics],
-                                         sharing_config: Dict[str, Any]):
+                                         revenue_streams -> None: List[RevenueStream],
+                                         creator_performance -> None: Dict[str, PerformanceMetrics],
+                                         sharing_config -> None: Dict[str, Any]) -> None:
         """Validate calculation inputs"""
         
         if not revenue_streams:
@@ -885,7 +885,7 @@ class RevenueSharingCalculator:
         timestamps = [stream.timestamp for stream in revenue_streams]
         return (min(timestamps), max(timestamps))
     
-    async def _store_calculation_results(self, campaign_id: str, report: RevenueSharingReport):
+    async def _store_calculation_results(self, campaign_id -> None: str, report -> None: RevenueSharingReport) -> None:
         """Store calculation results for future reference"""
         
         # Store revenue streams
@@ -901,7 +901,7 @@ class RevenueSharingCalculator:
         # Update fees collected
         self.fees_collected += report.platform_fees + report.management_fees
     
-    def _update_calculator_stats(self, stream_count: int, payout_count: int, processing_time: float):
+    def _update_calculator_stats(self, stream_count -> None: int, payout_count -> None: int, processing_time -> None: float) -> None:
         """Update calculator performance statistics"""
         
         self.calculator_stats["calculations_performed"] += 1

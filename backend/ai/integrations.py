@@ -109,7 +109,7 @@ class WebhookEvent:
 class BaseServiceIntegration(ABC):
     """Base class for service integrations"""
     
-    def __init__(self, config: IntegrationConfig):
+    def __init__(self, config -> None: IntegrationConfig) -> None:
         self.config = config
         self.status = IntegrationStatus.INACTIVE
         self.last_activity = datetime.now()
@@ -205,7 +205,7 @@ class BaseServiceIntegration(ABC):
 class SocialMediaIntegration(BaseServiceIntegration):
     """Integration for social media platforms"""
     
-    def __init__(self, config: IntegrationConfig):
+    def __init__(self, config -> None: IntegrationConfig) -> None:
         super().__init__(config)
         self.supported_platforms = ["youtube", "instagram", "twitter", "tiktok", "facebook", "linkedin"]
     
@@ -279,7 +279,7 @@ class SocialMediaIntegration(BaseServiceIntegration):
 class PaymentProcessorIntegration(BaseServiceIntegration):
     """Integration for payment processors"""
     
-    def __init__(self, config: IntegrationConfig):
+    def __init__(self, config -> None: IntegrationConfig) -> None:
         super().__init__(config)
         self.supported_processors = ["stripe", "paypal", "square", "razorpay"]
     
@@ -332,7 +332,7 @@ class PaymentProcessorIntegration(BaseServiceIntegration):
 class AIServiceIntegration(BaseServiceIntegration):
     """Integration for AI services (OpenAI, Google AI, etc.)"""
     
-    def __init__(self, config: IntegrationConfig):
+    def __init__(self, config -> None: IntegrationConfig) -> None:
         super().__init__(config)
         self.supported_services = ["openai", "google_ai", "anthropic", "cohere"]
     
@@ -381,7 +381,7 @@ class AIServiceIntegration(BaseServiceIntegration):
 class EmailServiceIntegration(BaseServiceIntegration):
     """Integration for email services"""
     
-    def __init__(self, config: IntegrationConfig):
+    def __init__(self, config -> None: IntegrationConfig) -> None:
         super().__init__(config)
         self.supported_services = ["sendgrid", "mailgun", "ses", "mailchimp"]
     
@@ -439,7 +439,7 @@ class EmailServiceIntegration(BaseServiceIntegration):
 class AnalyticsIntegration(BaseServiceIntegration):
     """Integration for analytics platforms"""
     
-    def __init__(self, config: IntegrationConfig):
+    def __init__(self, config -> None: IntegrationConfig) -> None:
         super().__init__(config)
         self.supported_platforms = ["google_analytics", "mixpanel", "amplitude", "segment"]
     
@@ -492,16 +492,16 @@ class AnalyticsIntegration(BaseServiceIntegration):
 class WebhookManager:
     """Manages webhook events from external services"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.webhook_handlers: Dict[str, Callable] = {}
         self.webhook_events: List[WebhookEvent] = []
         self.signature_validators: Dict[str, Callable] = {}
     
-    def register_webhook_handler(self, service_id: str, handler: Callable):
+    def register_webhook_handler(self, service_id -> None: str, handler -> None: Callable) -> None:
         """Register webhook handler for service"""
         self.webhook_handlers[service_id] = handler
         
-    def register_signature_validator(self, service_id: str, validator: Callable):
+    def register_signature_validator(self, service_id -> None: str, validator -> None: Callable) -> None:
         """Register signature validator for service"""
         self.signature_validators[service_id] = validator
     
@@ -555,7 +555,7 @@ class WebhookManager:
 class IntegrationManager:
     """Main manager for all external service integrations"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.integrations: Dict[str, BaseServiceIntegration] = {}
         self.webhook_manager = WebhookManager()
         self.rate_limiters: Dict[str, Dict[str, Any]] = {}

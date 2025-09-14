@@ -168,7 +168,7 @@ class BadgeGenerator:
     blockchain integration, and comprehensive badge management.
     """
     
-    def __init__(self, database_connection=None, cache_client=None, blockchain_client=None):
+    def __init__(self, database_connection=None, cache_client=None, blockchain_client=None) -> None:
         """Initialize the badge generator."""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self.db = database_connection

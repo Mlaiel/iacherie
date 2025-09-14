@@ -148,7 +148,7 @@ class GenerativeAIResearcher:
     - Ethical AI generation with comprehensive bias mitigation
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize generative AI research platform"""
         self.config = config or {}
         

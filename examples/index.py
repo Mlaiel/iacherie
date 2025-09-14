@@ -144,7 +144,7 @@ class CreatorProfile:
 class BaseExample(ABC):
     """Abstract base class for all examples."""
     
-    def __init__(self, config: ExampleConfig):
+    def __init__(self, config -> None: ExampleConfig) -> None:
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self.start_time = None
@@ -176,7 +176,7 @@ class BaseExample(ABC):
 class ExampleOrchestrator:
     """Ultra-advanced example orchestration engine."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(f"{__name__}.ExampleOrchestrator")
         self.examples_registry = {}
         self.execution_history = []
@@ -371,7 +371,7 @@ class ExampleOrchestrator:
 class CreatorWorkflowManager:
     """Advanced workflow management for different creator types."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(f"{__name__}.CreatorWorkflowManager")
         self.workflows = {}
         self.creator_profiles = {}
@@ -542,7 +542,7 @@ async def initialize_examples_system() -> Dict[str, Any]:
 
 if __name__ == "__main__":
     # Run initialization when module is executed directly
-    async def main():
+    async def main() -> None:
         result = await initialize_examples_system()
         print(f"Examples System Initialization: {'SUCCESS' if result['success'] else 'FAILED'}")
         print(f"Modules Loaded: {len(result['modules_loaded'])}")

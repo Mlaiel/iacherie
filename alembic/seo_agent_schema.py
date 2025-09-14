@@ -1,4 +1,6 @@
 """🔍 SEO Agent Schema - Enterprise AI Search Engine Optimization
+import asyncio
+
 ================================================================
 Module: alembic/seo_agent_schema.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -535,7 +537,7 @@ def upgrade() -> None:
     await create_nextgen_seo_tables()
 
 
-async def create_global_search_engines_tables():
+async def create_global_search_engines_tables() -> None:
     """🌍 Create global search engines optimization tables for 100+ search engines"""
     
     # Global search engines registry
@@ -655,7 +657,7 @@ async def create_global_search_engines_tables():
     )
 
 
-async def create_ai_seo_optimization_tables():
+async def create_ai_seo_optimization_tables() -> None:
     """🤖 Create AI-powered SEO optimization tables"""
     
     # AI keyword research engine
@@ -788,7 +790,7 @@ async def create_ai_seo_optimization_tables():
     )
 
 
-async def create_multilingual_seo_tables():
+async def create_multilingual_seo_tables() -> None:
     """🌍 Create multilingual SEO automation tables for 644 languages"""
     
     # Multilingual SEO management
@@ -882,7 +884,7 @@ async def create_multilingual_seo_tables():
     )
 
 
-async def create_nextgen_seo_tables():
+async def create_nextgen_seo_tables() -> None:
     """🔮 Create next-generation SEO features tables"""
     
     # Voice search optimization

@@ -1,3 +1,8 @@
+"""
+Training Visualization Engine module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
@@ -93,7 +98,7 @@ class TrainingVisualizationEngine:
     creator-specific analytics, and enterprise-grade reporting.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize training visualization engine."""
         self.config = config or {}
         self.visualization_configs: Dict[VisualizationType, VisualizationConfig] = {}
@@ -115,7 +120,7 @@ class TrainingVisualizationEngine:
         # Setup creator-specific themes
         self._initialize_creator_themes()
     
-    def _initialize_default_configs(self):
+    def _initialize_default_configs(self) -> None:
         """Initialize default visualization configurations."""
         default_configs = {
             VisualizationType.LOSS_CURVES: VisualizationConfig(
@@ -146,7 +151,7 @@ class TrainingVisualizationEngine:
         
         self.visualization_configs.update(default_configs)
     
-    def _initialize_creator_themes(self):
+    def _initialize_creator_themes(self) -> None:
         """Initialize creator-specific visualization themes."""
         self.creator_themes = {
             CreatorType.MUSICIAN: {
@@ -188,16 +193,16 @@ class TrainingVisualizationEngine:
     
     async def log_training_metrics(
         self,
-        epoch: int,
-        train_loss: float,
-        val_loss: float,
-        train_accuracy: float,
-        val_accuracy: float,
-        learning_rate: float,
-        gradient_norm: float,
-        creator_type: Optional[CreatorType] = None,
-        custom_metrics: Optional[Dict[str, float]] = None
-    ):
+        epoch -> None: int,
+        train_loss -> None: float,
+        val_loss -> None: float,
+        train_accuracy -> None: float,
+        val_accuracy -> None: float,
+        learning_rate -> None: float,
+        gradient_norm -> None: float,
+        creator_type -> None: Optional[CreatorType] = None,
+        custom_metrics -> None: Optional[Dict[str, float]] = None
+    ) -> None:
         """
         Log training metrics for visualization.
         
@@ -247,7 +252,7 @@ class TrainingVisualizationEngine:
         min_frequency = min(update_frequencies)
         return epoch % min_frequency == 0
     
-    async def _generate_real_time_visualizations(self, creator_type: Optional[CreatorType]):
+    async def _generate_real_time_visualizations(self, creator_type -> None: Optional[CreatorType]) -> None:
         """Generate real-time visualizations."""
         tasks = []
         
@@ -933,10 +938,10 @@ class TrainingVisualizationEngine:
     
     async def _save_visualization(
         self,
-        viz_data: Dict[str, Any],
-        visualization_type: VisualizationType,
-        creator_type: Optional[CreatorType]
-    ):
+        viz_data -> None: Dict[str, Any],
+        visualization_type -> None: VisualizationType,
+        creator_type -> None: Optional[CreatorType]
+    ) -> None:
         """Save visualization to file."""
         if "figure" not in viz_data:
             return
@@ -959,7 +964,7 @@ class TrainingVisualizationEngine:
         
         logger.info(f"💾 Visualization saved: {html_path}")
     
-    async def log_model_weights(self, model: nn.Module, epoch: int):
+    async def log_model_weights(self, model -> None: nn.Module, epoch -> None: int) -> None:
         """Log model weights for distribution analysis."""
         weights_dict = {}
         
@@ -1138,7 +1143,7 @@ __all__ = ['TrainingVisualizationEngine', 'VisualizationType', 'CreatorType', 'V
 
 if __name__ == "__main__":
     # Test the training visualization engine
-    async def test_training_visualization_engine():
+    async def test_training_visualization_engine() -> None:
         engine = TrainingVisualizationEngine()
         
         # Simulate training metrics

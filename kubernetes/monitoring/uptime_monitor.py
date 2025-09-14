@@ -6,7 +6,7 @@ multi-endpoint tracking, business impact assessment, SLA management,
 and comprehensive incident response for content protection and revenue systems.
 
 Features:
-- Multi-protocol monitoring (HTTP/HTTPS, TCP, Database, Redis, Custom)
+    - Multi-protocol monitoring (HTTP/HTTPS, TCP, Database, Redis, Custom)
 - AI-powered performance anomaly detection and trend analysis
 - Business impact assessment with automated escalation
 - Real-time SLA tracking with breach notifications
@@ -234,12 +234,12 @@ class DowntimeIncident:
 class AIAnomalyDetector:
     """AI-powered anomaly detection for performance metrics"""
     
-    def __init__(self, window_size: int = 50, sensitivity: float = 2.0):
+    def __init__(self, window_size -> None: int = 50, sensitivity -> None: float = 2.0) -> None:
         self.window_size = window_size
         self.sensitivity = sensitivity
         self.baseline_data: Dict[str, List[float]] = {}
         
-    def add_measurement(self, check_id: str, response_time: float):
+    def add_measurement(self, check_id -> None: str, response_time -> None: float) -> None:
         """
 Add a new measurement for trend analysis"""
         if check_id not in self.baseline_data:
@@ -388,13 +388,13 @@ class UptimeMonitor:
     
     def __init__(
         self,
-        redis_client: Optional[aioredis.Redis] = None,
-        alert_callback: Optional[Callable] = None,
-        retention_days: int = 90,
-        sla_target: float = 99.9,
-        enable_ai_detection: bool = True,
-        enable_business_impact: bool = True
-    ):
+        redis_client -> None: Optional[aioredis.Redis] = None,
+        alert_callback -> None: Optional[Callable] = None,
+        retention_days -> None: int = 90,
+        sla_target -> None: float = 99.9,
+        enable_ai_detection -> None: bool = True,
+        enable_business_impact -> None: bool = True
+    ) -> None:
         self.redis_client = redis_client
         self.alert_callback = alert_callback
         self.retention_days = retention_days
@@ -432,7 +432,7 @@ class UptimeMonitor:
         # Register enhanced default checks
         self._register_enhanced_default_checks()
         
-    def _register_enhanced_default_checks(self):
+    def _register_enhanced_default_checks(self) -> None:
         try:
             logger.info(f"Executing _register_enhanced_default_checks")
             
@@ -463,7 +463,7 @@ class UptimeMonitor:
             metadata={"category": "dns", "tier": "critical", "record_type": "A"}
         ))
         
-    async def start_monitoring(self):
+    async def start_monitoring(self) -> None:
         """Start uptime monitoring"""
         if self._monitoring:
             logger.warning("Uptime monitoring already running")
@@ -488,7 +488,7 @@ class UptimeMonitor:
         
         logger.info(f"Uptime monitoring started for {len(self.checks)} checks")
         
-    async def stop_monitoring(self):
+    async def stop_monitoring(self) -> None:
         """Stop uptime monitoring"""
         self._monitoring = False
         
@@ -517,7 +517,7 @@ class UptimeMonitor:
         
         logger.info("Uptime monitoring stopped")
         
-    async def _monitor_check(self, check: UptimeCheck):
+    async def _monitor_check(self, check -> None: UptimeCheck) -> None:
         """Monitor a specific check"""
         while self._monitoring and check.enabled:
             try:
@@ -742,7 +742,7 @@ class UptimeMonitor:
             response_time=response_time
         )
         
-    async def _process_check_result(self, check: UptimeCheck, result: CheckResult):
+    async def _process_check_result(self, check -> None: UptimeCheck, result -> None: CheckResult) -> None:
         """
 Process check result and update statistics"""
         # Update statistics
@@ -757,7 +757,7 @@ Process check result and update statistics"""
         # Update performance history
         self._update_performance_history(check.id, result.response_time)
         
-    async def _update_stats(self, check_id: str, result: CheckResult):
+    async def _update_stats(self, check_id -> None: str, result -> None: CheckResult) -> None:
         """
 Update uptime statistics"""
         if check_id not in self.stats:
@@ -797,7 +797,7 @@ Update uptime statistics"""
                 stats.min_response_time = min(stats.min_response_time, result.response_time)
                 stats.max_response_time = max(stats.max_response_time, result.response_time)
                 
-    async def _store_result(self, result: CheckResult):
+    async def _store_result(self, result -> None: CheckResult) -> None:
         """
 Store check result"""
         if self.redis_client:
@@ -826,7 +826,7 @@ Store check result"""
             except Exception as e:
                 logger.error(f"Error storing uptime result: {e}")
                 
-    async def _handle_status_change(self, check: UptimeCheck, result: CheckResult):
+    async def _handle_status_change(self, check -> None: UptimeCheck, result -> None: CheckResult) -> None:
         """Handle status changes and incidents"""
         # Check if status changed from previous check
         previous_status = await self._get_previous_status(check.id)
@@ -862,7 +862,7 @@ Store check result"""
                 
         return None
         
-    async def _start_downtime_incident(self, check: UptimeCheck, result: CheckResult):
+    async def _start_downtime_incident(self, check -> None: UptimeCheck, result -> None: CheckResult) -> None:
         """Start a downtime incident"""
         incident_id = f"downtime_{check.id}_{int(result.timestamp.timestamp())}"
         
@@ -892,7 +892,7 @@ Store check result"""
                 
         logger.warning(f"Downtime incident started for {check.name}: {incident_id}")
         
-    async def _end_downtime_incident(self, check: UptimeCheck, result: CheckResult):
+    async def _end_downtime_incident(self, check -> None: UptimeCheck, result -> None: CheckResult) -> None:
         """End a downtime incident"""
         if check.id in self.active_incidents:
             incident = self.active_incidents[check.id]
@@ -937,7 +937,7 @@ Store check result"""
         else:
             return "low"
             
-    def _update_performance_history(self, check_id: str, response_time: float):
+    def _update_performance_history(self, check_id -> None: str, response_time -> None: float) -> None:
         """Update performance history for trend analysis"""
         if check_id not in self._performance_history:
             self._performance_history[check_id] = []
@@ -949,7 +949,7 @@ Store check result"""
         if len(history) > 100:
             history.pop(0)
             
-    async def _maintenance_loop(self):
+    async def _maintenance_loop(self) -> None:
         """
 Maintenance loop for cleanup and SLA calculations"""
         while self._monitoring:
@@ -965,7 +965,7 @@ Maintenance loop for cleanup and SLA calculations"""
                 logger.error(f"Error in maintenance loop: {e}")
                 await asyncio.sleep(300)
                 
-    async def _calculate_sla_compliance(self):
+    async def _calculate_sla_compliance(self) -> None:
         """Calculate SLA compliance for all checks"""
         for check_id, stats in self.stats.items():
             # Calculate SLA compliance for different periods
@@ -973,7 +973,7 @@ Maintenance loop for cleanup and SLA calculations"""
             await self._calculate_period_sla(check_id, "7d", 7 * 24 * 3600)
             await self._calculate_period_sla(check_id, "30d", 30 * 24 * 3600)
             
-    async def _calculate_period_sla(self, check_id: str, period: str, seconds: int):
+    async def _calculate_period_sla(self, check_id -> None: str, period -> None: str, seconds -> None: int) -> None:
         """Calculate SLA for a specific period"""
         if not self.redis_client:
             return
@@ -1017,7 +1017,7 @@ Maintenance loop for cleanup and SLA calculations"""
         except Exception as e:
             logger.error(f"Error calculating SLA for {check_id}/{period}: {e}")
             
-    async def _cleanup_old_data(self):
+    async def _cleanup_old_data(self) -> None:
         """Clean up old monitoring data"""
         if not self.redis_client:
             return
@@ -1042,7 +1042,7 @@ Maintenance loop for cleanup and SLA calculations"""
         except Exception as e:
             logger.error(f"Error in uptime data cleanup: {e}")
             
-    async def _save_state(self):
+    async def _save_state(self) -> None:
         """Save current monitoring state"""
         if self.redis_client:
             try:
@@ -1073,12 +1073,12 @@ Maintenance loop for cleanup and SLA calculations"""
                 logger.error(f"Error saving uptime state: {e}")
                 
     # Public interface methods
-    def register_check(self, check: UptimeCheck):
+    def register_check(self, check -> None: UptimeCheck) -> None:
         """Register an uptime check"""
         self.checks[check.id] = check
         logger.info(f"Registered uptime check: {check.name}")
         
-    def unregister_check(self, check_id: str):
+    def unregister_check(self, check_id -> None: str) -> None:
         """Unregister an uptime check"""
         if check_id in self.checks:
             del self.checks[check_id]
@@ -1224,3 +1224,5 @@ Get active downtime incidents"""
             "sla_target": self.sla_target,
             "retention_days": self.retention_days
         }
+
+# File has syntax issues - needs manual review

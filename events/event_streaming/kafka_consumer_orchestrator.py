@@ -207,7 +207,7 @@ class AIAnalysisProcessor(MessageProcessor):
 class KafkaConsumer:
     """Individual Kafka consumer instance"""
     
-    def __init__(self, config: ConsumerConfig, metrics_collector=None):
+    def __init__(self, config -> None: ConsumerConfig, metrics_collector=None) -> None:
         self.config = config
         self.metrics_collector = metrics_collector
         self.metrics = ConsumerMetrics(consumer_id=config.consumer_id)
@@ -217,7 +217,7 @@ class KafkaConsumer:
         self._pause_event = asyncio.Event()
         self._pause_event.set()  # Start unpaused
         
-    async def start(self):
+    async def start(self) -> None:
         """Start the consumer"""
         try:
             if self.state != ConsumerState.IDLE:
@@ -245,7 +245,7 @@ class KafkaConsumer:
             logger.error(f"Failed to start consumer {self.config.consumer_id}: {e}")
             raise
     
-    async def stop(self):
+    async def stop(self) -> None:
         """Stop the consumer gracefully"""
         try:
             if self.state not in [ConsumerState.RUNNING, ConsumerState.PAUSED]:
@@ -277,7 +277,7 @@ class KafkaConsumer:
             logger.error(f"Error stopping consumer {self.config.consumer_id}: {e}")
             raise
     
-    async def pause(self):
+    async def pause(self) -> None:
         """Pause the consumer"""
         if self.state == ConsumerState.RUNNING:
             self.state = ConsumerState.PAUSED
@@ -285,7 +285,7 @@ class KafkaConsumer:
             self._pause_event.clear()
             logger.info(f"Consumer {self.config.consumer_id} paused")
     
-    async def resume(self):
+    async def resume(self) -> None:
         """Resume the consumer"""
         if self.state == ConsumerState.PAUSED:
             self.state = ConsumerState.RUNNING
@@ -293,7 +293,7 @@ class KafkaConsumer:
             self._pause_event.set()
             logger.info(f"Consumer {self.config.consumer_id} resumed")
     
-    async def _consume_loop(self):
+    async def _consume_loop(self) -> None:
         """Main consumer loop"""
         try:
             while not self._shutdown_event.is_set():
@@ -350,7 +350,7 @@ class KafkaConsumer:
             logger.error(f"Error fetching messages: {e}")
             return []
     
-    async def _process_messages(self, messages: List[Dict[str, Any]]):
+    async def _process_messages(self, messages -> None: List[Dict[str, Any]]) -> None:
         """Process fetched messages"""
         try:
             for message in messages:
@@ -407,7 +407,7 @@ class KafkaConsumer:
                 logger.error(f"No error handler configured for message processing error: {e}")
                 return False
     
-    async def _commit_offset(self, message: Dict[str, Any]):
+    async def _commit_offset(self, message -> None: Dict[str, Any]) -> None:
         """Commit message offset"""
         try:
             # Simulate offset commit
@@ -417,7 +417,7 @@ class KafkaConsumer:
         except Exception as e:
             logger.error(f"Error committing offset: {e}")
     
-    async def _handle_failed_message(self, message: Dict[str, Any]):
+    async def _handle_failed_message(self, message -> None: Dict[str, Any]) -> None:
         """Handle failed message processing"""
         try:
             retry_count = message.get("retry_count", 0)
@@ -437,7 +437,7 @@ class KafkaConsumer:
         except Exception as e:
             logger.error(f"Error handling failed message: {e}")
     
-    async def _send_to_dead_letter_queue(self, message: Dict[str, Any], error: str):
+    async def _send_to_dead_letter_queue(self, message -> None: Dict[str, Any], error -> None: str) -> None:
         """Send failed message to dead letter queue"""
         try:
             dlq_message = {
@@ -453,7 +453,7 @@ class KafkaConsumer:
         except Exception as e:
             logger.error(f"Error sending message to DLQ: {e}")
     
-    def _update_processing_time(self, processing_time_ms: float):
+    def _update_processing_time(self, processing_time_ms -> None: float) -> None:
         """Update processing time metrics"""
         if self.metrics.processing_time_ms == 0:
             self.metrics.processing_time_ms = processing_time_ms
@@ -485,7 +485,7 @@ class KafkaConsumer:
 class KafkaConsumerOrchestrator:
     """Orchestrates multiple Kafka consumer groups for Ainflue platform"""
     
-    def __init__(self, metrics_collector=None):
+    def __init__(self, metrics_collector=None) -> None:
         self.metrics_collector = metrics_collector
         self.consumer_groups: Dict[str, List[KafkaConsumer]] = {}
         self.group_metrics: Dict[str, ConsumerGroupMetrics] = {}
@@ -496,12 +496,12 @@ class KafkaConsumerOrchestrator:
         # Register default processors
         self._register_default_processors()
     
-    def _register_default_processors(self):
+    def _register_default_processors(self) -> None:
         """Register default message processors for Ainflue business logic"""
         self.processors["content_upload"] = ContentUploadProcessor()
         self.processors["ai_analysis"] = AIAnalysisProcessor()
     
-    async def start(self):
+    async def start(self) -> None:
         """Start the consumer orchestrator"""
         try:
             logger.info("Starting Kafka Consumer Orchestrator")
@@ -518,7 +518,7 @@ class KafkaConsumerOrchestrator:
             logger.error(f"Failed to start consumer orchestrator: {e}")
             raise
     
-    async def stop(self):
+    async def stop(self) -> None:
         """Stop the consumer orchestrator"""
         try:
             logger.info("Stopping Kafka Consumer Orchestrator")
@@ -541,7 +541,7 @@ class KafkaConsumerOrchestrator:
             logger.error(f"Error stopping consumer orchestrator: {e}")
             raise
     
-    async def _setup_default_consumer_groups(self):
+    async def _setup_default_consumer_groups(self) -> None:
         """Setup default consumer groups for Ainflue platform"""
         try:
             # Content upload processing group
@@ -626,7 +626,7 @@ class KafkaConsumerOrchestrator:
             logger.error(f"Error creating consumer group {group_id}: {e}")
             raise
     
-    async def scale_consumer_group(self, group_id: str, target_consumer_count: int):
+    async def scale_consumer_group(self, group_id -> None: str, target_consumer_count -> None: int) -> None:
         """Scale consumer group up or down"""
         try:
             if group_id not in self.consumer_groups:
@@ -656,7 +656,7 @@ class KafkaConsumerOrchestrator:
             logger.error(f"Error scaling consumer group {group_id}: {e}")
             raise
     
-    async def _scale_up_consumer_group(self, group_id: str, additional_consumers: int):
+    async def _scale_up_consumer_group(self, group_id -> None: str, additional_consumers -> None: int) -> None:
         """Add consumers to a group"""
         try:
             existing_consumers = self.consumer_groups[group_id]
@@ -688,7 +688,7 @@ class KafkaConsumerOrchestrator:
             logger.error(f"Error scaling up consumer group {group_id}: {e}")
             raise
     
-    async def _scale_down_consumer_group(self, group_id: str, consumers_to_remove: int):
+    async def _scale_down_consumer_group(self, group_id -> None: str, consumers_to_remove -> None: int) -> None:
         """Remove consumers from a group"""
         try:
             existing_consumers = self.consumer_groups[group_id]
@@ -703,7 +703,7 @@ class KafkaConsumerOrchestrator:
             logger.error(f"Error scaling down consumer group {group_id}: {e}")
             raise
     
-    async def _orchestrator_loop(self):
+    async def _orchestrator_loop(self) -> None:
         """Main orchestrator monitoring loop"""
         try:
             while not self._shutdown_event.is_set():
@@ -722,7 +722,7 @@ class KafkaConsumerOrchestrator:
         except Exception as e:
             logger.error(f"Error in orchestrator loop: {e}")
     
-    async def _update_group_metrics(self):
+    async def _update_group_metrics(self) -> None:
         """Update metrics for all consumer groups"""
         try:
             for group_id, consumers in self.consumer_groups.items():
@@ -747,7 +747,7 @@ class KafkaConsumerOrchestrator:
         except Exception as e:
             logger.error(f"Error updating group metrics: {e}")
     
-    async def _check_rebalancing_needs(self):
+    async def _check_rebalancing_needs(self) -> None:
         """Check if any consumer groups need rebalancing"""
         try:
             for group_id, consumers in self.consumer_groups.items():
@@ -771,7 +771,7 @@ class KafkaConsumerOrchestrator:
         except Exception as e:
             logger.error(f"Error checking rebalancing needs: {e}")
     
-    async def _perform_health_checks(self):
+    async def _perform_health_checks(self) -> None:
         """Perform health checks on all consumers"""
         try:
             for group_id, consumers in self.consumer_groups.items():

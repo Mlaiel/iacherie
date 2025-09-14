@@ -79,7 +79,7 @@ class SecurityEvent:
 class SessionManagementCore:
     """Advanced Session Management Core System"""
     
-    def __init__(self, level: str = "enterprise"):
+    def __init__(self, level -> None: str = "enterprise") -> None:
         self.version = "2.1.0"
         self.level = level
         self.sessions = {}
@@ -194,7 +194,7 @@ class SessionManagementCore:
         else:
             return SessionSecurityLevel.LOW
 
-    async def _enforce_session_limits(self, user_id: str):
+    async def _enforce_session_limits(self, user_id -> None: str) -> None:
         """Enforce session limits per user"""
         try:
             user_session_ids = self.user_sessions.get(user_id, [])
@@ -368,7 +368,7 @@ class SessionManagementCore:
             logger.error(f"Failed to get user sessions: {str(e)}")
             return []
 
-    async def _log_security_event(self, session_id: str, event_type: str, severity: str, description: str):
+    async def _log_security_event(self, session_id -> None: str, event_type -> None: str, severity -> None: str, description -> None: str) -> None:
         """Log security event"""
         try:
             event_id = f"evt_{uuid.uuid4().hex[:8]}"

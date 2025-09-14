@@ -177,7 +177,7 @@ class AdaptiveEncodingContext:
 class EncodingEngine:
     """Advanced encoding engine with intelligent optimization."""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize encoding engine with configuration."""
         self.config = config or {}
         self.max_workers = self.config.get("max_workers", 4)
@@ -206,7 +206,7 @@ class EncodingEngine:
         
         logger.info(f"EncodingEngine initialized with {self.max_workers} workers")
     
-    def _init_encoding_profiles(self):
+    def _init_encoding_profiles(self) -> None:
         """Initialize predefined encoding profiles."""
         self.encoding_profiles = {
             EncodingProfile.STREAMING_4K: EncodingParameters(
@@ -689,7 +689,7 @@ class EncodingEngine:
             }
         }
     
-    def _update_performance_metrics(self, result: EncodingResult):
+    def _update_performance_metrics(self, result -> None: EncodingResult) -> None:
         """Update global performance metrics."""
         self.performance_metrics["jobs_completed"] += 1
         self.performance_metrics["total_encoding_time"] += result.encoding_time
@@ -782,7 +782,7 @@ class EncodingEngine:
         """Get encoding engine performance metrics."""
         return self.performance_metrics.copy()
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Shutdown encoding engine gracefully."""
         logger.info("Shutting down EncodingEngine...")
         
@@ -802,7 +802,7 @@ class EncodingEngine:
 class AdaptiveEncodingManager:
     """Manager for adaptive encoding with machine learning optimization."""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize adaptive encoding manager."""
         self.config = config or {}
         self.encoding_engine = EncodingEngine(config)
@@ -836,8 +836,8 @@ class AdaptiveEncodingManager:
             )
     
     async def _learn_from_encoding_result(
-        self, context: AdaptiveEncodingContext, parameters: EncodingParameters, result: EncodingResult
-    ):
+        self, context -> None: AdaptiveEncodingContext, parameters -> None: EncodingParameters, result -> None: EncodingResult
+    ) -> None:
         """Learn from encoding results to improve future parameter selection."""
         # Store adaptation data for machine learning
         adaptation_data = {

@@ -122,7 +122,7 @@ class BalancerMetrics:
 class LoadBalancerRequest:
     """Load balancer request context"""
     
-    def __init__(self, client_ip: str, headers: Dict[str, str], path: str, method: str):
+    def __init__(self, client_ip -> None: str, headers -> None: Dict[str, str], path -> None: str, method -> None: str) -> None:
         self.client_ip = client_ip
         self.headers = headers
         self.path = path
@@ -133,7 +133,7 @@ class LoadBalancerRequest:
 class LoadBalancerCore:
     """Enterprise load balancing system"""
     
-    def __init__(self, level: str = "enterprise"):
+    def __init__(self, level -> None: str = "enterprise") -> None:
         """Initialize load balancer core"""
         self.level = level
         self.backend_pools: Dict[str, List[Backend]] = {}
@@ -166,7 +166,7 @@ class LoadBalancerCore:
         
         logger.info(f"⚖️ Load Balancer Core initialized - Level: {level}")
 
-    async def add_backend_pool(self, pool_name: str, algorithm: LoadBalancingAlgorithm = LoadBalancingAlgorithm.ROUND_ROBIN):
+    async def add_backend_pool(self, pool_name -> None: str, algorithm -> None: LoadBalancingAlgorithm = LoadBalancingAlgorithm.ROUND_ROBIN) -> None:
         """Add a backend pool"""
         async with self._lock:
             self.backend_pools[pool_name] = []
@@ -178,7 +178,7 @@ class LoadBalancerCore:
             
             logger.info(f"📝 Added backend pool '{pool_name}' with algorithm {algorithm.value}")
 
-    async def add_backend(self, pool_name: str, backend: Backend):
+    async def add_backend(self, pool_name -> None: str, backend -> None: Backend) -> None:
         """Add backend to pool"""
         async with self._lock:
             if pool_name not in self.backend_pools:
@@ -193,7 +193,7 @@ class LoadBalancerCore:
             
             logger.info(f"🔗 Added backend {backend.id} to pool '{pool_name}'")
 
-    async def remove_backend(self, pool_name: str, backend_id: str):
+    async def remove_backend(self, pool_name -> None: str, backend_id -> None: str) -> None:
         """Remove backend from pool"""
         async with self._lock:
             if pool_name in self.backend_pools:
@@ -210,7 +210,7 @@ class LoadBalancerCore:
                         logger.info(f"🗑️ Removed backend {backend_id} from pool '{pool_name}'")
                         break
 
-    def _update_consistent_hash_ring(self, pool_name: str):
+    def _update_consistent_hash_ring(self, pool_name -> None: str) -> None:
         """Update consistent hash ring for pool"""
         ring = {}
         backends = self.backend_pools[pool_name]
@@ -411,7 +411,7 @@ class LoadBalancerCore:
                 return backend
         return None
 
-    def _create_sticky_session(self, session_id: str, backend_id: str):
+    def _create_sticky_session(self, session_id -> None: str, backend_id -> None: str) -> None:
         """Create sticky session"""
         session = StickySession(
             session_id=session_id,
@@ -421,7 +421,7 @@ class LoadBalancerCore:
         )
         self.sticky_sessions[session_id] = session
 
-    async def record_request(self, backend: Backend, response_time: float, success: bool):
+    async def record_request(self, backend -> None: Backend, response_time -> None: float, success -> None: bool) -> None:
         """Record request metrics"""
         async with self._lock:
             backend.total_requests += 1
@@ -442,7 +442,7 @@ class LoadBalancerCore:
             # Update circuit breaker
             await self._update_circuit_breaker(backend, success)
 
-    async def _update_circuit_breaker(self, backend: Backend, success: bool):
+    async def _update_circuit_breaker(self, backend -> None: Backend, success -> None: bool) -> None:
         """Update circuit breaker state"""
         cb_key = f"{backend.id}"
         
@@ -467,13 +467,13 @@ class LoadBalancerCore:
                 backend.status = BackendStatus.UNHEALTHY
                 logger.warning(f"🔌 Circuit breaker opened for backend {backend.id}")
 
-    async def add_rule(self, rule: LoadBalancerRule):
+    async def add_rule(self, rule -> None: LoadBalancerRule) -> None:
         """Add routing rule"""
         self.rules.append(rule)
         self.rules.sort(key=lambda r: r.priority, reverse=True)
         logger.info(f"📋 Added load balancer rule '{rule.name}'")
 
-    async def remove_rule(self, rule_name: str):
+    async def remove_rule(self, rule_name -> None: str) -> None:
         """Remove routing rule"""
         self.rules = [r for r in self.rules if r.name != rule_name]
         logger.info(f"🗑️ Removed load balancer rule '{rule_name}'")
@@ -493,7 +493,7 @@ class LoadBalancerCore:
         
         return None
 
-    async def cleanup_sticky_sessions(self):
+    async def cleanup_sticky_sessions(self) -> None:
         """Clean up expired sticky sessions"""
         current_time = datetime.utcnow()
         expired_sessions = []
@@ -508,7 +508,7 @@ class LoadBalancerCore:
         if expired_sessions:
             logger.info(f"🧹 Cleaned up {len(expired_sessions)} expired sticky sessions")
 
-    async def update_backend_status(self, pool_name: str, backend_id: str, status: BackendStatus):
+    async def update_backend_status(self, pool_name -> None: str, backend_id -> None: str, status -> None: BackendStatus) -> None:
         """Update backend status"""
         async with self._lock:
             backend = self._find_backend_by_id(pool_name, backend_id)

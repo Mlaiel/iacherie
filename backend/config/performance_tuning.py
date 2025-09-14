@@ -175,7 +175,7 @@ class MetricsCollector(ABC):
 class SystemMetricsCollector(MetricsCollector):
     """System-level metrics collector"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.previous_disk_io = None
         self.previous_network_io = None
         self.previous_time = None
@@ -249,7 +249,7 @@ class SystemMetricsCollector(MetricsCollector):
 class ApplicationMetricsCollector(MetricsCollector):
     """Application-level metrics collector"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.response_times: deque = deque(maxlen=1000)
         self.request_count = 0
         self.error_count = 0
@@ -310,7 +310,7 @@ class ApplicationMetricsCollector(MetricsCollector):
 class PerformanceMonitor:
     """Real-time performance monitoring system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.collectors: List[MetricsCollector] = []
         self.thresholds: Dict[PerformanceMetricType, PerformanceThreshold] = {}
         self.metrics_history: Dict[PerformanceMetricType, deque] = defaultdict(lambda: deque(maxlen=1000))
@@ -474,7 +474,7 @@ class PerformanceMonitor:
 class AutoScaler:
     """Automatic scaling engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.scaling_configs: Dict[str, AutoScalingConfig] = {}
         self.current_instances: Dict[str, int] = {}
         self.last_scale_actions: Dict[str, datetime] = {}
@@ -601,7 +601,7 @@ class AutoScaler:
 class OptimizationEngine:
     """Performance optimization recommendation engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.baselines: Dict[str, PerformanceBaseline] = {}
         self.optimization_rules: List[Callable] = []
         self.applied_optimizations: Dict[str, List[OptimizationRecommendation]] = {}
@@ -858,7 +858,7 @@ def cache_optimization_rule(metrics: Dict[PerformanceMetricType, float]) -> List
 class PerformanceTuningManager:
     """Main performance tuning and optimization manager"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         # Core components
         self.monitor = PerformanceMonitor()
         self.auto_scaler = AutoScaler()

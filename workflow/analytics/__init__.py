@@ -68,13 +68,13 @@ class AnalyticsOrchestrator:
     and predictive insights.
     """
     
-    def __init__(self, config: AnalyticsConfig = None):
+    def __init__(self, config -> None: AnalyticsConfig = None) -> None:
         """Initialize analytics orchestrator with configuration."""
         self.config = config or AnalyticsConfig()
         self.workflows = {}
         self._initialize_workflows()
     
-    def _initialize_workflows(self):
+    def _initialize_workflows(self) -> None:
         """Initialize all analytics workflow instances."""
         self.workflows = {
             AnalyticsWorkflowType.PERFORMANCE_TRACKING: PerformanceTrackingWorkflow(),
@@ -141,13 +141,13 @@ class AnalyticsOrchestrator:
             "generated_at": datetime.utcnow().isoformat()
         }
     
-    def get_workflow(self, workflow_type: AnalyticsWorkflowType):
+    def get_workflow(self, workflow_type -> None: AnalyticsWorkflowType) -> None:
         """Get specific workflow instance."""
         return self.workflows.get(workflow_type)
 
 
 # Workflow factory function
-def create_analytics_workflow(workflow_type: AnalyticsWorkflowType):
+def create_analytics_workflow(workflow_type -> None: AnalyticsWorkflowType) -> None:
     """Factory function to create specific analytics workflow."""
     workflow_classes = {
         AnalyticsWorkflowType.PERFORMANCE_TRACKING: PerformanceTrackingWorkflow,

@@ -208,7 +208,7 @@ class MultimediaCodecProcessor:
     - Batch processing optimization
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the Multimedia Codec Processor"""
         self.logger = logging.getLogger(__name__)
         self.initialized = False
@@ -333,7 +333,7 @@ class MultimediaCodecProcessor:
             }
         }
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize the multimedia processor and components"""
         try:
             self.logger.info("Initializing Multimedia Codec Processor...")
@@ -348,7 +348,7 @@ class MultimediaCodecProcessor:
             self.logger.error(f"Processor initialization failed: {e}")
             raise CodecError(f"Processor initialization failed: {str(e)}")
     
-    async def _initialize_processing_components(self):
+    async def _initialize_processing_components(self) -> None:
         """Initialize processing component engines"""
         await self.audio_processor.initialize()
         await self.video_processor.initialize()
@@ -429,7 +429,7 @@ class MultimediaCodecProcessor:
             # Process requests concurrently with resource management
             semaphore = asyncio.Semaphore(4)  # Limit concurrent processing for resource management
             
-            async def process_single(request):
+            async def process_single(request) -> None:
                 async with semaphore:
                     return await self.process_multimedia(request)
             
@@ -499,7 +499,7 @@ class MultimediaCodecProcessor:
         
         return compliance
     
-    async def _update_metrics(self, processing_time: float, success: bool, result: Optional[ProcessingResult]):
+    async def _update_metrics(self, processing_time -> None: float, success -> None: bool, result -> None: Optional[ProcessingResult]) -> None:
         """Update performance metrics"""
         self.processing_metrics['total_processed'] += 1
         
@@ -545,7 +545,7 @@ class MultimediaCodecProcessor:
 class AudioCodecProcessor:
     """Specialized engine for audio codec processing"""
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize audio processor"""
         self.supported_formats = {
             AudioCodec.MP3: {'extension': '.mp3', 'quality_range': [64, 320]},
@@ -676,7 +676,7 @@ class AudioCodecProcessor:
 class VideoCodecProcessor:
     """Specialized engine for video codec processing"""
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize video processor"""
         self.supported_codecs = {
             VideoCodec.H264: {'lib': 'libx264', 'container': 'mp4'},
@@ -824,7 +824,7 @@ class VideoCodecProcessor:
 class ImageFormatProcessor:
     """Specialized engine for image format processing"""
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize image processor"""
         self.supported_formats = {
             ImageFormat.JPEG: {'quality_range': [1, 100], 'lossy': True},
@@ -938,7 +938,7 @@ class ImageFormatProcessor:
 class QualityEnhancementEngine:
     """Specialized engine for quality enhancement"""
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize quality enhancer"""
         pass
     
@@ -953,7 +953,7 @@ class QualityEnhancementEngine:
 class CompressionOptimizer:
     """Specialized engine for compression optimization"""
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize compression optimizer"""
         pass
     

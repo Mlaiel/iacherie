@@ -138,7 +138,7 @@ class ViralTrend:
 class ViralContentPredictor:
     """Advanced viral content prediction and analysis system"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize Viral Content Predictor
         
         Args:
@@ -1143,7 +1143,7 @@ class ViralContentPredictor:
         
         return optimal_counts.get(platform, 5)
     
-    async def _initialize_models(self):
+    async def _initialize_models(self) -> None:
         """Initialize ML models with synthetic training data"""
         try:
             # Generate synthetic training data
@@ -1230,7 +1230,7 @@ class ViralContentPredictor:
 
 
 # Example usage
-async def main():
+async def main() -> None:
     """Example usage of Viral Content Predictor"""
     try:
         # Initialize predictor

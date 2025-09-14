@@ -178,7 +178,7 @@ class MessageBrokerInterface(ABC):
         pass
         
     @abstractmethod
-    async def close(self):
+    async def close(self) -> None:
         """Close broker connection"""
         pass
 
@@ -186,7 +186,7 @@ class MessageBrokerInterface(ABC):
 class MemoryMessageBroker(MessageBrokerInterface):
     """In-memory message broker implementation"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.topics: Dict[str, TopicConfiguration] = {}
         self.messages: Dict[str, deque] = defaultdict(lambda: deque(maxlen=10000))
         self.subscribers: Dict[str, List[Tuple[MessageHandler, str]]] = defaultdict(list)
@@ -202,12 +202,12 @@ class MemoryMessageBroker(MessageBrokerInterface):
         self.running = False
         self.delivery_task = None
         
-    async def start(self):
+    async def start(self) -> None:
         """Start the broker"""
         self.running = True
         self.delivery_task = asyncio.create_task(self._delivery_loop())
         
-    async def stop(self):
+    async def stop(self) -> None:
         """Stop the broker"""
         self.running = False
         if self.delivery_task:
@@ -327,11 +327,11 @@ class MemoryMessageBroker(MessageBrokerInterface):
             stats['total_messages'] = sum(len(queue) for queue in self.messages.values())
             return stats
             
-    async def close(self):
+    async def close(self) -> None:
         """Close memory broker"""
         await self.stop()
         
-    async def _delivery_loop(self):
+    async def _delivery_loop(self) -> None:
         """Message delivery loop"""
         while self.running:
             try:
@@ -342,7 +342,7 @@ class MemoryMessageBroker(MessageBrokerInterface):
             except Exception as e:
                 logger.error(f"Error in delivery loop: {str(e)}")
                 
-    async def _deliver_messages(self):
+    async def _deliver_messages(self) -> None:
         """Deliver messages to subscribers"""
         with self._lock:
             topics_to_process = list(self.messages.keys())
@@ -390,7 +390,7 @@ class MemoryMessageBroker(MessageBrokerInterface):
 class KafkaMessageBroker(MessageBrokerInterface):
     """Kafka message broker implementation"""
     
-    def __init__(self, brokers: List[str], client_id: str = "ainflue"):
+    def __init__(self, brokers -> None: List[str], client_id -> None: str = "ainflue") -> None:
         self.brokers = brokers
         self.client_id = client_id
         self.producer = None
@@ -403,7 +403,7 @@ class KafkaMessageBroker(MessageBrokerInterface):
             'active_subscriptions': 0
         }
         
-    async def _ensure_producer(self):
+    async def _ensure_producer(self) -> None:
         """Ensure Kafka producer is initialized"""
         if self.producer is None:
             try:
@@ -487,7 +487,7 @@ class KafkaMessageBroker(MessageBrokerInterface):
             logger.error(f"Error subscribing to Kafka topic: {str(e)}")
             return ""
             
-    async def _consume_messages(self, subscription_id: str, consumer, handler: MessageHandler):
+    async def _consume_messages(self, subscription_id -> None: str, consumer, handler -> None: MessageHandler) -> None:
         """Consume messages from Kafka"""
         try:
             async for msg in consumer:
@@ -568,7 +568,7 @@ class KafkaMessageBroker(MessageBrokerInterface):
         stats['active_consumers'] = len(self.consumers)
         return stats
         
-    async def close(self):
+    async def close(self) -> None:
         """Close Kafka connections"""
         if self.producer:
             await self.producer.stop()
@@ -581,10 +581,10 @@ class KafkaMessageBroker(MessageBrokerInterface):
 class MessageRouter:
     """Message routing and filtering"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.routes: List[Tuple[Callable[[Message], bool], str]] = []
         
-    def add_route(self, condition: Callable[[Message], bool], target_topic: str):
+    def add_route(self, condition -> None: Callable[[Message], bool], target_topic -> None: str) -> None:
         """Add routing rule"""
         self.routes.append((condition, target_topic))
         
@@ -605,7 +605,7 @@ class MessageRouter:
 class MessageBrokerService:
     """Event-driven Messaging and Communication Service"""
     
-    def __init__(self, name: str = "message_broker_service"):
+    def __init__(self, name -> None: str = "message_broker_service") -> None:
         self.name = name
         self.brokers: Dict[str, MessageBrokerInterface] = {}
         self.default_broker: Optional[str] = None
@@ -618,7 +618,7 @@ class MessageBrokerService:
             'total_subscriptions': 0
         }
         
-    async def start(self):
+    async def start(self) -> None:
         """Start message broker service"""
         self.running = True
         
@@ -629,7 +629,7 @@ class MessageBrokerService:
                 
         logger.info(f"Started message broker service: {self.name}")
         
-    async def stop(self):
+    async def stop(self) -> None:
         """Stop message broker service"""
         self.running = False
         
@@ -639,7 +639,7 @@ class MessageBrokerService:
             
         logger.info(f"Stopped message broker service: {self.name}")
         
-    def add_broker(self, name: str, broker: MessageBrokerInterface, is_default: bool = False):
+    def add_broker(self, name -> None: str, broker -> None: MessageBrokerInterface, is_default -> None: bool = False) -> None:
         """Add message broker"""
         self.brokers[name] = broker
         if is_default or not self.default_broker:
@@ -753,7 +753,7 @@ class MessageBrokerService:
             return False
         return await broker.delete_topic(topic)
         
-    def add_route(self, condition: Callable[[Message], bool], target_topic: str):
+    def add_route(self, condition -> None: Callable[[Message], bool], target_topic -> None: str) -> None:
         """Add message routing rule"""
         self.router.add_route(condition, target_topic)
         

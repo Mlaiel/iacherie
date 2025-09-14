@@ -117,7 +117,7 @@ class ContentSEOScoringEngine:
     - Trend alignment analysis
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize SEO scoring engine"""
         self.config = config or {}
         self.content_analyses: Dict[str, ContentSEOAnalysis] = {}
@@ -139,7 +139,7 @@ class ContentSEOScoringEngine:
         self._initialize_seo_engine()
         logger.info("Content SEO Scoring Engine initialized")
     
-    def _initialize_seo_engine(self):
+    def _initialize_seo_engine(self) -> None:
         """Initialize SEO scoring engine components"""
         try:
             # Setup keyword analysis tools
@@ -160,7 +160,7 @@ class ContentSEOScoringEngine:
             logger.error(f"Failed to initialize SEO engine: {e}")
             raise
     
-    def _setup_keyword_analysis(self):
+    def _setup_keyword_analysis(self) -> None:
         """Setup keyword analysis tools"""
         self.keyword_tools = {
             "tfidf_vectorizer": TfidfVectorizer(
@@ -189,7 +189,7 @@ class ContentSEOScoringEngine:
             }
         }
     
-    def _setup_content_analyzers(self):
+    def _setup_content_analyzers(self) -> None:
         """Setup content quality analyzers"""
         self.content_analyzers = {
             "readability_formulas": ["flesch_kincaid", "gunning_fog", "smog"],
@@ -206,7 +206,7 @@ class ContentSEOScoringEngine:
             }
         }
     
-    def _setup_competitive_analysis(self):
+    def _setup_competitive_analysis(self) -> None:
         """Setup competitive SEO analysis"""
         self.competitive_config = {
             "competitor_tracking_limit": 50,
@@ -215,7 +215,7 @@ class ContentSEOScoringEngine:
             "performance_benchmark_period": 30  # days
         }
     
-    def _setup_trend_analysis(self):
+    def _setup_trend_analysis(self) -> None:
         """Setup trend analysis for SEO"""
         self.trend_config = {
             "trending_keywords_refresh": 3600,  # seconds
@@ -1129,7 +1129,7 @@ class ContentSEOScoringEngine:
 
 # Example usage and testing
 if __name__ == "__main__":
-    async def test_seo_scoring():
+    async def test_seo_scoring() -> None:
         """Test SEO scoring functionality"""
         engine = ContentSEOScoringEngine()
         

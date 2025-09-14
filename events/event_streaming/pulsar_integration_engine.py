@@ -166,7 +166,7 @@ class PulsarMetrics:
 class PulsarProducer:
     """Pulsar producer for high-throughput publishing"""
     
-    def __init__(self, config: PulsarProducerConfig, cluster_config: PulsarClusterConfig, metrics_collector=None):
+    def __init__(self, config -> None: PulsarProducerConfig, cluster_config -> None: PulsarClusterConfig, metrics_collector=None) -> None:
         self.config = config
         self.cluster_config = cluster_config
         self.metrics_collector = metrics_collector
@@ -174,7 +174,7 @@ class PulsarProducer:
         self._producer = None
         self._is_connected = False
         
-    async def start(self):
+    async def start(self) -> None:
         """Start the Pulsar producer"""
         try:
             logger.info(f"Starting Pulsar producer for topic {self.config.topic}")
@@ -194,7 +194,7 @@ class PulsarProducer:
             logger.error(f"Failed to start Pulsar producer: {e}")
             raise
     
-    async def stop(self):
+    async def stop(self) -> None:
         """Stop the Pulsar producer"""
         try:
             if not self._is_connected:
@@ -292,7 +292,7 @@ class PulsarProducer:
             logger.error(f"Failed to send batch messages: {e}")
             raise
     
-    async def _send_message(self, message: PulsarMessage):
+    async def _send_message(self, message -> None: PulsarMessage) -> None:
         """Send message to Pulsar (simulated)"""
         try:
             # Simulate message sending
@@ -305,7 +305,7 @@ class PulsarProducer:
             logger.error(f"Error sending message: {e}")
             raise
     
-    async def _flush_pending_messages(self):
+    async def _flush_pending_messages(self) -> None:
         """Flush any pending messages"""
         try:
             # In real implementation, would flush Pulsar producer
@@ -314,7 +314,7 @@ class PulsarProducer:
         except Exception as e:
             logger.error(f"Error flushing messages: {e}")
     
-    def _update_send_latency(self, latency_ms: float):
+    def _update_send_latency(self, latency_ms -> None: float) -> None:
         """Update send latency metrics"""
         if self.metrics.producer_send_latency_ms == 0:
             self.metrics.producer_send_latency_ms = latency_ms
@@ -330,10 +330,10 @@ class PulsarConsumer:
     """Pulsar consumer for reliable message consumption"""
     
     def __init__(self, 
-                 config: PulsarConsumerConfig, 
-                 cluster_config: PulsarClusterConfig, 
-                 message_handler: Callable[[PulsarMessage], bool],
-                 metrics_collector=None):
+                 config -> None: PulsarConsumerConfig, 
+                 cluster_config -> None: PulsarClusterConfig, 
+                 message_handler -> None: Callable[[PulsarMessage], bool],
+                 metrics_collector=None) -> None:
         self.config = config
         self.cluster_config = cluster_config
         self.message_handler = message_handler
@@ -344,7 +344,7 @@ class PulsarConsumer:
         self._consumer_task: Optional[asyncio.Task] = None
         self._shutdown_event = asyncio.Event()
         
-    async def start(self):
+    async def start(self) -> None:
         """Start the Pulsar consumer"""
         try:
             logger.info(f"Starting Pulsar consumer for topics {self.config.topics}")
@@ -366,7 +366,7 @@ class PulsarConsumer:
             logger.error(f"Failed to start Pulsar consumer: {e}")
             raise
     
-    async def stop(self):
+    async def stop(self) -> None:
         """Stop the Pulsar consumer"""
         try:
             if not self._is_connected:
@@ -392,7 +392,7 @@ class PulsarConsumer:
             logger.error(f"Error stopping Pulsar consumer: {e}")
             raise
     
-    async def _consumer_loop(self):
+    async def _consumer_loop(self) -> None:
         """Main consumer loop"""
         try:
             while not self._shutdown_event.is_set():
@@ -443,7 +443,7 @@ class PulsarConsumer:
             logger.error(f"Error receiving message: {e}")
             return None
     
-    async def _process_message(self, message: PulsarMessage):
+    async def _process_message(self, message -> None: PulsarMessage) -> None:
         """Process received message"""
         try:
             start_time = time.time()
@@ -485,7 +485,7 @@ class PulsarConsumer:
             # Negative acknowledge on error
             await self._negative_acknowledge_message(message)
     
-    async def _acknowledge_message(self, message: PulsarMessage):
+    async def _acknowledge_message(self, message -> None: PulsarMessage) -> None:
         """Acknowledge processed message"""
         try:
             # In real implementation, would acknowledge via Pulsar consumer
@@ -494,7 +494,7 @@ class PulsarConsumer:
         except Exception as e:
             logger.error(f"Error acknowledging message: {e}")
     
-    async def _negative_acknowledge_message(self, message: PulsarMessage):
+    async def _negative_acknowledge_message(self, message -> None: PulsarMessage) -> None:
         """Negative acknowledge failed message"""
         try:
             # In real implementation, would negative acknowledge via Pulsar consumer
@@ -503,7 +503,7 @@ class PulsarConsumer:
         except Exception as e:
             logger.error(f"Error negative acknowledging message: {e}")
     
-    def _update_receive_latency(self, latency_ms: float):
+    def _update_receive_latency(self, latency_ms -> None: float) -> None:
         """Update receive latency metrics"""
         if self.metrics.consumer_receive_latency_ms == 0:
             self.metrics.consumer_receive_latency_ms = latency_ms
@@ -518,7 +518,7 @@ class PulsarConsumer:
 class GeoReplicationManager:
     """Manages geo-replication across Pulsar clusters"""
     
-    def __init__(self, source_cluster: str, replication_config: GeoReplicationConfig, metrics_collector=None):
+    def __init__(self, source_cluster -> None: str, replication_config -> None: GeoReplicationConfig, metrics_collector=None) -> None:
         self.source_cluster = source_cluster
         self.config = replication_config
         self.metrics_collector = metrics_collector
@@ -526,7 +526,7 @@ class GeoReplicationManager:
         self._monitoring_task: Optional[asyncio.Task] = None
         self._shutdown_event = asyncio.Event()
         
-    async def start(self):
+    async def start(self) -> None:
         """Start geo-replication monitoring"""
         try:
             logger.info(f"Starting geo-replication monitoring for {self.source_cluster}")
@@ -540,7 +540,7 @@ class GeoReplicationManager:
             logger.error(f"Failed to start geo-replication monitoring: {e}")
             raise
     
-    async def stop(self):
+    async def stop(self) -> None:
         """Stop geo-replication monitoring"""
         try:
             logger.info("Stopping geo-replication monitoring")
@@ -558,7 +558,7 @@ class GeoReplicationManager:
             logger.error(f"Error stopping geo-replication monitoring: {e}")
             raise
     
-    async def _monitoring_loop(self):
+    async def _monitoring_loop(self) -> None:
         """Monitor geo-replication lag and health"""
         try:
             while not self._shutdown_event.is_set():
@@ -603,7 +603,7 @@ class GeoReplicationManager:
 class PulsarIntegrationEngine:
     """Main engine for Pulsar integration in Ainflue platform"""
     
-    def __init__(self, cluster_configs: Dict[str, PulsarClusterConfig], metrics_collector=None):
+    def __init__(self, cluster_configs -> None: Dict[str, PulsarClusterConfig], metrics_collector=None) -> None:
         self.cluster_configs = cluster_configs
         self.metrics_collector = metrics_collector
         self.producers: Dict[str, PulsarProducer] = {}
@@ -612,7 +612,7 @@ class PulsarIntegrationEngine:
         self._engine_task: Optional[asyncio.Task] = None
         self._shutdown_event = asyncio.Event()
         
-    async def start(self):
+    async def start(self) -> None:
         """Start the Pulsar integration engine"""
         try:
             logger.info("Starting Pulsar Integration Engine")
@@ -629,7 +629,7 @@ class PulsarIntegrationEngine:
             logger.error(f"Failed to start Pulsar integration engine: {e}")
             raise
     
-    async def stop(self):
+    async def stop(self) -> None:
         """Stop the Pulsar integration engine"""
         try:
             logger.info("Stopping Pulsar Integration Engine")
@@ -657,7 +657,7 @@ class PulsarIntegrationEngine:
             logger.error(f"Error stopping Pulsar integration engine: {e}")
             raise
     
-    async def _setup_default_topology(self):
+    async def _setup_default_topology(self) -> None:
         """Setup default Pulsar topology for Ainflue"""
         try:
             # Get primary cluster config
@@ -720,7 +720,7 @@ class PulsarIntegrationEngine:
             logger.error(f"Error setting up default topology: {e}")
             raise
     
-    async def _setup_geo_replication(self):
+    async def _setup_geo_replication(self) -> None:
         """Setup geo-replication between clusters"""
         try:
             # Setup replication from primary to other clusters
@@ -766,7 +766,7 @@ class PulsarIntegrationEngine:
             logger.error(f"Error in default message handler: {e}")
             return False
     
-    async def _handle_content_distribution_message(self, payload: Dict[str, Any]):
+    async def _handle_content_distribution_message(self, payload -> None: Dict[str, Any]) -> None:
         """Handle content distribution message"""
         try:
             creator_id = payload.get("creator_id")
@@ -779,7 +779,7 @@ class PulsarIntegrationEngine:
         except Exception as e:
             logger.error(f"Error handling content distribution message: {e}")
     
-    async def _handle_revenue_reconciliation_message(self, payload: Dict[str, Any]):
+    async def _handle_revenue_reconciliation_message(self, payload -> None: Dict[str, Any]) -> None:
         """Handle revenue reconciliation message"""
         try:
             transaction_id = payload.get("transaction_id")
@@ -792,7 +792,7 @@ class PulsarIntegrationEngine:
         except Exception as e:
             logger.error(f"Error handling revenue reconciliation message: {e}")
     
-    async def _handle_audit_message(self, payload: Dict[str, Any]):
+    async def _handle_audit_message(self, payload -> None: Dict[str, Any]) -> None:
         """Handle audit trail message"""
         try:
             event_type = payload.get("event_type")
@@ -805,7 +805,7 @@ class PulsarIntegrationEngine:
         except Exception as e:
             logger.error(f"Error handling audit message: {e}")
     
-    async def _engine_loop(self):
+    async def _engine_loop(self) -> None:
         """Main engine monitoring loop"""
         try:
             while not self._shutdown_event.is_set():
@@ -824,7 +824,7 @@ class PulsarIntegrationEngine:
         except Exception as e:
             logger.error(f"Error in engine loop: {e}")
     
-    async def _monitor_component_health(self):
+    async def _monitor_component_health(self) -> None:
         """Monitor health of producers and consumers"""
         try:
             # Check producer health
@@ -848,7 +848,7 @@ class PulsarIntegrationEngine:
         except Exception as e:
             logger.error(f"Error monitoring component health: {e}")
     
-    async def _check_geo_replication_status(self):
+    async def _check_geo_replication_status(self) -> None:
         """Check geo-replication status"""
         try:
             for cluster, geo_manager in self.geo_replication_managers.items():
@@ -862,7 +862,7 @@ class PulsarIntegrationEngine:
         except Exception as e:
             logger.error(f"Error checking geo-replication status: {e}")
     
-    async def _perform_maintenance(self):
+    async def _perform_maintenance(self) -> None:
         """Perform routine maintenance tasks"""
         try:
             # Update metrics

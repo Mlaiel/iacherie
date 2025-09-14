@@ -137,7 +137,7 @@ class OrganicTrafficAnalyzer:
     - ROI calculation and optimization
     """
     
-    def __init__(self, db_pool=None, analytics_apis: Dict[str, str] = None):
+    def __init__(self, db_pool=None, analytics_apis -> None: Dict[str, str] = None) -> None:
         self.db_pool = db_pool
         self.analytics_apis = analytics_apis or {}
         

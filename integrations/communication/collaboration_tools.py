@@ -25,7 +25,7 @@ logger = logging.getLogger(__name__)
 class Project:
     """Project management and tracking"""
     
-    def __init__(self, project_id: str, name: str, creator_id: str):
+    def __init__(self, project_id -> None: str, name -> None: str, creator_id -> None: str) -> None:
         self.project_id = project_id
         self.name = name
         self.creator_id = creator_id
@@ -42,7 +42,7 @@ class Project:
 class Task:
     """Task management and assignment"""
     
-    def __init__(self, task_id: str, project_id: str, title: str):
+    def __init__(self, task_id -> None: str, project_id -> None: str, title -> None: str) -> None:
         self.task_id = task_id
         self.project_id = project_id
         self.title = title
@@ -60,7 +60,7 @@ class Task:
 class TeamMember:
     """Team member management"""
     
-    def __init__(self, member_id: str, user_id: str, role: str):
+    def __init__(self, member_id -> None: str, user_id -> None: str, role -> None: str) -> None:
         self.member_id = member_id
         self.user_id = user_id
         self.role = role  # owner, admin, editor, viewer, collaborator
@@ -73,7 +73,7 @@ class TeamMember:
 class Document:
     """Document and file management"""
     
-    def __init__(self, document_id: str, project_id: str, title: str):
+    def __init__(self, document_id -> None: str, project_id -> None: str, title -> None: str) -> None:
         self.document_id = document_id
         self.project_id = project_id
         self.title = title
@@ -106,7 +106,7 @@ class CollaborationTools:
     - Performance monitoring and optimization
     """
     
-    def __init__(self, tools_config: Dict[str, Dict[str, Any]]):
+    def __init__(self, tools_config -> None: Dict[str, Dict[str, Any]]) -> None:
         self.tools_config = tools_config
         self.session = None
         self.active_projects = {}
@@ -116,17 +116,17 @@ class CollaborationTools:
             'minute_start': datetime.utcnow().minute
         }
         
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         """Async context manager entry"""
         self.session = aiohttp.ClientSession()
         return self
         
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         """Async context manager exit"""
         if self.session:
             await self.session.close()
 
-    def _check_rate_limit(self):
+    def _check_rate_limit(self) -> None:
         """Check and enforce rate limiting"""
         current_minute = datetime.utcnow().minute
         
@@ -747,7 +747,7 @@ class CollaborationTools:
     # Additional helper methods for comprehensive functionality...
 
 # Example usage and testing
-async def main():
+async def main() -> None:
     """Example usage of Collaboration Tools integration"""
     
     # Initialize the service

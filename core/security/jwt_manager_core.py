@@ -118,7 +118,7 @@ class JWTMetrics:
 class JWTManagerCore:
     """Enterprise JWT management system"""
     
-    def __init__(self, level: str = "enterprise"):
+    def __init__(self, level -> None: str = "enterprise") -> None:
         """Initialize JWT manager core"""
         self.level = level
         self.metrics = JWTMetrics()
@@ -158,7 +158,7 @@ class JWTManagerCore:
         """Generate cryptographically secure secret"""
         return base64.urlsafe_b64encode(secrets.token_bytes(32)).decode('utf-8')
 
-    def _initialize_rsa_keys(self):
+    def _initialize_rsa_keys(self) -> None:
         """Initialize RSA key pair for asymmetric signing"""
         try:
             # Generate RSA key pair
@@ -450,7 +450,7 @@ class JWTManagerCore:
         except Exception:
             return None
 
-    async def revoke_token(self, token_id: str):
+    async def revoke_token(self, token_id -> None: str) -> None:
         """Revoke specific token by ID"""
         
         if token_id in self.active_tokens:
@@ -460,7 +460,7 @@ class JWTManagerCore:
             
             logger.debug(f"Revoked token {token_id}")
 
-    async def revoke_refresh_token(self, refresh_token: str):
+    async def revoke_refresh_token(self, refresh_token -> None: str) -> None:
         """Revoke refresh token"""
         
         if refresh_token in self.refresh_tokens:
@@ -468,7 +468,7 @@ class JWTManagerCore:
             # Also revoke associated access token
             await self.revoke_token(access_token_id)
 
-    async def revoke_all_user_tokens(self, user_id: str):
+    async def revoke_all_user_tokens(self, user_id -> None: str) -> None:
         """Revoke all tokens for a specific user"""
         
         revoked_count = 0
@@ -520,7 +520,7 @@ class JWTManagerCore:
         
         return user_tokens
 
-    async def cleanup_expired_tokens(self):
+    async def cleanup_expired_tokens(self) -> None:
         """Clean up expired tokens from storage"""
         
         now = datetime.utcnow()

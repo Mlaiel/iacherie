@@ -112,7 +112,7 @@ class AnalyticsMetrics:
 class PredictiveAnalyticsCore:
     """Enterprise predictive analytics system"""
     
-    def __init__(self, level: str = "enterprise"):
+    def __init__(self, level -> None: str = "enterprise") -> None:
         """Initialize predictive analytics core"""
         self.level = level
         self.data_storage: Dict[str, List[DataPoint]] = defaultdict(list)
@@ -157,14 +157,14 @@ class PredictiveAnalyticsCore:
         
         logger.info(f"📊 Predictive Analytics Core initialized - Level: {level}")
 
-    def _start_model_retraining(self):
+    def _start_model_retraining(self) -> None:
         """Start periodic model retraining"""
         if self._retrain_task and not self._retrain_task.done():
             return
         
         self._retrain_task = asyncio.create_task(self._retrain_loop())
 
-    async def _retrain_loop(self):
+    async def _retrain_loop(self) -> None:
         """Periodic model retraining loop"""
         while not self._shutdown_event.is_set():
             try:
@@ -177,12 +177,12 @@ class PredictiveAnalyticsCore:
 
     async def add_data_point(
         self,
-        series_id: str,
-        timestamp: datetime,
-        value: float,
-        features: Optional[Dict[str, Any]] = None,
-        metadata: Optional[Dict[str, Any]] = None
-    ):
+        series_id -> None: str,
+        timestamp -> None: datetime,
+        value -> None: float,
+        features -> None: Optional[Dict[str, Any]] = None,
+        metadata -> None: Optional[Dict[str, Any]] = None
+    ) -> None:
         """Add data point for analysis"""
         
         data_point = DataPoint(
@@ -203,7 +203,7 @@ class PredictiveAnalyticsCore:
         
         logger.debug(f"Added data point to series {series_id}")
 
-    async def _clean_old_data(self, series_id: str):
+    async def _clean_old_data(self, series_id -> None: str) -> None:
         """Clean old data points"""
         
         cutoff_date = datetime.utcnow() - timedelta(days=self.config["data_retention_days"])
@@ -692,7 +692,7 @@ class PredictiveAnalyticsCore:
         self.metrics.forecasts_generated += len(forecasts)
         return forecasts
 
-    async def _retrain_all_models(self):
+    async def _retrain_all_models(self) -> None:
         """Retrain all models with new data"""
         
         logger.info("Starting model retraining")
@@ -719,7 +719,7 @@ class PredictiveAnalyticsCore:
         
         logger.info(f"Retrained {retrained_count} models")
 
-    def _update_average_accuracy(self):
+    def _update_average_accuracy(self) -> None:
         """Update average accuracy metric"""
         
         if self.model_metrics:
@@ -781,7 +781,7 @@ class PredictiveAnalyticsCore:
             logger.error(f"Predictive analytics health check failed: {str(e)}")
             return False
 
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Shutdown predictive analytics system"""
         logger.info("🛑 Shutting down predictive analytics")
         

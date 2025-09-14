@@ -1,3 +1,8 @@
+"""
+Collaboration Seo Engine module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 🤝 Collaboration SEO Engine - Moteur SEO de Collaboration Ultra-Avancé
@@ -166,7 +171,7 @@ class CollaborationSEOEngine:
     - Prédiction de ROI collaboratif
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialise le moteur de collaboration SEO"""
         self.config = config or {}
         self.creators: Dict[str, CreatorProfile] = {}
@@ -1073,7 +1078,7 @@ class GamificationSEOEngagementEngine:
     - Optimisation comportementale
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialise le moteur de gamification SEO"""
         self.config = config or {}
         self.gamification_elements: Dict[str, GamificationElement] = {}
@@ -2264,7 +2269,7 @@ __all__ = [
 
 if __name__ == "__main__":
     # Test des moteurs
-    async def test_engines():
+    async def test_engines() -> None:
         # Test moteur de collaboration
         await collaboration_seo_engine.initialize()
         

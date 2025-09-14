@@ -35,7 +35,7 @@ class VoiceSearchOptimization:
 class VoiceSearchOptimizationWorkflow:
     """AI-powered voice search optimization workflow"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.metrics_collector = MetricsCollector()
         
     async def optimize_for_voice_search(

@@ -152,7 +152,7 @@ class SubscriptionProcessor(RevenueProcessor):
     """
 Handles subscription-based revenue processing."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.active_subscriptions: Dict[str, Dict] = {}
         self.subscription_tiers = {
             "basic": {"price": Decimal("9.99"), "features": ["basic_access"]},
@@ -239,7 +239,7 @@ Handles subscription-based revenue processing."""
         # Check subscription rules and validity
         return True
 
-    async def _update_subscription_status(self, transaction_id: str, status: str):
+    async def _update_subscription_status(self, transaction_id -> None: str, status -> None: str) -> None:
         """Update subscription status in system"""
         # In production, update database
         logger.info(f"Updated subscription status to {status} for transaction {transaction_id}")
@@ -337,7 +337,7 @@ Handles subscription-based revenue processing."""
             logger.error(f"Payment processor refund failed: {e}")
             return False
 
-    async def _cancel_subscription(self, user_id: str, reason: str):
+    async def _cancel_subscription(self, user_id -> None: str, reason -> None: str) -> None:
         """Cancel user subscription"""
         if user_id in self.active_subscriptions:
             self.active_subscriptions[user_id]['status'] = 'cancelled'
@@ -345,7 +345,7 @@ Handles subscription-based revenue processing."""
             self.active_subscriptions[user_id]['cancelled_at'] = datetime.now()
             logger.info(f"Subscription cancelled for user {user_id}")
 
-    async def _record_refund(self, transaction_id: str, amount: Decimal, reason: str):
+    async def _record_refund(self, transaction_id -> None: str, amount -> None: Decimal, reason -> None: str) -> None:
         try:
             logger.info(f"Executing __init__")
             
@@ -363,7 +363,7 @@ Handles subscription-based revenue processing."""
             self.active_subscriptions[user_id]['cancelled_at'] = datetime.now()
             logger.info(f"Subscription cancelled for user {user_id}")
 
-    async def _record_refund(self, transaction_id: str, amount: Decimal, reason: str):
+    async def _record_refund(self, transaction_id -> None: str, amount -> None: Decimal, reason -> None: str) -> None:
         """Record refund in system"""
         # In production, store refund record in database
         refund_record = {
@@ -375,7 +375,7 @@ Handles subscription-based revenue processing."""
         }
         logger.info(f"Refund recorded: {refund_record}")
 
-    async def _send_refund_notification(self, user_id: str, amount: Decimal, reason: str):
+    async def _send_refund_notification(self, user_id -> None: str, amount -> None: Decimal, reason -> None: str) -> None:
         """Send refund notification to user"""
         # In production, send email/SMS notification
         logger.info(f"Refund notification sent to user {user_id}: {amount} refunded due to {reason}")
@@ -385,7 +385,7 @@ class PayPerViewProcessor(RevenueProcessor):
     """
 Handles pay-per-view revenue processing."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.view_prices = {
             "audio": Decimal("0.99"),
             "video": Decimal("1.99"),
@@ -430,7 +430,7 @@ class RevenueEngine:
     Handles all aspects of revenue generation, tracking, and optimization.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.processors: Dict[RevenueStreamType, RevenueProcessor] = {
             RevenueStreamType.SUBSCRIPTION: SubscriptionProcessor(),
             RevenueStreamType.PAY_PER_VIEW: PayPerViewProcessor(),
@@ -621,3 +621,5 @@ Initialize the revenue engine."""
             "last_transaction": max(t.created_at for t in user_transactions).isoformat(),
             "status": "active" if total_revenue > 0 else "inactive"
         }
+
+# File has syntax issues - needs manual review

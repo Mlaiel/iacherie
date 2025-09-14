@@ -1,5 +1,7 @@
 """Performance Optimization Workflow - System performance optimization.
 
+import asyncio
+
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Ainflue Platform. All rights reserved.
 """
@@ -10,6 +12,7 @@ from datetime import datetime
 
 @dataclass
 class PerformanceMetrics:
+    """PerformanceMetrics: class implementation"""
     response_time: float
     throughput: float
     cpu_usage: float
@@ -17,6 +20,7 @@ class PerformanceMetrics:
 
 @dataclass
 class OptimizationInsights:
+    """OptimizationInsights: class implementation"""
     user_id: str
     performance_gains: Dict[str, float]
     bottlenecks_resolved: List[str]
@@ -24,6 +28,7 @@ class OptimizationInsights:
     analysis_timestamp: datetime
 
 class PerformanceOptimizationWorkflow:
+    """PerformanceOptimizationWorkflow: class implementation"""
     async def optimize_performance(self, user_id: str, **kwargs) -> OptimizationInsights:
         return OptimizationInsights(
             user_id=user_id,

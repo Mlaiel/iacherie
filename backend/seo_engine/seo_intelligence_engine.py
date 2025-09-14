@@ -1,3 +1,8 @@
+"""
+Seo Intelligence Engine module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 🧠 SEO Intelligence Engine - Moteur d'Intelligence SEO Ultra-Avancé
@@ -150,7 +155,7 @@ class SEOIntelligenceEngine:
     - Recommandations personnalisées
     """
     
-    def __init__(self, config: Optional[SEOIntelligenceConfig] = None):
+    def __init__(self, config -> None: Optional[SEOIntelligenceConfig] = None) -> None:
         """Initialise le moteur d'intelligence SEO"""
         self.config = config or SEOIntelligenceConfig()
         self.competitors: Dict[str, CompetitorProfile] = {}
@@ -1363,7 +1368,7 @@ __all__ = [
 
 if __name__ == "__main__":
     # Test d'initialisation
-    async def test_engine():
+    async def test_engine() -> None:
         engine = SEOIntelligenceEngine()
         await engine.initialize()
         

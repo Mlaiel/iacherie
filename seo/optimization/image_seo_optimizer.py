@@ -53,7 +53,7 @@ class ImageSEOOptimizer:
     Provides comprehensive image optimization for search engines and accessibility
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.image_seo_factors = self._initialize_image_seo_factors()
         self.alt_text_patterns = self._load_alt_text_patterns()
         self.filename_conventions = self._load_filename_conventions()

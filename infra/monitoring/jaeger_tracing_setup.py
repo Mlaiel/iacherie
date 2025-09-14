@@ -1,3 +1,8 @@
+"""
+Jaeger Tracing Setup module
+Enterprise implementation for Ainflue platform
+"""
+
 # Ainflue Infrastructure Module - Jaeger Tracing Setup
 # ===================================================
 # 
@@ -102,7 +107,7 @@ class JaegerTracingSetup:
     collectors, agents, storage backends, and monitoring integration.
     """
     
-    def __init__(self, config_path: Optional[str] = None):
+    def __init__(self, config_path -> None: Optional[str] = None) -> None:
         """Initialize Jaeger tracing setup"""
         self.config_path = config_path or "/home/runner/work/Ainflue/Ainflue/infra/monitoring"
         self.jaeger_config: Dict[str, Any] = {}

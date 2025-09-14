@@ -109,7 +109,7 @@ class EthicalAssessmentReport:
 class BiasDetector:
     """Advanced bias detection algorithms"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.detection_threshold = 0.05  # 5% threshold for bias detection
         
     async def detect_demographic_parity_bias(
@@ -333,7 +333,7 @@ class BiasDetector:
 class FairnessEvaluator:
     """Comprehensive fairness evaluation"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.fairness_threshold = 0.8  # Minimum fairness score
         
     async def calculate_fairness_metrics(
@@ -630,7 +630,7 @@ class FairnessEvaluator:
 class EthicalAIAssessor:
     """Main ethical AI assessment system"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.config = config or {}
         self.bias_detector = BiasDetector()
         self.fairness_evaluator = FairnessEvaluator()
@@ -994,7 +994,7 @@ class EthicalAIAssessor:
             raise
 
 # Example usage and testing
-async def main():
+async def main() -> None:
     """Test ethical AI assessor"""
     try:
         # Initialize assessor

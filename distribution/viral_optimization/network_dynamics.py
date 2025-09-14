@@ -1,5 +1,7 @@
 """Network Dynamics - Content Propagation Modeling Engine
 
+import asyncio
+
 Models network dynamics and content propagation patterns across social networks
 to predict viral spread and optimize distribution strategies.
 
@@ -47,7 +49,7 @@ class PropagationMetrics:
 class NetworkDynamics:
     """Network dynamics modeling and analysis engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize network dynamics engine"""
         self.propagation_models = self._load_propagation_models()
         self.network_simulators = self._initialize_simulators()

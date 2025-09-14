@@ -32,18 +32,18 @@ import random
 from .platform_connectors import SocialPlatform, ContentPayload, PublicationResult
 
 
-def safe_mean(values):
+def safe_mean(values) -> None:
     """Calculate mean safely without numpy"""
     if not values:
         return 0.0
     return sum(values) / len(values)
 
-def safe_random_uniform(low, high):
+def safe_random_uniform(low, high) -> None:
     """Generate random uniform value without numpy"""
     import random
     return random.uniform(low, high)
 
-def safe_sqrt(value):
+def safe_sqrt(value) -> None:
     """Calculate square root safely"""
     import math
     return math.sqrt(max(0, value))
@@ -221,7 +221,7 @@ class ABTestingEngine:
         }
     }
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.active_tests: Dict[str, Dict[str, Any]] = {}
         self.completed_tests: Dict[str, TestResult] = {}
         self.test_performance_data: Dict[str, Dict[str, List[PerformanceMetrics]]] = defaultdict(lambda: defaultdict(list))
@@ -230,7 +230,7 @@ class ABTestingEngine:
         # Initialize variant generators
         self._initialize_variant_generators()
     
-    def _initialize_variant_generators(self):
+    def _initialize_variant_generators(self) -> None:
         """Initialize variant generation functions"""
         self.variant_generators = {
             TestType.TITLE_OPTIMIZATION: self._generate_title_variants,
@@ -345,11 +345,11 @@ class ABTestingEngine:
     
     async def record_performance(
         self,
-        test_id: str,
-        variant_id: str,
-        platform: SocialPlatform,
-        metrics: Dict[str, Any]
-    ):
+        test_id -> None: str,
+        variant_id -> None: str,
+        platform -> None: SocialPlatform,
+        metrics -> None: Dict[str, Any]
+    ) -> None:
         """Record performance metrics for a test variant"""
         try:
             if test_id not in self.active_tests:
@@ -397,7 +397,7 @@ class ABTestingEngine:
         except Exception as e:
             logger.error(f"Performance recording failed: {str(e)}")
     
-    async def _check_early_stopping(self, test_id: str):
+    async def _check_early_stopping(self, test_id -> None: str) -> None:
         """Check if test meets early stopping criteria"""
         try:
             test_data = self.active_tests[test_id]
@@ -573,7 +573,7 @@ class ABTestingEngine:
             logger.error(f"Two-proportion test failed: {str(e)}")
             return 1.0, 0.0
     
-    async def _complete_test(self, test_id: str, early_stop: bool = False, reason: Optional[str] = None):
+    async def _complete_test(self, test_id -> None: str, early_stop -> None: bool = False, reason -> None: Optional[str] = None) -> None:
         """Complete an A/B test and generate results"""
         try:
             test_data = self.active_tests[test_id]
@@ -1131,7 +1131,7 @@ class ABTestingEngine:
             logger.error(f"Statistics generation failed: {str(e)}")
             return {}
     
-    def clear_test_data(self, test_id: str):
+    def clear_test_data(self, test_id -> None: str) -> None:
         """Clear test data and performance history"""
         try:
             if test_id in self.active_tests:

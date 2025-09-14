@@ -1,3 +1,8 @@
+"""
+Event Sourcing Manager module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Event Sourcing Manager - Enterprise Event Management Component
@@ -125,7 +130,7 @@ class EventSourcingManager:
     for enterprise-grade event-driven architectures.
     """
     
-    def __init__(self, snapshot_frequency: int = 100):
+    def __init__(self, snapshot_frequency -> None: int = 100) -> None:
         self.event_store: Dict[str, EventStream] = {}
         self.snapshots: Dict[str, List[Snapshot]] = defaultdict(list)
         self.projections: Dict[str, EventProjection] = {}
@@ -618,7 +623,7 @@ def create_event_sourcing_manager(snapshot_frequency: int = 100) -> EventSourcin
 
 
 # Example usage
-async def main():
+async def main() -> None:
     """Example usage of Event Sourcing Manager"""
     event_manager = create_event_sourcing_manager()
     

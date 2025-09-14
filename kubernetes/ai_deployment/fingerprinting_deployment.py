@@ -8,7 +8,7 @@ detection, blockchain timestamping, and automated copyright enforcement.
 Project: IA Influencer Agent + Content Protection Platform
 Author: Fahed Mlaiel <mlaiel@live.de>
 
-⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
+# [EMOJI_REMOVED]  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED # [EMOJI_REMOVED]
 This software is protected by international copyright laws.
 Contact: mlaiel@live.de for licensing inquiries.
 """
@@ -122,7 +122,7 @@ class FingerprintingConfig:
     processing_timeout: int = 600  # 10 minutes
     replicas: int = 6
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         try:
                     # Request validation
                     if not data:
@@ -161,7 +161,7 @@ class FingerprintingDeployment:
     - Quantum-resistant cryptographic protection
     """
     
-    def __init__(self, namespace: str = "ia-content-fingerprinting"):
+    def __init__(self, namespace -> None: str = "ia-content-fingerprinting") -> None:
         """
         Initialize fingerprinting deployment
         
@@ -1122,3 +1122,5 @@ class FingerprintingDeployment:
         except Exception as e:
             logger.error(f"Content fingerprinting cleanup failed: {e}")
             raise
+
+# File has syntax issues - needs manual review

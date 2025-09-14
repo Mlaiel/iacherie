@@ -77,7 +77,7 @@ class CollaborationWorkflow:
 class CollaborationOrchestrator:
     """Advanced collaboration orchestration and workflow management system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize collaboration orchestrator"""
         self.active_collaborations = {}
         self.collaboration_templates = self._init_collaboration_templates()
@@ -591,7 +591,7 @@ class CollaborationOrchestrator:
         }
     
     # Additional placeholder methods for workflow management
-    async def _initialize_collaboration_workflow(self, plan: CollaborationPlan):
+    async def _initialize_collaboration_workflow(self, plan -> None: CollaborationPlan) -> None:
         """Initialize workflow engine for collaboration"""
         workflow = CollaborationWorkflow(
             workflow_id=f"workflow_{plan.collaboration_id}",
@@ -611,7 +611,7 @@ class CollaborationOrchestrator:
         """Execute specific workflow action"""
         return {'action': action, 'status': 'completed', 'next_actions': []}
     
-    async def _update_progress_tracking(self, collaboration_id: str, action: str, result: Dict):
+    async def _update_progress_tracking(self, collaboration_id -> None: str, action -> None: str, result -> None: Dict) -> None:
         """Update collaboration progress tracking"""
         if collaboration_id in self.active_collaborations:
             progress = self.active_collaborations[collaboration_id].get('progress_tracking', {})

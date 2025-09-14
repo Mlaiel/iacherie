@@ -123,7 +123,7 @@ class CreatorGrowthModel:
 class CapacityPlanningSystem:
     """Enterprise Capacity Planning System"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         
         # Data storage
@@ -163,7 +163,7 @@ class CapacityPlanningSystem:
         
         logger.info("📊 Capacity Planning System initialized")
     
-    def _initialize_sample_data(self):
+    def _initialize_sample_data(self) -> None:
         """Initialize system with sample historical data"""
         try:
             # Generate sample capacity data for the last 30 days
@@ -199,7 +199,7 @@ class CapacityPlanningSystem:
         except Exception as e:
             logger.error(f"❌ Error initializing sample data: {e}")
     
-    def _initialize_creator_models(self):
+    def _initialize_creator_models(self) -> None:
         """Initialize creator growth models"""
         creator_data = [
             {
@@ -792,7 +792,7 @@ class CapacityPlanningSystem:
 capacity_planner = CapacityPlanningSystem()
 
 
-async def main():
+async def main() -> None:
     """Test the Capacity Planning System"""
     planner = CapacityPlanningSystem()
     

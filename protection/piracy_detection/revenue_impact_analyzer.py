@@ -131,7 +131,7 @@ class RevenueImpactAnalyzer:
     including multi-platform analysis, predictive modeling, and ROI optimization.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """
 Initialize the revenue impact analyzer."""
         self.config = config or {}

@@ -45,7 +45,7 @@ class DMCATakedownNotice:
 class DMCAComplianceManager:
     """DMCA compliance management for Ainflue platform"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.takedown_notices = {}
         self.copyright_policies = self._initialize_dmca_policies()
         

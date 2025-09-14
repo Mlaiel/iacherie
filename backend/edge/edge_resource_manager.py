@@ -124,7 +124,7 @@ class ResourceAllocation:
 class DynamicResourceAllocator:
     """Allocateur dynamique de ressources."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.resources: Dict[str, ResourceSpec] = {}
         self.allocation_requests: Dict[str, AllocationRequest] = {}
         self.active_allocations: Dict[str, ResourceAllocation] = {}
@@ -141,7 +141,7 @@ class DynamicResourceAllocator:
         self._initialize_default_resources()
         self._initialize_prediction_models()
     
-    def _initialize_default_resources(self):
+    def _initialize_default_resources(self) -> None:
         """Initialise les ressources par défaut."""
         # CPU Cluster
         cpu_cluster = ResourceSpec(
@@ -196,7 +196,7 @@ class DynamicResourceAllocator:
         self.resource_pool[ResourceType.MEMORY].append("memory_pool_01")
         self.resource_pool[ResourceType.STORAGE].append("storage_cluster_01")
     
-    def _initialize_prediction_models(self):
+    def _initialize_prediction_models(self) -> None:
         """Initialise les modèles de prédiction."""
         # TODO: Chargement modèles ML pré-entraînés
         logger.info("Resource prediction models initialized")
@@ -511,7 +511,7 @@ class UsagePattern:
 class AIResourcePredictor:
     """Prédicteur de ressources alimenté par IA."""
     
-    def __init__(self, allocator: DynamicResourceAllocator):
+    def __init__(self, allocator -> None: DynamicResourceAllocator) -> None:
         self.allocator = allocator
         self.usage_patterns: Dict[str, UsagePattern] = {}
         self.demand_history: Dict[ResourceType, List[Tuple[datetime, float]]] = defaultdict(list)
@@ -527,13 +527,13 @@ class AIResourcePredictor:
         
         self._initialize_models()
     
-    def _initialize_models(self):
+    def _initialize_models(self) -> None:
         """Initialise les modèles de prédiction."""
         # TODO: Chargement modèles ML pré-entraînés
         logger.info("AI resource prediction models initialized")
     
-    async def record_usage(self, user_id: str, creator_type: str, 
-                          resource_usage: Dict[ResourceType, float]):
+    async def record_usage(self, user_id -> None: str, creator_type -> None: str, 
+                          resource_usage -> None: Dict[ResourceType, float]) -> None:
         """Enregistre l'utilisation des ressources."""
         try:
             current_time = datetime.now()
@@ -572,7 +572,7 @@ class AIResourcePredictor:
         except Exception as e:
             logger.error(f"Usage recording error: {e}")
     
-    async def _update_usage_patterns(self, user_id: str):
+    async def _update_usage_patterns(self, user_id -> None: str) -> None:
         """Met à jour les patterns d'utilisation."""
         try:
             pattern = self.usage_patterns[user_id]
@@ -821,7 +821,7 @@ class CostReport:
 class CostOptimizationEngine:
     """Moteur d'optimisation des coûts."""
     
-    def __init__(self, allocator: DynamicResourceAllocator):
+    def __init__(self, allocator -> None: DynamicResourceAllocator) -> None:
         self.allocator = allocator
         self.optimization_rules: Dict[str, CostOptimizationRule] = {}
         self.cost_history: List[Tuple[datetime, float, Dict[str, Any]]] = []
@@ -829,7 +829,7 @@ class CostOptimizationEngine:
         
         self._initialize_optimization_rules()
     
-    def _initialize_optimization_rules(self):
+    def _initialize_optimization_rules(self) -> None:
         """Initialise les règles d'optimisation."""
         # Règle sous-utilisation
         underutilization_rule = CostOptimizationRule(
@@ -1080,7 +1080,7 @@ class CostOptimizationEngine:
 class EdgeResourceManager:
     """Gestionnaire principal des ressources edge."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         # Composants principaux
         self.dynamic_allocator = DynamicResourceAllocator()
         self.ai_predictor = AIResourcePredictor(self.dynamic_allocator)
@@ -1290,7 +1290,7 @@ class EdgeResourceManager:
             logger.error(f"Resource analytics error: {e}")
             return {}
     
-    async def _continuous_monitoring(self):
+    async def _continuous_monitoring(self) -> None:
         """Monitoring continu des ressources."""
         while self.is_initialized:
             try:
@@ -1312,7 +1312,7 @@ class EdgeResourceManager:
                 logger.error(f"Continuous monitoring error: {e}")
                 await asyncio.sleep(60)
     
-    async def _trigger_auto_scaling(self, resource_type: ResourceType):
+    async def _trigger_auto_scaling(self, resource_type -> None: ResourceType) -> None:
         """Déclenche l'auto-scaling pour un type de ressource."""
         try:
             logger.info(f"Triggering auto-scaling for {resource_type.value}")

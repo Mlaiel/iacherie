@@ -95,7 +95,7 @@ class EnvironmentController:
     - Environment monitoring and health validation
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.environments: Dict[str, Environment] = {}
         self.configuration_templates: Dict[str, ConfigurationTemplate] = {}
         self.environment_promotions: List[Dict[str, Any]] = []
@@ -104,13 +104,13 @@ class EnvironmentController:
         self._initialize_controller()
         logger.info("EnvironmentController initialized")
 
-    def _initialize_controller(self):
+    def _initialize_controller(self) -> None:
         """Initialize environment controller"""
         asyncio.create_task(self._environment_monitoring_loop())
         asyncio.create_task(self._secret_rotation_loop())
         self._setup_default_templates()
 
-    def _setup_default_templates(self):
+    def _setup_default_templates(self) -> None:
         """Setup default configuration templates"""
         
         # Development template
@@ -227,7 +227,7 @@ class EnvironmentController:
             logger.error(f"Environment creation failed: {str(e)}")
             raise
 
-    async def _provision_environment(self, environment: Environment):
+    async def _provision_environment(self, environment -> None: Environment) -> None:
         """Provision environment infrastructure"""
         
         try:
@@ -468,7 +468,7 @@ class EnvironmentController:
         return recommendations
 
     # Background tasks
-    async def _environment_monitoring_loop(self):
+    async def _environment_monitoring_loop(self) -> None:
         """Background environment monitoring loop"""
         while True:
             try:
@@ -494,7 +494,7 @@ class EnvironmentController:
             except Exception as e:
                 logger.error(f"Environment monitoring loop error: {str(e)}")
 
-    async def _secret_rotation_loop(self):
+    async def _secret_rotation_loop(self) -> None:
         """Background secret rotation loop"""
         while True:
             try:

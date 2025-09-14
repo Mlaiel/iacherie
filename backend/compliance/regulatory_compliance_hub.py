@@ -187,7 +187,7 @@ class RegulatoryReportRecord(Base):
 class GDPRComplianceManager:
     """GDPR (General Data Protection Regulation) compliance management"""
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client -> None: aioredis.Redis) -> None:
         self.redis = redis_client
         self.framework = RegulatoryFramework.GDPR
         
@@ -422,7 +422,7 @@ class GDPRComplianceManager:
 class CCPAComplianceManager:
     """CCPA (California Consumer Privacy Act) compliance management"""
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client -> None: aioredis.Redis) -> None:
         self.redis = redis_client
         self.framework = RegulatoryFramework.CCPA
         
@@ -671,7 +671,7 @@ class CCPAComplianceManager:
 class InternationalComplianceManager:
     """International regulatory compliance management"""
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client -> None: aioredis.Redis) -> None:
         self.redis = redis_client
         self.supported_frameworks = [
             RegulatoryFramework.GDPR,
@@ -892,7 +892,7 @@ class InternationalComplianceManager:
 class ComplianceReportingEngine:
     """Comprehensive compliance reporting and documentation"""
     
-    def __init__(self, db_session: AsyncSession, redis_client: aioredis.Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: aioredis.Redis) -> None:
         self.db = db_session
         self.redis = redis_client
         
@@ -1107,7 +1107,7 @@ class ComplianceReportingEngine:
 class RegulatoryComplianceHub:
     """Main regulatory compliance hub orchestrator"""
     
-    def __init__(self, db_session: AsyncSession, redis_client: aioredis.Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: aioredis.Redis) -> None:
         self.db = db_session
         self.redis = redis_client
         

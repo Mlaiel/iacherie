@@ -1,3 +1,8 @@
+"""
+Multimodal Processor module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """🌐 Multimodal Processor - Cross-Modal AI Processing Engine
 ================================================================================
@@ -122,12 +127,12 @@ class CrossModalResult:
 class TextFeatureExtractor:
     """Extract features from text content"""
     
-    def __init__(self, model_name: str = "sentence-transformers/all-MiniLM-L6-v2"):
+    def __init__(self, model_name -> None: str = "sentence-transformers/all-MiniLM-L6-v2") -> None:
         self.model_name = model_name
         self.model = None
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize the text feature extractor"""
         if not _AI_AVAILABLE:
             raise ModelInferenceError(
@@ -187,13 +192,13 @@ class TextFeatureExtractor:
 class ImageFeatureExtractor:
     """Extract features from image content"""
     
-    def __init__(self, model_name: str = "openai/clip-vit-base-patch32"):
+    def __init__(self, model_name -> None: str = "openai/clip-vit-base-patch32") -> None:
         self.model_name = model_name
         self.model = None
         self.processor = None
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize the image feature extractor"""
         if not _AI_AVAILABLE:
             raise ModelInferenceError(
@@ -261,13 +266,13 @@ class ImageFeatureExtractor:
 class AudioFeatureExtractor:
     """Extract features from audio content"""
     
-    def __init__(self, model_name: str = "facebook/wav2vec2-base"):
+    def __init__(self, model_name -> None: str = "facebook/wav2vec2-base") -> None:
         self.model_name = model_name
         self.model = None
         self.processor = None
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize the audio feature extractor"""
         # For now, use librosa for feature extraction
         # Can be enhanced with wav2vec2 or other models
@@ -330,11 +335,11 @@ class AudioFeatureExtractor:
 class VideoFeatureExtractor:
     """Extract features from video content"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.image_extractor = ImageFeatureExtractor()
         self.audio_extractor = AudioFeatureExtractor()
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize the video feature extractor"""
         await self.image_extractor.initialize()
         await self.audio_extractor.initialize()
@@ -414,7 +419,7 @@ class VideoFeatureExtractor:
 class MultimodalProcessor:
     """Advanced cross-modal content processing engine"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize multimodal processor"""
         self.config = config or self._get_default_config()
         
@@ -458,7 +463,7 @@ class MultimodalProcessor:
             'confidence_threshold': 0.5
         }
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize all feature extractors"""
         if self._initialized:
             return
@@ -945,7 +950,7 @@ class MultimodalProcessor:
             'initialized': self._initialized
         }
     
-    async def cleanup(self):
+    async def cleanup(self) -> None:
         """Cleanup resources"""
         # Clear cache
         self.cross_modal_cache.clear()

@@ -44,7 +44,7 @@ Professional media file upload schema."""
     codec: Optional[str] = Field(None, description="Media codec")
     
     @validator('file_type')
-    def validate_file_type(cls, v):
+    def validate_file_type(cls, v) -> None:
         """Validate file type."""
         allowed_types = {'audio', 'video', 'image', 'document', 'archive', 'other'}
         if v not in allowed_types:
@@ -129,7 +129,7 @@ class MediaProcessing(UUIDSchema, TimestampSchema):
     memory_usage_peak_mb: Optional[float] = None
     
     @validator('processing_type')
-    def validate_processing_type(cls, v):
+    def validate_processing_type(cls, v) -> None:
         """Validate processing type."""
         allowed_types = {
             'transcode', 'compress', 'thumbnail', 'preview', 'analysis',
@@ -375,7 +375,7 @@ class MediaBackup(UUIDSchema, TimestampSchema):
     last_verified: Optional[datetime] = Field(None, description="Last backup verification")
     
     @validator('backup_type')
-    def validate_backup_type(cls, v):
+    def validate_backup_type(cls, v) -> None:
         """Validate backup type."""
         allowed_types = {'full', 'incremental', 'differential', 'snapshot', 'continuous'}
         if v not in allowed_types:

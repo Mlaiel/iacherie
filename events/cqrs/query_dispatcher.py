@@ -110,7 +110,7 @@ class QueryProfile:
 class QueryOptimizer:
     """Optimize queries for better performance"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._optimization_rules: List[Callable[[Query], Query]] = []
         self._query_profiles: Dict[str, QueryProfile] = {}
         self._optimization_stats = {
@@ -173,7 +173,7 @@ class QueryOptimizer:
 class CacheInvalidationManager:
     """Manage cache invalidation across read models"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._invalidation_patterns: Dict[str, List[str]] = defaultdict(list)
         self._pending_invalidations: List[Dict[str, Any]] = []
     
@@ -215,7 +215,7 @@ class CacheInvalidationManager:
 class GeographicRouter:
     """Route queries based on geographic affinity"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._region_mappings: Dict[str, List[str]] = {}
         self._user_regions: Dict[str, str] = {}
     
@@ -238,7 +238,7 @@ class GeographicRouter:
 class PerformanceMonitor:
     """Monitor query performance and adapt routing"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._performance_history: Dict[str, deque] = defaultdict(lambda: deque(maxlen=1000))
         self._anomaly_threshold = 2.0  # Standard deviations
     
@@ -290,7 +290,7 @@ class PerformanceMonitor:
 class EnterpriseQueryDispatcher:
     """Enterprise query dispatcher with advanced routing and optimization"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._read_model_registry: Dict[str, List[ReadModelInstance]] = defaultdict(list)
         self._routing_rules: List[QueryRoutingRule] = []
         

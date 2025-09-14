@@ -260,7 +260,7 @@ NFT smart contract representation"""
 class NFTMinter:
     """Professional NFT minting service"""
     
-    def __init__(self, web3_client: Web3, private_key: str, config: Dict[str, Any]):
+    def __init__(self, web3_client -> None: Web3, private_key -> None: str, config -> None: Dict[str, Any]) -> None:
         self.w3 = web3_client
         self.private_key = private_key
         self.account = Account.from_key(private_key)
@@ -580,12 +580,12 @@ Set royalties for an NFT (ERC2981 standard)"""
 class MarketplaceIntegration:
     """Integration with major NFT marketplaces"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.marketplace_apis: Dict[NFTMarketplace, Dict[str, str]] = {}
         self._initialize_marketplace_configs()
     
-    def _initialize_marketplace_configs(self):
+    def _initialize_marketplace_configs(self) -> None:
         """
 Initialize marketplace API configurations"""
         self.marketplace_apis = {

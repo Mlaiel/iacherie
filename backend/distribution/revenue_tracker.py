@@ -136,7 +136,7 @@ class RevenueTracker:
     and performance analytics across multiple platforms and revenue streams.
     """
     
-    def __init__(self, database_connection=None, cache_client=None):
+    def __init__(self, database_connection=None, cache_client=None) -> None:
         """Initialize the revenue tracker."""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self.db = database_connection
@@ -229,7 +229,7 @@ class RevenueTracker:
             self.logger.error(f"Error tracking revenue: {e}")
             raise
     
-    async def _update_attribution_analysis(self, revenue_entry: RevenueEntry):
+    async def _update_attribution_analysis(self, revenue_entry -> None: RevenueEntry) -> None:
         """Update attribution analysis for content."""
         try:
             content_id = revenue_entry.content_id
@@ -280,7 +280,7 @@ class RevenueTracker:
         except Exception as e:
             self.logger.error(f"Error updating attribution analysis: {e}")
     
-    async def _recalculate_contributions(self, attribution: RevenueAttribution):
+    async def _recalculate_contributions(self, attribution -> None: RevenueAttribution) -> None:
         """Recalculate touchpoint contribution percentages."""
         try:
             if attribution.total_revenue == 0:
@@ -700,7 +700,7 @@ class RevenueTracker:
             self.logger.error(f"Error getting attribution analysis: {e}")
             return None
     
-    async def update_conversion_rates(self, rates: Dict[Currency, Decimal]):
+    async def update_conversion_rates(self, rates -> None: Dict[Currency, Decimal]) -> None:
         """Update currency conversion rates."""
         try:
             self.conversion_rates.update(rates)

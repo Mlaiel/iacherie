@@ -235,7 +235,7 @@ class CampaignMetrics:
     engagement_rate: float = 0.0
     quality_score: float = 0.0
     
-    def calculate_derived_metrics(self):
+    def calculate_derived_metrics(self) -> None:
         """Calculate derived metrics"""
         # CTR calculation
         if self.impressions > 0:
@@ -328,7 +328,7 @@ class AdCampaign:
 class MLAdOptimizer:
     """ML-based advertisement optimization"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.models = {}
         self.training_data = []
         
@@ -412,7 +412,7 @@ class MLAdOptimizer:
 class FraudDetector:
     """Advertisement fraud detection"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.suspicious_patterns = set()
         self.fraud_indicators = defaultdict(int)
         
@@ -486,7 +486,7 @@ class FraudDetector:
 class CreativeGenerator:
     """AI-powered creative content generation"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.templates = {}
         self.performance_data = {}
         
@@ -593,7 +593,7 @@ class AdvertisingService:
     💡 AI Prompt: Intelligent ad copy generation, content optimization, and creative recommendations
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.campaigns: Dict[str, AdCampaign] = {}
         self.ml_optimizer = MLAdOptimizer()
         self.fraud_detector = FraudDetector()
@@ -608,7 +608,7 @@ class AdvertisingService:
         
         logger.info("AdvertisingService initialized successfully")
     
-    def _initialize_platform_connectors(self):
+    def _initialize_platform_connectors(self) -> None:
         """Initialize platform-specific connectors"""
         for platform in AdPlatform:
             self.platform_connectors[platform] = {
@@ -1106,7 +1106,7 @@ class AdvertisingService:
 
 
 # Example usage and testing
-async def main():
+async def main() -> None:
     """Example usage of the AdvertisingService"""
     service = AdvertisingService()
     

@@ -27,8 +27,10 @@ try:
 except ImportError:
     FASTAPI_AVAILABLE = False
     class WebSocket:
-        def __init__(self, *args, **kwargs): pass
+    """WebSocket: class implementation"""
+        def __init__(self, *args, **kwargs) -> None: pass
     class WebSocketDisconnect(Exception):
+    """WebSocketDisconnect class implementation"""
         pass
 
 # Optional pydantic with fallback
@@ -38,10 +40,11 @@ try:
 except ImportError:
     PYDANTIC_AVAILABLE = False
     class BaseModel:
-        def __init__(self, **kwargs):
+    """BaseModel: class implementation"""
+        def __init__(self, **kwargs) -> None:
             for key, value in kwargs.items():
                 setattr(self, key, value)
-    def Field(*args, **kwargs): return None
+    def Field(*args, **kwargs) -> None: return None
 
 # Optional SQLAlchemy with fallback
 try:
@@ -51,14 +54,15 @@ try:
 except ImportError:
     SQLALCHEMY_AVAILABLE = False
     AsyncSession = None
-    def select(*args): return None
+    def select(*args) -> None: return None
     class FuncFallback:
-        def count(self, *args): return 0
-        def sum(self, *args): return 0
-        def avg(self, *args): return 0
+    """FuncFallback: class implementation"""
+        def count(self, *args) -> None: return 0
+        def sum(self, *args) -> None: return 0
+        def avg(self, *args) -> None: return 0
     func = FuncFallback()
-    def and_(*args): return None
-    def or_(*args): return None
+    def and_(*args) -> None: return None
+    def or_(*args) -> None: return None
 
 # Use our pandas fallback
 from ..utils.fallbacks import pd, PANDAS_AVAILABLE
@@ -120,7 +124,7 @@ class WebSocketManager:
     """
 Manages WebSocket connections for real-time updates."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.active_connections: Dict[str, ConnectionInfo] = {}
         self.user_connections: Dict[str, Set[str]] = {}
         self._connection_lock = asyncio.Lock()
@@ -234,7 +238,7 @@ Send update to all connections subscribed to a widget."""
 class MetricsCalculator:
     """Calculates dashboard metrics and analytics."""
     
-    def __init__(self, cache_manager: CacheManager):
+    def __init__(self, cache_manager -> None: CacheManager) -> None:
         try:
             logger.info(f"Executing __init__")
             
@@ -455,10 +459,10 @@ class DashboardService:
     
     def __init__(
         self,
-        config: DashboardConfig,
-        cache_manager: CacheManager,
-        redis_client: redis.Redis
-    ):
+        config -> None: DashboardConfig,
+        cache_manager -> None: CacheManager,
+        redis_client -> None: redis.Redis
+    ) -> None:
         self.config = config
         self.cache_manager = cache_manager
         self.redis_client = redis_client

@@ -62,7 +62,7 @@ class AudioEmbeddingGenerator:
     """
 Generate embeddings for audio content"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.dimension = config.get('audio_embedding_dim', 512)
         self.logger = logging.getLogger(f"{__name__}.AudioEmbeddingGenerator")
@@ -149,7 +149,7 @@ Generate embeddings for audio content"""
 class VideoEmbeddingGenerator:
     """Generate embeddings for video content"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.dimension = config.get('video_embedding_dim', 1024)
         self.logger = logging.getLogger(f"{__name__}.VideoEmbeddingGenerator")
@@ -252,7 +252,7 @@ class VideoEmbeddingGenerator:
 class ImageEmbeddingGenerator:
     """Generate embeddings for image content"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.dimension = config.get('image_embedding_dim', 768)
         self.logger = logging.getLogger(f"{__name__}.ImageEmbeddingGenerator")
@@ -366,7 +366,7 @@ class ImageEmbeddingGenerator:
 class TextEmbeddingGenerator:
     """Generate embeddings for text content"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.dimension = config.get('text_embedding_dim', 384)
         self.logger = logging.getLogger(f"{__name__}.TextEmbeddingGenerator")
@@ -472,7 +472,7 @@ class TextEmbeddingGenerator:
 class CompositeEmbeddingGenerator:
     """Generate composite embeddings for multi-modal content"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.dimension = config.get('composite_embedding_dim', 1536)
         self.logger = logging.getLogger(f"{__name__}.CompositeEmbeddingGenerator")
@@ -574,7 +574,7 @@ class CompositeEmbeddingGenerator:
 class EmbeddingService:
     """Main service for generating embeddings from content features"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.EmbeddingService")
         

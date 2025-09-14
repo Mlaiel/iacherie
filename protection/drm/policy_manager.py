@@ -161,7 +161,7 @@ Policy violation record."""
 class PolicyManager:
     """Advanced DRM policy management system."""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """
 Initialize policy manager with configuration."""
         self.config = config

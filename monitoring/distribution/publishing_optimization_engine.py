@@ -93,7 +93,7 @@ class PublishingOptimizationEngine:
     reach and engagement across platforms.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.publishing_schedules: Dict[str, List[PublishingSchedule]] = {}
         self.optimization_history: List[OptimizationRecommendation] = []
         self.audience_insights: Dict[str, List[AudienceInsight]] = {}
@@ -103,7 +103,7 @@ class PublishingOptimizationEngine:
         self._initialize_audience_insights()
         logger.info("Publishing Optimization Engine initialized")
     
-    def _initialize_platform_algorithms(self):
+    def _initialize_platform_algorithms(self) -> None:
         """Initialize platform algorithm insights"""
         self.platform_algorithms = {
             'youtube': {
@@ -168,7 +168,7 @@ class PublishingOptimizationEngine:
             }
         }
     
-    def _initialize_audience_insights(self):
+    def _initialize_audience_insights(self) -> None:
         """Initialize audience behavior insights"""
         # Global audience patterns
         global_insights = [

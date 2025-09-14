@@ -314,7 +314,7 @@ class CollaborationModel(Base):
         Index('idx_collaboration_progress_deadline', 'progress_percentage', 'target_completion_date'),
     )
     
-    def __repr__(self):
+    def __repr__(self) -> None:
         return f"<CollaborationModel(id={self.id}, type={self.collaboration_type.value}, status={self.status.value})>"
 
 
@@ -446,7 +446,7 @@ class GamificationModel(Base):
         Index('idx_gamification_active_updated', 'is_active', 'updated_at'),
     )
     
-    def __repr__(self):
+    def __repr__(self) -> None:
         return f"<GamificationModel(id={self.id}, user_id={self.user_id}, level={self.current_level}, points={self.total_points})>"
 
 
@@ -558,7 +558,7 @@ class AchievementModel(Base):
         Index('idx_achievement_rarity_featured', 'rarity_score', 'is_featured'),
     )
     
-    def __repr__(self):
+    def __repr__(self) -> None:
         return f"<AchievementModel(id={self.id}, name='{self.achievement_name}', completed={self.is_completed})>"
 
 
@@ -657,7 +657,7 @@ class LeaderboardModel(Base):
         Index('idx_leaderboard_region_genre', 'region', 'genre'),
     )
     
-    def __repr__(self):
+    def __repr__(self) -> None:
         return f"<LeaderboardModel(id={self.id}, category={self.category.value}, rank={self.current_rank})>"
 
 

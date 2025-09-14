@@ -95,7 +95,7 @@ Complete monetization system configuration."""
     supported_platforms: List[str] = None
     max_distribution_platforms: int = 10
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.supported_platforms is None:
             self.supported_platforms = [
                 'spotify', 'youtube', 'instagram', 'tiktok', 
@@ -107,7 +107,7 @@ class MonetizationSystemManager:
     """
 Central manager for the complete monetization system."""
     
-    def __init__(self, config: MonetizationSystemConfig = None):
+    def __init__(self, config -> None: MonetizationSystemConfig = None) -> None:
         self.config = config or MonetizationSystemConfig()
         self.engines = {}
         self.is_initialized = False

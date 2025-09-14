@@ -145,7 +145,7 @@ class NotificationHandler(BaseComponent):
     delivery, intelligent routing, rate limiting, template management,
     and delivery tracking for deployment automation events.
     """
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         super().__init__()
         self.config = config
         self.logger = logging.getLogger(__name__)

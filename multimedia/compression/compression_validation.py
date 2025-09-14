@@ -50,7 +50,7 @@ class ValidationResult:
 class CompressionValidator:
     """Advanced validation engine for compression results."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the compression validator."""
         self.validation_rules = self._load_validation_rules()
         self.validation_history = {}

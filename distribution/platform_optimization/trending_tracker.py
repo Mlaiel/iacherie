@@ -117,7 +117,7 @@ class TrendOpportunity:
 class TrendingTracker:
     """Advanced platform trending analysis engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize trending tracker"""
         self.trend_data = {}
         self.platform_apis = {}

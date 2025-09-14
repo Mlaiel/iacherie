@@ -142,7 +142,7 @@ class ResourceUsageTracker:
     - Planification prédictive
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialise le traceur de ressources
         
         Args:
@@ -177,7 +177,7 @@ class ResourceUsageTracker:
         
         logger.info("Resource Usage Tracker initialized - Sustainability Intelligence Ready")
     
-    async def start_monitoring(self):
+    async def start_monitoring(self) -> None:
         """Démarrage du monitoring en continu"""
         try:
             if self._monitoring_thread and self._monitoring_thread.is_alive():
@@ -197,7 +197,7 @@ class ResourceUsageTracker:
             logger.error(f"Failed to start monitoring: {str(e)}")
             raise
     
-    async def stop_monitoring(self):
+    async def stop_monitoring(self) -> None:
         """Arrêt du monitoring"""
         try:
             if self._monitoring_thread:
@@ -209,7 +209,7 @@ class ResourceUsageTracker:
         except Exception as e:
             logger.error(f"Failed to stop monitoring: {str(e)}")
     
-    def _monitoring_loop(self):
+    def _monitoring_loop(self) -> None:
         """Boucle de monitoring principal"""
         while not self._stop_monitoring.is_set():
             try:
@@ -455,7 +455,7 @@ class ResourceUsageTracker:
         
         return suggestions
     
-    def _handle_alert(self, alert: ResourceAlert):
+    def _handle_alert(self, alert -> None: ResourceAlert) -> None:
         """Gestion d'une alerte générée"""
         try:
             # Log de l'alerte
@@ -472,7 +472,7 @@ class ResourceUsageTracker:
         except Exception as e:
             logger.error(f"Alert handling failed: {str(e)}")
     
-    def _execute_emergency_actions(self, resource_type: ResourceType):
+    def _execute_emergency_actions(self, resource_type -> None: ResourceType) -> None:
         """Exécution d'actions d'urgence automatiques"""
         try:
             if resource_type == ResourceType.MEMORY:
@@ -488,7 +488,7 @@ class ResourceUsageTracker:
         except Exception as e:
             logger.error(f"Emergency actions failed: {str(e)}")
     
-    def _send_alert_notification(self, alert: ResourceAlert):
+    def _send_alert_notification(self, alert -> None: ResourceAlert) -> None:
         """Envoi de notification d'alerte"""
         # Simulation d'envoi de notification
         logger.info(f"Alert notification sent: {alert.alert_id}")

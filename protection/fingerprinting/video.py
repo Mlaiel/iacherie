@@ -67,7 +67,7 @@ class PerceptualHashExtractor:
     """
 Advanced perceptual hashing for video frames."""
     
-    def __init__(self, hash_size: int = 16):
+    def __init__(self, hash_size -> None: int = 16) -> None:
         self.hash_size = hash_size
         self.sampling_rate = 1.0  # Sample every second
         
@@ -165,7 +165,7 @@ Advanced perceptual hashing for video frames."""
 class OpticalFlowAnalyzer:
     """Optical flow analysis for motion-based fingerprinting."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.flow_method = cv2.optflow.calcOpticalFlowPyrLK
         self.feature_params = {
             'maxCorners': 100,
@@ -285,12 +285,12 @@ class ObjectDetectionAnalyzer:
     """
 YOLO-based object detection for content analysis."""
     
-    def __init__(self, model_name: str = "yolov8n.pt"):
+    def __init__(self, model_name -> None: str = "yolov8n.pt") -> None:
         self.model_name = model_name
         self.model = None
         self._initialize_model()
         
-    def _initialize_model(self):
+    def _initialize_model(self) -> None:
         """Initialize YOLO model."""
         try:
             self.model = YOLO(self.model_name)
@@ -390,13 +390,13 @@ YOLO-based object detection for content analysis."""
 class CNNFeatureExtractor:
     """CNN-based feature extraction for video frames."""
     
-    def __init__(self, model_name: str = "resnet50"):
+    def __init__(self, model_name -> None: str = "resnet50") -> None:
         self.model_name = model_name
         self.model = None
         self.transform = None
         self._initialize_model()
         
-    def _initialize_model(self):
+    def _initialize_model(self) -> None:
         """Initialize pre-trained CNN model."""
         try:
             if self.model_name == "resnet50":
@@ -519,7 +519,7 @@ class CNNFeatureExtractor:
 class SceneChangeDetector:
     """Detect scene changes and transitions in video."""
     
-    def __init__(self, threshold: float = 0.3):
+    def __init__(self, threshold -> None: float = 0.3) -> None:
         try:
             logger.info(f"Executing __init__")
             
@@ -628,7 +628,7 @@ class VideoFingerprintingService:
     - Temporal pattern analysis
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.hash_extractor = PerceptualHashExtractor()
         self.motion_analyzer = OpticalFlowAnalyzer()

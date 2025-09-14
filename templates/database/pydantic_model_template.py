@@ -38,11 +38,11 @@ class PhoneNumberStr(str):
     """Custom phone number validation"""
     
     @classmethod
-    def __get_validators__(cls):
+    def __get_validators__(cls) -> None:
         yield cls.validate
     
     @classmethod
-    def validate(cls, v):
+    def validate(cls, v) -> None:
         if not isinstance(v, str):
             raise TypeError('Phone number must be a string')
         
@@ -69,11 +69,11 @@ class UsernameStr(str):
     """Custom username validation"""
     
     @classmethod
-    def __get_validators__(cls):
+    def __get_validators__(cls) -> None:
         yield cls.validate
     
     @classmethod
-    def validate(cls, v):
+    def validate(cls, v) -> None:
         if not isinstance(v, str):
             raise TypeError('Username must be a string')
         
@@ -110,11 +110,11 @@ class PasswordStr(SecretStr):
     """Custom password validation"""
     
     @classmethod
-    def __get_validators__(cls):
+    def __get_validators__(cls) -> None:
         yield cls.validate
     
     @classmethod
-    def validate(cls, v):
+    def validate(cls, v) -> None:
         if not isinstance(v, str):
             raise TypeError('Password must be a string')
         
@@ -153,11 +153,11 @@ class ColorCodeStr(str):
     """Custom color code validation"""
     
     @classmethod
-    def __get_validators__(cls):
+    def __get_validators__(cls) -> None:
         yield cls.validate
     
     @classmethod
-    def validate(cls, v):
+    def validate(cls, v) -> None:
         if not isinstance(v, str):
             raise TypeError('Color code must be a string')
         
@@ -221,6 +221,7 @@ class {{base_model_class}}(BaseModel):
     """
     
     class Config:
+    """Config: class implementation"""
         # Enable field validation on assignment
         validate_assignment = True
         
@@ -280,7 +281,7 @@ class {{base_model_class}}(BaseModel):
     )
     
     @validator('id', pre=True, always=True)
-    def validate_id(cls, v):
+    def validate_id(cls, v) -> None:
         """Validate and generate ID if not provided"""
         if v is None:
             import uuid
@@ -297,21 +298,21 @@ class {{base_model_class}}(BaseModel):
             return v
     
     @validator('created_at', pre=True, always=True)
-    def validate_created_at(cls, v):
+    def validate_created_at(cls, v) -> None:
         """Set creation timestamp if not provided"""
         if v is None:
             return datetime.utcnow()
         return v
     
     @validator('updated_at', pre=True, always=True)
-    def validate_updated_at(cls, v):
+    def validate_updated_at(cls, v) -> None:
         """Set update timestamp if not provided"""
         if v is None:
             return datetime.utcnow()
         return v
     
     @validator('metadata')
-    def validate_metadata(cls, v):
+    def validate_metadata(cls, v) -> None:
         """Validate metadata size and content"""
         if v and len(json.dumps(v)) > 10000:  # 10KB limit
             raise ValueError('Metadata size cannot exceed 10KB')
@@ -525,6 +526,7 @@ class UserProfile({{base_model_class}}):
     )
     
     class Config({{base_model_class}}.Config):
+    """Config class implementation"""
         schema_extra = {
             "example": {
                 "username": "john_doe",
@@ -556,14 +558,14 @@ class UserProfile({{base_model_class}}):
         }
     
     @validator('display_name', always=True)
-    def validate_display_name(cls, v, values):
+    def validate_display_name(cls, v, values) -> None:
         """Generate display name if not provided"""
         if v is None and 'first_name' in values and 'last_name' in values:
             return f"{values['first_name']} {values['last_name']}"
         return v
     
     @validator('social_links')
-    def validate_social_links(cls, v):
+    def validate_social_links(cls, v) -> None:
         """Validate social media links"""
         if not v:
             return []
@@ -594,7 +596,7 @@ class UserProfile({{base_model_class}}):
         return v
     
     @validator('notification_preferences')
-    def validate_notification_preferences(cls, v):
+    def validate_notification_preferences(cls, v) -> None:
         """Validate notification preferences"""
         if not v:
             return {
@@ -618,7 +620,7 @@ class UserProfile({{base_model_class}}):
         return v
     
     @root_validator
-    def validate_user_profile(cls, values):
+    def validate_user_profile(cls, values) -> None:
         """Root validator for cross-field validation"""
         # Ensure premium users have verified email
         if values.get('is_premium') and not values.get('is_verified'):
@@ -644,12 +646,13 @@ class UserRegistration(BaseModel):
     referral_code: Optional[constr(max_length=20)] = Field(None, description="Referral code")
     
     @validator('terms_accepted')
-    def validate_terms_accepted(cls, v):
+    def validate_terms_accepted(cls, v) -> None:
         if not v:
             raise ValueError('Terms of service must be accepted')
         return v
     
     class Config:
+    """Config: class implementation"""
         schema_extra = {
             "example": {
                 "username": "new_user",
@@ -679,7 +682,7 @@ class UserLogin(BaseModel):
     )
     
     @validator('device_info')
-    def validate_device_info(cls, v):
+    def validate_device_info(cls, v) -> None:
         if v:
             allowed_keys = {'user_agent', 'ip_address', 'device_type', 'os', 'browser'}
             for key in v.keys():
@@ -688,6 +691,7 @@ class UserLogin(BaseModel):
         return v
     
     class Config:
+    """Config: class implementation"""
         schema_extra = {
             "example": {
                 "identifier": "john_doe",
@@ -808,7 +812,7 @@ class ContentMetadata({{base_model_class}}):
     )
     
     @validator('tags')
-    def validate_tags(cls, v):
+    def validate_tags(cls, v) -> None:
         """Validate content tags"""
         if not v:
             return []
@@ -832,7 +836,7 @@ class ContentMetadata({{base_model_class}}):
         return validated_tags[:20]  # Limit to 20 tags
     
     @validator('dimensions')
-    def validate_dimensions(cls, v):
+    def validate_dimensions(cls, v) -> None:
         """Validate content dimensions"""
         if v:
             required_keys = {'width', 'height'}
@@ -848,7 +852,7 @@ class ContentMetadata({{base_model_class}}):
         return v
     
     @root_validator
-    def validate_content_metadata(cls, values):
+    def validate_content_metadata(cls, values) -> None:
         """Root validator for content metadata"""
         content_type = values.get('content_type')
         
@@ -875,6 +879,7 @@ class ContentMetadata({{base_model_class}}):
         return values
     
     class Config({{base_model_class}}.Config):
+    """Config class implementation"""
         schema_extra = {
             "example": {
                 "title": "Amazing Nature Documentary",
@@ -972,7 +977,7 @@ class PaymentInformation({{base_model_class}}):
     )
     
     @validator('currency')
-    def validate_currency(cls, v):
+    def validate_currency(cls, v) -> None:
         """Validate currency code"""
         v = v.upper()
         # Common currency codes
@@ -987,7 +992,7 @@ class PaymentInformation({{base_model_class}}):
         return v
     
     @validator('net_amount', always=True)
-    def calculate_net_amount(cls, v, values):
+    def calculate_net_amount(cls, v, values) -> None:
         """Calculate net amount if not provided"""
         if v is None and 'amount' in values and 'fee_amount' in values:
             amount = values['amount']
@@ -996,7 +1001,7 @@ class PaymentInformation({{base_model_class}}):
         return v
     
     @validator('billing_address')
-    def validate_billing_address(cls, v):
+    def validate_billing_address(cls, v) -> None:
         """Validate billing address"""
         if v:
             required_fields = {'street', 'city', 'country'}
@@ -1020,6 +1025,7 @@ class PaymentInformation({{base_model_class}}):
         return v
     
     class Config({{base_model_class}}.Config):
+    """Config class implementation"""
         schema_extra = {
             "example": {
                 "amount": "29.99",
@@ -1056,6 +1062,7 @@ class ApiResponse(BaseModel):
     timestamp: datetime = Field(default_factory=datetime.utcnow, description="Response timestamp")
     
     class Config:
+    """Config: class implementation"""
         schema_extra = {
             "example": {
                 "success": True,
@@ -1080,7 +1087,7 @@ class PaginatedResponse(BaseModel):
     has_prev: bool = Field(..., description="Has previous page")
     
     @validator('pages', always=True)
-    def calculate_pages(cls, v, values):
+    def calculate_pages(cls, v, values) -> None:
         """Calculate total pages"""
         if 'total' in values and 'per_page' in values:
             import math
@@ -1088,20 +1095,21 @@ class PaginatedResponse(BaseModel):
         return v
     
     @validator('has_next', always=True)
-    def calculate_has_next(cls, v, values):
+    def calculate_has_next(cls, v, values) -> None:
         """Calculate has next page"""
         if 'page' in values and 'pages' in values:
             return values['page'] < values['pages']
         return v
     
     @validator('has_prev', always=True)
-    def calculate_has_prev(cls, v, values):
+    def calculate_has_prev(cls, v, values) -> None:
         """Calculate has previous page"""
         if 'page' in values:
             return values['page'] > 1
         return v
     
     class Config:
+    """Config: class implementation"""
         schema_extra = {
             "example": {
                 "items": [{"id": "1", "name": "Item 1"}, {"id": "2", "name": "Item 2"}],
@@ -1219,3 +1227,5 @@ if __name__ == "__main__":
             
     except Exception as e:
         print(f"Error: {e}")
+
+# File has syntax issues - needs manual review

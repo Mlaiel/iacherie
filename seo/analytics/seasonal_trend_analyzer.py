@@ -135,7 +135,7 @@ class SeasonalForecast:
 class SeasonalTrendAnalyzer:
     """Advanced seasonal trend analysis and content strategy system"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize Seasonal Trend Analyzer
         
         Args:
@@ -821,7 +821,7 @@ class SeasonalTrendAnalyzer:
             logger.error(f"Error creating seasonal keyword: {str(e)}")
             return SeasonalKeyword(keyword=keyword)
     
-    def _initialize_seasonal_events(self):
+    def _initialize_seasonal_events(self) -> None:
         """Initialize database of seasonal events"""
         try:
             current_year = datetime.now().year
@@ -1081,7 +1081,7 @@ class SeasonalTrendAnalyzer:
 
 
 # Example usage
-async def main():
+async def main() -> None:
     """Example usage of Seasonal Trend Analyzer"""
     try:
         # Initialize analyzer

@@ -8,7 +8,7 @@ influencer matching, content optimization suggestions, and audience targeting.
 Project: IA Influencer Agent + Content Protection Platform
 Author: Fahed Mlaiel <mlaiel@live.de>
 
-⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
+# [EMOJI_REMOVED]  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED # [EMOJI_REMOVED]
 This software is protected by international copyright laws.
 Contact: mlaiel@live.de for licensing inquiries.
 """
@@ -132,7 +132,7 @@ class RecommendationConfig:
     update_frequency_hours: int = 4
     replicas: int = 8
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.supported_recommendation_types is None:
             self.supported_recommendation_types = [
                 RecommendationType.CONTENT_BASED,
@@ -169,7 +169,7 @@ class RecommendationEngineDeployment:
     - A/B testing and performance optimization
     """
     
-    def __init__(self, namespace: str = "ia-recommendation-engine"):
+    def __init__(self, namespace -> None: str = "ia-recommendation-engine") -> None:
         """
         Initialize recommendation engine deployment
         
@@ -277,7 +277,8 @@ class RecommendationEngineDeployment:
         """Initialize deep learning recommendation model"""
         try:
             class DeepRecommendationModel(nn.Module):
-                def __init__(self, num_users, num_items, embedding_dim=128):
+    """DeepRecommendationModel class implementation"""
+                def __init__(self, num_users, num_items, embedding_dim=128) -> None:
                     super().__init__()
                     self.user_embedding = nn.Embedding(num_users, embedding_dim)
                     self.item_embedding = nn.Embedding(num_items, embedding_dim)
@@ -295,7 +296,7 @@ class RecommendationEngineDeployment:
                         nn.Sigmoid()
                     )
                 
-                def forward(self, user_ids, item_ids):
+                def forward(self, user_ids, item_ids) -> None:
                     user_embeds = self.user_embedding(user_ids)
                     item_embeds = self.item_embedding(item_ids)
                     x = torch.cat([user_embeds, item_embeds], dim=-1)
@@ -1081,3 +1082,5 @@ class RecommendationEngineDeployment:
         except Exception as e:
             logger.error(f"Recommendation engine cleanup failed: {e}")
             raise
+
+# File has syntax issues - needs manual review

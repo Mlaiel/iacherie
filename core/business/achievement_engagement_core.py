@@ -1,4 +1,6 @@
 """
+from pathlib import Path
+
 Achievement Engagement Core - Advanced Achievement Management & Engagement Core
 
 Sophisticated achievement tracking, engagement optimization, and motivational systems
@@ -185,7 +187,7 @@ class AchievementEngagementCore:
     and adaptive motivational systems for sustained creator success.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize achievement engagement core"""
         self.config = config or {}
         self.engagement_profiles: Dict[str, EngagementProfile] = {}
@@ -264,7 +266,7 @@ class AchievementEngagementCore:
             'confidence_threshold': 0.75
         }
     
-    def _initialize_achievement_paths(self):
+    def _initialize_achievement_paths(self) -> None:
         """Initialize default achievement paths"""
         default_paths = [
             {
@@ -474,7 +476,7 @@ class AchievementEngagementCore:
         
         return base_value * quality_multiplier * duration_multiplier
     
-    async def _update_session_scores(self, session: EngagementSession):
+    async def _update_session_scores(self, session -> None: EngagementSession) -> None:
         """Update engagement and quality scores for session"""
         try:
             if not session.activities:
@@ -502,10 +504,10 @@ class AchievementEngagementCore:
     
     async def _check_session_achievements(
         self, 
-        user_id: str, 
-        session: EngagementSession, 
-        activity: Dict[str, Any]
-    ):
+        user_id -> None: str, 
+        session -> None: EngagementSession, 
+        activity -> None: Dict[str, Any]
+    ) -> None:
         """Check for achievements and milestones during session"""
         try:
             # Check for session-based achievements
@@ -535,7 +537,7 @@ class AchievementEngagementCore:
         except Exception as e:
             logger.error(f"Error checking session achievements: {e}")
     
-    async def _check_engagement_milestones(self, user_id: str, session: EngagementSession):
+    async def _check_engagement_milestones(self, user_id -> None: str, session -> None: EngagementSession) -> None:
         """Check for engagement milestones"""
         try:
             user_sessions = self.engagement_sessions[user_id]
@@ -605,7 +607,7 @@ class AchievementEngagementCore:
             logger.error(f"Error ending engagement session: {e}")
             raise
     
-    async def _analyze_session_completion(self, user_id: str, session: EngagementSession):
+    async def _analyze_session_completion(self, user_id -> None: str, session -> None: EngagementSession) -> None:
         """Analyze completed session and trigger interventions if needed"""
         try:
             profile = self.engagement_profiles.get(user_id)
@@ -626,7 +628,7 @@ class AchievementEngagementCore:
         except Exception as e:
             logger.error(f"Error analyzing session completion: {e}")
     
-    async def _trigger_engagement_intervention(self, user_id: str, trigger_type: str):
+    async def _trigger_engagement_intervention(self, user_id -> None: str, trigger_type -> None: str) -> None:
         """Trigger personalized engagement intervention"""
         try:
             profile = self.engagement_profiles[user_id]
@@ -723,7 +725,7 @@ class AchievementEngagementCore:
                 'follow_up_actions': []
             }
     
-    async def _trigger_achievement_encouragement(self, user_id: str):
+    async def _trigger_achievement_encouragement(self, user_id -> None: str) -> None:
         """Trigger achievement encouragement for high-quality session"""
         try:
             # Find nearby achievements user could work towards
@@ -778,7 +780,7 @@ class AchievementEngagementCore:
         
         return len(user_progress) == 0 or user_progress[0].progress_percentage < 100.0
     
-    async def _update_engagement_profile(self, user_id: str, session: EngagementSession):
+    async def _update_engagement_profile(self, user_id -> None: str, session -> None: EngagementSession) -> None:
         """Update engagement profile based on session data"""
         try:
             profile = self.engagement_profiles[user_id]

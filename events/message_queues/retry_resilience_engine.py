@@ -265,8 +265,8 @@ class RetryResilienceEngine:
     """
     
     def __init__(self,
-                 metrics_collector: Optional[MetricsCollector] = None,
-                 encryption_manager: Optional[EncryptionManager] = None):
+                 metrics_collector -> None: Optional[MetricsCollector] = None,
+                 encryption_manager -> None: Optional[EncryptionManager] = None) -> None:
         self.metrics = metrics_collector
         self.encryption = encryption_manager
         
@@ -336,10 +336,10 @@ class RetryResilienceEngine:
             return False, None, str(e)
     
     async def register_circuit_breaker(self,
-                                     service_name: str,
-                                     failure_threshold: int = 5,
-                                     timeout: float = 60.0,
-                                     recovery_callback: Optional[Callable] = None):
+                                     service_name -> None: str,
+                                     failure_threshold -> None: int = 5,
+                                     timeout -> None: float = 60.0,
+                                     recovery_callback -> None: Optional[Callable] = None) -> None:
         """Register a circuit breaker for a service"""
         config = AinflueBusiness.CIRCUIT_BREAKER_CONFIGS.get(service_name, {})
         
@@ -384,7 +384,7 @@ class RetryResilienceEngine:
         
         return False
     
-    async def record_circuit_breaker_result(self, service_name: str, success: bool):
+    async def record_circuit_breaker_result(self, service_name -> None: str, success -> None: bool) -> None:
         """Record circuit breaker operation result"""
         if service_name not in self.circuit_breakers:
             return
@@ -856,7 +856,7 @@ class RetryResilienceEngine:
         # Default to retryable for unknown categories
         return True
     
-    async def _transition_circuit_breaker(self, service_name: str, new_state: CircuitBreakerState):
+    async def _transition_circuit_breaker(self, service_name -> None: str, new_state -> None: CircuitBreakerState) -> None:
         """Transition circuit breaker to new state"""
         if service_name not in self.circuit_breakers:
             return
@@ -877,7 +877,7 @@ class RetryResilienceEngine:
             except Exception as e:
                 logger.error(f"Error in circuit breaker recovery callback: {str(e)}")
     
-    async def _update_retry_statistics(self, event_type: str, execution: RetryExecution):
+    async def _update_retry_statistics(self, event_type -> None: str, execution -> None: RetryExecution) -> None:
         """Update retry statistics"""
         stats = self.retry_statistics[event_type]
         stats["attempts"] += len(execution.attempts)
@@ -894,7 +894,7 @@ class RetryResilienceEngine:
             return 100.0
         return (stats.get("successes", 0) / total) * 100
     
-    async def _handle_dead_letter(self, message_id: str, event_type: str, error: str, execution: RetryExecution):
+    async def _handle_dead_letter(self, message_id -> None: str, event_type -> None: str, error -> None: str, execution -> None: RetryExecution) -> None:
         """Handle message that failed all retries"""
         dead_letter_entry = {
             "message_id": message_id,
@@ -916,12 +916,12 @@ class RetryResilienceEngine:
     
     # Configuration methods
     
-    def register_custom_retry_policy(self, event_type: str, policy: RetryPolicy):
+    def register_custom_retry_policy(self, event_type -> None: str, policy -> None: RetryPolicy) -> None:
         """Register custom retry policy for event type"""
         self.custom_retry_policies[event_type] = policy
         logger.info(f"Registered custom retry policy for {event_type}")
     
-    def register_error_classifier(self, classifier_name: str, classifier_func: Callable[[str], ErrorCategory]):
+    def register_error_classifier(self, classifier_name -> None: str, classifier_func -> None: Callable[[str], ErrorCategory]) -> None:
         """Register custom error classifier"""
         self.error_classifiers[classifier_name] = classifier_func
         logger.info(f"Registered error classifier: {classifier_name}")

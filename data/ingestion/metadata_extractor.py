@@ -119,7 +119,7 @@ class MetadataExtractor:
     - Video stream information and analysis
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """
 Initialize MetadataExtractor with AI models and processors."""
         self.logger = logging.getLogger(__name__)
@@ -143,7 +143,7 @@ Initialize MetadataExtractor with AI models and processors."""
             'ai_fields': ['content_description', 'sentiment', 'topics', 'quality_score']
         }
     
-    def _init_ai_models(self):
+    def _init_ai_models(self) -> None:
         """
 Initialize AI models for content analysis"""
         try:
@@ -270,7 +270,7 @@ Initialize AI models for content analysis"""
             # Process items concurrently with limited concurrency
             semaphore = asyncio.Semaphore(3)  # Limit concurrent extractions
             
-            async def extract_single(item):
+            async def extract_single(item) -> None:
                 try:
                     # AI model processing
                     if not hasattr(self, 'model') or self.model is None:
@@ -518,8 +518,8 @@ Initialize AI models for content analysis"""
             self.logger.warning(f"Content format detection failed: {str(e)}")
             return ContentFormat.TEXT
     
-    async def _extract_basic_metadata(self, metadata_collection: MetadataCollection,
-                                    file_data: bytes, filename: str):
+    async def _extract_basic_metadata(self, metadata_collection -> None: MetadataCollection,
+                                    file_data -> None: bytes, filename -> None: str) -> None:
         """Extract basic file metadata"""
         try:
             # Basic file information
@@ -544,8 +544,8 @@ Initialize AI models for content analysis"""
         except Exception as e:
             self.logger.warning(f"Basic metadata extraction failed: {str(e)}")
     
-    async def _extract_audio_metadata(self, metadata_collection: MetadataCollection,
-                                    file_data: bytes, filename: str):
+    async def _extract_audio_metadata(self, metadata_collection -> None: MetadataCollection,
+                                    file_data -> None: bytes, filename -> None: str) -> None:
         """Extract audio-specific metadata"""
         try:
             # Save to temporary file for processing
@@ -629,8 +629,8 @@ Initialize AI models for content analysis"""
         except Exception as e:
             self.logger.warning(f"Audio metadata extraction failed: {str(e)}")
     
-    async def _extract_video_metadata(self, metadata_collection: MetadataCollection,
-                                    file_data: bytes, filename: str):
+    async def _extract_video_metadata(self, metadata_collection -> None: MetadataCollection,
+                                    file_data -> None: bytes, filename -> None: str) -> None:
         """Extract video-specific metadata"""
         try:
             # Save to temporary file for processing
@@ -751,8 +751,8 @@ Initialize AI models for content analysis"""
         except Exception as e:
             self.logger.warning(f"Video metadata extraction failed: {str(e)}")
     
-    async def _extract_image_metadata(self, metadata_collection: MetadataCollection,
-                                    file_data: bytes, filename: str):
+    async def _extract_image_metadata(self, metadata_collection -> None: MetadataCollection,
+                                    file_data -> None: bytes, filename -> None: str) -> None:
         """Extract image-specific metadata"""
         try:
             # Load image with PIL
@@ -858,8 +858,8 @@ Initialize AI models for content analysis"""
         except Exception as e:
             self.logger.warning(f"Image metadata extraction failed: {str(e)}")
     
-    async def _extract_text_metadata(self, metadata_collection: MetadataCollection,
-                                   file_data: bytes, filename: str):
+    async def _extract_text_metadata(self, metadata_collection -> None: MetadataCollection,
+                                   file_data -> None: bytes, filename -> None: str) -> None:
         """Extract text/document-specific metadata"""
         try:
             file_ext = Path(filename).suffix.lower()
@@ -1028,8 +1028,8 @@ Initialize AI models for content analysis"""
             self.logger.warning(f"DOCX metadata extraction failed: {str(e)}")
             return "", {}
     
-    async def _extract_ai_metadata(self, metadata_collection: MetadataCollection,
-                                 file_data: bytes, content_type: ContentFormat):
+    async def _extract_ai_metadata(self, metadata_collection -> None: MetadataCollection,
+                                 file_data -> None: bytes, content_type -> None: ContentFormat) -> None:
         """Extract AI-powered metadata analysis"""
         try:
             ai_metadata = {}
@@ -1116,7 +1116,7 @@ Initialize AI models for content analysis"""
         except Exception as e:
             self.logger.warning(f"AI metadata extraction failed: {str(e)}")
     
-    async def _calculate_metadata_scores(self, metadata_collection: MetadataCollection):
+    async def _calculate_metadata_scores(self, metadata_collection -> None: MetadataCollection) -> None:
         """Calculate quality and completeness scores for metadata"""
         try:
             # Count extracted fields
@@ -1222,7 +1222,7 @@ Initialize AI models for content analysis"""
             metadata_collection.completeness_score = 0.0
             metadata_collection.quality_score = 0.0
     
-    async def _generate_extraction_summary(self, metadata_collection: MetadataCollection):
+    async def _generate_extraction_summary(self, metadata_collection -> None: MetadataCollection) -> None:
         """Generate extraction summary with statistics and insights"""
         try:
             summary = {

@@ -102,7 +102,7 @@ class SchedulerMetrics:
 class LearningRateScheduler:
     """🔧 Gestionnaire de scheduling de learning rate"""
     
-    def __init__(self, config: SchedulerConfig):
+    def __init__(self, config -> None: SchedulerConfig) -> None:
         self.config = config
         self.state = SchedulerState(current_lr=config.base_lr)
         self.metrics = SchedulerMetrics()
@@ -111,7 +111,7 @@ class LearningRateScheduler:
         
         logger.info(f"Learning Rate Scheduler initialized: {self.scheduler_id}")
     
-    def _initialize_creator_specific_config(self):
+    def _initialize_creator_specific_config(self) -> None:
         """Initialise la configuration spécifique au créateur"""
         if not self.config.creator_type:
             return
@@ -363,7 +363,7 @@ class LearningRateScheduler:
         else:
             return "stable"
     
-    async def save_scheduler_state(self, filepath: str):
+    async def save_scheduler_state(self, filepath -> None: str) -> None:
         """Sauvegarde l'état du scheduler"""
         try:
             state_data = {
@@ -426,7 +426,7 @@ def create_creator_optimized_scheduler(
         total_epochs=total_epochs
     )
 
-async def demo_learning_rate_scheduler():
+async def demo_learning_rate_scheduler() -> None:
     """Démo du scheduler de learning rate"""
     # Créer un scheduler pour musicien
     scheduler = create_creator_optimized_scheduler(

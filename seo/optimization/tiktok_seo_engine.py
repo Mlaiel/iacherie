@@ -144,7 +144,7 @@ class TikTokSEOEngine:
     - Posting schedule optimization
     """
     
-    def __init__(self, db_pool: asyncpg.Pool, api_keys: Dict[str, str]):
+    def __init__(self, db_pool -> None: asyncpg.Pool, api_keys -> None: Dict[str, str]) -> None:
         self.db_pool = db_pool
         self.api_keys = api_keys
         self.session = None
@@ -154,11 +154,11 @@ class TikTokSEOEngine:
         self.engagement_factors = self._load_engagement_factors()
         self.trending_indicators = self._load_trending_indicators()
         
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         self.session = aiohttp.ClientSession()
         return self
         
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         if self.session:
             await self.session.close()
     
@@ -707,7 +707,7 @@ class TikTokSEOEngine:
         
         return min(score, 100.0)
     
-    async def _store_tiktok_optimization(self, optimization: TikTokContentOptimization):
+    async def _store_tiktok_optimization(self, optimization -> None: TikTokContentOptimization) -> None:
         """Store TikTok optimization in database."""
         try:
             async with self.db_pool.acquire() as conn:

@@ -112,7 +112,7 @@ class ComplianceCheck:
 class VulnerabilityScanner:
     """Core vulnerability scanning engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.common_vulnerabilities = {
             'sql_injection': {
                 'patterns': [
@@ -406,7 +406,7 @@ class VulnerabilityScanner:
 class NetworkScanner:
     """Network security scanning capabilities"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.common_ports = [21, 22, 23, 25, 53, 80, 110, 143, 443, 993, 995]
         self.timeout = 5
     
@@ -535,7 +535,7 @@ class NetworkScanner:
 class WebApplicationScanner:
     """Web application security scanning"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         if not REQUESTS_AVAILABLE:
             raise ImportError("requests library required for web scanning")
         
@@ -858,7 +858,7 @@ class WebApplicationScanner:
 class ComplianceChecker:
     """Check compliance with security standards"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.compliance_frameworks = {
             'OWASP_TOP_10': {
                 'A01_Broken_Access_Control': self._check_access_control,
@@ -1145,7 +1145,7 @@ class ComplianceChecker:
 class SecurityScanner:
     """Main security scanner class orchestrating all scanning capabilities"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.config = config or {}
         self.vulnerability_scanner = VulnerabilityScanner()
         self.network_scanner = NetworkScanner()

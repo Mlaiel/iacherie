@@ -64,12 +64,12 @@ class CollectionConfig:
 class RateLimiter:
     """Basic rate limiter for collectors."""
     
-    def __init__(self, max_requests: int = 60, time_window: int = 60):
+    def __init__(self, max_requests -> None: int = 60, time_window -> None: int = 60) -> None:
         self.max_requests = max_requests
         self.time_window = time_window
         self.requests = []
     
-    async def wait_if_needed(self):
+    async def wait_if_needed(self) -> None:
         """Wait if rate limit would be exceeded."""
         now = time.time()
         # Remove old requests outside time window
@@ -95,7 +95,7 @@ class BaseCollector(ABC):
     a single, comprehensive collector for each platform.
     """
     
-    def __init__(self, platform_name: str, rate_limit: int = 60):
+    def __init__(self, platform_name -> None: str, rate_limit -> None: int = 60) -> None:
         self.platform_name = platform_name
         self.rate_limiter = RateLimiter(max_requests=rate_limit)
         self.status = CollectorStatus.IDLE
@@ -157,7 +157,7 @@ class BaseCollector(ABC):
             'total_collected': self.total_collected
         }
     
-    def update_stats(self, success: bool, response_time: float):
+    def update_stats(self, success -> None: bool, response_time -> None: float) -> None:
         """Update collection statistics."""
         self.stats['total_requests'] += 1
         

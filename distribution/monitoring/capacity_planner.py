@@ -1,3 +1,8 @@
+"""
+Capacity Planner module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Ainflue Platform - Distribution Monitoring - Capacity Planner
@@ -109,7 +114,7 @@ class DistributionCapacityPlanner:
     Predicts resource needs and provides scaling recommendations
     """
     
-    def __init__(self, config: Optional[Dict] = None):
+    def __init__(self, config -> None: Optional[Dict] = None) -> None:
         self.config = config or {}
         self.historical_metrics: Dict[ResourceType, List[ResourceMetrics]] = {}
         self.predictions: Dict[ResourceType, CapacityPrediction] = {}
@@ -194,7 +199,7 @@ class DistributionCapacityPlanner:
             }
         }
     
-    def _initialize_sample_data(self):
+    def _initialize_sample_data(self) -> None:
         """Initialize with sample historical data for demonstration"""
         
         # Generate sample CPU usage data with growth trend
@@ -481,7 +486,7 @@ class DistributionCapacityPlanner:
         
         return cost_impact
     
-    async def _check_capacity_alerts(self, prediction: CapacityPrediction):
+    async def _check_capacity_alerts(self, prediction -> None: CapacityPrediction) -> None:
         """Check if capacity alerts should be generated"""
         
         resource_type = prediction.resource_type
@@ -747,7 +752,7 @@ def create_capacity_planner(config: Optional[Dict] = None) -> DistributionCapaci
     return DistributionCapacityPlanner(config)
 
 # Example usage
-async def main():
+async def main() -> None:
     """Example usage of capacity planner"""
     planner = create_capacity_planner()
     

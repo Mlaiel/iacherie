@@ -137,7 +137,7 @@ class ConnectionConfig:
 class DatabaseConnection:
     """Database connection manager"""
     
-    def __init__(self, config: ConnectionConfig):
+    def __init__(self, config -> None: ConnectionConfig) -> None:
         self.config = config
         self.engine = None
         self.session_factory = None
@@ -146,7 +146,7 @@ class DatabaseConnection:
         self.mongo_database = None
         self._connection_pool_stats = defaultdict(int)
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize database connections"""
         if self.config.database_type == DatabaseType.POSTGRESQL:
             await self._initialize_postgresql()
@@ -159,7 +159,7 @@ class DatabaseConnection:
         
         logger.info(f"Database connection initialized: {self.config.database_type.value}")
     
-    async def _initialize_postgresql(self):
+    async def _initialize_postgresql(self) -> None:
         """Initialize PostgreSQL connection"""
         connection_string = (
             f"postgresql+asyncpg://{self.config.username}:{self.config.password}"
@@ -181,7 +181,7 @@ class DatabaseConnection:
             expire_on_commit=False
         )
     
-    async def _initialize_mysql(self):
+    async def _initialize_mysql(self) -> None:
         """Initialize MySQL connection"""
         connection_string = (
             f"mysql+aiomysql://{self.config.username}:{self.config.password}"
@@ -202,7 +202,7 @@ class DatabaseConnection:
             expire_on_commit=False
         )
     
-    async def _initialize_mongodb(self):
+    async def _initialize_mongodb(self) -> None:
         """Initialize MongoDB connection"""
         connection_string = (
             f"mongodb://{self.config.username}:{self.config.password}"
@@ -215,7 +215,7 @@ class DatabaseConnection:
         )
         self.mongo_database = self.mongo_client[self.config.database]
     
-    async def _initialize_redis(self):
+    async def _initialize_redis(self) -> None:
         """Initialize Redis connection"""
         self.redis_client = redis.Redis(
             host=self.config.host,
@@ -226,7 +226,7 @@ class DatabaseConnection:
         )
     
     @asynccontextmanager
-    async def get_session(self):
+    async def get_session(self) -> None:
         """Get database session with automatic cleanup"""
         if self.config.database_type in [DatabaseType.POSTGRESQL, DatabaseType.MYSQL]:
             async with self.session_factory() as session:
@@ -242,7 +242,7 @@ class DatabaseConnection:
         elif self.config.database_type == DatabaseType.REDIS:
             yield self.redis_client
     
-    async def close(self):
+    async def close(self) -> None:
         """Close database connections"""
         if self.engine:
             await self.engine.dispose()
@@ -254,7 +254,7 @@ class DatabaseConnection:
 class CacheManager:
     """Cache management for repository operations"""
     
-    def __init__(self, redis_client=None):
+    def __init__(self, redis_client=None) -> None:
         self.redis_client = redis_client
         self.memory_cache = {}
         self.cache_stats = {"hits": 0, "misses": 0}
@@ -289,7 +289,7 @@ class CacheManager:
             logger.error(f"Cache get error: {str(e)}")
             return None
     
-    async def set(self, key: str, value: Any, ttl: int = 300):
+    async def set(self, key -> None: str, value -> None: Any, ttl -> None: int = 300) -> None:
         """Set value in cache with TTL"""
         try:
             serialized_value = json.dumps(value, default=str)
@@ -316,7 +316,7 @@ class CacheManager:
         except Exception as e:
             logger.error(f"Cache set error: {str(e)}")
     
-    async def delete(self, key: str):
+    async def delete(self, key -> None: str) -> None:
         """Delete value from cache"""
         try:
             if self.redis_client:
@@ -326,7 +326,7 @@ class CacheManager:
         except Exception as e:
             logger.error(f"Cache delete error: {str(e)}")
     
-    async def clear_pattern(self, pattern: str):
+    async def clear_pattern(self, pattern -> None: str) -> None:
         """Clear cache keys matching pattern"""
         try:
             if self.redis_client:
@@ -345,9 +345,9 @@ class BaseRepository(Generic[T], ABC):
     """🗄️ Base Repository with Enterprise Data Access Patterns"""
     
     def __init__(self, 
-                 model_class: Type[T],
-                 connection: DatabaseConnection,
-                 cache_manager: Optional[CacheManager] = None):
+                 model_class -> None: Type[T],
+                 connection -> None: DatabaseConnection,
+                 cache_manager -> None: Optional[CacheManager] = None) -> None:
         """Initialize repository"""
         self.model_class = model_class
         self.connection = connection
@@ -546,7 +546,7 @@ class BaseRepository(Generic[T], ABC):
         
         return await cursor.to_list(length=options.limit)
     
-    def _apply_sql_filter(self, query, filter_spec: QueryFilter):
+    def _apply_sql_filter(self, query, filter_spec -> None: QueryFilter) -> None:
         """Apply SQL filter to query"""
         field = getattr(self.model_class, filter_spec.field)
         
@@ -822,7 +822,7 @@ class BaseRepository(Generic[T], ABC):
                 execution_time_ms=(time.time() - start_time) * 1000
             )
     
-    async def _clear_entity_cache(self, entity_id: Optional[str]):
+    async def _clear_entity_cache(self, entity_id -> None: Optional[str]) -> None:
         """Clear cache for entity and related queries"""
         if entity_id:
             patterns = [
@@ -833,7 +833,7 @@ class BaseRepository(Generic[T], ABC):
             for pattern in patterns:
                 await self.cache_manager.clear_pattern(pattern)
     
-    def _record_query_stats(self, operation: str, execution_time: float):
+    def _record_query_stats(self, operation -> None: str, execution_time -> None: float) -> None:
         """Record query statistics for performance monitoring"""
         self.query_stats[operation] += 1
         self.query_times[operation].append(execution_time)
@@ -870,12 +870,13 @@ class BaseRepository(Generic[T], ABC):
         return stats
 
 # Usage Example and Template Testing
-async def main():
+async def main() -> None:
     """Example usage of Repository Template"""
     
     # Mock model class for demonstration
     class User:
-        def __init__(self, **kwargs):
+    """User: class implementation"""
+        def __init__(self, **kwargs) -> None:
             for key, value in kwargs.items():
                 setattr(self, key, value)
         

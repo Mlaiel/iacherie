@@ -67,7 +67,7 @@ class StreamNode:
     state: TopologyState = TopologyState.CREATED
     metrics: Dict[str, Any] = field(default_factory=dict)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if not self.node_id:
             self.node_id = str(uuid4())
 
@@ -84,7 +84,7 @@ class StreamEdge:
     serializer: Optional[str] = None
     properties: Dict[str, Any] = field(default_factory=dict)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if not self.edge_id:
             self.edge_id = str(uuid4())
 
@@ -105,16 +105,16 @@ class StreamTopology:
     created_by: str = "system"
     version: int = 1
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if not self.topology_id:
             self.topology_id = str(uuid4())
     
-    def add_node(self, node: StreamNode):
+    def add_node(self, node -> None: StreamNode) -> None:
         """Add node to topology"""
         self.nodes[node.node_id] = node
         logger.debug(f"Added node {node.node_id} to topology {self.topology_id}")
     
-    def add_edge(self, edge: StreamEdge):
+    def add_edge(self, edge -> None: StreamEdge) -> None:
         """Add edge to topology"""
         self.edges[edge.edge_id] = edge
         logger.debug(f"Added edge {edge.edge_id} to topology {self.topology_id}")
@@ -407,14 +407,14 @@ class AinflueBusinesTopologies:
 class TopologyExecutor:
     """Executes stream processing topology"""
     
-    def __init__(self, topology: StreamTopology, metrics_collector=None):
+    def __init__(self, topology -> None: StreamTopology, metrics_collector=None) -> None:
         self.topology = topology
         self.metrics_collector = metrics_collector
         self.node_executors: Dict[str, asyncio.Task] = {}
         self.stream_buffers: Dict[str, deque] = defaultdict(lambda: deque(maxlen=1000))
         self._shutdown_event = asyncio.Event()
         
-    async def start(self):
+    async def start(self) -> None:
         """Start topology execution"""
         try:
             logger.info(f"Starting topology execution: {self.topology.name}")
@@ -444,7 +444,7 @@ class TopologyExecutor:
             logger.error(f"Failed to start topology: {e}")
             raise
     
-    async def stop(self):
+    async def stop(self) -> None:
         """Stop topology execution"""
         try:
             logger.info(f"Stopping topology: {self.topology.name}")
@@ -484,7 +484,7 @@ class TopologyExecutor:
         temp_visited = set()
         order = []
         
-        def visit(node_id: str):
+        def visit(node_id -> None: str) -> None:
             if node_id in temp_visited:
                 raise ValueError("Cycle detected in topology")
             
@@ -505,7 +505,7 @@ class TopologyExecutor:
         
         return order
     
-    async def _start_node(self, node_id: str):
+    async def _start_node(self, node_id -> None: str) -> None:
         """Start execution for a specific node"""
         try:
             node = self.topology.nodes[node_id]
@@ -525,7 +525,7 @@ class TopologyExecutor:
             logger.error(f"Error starting node {node_id}: {e}")
             raise
     
-    async def _execute_node(self, node_id: str):
+    async def _execute_node(self, node_id -> None: str) -> None:
         """Execute a specific node"""
         try:
             node = self.topology.nodes[node_id]
@@ -565,7 +565,7 @@ class TopologyExecutor:
             logger.error(f"Fatal error in node {node_id}: {e}")
             node.state = TopologyState.ERROR
     
-    async def _execute_source_node(self, node: StreamNode):
+    async def _execute_source_node(self, node -> None: StreamNode) -> None:
         """Execute source node (generate/read data)"""
         try:
             # Simulate data generation for demo
@@ -593,7 +593,7 @@ class TopologyExecutor:
             logger.error(f"Error in source node {node.node_id}: {e}")
             raise
     
-    async def _execute_processor_node(self, node: StreamNode):
+    async def _execute_processor_node(self, node -> None: StreamNode) -> None:
         """Execute processor node (transform data)"""
         try:
             # Process events from input streams
@@ -625,7 +625,7 @@ class TopologyExecutor:
             logger.error(f"Error in processor node {node.node_id}: {e}")
             raise
     
-    async def _execute_sink_node(self, node: StreamNode):
+    async def _execute_sink_node(self, node -> None: StreamNode) -> None:
         """Execute sink node (write/store data)"""
         try:
             # Process events from input streams
@@ -649,7 +649,7 @@ class TopologyExecutor:
             logger.error(f"Error in sink node {node.node_id}: {e}")
             raise
     
-    async def _execute_fork_node(self, node: StreamNode):
+    async def _execute_fork_node(self, node -> None: StreamNode) -> None:
         """Execute fork node (split stream)"""
         try:
             # Process events from input streams
@@ -676,7 +676,7 @@ class TopologyExecutor:
             logger.error(f"Error in fork node {node.node_id}: {e}")
             raise
     
-    async def _execute_join_node(self, node: StreamNode):
+    async def _execute_join_node(self, node -> None: StreamNode) -> None:
         """Execute join node (combine streams)"""
         try:
             # Simple join implementation - wait for events from all input streams
@@ -741,14 +741,14 @@ class TopologyExecutor:
 class StreamTopologyOrchestrator:
     """Main orchestrator for managing stream processing topologies"""
     
-    def __init__(self, metrics_collector=None):
+    def __init__(self, metrics_collector=None) -> None:
         self.metrics_collector = metrics_collector
         self.topologies: Dict[str, StreamTopology] = {}
         self.executors: Dict[str, TopologyExecutor] = {}
         self._orchestrator_task: Optional[asyncio.Task] = None
         self._shutdown_event = asyncio.Event()
         
-    async def start(self):
+    async def start(self) -> None:
         """Start the topology orchestrator"""
         try:
             logger.info("Starting Stream Topology Orchestrator")
@@ -765,7 +765,7 @@ class StreamTopologyOrchestrator:
             logger.error(f"Failed to start topology orchestrator: {e}")
             raise
     
-    async def stop(self):
+    async def stop(self) -> None:
         """Stop the orchestrator"""
         try:
             logger.info("Stopping Stream Topology Orchestrator")
@@ -787,7 +787,7 @@ class StreamTopologyOrchestrator:
             logger.error(f"Error stopping topology orchestrator: {e}")
             raise
     
-    async def _load_default_topologies(self):
+    async def _load_default_topologies(self) -> None:
         """Load default Ainflue topologies"""
         try:
             # Load content processing topology
@@ -867,7 +867,7 @@ class StreamTopologyOrchestrator:
             logger.error(f"Error stopping topology {topology_id}: {e}")
             return False
     
-    async def _orchestrator_loop(self):
+    async def _orchestrator_loop(self) -> None:
         """Main orchestrator monitoring loop"""
         try:
             while not self._shutdown_event.is_set():
@@ -883,7 +883,7 @@ class StreamTopologyOrchestrator:
         except Exception as e:
             logger.error(f"Error in orchestrator loop: {e}")
     
-    async def _monitor_topology_health(self):
+    async def _monitor_topology_health(self) -> None:
         """Monitor health of all topologies"""
         try:
             for topology_id, executor in self.executors.items():
@@ -903,7 +903,7 @@ class StreamTopologyOrchestrator:
         except Exception as e:
             logger.error(f"Error monitoring topology health: {e}")
     
-    async def _perform_maintenance(self):
+    async def _perform_maintenance(self) -> None:
         """Perform routine maintenance tasks"""
         try:
             # Log system status

@@ -73,7 +73,7 @@ class RecoveryStrategy:
 class RecoveryPlanner:
     """Advanced crisis recovery planning system"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
         

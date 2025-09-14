@@ -198,7 +198,7 @@ class MatchingProfile:
 class AvatarSocialNetwork:
     """Réseau social avatars"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
         self.users: Dict[str, UserProfile] = {}
         self.relationships: Dict[str, Relationship] = {}
@@ -475,7 +475,7 @@ class AvatarSocialNetwork:
 class CollaborationEngine:
     """Moteur collaboration créateurs"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
         self.collaborations: Dict[str, Collaboration] = {}
         self.collaboration_history: Dict[str, List[str]] = {}
@@ -607,7 +607,7 @@ class CollaborationEngine:
 class AvatarMatching:
     """Système matching intelligent"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
         self.matching_profiles: Dict[str, MatchingProfile] = {}
         self.match_history: Dict[str, List[Dict[str, Any]]] = {}
@@ -780,12 +780,12 @@ class AvatarMatching:
 class CommunityManager:
     """Gestion communautés avatars"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
         self.communities: Dict[str, Community] = {}
         self._initialize_default_communities()
     
-    def _initialize_default_communities(self):
+    def _initialize_default_communities(self) -> None:
         """Initialisation des communautés par défaut"""
         default_communities = [
             {

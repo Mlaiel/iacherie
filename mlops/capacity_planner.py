@@ -98,7 +98,7 @@ class CapacityPlanner:
     - Business impact analysis for capacity decisions
     """
     
-    def __init__(self, config: Optional[Dict] = None):
+    def __init__(self, config -> None: Optional[Dict] = None) -> None:
         self.logger = logging.getLogger(__name__)
         
         # Historical data storage
@@ -724,7 +724,7 @@ class CapacityPlanner:
         
         return base_timeline
 
-    async def _initialize_creator_workloads(self):
+    async def _initialize_creator_workloads(self) -> None:
         """Initialize creator workload profiles"""
         
         # Sample creator workload profiles based on business analysis
@@ -820,7 +820,7 @@ class CapacityPlanner:
         
         self.logger.info(f"✅ Initialized {len(creator_profiles)} creator workload profiles")
 
-    async def _initialize_ml_models(self):
+    async def _initialize_ml_models(self) -> None:
         """Initialize ML models for demand prediction"""
         
         try:
@@ -853,7 +853,7 @@ class CapacityPlanner:
         except Exception as e:
             self.logger.error(f"❌ Failed to initialize ML models: {e}")
 
-    async def _monitoring_loop(self):
+    async def _monitoring_loop(self) -> None:
         """Background monitoring loop"""
         
         while True:
@@ -868,7 +868,7 @@ class CapacityPlanner:
                 self.logger.error(f"❌ Monitoring loop error: {e}")
                 await asyncio.sleep(60)
 
-    async def _retraining_loop(self):
+    async def _retraining_loop(self) -> None:
         """Background model retraining loop"""
         
         while True:
@@ -882,7 +882,7 @@ class CapacityPlanner:
                 self.logger.error(f"❌ Retraining loop error: {e}")
                 await asyncio.sleep(300)
 
-    async def _recommendation_loop(self):
+    async def _recommendation_loop(self) -> None:
         """Background recommendation generation loop"""
         
         while True:
@@ -900,32 +900,32 @@ class CapacityPlanner:
                 self.logger.error(f"❌ Recommendation loop error: {e}")
                 await asyncio.sleep(300)
 
-    async def _collect_resource_metrics(self):
+    async def _collect_resource_metrics(self) -> None:
         """Collect current resource metrics"""
         # Placeholder - would integrate with actual monitoring system
         pass
 
-    async def _update_capacity_utilization(self):
+    async def _update_capacity_utilization(self) -> None:
         """Update capacity utilization metrics"""
         # Placeholder - would calculate actual utilization
         pass
 
-    async def _check_capacity_alerts(self):
+    async def _check_capacity_alerts(self) -> None:
         """Check for capacity alerts"""
         # Placeholder - would check thresholds and send alerts
         pass
 
-    async def _retrain_ml_models(self):
+    async def _retrain_ml_models(self) -> None:
         """Retrain ML models with latest data"""
         # Placeholder - would implement actual retraining
         pass
 
-    async def _evaluate_prediction_accuracy(self):
+    async def _evaluate_prediction_accuracy(self) -> None:
         """Evaluate prediction accuracy"""
         # Placeholder - would calculate accuracy metrics
         pass
 
-    async def _process_urgent_recommendation(self, recommendation: CapacityRecommendation):
+    async def _process_urgent_recommendation(self, recommendation -> None: CapacityRecommendation) -> None:
         """Process urgent capacity recommendations"""
         
         self.logger.warning(
@@ -937,7 +937,7 @@ class CapacityPlanner:
         if self.config["auto_scaling_enabled"] and recommendation.urgency == "critical":
             await self._trigger_auto_scaling(recommendation)
 
-    async def _trigger_auto_scaling(self, recommendation: CapacityRecommendation):
+    async def _trigger_auto_scaling(self, recommendation -> None: CapacityRecommendation) -> None:
         """Trigger auto-scaling based on recommendation"""
         
         self.logger.info(
@@ -1026,7 +1026,7 @@ class CapacityPlanner:
         return analysis
 
 # Example usage
-async def main():
+async def main() -> None:
     """Example usage of Capacity Planner"""
     
     # Initialize planner

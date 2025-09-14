@@ -156,7 +156,7 @@ class RoyaltyPayment:
 class BlockchainIntegration:
     """Advanced blockchain integration for DRM system."""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """
 Initialize blockchain integration."""
         self.config = config

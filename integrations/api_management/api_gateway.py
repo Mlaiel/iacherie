@@ -103,7 +103,7 @@ class APIGateway:
     and request/response transformation for all external API calls.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize API gateway."""
         self.logger = logging.getLogger(__name__)
         
@@ -522,7 +522,7 @@ class APIGateway:
         if self.health_monitor_task:
             return
         
-        async def health_monitor():
+        async def health_monitor() -> None:
             while True:
                 try:
                     await self._check_all_endpoints_health()

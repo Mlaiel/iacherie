@@ -65,7 +65,7 @@ class BlockchainConfig:
     retry_attempts: int = 3
     cache_ttl: int = 3600
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         """Initialize default configurations"""
         if self.ethereum_config is None:
             self.ethereum_config = self._get_default_ethereum_config()

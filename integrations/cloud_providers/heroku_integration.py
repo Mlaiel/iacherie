@@ -171,7 +171,7 @@ class HerokuConfig(BaseModel):
     slug_size_limit: int = Field(default=500 * 1024 * 1024, description="Slug size limit (500MB)")
     
     @validator('api_token')
-    def validate_api_token(cls, v):
+    def validate_api_token(cls, v) -> None:
         if not v or len(v) < 10:
             raise ValueError("Valid Heroku API token required")
         return v
@@ -179,7 +179,7 @@ class HerokuConfig(BaseModel):
 class HerokuSecurityManager:
     """Security manager for Heroku deployments - Security Expert role"""
     
-    def __init__(self, config: HerokuConfig):
+    def __init__(self, config -> None: HerokuConfig) -> None:
         self.config = config
     
     def sanitize_config_vars(self, config_vars: Dict[str, str]) -> Dict[str, str]:
@@ -267,7 +267,7 @@ class HerokuSecurityManager:
 class HerokuMLOptimizer:
     """ML-powered Heroku optimization - ML Engineer + Lead Dev IA roles"""
     
-    def __init__(self, config: HerokuConfig):
+    def __init__(self, config -> None: HerokuConfig) -> None:
         self.config = config
         self.performance_history = []
     
@@ -525,11 +525,11 @@ class HerokuMLOptimizer:
 class HerokuAPIClient:
     """Heroku API client - Backend Senior role"""
     
-    def __init__(self, config: HerokuConfig):
+    def __init__(self, config -> None: HerokuConfig) -> None:
         self.config = config
         self.session = None
     
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         self.session = aiohttp.ClientSession(
             headers={
                 "Authorization": f"Bearer {self.config.api_token}",
@@ -540,7 +540,7 @@ class HerokuAPIClient:
         )
         return self
     
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         if self.session:
             await self.session.close()
     
@@ -745,7 +745,7 @@ class HerokuAPIClient:
 class HerokuDeploymentManager:
     """Deployment management for Heroku - DevOps role"""
     
-    def __init__(self, config: HerokuConfig):
+    def __init__(self, config -> None: HerokuConfig) -> None:
         self.config = config
     
     async def prepare_source_code(self, source_path: str, app_type: HerokuAppType) -> str:
@@ -775,7 +775,7 @@ class HerokuDeploymentManager:
             logger.error(f"Source code preparation failed: {e}")
             raise
     
-    async def _add_app_specific_files(self, tar: tarfile.TarFile, app_type: HerokuAppType, source_path: str):
+    async def _add_app_specific_files(self, tar -> None: tarfile.TarFile, app_type -> None: HerokuAppType, source_path -> None: str) -> None:
         """Add app-type specific files"""
         try:
             # Create Procfile if it doesn't exist
@@ -887,7 +887,7 @@ class HerokuDeploymentManager:
 class HerokuIntegration:
     """Main Heroku integration orchestrator - Lead Dev IA + Backend Senior roles"""
     
-    def __init__(self, config: HerokuConfig):
+    def __init__(self, config -> None: HerokuConfig) -> None:
         self.config = config
         self.security_manager = HerokuSecurityManager(config)
         self.ml_optimizer = HerokuMLOptimizer(config)
@@ -1092,7 +1092,7 @@ class HerokuIntegration:
 class HerokuService:
     """Main Heroku service facade - DevOps + Integration role"""
     
-    def __init__(self, config: Optional[HerokuConfig] = None):
+    def __init__(self, config -> None: Optional[HerokuConfig] = None) -> None:
         self.config = config or HerokuConfig(
             api_token="your-heroku-token-here",  # Should be configured via environment
             auto_scaling_enabled=True,
@@ -1101,7 +1101,7 @@ class HerokuService:
         )
         self.integration = HerokuIntegration(self.config)
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize the Heroku service"""
         logger.info("Initializing Heroku Integration Service")
         
@@ -1110,7 +1110,7 @@ class HerokuService:
         
         logger.info("Heroku Integration Service initialized successfully")
     
-    async def _validate_configuration(self):
+    async def _validate_configuration(self) -> None:
         """Validate service configuration"""
         if not self.config.api_token or self.config.api_token == "your-heroku-token-here":
             logger.warning("Heroku API token not configured - deployments will fail")
@@ -1153,7 +1153,7 @@ __all__ = [
 
 if __name__ == "__main__":
     # Example usage and testing
-    async def main():
+    async def main() -> None:
         # Initialize service
         service = HerokuService()
         await service.initialize()

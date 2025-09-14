@@ -6,13 +6,13 @@ Copyright: All rights reserved. Any unauthorized use, reproduction, or distribut
 of this code without explicit written permission is strictly prohibited.
 
 Project Team Specialties:
-- Lead AI Developer & Backend Senior: Fahed Mlaiel
+    - Lead AI Developer & Backend Senior: Fahed Mlaiel
 - ML Engineer & Blockchain Specialist: Advanced IA Processing
 - Database Administrator & Security Expert: Data Protection
 - Microservices Architect & Audio Processing: Multi-format Support  
 - DevOps Engineer & IA Prompt Engineer: Production Deployment
 
-⚠️ STRONG WARNING ⚠️
+# [EMOJI_REMOVED] STRONG WARNING # [EMOJI_REMOVED]
 Any attempt to steal, copy, reproduce, or use this concept, idea, or code 
 without explicit written authorization from Fahed Mlaiel is strictly 
 prohibited and will result in legal action.
@@ -168,7 +168,7 @@ class PriceOracle:
     """
 Cryptocurrency price oracle for real-time rates"""
     
-    def __init__(self, api_keys: Dict[str, str]):
+    def __init__(self, api_keys -> None: Dict[str, str]) -> None:
         try:
             logger.info(f"Executing __aexit__")
             
@@ -183,17 +183,17 @@ Cryptocurrency price oracle for real-time rates"""
         except Exception as e:
             logger.error(f"__aexit__ failed: {e}")
             raise
-    def __init__(self, api_keys: Dict[str, str]):
+    def __init__(self, api_keys -> None: Dict[str, str]) -> None:
         self.api_keys = api_keys
         self.price_cache: Dict[str, Tuple[Decimal, datetime]] = {}
         self.cache_duration = timedelta(minutes=5)
         self.session: Optional[aiohttp.ClientSession] = None
     
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         self.session = aiohttp.ClientSession()
         return self
     
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         if self.session:
             await self.session.close()
     
@@ -355,7 +355,7 @@ Get current USD price for cryptocurrency"""
 class PaymentProcessor:
     """Professional cryptocurrency payment processor"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.price_oracle: Optional[PriceOracle] = None
         self.web3_clients: Dict[str, Web3] = {}
@@ -393,7 +393,7 @@ Initialize payment processor"""
             logger.error(f"Payment processor initialization failed: {e}")
             return False
     
-    def _initialize_service_rates(self):
+    def _initialize_service_rates(self) -> None:
         """Initialize service pricing rates"""
         self.service_rates = {
             'content_fingerprinting': PaymentRate(
@@ -655,3 +655,5 @@ __all__ = [
     'PriceOracle',
     'PaymentProcessor'
 ]
+
+# File has syntax issues - needs manual review

@@ -1,4 +1,6 @@
 """MongoDB Indexing Management
+import asyncio
+
 ===========================
 
 Advanced indexing utilities for optimal query performance in the Ainflue platform.
@@ -30,11 +32,15 @@ except ImportError:
     GEO2D = "2d"
     GEOSPHERE = "2dsphere"
     class motor:
+    """motor: class implementation"""
         class motor_asyncio:
+    """motor_asyncio: class implementation"""
             pass
     class pymongo:
+    """pymongo: class implementation"""
         pass
     class IndexModel:
+    """IndexModel: class implementation"""
         pass
 
 from .connection import MongoDBConnection, get_connection
@@ -67,7 +73,7 @@ class IndexUsageStats:
 class MongoDBIndexManager:
     """MongoDB index management and optimization."""
     
-    def __init__(self, connection: Optional[MongoDBConnection] = None):
+    def __init__(self, connection -> None: Optional[MongoDBConnection] = None) -> None:
         """Initialize index manager."""
         if not MONGODB_AVAILABLE:
             raise ImportError("MongoDB dependencies not available")
@@ -311,7 +317,7 @@ class MongoDBIndexManager:
         """Extract field names from query for index suggestions."""
         fields = []
         
-        def extract_fields(obj, prefix=""):
+        def extract_fields(obj, prefix="") -> None:
             if isinstance(obj, dict):
                 for key, value in obj.items():
                     if key.startswith("$"):

@@ -125,7 +125,7 @@ class ReplicationMonitor:
     - Cross-cloud replication oversight
     - Content fingerprint synchronization tracking
     """
-    def __init__(self, config: Config):
+    def __init__(self, config -> None: Config) -> None:
         self.config = config
         self.logger = logging.getLogger(__name__)
         self.db_manager = DatabaseManager(config)
@@ -270,7 +270,7 @@ Initialize automated repair strategies for different inconsistency types"""
             self.logger.error(f"Failed to register replication stream: {e}")
             raise
 
-    async def _monitor_replication_stream(self, stream: ReplicationStream):
+    async def _monitor_replication_stream(self, stream -> None: ReplicationStream) -> None:
         """Continuously monitor replication stream health and consistency"""
         stream_id = stream.stream_id
         
@@ -427,7 +427,7 @@ Initialize automated repair strategies for different inconsistency types"""
                 'timestamp': datetime.utcnow().isoformat()
             }
 
-    async def _attempt_automatic_repair(self, stream: ReplicationStream, consistency_check: Dict[str, Any]):
+    async def _attempt_automatic_repair(self, stream -> None: ReplicationStream, consistency_check -> None: Dict[str, Any]) -> None:
         """Attempt to automatically repair data inconsistencies"""
         if not consistency_check.get('inconsistencies'):
             return
@@ -627,9 +627,9 @@ Suspend replication monitoring for a stream"""
         timestamp = datetime.utcnow().strftime('%Y%m%d_%H%M%S')
         return f"repl_{timestamp}_{len(self.replication_streams) + 1}"
 
-    def _update_replication_metrics(self, stream: ReplicationStream, 
-                                  lag_check: Dict[str, Any], 
-                                  consistency_check: Dict[str, Any]):
+    def _update_replication_metrics(self, stream -> None: ReplicationStream, 
+                                  lag_check -> None: Dict[str, Any], 
+                                  consistency_check -> None: Dict[str, Any]) -> None:
         """Update aggregated replication metrics"""
         # Update stream counts
         self.replication_metrics['total_streams'] = len(self.replication_streams)

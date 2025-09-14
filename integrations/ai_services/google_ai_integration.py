@@ -151,7 +151,7 @@ class GoogleAIConfiguration:
 class GoogleAIIntegration:
     """Comprehensive Google AI Platform integration."""
     
-    def __init__(self, config: GoogleAIConfiguration):
+    def __init__(self, config -> None: GoogleAIConfiguration) -> None:
         self.config = config
         self.session = None
         self.credentials = None

@@ -42,7 +42,7 @@ class MetricsCollector:
     Implements DevOps best practices for monitoring
     """
     
-    def __init__(self, collection_interval: int = 30):
+    def __init__(self, collection_interval -> None: int = 30) -> None:
         """Initialize metrics collector"""
         self.collection_interval = collection_interval
         self.metrics_buffer: List[MetricData] = []
@@ -151,8 +151,8 @@ class MetricsCollector:
         
         return metrics
     
-    def record_metric(self, name: str, value: Union[int, float], 
-                     tags: Optional[Dict[str, str]] = None, unit: str = ""):
+    def record_metric(self, name -> None: str, value -> None: Union[int, float], 
+                     tags -> None: Optional[Dict[str, str]] = None, unit -> None: str = "") -> None:
         """Record a custom metric"""
         metric = MetricData(
             name=name,
@@ -164,17 +164,17 @@ class MetricsCollector:
         self.metrics_buffer.append(metric)
         logger.debug(f"Recorded metric: {name}={value}")
     
-    def increment_counter(self, name: str, tags: Optional[Dict[str, str]] = None):
+    def increment_counter(self, name -> None: str, tags -> None: Optional[Dict[str, str]] = None) -> None:
         """Increment a counter metric"""
         # In a real implementation, this would use a proper counter
         self.record_metric(name, 1, tags, "count")
     
-    def set_gauge(self, name: str, value: Union[int, float], 
-                  tags: Optional[Dict[str, str]] = None):
+    def set_gauge(self, name -> None: str, value -> None: Union[int, float], 
+                  tags -> None: Optional[Dict[str, str]] = None) -> None:
         """Set a gauge metric"""
         self.record_metric(name, value, tags, "gauge")
     
-    async def start_collection(self):
+    async def start_collection(self) -> None:
         """Start automatic metrics collection"""
         self.is_running = True
         logger.info("Starting metrics collection")
@@ -202,7 +202,7 @@ class MetricsCollector:
             
             await asyncio.sleep(self.collection_interval)
     
-    def stop_collection(self):
+    def stop_collection(self) -> None:
         """Stop metrics collection"""
         self.is_running = False
         logger.info("Stopped metrics collection")

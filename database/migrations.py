@@ -1,4 +1,6 @@
 """🔄 Database Migrations - Core Migration Management
+from datetime import datetime
+
 ===================================================
 Module: database/migrations.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -37,7 +39,7 @@ logger = logging.getLogger(__name__)
 class Migration:
     """Represents a single database migration"""
     
-    def __init__(self, version: str, name: str, up_func: Callable = None, down_func: Callable = None):
+    def __init__(self, version -> None: str, name -> None: str, up_func -> None: Callable = None, down_func -> None: Callable = None) -> None:
         self.version = version
         self.name = name
         self.up_func = up_func
@@ -78,13 +80,13 @@ class Migration:
 class MigrationManager:
     """Manages database migrations"""
     
-    def __init__(self, connection=None):
+    def __init__(self, connection=None) -> None:
         self.connection = connection
         self.migrations: List[Migration] = []
         self.applied_migrations: List[str] = []
         self._initialize_migrations_table()
     
-    def _initialize_migrations_table(self):
+    def _initialize_migrations_table(self) -> None:
         """Initialize migrations tracking table"""
         if not SQLALCHEMY_AVAILABLE or not self.connection:
             logger.warning("SQLAlchemy not available or no connection, using in-memory tracking")
@@ -109,7 +111,7 @@ class MigrationManager:
         except Exception as e:
             logger.error(f"Failed to initialize migrations table: {e}")
     
-    def add_migration(self, version: str, name: str, up_func: Callable = None, down_func: Callable = None):
+    def add_migration(self, version -> None: str, name -> None: str, up_func -> None: Callable = None, down_func -> None: Callable = None) -> None:
         """Add a new migration"""
         migration = Migration(version, name, up_func, down_func)
         self.migrations.append(migration)
@@ -162,7 +164,7 @@ class MigrationManager:
         
         return success
     
-    def _record_migration(self, version: str, name: str):
+    def _record_migration(self, version -> None: str, name -> None: str) -> None:
         """Record migration as applied"""
         if not SQLALCHEMY_AVAILABLE or not self.connection:
             return
@@ -174,7 +176,7 @@ class MigrationManager:
         except Exception as e:
             logger.error(f"Failed to record migration {version}: {e}")
     
-    def _remove_migration_record(self, version: str):
+    def _remove_migration_record(self, version -> None: str) -> None:
         """Remove migration record"""
         if not SQLALCHEMY_AVAILABLE or not self.connection:
             return
@@ -206,7 +208,7 @@ def get_migration_manager(connection=None) -> MigrationManager:
         _migration_manager = MigrationManager(connection)
     return _migration_manager
 
-def create_initial_tables(connection=None):
+def create_initial_tables(connection=None) -> None:
     """Create initial database tables"""
     if not SQLALCHEMY_AVAILABLE:
         logger.warning("SQLAlchemy not available, skipping table creation")
@@ -224,15 +226,15 @@ def create_initial_tables(connection=None):
     
     return False
 
-def setup_initial_migrations():
+def setup_initial_migrations() -> None:
     """Setup initial migrations"""
     manager = get_migration_manager()
     
     # Add initial migration
-    def create_tables_up(connection):
+    def create_tables_up(connection) -> None:
         create_initial_tables(connection)
     
-    def create_tables_down(connection):
+    def create_tables_down(connection) -> None:
         # Drop all tables (be careful!)
         if SQLALCHEMY_AVAILABLE:
             from . import models

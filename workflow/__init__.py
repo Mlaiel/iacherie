@@ -328,67 +328,67 @@ from .collaboration import (
 
 
 # Workflow factory functions
-def create_content_processing_workflow(config: dict = None):
+def create_content_processing_workflow(config -> None: dict = None) -> None:
     """Create a content processing workflow with optimal configuration."""
     return ContentProcessingWorkflow(config or {})
 
 
-def create_distribution_workflow(config: dict = None):
+def create_distribution_workflow(config -> None: dict = None) -> None:
     """Create a distribution workflow with multi-platform support."""
     return DistributionWorkflow(config or {})
 
 
-def create_seo_optimization_workflow(config: dict = None):
+def create_seo_optimization_workflow(config -> None: dict = None) -> None:
     """Create an SEO optimization workflow with AI-powered recommendations."""
     return SEOOptimizationWorkflow(config or {})
 
 
-def create_monitoring_workflow(config: dict = None):
+def create_monitoring_workflow(config -> None: dict = None) -> None:
     """Create a monitoring workflow with real-time analytics."""
     return MonitoringWorkflow(config or {})
 
 
-def create_automation_workflow(config: dict = None):
+def create_automation_workflow(config -> None: dict = None) -> None:
     """Create an automation workflow with intelligent triggers."""
     return AutomationWorkflow(config or {})
 
 
-def create_analytics_workflow(config: dict = None):
+def create_analytics_workflow(config -> None: dict = None) -> None:
     """Create an analytics workflow with comprehensive reporting."""
     return AnalyticsWorkflow(config or {})
 
 
-def create_security_workflow(config: dict = None):
+def create_security_workflow(config -> None: dict = None) -> None:
     """Create a security workflow with threat detection."""
     return SecurityWorkflow(config or {})
 
 
-def create_scheduling_workflow(config: dict = None):
+def create_scheduling_workflow(config -> None: dict = None) -> None:
     """Create a scheduling workflow with optimal timing."""
     return SchedulingWorkflow(config or {})
 
 
-def create_integration_workflow(config: dict = None):
+def create_integration_workflow(config -> None: dict = None) -> None:
     """Create an integration workflow with service connectivity."""
     return IntegrationWorkflow(config or {})
 
 
-def create_fingerprinting_workflow(config: dict = None):
+def create_fingerprinting_workflow(config -> None: dict = None) -> None:
     """Create a content fingerprinting workflow with AI-powered detection."""
     return ContentFingerprintingWorkflow(config or {})
 
 
-def create_protection_workflow(config: dict = None):
+def create_protection_workflow(config -> None: dict = None) -> None:
     """Create a content protection workflow with automated enforcement."""
     return ContentProtectionWorkflow(config or {})
 
 
-def create_revenue_optimization_workflow(config: dict = None):
+def create_revenue_optimization_workflow(config -> None: dict = None) -> None:
     """Create a revenue optimization workflow with monetization intelligence."""
     return RevenueOptimizationWorkflow(config or {})
 
 
-def create_collaboration_workflow(config: dict = None):
+def create_collaboration_workflow(config -> None: dict = None) -> None:
     """Create a collaboration workflow with partner matching and campaign management."""
     return CollaborationWorkflow(config or {})
 
@@ -681,28 +681,28 @@ DEFAULT_CONFIG = {
     "state_snapshot_interval": 300,  # 5 minutes
 }
 
-def get_default_config():
+def get_default_config() -> None:
     """Get default workflow module configuration."""
     return DEFAULT_CONFIG.copy()
 
-def create_default_orchestrator(config=None):
+def create_default_orchestrator(config=None) -> None:
     """Create a default workflow orchestrator with standard configuration."""
     from .orchestration import ContentWorkflowOrchestrator
     
     config = config or get_default_config()
     return ContentWorkflowOrchestrator(config=config)
 
-def create_intelligent_pipeline(pipeline_id=None, config=None):
+def create_intelligent_pipeline(pipeline_id=None, config=None) -> None:
     """Create an intelligent content pipeline with advanced features."""
     config = config or get_default_config()
     return IntelligentContentPipeline(pipeline_id=pipeline_id, config=config)
 
-def create_enterprise_engine(config=None):
+def create_enterprise_engine(config=None) -> None:
     """Create an enterprise workflow engine with full capabilities."""
     config = config or get_default_config()
     return EnterpriseWorkflowEngine(config=config)
 
-def create_advanced_scheduler(config=None):
+def create_advanced_scheduler(config=None) -> None:
     """Create an advanced workflow scheduler with intelligent features.""" 
     config = config or get_default_config()
     return AdvancedWorkflowScheduler(config=config)

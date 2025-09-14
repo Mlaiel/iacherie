@@ -134,7 +134,7 @@ class BlockchainNetworkManager:
     - 🤖 IA Prompt Engineer: Intelligent network selection + automated optimization + smart routing
     """
     
-    def __init__(self, network_configs: Dict[str, Dict], redis_client=None, db_pool=None):
+    def __init__(self, network_configs -> None: Dict[str, Dict], redis_client=None, db_pool=None) -> None:
         """Initialize Blockchain Network Manager with enterprise features"""
         self.redis_client = redis_client
         self.db_pool = db_pool
@@ -171,7 +171,7 @@ class BlockchainNetworkManager:
         
         logger.info("🏆 Blockchain Network Manager initialized with multi-role expertise")
     
-    def _initialize_networks(self, network_configs: Dict[str, Dict]):
+    def _initialize_networks(self, network_configs -> None: Dict[str, Dict]) -> None:
         """Initialize blockchain network connections"""
         try:
             default_configs = {
@@ -240,7 +240,7 @@ class BlockchainNetworkManager:
         except Exception as e:
             logger.error(f"❌ Network initialization failed: {str(e)}")
     
-    def _setup_network_connections(self, network: BlockchainNetwork, config: NetworkConfig):
+    def _setup_network_connections(self, network -> None: BlockchainNetwork, config -> None: NetworkConfig) -> None:
         """Setup Web3 connections for a network with connection pooling"""
         try:
             connections = []
@@ -279,7 +279,7 @@ class BlockchainNetworkManager:
             logger.error(f"❌ Network setup failed for {network.value}: {str(e)}")
             self.network_status[network] = NetworkStatus.DISCONNECTED
     
-    def _initialize_ml_models(self):
+    def _initialize_ml_models(self) -> None:
         """🧠 ML Engineer: Initialize ML models for blockchain optimization"""
         try:
             # Generate sample training data for demonstration
@@ -874,9 +874,9 @@ class BlockchainNetworkManager:
     
     async def _process_audio_blockchain_transaction(
         self,
-        transaction_request: TransactionRequest,
-        result: TransactionResult
-    ):
+        transaction_request -> None: TransactionRequest,
+        result -> None: TransactionResult
+    ) -> None:
         """
         🎵 Audio Engineer: Process audio-specific blockchain transaction
         """
@@ -905,7 +905,7 @@ class BlockchainNetworkManager:
     
     # Storage and analytics (DBA expertise)
     
-    async def _store_transaction_result(self, result: TransactionResult):
+    async def _store_transaction_result(self, result -> None: TransactionResult) -> None:
         """🗄️ DBA: Store transaction result in database"""
         try:
             if self.db_pool:
@@ -931,7 +931,7 @@ class BlockchainNetworkManager:
     
     # Network health monitoring (DevOps expertise)
     
-    async def check_network_health(self):
+    async def check_network_health(self) -> None:
         """⚙️ DevOps: Check health of all blockchain networks"""
         try:
             for network in self.networks.keys():
@@ -948,7 +948,7 @@ class BlockchainNetworkManager:
         except Exception as e:
             logger.error(f"❌ Network health check failed: {str(e)}")
     
-    async def _check_single_network_health(self, network: BlockchainNetwork):
+    async def _check_single_network_health(self, network -> None: BlockchainNetwork) -> None:
         """Check health of a single network"""
         try:
             connections = self.web3_connections.get(network, [])

@@ -123,14 +123,14 @@ class PushNotificationEnterpriseService:
     
     def __init__(
         self,
-        fcm_api_key: Optional[str] = None,
-        apns_config: Optional[Dict[str, Any]] = None,
-        telegram_bot_token: Optional[str] = None,
-        slack_webhook_url: Optional[str] = None,
-        discord_webhook_url: Optional[str] = None,
-        enable_analytics: bool = True,
-        enable_creator_optimization: bool = True
-    ):
+        fcm_api_key -> None: Optional[str] = None,
+        apns_config -> None: Optional[Dict[str, Any]] = None,
+        telegram_bot_token -> None: Optional[str] = None,
+        slack_webhook_url -> None: Optional[str] = None,
+        discord_webhook_url -> None: Optional[str] = None,
+        enable_analytics -> None: bool = True,
+        enable_creator_optimization -> None: bool = True
+    ) -> None:
         """Initialize push notification service with enterprise configuration."""
         self.fcm_api_key = fcm_api_key
         self.apns_config = apns_config or {}
@@ -903,11 +903,11 @@ class PushNotificationEnterpriseService:
             
         logger.info("✅ Push Notification Service closed")
 
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         """Async context manager entry."""
         return self
 
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         """Async context manager exit."""
         await self.close()
 
@@ -946,7 +946,7 @@ def create_push_notification_service(
 
 
 # Example usage for creator notifications
-async def example_creator_notifications():
+async def example_creator_notifications() -> None:
     """Example of creator-specific notification workflows."""
     try:
         service = create_push_notification_service(

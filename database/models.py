@@ -1,4 +1,6 @@
 """🗃️ Database Models - Core Data Models
+from datetime import datetime
+
 ======================================
 Module: database/models.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -59,7 +61,7 @@ class ContentStatus(Enum):
 class BaseModel:
     """Base model class for all data models"""
     
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs) -> None:
         for key, value in kwargs.items():
             setattr(self, key, value)
         self.created_at = datetime.datetime.utcnow()
@@ -78,7 +80,7 @@ class BaseModel:
                     result[key] = value
         return result
     
-    def update(self, **kwargs):
+    def update(self, **kwargs) -> None:
         """Update model attributes"""
         for key, value in kwargs.items():
             if hasattr(self, key):
@@ -184,8 +186,8 @@ else:
     class User(BaseModel):
         """User model fallback"""
         
-        def __init__(self, username: str, email: str, full_name: str = None, 
-                     role: str = "user", **kwargs):
+        def __init__(self, username -> None: str, email -> None: str, full_name -> None: str = None, 
+                     role -> None: str = "user", **kwargs) -> None:
             super().__init__(**kwargs)
             self.id = kwargs.get('id')
             self.username = username
@@ -197,8 +199,8 @@ else:
     class Content(BaseModel):
         """Content model fallback"""
         
-        def __init__(self, title: str, content_type: str, owner_id: int,
-                     description: str = None, **kwargs):
+        def __init__(self, title -> None: str, content_type -> None: str, owner_id -> None: int,
+                     description -> None: str = None, **kwargs) -> None:
             super().__init__(**kwargs)
             self.id = kwargs.get('id')
             self.title = title
@@ -213,8 +215,8 @@ else:
     class Fingerprint(BaseModel):
         """Fingerprint model fallback"""
         
-        def __init__(self, content_id: int, algorithm: str, 
-                     fingerprint_data: Dict[str, Any], **kwargs):
+        def __init__(self, content_id -> None: int, algorithm -> None: str, 
+                     fingerprint_data -> None: Dict[str, Any], **kwargs) -> None:
             super().__init__(**kwargs)
             self.id = kwargs.get('id')
             self.content_id = content_id
@@ -229,7 +231,7 @@ MODELS = {
     'Fingerprint': Fingerprint
 }
 
-def get_model(model_name: str):
+def get_model(model_name -> None: str) -> None:
     """Get model class by name"""
     return MODELS.get(model_name)
 
@@ -237,7 +239,7 @@ def get_all_models() -> Dict[str, Any]:
     """Get all available models"""
     return MODELS.copy()
 
-def create_tables(engine=None):
+def create_tables(engine=None) -> None:
     """Create all tables in the database"""
     if SQLALCHEMY_AVAILABLE and Base and engine:
         Base.metadata.create_all(bind=engine)

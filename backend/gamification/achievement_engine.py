@@ -257,7 +257,7 @@ class UnifiedAchievementEngine:
     and specialized gaming achievements with comprehensive tracking.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.achievements: Dict[str, Achievement] = {}
         self.user_progress: Dict[str, Dict[str, UserAchievementProgress]] = {}
@@ -273,7 +273,7 @@ class UnifiedAchievementEngine:
         self._initialize_achievement_templates()
         logger.info("🏆 Unified Achievement Engine initialized")
     
-    def _initialize_achievement_templates(self):
+    def _initialize_achievement_templates(self) -> None:
         """Initialize both general and gaming achievement templates."""
         
         # General Platform Achievement Templates
@@ -501,7 +501,7 @@ class UnifiedAchievementEngine:
             logger.error(f"Error checking achievement unlock: {e}")
             return {"unlocked": False, "progress_updated": False}
     
-    async def _unlock_achievement(self, user_id: str, achievement_id: str):
+    async def _unlock_achievement(self, user_id -> None: str, achievement_id -> None: str) -> None:
         """Unlock an achievement for a user."""
         try:
             achievement = self.achievements.get(achievement_id)
@@ -552,7 +552,7 @@ class UnifiedAchievementEngine:
         except Exception as e:
             logger.error(f"Error unlocking achievement: {e}")
     
-    async def _update_user_stats(self, user_id: str):
+    async def _update_user_stats(self, user_id -> None: str) -> None:
         """Update comprehensive user achievement statistics."""
         try:
             stats = self.user_stats[user_id]

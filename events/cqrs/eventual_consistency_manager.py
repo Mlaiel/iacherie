@@ -116,7 +116,7 @@ class AggregateSnapshot:
 class ConsistencyChecker:
     """Check consistency between aggregates"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._snapshots: Dict[str, AggregateSnapshot] = {}
         self._consistency_cache: Dict[str, Dict[str, Any]] = {}
     
@@ -206,7 +206,7 @@ class ConsistencyChecker:
 class ReconciliationEngine:
     """Engine for reconciling consistency violations"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._reconciliation_strategies: Dict[ReconciliationStrategy, Callable] = {
             ReconciliationStrategy.LAST_WRITER_WINS: self._last_writer_wins_strategy,
             ReconciliationStrategy.MERGE: self._merge_strategy,
@@ -320,7 +320,7 @@ class ReconciliationEngine:
 class ConsistencyMonitor:
     """Monitor consistency across the system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._metrics = {
             "total_violations": 0,
             "resolved_violations": 0,
@@ -434,7 +434,7 @@ class ConsistencyMonitor:
 class EnterpriseEventualConsistencyManager:
     """Enterprise eventual consistency manager"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._consistency_rules: Dict[str, ConsistencyRule] = {}
         self._active_violations: Dict[str, ConsistencyViolation] = {}
         self._consistency_checker = ConsistencyChecker()

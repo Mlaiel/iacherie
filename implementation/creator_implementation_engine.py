@@ -109,7 +109,7 @@ class CreatorImplementationEngine:
     with specialized handling for different creator types and content formats.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
         

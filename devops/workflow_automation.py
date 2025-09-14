@@ -135,7 +135,7 @@ class WorkflowAutomation:
     - Cloud resource optimization recommendations
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         # Workflow management
         self.workflows: Dict[str, Workflow] = {}
         self.workflow_executions: Dict[str, WorkflowExecution] = {}
@@ -158,7 +158,7 @@ class WorkflowAutomation:
         self._initialize_automation()
         logger.info("WorkflowAutomation initialized")
 
-    def _initialize_automation(self):
+    def _initialize_automation(self) -> None:
         """Initialize workflow automation"""
         
         # Start background tasks
@@ -173,7 +173,7 @@ class WorkflowAutomation:
         self._setup_default_resources()
         self._setup_automation_rules()
 
-    def _setup_default_workflows(self):
+    def _setup_default_workflows(self) -> None:
         """Setup default workflows"""
         
         # Daily backup workflow
@@ -213,7 +213,7 @@ class WorkflowAutomation:
         self.workflows[backup_workflow.workflow_id] = backup_workflow
         self.workflows[cleanup_workflow.workflow_id] = cleanup_workflow
 
-    def _setup_default_resources(self):
+    def _setup_default_resources(self) -> None:
         """Setup default resources"""
         
         # Mock resources for demonstration
@@ -248,7 +248,7 @@ class WorkflowAutomation:
             
             self.resources[resource.resource_id] = resource
 
-    def _setup_automation_rules(self):
+    def _setup_automation_rules(self) -> None:
         """Setup automation rules"""
         
         self.automation_rules = [
@@ -356,7 +356,7 @@ class WorkflowAutomation:
             logger.error(f"Workflow execution failed: {str(e)}")
             raise
 
-    async def _execute_workflow_steps(self, execution: WorkflowExecution):
+    async def _execute_workflow_steps(self, execution -> None: WorkflowExecution) -> None:
         """Execute workflow steps"""
         
         try:
@@ -583,7 +583,7 @@ class WorkflowAutomation:
             return []
 
     # Background tasks
-    async def _workflow_execution_loop(self):
+    async def _workflow_execution_loop(self) -> None:
         """Background workflow execution loop"""
         while True:
             try:
@@ -600,7 +600,7 @@ class WorkflowAutomation:
             except Exception as e:
                 logger.error(f"Workflow execution loop error: {str(e)}")
 
-    async def _check_scheduled_workflows(self):
+    async def _check_scheduled_workflows(self) -> None:
         """Check for scheduled workflow executions"""
         
         current_time = datetime.now()
@@ -613,7 +613,7 @@ class WorkflowAutomation:
                 if current_time.minute == 0:  # Top of the hour
                     await self.execute_workflow(workflow.workflow_id)
 
-    async def _resource_monitoring_loop(self):
+    async def _resource_monitoring_loop(self) -> None:
         """Background resource monitoring loop"""
         while True:
             try:
@@ -632,7 +632,7 @@ class WorkflowAutomation:
             except Exception as e:
                 logger.error(f"Resource monitoring loop error: {str(e)}")
 
-    async def _check_automation_rules(self, resource: Resource):
+    async def _check_automation_rules(self, resource -> None: Resource) -> None:
         """Check automation rules against resource"""
         
         for rule in self.automation_rules:
@@ -654,7 +654,7 @@ class WorkflowAutomation:
         
         return False
 
-    async def _execute_rule_action(self, rule: Dict[str, Any], resource: Resource):
+    async def _execute_rule_action(self, rule -> None: Dict[str, Any], resource -> None: Resource) -> None:
         """Execute automation rule action"""
         
         action = rule["action"]
@@ -667,7 +667,7 @@ class WorkflowAutomation:
         elif action == "scale_resource":
             logger.info(f"Auto-scaling triggered for: {resource.name}")
 
-    async def _cost_monitoring_loop(self):
+    async def _cost_monitoring_loop(self) -> None:
         """Background cost monitoring loop"""
         while True:
             try:
@@ -688,7 +688,7 @@ class WorkflowAutomation:
             except Exception as e:
                 logger.error(f"Cost monitoring loop error: {str(e)}")
 
-    async def _cleanup_automation_loop(self):
+    async def _cleanup_automation_loop(self) -> None:
         """Background cleanup automation loop"""
         while True:
             try:
@@ -706,7 +706,7 @@ class WorkflowAutomation:
             except Exception as e:
                 logger.error(f"Cleanup automation loop error: {str(e)}")
 
-    async def _optimization_loop(self):
+    async def _optimization_loop(self) -> None:
         """Background optimization loop"""
         while True:
             try:

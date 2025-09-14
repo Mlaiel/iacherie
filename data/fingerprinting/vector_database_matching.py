@@ -147,7 +147,7 @@ class IndexStatistics:
 class CacheOptimizationEngine:
     """Moteur d'optimisation cache multi-niveau."""
     
-    def __init__(self, config: VectorDatabaseConfig, redis_client: Any = None):
+    def __init__(self, config -> None: VectorDatabaseConfig, redis_client -> None: Any = None) -> None:
         self.config = config
         self.redis_client = redis_client
         self.logger = logging.getLogger(__name__)
@@ -225,7 +225,7 @@ class CacheOptimizationEngine:
             self.logger.error(f"❌ Erreur récupération cache: {str(e)}")
             return None
     
-    async def store_cached_result(self, query_key: str, results: List[VectorSearchResult]):
+    async def store_cached_result(self, query_key -> None: str, results -> None: List[VectorSearchResult]) -> None:
         """Stocke résultat dans cache multi-niveau."""
         try:
             # L1 Cache (Mémoire)
@@ -258,7 +258,7 @@ class CacheOptimizationEngine:
             self.logger.warning(f"⚠️ Erreur cache Redis: {str(e)}")
             return None
     
-    async def _store_redis_cache(self, query_key: str, results: List[VectorSearchResult]):
+    async def _store_redis_cache(self, query_key -> None: str, results -> None: List[VectorSearchResult]) -> None:
         """Stockage dans Redis."""
         try:
             if not REDIS_AVAILABLE or not self.redis_client:
@@ -293,7 +293,7 @@ class CacheOptimizationEngine:
             self.logger.warning(f"⚠️ Erreur cache disque: {str(e)}")
             return None
     
-    async def _store_disk_cache(self, query_key: str, results: List[VectorSearchResult]):
+    async def _store_disk_cache(self, query_key -> None: str, results -> None: List[VectorSearchResult]) -> None:
         """Stockage sur disque."""
         try:
             cache_dir = Path("/tmp/vector_cache")
@@ -306,7 +306,7 @@ class CacheOptimizationEngine:
         except Exception as e:
             self.logger.warning(f"⚠️ Erreur stockage disque: {str(e)}")
     
-    async def _store_l1_cache(self, query_key: str, results: List[VectorSearchResult]):
+    async def _store_l1_cache(self, query_key -> None: str, results -> None: List[VectorSearchResult]) -> None:
         """Stockage en cache L1 mémoire."""
         try:
             # Éviction LRU si nécessaire
@@ -320,19 +320,19 @@ class CacheOptimizationEngine:
         except Exception as e:
             self.logger.warning(f"⚠️ Erreur cache L1: {str(e)}")
     
-    async def _promote_to_l1(self, query_key: str, results: List[VectorSearchResult]):
+    async def _promote_to_l1(self, query_key -> None: str, results -> None: List[VectorSearchResult]) -> None:
         """Promotion vers cache L1."""
         await self._store_l1_cache(query_key, results)
     
-    async def _promote_to_l2(self, query_key: str, results: List[VectorSearchResult]):
+    async def _promote_to_l2(self, query_key -> None: str, results -> None: List[VectorSearchResult]) -> None:
         """Promotion vers cache L2."""
         await self._store_redis_cache(query_key, results)
     
-    def _update_l1_access_time(self, query_key: str):
+    def _update_l1_access_time(self, query_key -> None: str) -> None:
         """Met à jour temps d'accès L1."""
         self._l1_access_times[query_key] = time.time()
     
-    async def _evict_l1_lru(self):
+    async def _evict_l1_lru(self) -> None:
         """Éviction LRU du cache L1."""
         if not self._l1_access_times:
             return
@@ -375,7 +375,7 @@ class CacheOptimizationEngine:
 class VectorIndexManager:
     """Gestionnaire d'index FAISS avec optimisation automatique."""
     
-    def __init__(self, config: VectorDatabaseConfig):
+    def __init__(self, config -> None: VectorDatabaseConfig) -> None:
         self.config = config
         self.logger = logging.getLogger(__name__)
         
@@ -541,7 +541,7 @@ class VectorIndexManager:
         else:
             return IndexType.IVF_PQ  # Compression pour grandes dimensions
     
-    def _update_query_statistics(self, index_name: str, query_time: float):
+    def _update_query_statistics(self, index_name -> None: str, query_time -> None: float) -> None:
         """Met à jour les statistiques de requête."""
         try:
             if index_name not in self._query_counts:
@@ -604,8 +604,8 @@ class ConsolidatedVectorDatabaseEngine:
     recherche de similarité haute performance pour fingerprinting.
     """
     
-    def __init__(self, db_session: Any = None, redis_client: Any = None, 
-                 config: Optional[Dict[str, Any]] = None):
+    def __init__(self, db_session -> None: Any = None, redis_client -> None: Any = None, 
+                 config -> None: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialise le moteur de base vectorielle.
         
@@ -943,7 +943,7 @@ class ConsolidatedVectorDatabaseEngine:
         vector_hash = hashlib.sha256(query_vector.tobytes()).hexdigest()[:16]
         return f"query:{vector_hash}:{content_type}:{creator_type}:{k}"
     
-    async def _store_vector_metadata(self, content_id: str, index_name: str, metadata: Dict[str, Any]):
+    async def _store_vector_metadata(self, content_id -> None: str, index_name -> None: str, metadata -> None: Dict[str, Any]) -> None:
         """Stocke métadonnées du vecteur en base de données."""
         try:
             # Implémentation dépendante de la base de données utilisée
@@ -963,7 +963,7 @@ class ConsolidatedVectorDatabaseEngine:
             self.logger.warning(f"⚠️ Erreur récupération métadonnées {internal_id}: {str(e)}")
             return None, {}
     
-    def _update_global_statistics(self, start_time: float):
+    def _update_global_statistics(self, start_time -> None: float) -> None:
         """Met à jour les statistiques globales."""
         try:
             query_time = time.time() - start_time

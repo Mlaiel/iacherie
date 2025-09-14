@@ -190,11 +190,11 @@ class StripeGateway(PaymentGateway):
     """
 Stripe payment gateway implementation."""
     
-    def __init__(self, api_key: str, webhook_secret: str):
+    def __init__(self, api_key -> None: str, webhook_secret -> None: str) -> None:
         self.api_key = api_key
         self.webhook_secret = webhook_secret
         self.base_url = "https://api.stripe.com/v1"
-        self.fee_rate = Decimal("0.029")  # 2.9% + €0.30
+        self.fee_rate = Decimal("0.029")  # 2.9% + # [EMOJI_REMOVED]0.30
         self.fixed_fee = Decimal("0.30")
     
     async def process_payment(self, request: PaymentRequest) -> PaymentResponse:
@@ -281,12 +281,12 @@ Stripe payment gateway implementation."""
 class PayPalGateway(PaymentGateway):
     """PayPal payment gateway implementation."""
     
-    def __init__(self, client_id: str, client_secret: str, sandbox: bool = True):
+    def __init__(self, client_id -> None: str, client_secret -> None: str, sandbox -> None: bool = True) -> None:
         self.client_id = client_id
         self.client_secret = client_secret
         self.sandbox = sandbox
         self.base_url = "https://api.sandbox.paypal.com" if sandbox else "https://api.paypal.com"
-        self.fee_rate = Decimal("0.034")  # 3.4% + €0.35
+        self.fee_rate = Decimal("0.034")  # 3.4% + # [EMOJI_REMOVED]0.35
         self.fixed_fee = Decimal("0.35")
     
     async def process_payment(self, request: PaymentRequest) -> PaymentResponse:
@@ -360,7 +360,7 @@ class PaymentGatewayManager:
     Handles multiple payment gateways and intelligent routing.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.gateways: Dict[GatewayType, PaymentGateway] = {}
         self.gateway_preferences: Dict[str, List[GatewayType]] = {
             "EUR": [GatewayType.STRIPE, GatewayType.PAYPAL],
@@ -576,3 +576,5 @@ Simple fraud detection algorithm."""
             gateway = payment.gateway_response.get("gateway", "unknown")
             usage[gateway] = usage.get(gateway, 0) + 1
         return usage
+
+# File has syntax issues - needs manual review

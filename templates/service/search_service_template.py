@@ -163,12 +163,12 @@ class AbstractSearchEngine(ABC):
 class ElasticsearchEngine(AbstractSearchEngine):
     """Elasticsearch implementation"""
     
-    def __init__(self, config: SearchConfig):
+    def __init__(self, config -> None: SearchConfig) -> None:
         self.config = config
         self.client = None
         self.logger = logging.getLogger(__name__)
     
-    async def connect(self):
+    async def connect(self) -> None:
         """Connect to Elasticsearch"""
         try:
             self.client = AsyncElasticsearch(
@@ -186,12 +186,12 @@ class ElasticsearchEngine(AbstractSearchEngine):
             self.logger.error(f"Failed to connect to Elasticsearch: {e}")
             raise
     
-    async def disconnect(self):
+    async def disconnect(self) -> None:
         """Disconnect from Elasticsearch"""
         if self.client:
             await self.client.close()
     
-    async def create_index(self, index: str, mapping: Dict[str, Any]):
+    async def create_index(self, index -> None: str, mapping -> None: Dict[str, Any]) -> None:
         """Create index with mapping"""
         try:
             body = {
@@ -572,7 +572,7 @@ class ElasticsearchEngine(AbstractSearchEngine):
 class SearchService:
     """Enterprise search service"""
     
-    def __init__(self, config: SearchConfig):
+    def __init__(self, config -> None: SearchConfig) -> None:
         self.config = config
         self.engine = self._create_engine()
         self.cache = None
@@ -586,7 +586,7 @@ class SearchService:
         else:
             raise ValueError(f"Unsupported search engine: {self.config.engine}")
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize search service"""
         await self.engine.connect()
         
@@ -602,13 +602,13 @@ class SearchService:
         
         self.logger.info("Search service initialized")
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Shutdown search service"""
         await self.engine.disconnect()
         if self.cache:
             await self.cache.close()
     
-    async def _create_default_indices(self):
+    async def _create_default_indices(self) -> None:
         """Create default search indices"""
         indices = {
             "content": {
@@ -770,7 +770,7 @@ class SearchService:
         key_hash = hash(json.dumps(key_data, sort_keys=True))
         return f"{self.config.cache_prefix}:{key_hash}"
     
-    async def _flush_analytics(self):
+    async def _flush_analytics(self) -> None:
         """Flush analytics buffer"""
         try:
             # In a real implementation, this would send to analytics service
@@ -821,7 +821,7 @@ class SearchService:
 
 
 # Usage example
-async def main():
+async def main() -> None:
     """Example usage of SearchService"""
     
     # Configure search service

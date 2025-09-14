@@ -181,7 +181,7 @@ class PerformanceReport:
 class PerformanceAnalytics:
     """Analytics performance détaillées"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
         self.metrics: Dict[str, List[PerformanceMetric]] = defaultdict(list)
         self.engagement_history: Dict[str, List[EngagementData]] = defaultdict(list)
@@ -410,7 +410,7 @@ class PerformanceAnalytics:
 class EngagementTracker:
     """Suivi engagement audience"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
         self.engagement_events: Dict[str, List[Dict[str, Any]]] = defaultdict(list)
         self.audience_segments: Dict[str, AudienceInsight] = {}
@@ -541,7 +541,7 @@ class EngagementTracker:
 class ViralPredictor:
     """Prédiction potentiel viral"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
         self.viral_indicators: Dict[str, Dict[str, float]] = {}
         self.viral_history: Dict[str, List[ViralityMetrics]] = defaultdict(list)
@@ -677,12 +677,12 @@ class ViralPredictor:
 class OptimizationSuggester:
     """Suggestions optimisation"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
         self.suggestion_templates: Dict[OptimizationCategory, List[Dict[str, Any]]] = {}
         self._initialize_suggestion_templates()
     
-    def _initialize_suggestion_templates(self):
+    def _initialize_suggestion_templates(self) -> None:
         """Initialisation des templates de suggestions"""
         self.suggestion_templates = {
             OptimizationCategory.CONTENT_STRATEGY: [

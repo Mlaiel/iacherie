@@ -112,7 +112,7 @@ class AccessAuditLog:
 class EncryptionManager:
     """Handles encryption and decryption of secrets"""
     
-    def __init__(self, master_key: Optional[bytes] = None):
+    def __init__(self, master_key -> None: Optional[bytes] = None) -> None:
         if master_key:
             self.master_key = master_key
         else:
@@ -217,11 +217,11 @@ class EncryptionManager:
 class AccessController:
     """Controls access to secrets based on policies"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.policies = {}
         self.audit_logs = []
     
-    def add_policy(self, policy: AccessPolicy):
+    def add_policy(self, policy -> None: AccessPolicy) -> None:
         """Add an access policy"""
         self.policies[policy.policy_id] = policy
         logger.info(f"Added access policy: {policy.name}")
@@ -358,9 +358,9 @@ class AccessController:
         
         return True
     
-    async def _log_access(self, secret_id: str, principal: str, action: str, 
-                         success: bool, context: Dict[str, Any] = None,
-                         error_message: Optional[str] = None):
+    async def _log_access(self, secret_id -> None: str, principal -> None: str, action -> None: str, 
+                         success -> None: bool, context -> None: Dict[str, Any] = None,
+                         error_message -> None: Optional[str] = None) -> None:
         """Log access attempt"""
         context = context or {}
         
@@ -420,12 +420,12 @@ class AccessController:
 class SecretRotator:
     """Handles automatic secret rotation"""
     
-    def __init__(self, secrets_manager: 'SecretsManager'):
+    def __init__(self, secrets_manager -> None: 'SecretsManager') -> None:
         self.secrets_manager = secrets_manager
         self.rotation_jobs = {}
     
-    async def schedule_rotation(self, secret_id: str, 
-                              rotation_function: Optional[Callable] = None):
+    async def schedule_rotation(self, secret_id -> None: str, 
+                              rotation_function -> None: Optional[Callable] = None) -> None:
         """Schedule automatic rotation for a secret"""
         try:
             metadata = await self.secrets_manager.get_secret_metadata(secret_id)
@@ -540,7 +540,7 @@ class SecretRotator:
         """Generate a secure random string"""
         return secrets.token_urlsafe(length)
     
-    async def check_pending_rotations(self):
+    async def check_pending_rotations(self) -> None:
         """Check for secrets that need rotation"""
         now = datetime.now()
         
@@ -561,7 +561,7 @@ class SecretRotator:
 class SecretsManager:
     """Main secrets management system"""
     
-    def __init__(self, master_key: Optional[bytes] = None):
+    def __init__(self, master_key -> None: Optional[bytes] = None) -> None:
         self.encryption_manager = EncryptionManager(master_key)
         self.access_controller = AccessController()
         self.rotator = SecretRotator(self)

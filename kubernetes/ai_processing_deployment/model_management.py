@@ -162,7 +162,7 @@ class ModelLoader:
     with automatic optimization and caching.
     """
     
-    def __init__(self, cache_dir: str = "/tmp/model_cache"):
+    def __init__(self, cache_dir -> None: str = "/tmp/model_cache") -> None:
         """Initialize model loader."""
         self.cache_dir = Path(cache_dir)
         self.cache_dir.mkdir(parents=True, exist_ok=True)
@@ -361,7 +361,7 @@ class ModelInferenceEngine:
     caching, and performance optimization.
     """
     
-    def __init__(self, model_loader: ModelLoader, batch_size: int = 32):
+    def __init__(self, model_loader -> None: ModelLoader, batch_size -> None: int = 32) -> None:
         """
 Initialize inference engine."""
         self.model_loader = model_loader
@@ -562,7 +562,7 @@ Perform Hugging Face model inference."""
         else:
             return model.predict(input_data)
     
-    def _update_performance_metrics(self, model_id: str, processing_time: float, success: bool):
+    def _update_performance_metrics(self, model_id -> None: str, processing_time -> None: float, success -> None: bool) -> None:
         """
 Update performance metrics for model."""
         if model_id not in self.performance_metrics:
@@ -635,7 +635,7 @@ class ModelManager:
     deployment coordination, and performance optimization.
     """
     
-    def __init__(self, config: ProcessingConfig):
+    def __init__(self, config -> None: ProcessingConfig) -> None:
         """
 Initialize model manager."""
         self.config = config

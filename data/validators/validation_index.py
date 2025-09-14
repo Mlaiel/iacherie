@@ -126,7 +126,7 @@ class RoutingResult:
 class ValidatorRegistry:
     """Central registry for all validators."""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize validator registry.
         
         Args:
@@ -155,7 +155,7 @@ class ValidatorRegistry:
         
         logger.info("ValidatorRegistry initialized")
     
-    async def start(self):
+    async def start(self) -> None:
         """Start registry background tasks."""
         if self.health_monitoring_enabled:
             self._health_check_task = asyncio.create_task(self._health_check_loop())
@@ -169,7 +169,7 @@ class ValidatorRegistry:
         
         logger.info("ValidatorRegistry started")
     
-    async def stop(self):
+    async def stop(self) -> None:
         """Stop registry background tasks."""
         if self._health_check_task:
             self._health_check_task.cancel()
@@ -888,7 +888,7 @@ class ValidatorRegistry:
 class ValidationEngine:
     """Main validation engine combining registry and management."""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize validation engine.
         
         Args:
@@ -908,12 +908,12 @@ class ValidationEngine:
         
         logger.info("ValidationEngine initialized")
     
-    async def start(self):
+    async def start(self) -> None:
         """Start validation engine."""
         await self.registry.start()
         logger.info("ValidationEngine started")
     
-    async def stop(self):
+    async def stop(self) -> None:
         """Stop validation engine."""
         await self.registry.stop()
         logger.info("ValidationEngine stopped")
@@ -1167,7 +1167,7 @@ def get_validation_engine() -> ValidationEngine:
 class ValidationManager:
     """High-level validation management interface."""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize validation manager.
         
         Args:
@@ -1176,11 +1176,11 @@ class ValidationManager:
         self.engine = get_validation_engine()
         self.config = config or {}
     
-    async def start(self):
+    async def start(self) -> None:
         """Start validation manager."""
         await self.engine.start()
     
-    async def stop(self):
+    async def stop(self) -> None:
         """Stop validation manager."""
         await self.engine.stop()
     
@@ -1200,7 +1200,7 @@ class ValidationManager:
 class ValidationConfig:
     """Validation configuration management."""
     
-    def __init__(self, config_path: Optional[Path] = None):
+    def __init__(self, config_path -> None: Optional[Path] = None) -> None:
         """Initialize validation configuration.
         
         Args:

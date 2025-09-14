@@ -174,7 +174,7 @@ class Outfit:
 class ClothingConfig:
     """Configuration for clothing generation and simulation"""
     
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs) -> None:
         # Basic clothing parameters
         self.style = kwargs.get('style', ClothingStyle.CASUAL)
         self.occasion = kwargs.get('occasion', 'casual')
@@ -273,7 +273,7 @@ class AvatarClothingSystem(BaseContentGenerator):
     - Accessory matching and layering
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(config or {})
         self.logger = logging.getLogger(__name__)
         self._setup_clothing_engine()

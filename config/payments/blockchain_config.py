@@ -1,7 +1,14 @@
+"""
+Blockchain Config module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 """Ainflue Blockchain Configuration Module
+import asyncio
+
 ========================================
 
 Enterprise-grade blockchain configuration for the Ainflue platform.
@@ -447,7 +454,7 @@ class NFTMarketplaceConfig:
 class BlockchainConfiguration:
     """Main blockchain configuration manager"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize blockchain configuration"""
         # Configuration components
         self.blockchain_integration = BlockchainIntegrationConfig()
@@ -527,7 +534,7 @@ class BlockchainConfiguration:
             }
         }
     
-    def _initialize_default_networks(self):
+    def _initialize_default_networks(self) -> None:
         """Initialize default blockchain network configurations"""
         
         # Ethereum Mainnet

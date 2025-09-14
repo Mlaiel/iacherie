@@ -430,7 +430,7 @@ class PlatformDistributionSEOEngine:
     Orchestrates cross-platform content distribution and SEO optimization
     """
     
-    def __init__(self, db_session: AsyncSession, redis_client: Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: Redis) -> None:
         self.db_session = db_session
         self.redis_client = redis_client
         self.logger = logging.getLogger(__name__)
@@ -859,7 +859,7 @@ class PlatformDistributionSEOEngine:
 class CrossPlatformAnalyzer:
     """Analyzes content for cross-platform compatibility"""
     
-    def __init__(self, db_session: AsyncSession, redis_client: Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: Redis) -> None:
         self.db_session = db_session
         self.redis_client = redis_client
         self.logger = logging.getLogger(__name__)
@@ -903,7 +903,7 @@ class CrossPlatformAnalyzer:
 class SEOOptimizationEngine:
     """Advanced SEO optimization engine"""
     
-    def __init__(self, db_session: AsyncSession, redis_client: Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: Redis) -> None:
         self.db_session = db_session
         self.redis_client = redis_client
         self.logger = logging.getLogger(__name__)
@@ -961,7 +961,8 @@ class SEOOptimizationEngine:
 
 # Mock additional engine classes for completeness
 class KeywordResearchEngine:
-    def __init__(self, db_session: AsyncSession, redis_client: Redis):
+    """KeywordResearchEngine: class implementation"""
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: Redis) -> None:
         self.db_session = db_session
         self.redis_client = redis_client
         self.logger = logging.getLogger(__name__)
@@ -976,7 +977,8 @@ class KeywordResearchEngine:
 
 
 class ContentDistributionOptimizer:
-    def __init__(self, db_session: AsyncSession, redis_client: Redis):
+    """ContentDistributionOptimizer: class implementation"""
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: Redis) -> None:
         self.db_session = db_session
         self.redis_client = redis_client
         self.logger = logging.getLogger(__name__)
@@ -1000,7 +1002,8 @@ class ContentDistributionOptimizer:
 
 # Mock remaining engine classes
 class PlatformAlgorithmTracker:
-    def __init__(self, db_session: AsyncSession, redis_client: Redis):
+    """PlatformAlgorithmTracker: class implementation"""
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: Redis) -> None:
         self.db_session = db_session
         self.redis_client = redis_client
         
@@ -1012,7 +1015,8 @@ class PlatformAlgorithmTracker:
 
 
 class ViralContentAnalyzer:
-    def __init__(self, db_session: AsyncSession, redis_client: Redis):
+    """ViralContentAnalyzer: class implementation"""
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: Redis) -> None:
         self.db_session = db_session
         self.redis_client = redis_client
         
@@ -1023,7 +1027,8 @@ class ViralContentAnalyzer:
 
 
 class HashtagOptimizer:
-    def __init__(self, db_session: AsyncSession, redis_client: Redis):
+    """HashtagOptimizer: class implementation"""
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: Redis) -> None:
         self.db_session = db_session
         self.redis_client = redis_client
         
@@ -1034,7 +1039,8 @@ class HashtagOptimizer:
 
 
 class TitleOptimizationEngine:
-    def __init__(self, db_session: AsyncSession, redis_client: Redis):
+    """TitleOptimizationEngine: class implementation"""
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: Redis) -> None:
         self.db_session = db_session
         self.redis_client = redis_client
         
@@ -1045,7 +1051,8 @@ class TitleOptimizationEngine:
 
 
 class DescriptionGeneratorEngine:
-    def __init__(self, db_session: AsyncSession, redis_client: Redis):
+    """DescriptionGeneratorEngine: class implementation"""
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: Redis) -> None:
         self.db_session = db_session
         self.redis_client = redis_client
         
@@ -1056,7 +1063,8 @@ class DescriptionGeneratorEngine:
 
 
 class ThumbnailOptimizer:
-    def __init__(self, db_session: AsyncSession, redis_client: Redis):
+    """ThumbnailOptimizer: class implementation"""
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: Redis) -> None:
         self.db_session = db_session
         self.redis_client = redis_client
         
@@ -1067,7 +1075,8 @@ class ThumbnailOptimizer:
 
 
 class PostTimingOptimizer:
-    def __init__(self, db_session: AsyncSession, redis_client: Redis):
+    """PostTimingOptimizer: class implementation"""
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: Redis) -> None:
         self.db_session = db_session
         self.redis_client = redis_client
         
@@ -1078,7 +1087,8 @@ class PostTimingOptimizer:
 
 
 class CrossPromotionEngine:
-    def __init__(self, db_session: AsyncSession, redis_client: Redis):
+    """CrossPromotionEngine: class implementation"""
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: Redis) -> None:
         self.db_session = db_session
         self.redis_client = redis_client
         
@@ -1089,7 +1099,8 @@ class CrossPromotionEngine:
 
 
 class LanguageOptimizer:
-    def __init__(self, db_session: AsyncSession, redis_client: Redis):
+    """LanguageOptimizer: class implementation"""
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: Redis) -> None:
         self.db_session = db_session
         self.redis_client = redis_client
         
@@ -1100,7 +1111,8 @@ class LanguageOptimizer:
 
 
 class LocalSEOEngine:
-    def __init__(self, db_session: AsyncSession, redis_client: Redis):
+    """LocalSEOEngine: class implementation"""
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: Redis) -> None:
         self.db_session = db_session
         self.redis_client = redis_client
 

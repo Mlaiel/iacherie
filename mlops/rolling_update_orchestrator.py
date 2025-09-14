@@ -216,7 +216,7 @@ class RollingUpdateProgress:
 class PodManager:
     """Manages pod lifecycle during rolling updates"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.pods: Dict[str, PodInstance] = {}
         
     async def create_pod(
@@ -368,7 +368,7 @@ class PodManager:
         """Get all ready pods"""
         return [pod for pod in self.pods.values() if pod.status == PodStatus.READY]
 
-    def cleanup_terminated_pods(self):
+    def cleanup_terminated_pods(self) -> None:
         """Clean up terminated pods"""
         terminated_pods = [
             pod_id for pod_id, pod in self.pods.items() 
@@ -385,7 +385,7 @@ class PodManager:
 class UpdateValidator:
     """Validates deployments during rolling updates"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.validation_cache: Dict[str, Dict[str, Any]] = {}
         
     async def validate_deployment_spec(self, spec: DeploymentSpec) -> Dict[str, Any]:
@@ -504,7 +504,7 @@ class RollingUpdateOrchestrator:
     Enterprise rolling update orchestrator for ML deployments
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.pod_manager = PodManager()
         self.validator = UpdateValidator()
         self.active_updates: Dict[str, RollingUpdateProgress] = {}
@@ -560,10 +560,10 @@ class RollingUpdateOrchestrator:
 
     async def _execute_update_phases(
         self,
-        spec: DeploymentSpec,
-        config: UpdateConfiguration,
-        progress: RollingUpdateProgress
-    ):
+        spec -> None: DeploymentSpec,
+        config -> None: UpdateConfiguration,
+        progress -> None: RollingUpdateProgress
+    ) -> None:
         """Execute all update phases"""
         try:
             # Phase 1: Preparation
@@ -587,10 +587,10 @@ class RollingUpdateOrchestrator:
 
     async def _phase_preparation(
         self,
-        spec: DeploymentSpec,
-        config: UpdateConfiguration,
-        progress: RollingUpdateProgress
-    ):
+        spec -> None: DeploymentSpec,
+        config -> None: UpdateConfiguration,
+        progress -> None: RollingUpdateProgress
+    ) -> None:
         """Preparation phase"""
         try:
             logger.info(f"Phase 1: Preparation for {spec.name}")
@@ -622,10 +622,10 @@ class RollingUpdateOrchestrator:
 
     async def _phase_validation(
         self,
-        spec: DeploymentSpec,
-        config: UpdateConfiguration,
-        progress: RollingUpdateProgress
-    ):
+        spec -> None: DeploymentSpec,
+        config -> None: UpdateConfiguration,
+        progress -> None: RollingUpdateProgress
+    ) -> None:
         """Validation phase"""
         try:
             logger.info(f"Phase 2: Validation for {spec.name}")
@@ -653,10 +653,10 @@ class RollingUpdateOrchestrator:
 
     async def _phase_deployment(
         self,
-        spec: DeploymentSpec,
-        config: UpdateConfiguration,
-        progress: RollingUpdateProgress
-    ):
+        spec -> None: DeploymentSpec,
+        config -> None: UpdateConfiguration,
+        progress -> None: RollingUpdateProgress
+    ) -> None:
         """Deployment phase"""
         try:
             logger.info(f"Phase 3: Deployment for {spec.name}")
@@ -689,12 +689,12 @@ class RollingUpdateOrchestrator:
 
     async def _execute_rolling_update(
         self,
-        spec: DeploymentSpec,
-        config: UpdateConfiguration,
-        progress: RollingUpdateProgress,
-        max_unavailable: int,
-        max_surge: int
-    ):
+        spec -> None: DeploymentSpec,
+        config -> None: UpdateConfiguration,
+        progress -> None: RollingUpdateProgress,
+        max_unavailable -> None: int,
+        max_surge -> None: int
+    ) -> None:
         """Execute rolling update strategy"""
         try:
             target_replicas = spec.desired_replicas
@@ -762,10 +762,10 @@ class RollingUpdateOrchestrator:
 
     async def _execute_blue_green_update(
         self,
-        spec: DeploymentSpec,
-        config: UpdateConfiguration,
-        progress: RollingUpdateProgress
-    ):
+        spec -> None: DeploymentSpec,
+        config -> None: UpdateConfiguration,
+        progress -> None: RollingUpdateProgress
+    ) -> None:
         """Execute blue-green update strategy"""
         try:
             # Create all new pods (green)
@@ -802,10 +802,10 @@ class RollingUpdateOrchestrator:
 
     async def _execute_recreate_update(
         self,
-        spec: DeploymentSpec,
-        config: UpdateConfiguration,
-        progress: RollingUpdateProgress
-    ):
+        spec -> None: DeploymentSpec,
+        config -> None: UpdateConfiguration,
+        progress -> None: RollingUpdateProgress
+    ) -> None:
         """Execute recreate update strategy"""
         try:
             # Terminate all old pods first
@@ -841,10 +841,10 @@ class RollingUpdateOrchestrator:
 
     async def _phase_verification(
         self,
-        spec: DeploymentSpec,
-        config: UpdateConfiguration,
-        progress: RollingUpdateProgress
-    ):
+        spec -> None: DeploymentSpec,
+        config -> None: UpdateConfiguration,
+        progress -> None: RollingUpdateProgress
+    ) -> None:
         """Verification phase"""
         try:
             logger.info(f"Phase 4: Verification for {spec.name}")
@@ -870,10 +870,10 @@ class RollingUpdateOrchestrator:
 
     async def _phase_completion(
         self,
-        spec: DeploymentSpec,
-        config: UpdateConfiguration,
-        progress: RollingUpdateProgress
-    ):
+        spec -> None: DeploymentSpec,
+        config -> None: UpdateConfiguration,
+        progress -> None: RollingUpdateProgress
+    ) -> None:
         """Completion phase"""
         try:
             logger.info(f"Phase 5: Completion for {spec.name}")
@@ -931,7 +931,7 @@ class RollingUpdateOrchestrator:
         else:
             return 1
 
-    def _add_event(self, progress: RollingUpdateProgress, message: str):
+    def _add_event(self, progress -> None: RollingUpdateProgress, message -> None: str) -> None:
         """Add event to progress tracking"""
         event = {
             "timestamp": datetime.utcnow().isoformat(),
@@ -942,10 +942,10 @@ class RollingUpdateOrchestrator:
 
     async def _rollback_update(
         self,
-        spec: DeploymentSpec,
-        config: UpdateConfiguration,
-        progress: RollingUpdateProgress
-    ):
+        spec -> None: DeploymentSpec,
+        config -> None: UpdateConfiguration,
+        progress -> None: RollingUpdateProgress
+    ) -> None:
         """Rollback failed update"""
         try:
             logger.info(f"Starting rollback for {spec.name}")
@@ -1051,7 +1051,7 @@ def create_update_configuration(
 
 # Example usage
 if __name__ == "__main__":
-    async def main():
+    async def main() -> None:
         # Create orchestrator
         orchestrator = create_rolling_update_orchestrator()
         

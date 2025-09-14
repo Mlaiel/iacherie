@@ -115,7 +115,7 @@ class MonetizationIntelligenceHub:
     business intelligence and strategic guidance.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the monetization intelligence hub."""
         self.insights: List[MonetizationInsight] = []
         self.recommendations: List[StrategicRecommendation] = []
@@ -130,7 +130,7 @@ class MonetizationIntelligenceHub:
         self._initialize_kpi_thresholds()
         self._load_competitive_benchmarks()
     
-    def _setup_intelligence_models(self):
+    def _setup_intelligence_models(self) -> None:
         """Setup intelligence analysis models."""
         self.intelligence_models = {
             "revenue_forecasting": {
@@ -171,7 +171,7 @@ class MonetizationIntelligenceHub:
             }
         }
     
-    def _initialize_kpi_thresholds(self):
+    def _initialize_kpi_thresholds(self) -> None:
         """Initialize KPI performance thresholds."""
         self.kpi_thresholds = {
             "revenue_growth_rate": 0.15,  # 15% monthly growth target
@@ -186,7 +186,7 @@ class MonetizationIntelligenceHub:
             "gross_margin": 0.80  # 80% gross margin
         }
     
-    def _load_competitive_benchmarks(self):
+    def _load_competitive_benchmarks(self) -> None:
         """Load competitive benchmarks and industry standards."""
         self.competitive_benchmarks = {
             "saas_churn_rate": 0.08,  # Industry average
@@ -256,7 +256,7 @@ class MonetizationIntelligenceHub:
         
         return statistics.mean(quality_factors) if quality_factors else 0.5
     
-    def _trigger_intelligence_analysis(self, module_name: str, data: Dict[str, Any]):
+    def _trigger_intelligence_analysis(self, module_name -> None: str, data -> None: Dict[str, Any]) -> None:
         """Trigger intelligent analysis based on new data."""
         
         # Generate insights based on the module
@@ -272,7 +272,7 @@ class MonetizationIntelligenceHub:
         # Update executive summary
         self._update_executive_summary()
     
-    def _analyze_revenue_optimization(self, data: Dict[str, Any]):
+    def _analyze_revenue_optimization(self, data -> None: Dict[str, Any]) -> None:
         """Analyze revenue optimization data for insights."""
         
         metrics = data.get("metrics", {})
@@ -329,7 +329,7 @@ class MonetizationIntelligenceHub:
             )
             self.insights.append(insight)
     
-    def _analyze_fraud_patterns(self, data: Dict[str, Any]):
+    def _analyze_fraud_patterns(self, data -> None: Dict[str, Any]) -> None:
         """Analyze fraud detection data for patterns and insights."""
         
         metrics = data.get("metrics", {})
@@ -380,7 +380,7 @@ class MonetizationIntelligenceHub:
             )
             self.insights.append(insight)
     
-    def _analyze_subscription_trends(self, data: Dict[str, Any]):
+    def _analyze_subscription_trends(self, data -> None: Dict[str, Any]) -> None:
         """Analyze subscription health data for trends."""
         
         metrics = data.get("metrics", {})
@@ -416,7 +416,7 @@ class MonetizationIntelligenceHub:
             )
             self.insights.append(insight)
     
-    def _analyze_payment_performance(self, data: Dict[str, Any]):
+    def _analyze_payment_performance(self, data -> None: Dict[str, Any]) -> None:
         """Analyze payment gateway performance data."""
         
         metrics = data.get("metrics", {})
@@ -436,7 +436,7 @@ class MonetizationIntelligenceHub:
             )
             self.insights.append(insight)
     
-    def _update_executive_summary(self):
+    def _update_executive_summary(self) -> None:
         """Update executive summary with latest insights."""
         
         # Calculate key metrics

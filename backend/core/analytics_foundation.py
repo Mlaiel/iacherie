@@ -122,7 +122,7 @@ class CoreAnalyticsEngine:
     processing, and analysis capabilities with real-time insights.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize the Core Analytics Engine"""
         self.config = config or {}
         self.metric_definitions: Dict[str, MetricDefinition] = {}
@@ -134,7 +134,7 @@ class CoreAnalyticsEngine:
         # Initialize default metrics
         self._initialize_default_metrics()
     
-    def _initialize_default_metrics(self):
+    def _initialize_default_metrics(self) -> None:
         """Initialize default metric definitions"""
         
         default_metrics = [
@@ -212,8 +212,8 @@ class CoreAnalyticsEngine:
             return False
     
     async def _update_real_time_aggregations(self, 
-                                           metric_id: str,
-                                           data_point: MetricDataPoint):
+                                           metric_id -> None: str,
+                                           data_point -> None: MetricDataPoint) -> None:
         """Update real-time aggregations"""
         
         metric_def = self.metric_definitions[metric_id]
@@ -366,7 +366,7 @@ class RealTimeDataProcessor:
     complex event processing, and low-latency data transformation.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize the Real-Time Data Processor"""
         self.config = config or {}
         self.processing_pipelines: Dict[str, Dict[str, Any]] = {}
@@ -405,7 +405,7 @@ class RealTimeDataProcessor:
             self.logger.error(f"Failed to create pipeline {pipeline_id}: {e}")
             return False
     
-    async def _process_pipeline(self, pipeline_id: str):
+    async def _process_pipeline(self, pipeline_id -> None: str) -> None:
         """Process events in pipeline"""
         
         pipeline = self.processing_pipelines[pipeline_id]
@@ -517,7 +517,7 @@ class RealTimeDataProcessor:
         
         return data
     
-    async def _trigger_event_handlers(self, pipeline_id: str, data: Any):
+    async def _trigger_event_handlers(self, pipeline_id -> None: str, data -> None: Any) -> None:
         """Trigger event handlers for processed data"""
         
         handlers = self.event_handlers.get(pipeline_id, [])
@@ -548,7 +548,7 @@ class RealTimeDataProcessor:
             self.logger.error(f"Failed to send event to pipeline {pipeline_id}: {e}")
             return False
     
-    def register_event_handler(self, pipeline_id: str, handler: Callable):
+    def register_event_handler(self, pipeline_id -> None: str, handler -> None: Callable) -> None:
         """Register event handler for pipeline"""
         self.event_handlers[pipeline_id].append(handler)
     
@@ -579,7 +579,7 @@ class BusinessIntelligenceFoundation:
     trend analysis, and strategic insights generation.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize the Business Intelligence Foundation"""
         self.config = config or {}
         self.bi_models: Dict[str, Dict[str, Any]] = {}
@@ -814,7 +814,7 @@ class AnalyticsFoundation:
     across the IA Influencer Agent platform with enterprise-grade capabilities.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize the Analytics Foundation"""
         self.config = config or {}
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
@@ -847,7 +847,7 @@ class AnalyticsFoundation:
             self.logger.error(f"Analytics Foundation initialization failed: {e}")
             return False
     
-    async def _initialize_default_pipelines(self):
+    async def _initialize_default_pipelines(self) -> None:
         """Initialize default real-time processing pipelines"""
         
         # User activity pipeline
@@ -870,7 +870,7 @@ class AnalyticsFoundation:
             ]
         )
     
-    async def _initialize_default_bi_models(self):
+    async def _initialize_default_bi_models(self) -> None:
         """Initialize default business intelligence models"""
         
         # Revenue forecasting model

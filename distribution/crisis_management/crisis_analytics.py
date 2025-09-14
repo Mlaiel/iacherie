@@ -67,7 +67,7 @@ class AnalyticsInsight:
 class CrisisAnalytics:
     """Advanced crisis management analytics system"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
         
@@ -151,7 +151,7 @@ class CrisisAnalytics:
             self.logger.error(f"Crisis metrics tracking failed: {e}")
             raise
     
-    def _update_performance_history(self, metrics: CrisisMetrics):
+    def _update_performance_history(self, metrics -> None: CrisisMetrics) -> None:
         """Update performance history with new metrics"""
         performance_indicators = [
             ('detection_time', metrics.detection_time.total_seconds() / 60),  # minutes
@@ -356,7 +356,7 @@ class CrisisAnalytics:
         recovery_scores = [m.recovery_score for m in sorted_metrics]
         satisfaction_scores = [m.stakeholder_satisfaction for m in sorted_metrics]
         
-        def calculate_trend(values):
+        def calculate_trend(values) -> None:
             if len(values) < 2:
                 return 'stable'
             

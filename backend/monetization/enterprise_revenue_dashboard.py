@@ -22,6 +22,7 @@ import numpy as np
 import redis.asyncio as redis
 
 class DashboardMetric(Enum):
+    """DashboardMetric class implementation"""
     TOTAL_REVENUE = "total_revenue"
     MONTHLY_RECURRING_REVENUE = "mrr" 
     AVERAGE_REVENUE_PER_USER = "arpu"
@@ -30,6 +31,7 @@ class DashboardMetric(Enum):
     CONVERSION_RATE = "conversion_rate"
 
 class TimeFrame(Enum):
+    """TimeFrame class implementation"""
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -38,6 +40,7 @@ class TimeFrame(Enum):
 
 @dataclass
 class RevenueMetrics:
+    """RevenueMetrics: class implementation"""
     period: str
     total_revenue: Decimal
     recurring_revenue: Decimal
@@ -50,6 +53,7 @@ class RevenueMetrics:
 
 @dataclass
 class DashboardData:
+    """DashboardData: class implementation"""
     metrics: RevenueMetrics
     top_revenue_sources: List[Dict[str, Any]]
     geographic_breakdown: Dict[str, Decimal]
@@ -61,7 +65,7 @@ class DashboardData:
 class EnterpriseRevenueDashboard:
     """Enterprise revenue dashboard and analytics system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
         self.redis_client = None
     

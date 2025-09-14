@@ -1,3 +1,8 @@
+"""
+Database Pools module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """Database Pools - Consolidated PostgreSQL, MongoDB, Elasticsearch Implementations
 ===================================================================================
@@ -74,7 +79,7 @@ class PoolMetrics:
 class PostgreSQLConnectionPool:
     """Enterprise PostgreSQL connection pool with auto-scaling and monitoring"""
     
-    def __init__(self, config: DatabaseConfig, connection_url: str):
+    def __init__(self, config -> None: DatabaseConfig, connection_url -> None: str) -> None:
         self.config = config
         self.connection_url = connection_url
         self._pool = None
@@ -123,7 +128,7 @@ class PostgreSQLConnectionPool:
         }
 
     @asynccontextmanager
-    async def get_connection(self):
+    async def get_connection(self) -> None:
         """Get connection with automatic resource management"""
         if not self._initialized:
             raise RuntimeError("Pool not initialized")
@@ -155,7 +160,7 @@ class PostgreSQLConnectionPool:
                 self._metrics.idle_connections += 1
                 logger.debug("🔌 PostgreSQL connection released")
 
-    async def _health_monitor(self):
+    async def _health_monitor(self) -> None:
         """Monitor pool health and performance"""
         while True:
             try:
@@ -175,7 +180,7 @@ class PostgreSQLConnectionPool:
             except Exception as e:
                 logger.error(f"🔥 PostgreSQL health check failed: {e}")
 
-    async def _check_auto_scaling(self):
+    async def _check_auto_scaling(self) -> None:
         """Check if pool needs scaling"""
         async with self._scaling_lock:
             utilization = (self._metrics.active_connections / 
@@ -199,7 +204,7 @@ class PostgreSQLConnectionPool:
         """Get current pool metrics"""
         return self._metrics
 
-    async def close(self):
+    async def close(self) -> None:
         """Close the pool and cleanup resources"""
         logger.info("🛑 Closing PostgreSQL pool...")
         
@@ -218,7 +223,7 @@ class PostgreSQLConnectionPool:
 class MongoDBConnectionPool:
     """Enterprise MongoDB connection pool with replica set support"""
     
-    def __init__(self, config: DatabaseConfig, connection_url: str):
+    def __init__(self, config -> None: DatabaseConfig, connection_url -> None: str) -> None:
         self.config = config
         self.connection_url = connection_url
         self._client = None
@@ -265,7 +270,7 @@ class MongoDBConnectionPool:
         }
 
     @asynccontextmanager
-    async def get_connection(self):
+    async def get_connection(self) -> None:
         """Get MongoDB database connection"""
         if not self._initialized:
             raise RuntimeError("Pool not initialized")
@@ -294,7 +299,7 @@ class MongoDBConnectionPool:
             self._metrics.active_connections -= 1
             logger.debug("🔌 MongoDB connection released")
 
-    async def _health_monitor(self):
+    async def _health_monitor(self) -> None:
         """Monitor MongoDB pool health"""
         while True:
             try:
@@ -315,7 +320,7 @@ class MongoDBConnectionPool:
         """Get current pool metrics"""
         return self._metrics
 
-    async def close(self):
+    async def close(self) -> None:
         """Close MongoDB connections"""
         logger.info("🛑 Closing MongoDB pool...")
         
@@ -334,7 +339,7 @@ class MongoDBConnectionPool:
 class ElasticsearchConnectionPool:
     """Enterprise Elasticsearch connection pool with load balancing"""
     
-    def __init__(self, config: DatabaseConfig, connection_url: str):
+    def __init__(self, config -> None: DatabaseConfig, connection_url -> None: str) -> None:
         self.config = config
         self.connection_url = connection_url
         self._client = None
@@ -379,7 +384,7 @@ class ElasticsearchConnectionPool:
         }
 
     @asynccontextmanager
-    async def get_connection(self):
+    async def get_connection(self) -> None:
         """Get Elasticsearch client connection"""
         if not self._initialized:
             raise RuntimeError("Pool not initialized")
@@ -407,7 +412,7 @@ class ElasticsearchConnectionPool:
             self._metrics.active_connections -= 1
             logger.debug("🔌 Elasticsearch connection released")
 
-    async def _health_monitor(self):
+    async def _health_monitor(self) -> None:
         """Monitor Elasticsearch pool health"""
         while True:
             try:
@@ -428,7 +433,7 @@ class ElasticsearchConnectionPool:
         """Get current pool metrics"""
         return self._metrics
 
-    async def close(self):
+    async def close(self) -> None:
         """Close Elasticsearch connections"""
         logger.info("🛑 Closing Elasticsearch pool...")
         

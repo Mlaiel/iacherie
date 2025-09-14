@@ -133,10 +133,10 @@ class StripeIntegration:
     
     def __init__(
         self,
-        api_key: str,
-        webhook_secret: Optional[str] = None,
-        config: Optional[Dict[str, Any]] = None
-    ):
+        api_key -> None: str,
+        webhook_secret -> None: Optional[str] = None,
+        config -> None: Optional[Dict[str, Any]] = None
+    ) -> None:
         self.api_key = api_key
         self.webhook_secret = webhook_secret
         self.config = config or {}
@@ -170,7 +170,7 @@ class StripeIntegration:
         self.customer_cache: Dict[str, Customer] = {}
         self.cache_ttl = timedelta(minutes=15)
         
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize the Stripe integration."""
         # Test API connectivity
         try:
@@ -643,7 +643,7 @@ class StripeIntegration:
             self.logger.error(f"Invalid webhook signature: {e}")
             raise
     
-    async def _handle_webhook_event(self, event: Dict[str, Any]):
+    async def _handle_webhook_event(self, event -> None: Dict[str, Any]) -> None:
         """Handle specific webhook events."""
         event_type = event['type']
         
@@ -665,28 +665,28 @@ class StripeIntegration:
         elif event_type == 'customer.subscription.deleted':
             await self._handle_subscription_deleted(event['data']['object'])
     
-    async def _handle_payment_succeeded(self, payment_intent: Dict[str, Any]):
+    async def _handle_payment_succeeded(self, payment_intent -> None: Dict[str, Any]) -> None:
         """Handle successful payment."""
         self.logger.info(f"Payment succeeded: {payment_intent['id']}")
         # Add custom logic here
     
-    async def _handle_payment_failed(self, payment_intent: Dict[str, Any]):
+    async def _handle_payment_failed(self, payment_intent -> None: Dict[str, Any]) -> None:
         """Handle failed payment."""
         self.logger.warning(f"Payment failed: {payment_intent['id']}")
         # Add custom logic here
     
-    async def _handle_subscription_created(self, subscription: Dict[str, Any]):
+    async def _handle_subscription_created(self, subscription -> None: Dict[str, Any]) -> None:
         """Handle subscription creation."""
         self.logger.info(f"Subscription created: {subscription['id']}")
         # Add custom logic here
     
-    async def _handle_subscription_deleted(self, subscription: Dict[str, Any]):
+    async def _handle_subscription_deleted(self, subscription -> None: Dict[str, Any]) -> None:
         """Handle subscription deletion."""
         self.logger.info(f"Subscription deleted: {subscription['id']}")
         # Add custom logic here
     
     # Event Handler Registration
-    def register_event_handler(self, event_type: str, handler: callable):
+    def register_event_handler(self, event_type -> None: str, handler -> None: callable) -> None:
         """Register event handler for webhook events."""
         if event_type not in self.event_handlers:
             self.event_handlers[event_type] = []
@@ -694,7 +694,7 @@ class StripeIntegration:
         
         self.logger.info(f"Registered event handler for: {event_type}")
     
-    def unregister_event_handler(self, event_type: str, handler: callable):
+    def unregister_event_handler(self, event_type -> None: str, handler -> None: callable) -> None:
         """Unregister event handler."""
         if event_type in self.event_handlers:
             try:
@@ -706,11 +706,11 @@ class StripeIntegration:
     # Metrics and Monitoring
     async def _update_metrics(
         self,
-        operation: str,
-        success: bool,
-        error: Optional[Exception] = None,
-        processing_time: float = 0.0
-    ):
+        operation -> None: str,
+        success -> None: bool,
+        error -> None: Optional[Exception] = None,
+        processing_time -> None: float = 0.0
+    ) -> None:
         """Update integration metrics."""
         self.metrics['total_requests'] += 1
         
@@ -779,7 +779,7 @@ class StripeIntegration:
 
 # Example usage
 if __name__ == "__main__":
-    async def main():
+    async def main() -> None:
         # Initialize Stripe integration
         stripe_integration = StripeIntegration(
             api_key="sk_test_your_stripe_key",

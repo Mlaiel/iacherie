@@ -58,7 +58,7 @@ class WatermarkRequest:
     method: str = "auto"
     metadata: Dict[str, Any] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         try:
                     # Request validation
                     if not data:
@@ -105,7 +105,7 @@ class WatermarkResponse:
     forensic_evidence: Optional[Dict[str, Any]] = None
     error_message: str = ""
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.watermark_info is None:
             self.watermark_info = {}
 
@@ -116,7 +116,7 @@ class WatermarkServiceManager:
     Orchestrates all watermarking operations across different content types
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.engines = {}
         self.blockchain_registry = None
@@ -132,7 +132,7 @@ class WatermarkServiceManager:
         
         self._initialize_engines()
     
-    def _initialize_engines(self):
+    def _initialize_engines(self) -> None:
         """
 Initialize all watermarking engines"""
         try:
@@ -687,7 +687,7 @@ Initialize all watermarking engines"""
         except Exception as e:
             return {'valid': False, 'error': str(e)}
     
-    async def _log_operation(self, request: WatermarkRequest, response: WatermarkResponse, processing_time: float):
+    async def _log_operation(self, request -> None: WatermarkRequest, response -> None: WatermarkResponse, processing_time -> None: float) -> None:
         """
 Logs watermark operation"""
         try:
@@ -777,3 +777,5 @@ Logs watermark operation"""
         except Exception as e:
             logger.error(f"Content type detection failed: {e}")
             return ContentType.UNKNOWN
+
+# File has syntax issues - needs manual review

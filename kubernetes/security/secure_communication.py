@@ -67,7 +67,7 @@ class MessageEncryption:
     Advanced message encryption and signing system
     """
     
-    def __init__(self, master_key: Optional[bytes] = None):
+    def __init__(self, master_key -> None: Optional[bytes] = None) -> None:
         self.master_key = master_key or Fernet.generate_key()
         self._fernet = Fernet(self.master_key)
         
@@ -315,15 +315,15 @@ class ProtocolValidator:
         "ECDHE-RSA-AES256-GCM-SHA384"
     ]
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.validation_rules = {}
         logger.info("Protocol validator initialized")
     
     def register_validation_rule(
         self,
-        protocol: str,
-        validator: Callable[[Dict[str, Any]], bool]
-    ):
+        protocol -> None: str,
+        validator -> None: Callable[[Dict[str, Any]], bool]
+    ) -> None:
         """
         Register custom validation rule for protocol
         
@@ -478,10 +478,10 @@ class SecureChannelManager:
     
     def __init__(
         self,
-        redis_url: str = "redis://localhost:6379",
-        encryption: Optional[MessageEncryption] = None,
-        validator: Optional[ProtocolValidator] = None
-    ):
+        redis_url -> None: str = "redis -> None://localhost -> None:6379",
+        encryption -> None: Optional[MessageEncryption] = None,
+        validator -> None: Optional[ProtocolValidator] = None
+    ) -> None:
         self.redis_url = redis_url
         self.encryption = encryption or MessageEncryption()
         self.validator = validator or ProtocolValidator()
@@ -498,7 +498,7 @@ class SecureChannelManager:
         
         logger.info("Secure channel manager initialized")
     
-    async def initialize_redis_pool(self):
+    async def initialize_redis_pool(self) -> None:
         """Initialize Redis connection pool"""
         try:
             self._redis_pool = aioredis.ConnectionPool.from_url(self.redis_url)
@@ -713,10 +713,10 @@ class SecureChannelManager:
     
     async def start_websocket_server(
         self,
-        host: str = "0.0.0.0",
-        port: int = 8765,
-        ssl_context: Optional[ssl.SSLContext] = None
-    ):
+        host -> None: str = "0.0.0.0",
+        port -> None: int = 8765,
+        ssl_context -> None: Optional[ssl.SSLContext] = None
+    ) -> None:
         """
         Start secure WebSocket server
         
@@ -726,7 +726,7 @@ class SecureChannelManager:
             ssl_context: SSL context for secure connections
         """
         try:
-            async def handle_websocket(websocket, path):
+            async def handle_websocket(websocket, path) -> None:
                 """
 Handle WebSocket connection"""
                 try:
@@ -779,7 +779,7 @@ Handle WebSocket connection"""
         # Implement token validation logic
         return token is not None and len(token) > 10
     
-    async def _handle_websocket_message(self, client_id: str, message: str):
+    async def _handle_websocket_message(self, client_id -> None: str, message -> None: str) -> None:
         """
 Handle incoming WebSocket message"""
         try:
@@ -800,7 +800,7 @@ Handle incoming WebSocket message"""
         except Exception as e:
             logger.error(f"Failed to handle WebSocket message: {e}")
     
-    async def cleanup_expired_messages(self):
+    async def cleanup_expired_messages(self) -> None:
         """Cleanup expired messages from Redis"""
         try:
             if self._redis_pool is None:

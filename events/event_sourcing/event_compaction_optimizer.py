@@ -137,7 +137,7 @@ class CompactionJob:
 class EventAnalyzer:
     """Analyzes events for compaction opportunities"""
     
-    def __init__(self, event_store: EventStoreInterface):
+    def __init__(self, event_store -> None: EventStoreInterface) -> None:
         self.event_store = event_store
     
     async def analyze_aggregate_events(self, aggregate_id: str) -> Dict[str, Any]:
@@ -392,7 +392,7 @@ class EventAnalyzer:
 class EventCompressor:
     """Handles event compression and decompression"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.compression_stats = {}
     
     def compress_events(self, events: List[DomainEvent], 
@@ -493,7 +493,7 @@ class EventCompressor:
 class CompactionExecutor:
     """Executes compaction operations"""
     
-    def __init__(self, event_store: EventStoreInterface, analyzer: EventAnalyzer):
+    def __init__(self, event_store -> None: EventStoreInterface, analyzer -> None: EventAnalyzer) -> None:
         self.event_store = event_store
         self.analyzer = analyzer
         self.compressor = EventCompressor()
@@ -673,7 +673,7 @@ class CompactionExecutor:
 class EventCompactionOptimizer:
     """Enterprise event compaction optimizer"""
     
-    def __init__(self, event_store: EventStoreInterface):
+    def __init__(self, event_store -> None: EventStoreInterface) -> None:
         self.event_store = event_store
         self.analyzer = EventAnalyzer(event_store)
         self.executor = CompactionExecutor(event_store, self.analyzer)
@@ -685,7 +685,7 @@ class EventCompactionOptimizer:
         # Initialize default rules
         self._initialize_default_rules()
     
-    def _initialize_default_rules(self):
+    def _initialize_default_rules(self) -> None:
         """Initialize default compaction rules"""
         # Time-based rule for old events
         self.compaction_rules.append(CompactionRule(

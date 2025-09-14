@@ -122,7 +122,7 @@ class GamificationIntelligenceHub:
     and offers strategic recommendations for maximizing user engagement and retention.
     """
     
-    def __init__(self, config: Optional[Dict] = None):
+    def __init__(self, config -> None: Optional[Dict] = None) -> None:
         """Initialize the gamification intelligence hub."""
         self.config = config or {}
         
@@ -144,7 +144,7 @@ class GamificationIntelligenceHub:
         
         logger.info("GamificationIntelligenceHub initialized")
     
-    async def start_intelligence_system(self):
+    async def start_intelligence_system(self) -> None:
         """Start the complete gamification intelligence system."""
         try:
             logger.info("Starting gamification intelligence system...")
@@ -373,7 +373,7 @@ class GamificationIntelligenceHub:
     
     # Private helper methods for AI intelligence
     
-    async def _initialize_intelligence_models(self):
+    async def _initialize_intelligence_models(self) -> None:
         """Initialize AI models for gamification intelligence."""
         self.intelligence_models = {
             'behavior_classifier': {
@@ -399,12 +399,12 @@ class GamificationIntelligenceHub:
         }
         logger.info("AI intelligence models initialized")
     
-    async def _load_user_profiles(self):
+    async def _load_user_profiles(self) -> None:
         """Load existing user profiles."""
         # Placeholder for loading profiles from database
         logger.info("User profiles loaded")
     
-    async def _update_user_profile(self, user_id: str, activity_data: Dict[str, Any], engagement_results: Dict[str, Any]):
+    async def _update_user_profile(self, user_id -> None: str, activity_data -> None: Dict[str, Any], engagement_results -> None: Dict[str, Any]) -> None:
         """Update user profile based on new activity data."""
         profile = await self._get_or_create_user_profile(user_id)
         
@@ -511,7 +511,7 @@ class GamificationIntelligenceHub:
     
     # Background intelligence loops
     
-    async def _intelligence_analysis_loop(self):
+    async def _intelligence_analysis_loop(self) -> None:
         """Background loop for continuous intelligence analysis."""
         while True:
             try:
@@ -522,7 +522,7 @@ class GamificationIntelligenceHub:
                 logger.error(f"Error in intelligence analysis loop: {e}")
                 await asyncio.sleep(300)
     
-    async def _recommendation_generation_loop(self):
+    async def _recommendation_generation_loop(self) -> None:
         """Background loop for recommendation generation."""
         while True:
             try:
@@ -533,7 +533,7 @@ class GamificationIntelligenceHub:
                 logger.error(f"Error in recommendation generation loop: {e}")
                 await asyncio.sleep(600)
     
-    async def _strategy_optimization_loop(self):
+    async def _strategy_optimization_loop(self) -> None:
         """Background loop for strategy optimization."""
         while True:
             try:
@@ -544,7 +544,7 @@ class GamificationIntelligenceHub:
                 logger.error(f"Error in strategy optimization loop: {e}")
                 await asyncio.sleep(1200)
     
-    async def _performance_tracking_loop(self):
+    async def _performance_tracking_loop(self) -> None:
         """Background loop for performance tracking."""
         while True:
             try:
@@ -703,7 +703,7 @@ class GamificationIntelligenceHub:
     
     # Background task implementations
     
-    async def _analyze_global_intelligence_patterns(self):
+    async def _analyze_global_intelligence_patterns(self) -> None:
         """Analyze global intelligence patterns."""
         try:
             # Collect global gamification data
@@ -753,15 +753,15 @@ class GamificationIntelligenceHub:
             logger.error(f"Error analyzing global intelligence patterns: {e}")
             raise
     
-    async def _generate_background_recommendations(self):
+    async def _generate_background_recommendations(self) -> None:
         """Generate background recommendations."""
         pass
     
-    async def _optimize_strategies_based_on_performance(self):
+    async def _optimize_strategies_based_on_performance(self) -> None:
         """Optimize strategies based on performance."""
         pass
     
-    async def _track_recommendation_performance(self):
+    async def _track_recommendation_performance(self) -> None:
         """Track recommendation performance."""
         pass
 

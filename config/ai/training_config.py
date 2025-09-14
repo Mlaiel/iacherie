@@ -165,7 +165,7 @@ class TrainingJob:
 class EnterpriseAITrainingConfiguration:
     """Enterprise-grade AI training configuration management"""
     
-    def __init__(self, level: str = "enterprise"):
+    def __init__(self, level -> None: str = "enterprise") -> None:
         """Initialize AI training configuration"""
         self.level = level
         self.training_jobs: Dict[str, TrainingJob] = {}
@@ -369,7 +369,7 @@ class EnterpriseAITrainingConfiguration:
             }
         }
     
-    def _initialize_training_pipelines(self):
+    def _initialize_training_pipelines(self) -> None:
         """Initialize default training pipelines for Ainflue business logic"""
         
         # Content Recommendation Model
@@ -508,7 +508,7 @@ class EnterpriseAITrainingConfiguration:
         
         logger.info(f"✅ Initialized {len(self.training_jobs)} default training pipelines")
     
-    def _setup_experiment_tracking(self):
+    def _setup_experiment_tracking(self) -> None:
         """Setup experiment tracking configuration"""
         self.experiment_tracking = {
             "wandb_config": {
@@ -625,7 +625,7 @@ class EnterpriseAITrainingConfiguration:
             logger.error(f"❌ Failed to start training job: {str(e)}")
             return False
     
-    def _initialize_experiment_tracking(self, job: TrainingJob):
+    def _initialize_experiment_tracking(self, job -> None: TrainingJob) -> None:
         """Initialize experiment tracking for a training job"""
         # This would integrate with actual experiment tracking systems
         experiment_config = {

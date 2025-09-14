@@ -57,7 +57,7 @@ class AudioCopyrightProtectionEvent(BaseEvent):
     expiration_date: Optional[datetime] = None
     protection_metadata: Dict[str, Any] = field(default_factory=dict)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.protection.copyright_applied",
             data={
@@ -91,7 +91,7 @@ class AudioRightsVerificationEvent(BaseEvent):
     rights_database_checked: List[str]
     verification_metadata: Dict[str, Any] = field(default_factory=dict)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.protection.rights_verification",
             data={
@@ -124,7 +124,7 @@ class AudioPiracyDetectionEvent(BaseEvent):
     automated_response: bool
     response_actions: List[str] = field(default_factory=list)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.protection.piracy_detected",
             data={
@@ -157,7 +157,7 @@ class AudioLicenseValidationEvent(BaseEvent):
     renewal_required: bool = False
     compliance_check: Dict[str, Any] = field(default_factory=dict)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.protection.license_validation",
             data={
@@ -189,7 +189,7 @@ class AudioWatermarkingEvent(BaseEvent):
     imperceptibility_score: float
     watermark_metadata: Dict[str, Any] = field(default_factory=dict)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.protection.watermarking",
             data={
@@ -222,7 +222,7 @@ class AudioCopyrightClaimEvent(BaseEvent):
     resolution_deadline: Optional[datetime] = None
     claim_metadata: Dict[str, Any] = field(default_factory=dict)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.protection.copyright_claim",
             data={
@@ -256,7 +256,7 @@ class AudioDMCARequestEvent(BaseEvent):
     response_deadline: datetime
     status: str  # received, processing, complied, disputed
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.protection.dmca_request",
             data={
@@ -290,7 +290,7 @@ class AudioRightsTransferEvent(BaseEvent):
     compensation: Optional[Dict[str, Any]] = None
     legal_documentation: List[Dict[str, Any]] = field(default_factory=list)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.protection.rights_transfer",
             data={
@@ -325,7 +325,7 @@ class AudioUsageAuthorizationEvent(BaseEvent):
     revoked: bool = False
     revocation_reason: Optional[str] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.protection.usage_authorization",
             data={
@@ -360,7 +360,7 @@ class AudioCopyrightViolationReportedEvent(BaseEvent):
     investigation_status: str  # pending, investigating, resolved, dismissed
     resolution_actions: List[str] = field(default_factory=list)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.protection.violation_reported",
             data={

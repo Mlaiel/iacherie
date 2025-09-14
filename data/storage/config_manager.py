@@ -229,7 +229,7 @@ class ConfigurationManager:
     validation, encryption, and hot-reload capabilities.
     """
     
-    def __init__(self, config_path: str = None, environment: EnvironmentType = None):
+    def __init__(self, config_path -> None: str = None, environment -> None: EnvironmentType = None) -> None:
         """
         Initialize ConfigurationManager.
         
@@ -326,7 +326,7 @@ class ConfigurationManager:
             os.chmod(key_file, 0o600)
             return key
     
-    def _initialize_configuration(self):
+    def _initialize_configuration(self) -> None:
         """Initialize configuration system"""
         try:
             # Load configuration
@@ -736,7 +736,7 @@ class ConfigurationManager:
         
         return config_data
     
-    def _set_nested_value(self, data: Dict, key_path: str, value: Any):
+    def _set_nested_value(self, data -> None: Dict, key_path -> None: str, value -> None: Any) -> None:
         """Set nested dictionary value using dot notation"""
         keys = key_path.split('.')
         current = data
@@ -808,7 +808,7 @@ Compare two configurations and return list of changes"""
             self.logger.error(f"Configuration validation error: {str(e)}")
             return False
     
-    def _initialize_schema_validator(self):
+    def _initialize_schema_validator(self) -> None:
         try:
             logger.info(f"Executing _initialize_schema_validator")
             
@@ -823,7 +823,7 @@ Compare two configurations and return list of changes"""
         except Exception as e:
             logger.error(f"_initialize_schema_validator failed: {e}")
             raise
-    def _cache_configuration(self):
+    def _cache_configuration(self) -> None:
         """
 Cache current configuration"""
         if self.current_config:
@@ -833,7 +833,7 @@ Cache current configuration"""
                 'timestamp': datetime.utcnow()
             }
     
-    def _backup_configuration(self):
+    def _backup_configuration(self) -> None:
         """Backup current configuration"""
         if not self.backup_enabled or not self.current_config:
             return
@@ -859,7 +859,7 @@ Cache current configuration"""
         except Exception as e:
             self.logger.error(f"Failed to backup configuration: {str(e)}")
     
-    async def _start_config_watcher(self):
+    async def _start_config_watcher(self) -> None:
         """Start configuration file watcher for hot reload"""
         while self.hot_reload_enabled:
             try:

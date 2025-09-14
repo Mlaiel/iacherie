@@ -296,7 +296,7 @@ class ImageProcessor:
     """
 Professional enterprise-grade image processing engine"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or self._get_default_config()
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
@@ -372,7 +372,7 @@ Professional enterprise-grade image processing engine"""
             'temp_dir': '/tmp/image_processor'
         }
     
-    def _initialize_engines(self):
+    def _initialize_engines(self) -> None:
         """
 Initialize professional image processing engines"""
         try:
@@ -400,7 +400,7 @@ Initialize professional image processing engines"""
             self.logger.error(f"Error initializing image engines: {str(e)}")
             raise
     
-    def _initialize_opencv_engines(self):
+    def _initialize_opencv_engines(self) -> None:
         """Initialize OpenCV-based processing engines"""
         # Object detection cascades
         self.face_cascade = cv2.CascadeClassifier(
@@ -423,7 +423,7 @@ Initialize professional image processing engines"""
             criteria=(cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_COUNT, 10, 0.03)
         )
     
-    def _initialize_feature_detectors(self):
+    def _initialize_feature_detectors(self) -> None:
         """
 Initialize feature detection algorithms"""
         # Corner and feature detectors
@@ -438,7 +438,7 @@ Initialize feature detection algorithms"""
         self.hough_line_params = {'rho': 1, 'theta': np.pi/180, 'threshold': 100}
         self.hough_circle_params = {'dp': 1, 'min_dist': 50, 'param1': 100, 'param2': 30}
     
-    def _initialize_color_engines(self):
+    def _initialize_color_engines(self) -> None:
         """
 Initialize color analysis and correction engines"""
         # Color space conversion matrices
@@ -463,7 +463,7 @@ Initialize color analysis and correction engines"""
             'shade': 7500
         }
     
-    def _initialize_enhancement_engines(self):
+    def _initialize_enhancement_engines(self) -> None:
         """
 Initialize image enhancement algorithms"""
         # Denoising algorithms
@@ -493,7 +493,7 @@ Initialize image enhancement algorithms"""
                 A.HueSaturationValue(hue_shift_limit=10, sat_shift_limit=20, val_shift_limit=10, p=0.5),
             ])
     
-    def _initialize_quality_engines(self):
+    def _initialize_quality_engines(self) -> None:
         """
 Initialize quality assessment engines"""
         # Quality metrics
@@ -513,7 +513,7 @@ Initialize quality assessment engines"""
             'clarity': 0.2
         }
     
-    def _load_ai_models(self):
+    def _load_ai_models(self) -> None:
         """
 Load AI models for professional processing"""
         try:
@@ -540,7 +540,7 @@ Load AI models for professional processing"""
         except Exception as e:
             self.logger.warning(f"AI model loading failed: {str(e)}")
     
-    def _setup_platform_profiles(self):
+    def _setup_platform_profiles(self) -> None:
         """Setup social media platform optimization profiles"""
         self.platform_profiles = {
             PlatformProfile.INSTAGRAM: {
@@ -1706,7 +1706,7 @@ Extract comprehensive image features"""
             for i, result in enumerate(results)
         ]
     
-    def cleanup(self):
+    def cleanup(self) -> None:
         """
 Cleanup temporary files and resources"""
         try:
@@ -1722,6 +1722,6 @@ Cleanup temporary files and resources"""
         except Exception as e:
             self.logger.warning(f"Cleanup failed: {str(e)}")
     
-    def __del__(self):
+    def __del__(self) -> None:
         """Destructor"""
         self.cleanup()

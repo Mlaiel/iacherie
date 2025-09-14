@@ -181,9 +181,9 @@ class SecretsConfig:
     
     def __init__(
         self,
-        config_file: Optional[str] = None,
-        environment: Union[str, Environment] = Environment.PRODUCTION
-    ):
+        config_file -> None: Optional[str] = None,
+        environment -> None: Union[str, Environment] = Environment.PRODUCTION
+    ) -> None:
         """
         Initialize secrets configuration.
         

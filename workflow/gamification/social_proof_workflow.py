@@ -59,7 +59,7 @@ class ProofEngagement:
 class SocialProofWorkflow:
     """AI-powered social proof workflow"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.metrics_collector = MetricsCollector()
         self.social_proofs: Dict[str, SocialProof] = {}
         self.proof_engagement: Dict[str, ProofEngagement] = {}

@@ -114,7 +114,7 @@ class ProducerMetrics:
 class AinflueBusinesPartitioner:
     """Custom partitioner for Ainflue business logic"""
     
-    def __init__(self, partition_count: int):
+    def __init__(self, partition_count -> None: int) -> None:
         self.partition_count = partition_count
     
     def partition(self, topic: str, key: Optional[str], value: Dict[str, Any]) -> int:
@@ -150,7 +150,7 @@ class AinflueBusinesPartitioner:
 class KafkaEnterpriseProducer:
     """High-performance enterprise Kafka producer"""
     
-    def __init__(self, config: KafkaProducerConfig, metrics_collector=None):
+    def __init__(self, config -> None: KafkaProducerConfig, metrics_collector=None) -> None:
         self.config = config
         self.metrics_collector = metrics_collector
         self.metrics = ProducerMetrics()
@@ -160,7 +160,7 @@ class KafkaEnterpriseProducer:
         self._shutdown_event = asyncio.Event()
         self._retry_task: Optional[asyncio.Task] = None
         
-    async def start(self):
+    async def start(self) -> None:
         """Start the producer"""
         try:
             # In a real implementation, this would initialize the actual Kafka producer
@@ -180,7 +180,7 @@ class KafkaEnterpriseProducer:
             logger.error(f"Failed to start Kafka producer: {e}")
             raise
     
-    async def stop(self):
+    async def stop(self) -> None:
         """Stop the producer gracefully"""
         try:
             logger.info("Stopping Kafka Enterprise Producer")
@@ -398,7 +398,7 @@ class KafkaEnterpriseProducer:
             logger.error(f"Failed to send message: {e}")
             raise
     
-    async def _flush_producer(self):
+    async def _flush_producer(self) -> None:
         """Flush producer buffers"""
         try:
             # In real implementation, this would flush the Kafka producer
@@ -407,7 +407,7 @@ class KafkaEnterpriseProducer:
         except Exception as e:
             logger.error(f"Error flushing producer: {e}")
     
-    async def _handle_retries(self):
+    async def _handle_retries(self) -> None:
         """Handle message retries"""
         try:
             while not self._shutdown_event.is_set():

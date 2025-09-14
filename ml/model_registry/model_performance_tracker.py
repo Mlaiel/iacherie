@@ -125,7 +125,7 @@ class TrackerConfig:
 class ModelPerformanceTracker:
     """🗄️ Tracker de performance de modèles ML"""
     
-    def __init__(self, config: TrackerConfig):
+    def __init__(self, config -> None: TrackerConfig) -> None:
         self.config = config
         self.tracker_id = str(uuid.uuid4())
         self.performance_history: List[ModelPerformanceSnapshot] = []
@@ -136,7 +136,7 @@ class ModelPerformanceTracker:
         
         logger.info(f"Model Performance Tracker initialized: {self.tracker_id}")
     
-    async def record_performance_snapshot(self, snapshot: ModelPerformanceSnapshot):
+    async def record_performance_snapshot(self, snapshot -> None: ModelPerformanceSnapshot) -> None:
         """Enregistre un snapshot de performance"""
         try:
             self.performance_history.append(snapshot)
@@ -163,7 +163,7 @@ class ModelPerformanceTracker:
             logger.error(f"Error recording performance snapshot: {e}")
             raise
     
-    async def _update_baselines(self):
+    async def _update_baselines(self) -> None:
         """Met à jour les métriques de baseline"""
         try:
             if len(self.performance_history) < 2:
@@ -211,7 +211,7 @@ class ModelPerformanceTracker:
         except Exception as e:
             logger.error(f"Error updating baselines: {e}")
     
-    async def _analyze_trends(self):
+    async def _analyze_trends(self) -> None:
         """Analyse les tendances de performance"""
         try:
             if len(self.performance_history) < 10:
@@ -224,7 +224,7 @@ class ModelPerformanceTracker:
         except Exception as e:
             logger.error(f"Error analyzing trends: {e}")
     
-    async def _analyze_metric_trend(self, metric_type: MetricType):
+    async def _analyze_metric_trend(self, metric_type -> None: MetricType) -> None:
         """Analyse la tendance d'une métrique spécifique"""
         try:
             # Extraire les valeurs et timestamps
@@ -288,7 +288,7 @@ class ModelPerformanceTracker:
         except Exception as e:
             logger.error(f"Error analyzing trend for {metric_type}: {e}")
     
-    async def _detect_degradation(self, snapshot: ModelPerformanceSnapshot):
+    async def _detect_degradation(self, snapshot -> None: ModelPerformanceSnapshot) -> None:
         """Détecte la dégradation de performance"""
         try:
             for metric_type, metric in snapshot.metrics.items():
@@ -297,9 +297,9 @@ class ModelPerformanceTracker:
         except Exception as e:
             logger.error(f"Error detecting degradation: {e}")
     
-    async def _check_metric_degradation(self, metric_type: MetricType, 
-                                       metric: PerformanceMetric, 
-                                       snapshot: ModelPerformanceSnapshot):
+    async def _check_metric_degradation(self, metric_type -> None: MetricType, 
+                                       metric -> None: PerformanceMetric, 
+                                       snapshot -> None: ModelPerformanceSnapshot) -> None:
         """Vérifie la dégradation d'une métrique spécifique"""
         try:
             # Obtenir la baseline appropriée
@@ -546,7 +546,7 @@ def create_model_performance_tracker(
     )
     return ModelPerformanceTracker(config)
 
-async def demo_performance_tracker():
+async def demo_performance_tracker() -> None:
     """Démo du tracker de performance"""
     tracker = create_model_performance_tracker("musician-classifier-v1")
     

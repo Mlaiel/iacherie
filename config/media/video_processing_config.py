@@ -58,7 +58,7 @@ class Resolution(str, Enum):
 class VideoProcessingConfiguration:
     """Video processing configuration"""
     
-    def __init__(self, level: VideoProcessingLevel = VideoProcessingLevel.ENTERPRISE):
+    def __init__(self, level -> None: VideoProcessingLevel = VideoProcessingLevel.ENTERPRISE) -> None:
         self.level = level
         self.format_config = self._get_format_config()
         self.quality_config = self._get_quality_config()

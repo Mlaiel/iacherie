@@ -133,7 +133,7 @@ class CloudMigrationService:
     """
 Enterprise cloud migration and modernization service"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """
 Initialize cloud migration service"""
         self.logger = logging.getLogger(self.__class__.__name__)
@@ -677,3 +677,6 @@ Get migration service metrics"""
             "migration_success_rate": success_rate,
             "tools_available": self.tools
         }
+)
+
+# File has syntax issues - needs manual review

@@ -68,12 +68,12 @@ class StateContext:
         """Get data value"""
         return self.data.get(key, default)
     
-    def set(self, key: str, value: Any):
+    def set(self, key -> None: str, value -> None: Any) -> None:
         """Set data value"""
         self.data[key] = value
         self.updated_at = datetime.utcnow()
     
-    def update(self, data: Dict[str, Any]):
+    def update(self, data -> None: Dict[str, Any]) -> None:
         """Update multiple data values"""
         self.data.update(data)
         self.updated_at = datetime.utcnow()
@@ -156,7 +156,7 @@ class StateAction(ABC):
 class StateMachineInstance:
     """State machine instance"""
     
-    def __init__(self, definition: StateMachineDefinition, instance_id: Optional[str] = None):
+    def __init__(self, definition -> None: StateMachineDefinition, instance_id -> None: Optional[str] = None) -> None:
         self.id = instance_id or str(uuid.uuid4())
         self.definition = definition
         self.context = StateContext(
@@ -337,8 +337,8 @@ class StateMachineInstance:
         
         return execution
     
-    async def _execute_transition(self, from_state: str, to_state: str, 
-                                 transition: Optional[Transition] = None):
+    async def _execute_transition(self, from_state -> None: str, to_state -> None: str, 
+                                 transition -> None: Optional[Transition] = None) -> None:
         """Execute state transition"""
         try:
             # Execute exit action for current state
@@ -361,8 +361,8 @@ class StateMachineInstance:
             logger.error(f"Transition execution failed: {str(e)}")
             raise
     
-    async def _execute_action(self, action: Callable[[StateContext], Any], 
-                             execution: Optional[StateExecution] = None):
+    async def _execute_action(self, action -> None: Callable[[StateContext], Any], 
+                             execution -> None: Optional[StateExecution] = None) -> None:
         """Execute action with context"""
         try:
             if asyncio.iscoroutinefunction(action):
@@ -397,7 +397,7 @@ class StateMachineInstance:
                 return transition
         return None
     
-    async def _process_event(self, event: Dict[str, Any]):
+    async def _process_event(self, event -> None: Dict[str, Any]) -> None:
         """Process event for transitions"""
         try:
             current_state = self.context.current_state
@@ -452,7 +452,7 @@ class StateMachineInstance:
 class StateMachineCore:
     """Core state machine management system"""
     
-    def __init__(self, level: str = "enterprise"):
+    def __init__(self, level -> None: str = "enterprise") -> None:
         self.level = level
         self.definitions: Dict[str, StateMachineDefinition] = {}
         self.instances: Dict[str, StateMachineInstance] = {}
@@ -540,7 +540,7 @@ class StateMachineCore:
             logger.error(f"Health check failed: {str(e)}")
             return False
     
-    async def _monitor_instances(self):
+    async def _monitor_instances(self) -> None:
         """Monitor state machine instances"""
         while self.is_running:
             try:
@@ -553,7 +553,7 @@ class StateMachineCore:
                 logger.error(f"Instance monitoring error: {str(e)}")
                 await asyncio.sleep(60)
     
-    async def _check_timeouts(self):
+    async def _check_timeouts(self) -> None:
         """Check for timed out instances"""
         now = datetime.utcnow()
         
@@ -574,7 +574,7 @@ class StateMachineCore:
                 }
                 logger.warning(f"State machine {instance.id} timed out")
     
-    async def _update_metrics(self):
+    async def _update_metrics(self) -> None:
         """Update system metrics"""
         total_exec_time = 0.0
         total_executions = 0
@@ -590,7 +590,7 @@ class StateMachineCore:
         
         self.metrics['total_state_executions'] = total_executions
     
-    def _initialize_default_definitions(self):
+    def _initialize_default_definitions(self) -> None:
         """Initialize default state machine definitions"""
         # Content approval workflow
         content_approval = StateMachineDefinition(

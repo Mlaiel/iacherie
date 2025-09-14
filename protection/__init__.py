@@ -86,7 +86,7 @@ class ContentProtectionSuite:
     Master orchestrator for the complete content protection ecosystem
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.services = {}
         self.is_initialized = False
@@ -198,10 +198,10 @@ class ContentProtectionService:
     including fingerprinting, monitoring, enforcement, and monetization.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the content protection service"""
         self.active = True
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the Content Protection Service.
         

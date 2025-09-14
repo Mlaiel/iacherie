@@ -50,7 +50,7 @@ class GPUCapabilities:
 class GPUOptimizer:
     """Professional GPU optimization system"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize GPU optimizer"""
         self.config = config or {}
         self.gpu_capabilities = self._detect_gpu_capabilities()

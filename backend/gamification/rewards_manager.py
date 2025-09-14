@@ -147,7 +147,7 @@ class RewardsManager:
     calculation, distribution, and analytics with multi-currency support.
     """
     
-    def __init__(self, database_connection=None, cache_client=None):
+    def __init__(self, database_connection=None, cache_client=None) -> None:
         """Initialize the rewards manager."""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self.db = database_connection

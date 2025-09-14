@@ -96,7 +96,7 @@ class AIInsight:
 class EnterpriseDashboard:
     """Enterprise MongoDB dashboard with multi-role expert capabilities."""
     
-    def __init__(self, database, config: Dict[str, Any] = None):
+    def __init__(self, database, config -> None: Dict[str, Any] = None) -> None:
         """Initialize enterprise dashboard.
         
         Args:
@@ -122,7 +122,7 @@ class EnterpriseDashboard:
         # Expert role implementations
         self._initialize_expert_systems()
     
-    def _initialize_expert_systems(self):
+    def _initialize_expert_systems(self) -> None:
         """Initialize all expert role systems."""
         logger.info("Initializing enterprise expert systems")
         
@@ -192,7 +192,7 @@ class EnterpriseDashboard:
         if HAS_ML_LIBS:
             self._initialize_ml_models()
     
-    def _initialize_ml_models(self):
+    def _initialize_ml_models(self) -> None:
         """Initialize machine learning models for predictive analytics."""
         logger.info("Initializing ML models for predictive analytics")
         
@@ -208,7 +208,7 @@ class EnterpriseDashboard:
         
         logger.info("ML models initialized successfully")
     
-    async def start_monitoring(self):
+    async def start_monitoring(self) -> None:
         """Start real-time monitoring (DevOps role)."""
         if self._monitoring_active:
             logger.warning("Monitoring already active")
@@ -218,7 +218,7 @@ class EnterpriseDashboard:
         self._monitoring_task = asyncio.create_task(self._monitoring_loop())
         logger.info("Enterprise monitoring started")
     
-    async def stop_monitoring(self):
+    async def stop_monitoring(self) -> None:
         """Stop real-time monitoring."""
         self._monitoring_active = False
         if self._monitoring_task:
@@ -229,7 +229,7 @@ class EnterpriseDashboard:
                 pass
         logger.info("Enterprise monitoring stopped")
     
-    async def _monitoring_loop(self):
+    async def _monitoring_loop(self) -> None:
         """Main monitoring loop combining all expert roles."""
         while self._monitoring_active:
             try:
@@ -247,7 +247,7 @@ class EnterpriseDashboard:
                 logger.error(f"Error in monitoring loop: {e}")
                 await asyncio.sleep(5)
     
-    async def _collect_performance_metrics(self):
+    async def _collect_performance_metrics(self) -> None:
         """Collect performance metrics (Backend Senior + DBA roles)."""
         try:
             # Database performance metrics
@@ -300,7 +300,7 @@ class EnterpriseDashboard:
         except Exception as e:
             logger.error(f"Failed to collect performance metrics: {e}")
     
-    async def _analyze_security_threats(self):
+    async def _analyze_security_threats(self) -> None:
         """Analyze security threats and compliance (Security role)."""
         try:
             # Check for suspicious activity patterns
@@ -333,7 +333,7 @@ class EnterpriseDashboard:
         except Exception as e:
             logger.error(f"Failed to analyze security threats: {e}")
     
-    async def _monitor_service_health(self):
+    async def _monitor_service_health(self) -> None:
         """Monitor microservices health (Microservices role)."""
         try:
             # Check database connectivity
@@ -352,7 +352,7 @@ class EnterpriseDashboard:
         except Exception as e:
             logger.error(f"Failed to monitor service health: {e}")
     
-    async def _generate_ai_insights(self):
+    async def _generate_ai_insights(self) -> None:
         """Generate AI-driven insights (Lead Dev IA + IA Prompt Engineer roles)."""
         try:
             if not HAS_ML_LIBS:
@@ -382,7 +382,7 @@ class EnterpriseDashboard:
         except Exception as e:
             logger.error(f"Failed to generate AI insights: {e}")
     
-    async def _optimize_performance(self):
+    async def _optimize_performance(self) -> None:
         """Optimize system performance (ML Engineer + DBA roles)."""
         try:
             # Query optimization recommendations
@@ -409,7 +409,7 @@ class EnterpriseDashboard:
         except Exception as e:
             logger.error(f"Failed to optimize performance: {e}")
     
-    def _add_metric(self, metric: PerformanceMetric):
+    def _add_metric(self, metric -> None: PerformanceMetric) -> None:
         """Add performance metric to buffer."""
         self._metrics_buffer.append(metric)
         
@@ -429,7 +429,7 @@ class EnterpriseDashboard:
                 metric.category
             ))
     
-    async def _create_alert(self, severity: AlertSeverity, title: str, description: str, category: str):
+    async def _create_alert(self, severity -> None: AlertSeverity, title -> None: str, description -> None: str, category -> None: str) -> None:
         """Create system alert."""
         alert = Alert(
             alert_id=f"alert_{int(time.time())}_{len(self._alerts)}",
@@ -558,7 +558,7 @@ class EnterpriseDashboard:
         except Exception:
             return False
     
-    async def _check_compliance_status(self):
+    async def _check_compliance_status(self) -> None:
         """Check compliance status."""
         self._security_monitor['compliance_status'] = {
             'gdpr_compliant': True,
@@ -678,7 +678,7 @@ class EnterpriseDashboard:
         # This would analyze actual index usage statistics
         return ["CREATE INDEX idx_user_created_at ON users(created_at)"]
     
-    async def _update_performance_predictions(self):
+    async def _update_performance_predictions(self) -> None:
         """Update ML-based performance predictions."""
         if not HAS_ML_LIBS:
             return

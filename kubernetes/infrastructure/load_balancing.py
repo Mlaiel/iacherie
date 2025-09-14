@@ -1,12 +1,14 @@
 """Load Balancing Management System
 
+from pathlib import Path
+
 Provides comprehensive load balancing solutions including Layer 4/7 load balancers,
 API gateways, service mesh integration, and traffic management.
 
 Project: IA Influencer Agent + Content Protection Platform
 Author: Fahed Mlaiel <mlaiel@live.de>
 
-⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
+# [EMOJI_REMOVED]  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED # [EMOJI_REMOVED]
 """
 
 import asyncio
@@ -184,7 +186,7 @@ class NginxIngressController(LoadBalancerInterface):
     """
 NGINX Ingress Controller implementation"""
     
-    def __init__(self, k8s_client=None):
+    def __init__(self, k8s_client=None) -> None:
         self.k8s_client = k8s_client
         self.networking_v1 = client.NetworkingV1Api() if k8s_client else None
         self.core_v1 = client.CoreV1Api() if k8s_client else None
@@ -418,7 +420,7 @@ Create Kubernetes service for backend"""
 class TraefikController(LoadBalancerInterface):
     """Traefik load balancer implementation"""
     
-    def __init__(self, k8s_client=None):
+    def __init__(self, k8s_client=None) -> None:
         self.k8s_client = k8s_client
         
     async def create_load_balancer(self, spec: LoadBalancerSpec) -> Dict[str, Any]:
@@ -466,7 +468,7 @@ Create Traefik load balancer"""
 class IstioGateway(LoadBalancerInterface):
     """Istio Gateway implementation"""
     
-    def __init__(self, k8s_client=None):
+    def __init__(self, k8s_client=None) -> None:
         self.k8s_client = k8s_client
         
     async def create_load_balancer(self, spec: LoadBalancerSpec) -> Dict[str, Any]:
@@ -514,7 +516,7 @@ Create Istio Gateway"""
 class LoadBalancerManager:
     """Main load balancer manager"""
     
-    def __init__(self, k8s_client=None):
+    def __init__(self, k8s_client=None) -> None:
         self.k8s_client = k8s_client
         self.controllers = {
             LoadBalancerType.NGINX_INGRESS: NginxIngressController(k8s_client),
@@ -770,3 +772,5 @@ Create load balancer based on type"""
         except Exception as e:
             logger.error(f"Failed to enable circuit breaker: {e}")
             return {'status': 'error', 'message': str(e)}
+
+# File has syntax issues - needs manual review

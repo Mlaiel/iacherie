@@ -122,7 +122,7 @@ class ContentQualityScore:
     assessment_time: datetime = field(default_factory=datetime.utcnow)
     metadata: Dict[str, Any] = field(default_factory=dict)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if not 0 <= self.overall_score <= 100:
             raise ValueError("Overall score must be between 0 and 100")
 
@@ -161,7 +161,7 @@ class OptimizationRecommendation:
     estimated_effort: str  # "low", "medium", "high"
     expected_impact: str   # "low", "medium", "high"
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if not self.recommendation_id:
             self.recommendation_id = str(uuid.uuid4())
 
@@ -171,7 +171,7 @@ class ContentAssessment:
     performance benchmarking, and optimization recommendations.
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """
         Initialize the content assessment system.
         
@@ -589,7 +589,7 @@ class ContentAssessment:
     
     # Private helper methods
     
-    async def _load_quality_baselines(self):
+    async def _load_quality_baselines(self) -> None:
         """Load quality baselines for different content formats"""
         # Default quality baselines
         default_baselines = {
@@ -621,7 +621,7 @@ class ContentAssessment:
                 self.quality_baselines[content_format][ContentQualityDimension.AUDIO_QUALITY] = 0.0
                 self.quality_baselines[content_format][ContentQualityDimension.VIDEO_QUALITY] = 0.0
     
-    async def _load_performance_baselines(self):
+    async def _load_performance_baselines(self) -> None:
         """Load performance baselines for different content formats"""
         # Default performance baselines
         default_baselines = {
@@ -647,7 +647,7 @@ class ContentAssessment:
                 self.benchmark_baselines[content_format][PerformanceMetric.RESPONSE_TIME_MS] = 1000.0
                 self.benchmark_baselines[content_format][PerformanceMetric.MEMORY_USAGE_MB] = 512.0
     
-    async def _initialize_assessment_models(self):
+    async def _initialize_assessment_models(self) -> None:
         """Initialize assessment models and algorithms"""
         # This would load ML models for quality assessment
         # For now, we'll use algorithmic approaches
@@ -753,7 +753,7 @@ class ContentAssessment:
 class ContentQualityAssessor:
     """Content quality assessment engine"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.logger = logger
     
@@ -1044,7 +1044,7 @@ class ContentQualityAssessor:
 class PerformanceBenchmark:
     """Performance benchmarking engine"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.logger = logger
     
@@ -1193,7 +1193,7 @@ class PerformanceBenchmark:
             sample_size=operations
         )
     
-    async def _simulate_content_processing(self, content_data: Any, content_format: ContentFormat):
+    async def _simulate_content_processing(self, content_data -> None: Any, content_format -> None: ContentFormat) -> None:
         """Simulate content processing work"""
         # Simulate different processing times based on format
         if content_format.value.startswith('video_'):

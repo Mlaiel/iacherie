@@ -75,8 +75,8 @@ class LoadBalancer:
     """Enterprise-grade MongoDB load balancer with intelligent routing."""
     
     def __init__(self, 
-                 nodes: List[Dict[str, Any]], 
-                 strategy: LoadBalancingStrategy = LoadBalancingStrategy.INTELLIGENT):
+                 nodes -> None: List[Dict[str, Any]], 
+                 strategy -> None: LoadBalancingStrategy = LoadBalancingStrategy.INTELLIGENT) -> None:
         """Initialize load balancer."""
         if not MONGODB_AVAILABLE:
             raise ImportError("PyMongo is required for load balancing")
@@ -100,7 +100,7 @@ class LoadBalancer:
         # Start monitoring
         self._start_monitoring()
     
-    def _add_node(self, node_config: Dict[str, Any]):
+    def _add_node(self, node_config -> None: Dict[str, Any]) -> None:
         """Add a node to the load balancer."""
         node_id = f"{node_config['host']}:{node_config['port']}"
         
@@ -290,20 +290,20 @@ class LoadBalancer:
                 return node_id
         return None
     
-    def _update_connection_metrics(self, node_id: str):
+    def _update_connection_metrics(self, node_id -> None: str) -> None:
         """Update connection metrics for a node."""
         if node_id in self.nodes:
             self.nodes[node_id].active_connections += 1
     
-    def release_connection(self, node_id: str):
+    def release_connection(self, node_id -> None: str) -> None:
         """Release a connection back to the pool."""
         if node_id in self.nodes:
             self.nodes[node_id].active_connections = max(0, 
                 self.nodes[node_id].active_connections - 1)
     
-    def _start_monitoring(self):
+    def _start_monitoring(self) -> None:
         """Start background monitoring of node health and metrics."""
-        def monitor():
+        def monitor() -> None:
             while True:
                 try:
                     self._update_node_metrics()
@@ -316,7 +316,7 @@ class LoadBalancer:
         monitor_thread.start()
         logger.info("Started load balancer monitoring")
     
-    def _update_node_metrics(self):
+    def _update_node_metrics(self) -> None:
         """Update metrics for all nodes."""
         for node_id, client in self.connection_pools.items():
             try:
@@ -359,7 +359,7 @@ class LoadBalancer:
                 self.nodes[node_id].available = False
                 self.nodes[node_id].error_rate += 0.1
     
-    def _cleanup_old_metrics(self):
+    def _cleanup_old_metrics(self) -> None:
         """Clean up old metrics data."""
         cutoff_time = datetime.now() - timedelta(seconds=self.metrics_window)
         
@@ -391,11 +391,11 @@ class LoadBalancer:
             "last_updated": datetime.now()
         }
     
-    def add_node(self, node_config: Dict[str, Any]):
+    def add_node(self, node_config -> None: Dict[str, Any]) -> None:
         """Add a new node to the load balancer."""
         self._add_node(node_config)
     
-    def remove_node(self, host: str, port: int):
+    def remove_node(self, host -> None: str, port -> None: int) -> None:
         """Remove a node from the load balancer."""
         node_id = f"{host}:{port}"
         
@@ -411,14 +411,14 @@ class LoadBalancer:
             
             logger.info(f"Removed node from load balancer: {node_id}")
     
-    def set_node_weight(self, host: str, port: int, weight: float):
+    def set_node_weight(self, host -> None: str, port -> None: int, weight -> None: float) -> None:
         """Set the weight for a specific node."""
         node_id = f"{host}:{port}"
         if node_id in self.nodes:
             self.nodes[node_id].weight = weight
             logger.info(f"Updated weight for node {node_id}: {weight}")
     
-    def close(self):
+    def close(self) -> None:
         """Close all connection pools."""
         for client in self.connection_pools.values():
             client.close()

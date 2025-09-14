@@ -128,7 +128,7 @@ class GeospatialIntelligenceEngine:
     """
 Ultra-advanced geospatial intelligence and surveillance system."""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """
 Initialize the geospatial intelligence engine."""
         self.config = config
@@ -153,7 +153,7 @@ Initialize the geospatial intelligence engine."""
         
         logger.info("Geospatial Intelligence Engine initialized")
 
-    async def initialize(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    async def initialize(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         """Initialize geospatial engine with dependencies."""
         self.redis_client = redis_client
         self.db_session = db_session
@@ -169,7 +169,7 @@ Initialize the geospatial intelligence engine."""
         
         logger.info("Geospatial Intelligence Engine fully initialized")
 
-    async def _initialize_geoip_database(self):
+    async def _initialize_geoip_database(self) -> None:
         """Initialize GeoIP database for location resolution."""
         try:
             # In production, use actual GeoIP2 database file
@@ -186,7 +186,7 @@ Initialize the geospatial intelligence engine."""
             logger.error(f"Failed to initialize GeoIP database: {e}")
             self._geoip_db = None
 
-    async def _load_jurisdiction_profiles(self):
+    async def _load_jurisdiction_profiles(self) -> None:
         """Load comprehensive jurisdiction profiles."""
         try:
             # Load jurisdiction data (in production, this would come from a database)
@@ -1251,7 +1251,7 @@ Calculate coordination score for territorial cluster."""
             logger.error(f"Failed to create threat heat map: {e}")
             return ""
 
-    async def _start_geospatial_monitoring(self):
+    async def _start_geospatial_monitoring(self) -> None:
         """Start continuous geospatial monitoring."""
         try:
             self._geospatial_monitoring_active = True
@@ -1264,7 +1264,7 @@ Calculate coordination score for territorial cluster."""
         except Exception as e:
             logger.error(f"Failed to start geospatial monitoring: {e}")
 
-    async def _geospatial_monitoring_loop(self):
+    async def _geospatial_monitoring_loop(self) -> None:
         """Main geospatial monitoring loop."""
         try:
             while self._geospatial_monitoring_active:
@@ -1285,7 +1285,7 @@ Calculate coordination score for territorial cluster."""
         except Exception as e:
             logger.error(f"Geospatial monitoring loop error: {e}")
 
-    async def _perform_periodic_analysis(self):
+    async def _perform_periodic_analysis(self) -> None:
         """Perform periodic geospatial analysis."""
         try:
             # Generate intelligence report
@@ -1298,7 +1298,7 @@ Calculate coordination score for territorial cluster."""
         except Exception as e:
             logger.error(f"Failed to perform periodic analysis: {e}")
 
-    async def _handle_high_risk_situation(self, report: Dict[str, Any]):
+    async def _handle_high_risk_situation(self, report -> None: Dict[str, Any]) -> None:
         """Handle high-risk geospatial situations."""
         try:
             alert_data = {
@@ -1320,7 +1320,7 @@ Calculate coordination score for territorial cluster."""
         except Exception as e:
             logger.error(f"Failed to handle high-risk situation: {e}")
 
-    async def _cleanup_old_data(self):
+    async def _cleanup_old_data(self) -> None:
         """Clean up old geospatial data."""
         try:
             cutoff_time = datetime.utcnow() - timedelta(days=30)
@@ -1411,7 +1411,7 @@ Calculate coordination score for territorial cluster."""
         
         return [{"country": country, "threat_count": count} for country, count in trending]
 
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Shutdown the geospatial intelligence engine."""
         logger.info("Shutting down Geospatial Intelligence Engine...")
         

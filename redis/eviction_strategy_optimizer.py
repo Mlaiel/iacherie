@@ -1,3 +1,8 @@
+"""
+Eviction Strategy Optimizer module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
@@ -94,7 +99,7 @@ class EvictionStrategyOptimizer:
     **DBA**: Optimisation mémoire et gestion stockage intelligent
     """
     
-    def __init__(self, redis_pool, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, redis_pool, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.redis_pool = redis_pool
         self.config = config or self._get_default_config()
         
@@ -144,7 +149,7 @@ class EvictionStrategyOptimizer:
             }
         }
     
-    async def initialize_ml_model(self):
+    async def initialize_ml_model(self) -> None:
         """**ML Engineer**: Initialisation modèle ML éviction"""
         try:
             self.ml_model = GradientBoostingClassifier(
@@ -163,7 +168,7 @@ class EvictionStrategyOptimizer:
         except Exception as e:
             logger.error(f"❌ Erreur initialisation ML éviction: {e}")
     
-    async def _train_initial_model(self):
+    async def _train_initial_model(self) -> None:
         """**ML Engineer**: Entraînement initial avec données simulées"""
         try:
             # Génération données d'entraînement
@@ -204,7 +209,7 @@ class EvictionStrategyOptimizer:
         except Exception as e:
             logger.error(f"❌ Erreur entraînement ML éviction: {e}")
     
-    async def register_cache_item(self, key: str, size_bytes: int, ttl_seconds: Optional[int] = None):
+    async def register_cache_item(self, key -> None: str, size_bytes -> None: int, ttl_seconds -> None: Optional[int] = None) -> None:
         """**Backend Senior**: Enregistrement nouvel élément cache"""
         try:
             current_time = time.time()
@@ -230,7 +235,7 @@ class EvictionStrategyOptimizer:
         except Exception as e:
             logger.error(f"❌ Erreur enregistrement cache {key}: {e}")
     
-    async def update_access_metrics(self, key: str, hit: bool = True):
+    async def update_access_metrics(self, key -> None: str, hit -> None: bool = True) -> None:
         """**DBA**: Mise à jour métriques d'accès"""
         if key in self.cache_items:
             item = self.cache_items[key]
@@ -588,7 +593,7 @@ class EvictionStrategyOptimizer:
             logger.error(f"❌ Erreur éviction {key}: {e}")
             return False
     
-    async def _update_strategy_performance(self, strategy: EvictionStrategy, result: Dict[str, Any]):
+    async def _update_strategy_performance(self, strategy -> None: EvictionStrategy, result -> None: Dict[str, Any]) -> None:
         """**ML Engineer**: Mise à jour performance stratégies"""
         
         performance_score = result['efficiency'] * 0.5 + (1.0 - result['execution_time'] / 10.0) * 0.5
@@ -663,7 +668,7 @@ class EvictionStrategyOptimizer:
         }
 
 # Factory function
-async def create_eviction_optimizer(redis_pool, config: Optional[Dict[str, Any]] = None):
+async def create_eviction_optimizer(redis_pool, config -> None: Optional[Dict[str, Any]] = None) -> None:
     """**Lead Dev IA**: Factory création optimiseur éviction"""
     optimizer = EvictionStrategyOptimizer(redis_pool, config)
     
@@ -673,12 +678,13 @@ async def create_eviction_optimizer(redis_pool, config: Optional[Dict[str, Any]]
     return optimizer
 
 if __name__ == "__main__":
-    async def demo():
+    async def demo() -> None:
         """Démonstration Eviction Strategy Optimizer"""
         
         # Configuration Redis simulée
         class MockRedisPool:
-            def get_connection(self):
+    """MockRedisPool: class implementation"""
+            def get_connection(self) -> None:
                 from unittest.mock import AsyncMock
                 mock = AsyncMock()
                 mock.delete.return_value = 1

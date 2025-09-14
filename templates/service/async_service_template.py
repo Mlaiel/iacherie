@@ -67,7 +67,7 @@ class AsyncTaskRequest(BaseModel):
     callback_url: Optional[str] = None
     metadata: Dict[str, Any] = Field(default_factory=dict)
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if not self.task_id:
             self.task_id = str(uuid.uuid4())
 
@@ -113,7 +113,7 @@ class TaskContext:
 class AsyncTaskManager:
     """Manager for async task lifecycle"""
     
-    def __init__(self, redis_client, cache_manager):
+    def __init__(self, redis_client, cache_manager) -> None:
         self.redis = redis_client
         self.cache = cache_manager
         self.running_tasks: Dict[str, asyncio.Task] = {}
@@ -335,10 +335,10 @@ class {{service_class_name}}(BaseService):
     
     def __init__(
         self,
-        name: str = "{{service_name}}",
-        config: Optional[AsyncOperationConfig] = None,
+        name -> None: str = "{{service_name}}",
+        config -> None: Optional[AsyncOperationConfig] = None,
         **kwargs
-    ):
+    ) -> None:
         super().__init__(name=name, **kwargs)
         self.config = config or AsyncOperationConfig()
         
@@ -872,3 +872,5 @@ class {{service_class_name}}(BaseService):
                 "sync_external"
             ]
         }
+
+# File has syntax issues - needs manual review

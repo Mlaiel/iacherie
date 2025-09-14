@@ -58,7 +58,7 @@ class AudioUploadStartedEvent(BaseEvent):
     total_chunks: int = 0
     metadata: Dict[str, Any] = field(default_factory=dict)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.upload.started",
             data={
@@ -91,7 +91,7 @@ class AudioUploadProgressEvent(BaseEvent):
     current_chunk: int
     total_chunks: int
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.upload.progress",
             data={
@@ -132,7 +132,7 @@ class AudioUploadCompletedEvent(BaseEvent):
     upload_session_id: str
     metadata: Dict[str, Any] = field(default_factory=dict)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.upload.completed",
             data={
@@ -171,7 +171,7 @@ class AudioUploadFailedEvent(BaseEvent):
     is_retryable: bool
     suggested_action: str
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.upload.failed",
             data={
@@ -208,7 +208,7 @@ class AudioUploadValidationEvent(BaseEvent):
     errors: List[Dict[str, Any]] = field(default_factory=list)
     recommendations: List[str] = field(default_factory=list)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.upload.validation",
             data={
@@ -241,7 +241,7 @@ class AudioUploadSecurityScanEvent(BaseEvent):
     quarantine_required: bool = False
     scan_details: Dict[str, Any] = field(default_factory=dict)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.upload.security_scan",
             data={
@@ -277,7 +277,7 @@ class AudioUploadMetadataExtractionEvent(BaseEvent):
     recording_location: Optional[Dict[str, Any]] = None
     equipment_info: Optional[Dict[str, Any]] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.upload.metadata_extracted",
             data={
@@ -313,7 +313,7 @@ class AudioUploadThumbnailGenerationEvent(BaseEvent):
     waveform_format: str = "svg"
     error_message: Optional[str] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.upload.thumbnail_generation",
             data={

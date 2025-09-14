@@ -50,7 +50,7 @@ class FailoverEvent:
 class FailoverHandler:
     """Enterprise-grade automatic failover and recovery system."""
     
-    def __init__(self, connection_string: str, replica_set_name: str):
+    def __init__(self, connection_string -> None: str, replica_set_name -> None: str) -> None:
         """Initialize failover handler."""
         if not MONGODB_AVAILABLE:
             raise ImportError("PyMongo is required for failover handling")
@@ -73,7 +73,7 @@ class FailoverHandler:
         self.failover_in_progress = False
         self.failover_history: List[FailoverEvent] = []
     
-    async def start_monitoring(self):
+    async def start_monitoring(self) -> None:
         """Start continuous cluster health monitoring."""
         self.monitoring_active = True
         logger.info("Starting cluster health monitoring")
@@ -86,16 +86,16 @@ class FailoverHandler:
                 logger.error(f"Error in health monitoring: {e}")
                 await asyncio.sleep(self.health_check_interval)
     
-    def stop_monitoring(self):
+    def stop_monitoring(self) -> None:
         """Stop cluster health monitoring."""
         self.monitoring_active = False
         logger.info("Stopped cluster health monitoring")
     
-    def add_failover_callback(self, callback: Callable[[FailoverEvent], None]):
+    def add_failover_callback(self, callback -> None: Callable[[FailoverEvent], None]) -> None:
         """Add callback function to be executed on failover events."""
         self.failover_callbacks.append(callback)
     
-    async def _check_cluster_health(self):
+    async def _check_cluster_health(self) -> None:
         """Perform comprehensive cluster health check."""
         try:
             if not self.client:
@@ -125,7 +125,7 @@ class FailoverHandler:
             logger.error(f"Health check failed: {e}")
             await self._handle_connection_failure()
     
-    async def _handle_primary_change(self, old_primary: Optional[str], new_primary: Optional[str]):
+    async def _handle_primary_change(self, old_primary -> None: Optional[str], new_primary -> None: Optional[str]) -> None:
         """Handle primary node changes."""
         if not new_primary:
             logger.critical("No primary node available - cluster in critical state")
@@ -139,7 +139,7 @@ class FailoverHandler:
             trigger = await self._determine_failover_cause(old_primary, new_primary)
             await self._trigger_failover(trigger, old_primary, new_primary)
     
-    async def _check_for_issues(self, status: Dict[str, Any]):
+    async def _check_for_issues(self, status -> None: Dict[str, Any]) -> None:
         """Check for various cluster issues that might require intervention."""
         # Check replication lag
         max_lag = self._calculate_max_replication_lag(status)
@@ -163,9 +163,9 @@ class FailoverHandler:
             await self._trigger_failover(FailoverTrigger.NETWORK_PARTITION, primary, None)
     
     async def _trigger_failover(self, 
-                               trigger: FailoverTrigger, 
-                               old_primary: Optional[str], 
-                               new_primary: Optional[str]):
+                               trigger -> None: FailoverTrigger, 
+                               old_primary -> None: Optional[str], 
+                               new_primary -> None: Optional[str]) -> None:
         """Trigger failover process."""
         if self.failover_in_progress:
             logger.info("Failover already in progress, skipping")
@@ -226,7 +226,7 @@ class FailoverHandler:
         finally:
             self.failover_in_progress = False
     
-    async def _handle_primary_failure(self):
+    async def _handle_primary_failure(self) -> None:
         """Handle primary node failure."""
         logger.info("Handling primary node failure")
         
@@ -240,7 +240,7 @@ class FailoverHandler:
         # Trigger priority-based election
         await self._trigger_election()
     
-    async def _handle_network_partition(self):
+    async def _handle_network_partition(self) -> None:
         """Handle network partition scenarios."""
         logger.info("Handling network partition")
         
@@ -248,7 +248,7 @@ class FailoverHandler:
         # This might involve checking multiple connection paths
         await self._attempt_reconnection()
     
-    async def _handle_performance_issue(self):
+    async def _handle_performance_issue(self) -> None:
         """Handle performance-related failover."""
         logger.info("Handling performance issue")
         
@@ -281,7 +281,7 @@ class FailoverHandler:
         logger.error("Timeout waiting for new primary election")
         return None
     
-    async def _trigger_election(self):
+    async def _trigger_election(self) -> None:
         """Trigger a new primary election."""
         try:
             # This would implement custom election logic if needed
@@ -290,7 +290,7 @@ class FailoverHandler:
         except Exception as e:
             logger.error(f"Failed to trigger election: {e}")
     
-    async def _attempt_reconnection(self):
+    async def _attempt_reconnection(self) -> None:
         """Attempt to reconnect to the cluster."""
         for attempt in range(self.retry_attempts):
             try:
@@ -317,12 +317,12 @@ class FailoverHandler:
         logger.error("All reconnection attempts failed")
         return False
     
-    async def _handle_network_issues(self):
+    async def _handle_network_issues(self) -> None:
         """Handle network connectivity issues."""
         logger.warning("Handling network issues")
         await self._attempt_reconnection()
     
-    async def _handle_connection_failure(self):
+    async def _handle_connection_failure(self) -> None:
         """Handle general connection failures."""
         logger.warning("Handling connection failure")
         await self._attempt_reconnection()
@@ -411,7 +411,7 @@ class FailoverHandler:
             "last_failover": self.failover_history[-1].timestamp if self.failover_history else None
         }
     
-    def close(self):
+    def close(self) -> None:
         """Close database connections and stop monitoring."""
         self.stop_monitoring()
         if self.client:

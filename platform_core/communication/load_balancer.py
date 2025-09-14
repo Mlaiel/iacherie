@@ -1,14 +1,14 @@
-"""🚀 Load Balancer & Health Checker - IA Influencer Agent Platform Enterprise
+"""# [EMOJI_REMOVED] Load Balancer & Health Checker - IA Influencer Agent Platform Enterprise
 ========================================================================
 Module: backend/platform_core/communication/load_balancer.py
 Author: Fahed Mlaiel (mlaiel@live.de)
 ========================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+# [EMOJI_REMOVED]  PROPRI# [EMOJI_REMOVED]T# [EMOJI_REMOVED] INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL # [EMOJI_REMOVED]
 (c) 2025 Fahed Mlaiel. Tous droits reserves.
 Contact: mlaiel@live.de
 
-🎯 LOAD BALANCER INTELLIGENT
+# [EMOJI_REMOVED] LOAD BALANCER INTELLIGENT
 Repartition de charge avancee avec detection de pannes
 - Algorithmes multiples (Round Robin, Weighted, Least Connections)
 - Health checking proactif et reactif
@@ -45,7 +45,7 @@ Algorithmes de load balancing"""
     WEIGHTED_RANDOM = "weighted_random"
 
 class ServerStatus(Enum):
-    """États des serveurs"""
+    """# [EMOJI_REMOVED]tats des serveurs"""
 
     HEALTHY = "healthy"
     DEGRADED = "degraded"
@@ -99,7 +99,7 @@ Definition d'un serveur backend"""
     tags: List[str] = field(default_factory=list)
     metadata: Dict[str, Any] = field(default_factory=dict)
     
-    # État
+    # # [EMOJI_REMOVED]tat
     status: ServerStatus = ServerStatus.HEALTHY
     last_health_check: Optional[datetime] = None
     consecutive_failures: int = 0
@@ -165,7 +165,7 @@ Demarre le health checker"""
             )
         logger.info("HealthChecker demarre")
         
-    async def stop(self):
+    async def stop(self) -> None:
         """Arrete le health checker"""
         # Arreter toutes les taches de health check
         for task in self._health_tasks.values():
@@ -184,7 +184,7 @@ Demarre le health checker"""
             
         logger.info("HealthChecker arrete")
         
-    async def add_server(self, server: Server):
+    async def add_server(self, server -> None: Server) -> None:
         """Ajoute un serveur au monitoring"""
         if server.server_id in self._health_tasks:
             return
@@ -193,7 +193,7 @@ Demarre le health checker"""
         self._health_tasks[server.server_id] = task
         logger.info(f"Health checking active pour {server.server_id}")
         
-    async def remove_server(self, server_id: str):
+    async def remove_server(self, server_id -> None: str) -> None:
         """Retire un serveur du monitoring"""
         if server_id in self._health_tasks:
             self._health_tasks[server_id].cancel()
@@ -203,7 +203,7 @@ Demarre le health checker"""
                 pass
             del self._health_tasks[server_id]
             
-    async def _health_check_loop(self, server: Server):
+    async def _health_check_loop(self, server -> None: Server) -> None:
         """Boucle de health check pour un serveur"""
         while True:
             try:
@@ -214,7 +214,7 @@ Demarre le health checker"""
             except Exception as e:
                 logger.error(f"Erreur dans health check de {server.server_id}: {e}")
                 
-    async def _check_server_health(self, server: Server):
+    async def _check_server_health(self, server -> None: Server) -> None:
         """Verifie la sante du serveur"""
         if not self.session:
             return
@@ -267,7 +267,7 @@ Demarre le health checker"""
             logger.warning(f"Health check failed pour {server.server_id}: {e}")
             self._handle_server_failure(server)
             
-    def _handle_server_failure(self, server: Server):
+    def _handle_server_failure(self, server -> None: Server) -> None:
         """Gere l'echec d'un serveur"""
         server.consecutive_failures += 1
         server.last_health_check = datetime.utcnow()
@@ -283,13 +283,13 @@ class LoadBalancer:
     """Load balancer intelligent avec multiples algorithmes"""
     
     def __init__(self, 
-                 algorithm: LoadBalancingAlgorithm = LoadBalancingAlgorithm.WEIGHTED_ROUND_ROBIN,
-                 health_checker: Optional[HealthChecker] = None):
+                 algorithm -> None: LoadBalancingAlgorithm = LoadBalancingAlgorithm.WEIGHTED_ROUND_ROBIN,
+                 health_checker -> None: Optional[HealthChecker] = None) -> None:
         self.algorithm = algorithm
         self.servers: Dict[str, Server] = {}
         self.health_checker = health_checker or HealthChecker()
         
-        # État pour les algorithmes
+        # # [EMOJI_REMOVED]tat pour les algorithmes
         self._round_robin_index = 0
         self._connections_count: Dict[str, int] = {}
         
@@ -298,25 +298,25 @@ class LoadBalancer:
         self.total_errors = 0
         self.start_time = datetime.utcnow()
         
-    async def start(self):
+    async def start(self) -> None:
         """
 Demarre le load balancer"""
         await self.health_checker.start()
         logger.info(f"LoadBalancer demarre avec algorithme {self.algorithm.value}")
         
-    async def stop(self):
+    async def stop(self) -> None:
         """Arrete le load balancer"""
         await self.health_checker.stop()
         logger.info("LoadBalancer arrete")
         
-    async def add_server(self, server: Server):
+    async def add_server(self, server -> None: Server) -> None:
         """Ajoute un serveur au pool"""
         self.servers[server.server_id] = server
         self._connections_count[server.server_id] = 0
         await self.health_checker.add_server(server)
         logger.info(f"Serveur ajoute: {server.server_id} ({server.url})")
         
-    async def remove_server(self, server_id: str):
+    async def remove_server(self, server_id -> None: str) -> None:
         """Retire un serveur du pool"""
         if server_id in self.servers:
             server = self.servers[server_id]
@@ -425,7 +425,7 @@ Selection aleatoire ponderee"""
         weights = [max(0.1, server.weight * (1 - server.load_score)) for server in servers]
         return random.choices(servers, weights=weights)[0]
         
-    async def record_request(self, server: Server, response_time: float, success: bool):
+    async def record_request(self, server -> None: Server, response_time -> None: float, success -> None: bool) -> None:
         """
 Enregistre les metriques d'une requete"""
         server.metrics.total_requests += 1
@@ -442,13 +442,13 @@ Enregistre les metriques d'une requete"""
             server.metrics.failed_requests += 1
             self.total_errors += 1
             
-    async def acquire_connection(self, server: Server):
+    async def acquire_connection(self, server -> None: Server) -> None:
         """
 Acquiert une connexion vers un serveur"""
         server.metrics.active_connections += 1
         self._connections_count[server.server_id] += 1
         
-    async def release_connection(self, server: Server):
+    async def release_connection(self, server -> None: Server) -> None:
         """
 Libere une connexion vers un serveur"""
         server.metrics.active_connections = max(0, server.metrics.active_connections - 1)
@@ -484,19 +484,19 @@ Retourne les statistiques du load balancer"""
             }
         }
         
-    async def set_server_weight(self, server_id: str, weight: float):
+    async def set_server_weight(self, server_id -> None: str, weight -> None: float) -> None:
         """Modifie le poids d'un serveur"""
         if server_id in self.servers:
             self.servers[server_id].weight = max(0.1, weight)
             logger.info(f"Poids du serveur {server_id} modifie: {weight}")
             
-    async def drain_server(self, server_id: str):
+    async def drain_server(self, server_id -> None: str) -> None:
         """Met un serveur en mode drain (arret progressif)"""
         if server_id in self.servers:
             self.servers[server_id].status = ServerStatus.DRAINING
             logger.info(f"Serveur {server_id} mis en mode drain")
             
-    async def set_maintenance(self, server_id: str, maintenance: bool):
+    async def set_maintenance(self, server_id -> None: str, maintenance -> None: bool) -> None:
         """Met un serveur en/hors maintenance"""
         if server_id in self.servers:
             server = self.servers[server_id]
@@ -507,3 +507,5 @@ Retourne les statistiques du load balancer"""
                 server.status = ServerStatus.HEALTHY
                 server.consecutive_failures = 0
                 logger.info(f"Serveur {server_id} sorti de maintenance")
+
+# File has syntax issues - needs manual review

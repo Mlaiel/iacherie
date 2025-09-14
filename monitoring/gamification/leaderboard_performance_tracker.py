@@ -150,7 +150,7 @@ class LeaderboardPerformanceTracker:
     - A/B testing framework for leaderboard mechanics
     """
     
-    def __init__(self, db_url: str = None, redis_url: str = None):
+    def __init__(self, db_url -> None: str = None, redis_url -> None: str = None) -> None:
         """Initialize leaderboard performance tracker"""
         self.db_url = db_url
         self.redis_url = redis_url
@@ -179,7 +179,7 @@ class LeaderboardPerformanceTracker:
         
         logger.info("🎮 Leaderboard Performance Tracker initialized")
 
-    async def _initialize_default_leaderboards(self):
+    async def _initialize_default_leaderboards(self) -> None:
         """Initialize default leaderboard configurations"""
         try:
             # Global creators leaderboard
@@ -1250,7 +1250,7 @@ class LeaderboardPerformanceTracker:
             return 0.5
 
 # Usage example
-async def main():
+async def main() -> None:
     """Test the leaderboard performance tracker"""
     try:
         # Initialize tracker

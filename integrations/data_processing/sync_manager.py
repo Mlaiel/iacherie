@@ -137,10 +137,10 @@ class DataSyncEngine:
     
     def __init__(
         self,
-        database_url: str,
-        redis_url: str,
-        config: Optional[Dict[str, Any]] = None
-    ):
+        database_url -> None: str,
+        redis_url -> None: str,
+        config -> None: Optional[Dict[str, Any]] = None
+    ) -> None:
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
         
@@ -175,7 +175,7 @@ class DataSyncEngine:
         
         self._setup_conflict_resolvers()
         
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize the sync engine."""
         # Create database tables
         async with self.engine.begin() as conn:
@@ -186,7 +186,7 @@ class DataSyncEngine:
         
         self.logger.info("Data sync engine initialized")
     
-    def _setup_conflict_resolvers(self):
+    def _setup_conflict_resolvers(self) -> None:
         """Setup conflict resolution strategies."""
         self.conflict_resolvers = {
             ConflictResolution.LATEST_WINS: self._resolve_latest_wins,
@@ -195,23 +195,23 @@ class DataSyncEngine:
             ConflictResolution.MERGE_FIELDS: self._resolve_merge_fields
         }
     
-    def register_platform_adapter(self, platform: str, adapter: Any):
+    def register_platform_adapter(self, platform -> None: str, adapter -> None: Any) -> None:
         """Register platform-specific data adapter."""
         self.platform_adapters[platform] = adapter
         self.logger.info(f"Registered adapter for platform: {platform}")
     
-    def add_sync_rule(self, sync_rule: SyncRule):
+    def add_sync_rule(self, sync_rule -> None: SyncRule) -> None:
         """Add synchronization rule."""
         self.sync_rules[sync_rule.id] = sync_rule
         self.logger.info(f"Added sync rule: {sync_rule.name}")
     
-    def remove_sync_rule(self, rule_id: str):
+    def remove_sync_rule(self, rule_id -> None: str) -> None:
         """Remove synchronization rule."""
         if rule_id in self.sync_rules:
             del self.sync_rules[rule_id]
             self.logger.info(f"Removed sync rule: {rule_id}")
     
-    async def start_scheduler(self):
+    async def start_scheduler(self) -> None:
         """Start the synchronization scheduler."""
         if self.scheduler_running:
             return
@@ -220,7 +220,7 @@ class DataSyncEngine:
         self.scheduler_task = asyncio.create_task(self._scheduler_loop())
         self.logger.info("Sync scheduler started")
     
-    async def stop_scheduler(self):
+    async def stop_scheduler(self) -> None:
         """Stop the synchronization scheduler."""
         if not self.scheduler_running:
             return
@@ -235,7 +235,7 @@ class DataSyncEngine:
         
         self.logger.info("Sync scheduler stopped")
     
-    async def _scheduler_loop(self):
+    async def _scheduler_loop(self) -> None:
         """Main scheduler loop."""
         while self.scheduler_running:
             try:
@@ -245,7 +245,7 @@ class DataSyncEngine:
                 self.logger.error(f"Scheduler error: {e}")
                 await asyncio.sleep(60)
     
-    async def _check_scheduled_syncs(self):
+    async def _check_scheduled_syncs(self) -> None:
         """Check for scheduled synchronizations."""
         from croniter import croniter
         
@@ -305,7 +305,7 @@ class DataSyncEngine:
         self.logger.info(f"Created sync job: {job.id}")
         return job
     
-    async def start_sync_job(self, job_id: str):
+    async def start_sync_job(self, job_id -> None: str) -> None:
         """Start a synchronization job."""
         if job_id not in self.active_jobs:
             raise ValueError(f"Sync job not found: {job_id}")
@@ -323,7 +323,7 @@ class DataSyncEngine:
         sync_task = asyncio.create_task(self._execute_sync_job(job, rule))
         self.logger.info(f"Started sync job: {job_id}")
     
-    async def _execute_sync_job(self, job: SyncJob, rule: SyncRule):
+    async def _execute_sync_job(self, job -> None: SyncJob, rule -> None: SyncRule) -> None:
         """Execute synchronization job."""
         try:
             # Get platform adapters
@@ -431,14 +431,14 @@ class DataSyncEngine:
     
     async def _sync_records(
         self,
-        source_records: Dict[str, DataRecord],
-        target_records: Dict[str, DataRecord],
-        rule: SyncRule,
-        job: SyncJob,
-        source_adapter: Any,
-        target_adapter: Any,
-        direction: str
-    ):
+        source_records -> None: Dict[str, DataRecord],
+        target_records -> None: Dict[str, DataRecord],
+        rule -> None: SyncRule,
+        job -> None: SyncJob,
+        source_adapter -> None: Any,
+        target_adapter -> None: Any,
+        direction -> None: str
+    ) -> None:
         """Synchronize records between platforms."""
         for record_id, source_record in source_records.items():
             try:
@@ -610,9 +610,9 @@ class DataSyncEngine:
     
     async def _create_platform_record(
         self, 
-        adapter: Any, 
-        data: Dict[str, Any]
-    ):
+        adapter -> None: Any, 
+        data -> None: Dict[str, Any]
+    ) -> None:
         """Create record in platform."""
         if hasattr(adapter, 'create_record'):
             return await adapter.create_record(data)
@@ -621,17 +621,17 @@ class DataSyncEngine:
     
     async def _update_platform_record(
         self, 
-        adapter: Any, 
-        record_id: str, 
-        data: Dict[str, Any]
-    ):
+        adapter -> None: Any, 
+        record_id -> None: str, 
+        data -> None: Dict[str, Any]
+    ) -> None:
         """Update record in platform."""
         if hasattr(adapter, 'update_record'):
             return await adapter.update_record(record_id, data)
         else:
             raise ValueError("Adapter does not support record updates")
     
-    async def _update_job_status(self, job: SyncJob):
+    async def _update_job_status(self, job -> None: SyncJob) -> None:
         """Update job status in database."""
         async with self.async_session() as session:
             result = await session.execute(
@@ -693,7 +693,7 @@ class DataSyncEngine:
         """Get synchronization metrics."""
         return self.sync_metrics.copy()
     
-    async def cleanup_completed_jobs(self, older_than_days: int = 7):
+    async def cleanup_completed_jobs(self, older_than_days -> None: int = 7) -> None:
         """Clean up completed jobs older than specified days."""
         cutoff_date = datetime.now() - timedelta(days=older_than_days)
         
@@ -727,18 +727,18 @@ class PlatformAdapter:
         """Create record in platform."""
         raise NotImplementedError
     
-    async def update_record(self, record_id: str, data: Dict[str, Any]):
+    async def update_record(self, record_id -> None: str, data -> None: Dict[str, Any]) -> None:
         """Update record in platform."""
         raise NotImplementedError
     
-    async def delete_record(self, record_id: str):
+    async def delete_record(self, record_id -> None: str) -> None:
         """Delete record from platform."""
         raise NotImplementedError
 
 
 # Example usage
 if __name__ == "__main__":
-    async def main():
+    async def main() -> None:
         # Initialize sync engine
         sync_engine = DataSyncEngine(
             database_url="postgresql+asyncpg://user:pass@localhost/db",

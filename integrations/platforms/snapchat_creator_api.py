@@ -27,7 +27,7 @@ logger = logging.getLogger(__name__)
 class SnapchatARFilter:
     """AR filter management and monetization"""
     
-    def __init__(self, filter_id: str, name: str, creator_id: str):
+    def __init__(self, filter_id -> None: str, name -> None: str, creator_id -> None: str) -> None:
         self.filter_id = filter_id
         self.name = name
         self.creator_id = creator_id
@@ -39,7 +39,7 @@ class SnapchatARFilter:
 class SnapchatStory:
     """Story content management and analytics"""
     
-    def __init__(self, story_id: str, creator_id: str, content_type: str):
+    def __init__(self, story_id -> None: str, creator_id -> None: str, content_type -> None: str) -> None:
         self.story_id = story_id
         self.creator_id = creator_id
         self.content_type = content_type  # 'image', 'video', 'ar_filter'
@@ -65,7 +65,7 @@ class SnapchatCreatorAPI:
     - Brand partnership management
     """
     
-    def __init__(self, client_id: str, client_secret: str, redirect_uri: str):
+    def __init__(self, client_id -> None: str, client_secret -> None: str, redirect_uri -> None: str) -> None:
         self.client_id = client_id
         self.client_secret = client_secret
         self.redirect_uri = redirect_uri
@@ -82,12 +82,12 @@ class SnapchatCreatorAPI:
             'hour_start': datetime.utcnow().hour
         }
         
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         """Async context manager entry"""
         self.session = aiohttp.ClientSession()
         return self
         
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         """Async context manager exit"""
         if self.session:
             await self.session.close()
@@ -194,7 +194,7 @@ class SnapchatCreatorAPI:
             logger.error(f"Error refreshing token: {e}")
             raise SnapchatCreatorAPIError(f"Token refresh error: {e}")
 
-    async def _ensure_valid_token(self):
+    async def _ensure_valid_token(self) -> None:
         """Ensure we have a valid access token"""
         if not self.access_token:
             raise SnapchatCreatorAPIError("No access token available")
@@ -202,7 +202,7 @@ class SnapchatCreatorAPI:
         if self.token_expires_at and datetime.utcnow() >= self.token_expires_at - timedelta(minutes=5):
             await self.refresh_access_token()
 
-    def _check_rate_limit(self):
+    def _check_rate_limit(self) -> None:
         """Check and enforce rate limiting"""
         current_hour = datetime.utcnow().hour
         
@@ -1107,7 +1107,7 @@ class SnapchatCreatorAPI:
         ]
 
 # Example usage and testing
-async def main():
+async def main() -> None:
     """Example usage of Snapchat Creator API integration"""
     
     # Initialize the API client

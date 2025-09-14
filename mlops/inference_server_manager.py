@@ -1,3 +1,8 @@
+"""
+Inference Server Manager module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 🚀 Inference Server Manager - Enterprise MLOps Platform
@@ -118,7 +123,7 @@ class InferenceResponse:
 class InferenceServer:
     """Serveur d'inférence individuel"""
     
-    def __init__(self, config: ServerConfig):
+    def __init__(self, config -> None: ServerConfig) -> None:
         self.config = config
         self.status = ServerStatus.STARTING
         self.metrics = ServerMetrics(
@@ -144,7 +149,7 @@ class InferenceServer:
         self.is_running = False
         self.executor = ThreadPoolExecutor(max_workers=config.max_concurrent_requests)
         
-    async def start(self):
+    async def start(self) -> None:
         """Démarre le serveur d'inférence"""
         try:
             logger.info(f"Démarrage serveur {self.config.server_id}")
@@ -165,14 +170,14 @@ class InferenceServer:
             self.status = ServerStatus.UNHEALTHY
             raise
     
-    async def stop(self):
+    async def stop(self) -> None:
         """Arrête le serveur d'inférence"""
         logger.info(f"Arrêt serveur {self.config.server_id}")
         self.is_running = False
         self.status = ServerStatus.STOPPED
         self.executor.shutdown(wait=True)
     
-    async def _load_model(self):
+    async def _load_model(self) -> None:
         """Charge le modèle ML"""
         try:
             # Simulation du chargement de modèle
@@ -184,7 +189,7 @@ class InferenceServer:
             logger.error(f"Erreur chargement modèle: {e}")
             raise
     
-    async def _request_processor(self):
+    async def _request_processor(self) -> None:
         """Processeur de requêtes d'inférence"""
         while self.is_running:
             try:
@@ -202,7 +207,7 @@ class InferenceServer:
             except Exception as e:
                 logger.error(f"Erreur processeur requêtes: {e}")
     
-    async def _process_request(self, request: InferenceRequest):
+    async def _process_request(self, request -> None: InferenceRequest) -> None:
         """Traite une requête d'inférence"""
         start_time = time.time()
         self.active_requests[request.request_id] = request
@@ -280,7 +285,7 @@ class InferenceServer:
             logger.error(f"Erreur inférence: {e}")
             raise
     
-    async def _metrics_collector(self):
+    async def _metrics_collector(self) -> None:
         """Collecte les métriques du serveur"""
         while self.is_running:
             try:
@@ -313,7 +318,7 @@ class InferenceServer:
                 logger.error(f"Erreur collecte métriques: {e}")
                 await asyncio.sleep(5)
     
-    def _update_status(self):
+    def _update_status(self) -> None:
         """Met à jour le statut du serveur"""
         if not self.is_running:
             self.status = ServerStatus.STOPPED
@@ -352,18 +357,18 @@ class InferenceServer:
 class LoadBalancer:
     """Load balancer intelligent pour serveurs d'inférence"""
     
-    def __init__(self, strategy: LoadBalancingStrategy = LoadBalancingStrategy.AI_OPTIMIZED):
+    def __init__(self, strategy -> None: LoadBalancingStrategy = LoadBalancingStrategy.AI_OPTIMIZED) -> None:
         self.strategy = strategy
         self.servers: Dict[str, InferenceServer] = {}
         self.current_index = 0
         self.request_history: List[Dict[str, Any]] = []
         
-    def add_server(self, server: InferenceServer):
+    def add_server(self, server -> None: InferenceServer) -> None:
         """Ajoute un serveur au pool"""
         self.servers[server.config.server_id] = server
         logger.info(f"Serveur ajouté au pool: {server.config.server_id}")
     
-    def remove_server(self, server_id: str):
+    def remove_server(self, server_id -> None: str) -> None:
         """Retire un serveur du pool"""
         if server_id in self.servers:
             del self.servers[server_id]
@@ -458,7 +463,7 @@ class LoadBalancer:
 class AutoScaler:
     """Auto-scaler pour serveurs d'inférence"""
     
-    def __init__(self, min_servers: int = 2, max_servers: int = 20):
+    def __init__(self, min_servers -> None: int = 2, max_servers -> None: int = 20) -> None:
         self.min_servers = min_servers
         self.max_servers = max_servers
         self.scaling_history: List[Dict[str, Any]] = []
@@ -526,7 +531,7 @@ class AutoScaler:
 class InferenceServerManager:
     """Manager principal des serveurs d'inférence avec auto-scaling et load balancing"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.servers: Dict[str, InferenceServer] = {}
         self.load_balancer = LoadBalancer(
@@ -540,7 +545,7 @@ class InferenceServerManager:
         self.is_running = False
         self.metrics_history: List[Dict[str, Any]] = []
         
-    async def start(self):
+    async def start(self) -> None:
         """Démarre le manager de serveurs d'inférence"""
         try:
             logger.info("Démarrage du manager de serveurs d'inférence")
@@ -563,7 +568,7 @@ class InferenceServerManager:
             logger.error(f"Erreur démarrage manager: {e}")
             raise
     
-    async def stop(self):
+    async def stop(self) -> None:
         """Arrête le manager et tous les serveurs"""
         logger.info("Arrêt du manager de serveurs d'inférence")
         
@@ -592,7 +597,7 @@ class InferenceServerManager:
             logger.error(f"Erreur ajout serveur {config.server_id}: {e}")
             raise
     
-    async def remove_server(self, server_id: str):
+    async def remove_server(self, server_id -> None: str) -> None:
         """Retire un serveur d'inférence"""
         if server_id in self.servers:
             server = self.servers[server_id]
@@ -649,7 +654,7 @@ class InferenceServerManager:
                 error_message=str(e)
             )
     
-    async def _request_dispatcher(self):
+    async def _request_dispatcher(self) -> None:
         """Dispatcher des requêtes d'inférence"""
         while self.is_running:
             try:
@@ -659,7 +664,7 @@ class InferenceServerManager:
             except Exception as e:
                 logger.error(f"Erreur dispatcher requêtes: {e}")
     
-    async def _health_monitor(self):
+    async def _health_monitor(self) -> None:
         """Monitor de santé des serveurs"""
         while self.is_running:
             try:
@@ -685,7 +690,7 @@ class InferenceServerManager:
                 logger.error(f"Erreur monitor santé: {e}")
                 await asyncio.sleep(30)
     
-    async def _auto_scaling_monitor(self):
+    async def _auto_scaling_monitor(self) -> None:
         """Monitor d'auto-scaling"""
         while self.is_running:
             try:
@@ -703,7 +708,7 @@ class InferenceServerManager:
                 logger.error(f"Erreur monitor auto-scaling: {e}")
                 await asyncio.sleep(60)
     
-    async def _scale_up(self):
+    async def _scale_up(self) -> None:
         """Exécute un scale-up"""
         try:
             # Configuration du nouveau serveur
@@ -730,7 +735,7 @@ class InferenceServerManager:
         except Exception as e:
             logger.error(f"Erreur scale-up: {e}")
     
-    async def _scale_down(self):
+    async def _scale_down(self) -> None:
         """Exécute un scale-down"""
         try:
             server_to_remove = self.auto_scaler.get_server_to_remove(self.servers)
@@ -744,7 +749,7 @@ class InferenceServerManager:
         except Exception as e:
             logger.error(f"Erreur scale-down: {e}")
     
-    async def _metrics_aggregator(self):
+    async def _metrics_aggregator(self) -> None:
         """Agrégateur de métriques globales"""
         while self.is_running:
             try:
@@ -823,7 +828,7 @@ def create_inference_server_manager(config: Dict[str, Any]) -> InferenceServerMa
     return InferenceServerManager(config)
 
 # Exemple d'utilisation
-async def main():
+async def main() -> None:
     """Exemple d'utilisation du manager de serveurs d'inférence"""
     
     # Configuration

@@ -80,7 +80,7 @@ class PrometheusManager:
     - Alert threshold management
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.registry = CollectorRegistry()
         self.metrics: Dict[str, MetricWrapperBase] = {}
         self.redis_manager = RedisManager()
@@ -576,7 +576,7 @@ Record HTTP request metrics"""
 class SystemResourceCollector:
     """Custom collector for system resource metrics"""
     
-    def collect(self):
+    def collect(self) -> None:
         """
 Collect system resource metrics"""
         try:
@@ -624,7 +624,7 @@ Collect system resource metrics"""
 class DatabaseMetricsCollector:
     """Custom collector for database metrics"""
     
-    def collect(self):
+    def collect(self) -> None:
         """
 Collect database metrics"""
         try:

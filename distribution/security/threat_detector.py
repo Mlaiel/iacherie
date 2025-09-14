@@ -77,7 +77,7 @@ class ThreatDetector:
     Real-time threat detection with automated response capabilities
     """
     
-    def __init__(self, redis_client: redis.Redis):
+    def __init__(self, redis_client -> None: redis.Redis) -> None:
         self.redis = redis_client
         self.threat_patterns = {}
         self.ml_models = {}
@@ -89,7 +89,7 @@ class ThreatDetector:
         # Initialize threat patterns
         self._initialize_threat_patterns()
         
-    async def start(self):
+    async def start(self) -> None:
         """Start the threat detection system"""
         self.running = True
         logger.info("Starting threat detection system")
@@ -103,12 +103,12 @@ class ThreatDetector:
         asyncio.create_task(self._update_behavior_baselines())
         asyncio.create_task(self._cleanup_old_data())
         
-    async def stop(self):
+    async def stop(self) -> None:
         """Stop the threat detection system"""
         self.running = False
         logger.info("Stopping threat detection system")
     
-    def _initialize_threat_patterns(self):
+    def _initialize_threat_patterns(self) -> None:
         """Initialize predefined threat detection patterns"""
         patterns = [
             ThreatPattern(
@@ -578,7 +578,7 @@ class ThreatDetector:
         
         return threats
     
-    async def _process_threat(self, threat: ThreatEvent):
+    async def _process_threat(self, threat -> None: ThreatEvent) -> None:
         """Process detected threat"""
         # Store threat
         await self._store_threat(threat)
@@ -593,7 +593,7 @@ class ThreatDetector:
         # Log threat
         logger.warning(f"Threat detected: {threat.description} [{threat.level.value}] from {threat.source_ip}")
     
-    async def _store_threat(self, threat: ThreatEvent):
+    async def _store_threat(self, threat -> None: ThreatEvent) -> None:
         """Store threat in Redis"""
         threat_data = {
             'id': threat.id,
@@ -618,7 +618,7 @@ class ThreatDetector:
         if threat.level in [ThreatLevel.CRITICAL, ThreatLevel.HIGH]:
             await self.redis.hset("active_threats", threat.id, json.dumps(threat_data))
     
-    async def _trigger_automated_response(self, threat: ThreatEvent):
+    async def _trigger_automated_response(self, threat -> None: ThreatEvent) -> None:
         """Trigger automated response to threat"""
         actions = []
         
@@ -647,24 +647,24 @@ class ThreatDetector:
         threat.automated_response = True
         threat.response_actions = actions
     
-    async def _block_ip(self, ip_address: str, duration: int):
+    async def _block_ip(self, ip_address -> None: str, duration -> None: int) -> None:
         """Block IP address"""
         block_key = f"ip_blocked:{ip_address}"
         await self.redis.setex(block_key, duration, "1")
         logger.info(f"Blocked IP {ip_address} for {duration} seconds")
     
-    async def _apply_strict_rate_limits(self, ip_address: str):
+    async def _apply_strict_rate_limits(self, ip_address -> None: str) -> None:
         """Apply stricter rate limits to IP"""
         limit_key = f"strict_limits:{ip_address}"
         await self.redis.setex(limit_key, 3600, "1")
         logger.info(f"Applied strict rate limits to {ip_address}")
     
-    async def _alert_security_team(self, threat: ThreatEvent):
+    async def _alert_security_team(self, threat -> None: ThreatEvent) -> None:
         """Alert security team about critical threat"""
         # This would integrate with your alerting system
         logger.critical(f"SECURITY ALERT: {threat.description} from {threat.source_ip}")
     
-    async def _quarantine_user(self, user_id: str):
+    async def _quarantine_user(self, user_id -> None: str) -> None:
         """Quarantine user account"""
         quarantine_key = f"user_quarantined:{user_id}"
         await self.redis.setex(quarantine_key, 86400, "1")
@@ -688,7 +688,7 @@ class ThreatDetector:
         else:
             return ThreatLevel.INFO
     
-    async def _update_behavior_baselines(self):
+    async def _update_behavior_baselines(self) -> None:
         """Background task to update behavioral baselines"""
         while self.running:
             try:
@@ -701,7 +701,7 @@ class ThreatDetector:
             except Exception as e:
                 logger.error(f"Error updating baselines: {e}")
     
-    async def _cleanup_old_data(self):
+    async def _cleanup_old_data(self) -> None:
         """Background task to cleanup old data"""
         while self.running:
             try:

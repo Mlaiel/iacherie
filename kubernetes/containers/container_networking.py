@@ -159,7 +159,7 @@ class ServiceMeshConfig:
 class ContainerNetworkingManager:
     """Professional container networking manager"""
     
-    def __init__(self, config_path: str = "/app/config/networking"):
+    def __init__(self, config_path -> None: str = "/app/config/networking") -> None:
         self.config_path = Path(config_path)
         self.k8s_client = None
         self.consul_client = None
@@ -1291,7 +1291,7 @@ class ContainerNetworkingManager:
 class ServiceDiscoveryManager:
     """Service discovery manager for container networking"""
     
-    def __init__(self, networking_manager: ContainerNetworkingManager):
+    def __init__(self, networking_manager -> None: ContainerNetworkingManager) -> None:
         self.networking_manager = networking_manager
         self.service_registry = {}
         self.health_status = {}

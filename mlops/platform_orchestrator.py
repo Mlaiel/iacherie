@@ -130,7 +130,7 @@ class MLOpsConfig:
 class MLOpsPlatform:
     """Unified MLOps platform orchestrator"""
     
-    def __init__(self, config: MLOpsConfig):
+    def __init__(self, config -> None: MLOpsConfig) -> None:
         self.config = config
         self.is_initialized = False
         self.is_running = False
@@ -152,7 +152,7 @@ class MLOpsPlatform:
         self.active_experiments: Dict[str, str] = {}  # model_name -> experiment_id
         self.platform_metrics: Dict[str, Any] = {}
         
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize the MLOps platform"""
         if self.is_initialized:
             logger.warning("Platform already initialized")
@@ -216,7 +216,7 @@ class MLOpsPlatform:
             logger.error(f"Failed to initialize MLOps platform: {str(e)}")
             raise
     
-    async def start(self):
+    async def start(self) -> None:
         """Start the MLOps platform"""
         if not self.is_initialized:
             await self.initialize()
@@ -256,7 +256,7 @@ class MLOpsPlatform:
             logger.error(f"Error starting MLOps platform: {str(e)}")
             raise
     
-    async def stop(self):
+    async def stop(self) -> None:
         """Stop the MLOps platform"""
         if not self.is_running:
             logger.warning("Platform is not running")
@@ -594,7 +594,7 @@ class MLOpsPlatform:
         
         return status
     
-    async def _setup_default_governance_rules(self):
+    async def _setup_default_governance_rules(self) -> None:
         """Setup default governance rules"""
         if not self.governance_engine:
             return
@@ -700,7 +700,7 @@ def create_mlops_platform(config_dict: Optional[Dict] = None) -> MLOpsPlatform:
 
 
 # Example usage and demo
-async def demo_mlops_platform():
+async def demo_mlops_platform() -> None:
     """Demonstrate the MLOps platform capabilities"""
     
     # Create platform with custom config

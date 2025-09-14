@@ -33,6 +33,7 @@ logging.basicConfig(
 logger = logging.getLogger("ProjectManagementService")
 
 class ProjectStatus(str, Enum):
+    """ProjectStatus class implementation"""
     PLANNING = "planning"
     ACTIVE = "active"
     ON_HOLD = "on_hold"
@@ -40,6 +41,7 @@ class ProjectStatus(str, Enum):
     CANCELLED = "cancelled"
 
 class TaskStatus(str, Enum):
+    """TaskStatus class implementation"""
     TODO = "todo"
     IN_PROGRESS = "in_progress"
     REVIEW = "review"
@@ -47,6 +49,7 @@ class TaskStatus(str, Enum):
     BLOCKED = "blocked"
 
 class Priority(str, Enum):
+    """Priority class implementation"""
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -106,7 +109,7 @@ class ProjectManagementService:
     - **DevOps**: Automated project monitoring and analytics
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.projects: Dict[str, ProjectModel] = {}
         self.templates: Dict[str, Dict] = self._initialize_templates()
         self.active_projects: List[str] = []
@@ -476,43 +479,43 @@ app = FastAPI(title="Project Management Service", version="1.0.0")
 service = ProjectManagementService()
 
 @app.post("/projects/create")
-async def create_project(project: ProjectModel):
+async def create_project(project -> None: ProjectModel) -> None:
     """Create new collaboration project"""
     return await service.create_project(project)
 
 @app.post("/projects/create-from-template")
-async def create_from_template(template_name: str, project_name: str, 
-                             creator_id: str, customization: Dict = None):
+async def create_from_template(template_name -> None: str, project_name -> None: str, 
+                             creator_id -> None: str, customization -> None: Dict = None) -> None:
     """Create project from template"""
     return await service.create_from_template(template_name, project_name, creator_id, customization)
 
 @app.put("/projects/{project_id}/status")
-async def update_project_status(project_id: str, status: ProjectStatus):
+async def update_project_status(project_id -> None: str, status -> None: ProjectStatus) -> None:
     """Update project status"""
     return await service.update_project_status(project_id, status)
 
 @app.post("/projects/{project_id}/tasks")
-async def add_task(project_id: str, task: TaskModel):
+async def add_task(project_id -> None: str, task -> None: TaskModel) -> None:
     """Add task to project"""
     return await service.add_task(project_id, task)
 
 @app.put("/projects/{project_id}/tasks/{task_id}/status")
-async def update_task_status(project_id: str, task_id: str, status: TaskStatus):
+async def update_task_status(project_id -> None: str, task_id -> None: str, status -> None: TaskStatus) -> None:
     """Update task status"""
     return await service.update_task_status(project_id, task_id, status)
 
 @app.get("/projects/{project_id}/analytics")
-async def get_project_analytics(project_id: str):
+async def get_project_analytics(project_id -> None: str) -> None:
     """Get project analytics and insights"""
     return await service.get_project_analytics(project_id)
 
 @app.get("/portfolio/overview")
-async def get_portfolio_overview():
+async def get_portfolio_overview() -> None:
     """Get portfolio overview and metrics"""
     return await service.get_portfolio_overview()
 
 @app.get("/health")
-async def health_check():
+async def health_check() -> None:
     """Service health check"""
     return {
         "service": "ProjectManagementService",

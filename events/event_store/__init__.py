@@ -67,9 +67,9 @@ except ImportError as e:
     class StoreResult: pass
     class StorageMetrics: pass
     class OptimizationResult: pass
-    def get_global_enterprise_store(): return None
-    def store_event_enterprise(*args, **kwargs): return None
-    def retrieve_events_enterprise(*args, **kwargs): return []
+    def get_global_enterprise_store() -> None: return None
+    def store_event_enterprise(*args, **kwargs) -> None: return None
+    def retrieve_events_enterprise(*args, **kwargs) -> None: return []
 
 # PostgreSQL high-performance repository
 try:
@@ -169,7 +169,7 @@ class EventStoreManager:
     - Backup, archival, and disaster recovery
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._enterprise_store: Optional[EnterpriseEventStore] = None
         self._backends: Dict[str, IEventStoreBackend] = {}
         self._hybrid_coordinator: Optional[HybridStorageCoordinator] = None

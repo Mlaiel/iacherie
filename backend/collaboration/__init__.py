@@ -1,5 +1,8 @@
 """Collaboration Module - AI-Powered Creator Collaboration System
 
+import asyncio
+from datetime import datetime
+
 Main module exports for the backend collaboration system providing comprehensive
 creator matching, project management, and revenue distribution capabilities.
 
@@ -135,7 +138,7 @@ class CollaborationEngine:
     Unified Collaboration Engine that combines all collaboration components
     """
     
-    def __init__(self, config=None):
+    def __init__(self, config=None) -> None:
         """Initialize the unified collaboration engine"""
         self.config = config or {}
         
@@ -148,9 +151,9 @@ class CollaborationEngine:
     
     async def complete_collaboration_workflow(
         self,
-        collaboration_request: dict,
-        creator_pool: list = None
-    ):
+        collaboration_request -> None: dict,
+        creator_pool -> None: list = None
+    ) -> None:
         """
         Execute complete collaboration workflow from matching to project completion
         
@@ -296,7 +299,7 @@ class CollaborationEngine:
         
         return results
     
-    async def get_collaboration_status(self, project_id: str):
+    async def get_collaboration_status(self, project_id -> None: str) -> None:
         """Get comprehensive collaboration status"""
         status = {}
         

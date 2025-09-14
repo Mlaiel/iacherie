@@ -162,10 +162,10 @@ class StreamOptimizer:
     
     def __init__(
         self,
-        optimization_strategy: OptimizationStrategy = OptimizationStrategy.BALANCED,
-        enable_auto_optimization: bool = True,
-        optimization_interval_seconds: int = 300
-    ):
+        optimization_strategy -> None: OptimizationStrategy = OptimizationStrategy.BALANCED,
+        enable_auto_optimization -> None: bool = True,
+        optimization_interval_seconds -> None: int = 300
+    ) -> None:
         # Configuration
         self.optimization_strategy = optimization_strategy
         self.enable_auto_optimization = enable_auto_optimization

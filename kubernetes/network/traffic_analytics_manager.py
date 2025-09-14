@@ -136,10 +136,10 @@ class TrafficAnalyticsManager:
     
     def __init__(
         self,
-        database_url: str,
-        redis_url: str = "redis://localhost:6379",
-        geoip_database_path: str = "/etc/geoip/GeoLite2-City.mmdb"
-    ):
+        database_url -> None: str,
+        redis_url -> None: str = "redis -> None://localhost -> None:6379",
+        geoip_database_path -> None: str = "/etc/geoip/GeoLite2-City.mmdb"
+    ) -> None:
         self.database_url = database_url
         self.redis_url = redis_url
         self.geoip_database_path = geoip_database_path

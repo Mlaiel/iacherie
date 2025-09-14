@@ -1,5 +1,7 @@
 """Creator Analytics Events Module
 
+import logging
+
 Advanced analytics and insights specifically designed for multi-format content creators.
 Provides comprehensive creator performance tracking, insights generation, and growth recommendations.
 
@@ -177,7 +179,7 @@ class CreatorAnalyticsEventHandler(BaseEventHandler):
     """
 Handles creator analytics events with comprehensive processing"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
         self.cache_manager = CacheManager()
         self.db_manager = DatabaseManager()
@@ -349,7 +351,7 @@ class CreatorPerformanceTracker:
     """
 Tracks comprehensive creator performance metrics"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.db_manager = DatabaseManager()
         self.cache_manager = CacheManager()
         self.metrics_calculator = MetricsCalculator()
@@ -456,7 +458,7 @@ class CreatorInsightsEngine:
     """
 Generates actionable insights for creators"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.db_manager = DatabaseManager()
         self.anomaly_detector = IsolationForest(contamination=0.1, random_state=42)
         self.insight_classifier = RandomForestRegressor(n_estimators=100, random_state=42)
@@ -655,7 +657,7 @@ Detect performance anomalies and generate insights"""
 class CreatorRecommendationEngine:
     """Generates personalized recommendations for creators"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.db_manager = DatabaseManager()
         self.recommendation_ai = CreatorRecommendationAI()
         
@@ -696,7 +698,7 @@ class CreatorBenchmarkingEngine:
     """
 Benchmarks creator performance against peers and industry standards"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.db_manager = DatabaseManager()
         self.scaler = StandardScaler()
         

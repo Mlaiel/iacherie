@@ -89,7 +89,7 @@ class PlatformValidationResult:
 class PlatformSpecificValidator:
     """Platform-specific validation system."""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize platform-specific validator.
         
         Args:

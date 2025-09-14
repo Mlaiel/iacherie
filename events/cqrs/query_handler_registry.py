@@ -113,7 +113,7 @@ class QueryHandlerInstance:
 class QueryCacheManager:
     """Advanced cache management for query handlers"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._cache_stores: Dict[str, Dict[str, Any]] = defaultdict(dict)
         self._cache_metadata: Dict[str, Dict[str, Any]] = defaultdict(dict)
         self._invalidation_patterns: Dict[str, List[str]] = defaultdict(list)
@@ -226,7 +226,7 @@ class QueryCacheManager:
 class ReadModelSyncManager:
     """Manage read model synchronization for query handlers"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._sync_status: Dict[str, Dict[str, Any]] = defaultdict(dict)
         self._sync_strategies: Dict[str, Callable] = {}
     
@@ -271,7 +271,7 @@ class ReadModelSyncManager:
 class PerformanceOptimizer:
     """Optimize query handler performance"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._optimization_rules: List[Callable] = []
         self._performance_profiles: Dict[str, Dict[str, Any]] = defaultdict(dict)
     
@@ -354,13 +354,13 @@ class PerformanceOptimizer:
 
 
 # Decorator for automatic query handler registration
-def query_handler(query_type: str, version: str = "1.0.0", description: str = "",
-                 cache_strategy: CacheStrategy = CacheStrategy.TIME_BASED,
-                 cache_ttl_seconds: int = 300, performance_sla_ms: int = 1000,
-                 read_models: List[str] = None, consistency_level: str = "eventual"):
+def query_handler(query_type -> None: str, version -> None: str = "1.0.0", description -> None: str = "",
+                 cache_strategy -> None: CacheStrategy = CacheStrategy.TIME_BASED,
+                 cache_ttl_seconds -> None: int = 300, performance_sla_ms -> None: int = 1000,
+                 read_models -> None: List[str] = None, consistency_level -> None: str = "eventual") -> None:
     """Decorator for automatic query handler registration"""
     
-    def decorator(handler_class: Type[QueryHandler]):
+    def decorator(handler_class -> None: Type[QueryHandler]) -> None:
         # Store metadata in class
         handler_class._query_metadata = QueryHandlerMetadata(
             handler_id=f"{query_type}_handler_{version}",
@@ -383,7 +383,7 @@ def query_handler(query_type: str, version: str = "1.0.0", description: str = ""
 class EnterpriseQueryHandlerRegistry:
     """Enterprise query handler registry with advanced caching and optimization"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._handlers: Dict[str, QueryHandlerInstance] = {}
         self._query_type_mapping: Dict[str, List[str]] = defaultdict(list)
         self._cache_manager = QueryCacheManager()

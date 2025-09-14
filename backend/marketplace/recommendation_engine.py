@@ -182,7 +182,7 @@ class RecommendationPerformance:
 class RecommendationEngine:
     """Advanced AI-powered recommendation system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.user_profiles: Dict[str, UserProfile] = {}
         self.content_items: Dict[str, ContentItem] = {}
         self.creator_profiles: Dict[str, CreatorProfile] = {}
@@ -206,7 +206,7 @@ class RecommendationEngine:
         # Initialize with sample data
         self._initialize_sample_data()
     
-    def _initialize_sample_data(self):
+    def _initialize_sample_data(self) -> None:
         """Initialize with sample data for demonstration"""
         # Sample content items
         sample_content = [
@@ -376,7 +376,7 @@ class RecommendationEngine:
         
         return self.user_profiles[user_id]
     
-    async def _initialize_user_preferences(self, profile: UserProfile):
+    async def _initialize_user_preferences(self, profile -> None: UserProfile) -> None:
         """Initialize user preferences based on available data"""
         # In production, would use onboarding data, demographic info, etc.
         # For now, use random preferences as placeholder
@@ -874,9 +874,9 @@ class RecommendationEngine:
     
     async def _update_user_profile_from_interaction(
         self,
-        user_id: str,
-        interaction: InteractionEvent
-    ):
+        user_id -> None: str,
+        interaction -> None: InteractionEvent
+    ) -> None:
         """Update user profile based on interaction"""
         profile = self.user_profiles.get(user_id)
         if not profile:
@@ -1015,7 +1015,7 @@ class RecommendationEngine:
         }
 
 # Example usage
-async def main():
+async def main() -> None:
     """Example usage of RecommendationEngine"""
     engine = RecommendationEngine()
     

@@ -147,7 +147,7 @@ class ChargebackPreventionSystem:
     - Cost-benefit optimization
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.chargeback_cases: Dict[str, List[ChargebackCase]] = defaultdict(list)
         self.risk_assessments: Dict[str, RiskAssessment] = {}
@@ -186,7 +186,7 @@ class ChargebackPreventionSystem:
         
         logger.info("ChargebackPreventionSystem initialized")
 
-    def _initialize_default_rules(self):
+    def _initialize_default_rules(self) -> None:
         """Initialize default prevention rules."""
         default_rules = [
             {
@@ -667,7 +667,7 @@ class ChargebackPreventionSystem:
             logger.error(f"Error recording chargeback: {e}")
             raise
 
-    async def _evaluate_prediction_accuracy(self, transaction_id: str):
+    async def _evaluate_prediction_accuracy(self, transaction_id -> None: str) -> None:
         """Evaluate prediction accuracy for a chargeback."""
         assessment = self.risk_assessments.get(transaction_id)
         if assessment:
@@ -679,7 +679,7 @@ class ChargebackPreventionSystem:
                 # Missed prediction
                 self._update_accuracy_metrics(False)
 
-    def _update_accuracy_metrics(self, correct_prediction: bool):
+    def _update_accuracy_metrics(self, correct_prediction -> None: bool) -> None:
         """Update prediction accuracy metrics."""
         current_accuracy = self.metrics['prevention_accuracy']
         total_predictions = self.metrics['model_predictions']
@@ -688,7 +688,7 @@ class ChargebackPreventionSystem:
             new_accuracy = ((current_accuracy * (total_predictions - 1)) + (1.0 if correct_prediction else 0.0)) / total_predictions
             self.metrics['prevention_accuracy'] = new_accuracy
 
-    async def _update_model_with_chargeback(self, transaction_id: str, case: ChargebackCase):
+    async def _update_model_with_chargeback(self, transaction_id -> None: str, case -> None: ChargebackCase) -> None:
         """Update ML model with chargeback data."""
         # This would typically involve retraining the model with new data
         # For now, we'll just log the update
@@ -899,7 +899,7 @@ class ChargebackPreventionSystem:
 
 # Example usage and testing
 if __name__ == "__main__":
-    async def test_chargeback_prevention():
+    async def test_chargeback_prevention() -> None:
         """Test chargeback prevention system."""
         system = ChargebackPreventionSystem()
         

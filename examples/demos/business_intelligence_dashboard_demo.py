@@ -1,3 +1,8 @@
+"""
+Business Intelligence Dashboard Demo module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Business Intelligence Dashboard Demo for Ainflue Platform
@@ -50,7 +55,7 @@ class BusinessIntelligenceDashboardDemo:
     Real-time analytics, predictive insights, and executive reporting
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = self._setup_logging()
         self.dashboard_engine = DashboardEngineSimulator()
         self.analytics_processor = AnalyticsProcessorSimulator()
@@ -899,7 +904,7 @@ BusinessIntelligenceDashboardDemo._generate_bi_dashboard_report = _generate_bi_d
 
 
 if __name__ == "__main__":
-    async def main():
+    async def main() -> None:
         """Main demo execution"""
         print("📈 Business Intelligence Dashboard Comprehensive Demo")
         print("=" * 60)

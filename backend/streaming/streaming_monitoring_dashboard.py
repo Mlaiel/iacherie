@@ -244,7 +244,7 @@ class HealthCheck:
 class RealTimeMetricsCollector:
     """Real-time metrics collection and processing system"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         self.metric_collectors = {}
@@ -357,7 +357,7 @@ class RealTimeMetricsCollector:
 class InteractiveDashboardEngine:
     """Interactive dashboard generation and management system"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         self.dashboard_renderers = {}
@@ -474,7 +474,7 @@ class InteractiveDashboardEngine:
 class AlertManagementSystem:
     """Alert management and notification system"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         self.alert_engines = {}
@@ -594,7 +594,7 @@ class AlertManagementSystem:
 class HealthMonitoringSystem:
     """System health monitoring and status tracking system"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         self.health_checkers = {}
@@ -654,7 +654,7 @@ class HealthMonitoringSystem:
 class StreamingMonitoringDashboard:
     """Unified streaming monitoring dashboard - Main service class"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         

@@ -299,7 +299,7 @@ class BlockchainAssetModel(Base):
         Index('idx_asset_collection_rarity', 'collection_id', 'rarity_rank'),
     )
     
-    def __repr__(self):
+    def __repr__(self) -> None:
         return f"<BlockchainAssetModel(id={self.id}, network={self.blockchain_network.value}, type={self.asset_type.value})>"
 
 
@@ -451,7 +451,7 @@ class NFTModel(Base):
         Index('idx_nft_trending_featured', 'trending_score', 'is_featured'),
     )
     
-    def __repr__(self):
+    def __repr__(self) -> None:
         return f"<NFTModel(id={self.id}, name='{self.nft_name[:50]}', rarity={self.rarity_tier})>"
 
 
@@ -596,7 +596,7 @@ class SmartContractModel(Base):
         Index('idx_contract_deployment_timestamp', 'deployment_timestamp'),
     )
     
-    def __repr__(self):
+    def __repr__(self) -> None:
         return f"<SmartContractModel(id={self.id}, type={self.contract_type.value}, address={self.contract_address[:10]}...)>"
 
 
@@ -713,7 +713,7 @@ class CryptocurrencyModel(Base):
         Index('idx_crypto_timestamp_amount', 'block_timestamp', 'amount'),
     )
     
-    def __repr__(self):
+    def __repr__(self) -> None:
         return f"<CryptocurrencyModel(id={self.id}, hash={self.transaction_hash[:10]}..., amount={self.amount} {self.currency})>"
 
 

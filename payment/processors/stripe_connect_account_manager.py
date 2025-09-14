@@ -119,7 +119,7 @@ class StripeConnectAccountManager:
     - Audit trail maintenance
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """Initialize Stripe Connect account manager"""
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -682,7 +682,7 @@ class StripeConnectAccountManager:
         else:
             return VerificationStatus.UNVERIFIED
     
-    async def _check_verification_alerts(self, profile: CreatorProfile):
+    async def _check_verification_alerts(self, profile -> None: CreatorProfile) -> None:
         """DevOps: Check if verification alerts are needed"""
         current_time = datetime.now()
         
@@ -694,7 +694,7 @@ class StripeConnectAccountManager:
                     # Generate alert
                     self.logger.warning(f"Verification deadline approaching for creator {profile.creator_id}: {req.field_name}")
     
-    async def _log_audit_event(self, event: Dict[str, Any]):
+    async def _log_audit_event(self, event -> None: Dict[str, Any]) -> None:
         """DBA: Log audit event"""
         event['id'] = str(uuid.uuid4())
         self.audit_logs.append(event)

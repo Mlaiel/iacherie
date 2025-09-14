@@ -1,3 +1,8 @@
+"""
+Redis Auth Manager module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
@@ -132,7 +137,7 @@ class RedisAuthManager:
     - Audit base données sécurisé
     """
     
-    def __init__(self, redis_pool, secret_key: str, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, redis_pool, secret_key -> None: str, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.redis_pool = redis_pool
         self.secret_key = secret_key
         self.config = config or {}
@@ -185,7 +190,7 @@ class RedisAuthManager:
         key = base64.urlsafe_b64encode(kdf.derive(secret.encode()))
         return key
     
-    async def _initialize_default_users(self):
+    async def _initialize_default_users(self) -> None:
         """**DBA**: Initialisation utilisateurs par défaut"""
         try:
             # Admin par défaut
@@ -225,7 +230,7 @@ class RedisAuthManager:
         except Exception as e:
             logger.error(f"❌ Erreur initialisation utilisateurs: {e}")
     
-    async def _load_acl_rules(self):
+    async def _load_acl_rules(self) -> None:
         """**DBA**: Chargement règles ACL par défaut"""
         default_rules = [
             # Admin: accès complet
@@ -264,7 +269,7 @@ class RedisAuthManager:
         self.acl_rules.extend(default_rules)
         logger.info(f"✅ {len(default_rules)} règles ACL chargées")
     
-    async def _start_security_monitoring(self):
+    async def _start_security_monitoring(self) -> None:
         """**DevOps**: Démarrage monitoring sécurité"""
         asyncio.create_task(self._security_scan_loop())
         asyncio.create_task(self._cleanup_expired_tokens())
@@ -562,7 +567,7 @@ class RedisAuthManager:
         
         return value == pattern
     
-    async def _handle_failed_auth(self, username: str, ip_address: str, reason: str):
+    async def _handle_failed_auth(self, username -> None: str, ip_address -> None: str, reason -> None: str) -> None:
         """**Sécurité**: Gestion échecs d'authentification"""
         # Mise à jour compteurs
         self.security_metrics.failed_auths += 1
@@ -593,7 +598,7 @@ class RedisAuthManager:
             {"reason": reason, "ip": ip_address}
         )
     
-    async def _handle_successful_auth(self, user: User, ip_address: str):
+    async def _handle_successful_auth(self, user -> None: User, ip_address -> None: str) -> None:
         """**Sécurité**: Gestion authentification réussie"""
         # Reset compteurs
         user.failed_login_attempts = 0
@@ -633,7 +638,7 @@ class RedisAuthManager:
         self.rate_limits[ip_address].append(current_time)
         return True
     
-    async def _check_suspicious_ip(self, ip_address: str):
+    async def _check_suspicious_ip(self, ip_address -> None: str) -> None:
         """**Sécurité**: Détection IP suspectes"""
         # Comptage échecs par IP
         recent_failures = 0
@@ -665,10 +670,10 @@ class RedisAuthManager:
     
     async def _log_security_event(
         self, 
-        event_type: AuthEvent, 
-        username: str,
-        details: Dict[str, Any]
-    ):
+        event_type -> None: AuthEvent, 
+        username -> None: str,
+        details -> None: Dict[str, Any]
+    ) -> None:
         """**DevOps**: Logging événements sécurité pour audit"""
         event = {
             "timestamp": time.time(),
@@ -699,7 +704,7 @@ class RedisAuthManager:
         else:
             logger.info(f"🔐 {event_type.value}: {username}")
     
-    async def _security_scan_loop(self):
+    async def _security_scan_loop(self) -> None:
         """**DevOps**: Boucle scan sécurité périodique"""
         while True:
             try:
@@ -711,7 +716,7 @@ class RedisAuthManager:
             except Exception as e:
                 logger.error(f"❌ Erreur scan sécurité: {e}")
     
-    async def _perform_security_scan(self):
+    async def _perform_security_scan(self) -> None:
         """**DevOps**: Scan sécurité détaillé"""
         current_time = time.time()
         
@@ -730,7 +735,7 @@ class RedisAuthManager:
         
         logger.debug("🔍 Scan sécurité terminé")
     
-    async def _detect_suspicious_patterns(self):
+    async def _detect_suspicious_patterns(self) -> None:
         """**Sécurité**: Détection patterns suspects avec IA"""
         try:
             # Analyse logs récents pour patterns d'attaque
@@ -760,7 +765,7 @@ class RedisAuthManager:
         except Exception as e:
             logger.error(f"❌ Erreur détection patterns: {e}")
     
-    async def _cleanup_expired_tokens(self):
+    async def _cleanup_expired_tokens(self) -> None:
         """**Backend Senior**: Nettoyage tokens expirés"""
         while True:
             try:
@@ -784,7 +789,7 @@ class RedisAuthManager:
             except Exception as e:
                 logger.error(f"❌ Erreur nettoyage tokens: {e}")
     
-    async def _persist_user(self, user: User):
+    async def _persist_user(self, user -> None: User) -> None:
         """**DBA**: Persistance utilisateur en Redis"""
         try:
             async with self.redis_pool.get_connection() as redis_conn:
@@ -857,18 +862,19 @@ class RedisAuthManager:
         }
 
 # Factory function
-async def create_redis_auth_manager(redis_pool, secret_key: str, config: Optional[Dict[str, Any]] = None):
+async def create_redis_auth_manager(redis_pool, secret_key -> None: str, config -> None: Optional[Dict[str, Any]] = None) -> None:
     """**Sécurité**: Factory création Auth Manager"""
     auth_manager = RedisAuthManager(redis_pool, secret_key, config)
     return auth_manager
 
 if __name__ == "__main__":
-    async def demo():
+    async def demo() -> None:
         """Démonstration Redis Auth Manager"""
         
         # Configuration Redis simulée
         class MockRedisPool:
-            def get_connection(self):
+    """MockRedisPool: class implementation"""
+            def get_connection(self) -> None:
                 from unittest.mock import AsyncMock
                 return AsyncMock()
         

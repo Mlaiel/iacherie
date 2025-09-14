@@ -222,7 +222,7 @@ class DatabaseOptimizer:
     forensic evidence management, and high-availability architecture.
     """
     
-    def __init__(self, config: DatabaseConfig):
+    def __init__(self, config -> None: DatabaseConfig) -> None:
         self.config = config
         self.async_engine = None
         self.sync_engine = None
@@ -255,7 +255,7 @@ class DatabaseOptimizer:
             f"?sslmode={self.config.ssl_mode}"
         )
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize database connections and components."""
         start_time = time.time()
         
@@ -310,7 +310,7 @@ class DatabaseOptimizer:
             logger.error(f"Database initialization failed: {str(e)}")
             raise
     
-    async def _initialize_components(self):
+    async def _initialize_components(self) -> None:
         """Initialize database management components."""
         # Initialize encryption manager
         self.encryption_manager = EncryptionManager(self.config)
@@ -334,7 +334,7 @@ class DatabaseOptimizer:
         
         logger.info("Database components initialized")
     
-    async def _create_schema(self):
+    async def _create_schema(self) -> None:
         """Create optimized database schema."""
         logger.info("Creating database schema...")
         
@@ -480,7 +480,7 @@ class DatabaseOptimizer:
         
         return tables
     
-    async def _create_custom_indexes(self):
+    async def _create_custom_indexes(self) -> None:
         """Create advanced custom indexes for optimization."""
         logger.info("Creating custom indexes...")
         
@@ -530,7 +530,7 @@ class DatabaseOptimizer:
         
         logger.info("Custom indexes created successfully")
     
-    async def _setup_partitioning(self):
+    async def _setup_partitioning(self) -> None:
         """Setup table partitioning for large datasets."""
         logger.info("Setting up table partitioning...")
         
@@ -563,7 +563,7 @@ class DatabaseOptimizer:
         
         logger.info("Table partitioning configured")
     
-    async def _configure_row_level_security(self):
+    async def _configure_row_level_security(self) -> None:
         """Configure row-level security policies."""
         logger.info("Configuring row-level security...")
         
@@ -608,7 +608,7 @@ class DatabaseOptimizer:
         
         logger.info("Row-level security configured")
     
-    async def _configure_database_optimization(self):
+    async def _configure_database_optimization(self) -> None:
         """Configure PostgreSQL optimization parameters."""
         logger.info("Configuring database optimization...")
         
@@ -643,7 +643,7 @@ class DatabaseOptimizer:
         
         logger.info("Database optimization configured")
     
-    async def _configure_auto_vacuum(self):
+    async def _configure_auto_vacuum(self) -> None:
         """Configure automatic vacuum and analyze settings."""
         auto_vacuum_settings = [
             "ALTER SYSTEM SET autovacuum = on",
@@ -662,7 +662,7 @@ class DatabaseOptimizer:
                 except Exception as e:
                     logger.warning(f"Auto-vacuum setting failed: {str(e)}")
     
-    async def _start_monitoring(self):
+    async def _start_monitoring(self) -> None:
         """Start database performance monitoring."""
         if self.monitoring_manager:
             await self.monitoring_manager.start_monitoring()
@@ -782,8 +782,8 @@ class DatabaseOptimizer:
         
         return 'unknown'
     
-    async def _log_query_performance(self, query_hash: str, query_type: QueryType, 
-                                   execution_time: float, rows_affected: int, query: str):
+    async def _log_query_performance(self, query_hash -> None: str, query_type -> None: QueryType, 
+                                   execution_time -> None: float, rows_affected -> None: int, query -> None: str) -> None:
         """Log query performance for analysis."""
         try:
             performance_data = {
@@ -1061,7 +1061,7 @@ class DatabaseOptimizer:
         logger.info(f"Database backup {backup_type} completed: {backup_id}")
         return backup_info
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Gracefully shutdown database connections."""
         logger.info("Shutting down database optimizer...")
         
@@ -1083,13 +1083,13 @@ class DatabaseOptimizer:
 class EncryptionManager:
     """Advanced encryption manager for sensitive data protection."""
     
-    def __init__(self, config: DatabaseConfig):
+    def __init__(self, config -> None: DatabaseConfig) -> None:
         self.config = config
         self.master_key = None
         self.field_keys = {}
         self.initialized = False
         
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize encryption components."""
         if self.config.encryption_enabled:
             self.master_key = self._generate_master_key()
@@ -1102,7 +1102,7 @@ class EncryptionManager:
         # In production, this would load from secure key management system
         return Fernet.generate_key()
     
-    async def _load_field_keys(self):
+    async def _load_field_keys(self) -> None:
         """Load field-specific encryption keys."""
         # Generate field-specific keys
         sensitive_fields = [
@@ -1134,12 +1134,12 @@ class EncryptionManager:
 class ForensicEvidenceManager:
     """Advanced forensic evidence management with chain of custody."""
     
-    def __init__(self, engine, encryption_manager: EncryptionManager):
+    def __init__(self, engine, encryption_manager -> None: EncryptionManager) -> None:
         self.engine = engine
         self.encryption_manager = encryption_manager
         self.initialized = False
         
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize forensic evidence manager."""
         self.initialized = True
         logger.info("Forensic evidence manager initialized")
@@ -1294,11 +1294,11 @@ class ForensicEvidenceManager:
 class IndexManager:
     """Advanced database index management and optimization."""
     
-    def __init__(self, engine):
+    def __init__(self, engine) -> None:
         self.engine = engine
         self.initialized = False
         
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize index manager."""
         self.initialized = True
         logger.info("Index manager initialized")
@@ -1362,16 +1362,16 @@ class IndexManager:
 class PartitionManager:
     """Advanced table partitioning management."""
     
-    def __init__(self, engine):
+    def __init__(self, engine) -> None:
         self.engine = engine
         self.initialized = False
         
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize partition manager."""
         self.initialized = True
         logger.info("Partition manager initialized")
     
-    async def create_partitioned_table(self, config: PartitionConfig):
+    async def create_partitioned_table(self, config -> None: PartitionConfig) -> None:
         """Create partitioned table based on configuration."""
         if config.strategy == PartitionStrategy.TIME_BASED:
             await self._create_time_based_partitions(config)
@@ -1379,7 +1379,7 @@ class PartitionManager:
             await self._create_hash_partitions(config)
         # Add other partitioning strategies as needed
     
-    async def _create_time_based_partitions(self, config: PartitionConfig):
+    async def _create_time_based_partitions(self, config -> None: PartitionConfig) -> None:
         """Create time-based partitions (monthly)."""
         base_date = datetime.now(timezone.utc).replace(day=1)
         
@@ -1419,18 +1419,18 @@ class PartitionManager:
 class DatabaseMonitoringManager:
     """Real-time database monitoring and alerting."""
     
-    def __init__(self, engine, config: DatabaseConfig):
+    def __init__(self, engine, config -> None: DatabaseConfig) -> None:
         self.engine = engine
         self.config = config
         self.monitoring_tasks = []
         self.initialized = False
         
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize monitoring manager."""
         self.initialized = True
         logger.info("Database monitoring manager initialized")
     
-    async def start_monitoring(self):
+    async def start_monitoring(self) -> None:
         """Start monitoring tasks."""
         if not self.initialized:
             return
@@ -1445,7 +1445,7 @@ class DatabaseMonitoringManager:
         
         logger.info("Database monitoring started")
     
-    async def stop_monitoring(self):
+    async def stop_monitoring(self) -> None:
         """Stop monitoring tasks."""
         for task in self.monitoring_tasks:
             task.cancel()
@@ -1453,7 +1453,7 @@ class DatabaseMonitoringManager:
         await asyncio.gather(*self.monitoring_tasks, return_exceptions=True)
         logger.info("Database monitoring stopped")
     
-    async def _monitor_performance(self):
+    async def _monitor_performance(self) -> None:
         """Monitor database performance metrics."""
         while True:
             try:
@@ -1480,7 +1480,7 @@ class DatabaseMonitoringManager:
                 logger.error(f"Performance monitoring error: {str(e)}")
                 await asyncio.sleep(60)
     
-    async def _monitor_connections(self):
+    async def _monitor_connections(self) -> None:
         """Monitor database connections."""
         while True:
             try:

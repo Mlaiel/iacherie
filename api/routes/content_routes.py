@@ -33,6 +33,7 @@ router = APIRouter(
 # ========================================
 
 class ContentType(str, Enum):
+    """ContentType class implementation"""
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -44,6 +45,7 @@ class ContentType(str, Enum):
     COURSE = "course"
 
 class ContentStatus(str, Enum):
+    """ContentStatus class implementation"""
     UPLOADING = "uploading"
     PROCESSING = "processing"
     ANALYZING = "analyzing"
@@ -55,6 +57,7 @@ class ContentStatus(str, Enum):
     DELETED = "deleted"
 
 class ProtectionLevel(str, Enum):
+    """ProtectionLevel class implementation"""
     BASIC = "basic"
     STANDARD = "standard"
     ADVANCED = "advanced"
@@ -62,6 +65,7 @@ class ProtectionLevel(str, Enum):
     MAXIMUM = "maximum"
 
 class LicenseType(str, Enum):
+    """LicenseType class implementation"""
     ALL_RIGHTS_RESERVED = "all_rights_reserved"
     CREATIVE_COMMONS_BY = "cc_by"
     CREATIVE_COMMONS_BY_SA = "cc_by_sa"
@@ -72,6 +76,7 @@ class LicenseType(str, Enum):
     NON_EXCLUSIVE_LICENSE = "non_exclusive_license"
 
 class QualityLevel(str, Enum):
+    """QualityLevel class implementation"""
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -83,6 +88,7 @@ class QualityLevel(str, Enum):
 # ========================================
 
 class ContentMetadata(BaseModel):
+    """ContentMetadata class implementation"""
     title: str = Field(..., min_length=1, max_length=200)
     description: Optional[str] = Field(None, max_length=2000)
     tags: List[str] = Field(default_factory=list, max_items=20)
@@ -97,6 +103,7 @@ class ContentMetadata(BaseModel):
     custom_metadata: Dict[str, Any] = Field(default_factory=dict)
 
 class ContentUploadRequest(BaseModel):
+    """ContentUploadRequest class implementation"""
     metadata: ContentMetadata
     protection_level: ProtectionLevel = Field(default=ProtectionLevel.STANDARD)
     enable_watermarking: bool = Field(default=True)
@@ -107,6 +114,7 @@ class ContentUploadRequest(BaseModel):
     content_warnings: List[str] = Field(default_factory=list)
 
 class ContentResponse(BaseModel):
+    """ContentResponse class implementation"""
     id: str
     filename: str
     content_type: ContentType
@@ -128,6 +136,7 @@ class ContentResponse(BaseModel):
     revenue_generated: Decimal = Field(default=Decimal("0.00"))
 
 class ContentFilter(BaseModel):
+    """ContentFilter class implementation"""
     content_type: Optional[ContentType] = None
     status: Optional[ContentStatus] = None
     category: Optional[str] = None
@@ -140,6 +149,7 @@ class ContentFilter(BaseModel):
     has_violations: Optional[bool] = None
 
 class ContentAnalytics(BaseModel):
+    """ContentAnalytics class implementation"""
     content_id: str
     views: int
     downloads: int
@@ -154,6 +164,7 @@ class ContentAnalytics(BaseModel):
     quality_score: float = Field(ge=0.0, le=10.0)
 
 class ContentProtectionRequest(BaseModel):
+    """ContentProtectionRequest class implementation"""
     content_id: str
     protection_level: ProtectionLevel
     watermark_settings: Dict[str, Any] = Field(default_factory=dict)
@@ -162,6 +173,7 @@ class ContentProtectionRequest(BaseModel):
     notification_settings: Dict[str, bool] = Field(default_factory=dict)
 
 class ContentDistributionRequest(BaseModel):
+    """ContentDistributionRequest class implementation"""
     content_id: str
     platforms: List[str] = Field(..., min_items=1)
     schedule_time: Optional[datetime] = None
@@ -738,13 +750,13 @@ async def get_content_analytics(
 # ========================================
 
 async def process_uploaded_content(
-    content_id: str,
-    file: UploadFile,
-    protection_level: ProtectionLevel,
-    enable_watermarking: bool,
-    enable_fingerprinting: bool,
-    auto_publish: bool
-):
+    content_id -> None: str,
+    file -> None: UploadFile,
+    protection_level -> None: ProtectionLevel,
+    enable_watermarking -> None: bool,
+    enable_fingerprinting -> None: bool,
+    auto_publish -> None: bool
+) -> None:
     """Background task to process uploaded content"""
     # Simulate processing pipeline
     await asyncio.sleep(5)  # File upload
@@ -756,12 +768,12 @@ async def process_uploaded_content(
     await asyncio.sleep(3)  # Quality check
     print(f"Content {content_id} processing completed")
 
-async def apply_content_protection(content_id: str, protection_request: ContentProtectionRequest):
+async def apply_content_protection(content_id -> None: str, protection_request -> None: ContentProtectionRequest) -> None:
     """Background task to apply content protection"""
     await asyncio.sleep(15)  # Protection processing
     print(f"Protection applied to content {content_id} with level {protection_request.protection_level}")
 
-async def process_content_distribution(content_id: str, distribution_request: ContentDistributionRequest):
+async def process_content_distribution(content_id -> None: str, distribution_request -> None: ContentDistributionRequest) -> None:
     """Background task to distribute content to platforms"""
     for platform in distribution_request.platforms:
         await asyncio.sleep(5)  # Per-platform distribution

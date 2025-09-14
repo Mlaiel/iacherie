@@ -134,7 +134,7 @@ class GatewayMetrics:
 class APIGatewayCore:
     """Enterprise API Gateway core management system"""
     
-    def __init__(self, config: Optional[GatewayConfig] = None, level: str = "enterprise"):
+    def __init__(self, config -> None: Optional[GatewayConfig] = None, level -> None: str = "enterprise") -> None:
         """Initialize API Gateway core"""
         self.config = config or GatewayConfig()
         self.level = level
@@ -209,13 +209,13 @@ class APIGatewayCore:
             logger.error(f"❌ API Gateway initialization failed: {str(e)}")
             return False
     
-    def _setup_middleware(self):
+    def _setup_middleware(self) -> None:
         """Setup gateway middleware"""
         if not self.app:
             return
         
         @self.app.middleware("http")
-        async def gateway_middleware(request: Request, call_next):
+        async def gateway_middleware(request -> None: Request, call_next) -> None:
             start_time = time.time()
             
             # Metrics
@@ -248,21 +248,21 @@ class APIGatewayCore:
                     content={"error": "Internal gateway error"}
                 )
     
-    def _setup_routes(self):
+    def _setup_routes(self) -> None:
         """Setup dynamic routes"""
         if not self.app:
             return
         
         @self.app.api_route("/{path:path}", methods=["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"])
-        async def dynamic_route_handler(request: Request, path: str):
+        async def dynamic_route_handler(request -> None: Request, path -> None: str) -> None:
             return await self._handle_request(request, path)
         
         @self.app.get("/health")
-        async def health_check():
+        async def health_check() -> None:
             return {"status": "healthy", "timestamp": time.time()}
         
         @self.app.get("/metrics")
-        async def get_metrics():
+        async def get_metrics() -> None:
             return self.get_metrics_summary()
     
     async def _handle_request(self, request: Request, path: str) -> Any:
@@ -378,7 +378,7 @@ class APIGatewayCore:
         
         return None
     
-    def _cache_response(self, request: Request, response: Any):
+    def _cache_response(self, request -> None: Request, response -> None: Any) -> None:
         """Cache response"""
         cache_key = self._generate_cache_key(request)
         self.response_cache[cache_key] = {
@@ -481,7 +481,7 @@ class APIGatewayCore:
         
         return False
     
-    def _handle_circuit_breaker(self, service_id: str):
+    def _handle_circuit_breaker(self, service_id -> None: str) -> None:
         """Handle circuit breaker logic"""
         if service_id not in self.circuit_breakers:
             return
@@ -495,7 +495,7 @@ class APIGatewayCore:
             self.metrics.circuit_breakers_open += 1
             logger.warning(f"Circuit breaker opened for service {service_id}")
     
-    def _initialize_circuit_breakers(self):
+    def _initialize_circuit_breakers(self) -> None:
         """Initialize circuit breakers for all services"""
         for service_id in self.services:
             self.circuit_breakers[service_id] = {
@@ -504,7 +504,7 @@ class APIGatewayCore:
                 "last_failure": 0
             }
     
-    def _update_avg_response_time(self, processing_time: float):
+    def _update_avg_response_time(self, processing_time -> None: float) -> None:
         """Update average response time"""
         total_requests = self.metrics.total_requests
         self.metrics.avg_response_time = (
@@ -597,7 +597,7 @@ class APIGatewayCore:
             logger.error(f"API Gateway health check failed: {str(e)}")
             return False
     
-    async def _health_monitor_loop(self):
+    async def _health_monitor_loop(self) -> None:
         """Health monitoring loop"""
         while not self._shutdown_event.is_set():
             try:

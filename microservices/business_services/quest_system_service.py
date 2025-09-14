@@ -114,7 +114,7 @@ class Quest:
 class AIQuestGenerator:
     """🧠 AI-Powered Quest Generation (Lead Dev IA + AI Prompt Engineer)"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.providers = {
             'openai': self._openai_generate,
             'anthropic': self._anthropic_generate,
@@ -268,7 +268,7 @@ class AIQuestGenerator:
 class QuestValidationEngine:
     """🔒 Quest Security and Validation (Security Expert)"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.fraud_detection_rules = [
             self._validate_quest_integrity,
             self._check_reward_manipulation,
@@ -337,7 +337,7 @@ class QuestValidationEngine:
 class QuestSystemService:
     """🎮 Main Quest System Service (All Expert Roles Integration)"""
     
-    def __init__(self, redis_url: str = "redis://localhost:6379"):
+    def __init__(self, redis_url -> None: str = "redis -> None://localhost -> None:6379") -> None:
         # 🏗️ Backend Senior: Enterprise architecture setup
         self.redis_client = None
         self.redis_url = redis_url
@@ -369,7 +369,7 @@ class QuestSystemService:
         
         logger.info("Quest System Service initialized")
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """🚀 Service initialization (DevOps Expert)"""
         try:
             # Initialize Redis connection
@@ -630,7 +630,7 @@ class QuestSystemService:
             ai_generated=False
         )
     
-    async def _store_quest(self, quest: Quest):
+    async def _store_quest(self, quest -> None: Quest) -> None:
         """🗄️ Optimized quest storage (DBA Expert)"""
         # Serialize quest data
         quest_data = {
@@ -696,7 +696,7 @@ class QuestSystemService:
             'applied': True
         }
     
-    async def _update_user_progress(self, user_id: str, quest: Quest):
+    async def _update_user_progress(self, user_id -> None: str, quest -> None: Quest) -> None:
         """📈 Update user progress tracking"""
         progress_key = self.keys['user_progress'].format(user_id)
         progress_data = {
@@ -784,12 +784,12 @@ class QuestSystemService:
             'average_completion_time': 24.5
         }
     
-    async def _load_ml_models(self):
+    async def _load_ml_models(self) -> None:
         """🤖 Load ML models (ML Engineer)"""
         # Implementation would load trained models
         logger.info("ML models loaded for quest optimization")
     
-    async def _setup_monitoring(self):
+    async def _setup_monitoring(self) -> None:
         """⚙️ Setup monitoring and alerting (DevOps Expert)"""
         # Implementation would setup monitoring dashboards
         logger.info("Quest system monitoring initialized")
@@ -841,7 +841,7 @@ def get_quest_metrics() -> Dict[str, Any]:
 
 if __name__ == "__main__":
     """🎯 Quest System Service Demo"""
-    async def demo():
+    async def demo() -> None:
         # Initialize service
         service = await create_quest_system_service()
         

@@ -17,14 +17,14 @@ __all__ = ['RateLimiter', 'TokenBucket', 'SlidingWindowLimiter', 'RateLimitExcee
 
 class RateLimitExceeded(Exception):
     """Exception raised when rate limit is exceeded"""
-    def __init__(self, message: str, retry_after: Optional[float] = None):
+    def __init__(self, message -> None: str, retry_after -> None: Optional[float] = None) -> None:
         super().__init__(message)
         self.retry_after = retry_after
 
 class TokenBucket:
     """Token bucket rate limiter implementation"""
     
-    def __init__(self, capacity: int, refill_rate: float):
+    def __init__(self, capacity -> None: int, refill_rate -> None: float) -> None:
         self.capacity = capacity
         self.refill_rate = refill_rate  # tokens per second
         self.tokens = capacity
@@ -41,7 +41,7 @@ class TokenBucket:
                 return True
             return False
     
-    def _refill(self):
+    def _refill(self) -> None:
         """Refill tokens based on time elapsed"""
         now = time.time()
         time_passed = now - self.last_refill
@@ -53,7 +53,7 @@ class TokenBucket:
 class SlidingWindowLimiter:
     """Sliding window rate limiter"""
     
-    def __init__(self, max_requests: int, window_size: int):
+    def __init__(self, max_requests -> None: int, window_size -> None: int) -> None:
         self.max_requests = max_requests
         self.window_size = window_size  # in seconds
         self.requests: Dict[str, deque] = defaultdict(deque)
@@ -89,7 +89,7 @@ class SlidingWindowLimiter:
 class RateLimiter:
     """Main rate limiter class with multiple strategies"""
     
-    def __init__(self, strategy: str = "token_bucket", **kwargs):
+    def __init__(self, strategy -> None: str = "token_bucket", **kwargs) -> None:
         self.strategy = strategy
         
         if strategy == "token_bucket":
@@ -112,7 +112,7 @@ class RateLimiter:
         
         return False
     
-    def enforce_rate_limit(self, identifier: str = "default"):
+    def enforce_rate_limit(self, identifier -> None: str = "default") -> None:
         """Enforce rate limit, raise exception if exceeded"""
         if not self.check_rate_limit(identifier):
             retry_after = None

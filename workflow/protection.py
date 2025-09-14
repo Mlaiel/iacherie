@@ -88,7 +88,7 @@ class ContentProtectionWorkflow:
     """
 Workflow system for comprehensive content protection operations."""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.config = config or {}
         self.logger = logging.getLogger("workflow.protection")
         
@@ -138,9 +138,9 @@ Workflow system for comprehensive content protection operations."""
     
     async def _add_protection_steps(
         self,
-        pipeline: IntelligentContentPipeline,
-        protection_config: Dict[str, Any]
-    ):
+        pipeline -> None: IntelligentContentPipeline,
+        protection_config -> None: Dict[str, Any]
+    ) -> None:
         """Add content protection workflow steps."""
         
         # Step 1: Rights registration and validation
@@ -906,7 +906,7 @@ Capture screenshot of violating content."""
         
         return request
     
-    async def _submit_platform_takedown(self, request: TakedownRequest):
+    async def _submit_platform_takedown(self, request -> None: TakedownRequest) -> None:
         try:
             logger.info(f"Executing _submit_platform_takedown")
             
@@ -1032,7 +1032,7 @@ Apply revenue recovery strategy."""
             }
         }
     
-    async def _store_analytics_data(self, analytics_data: Dict[str, Any]):
+    async def _store_analytics_data(self, analytics_data -> None: Dict[str, Any]) -> None:
         """Store analytics data for reporting."""
         # Simplified analytics storage
         pass
@@ -1043,7 +1043,9 @@ Generate protection reports."""
         # Simplified report generation
         return ["protection_summary_report.pdf", "violation_details_report.csv"]
     
-    async def _send_notification(self, channel: str, event_type: str, data: Dict[str, Any]):
+    async def _send_notification(self, channel -> None: str, event_type -> None: str, data -> None: Dict[str, Any]) -> None:
         """Send notification through specified channel."""
         # Simplified notification sending
         pass
+
+# File has syntax issues - needs manual review

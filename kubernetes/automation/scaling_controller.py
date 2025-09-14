@@ -129,7 +129,7 @@ class ScalingController(BaseComponent):
     predictive scaling, custom metrics support, and comprehensive
     scaling event tracking and analysis.
     """
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         super().__init__()
         self.config = config
         self.logger = logging.getLogger(__name__)

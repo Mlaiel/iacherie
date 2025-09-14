@@ -1,3 +1,8 @@
+"""
+Timeout Resilience Controller module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """Timeout Resilience Controller - Adaptive Timeout Management
 =============================================================
@@ -111,7 +116,7 @@ class TimeoutStrategy(ABC):
 class AdaptiveTimeoutStrategy(TimeoutStrategy):
     """Adaptive timeout strategy based on historical performance"""
     
-    def __init__(self, config: TimeoutConfiguration):
+    def __init__(self, config -> None: TimeoutConfiguration) -> None:
         self.config = config
         self.performance_history: Dict[str, List[float]] = {}
     
@@ -225,7 +230,7 @@ class AdaptiveTimeoutStrategy(TimeoutStrategy):
         # If timeout rate is very high, skip retry
         return timeout_rate < 0.7
     
-    def _record_timeout(self, timeout_event: TimeoutEvent):
+    def _record_timeout(self, timeout_event -> None: TimeoutEvent) -> None:
         """Record timeout for learning"""
         step_key = f"{timeout_event.context.saga_type}_{timeout_event.step_name}"
         
@@ -243,7 +248,7 @@ class AdaptiveTimeoutStrategy(TimeoutStrategy):
 class TimeoutResilienceController:
     """Main controller for timeout management and resilience"""
     
-    def __init__(self, config: TimeoutConfiguration = None):
+    def __init__(self, config -> None: TimeoutConfiguration = None) -> None:
         self.config = config or TimeoutConfiguration()
         self.active_timers: Dict[str, asyncio.Task] = {}
         self.timeout_strategy = AdaptiveTimeoutStrategy(self.config)
@@ -254,7 +259,7 @@ class TimeoutResilienceController:
         # Setup default escalation policies
         self._setup_default_escalation_policies()
     
-    def _setup_default_escalation_policies(self):
+    def _setup_default_escalation_policies(self) -> None:
         """Setup default escalation policies"""
         self.escalation_policies["content_processing"] = EscalationPolicy(
             escalation_levels=[EscalationLevel.WARNING, EscalationLevel.CRITICAL, EscalationLevel.EMERGENCY],
@@ -364,10 +369,10 @@ class TimeoutResilienceController:
     
     async def _timeout_with_escalation(
         self,
-        timer_id: str,
-        timeout_duration: float,
-        context: TimeoutContext
-    ):
+        timer_id -> None: str,
+        timeout_duration -> None: float,
+        context -> None: TimeoutContext
+    ) -> None:
         """Execute timeout with escalation logic"""
         timeout_event = TimeoutEvent(
             timer_id=timer_id,
@@ -410,9 +415,9 @@ class TimeoutResilienceController:
     
     async def _execute_timeout_action(
         self,
-        timeout_event: TimeoutEvent,
-        action: TimeoutAction
-    ):
+        timeout_event -> None: TimeoutEvent,
+        action -> None: TimeoutAction
+    ) -> None:
         """Execute the determined timeout action"""
         saga_id = timeout_event.saga_id
         step_name = timeout_event.step_name
@@ -459,9 +464,9 @@ class TimeoutResilienceController:
     
     async def _escalate_timeout(
         self,
-        timeout_event: TimeoutEvent,
-        escalation_level: EscalationLevel
-    ):
+        timeout_event -> None: TimeoutEvent,
+        escalation_level -> None: EscalationLevel
+    ) -> None:
         """Escalate timeout to appropriate channels"""
         saga_type = timeout_event.context.saga_type
         policy = self.escalation_policies.get(saga_type)
@@ -477,10 +482,10 @@ class TimeoutResilienceController:
     
     async def _send_escalation_notification(
         self,
-        timeout_event: TimeoutEvent,
-        escalation_level: EscalationLevel,
-        channel: str
-    ):
+        timeout_event -> None: TimeoutEvent,
+        escalation_level -> None: EscalationLevel,
+        channel -> None: str
+    ) -> None:
         """Send escalation notification"""
         message = {
             "event": "saga_timeout_escalation",
@@ -518,7 +523,7 @@ class TimeoutResilienceController:
         # Business hours: 9 AM - 6 PM, Monday-Friday
         return 0 <= weekday <= 4 and 9 <= hour < 18
     
-    def _record_successful_completion(self, timeout_event: TimeoutEvent):
+    def _record_successful_completion(self, timeout_event -> None: TimeoutEvent) -> None:
         """Record successful step completion"""
         elapsed = (datetime.now(timezone.utc) - timeout_event.started_at).total_seconds()
         
@@ -536,7 +541,7 @@ class TimeoutResilienceController:
         metrics["successful_executions"] += 1
         metrics["total_duration"] += elapsed
     
-    def _update_timeout_metrics(self, timeout_event: TimeoutEvent):
+    def _update_timeout_metrics(self, timeout_event -> None: TimeoutEvent) -> None:
         """Update timeout metrics"""
         step_key = f"{timeout_event.context.saga_type}_{timeout_event.step_name}"
         if step_key not in self.performance_metrics:

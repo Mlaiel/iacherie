@@ -104,7 +104,7 @@ class ModelInstance:
 class DynamicBatcher:
     """Dynamic batching for optimal throughput"""
     
-    def __init__(self, max_batch_size: int = 32, max_wait_time_ms: float = 10.0):
+    def __init__(self, max_batch_size -> None: int = 32, max_wait_time_ms -> None: float = 10.0) -> None:
         self.max_batch_size = max_batch_size
         self.max_wait_time_ms = max_wait_time_ms
         self.pending_requests: queue.Queue = queue.Queue()
@@ -138,7 +138,7 @@ class DynamicBatcher:
 class ModelCache:
     """Intelligent model caching system"""
     
-    def __init__(self, max_cache_size_gb: float = 4.0):
+    def __init__(self, max_cache_size_gb -> None: float = 4.0) -> None:
         self.max_cache_size_gb = max_cache_size_gb
         self.cached_models: Dict[str, ModelInstance] = {}
         self.access_times: Dict[str, datetime] = {}
@@ -202,7 +202,7 @@ class ModelCache:
 class PerformanceMonitor:
     """Real-time performance monitoring"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.latency_history: deque = deque(maxlen=1000)
         self.throughput_history: deque = deque(maxlen=100)
         self.error_counts: Dict[str, int] = defaultdict(int)
@@ -273,7 +273,7 @@ class PerformanceMonitor:
 class ModelLoader:
     """Efficient model loading and initialization"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.supported_formats = {
             ModelFormat.PYTORCH: self._load_pytorch_model,
             ModelFormat.ONNX: self._load_onnx_model,
@@ -380,7 +380,7 @@ class ModelLoader:
 class HighPerformanceServingEngine:
     """Main high-performance serving engine"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.config = config or {}
         self.max_concurrent_requests = self.config.get('max_concurrent_requests', 100)
         self.default_batch_size = self.config.get('default_batch_size', 32)
@@ -746,7 +746,7 @@ class HighPerformanceServingEngine:
             logger.error(f"Shutdown error: {e}")
 
 # Example usage and testing
-async def main():
+async def main() -> None:
     """Test high performance serving"""
     try:
         # Initialize serving engine
@@ -762,11 +762,12 @@ async def main():
         
         # Create a simple test model
         class SimpleModel(nn.Module):
-            def __init__(self):
+    """SimpleModel class implementation"""
+            def __init__(self) -> None:
                 super().__init__()
                 self.linear = nn.Linear(10, 1)
             
-            def forward(self, x):
+            def forward(self, x) -> None:
                 return self.linear(x)
         
         # Save test model

@@ -189,14 +189,14 @@ class PerformanceTrend:
 class SystemMetricsCollector:
     """Collects system-level performance metrics"""
     
-    def __init__(self, config: MonitoringConfig):
+    def __init__(self, config -> None: MonitoringConfig) -> None:
         self.config = config
         self.metrics_buffer = deque(maxlen=1000)
         self.collection_active = False
         
         logger.info("📊 System Metrics Collector initialized")
     
-    async def start_collection(self):
+    async def start_collection(self) -> None:
         """Start metrics collection"""
         try:
             self.collection_active = True
@@ -206,7 +206,7 @@ class SystemMetricsCollector:
         except Exception as e:
             logger.error(f"Failed to start metrics collection: {e}")
     
-    async def stop_collection(self):
+    async def stop_collection(self) -> None:
         """Stop metrics collection"""
         self.collection_active = False
         logger.info("System metrics collection stopped")
@@ -306,7 +306,7 @@ class SystemMetricsCollector:
             logger.error(f"Failed to collect system metrics: {e}")
             return []
     
-    async def _collection_loop(self):
+    async def _collection_loop(self) -> None:
         """Main collection loop"""
         while self.collection_active:
             try:
@@ -370,7 +370,7 @@ class SystemMetricsCollector:
 class PerformanceAnalyzer:
     """Analyzes performance metrics and detects issues"""
     
-    def __init__(self, config: MonitoringConfig):
+    def __init__(self, config -> None: MonitoringConfig) -> None:
         self.config = config
         self.trend_cache = {}
         self.baseline_metrics = {}
@@ -603,7 +603,7 @@ class PerformanceAnalyzer:
 class AlertManager:
     """Manages performance alerts and notifications"""
     
-    def __init__(self, config: MonitoringConfig):
+    def __init__(self, config -> None: MonitoringConfig) -> None:
         self.config = config
         self.active_alerts: Dict[str, PerformanceAlert] = {}
         self.alert_history: List[PerformanceAlert] = []
@@ -613,7 +613,7 @@ class AlertManager:
         
         logger.info("🚨 Alert Manager initialized")
     
-    async def check_for_alerts(self, analysis: Dict[str, Any], component: str):
+    async def check_for_alerts(self, analysis -> None: Dict[str, Any], component -> None: str) -> None:
         """Check analysis results and create alerts if needed"""
         try:
             current_time = datetime.now(timezone.utc)
@@ -692,14 +692,14 @@ class AlertManager:
     
     async def _create_alert(
         self,
-        severity: AlertSeverity,
-        title: str,
-        description: str,
-        component: str,
-        metric_name: str,
-        current_value: float,
-        threshold_value: float
-    ):
+        severity -> None: AlertSeverity,
+        title -> None: str,
+        description -> None: str,
+        component -> None: str,
+        metric_name -> None: str,
+        current_value -> None: float,
+        threshold_value -> None: float
+    ) -> None:
         """Create new alert"""
         try:
             # Check cooldown
@@ -739,7 +739,7 @@ class AlertManager:
         except Exception as e:
             logger.error(f"Failed to create alert: {e}")
     
-    async def _send_alert_notification(self, alert: PerformanceAlert):
+    async def _send_alert_notification(self, alert -> None: PerformanceAlert) -> None:
         """Send alert notification"""
         # Placeholder for notification implementation
         # In production, would integrate with email, Slack, PagerDuty, etc.
@@ -789,7 +789,7 @@ class AlertManager:
 class PerformanceOptimizer:
     """Provides performance optimization recommendations"""
     
-    def __init__(self, config: MonitoringConfig):
+    def __init__(self, config -> None: MonitoringConfig) -> None:
         self.config = config
         self.optimization_cache = {}
         
@@ -1028,7 +1028,7 @@ class PerformanceOptimizer:
 class MediaPerformanceMonitor:
     """Main media performance monitoring system"""
     
-    def __init__(self, config: Optional[MonitoringConfig] = None):
+    def __init__(self, config -> None: Optional[MonitoringConfig] = None) -> None:
         """Initialize media performance monitor"""
         self.config = config or MonitoringConfig()
         
@@ -1213,7 +1213,7 @@ class MediaPerformanceMonitor:
             logger.error(f"Failed to generate performance dashboard: {e}")
             return {'error': str(e)}
     
-    async def _monitoring_loop(self):
+    async def _monitoring_loop(self) -> None:
         """Main monitoring loop"""
         while self.monitoring_active:
             try:

@@ -1,3 +1,8 @@
+"""
+  Init   module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Affiliate Examples Module - Démonstrations Affiliation Ultra Avancées
@@ -91,7 +96,7 @@ class AffiliateExamplesManager:
     Coordonne les démonstrations et fournit une interface unifiée
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.demo_modules = {}
         self.available_demos = AVAILABLE_DEMOS.copy()
         self.logger = logging.getLogger(f"{__name__}.AffiliateExamplesManager")
@@ -152,7 +157,7 @@ class AffiliateExamplesManager:
             self.logger.error(f"❌ Erreur lors de la démonstration {demo_name}: {e}")
             raise
     
-    async def _import_demo_module(self, demo_name: str):
+    async def _import_demo_module(self, demo_name -> None: str) -> None:
         """Import dynamique d'un module de démonstration"""
         try:
             if demo_name == "affiliate_demo":

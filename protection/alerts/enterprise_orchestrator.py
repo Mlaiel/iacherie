@@ -45,7 +45,7 @@ class EnterpriseAlertSystemOrchestrator:
     - Automated response coordination
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
         self.neural_threat_engine = NeuralThreatDetectionEngine()
         self.audio_analyzer = AudioThreatAnalyzer()
@@ -55,7 +55,7 @@ class EnterpriseAlertSystemOrchestrator:
         self.websocket_connections = set()
         self._initialize_services()
     
-    def _initialize_services(self):
+    def _initialize_services(self) -> None:
         """🏗️ Backend Senior - Initialize enterprise alert services"""
         try:
             # Initialize Redis connection pool
@@ -248,7 +248,7 @@ class EnterpriseAlertSystemOrchestrator:
             self.logger.error(f"Threat alert creation failed: {e}")
             raise
     
-    async def _store_threat_alert(self, threat_alert: ThreatAlert, evidence_data: Dict[str, Any]):
+    async def _store_threat_alert(self, threat_alert -> None: ThreatAlert, evidence_data -> None: Dict[str, Any]) -> None:
         """🗄️ DBA - High-performance threat alert storage"""
         try:
             # Store in database with optimized queries
@@ -293,7 +293,7 @@ class EnterpriseAlertSystemOrchestrator:
             self.logger.error(f"Threat alert storage failed: {e}")
             raise
     
-    async def _send_real_time_notifications(self, threat_alert: ThreatAlert):
+    async def _send_real_time_notifications(self, threat_alert -> None: ThreatAlert) -> None:
         """🌐 Microservices - Real-time notification delivery"""
         try:
             # Send WebSocket notifications to connected clients
@@ -325,7 +325,7 @@ class EnterpriseAlertSystemOrchestrator:
         except Exception as e:
             self.logger.error(f"Real-time notification delivery failed: {e}")
     
-    async def _update_alert_metrics(self, threat_alert: ThreatAlert, processing_time: float):
+    async def _update_alert_metrics(self, threat_alert -> None: ThreatAlert, processing_time -> None: float) -> None:
         """⚙️ DevOps - Update alert system metrics"""
         try:
             # Update Prometheus metrics
@@ -484,7 +484,7 @@ class EnterpriseAlertSystemOrchestrator:
             "resources_required": ["security_analyst", "legal_review"]
         }
     
-    async def _update_active_alerts_gauge(self):
+    async def _update_active_alerts_gauge(self) -> None:
         """Update the active alerts gauge metric"""
         try:
             # This would query the database for actual counts

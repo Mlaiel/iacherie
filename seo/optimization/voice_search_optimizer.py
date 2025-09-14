@@ -111,13 +111,13 @@ class VoiceSearchOptimizer:
     - Answer box optimization
     """
     
-    def __init__(self, db_pool: asyncpg.Pool):
+    def __init__(self, db_pool -> None: asyncpg.Pool) -> None:
         self.db_pool = db_pool
         self.nlp = None
         self.voice_patterns = self._load_voice_patterns()
         self._initialize_nlp()
         
-    def _initialize_nlp(self):
+    def _initialize_nlp(self) -> None:
         """Initialize NLP tools."""
         try:
             self.nlp = spacy.load("en_core_web_sm")
@@ -856,7 +856,7 @@ class VoiceSearchOptimizer:
         
         return min(score, 100.0)
     
-    async def _store_voice_query_analysis(self, voice_query: VoiceQuery):
+    async def _store_voice_query_analysis(self, voice_query -> None: VoiceQuery) -> None:
         """Store voice query analysis in database."""
         try:
             async with self.db_pool.acquire() as conn:

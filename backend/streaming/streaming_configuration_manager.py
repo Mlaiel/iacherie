@@ -221,7 +221,7 @@ class ConfigurationDeployment:
 class ConfigurationValidator:
     """Configuration validation and compliance system"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         self.validation_engines = {}
@@ -343,7 +343,7 @@ class ConfigurationValidator:
 class DynamicConfigurationManager:
     """Dynamic configuration updates and hot-reloading system"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         self.update_managers = {}
@@ -458,7 +458,7 @@ class DynamicConfigurationManager:
 class EnvironmentConfigurationOrchestrator:
     """Environment-specific configuration orchestration system"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         self.environment_managers = {}
@@ -521,7 +521,7 @@ class EnvironmentConfigurationOrchestrator:
 class ConfigurationOptimizer:
     """Intelligent configuration optimization system"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         self.optimization_engines = {}
@@ -584,7 +584,7 @@ class ConfigurationOptimizer:
 class StreamingConfigurationManager:
     """Unified streaming configuration manager - Main service class"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         

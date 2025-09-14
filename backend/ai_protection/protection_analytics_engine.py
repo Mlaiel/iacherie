@@ -128,22 +128,22 @@ class PerformanceMetrics:
 class DataCollector:
     """Analytics data collection engine"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.data_points: List[AnalyticsDataPoint] = []
         self.collection_active = False
         
-    async def start_collection(self):
+    async def start_collection(self) -> None:
         """Start continuous data collection"""
         self.collection_active = True
         logger.info("Analytics data collection started")
     
-    async def stop_collection(self):
+    async def stop_collection(self) -> None:
         """Stop data collection"""
         self.collection_active = False
         logger.info("Analytics data collection stopped")
     
-    async def collect_violation_data(self, violations: List[ViolationDetection]):
+    async def collect_violation_data(self, violations -> None: List[ViolationDetection]) -> None:
         """Collect data from violation detections"""
         try:
             for violation in violations:
@@ -170,7 +170,7 @@ class DataCollector:
         except Exception as e:
             logger.error(f"Violation data collection failed: {e}")
     
-    async def collect_legal_action_data(self, legal_results: List[LegalActionResult]):
+    async def collect_legal_action_data(self, legal_results -> None: List[LegalActionResult]) -> None:
         """Collect data from legal actions"""
         try:
             for result in legal_results:
@@ -205,7 +205,7 @@ class DataCollector:
         except Exception as e:
             logger.error(f"Legal action data collection failed: {e}")
     
-    async def collect_global_network_data(self, global_violations: List[GlobalViolation]):
+    async def collect_global_network_data(self, global_violations -> None: List[GlobalViolation]) -> None:
         """Collect data from global network operations"""
         try:
             for violation in global_violations:
@@ -231,8 +231,8 @@ class DataCollector:
         except Exception as e:
             logger.error(f"Global network data collection failed: {e}")
     
-    def _add_data_point(self, metric: AnalyticsMetric, value: float, 
-                       context: Dict[str, Any], source: str):
+    def _add_data_point(self, metric -> None: AnalyticsMetric, value -> None: float, 
+                       context -> None: Dict[str, Any], source -> None: str) -> None:
         """Add data point to collection"""
         try:
             data_point = AnalyticsDataPoint(
@@ -304,7 +304,7 @@ class ProtectionAnalyticsEngine:
     recommendations for copyright protection systems.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize protection analytics engine"""
         self.config = config or {}
         
@@ -318,7 +318,7 @@ class ProtectionAnalyticsEngine:
         
         logger.info("Protection Analytics Engine initialized")
     
-    async def start_analytics(self):
+    async def start_analytics(self) -> None:
         """Start analytics processing"""
         try:
             await self.data_collector.start_collection()
@@ -328,7 +328,7 @@ class ProtectionAnalyticsEngine:
             logger.error(f"Analytics startup failed: {e}")
             raise
     
-    async def stop_analytics(self):
+    async def stop_analytics(self) -> None:
         """Stop analytics processing"""
         try:
             await self.data_collector.stop_collection()
@@ -337,21 +337,21 @@ class ProtectionAnalyticsEngine:
         except Exception as e:
             logger.error(f"Analytics shutdown failed: {e}")
     
-    async def process_violation_data(self, violations: List[ViolationDetection]):
+    async def process_violation_data(self, violations -> None: List[ViolationDetection]) -> None:
         """Process violation data for analytics"""
         try:
             await self.data_collector.collect_violation_data(violations)
         except Exception as e:
             logger.error(f"Violation data processing failed: {e}")
     
-    async def process_legal_action_data(self, legal_results: List[LegalActionResult]):
+    async def process_legal_action_data(self, legal_results -> None: List[LegalActionResult]) -> None:
         """Process legal action data for analytics"""
         try:
             await self.data_collector.collect_legal_action_data(legal_results)
         except Exception as e:
             logger.error(f"Legal action data processing failed: {e}")
     
-    async def process_global_network_data(self, global_violations: List[GlobalViolation]):
+    async def process_global_network_data(self, global_violations -> None: List[GlobalViolation]) -> None:
         """Process global network data for analytics"""
         try:
             await self.data_collector.collect_global_network_data(global_violations)

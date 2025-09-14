@@ -122,9 +122,9 @@ class PayoutSchedulerProcessor:
     
     def __init__(
         self,
-        config: Dict[str, Any],
-        payment_processors: Dict[str, Any]
-    ):
+        config -> None: Dict[str, Any],
+        payment_processors -> None: Dict[str, Any]
+    ) -> None:
         """
 Initialize payout scheduler processor"""
         self.config = config

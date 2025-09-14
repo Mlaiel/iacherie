@@ -1,4 +1,6 @@
 """🔗 Database Connection - Core Connection Management
+import asyncio
+
 ===================================================
 Module: database/connection.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -49,7 +51,7 @@ metadata = None
 class DatabaseConnection:
     """Database connection manager"""
     
-    def __init__(self, database_url: str = None):
+    def __init__(self, database_url -> None: str = None) -> None:
         self.database_url = database_url or DATABASE_URL
         self.engine = None
         self.session_factory = None
@@ -73,14 +75,14 @@ class DatabaseConnection:
             self.connected = False
             return False
     
-    def disconnect(self):
+    def disconnect(self) -> None:
         """Close database connection"""
         if self.engine:
             self.engine.dispose()
         self.connected = False
         logger.info("Disconnected from database")
     
-    def get_session(self):
+    def get_session(self) -> None:
         """Get database session"""
         if not self.connected:
             raise RuntimeError("Database not connected")
@@ -106,13 +108,13 @@ def connect_database(database_url: str = None) -> bool:
         _connection.database_url = database_url
     return _connection.connect()
 
-def disconnect_database():
+def disconnect_database() -> None:
     """Disconnect from the database"""
     global _connection
     _connection.disconnect()
 
 @asynccontextmanager
-async def get_db_session():
+async def get_db_session() -> None:
     """Get database session context manager"""
     session = _connection.get_session()
     try:
@@ -127,7 +129,7 @@ async def get_db_session():
         if session:
             session.close()
 
-def init_database():
+def init_database() -> None:
     """Initialize database with default settings"""
     global engine, SessionLocal, Base, metadata
     

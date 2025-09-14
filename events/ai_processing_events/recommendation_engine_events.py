@@ -77,7 +77,7 @@ class RecommendationResult:
 class RecommendationEngineEvents(BaseEventHandler):
     """Enterprise Recommendation Engine with ML capabilities"""
     
-    def __init__(self, max_workers: int = 4):
+    def __init__(self, max_workers -> None: int = 4) -> None:
         super().__init__()
         self.executor = ThreadPoolExecutor(max_workers=max_workers)
         self.request_queue = asyncio.Queue(maxsize=1000)
@@ -115,7 +115,7 @@ class RecommendationEngineEvents(BaseEventHandler):
             }
         return database
     
-    async def start_engine(self):
+    async def start_engine(self) -> None:
         """Start the recommendation engine"""
         self.is_running = True
         
@@ -125,7 +125,7 @@ class RecommendationEngineEvents(BaseEventHandler):
         
         logger.info("Recommendation Engine started")
     
-    async def stop_engine(self):
+    async def stop_engine(self) -> None:
         """Stop the recommendation engine"""
         self.is_running = False
         self.executor.shutdown(wait=True)
@@ -305,7 +305,7 @@ class RecommendationEngineEvents(BaseEventHandler):
         
         return recommended_items
     
-    async def _worker_loop(self, worker_id: str):
+    async def _worker_loop(self, worker_id -> None: str) -> None:
         """Worker loop for processing recommendation requests"""
         logger.info(f"Recommendation worker {worker_id} started")
         

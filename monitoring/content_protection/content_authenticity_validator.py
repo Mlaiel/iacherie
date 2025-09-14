@@ -79,7 +79,7 @@ class AuthenticityResult:
 class ContentAuthenticityValidator:
     """Enterprise content authenticity validation system."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.validation_cache = {}
         self.blockchain_validators = []
         self.ai_models = {}

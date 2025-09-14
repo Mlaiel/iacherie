@@ -216,7 +216,7 @@ class DockerConfigManager:
     """
 Enterprise-grade Docker configuration manager for IA-Influencer-Agent"""
     
-    def __init__(self, config_path: str = "/app/config/docker"):
+    def __init__(self, config_path -> None: str = "/app/config/docker") -> None:
         self.config_path = Path(config_path)
         self.client = None
         self.configs: Dict[str, DockerConfig] = {}
@@ -613,7 +613,7 @@ class DockerImageBuilder:
     """
 Professional Docker image builder with advanced features"""
     
-    def __init__(self, docker_client, registry_manager=None):
+    def __init__(self, docker_client, registry_manager=None) -> None:
         self.client = docker_client
         self.registry_manager = registry_manager
         self.build_cache: Dict[str, DockerBuildResult] = {}
@@ -793,7 +793,7 @@ class DockerRegistryManager:
     """
 Professional Docker registry management"""
     
-    def __init__(self, default_registry: str = "registry.ia-influencer-agent.com"):
+    def __init__(self, default_registry -> None: str = "registry.ia-influencer-agent.com") -> None:
         self.default_registry = default_registry
         self.credentials: Dict[str, DockerRegistryCredentials] = {}
         self.client = None
@@ -1180,7 +1180,7 @@ Update configuration for specific service"""
 class DockerImageBuilder:
     """Professional Docker image builder"""
     
-    def __init__(self, registry_url: str = None):
+    def __init__(self, registry_url -> None: str = None) -> None:
         self.registry_url = registry_url
         self.client = None
         self.build_cache = {}
@@ -1274,7 +1274,7 @@ class DockerImageBuilder:
 class DockerRegistryManager:
     """Professional Docker registry management"""
     
-    def __init__(self, registry_config: Dict[str, Any]):
+    def __init__(self, registry_config -> None: Dict[str, Any]) -> None:
         self.registry_config = registry_config
         self.client = None
         self.authenticated = False

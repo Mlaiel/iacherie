@@ -309,7 +309,7 @@ class EconomicEvent(Base):
 class VirtualEconomyEngine:
     """Central virtual economy management system"""
     
-    def __init__(self, redis_client: redis.Redis):
+    def __init__(self, redis_client -> None: redis.Redis) -> None:
         self.redis = redis_client
         self.currency_manager = CurrencyManager(redis_client)
         self.marketplace_engine = MarketplaceEngine(redis_client)
@@ -561,7 +561,7 @@ class VirtualEconomyEngine:
         # Database lookup would happen here
         return None
     
-    async def _cache_wallet(self, wallet: UserWallet):
+    async def _cache_wallet(self, wallet -> None: UserWallet) -> None:
         """Cache wallet data for fast access"""
         wallet_data = {
             'id': wallet.id,
@@ -645,7 +645,7 @@ class VirtualEconomyEngine:
 class CurrencyManager:
     """Advanced currency management and validation"""
     
-    def __init__(self, redis_client: redis.Redis):
+    def __init__(self, redis_client -> None: redis.Redis) -> None:
         self.redis = redis_client
         self.daily_limits = {
             CurrencyType.COINS: Decimal('1000'),    # Max 1000 coins per day from rewards
@@ -714,7 +714,7 @@ class CurrencyManager:
 class MarketplaceEngine:
     """Advanced marketplace with dynamic pricing"""
     
-    def __init__(self, redis_client: redis.Redis):
+    def __init__(self, redis_client -> None: redis.Redis) -> None:
         self.redis = redis_client
         self.pricing_ai = DynamicPricingAI()
         logger.info("Marketplace Engine initialized")
@@ -853,7 +853,7 @@ class MarketplaceEngine:
 class DynamicPricingAI:
     """AI-powered dynamic pricing system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.demand_metrics: Dict[str, Dict] = {}
         logger.info("Dynamic Pricing AI initialized")
     
@@ -903,7 +903,7 @@ class DynamicPricingAI:
             logger.error(f"Failed to calculate dynamic price: {e}")
             return item.base_price_coins or Decimal('100')
     
-    async def update_demand_metrics(self, item_id: str, quantity_sold: int):
+    async def update_demand_metrics(self, item_id -> None: str, quantity_sold -> None: int) -> None:
         """Update demand metrics after sale"""
         try:
             if item_id not in self.demand_metrics:
@@ -931,7 +931,7 @@ class DynamicPricingAI:
         
         return self.demand_metrics[item_id]
     
-    async def _decay_recent_metrics(self, item_id: str):
+    async def _decay_recent_metrics(self, item_id -> None: str) -> None:
         """Decay recent sales metrics over time"""
         if item_id not in self.demand_metrics:
             return
@@ -951,7 +951,7 @@ class DynamicPricingAI:
 class TradingSystem:
     """Peer-to-peer trading system with escrow"""
     
-    def __init__(self, redis_client: redis.Redis):
+    def __init__(self, redis_client -> None: redis.Redis) -> None:
         self.redis = redis_client
         self.active_trades: Dict[str, PeerTrade] = {}
         logger.info("Trading System initialized")
@@ -1102,7 +1102,7 @@ class TradingSystem:
         data = f"{seller_id}:{item_id}:{amount}:{timestamp}"
         return hashlib.sha256(data.encode()).hexdigest()
     
-    async def _cache_trade(self, trade: PeerTrade):
+    async def _cache_trade(self, trade -> None: PeerTrade) -> None:
         """Cache trade for fast access"""
         trade_data = {
             'id': trade.id,
@@ -1136,13 +1136,13 @@ class TradingSystem:
         
         return None
     
-    async def _hold_escrow(self, trade: PeerTrade):
+    async def _hold_escrow(self, trade -> None: PeerTrade) -> None:
         """Hold buyer funds in escrow"""
         trade.escrow_held = True
         trade.escrow_amount = trade.offered_amount
         # Actual escrow implementation would freeze buyer funds
     
-    async def _complete_trade(self, trade: PeerTrade):
+    async def _complete_trade(self, trade -> None: PeerTrade) -> None:
         """Complete the trade transaction"""
         trade.status = TradeStatus.COMPLETED.value
         trade.completed_at = datetime.utcnow()
@@ -1153,7 +1153,7 @@ class TradingSystem:
         
         await self._update_trade(trade)
     
-    async def _update_trade(self, trade: PeerTrade):
+    async def _update_trade(self, trade -> None: PeerTrade) -> None:
         """Update trade in database and cache"""
         await self._cache_trade(trade)
         # Database update would happen here
@@ -1165,12 +1165,12 @@ class TradingSystem:
 class EconomyBalancer:
     """Economic balancing and inflation control"""
     
-    def __init__(self, redis_client: redis.Redis):
+    def __init__(self, redis_client -> None: redis.Redis) -> None:
         self.redis = redis_client
         self.inflation_target = 0.02  # 2% monthly inflation target
         logger.info("Economy Balancer initialized")
     
-    async def record_transaction(self, transaction: VirtualTransaction):
+    async def record_transaction(self, transaction -> None: VirtualTransaction) -> None:
         """Record transaction for economic analysis"""
         try:
             # Store daily transaction data
@@ -1282,14 +1282,14 @@ class EconomyBalancer:
         # Would sum all marketplace fees
         return Decimal('5000.75')  # Mock value
     
-    async def _reduce_money_supply(self):
+    async def _reduce_money_supply(self) -> None:
         """Reduce money supply to combat inflation"""
         # Increase transaction fees
         # Reduce reward multipliers
         # Implement currency sinks
         pass
     
-    async def _increase_money_supply(self):
+    async def _increase_money_supply(self) -> None:
         """Increase money supply to stimulate economy"""
         # Reduce transaction fees
         # Increase reward multipliers
@@ -1303,7 +1303,7 @@ class EconomyBalancer:
 class CurrencyConversionEngine:
     """Real-world to virtual currency conversion"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         # Real money to virtual currency rates (USD)
         self.usd_rates = {
             CurrencyType.GEMS: Decimal('100'),    # $1 = 100 gems

@@ -1,4 +1,6 @@
 """🚀 Configuration Management Module - IA-Influencer-Agent
+import asyncio
+
 ==================================================================
 Project Creator & Lead Dev IA: Fahed Mlaiel <mlaiel@live.de>
 Experts: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security Expert + 
@@ -586,7 +588,7 @@ class ConfigurationModule:
     - Infrastructure as Code templates
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """
 Initialize configuration module with all managers"""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")

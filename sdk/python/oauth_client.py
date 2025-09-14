@@ -102,7 +102,7 @@ class OAuthConfig(BaseModel):
 class PKCEChallenge:
     """PKCE (Proof Key for Code Exchange) implementation"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.code_verifier = self._generate_code_verifier()
         self.code_challenge = self._generate_code_challenge()
     
@@ -183,7 +183,7 @@ class OAuthProviderConfig:
 class OAuthStateManager:
     """OAuth state management for security (Security expertise)"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.states = {}  # In production, use secure storage
         self.cleanup_interval = 3600  # 1 hour
     
@@ -229,11 +229,11 @@ class OAuthStateManager:
         state_data["used"] = True
         return True
     
-    def _remove_state(self, state: str):
+    def _remove_state(self, state -> None: str) -> None:
         """Remove state from storage"""
         self.states.pop(state, None)
     
-    def cleanup_expired_states(self):
+    def cleanup_expired_states(self) -> None:
         """Clean up expired states"""
         now = datetime.now()
         expired_states = [
@@ -248,7 +248,7 @@ class OAuthStateManager:
 class OAuthClient:
     """Main OAuth 2.0 client with multi-expert security implementation"""
     
-    def __init__(self, config: OAuthConfig):
+    def __init__(self, config -> None: OAuthConfig) -> None:
         self.config = config
         self.logger = logging.getLogger(__name__)
         
@@ -267,7 +267,7 @@ class OAuthClient:
         # Validate configuration
         self._validate_config()
     
-    def _validate_config(self):
+    def _validate_config(self) -> None:
         """Validate OAuth configuration (Security expertise)"""
         if self.config.enforce_https:
             if not str(self.config.authorization_endpoint).startswith('https://'):
@@ -277,7 +277,7 @@ class OAuthClient:
             if not str(self.config.redirect_uri).startswith('https://'):
                 raise ConfigurationError("Redirect URI must use HTTPS")
     
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         """Async context manager entry"""
         self.http_client = httpx.AsyncClient(
             timeout=self.config.token_timeout,
@@ -285,7 +285,7 @@ class OAuthClient:
         )
         return self
     
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         """Async context manager exit"""
         if self.http_client:
             await self.http_client.aclose()
@@ -597,7 +597,7 @@ class OAuthClient:
             self.logger.error(f"Token revocation failed: {e}")
             return False
     
-    def _update_average_auth_time(self, auth_time: float):
+    def _update_average_auth_time(self, auth_time -> None: float) -> None:
         """Update average authentication time"""
         if self.metrics.successful_auths == 1:
             self.metrics.average_auth_time = auth_time
@@ -623,7 +623,7 @@ class OAuthClient:
 
 
 # Example usage
-async def example_oauth_usage():
+async def example_oauth_usage() -> None:
     """Example OAuth 2.0 usage"""
     # Google OAuth configuration
     config = OAuthConfig(

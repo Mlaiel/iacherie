@@ -153,7 +153,7 @@ class AinflueMetricsEngine:
     - Custom dashboard support
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.metric_storage: Dict[str, deque] = defaultdict(lambda: deque(maxlen=10000))
         self.aggregated_metrics: Dict[str, List[AggregatedMetric]] = defaultdict(list)
@@ -173,7 +173,7 @@ class AinflueMetricsEngine:
         
         logger.info("AinflueMetricsEngine initialized with enterprise features")
 
-    async def record_metric(self, metric: MetricValue):
+    async def record_metric(self, metric -> None: MetricValue) -> None:
         """Record a metric value."""
         try:
             # Store metric
@@ -244,7 +244,7 @@ def get_metrics_engine(config: Optional[Dict[str, Any]] = None) -> AinflueMetric
     return _metrics_engine
 
 # Convenience functions for metric recording
-async def record_audio_processing_time(processing_time: float, format_pair: str = ""):
+async def record_audio_processing_time(processing_time -> None: float, format_pair -> None: str = "") -> None:
     """Record audio processing time metric."""
     engine = get_metrics_engine()
     metric = MetricValue(
@@ -257,7 +257,7 @@ async def record_audio_processing_time(processing_time: float, format_pair: str 
     )
     await engine.record_metric(metric)
 
-async def record_collaboration_success(success: bool, partnership_id: str = ""):
+async def record_collaboration_success(success -> None: bool, partnership_id -> None: str = "") -> None:
     """Record collaboration success metric."""
     engine = get_metrics_engine()
     metric = MetricValue(
@@ -270,7 +270,7 @@ async def record_collaboration_success(success: bool, partnership_id: str = ""):
     )
     await engine.record_metric(metric)
 
-async def record_payment_transaction(amount: float, success: bool, gateway: str = ""):
+async def record_payment_transaction(amount -> None: float, success -> None: bool, gateway -> None: str = "") -> None:
     """Record payment transaction metric."""
     engine = get_metrics_engine()
     
@@ -296,7 +296,7 @@ async def record_payment_transaction(amount: float, success: bool, gateway: str 
     )
     await engine.record_metric(success_metric)
 
-async def record_api_response_time(endpoint: str, response_time_ms: float):
+async def record_api_response_time(endpoint -> None: str, response_time_ms -> None: float) -> None:
     """Record API response time metric."""
     engine = get_metrics_engine()
     metric = MetricValue(

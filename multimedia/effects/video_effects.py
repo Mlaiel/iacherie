@@ -34,7 +34,7 @@ class VideoEffectsConfig:
 class TransitionEngine:
     """Professional transition effects between video clips."""
     
-    def __init__(self, config: VideoEffectsConfig):
+    def __init__(self, config -> None: VideoEffectsConfig) -> None:
         self.config = config
         
     def fade_transition(self, frame1: np.ndarray, frame2: np.ndarray, progress: float) -> np.ndarray:
@@ -155,7 +155,7 @@ class TransitionEngine:
 class OverlayEngine:
     """Professional overlay effects for videos."""
     
-    def __init__(self, config: VideoEffectsConfig):
+    def __init__(self, config -> None: VideoEffectsConfig) -> None:
         self.config = config
     
     def add_text_overlay(
@@ -252,7 +252,7 @@ class OverlayEngine:
 class ColorGradingEngine:
     """Professional color grading and correction."""
     
-    def __init__(self, config: VideoEffectsConfig):
+    def __init__(self, config -> None: VideoEffectsConfig) -> None:
         self.config = config
     
     def apply_lut(self, frame: np.ndarray, lut: np.ndarray) -> np.ndarray:
@@ -300,7 +300,7 @@ class ColorGradingEngine:
 class MotionEngine:
     """Motion effects and camera movements."""
     
-    def __init__(self, config: VideoEffectsConfig):
+    def __init__(self, config -> None: VideoEffectsConfig) -> None:
         self.config = config
     
     def apply_shake(self, frame: np.ndarray, intensity: float = 0.5) -> np.ndarray:
@@ -358,7 +358,7 @@ class MotionEngine:
 class VideoEffectsEngine:
     """Enterprise video effects processing engine with professional tools."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.config = VideoEffectsConfig()
         self.transition_engine = TransitionEngine(self.config)
         self.overlay_engine = OverlayEngine(self.config)

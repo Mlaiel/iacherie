@@ -1,3 +1,8 @@
+"""
+Brand Monitoring module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
@@ -174,7 +179,7 @@ class BrandMonitoring:
     threat detection, and automated reputation management.
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """Initialize brand monitoring system with configuration"""
         self.config = config
         self.auth_handler = AuthenticationHandler(config)
@@ -227,7 +232,7 @@ class BrandMonitoring:
         
         logger.info("Brand Monitoring System initialized successfully")
     
-    async def _initialize_monitoring_system(self):
+    async def _initialize_monitoring_system(self) -> None:
         """Initialize brand monitoring models and real-time processing"""
         try:
             # Load historical data for model training
@@ -818,10 +823,10 @@ class BrandMonitoring:
     
     def _validate_monitoring_inputs(
         self,
-        brand_name: str,
-        keywords: List[str],
-        platforms: List[str]
-    ):
+        brand_name -> None: str,
+        keywords -> None: List[str],
+        platforms -> None: List[str]
+    ) -> None:
         """Validate monitoring input parameters"""
         if not brand_name or len(brand_name.strip()) < 2:
             raise ValueError("Brand name must be at least 2 characters")
@@ -886,7 +891,7 @@ class BrandMonitoring:
 
 if __name__ == "__main__":
     # Example usage
-    async def test_brand_monitoring():
+    async def test_brand_monitoring() -> None:
         config = {
             'redis_url': 'redis://localhost:6379',
             'openai_api_key': 'your-api-key',

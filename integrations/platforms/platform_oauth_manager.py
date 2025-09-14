@@ -55,7 +55,7 @@ OAuth tokens for a platform"""
 class PlatformOAuthManager:
     """Multi-platform OAuth authentication manager"""
     
-    def __init__(self, encryption_key: Optional[bytes] = None):
+    def __init__(self, encryption_key -> None: Optional[bytes] = None) -> None:
         self.session = None
         self.encryption_key = encryption_key or Fernet.generate_key()
         self.cipher_suite = Fernet(self.encryption_key)
@@ -158,12 +158,12 @@ class PlatformOAuthManager:
             )
         }
         
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         """Async context manager entry"""
         self.session = aiohttp.ClientSession()
         return self
         
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         """
 Async context manager exit"""
         if self.session:
@@ -171,12 +171,12 @@ Async context manager exit"""
             
     def configure_platform(
         self,
-        platform: str,
-        client_id: str,
-        client_secret: str,
-        redirect_uri: str,
-        scopes: Optional[List[str]] = None
-    ):
+        platform -> None: str,
+        client_id -> None: str,
+        client_secret -> None: str,
+        redirect_uri -> None: str,
+        scopes -> None: Optional[List[str]] = None
+    ) -> None:
         """
 Configure OAuth settings for a platform"""
         if platform not in self.platform_configs:
@@ -528,7 +528,7 @@ Configure OAuth settings for a platform"""
             logger.error(f"Error validating tokens for {tokens.platform}: {e}")
             return False
             
-    def cleanup_expired_states(self, max_age_minutes: int = 30):
+    def cleanup_expired_states(self, max_age_minutes -> None: int = 30) -> None:
         """Clean up expired OAuth states"""
         cutoff_time = datetime.now() - timedelta(minutes=max_age_minutes)
         

@@ -102,7 +102,7 @@ class TopicClusteringResult:
 class TopicClusteringEngine:
     """Advanced topic clustering engine for SEO content strategy"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """Initialize topic clustering engine
         
         Args:

@@ -112,7 +112,7 @@ class CacheEntry:
         expiry_time = self.created_at + timedelta(seconds=self.ttl_seconds)
         return datetime.now(timezone.utc) > expiry_time
     
-    def update_access(self):
+    def update_access(self) -> None:
         """Update access statistics"""
         self.last_accessed = datetime.now(timezone.utc)
         self.access_count += 1
@@ -174,7 +174,7 @@ class LanguageCacheEngine:
     with performance optimization and intelligent cache management
     """
     
-    def __init__(self, config: Optional[CacheConfig] = None):
+    def __init__(self, config -> None: Optional[CacheConfig] = None) -> None:
         """Initialize language cache engine"""
         self.config = config or CacheConfig()
         
@@ -670,8 +670,8 @@ class LanguageCacheEngine:
         """Generate hash for cache key"""
         return hashlib.sha256(key.encode()).hexdigest()
     
-    async def _promote_to_higher_levels(self, key: str, value: Any, current_level: CacheLevel, 
-                                      available_levels: List[CacheLevel]):
+    async def _promote_to_higher_levels(self, key -> None: str, value -> None: Any, current_level -> None: CacheLevel, 
+                                      available_levels -> None: List[CacheLevel]) -> None:
         """Promote frequently accessed data to higher cache levels"""
         higher_levels = []
         
@@ -687,12 +687,12 @@ class LanguageCacheEngine:
             except Exception as e:
                 logger.error(f"Error promoting to level {level.value}: {e}")
     
-    async def _update_access_stats(self, key: str, level: CacheLevel):
+    async def _update_access_stats(self, key -> None: str, level -> None: CacheLevel) -> None:
         """Update access statistics for cache optimization"""
         # This would update detailed access patterns for optimization
         pass
     
-    async def _evict_memory_entries(self, strategy: CacheStrategy, count: int):
+    async def _evict_memory_entries(self, strategy -> None: CacheStrategy, count -> None: int) -> None:
         """Evict entries from memory cache based on strategy"""
         if strategy == CacheStrategy.LRU:
             # Sort by last accessed time
@@ -744,7 +744,7 @@ class LanguageCacheEngine:
         
         return count
     
-    async def _update_cache_patterns(self, cache_key: CacheKey, strategy: CacheStrategy):
+    async def _update_cache_patterns(self, cache_key -> None: CacheKey, strategy -> None: CacheStrategy) -> None:
         """Update cache patterns for optimization"""
         pattern_key = f"{cache_key.content_type.value}:{cache_key.language_code}"
         

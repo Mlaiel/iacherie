@@ -110,7 +110,7 @@ class FormatProfile:
 class FormatCompatibilityManager:
     """Professional format compatibility management system"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize format compatibility manager"""
         self.config = config or {}
         self.format_profiles: Dict[str, FormatProfile] = {}
@@ -122,7 +122,7 @@ class FormatCompatibilityManager:
         self._initialize_compatibility_matrix()
         self._initialize_conversion_rules()
     
-    def _initialize_format_profiles(self):
+    def _initialize_format_profiles(self) -> None:
         """Initialize comprehensive format profiles"""
         try:
             # Video formats
@@ -269,7 +269,7 @@ class FormatCompatibilityManager:
         except Exception as e:
             logger.error(f"Error initializing format profiles: {e}")
     
-    def _initialize_compatibility_matrix(self):
+    def _initialize_compatibility_matrix(self) -> None:
         """Initialize format compatibility matrix"""
         try:
             # Video container compatibility
@@ -360,18 +360,18 @@ class FormatCompatibilityManager:
     
     def _add_compatibility(
         self,
-        source_format: str,
-        target_format: str,
-        compatibility_level: CompatibilityLevel,
-        conversion_complexity: ConversionComplexity,
-        quality_impact: QualityImpact,
-        compatible_features: List[str] = None,
-        incompatible_features: List[str] = None,
-        required_tools: List[str] = None,
-        conversion_steps: List[str] = None,
-        recommended: bool = False,
-        notes: List[str] = None
-    ):
+        source_format -> None: str,
+        target_format -> None: str,
+        compatibility_level -> None: CompatibilityLevel,
+        conversion_complexity -> None: ConversionComplexity,
+        quality_impact -> None: QualityImpact,
+        compatible_features -> None: List[str] = None,
+        incompatible_features -> None: List[str] = None,
+        required_tools -> None: List[str] = None,
+        conversion_steps -> None: List[str] = None,
+        recommended -> None: bool = False,
+        notes -> None: List[str] = None
+    ) -> None:
         """Add compatibility information to matrix"""
         try:
             compat_info = CompatibilityInfo(
@@ -393,7 +393,7 @@ class FormatCompatibilityManager:
         except Exception as e:
             logger.error(f"Error adding compatibility info: {e}")
     
-    def _initialize_conversion_rules(self):
+    def _initialize_conversion_rules(self) -> None:
         """Initialize format conversion rules"""
         try:
             # Video conversion rules

@@ -1,3 +1,8 @@
+"""
+Performance Testing Suite module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 🚀 PERFORMANCE TESTING SUITE - ENTERPRISE VALIDATION
@@ -70,12 +75,12 @@ class LoadTestConfig:
 class EnterprisePerformanceTester:
     """🏗️ TESTEUR PERFORMANCE ENTERPRISE - MULTI-EXPERTISE"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.results: List[PerformanceMetrics] = []
         self.session: Optional[aiohttp.ClientSession] = None
         logger.info("🚀 Enterprise Performance Tester initialized")
     
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         """Async context manager entry"""
         self.session = aiohttp.ClientSession(
             timeout=aiohttp.ClientTimeout(total=30),
@@ -83,7 +88,7 @@ class EnterprisePerformanceTester:
         )
         return self
     
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         """Async context manager exit"""
         if self.session:
             await self.session.close()
@@ -164,7 +169,7 @@ class EnterprisePerformanceTester:
         cpu_start, memory_start, network_start = self.get_system_metrics()
         
         # Générateur de tâches async
-        async def user_simulation(user_id: int):
+        async def user_simulation(user_id -> None: int) -> None:
             nonlocal request_count
             user_results = []
             
@@ -241,7 +246,7 @@ class EnterprisePerformanceTester:
         index = int(len(sorted_data) * percentile / 100)
         return sorted_data[min(index, len(sorted_data) - 1)]
     
-    def log_performance_results(self, metrics: PerformanceMetrics):
+    def log_performance_results(self, metrics -> None: PerformanceMetrics) -> None:
         """📝 Logging résultats - Expertise DevOps"""
         logger.info(f"🎯 Performance Test Results for {metrics.test_name}")
         logger.info(f"📊 Duration: {metrics.duration_seconds:.2f}s")

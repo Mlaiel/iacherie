@@ -1,3 +1,8 @@
+"""
+Ci Orchestrator module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 CI/CD Orchestrator - Enterprise CI/CD Pipeline Automation
@@ -37,6 +42,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 class PipelineStage(Enum):
+    """PipelineStage class implementation"""
     SOURCE = "source"
     BUILD = "build"
     TEST = "test"
@@ -49,6 +55,7 @@ class PipelineStage(Enum):
     MONITORING = "monitoring"
 
 class PipelineStatus(Enum):
+    """PipelineStatus class implementation"""
     PENDING = "pending"
     RUNNING = "running"
     SUCCESS = "success"
@@ -96,13 +103,13 @@ class CICDOrchestrator:
     - Monitoring and alerting
     """
     
-    def __init__(self, config_path: str = "/etc/ainflue/cicd.yaml"):
+    def __init__(self, config_path -> None: str = "/etc/ainflue/cicd.yaml") -> None:
         self.config_path = config_path
         self.active_runs: Dict[str, PipelineRun] = {}
         self.completed_runs: List[PipelineRun] = []
         self.config = {}
         
-    async def load_cicd_configuration(self):
+    async def load_cicd_configuration(self) -> None:
         """Load CI/CD configuration"""
         try:
             with open(self.config_path, 'r') as f:
@@ -186,7 +193,7 @@ class CICDOrchestrator:
             logger.error(f"Failed to trigger pipeline: {e}")
             raise
     
-    async def _execute_pipeline(self, pipeline_run: PipelineRun):
+    async def _execute_pipeline(self, pipeline_run -> None: PipelineRun) -> None:
         """Execute complete CI/CD pipeline"""
         try:
             logger.info(f"Executing pipeline: {pipeline_run.run_id}")
@@ -676,7 +683,7 @@ class CICDOrchestrator:
         
         return vulnerabilities
     
-    async def _send_pipeline_notification(self, pipeline_run: PipelineRun):
+    async def _send_pipeline_notification(self, pipeline_run -> None: PipelineRun) -> None:
         """Send pipeline completion notification"""
         try:
             message = f"Pipeline {pipeline_run.run_id} completed with status: {pipeline_run.status.value}"
@@ -747,7 +754,7 @@ class CICDOrchestrator:
         
         return report
 
-async def main():
+async def main() -> None:
     """CLI entry point for CI/CD orchestrator"""
     import argparse
     

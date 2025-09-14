@@ -91,7 +91,7 @@ class CoreWebVitalsOptimizer:
     for improved performance metrics and better search engine rankings.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the Core Web Vitals optimizer"""
         self.web_vitals_thresholds = {
             WebVitalMetric.LARGEST_CONTENTFUL_PAINT: {"good": 2.5, "needs_improvement": 4.0},
@@ -508,7 +508,7 @@ class CoreWebVitalsOptimizer:
         
         # Add loading attributes and dimensions
         img_pattern = r'<img([^>]*?)>'
-        def optimize_img_tag(match):
+        def optimize_img_tag(match) -> None:
             img_attrs = match.group(1)
             
             # Add loading="lazy" for non-critical images (keep first image eager)
@@ -593,7 +593,7 @@ class CoreWebVitalsOptimizer:
         
         # Add async/defer to external scripts
         script_pattern = r'<script([^>]*?)src=([^>]*?)>'
-        def optimize_script_tag(match):
+        def optimize_script_tag(match) -> None:
             attrs = match.group(1)
             src_part = match.group(2)
             
@@ -608,7 +608,7 @@ class CoreWebVitalsOptimizer:
         
         # Minimize inline JavaScript
         inline_script_pattern = r'<script[^>]*>(.*?)</script>'
-        def minimize_inline_script(match):
+        def minimize_inline_script(match) -> None:
             script_content = match.group(1)
             
             # Basic minification
@@ -641,7 +641,7 @@ class CoreWebVitalsOptimizer:
         # Ensure images have dimensions
         img_without_dimensions = r'<img(?![^>]*(?:width|height))[^>]*>'
         if re.search(img_without_dimensions, optimized_html):
-            def add_dimensions(match):
+            def add_dimensions(match) -> None:
                 img_tag = match.group(0)
                 # Add default dimensions
                 img_tag = img_tag.replace('<img', '<img width="600" height="400"')
@@ -651,12 +651,12 @@ class CoreWebVitalsOptimizer:
         
         # Add font-display: swap to any @font-face rules found in style tags
         style_pattern = r'<style[^>]*>(.*?)</style>'
-        def optimize_fonts_in_style(match):
+        def optimize_fonts_in_style(match) -> None:
             style_content = match.group(1)
             
             # Add font-display: swap to @font-face rules
             font_face_pattern = r'(@font-face\s*{[^}]*?)}'
-            def add_font_display(font_match):
+            def add_font_display(font_match) -> None:
                 font_face = font_match.group(1)
                 if 'font-display' not in font_face:
                     return f'{font_face}font-display: swap;}}'

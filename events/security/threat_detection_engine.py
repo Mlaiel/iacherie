@@ -36,7 +36,7 @@ class ThreatIndicator:
     detected_at: datetime = None
     source_event_id: str = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.detected_at is None:
             self.detected_at = datetime.utcnow()
 
@@ -52,7 +52,7 @@ class ThreatAnalysisResult:
     recommended_actions: List[str]
     analysis_timestamp: datetime = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.analysis_timestamp is None:
             self.analysis_timestamp = datetime.utcnow()
 
@@ -74,7 +74,7 @@ class ThreatDetectionEngine:
     Uses ML-powered analysis with business context awareness.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.enabled = True
         self.threat_signatures = self._load_threat_signatures()
         self.behavior_baselines = {}
@@ -676,7 +676,7 @@ class ThreatDetectionEngine:
             recommended_actions=["Manual security review required", "Check threat detection system"]
         )
     
-    def _store_analysis_history(self, result: ThreatAnalysisResult):
+    def _store_analysis_history(self, result -> None: ThreatAnalysisResult) -> None:
         """Store analysis result in history for learning"""
         
         self.detection_history.append({
@@ -691,12 +691,12 @@ class ThreatDetectionEngine:
         if len(self.detection_history) > self.max_history_size:
             self.detection_history = self.detection_history[-self.max_history_size:]
     
-    def enable_detection(self):
+    def enable_detection(self) -> None:
         """Enable threat detection"""
         self.enabled = True
         logger.info("Threat detection enabled")
     
-    def disable_detection(self):
+    def disable_detection(self) -> None:
         """Disable threat detection"""
         self.enabled = False
         logger.info("Threat detection disabled")

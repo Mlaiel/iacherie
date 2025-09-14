@@ -54,7 +54,7 @@ class PipelineMetrics:
 class PipelineBuilder:
     """Dynamic aggregation pipeline builder."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize pipeline builder."""
         self._stages: List[PipelineStage] = []
         self._cache: Dict[str, Any] = {}
@@ -194,7 +194,7 @@ class PipelineBuilder:
         
         return self
     
-    def _move_match_stages_early(self):
+    def _move_match_stages_early(self) -> None:
         """Move $match stages as early as possible."""
         match_stages = [s for s in self._stages if s.stage_type == AggregationType.MATCH]
         other_stages = [s for s in self._stages if s.stage_type != AggregationType.MATCH]
@@ -206,7 +206,7 @@ class PipelineBuilder:
         for i, stage in enumerate(self._stages):
             stage.order = i
     
-    def _combine_match_stages(self):
+    def _combine_match_stages(self) -> None:
         """Combine multiple consecutive $match stages."""
         combined_stages = []
         current_match = None
@@ -229,7 +229,7 @@ class PipelineBuilder:
         
         self._stages = combined_stages
     
-    def _move_limit_early(self):
+    def _move_limit_early(self) -> None:
         """Move $limit stages earlier when safe to do so."""
         # This is a simplified implementation
         # In practice, this requires complex analysis of stage dependencies

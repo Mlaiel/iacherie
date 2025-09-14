@@ -113,7 +113,7 @@ class EmailMetrics:
 class EmailServiceCore:
     """Enterprise email service system"""
     
-    def __init__(self, level: str = "enterprise"):
+    def __init__(self, level -> None: str = "enterprise") -> None:
         """Initialize email service core"""
         self.level = level
         self.messages: Dict[str, EmailMessage] = {}
@@ -152,7 +152,7 @@ class EmailServiceCore:
         
         logger.info(f"📧 Email Service Core initialized - Level: {level}")
 
-    def _initialize_default_templates(self):
+    def _initialize_default_templates(self) -> None:
         """Initialize default email templates"""
         
         # Welcome email template
@@ -229,7 +229,7 @@ class EmailServiceCore:
         
         self.templates[reset_template.template_id] = reset_template
 
-    def _start_email_processors(self):
+    def _start_email_processors(self) -> None:
         """Start background email processing tasks"""
         
         # Main email sender
@@ -246,9 +246,9 @@ class EmailServiceCore:
 
     async def configure_provider(
         self,
-        provider: EmailProvider,
-        config: Dict[str, Any]
-    ):
+        provider -> None: EmailProvider,
+        config -> None: Dict[str, Any]
+    ) -> None:
         """Configure email provider"""
         
         self.providers[provider.value] = config
@@ -404,7 +404,7 @@ class EmailServiceCore:
         
         return result
 
-    async def _email_sender_loop(self):
+    async def _email_sender_loop(self) -> None:
         """Main email sending loop"""
         
         while not self._shutdown_event.is_set():
@@ -422,7 +422,7 @@ class EmailServiceCore:
             except Exception as e:
                 logger.error(f"Email sender error: {str(e)}")
 
-    async def _send_message(self, message: EmailMessage):
+    async def _send_message(self, message -> None: EmailMessage) -> None:
         """Send individual email message"""
         
         try:
@@ -462,7 +462,7 @@ class EmailServiceCore:
             else:
                 self.metrics.emails_failed += len(message.to_addresses)
 
-    async def _send_via_smtp(self, message: EmailMessage):
+    async def _send_via_smtp(self, message -> None: EmailMessage) -> None:
         """Send email via SMTP"""
         
         smtp_config = self.providers.get("smtp", {})
@@ -525,7 +525,7 @@ class EmailServiceCore:
         except Exception as e:
             raise Exception(f"SMTP send failed: {str(e)}")
 
-    async def _send_via_api(self, message: EmailMessage):
+    async def _send_via_api(self, message -> None: EmailMessage) -> None:
         """Send email via API provider"""
         
         # Placeholder for API-based providers
@@ -539,7 +539,7 @@ class EmailServiceCore:
         pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
         return re.match(pattern, email) is not None
 
-    async def _retry_processor_loop(self):
+    async def _retry_processor_loop(self) -> None:
         """Process retry queue"""
         
         while not self._shutdown_event.is_set():
@@ -561,7 +561,7 @@ class EmailServiceCore:
             except Exception as e:
                 logger.error(f"Retry processor error: {str(e)}")
 
-    async def _metrics_updater_loop(self):
+    async def _metrics_updater_loop(self) -> None:
         """Update email metrics"""
         
         while not self._shutdown_event.is_set():
@@ -580,7 +580,7 @@ class EmailServiceCore:
             except Exception as e:
                 logger.error(f"Metrics updater error: {str(e)}")
 
-    async def track_delivery(self, message_id: str):
+    async def track_delivery(self, message_id -> None: str) -> None:
         """Track email delivery"""
         
         message = self.messages.get(message_id)
@@ -589,7 +589,7 @@ class EmailServiceCore:
             message.delivered_at = datetime.utcnow()
             self.metrics.emails_delivered += 1
 
-    async def track_bounce(self, message_id: str, reason: str):
+    async def track_bounce(self, message_id -> None: str, reason -> None: str) -> None:
         """Track email bounce"""
         
         message = self.messages.get(message_id)
@@ -598,7 +598,7 @@ class EmailServiceCore:
             message.metadata["bounce_reason"] = reason
             self.metrics.emails_bounced += 1
 
-    async def track_open(self, message_id: str):
+    async def track_open(self, message_id -> None: str) -> None:
         """Track email open"""
         
         message = self.messages.get(message_id)
@@ -608,7 +608,7 @@ class EmailServiceCore:
             message.metadata["opened_at"] = datetime.utcnow().isoformat()
             self.metrics.emails_opened += 1
 
-    async def track_click(self, message_id: str, link_url: str):
+    async def track_click(self, message_id -> None: str, link_url -> None: str) -> None:
         """Track email link click"""
         
         message = self.messages.get(message_id)
@@ -678,7 +678,7 @@ class EmailServiceCore:
             logger.error(f"Email service health check failed: {str(e)}")
             return False
 
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Shutdown email service"""
         logger.info("🛑 Shutting down email service")
         

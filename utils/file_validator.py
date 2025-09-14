@@ -119,11 +119,11 @@ class FileValidator:
     """
     
     def __init__(self, 
-                 validation_level: ValidationLevel = ValidationLevel.STANDARD,
-                 max_file_size: int = 100 * 1024 * 1024,  # 100MB
-                 temp_dir: Optional[str] = None,
-                 enable_content_scanning: bool = True,
-                 enable_signature_verification: bool = True):
+                 validation_level -> None: ValidationLevel = ValidationLevel.STANDARD,
+                 max_file_size -> None: int = 100 * 1024 * 1024,  # 100MB
+                 temp_dir -> None: Optional[str] = None,
+                 enable_content_scanning -> None: bool = True,
+                 enable_signature_verification -> None: bool = True) -> None:
         """
         Initialize file validator
         
@@ -295,7 +295,7 @@ class FileValidator:
         
         semaphore = asyncio.Semaphore(max_concurrent)
         
-        async def validate_with_semaphore(file_path: str):
+        async def validate_with_semaphore(file_path -> None: str) -> None:
             async with semaphore:
                 return await self.validate_file(file_path, validation_level)
         
@@ -368,7 +368,7 @@ class FileValidator:
         }
 
     # Private methods
-    def _setup_validation_rules(self):
+    def _setup_validation_rules(self) -> None:
         """Setup standard validation rules"""
         self.validation_rules = {
             ValidationLevel.BASIC: [
@@ -485,7 +485,7 @@ class FileValidator:
             ]
         }
 
-    def _setup_file_signatures(self):
+    def _setup_file_signatures(self) -> None:
         """Setup file signature database for verification"""
         self.file_signatures = {
             # Images
@@ -538,7 +538,7 @@ class FileValidator:
             '.scr': [b'\x4D\x5A'],
         }
 
-    def _setup_security_patterns(self):
+    def _setup_security_patterns(self) -> None:
         """Setup security threat patterns"""
         self.dangerous_patterns = [
             # Script injections
@@ -918,7 +918,7 @@ class FileValidator:
             logger.error(f"Failed to calculate hash for {file_path}: {e}")
             return ""
 
-    def _update_validation_stats(self, result: ValidationResult, threat_level: ThreatLevel, scan_duration: float):
+    def _update_validation_stats(self, result -> None: ValidationResult, threat_level -> None: ThreatLevel, scan_duration -> None: float) -> None:
         """Update validation statistics"""
         self.validation_stats["total_files_validated"] += 1
         self.validation_stats["total_scan_time"] += scan_duration

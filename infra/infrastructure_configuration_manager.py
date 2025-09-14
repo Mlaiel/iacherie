@@ -1,3 +1,8 @@
+"""
+Infrastructure Configuration Manager module
+Enterprise implementation for Ainflue platform
+"""
+
 # Ainflue Infrastructure Module
 # =============================
 # 
@@ -77,7 +82,7 @@ class InfrastructureConfigurationManager:
     environment-specific profiles, and secrets management.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize configuration manager."""
         self.config = config or {}
         self.templates: Dict[str, ConfigurationTemplate] = {}
@@ -103,7 +108,7 @@ class InfrastructureConfigurationManager:
         
         logger.info("InfrastructureConfigurationManager initialized")
     
-    def _create_directories(self):
+    def _create_directories(self) -> None:
         """Create configuration directories if they don't exist."""
         try:
             self.base_path.mkdir(parents=True, exist_ok=True)
@@ -505,7 +510,7 @@ class InfrastructureConfigurationManager:
             logger.error(f"Failed to decrypt secrets: {str(e)}")
             return encrypted_secrets
     
-    async def _save_compiled_config(self, profile_name: str, compiled_config: Dict[str, Any], output_format: ConfigType):
+    async def _save_compiled_config(self, profile_name -> None: str, compiled_config -> None: Dict[str, Any], output_format -> None: ConfigType) -> None:
         """Save compiled configuration to file."""
         try:
             output_file = self.compiled_path / f"{profile_name}.{output_format.value}"

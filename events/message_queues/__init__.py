@@ -69,7 +69,7 @@ class QueueMessage:
     reply_to: Optional[str] = None
     headers: Dict[str, str] = field(default_factory=dict)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         self.message_id = str(uuid4())
     
     def is_expired(self) -> bool:
@@ -168,9 +168,9 @@ class RedisMessageQueue(MessageQueue):
     """
 Redis-based message queue implementation"""
     
-    def __init__(self, queue_name: str, redis_manager: RedisManager,
-                 encryption_manager: EncryptionManager,
-                 metrics_collector: MetricsCollector):
+    def __init__(self, queue_name -> None: str, redis_manager -> None: RedisManager,
+                 encryption_manager -> None: EncryptionManager,
+                 metrics_collector -> None: MetricsCollector) -> None:
         self.queue_name = queue_name
         self.redis = redis_manager
         self.encryption = encryption_manager
@@ -439,7 +439,7 @@ Redis-based message queue implementation"""
             logger.error(f"Error purging queue: {str(e)}")
             return 0
     
-    async def _process_scheduled_messages(self):
+    async def _process_scheduled_messages(self) -> None:
         """Move ready scheduled messages to pending queue"""
         try:
             current_time = datetime.now(timezone.utc).timestamp()
@@ -503,7 +503,7 @@ Redis-based message queue implementation"""
 class QueueProcessor:
     """Process messages from a queue with configurable workers"""
     
-    def __init__(self, queue: MessageQueue, worker_count: int = 1):
+    def __init__(self, queue -> None: MessageQueue, worker_count -> None: int = 1) -> None:
         self.queue = queue
         self.worker_count = worker_count
         self._running = False
@@ -511,12 +511,12 @@ class QueueProcessor:
         self._handlers: Dict[str, Callable] = {}
         self._shutdown_event = Event()
     
-    def register_handler(self, message_type: str, handler: Callable):
+    def register_handler(self, message_type -> None: str, handler -> None: Callable) -> None:
         """
 Register a message handler for specific message type"""
         self._handlers[message_type] = handler
     
-    async def start(self):
+    async def start(self) -> None:
         """
 Start processing messages"""
         if self._running:
@@ -532,7 +532,7 @@ Start processing messages"""
         
         logger.info(f"Started queue processor with {self.worker_count} workers")
     
-    async def stop(self, timeout: float = 30.0):
+    async def stop(self, timeout -> None: float = 30.0) -> None:
         """Stop processing messages gracefully"""
         if not self._running:
             return
@@ -558,7 +558,7 @@ Start processing messages"""
         self._workers.clear()
         logger.info("Queue processor stopped")
     
-    async def _worker_loop(self, worker_id: int):
+    async def _worker_loop(self, worker_id -> None: int) -> None:
         """Main worker loop"""
         logger.info(f"Worker {worker_id} started")
         
@@ -584,7 +584,7 @@ Start processing messages"""
         
         logger.info(f"Worker {worker_id} stopped")
     
-    async def _process_message(self, message: QueueMessage, worker_id: int):
+    async def _process_message(self, message -> None: QueueMessage, worker_id -> None: int) -> None:
         """Process a single message"""
         try:
             # Determine message type from payload or headers
@@ -638,9 +638,9 @@ Start processing messages"""
 class QueueManager:
     """Manage multiple message queues"""
     
-    def __init__(self, redis_manager: RedisManager,
-                 encryption_manager: EncryptionManager,
-                 metrics_collector: MetricsCollector):
+    def __init__(self, redis_manager -> None: RedisManager,
+                 encryption_manager -> None: EncryptionManager,
+                 metrics_collector -> None: MetricsCollector) -> None:
         self.redis = redis_manager
         self.encryption = encryption_manager
         self.metrics = metrics_collector
@@ -665,13 +665,13 @@ Create a processor for a queue"""
         self._processors[queue_name] = processor
         return processor
     
-    async def start_all_processors(self):
+    async def start_all_processors(self) -> None:
         """
 Start all registered processors"""
         for processor in self._processors.values():
             await processor.start()
     
-    async def stop_all_processors(self):
+    async def stop_all_processors(self) -> None:
         """
 Stop all processors"""
         for processor in self._processors.values():

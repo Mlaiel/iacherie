@@ -119,7 +119,7 @@ class RecoveryJob:
 class BackupSystem:
     """Core backup system implementation"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         """Initialize backup system"""
         self.config = config or {}
         self.backup_configs = {}
@@ -207,7 +207,7 @@ class BackupSystem:
             logger.error(f"Failed to start backup: {e}")
             raise
     
-    async def _execute_backup_job(self, job: BackupJob):
+    async def _execute_backup_job(self, job -> None: BackupJob) -> None:
         """Execute backup job"""
         try:
             job.status = BackupStatus.IN_PROGRESS
@@ -252,7 +252,7 @@ class BackupSystem:
             
             logger.error(f"Backup job failed {job.job_id}: {e}")
     
-    async def _perform_full_backup(self, job: BackupJob, config: BackupConfiguration):
+    async def _perform_full_backup(self, job -> None: BackupJob, config -> None: BackupConfiguration) -> None:
         """Perform full backup"""
         try:
             backup_path = f"{job.destination_path}/full_{job.started_at.strftime('%Y%m%d_%H%M%S')}.tar.gz"
@@ -268,7 +268,7 @@ class BackupSystem:
             logger.error(f"Full backup failed: {e}")
             raise
     
-    async def _perform_incremental_backup(self, job: BackupJob, config: BackupConfiguration):
+    async def _perform_incremental_backup(self, job -> None: BackupJob, config -> None: BackupConfiguration) -> None:
         """Perform incremental backup"""
         try:
             # Get last backup timestamp
@@ -286,7 +286,7 @@ class BackupSystem:
             logger.error(f"Incremental backup failed: {e}")
             raise
     
-    async def _perform_differential_backup(self, job: BackupJob, config: BackupConfiguration):
+    async def _perform_differential_backup(self, job -> None: BackupJob, config -> None: BackupConfiguration) -> None:
         """Perform differential backup"""
         try:
             # Get last full backup timestamp
@@ -304,7 +304,7 @@ class BackupSystem:
             logger.error(f"Differential backup failed: {e}")
             raise
     
-    async def _perform_snapshot_backup(self, job: BackupJob, config: BackupConfiguration):
+    async def _perform_snapshot_backup(self, job -> None: BackupJob, config -> None: BackupConfiguration) -> None:
         """Perform snapshot backup"""
         try:
             snapshot_path = f"{job.destination_path}/snapshot_{job.started_at.strftime('%Y%m%d_%H%M%S')}"
@@ -328,11 +328,11 @@ class BackupSystem:
     
     async def _add_to_archive(
         self,
-        tar: tarfile.TarFile,
-        path: str,
-        job: BackupJob,
-        config: BackupConfiguration
-    ):
+        tar -> None: tarfile.TarFile,
+        path -> None: str,
+        job -> None: BackupJob,
+        config -> None: BackupConfiguration
+    ) -> None:
         """Add files to tar archive"""
         try:
             if os.path.isfile(path):
@@ -355,12 +355,12 @@ class BackupSystem:
     
     async def _add_modified_files(
         self,
-        tar: tarfile.TarFile,
-        path: str,
-        since_time: datetime,
-        job: BackupJob,
-        config: BackupConfiguration
-    ):
+        tar -> None: tarfile.TarFile,
+        path -> None: str,
+        since_time -> None: datetime,
+        job -> None: BackupJob,
+        config -> None: BackupConfiguration
+    ) -> None:
         """Add modified files since timestamp"""
         try:
             if os.path.isfile(path):
@@ -397,7 +397,7 @@ class BackupSystem:
             logger.warning(f"Error checking file inclusion {file_path}: {e}")
             return True
     
-    async def _calculate_backup_size(self, job: BackupJob, config: BackupConfiguration):
+    async def _calculate_backup_size(self, job -> None: BackupJob, config -> None: BackupConfiguration) -> None:
         """Calculate total backup size"""
         try:
             total_files = 0
@@ -437,7 +437,7 @@ class BackupSystem:
             logger.error(f"Failed to calculate checksum: {e}")
             return ""
     
-    async def _upload_backup(self, job: BackupJob, config: BackupConfiguration):
+    async def _upload_backup(self, job -> None: BackupJob, config -> None: BackupConfiguration) -> None:
         """Upload backup to remote storage"""
         try:
             storage_client = self.storage_clients.get(config.storage_location)
@@ -455,7 +455,7 @@ class BackupSystem:
             logger.error(f"Failed to upload backup: {e}")
             raise
     
-    async def _upload_to_s3(self, job: BackupJob, config: BackupConfiguration, s3_client):
+    async def _upload_to_s3(self, job -> None: BackupJob, config -> None: BackupConfiguration, s3_client) -> None:
         """Upload backup to AWS S3"""
         try:
             bucket_name = config.destination.split('/')[0]
@@ -469,12 +469,12 @@ class BackupSystem:
             logger.error(f"S3 upload failed: {e}")
             raise
     
-    async def _upload_to_gcs(self, job: BackupJob, config: BackupConfiguration, gcs_client):
+    async def _upload_to_gcs(self, job -> None: BackupJob, config -> None: BackupConfiguration, gcs_client) -> None:
         """Upload backup to Google Cloud Storage"""
         # Implementation for GCS upload
         pass
     
-    async def _initialize_storage_clients(self):
+    async def _initialize_storage_clients(self) -> None:
         """Initialize storage clients"""
         try:
             # AWS S3 client
@@ -493,10 +493,10 @@ class BackupSystem:
         except Exception as e:
             logger.error(f"Failed to initialize storage clients: {e}")
     
-    def _start_scheduler(self):
+    def _start_scheduler(self) -> None:
         """Start backup scheduler"""
         try:
-            def run_scheduler():
+            def run_scheduler() -> None:
                 while True:
                     schedule.run_pending()
                     time.sleep(60)
@@ -509,10 +509,10 @@ class BackupSystem:
         except Exception as e:
             logger.error(f"Failed to start scheduler: {e}")
     
-    async def _schedule_backup(self, config: BackupConfiguration):
+    async def _schedule_backup(self, config -> None: BackupConfiguration) -> None:
         """Schedule automatic backup"""
         try:
-            def backup_task():
+            def backup_task() -> None:
                 asyncio.create_task(self.start_backup(config.config_id))
             
             # Parse cron schedule and register with scheduler
@@ -540,7 +540,7 @@ class BackupSystem:
 class DisasterRecovery:
     """Disaster recovery system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize disaster recovery"""
         self.recovery_plans = {}
         self.recovery_jobs = {}
@@ -611,7 +611,7 @@ class DisasterRecovery:
             logger.error(f"Failed to start recovery: {e}")
             raise
     
-    async def _execute_recovery(self, recovery: RecoveryJob):
+    async def _execute_recovery(self, recovery -> None: RecoveryJob) -> None:
         """Execute recovery operation"""
         try:
             recovery.status = BackupStatus.IN_PROGRESS
@@ -638,7 +638,7 @@ class DisasterRecovery:
             
             logger.error(f"Recovery failed {recovery.recovery_id}: {e}")
     
-    async def _perform_full_restore(self, recovery: RecoveryJob):
+    async def _perform_full_restore(self, recovery -> None: RecoveryJob) -> None:
         """Perform full system restore"""
         try:
             # Extract backup archive
@@ -652,17 +652,17 @@ class DisasterRecovery:
             logger.error(f"Full restore failed: {e}")
             raise
     
-    async def _perform_partial_restore(self, recovery: RecoveryJob):
+    async def _perform_partial_restore(self, recovery -> None: RecoveryJob) -> None:
         """Perform partial restore"""
         # Implementation for partial restore
         pass
     
-    async def _perform_point_in_time_restore(self, recovery: RecoveryJob):
+    async def _perform_point_in_time_restore(self, recovery -> None: RecoveryJob) -> None:
         """Perform point-in-time restore"""
         # Implementation for point-in-time restore
         pass
     
-    async def _perform_file_restore(self, recovery: RecoveryJob):
+    async def _perform_file_restore(self, recovery -> None: RecoveryJob) -> None:
         """Perform file-level restore"""
         # Implementation for file restore
         pass
@@ -682,7 +682,7 @@ class DisasterRecovery:
 class DataProtection:
     """Data protection and encryption"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize data protection"""
         self.encryption_keys = {}
         self.protection_policies = {}
@@ -692,7 +692,7 @@ class DataProtection:
 class VoiceBackup:
     """Voice-specific backup operations"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize voice backup"""
         self.voice_backup_configs = {}
         
@@ -701,7 +701,7 @@ class VoiceBackup:
 class RecoverySystem:
     """Recovery system management"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize recovery system"""
         self.recovery_catalog = {}
         
@@ -710,7 +710,7 @@ class RecoverySystem:
 class BackupAnalytics:
     """Backup analytics and monitoring"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize backup analytics"""
         self.backup_metrics = {}
         self.performance_stats = {}
@@ -720,7 +720,7 @@ class BackupAnalytics:
 class RecoveryManagement:
     """Recovery management system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize recovery management"""
         self.recovery_procedures = {}
         
@@ -729,7 +729,7 @@ class RecoveryManagement:
 class VoiceBackupRecovery:
     """Main voice backup and recovery system"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         """Initialize voice backup recovery system"""
         self.config = config or {}
         self.backup_system = BackupSystem(config)
@@ -794,7 +794,7 @@ class VoiceBackupRecovery:
             logger.error(f"Failed to restore voice data: {e}")
             raise
     
-    async def _initialize_voice_backups(self):
+    async def _initialize_voice_backups(self) -> None:
         """Initialize voice-specific backup configurations"""
         try:
             # Voice bank backup

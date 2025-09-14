@@ -114,7 +114,7 @@ class CollaborationWorkflow:
     """
 Workflow system for content collaboration management."""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.config = config or {}
         self.logger = logging.getLogger("workflow.collaboration")
         
@@ -164,9 +164,9 @@ Workflow system for content collaboration management."""
     
     async def _add_collaboration_workflow_steps(
         self,
-        pipeline: IntelligentContentPipeline,
-        collaboration_request: Dict[str, Any]
-    ):
+        pipeline -> None: IntelligentContentPipeline,
+        collaboration_request -> None: Dict[str, Any]
+    ) -> None:
         """Add collaboration workflow steps."""
         
         # Step 1: Partner discovery and matching

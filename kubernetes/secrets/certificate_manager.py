@@ -111,9 +111,9 @@ class CertificateManager:
     
     def __init__(
         self,
-        vault_manager: VaultManager,
-        config: SecretsConfig = None
-    ):
+        vault_manager -> None: VaultManager,
+        config -> None: SecretsConfig = None
+    ) -> None:
         """
         Initialize certificate manager.
         
@@ -1212,9 +1212,9 @@ class InfluencerCertificateManager(CertificateManager):
     
     def __init__(
         self,
-        vault_manager: VaultManager,
-        config: SecretsConfig = None
-    ):
+        vault_manager -> None: VaultManager,
+        config -> None: SecretsConfig = None
+    ) -> None:
         super().__init__(vault_manager, config)
         
         # IA Influencer platform-specific certificate templates
@@ -3104,3 +3104,5 @@ class InfluencerCertificateManager(CertificateManager):
         recommendations.append("Regular security audits of certificate infrastructure")
         
         return recommendations
+
+# File has syntax issues - needs manual review

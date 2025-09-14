@@ -207,7 +207,7 @@ class NetworkingEnvironmentManager:
     - DDoS protection and mitigation
     """
     
-    def __init__(self, config_path: Optional[str] = None):
+    def __init__(self, config_path -> None: Optional[str] = None) -> None:
         self.config_path = config_path or "/config/networking.yml"
         self.environment = "networking"
         
@@ -572,184 +572,184 @@ Get networking environment health status"""
         }
     
     # Private helper methods
-    def _configure_lb_algorithm(self):
+    def _configure_lb_algorithm(self) -> None:
         """
 Configure load balancer algorithm"""
         logger.info(f"Configuring load balancer algorithm: {self.load_balancer.algorithm.value}")
     
-    def _setup_health_checks(self):
+    def _setup_health_checks(self) -> None:
         """Setup load balancer health checks"""
         logger.info("Setting up load balancer health checks")
     
-    def _configure_session_affinity(self):
+    def _configure_session_affinity(self) -> None:
         """Configure session affinity"""
         if self.load_balancer.session_affinity:
             logger.info("Configuring session affinity")
     
-    def _setup_connection_draining(self):
+    def _setup_connection_draining(self) -> None:
         """Setup connection draining"""
         logger.info(f"Setting up connection draining: {self.load_balancer.connection_draining_timeout}s")
     
-    def _enable_cross_zone_balancing(self):
+    def _enable_cross_zone_balancing(self) -> None:
         """Enable cross-zone load balancing"""
         if self.load_balancer.cross_zone_balancing:
             logger.info("Enabling cross-zone load balancing")
     
-    def _setup_lb_monitoring(self):
+    def _setup_lb_monitoring(self) -> None:
         """Setup load balancer monitoring"""
         if self.load_balancer.enable_monitoring:
             logger.info("Setting up load balancer monitoring")
     
-    def _configure_edge_locations(self):
+    def _configure_edge_locations(self) -> None:
         """Configure CDN edge locations"""
         logger.info(f"Configuring CDN edge locations: {self.cdn.edge_locations}")
     
-    def _setup_cache_behaviors(self):
+    def _setup_cache_behaviors(self) -> None:
         """Setup CDN cache behaviors"""
         logger.info("Setting up CDN cache behaviors")
     
-    def _configure_compression(self):
+    def _configure_compression(self) -> None:
         """Configure CDN compression"""
         if self.cdn.compression_enabled:
             logger.info("Enabling CDN compression")
     
-    def _setup_http_protocols(self):
+    def _setup_http_protocols(self) -> None:
         """Setup HTTP/2 and HTTP/3"""
         if self.cdn.http2_enabled:
             logger.info("Enabling HTTP/2")
         if self.cdn.http3_enabled:
             logger.info("Enabling HTTP/3")
     
-    def _configure_origin_shield(self):
+    def _configure_origin_shield(self) -> None:
         """Configure CDN origin shield"""
         if self.cdn.origin_shield_enabled:
             logger.info("Configuring CDN origin shield")
     
-    def _setup_custom_headers(self):
+    def _setup_custom_headers(self) -> None:
         """Setup CDN custom headers"""
         logger.info("Setting up CDN custom headers")
     
-    def _enable_realtime_logs(self):
+    def _enable_realtime_logs(self) -> None:
         """Enable CDN real-time logs"""
         if self.cdn.real_time_logs:
             logger.info("Enabling CDN real-time logs")
     
-    def _deploy_service_mesh_control_plane(self):
+    def _deploy_service_mesh_control_plane(self) -> None:
         """Deploy service mesh control plane"""
         logger.info(f"Deploying {self.service_mesh.provider} control plane")
     
-    def _configure_mtls(self):
+    def _configure_mtls(self) -> None:
         """Configure mutual TLS"""
         if self.service_mesh.mtls_enabled:
             logger.info("Configuring mutual TLS")
     
-    def _setup_traffic_policies(self):
+    def _setup_traffic_policies(self) -> None:
         """Setup traffic policies"""
         logger.info(f"Setting up traffic policy: {self.service_mesh.traffic_policy}")
     
-    def _configure_circuit_breaker(self):
+    def _configure_circuit_breaker(self) -> None:
         """Configure circuit breaker"""
         if self.service_mesh.circuit_breaker_enabled:
             logger.info("Configuring circuit breaker")
     
-    def _setup_retry_policies(self):
+    def _setup_retry_policies(self) -> None:
         """Setup retry policies"""
         if self.service_mesh.retry_policy_enabled:
             logger.info(f"Setting up retry policy: {self.service_mesh.max_retries} retries")
     
-    def _enable_outlier_detection(self):
+    def _enable_outlier_detection(self) -> None:
         """Enable outlier detection"""
         if self.service_mesh.outlier_detection:
             logger.info("Enabling outlier detection")
     
-    def _configure_distributed_tracing(self):
+    def _configure_distributed_tracing(self) -> None:
         """Configure distributed tracing"""
         if self.service_mesh.distributed_tracing:
             logger.info("Configuring distributed tracing")
     
-    def _setup_mesh_gateways(self):
+    def _setup_mesh_gateways(self) -> None:
         """Setup ingress and egress gateways"""
         logger.info("Setting up service mesh gateways")
     
-    def _configure_firewall_rules(self):
+    def _configure_firewall_rules(self) -> None:
         """Configure firewall rules"""
         if self.security.enable_firewall:
             logger.info("Configuring firewall rules")
     
-    def _setup_ddos_protection(self):
+    def _setup_ddos_protection(self) -> None:
         """Setup DDoS protection"""
         if self.security.enable_ddos_protection:
             logger.info("Setting up DDoS protection")
     
-    def _configure_waf(self):
+    def _configure_waf(self) -> None:
         """Configure Web Application Firewall"""
         if self.security.enable_waf:
             logger.info("Configuring Web Application Firewall")
     
-    def _setup_rate_limiting(self):
+    def _setup_rate_limiting(self) -> None:
         """Setup rate limiting"""
         if self.security.rate_limiting_enabled:
             logger.info(f"Setting up rate limiting: {self.security.rate_limit_requests_per_minute} req/min")
     
-    def _configure_ssl_tls(self):
+    def _configure_ssl_tls(self) -> None:
         """Configure SSL/TLS"""
         logger.info(f"Configuring SSL/TLS: {self.security.ssl_tls_version}")
     
-    def _setup_ip_filtering(self):
+    def _setup_ip_filtering(self) -> None:
         """Setup IP filtering"""
         logger.info("Setting up IP whitelisting/blacklisting")
     
-    def _configure_geo_restrictions(self):
+    def _configure_geo_restrictions(self) -> None:
         """Configure geographic restrictions"""
         if self.security.blocked_countries:
             logger.info(f"Configuring geo restrictions: blocked {self.security.blocked_countries}")
     
-    def _configure_dns_servers(self):
+    def _configure_dns_servers(self) -> None:
         """Configure DNS servers"""
         logger.info(f"Configuring DNS servers: {self.dns.primary_dns_servers}")
     
-    def _setup_secure_dns(self):
+    def _setup_secure_dns(self) -> None:
         """Setup DNS over HTTPS/TLS"""
         if self.dns.dns_over_https:
             logger.info("Setting up DNS over HTTPS")
         if self.dns.dns_over_tls:
             logger.info("Setting up DNS over TLS")
     
-    def _configure_dnssec(self):
+    def _configure_dnssec(self) -> None:
         """Configure DNSSEC"""
         if self.dns.dnssec_validation:
             logger.info("Configuring DNSSEC validation")
     
-    def _setup_dns_caching(self):
+    def _setup_dns_caching(self) -> None:
         """Setup DNS caching"""
         if self.dns.dns_caching_enabled:
             logger.info(f"Setting up DNS caching: {self.dns.dns_cache_ttl}s TTL")
     
-    def _configure_custom_records(self):
+    def _configure_custom_records(self) -> None:
         """Configure custom DNS records"""
         logger.info("Configuring custom DNS records")
     
-    def _setup_dns_monitoring(self):
+    def _setup_dns_monitoring(self) -> None:
         """Setup DNS monitoring"""
         logger.info("Setting up DNS monitoring")
     
-    def _setup_geographic_routing(self):
+    def _setup_geographic_routing(self) -> None:
         """Setup geographic routing"""
         logger.info("Setting up geographic traffic routing")
     
-    def _setup_latency_routing(self):
+    def _setup_latency_routing(self) -> None:
         """Setup latency-based routing"""
         logger.info("Setting up latency-based traffic routing")
     
-    def _setup_weighted_routing(self):
+    def _setup_weighted_routing(self) -> None:
         """Setup weighted routing"""
         logger.info("Setting up weighted traffic routing")
     
-    def _setup_failover_routing(self):
+    def _setup_failover_routing(self) -> None:
         """Setup failover routing"""
         logger.info("Setting up failover traffic routing")
     
-    def _setup_geolocation_routing(self):
+    def _setup_geolocation_routing(self) -> None:
         """Setup geolocation routing"""
         logger.info("Setting up geolocation traffic routing")
     
@@ -803,7 +803,7 @@ Calculate CDN cache hit ratio"""
 Get load balancer status"""
         return "healthy"
     
-    def _check_alert_thresholds(self, metrics: Dict[str, Any]):
+    def _check_alert_thresholds(self, metrics -> None: Dict[str, Any]) -> None:
         """Check alert thresholds"""
         # Implement alerting logic
         pass

@@ -130,7 +130,7 @@ class GeneratedReport:
 class DataCollector:
     """Collects data from various platforms for reporting"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.data_cache: Dict[str, List[ReportData]] = {}
         self.platform_apis: Dict[str, Callable] = {}
         self._setup_platform_apis()
@@ -319,7 +319,7 @@ class DataCollector:
 class ReportGenerator:
     """Generates various types of reports"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.data_collector = DataCollector()
         self.report_templates: Dict[ReportType, Callable] = {}
         self._setup_report_templates()
@@ -591,7 +591,7 @@ class ReportGenerator:
 class ReportScheduler:
     """Manages scheduled report generation"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.scheduled_reports: Dict[str, ReportConfig] = {}
         self.report_generator = ReportGenerator()
     
@@ -645,7 +645,7 @@ class PlatformReportingService:
     - Revenue and monetization reports
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.report_generator = ReportGenerator()
         self.scheduler = ReportScheduler()

@@ -124,7 +124,7 @@ class OptimizationReport:
 class PlatformSpecsManager:
     """Manages platform-specific specifications and preferences"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.platform_specs: Dict[str, PlatformSpecs] = {}
         self._initialize_platform_specs()
     
@@ -276,7 +276,7 @@ class PlatformSpecsManager:
 class OptimizationEngine:
     """Core content optimization engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.platform_specs_manager = PlatformSpecsManager()
         self.optimization_rules: Dict[str, List[OptimizationRule]] = {}
         self._initialize_optimization_rules()
@@ -719,7 +719,7 @@ class PlatformOptimizationService:
     - Automated optimization suggestions
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.optimization_engine = OptimizationEngine()
         self.is_running = False

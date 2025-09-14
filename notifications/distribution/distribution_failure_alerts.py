@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 class DistributionFailureAlerts:
     """Distribution failure alert and recovery system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         logger.info("Distribution failure alerts initialized")
     
     async def notify_distribution_failure(self, user_id: str, content_id: str, 

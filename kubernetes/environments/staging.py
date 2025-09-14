@@ -1,4 +1,6 @@
 """Staging Environment Manager - IA Influencer Agent
+from datetime import datetime
+
 =================================================
 Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -192,7 +194,7 @@ class StagingEnvironmentManager:
     - Rollback and recovery testing
     """
     
-    def __init__(self, config_path: Optional[str] = None):
+    def __init__(self, config_path -> None: Optional[str] = None) -> None:
         self.config_path = config_path or "/config/staging.yml"
         self.environment = "staging"
         self.debug_mode = True
@@ -543,102 +545,102 @@ class StagingEnvironmentManager:
         }
     
     # Private helper methods for staging-specific operations
-    def _setup_load_testing_tools(self):
+    def _setup_load_testing_tools(self) -> None:
         """
 Setup load testing tools like K6, Artillery, JMeter"""
         pass
     
-    def _setup_performance_benchmarks(self):
+    def _setup_performance_benchmarks(self) -> None:
         """
 Setup performance benchmarks"""
         pass
     
-    def _setup_stress_testing(self):
+    def _setup_stress_testing(self) -> None:
         """
 Setup stress testing"""
         pass
     
-    def _setup_scalability_testing(self):
+    def _setup_scalability_testing(self) -> None:
         """
 Setup scalability testing"""
         pass
     
-    def _setup_penetration_testing(self):
+    def _setup_penetration_testing(self) -> None:
         """
 Setup penetration testing tools"""
         pass
     
-    def _setup_vulnerability_scanning(self):
+    def _setup_vulnerability_scanning(self) -> None:
         """
 Setup vulnerability scanning"""
         pass
     
-    def _setup_security_auditing(self):
+    def _setup_security_auditing(self) -> None:
         """
 Setup security auditing"""
         pass
     
-    def _setup_compliance_testing(self):
+    def _setup_compliance_testing(self) -> None:
         """
 Setup compliance testing"""
         pass
     
-    def _setup_pii_removal(self):
+    def _setup_pii_removal(self) -> None:
         """
 Setup PII removal"""
         pass
     
-    def _setup_data_masking(self):
+    def _setup_data_masking(self) -> None:
         """
 Setup data masking"""
         pass
     
-    def _setup_synthetic_data(self):
+    def _setup_synthetic_data(self) -> None:
         """
 Setup synthetic data generation"""
         pass
     
-    def _setup_privacy_compliance(self):
+    def _setup_privacy_compliance(self) -> None:
         """
 Setup privacy compliance"""
         pass
     
-    def _setup_api_testing(self):
+    def _setup_api_testing(self) -> None:
         """
 Setup API testing"""
         pass
     
-    def _setup_webhook_testing(self):
+    def _setup_webhook_testing(self) -> None:
         """
 Setup webhook testing"""
         pass
     
-    def _setup_service_mocks(self):
+    def _setup_service_mocks(self) -> None:
         """
 Setup service mocks"""
         pass
     
-    def _setup_contract_testing(self):
+    def _setup_contract_testing(self) -> None:
         """
 Setup contract testing"""
         pass
     
-    def _setup_blue_environment(self):
+    def _setup_blue_environment(self) -> None:
         """
 Setup blue environment"""
         pass
     
-    def _setup_green_environment(self):
+    def _setup_green_environment(self) -> None:
         """
 Setup green environment"""
         pass
     
-    def _setup_traffic_routing(self):
+    def _setup_traffic_routing(self) -> None:
         """
 Setup traffic routing"""
         pass
     
-    def _setup_deployment_validation(self):
+    def _setup_deployment_validation(self) -> None:
         """
 Setup deployment validation"""
         pass

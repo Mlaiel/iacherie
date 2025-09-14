@@ -19,11 +19,11 @@ from datetime import datetime, timedelta
 from dataclasses import dataclass, field, asdict
 from enum import Enum
 import json
-def safe_mean(values):
+def safe_mean(values) -> None:
     """Calculate mean safely without numpy"""
     return sum(values) / len(values) if values else 0.0
 
-def safe_random_uniform(low, high):
+def safe_random_uniform(low, high) -> None:
     """Generate random uniform value without numpy"""
     import random
     return random.uniform(low, high)
@@ -165,7 +165,7 @@ class CrossPlatformInsights:
 class AnalyticsAggregator:
     """Unified multi-platform analytics aggregation system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.platform_data: Dict[str, List[PlatformAnalytics]] = defaultdict(list)
         self.unified_cache: Dict[str, UnifiedMetrics] = {}
         self.insights_cache: Dict[str, CrossPlatformInsights] = {}
@@ -174,7 +174,7 @@ class AnalyticsAggregator:
         # Initialize benchmark data
         self._initialize_benchmarks()
     
-    def _initialize_benchmarks(self):
+    def _initialize_benchmarks(self) -> None:
         """Initialize industry benchmark data"""
         self.benchmark_data = {
             SocialPlatform.YOUTUBE: {
@@ -217,8 +217,8 @@ class AnalyticsAggregator:
     
     async def add_platform_analytics(
         self,
-        analytics: PlatformAnalytics
-    ):
+        analytics -> None: PlatformAnalytics
+    ) -> None:
         """Add analytics data from a platform"""
         try:
             content_key = f"{analytics.platform.value}_{analytics.content_id}"
@@ -812,7 +812,7 @@ class AnalyticsAggregator:
             for platform, analytics in platform_metrics.items()
         }
     
-    def _invalidate_caches(self, content_id: str):
+    def _invalidate_caches(self, content_id -> None: str) -> None:
         """Invalidate caches related to content"""
         # Remove cache entries containing the content_id
         keys_to_remove = [
@@ -918,7 +918,7 @@ class AnalyticsAggregator:
             logger.error(f"Statistics generation failed: {str(e)}")
             return {}
     
-    def clear_cache(self):
+    def clear_cache(self) -> None:
         """Clear all analytics caches"""
         self.unified_cache.clear()
         self.insights_cache.clear()

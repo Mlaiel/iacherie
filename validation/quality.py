@@ -1,4 +1,6 @@
 """
+import asyncio
+
 Quality Validation Module
 Ensures 90%+ test coverage, 0 critical bugs, A+ code quality, 100% documentation, AA accessibility
 """
@@ -51,7 +53,7 @@ class Bug:
 class TestCoverageAnalyzer:
     """Analyzes test coverage"""
     
-    def __init__(self, project_root: str):
+    def __init__(self, project_root -> None: str) -> None:
         self.project_root = project_root
     
     def analyze_coverage(self) -> Dict[str, Any]:
@@ -85,7 +87,7 @@ class TestCoverageAnalyzer:
 class CodeQualityAnalyzer:
     """Analyzes code quality"""
     
-    def __init__(self, project_root: str):
+    def __init__(self, project_root -> None: str) -> None:
         self.project_root = project_root
         self.bugs: List[Bug] = []
     
@@ -174,7 +176,7 @@ class CodeQualityAnalyzer:
 class DocumentationAnalyzer:
     """Analyzes documentation coverage"""
     
-    def __init__(self, project_root: str):
+    def __init__(self, project_root -> None: str) -> None:
         self.project_root = project_root
     
     def analyze_documentation(self) -> Dict[str, Any]:
@@ -210,7 +212,7 @@ class DocumentationAnalyzer:
 class AccessibilityAnalyzer:
     """Analyzes accessibility compliance"""
     
-    def __init__(self, project_root: str):
+    def __init__(self, project_root -> None: str) -> None:
         self.project_root = project_root
     
     def analyze_accessibility(self) -> Dict[str, Any]:
@@ -269,7 +271,7 @@ class AccessibilityAnalyzer:
 class QualityValidator:
     """Validates all quality requirements"""
     
-    def __init__(self, project_root: str = "."):
+    def __init__(self, project_root -> None: str = ".") -> None:
         self.project_root = project_root
         self.coverage_analyzer = TestCoverageAnalyzer(project_root)
         self.quality_analyzer = CodeQualityAnalyzer(project_root)

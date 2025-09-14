@@ -198,7 +198,7 @@ class StreamSession:
 class AdaptiveStreamingEngine:
     """Adaptive bitrate streaming engine"""
     
-    def __init__(self, config: StreamConfig):
+    def __init__(self, config -> None: StreamConfig) -> None:
         self.config = config
         self.quality_ladder = self._initialize_quality_ladder()
         self.viewer_qualities = {}  # viewer_id -> current_quality
@@ -343,7 +343,7 @@ class AdaptiveStreamingEngine:
 class StreamProcessor:
     """Real-time stream processing and encoding"""
     
-    def __init__(self, config: StreamConfig):
+    def __init__(self, config -> None: StreamConfig) -> None:
         self.config = config
         self.is_processing = False
         self.frame_buffer = []
@@ -419,13 +419,13 @@ class StreamProcessor:
             logger.error(f"Audio processing failed: {e}")
             return audio_data
     
-    async def _start_video_processing(self, input_source: str):
+    async def _start_video_processing(self, input_source -> None: str) -> None:
         """Start video processing from source"""
         if HAS_OPENCV:
             # Video processing implementation
             pass
     
-    async def _start_audio_processing(self, input_source: str):
+    async def _start_audio_processing(self, input_source -> None: str) -> None:
         """Start audio processing from source"""
         if HAS_SOUNDDEVICE:
             # Audio processing implementation
@@ -441,7 +441,7 @@ class StreamProcessor:
 class StreamingServer:
     """Core streaming server handling multiple streams"""
     
-    def __init__(self, config: StreamConfig):
+    def __init__(self, config -> None: StreamConfig) -> None:
         self.config = config
         self.active_streams: Dict[str, StreamSession] = {}
         self.stream_processors: Dict[str, StreamProcessor] = {}
@@ -700,12 +700,12 @@ class StreamingServer:
             logger.error(f"Failed to get stream status: {e}")
             return {'error': str(e)}
     
-    async def _initialize_server_components(self):
+    async def _initialize_server_components(self) -> None:
         """Initialize server components"""
         # Server initialization logic
         pass
     
-    async def _collect_stream_metrics(self, stream_id: str):
+    async def _collect_stream_metrics(self, stream_id -> None: str) -> None:
         """Collect real-time metrics for stream"""
         session = self.active_streams.get(stream_id)
         if not session:
@@ -757,7 +757,7 @@ class StreamingServer:
 class MediaStreamingEngine:
     """Main media streaming engine orchestrating all streaming components"""
     
-    def __init__(self, config: Optional[StreamConfig] = None):
+    def __init__(self, config -> None: Optional[StreamConfig] = None) -> None:
         """Initialize media streaming engine"""
         self.config = config or StreamConfig()
         
@@ -884,7 +884,7 @@ class MediaStreamingEngine:
             logger.error(f"Failed to get engine status: {e}")
             return {'error': str(e)}
     
-    async def _collect_global_metrics(self):
+    async def _collect_global_metrics(self) -> None:
         """Collect global engine metrics"""
         while self.is_running:
             try:

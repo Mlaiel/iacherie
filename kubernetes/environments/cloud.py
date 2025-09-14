@@ -228,7 +228,7 @@ class CloudEnvironmentManager:
     - Network and VPC management
     """
     
-    def __init__(self, provider: CloudProvider = CloudProvider.AWS, config_path: Optional[str] = None):
+    def __init__(self, provider -> None: CloudProvider = CloudProvider.AWS, config_path -> None: Optional[str] = None) -> None:
         self.provider = provider
         self.config_path = config_path or f"./cloud/{provider.value}_config.json"
         self.environment = "cloud"
@@ -608,79 +608,79 @@ Provision Azure infrastructure"""
         return True
     
     # Managed services setup methods
-    def _setup_managed_databases(self):
+    def _setup_managed_databases(self) -> None:
         """
 Setup managed databases"""
         pass
     
-    def _setup_managed_caching(self):
+    def _setup_managed_caching(self) -> None:
         """
 Setup managed caching services"""
         pass
     
-    def _setup_object_storage(self):
+    def _setup_object_storage(self) -> None:
         """
 Setup object storage"""
         pass
     
-    def _setup_cdn(self):
+    def _setup_cdn(self) -> None:
         """
 Setup Content Delivery Network"""
         pass
     
-    def _setup_load_balancers(self):
+    def _setup_load_balancers(self) -> None:
         """
 Setup load balancers"""
         pass
     
-    def _setup_monitoring_services(self):
+    def _setup_monitoring_services(self) -> None:
         """
 Setup cloud monitoring services"""
         pass
     
     # Security setup methods
-    def _setup_vpc_security(self):
+    def _setup_vpc_security(self) -> None:
         """
 Setup VPC and network security"""
         pass
     
-    def _setup_iam_security(self):
+    def _setup_iam_security(self) -> None:
         """
 Setup IAM and access control"""
         pass
     
-    def _setup_encryption(self):
+    def _setup_encryption(self) -> None:
         """
 Setup encryption and key management"""
         pass
     
-    def _setup_security_monitoring(self):
+    def _setup_security_monitoring(self) -> None:
         """
 Setup security monitoring"""
         pass
     
-    def _setup_compliance_auditing(self):
+    def _setup_compliance_auditing(self) -> None:
         """
 Setup compliance and auditing"""
         pass
     
     # Disaster recovery methods
-    def _setup_cross_region_replication(self):
+    def _setup_cross_region_replication(self) -> None:
         """
 Setup cross-region replication"""
         pass
     
-    def _setup_automated_backups(self):
+    def _setup_automated_backups(self) -> None:
         """
 Setup automated backups"""
         pass
     
-    def _setup_disaster_recovery_procedures(self):
+    def _setup_disaster_recovery_procedures(self) -> None:
         """
 Setup disaster recovery procedures"""
         pass
     
-    def _setup_failover_mechanisms(self):
+    def _setup_failover_mechanisms(self) -> None:
         """
 Setup failover mechanisms"""
         pass

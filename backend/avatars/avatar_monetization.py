@@ -167,13 +167,13 @@ class RevenueReport:
 class AvatarCommerce:
     """Commerce avatars et accessoires"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
         self.products: Dict[str, Product] = {}
         self.transactions: Dict[str, Transaction] = {}
         self._initialize_default_products()
     
-    def _initialize_default_products(self):
+    def _initialize_default_products(self) -> None:
         """Initialisation des produits par défaut"""
         default_products = [
             Product(
@@ -374,7 +374,7 @@ class AvatarCommerce:
 class DigitalAssetManager:
     """Gestion actifs numériques"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
         self.assets: Dict[str, Dict[str, Any]] = {}
         self.access_tokens: Dict[str, Dict[str, Any]] = {}
@@ -473,7 +473,7 @@ class DigitalAssetManager:
 class NFTIntegration:
     """Intégration blockchain/NFT"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
         self.nft_assets: Dict[str, NFTAsset] = {}
         self.mint_queue: List[Dict[str, Any]] = []
@@ -579,7 +579,7 @@ class NFTIntegration:
 class RevenueTracker:
     """Suivi revenus avatars"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
         self.transactions: List[Transaction] = []
         self.subscriptions: Dict[str, Subscription] = {}

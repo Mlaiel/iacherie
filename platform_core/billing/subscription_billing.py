@@ -283,9 +283,9 @@ class SubscriptionBilling:
     """Gestionnaire de facturation d'abonnements"""
     
     def __init__(self, 
-                 invoice_manager: Any,
-                 payment_processor: Any,
-                 database_client: Optional[Any] = None):
+                 invoice_manager -> None: Any,
+                 payment_processor -> None: Any,
+                 database_client -> None: Optional[Any] = None) -> None:
         self.invoice_manager = invoice_manager
         self.payment_processor = payment_processor
         self.database_client = database_client
@@ -439,10 +439,10 @@ Crée un nouveau plan d'abonnement"""
         return subscription
         
     async def record_usage(self,
-                          subscription_id: str,
-                          feature_name: str,
-                          quantity: int,
-                          timestamp: Optional[datetime] = None):
+                          subscription_id -> None: str,
+                          feature_name -> None: str,
+                          quantity -> None: int,
+                          timestamp -> None: Optional[datetime] = None) -> None:
         """Enregistre l'utilisation d'une fonctionnalité mesurée"""
         subscription = await self.get_subscription(subscription_id)
         if not subscription:
@@ -594,9 +594,9 @@ Crée un nouveau plan d'abonnement"""
             return start_date + timedelta(days=30)  # Par défaut
             
     async def _handle_plan_change_proration(self,
-                                          subscription: Subscription,
-                                          old_plan: SubscriptionPlan,
-                                          new_plan: SubscriptionPlan):
+                                          subscription -> None: Subscription,
+                                          old_plan -> None: SubscriptionPlan,
+                                          new_plan -> None: SubscriptionPlan) -> None:
         """
 Gère la prorata lors d'un changement de plan"""
         now = datetime.utcnow()
@@ -666,7 +666,7 @@ Récupère un abonnement par ID"""
             
         return None
         
-    async def update_subscription(self, subscription: Subscription):
+    async def update_subscription(self, subscription -> None: Subscription) -> None:
         """
 Met à jour un abonnement"""
         if self.database_client:
@@ -680,7 +680,7 @@ Récupère les abonnements à facturer"""
         # pour récupérer les abonnements dont current_period_end <= maintenant
         return []
         
-    async def _save_plan(self, plan: SubscriptionPlan):
+    async def _save_plan(self, plan -> None: SubscriptionPlan) -> None:
         """
 Sauvegarde un plan en base"""
         try:
@@ -734,7 +734,7 @@ Sauvegarde un plan en base"""
             logger.error(f"Error loading subscription plan {plan_id}: {e}")
             return None
         
-    async def _save_subscription(self, subscription: Subscription):
+    async def _save_subscription(self, subscription -> None: Subscription) -> None:
         """Sauvegarde un abonnement en base"""
         try:
             # In a real system, this would save to database

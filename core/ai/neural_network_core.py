@@ -107,7 +107,7 @@ class TrainingMetrics:
 class AinflueCoreNeuralNetwork(nn.Module if nn else object):
     """Core neural network architecture for Ainflue"""
     
-    def __init__(self, config: NetworkConfig):
+    def __init__(self, config -> None: NetworkConfig) -> None:
         if nn:
             super().__init__()
         self.config = config
@@ -117,7 +117,7 @@ class AinflueCoreNeuralNetwork(nn.Module if nn else object):
         else:
             logger.warning("⚠️ PyTorch not available, using mock neural network")
     
-    def _build_network(self):
+    def _build_network(self) -> None:
         """Build the neural network architecture"""
         if self.config.architecture == NetworkArchitecture.TRANSFORMER:
             self._build_transformer()
@@ -128,7 +128,7 @@ class AinflueCoreNeuralNetwork(nn.Module if nn else object):
         else:
             self._build_feedforward()
     
-    def _build_transformer(self):
+    def _build_transformer(self) -> None:
         """Build transformer architecture"""
         self.embedding = nn.Linear(self.config.input_size, self.config.hidden_sizes[0])
         self.positional_encoding = nn.Parameter(
@@ -153,7 +153,7 @@ class AinflueCoreNeuralNetwork(nn.Module if nn else object):
         if self.config.layer_norm:
             self.layer_norm = nn.LayerNorm(self.config.hidden_sizes[0])
     
-    def _build_feedforward(self):
+    def _build_feedforward(self) -> None:
         """Build feedforward network"""
         layers = []
         
@@ -177,7 +177,7 @@ class AinflueCoreNeuralNetwork(nn.Module if nn else object):
         layers.append(nn.Linear(input_size, self.config.output_size))
         self.network = nn.Sequential(*layers)
     
-    def _build_cnn(self):
+    def _build_cnn(self) -> None:
         """Build convolutional network"""
         self.conv_layers = nn.Sequential(
             nn.Conv2d(3, 64, kernel_size=3, padding=1),
@@ -204,7 +204,7 @@ class AinflueCoreNeuralNetwork(nn.Module if nn else object):
             nn.Linear(self.config.hidden_sizes[0], self.config.output_size)
         )
     
-    def _build_rnn(self):
+    def _build_rnn(self) -> None:
         """Build recurrent network"""
         self.embedding = nn.Linear(self.config.input_size, self.config.hidden_sizes[0])
         
@@ -227,7 +227,7 @@ class AinflueCoreNeuralNetwork(nn.Module if nn else object):
         
         self.output_layer = nn.Linear(self.config.hidden_sizes[1], self.config.output_size)
     
-    def forward(self, x):
+    def forward(self, x) -> None:
         """Forward pass through the network"""
         if not torch:
             return {"logits": [0.0] * self.config.output_size}
@@ -241,7 +241,7 @@ class AinflueCoreNeuralNetwork(nn.Module if nn else object):
         else:
             return self._forward_feedforward(x)
     
-    def _forward_transformer(self, x):
+    def _forward_transformer(self, x) -> None:
         """Forward pass for transformer"""
         x = self.embedding(x)
         
@@ -264,18 +264,18 @@ class AinflueCoreNeuralNetwork(nn.Module if nn else object):
         
         return {"logits": logits}
     
-    def _forward_feedforward(self, x):
+    def _forward_feedforward(self, x) -> None:
         """Forward pass for feedforward network"""
         logits = self.network(x)
         return {"logits": logits}
     
-    def _forward_cnn(self, x):
+    def _forward_cnn(self, x) -> None:
         """Forward pass for CNN"""
         features = self.conv_layers(x)
         logits = self.classifier(features)
         return {"logits": logits}
     
-    def _forward_rnn(self, x):
+    def _forward_rnn(self, x) -> None:
         """Forward pass for RNN"""
         x = self.embedding(x)
         rnn_out, _ = self.rnn(x)
@@ -289,7 +289,7 @@ class AinflueCoreNeuralNetwork(nn.Module if nn else object):
 class NeuralNetworkCore:
     """Enterprise neural network core management system"""
     
-    def __init__(self, config: Optional[NetworkConfig] = None, level: str = "enterprise"):
+    def __init__(self, config -> None: Optional[NetworkConfig] = None, level -> None: str = "enterprise") -> None:
         """Initialize neural network core"""
         self.config = config or NetworkConfig()
         self.level = level

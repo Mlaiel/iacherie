@@ -146,7 +146,7 @@ class CreatorPerformanceIntelligence:
     optimization recommendations, and business insights for content creators.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.performance_cache: Dict[str, CreatorPerformanceMetrics] = {}
         self.intelligence_cache: Dict[str, CreatorIntelligenceInsights] = {}
         self.performance_history: Dict[str, List[CreatorPerformanceMetrics]] = defaultdict(list)
@@ -495,7 +495,7 @@ class CreatorPerformanceIntelligence:
             optimization_suggestions=optimization_suggestions
         )
     
-    async def _enhance_with_ai_insights(self, metrics: CreatorPerformanceMetrics):
+    async def _enhance_with_ai_insights(self, metrics -> None: CreatorPerformanceMetrics) -> None:
         """Enhance metrics with AI-powered insights"""
         # AI enhancement logic would go here
         # For now, we'll add some intelligent suggestions based on performance

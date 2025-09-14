@@ -33,7 +33,7 @@ DISTRIBUTION_CONFIG = {
     'distribution_strategies': ['simultaneous', 'sequential', 'platform_specific', 'a_b_testing']
 }
 
-def get_distribution_manager():
+def get_distribution_manager() -> None:
     """Factory pour créer le gestionnaire principal de distribution."""
     return {
         'distributor': MultiPlatformDistributor(),

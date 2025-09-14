@@ -84,7 +84,7 @@ class Touchpoint:
     value: float = 0.0  # Economic value of touchpoint
     metadata: Dict[str, Any] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.metadata is None:
             self.metadata = {}
     
@@ -105,7 +105,7 @@ class Conversion:
     attribution_window_hours: int = 168  # 7 days default
     metadata: Dict[str, Any] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.timestamp is None:
             self.timestamp = datetime.now(timezone.utc)
         if self.metadata is None:
@@ -129,7 +129,7 @@ class CustomerJourney(BaseModel):
     conversion_probability: float = Field(default=0.0, description="Predicted conversion probability")
     
     @validator('first_touch', 'last_touch')
-    def validate_timestamps(cls, v):
+    def validate_timestamps(cls, v) -> None:
         if isinstance(v, str):
             return datetime.fromisoformat(v.replace('Z', '+00:00'))
         return v
@@ -146,7 +146,7 @@ class AttributionResult(BaseModel):
     confidence_score: float = Field(default=1.0, description="Attribution confidence")
     
     @validator('analysis_timestamp')
-    def validate_timestamp(cls, v):
+    def validate_timestamp(cls, v) -> None:
         if isinstance(v, str):
             return datetime.fromisoformat(v.replace('Z', '+00:00'))
         return v
@@ -158,7 +158,7 @@ class AttributionAnalytics:
     Tracks customer journeys and attributes conversions to touchpoints
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.touchpoints: Dict[str, Touchpoint] = {}
         self.conversions: Dict[str, Conversion] = {}
         self.journeys: Dict[str, CustomerJourney] = {}
@@ -244,7 +244,7 @@ class AttributionAnalytics:
             logger.error(f"Failed to track conversion: {e}")
             return False
             
-    async def _update_customer_journey(self, touchpoint: Touchpoint):
+    async def _update_customer_journey(self, touchpoint -> None: Touchpoint) -> None:
         """Update customer journey with new touchpoint"""
         user_id = touchpoint.user_id
         
@@ -282,7 +282,7 @@ class AttributionAnalytics:
             0.95
         )
         
-    async def _update_customer_journey_with_conversion(self, conversion: Conversion):
+    async def _update_customer_journey_with_conversion(self, conversion -> None: Conversion) -> None:
         """Update customer journey with conversion"""
         user_id = conversion.user_id
         
@@ -290,7 +290,7 @@ class AttributionAnalytics:
             journey = self.journeys[user_id]
             journey.conversions.append(conversion)
             
-    async def _run_attribution_analysis(self, conversion: Conversion):
+    async def _run_attribution_analysis(self, conversion -> None: Conversion) -> None:
         """Run attribution analysis for a conversion"""
         try:
             user_id = conversion.user_id

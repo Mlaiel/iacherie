@@ -62,7 +62,7 @@ class CompleteMobileAppsService:
     """
 Complete mobile apps integration and management service."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.platform_configs = self._initialize_platform_configs()
         self.feature_implementations = self._initialize_feature_implementations()
         self.app_store_configs = self._initialize_app_store_configs()

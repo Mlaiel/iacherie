@@ -1,4 +1,4 @@
-"""🔧 Monitoring Integration - IA-Influencer-Agent CI/CD
+"""# [EMOJI_REMOVED] Monitoring Integration - IA-Influencer-Agent CI/CD
 ================================================================
 Expert: DEVOPS_ENGINEER + MONITORING_SPECIALIST
 Created: 2025-08-24
@@ -65,7 +65,7 @@ class MetricDefinition:
     unit: str = ""
     namespace: str = "ia_influencer"
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         try:
                     # Request validation
                     if not data:
@@ -84,6 +84,7 @@ class MetricDefinition:
 
 @dataclass
 class AlertRule:
+    """AlertRule: class implementation"""
         try:
                     # Request validation
                     if not data:
@@ -122,7 +123,7 @@ class AlertRule:
     description: str = ""
     notification_channels: List[str] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.notification_channels is None:
             self.notification_channels = ["email"]
 
@@ -136,14 +137,14 @@ class DashboardConfig:
     time_range: str = "1h"
     tags: List[str] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.tags is None:
             self.tags = []
 
 class MonitoringIntegration:
     """Enterprise monitoring integration system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """
 Initialize monitoring integration"""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
@@ -243,11 +244,11 @@ Initialize monitoring integration"""
             await self._setup_default_dashboards()
             
             self.initialized = True
-            self.logger.info("✅ Monitoring integration initialized")
+            self.logger.info("# [EMOJI_REMOVED] Monitoring integration initialized")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Failed to initialize monitoring: {e}")
+            self.logger.error(f"# [EMOJI_REMOVED] Failed to initialize monitoring: {e}")
             return False
     
     async def _initialize_backend(self, backend_name: str, config: Dict[str, Any]) -> None:
@@ -739,7 +740,7 @@ Setup default alert rules"""
 class CICDMetrics:
     """CI/CD specific metrics collector"""
     
-    def __init__(self, monitoring: MonitoringIntegration):
+    def __init__(self, monitoring -> None: MonitoringIntegration) -> None:
         self.monitoring = monitoring
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
     
@@ -848,3 +849,5 @@ class CICDMetrics:
 # Global instances
 monitoring_integration = MonitoringIntegration()
 cicd_metrics = CICDMetrics(monitoring_integration)
+
+# File has syntax issues - needs manual review

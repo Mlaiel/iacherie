@@ -16,7 +16,7 @@ API_KEY = os.getenv("AINFLUE_API_KEY", "your-api-key-here")
 BASE_URL = os.getenv("AINFLUE_BASE_URL", "https://api.ainflue.com")
 
 
-async def public_api_health_check():
+async def public_api_health_check() -> None:
     """Example: Check public API health status"""
     print("🏥 Public API Health Check")
     print("-" * 30)
@@ -35,7 +35,7 @@ async def public_api_health_check():
             print(f"❌ Error: {str(e)}")
 
 
-async def public_api_info_example():
+async def public_api_info_example() -> None:
     """Example: Get public API information"""
     print("\n📋 Public API Information")
     print("-" * 30)
@@ -54,7 +54,7 @@ async def public_api_info_example():
             print(f"❌ Error: {str(e)}")
 
 
-async def sandbox_testing_example():
+async def sandbox_testing_example() -> None:
     """Example: Test API endpoints in sandbox"""
     print("\n🧪 Sandbox Testing Example")
     print("-" * 30)
@@ -78,7 +78,7 @@ async def sandbox_testing_example():
             print(f"❌ Error: {str(e)}")
 
 
-async def content_analysis_example():
+async def content_analysis_example() -> None:
     """Example: Analyze content for fingerprinting"""
     print("\n🔍 Content Analysis Example")
     print("-" * 30)
@@ -107,7 +107,7 @@ async def content_analysis_example():
             print(f"❌ Error: {str(e)}")
 
 
-async def fingerprint_generation_example():
+async def fingerprint_generation_example() -> None:
     """Example: Generate content fingerprint"""
     print("\n🔒 Fingerprint Generation Example")
     print("-" * 30)
@@ -136,7 +136,7 @@ async def fingerprint_generation_example():
             print(f"❌ Error: {str(e)}")
 
 
-async def sdk_download_example():
+async def sdk_download_example() -> None:
     """Example: Download SDK and documentation"""
     print("\n💾 SDK Download Example")
     print("-" * 30)
@@ -163,7 +163,7 @@ async def sdk_download_example():
             print(f"❌ Error: {str(e)}")
 
 
-async def content_protection_example():
+async def content_protection_example() -> None:
     """Example: Protect content across platforms"""
     print("\n🛡️ Content Protection Example")
     print("-" * 30)
@@ -200,7 +200,7 @@ async def content_protection_example():
             print(f"❌ Error: {str(e)}")
 
 
-async def monetization_example():
+async def monetization_example() -> None:
     """Example: Monetize content with licensing"""
     print("\n💰 Monetization Example")
     print("-" * 30)
@@ -239,7 +239,7 @@ async def monetization_example():
             print(f"❌ Error: {str(e)}")
 
 
-async def analytics_example():
+async def analytics_example() -> None:
     """Example: Get platform analytics"""
     print("\n📊 Analytics Example")
     print("-" * 30)
@@ -266,7 +266,7 @@ async def analytics_example():
             print(f"❌ Error: {str(e)}")
 
 
-def sync_example():
+def sync_example() -> None:
     """Example: Using the synchronous SDK"""
     print("\n🔄 Synchronous SDK Example")
     print("-" * 30)
@@ -295,7 +295,7 @@ def sync_example():
         sdk.close()
 
 
-async def batch_processing_example():
+async def batch_processing_example() -> None:
     """Example: Process multiple content items"""
     print("\n📦 Batch Processing Example")
     print("-" * 30)
@@ -331,7 +331,7 @@ async def batch_processing_example():
             print(f"❌ Error: {str(e)}")
 
 
-async def file_upload_example():
+async def file_upload_example() -> None:
     """Example: Upload and analyze a file"""
     print("\n📁 File Upload Example")
     print("-" * 30)
@@ -355,7 +355,7 @@ async def file_upload_example():
             print(f"❌ Error: {str(e)}")
 
 
-async def user_management_example():
+async def user_management_example() -> None:
     """Example: User profile management"""
     print("\n👤 User Management Example")
     print("-" * 30)
@@ -387,7 +387,7 @@ async def user_management_example():
             print(f"❌ Error: {str(e)}")
 
 
-async def error_handling_example():
+async def error_handling_example() -> None:
     """Example: Error handling and retries"""
     print("\n⚠️ Error Handling Example")
     print("-" * 30)
@@ -412,7 +412,7 @@ async def error_handling_example():
             print(f"   Message: {str(e)}")
 
 
-async def main():
+async def main() -> None:
     """Run all examples"""
     print("🚀 Ainflue SDK Examples")
     print("=" * 50)

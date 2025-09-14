@@ -29,7 +29,7 @@ class MotionEffectsConfig:
 class CameraMovements:
     """Professional camera movement effects."""
     
-    def __init__(self, config: MotionEffectsConfig):
+    def __init__(self, config -> None: MotionEffectsConfig) -> None:
         self.config = config
     
     def zoom_effect(self, frame: np.ndarray, zoom_factor: float, center: Tuple[int, int] = None) -> np.ndarray:
@@ -114,7 +114,7 @@ class CameraMovements:
 class KineticEffects:
     """Dynamic kinetic motion effects."""
     
-    def __init__(self, config: MotionEffectsConfig):
+    def __init__(self, config -> None: MotionEffectsConfig) -> None:
         self.config = config
     
     def speed_ramp_effect(self, frames: List[np.ndarray], speed_curve: List[float]) -> List[np.ndarray]:
@@ -188,7 +188,7 @@ class KineticEffects:
 class ParallaxEffects:
     """3D-style parallax and depth effects."""
     
-    def __init__(self, config: MotionEffectsConfig):
+    def __init__(self, config -> None: MotionEffectsConfig) -> None:
         self.config = config
     
     def parallax_effect(self, layers: List[np.ndarray], depths: List[float], movement_x: float, movement_y: float) -> np.ndarray:
@@ -247,7 +247,7 @@ class ParallaxEffects:
 class MotionEffectsEngine:
     """Enterprise motion effects engine with cinematic camera movements."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.config = MotionEffectsConfig()
         self.camera_movements = CameraMovements(self.config)
         self.kinetic_effects = KineticEffects(self.config)

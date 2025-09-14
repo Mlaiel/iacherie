@@ -57,10 +57,10 @@ class EventSerializer:
     """Advanced event serialization system"""
     
     def __init__(self,
-                 default_format: SerializationFormat = SerializationFormat.JSON,
-                 compression: CompressionType = CompressionType.NONE,
-                 include_metadata: bool = True,
-                 pretty_print: bool = False):
+                 default_format -> None: SerializationFormat = SerializationFormat.JSON,
+                 compression -> None: CompressionType = CompressionType.NONE,
+                 include_metadata -> None: bool = True,
+                 pretty_print -> None: bool = False) -> None:
         """Initialize event serializer
         
         Args:

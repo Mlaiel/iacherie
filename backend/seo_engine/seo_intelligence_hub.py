@@ -148,7 +148,7 @@ class SEOIntelligenceHub:
     et des insights automatisés pour optimiser les stratégies SEO.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialise le hub d'intelligence SEO
         

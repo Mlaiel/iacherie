@@ -77,7 +77,7 @@ class EdgeDeploymentController:
     - Edge failover with zero-downtime guarantees
     """
     
-    def __init__(self, config_path: Optional[str] = None):
+    def __init__(self, config_path -> None: Optional[str] = None) -> None:
         self.logger = logging.getLogger(__name__)
         self.edge_nodes: Dict[str, EdgeNodeConfig] = {}
         self.active_deployments: Dict[str, Dict] = {}
@@ -412,10 +412,10 @@ class EdgeDeploymentController:
 
     async def _update_node_resources(
         self,
-        node_id: str,
-        resources: Dict[str, float],
-        operation: str  # "allocate" or "deallocate"
-    ):
+        node_id -> None: str,
+        resources -> None: Dict[str, float],
+        operation -> None: str  # "allocate" or "deallocate"
+    ) -> None:
         """Update node resource allocation"""
         
         if node_id not in self.edge_nodes:
@@ -432,7 +432,7 @@ class EdgeDeploymentController:
             utilization = 100 - (node.compute_capacity[resource_type] / 100) * 100  # Simplified
             self.resource_utilization.labels(node_id=node_id, resource_type=resource_type).set(utilization)
 
-    async def _discover_edge_nodes(self):
+    async def _discover_edge_nodes(self) -> None:
         """Discover available edge nodes"""
         
         # Simulate discovery of edge nodes globally
@@ -480,7 +480,7 @@ class EdgeDeploymentController:
         
         self.logger.info(f"🌐 Discovered {len(sample_nodes)} edge nodes")
 
-    async def _health_monitor_loop(self):
+    async def _health_monitor_loop(self) -> None:
         """Background health monitoring for edge nodes"""
         
         while True:
@@ -508,7 +508,7 @@ class EdgeDeploymentController:
         # Simulate health check - would be actual HTTP health check in production
         return True  # Simplified for demo
 
-    async def _handle_node_failure(self, failed_node_id: str):
+    async def _handle_node_failure(self, failed_node_id -> None: str) -> None:
         """Handle edge node failure with automatic failover"""
         
         if not self.config["failover_enabled"]:
@@ -535,7 +535,7 @@ class EdgeDeploymentController:
                 self.logger.info(f"🔄 Failing over deployment {deployment_id} to node {healthy_alternatives[0]}")
                 await self._deploy_to_single_node(deployment_id, healthy_alternatives[0], model_spec)
 
-    async def _traffic_analyzer_loop(self):
+    async def _traffic_analyzer_loop(self) -> None:
         """Analyze traffic patterns for intelligent placement optimization"""
         
         while True:
@@ -552,7 +552,7 @@ class EdgeDeploymentController:
                 self.logger.error(f"❌ Traffic analyzer error: {e}")
                 await asyncio.sleep(60)
 
-    async def _auto_scaler_loop(self):
+    async def _auto_scaler_loop(self) -> None:
         """Auto-scaling loop for edge deployments"""
         
         while True:
@@ -566,22 +566,22 @@ class EdgeDeploymentController:
                 self.logger.error(f"❌ Auto-scaler error: {e}")
                 await asyncio.sleep(60)
 
-    async def _collect_traffic_metrics(self):
+    async def _collect_traffic_metrics(self) -> None:
         """Collect traffic metrics from edge nodes"""
         # Simulate traffic collection - would integrate with monitoring system
         pass
 
-    async def _update_placement_weights(self):
+    async def _update_placement_weights(self) -> None:
         """Update placement optimizer weights based on learned patterns"""
         # ML-based weight optimization would go here
         pass
 
-    async def _evaluate_scaling_needs(self):
+    async def _evaluate_scaling_needs(self) -> None:
         """Evaluate if scaling up/down is needed"""
         # Auto-scaling logic based on resource utilization and traffic
         pass
 
-    async def _log_deployment_audit(self, deployment_plan: Dict):
+    async def _log_deployment_audit(self, deployment_plan -> None: Dict) -> None:
         """Log deployment for audit purposes"""
         
         if not self.config["audit_logging"]:
@@ -649,7 +649,7 @@ class EdgeDeploymentController:
         }
 
 # Example usage for enterprise MLOps integration
-async def main():
+async def main() -> None:
     """Example usage of Edge Deployment Controller"""
     
     # Initialize controller

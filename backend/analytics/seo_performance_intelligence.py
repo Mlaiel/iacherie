@@ -265,7 +265,7 @@ class SEOPerformanceIntelligence:
     multi-platform SEO intelligence.
     """
     
-    def __init__(self, retention_days: int = 365):
+    def __init__(self, retention_days -> None: int = 365) -> None:
         """Initialize the SEO Performance Intelligence Engine"""
         self.retention_days = retention_days
         self.content_seo_data: Dict[str, ContentSEOAnalysis] = {}
@@ -448,7 +448,7 @@ class SEOPerformanceIntelligence:
             logger.error(f"❌ SEO analysis failed for content {content_id}: {e}")
             return None
     
-    async def _analyze_technical_seo(self, analysis: ContentSEOAnalysis, content_data: Dict[str, Any]):
+    async def _analyze_technical_seo(self, analysis -> None: ContentSEOAnalysis, content_data -> None: Dict[str, Any]) -> None:
         """Analyze technical SEO factors"""
         # Simulate technical SEO analysis
         analysis.page_speed_score = content_data.get("page_speed_score", random.uniform(70, 95))
@@ -475,7 +475,7 @@ class SEOPerformanceIntelligence:
         
         return headings
     
-    async def _analyze_content_optimization(self, analysis: ContentSEOAnalysis, content_data: Dict[str, Any]):
+    async def _analyze_content_optimization(self, analysis -> None: ContentSEOAnalysis, content_data -> None: Dict[str, Any]) -> None:
         """Analyze content optimization factors"""
         content_text = content_data.get("content_text", "")
         
@@ -506,7 +506,7 @@ class SEOPerformanceIntelligence:
             "external_links_count": len(external_links)
         }
     
-    async def _analyze_keyword_performance(self, analysis: ContentSEOAnalysis):
+    async def _analyze_keyword_performance(self, analysis -> None: ContentSEOAnalysis) -> None:
         """Analyze keyword performance for the content"""
         ranking_positions = {}
         
@@ -526,7 +526,7 @@ class SEOPerformanceIntelligence:
         analysis.social_shares = random.randint(0, 500)
         analysis.backlinks = random.randint(0, 50)
     
-    async def _generate_optimization_recommendations(self, analysis: ContentSEOAnalysis):
+    async def _generate_optimization_recommendations(self, analysis -> None: ContentSEOAnalysis) -> None:
         """Generate specific optimization recommendations"""
         recommendations = []
         

@@ -67,7 +67,7 @@ class RevenueAnomalyDetector:
     - Automated response suggestions
     """
     
-    def __init__(self, revenue_tracker):
+    def __init__(self, revenue_tracker) -> None:
         """
 Initialize anomaly detector"""
         self.revenue_tracker = revenue_tracker

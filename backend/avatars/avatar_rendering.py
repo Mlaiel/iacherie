@@ -166,12 +166,12 @@ class PerformanceMetrics:
 class MaterialManager:
     """Gestion matériaux avancés"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
         self.materials: Dict[str, MaterialProperties] = {}
         self._initialize_preset_materials()
     
-    def _initialize_preset_materials(self):
+    def _initialize_preset_materials(self) -> None:
         """Initialisation des matériaux prédéfinis"""
         presets = {
             "realistic_skin": MaterialProperties(
@@ -291,13 +291,13 @@ class MaterialManager:
 class LightingSystem:
     """Système éclairage professionnel"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
         self.light_sources: Dict[str, LightSource] = {}
         self.environment_settings: Dict[str, Any] = {}
         self._initialize_lighting_presets()
     
-    def _initialize_lighting_presets(self):
+    def _initialize_lighting_presets(self) -> None:
         """Initialisation des préréglages d'éclairage"""
         presets = {
             "studio_portrait": [
@@ -433,7 +433,7 @@ class LightingSystem:
 class PerformanceOptimizer:
     """Optimiseur performance rendu"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
         self.current_metrics = PerformanceMetrics()
         self.target_fps = 60
@@ -551,7 +551,7 @@ class PerformanceOptimizer:
 class RenderingEngine:
     """Moteur rendu principal"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
         self.material_manager = MaterialManager()
         self.lighting_system = LightingSystem()

@@ -59,7 +59,7 @@ class LeaderboardData:
 class LeaderboardManagementWorkflow:
     """AI-powered leaderboard management workflow"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.metrics_collector = MetricsCollector()
         self.cache_manager = CacheManager()
         self.leaderboards: Dict[str, LeaderboardData] = {}
@@ -367,12 +367,12 @@ class LeaderboardManagementWorkflow:
         
         return start, end
     
-    async def _cache_leaderboard(self, leaderboard: LeaderboardData):
+    async def _cache_leaderboard(self, leaderboard -> None: LeaderboardData) -> None:
         """Cache leaderboard data"""
         cache_key = f"leaderboard_{leaderboard.leaderboard_id}"
         await self.cache_manager.set(cache_key, leaderboard, ttl=3600)
     
-    async def _notify_rank_changes(self, entries: List[LeaderboardEntry]):
+    async def _notify_rank_changes(self, entries -> None: List[LeaderboardEntry]) -> None:
         """Send notifications for significant rank changes"""
         significant_changes = [
             entry for entry in entries
@@ -417,7 +417,7 @@ class LeaderboardManagementWorkflow:
         intensity = min(coefficient_of_variation, 1.0)
         return round(intensity, 3)
     
-    async def _archive_leaderboard(self, leaderboard: LeaderboardData, archive_id: str):
+    async def _archive_leaderboard(self, leaderboard -> None: LeaderboardData, archive_id -> None: str) -> None:
         """Archive leaderboard data"""
         archive_key = f"leaderboard_archive_{archive_id}"
         await self.cache_manager.set(archive_key, leaderboard, ttl=86400 * 365)  # 1 year

@@ -91,7 +91,7 @@ class LogFile:
     """
 Log file metadata and operations"""
     
-    def __init__(self, path: Path):
+    def __init__(self, path -> None: Path) -> None:
         self.path = path
         self.size = 0
         self.created_at: Optional[datetime] = None
@@ -102,7 +102,7 @@ Log file metadata and operations"""
         self.storage_tier = StorageTier.HOT
         self._load_metadata()
     
-    def _load_metadata(self):
+    def _load_metadata(self) -> None:
         """
 Load file metadata"""
         if self.path.exists():
@@ -142,7 +142,7 @@ Log file compression utilities"""
         """
 Compress a log file"""
         
-        def _compress():
+        def _compress() -> None:
             if compression == CompressionType.GZIP:
                 compressed_path = file_path.with_suffix(file_path.suffix + '.gz')
                 with open(file_path, 'rb') as f_in:
@@ -184,7 +184,7 @@ Compress a log file"""
         if not output_path:
             output_path = directory.with_suffix('.tar.gz')
         
-        def _compress_dir():
+        def _compress_dir() -> None:
             with tarfile.open(output_path, f'w:{compression.value.split(".")[-1]}') as tar:
                 tar.add(directory, arcname=directory.name)
             return output_path
@@ -200,7 +200,7 @@ Compress a log file"""
 class S3Archiver:
     """S3 archival service for log files"""
     
-    def __init__(self, bucket: str, region: str = "eu-central-1"):
+    def __init__(self, bucket -> None: str, region -> None: str = "eu-central-1") -> None:
         self.bucket = bucket
         self.region = region
         self.s3_client = boto3.client('s3', region_name=region)
@@ -211,7 +211,7 @@ class S3Archiver:
                          storage_class: str = "STANDARD_IA") -> bool:
         """Upload file to S3"""
         
-        def _upload():
+        def _upload() -> None:
         try:
             logger.info(f"Executing _upload")
             
@@ -288,7 +288,7 @@ class S3Archiver:
     async def list_archived_files(self, prefix: str) -> List[Dict[str, Any]]:
         """List files in S3 bucket"""
         
-        def _list_files():
+        def _list_files() -> None:
             try:
                 response = self.s3_client.list_objects_v2(
                     Bucket=self.bucket,
@@ -334,7 +334,7 @@ class S3Archiver:
                                      new_storage_class: str) -> bool:
         """Transition file to different storage class"""
         
-        def _transition():
+        def _transition() -> None:
             try:
                 # Copy object to itself with new storage class
                 copy_source = {'Bucket': self.bucket, 'Key': s3_key}
@@ -362,7 +362,7 @@ class S3Archiver:
 class RetentionRule:
     """Individual retention rule processor"""
     
-    def __init__(self, policy: RetentionPolicy):
+    def __init__(self, policy -> None: RetentionPolicy) -> None:
         self.policy = policy
         self.compressor = LogCompressor()
         self.archiver = None
@@ -477,7 +477,7 @@ Process files according to retention policy"""
 class LogRetentionManager:
     """Advanced log retention manager for IA Influencer Agent"""
     
-    def __init__(self, config_path: Optional[Path] = None):
+    def __init__(self, config_path -> None: Optional[Path] = None) -> None:
         self.config_path = config_path or Path("/etc/ia-influencer/retention.json")
         self.policies: List[RetentionPolicy] = []
         self.elasticsearch_manager: Optional[ElasticsearchManager] = None
@@ -485,7 +485,7 @@ class LogRetentionManager:
         self.last_run: Optional[datetime] = None
         self._load_default_policies()
     
-    def _load_default_policies(self):
+    def _load_default_policies(self) -> None:
         """Load default retention policies for IA Influencer Agent"""
         
         # Application logs - 90 days hot, 180 days warm, 365 days cold
@@ -555,7 +555,7 @@ class LogRetentionManager:
         
         self.policies = [app_policy, ai_policy, error_policy, audit_policy, performance_policy]
     
-    async def load_config(self):
+    async def load_config(self) -> None:
         """Load retention configuration from file"""
         if self.config_path.exists():
             try:
@@ -573,7 +573,7 @@ class LogRetentionManager:
                 logging.error(f"Failed to load retention config: {e}")
                 # Keep default policies
     
-    async def save_config(self):
+    async def save_config(self) -> None:
         """Save retention configuration to file"""
         try:
             self.config_path.parent.mkdir(parents=True, exist_ok=True)
@@ -592,7 +592,7 @@ class LogRetentionManager:
             logging.error(f"Failed to save retention config: {e}")
             raise RetentionError(f"Config save failed: {e}")
     
-    def add_policy(self, policy: RetentionPolicy):
+    def add_policy(self, policy -> None: RetentionPolicy) -> None:
         """Add retention policy"""
         self.policies.append(policy)
     
@@ -752,7 +752,7 @@ Run retention policies on log directory"""
         
         return stats
     
-    async def start_scheduler(self, interval_hours: int = 24):
+    async def start_scheduler(self, interval_hours -> None: int = 24) -> None:
         """Start automatic retention scheduler"""
         self.is_running = True
         
@@ -772,11 +772,13 @@ Run retention policies on log directory"""
             # Wait for next run
             await asyncio.sleep(interval_hours * 3600)
     
-    async def stop_scheduler(self):
+    async def stop_scheduler(self) -> None:
         """Stop automatic retention scheduler"""
         self.is_running = False
         logging.info("Retention scheduler stopped")
     
-    def set_elasticsearch_manager(self, es_manager: ElasticsearchManager):
+    def set_elasticsearch_manager(self, es_manager -> None: ElasticsearchManager) -> None:
         """Set Elasticsearch manager for index cleanup"""
         self.elasticsearch_manager = es_manager
+
+# File has syntax issues - needs manual review

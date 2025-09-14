@@ -1,3 +1,8 @@
+"""
+Network Access Control module
+Enterprise implementation for Ainflue platform
+"""
+
 # Ainflue Infrastructure Module
 # =============================
 # 
@@ -121,7 +126,7 @@ class NetworkAccessController:
     access control, threat intelligence, and compliance monitoring.
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """Initialize network access controller."""
         self.config = config
         self.access_rules = {}
@@ -139,7 +144,7 @@ class NetworkAccessController:
         self._load_threat_intelligence()
         self._initialize_default_policies()
     
-    def _initialize_cloud_clients(self):
+    def _initialize_cloud_clients(self) -> None:
         """Initialize cloud provider clients."""
         try:
             # AWS clients
@@ -177,7 +182,7 @@ class NetworkAccessController:
         except Exception as e:
             logger.error(f"Failed to initialize cloud clients: {e}")
     
-    def _load_threat_intelligence(self):
+    def _load_threat_intelligence(self) -> None:
         """Load threat intelligence data."""
         try:
             # Load known threat IPs and indicators
@@ -217,7 +222,7 @@ class NetworkAccessController:
         except Exception as e:
             logger.error(f"Failed to load threat intelligence: {e}")
     
-    def _initialize_default_policies(self):
+    def _initialize_default_policies(self) -> None:
         """Initialize default access policies."""
         try:
             # Default deny policy
@@ -531,7 +536,7 @@ class NetworkAccessController:
             logger.error(f"Failed to match IP: {e}")
             return False
     
-    async def _log_access_attempt(self, attempt: AccessAttempt):
+    async def _log_access_attempt(self, attempt -> None: AccessAttempt) -> None:
         """Log access attempt for audit and analysis."""
         try:
             log_entry = {
@@ -556,7 +561,7 @@ class NetworkAccessController:
         except Exception as e:
             logger.error(f"Failed to log access attempt: {e}")
     
-    async def _handle_denied_access(self, attempt: AccessAttempt):
+    async def _handle_denied_access(self, attempt -> None: AccessAttempt) -> None:
         """Handle denied access attempts."""
         try:
             # Increment failed attempt counter for source IP
@@ -583,7 +588,7 @@ class NetworkAccessController:
         except Exception as e:
             logger.error(f"Failed to handle denied access: {e}")
     
-    async def _handle_alert(self, attempt: AccessAttempt):
+    async def _handle_alert(self, attempt -> None: AccessAttempt) -> None:
         """Handle access attempts that trigger alerts."""
         try:
             alert_message = (
@@ -596,7 +601,7 @@ class NetworkAccessController:
         except Exception as e:
             logger.error(f"Failed to handle alert: {e}")
     
-    async def _send_security_alert(self, message: str):
+    async def _send_security_alert(self, message -> None: str) -> None:
         """Send security alert to configured channels."""
         try:
             alert = {
@@ -612,7 +617,7 @@ class NetworkAccessController:
         except Exception as e:
             logger.error(f"Failed to send security alert: {e}")
     
-    async def block_ip(self, ip_address: str, reason: str):
+    async def block_ip(self, ip_address -> None: str, reason -> None: str) -> None:
         """Block IP address across all network access points."""
         try:
             self.blocked_ips.add(ip_address)
@@ -644,7 +649,7 @@ class NetworkAccessController:
         except Exception as e:
             logger.error(f"Failed to block IP: {e}")
     
-    async def _block_ip_aws_waf(self, ip_address: str):
+    async def _block_ip_aws_waf(self, ip_address -> None: str) -> None:
         """Block IP in AWS WAF."""
         try:
             waf_client = self.aws_clients['waf']
@@ -658,7 +663,7 @@ class NetworkAccessController:
         except Exception as e:
             logger.error(f"Failed to block IP in AWS WAF: {e}")
     
-    async def _block_ip_azure_nsg(self, ip_address: str):
+    async def _block_ip_azure_nsg(self, ip_address -> None: str) -> None:
         """Block IP in Azure Network Security Group."""
         try:
             # Implementation would add deny rule to NSG
@@ -667,7 +672,7 @@ class NetworkAccessController:
         except Exception as e:
             logger.error(f"Failed to block IP in Azure NSG: {e}")
     
-    async def _block_ip_gcp_firewall(self, ip_address: str):
+    async def _block_ip_gcp_firewall(self, ip_address -> None: str) -> None:
         """Block IP in GCP Firewall."""
         try:
             # Implementation would create deny firewall rule
@@ -676,7 +681,7 @@ class NetworkAccessController:
         except Exception as e:
             logger.error(f"Failed to block IP in GCP Firewall: {e}")
     
-    async def unblock_ip(self, ip_address: str):
+    async def unblock_ip(self, ip_address -> None: str) -> None:
         """Unblock IP address."""
         try:
             self.blocked_ips.discard(ip_address)
@@ -910,7 +915,7 @@ if __name__ == "__main__":
         "threat_feeds": ["internal", "commercial"]
     }
     
-    async def main():
+    async def main() -> None:
         # Initialize network access controller
         controller = NetworkAccessController(config)
         

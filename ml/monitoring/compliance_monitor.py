@@ -1,3 +1,8 @@
+"""
+Compliance Monitor module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 🚀 **Compliance Monitor - Enterprise ML Regulatory Compliance**
@@ -146,7 +151,7 @@ class ComplianceMonitor:
     - Creator rights protection with usage tracking and attribution
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.logger = logging.getLogger(__name__)
         
@@ -184,7 +189,7 @@ class ComplianceMonitor:
             RegulationType.CREATOR_RIGHTS: timedelta(minutes=5)
         }
     
-    def _initialize_default_retention_policies(self):
+    def _initialize_default_retention_policies(self) -> None:
         """Initialize default data retention policies"""
         self.retention_policies = {
             DataCategory.PERSONAL_DATA: DataRetentionPolicy(
@@ -935,12 +940,12 @@ class ComplianceMonitor:
     
     async def log_audit_event(
         self,
-        event_type: str,
-        actor: str,
-        resource: str,
-        action: str,
-        details: Dict[str, Any]
-    ):
+        event_type -> None: str,
+        actor -> None: str,
+        resource -> None: str,
+        action -> None: str,
+        details -> None: Dict[str, Any]
+    ) -> None:
         """Log audit event for SOC 2 compliance"""
         audit_entry = {
             'timestamp': datetime.utcnow().isoformat(),
@@ -1017,7 +1022,7 @@ class ComplianceMonitor:
         return consent_id
 
 # Usage example
-async def main():
+async def main() -> None:
     """Example usage of ComplianceMonitor"""
     config = {
         'encryption_key': Fernet.generate_key()

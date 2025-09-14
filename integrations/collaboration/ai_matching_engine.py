@@ -53,7 +53,7 @@ class MatchResult:
 class AIMatchingEngine:
     """Engine IA pour matching optimal de créateurs."""
     
-    def __init__(self, config: Optional[Dict] = None):
+    def __init__(self, config -> None: Optional[Dict] = None) -> None:
         """Initialise l'engine de matching IA."""
         self.config = config or {}
         self.matching_models = {}
@@ -62,7 +62,7 @@ class AIMatchingEngine:
         self._load_models()
         logger.info("AI Matching Engine initialisé")
     
-    def _load_models(self):
+    def _load_models(self) -> None:
         """Charge les modèles ML pour matching."""
         self.matching_models = {
             'style_compatibility': self._init_style_model(),
@@ -71,7 +71,7 @@ class AIMatchingEngine:
             'success_prediction': self._init_success_model()
         }
     
-    def _init_style_model(self):
+    def _init_style_model(self) -> None:
         """Initialise le modèle d'analyse de style."""
         return {
             'type': 'style_similarity',
@@ -79,7 +79,7 @@ class AIMatchingEngine:
             'threshold': 0.7
         }
     
-    def _init_audience_model(self):
+    def _init_audience_model(self) -> None:
         """Initialise le modèle d'analyse d'audience."""
         return {
             'type': 'audience_overlap',
@@ -89,7 +89,7 @@ class AIMatchingEngine:
             'min_overlap': 0.15
         }
     
-    def _init_revenue_model(self):
+    def _init_revenue_model(self) -> None:
         """Initialise le modèle de prédiction revenue."""
         return {
             'type': 'revenue_prediction',
@@ -99,7 +99,7 @@ class AIMatchingEngine:
             }
         }
     
-    def _init_success_model(self):
+    def _init_success_model(self) -> None:
         """Initialise le modèle de prédiction de succès."""
         return {
             'type': 'collaboration_success',

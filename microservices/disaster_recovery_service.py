@@ -120,7 +120,7 @@ class BackupInfo:
 class DisasterRecoveryService:
     """Enterprise disaster recovery service for business continuity."""
     
-    def __init__(self, config_path: Optional[str] = None):
+    def __init__(self, config_path -> None: Optional[str] = None) -> None:
         """Initialize the disaster recovery service.
         
         Args:
@@ -1160,7 +1160,7 @@ class DisasterRecoveryService:
 
 
 # Example usage and testing
-async def main():
+async def main() -> None:
     """Example usage of the DisasterRecoveryService."""
     # Initialize service
     service = DisasterRecoveryService()

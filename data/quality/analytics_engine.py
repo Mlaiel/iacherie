@@ -83,7 +83,7 @@ class ModelPerformance:
 class QualityPredictionModel:
     """Modèle de prédiction de qualité ML"""
     
-    def __init__(self, model_path: Optional[str] = None):
+    def __init__(self, model_path -> None: Optional[str] = None) -> None:
         self.model = RandomForestRegressor(n_estimators=100, random_state=42)
         self.scaler = StandardScaler()
         self.feature_names = [
@@ -226,7 +226,7 @@ class QualityPredictionModel:
             self.logger.error(f"Error predicting quality: {e}")
             raise
     
-    def save_model(self):
+    def save_model(self) -> None:
         """Sauvegarde modèle"""
         if self.model_path:
             model_data = {
@@ -237,7 +237,7 @@ class QualityPredictionModel:
             }
             joblib.dump(model_data, self.model_path)
     
-    def load_model(self):
+    def load_model(self) -> None:
         """Chargement modèle"""
         if self.model_path and Path(self.model_path).exists():
             model_data = joblib.load(self.model_path)
@@ -250,7 +250,7 @@ class QualityPredictionModel:
 class AnomalyDetectionModel:
     """Modèle de détection d'anomalies"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.model = IsolationForest(contamination=0.1, random_state=42)
         self.scaler = StandardScaler()
         self.is_trained = False
@@ -347,7 +347,7 @@ class AnomalyDetectionModel:
 class BusinessIntelligenceEngine:
     """Moteur de Business Intelligence"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
     
     def analyze_content_performance(self, content_data: List[Dict[str, Any]]) -> Dict[str, Any]:
@@ -484,7 +484,7 @@ class BusinessIntelligenceEngine:
 class VisualizationEngine:
     """Moteur de visualisation des données"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
     
     def create_quality_dashboard(self, quality_data: List[Dict[str, Any]]) -> Dict[str, Any]:
@@ -604,7 +604,7 @@ class VisualizationEngine:
 class AdvancedAnalyticsEngine:
     """Moteur d'analytics avancé enterprise"""
     
-    def __init__(self, analytics_level: AnalyticsLevel = AnalyticsLevel.ENTERPRISE):
+    def __init__(self, analytics_level -> None: AnalyticsLevel = AnalyticsLevel.ENTERPRISE) -> None:
         self.analytics_level = analytics_level
         self.quality_model = QualityPredictionModel()
         self.anomaly_model = AnomalyDetectionModel()
@@ -739,7 +739,7 @@ class AdvancedAnalyticsEngine:
             self.logger.error(f"Error getting real-time analytics: {e}")
             return {"error": str(e)}
     
-    def clear_cache(self):
+    def clear_cache(self) -> None:
         """Nettoyage cache"""
         self.results_cache.clear()
         self.logger.info("Analytics cache cleared")
@@ -772,7 +772,7 @@ __all__ = [
 
 # Exemple d'utilisation
 if __name__ == "__main__":
-    async def main():
+    async def main() -> None:
         # Configuration logging
         logging.basicConfig(level=logging.INFO)
         

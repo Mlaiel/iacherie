@@ -101,7 +101,7 @@ class PerformanceAlert:
 class MetricsCollector:
     """System and application metrics collector"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.collection_interval = 1.0  # seconds
         self.is_collecting = False
         self.metrics_buffer = deque(maxlen=1000)
@@ -120,7 +120,7 @@ class MetricsCollector:
         # Initialize database for metrics storage
         self._init_metrics_database()
     
-    def _init_metrics_database(self):
+    def _init_metrics_database(self) -> None:
         """Initialize SQLite database for metrics storage"""
         try:
             self.db_connection = sqlite3.connect(':memory:', check_same_thread=False)
@@ -157,7 +157,7 @@ class MetricsCollector:
         except Exception as e:
             logger.error(f"Failed to initialize metrics database: {e}")
     
-    async def start_collection(self):
+    async def start_collection(self) -> None:
         """Start metrics collection"""
         if self.is_collecting:
             return
@@ -166,12 +166,12 @@ class MetricsCollector:
         asyncio.create_task(self._collection_loop())
         logger.info("Metrics collection started")
     
-    async def stop_collection(self):
+    async def stop_collection(self) -> None:
         """Stop metrics collection"""
         self.is_collecting = False
         logger.info("Metrics collection stopped")
     
-    async def _collection_loop(self):
+    async def _collection_loop(self) -> None:
         """Main metrics collection loop"""
         while self.is_collecting:
             try:
@@ -248,7 +248,7 @@ class MetricsCollector:
             logger.error(f"System metrics collection failed: {e}")
             return SystemMetrics(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, time.time())
     
-    async def _store_system_metrics(self, metrics: SystemMetrics):
+    async def _store_system_metrics(self, metrics -> None: SystemMetrics) -> None:
         """Store system metrics in database"""
         try:
             cursor = self.db_connection.cursor()
@@ -326,7 +326,7 @@ class MetricsCollector:
         
         return alerts
     
-    async def _handle_performance_alert(self, alert: PerformanceAlert):
+    async def _handle_performance_alert(self, alert -> None: PerformanceAlert) -> None:
         """Handle performance alert"""
         # Log alert
         logger.warning(f"Performance Alert [{alert.severity}]: {alert.message}")
@@ -336,8 +336,8 @@ class MetricsCollector:
         for rec in alert.recommendations:
             logger.info(f"Recommendation: {rec}")
     
-    def record_processing_event(self, file_path: str, processing_time: float, 
-                              success: bool, file_size: int):
+    def record_processing_event(self, file_path -> None: str, processing_time -> None: float, 
+                              success -> None: bool, file_size -> None: int) -> None:
         """Record a multimedia processing event"""
         event = {
             'file_path': file_path,
@@ -397,7 +397,7 @@ class MetricsCollector:
 class PerformanceProfiler:
     """Main performance profiler"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.metrics_collector = MetricsCollector()
         self.is_monitoring = False
         self.performance_history = deque(maxlen=10000)
@@ -405,7 +405,7 @@ class PerformanceProfiler:
         # Performance optimization suggestions
         self.optimization_suggestions = []
     
-    async def start_monitoring(self):
+    async def start_monitoring(self) -> None:
         """Start performance monitoring"""
         if self.is_monitoring:
             return
@@ -414,7 +414,7 @@ class PerformanceProfiler:
         await self.metrics_collector.start_collection()
         logger.info("Performance monitoring started")
     
-    async def stop_monitoring(self):
+    async def stop_monitoring(self) -> None:
         """Stop performance monitoring"""
         if not self.is_monitoring:
             return
@@ -455,9 +455,9 @@ class PerformanceProfiler:
             'data_points': len(recent_metrics)
         }
     
-    def record_processing_performance(self, file_path: str, processing_time: float,
-                                    success: bool, file_size: int,
-                                    optimization_applied: List[str] = None):
+    def record_processing_performance(self, file_path -> None: str, processing_time -> None: float,
+                                    success -> None: bool, file_size -> None: int,
+                                    optimization_applied -> None: List[str] = None) -> None:
         """Record multimedia processing performance"""
         self.metrics_collector.record_processing_event(
             file_path, processing_time, success, file_size

@@ -165,7 +165,7 @@ class VolumeManager:
     - Compliance management (GDPR, SOX, PCI-DSS)
     """
     
-    def __init__(self, config: VolumeConfig):
+    def __init__(self, config -> None: VolumeConfig) -> None:
         self.config = config
         self.metrics = VolumeMetrics(volume_name=config.name)
         self._k8s_client: Optional[client.CoreV1Api] = None
@@ -176,7 +176,7 @@ class VolumeManager:
         
         logger.info(f"🚀 VolumeManager initialized for volume: {config.name}")
     
-    def _initialize_clients(self):
+    def _initialize_clients(self) -> None:
         """Initialize appropriate clients based on volume type"""
         try:
             if self.config.volume_type == VolumeType.KUBERNETES_PV:
@@ -381,7 +381,7 @@ class VolumeManager:
             }
         }
     
-    async def _wait_for_pvc_bound(self, timeout_seconds: int = 300):
+    async def _wait_for_pvc_bound(self, timeout_seconds -> None: int = 300) -> None:
         """Wait for PVC to be bound"""
         start_time = datetime.now()
         
@@ -534,7 +534,7 @@ class VolumeManager:
             logger.error(f"❌ NFS volume deployment failed: {e}")
             raise
     
-    async def _format_filesystem(self, volume_path: Path):
+    async def _format_filesystem(self, volume_path -> None: Path) -> None:
         """Format filesystem for local volume"""
         try:
             if self.config.filesystem == "xfs":
@@ -951,7 +951,7 @@ Load volume configuration from YAML file"""
             raise
     
     @staticmethod
-    def save_config_to_file(config: VolumeConfig, config_path: Path):
+    def save_config_to_file(config -> None: VolumeConfig, config_path -> None: Path) -> None:
         """Save volume configuration to YAML file"""
         try:
             config_data = {
@@ -1003,7 +1003,7 @@ def create_volume_manager(
 
 
 # Usage Example
-async def main():
+async def main() -> None:
     """
 Example usage of VolumeManager"""
     try:

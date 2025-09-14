@@ -164,7 +164,7 @@ class ContentOptimization:
 class ContentOrchestrator:
     """Orchestrateur principal de contenu"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         self.processing_pipelines = {}
@@ -449,7 +449,7 @@ class ContentOrchestrator:
 class ContentProcessor:
     """Processeur de contenu spécialisé"""
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client -> None: aioredis.Redis) -> None:
         self.redis = redis_client
         self.processors = {}
         
@@ -583,7 +583,7 @@ class ContentProcessor:
 class ContentOrchestratorService:
     """Service principal d'orchestration de contenu"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         self.content_orchestrator = ContentOrchestrator(redis_client, db_session)

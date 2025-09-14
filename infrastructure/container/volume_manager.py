@@ -1,4 +1,6 @@
 """
+import asyncio
+
 Volume Manager
 Kubernetes persistent volume management for Ainflue infrastructure
 
@@ -15,7 +17,7 @@ logger = logging.getLogger(__name__)
 class VolumeManager:
     """Kubernetes volume management"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize volume manager"""
         logger.info("Volume manager initialized")
         

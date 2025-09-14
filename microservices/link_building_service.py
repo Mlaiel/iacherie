@@ -107,7 +107,7 @@ class LinkBuildingService:
     with intelligent opportunity discovery, automated outreach, and performance analytics.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize Link Building Service with enterprise configuration"""
         self.service_name = "LinkBuildingService"
         self.version = "1.0.0"
@@ -625,12 +625,12 @@ Best regards,
         return domain not in self.security_config['blacklist_domains']
 
     # 🗄️ DBA Methods
-    async def _store_opportunities(self, opportunities: List[LinkOpportunity]):
+    async def _store_opportunities(self, opportunities -> None: List[LinkOpportunity]) -> None:
         """Store opportunities with optimized indexing"""
         for opp in opportunities:
             self.opportunities_db[opp.id] = opp
 
-    async def _update_campaign_metrics(self, campaign_id: str):
+    async def _update_campaign_metrics(self, campaign_id -> None: str) -> None:
         """Update campaign performance metrics"""
         campaign = self.campaigns_db[campaign_id]
         # Update success rate based on current status
@@ -640,7 +640,7 @@ Best regards,
         campaign.success_rate = accepted / sent if sent > 0 else 0
 
     # ⚙️ DevOps Methods
-    async def _track_email_metrics(self, opportunity_id: str, content: str, success: bool):
+    async def _track_email_metrics(self, opportunity_id -> None: str, content -> None: str, success -> None: bool) -> None:
         """Track email delivery and engagement metrics"""
         metrics = {
             'opportunity_id': opportunity_id,
@@ -696,7 +696,7 @@ Best regards,
         }
 
 # Example usage and testing
-async def main():
+async def main() -> None:
     """Example usage of Link Building Service"""
     service = LinkBuildingService()
     

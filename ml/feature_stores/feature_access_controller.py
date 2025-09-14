@@ -1,3 +1,8 @@
+"""
+Feature Access Controller module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 🚀 **Feature Access Controller - Enterprise ML Feature Security**
@@ -135,7 +140,7 @@ class FeatureAccessController:
     - Feature-level encryption and anonymization
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.logger = logging.getLogger(__name__)
         
@@ -163,7 +168,7 @@ class FeatureAccessController:
         # Initialize default policies
         self._initialize_default_policies()
     
-    def _initialize_default_policies(self):
+    def _initialize_default_policies(self) -> None:
         """Initialize default access policies"""
         
         # Creator access to their own data
@@ -228,7 +233,7 @@ class FeatureAccessController:
         # Initialize privacy filters
         self._initialize_privacy_filters()
     
-    def _initialize_privacy_filters(self):
+    def _initialize_privacy_filters(self) -> None:
         """Initialize privacy filters for sensitive data"""
         
         # Mask personal identifiers
@@ -679,23 +684,23 @@ class FeatureAccessController:
         
         return True
     
-    def set_user_role(self, user_id: str, role: UserRole):
+    def set_user_role(self, user_id -> None: str, role -> None: UserRole) -> None:
         """Set user role"""
         self.user_roles[user_id] = role
         self._clear_user_cache(user_id)
     
-    def set_creator_type(self, creator_id: str, creator_type: CreatorType):
+    def set_creator_type(self, creator_id -> None: str, creator_type -> None: CreatorType) -> None:
         """Set creator type"""
         self.creator_mappings[creator_id] = creator_type
     
-    def add_creator_ownership(self, creator_id: str, feature_names: List[str]):
+    def add_creator_ownership(self, creator_id -> None: str, feature_names -> None: List[str]) -> None:
         """Add feature ownership for creator"""
         if creator_id not in self.creator_ownership:
             self.creator_ownership[creator_id] = set()
         
         self.creator_ownership[creator_id].update(feature_names)
     
-    def _clear_user_cache(self, user_id: str):
+    def _clear_user_cache(self, user_id -> None: str) -> None:
         """Clear access cache for user"""
         keys_to_remove = [key for key in self.access_cache.keys() if key.startswith(f"{user_id}:")]
         for key in keys_to_remove:
@@ -703,11 +708,11 @@ class FeatureAccessController:
     
     async def _log_access_request(
         self,
-        request: AccessRequest,
-        granted: bool,
-        reason: str,
-        grant_id: Optional[str]
-    ):
+        request -> None: AccessRequest,
+        granted -> None: bool,
+        reason -> None: str,
+        grant_id -> None: Optional[str]
+    ) -> None:
         """Log access request for audit"""
         audit_entry = {
             'timestamp': datetime.utcnow().isoformat(),
@@ -730,7 +735,7 @@ class FeatureAccessController:
         
         self.logger.info(f"Access request logged: {request.user_id} -> {len(request.feature_names)} features, granted: {granted}")
     
-    async def _log_feature_access(self, user_id: str, feature_names: List[str], grant_id: str):
+    async def _log_feature_access(self, user_id -> None: str, feature_names -> None: List[str], grant_id -> None: str) -> None:
         """Log feature access for audit"""
         audit_entry = {
             'timestamp': datetime.utcnow().isoformat(),
@@ -744,7 +749,7 @@ class FeatureAccessController:
         self.audit_log.append(audit_entry)
         self._trim_audit_log()
     
-    async def _log_policy_change(self, action: str, policy_id: str, changed_by: str):
+    async def _log_policy_change(self, action -> None: str, policy_id -> None: str, changed_by -> None: str) -> None:
         """Log policy changes for audit"""
         audit_entry = {
             'timestamp': datetime.utcnow().isoformat(),
@@ -757,7 +762,7 @@ class FeatureAccessController:
         self.audit_log.append(audit_entry)
         self._trim_audit_log()
     
-    async def _log_access_revocation(self, grant_id: str, revoked_by: str):
+    async def _log_access_revocation(self, grant_id -> None: str, revoked_by -> None: str) -> None:
         """Log access revocation for audit"""
         audit_entry = {
             'timestamp': datetime.utcnow().isoformat(),
@@ -769,7 +774,7 @@ class FeatureAccessController:
         self.audit_log.append(audit_entry)
         self._trim_audit_log()
     
-    def _trim_audit_log(self):
+    def _trim_audit_log(self) -> None:
         """Keep audit log size manageable"""
         max_entries = self.config.get('max_audit_entries', 10000)
         if len(self.audit_log) > max_entries:
@@ -823,7 +828,7 @@ class FeatureAccessController:
         }
 
 # Usage example
-async def main():
+async def main() -> None:
     """Example usage of FeatureAccessController"""
     config = {
         'cache_ttl_minutes': 15,

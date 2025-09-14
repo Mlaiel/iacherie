@@ -1,4 +1,6 @@
 """MongoDB Collections Management
+import asyncio
+
 ==============================
 
 Advanced collection management for the Ainflue platform including collection
@@ -24,11 +26,15 @@ except ImportError:
     MONGODB_AVAILABLE = False
     # Create mock classes to prevent NameError
     class motor:
+    """motor: class implementation"""
         class motor_asyncio:
+    """motor_asyncio: class implementation"""
             pass
     class pymongo:
+    """pymongo: class implementation"""
         pass
     class IndexModel:
+    """IndexModel: class implementation"""
         pass
 
 from .connection import MongoDBConnection, get_connection
@@ -51,7 +57,7 @@ class CollectionSchema:
 class MongoDBCollectionManager:
     """MongoDB collection management with schema validation."""
     
-    def __init__(self, connection: Optional[MongoDBConnection] = None):
+    def __init__(self, connection -> None: Optional[MongoDBConnection] = None) -> None:
         """Initialize collection manager."""
         if not MONGODB_AVAILABLE:
             raise ImportError("MongoDB dependencies not available")
@@ -126,7 +132,7 @@ class MongoDBCollectionManager:
             logger.error(f"Failed to drop collection {collection_name}: {e}")
             return False
     
-    async def get_collection(self, collection_name: str):
+    async def get_collection(self, collection_name -> None: str) -> None:
         """Get collection instance with caching."""
         if collection_name in self._collections_cache:
             return self._collections_cache[collection_name]

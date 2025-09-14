@@ -108,7 +108,7 @@ class RecoveryMetricsCollector:
     - Recovery performance optimization recommendations
     - Historical trend analysis and forecasting
     """
-    def __init__(self, config: Config):
+    def __init__(self, config -> None: Config) -> None:
         self.config = config
         self.logger = logging.getLogger(__name__)
         self.db_manager = DatabaseManager(config)
@@ -139,7 +139,7 @@ class RecoveryMetricsCollector:
         # Initialize core recovery metrics
         self._initialize_core_metrics()
 
-    def _initialize_core_metrics(self):
+    def _initialize_core_metrics(self) -> None:
         """
 Initialize core disaster recovery metrics"""
         core_metrics = [
@@ -365,7 +365,7 @@ Initialize alert configurations for metrics"""
             self.logger.error(f"Failed to register recovery metric: {e}")
             raise
 
-    async def _collect_metric_data(self, metric: RecoveryMetric):
+    async def _collect_metric_data(self, metric -> None: RecoveryMetric) -> None:
         """Collect data for a specific metric"""
         metric_id = metric.metric_id
         collection_interval = self._get_collection_interval(metric.granularity)
@@ -734,7 +734,7 @@ Calculate trend direction for values"""
         }
         return intervals.get(granularity, 900)
 
-    def _update_collection_performance(self, collection_time: float):
+    def _update_collection_performance(self, collection_time -> None: float) -> None:
         """
 Update collection performance metrics"""
         self.collection_performance['total_metrics_collected'] += 1
@@ -1050,7 +1050,7 @@ Get comprehensive recovery metrics for disaster recovery coordinator"""
             self.logger.error(f"Custom metric {metric_id} retrieval failed: {e}")
             return None
 
-    async def _check_metric_alerts(self, metric: RecoveryMetric, data_point: MetricDataPoint):
+    async def _check_metric_alerts(self, metric -> None: RecoveryMetric, data_point -> None: MetricDataPoint) -> None:
         """Check metric against alert thresholds"""
         try:
             value = data_point.value
@@ -1072,7 +1072,7 @@ Get comprehensive recovery metrics for disaster recovery coordinator"""
         except Exception as e:
             self.logger.error(f"Alert check failed for metric {metric.metric_id}: {e}")
 
-    async def _trigger_alert(self, metric: RecoveryMetric, data_point: MetricDataPoint, severity: str):
+    async def _trigger_alert(self, metric -> None: RecoveryMetric, data_point -> None: MetricDataPoint, severity -> None: str) -> None:
         """Trigger alert for metric threshold breach"""
         try:
             alert_data = {

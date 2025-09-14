@@ -102,12 +102,12 @@ class DataDriftDetector:
     
     def __init__(
         self,
-        model_id: str,
-        default_method: DriftDetectionMethod = DriftDetectionMethod.KOLMOGOROV_SMIRNOV,
-        sensitivity_threshold: float = 0.05,
-        enable_alerting: bool = True,
-        alert_webhook_url: Optional[str] = None
-    ):
+        model_id -> None: str,
+        default_method -> None: DriftDetectionMethod = DriftDetectionMethod.KOLMOGOROV_SMIRNOV,
+        sensitivity_threshold -> None: float = 0.05,
+        enable_alerting -> None: bool = True,
+        alert_webhook_url -> None: Optional[str] = None
+    ) -> None:
         """Initialize drift detector
         
         Args:
@@ -761,7 +761,7 @@ class CreatorSpecificDriftDetector(DataDriftDetector):
     Specialized for musician, blogger, photographer, influencer, comedian use cases
     """
     
-    def __init__(self, creator_type: str, *args, **kwargs):
+    def __init__(self, creator_type -> None: str, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
         self.creator_type = creator_type.lower()
         

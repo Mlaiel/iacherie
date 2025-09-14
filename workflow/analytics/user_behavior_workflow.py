@@ -117,7 +117,7 @@ class UserBehaviorWorkflow:
     segmentation, pattern recognition, and predictive insights.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize user behavior workflow."""
         self.behavior_data = defaultdict(list)
         self.session_timeout = 1800  # 30 minutes

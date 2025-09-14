@@ -277,7 +277,7 @@ class CollaborationMatch:
 class AIInfluencerDiscoverySystem:
     """Enterprise AI-powered influencer discovery and analysis system."""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """Initialize influencer discovery system.
         
         Args:
@@ -1340,7 +1340,7 @@ class AIInfluencerDiscoverySystem:
 
 
 # Example usage
-async def example_usage():
+async def example_usage() -> None:
     """Example usage of AIInfluencerDiscoverySystem."""
     
     config = {

@@ -60,7 +60,7 @@ class PerformanceMetrics:
 class EnterpriseHealthMonitor:
     """🛡️ Monitoring Enterprise ML Services"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.services = {
             "ml_inference_engine": "http://localhost:8001/health",
             "feature_store": "http://localhost:8002/health", 
@@ -278,7 +278,7 @@ class EnterpriseHealthMonitor:
         
         return recommendations
 
-    async def start_continuous_monitoring(self, interval_seconds: int = 60):
+    async def start_continuous_monitoring(self, interval_seconds -> None: int = 60) -> None:
         """🔄 Monitoring continu enterprise"""
         logger.info(f"🛡️ Démarrage monitoring continu (interval: {interval_seconds}s)")
         
@@ -303,7 +303,7 @@ class EnterpriseHealthMonitor:
             
             await asyncio.sleep(interval_seconds)
 
-    async def _save_health_report(self, report: Dict[str, Any]):
+    async def _save_health_report(self, report -> None: Dict[str, Any]) -> None:
         """Sauvegarde rapport health check"""
         reports_dir = Path(__file__).parent / "health_reports"
         reports_dir.mkdir(exist_ok=True)
@@ -336,7 +336,7 @@ class ProductionConfig:
     EMAIL_SMTP_SERVER = "smtp.company.com"
 
 # Utilitaire d'exécution
-async def main():
+async def main() -> None:
     """🚀 Démarrage health monitoring enterprise"""
     monitor = EnterpriseHealthMonitor()
     

@@ -36,7 +36,7 @@ logger = logging.getLogger(__name__)
 class CRUDBase:
     """Base CRUD operations class"""
     
-    def __init__(self, model_class, session=None):
+    def __init__(self, model_class, session=None) -> None:
         self.model_class = model_class
         self.session = session
         self.in_memory_store = {}  # Fallback for non-SQLAlchemy environments
@@ -196,41 +196,41 @@ class CRUDBase:
 class UserCRUD(CRUDBase):
     """CRUD operations for User model"""
     
-    def get_by_username(self, username: str):
+    def get_by_username(self, username -> None: str) -> None:
         """Get user by username"""
         return self.search({"username": username})
     
-    def get_by_email(self, email: str):
+    def get_by_email(self, email -> None: str) -> None:
         """Get user by email"""
         return self.search({"email": email})
     
-    def get_active_users(self):
+    def get_active_users(self) -> None:
         """Get all active users"""
         return self.search({"is_active": True})
 
 class ContentCRUD(CRUDBase):
     """CRUD operations for Content model"""
     
-    def get_by_owner(self, owner_id: int):
+    def get_by_owner(self, owner_id -> None: int) -> None:
         """Get content by owner ID"""
         return self.search({"owner_id": owner_id})
     
-    def get_by_type(self, content_type: str):
+    def get_by_type(self, content_type -> None: str) -> None:
         """Get content by type"""
         return self.search({"content_type": content_type})
     
-    def get_by_status(self, status: str):
+    def get_by_status(self, status -> None: str) -> None:
         """Get content by status"""
         return self.search({"status": status})
 
 class FingerprintCRUD(CRUDBase):
     """CRUD operations for Fingerprint model"""
     
-    def get_by_content(self, content_id: int):
+    def get_by_content(self, content_id -> None: int) -> None:
         """Get fingerprints by content ID"""
         return self.search({"content_id": content_id})
     
-    def get_by_algorithm(self, algorithm: str):
+    def get_by_algorithm(self, algorithm -> None: str) -> None:
         """Get fingerprints by algorithm"""
         return self.search({"algorithm": algorithm})
 
@@ -238,7 +238,7 @@ class FingerprintCRUD(CRUDBase):
 class CRUDManager:
     """Manages all CRUD operations"""
     
-    def __init__(self, session=None):
+    def __init__(self, session=None) -> None:
         self.session = session
         self._crud_instances = {}
     
@@ -269,31 +269,31 @@ def get_crud_manager(session=None) -> CRUDManager:
     return _crud_manager
 
 # Convenience functions
-def create_user(user_data: Dict[str, Any], session=None):
+def create_user(user_data -> None: Dict[str, Any], session=None) -> None:
     """Create a new user"""
     from . import models
     crud = get_crud_manager(session).get_crud(models.User)
     return crud.create(user_data)
 
-def get_user(user_id: int, session=None):
+def get_user(user_id -> None: int, session=None) -> None:
     """Get user by ID"""
     from . import models
     crud = get_crud_manager(session).get_crud(models.User)
     return crud.get(user_id)
 
-def create_content(content_data: Dict[str, Any], session=None):
+def create_content(content_data -> None: Dict[str, Any], session=None) -> None:
     """Create new content"""
     from . import models
     crud = get_crud_manager(session).get_crud(models.Content)
     return crud.create(content_data)
 
-def get_content(content_id: int, session=None):
+def get_content(content_id -> None: int, session=None) -> None:
     """Get content by ID"""
     from . import models
     crud = get_crud_manager(session).get_crud(models.Content)
     return crud.get(content_id)
 
-def create_fingerprint(fingerprint_data: Dict[str, Any], session=None):
+def create_fingerprint(fingerprint_data -> None: Dict[str, Any], session=None) -> None:
     """Create new fingerprint"""
     from . import models
     crud = get_crud_manager(session).get_crud(models.Fingerprint)

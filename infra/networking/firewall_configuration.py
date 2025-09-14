@@ -1,3 +1,8 @@
+"""
+Firewall Configuration module
+Enterprise implementation for Ainflue platform
+"""
+
 # Ainflue Infrastructure Module
 # =============================
 # 
@@ -82,7 +87,7 @@ class FirewallConfiguration:
     - Real-time threat detection
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = self._setup_logging()
         self.rules: Dict[str, FirewallRule] = {}
         self.security_zones: Dict[str, SecurityZone] = {}

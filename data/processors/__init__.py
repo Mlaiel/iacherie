@@ -93,11 +93,11 @@ DEFAULT_CONFIG = {
 class ProcessorRegistry:
     """Registry for all available processors in the system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._processors = {}
         self._initialize_processors()
     
-    def _initialize_processors(self):
+    def _initialize_processors(self) -> None:
         """
 Initialize all processor instances"""
         self._processors = {
@@ -118,7 +118,7 @@ Initialize all processor instances"""
         
         logger.info(f"Initialized {len(self._processors)} processors")
     
-    def get_processor(self, processor_type: str):
+    def get_processor(self, processor_type -> None: str) -> None:
         """Get processor instance by type"""
         return self._processors.get(processor_type)
     
@@ -130,7 +130,7 @@ List all available processor types"""
 # Global processor registry
 processor_registry = ProcessorRegistry()
 
-def get_processor(processor_type: str):
+def get_processor(processor_type -> None: str) -> None:
     """
 Get processor instance by type"""
     return processor_registry.get_processor(processor_type)

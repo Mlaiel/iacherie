@@ -121,7 +121,7 @@ class ContentFormatCore:
     reliability, and quality standards. Supports audio, video, image, text processing.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.processing_tasks: Dict[str, ContentProcessingTask] = {}
         self.format_processors: Dict[str, Any] = {}
         self.quality_standards: Dict[str, Dict[str, Any]] = {}
@@ -145,7 +145,7 @@ class ContentFormatCore:
             logger.error(f"❌ Content Format Core initialization failed: {str(e)}")
             return False
     
-    async def _setup_format_processors(self):
+    async def _setup_format_processors(self) -> None:
         """Setup format-specific processors"""
         self.format_processors = {
             # Audio Processing Capabilities
@@ -219,7 +219,7 @@ class ContentFormatCore:
         
         logger.info("✅ Format processors configured")
     
-    async def _setup_quality_standards(self):
+    async def _setup_quality_standards(self) -> None:
         """Setup content quality standards"""
         self.quality_standards = {
             "processing_speed": {
@@ -243,7 +243,7 @@ class ContentFormatCore:
         
         logger.info("✅ Quality standards configured")
     
-    async def _setup_performance_monitoring(self):
+    async def _setup_performance_monitoring(self) -> None:
         """Setup performance monitoring"""
         self.performance_metrics = {
             "processing_speed_ms": 0.0,
@@ -657,10 +657,10 @@ class ContentFormatCore:
     
     async def _update_performance_metrics(
         self, 
-        task: ContentProcessingTask, 
-        processing_time: float, 
-        success: bool
-    ):
+        task -> None: ContentProcessingTask, 
+        processing_time -> None: float, 
+        success -> None: bool
+    ) -> None:
         """Update system performance metrics"""
         try:
             # Update processing speed

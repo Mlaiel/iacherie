@@ -36,7 +36,7 @@ class AnsibleConfig:
 class AnsibleManager:
     """Unified Ansible management interface"""
     
-    def __init__(self, config: AnsibleConfig):
+    def __init__(self, config -> None: AnsibleConfig) -> None:
         self.config = config
         self.logger = logging.getLogger(__name__)
         self.playbook_runner = PlaybookRunner(config)
@@ -53,7 +53,7 @@ class AnsibleManager:
             self.logger.error(f"Failed to initialize Ansible: {e}")
             return False
     
-    async def _create_ansible_structure(self):
+    async def _create_ansible_structure(self) -> None:
         """Create Ansible directory structure"""
         directories = [
             'playbooks',
@@ -66,7 +66,7 @@ class AnsibleManager:
         for directory in directories:
             Path(directory).mkdir(parents=True, exist_ok=True)
     
-    async def _generate_ansible_config(self):
+    async def _generate_ansible_config(self) -> None:
         """Generate ansible.cfg"""
         config_content = f'''[defaults]
 inventory = {self.config.inventory_path}
@@ -91,7 +91,7 @@ ssh_args = -o ControlMaster=auto -o ControlPersist=60s
 class PlaybookRunner:
     """Ansible playbook execution"""
     
-    def __init__(self, config: AnsibleConfig):
+    def __init__(self, config -> None: AnsibleConfig) -> None:
         self.config = config
         self.logger = logging.getLogger(__name__)
     
@@ -165,7 +165,7 @@ class PlaybookRunner:
 class ConfigurationManager:
     """Configuration management with Ansible"""
     
-    def __init__(self, config: AnsibleConfig):
+    def __init__(self, config -> None: AnsibleConfig) -> None:
         self.config = config
         self.logger = logging.getLogger(__name__)
     
@@ -308,7 +308,7 @@ class ConfigurationManager:
 class InventoryManager:
     """Ansible inventory management"""
     
-    def __init__(self, config: AnsibleConfig):
+    def __init__(self, config -> None: AnsibleConfig) -> None:
         self.config = config
         self.logger = logging.getLogger(__name__)
         self.inventory = {}

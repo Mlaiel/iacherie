@@ -90,7 +90,7 @@ class NLPResult:
 class LanguageDetector:
     """Advanced language detection"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.supported_languages = [lang.value for lang in LanguageCode]
         
     async def detect_language(self, text: str) -> LanguageCode:
@@ -107,7 +107,7 @@ class LanguageDetector:
 class EntityRecognizer:
     """Named Entity Recognition system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.entity_patterns = {
             EntityType.PLATFORM: [
                 r'\b(youtube|instagram|tiktok|twitter|facebook|spotify|soundcloud)\b',
@@ -153,7 +153,7 @@ class EntityRecognizer:
 class IntentClassifier:
     """Intent classification and analysis"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.intent_keywords = {
             IntentType.COLLABORATION: [
                 "collaborate", "partnership", "work together", "join forces",
@@ -237,7 +237,7 @@ class SentimentAnalyzer:
 class KeywordExtractor:
     """Keyword and topic extraction"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.stop_words = {
             "en": {"the", "a", "an", "and", "or", "but", "in", "on", "at", "to", "for", "of", "with", "by", "is", "are", "was", "were"},
             "fr": {"le", "la", "les", "de", "du", "des", "et", "ou", "dans", "sur", "avec", "par", "est", "sont", "était", "étaient"},
@@ -305,7 +305,7 @@ class TranslationEngine:
 class NLPPipeline:
     """Comprehensive NLP processing pipeline"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.language_detector = LanguageDetector()
         self.entity_recognizer = EntityRecognizer()
         self.intent_classifier = IntentClassifier()
@@ -365,7 +365,7 @@ class NLPPipeline:
 class ContentNLPProcessor:
     """NLP processor specialized for content analysis"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.pipeline = NLPPipeline()
     
     async def analyze_content(self, content: str, content_type: str) -> Dict[str, Any]:
@@ -398,7 +398,7 @@ class ContentNLPProcessor:
 class BusinessNLPProcessor:
     """NLP processor specialized for business communications"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.pipeline = NLPPipeline()
     
     async def analyze_business_communication(self, text: str) -> Dict[str, Any]:

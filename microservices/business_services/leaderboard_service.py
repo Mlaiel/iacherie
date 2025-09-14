@@ -1,3 +1,8 @@
+"""
+Leaderboard Service module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 🏅 LEADERBOARD SERVICE
@@ -205,7 +210,7 @@ class LeaderboardService:
     competitive analysis, and AI-powered ranking optimization.
     """
     
-    def __init__(self, redis_url: str = "redis://localhost:6379"):
+    def __init__(self, redis_url -> None: str = "redis -> None://localhost -> None:6379") -> None:
         self.redis_url = redis_url
         self.redis_client = None
         self.leaderboard_cache = {}
@@ -1182,7 +1187,7 @@ class LeaderboardService:
             logger.error(f"❌ Error stopping service: {str(e)}")
 
 # Example usage and testing
-async def main():
+async def main() -> None:
     """Example usage of LeaderboardService"""
     service = LeaderboardService()
     

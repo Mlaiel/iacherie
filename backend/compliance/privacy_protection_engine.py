@@ -201,7 +201,7 @@ class EncryptionKey(Base):
 class PIIDetector:
     """Advanced PII detection and classification"""
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client -> None: aioredis.Redis) -> None:
         self.redis = redis_client
         self.pii_patterns = self._compile_pii_patterns()
         
@@ -364,7 +364,7 @@ class PIIDetector:
 class DataAnonymizer:
     """Advanced data anonymization and pseudonymization"""
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client -> None: aioredis.Redis) -> None:
         self.redis = redis_client
         self.encryption_key = self._get_encryption_key()
         
@@ -589,7 +589,7 @@ class DataAnonymizer:
 class ConsentManager:
     """Comprehensive consent management system"""
     
-    def __init__(self, db_session: AsyncSession, redis_client: aioredis.Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: aioredis.Redis) -> None:
         self.db = db_session
         self.redis = redis_client
         
@@ -777,7 +777,7 @@ class ConsentManager:
 class EncryptionManager:
     """Advanced encryption and key management"""
     
-    def __init__(self, db_session: AsyncSession, redis_client: aioredis.Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: aioredis.Redis) -> None:
         self.db = db_session
         self.redis = redis_client
         
@@ -1004,7 +1004,7 @@ class EncryptionManager:
 class DataRetentionManager:
     """Data retention and lifecycle management"""
     
-    def __init__(self, db_session: AsyncSession, redis_client: aioredis.Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: aioredis.Redis) -> None:
         self.db = db_session
         self.redis = redis_client
         
@@ -1178,7 +1178,7 @@ class DataRetentionManager:
 class PrivacyProtectionEngine:
     """Main privacy protection engine orchestrator"""
     
-    def __init__(self, db_session: AsyncSession, redis_client: aioredis.Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: aioredis.Redis) -> None:
         self.db = db_session
         self.redis = redis_client
         

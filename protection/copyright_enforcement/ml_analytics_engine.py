@@ -250,7 +250,7 @@ class AdvancedFeatureEngineer:
     with automated feature selection and dimensionality reduction.
     """
     
-    def __init__(self, config: FeatureEngineering):
+    def __init__(self, config -> None: FeatureEngineering) -> None:
         self.config = config
         self.scalers = {}
         self.encoders = {}
@@ -652,7 +652,7 @@ class ModelEnsemble:
     hyperparameter optimization, and automated model management.
     """
     
-    def __init__(self, config: MLConfig):
+    def __init__(self, config -> None: MLConfig) -> None:
         self.config = config
         self.models = {}
         self.model_weights = {}
@@ -797,7 +797,7 @@ class ModelEnsemble:
             if self.config.hyperparameter_tuning:
                 study = optuna.create_study(direction='maximize')
                 
-                def objective(trial):
+                def objective(trial) -> None:
                     # Define hyperparameter search space
                     params = self._get_hyperparameter_space(model_name, trial)
                     
@@ -981,7 +981,8 @@ class ModelEnsemble:
     def _create_classification_network(self, input_size: int, output_size: int) -> nn.Module:
         """Create neural network for classification."""
         class ClassificationNetwork(nn.Module):
-            def __init__(self, input_size, output_size):
+    """ClassificationNetwork class implementation"""
+            def __init__(self, input_size, output_size) -> None:
                 super().__init__()
                 self.fc1 = nn.Linear(input_size, 512)
                 self.fc2 = nn.Linear(512, 256)
@@ -992,7 +993,7 @@ class ModelEnsemble:
                 self.batch_norm2 = nn.BatchNorm1d(256)
                 self.batch_norm3 = nn.BatchNorm1d(128)
                 
-            def forward(self, x):
+            def forward(self, x) -> None:
                 x = F.relu(self.batch_norm1(self.fc1(x)))
                 x = self.dropout(x)
                 x = F.relu(self.batch_norm2(self.fc2(x)))
@@ -1006,7 +1007,8 @@ class ModelEnsemble:
     def _create_regression_network(self, input_size: int, output_size: int) -> nn.Module:
         """Create neural network for regression."""
         class RegressionNetwork(nn.Module):
-            def __init__(self, input_size, output_size):
+    """RegressionNetwork class implementation"""
+            def __init__(self, input_size, output_size) -> None:
                 super().__init__()
                 self.fc1 = nn.Linear(input_size, 512)
                 self.fc2 = nn.Linear(512, 256)
@@ -1017,7 +1019,7 @@ class ModelEnsemble:
                 self.batch_norm2 = nn.BatchNorm1d(256)
                 self.batch_norm3 = nn.BatchNorm1d(128)
                 
-            def forward(self, x):
+            def forward(self, x) -> None:
                 x = F.relu(self.batch_norm1(self.fc1(x)))
                 x = self.dropout(x)
                 x = F.relu(self.batch_norm2(self.fc2(x)))
@@ -1172,7 +1174,7 @@ class ModelEnsemble:
         
         return best_model or 'ensemble'
     
-    async def _log_to_mlflow(self, model_type: ModelType, model_results: Dict[str, Dict], champion_model: str):
+    async def _log_to_mlflow(self, model_type -> None: ModelType, model_results -> None: Dict[str, Dict], champion_model -> None: str) -> None:
         """Log training results to MLflow."""
         try:
             with mlflow.start_run(run_name=f"{model_type.value}_training_{int(time.time())}"):

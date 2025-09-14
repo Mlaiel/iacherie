@@ -338,11 +338,11 @@ class ContinuousIntegrationManager:
     
     def __init__(
         self,
-        workspace_path: str = "ci_workspace",
-        max_concurrent_runs: int = 5,
-        enable_parallel_testing: bool = True,
-        notification_enabled: bool = True
-    ):
+        workspace_path -> None: str = "ci_workspace",
+        max_concurrent_runs -> None: int = 5,
+        enable_parallel_testing -> None: bool = True,
+        notification_enabled -> None: bool = True
+    ) -> None:
         self.workspace_path = Path(workspace_path)
         self.workspace_path.mkdir(parents=True, exist_ok=True)
         
@@ -381,7 +381,7 @@ class ContinuousIntegrationManager:
         
         logger.info("🔄 Continuous Integration Manager initialized")
     
-    def _initialize_default_configs(self):
+    def _initialize_default_configs(self) -> None:
         """Initialiser les configurations par défaut"""
         
         # Configuration principale ML pipeline
@@ -428,7 +428,7 @@ class ContinuousIntegrationManager:
         # Créer les cas de test par défaut
         self._create_default_test_cases()
     
-    def _create_default_test_cases(self):
+    def _create_default_test_cases(self) -> None:
         """Créer les cas de test par défaut"""
         
         # Tests de qualité de code
@@ -625,7 +625,7 @@ else:
         logger.info(f"🚀 Started pipeline run: {run_id}")
         return run_id
     
-    async def _execute_pipeline(self, run_id: str):
+    async def _execute_pipeline(self, run_id -> None: str) -> None:
         """Exécuter un pipeline complet"""
         
         pipeline_run = self.pipeline_runs[run_id]
@@ -865,7 +865,7 @@ else:
             # Gate non implémenté - passer par défaut
             return True
     
-    async def _send_notification(self, pipeline_run: PipelineRun):
+    async def _send_notification(self, pipeline_run -> None: PipelineRun) -> None:
         """Envoyer une notification de fin de pipeline"""
         
         status_emoji = "✅" if pipeline_run.status == "success" else "❌"
@@ -976,7 +976,7 @@ else:
         }
 
 # Usage Example
-async def main():
+async def main() -> None:
     """Exemple d'utilisation du Continuous Integration Manager"""
     
     ci_manager = ContinuousIntegrationManager(

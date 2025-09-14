@@ -168,7 +168,7 @@ class SEOBusinessCore:
     content optimization, and search performance management.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize SEO business core"""
         self.config = config or {}
         self.keyword_research: Dict[str, KeywordResearch] = {}

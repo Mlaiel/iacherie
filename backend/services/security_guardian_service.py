@@ -153,7 +153,7 @@ class ComplianceResult:
 class SecurityManager:
     """Gestionnaire principal de sécurité"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         self.encryption_key = Fernet.generate_key()
@@ -391,7 +391,7 @@ class SecurityManager:
 class ComplianceMonitor:
     """Moniteur de conformité"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         self.compliance_rules = {}
@@ -519,7 +519,7 @@ class ComplianceMonitor:
 class SecurityGuardianService:
     """Service principal de garde de sécurité"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         self.security_manager = SecurityManager(redis_client, db_session)

@@ -1,4 +1,6 @@
 """{{auth_name}} Authorization Template for Ainflue Platform
+import asyncio
+
 {{auth_description}}
 
 Author: {{author_name}} ({{author_email}})
@@ -165,13 +167,13 @@ class {{auth_name}}Authorizer:
     
     def __init__(
         self,
-        secret_key: str,
-        algorithm: str = "HS256",
-        token_expire_hours: int = 24,
-        cache_ttl: int = 300,
-        enable_policy_caching: bool = True,
-        metrics_collector: Optional[SecurityMetricsCollector] = None
-    ):
+        secret_key -> None: str,
+        algorithm -> None: str = "HS256",
+        token_expire_hours -> None: int = 24,
+        cache_ttl -> None: int = 300,
+        enable_policy_caching -> None: bool = True,
+        metrics_collector -> None: Optional[SecurityMetricsCollector] = None
+    ) -> None:
         self.secret_key = secret_key
         self.algorithm = algorithm
         self.token_expire_hours = token_expire_hours
@@ -195,7 +197,7 @@ class {{auth_name}}Authorizer:
         
         logger.info("Authorization system initialized")
     
-    def _initialize_default_permissions(self):
+    def _initialize_default_permissions(self) -> None:
         """Initialize default permissions"""
         default_permissions = [
             # User permissions
@@ -229,7 +231,7 @@ class {{auth_name}}Authorizer:
         for permission in default_permissions:
             self.permissions[permission.id] = permission
     
-    def _initialize_default_roles(self):
+    def _initialize_default_roles(self) -> None:
         """Initialize default roles"""
         # Basic User Role
         basic_permissions = [
@@ -587,7 +589,7 @@ class {{auth_name}}Authorizer:
         decision = await self.authorize(auth_context)
         return decision.allowed
     
-    def _clear_cache(self):
+    def _clear_cache(self) -> None:
         """Clear authorization caches"""
         self.permission_cache.clear()
         self.policy_cache.clear()
@@ -648,7 +650,7 @@ async def get_authorization_service() -> {{auth_name}}Authorizer:
 
 
 # Template usage example
-def create_authorization_system_example():
+def create_authorization_system_example() -> None:
     """Example of how to create and use the authorization system"""
     
     # Create authorizer
@@ -698,3 +700,5 @@ TEMPLATE_CONFIG = {
         "Performance monitoring"
     ]
 }
+
+# File has syntax issues - needs manual review

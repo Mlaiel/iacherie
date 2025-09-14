@@ -111,7 +111,7 @@ class IntelligentDemographicMapper:
     - Predictive demographic modeling
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.scaler = StandardScaler()
         self.label_encoders = {}
         self.demographic_models = {}

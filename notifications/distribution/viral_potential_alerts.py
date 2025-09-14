@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 class ViralPotentialAlerts:
     """Viral content potential detection and alert system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         logger.info("Viral potential alerts initialized")
     
     async def notify_viral_potential(self, user_id: str, content_id: str, 

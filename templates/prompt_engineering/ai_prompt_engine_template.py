@@ -1,4 +1,6 @@
 """{{prompt_name}} AI Prompt Engineering Template for Ainflue Platform
+import asyncio
+
 {{prompt_description}}
 
 Author: {{author_name}} ({{author_email}})
@@ -91,7 +93,7 @@ class PromptTemplate(BaseModel):
     updated_at: datetime = Field(default_factory=datetime.utcnow)
     
     @validator('template')
-    def validate_template(cls, v):
+    def validate_template(cls, v) -> None:
         if not v or not v.strip():
             raise ValueError('Template cannot be empty')
         return v.strip()
@@ -143,7 +145,7 @@ class {{prompt_name}}PromptEngine:
     - Performance analytics and monitoring
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.metrics_collector = PromptMetricsCollector()
         
@@ -390,7 +392,7 @@ class {{prompt_name}}PromptEngine:
         
         return variables
     
-    async def _validate_template_syntax(self, template: PromptTemplate):
+    async def _validate_template_syntax(self, template -> None: PromptTemplate) -> None:
         """Validate template syntax"""
         try:
             # Try to render with dummy variables
@@ -399,7 +401,7 @@ class {{prompt_name}}PromptEngine:
         except Exception as e:
             raise ValidationError(f"Template syntax error: {str(e)}")
     
-    async def _validate_variables(self, template: PromptTemplate, variables: Dict[str, Any]):
+    async def _validate_variables(self, template -> None: PromptTemplate, variables -> None: Dict[str, Any]) -> None:
         """Validate provided variables against template requirements"""
         for var in template.variables:
             if var.required and var.name not in variables:
@@ -589,3 +591,5 @@ class {{prompt_name}}PromptEngine:
                 del self.template_versions[template_id]
             return True
         return False
+
+# File has syntax issues - needs manual review

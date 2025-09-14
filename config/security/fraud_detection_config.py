@@ -1,7 +1,14 @@
+"""
+Fraud Detection Config module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 """Ainflue Fraud Detection Configuration Module
+import asyncio
+
 =============================================
 
 Enterprise-grade fraud detection configuration for the Ainflue platform.
@@ -506,7 +513,7 @@ class FraudResponseConfig:
 class FraudDetectionConfiguration:
     """Main fraud detection configuration manager"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize fraud detection configuration"""
         # Fraud detection components
         self.real_time_detection = RealTimeFraudDetectionConfig()

@@ -1,3 +1,8 @@
+"""
+Pool Configuration module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """Pool Configuration - Consolidated Configuration and Security Management
 ==========================================================================
@@ -100,7 +105,7 @@ class SecurityConfiguration:
 class CredentialManager:
     """Encrypted credential management"""
     
-    def __init__(self, master_key: str):
+    def __init__(self, master_key -> None: str) -> None:
         self.master_key = master_key
         self._credentials_cache = {}
         logger.info("🔐 Credential manager initialized")
@@ -158,7 +163,7 @@ class CredentialManager:
 class PoolConfigurationManager:
     """Central configuration manager for all database pools"""
     
-    def __init__(self, master_key: str = "default-demo-key"):
+    def __init__(self, master_key -> None: str = "default-demo-key") -> None:
         self.master_key = master_key
         self.credential_manager = CredentialManager(master_key)
         self.configurations: Dict[str, PoolConfig] = {}
@@ -292,7 +297,7 @@ class PoolConfigurationManager:
         
         return configs
 
-    def set_security_level(self, level: SecurityLevel):
+    def set_security_level(self, level -> None: SecurityLevel) -> None:
         """Set global security level"""
         self.security_level = level
         
@@ -349,7 +354,7 @@ class PoolConfigurationManager:
         
         return errors
 
-    def _log_config_change(self, action: str, pool_id: str, config: PoolConfig, details: Optional[Dict] = None):
+    def _log_config_change(self, action -> None: str, pool_id -> None: str, config -> None: PoolConfig, details -> None: Optional[Dict] = None) -> None:
         """Log configuration changes for audit"""
         log_entry = {
             'timestamp': datetime.now(timezone.utc).isoformat(),

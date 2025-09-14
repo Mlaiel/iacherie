@@ -151,7 +151,7 @@ class CollaborationImplementation:
     and outcome optimization using advanced AI algorithms and business intelligence.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
         
@@ -595,7 +595,7 @@ class CollaborationImplementation:
         
         return deliverables
     
-    async def _trigger_automatic_matching(self, request_id: str):
+    async def _trigger_automatic_matching(self, request_id -> None: str) -> None:
         """Trigger automatic AI-powered matching process"""
         try:
             matches = await self.find_collaboration_matches(request_id, max_matches=5)

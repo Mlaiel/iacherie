@@ -102,7 +102,7 @@ class FinancialMetrics:
     ltv: Decimal = Decimal('0.00')  # Lifetime Value
     ltv_cac_ratio: float = 0.0
     
-    def calculate_derived_metrics(self):
+    def calculate_derived_metrics(self) -> None:
         """Calculate derived financial metrics"""
         # ROI calculation
         if self.cost > 0:
@@ -244,7 +244,7 @@ class OptimizationResult:
 class MLOptimizer:
     """Machine Learning-based ROI optimizer"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.models = {}
         self.training_data = []
         
@@ -400,7 +400,7 @@ class MLOptimizer:
 class RecommendationEngine:
     """ROI optimization recommendation engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.recommendation_templates = {}
         
     async def generate_recommendations(self, portfolio: CampaignPortfolio, performance_data: Dict[str, FinancialMetrics], optimization_result: OptimizationResult) -> List[OptimizationRecommendation]:
@@ -584,7 +584,7 @@ class ROIOptimizationService:
     💡 AI Prompt: Intelligent optimization recommendations, budget insights, and strategic guidance generation
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.portfolios: Dict[str, CampaignPortfolio] = {}
         self.performance_data: Dict[str, Dict[str, FinancialMetrics]] = defaultdict(dict)  # Portfolio ID -> Campaign ID -> Metrics
         self.optimization_results: Dict[str, OptimizationResult] = {}
@@ -1169,7 +1169,7 @@ class ROIOptimizationService:
 
 
 # Example usage and testing
-async def main():
+async def main() -> None:
     """Example usage of the ROIOptimizationService"""
     service = ROIOptimizationService()
     

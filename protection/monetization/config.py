@@ -1,4 +1,6 @@
 """Advanced Configuration Module for Professional Monetization System.
+from datetime import datetime
+
 Provides comprehensive configuration management with environment-specific settings.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -250,7 +252,7 @@ class MonetizationConfig:
     max_request_size_mb: int = 100
     max_file_upload_mb: int = 500
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         """Post-initialization processing."""
         # Adjust settings based on environment
         if self.environment == EnvironmentType.PRODUCTION:
@@ -454,7 +456,7 @@ class ConfigurationManager:
     """
 Manager for configuration loading and management."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._config: Optional[MonetizationConfig] = None
         self._config_file_path: Optional[Path] = None
     
@@ -563,3 +565,5 @@ __all__ = [
     'get_config',
     'load_config'
 ]
+
+# File has syntax issues - needs manual review

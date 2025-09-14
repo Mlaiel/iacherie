@@ -102,7 +102,7 @@ class RealTimeProcessor(ABC):
 class ContentModerationProcessor(RealTimeProcessor):
     """Real-time content moderation processor"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.toxic_keywords = {
             "hate_speech": ["hate", "discrimination", "racist", "sexist"],
             "violence": ["kill", "murder", "attack", "violence"],
@@ -198,7 +198,7 @@ class ContentModerationProcessor(RealTimeProcessor):
 class SentimentAnalysisProcessor(RealTimeProcessor):
     """Real-time sentiment analysis processor"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.positive_words = ["good", "great", "awesome", "love", "amazing", "excellent", "fantastic"]
         self.negative_words = ["bad", "hate", "terrible", "awful", "horrible", "disgusting", "worst"]
         self.neutral_words = ["okay", "fine", "average", "normal", "standard"]
@@ -278,7 +278,7 @@ class SentimentAnalysisProcessor(RealTimeProcessor):
 class RecommendationProcessor(RealTimeProcessor):
     """Real-time recommendation processor"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.user_preferences = {}  # Cache user preferences
         self.trending_content = []  # Trending content cache
         self.recommendation_cache = {}
@@ -362,7 +362,7 @@ class RecommendationProcessor(RealTimeProcessor):
 class RealTimeAgent:
     """⚡ Advanced Real-Time AI Agent for Live Processing and Response"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         """Initialize Real-Time Agent"""
         self.config = config or {}
         self.processors = self._initialize_processors()
@@ -397,7 +397,7 @@ class RealTimeAgent:
             EventType.CONTENT_VIEW: RecommendationProcessor()
         }
     
-    async def start(self, num_workers: int = 5):
+    async def start(self, num_workers -> None: int = 5) -> None:
         """Start the real-time processing system"""
         logger.info(f"Starting Real-Time Agent with {num_workers} workers")
         
@@ -414,7 +414,7 @@ class RealTimeAgent:
         
         logger.info("✅ Real-Time Agent started successfully")
     
-    async def stop(self):
+    async def stop(self) -> None:
         """Stop the real-time processing system"""
         logger.info("Stopping Real-Time Agent")
         
@@ -429,7 +429,7 @@ class RealTimeAgent:
         
         logger.info("✅ Real-Time Agent stopped")
     
-    async def _worker(self, worker_id: str):
+    async def _worker(self, worker_id -> None: str) -> None:
         """Worker coroutine for processing events"""
         logger.info(f"Worker {worker_id} started")
         
@@ -519,7 +519,7 @@ class RealTimeAgent:
         }
         return timeouts.get(priority, 100.0)
     
-    def _update_stats(self, result: ProcessingResult):
+    def _update_stats(self, result -> None: ProcessingResult) -> None:
         """Update processing statistics"""
         self.processing_stats["total_events"] += 1
         
@@ -538,7 +538,7 @@ class RealTimeAgent:
                 list(self.processing_stats["latency_histogram"])
             )
     
-    async def _handle_alerts(self, event: RealTimeEvent, result: ProcessingResult):
+    async def _handle_alerts(self, event -> None: RealTimeEvent, result -> None: ProcessingResult) -> None:
         """Handle alerts based on processing results"""
         alerts = []
         
@@ -575,7 +575,7 @@ class RealTimeAgent:
         for alert in alerts:
             await self._send_alert(alert)
     
-    async def _send_alert(self, alert: Dict[str, Any]):
+    async def _send_alert(self, alert -> None: Dict[str, Any]) -> None:
         """Send alert to configured handlers"""
         for handler in self.alert_handlers:
             try:
@@ -583,7 +583,7 @@ class RealTimeAgent:
             except Exception as e:
                 logger.error(f"Alert handler error: {str(e)}")
     
-    async def _collect_metrics(self):
+    async def _collect_metrics(self) -> None:
         """Collect real-time metrics"""
         last_event_count = 0
         last_time = time.time()
@@ -646,7 +646,7 @@ class RealTimeAgent:
         else:
             raise Exception("Failed to submit event: queue full")
     
-    def add_alert_handler(self, handler: Callable[[Dict[str, Any]], None]):
+    def add_alert_handler(self, handler -> None: Callable[[Dict[str, Any]], None]) -> None:
         """Add alert handler"""
         self.alert_handlers.append(handler)
     
@@ -680,11 +680,11 @@ class RealTimeAgent:
 class WebSocketEventHandler:
     """WebSocket handler for real-time events"""
     
-    def __init__(self, agent: RealTimeAgent):
+    def __init__(self, agent -> None: RealTimeAgent) -> None:
         self.agent = agent
         self.connected_clients = set()
     
-    async def handle_websocket(self, websocket, path):
+    async def handle_websocket(self, websocket, path) -> None:
         """Handle WebSocket connections"""
         self.connected_clients.add(websocket)
         logger.info(f"Client connected: {websocket.remote_address}")
@@ -715,7 +715,7 @@ class WebSocketEventHandler:
         finally:
             self.connected_clients.remove(websocket)
     
-    async def broadcast_stats(self):
+    async def broadcast_stats(self) -> None:
         """Broadcast processing stats to connected clients"""
         while True:
             if self.connected_clients:
@@ -741,14 +741,14 @@ class WebSocketEventHandler:
             await asyncio.sleep(5.0)  # Broadcast every 5 seconds
 
 # Usage Example and Template Testing
-async def main():
+async def main() -> None:
     """Example usage of Real-Time Agent Template"""
     
     # Initialize the agent
     agent = RealTimeAgent()
     
     # Add custom alert handler
-    async def alert_handler(alert):
+    async def alert_handler(alert) -> None:
         print(f"🚨 ALERT [{alert['level'].value.upper()}]: {alert['message']}")
     
     agent.add_alert_handler(alert_handler)

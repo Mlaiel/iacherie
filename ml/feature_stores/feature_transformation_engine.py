@@ -112,7 +112,7 @@ class TransformationResult:
 class FeatureTransformationEngine:
     """Enterprise Feature Transformation Engine"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         
         # Pipeline storage
@@ -648,7 +648,7 @@ class FeatureTransformationEngine:
             logger.error(f"❌ Error getting cached result: {e}")
             return None
     
-    def _cache_result(self, cache_key: str, result: TransformationResult):
+    def _cache_result(self, cache_key -> None: str, result -> None: TransformationResult) -> None:
         """Cache transformation result"""
         try:
             self.transformation_cache[cache_key] = (result, datetime.utcnow())
@@ -669,10 +669,10 @@ class FeatureTransformationEngine:
     
     async def _optimize_feature_selection(
         self,
-        pipeline: TransformationPipeline,
-        validation_data: pd.DataFrame,
-        target_column: str
-    ):
+        pipeline -> None: TransformationPipeline,
+        validation_data -> None: pd.DataFrame,
+        target_column -> None: str
+    ) -> None:
         """Optimize feature selection steps"""
         try:
             # Find feature selection steps
@@ -728,9 +728,9 @@ class FeatureTransformationEngine:
     
     async def _optimize_parameters(
         self,
-        pipeline: TransformationPipeline,
-        validation_data: pd.DataFrame
-    ):
+        pipeline -> None: TransformationPipeline,
+        validation_data -> None: pd.DataFrame
+    ) -> None:
         """Optimize transformation parameters"""
         try:
             # For now, just log optimization attempt
@@ -740,7 +740,7 @@ class FeatureTransformationEngine:
         except Exception as e:
             logger.error(f"❌ Error optimizing parameters: {e}")
     
-    async def _update_metrics(self, processing_time: float, success: bool):
+    async def _update_metrics(self, processing_time -> None: float, success -> None: bool) -> None:
         """Update transformation metrics"""
         try:
             self.transformation_metrics['total_transformations'] += 1
@@ -806,7 +806,7 @@ class FeatureTransformationEngine:
 transformation_engine = FeatureTransformationEngine()
 
 
-async def main():
+async def main() -> None:
     """Test the Feature Transformation Engine"""
     engine = FeatureTransformationEngine()
     

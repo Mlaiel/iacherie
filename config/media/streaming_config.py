@@ -1,7 +1,14 @@
+"""
+Streaming Config module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 """Ainflue Streaming Configuration Module
+import asyncio
+
 ========================================
 
 Enterprise-grade streaming configuration for the Ainflue platform.
@@ -532,7 +539,7 @@ class StreamAnalyticsConfig:
 class StreamingConfiguration:
     """Main streaming configuration manager"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize streaming configuration"""
         # Configuration components
         self.adaptive_bitrate = AdaptiveBitrateConfig()
@@ -604,7 +611,7 @@ class StreamingConfiguration:
         # Initialize default endpoints
         self._initialize_default_endpoints()
     
-    def _initialize_default_endpoints(self):
+    def _initialize_default_endpoints(self) -> None:
         """Initialize default streaming endpoints"""
         
         # Primary RTMP endpoint

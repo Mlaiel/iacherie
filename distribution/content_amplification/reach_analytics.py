@@ -95,7 +95,7 @@ class ReachAnalytics:
     - ROI and effectiveness measurement
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.analytics_engines = {}
         self.data_collectors = {}
         self.insight_generators = {}

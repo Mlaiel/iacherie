@@ -105,7 +105,7 @@ class InfluencerConnector:
     - Automated outreach and negotiation
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.influencer_database = {}
         self.collaboration_models = {}
         self.network_analytics = {}

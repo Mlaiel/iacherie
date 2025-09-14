@@ -128,7 +128,7 @@ class FingerprintingDeploymentOrchestrator:
     - Disaster recovery and backup
     """
     
-    def __init__(self, config: FingerprintingDeploymentConfig):
+    def __init__(self, config -> None: FingerprintingDeploymentConfig) -> None:
         """
         Initialize fingerprinting deployment orchestrator
         

@@ -227,7 +227,7 @@ class DatabaseAuditManager:
     Fournit un audit complet et conforme aux réglementations
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or get_settings()
         self.logger = get_logger(f"{__name__}.DatabaseAuditManager")
         self.encryption_manager = get_encryption_manager()
@@ -267,7 +267,7 @@ class DatabaseAuditManager:
         # Initialisation
         asyncio.create_task(self._initialize_audit_system())
     
-    async def _initialize_audit_system(self):
+    async def _initialize_audit_system(self) -> None:
         """Initialise le système d'audit"""
         try:
             self.logger.info("📊 Initializing enterprise audit system...")
@@ -290,7 +290,7 @@ class DatabaseAuditManager:
             self.logger.error(f"❌ Failed to initialize audit system: {e}")
             raise
     
-    async def _setup_cryptographic_signing(self):
+    async def _setup_cryptographic_signing(self) -> None:
         """Configure la signature cryptographique des audits"""
         try:
             if not self.signature_enabled:
@@ -349,7 +349,7 @@ class DatabaseAuditManager:
             self.logger.error(f"Failed to setup cryptographic signing: {e}")
             raise
     
-    async def _setup_audit_database(self):
+    async def _setup_audit_database(self) -> None:
         """Configure la base de données d'audit"""
         try:
             if not self.audit_database_url:
@@ -373,7 +373,7 @@ class DatabaseAuditManager:
             # Continue sans DB audit, utilise les fichiers
             self.audit_pool = None
     
-    async def _create_audit_tables(self):
+    async def _create_audit_tables(self) -> None:
         """Crée les tables d'audit nécessaires"""
         try:
             if not self.audit_pool:
@@ -455,7 +455,7 @@ class DatabaseAuditManager:
             self.logger.error(f"Failed to create audit tables: {e}")
             raise
     
-    async def _setup_audit_directories(self):
+    async def _setup_audit_directories(self) -> None:
         """Configure les répertoires de logs d'audit"""
         try:
             # Création des répertoires
@@ -477,7 +477,7 @@ class DatabaseAuditManager:
             self.logger.error(f"Failed to setup audit directories: {e}")
             raise
     
-    async def _start_maintenance_tasks(self):
+    async def _start_maintenance_tasks(self) -> None:
         """Démarre les tâches de maintenance d'audit"""
         try:
             # Tâche de flush du buffer
@@ -594,7 +594,7 @@ class DatabaseAuditManager:
             self.logger.error(f"Failed to log audit event: {e}")
             return ""
     
-    async def _encrypt_audit_data(self, event: AuditEvent):
+    async def _encrypt_audit_data(self, event -> None: AuditEvent) -> None:
         """Chiffre les données sensibles dans l'événement d'audit"""
         try:
             if event.data_before:
@@ -622,7 +622,7 @@ class DatabaseAuditManager:
         except Exception as e:
             self.logger.warning(f"Failed to encrypt audit data: {e}")
     
-    async def _sign_audit_event(self, event: AuditEvent):
+    async def _sign_audit_event(self, event -> None: AuditEvent) -> None:
         """Signe cryptographiquement l'événement d'audit"""
         try:
             if not self.signing_key:
@@ -673,7 +673,7 @@ class DatabaseAuditManager:
             self.logger.warning(f"Failed to calculate checksum: {e}")
             return ""
     
-    async def _flush_audit_buffer(self):
+    async def _flush_audit_buffer(self) -> None:
         """Flush le buffer d'audit vers le stockage persistant"""
         try:
             if not self.audit_buffer:
@@ -696,7 +696,7 @@ class DatabaseAuditManager:
             # Restore buffer in case of failure
             self.audit_buffer.extend(buffer_copy)
     
-    async def _write_to_database(self, events: List[AuditEvent]):
+    async def _write_to_database(self, events -> None: List[AuditEvent]) -> None:
         """Écrit les événements d'audit en base de données"""
         try:
             if not self.audit_pool:
@@ -759,7 +759,7 @@ class DatabaseAuditManager:
             self.logger.error(f"Failed to write audit events to database: {e}")
             raise
     
-    async def _write_to_files(self, events: List[AuditEvent]):
+    async def _write_to_files(self, events -> None: List[AuditEvent]) -> None:
         """Écrit les événements d'audit dans des fichiers"""
         try:
             today = datetime.utcnow().strftime('%Y-%m-%d')
@@ -797,7 +797,7 @@ class DatabaseAuditManager:
         except Exception as e:
             self.logger.error(f"Failed to write audit events to files: {e}")
     
-    async def _buffer_flush_task(self):
+    async def _buffer_flush_task(self) -> None:
         """Tâche de flush périodique du buffer"""
         while True:
             try:
@@ -807,7 +807,7 @@ class DatabaseAuditManager:
             except Exception as e:
                 self.logger.error(f"Buffer flush task error: {e}")
     
-    async def _log_rotation_task(self):
+    async def _log_rotation_task(self) -> None:
         """Tâche de rotation des logs d'audit"""
         while True:
             try:
@@ -825,7 +825,7 @@ class DatabaseAuditManager:
                 self.logger.error(f"Log rotation task error: {e}")
                 await asyncio.sleep(3600)  # Retry in 1 hour
     
-    async def _cleanup_task(self):
+    async def _cleanup_task(self) -> None:
         """Tâche de nettoyage des anciens logs"""
         while True:
             try:
@@ -837,7 +837,7 @@ class DatabaseAuditManager:
             except Exception as e:
                 self.logger.error(f"Cleanup task error: {e}")
     
-    async def _integrity_check_task(self):
+    async def _integrity_check_task(self) -> None:
         """Tâche de vérification d'intégrité"""
         while True:
             try:
@@ -849,7 +849,7 @@ class DatabaseAuditManager:
             except Exception as e:
                 self.logger.error(f"Integrity check task error: {e}")
     
-    async def _archive_daily_logs(self):
+    async def _archive_daily_logs(self) -> None:
         """Archive les logs quotidiens"""
         try:
             yesterday = (datetime.utcnow() - timedelta(days=1)).strftime('%Y-%m-%d')
@@ -880,7 +880,7 @@ class DatabaseAuditManager:
         except Exception as e:
             self.logger.error(f"Failed to archive daily logs: {e}")
     
-    async def _cleanup_expired_logs(self):
+    async def _cleanup_expired_logs(self) -> None:
         """Nettoie les logs expirés selon les politiques de rétention"""
         try:
             # Nettoyage base de données
@@ -895,7 +895,7 @@ class DatabaseAuditManager:
         except Exception as e:
             self.logger.error(f"Failed to cleanup expired logs: {e}")
     
-    async def _cleanup_database_audit(self):
+    async def _cleanup_database_audit(self) -> None:
         """Nettoie les anciennes entrées d'audit en base"""
         try:
             # Archive les anciennes entrées avant suppression
@@ -922,7 +922,7 @@ class DatabaseAuditManager:
         except Exception as e:
             self.logger.error(f"Failed to cleanup database audit: {e}")
     
-    async def _cleanup_file_audit(self):
+    async def _cleanup_file_audit(self) -> None:
         """Nettoie les anciens fichiers d'audit"""
         try:
             archive_dir = os.path.join(self.audit_file_path, 'archive')
@@ -946,7 +946,7 @@ class DatabaseAuditManager:
         except Exception as e:
             self.logger.error(f"Failed to cleanup file audit: {e}")
     
-    async def _verify_audit_integrity(self):
+    async def _verify_audit_integrity(self) -> None:
         """Vérifie l'intégrité des logs d'audit"""
         try:
             verification_results = {
@@ -975,7 +975,7 @@ class DatabaseAuditManager:
         except Exception as e:
             self.logger.error(f"Failed to verify audit integrity: {e}")
     
-    async def _verify_database_integrity(self, results: Dict[str, Any]):
+    async def _verify_database_integrity(self, results -> None: Dict[str, Any]) -> None:
         """Vérifie l'intégrité des audits en base"""
         try:
             # Échantillonnage des entrées récentes
@@ -1012,7 +1012,7 @@ class DatabaseAuditManager:
         except Exception as e:
             self.logger.error(f"Database integrity verification failed: {e}")
     
-    async def _verify_file_integrity(self, results: Dict[str, Any]):
+    async def _verify_file_integrity(self, results -> None: Dict[str, Any]) -> None:
         """Vérifie l'intégrité des fichiers d'audit"""
         try:
             # Vérification des fichiers récents
@@ -1026,7 +1026,7 @@ class DatabaseAuditManager:
         except Exception as e:
             self.logger.error(f"File integrity verification failed: {e}")
     
-    async def _verify_file_content(self, file_path: str, results: Dict[str, Any]):
+    async def _verify_file_content(self, file_path -> None: str, results -> None: Dict[str, Any]) -> None:
         """Vérifie le contenu d'un fichier d'audit"""
         try:
             if file_path.endswith('.gz'):
@@ -1123,7 +1123,7 @@ Vérifie le checksum d'un enregistrement d'audit"""
         except Exception:
             return False
     
-    async def _send_integrity_alert(self, results: Dict[str, Any]):
+    async def _send_integrity_alert(self, results -> None: Dict[str, Any]) -> None:
         """
 Envoie une alerte en cas de problème d'intégrité"""
         try:
@@ -1756,7 +1756,7 @@ Génère des recommandations de compliance"""
         except Exception as e:
             self.logger.error(f"Failed to send SMS notification: {e}")
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Arrêt propre du système d'audit"""
         try:
             self.logger.info("🔒 Shutting down audit system...")

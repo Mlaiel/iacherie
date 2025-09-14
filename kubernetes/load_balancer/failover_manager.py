@@ -6,7 +6,7 @@ orchestration, and recovery for high availability across all services.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ WARNING: This code is proprietary and confidential.
+# [EMOJI_REMOVED] WARNING: This code is proprietary and confidential.
 Unauthorized copying, distribution, or use without explicit written
 permission from Fahed Mlaiel is strictly prohibited and may result
 in legal action.
@@ -112,7 +112,7 @@ class FailoverManager:
     IA Influencer Agent platform's microservices.
     """
     
-    def __init__(self, check_interval: int = 30):
+    def __init__(self, check_interval -> None: int = 30) -> None:
         self.check_interval = check_interval
         
         # Node management
@@ -745,7 +745,7 @@ Restore a recovered node to service"""
             self.check_interval = min(self.check_interval * 2, 120)  # Max 2 minutes
             
             # Reset after 10 minutes
-            async def reset_cascade_prevention():
+            async def reset_cascade_prevention() -> None:
                 await asyncio.sleep(600)  # 10 minutes
                 for node in self.service_nodes.values():
                     node.failure_threshold = max(node.failure_threshold - 2, 3)
@@ -904,3 +904,5 @@ Restore a recovered node to service"""
                 
         except Exception as e:
             logger.error(f"Failed to save historical data: {e}")
+
+# File has syntax issues - needs manual review

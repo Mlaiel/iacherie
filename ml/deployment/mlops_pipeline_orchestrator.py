@@ -152,13 +152,13 @@ class MLOpsPipelineOrchestrator:
     """🔧 Orchestrateur de pipeline MLOps enterprise"""
     
     def __init__(self,
-                 mlflow_tracking_uri: str = "http://localhost:5000",
-                 gitlab_url: str = "https://gitlab.com",
-                 gitlab_token: Optional[str] = None,
-                 jenkins_url: Optional[str] = None,
-                 jenkins_user: Optional[str] = None,
-                 jenkins_token: Optional[str] = None,
-                 redis_url: str = "redis://localhost:6379/0"):
+                 mlflow_tracking_uri -> None: str = "http -> None://localhost -> None:5000",
+                 gitlab_url -> None: str = "https -> None://gitlab.com",
+                 gitlab_token -> None: Optional[str] = None,
+                 jenkins_url -> None: Optional[str] = None,
+                 jenkins_user -> None: Optional[str] = None,
+                 jenkins_token -> None: Optional[str] = None,
+                 redis_url -> None: str = "redis -> None://localhost -> None:6379/0") -> None:
         
         self.mlflow_tracking_uri = mlflow_tracking_uri
         self.gitlab_url = gitlab_url
@@ -193,7 +193,7 @@ class MLOpsPipelineOrchestrator:
         self.successful_executions = 0
         self.failed_executions = 0
         
-    def _setup_metrics(self):
+    def _setup_metrics(self) -> None:
         """Configure les métriques Prometheus"""
         self.pipeline_counter = prometheus_client.Counter(
             'mlops_pipeline_executions_total',
@@ -220,7 +220,7 @@ class MLOpsPipelineOrchestrator:
             'Number of active pipeline executions'
         )
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialise l'orchestrateur"""
         try:
             # MLflow client
@@ -266,7 +266,7 @@ class MLOpsPipelineOrchestrator:
             logger.error(f"Failed to initialize MLOpsPipelineOrchestrator: {e}")
             raise
     
-    def _setup_stage_executors(self):
+    def _setup_stage_executors(self) -> None:
         """Configure les exécuteurs d'étapes"""
         self.stage_executors = {
             PipelineStage.DATA_VALIDATION: self._execute_data_validation,
@@ -345,7 +345,7 @@ class MLOpsPipelineOrchestrator:
             logger.error(f"Failed to trigger pipeline: {e}")
             raise
     
-    async def _execute_pipeline(self, execution_id: str, parameters: Dict[str, Any]):
+    async def _execute_pipeline(self, execution_id -> None: str, parameters -> None: Dict[str, Any]) -> None:
         """Exécute un pipeline complet"""
         try:
             execution = self.active_executions[execution_id]
@@ -936,7 +936,7 @@ kubectl rollout status deployment/model-{execution.pipeline_id} -n staging
         
         return True
     
-    async def _validate_pipeline_config(self, config: PipelineConfig):
+    async def _validate_pipeline_config(self, config -> None: PipelineConfig) -> None:
         """Valide une configuration de pipeline"""
         if not config.pipeline_id:
             raise ValueError("Pipeline ID is required")
@@ -954,7 +954,7 @@ kubectl rollout status deployment/model-{execution.pipeline_id} -n staging
         if enabled_indices != sorted(enabled_indices):
             logger.warning("Pipeline stages are not in optimal order")
     
-    async def _persist_pipeline_config(self, config: PipelineConfig):
+    async def _persist_pipeline_config(self, config -> None: PipelineConfig) -> None:
         """Persiste la configuration dans Redis"""
         try:
             config_dict = {
@@ -979,7 +979,7 @@ kubectl rollout status deployment/model-{execution.pipeline_id} -n staging
         except Exception as e:
             logger.error(f"Failed to persist pipeline config: {e}")
     
-    async def _send_notifications(self, execution: PipelineExecution):
+    async def _send_notifications(self, execution -> None: PipelineExecution) -> None:
         """Envoie les notifications de fin de pipeline"""
         try:
             config = self.pipeline_configs[execution.pipeline_id]
@@ -1003,7 +1003,7 @@ Endpoints:
         except Exception as e:
             logger.error(f"Failed to send notifications: {e}")
     
-    async def _pipeline_monitor_loop(self):
+    async def _pipeline_monitor_loop(self) -> None:
         """Boucle de monitoring des pipelines"""
         while True:
             try:
@@ -1028,7 +1028,7 @@ Endpoints:
             except Exception as e:
                 logger.error(f"Pipeline monitor loop error: {e}")
     
-    async def _cleanup_old_executions(self):
+    async def _cleanup_old_executions(self) -> None:
         """Nettoie les anciennes exécutions"""
         while True:
             try:
@@ -1107,7 +1107,7 @@ Endpoints:
         }
 
 # Usage example
-async def demo_mlops_orchestrator():
+async def demo_mlops_orchestrator() -> None:
     """Démo de l'orchestrateur MLOps"""
     orchestrator = MLOpsPipelineOrchestrator()
     await orchestrator.initialize()

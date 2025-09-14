@@ -1,3 +1,8 @@
+"""
+Service Mesh Configuration module
+Enterprise implementation for Ainflue platform
+"""
+
 # Ainflue Infrastructure Module - Service Mesh Configuration
 # ==========================================================
 # 
@@ -103,7 +108,7 @@ class ServiceMeshConfigurator:
     across multi-cloud environments for the Ainflue platform.
     """
     
-    def __init__(self, provider: ServiceMeshProvider = ServiceMeshProvider.ISTIO):
+    def __init__(self, provider -> None: ServiceMeshProvider = ServiceMeshProvider.ISTIO) -> None:
         """Initialize service mesh configurator"""
         self.provider = provider
         self.services: Dict[str, ServiceConfig] = {}

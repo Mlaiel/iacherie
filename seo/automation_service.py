@@ -122,7 +122,7 @@ class SEOAutomationService:
     User → Upload → AI Processing → **SEO Automation** → Protection → Monetization → Distribution
     """
     
-    def __init__(self, base_url: str, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, base_url -> None: str, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialize the SEO automation service.
         
@@ -653,7 +653,7 @@ class SEOAutomationService:
         # Process requests concurrently with concurrency limit
         semaphore = asyncio.Semaphore(5)  # Max 5 concurrent optimizations
         
-        async def optimize_with_limit(request):
+        async def optimize_with_limit(request) -> None:
             async with semaphore:
                 return await self.optimize_content_seo(request)
         

@@ -132,7 +132,7 @@ class SEOTechnicalOptimizer:
     performance, mobile-first et conformité SEO avancée.
     """
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         """Initialize technical SEO optimizer"""
         self.config = config or {}
         self.audit_cache = {}
@@ -932,7 +932,7 @@ class CoreWebVitalsOptimizer:
     avancées et monitoring en temps réel.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.optimization_strategies = {}
         self.monitoring_thresholds = {
             "lcp": {"warning": 3.0, "critical": 4.0},
@@ -1002,7 +1002,7 @@ class TechnicalAnalysisEngine:
     benchmarking et recommandations stratégiques.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.analysis_cache = {}
         self.benchmark_database = {}
         

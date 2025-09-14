@@ -209,7 +209,7 @@ class MonitoringStack:
     orchestration, business analytics, and enterprise-grade observability.
     """
     
-    def __init__(self, config: MonitoringStackConfig = None):
+    def __init__(self, config -> None: MonitoringStackConfig = None) -> None:
         self.config = config or MonitoringStackConfig()
         self.orchestrator: Optional[MonitoringOrchestrator] = None
         self._components: Dict[str, Any] = {}
@@ -221,8 +221,8 @@ class MonitoringStack:
         self, 
         redis_client=None, 
         db_engine=None,
-        external_config: Dict[str, Any] = None
-    ):
+        external_config -> None: Dict[str, Any] = None
+    ) -> None:
         """Initialize the complete monitoring stack"""
         try:
             # Merge external configuration
@@ -245,7 +245,7 @@ class MonitoringStack:
             logger.error(f"Failed to initialize monitoring stack: {e}")
             raise
     
-    def _merge_external_config(self, external_config: Dict[str, Any]):
+    def _merge_external_config(self, external_config -> None: Dict[str, Any]) -> None:
         """Merge external configuration with stack config"""
         for key, value in external_config.items():
             if hasattr(self.config, key):
@@ -275,7 +275,7 @@ Build orchestrator configuration from stack config"""
             "performance_optimization_enabled": self.config.performance_optimization_enabled
         }
     
-    def _store_component_references(self):
+    def _store_component_references(self) -> None:
         """Store references to monitoring components for direct access"""
         if self.orchestrator:
             self._components = {
@@ -292,7 +292,7 @@ Build orchestrator configuration from stack config"""
                 "compliance_tracker": self.orchestrator.compliance_tracker
             }
     
-    async def start(self):
+    async def start(self) -> None:
         """Start the complete monitoring stack"""
         if not self.orchestrator:
             raise RuntimeError("Monitoring stack not initialized. Call initialize() first.")
@@ -306,7 +306,7 @@ Build orchestrator configuration from stack config"""
             logger.error(f"Failed to start monitoring stack: {e}")
             raise
     
-    async def stop(self):
+    async def stop(self) -> None:
         """Stop the monitoring stack gracefully"""
         if self.orchestrator:
             await self.orchestrator.stop()
@@ -378,12 +378,12 @@ Get the metrics collector component"""
     
     async def trigger_alert(
         self, 
-        name: str, 
-        message: str, 
-        severity: str = "warning",
-        source: str = "manual",
-        labels: Dict[str, str] = None
-    ):
+        name -> None: str, 
+        message -> None: str, 
+        severity -> None: str = "warning",
+        source -> None: str = "manual",
+        labels -> None: Dict[str, str] = None
+    ) -> None:
         """Manually trigger an alert"""
         alert_manager = self.get_alert_manager()
         if alert_manager:
@@ -397,12 +397,12 @@ Get the metrics collector component"""
     
     async def add_custom_metric(
         self,
-        name: str,
-        value: Union[int, float],
-        metric_type: str = "gauge",
-        domain: str = "custom",
-        dimensions: Dict[str, str] = None
-    ):
+        name -> None: str,
+        value -> None: Union[int, float],
+        metric_type -> None: str = "gauge",
+        domain -> None: str = "custom",
+        dimensions -> None: Dict[str, str] = None
+    ) -> None:
         """Add a custom business metric"""
         business_metrics = self.get_business_metrics()
         if business_metrics:

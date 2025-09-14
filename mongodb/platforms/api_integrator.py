@@ -67,7 +67,7 @@ class APICredentials:
     expires_at: Optional[datetime] = None
     custom_headers: Dict[str, str] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.custom_headers is None:
             self.custom_headers = {}
 
@@ -86,7 +86,7 @@ class APIRequest:
     timeout: int = 30
     retry_count: int = 3
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.headers is None:
             self.headers = {}
         if self.params is None:
@@ -109,7 +109,7 @@ class APIResponse:
     response_time: float = 0.0
     timestamp: datetime = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.timestamp is None:
             self.timestamp = datetime.utcnow()
 
@@ -122,7 +122,7 @@ class APIIntegrator:
     rate limiting, and intelligent error handling for all supported platforms.
     """
     
-    def __init__(self, db: AsyncIOMotorDatabase):
+    def __init__(self, db -> None: AsyncIOMotorDatabase) -> None:
         """
         Initialize API Integrator
         

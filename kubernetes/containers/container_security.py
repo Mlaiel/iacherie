@@ -110,7 +110,7 @@ Container security policy"""
 class ContainerSecurityManager:
     """Professional container security manager"""
     
-    def __init__(self, config_path: str = "/app/config/security"):
+    def __init__(self, config_path -> None: str = "/app/config/security") -> None:
         self.config_path = Path(config_path)
         self.docker_client = None
         self.k8s_client = None
@@ -765,7 +765,7 @@ class ContainerSecurityManager:
 class VulnerabilityScanner:
     """Specialized vulnerability scanner"""
     
-    def __init__(self, security_manager: ContainerSecurityManager):
+    def __init__(self, security_manager -> None: ContainerSecurityManager) -> None:
         self.security_manager = security_manager
         self.scan_queue = asyncio.Queue()
         self.active_scans = {}
@@ -859,7 +859,7 @@ class VulnerabilityScanner:
 class ComplianceValidator:
     """Compliance validation engine"""
     
-    def __init__(self, security_manager: ContainerSecurityManager):
+    def __init__(self, security_manager -> None: ContainerSecurityManager) -> None:
         self.security_manager = security_manager
         self.compliance_standards = {}
         self.validation_results = {}

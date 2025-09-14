@@ -226,7 +226,7 @@ class BrandCollaborationMatch:
 class RevenueOptimizer:
     """AI-driven revenue optimization engine."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(f"{__name__}.optimizer")
         self.revenue_streams: Dict[str, RevenueStreamConfig] = {}
         self.historical_performance: List[MonetizationMetrics] = []
@@ -416,7 +416,7 @@ class RevenueOptimizer:
 class SponsorshipMatcher:
     """AI-driven sponsorship and brand collaboration matching engine."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(f"{__name__}.sponsorship_matcher")
         self.brand_database: Dict[str, Dict[str, Any]] = {}
         self.sponsorship_opportunities: List[SponsorshipOpportunity] = []
@@ -509,7 +509,7 @@ class SponsorshipMatcher:
         estimated_revenue = base_rate * follower_multiplier * engagement_multiplier
         return Decimal(str(estimated_revenue))
     
-    async def load_sponsorship_opportunities(self, opportunities: List[Dict[str, Any]]):
+    async def load_sponsorship_opportunities(self, opportunities -> None: List[Dict[str, Any]]) -> None:
         """Load sponsorship opportunities from external sources."""
         self.sponsorship_opportunities = []
         
@@ -535,7 +535,7 @@ class SponsorshipMatcher:
 class AffiliateManager:
     """Affiliate marketing management and optimization system."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(f"{__name__}.affiliate_manager")
         self.affiliate_programs: Dict[str, AffiliateProgram] = {}
         self.performance_tracking: Dict[str, Dict[str, Any]] = {}
@@ -589,7 +589,7 @@ class AffiliateManager:
 class MonetizationDistributionManager:
     """Main monetization distribution management system."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(f"{__name__}.manager")
         self.revenue_optimizer = RevenueOptimizer()
         self.sponsorship_matcher = SponsorshipMatcher()
@@ -673,7 +673,7 @@ class MonetizationDistributionManager:
             audience_value_score=min(creator_profile.get("follower_count", 0) / 10000 * 100, 100)
         )
     
-    async def _load_default_configurations(self):
+    async def _load_default_configurations(self) -> None:
         """Load default monetization configurations."""
         # Load sample sponsorship opportunities
         sample_opportunities = [

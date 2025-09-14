@@ -56,7 +56,7 @@ from backend.edge import (
 )
 
 
-async def demo_edge_inference():
+async def demo_edge_inference() -> None:
     """Demonstrate edge AI inference orchestration."""
     print("\n" + "="*60)
     print("🧠 EDGE AI INFERENCE ORCHESTRATION DEMO")
@@ -99,7 +99,7 @@ async def demo_edge_inference():
         print("🛑 Edge inference orchestrator stopped")
 
 
-async def demo_5g_mec_integration():
+async def demo_5g_mec_integration() -> None:
     """Demonstrate 5G MEC integration capabilities."""
     print("\n" + "="*60)
     print("📡 5G MEC INTEGRATION DEMO")
@@ -162,7 +162,7 @@ async def demo_5g_mec_integration():
         print("🛑 MEC integration layer stopped")
 
 
-async def demo_iot_mesh_network():
+async def demo_iot_mesh_network() -> None:
     """Demonstrate IoT mesh networking capabilities."""
     print("\n" + "="*60)
     print("🌐 IOT MESH NETWORKING DEMO")
@@ -259,7 +259,7 @@ async def demo_iot_mesh_network():
         print("🛑 IoT mesh orchestrator stopped")
 
 
-async def demo_fog_computing():
+async def demo_fog_computing() -> None:
     """Demonstrate fog computing orchestration."""
     print("\n" + "="*60)
     print("🌫️ FOG COMPUTING ORCHESTRATION DEMO")
@@ -313,7 +313,7 @@ async def demo_fog_computing():
         print(f"☁️ Registered cloud node: {cloud_node_id}")
         
         # Define processing functions
-        def image_classification_task(image_data):
+        def image_classification_task(image_data) -> None:
             """Simulate image classification."""
             import time
             time.sleep(1)  # Simulate processing time
@@ -324,7 +324,7 @@ async def demo_fog_computing():
                 "processed_at": datetime.now().isoformat()
             }
         
-        async def data_aggregation_task(sensor_data):
+        async def data_aggregation_task(sensor_data) -> None:
             """Simulate async data aggregation."""
             await asyncio.sleep(0.5)  # Simulate async I/O
             return {
@@ -408,7 +408,7 @@ async def demo_fog_computing():
         print("🛑 Fog computing orchestrator stopped")
 
 
-async def demo_integration():
+async def demo_integration() -> None:
     """Demonstrate integration between all edge computing components."""
     print("\n" + "="*60)
     print("🔗 EDGE COMPUTING INTEGRATION DEMO")
@@ -498,7 +498,7 @@ async def demo_integration():
         print("🛑 All edge computing components stopped")
 
 
-async def main():
+async def main() -> None:
     """Run the complete edge computing layer demonstration."""
     print("🌟 AINFLUE EDGE COMPUTING LAYER DEMONSTRATION")
     print("=" * 80)

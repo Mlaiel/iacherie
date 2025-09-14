@@ -224,7 +224,7 @@ class ComplianceAudit:
 class LicenseComplianceMonitor:
     """Advanced license compliance monitoring and validation"""
     
-    def __init__(self, config: ComplianceConfig):
+    def __init__(self, config -> None: ComplianceConfig) -> None:
         self.config = config
         self.licenses: Dict[str, LicenseInfo] = {}
         self.violations: List[ComplianceViolation] = []
@@ -750,7 +750,7 @@ class LicenseComplianceMonitor:
         
         return violations
     
-    async def _create_violation(self, violation_data: Dict[str, Any]):
+    async def _create_violation(self, violation_data -> None: Dict[str, Any]) -> None:
         """Create compliance violation record"""
         violation = ComplianceViolation(
             violation_id=str(uuid.uuid4()),
@@ -769,7 +769,7 @@ class LicenseComplianceMonitor:
         if self.config.real_time_alerts:
             await self._send_violation_alert(violation)
     
-    async def _send_violation_alert(self, violation: ComplianceViolation):
+    async def _send_violation_alert(self, violation -> None: ComplianceViolation) -> None:
         """Send violation alert (placeholder implementation)"""
         logger.warning(f"Compliance violation detected: {violation.violation_type.value} - {violation.description}")
     
@@ -861,7 +861,7 @@ class LicenseComplianceMonitor:
 class RegulatoryComplianceMonitor:
     """Regulatory compliance monitoring for various frameworks"""
     
-    def __init__(self, frameworks: List[RegulationFramework]):
+    def __init__(self, frameworks -> None: List[RegulationFramework]) -> None:
         self.frameworks = frameworks
         self.compliance_checks = {}
         self.audit_trail = []
@@ -871,7 +871,7 @@ class RegulatoryComplianceMonitor:
         
         logger.info(f"📋 Regulatory Compliance Monitor initialized for {len(frameworks)} frameworks")
     
-    def _initialize_compliance_checks(self):
+    def _initialize_compliance_checks(self) -> None:
         """Initialize compliance checks for each framework"""
         for framework in self.frameworks:
             if framework == RegulationFramework.GDPR:
@@ -961,9 +961,9 @@ class ComplianceMonitoringSystem:
     
     def __init__(
         self, 
-        config: Optional[ComplianceConfig] = None,
-        regulatory_frameworks: Optional[List[RegulationFramework]] = None
-    ):
+        config -> None: Optional[ComplianceConfig] = None,
+        regulatory_frameworks -> None: Optional[List[RegulationFramework]] = None
+    ) -> None:
         """Initialize compliance monitoring system"""
         self.config = config or ComplianceConfig()
         
@@ -1093,7 +1093,7 @@ class ComplianceMonitoringSystem:
 # Backward compatibility classes for existing imports
 class LicenseComplianceMonitor_Legacy:
     """Legacy wrapper for license compliance monitor"""
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs) -> None:
         config = ComplianceConfig()
         self.monitor = LicenseComplianceMonitor(config)
 

@@ -127,7 +127,7 @@ class AIContractGenerator:
     natural language processing and machine learning.
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """
 Initialize AI contract generator with configuration."""
         self.config = config
@@ -151,7 +151,7 @@ Initialize AI contract generator with configuration."""
         
         self.logger.info("AI Contract Generator initialized successfully")
 
-    def _initialize_ai_models(self):
+    def _initialize_ai_models(self) -> None:
         """Initialize NLP and AI models for contract generation."""
         try:
             # Legal language model for contract generation
@@ -819,7 +819,7 @@ Suggest mitigation strategies for identified risks."""
         
         return compliance_status
 
-    def _update_generation_metrics(self, generation_time: float, success: bool):
+    def _update_generation_metrics(self, generation_time -> None: float, success -> None: bool) -> None:
         """
 Update performance metrics."""
         self.generation_metrics['total_contracts'] += 1

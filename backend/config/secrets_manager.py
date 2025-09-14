@@ -163,7 +163,7 @@ class RotationConfig:
 class EncryptionManager:
     """Advanced encryption management for secrets"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.master_key = self._generate_or_load_master_key()
         self.key_versions: Dict[str, str] = {}
         self.current_key_version = "v1"
@@ -282,7 +282,7 @@ class SecretVault(Protocol):
 class LocalFileVault:
     """Local file-based secret vault"""
     
-    def __init__(self, vault_path: str = "./secrets/vault"):
+    def __init__(self, vault_path -> None: str = "./secrets/vault") -> None:
         self.vault_path = Path(vault_path)
         self.vault_path.mkdir(exist_ok=True, parents=True)
         
@@ -406,7 +406,7 @@ class LocalFileVault:
 class HashiCorpVault:
     """HashiCorp Vault integration"""
     
-    def __init__(self, vault_url: str, vault_token: str):
+    def __init__(self, vault_url -> None: str, vault_token -> None: str) -> None:
         self.vault_url = vault_url.rstrip('/')
         self.vault_token = vault_token
         self.session: Optional[aiohttp.ClientSession] = None
@@ -527,7 +527,7 @@ class HashiCorpVault:
             logging.error(f"Failed to list secrets from Vault: {e}")
             return []
     
-    async def close(self):
+    async def close(self) -> None:
         """Close HTTP session"""
         if self.session:
             await self.session.close()
@@ -540,7 +540,7 @@ class HashiCorpVault:
 class AccessControlManager:
     """Access control and policy management"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.policies: Dict[str, AccessPolicy] = {}
         self.audit_log: List[AuditLogEntry] = []
         self.max_audit_entries = 10000
@@ -685,7 +685,7 @@ class AccessControlManager:
 class SecretRotationManager:
     """Automated secret rotation management"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.rotation_configs: Dict[str, RotationConfig] = {}
         self.rotation_history: Dict[str, List[Dict[str, Any]]] = {}
         self.rotation_tasks: Dict[str, asyncio.Task] = {}
@@ -763,7 +763,7 @@ class SecretRotationManager:
     
     def _schedule_rotation(self, config: RotationConfig) -> None:
         """Schedule automated rotation"""
-        async def rotation_loop():
+        async def rotation_loop() -> None:
             while True:
                 try:
                     if config.interval:
@@ -834,7 +834,7 @@ class SecretRotationManager:
 class SecretsManager:
     """Main secrets management system"""
     
-    def __init__(self, vault_type: SecretVaultType = SecretVaultType.LOCAL_FILE):
+    def __init__(self, vault_type -> None: SecretVaultType = SecretVaultType.LOCAL_FILE) -> None:
         # Core components
         self.encryption_manager = EncryptionManager()
         self.access_control = AccessControlManager()

@@ -235,7 +235,7 @@ class BackupVerification:
 class AutomatedBackupSystem:
     """Automated backup management system"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         self.backup_schedulers = {}
@@ -377,7 +377,7 @@ class AutomatedBackupSystem:
 class DisasterRecoveryOrchestrator:
     """Disaster recovery orchestration system"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         self.recovery_engines = {}
@@ -517,7 +517,7 @@ class DisasterRecoveryOrchestrator:
 class ContentPreservationManager:
     """Content preservation and version management system"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         self.preservation_engines = {}
@@ -581,7 +581,7 @@ class ContentPreservationManager:
 class BackupMonitoringSystem:
     """Real-time backup monitoring and alerting system"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         self.monitoring_agents = {}
@@ -633,7 +633,7 @@ class BackupMonitoringSystem:
 class StreamingBackupRecovery:
     """Unified streaming backup recovery - Main service class"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         

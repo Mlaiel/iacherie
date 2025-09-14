@@ -326,7 +326,7 @@ class VisionAnalysisResult:
 class VisionModelProcessor(ABC):
     """Abstract base class for vision model processors"""
     
-    def __init__(self, task_type: VisionTaskType, model_architecture: ModelArchitecture):
+    def __init__(self, task_type -> None: VisionTaskType, model_architecture -> None: ModelArchitecture) -> None:
         self.task_type = task_type
         self.model_architecture = model_architecture
         self.logger = logging.getLogger(f"{__name__}.{task_type.value}")
@@ -349,7 +349,7 @@ class VisionModelProcessor(ABC):
 class ObjectDetectionProcessor(VisionModelProcessor):
     """Object detection processor"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__(VisionTaskType.OBJECT_DETECTION, ModelArchitecture.YOLO)
     
     async def preprocess(self, visual_data: VisualData, config: Dict[str, Any]) -> Any:
@@ -416,7 +416,7 @@ class ObjectDetectionProcessor(VisionModelProcessor):
 class ImageClassificationProcessor(VisionModelProcessor):
     """Image classification processor"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__(VisionTaskType.IMAGE_CLASSIFICATION, ModelArchitecture.EFFICIENTNET)
     
     async def preprocess(self, visual_data: VisualData, config: Dict[str, Any]) -> Any:
@@ -470,7 +470,7 @@ class ImageClassificationProcessor(VisionModelProcessor):
 class FacialRecognitionProcessor(VisionModelProcessor):
     """Facial recognition processor"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__(VisionTaskType.FACIAL_RECOGNITION, ModelArchitecture.RESNET)
     
     async def preprocess(self, visual_data: VisualData, config: Dict[str, Any]) -> Any:
@@ -544,7 +544,7 @@ class ComputerVisionProcessor(BaseEventHandler):
     enhancement workflows for the IA Influencer Agent platform.
     """
     
-    def __init__(self, max_workers: int = 4):
+    def __init__(self, max_workers -> None: int = 4) -> None:
         super().__init__()
         
         # Core components
@@ -581,7 +581,7 @@ class ComputerVisionProcessor(BaseEventHandler):
         
         logger.info("Computer Vision Processor initialized")
     
-    async def start_processor(self):
+    async def start_processor(self) -> None:
         """Start the computer vision processor"""
         self.is_running = True
         
@@ -594,7 +594,7 @@ class ComputerVisionProcessor(BaseEventHandler):
         
         logger.info("Computer Vision Processor started")
     
-    async def stop_processor(self):
+    async def stop_processor(self) -> None:
         """Stop the computer vision processor"""
         self.is_running = False
         self.executor.shutdown(wait=True)
@@ -641,7 +641,7 @@ class ComputerVisionProcessor(BaseEventHandler):
             logger.error(f"Request validation error: {str(e)}")
             return False
     
-    async def _worker_loop(self, worker_id: str):
+    async def _worker_loop(self, worker_id -> None: str) -> None:
         """Main worker loop for processing vision requests"""
         logger.info(f"Vision worker {worker_id} started")
         
@@ -751,8 +751,8 @@ class ComputerVisionProcessor(BaseEventHandler):
         return result
     
     async def _generate_additional_results(self, 
-                                          result: VisionAnalysisResult, 
-                                          request: VisionAnalysisRequest):
+                                          result -> None: VisionAnalysisResult, 
+                                          request -> None: VisionAnalysisRequest) -> None:
         """Generate additional analysis results"""
         try:
             # Generate quality score
@@ -795,7 +795,7 @@ class ComputerVisionProcessor(BaseEventHandler):
         except Exception as e:
             logger.error(f"Error generating additional results: {str(e)}")
     
-    def _update_performance_metrics(self, result: VisionAnalysisResult):
+    def _update_performance_metrics(self, result -> None: VisionAnalysisResult) -> None:
         """Update processor performance metrics"""
         # Update average processing time
         if self.total_requests > 0:
@@ -803,7 +803,7 @@ class ComputerVisionProcessor(BaseEventHandler):
             self.average_processing_time = (alpha * result.processing_time + 
                                           (1 - alpha) * self.average_processing_time)
     
-    async def _monitor_performance(self):
+    async def _monitor_performance(self) -> None:
         """Monitor vision processor performance"""
         while self.is_running:
             try:

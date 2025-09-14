@@ -98,7 +98,7 @@ class SnapshotConfig:
 class SnapshotData:
     """Serializable snapshot data container"""
     
-    def __init__(self, aggregate_state: Dict[str, Any], metadata: Dict[str, Any] = None):
+    def __init__(self, aggregate_state -> None: Dict[str, Any], metadata -> None: Dict[str, Any] = None) -> None:
         self.aggregate_state = aggregate_state
         self.metadata = metadata or {}
         self.created_at = datetime.now(timezone.utc)
@@ -155,7 +155,7 @@ class SnapshotStorageInterface(ABC):
 class MemorySnapshotStorage(SnapshotStorageInterface):
     """In-memory snapshot storage for testing/development"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.snapshots: Dict[str, SnapshotData] = {}
         self.metadata_store: Dict[str, SnapshotMetadata] = {}
         self.aggregate_snapshots: Dict[str, List[str]] = {}
@@ -224,7 +224,7 @@ class MemorySnapshotStorage(SnapshotStorageInterface):
 class FileSystemSnapshotStorage(SnapshotStorageInterface):
     """File system based snapshot storage"""
     
-    def __init__(self, base_path: str):
+    def __init__(self, base_path -> None: str) -> None:
         self.base_path = base_path
         import os
         os.makedirs(base_path, exist_ok=True)
@@ -460,7 +460,7 @@ class SnapshotValidator:
 class AggregateSnapshotManager:
     """Enterprise aggregate snapshot manager"""
     
-    def __init__(self, config: SnapshotConfig, storage: SnapshotStorageInterface):
+    def __init__(self, config -> None: SnapshotConfig, storage -> None: SnapshotStorageInterface) -> None:
         self.config = config
         self.storage = storage
         self.compressor = SnapshotCompressor()

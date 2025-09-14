@@ -1,5 +1,7 @@
 """Business Intelligence Events Module
 
+import logging
+
 Advanced business intelligence and analytics for strategic decision making.
 Provides market analysis, competitive intelligence, and business trend prediction.
 
@@ -132,7 +134,7 @@ class BusinessIntelligenceEventHandler(BaseEventHandler):
     """
 Handles business intelligence events with advanced analytics"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
         self.cache_manager = CacheManager()
         self.db_manager = DatabaseManager()
@@ -326,7 +328,7 @@ class BusinessMetricsTracker:
     """
 Tracks and analyzes business metrics"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.cache_manager = CacheManager()
         self.db_manager = DatabaseManager()
         self.data_processor = DataProcessor()
@@ -428,7 +430,7 @@ class BusinessTrendAnalyzer:
     """
 Analyzes business trends and patterns"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.db_manager = DatabaseManager()
         self.trend_detector = IsolationForest(contamination=0.1)
         self.time_series_analyzer = TimeSeriesAnalyzer()
@@ -497,7 +499,7 @@ class CompetitiveAnalysisEngine:
     """
 Analyzes competitive landscape and positioning"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.db_manager = DatabaseManager()
         self.market_analyzer = MarketAnalyzer()
         self.benchmark_engine = BenchmarkEngine()
@@ -542,7 +544,7 @@ class MarketInsightsEngine:
     """
 Generates actionable market insights"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.db_manager = DatabaseManager()
         self.ml_predictor = BusinessPredictor()
         self.nlp_analyzer = pipeline("text-classification")

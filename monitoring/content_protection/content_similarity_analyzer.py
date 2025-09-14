@@ -116,7 +116,7 @@ class SimilarityAlert:
 class ContentSimilarityAnalyzer:
     """Enterprise content similarity analysis system."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.content_database = {}
         self.fingerprint_database = {}
         self.similarity_cache = {}

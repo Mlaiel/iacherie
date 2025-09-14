@@ -12,6 +12,7 @@ from datetime import datetime
 
 
 class ViralStage(Enum):
+    """ViralStage class implementation"""
     EMERGING = "emerging"
     ACCELERATING = "accelerating"
     VIRAL = "viral"
@@ -21,6 +22,7 @@ class ViralStage(Enum):
 
 @dataclass
 class ViralMetrics:
+    """ViralMetrics: class implementation"""
     content_id: str
     viral_score: float = 0.0
     velocity: float = 0.0
@@ -32,6 +34,7 @@ class ViralMetrics:
 
 @dataclass
 class ViralityScore:
+    """ViralityScore: class implementation"""
     content_id: str
     overall_score: float
     viral_indicators: Dict[str, float]

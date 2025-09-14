@@ -98,11 +98,11 @@ class InfluencerEngagementResearcher:
     """
     
     def __init__(self, 
-                 redis_host: str = "localhost",
-                 redis_port: int = 6379,
-                 db_host: str = "localhost",
-                 db_port: int = 5432,
-                 db_name: str = "ainflue_analytics"):
+                 redis_host -> None: str = "localhost",
+                 redis_port -> None: int = 6379,
+                 db_host -> None: str = "localhost",
+                 db_port -> None: int = 5432,
+                 db_name -> None: str = "ainflue_analytics") -> None:
         self.logger = logging.getLogger(__name__)
         
         # Initialize Redis for caching
@@ -171,7 +171,7 @@ class InfluencerEngagementResearcher:
             'avg_processing_time': 0.0
         }
     
-    def _init_models(self):
+    def _init_models(self) -> None:
         """Initialize machine learning models for engagement research"""
         try:
             # Engagement prediction model
@@ -673,7 +673,7 @@ class InfluencerEngagementResearcher:
             'cross_segment_opportunities': await self._identify_cross_segment_opportunities(segments)
         }
     
-    def _update_research_metrics(self, processing_time: float):
+    def _update_research_metrics(self, processing_time -> None: float) -> None:
         """Update research performance metrics"""
         self.research_metrics['analyses_performed'] += 1
         self.research_metrics['avg_processing_time'] = (
@@ -694,7 +694,7 @@ class InfluencerEngagementResearcher:
 
 # Example usage and integration
 if __name__ == "__main__":
-    async def main():
+    async def main() -> None:
         # Initialize researcher
         researcher = InfluencerEngagementResearcher()
         

@@ -1,4 +1,6 @@
 """
+import asyncio
+
 Content Delivery Network (CDN) Management - High-Quality Audio Streaming
 Enterprise CDN infrastructure optimized for Ainflue creator audio content
 
@@ -104,7 +106,7 @@ class CDNManager:
     - Audio analytics and quality monitoring
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize CDN manager with audio streaming focus"""
         self.cdns = {}
         self.performance_metrics = {}

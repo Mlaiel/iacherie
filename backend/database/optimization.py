@@ -180,7 +180,7 @@ class QueryOptimizationEngine(IOptimizationEngine):
     and query rewriting for maximum performance.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._query_patterns: Dict[str, QueryPattern] = {}
         self._query_history: deque = deque(maxlen=10000)
         self._index_recommendations: List[OptimizationRecommendation] = []
@@ -421,7 +421,7 @@ class QueryOptimizationEngine(IOptimizationEngine):
             "metrics_tracked": ["response_time", "throughput", "resource_usage"]
         }
     
-    async def record_query_execution(self, sql: str, duration_ms: float, execution_plan: Optional[str] = None):
+    async def record_query_execution(self, sql -> None: str, duration_ms -> None: float, execution_plan -> None: Optional[str] = None) -> None:
         """Record query execution for analysis."""
         query_record = {
             "sql": sql,
@@ -468,7 +468,7 @@ class ConnectionPoolOptimizer(IOptimizationEngine):
     Intelligent connection pool sizing and optimization based on workload patterns.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._connection_metrics: deque = deque(maxlen=1000)
         self._pool_configurations: Dict[str, Dict[str, Any]] = {}
         
@@ -579,7 +579,7 @@ class DatabaseOptimizationManager:
     AI-powered performance optimization and intelligent resource management.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.query_optimizer = QueryOptimizationEngine()
         self.pool_optimizer = ConnectionPoolOptimizer()
         self._optimization_engines: List[IOptimizationEngine] = [
@@ -590,7 +590,7 @@ class DatabaseOptimizationManager:
         self._monitoring_tasks: List[asyncio.Task] = []
         self._auto_optimization_enabled = False
         
-    async def initialize(self, auto_optimization: bool = False):
+    async def initialize(self, auto_optimization -> None: bool = False) -> None:
         """Initialize optimization manager."""
         logger.info("⚡ Initializing Enterprise Database Optimization Manager...")
         
@@ -603,7 +603,7 @@ class DatabaseOptimizationManager:
         
         logger.info("✅ Enterprise Database Optimization Manager initialized")
     
-    async def _optimization_monitor(self):
+    async def _optimization_monitor(self) -> None:
         """Monitor and trigger optimizations."""
         while True:
             try:
@@ -618,7 +618,7 @@ class DatabaseOptimizationManager:
             except Exception as e:
                 logger.error(f"Optimization monitor error: {e}")
     
-    async def _auto_implement_safe_optimizations(self):
+    async def _auto_implement_safe_optimizations(self) -> None:
         """Automatically implement safe, low-risk optimizations."""
         pending_optimizations = [
             opt for opt in self._optimization_history 
@@ -753,7 +753,7 @@ class DatabaseOptimizationManager:
         """Get recommendations by optimization type."""
         return [opt for opt in self._optimization_history if opt.optimization_type == optimization_type]
     
-    async def close(self):
+    async def close(self) -> None:
         """Close optimization manager."""
         logger.info("🔌 Closing Database Optimization Manager...")
         

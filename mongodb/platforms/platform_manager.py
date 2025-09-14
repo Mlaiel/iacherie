@@ -91,7 +91,7 @@ class PlatformCredentials:
     scopes: List[str] = None
     webhook_url: Optional[str] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.scopes is None:
             self.scopes = []
 
@@ -109,7 +109,7 @@ class PlatformLimits:
     max_caption_length: int = 2000
     max_hashtags: int = 30
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.supported_formats is None:
             self.supported_formats = []
 
@@ -132,7 +132,7 @@ class PlatformConfig:
     auto_sync_enabled: bool = False
     custom_settings: Dict[str, Any] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.custom_settings is None:
             self.custom_settings = {}
 
@@ -145,7 +145,7 @@ class PlatformManager:
     content distribution across multiple social media and content platforms.
     """
     
-    def __init__(self, db: AsyncIOMotorDatabase):
+    def __init__(self, db -> None: AsyncIOMotorDatabase) -> None:
         """
         Initialize Platform Manager
         

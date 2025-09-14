@@ -90,7 +90,7 @@ class RateLimitResult:
 class GatewayRateLimiter:
     """Enterprise gateway rate limiting system"""
 
-    def __init__(self, redis_url: str = "redis://localhost:6379"):
+    def __init__(self, redis_url -> None: str = "redis -> None://localhost -> None:6379") -> None:
         self.redis_url = redis_url
         self.redis_client: Optional[redis.Redis] = None
         
@@ -137,7 +137,7 @@ class GatewayRateLimiter:
             'crypto': {'daily': 1000, 'hourly': 100}
         }
 
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize Redis connection"""
         try:
             self.redis_client = redis.from_url(self.redis_url, decode_responses=True)
@@ -486,7 +486,7 @@ class GatewayRateLimiter:
             last_request=current_time
         )
 
-    async def _save_rate_limit_state(self, key: str, state: RateLimitState):
+    async def _save_rate_limit_state(self, key -> None: str, state -> None: RateLimitState) -> None:
         """Save rate limit state to storage"""
         state_data = {
             'count': state.count,
@@ -516,7 +516,7 @@ class GatewayRateLimiter:
             await self._cleanup_memory_store()
             self.last_cleanup = current_time
 
-    async def _cleanup_memory_store(self):
+    async def _cleanup_memory_store(self) -> None:
         """Clean up expired entries from memory store"""
         current_time = time.time()
         expired_keys = []
@@ -531,11 +531,11 @@ class GatewayRateLimiter:
         
         logger.debug(f"Cleaned up {len(expired_keys)} expired rate limit entries")
 
-    async def set_custom_limits(self, identifier: str, limits: List[RateLimit]):
+    async def set_custom_limits(self, identifier -> None: str, limits -> None: List[RateLimit]) -> None:
         """Set custom rate limits for specific identifier"""
         self.custom_limits[identifier] = limits
 
-    async def remove_custom_limits(self, identifier: str):
+    async def remove_custom_limits(self, identifier -> None: str) -> None:
         """Remove custom rate limits for identifier"""
         if identifier in self.custom_limits:
             del self.custom_limits[identifier]
@@ -567,7 +567,7 @@ class GatewayRateLimiter:
             'timestamp': time.time()
         }
 
-    async def reset_rate_limit(self, identifier: str, scope: LimitScope):
+    async def reset_rate_limit(self, identifier -> None: str, scope -> None: LimitScope) -> None:
         """Reset rate limits for identifier"""
         limits = self._get_applicable_limits(identifier, scope)
         

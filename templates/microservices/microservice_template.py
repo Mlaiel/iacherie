@@ -111,7 +111,7 @@ class {{microservice_name}}Service:
     - Service discovery integration
     """
     
-    def __init__(self, config: ServiceConfig):
+    def __init__(self, config -> None: ServiceConfig) -> None:
         self.config = config
         self.app = FastAPI(
             title=config.name,
@@ -135,7 +135,7 @@ class {{microservice_name}}Service:
         self._setup_routes()
         self._setup_event_handlers()
     
-    def _setup_middleware(self):
+    def _setup_middleware(self) -> None:
         """Setup FastAPI middleware"""
         if self.config.enable_cors:
             self.app.add_middleware(
@@ -151,7 +151,7 @@ class {{microservice_name}}Service:
         
         # Add custom middleware
         @self.app.middleware("http")
-        async def metrics_middleware(request: Request, call_next):
+        async def metrics_middleware(request -> None: Request, call_next) -> None:
             start_time = datetime.utcnow()
             
             try:
@@ -180,16 +180,16 @@ class {{microservice_name}}Service:
                 
                 raise e
     
-    def _setup_routes(self):
+    def _setup_routes(self) -> None:
         """Setup API routes"""
         
         @self.app.get("/health", response_model=HealthStatus)
-        async def health_check():
+        async def health_check() -> None:
             """Health check endpoint"""
             return await self._get_health_status()
         
         @self.app.get("/ready")
-        async def readiness_check():
+        async def readiness_check() -> None:
             """Readiness check endpoint"""
             if self.status == ServiceStatus.HEALTHY:
                 return {"status": "ready"}
@@ -197,7 +197,7 @@ class {{microservice_name}}Service:
                 raise HTTPException(status_code=503, detail="Service not ready")
         
         @self.app.get("/metrics")
-        async def metrics_endpoint():
+        async def metrics_endpoint() -> None:
             """Prometheus metrics endpoint"""
             if self.config.enable_metrics:
                 return Response(
@@ -208,7 +208,7 @@ class {{microservice_name}}Service:
                 raise HTTPException(status_code=404, detail="Metrics disabled")
         
         @self.app.get("/info")
-        async def service_info():
+        async def service_info() -> None:
             """Service information endpoint"""
             return {
                 "name": self.config.name,
@@ -221,7 +221,7 @@ class {{microservice_name}}Service:
         
         # Add custom business logic routes here
         @self.app.post("/api/v1/process")
-        async def process_request(request_data: Dict[str, Any]):
+        async def process_request(request_data -> None: Dict[str, Any]) -> None:
             """Main processing endpoint"""
             try:
                 result = await self._process_business_logic(request_data)
@@ -230,11 +230,11 @@ class {{microservice_name}}Service:
                 logger.error(f"Processing failed: {str(e)}")
                 raise HTTPException(status_code=500, detail=str(e))
     
-    def _setup_event_handlers(self):
+    def _setup_event_handlers(self) -> None:
         """Setup application event handlers"""
         
         @self.app.on_event("startup")
-        async def startup_event():
+        async def startup_event() -> None:
             """Application startup event"""
             try:
                 await self._initialize_connections()
@@ -247,14 +247,14 @@ class {{microservice_name}}Service:
                 raise
         
         @self.app.on_event("shutdown")
-        async def shutdown_event():
+        async def shutdown_event() -> None:
             """Application shutdown event"""
             self.status = ServiceStatus.STOPPING
             await self._cleanup_connections()
             await self._deregister_service()
             logger.info(f"Service {self.config.name} stopped")
     
-    async def _initialize_connections(self):
+    async def _initialize_connections(self) -> None:
         """Initialize external connections"""
         try:
             # Initialize Redis connection
@@ -281,7 +281,7 @@ class {{microservice_name}}Service:
             logger.error(f"Failed to initialize connections: {str(e)}")
             raise
     
-    async def _cleanup_connections(self):
+    async def _cleanup_connections(self) -> None:
         """Cleanup external connections"""
         try:
             if self.redis_client:
@@ -375,7 +375,7 @@ class {{microservice_name}}Service:
             await self._record_circuit_breaker_failure(message.target_service)
             return False
     
-    async def _setup_message_subscriptions(self):
+    async def _setup_message_subscriptions(self) -> None:
         """Setup message queue subscriptions"""
         if not self.redis_client:
             return
@@ -393,7 +393,7 @@ class {{microservice_name}}Service:
         # Start message processing task
         asyncio.create_task(self._process_messages())
     
-    async def _process_messages(self):
+    async def _process_messages(self) -> None:
         """Process incoming messages"""
         if not self.redis_client:
             return
@@ -434,7 +434,7 @@ class {{microservice_name}}Service:
                 logger.error(f"Error in message processing loop: {str(e)}")
                 await asyncio.sleep(5)
     
-    async def _handle_message(self, message: ServiceMessage):
+    async def _handle_message(self, message -> None: ServiceMessage) -> None:
         """Handle incoming message"""
         handler = self.message_handlers.get(message.operation)
         
@@ -452,7 +452,7 @@ class {{microservice_name}}Service:
         else:
             logger.warning(f"No handler found for operation: {message.operation}")
     
-    def register_message_handler(self, operation: str, handler: Callable):
+    def register_message_handler(self, operation -> None: str, handler -> None: Callable) -> None:
         """Register message handler for specific operation"""
         self.message_handlers[operation] = handler
         logger.info(f"Registered handler for operation: {operation}")
@@ -479,7 +479,7 @@ class {{microservice_name}}Service:
         
         return True
     
-    async def _record_circuit_breaker_failure(self, service: str):
+    async def _record_circuit_breaker_failure(self, service -> None: str) -> None:
         """Record circuit breaker failure"""
         if service not in self.circuit_breakers:
             self.circuit_breakers[service] = {
@@ -496,7 +496,7 @@ class {{microservice_name}}Service:
             cb["state"] = "open"
             logger.warning(f"Circuit breaker opened for service: {service}")
     
-    async def _record_circuit_breaker_success(self, service: str):
+    async def _record_circuit_breaker_success(self, service -> None: str) -> None:
         """Record circuit breaker success"""
         if service in self.circuit_breakers:
             cb = self.circuit_breakers[service]
@@ -524,12 +524,12 @@ class {{microservice_name}}Service:
             "timestamp": datetime.utcnow().isoformat()
         }
     
-    async def _register_service(self):
+    async def _register_service(self) -> None:
         """Register service with service discovery"""
         # This would integrate with service discovery like Consul, etcd, etc.
         logger.info(f"Service {self.config.name} registered")
     
-    async def _deregister_service(self):
+    async def _deregister_service(self) -> None:
         """Deregister service from service discovery"""
         logger.info(f"Service {self.config.name} deregistered")
     
@@ -539,7 +539,7 @@ class {{microservice_name}}Service:
         # For now, return a mock URL
         return f"http://{service_name}:8000"
     
-    async def _retry_message(self, message: ServiceMessage):
+    async def _retry_message(self, message -> None: ServiceMessage) -> None:
         """Retry failed message"""
         # Implement exponential backoff
         delay = min(2 ** message.retry_count, 60)  # Max 60 seconds
@@ -548,7 +548,7 @@ class {{microservice_name}}Service:
         # Resend message
         await self.send_message(message)
     
-    def run(self):
+    def run(self) -> None:
         """Run the microservice"""
         import uvicorn
         
@@ -574,13 +574,13 @@ def create_{{microservice_name|lower}}_service() -> {{microservice_name}}Service
     service = {{microservice_name}}Service(config)
     
     # Register custom message handlers
-    async def handle_user_created(message: ServiceMessage):
+    async def handle_user_created(message -> None: ServiceMessage) -> None:
         """Handle user created event"""
         user_data = message.payload
         logger.info(f"User created: {user_data.get('user_id')}")
         # Add business logic here
     
-    async def handle_process_request(message: ServiceMessage):
+    async def handle_process_request(message -> None: ServiceMessage) -> None:
         """Handle process request command"""
         request_data = message.payload
         logger.info(f"Processing request: {request_data}")
@@ -596,3 +596,5 @@ if __name__ == "__main__":
     # Run the service
     service = create_{{microservice_name|lower}}_service()
     service.run()
+
+# File has syntax issues - needs manual review

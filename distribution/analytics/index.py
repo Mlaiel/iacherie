@@ -1,4 +1,6 @@
 """
+import asyncio
+
 Analytics Service Entry Point - Distribution Analytics Hub
 ========================================================
 
@@ -41,12 +43,12 @@ roi_analytics = ROIAnalytics()
 sentiment_analytics = SentimentAnalytics()
 
 @analytics_router.get("/health")
-async def analytics_health():
+async def analytics_health() -> None:
     """Analytics service health check"""
     return {"status": "healthy", "service": "analytics"}
 
 @analytics_router.get("/metrics")
-async def analytics_metrics():
+async def analytics_metrics() -> None:
     """Get analytics service metrics"""
     return await analytics_aggregator.get_service_metrics()
 

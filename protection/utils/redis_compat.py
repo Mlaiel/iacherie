@@ -1,5 +1,7 @@
 """Redis compatibility wrapper for Python 3.12+.
 
+import asyncio
+
 This module provides a compatibility layer for aioredis to handle
 the TimeoutError issue in Python 3.12.
 
@@ -28,7 +30,7 @@ except (ImportError, TypeError) as e:
         """Mock Redis client for compatibility when aioredis is not available."""
         
         @classmethod
-        async def from_url(cls, url: str, **kwargs):
+        async def from_url(cls, url -> None: str, **kwargs) -> None:
             """Mock from_url method."""
             logger.warning("Redis functionality disabled - using mock client")
             return cls()
@@ -53,7 +55,7 @@ except (ImportError, TypeError) as e:
             """Mock expire method."""
             return True
         
-        async def close(self):
+        async def close(self) -> None:
             """Mock close method."""
             pass
         
@@ -63,6 +65,7 @@ except (ImportError, TypeError) as e:
     
     # Create mock aioredis module
     class MockAioRedis:
+    """MockAioRedis: class implementation"""
         Redis = MockRedis
         from_url = MockRedis.from_url
     

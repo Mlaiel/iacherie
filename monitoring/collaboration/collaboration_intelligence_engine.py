@@ -128,7 +128,7 @@ class CollaborationIntelligenceEngine:
     for optimizing collaborations across the creator ecosystem.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the collaboration intelligence engine."""
         self.insights: List[CollaborationInsight] = []
         self.recommendations: List[StrategicRecommendation] = []
@@ -144,7 +144,7 @@ class CollaborationIntelligenceEngine:
         self._initialize_benchmarks()
         self._load_market_intelligence()
     
-    def _setup_intelligence_models(self):
+    def _setup_intelligence_models(self) -> None:
         """Setup AI models for intelligence analysis."""
         self.intelligence_models = {
             "collaboration_success_predictor": {
@@ -185,7 +185,7 @@ class CollaborationIntelligenceEngine:
             }
         }
     
-    def _initialize_benchmarks(self):
+    def _initialize_benchmarks(self) -> None:
         """Initialize performance benchmarks."""
         self.performance_benchmarks = {
             "collaboration_success_rate": 0.75,
@@ -198,7 +198,7 @@ class CollaborationIntelligenceEngine:
             "satisfaction_score": 0.85
         }
     
-    def _load_market_intelligence(self):
+    def _load_market_intelligence(self) -> None:
         """Load market intelligence and competitive analysis."""
         self.market_intelligence = {
             "market_size": {
@@ -284,7 +284,7 @@ class CollaborationIntelligenceEngine:
         
         return statistics.mean(quality_factors) if quality_factors else 0.5
     
-    def _analyze_collaboration_data(self, source_module: str, data: Dict[str, Any]):
+    def _analyze_collaboration_data(self, source_module -> None: str, data -> None: Dict[str, Any]) -> None:
         """Analyze collaboration data to generate insights."""
         
         if source_module == "ai_matching_monitor":
@@ -301,7 +301,7 @@ class CollaborationIntelligenceEngine:
         # Update trends
         self._update_collaboration_trends(source_module, data)
     
-    def _analyze_matching_performance(self, data: Dict[str, Any]):
+    def _analyze_matching_performance(self, data -> None: Dict[str, Any]) -> None:
         """Analyze AI matching performance data."""
         
         metrics = data.get("metrics", {})
@@ -350,7 +350,7 @@ class CollaborationIntelligenceEngine:
             )
             self.insights.append(insight)
     
-    def _analyze_success_predictions(self, data: Dict[str, Any]):
+    def _analyze_success_predictions(self, data -> None: Dict[str, Any]) -> None:
         """Analyze collaboration success prediction data."""
         
         metrics = data.get("metrics", {})
@@ -397,7 +397,7 @@ class CollaborationIntelligenceEngine:
             )
             self.insights.append(insight)
     
-    def _analyze_partnership_performance(self, data: Dict[str, Any]):
+    def _analyze_partnership_performance(self, data -> None: Dict[str, Any]) -> None:
         """Analyze partnership performance data."""
         
         metrics = data.get("metrics", {})
@@ -446,7 +446,7 @@ class CollaborationIntelligenceEngine:
             )
             self.insights.append(insight)
     
-    def _analyze_roi_performance(self, data: Dict[str, Any]):
+    def _analyze_roi_performance(self, data -> None: Dict[str, Any]) -> None:
         """Analyze ROI performance data."""
         
         metrics = data.get("metrics", {})
@@ -472,7 +472,7 @@ class CollaborationIntelligenceEngine:
             )
             self.insights.append(insight)
     
-    def _analyze_network_effects(self, data: Dict[str, Any]):
+    def _analyze_network_effects(self, data -> None: Dict[str, Any]) -> None:
         """Analyze network effects data."""
         
         metrics = data.get("metrics", {})
@@ -521,7 +521,7 @@ class CollaborationIntelligenceEngine:
             )
             self.insights.append(insight)
     
-    def _update_collaboration_trends(self, source_module: str, data: Dict[str, Any]):
+    def _update_collaboration_trends(self, source_module -> None: str, data -> None: Dict[str, Any]) -> None:
         """Update collaboration trends based on new data."""
         
         metrics = data.get("metrics", {})
@@ -581,7 +581,7 @@ class CollaborationIntelligenceEngine:
         else:
             return 120  # 4 months
     
-    def _update_existing_trends(self, metrics: Dict[str, Any], timestamp: datetime):
+    def _update_existing_trends(self, metrics -> None: Dict[str, Any], timestamp -> None: datetime) -> None:
         """Update existing trend data with new metrics."""
         
         # Update trend strength based on new data
@@ -598,7 +598,7 @@ class CollaborationIntelligenceEngine:
                     # Update trend strength (simple exponential smoothing)
                     trend.strength = trend.strength * 0.8 + avg_indicator * 0.2
     
-    def _update_intelligence_insights(self):
+    def _update_intelligence_insights(self) -> None:
         """Update intelligence insights based on current data."""
         
         # Generate strategic recommendations
@@ -610,7 +610,7 @@ class CollaborationIntelligenceEngine:
         # Clean up expired insights
         self._cleanup_expired_insights()
     
-    def _generate_strategic_recommendations(self):
+    def _generate_strategic_recommendations(self) -> None:
         """Generate strategic recommendations based on insights."""
         
         # Group insights by category
@@ -720,7 +720,7 @@ class CollaborationIntelligenceEngine:
         
         return None
     
-    def _perform_network_analysis(self):
+    def _perform_network_analysis(self) -> None:
         """Perform comprehensive network analysis."""
         
         # Simulate network analysis (in production, would analyze actual network data)
@@ -828,7 +828,7 @@ class CollaborationIntelligenceEngine:
         
         return opportunities[:6]
     
-    def _cleanup_expired_insights(self):
+    def _cleanup_expired_insights(self) -> None:
         """Remove expired insights and recommendations."""
         
         current_time = datetime.now()

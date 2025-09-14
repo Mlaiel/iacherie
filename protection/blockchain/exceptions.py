@@ -6,13 +6,13 @@ Copyright: All rights reserved. Any unauthorized use, reproduction, or distribut
 of this code without explicit written permission is strictly prohibited.
 
 Project Team Specialties:
-- Lead AI Developer & Backend Senior: Fahed Mlaiel
+    - Lead AI Developer & Backend Senior: Fahed Mlaiel
 - ML Engineer & Blockchain Specialist: Advanced IA Processing
 - Database Administrator & Security Expert: Data Protection
 - Microservices Architect & Audio Processing: Multi-format Support  
 - DevOps Engineer & IA Prompt Engineer: Production Deployment
 
-⚠️ STRONG WARNING ⚠️
+# [EMOJI_REMOVED] STRONG WARNING # [EMOJI_REMOVED]
 Any attempt to steal, copy, reproduce, or use this concept, idea, or code 
 without explicit written authorization from Fahed Mlaiel is strictly 
 prohibited and will result in legal action.
@@ -79,12 +79,12 @@ class BlockchainError(Exception):
     
     def __init__(
         self,
-        message: str,
-        error_code: ErrorCode,
-        details: Optional[Dict[str, Any]] = None,
-        transaction_hash: Optional[str] = None,
-        network: Optional[str] = None
-    ):
+        message -> None: str,
+        error_code -> None: ErrorCode,
+        details -> None: Optional[Dict[str, Any]] = None,
+        transaction_hash -> None: Optional[str] = None,
+        network -> None: Optional[str] = None
+    ) -> None:
         self.message = message
         self.error_code = error_code
         self.details = details or {}
@@ -152,11 +152,11 @@ Insufficient funds for transaction"""
     
     def __init__(
         self,
-        required_amount: str,
-        available_amount: str,
-        currency: str,
-        network: Optional[str] = None
-    ):
+        required_amount -> None: str,
+        available_amount -> None: str,
+        currency -> None: str,
+        network -> None: Optional[str] = None
+    ) -> None:
         message = f"Insufficient {currency}: required {required_amount}, available {available_amount}"
         details = {
             "required_amount": required_amount,
@@ -184,10 +184,10 @@ class GasEstimationError(TransactionError):
     
     def __init__(
         self,
-        message: str = "Failed to estimate gas for transaction",
-        network: Optional[str] = None,
-        details: Optional[Dict[str, Any]] = None
-    ):
+        message -> None: str = "Failed to estimate gas for transaction",
+        network -> None: Optional[str] = None,
+        details -> None: Optional[Dict[str, Any]] = None
+    ) -> None:
         super().__init__(
             message,
             error_code=ErrorCode.GAS_ESTIMATION_FAILED,
@@ -201,13 +201,13 @@ class ContractError(BlockchainError):
     
     def __init__(
         self,
-        message: str,
-        contract_address: Optional[str] = None,
-        error_code: ErrorCode = ErrorCode.CONTRACT_EXECUTION_FAILED,
-        details: Optional[Dict[str, Any]] = None,
-        transaction_hash: Optional[str] = None,
-        network: Optional[str] = None
-    ):
+        message -> None: str,
+        contract_address -> None: Optional[str] = None,
+        error_code -> None: ErrorCode = ErrorCode.CONTRACT_EXECUTION_FAILED,
+        details -> None: Optional[Dict[str, Any]] = None,
+        transaction_hash -> None: Optional[str] = None,
+        network -> None: Optional[str] = None
+    ) -> None:
         self.contract_address = contract_address
         if contract_address:
             details = details or {}
@@ -220,11 +220,11 @@ class ContractDeploymentError(ContractError):
     
     def __init__(
         self,
-        message: str,
-        contract_type: str,
-        network: Optional[str] = None,
-        details: Optional[Dict[str, Any]] = None
-    ):
+        message -> None: str,
+        contract_type -> None: str,
+        network -> None: Optional[str] = None,
+        details -> None: Optional[Dict[str, Any]] = None
+    ) -> None:
         details = details or {}
         details["contract_type"] = contract_type
         super().__init__(
@@ -240,13 +240,13 @@ class ContractExecutionError(ContractError):
     
     def __init__(
         self,
-        message: str,
-        contract_address: str,
-        method_name: str,
-        parameters: Optional[Dict[str, Any]] = None,
-        network: Optional[str] = None,
-        transaction_hash: Optional[str] = None
-    ):
+        message -> None: str,
+        contract_address -> None: str,
+        method_name -> None: str,
+        parameters -> None: Optional[Dict[str, Any]] = None,
+        network -> None: Optional[str] = None,
+        transaction_hash -> None: Optional[str] = None
+    ) -> None:
         details = {
             "method_name": method_name,
             "parameters": parameters or {}
@@ -266,13 +266,13 @@ class NFTError(BlockchainError):
     
     def __init__(
         self,
-        message: str,
-        token_id: Optional[str] = None,
-        error_code: ErrorCode = ErrorCode.NFT_MINT_FAILED,
-        details: Optional[Dict[str, Any]] = None,
-        transaction_hash: Optional[str] = None,
-        network: Optional[str] = None
-    ):
+        message -> None: str,
+        token_id -> None: Optional[str] = None,
+        error_code -> None: ErrorCode = ErrorCode.NFT_MINT_FAILED,
+        details -> None: Optional[Dict[str, Any]] = None,
+        transaction_hash -> None: Optional[str] = None,
+        network -> None: Optional[str] = None
+    ) -> None:
         self.token_id = token_id
         if token_id:
             details = details or {}
@@ -316,10 +316,10 @@ class SecurityError(BlockchainError):
     
     def __init__(
         self,
-        message: str,
-        error_code: ErrorCode = ErrorCode.SIGNATURE_VALIDATION_FAILED,
-        details: Optional[Dict[str, Any]] = None
-    ):
+        message -> None: str,
+        error_code -> None: ErrorCode = ErrorCode.SIGNATURE_VALIDATION_FAILED,
+        details -> None: Optional[Dict[str, Any]] = None
+    ) -> None:
         super().__init__(message, error_code, details)
 
 
@@ -329,10 +329,10 @@ Digital signature validation errors"""
     
     def __init__(
         self,
-        message: str = "Invalid signature",
-        signature: Optional[str] = None,
-        expected_signer: Optional[str] = None
-    ):
+        message -> None: str = "Invalid signature",
+        signature -> None: Optional[str] = None,
+        expected_signer -> None: Optional[str] = None
+    ) -> None:
         details = {}
         if signature:
             details["signature"] = signature
@@ -351,11 +351,11 @@ class StorageError(BlockchainError):
     
     def __init__(
         self,
-        message: str,
-        storage_type: str,
-        error_code: ErrorCode = ErrorCode.IPFS_UPLOAD_FAILED,
-        details: Optional[Dict[str, Any]] = None
-    ):
+        message -> None: str,
+        storage_type -> None: str,
+        error_code -> None: ErrorCode = ErrorCode.IPFS_UPLOAD_FAILED,
+        details -> None: Optional[Dict[str, Any]] = None
+    ) -> None:
         details = details or {}
         details["storage_type"] = storage_type
         super().__init__(message, error_code, details)
@@ -366,11 +366,11 @@ class IPFSError(StorageError):
     
     def __init__(
         self,
-        message: str,
-        ipfs_hash: Optional[str] = None,
-        error_code: ErrorCode = ErrorCode.IPFS_UPLOAD_FAILED,
-        details: Optional[Dict[str, Any]] = None
-    ):
+        message -> None: str,
+        ipfs_hash -> None: Optional[str] = None,
+        error_code -> None: ErrorCode = ErrorCode.IPFS_UPLOAD_FAILED,
+        details -> None: Optional[Dict[str, Any]] = None
+    ) -> None:
         details = details or {}
         if ipfs_hash:
             details["ipfs_hash"] = ipfs_hash
@@ -382,13 +382,13 @@ class DeFiError(BlockchainError):
     
     def __init__(
         self,
-        message: str,
-        protocol: str,
-        error_code: ErrorCode = ErrorCode.SWAP_FAILED,
-        details: Optional[Dict[str, Any]] = None,
-        transaction_hash: Optional[str] = None,
-        network: Optional[str] = None
-    ):
+        message -> None: str,
+        protocol -> None: str,
+        error_code -> None: ErrorCode = ErrorCode.SWAP_FAILED,
+        details -> None: Optional[Dict[str, Any]] = None,
+        transaction_hash -> None: Optional[str] = None,
+        network -> None: Optional[str] = None
+    ) -> None:
         details = details or {}
         details["protocol"] = protocol
         super().__init__(message, error_code, details, transaction_hash, network)
@@ -430,11 +430,11 @@ Base exception for all blockchain-related errors"""
     
     def __init__(
         self, 
-        message: str, 
-        error_code: str = None, 
-        details: Dict[str, Any] = None,
-        transaction_hash: str = None
-    ):
+        message -> None: str, 
+        error_code -> None: str = None, 
+        details -> None: Dict[str, Any] = None,
+        transaction_hash -> None: str = None
+    ) -> None:
         self.message = message
         self.error_code = error_code
         self.details = details or {}
@@ -472,7 +472,7 @@ class BlockchainConnectionError(BlockchainError):
     """
 Raised when blockchain network connection fails"""
     
-    def __init__(self, network: str, endpoint: str, **kwargs):
+    def __init__(self, network -> None: str, endpoint -> None: str, **kwargs) -> None:
         message = f"Failed to connect to {network} blockchain at {endpoint}"
         super().__init__(message, error_code="BLOCKCHAIN_CONNECTION_FAILED", **kwargs)
         self.network = network
@@ -482,7 +482,7 @@ Raised when blockchain network connection fails"""
 class ContractDeploymentError(BlockchainError):
     """Raised when smart contract deployment fails"""
     
-    def __init__(self, contract_name: str, reason: str, **kwargs):
+    def __init__(self, contract_name -> None: str, reason -> None: str, **kwargs) -> None:
         message = f"Failed to deploy {contract_name} contract: {reason}"
         super().__init__(message, error_code="CONTRACT_DEPLOYMENT_FAILED", **kwargs)
         self.contract_name = contract_name
@@ -492,7 +492,7 @@ class ContractDeploymentError(BlockchainError):
 class ContractExecutionError(BlockchainError):
     """Raised when smart contract execution fails"""
     
-    def __init__(self, contract_address: str, method: str, reason: str, **kwargs):
+    def __init__(self, contract_address -> None: str, method -> None: str, reason -> None: str, **kwargs) -> None:
         message = f"Failed to execute {method} on contract {contract_address}: {reason}"
         super().__init__(message, error_code="CONTRACT_EXECUTION_FAILED", **kwargs)
         self.contract_address = contract_address
@@ -503,7 +503,7 @@ class ContractExecutionError(BlockchainError):
 class TransactionError(BlockchainError):
     """Raised when blockchain transaction fails"""
     
-    def __init__(self, transaction_type: str, reason: str, gas_used: int = None, **kwargs):
+    def __init__(self, transaction_type -> None: str, reason -> None: str, gas_used -> None: int = None, **kwargs) -> None:
         message = f"Transaction {transaction_type} failed: {reason}"
         super().__init__(message, error_code="TRANSACTION_FAILED", **kwargs)
         self.transaction_type = transaction_type
@@ -514,7 +514,7 @@ class TransactionError(BlockchainError):
 class InsufficientFundsError(BlockchainError):
     """Raised when wallet has insufficient funds for transaction"""
     
-    def __init__(self, required_amount: str, available_amount: str, currency: str = "ETH", **kwargs):
+    def __init__(self, required_amount -> None: str, available_amount -> None: str, currency -> None: str = "ETH", **kwargs) -> None:
         message = f"Insufficient {currency}: required {required_amount}, available {available_amount}"
         super().__init__(message, error_code="INSUFFICIENT_FUNDS", **kwargs)
         self.required_amount = required_amount
@@ -525,7 +525,7 @@ class InsufficientFundsError(BlockchainError):
 class NFTMintingError(BlockchainError):
     """Raised when NFT minting operation fails"""
     
-    def __init__(self, token_id: str, collection: str, reason: str, **kwargs):
+    def __init__(self, token_id -> None: str, collection -> None: str, reason -> None: str, **kwargs) -> None:
         message = f"Failed to mint NFT {token_id} in collection {collection}: {reason}"
         super().__init__(message, error_code="NFT_MINTING_FAILED", **kwargs)
         self.token_id = token_id
@@ -536,7 +536,7 @@ class NFTMintingError(BlockchainError):
 class NFTTransferError(BlockchainError):
     """Raised when NFT transfer fails"""
     
-    def __init__(self, token_id: str, from_address: str, to_address: str, reason: str, **kwargs):
+    def __init__(self, token_id -> None: str, from_address -> None: str, to_address -> None: str, reason -> None: str, **kwargs) -> None:
         message = f"Failed to transfer NFT {token_id} from {from_address} to {to_address}: {reason}"
         super().__init__(message, error_code="NFT_TRANSFER_FAILED", **kwargs)
         self.token_id = token_id
@@ -548,7 +548,7 @@ class NFTTransferError(BlockchainError):
 class DLTStorageError(BlockchainError):
     """Raised when distributed ledger storage operation fails"""
     
-    def __init__(self, operation: str, data_hash: str, reason: str, **kwargs):
+    def __init__(self, operation -> None: str, data_hash -> None: str, reason -> None: str, **kwargs) -> None:
         message = f"DLT storage {operation} failed for data {data_hash}: {reason}"
         super().__init__(message, error_code="DLT_STORAGE_FAILED", **kwargs)
         self.operation = operation
@@ -559,7 +559,7 @@ class DLTStorageError(BlockchainError):
 class CryptoPaymentError(BlockchainError):
     """Raised when cryptocurrency payment processing fails"""
     
-    def __init__(self, payment_id: str, amount: str, currency: str, reason: str, **kwargs):
+    def __init__(self, payment_id -> None: str, amount -> None: str, currency -> None: str, reason -> None: str, **kwargs) -> None:
         message = f"Crypto payment {payment_id} of {amount} {currency} failed: {reason}"
         super().__init__(message, error_code="CRYPTO_PAYMENT_FAILED", **kwargs)
         self.payment_id = payment_id
@@ -571,7 +571,7 @@ class CryptoPaymentError(BlockchainError):
 class DeFiIntegrationError(BlockchainError):
     """Raised when DeFi protocol integration fails"""
     
-    def __init__(self, protocol: str, operation: str, reason: str, **kwargs):
+    def __init__(self, protocol -> None: str, operation -> None: str, reason -> None: str, **kwargs) -> None:
         message = f"DeFi integration with {protocol} failed during {operation}: {reason}"
         super().__init__(message, error_code="DEFI_INTEGRATION_FAILED", **kwargs)
         self.protocol = protocol
@@ -582,7 +582,7 @@ class DeFiIntegrationError(BlockchainError):
 class Web3ProviderError(BlockchainError):
     """Raised when Web3 provider connection or operation fails"""
     
-    def __init__(self, provider_url: str, operation: str, reason: str, **kwargs):
+    def __init__(self, provider_url -> None: str, operation -> None: str, reason -> None: str, **kwargs) -> None:
         message = f"Web3 provider {provider_url} failed during {operation}: {reason}"
         super().__init__(message, error_code="WEB3_PROVIDER_FAILED", **kwargs)
         self.provider_url = provider_url
@@ -593,7 +593,7 @@ class Web3ProviderError(BlockchainError):
 class GasEstimationError(BlockchainError):
     """Raised when gas estimation for transaction fails"""
     
-    def __init__(self, transaction_data: str, reason: str, **kwargs):
+    def __init__(self, transaction_data -> None: str, reason -> None: str, **kwargs) -> None:
         message = f"Gas estimation failed for transaction: {reason}"
         super().__init__(message, error_code="GAS_ESTIMATION_FAILED", **kwargs)
         self.transaction_data = transaction_data
@@ -603,7 +603,7 @@ class GasEstimationError(BlockchainError):
 class SignatureValidationError(BlockchainError):
     """Raised when cryptographic signature validation fails"""
     
-    def __init__(self, signature: str, signer_address: str, reason: str, **kwargs):
+    def __init__(self, signature -> None: str, signer_address -> None: str, reason -> None: str, **kwargs) -> None:
         message = f"Signature validation failed for {signer_address}: {reason}"
         super().__init__(message, error_code="SIGNATURE_VALIDATION_FAILED", **kwargs)
         self.signature = signature
@@ -614,9 +614,12 @@ class SignatureValidationError(BlockchainError):
 class BlockchainSyncError(BlockchainError):
     """Raised when blockchain synchronization fails"""
     
-    def __init__(self, current_block: int, target_block: int, reason: str, **kwargs):
+    def __init__(self, current_block -> None: int, target_block -> None: int, reason -> None: str, **kwargs) -> None:
         message = f"Blockchain sync failed at block {current_block}/{target_block}: {reason}"
         super().__init__(message, error_code="BLOCKCHAIN_SYNC_FAILED", **kwargs)
         self.current_block = current_block
         self.target_block = target_block
         self.reason = reason
+}
+
+# File has syntax issues - needs manual review

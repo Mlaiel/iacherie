@@ -1,3 +1,8 @@
+"""
+Resource Coordinator module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Resource Coordinator - Enterprise Core Component
@@ -155,14 +160,14 @@ class ResourceProvider(ABC):
 class MockResourceProvider(ResourceProvider):
     """Mock resource provider for testing"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.resource_pools: Dict[ResourceType, ResourcePool] = {}
         self.allocations: Dict[str, ResourceAllocation] = {}
         
         # Initialize mock pools
         self._initialize_mock_pools()
     
-    def _initialize_mock_pools(self):
+    def _initialize_mock_pools(self) -> None:
         """Initialize mock resource pools"""
         self.resource_pools[ResourceType.CPU] = ResourcePool(
             pool_id="cpu_pool_1",
@@ -258,7 +263,7 @@ class ResourceCoordinator:
     capacity planning capabilities.
     """
     
-    def __init__(self, resource_provider: Optional[ResourceProvider] = None, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, resource_provider -> None: Optional[ResourceProvider] = None, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.resource_provider = resource_provider or MockResourceProvider()
         self.resource_pools: Dict[str, ResourcePool] = {}
@@ -810,11 +815,11 @@ class ResourceCoordinator:
                 await asyncio.sleep(60)
     
     # Context Manager Support
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         await self.start()
         return self
     
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         await self.stop()
 
 
@@ -825,7 +830,7 @@ def create_resource_coordinator(resource_provider: Optional[ResourceProvider] = 
 
 
 # Example usage
-async def main():
+async def main() -> None:
     """Example usage of Resource Coordinator"""
     async with create_resource_coordinator() as coordinator:
         # Register a resource pool

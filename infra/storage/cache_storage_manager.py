@@ -1,3 +1,8 @@
+"""
+Cache Storage Manager module
+Enterprise implementation for Ainflue platform
+"""
+
 # Ainflue Infrastructure Module
 # =============================
 # 
@@ -111,7 +116,7 @@ class CacheStorageManager:
     intelligent eviction, performance optimization, and multi-cloud support.
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """Initialize cache storage manager."""
         self.config = config
         self.cache_instances = {}
@@ -133,7 +138,7 @@ class CacheStorageManager:
         self._initialize_cache_backends()
         self._setup_default_caches()
     
-    def _initialize_cloud_clients(self):
+    def _initialize_cloud_clients(self) -> None:
         """Initialize cloud provider clients."""
         try:
             # AWS clients
@@ -173,7 +178,7 @@ class CacheStorageManager:
         except Exception as e:
             logger.error(f"Failed to initialize cloud clients: {e}")
     
-    def _initialize_cache_backends(self):
+    def _initialize_cache_backends(self) -> None:
         """Initialize cache backend connections."""
         try:
             # Redis connections
@@ -219,7 +224,7 @@ class CacheStorageManager:
         except Exception as e:
             logger.error(f"Failed to initialize cache backends: {e}")
     
-    def _setup_default_caches(self):
+    def _setup_default_caches(self) -> None:
         """Setup default cache configurations."""
         try:
             default_configs = [
@@ -815,7 +820,7 @@ class CacheStorageManager:
         # For distributed cache, use Redis by default
         return await self._delete_redis(cache_name, key)
     
-    async def _update_cache_metrics(self, cache_name: str, operation: str, success: bool):
+    async def _update_cache_metrics(self, cache_name -> None: str, operation -> None: str, success -> None: bool) -> None:
         """Update cache performance metrics."""
         try:
             if cache_name not in self.cache_metrics:
@@ -1074,7 +1079,7 @@ if __name__ == "__main__":
         "environment": "production"
     }
     
-    async def main():
+    async def main() -> None:
         # Initialize cache storage manager
         manager = CacheStorageManager(config)
         

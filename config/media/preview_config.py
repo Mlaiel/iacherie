@@ -1,7 +1,14 @@
+"""
+Preview Config module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 """Ainflue Preview Configuration Module
+import asyncio
+
 ======================================
 
 Enterprise-grade preview generation configuration for the Ainflue platform.
@@ -373,21 +380,21 @@ class PreviewJob:
     # Metadata
     created_date: datetime = field(default_factory=datetime.now)
     
-    def start_processing(self):
+    def start_processing(self) -> None:
         """Start preview generation"""
         self.status = "analyzing"
         self.started_at = datetime.now()
         self.progress = 0.0
         self.current_step = "Starting content analysis"
     
-    def update_progress(self, progress: float, step: str = ""):
+    def update_progress(self, progress -> None: float, step -> None: str = "") -> None:
         """Update job progress"""
         self.progress = max(0.0, min(1.0, progress))
         if step:
             self.current_step = step
     
-    def set_analysis_results(self, segments: List[PreviewSegment], 
-                           source_duration: float, confidence: float):
+    def set_analysis_results(self, segments -> None: List[PreviewSegment], 
+                           source_duration -> None: float, confidence -> None: float) -> None:
         """Set content analysis results"""
         self.analyzed_segments = segments
         self.total_source_duration = source_duration
@@ -395,15 +402,15 @@ class PreviewJob:
         self.status = "generating"
         self.current_step = "Selecting optimal segments"
     
-    def set_selected_segments(self, segments: List[PreviewSegment]):
+    def set_selected_segments(self, segments -> None: List[PreviewSegment]) -> None:
         """Set selected segments for preview"""
         self.selected_segments = segments
         self.preview_duration = sum(seg.duration for seg in segments)
         self.status = "encoding"
         self.current_step = "Encoding preview video"
     
-    def complete_processing(self, output_files: List[str], file_sizes: Dict[str, int],
-                           quality_scores: List[float] = None, processing_cost: float = 0.0):
+    def complete_processing(self, output_files -> None: List[str], file_sizes -> None: Dict[str, int],
+                           quality_scores -> None: List[float] = None, processing_cost -> None: float = 0.0) -> None:
         """Complete preview generation"""
         self.status = "completed"
         self.completed_at = datetime.now()
@@ -417,14 +424,14 @@ class PreviewJob:
             self.segment_quality_scores = quality_scores
             self.overall_quality_score = sum(quality_scores) / len(quality_scores)
     
-    def fail_processing(self, error_message: str):
+    def fail_processing(self, error_message -> None: str) -> None:
         """Mark job as failed"""
         self.status = "failed"
         self.completed_at = datetime.now()
         self.error_message = error_message
         self.current_step = f"Failed: {error_message}"
     
-    def add_warning(self, warning: str):
+    def add_warning(self, warning -> None: str) -> None:
         """Add warning message"""
         self.warnings.append(warning)
     
@@ -432,7 +439,7 @@ class PreviewJob:
         """Check if job can be retried"""
         return self.status == "failed" and self.retry_count < self.max_retries
     
-    def retry(self):
+    def retry(self) -> None:
         """Retry failed job"""
         if self.can_retry():
             self.retry_count += 1
@@ -492,7 +499,7 @@ class PreviewJob:
 class PreviewConfiguration:
     """Main preview configuration manager"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize preview configuration"""
         # Data storage
         self.templates: Dict[str, PreviewTemplate] = {}
@@ -576,7 +583,7 @@ class PreviewConfiguration:
         # Initialize default templates
         self._initialize_default_templates()
     
-    def _initialize_default_templates(self):
+    def _initialize_default_templates(self) -> None:
         """Initialize default preview templates"""
         
         # Short video preview template

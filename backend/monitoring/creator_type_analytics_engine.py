@@ -135,7 +135,7 @@ class CreatorTypeAnalyticsEngine:
     tailored to specific creator types and their unique business models.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.creator_profiles: Dict[str, CreatorTypeProfile] = {}
         self.type_analytics: Dict[CreatorType, List[TypeSpecificAnalytics]] = defaultdict(list)
         self.benchmarks: Dict[CreatorType, Dict[str, float]] = defaultdict(dict)
@@ -371,7 +371,7 @@ class CreatorTypeAnalyticsEngine:
         else:
             return CreatorTier.EMERGING
     
-    async def _calculate_initial_metrics(self, profile: CreatorTypeProfile):
+    async def _calculate_initial_metrics(self, profile -> None: CreatorTypeProfile) -> None:
         """Calculate initial metrics for creator profile"""
         try:
             # Calculate revenue per follower

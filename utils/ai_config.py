@@ -64,7 +64,7 @@ class AIConfig:
     - Fallback strategies
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize AI configuration manager"""
         self.providers: Dict[AIProvider, ProviderConfig] = {}
         self.models: Dict[str, ModelConfig] = {}
@@ -161,7 +161,7 @@ class AIConfig:
             logger.error(f"Provider configuration failed: {e}")
             raise
     
-    def _auto_configure_models(self, provider: AIProvider):
+    def _auto_configure_models(self, provider -> None: AIProvider) -> None:
         """Automatically configure models for provider"""
         default_config = self.default_configs.get(provider.value, {})
         models_config = default_config.get('models', {})
@@ -258,7 +258,7 @@ class AIConfig:
             logger.error(f"Optimal model selection failed: {e}")
             return None
     
-    def apply_profile(self, profile_name: str):
+    def apply_profile(self, profile_name -> None: str) -> None:
         """Apply configuration profile to all models"""
         try:
             if profile_name not in self.profiles:
@@ -282,7 +282,7 @@ class AIConfig:
             logger.error(f"Profile application failed: {e}")
             raise
     
-    def create_profile(self, name: str, config: Dict[str, Any]):
+    def create_profile(self, name -> None: str, config -> None: Dict[str, Any]) -> None:
         """Create new configuration profile"""
         self.profiles[name] = config
         logger.info(f"Profile created: {name}")
@@ -417,7 +417,7 @@ class AIConfig:
             logger.error(f"Configuration export failed: {e}")
             raise
     
-    def import_configuration(self, config_json: str):
+    def import_configuration(self, config_json -> None: str) -> None:
         """Import configuration from JSON"""
         try:
             config_data = json.loads(config_json)

@@ -138,7 +138,7 @@ class UserBehaviorProfile:
 class EngagementTracker:
     """Main engagement tracking system"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.logger = logger.getChild(self.__class__.__name__)
         
@@ -185,7 +185,7 @@ class EngagementTracker:
         
         return True
     
-    async def _update_real_time_metrics(self, event: EngagementEvent):
+    async def _update_real_time_metrics(self, event -> None: EngagementEvent) -> None:
         """Update real-time engagement metrics"""
         try:
             content_id = event.content_id
@@ -268,8 +268,8 @@ class EngagementTracker:
             self.logger.error(f"Content engagement analysis failed: {e}")
             return EngagementMetrics(content_id=content_id, analysis_period=(start_time, end_time))
     
-    async def _calculate_basic_metrics(self, events: List[EngagementEvent], 
-                                     metrics: EngagementMetrics):
+    async def _calculate_basic_metrics(self, events -> None: List[EngagementEvent], 
+                                     metrics -> None: EngagementMetrics) -> None:
         """Calculate basic engagement metrics"""
         try:
             # Count events by type
@@ -299,8 +299,8 @@ class EngagementTracker:
         except Exception as e:
             self.logger.error(f"Basic metrics calculation failed: {e}")
     
-    async def _calculate_time_based_metrics(self, events: List[EngagementEvent], 
-                                          metrics: EngagementMetrics):
+    async def _calculate_time_based_metrics(self, events -> None: List[EngagementEvent], 
+                                          metrics -> None: EngagementMetrics) -> None:
         """Calculate time-based engagement metrics"""
         try:
             view_events = [e for e in events if e.engagement_type == EngagementType.VIEW]
@@ -362,8 +362,8 @@ class EngagementTracker:
             self.logger.error(f"Retention curve calculation failed: {e}")
             return []
     
-    async def _calculate_behavioral_insights(self, events: List[EngagementEvent], 
-                                           metrics: EngagementMetrics):
+    async def _calculate_behavioral_insights(self, events -> None: List[EngagementEvent], 
+                                           metrics -> None: EngagementMetrics) -> None:
         """Calculate behavioral insights"""
         try:
             view_events = [e for e in events if e.engagement_type == EngagementType.VIEW]
@@ -412,8 +412,8 @@ class EngagementTracker:
         except Exception as e:
             self.logger.error(f"Behavioral insights calculation failed: {e}")
     
-    async def _calculate_performance_scores(self, events: List[EngagementEvent], 
-                                          metrics: EngagementMetrics):
+    async def _calculate_performance_scores(self, events -> None: List[EngagementEvent], 
+                                          metrics -> None: EngagementMetrics) -> None:
         """Calculate performance and prediction scores"""
         try:
             # Virality score based on shares and engagement velocity
@@ -458,7 +458,7 @@ class EngagementTracker:
 class UserBehaviorAnalyzer:
     """User behavior analysis and profiling"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.logger = logger.getChild(self.__class__.__name__)
         
@@ -504,8 +504,8 @@ class UserBehaviorAnalyzer:
             self.logger.error(f"User behavior analysis failed: {e}")
             return UserBehaviorProfile(user_id=user_id, analysis_period=(start_time, end_time))
     
-    async def _analyze_consumption_patterns(self, events: List[EngagementEvent],
-                                          profile: UserBehaviorProfile):
+    async def _analyze_consumption_patterns(self, events -> None: List[EngagementEvent],
+                                          profile -> None: UserBehaviorProfile) -> None:
         """Analyze user content consumption patterns"""
         try:
             # Total content consumed
@@ -539,8 +539,8 @@ class UserBehaviorAnalyzer:
         except Exception as e:
             self.logger.error(f"Consumption pattern analysis failed: {e}")
     
-    async def _analyze_interaction_patterns(self, events: List[EngagementEvent],
-                                          profile: UserBehaviorProfile):
+    async def _analyze_interaction_patterns(self, events -> None: List[EngagementEvent],
+                                          profile -> None: UserBehaviorProfile) -> None:
         """Analyze user interaction patterns"""
         try:
             # Interaction frequency
@@ -565,8 +565,8 @@ class UserBehaviorAnalyzer:
         except Exception as e:
             self.logger.error(f"Interaction pattern analysis failed: {e}")
     
-    async def _analyze_preferences(self, events: List[EngagementEvent],
-                                 profile: UserBehaviorProfile):
+    async def _analyze_preferences(self, events -> None: List[EngagementEvent],
+                                 profile -> None: UserBehaviorProfile) -> None:
         """Analyze user preferences"""
         try:
             # Platform preferences
@@ -593,8 +593,8 @@ class UserBehaviorAnalyzer:
         except Exception as e:
             self.logger.error(f"Preference analysis failed: {e}")
     
-    async def _calculate_behavioral_scores(self, events: List[EngagementEvent],
-                                         profile: UserBehaviorProfile):
+    async def _calculate_behavioral_scores(self, events -> None: List[EngagementEvent],
+                                         profile -> None: UserBehaviorProfile) -> None:
         """Calculate behavioral scores"""
         try:
             # Engagement score
@@ -624,8 +624,8 @@ class UserBehaviorAnalyzer:
         except Exception as e:
             self.logger.error(f"Behavioral scores calculation failed: {e}")
     
-    async def _generate_predictions(self, events: List[EngagementEvent],
-                                  profile: UserBehaviorProfile):
+    async def _generate_predictions(self, events -> None: List[EngagementEvent],
+                                  profile -> None: UserBehaviorProfile) -> None:
         """Generate behavioral predictions"""
         try:
             # Churn probability (simplified model)
@@ -685,7 +685,7 @@ class UserBehaviorAnalyzer:
 class InteractionMetrics:
     """Advanced interaction metrics calculator"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.logger = logger.getChild(self.__class__.__name__)
     

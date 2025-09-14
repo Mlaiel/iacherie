@@ -1,3 +1,8 @@
+"""
+Automation Orchestrator module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """Automation Orchestrator Engine
 
@@ -161,7 +166,7 @@ class AutomationOrchestrator:
     - Comprehensive audit trails
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize the automation orchestrator"""
         self.config = config or {}
         self.workflows: Dict[str, WorkflowDefinition] = {}

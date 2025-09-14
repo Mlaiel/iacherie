@@ -247,7 +247,7 @@ class ArchiveJob:
 class DataClassifier:
     """AI-powered data classification"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.classification_models = {}
         self.classification_rules = {}
         
@@ -337,7 +337,7 @@ class DataClassifier:
 class CompressionEngine:
     """Data compression engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.compression_stats = defaultdict(int)
         
     async def compress_file(self, source_path: str, target_path: str, compression_type: CompressionType) -> Dict[str, Any]:
@@ -426,13 +426,13 @@ class CompressionEngine:
                 'error': str(e)
             }
     
-    async def _decompress_gzip(self, source_path: str, target_path: str):
+    async def _decompress_gzip(self, source_path -> None: str, target_path -> None: str) -> None:
         """Decompress gzip file"""
         with gzip.open(source_path, 'rb') as f_in:
             with open(target_path, 'wb') as f_out:
                 shutil.copyfileobj(f_in, f_out)
     
-    async def _decompress_lz4(self, source_path: str, target_path: str):
+    async def _decompress_lz4(self, source_path -> None: str, target_path -> None: str) -> None:
         """Decompress LZ4 file"""
         with lz4.frame.open(source_path, 'rb') as f_in:
             with open(target_path, 'wb') as f_out:
@@ -455,7 +455,7 @@ class DataArchivingService:
     💡 AI Prompt: Intelligent retention recommendations, archiving insights, and automated policy generation
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.archive_records: Dict[str, ArchiveRecord] = {}
         self.retention_rules: Dict[str, RetentionRule] = {}
         self.archive_jobs: Dict[str, ArchiveJob] = {}
@@ -473,7 +473,7 @@ class DataArchivingService:
         
         logger.info("DataArchivingService initialized successfully")
     
-    def _initialize_storage_tiers(self):
+    def _initialize_storage_tiers(self) -> None:
         """Initialize storage tier configurations"""
         self.storage_tiers = {
             StorageTier.HOT: {
@@ -512,7 +512,7 @@ class DataArchivingService:
         for tier_config in self.storage_tiers.values():
             os.makedirs(tier_config['base_path'], exist_ok=True)
     
-    def _initialize_default_retention_rules(self):
+    def _initialize_default_retention_rules(self) -> None:
         """Initialize default retention rules"""
         default_rules = [
             RetentionRule(
@@ -1040,7 +1040,7 @@ class DataArchivingService:
 
 
 # Example usage and testing
-async def main():
+async def main() -> None:
     """Example usage of the DataArchivingService"""
     service = DataArchivingService()
     

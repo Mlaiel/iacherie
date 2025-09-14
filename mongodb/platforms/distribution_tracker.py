@@ -73,7 +73,7 @@ class DistributionRecord:
     failed_platforms: int = 0
     metadata: Dict[str, Any] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.metadata is None:
             self.metadata = {}
         if self.total_platforms == 0:
@@ -94,7 +94,7 @@ class PlatformDistribution:
     error_message: Optional[str] = None
     metadata: Dict[str, Any] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.metadata is None:
             self.metadata = {}
 
@@ -114,7 +114,7 @@ class EngagementMetrics:
     impressions: int = 0
     updated_at: datetime = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.updated_at is None:
             self.updated_at = datetime.utcnow()
 
@@ -131,7 +131,7 @@ class RevenueMetrics:
     tip_revenue: float = 0.0
     updated_at: datetime = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.updated_at is None:
             self.updated_at = datetime.utcnow()
 
@@ -147,7 +147,7 @@ class TrackingEvent:
     data: Dict[str, Any]
     timestamp: datetime = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.timestamp is None:
             self.timestamp = datetime.utcnow()
 
@@ -160,7 +160,7 @@ class DistributionTracker:
     with real-time analytics, performance monitoring, and AI-driven insights.
     """
     
-    def __init__(self, db: AsyncIOMotorDatabase):
+    def __init__(self, db -> None: AsyncIOMotorDatabase) -> None:
         """
         Initialize Distribution Tracker
         

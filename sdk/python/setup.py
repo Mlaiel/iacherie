@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 import os
 
 # Read README for long description
-def read_readme():
+def read_readme() -> None:
     readme_path = os.path.join(os.path.dirname(__file__), "README.md")
     if os.path.exists(readme_path):
         with open(readme_path, "r", encoding="utf-8") as f:
@@ -12,7 +12,7 @@ def read_readme():
     return "Ainflue Platform Python SDK"
 
 # Read requirements
-def read_requirements():
+def read_requirements() -> None:
     requirements_path = os.path.join(os.path.dirname(__file__), "requirements.txt")
     if os.path.exists(requirements_path):
         with open(requirements_path, "r", encoding="utf-8") as f:

@@ -44,7 +44,7 @@ class AmplificationResults:
 class ContentAmplificationEngine:
     """Main content amplification engine"""
     
-    def __init__(self, amplification_level: AmplificationLevel = AmplificationLevel.VIRAL):
+    def __init__(self, amplification_level -> None: AmplificationLevel = AmplificationLevel.VIRAL) -> None:
         """Initialize content amplification engine"""
         self.amplification_level = amplification_level
         

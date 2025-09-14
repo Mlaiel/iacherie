@@ -142,7 +142,7 @@ class RebuildJob:
 class ProjectionCheckpoint:
     """Manages projection checkpoints"""
     
-    def __init__(self, projection_id: str):
+    def __init__(self, projection_id -> None: str) -> None:
         self.projection_id = projection_id
         self.checkpoints: Dict[str, Any] = {}
     
@@ -199,7 +199,7 @@ class ProjectionHandler(ABC):
 class AggregateViewProjection(ProjectionHandler):
     """Simple aggregate view projection"""
     
-    def __init__(self, projection_id: str):
+    def __init__(self, projection_id -> None: str) -> None:
         self.projection_id = projection_id
         self.aggregate_views: Dict[str, Dict[str, Any]] = {}
         self.processed_events: Set[str] = set()
@@ -292,7 +292,7 @@ class AggregateViewProjection(ProjectionHandler):
 class SearchIndexProjection(ProjectionHandler):
     """Search index projection"""
     
-    def __init__(self, projection_id: str):
+    def __init__(self, projection_id -> None: str) -> None:
         self.projection_id = projection_id
         self.search_documents: Dict[str, Dict[str, Any]] = {}
         self.indexed_events: Set[str] = set()
@@ -397,7 +397,7 @@ class SearchIndexProjection(ProjectionHandler):
 class ProjectionRegistry:
     """Registry for managing projection definitions and handlers"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.projections: Dict[str, ProjectionDefinition] = {}
         self.handlers: Dict[str, ProjectionHandler] = {}
         self.metrics: Dict[str, ProjectionMetrics] = {}
@@ -460,7 +460,7 @@ class ProjectionRegistry:
 class ProjectionRebuildCoordinator:
     """Enterprise projection rebuild coordinator"""
     
-    def __init__(self, event_store: EventStoreInterface):
+    def __init__(self, event_store -> None: EventStoreInterface) -> None:
         self.event_store = event_store
         self.registry = ProjectionRegistry()
         self.rebuild_jobs: List[RebuildJob] = []
@@ -474,7 +474,7 @@ class ProjectionRebuildCoordinator:
         # Initialize default projections
         self._initialize_default_projections()
     
-    def _initialize_default_projections(self):
+    def _initialize_default_projections(self) -> None:
         """Initialize default projections"""
         # Aggregate view projection
         aggregate_def = ProjectionDefinition(
@@ -778,7 +778,7 @@ class ProjectionRebuildCoordinator:
         # Execute rebuilds with concurrency limit
         semaphore = asyncio.Semaphore(self.max_concurrent_rebuilds)
         
-        async def execute_with_semaphore(job: RebuildJob):
+        async def execute_with_semaphore(job -> None: RebuildJob) -> None:
             async with semaphore:
                 return await self.execute_rebuild(job.job_id)
         

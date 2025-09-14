@@ -1,4 +1,4 @@
-"""🔧 Security Scanner - IA-Influencer-Agent CI/CD
+"""# [EMOJI_REMOVED] Security Scanner - IA-Influencer-Agent CI/CD
 ================================================================
 Expert: SECURITY_ENGINEER + DEVOPS_ENGINEER
 Created: 2025-08-24
@@ -90,7 +90,7 @@ Security scan result"""
 class SecurityScanEngine:
     """Enterprise security scanning engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """
 Initialize security scan engine"""
         self.initialized = False
@@ -118,10 +118,10 @@ Initialize security scan engine"""
             await self._verify_security_tools()
             
             self.initialized = True
-            self.logger.info("✅ Security scanner initialized")
+            self.logger.info("# [EMOJI_REMOVED] Security scanner initialized")
             return True
         except Exception as e:
-            self.logger.error(f"❌ Failed to initialize security scanner: {e}")
+            self.logger.error(f"# [EMOJI_REMOVED] Failed to initialize security scanner: {e}")
             return False
     
     async def _verify_security_tools(self) -> None:
@@ -205,7 +205,7 @@ Initialize security scan engine"""
             
             self.scan_history.append(result)
             
-            self.logger.info(f"✅ Security scan {scan_id} completed. Score: {overall_score:.1f}")
+            self.logger.info(f"# [EMOJI_REMOVED] Security scan {scan_id} completed. Score: {overall_score:.1f}")
             return result
             
         except Exception as e:
@@ -226,7 +226,7 @@ Initialize security scan engine"""
             )
             
             self.scan_history.append(result)
-            self.logger.error(f"❌ Security scan {scan_id} failed: {e}")
+            self.logger.error(f"# [EMOJI_REMOVED] Security scan {scan_id} failed: {e}")
             return result
     
     def _generate_scan_id(self) -> str:
@@ -729,3 +729,6 @@ __all__ = [
     "ScanType",
     "VulnerabilitySeverity",
 ]
+)}
+
+# File has syntax issues - needs manual review

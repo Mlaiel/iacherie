@@ -1,3 +1,8 @@
+"""
+Audience Insights module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
@@ -160,7 +165,7 @@ class AudienceInsights:
     behavioral clustering, and strategic audience optimization.
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """Initialize audience insights engine with configuration"""
         self.config = config
         self.auth_handler = AuthenticationHandler(config)
@@ -204,7 +209,7 @@ class AudienceInsights:
         
         logger.info("Audience Insights Engine initialized successfully")
     
-    async def _initialize_analytics_models(self):
+    async def _initialize_analytics_models(self) -> None:
         """Initialize audience analytics models"""
         try:
             # Load historical audience data
@@ -861,10 +866,10 @@ class AudienceInsights:
     
     def _validate_analysis_inputs(
         self,
-        creator_id: str,
-        platforms: List[str],
-        time_range: str
-    ):
+        creator_id -> None: str,
+        platforms -> None: List[str],
+        time_range -> None: str
+    ) -> None:
         """Validate analysis input parameters"""
         if not creator_id:
             raise ValueError("Creator ID cannot be empty")
@@ -933,7 +938,7 @@ class AudienceInsights:
 
 if __name__ == "__main__":
     # Example usage
-    async def test_audience_insights():
+    async def test_audience_insights() -> None:
         config = {
             'redis_url': 'redis://localhost:6379',
             'openai_api_key': 'your-api-key',

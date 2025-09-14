@@ -93,8 +93,8 @@ class MLPredictionEngine:
     """
     
     def __init__(self, 
-                 cache_ttl: int = 3600,
-                 model_refresh_interval: int = 86400):
+                 cache_ttl -> None: int = 3600,
+                 model_refresh_interval -> None: int = 86400) -> None:
         """
         Initialize ML Prediction Engine
         

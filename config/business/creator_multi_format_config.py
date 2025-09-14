@@ -1,4 +1,6 @@
 """
+import logging
+
 Creator Multi-Format Configuration - Enterprise Configuration Management
 Enterprise configuration for creator multi-format content support and business logic
 
@@ -159,7 +161,7 @@ class ContentIngestionConfig:
 class CreatorMultiFormatSettings:
     """Creator multi-format configuration settings"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         # Content Format Configuration
         self.content_formats = ContentFormatConfig(
             audio_formats=["mp3", "wav", "flac", "ogg", "aac", "m4a"],

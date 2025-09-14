@@ -133,7 +133,7 @@ class FinancialComplianceMonitor:
     and ensures adherence to international compliance standards.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the financial compliance monitor."""
         self.compliance_rules: List[ComplianceRule] = []
         self.violations: List[ComplianceViolation] = []
@@ -149,7 +149,7 @@ class FinancialComplianceMonitor:
         self._load_sanctions_lists()
         self._setup_compliance_thresholds()
     
-    def _initialize_compliance_rules(self):
+    def _initialize_compliance_rules(self) -> None:
         """Initialize compliance monitoring rules."""
         self.compliance_rules = [
             # PCI DSS Rules
@@ -242,7 +242,7 @@ class FinancialComplianceMonitor:
             )
         ]
     
-    def _load_sanctions_lists(self):
+    def _load_sanctions_lists(self) -> None:
         """Load sanctions and watchlists."""
         # Sample sanctioned entities (in production, would integrate with OFAC, UN, EU lists)
         self.sanctioned_entities = {
@@ -265,7 +265,7 @@ class FinancialComplianceMonitor:
         
         logger.info("Loaded sanctions lists and high-risk countries")
     
-    def _setup_compliance_thresholds(self):
+    def _setup_compliance_thresholds(self) -> None:
         """Setup compliance monitoring thresholds."""
         self.compliance_thresholds = {
             "aml_transaction_threshold": 10000.0,
@@ -876,10 +876,10 @@ class FinancialComplianceMonitor:
     
     def _update_compliance_metrics(
         self,
-        status: str,
-        violations: List[ComplianceViolation],
-        warnings: List[Dict[str, Any]]
-    ):
+        status -> None: str,
+        violations -> None: List[ComplianceViolation],
+        warnings -> None: List[Dict[str, Any]]
+    ) -> None:
         """Update compliance metrics."""
         
         self.metrics.total_checks += 1
@@ -901,11 +901,11 @@ class FinancialComplianceMonitor:
     
     def _log_compliance_check(
         self,
-        entity_id: str,
-        status: str,
-        violations: List[ComplianceViolation],
-        warnings: List[Dict[str, Any]]
-    ):
+        entity_id -> None: str,
+        status -> None: str,
+        violations -> None: List[ComplianceViolation],
+        warnings -> None: List[Dict[str, Any]]
+    ) -> None:
         """Log compliance check for audit trail."""
         
         log_entry = {

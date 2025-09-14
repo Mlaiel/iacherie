@@ -60,7 +60,7 @@ class SchemaInfo:
     replacement: Optional[str] = None
     tags: Set[str] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.tags is None:
             self.tags = set()
 
@@ -78,7 +78,7 @@ class SchemaRegistration(BaseSchema):
     dependencies: List[str] = Field(default=[], description="Schema dependencies")
     
     @validator('name')
-    def validate_name(cls, v):
+    def validate_name(cls, v) -> None:
         """Validate schema name format."""
         if not v.replace('_', '').replace('-', '').isalnum():
             raise ValueError('Schema name must be alphanumeric with underscores/hyphens')
@@ -123,7 +123,7 @@ class SchemaDiscovery(BaseSchema):
 class SchemaRegistry:
     """Centralized schema registry for the Ainflue platform."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._schemas: Dict[str, Dict[str, SchemaInfo]] = {}
         self._classes: Dict[str, Type[BaseModel]] = {}
         self._validation_rules: List[SchemaValidationRule] = []

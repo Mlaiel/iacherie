@@ -1,4 +1,6 @@
 """Data Infrastructure Utilities
+import logging
+
 ==============================
 
 Enterprise data infrastructure utilities for IA Influencer Agent platform.
@@ -45,19 +47,19 @@ from sqlalchemy.sql import text
 class ValidationError(Exception):
     """Custom exception for validation errors"""
     
-    def __init__(self, message: str, field: str = None, code: str = None, details: Dict[str, Any] = None):
+    def __init__(self, message -> None: str, field -> None: str = None, code -> None: str = None, details -> None: Dict[str, Any] = None) -> None:
         super().__init__(message)
         self.message = message
         self.field = field
         self.code = code
         self.details = details or {}
         
-    def __str__(self):
+    def __str__(self) -> None:
         if self.field:
             return f"Validation error in field '{self.field}': {self.message}"
         return f"Validation error: {self.message}"
     
-    def to_dict(self):
+    def to_dict(self) -> None:
         return {
             "error": "ValidationError",
             "message": self.message,
@@ -70,7 +72,7 @@ class ValidationError(Exception):
 class MigrationError(Exception):
     """Custom exception for migration errors"""
     
-    def __init__(self, message: str, migration_id: str = None, details: Dict[str, Any] = None):
+    def __init__(self, message -> None: str, migration_id -> None: str = None, details -> None: Dict[str, Any] = None) -> None:
         super().__init__(message)
         self.message = message
         self.migration_id = migration_id
@@ -80,7 +82,7 @@ class MigrationError(Exception):
 class SchemaValidationError(Exception):
     """Custom exception for schema validation errors"""
     
-    def __init__(self, message: str, schema_name: str = None, details: Dict[str, Any] = None):
+    def __init__(self, message -> None: str, schema_name -> None: str = None, details -> None: Dict[str, Any] = None) -> None:
         super().__init__(message)
         self.message = message
         self.schema_name = schema_name
@@ -94,16 +96,16 @@ class SchemaValidationError(Exception):
 class ValidationResult:
     """Container for validation results with detailed feedback"""
     
-    def __init__(self, is_valid: bool = True, errors: List[str] = None, 
-                 warnings: List[str] = None, field_errors: Dict[str, List[str]] = None,
-                 metadata: Dict[str, Any] = None):
+    def __init__(self, is_valid -> None: bool = True, errors -> None: List[str] = None, 
+                 warnings -> None: List[str] = None, field_errors -> None: Dict[str, List[str]] = None,
+                 metadata -> None: Dict[str, Any] = None) -> None:
         self.is_valid = is_valid
         self.errors = errors or []
         self.warnings = warnings or []
         self.field_errors = field_errors or {}
         self.metadata = metadata or {}
         
-    def add_error(self, message: str, field: str = None):
+    def add_error(self, message -> None: str, field -> None: str = None) -> None:
         """Add an error to the validation result"""
         self.is_valid = False
         self.errors.append(message)
@@ -112,11 +114,11 @@ class ValidationResult:
                 self.field_errors[field] = []
             self.field_errors[field].append(message)
     
-    def add_warning(self, message: str):
+    def add_warning(self, message -> None: str) -> None:
         """Add a warning to the validation result"""
         self.warnings.append(message)
     
-    def merge(self, other: 'ValidationResult'):
+    def merge(self, other -> None: 'ValidationResult') -> None:
         """Merge another validation result into this one"""
         if not other.is_valid:
             self.is_valid = False
@@ -128,7 +130,7 @@ class ValidationResult:
             self.field_errors[field].extend(field_errors)
         self.metadata.update(other.metadata)
     
-    def to_dict(self):
+    def to_dict(self) -> None:
         """Convert validation result to dictionary"""
         return {
             "is_valid": self.is_valid,
@@ -138,7 +140,7 @@ class ValidationResult:
             "metadata": self.metadata
         }
     
-    def __str__(self):
+    def __str__(self) -> None:
         if self.is_valid:
             status = "VALID"
             if self.warnings:
@@ -161,7 +163,7 @@ class ModelDataValidator:
     Comprehensive validation with business rules and performance optimization.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.validation_rules = self._load_validation_rules()
         self.business_rules = self._load_business_rules()
         
@@ -392,14 +394,14 @@ class MigrationManager:
     Comprehensive migration tracking and version management.
     """
     
-    def __init__(self, database_url: str):
+    def __init__(self, database_url -> None: str) -> None:
         self.database_url = database_url
         self.engine = create_engine(database_url)
         self.metadata = MetaData()
         self.Session = sessionmaker(bind=self.engine)
         self._ensure_migration_table()
     
-    def _ensure_migration_table(self):
+    def _ensure_migration_table(self) -> None:
         """Ensure migration tracking table exists"""
         migration_table_sql = """
         CREATE TABLE IF NOT EXISTS migration_history (
@@ -588,7 +590,7 @@ class SchemaValidator:
     Comprehensive schema checking with performance optimization.
     """
     
-    def __init__(self, database_url: str):
+    def __init__(self, database_url -> None: str) -> None:
         self.database_url = database_url
         self.engine = create_engine(database_url)
         self.inspector = inspect(self.engine)
@@ -637,7 +639,7 @@ class SchemaValidator:
         
         return result
     
-    def _validate_indexes(self, table_name: str, expected_indexes: List[Dict[str, Any]], result: ValidationResult):
+    def _validate_indexes(self, table_name -> None: str, expected_indexes -> None: List[Dict[str, Any]], result -> None: ValidationResult) -> None:
         """Validate table indexes"""
         actual_indexes = {idx['name']: idx for idx in self.inspector.get_indexes(table_name)}
         
@@ -646,7 +648,7 @@ class SchemaValidator:
             if idx_name not in actual_indexes:
                 result.add_error(f"Missing index '{idx_name}' on table '{table_name}'")
     
-    def _validate_foreign_keys(self, table_name: str, expected_fks: List[Dict[str, Any]], result: ValidationResult):
+    def _validate_foreign_keys(self, table_name -> None: str, expected_fks -> None: List[Dict[str, Any]], result -> None: ValidationResult) -> None:
         """Validate foreign key constraints"""
         actual_fks = self.inspector.get_foreign_keys(table_name)
         
@@ -677,7 +679,7 @@ class ExampleDataGenerator:
     Realistic data generation with relationships and constraints.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.faker_available = self._check_faker()
         if self.faker_available:
             from faker import Faker

@@ -87,7 +87,7 @@ class CreatorTypeOrchestrationEngine:
     - Industry-specific best practices and automation
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.creator_strategies: Dict[CreatorType, Dict[str, Any]] = {}
         self.specialization_configs: Dict[str, CreatorSpecialization] = {}
         self.active_workflows: Dict[str, TypeSpecificWorkflow] = {}
@@ -113,7 +113,7 @@ class CreatorTypeOrchestrationEngine:
             logger.error(f"❌ Failed to initialize Creator Type Orchestration Engine: {e}")
             return False
 
-    async def _setup_creator_strategies(self):
+    async def _setup_creator_strategies(self) -> None:
         """Setup specialized strategies for each creator type"""
 
         # Musicians Strategy - Audio-centric with performance focus
@@ -283,7 +283,7 @@ class CreatorTypeOrchestrationEngine:
 
         logger.info(f"✅ Setup specialized strategies for {len(self.creator_strategies)} creator types")
 
-    async def _setup_performance_benchmarks(self):
+    async def _setup_performance_benchmarks(self) -> None:
         """Setup performance benchmarks for each creator type"""
         
         self.performance_benchmarks = {
@@ -321,7 +321,7 @@ class CreatorTypeOrchestrationEngine:
 
         logger.info(f"✅ Setup performance benchmarks for {len(self.performance_benchmarks)} creator types")
 
-    async def _setup_industry_insights(self):
+    async def _setup_industry_insights(self) -> None:
         """Setup industry-specific insights and trends"""
         
         self.industry_insights = {
@@ -364,7 +364,7 @@ class CreatorTypeOrchestrationEngine:
 
         logger.info(f"✅ Setup industry insights for {len(self.industry_insights)} creator types")
 
-    async def _setup_collaboration_networks(self):
+    async def _setup_collaboration_networks(self) -> None:
         """Setup collaboration networks for each creator type"""
         
         self.collaboration_networks = {
@@ -392,7 +392,7 @@ class CreatorTypeOrchestrationEngine:
 
         logger.info(f"✅ Setup collaboration networks for {len(self.collaboration_networks)} creator types")
 
-    async def _setup_monetization_models(self):
+    async def _setup_monetization_models(self) -> None:
         """Setup monetization models specific to each creator type"""
         
         self.monetization_models = {
@@ -612,7 +612,7 @@ class CreatorTypeOrchestrationEngine:
         else:
             return {"success": True, "generic_comedian_stage": stage}
 
-    async def _apply_type_specific_optimizations(self, workflow: TypeSpecificWorkflow):
+    async def _apply_type_specific_optimizations(self, workflow -> None: TypeSpecificWorkflow) -> None:
         """Apply creator-type specific optimizations"""
         creator_type = workflow.creator_type
         optimization_strategy = workflow.optimization_strategy
@@ -631,37 +631,37 @@ class CreatorTypeOrchestrationEngine:
         elif optimization_strategy == OptimizationStrategy.BRAND_FOCUSED:
             await self._apply_brand_optimizations(workflow)
 
-    async def _apply_quality_optimizations(self, workflow: TypeSpecificWorkflow):
+    async def _apply_quality_optimizations(self, workflow -> None: TypeSpecificWorkflow) -> None:
         """Apply quality-focused optimizations"""
         # Simulate quality optimization
         await asyncio.sleep(0.1)
         logger.info("✅ Quality optimizations applied")
 
-    async def _apply_engagement_optimizations(self, workflow: TypeSpecificWorkflow):
+    async def _apply_engagement_optimizations(self, workflow -> None: TypeSpecificWorkflow) -> None:
         """Apply engagement-focused optimizations"""
         # Simulate engagement optimization  
         await asyncio.sleep(0.1)
         logger.info("✅ Engagement optimizations applied")
 
-    async def _apply_revenue_optimizations(self, workflow: TypeSpecificWorkflow):
+    async def _apply_revenue_optimizations(self, workflow -> None: TypeSpecificWorkflow) -> None:
         """Apply revenue-focused optimizations"""
         # Simulate revenue optimization
         await asyncio.sleep(0.1)
         logger.info("✅ Revenue optimizations applied")
 
-    async def _apply_viral_optimizations(self, workflow: TypeSpecificWorkflow):
+    async def _apply_viral_optimizations(self, workflow -> None: TypeSpecificWorkflow) -> None:
         """Apply viral-focused optimizations"""
         # Simulate viral optimization
         await asyncio.sleep(0.1)
         logger.info("✅ Viral optimizations applied")
 
-    async def _apply_brand_optimizations(self, workflow: TypeSpecificWorkflow):
+    async def _apply_brand_optimizations(self, workflow -> None: TypeSpecificWorkflow) -> None:
         """Apply brand-focused optimizations"""
         # Simulate brand optimization
         await asyncio.sleep(0.1)
         logger.info("✅ Brand optimizations applied")
 
-    async def _evaluate_performance_benchmarks(self, workflow: TypeSpecificWorkflow):
+    async def _evaluate_performance_benchmarks(self, workflow -> None: TypeSpecificWorkflow) -> None:
         """Evaluate performance against creator-type benchmarks"""
         benchmarks = self.performance_benchmarks.get(workflow.creator_type, {})
         

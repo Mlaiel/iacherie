@@ -149,10 +149,10 @@ class PasswordUtilities:
     """
     
     def __init__(self,
-                 default_algorithm: HashAlgorithm = HashAlgorithm.ARGON2,
-                 default_policy: Optional[PasswordPolicy] = None,
-                 enable_breach_checking: bool = True,
-                 pepper: Optional[str] = None):
+                 default_algorithm -> None: HashAlgorithm = HashAlgorithm.ARGON2,
+                 default_policy -> None: Optional[PasswordPolicy] = None,
+                 enable_breach_checking -> None: bool = True,
+                 pepper -> None: Optional[str] = None) -> None:
         """
         Initialize password utilities
         

@@ -127,7 +127,7 @@ class DataIntegrityValidator:
     - Cross-system consistency validation
     - Performance-optimized batch processing
     """
-    def __init__(self, config: Config):
+    def __init__(self, config -> None: Config) -> None:
         self.config = config
         self.logger = logging.getLogger(__name__)
         self.db_manager = DatabaseManager(config)
@@ -163,7 +163,7 @@ class DataIntegrityValidator:
         # Initialize core integrity rules
         self._initialize_core_integrity_rules()
 
-    def _initialize_core_integrity_rules(self):
+    def _initialize_core_integrity_rules(self) -> None:
         """
 Initialize core data integrity rules for content protection platform"""
         core_rules = [
@@ -285,7 +285,7 @@ Initialize core data integrity rules for content protection platform"""
             self.logger.error(f"Failed to register integrity rule: {e}")
             raise
 
-    async def _run_periodic_validation(self, rule: IntegrityRule):
+    async def _run_periodic_validation(self, rule -> None: IntegrityRule) -> None:
         """Run periodic validation for an integrity rule"""
         rule_id = rule.rule_id
         
@@ -522,7 +522,7 @@ Initialize core data integrity rules for content protection platform"""
             self.logger.error(f"Failed to start integrity scan: {e}")
             raise
 
-    async def _execute_integrity_scan(self, report: IntegrityReport, config: Dict[str, Any]):
+    async def _execute_integrity_scan(self, report -> None: IntegrityReport, config -> None: Dict[str, Any]) -> None:
         """Execute comprehensive integrity scan"""
         try:
             # Select rules to run
@@ -632,7 +632,7 @@ Generate integrity improvement recommendations"""
         
         return recommendations
 
-    def _update_integrity_metrics(self, rule: IntegrityRule, validation_result: Dict[str, Any]):
+    def _update_integrity_metrics(self, rule -> None: IntegrityRule, validation_result -> None: Dict[str, Any]) -> None:
         """Update integrity performance metrics"""
         self.integrity_metrics['total_checks_performed'] += 1
         

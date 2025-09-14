@@ -16,7 +16,8 @@ try:
 except ImportError:
     # Fallback for environments without pydantic_settings
     class BaseSettings:
-        def __init__(self, **kwargs):
+    """BaseSettings: class implementation"""
+        def __init__(self, **kwargs) -> None:
             for key, value in kwargs.items():
                 setattr(self, key, value)
 
@@ -105,7 +106,7 @@ class IngestionWorkflow:
 class ContentIngestionSettings:
     """Content ingestion configuration settings"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         # File Size Limits by Content Type
         self.file_size_limits = {
             "audio": FileSizeLimit(

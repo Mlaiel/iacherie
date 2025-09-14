@@ -1,4 +1,6 @@
 """💰 Monetization Configuration Manager - IA-Influencer-Agent
+from pathlib import Path
+
 ==================================================================
 Project Creator & Lead Dev IA: Fahed Mlaiel <mlaiel@live.de>
 Experts: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security Expert + 
@@ -382,7 +384,7 @@ class MonetizationConfigManager:
     - Multi-currency and international support
     """
     
-    def __init__(self, config_path: Optional[str] = None):
+    def __init__(self, config_path -> None: Optional[str] = None) -> None:
         """
         Initialize monetization config manager.
         

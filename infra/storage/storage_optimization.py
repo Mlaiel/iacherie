@@ -1,3 +1,8 @@
+"""
+Storage Optimization module
+Enterprise implementation for Ainflue platform
+"""
+
 # Ainflue Infrastructure Module - Storage Optimization
 # ===================================================
 # 
@@ -100,7 +105,7 @@ class StorageOptimizer:
     - Predictive scaling strategies
     """
     
-    def __init__(self, config_path: str = None):
+    def __init__(self, config_path -> None: str = None) -> None:
         """Initialize storage optimizer"""
         self.config_path = config_path
         self.providers = {}
@@ -111,7 +116,7 @@ class StorageOptimizer:
         
         logger.info("Storage Optimizer initialized")
     
-    async def initialize_providers(self, providers_config: Dict[str, Any]):
+    async def initialize_providers(self, providers_config -> None: Dict[str, Any]) -> None:
         """Initialize cloud provider clients"""
         try:
             # Initialize AWS
@@ -637,7 +642,7 @@ class StorageOptimizer:
             logger.error(f"Capacity forecasting failed: {e}")
             raise
     
-    async def cleanup_resources(self):
+    async def cleanup_resources(self) -> None:
         """Cleanup optimizer resources"""
         try:
             # Close cloud provider connections
@@ -682,7 +687,7 @@ CREATOR_OPTIMIZATION_CONFIGS = {
 }
 
 
-async def main():
+async def main() -> None:
     """Example usage of Storage Optimizer"""
     optimizer = StorageOptimizer()
     

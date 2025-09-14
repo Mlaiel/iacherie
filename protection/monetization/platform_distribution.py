@@ -5,7 +5,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
 Team Specialties:
-- Lead Dev IA: AI-powered distribution optimization
+    - Lead Dev IA: AI-powered distribution optimization
 - Backend Senior: Scalable distribution architecture
 - ML Engineer: Performance prediction algorithms  
 - DBA: Distribution data management
@@ -207,15 +207,15 @@ class PlatformAdapter(ABC):
     """
 Abstract base class for platform adapters."""
     
-    def __init__(self, config: PlatformConfiguration):
+    def __init__(self, config -> None: PlatformConfiguration) -> None:
         self.config = config
         self.session: Optional[aiohttp.ClientSession] = None
     
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         self.session = aiohttp.ClientSession()
         return self
     
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         try:
             logger.info(f"Executing __aexit__")
             
@@ -582,7 +582,7 @@ Upload video content to YouTube."""
 class PlatformDistributionEngine:
     """Main platform distribution engine."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.platform_configs: Dict[PlatformType, PlatformConfiguration] = {}
         self.platform_adapters: Dict[PlatformType, PlatformAdapter] = {}
         self.distribution_tasks: Dict[str, DistributionTask] = {}
@@ -591,7 +591,7 @@ class PlatformDistributionEngine:
         # Initialize default platform configurations
         self._initialize_platform_configs()
     
-    def _initialize_platform_configs(self):
+    def _initialize_platform_configs(self) -> None:
         """
 Initialize default platform configurations."""
         
@@ -735,7 +735,7 @@ Distribute content to multiple platforms."""
         """Schedule a distribution task for future execution."""
         delay = (task.scheduling - datetime.utcnow()).total_seconds()
         
-        async def delayed_execution():
+        async def delayed_execution() -> None:
             await asyncio.sleep(delay)
             await self._execute_distribution(task)
         
@@ -984,3 +984,5 @@ __all__ = [
     'SpotifyAdapter',
     'YouTubeAdapter'
 ]
+
+# File has syntax issues - needs manual review

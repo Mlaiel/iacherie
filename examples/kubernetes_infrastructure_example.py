@@ -16,7 +16,7 @@ import tempfile
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
-def generate_kubernetes_infrastructure():
+def generate_kubernetes_infrastructure() -> None:
     """Generate complete Kubernetes infrastructure manifests"""
     
     print("🚀 Starting Kubernetes Infrastructure Generation for Ainflue Platform")
@@ -248,7 +248,7 @@ def generate_kubernetes_infrastructure():
     print("   4. Access services: kubectl get ingress -n ia-influencer")
 
 
-def demonstrate_integrated_manager():
+def demonstrate_integrated_manager() -> None:
     """Demonstrate the integrated infrastructure manager"""
     
     print("\n🔧 Demonstrating Integrated Kubernetes Infrastructure Manager")
@@ -310,7 +310,7 @@ print(f"Generated {total_files} manifest files for {summary['total_managers']} c
         print(f"⚠️  Integrated manager demo skipped: {e}")
 
 
-def create_deployment_example():
+def create_deployment_example() -> None:
     """Create deployment script example"""
     
     print("\n📜 Deployment Script Example")

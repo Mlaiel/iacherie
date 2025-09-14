@@ -1,4 +1,6 @@
 """🔧 Base Configuration Manager - IA-Influencer-Agent
+import asyncio
+
 ==================================================================
 Lead Dev IA: Fahed Mlaiel <mlaiel@live.de>
 Experts: DevOps + Backend Senior + Cloud Architect + Infrastructure Engineer
@@ -88,7 +90,7 @@ class BaseConfigurationManager:
     - Audit logging and change tracking
     """
     
-    def __init__(self, config_dir: Optional[str] = None):
+    def __init__(self, config_dir -> None: Optional[str] = None) -> None:
         """
         Initialize base configuration manager.
         

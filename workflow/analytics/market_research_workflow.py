@@ -12,6 +12,7 @@ from datetime import datetime
 
 @dataclass
 class Market_researchMetrics:
+    """Market_researchMetrics: class implementation"""
     analysis_score: float = 0.0
     accuracy: float = 0.0
     insights_generated: int = 0
@@ -19,6 +20,7 @@ class Market_researchMetrics:
 
 @dataclass
 class Market_researchResult:
+    """Market_researchResult: class implementation"""
     user_id: str
     metrics: Market_researchMetrics
     insights: List[str]

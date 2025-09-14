@@ -254,7 +254,7 @@ class VoiceprintProfile:
 class FeatureExtractor:
     """🔍 Advanced Audio Feature Extraction Engine"""
     
-    def __init__(self, sample_rate: int = 44100):
+    def __init__(self, sample_rate -> None: int = 44100) -> None:
         self.sample_rate = sample_rate
         self.logger = logging.getLogger(self.__class__.__name__)
     
@@ -426,7 +426,7 @@ class FeatureExtractor:
 class MusicInformationRetrieval:
     """🎵 Advanced Music Information Retrieval System"""
     
-    def __init__(self, sample_rate: int = 44100):
+    def __init__(self, sample_rate -> None: int = 44100) -> None:
         self.sample_rate = sample_rate
         self.logger = logging.getLogger(self.__class__.__name__)
         self.feature_extractor = FeatureExtractor(sample_rate)
@@ -645,8 +645,8 @@ class MusicInformationRetrieval:
 class SpeechRecognitionEngine:
     """🗣️ Advanced Speech Recognition & Language Processing"""
     
-    def __init__(self, model: RecognitionModel = RecognitionModel.WHISPER, 
-                 sample_rate: int = 16000):
+    def __init__(self, model -> None: RecognitionModel = RecognitionModel.WHISPER, 
+                 sample_rate -> None: int = 16000) -> None:
         self.logger = logging.getLogger(self.__class__.__name__)
         self.model = model
         self.sample_rate = sample_rate
@@ -797,7 +797,7 @@ class SpeechRecognitionEngine:
 class SpeakerRecognitionEngine:
     """👤 Advanced Speaker Recognition & Voiceprint Analysis"""
     
-    def __init__(self, sample_rate: int = 16000):
+    def __init__(self, sample_rate -> None: int = 16000) -> None:
         self.logger = logging.getLogger(self.__class__.__name__)
         self.sample_rate = sample_rate
         self.feature_extractor = FeatureExtractor(sample_rate)
@@ -969,7 +969,7 @@ class SpeakerRecognitionEngine:
 class AudioEventDetector:
     """🔊 Advanced Audio Event Detection System"""
     
-    def __init__(self, sample_rate: int = 44100):
+    def __init__(self, sample_rate -> None: int = 44100) -> None:
         self.logger = logging.getLogger(self.__class__.__name__)
         self.sample_rate = sample_rate
         self.feature_extractor = FeatureExtractor(sample_rate)
@@ -1134,7 +1134,7 @@ class AudioEventDetector:
 class AudioRecognitionOrchestrator:
     """🎼 Enterprise Audio Recognition Orchestration System"""
     
-    def __init__(self, sample_rate: int = 44100):
+    def __init__(self, sample_rate -> None: int = 44100) -> None:
         self.logger = logging.getLogger(self.__class__.__name__)
         self.sample_rate = sample_rate
         
@@ -1234,7 +1234,7 @@ class AudioRecognitionOrchestrator:
             None, self.event_detector.detect_events, audio_data
         )
     
-    def _update_recognition_stats(self, results: List[RecognitionResult]):
+    def _update_recognition_stats(self, results -> None: List[RecognitionResult]) -> None:
         """Update recognition statistics"""
         if not results:
             return

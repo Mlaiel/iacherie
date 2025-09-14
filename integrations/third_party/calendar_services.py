@@ -1,3 +1,8 @@
+"""
+Calendar Services module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Ainflue Platform - Calendar Services Integration Module
@@ -134,7 +139,7 @@ class CalendarResponse(BaseModel):
 class GoogleCalendarAPI:
     """Google Calendar API integration"""
     
-    def __init__(self, credentials: Dict[str, str]):
+    def __init__(self, credentials -> None: Dict[str, str]) -> None:
         self.credentials = credentials
         self.access_token = credentials.get("access_token")
         self.refresh_token = credentials.get("refresh_token")
@@ -143,7 +148,7 @@ class GoogleCalendarAPI:
         self.base_url = "https://www.googleapis.com/calendar/v3"
         self.session = None
         
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         # Refresh token if needed
         await self._ensure_valid_token()
         
@@ -156,11 +161,11 @@ class GoogleCalendarAPI:
         )
         return self
         
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         if self.session:
             await self.session.close()
             
-    async def _ensure_valid_token(self):
+    async def _ensure_valid_token(self) -> None:
         """Ensure access token is valid, refresh if needed"""
         # In a real implementation, check token expiry and refresh
         # For now, assume token is valid
@@ -459,7 +464,7 @@ class GoogleCalendarAPI:
 class OutlookCalendarAPI:
     """Microsoft Outlook Calendar API integration"""
     
-    def __init__(self, credentials: Dict[str, str]):
+    def __init__(self, credentials -> None: Dict[str, str]) -> None:
         self.credentials = credentials
         self.access_token = credentials.get("access_token")
         self.refresh_token = credentials.get("refresh_token")
@@ -468,7 +473,7 @@ class OutlookCalendarAPI:
         self.base_url = "https://graph.microsoft.com/v1.0"
         self.session = None
         
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         await self._ensure_valid_token()
         
         self.session = aiohttp.ClientSession(
@@ -480,11 +485,11 @@ class OutlookCalendarAPI:
         )
         return self
         
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         if self.session:
             await self.session.close()
             
-    async def _ensure_valid_token(self):
+    async def _ensure_valid_token(self) -> None:
         """Ensure access token is valid"""
         # Token refresh logic would go here
         pass
@@ -694,12 +699,12 @@ class OutlookCalendarAPI:
 class ContentScheduler:
     """Content scheduling and calendar management"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.content_schedule = []
         self.templates = {}
         self._initialize_templates()
         
-    def _initialize_templates(self):
+    def _initialize_templates(self) -> None:
         """Initialize content scheduling templates"""
         self.templates = {
             "daily_content": {
@@ -914,13 +919,13 @@ class ContentScheduler:
 class CalendarServicesManager:
     """Main manager for all calendar services"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.providers = {}
         self.content_scheduler = ContentScheduler()
         self._initialize_providers()
         
-    def _initialize_providers(self):
+    def _initialize_providers(self) -> None:
         """Initialize calendar providers"""
         try:
             # Google Calendar
@@ -1319,7 +1324,7 @@ if __name__ == "__main__":
     # Test the calendar services integration
     import asyncio
     
-    async def test_calendar_services():
+    async def test_calendar_services() -> None:
         """Test calendar services functionality"""
         
         test_content_strategy = {

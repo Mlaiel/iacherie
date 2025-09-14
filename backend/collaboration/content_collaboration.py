@@ -220,7 +220,7 @@ class ContentCollaborationManager:
     - Analytics de performance prédictive
     """
     
-    def __init__(self, db_session=None, redis_client=None):
+    def __init__(self, db_session=None, redis_client=None) -> None:
         self.db_session = db_session
         self.redis_client = redis_client
         self.content_pieces = {}
@@ -233,7 +233,7 @@ class ContentCollaborationManager:
         # Initialiser les analyseurs de qualité
         self._initialize_quality_analyzers()
     
-    def _initialize_quality_analyzers(self):
+    def _initialize_quality_analyzers(self) -> None:
         """Initialise les analyseurs de qualité"""
         self.quality_analyzers = {
             'text': {
@@ -650,7 +650,7 @@ class ContentQualityAnalyzer:
     - Conformité aux guidelines de marque
     """
     
-    def __init__(self, collaboration_manager):
+    def __init__(self, collaboration_manager) -> None:
         self.collaboration_manager = collaboration_manager
         self.quality_models = {}
         self.benchmark_data = {}
@@ -755,7 +755,7 @@ class ContentTemplateEngine:
     - Optimisation de templates basée sur performance
     """
     
-    def __init__(self, collaboration_manager):
+    def __init__(self, collaboration_manager) -> None:
         self.collaboration_manager = collaboration_manager
         self.template_library = {}
         self.template_performance = defaultdict(dict)

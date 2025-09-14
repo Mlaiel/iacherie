@@ -6,7 +6,7 @@ support for multi-format content caching specifically designed for the
 IA Influencer Agent platform's content protection and monetization workflows.
 
 This module provides:
-- Environment-specific configuration loading with hierarchical overrides
+    - Environment-specific configuration loading with hierarchical overrides
 - Dynamic configuration updates without restart capability
 - Configuration validation and schema enforcement with business rules
 - Secure configuration management with AES-256 encryption
@@ -22,7 +22,7 @@ Copyright: 2025 Fahed Mlaiel - All Rights Reserved
 License: Proprietary - Unauthorized use strictly prohibited
 
 Business Logic Integration:
-- Content creator multi-format support (audio, video, image, text)
+    - Content creator multi-format support (audio, video, image, text)
 - AI processing cache optimization for faster fingerprinting
 - Protection system cache for rapid content matching
 - Monetization data caching for real-time revenue analytics
@@ -270,10 +270,10 @@ class CacheConfiguration:
     """
     def __init__(
         self,
-        config_file: Optional[str] = None,
-        environment: str = "production",
-        encryption_key: Optional[bytes] = None
-    ):
+        config_file -> None: Optional[str] = None,
+        environment -> None: str = "production",
+        encryption_key -> None: Optional[bytes] = None
+    ) -> None:
         """
         Initialize cache configuration manager.
         
@@ -891,7 +891,7 @@ Validate configuration data against schema"""
             "encryption_key", "password", "secret", "token", "api_key"
         }
         
-        def encrypt_recursive(obj):
+        def encrypt_recursive(obj) -> None:
             if isinstance(obj, dict):
                 return {
                     key: (
@@ -988,3 +988,5 @@ Validate configuration data against schema"""
                 diff[key] = {"action": "removed", "old": other[key]}
         
         return diff
+
+# File has syntax issues - needs manual review

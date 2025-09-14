@@ -1,3 +1,8 @@
+"""
+Seo Optimization Core module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """🔍 SEO Optimization Core - Professional Multi-Platform SEO Engine
 ================================================================
@@ -154,7 +159,7 @@ class KeywordData:
     ranking_history: List[Dict[str, Any]] = field(default_factory=list)
     click_through_rate: float = 0.0
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if not self.keyword:
             raise ValueError("Keyword cannot be empty")
 
@@ -201,7 +206,7 @@ class SEOOptimization:
     # Timestamps
     created_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if not self.optimization_id:
             self.optimization_id = f"seo_{uuid.uuid4().hex[:12]}"
 
@@ -237,7 +242,7 @@ class CompetitorAnalysis:
     # Timestamps
     analyzed_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if not self.analysis_id:
             self.analysis_id = f"comp_{uuid.uuid4().hex[:12]}"
 
@@ -272,7 +277,7 @@ class TrendAnalysis:
     optimization_opportunities: List[str] = field(default_factory=list)
     content_suggestions: List[str] = field(default_factory=list)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if not self.trend_id:
             self.trend_id = f"trend_{uuid.uuid4().hex[:12]}"
 
@@ -284,14 +289,14 @@ class TrendAnalysis:
 class KeywordResearchEngine:
     """Advanced keyword research and analysis"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.keyword_cache: Dict[str, KeywordData] = {}
         self.trend_cache: Dict[str, TrendAnalysis] = {}
         
         # Initialize keyword database (in production, use external APIs)
         self._initialize_keyword_database()
     
-    def _initialize_keyword_database(self):
+    def _initialize_keyword_database(self) -> None:
         """Initialize mock keyword database"""
         # In production, integrate with Google Keyword Planner, SEMrush, Ahrefs APIs
         self.mock_keywords = {
@@ -588,7 +593,7 @@ class KeywordResearchEngine:
 class ContentOptimizationEngine:
     """Advanced content optimization for SEO"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.optimization_templates = self._initialize_optimization_templates()
         self.platform_requirements = self._initialize_platform_requirements()
     
@@ -927,7 +932,7 @@ class ContentOptimizationEngine:
         }
         return mapping.get(category, "Entertainment")
     
-    async def _calculate_seo_scores(self, optimization: SEOOptimization):
+    async def _calculate_seo_scores(self, optimization -> None: SEOOptimization) -> None:
         """Calculate various SEO scores"""
         try:
             # Keyword optimization score
@@ -1055,7 +1060,7 @@ class ContentOptimizationEngine:
 class CompetitorAnalysisEngine:
     """Competitor SEO analysis and insights"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.analysis_cache: Dict[str, CompetitorAnalysis] = {}
     
     async def analyze_competitor(
@@ -1097,9 +1102,9 @@ class CompetitorAnalysisEngine:
     
     async def _analyze_competitor_content(
         self,
-        analysis: CompetitorAnalysis,
-        target_keywords: List[str]
-    ):
+        analysis -> None: CompetitorAnalysis,
+        target_keywords -> None: List[str]
+    ) -> None:
         """Analyze competitor content strategy"""
         try:
             # Mock content analysis
@@ -1127,7 +1132,7 @@ class CompetitorAnalysisEngine:
         except Exception as e:
             logger.error(f"Competitor content analysis failed: {e}")
     
-    async def _analyze_competitor_performance(self, analysis: CompetitorAnalysis):
+    async def _analyze_competitor_performance(self, analysis -> None: CompetitorAnalysis) -> None:
         """Analyze competitor performance metrics"""
         try:
             # Mock performance metrics
@@ -1147,9 +1152,9 @@ class CompetitorAnalysisEngine:
     
     async def _identify_opportunities(
         self,
-        analysis: CompetitorAnalysis,
-        target_keywords: List[str]
-    ):
+        analysis -> None: CompetitorAnalysis,
+        target_keywords -> None: List[str]
+    ) -> None:
         """Identify opportunities based on competitor analysis"""
         try:
             # Mock opportunity identification
@@ -1183,7 +1188,7 @@ class CompetitorAnalysisEngine:
 class SEOOptimizationCore:
     """Main SEO optimization and management system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.keyword_research = KeywordResearchEngine()
         self.content_optimizer = ContentOptimizationEngine()
         self.competitor_analyzer = CompetitorAnalysisEngine()
@@ -1543,7 +1548,7 @@ if __name__ == "__main__":
     # Example usage for testing
     import asyncio
     
-    async def main():
+    async def main() -> None:
         print("🔍 SEO Optimization Core Test")
         print("=" * 50)
         

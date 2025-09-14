@@ -1,3 +1,8 @@
+"""
+Collaboration Matching Service module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Enterprise Collaboration Matching Service
@@ -159,7 +164,7 @@ class CollaborationMatchingService:
     - Performance tracking
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize collaboration matching service"""
         # Creator database
         self.creator_profiles: Dict[str, CreatorProfile] = {}
@@ -212,7 +217,7 @@ class CollaborationMatchingService:
         
         logger.info("CollaborationMatchingService initialized")
     
-    async def start(self):
+    async def start(self) -> None:
         """Start the collaboration matching service"""
         try:
             # Start background optimization task
@@ -223,7 +228,7 @@ class CollaborationMatchingService:
             logger.error("Failed to start CollaborationMatchingService: %s", e)
             raise
     
-    async def stop(self):
+    async def stop(self) -> None:
         """Stop the collaboration matching service"""
         try:
             self.shutdown_event.set()
@@ -240,7 +245,7 @@ class CollaborationMatchingService:
         except Exception as e:
             logger.error("Error stopping CollaborationMatchingService: %s", e)
     
-    async def register_creator(self, profile: CreatorProfile):
+    async def register_creator(self, profile -> None: CreatorProfile) -> None:
         """Register or update a creator profile"""
         async with self._lock:
             self.creator_profiles[profile.creator_id] = profile
@@ -1086,7 +1091,7 @@ class CollaborationMatchingService:
         
         return steps
     
-    async def _handle_auto_proposals(self, matches: List[CollaborationMatch], request: CollaborationRequest):
+    async def _handle_auto_proposals(self, matches -> None: List[CollaborationMatch], request -> None: CollaborationRequest) -> None:
         """Handle automatic proposal generation for high-compatibility matches"""
         threshold = self.config["auto_proposal_threshold"]
         if not threshold:
@@ -1117,7 +1122,7 @@ class CollaborationMatchingService:
             except Exception as e:
                 logger.error("Failed to auto-generate proposal for match %s: %s", match.match_id, e)
     
-    async def _update_matching_stats(self, matches: List[CollaborationMatch], processing_time: float):
+    async def _update_matching_stats(self, matches -> None: List[CollaborationMatch], processing_time -> None: float) -> None:
         """Update matching statistics"""
         self.matching_stats["total_matches"] += len(matches)
         
@@ -1149,7 +1154,7 @@ class CollaborationMatchingService:
             if total_requests > 0 else processing_time
         )
     
-    async def _record_collaboration_start(self, proposal: CollaborationProposal):
+    async def _record_collaboration_start(self, proposal -> None: CollaborationProposal) -> None:
         """Record the start of a successful collaboration"""
         collaboration_record = {
             "proposal_id": proposal.proposal_id,
@@ -1169,7 +1174,7 @@ class CollaborationMatchingService:
         
         logger.info("Recorded collaboration start: %s", proposal.proposal_id)
     
-    async def _optimization_loop(self):
+    async def _optimization_loop(self) -> None:
         """Background optimization loop"""
         while not self.shutdown_event.is_set():
             try:
@@ -1180,7 +1185,7 @@ class CollaborationMatchingService:
             except Exception as e:
                 logger.error("Error in optimization loop: %s", e)
     
-    async def _optimize_matching_weights(self):
+    async def _optimize_matching_weights(self) -> None:
         """Optimize compatibility weights based on success data"""
         if not self.config["learning_enabled"]:
             return
@@ -1201,7 +1206,7 @@ async def get_collaboration_service() -> CollaborationMatchingService:
         await _collaboration_service.start()
     return _collaboration_service
 
-async def shutdown_collaboration_service():
+async def shutdown_collaboration_service() -> None:
     """Shutdown global collaboration matching service"""
     global _collaboration_service
     if _collaboration_service:
@@ -1209,7 +1214,7 @@ async def shutdown_collaboration_service():
         _collaboration_service = None
 
 if __name__ == "__main__":
-    async def test_collaboration_service():
+    async def test_collaboration_service() -> None:
         """Test collaboration matching service functionality"""
         service = CollaborationMatchingService()
         await service.start()

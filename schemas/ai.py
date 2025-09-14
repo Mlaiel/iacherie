@@ -86,7 +86,7 @@ AI model configuration and management schema."""
     last_health_check: Optional[datetime] = None
     
     @validator('model_type')
-    def validate_model_type(cls, v):
+    def validate_model_type(cls, v) -> None:
         """Validate model type."""
         allowed_types = {
             "language_model", "computer_vision", "audio_processing", "multimodal",
@@ -142,7 +142,7 @@ class AIProcessingRequest(UUIDSchema, TimestampSchema):
     processing_cost: Optional[Decimal] = None
     
     @validator('processing_type')
-    def validate_processing_type(cls, v):
+    def validate_processing_type(cls, v) -> None:
         """Validate processing type."""
         allowed_types = {
             "content_generation", "content_analysis", "content_enhancement",
@@ -155,7 +155,7 @@ class AIProcessingRequest(UUIDSchema, TimestampSchema):
         return v
     
     @validator('priority_level')
-    def validate_priority_level(cls, v):
+    def validate_priority_level(cls, v) -> None:
         """Validate priority level."""
         allowed_levels = {"low", "normal", "high", "urgent", "critical"}
         if v not in allowed_levels:
@@ -217,7 +217,7 @@ class AIProcessingResult(UUIDSchema, TimestampSchema):
     learning_data_contribution: bool = Field(default=False)
     
     @validator('processing_status')
-    def validate_processing_status(cls, v):
+    def validate_processing_status(cls, v) -> None:
         """Validate processing status."""
         allowed_statuses = {
             "completed", "partial_success", "failed", "timeout",
@@ -286,7 +286,7 @@ class MLPipeline(UUIDSchema, TimestampSchema, AuditSchema):
     cost_per_execution: Decimal = Field(default=Decimal('0.00'), ge=0)
     
     @validator('pipeline_type')
-    def validate_pipeline_type(cls, v):
+    def validate_pipeline_type(cls, v) -> None:
         """Validate pipeline type."""
         allowed_types = {
             "training_pipeline", "inference_pipeline", "data_processing",
@@ -365,7 +365,7 @@ class ContentIntelligence(UUIDSchema, TimestampSchema):
     long_term_opportunities: List[str] = Field(default_factory=list)
     
     @validator('analysis_type')
-    def validate_analysis_type(cls, v):
+    def validate_analysis_type(cls, v) -> None:
         """Validate analysis type."""
         allowed_types = {
             "comprehensive_analysis", "sentiment_analysis", "quality_assessment",
@@ -433,7 +433,7 @@ class AIRecommendationEngine(UUIDSchema, TimestampSchema):
     conversion_tracking: Dict[str, float] = Field(default_factory=dict)
     
     @validator('recommendation_type')
-    def validate_recommendation_type(cls, v):
+    def validate_recommendation_type(cls, v) -> None:
         """Validate recommendation type."""
         allowed_types = {
             "content_recommendations", "collaboration_matching", "audience_targeting",
@@ -495,7 +495,7 @@ class NeuralNetworkConfiguration(UUIDSchema, TimestampSchema):
     a_b_testing_enabled: bool = Field(default=False)
     
     @validator('architecture_type')
-    def validate_architecture_type(cls, v):
+    def validate_architecture_type(cls, v) -> None:
         """Validate architecture type."""
         allowed_types = {
             "feedforward", "convolutional", "recurrent", "transformer",

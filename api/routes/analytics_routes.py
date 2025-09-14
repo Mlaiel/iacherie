@@ -31,6 +31,7 @@ router = APIRouter(
 # ========================================
 
 class MetricType(str, Enum):
+    """MetricType class implementation"""
     REVENUE = "revenue"
     ENGAGEMENT = "engagement"
     PERFORMANCE = "performance"
@@ -41,6 +42,7 @@ class MetricType(str, Enum):
     PLATFORM_DISTRIBUTION = "platform_distribution"
 
 class TimeRange(str, Enum):
+    """TimeRange class implementation"""
     HOUR = "1h"
     DAY = "24h"
     WEEK = "7d"
@@ -50,6 +52,7 @@ class TimeRange(str, Enum):
     ALL_TIME = "all"
 
 class AggregationType(str, Enum):
+    """AggregationType class implementation"""
     SUM = "sum"
     AVERAGE = "avg"
     COUNT = "count"
@@ -59,6 +62,7 @@ class AggregationType(str, Enum):
     PERCENTILE = "percentile"
 
 class RevenueSource(str, Enum):
+    """RevenueSource class implementation"""
     CONTENT_LICENSING = "content_licensing"
     SUBSCRIPTION_FEES = "subscription_fees"
     VIOLATION_SETTLEMENTS = "violation_settlements"
@@ -68,6 +72,7 @@ class RevenueSource(str, Enum):
     PREMIUM_FEATURES = "premium_features"
 
 class EngagementMetric(str, Enum):
+    """EngagementMetric class implementation"""
     VIEWS = "views"
     LIKES = "likes"
     SHARES = "shares"
@@ -82,6 +87,7 @@ class EngagementMetric(str, Enum):
 # ========================================
 
 class AnalyticsQuery(BaseModel):
+    """AnalyticsQuery class implementation"""
     metric_types: List[MetricType] = Field(..., min_items=1)
     time_range: TimeRange = Field(default=TimeRange.MONTH)
     start_date: Optional[datetime] = None
@@ -94,11 +100,13 @@ class AnalyticsQuery(BaseModel):
     include_predictions: bool = Field(default=False, description="Include AI predictions")
 
 class MetricDataPoint(BaseModel):
+    """MetricDataPoint class implementation"""
     timestamp: datetime
     value: Union[float, int, Decimal]
     metadata: Dict[str, Any] = Field(default_factory=dict)
 
 class AnalyticsResponse(BaseModel):
+    """AnalyticsResponse class implementation"""
     metric_type: MetricType
     time_range: TimeRange
     data_points: List[MetricDataPoint]
@@ -110,6 +118,7 @@ class AnalyticsResponse(BaseModel):
     generated_at: datetime = Field(default_factory=datetime.utcnow)
 
 class RevenueAnalytics(BaseModel):
+    """RevenueAnalytics class implementation"""
     total_revenue: Decimal
     revenue_by_source: Dict[RevenueSource, Decimal]
     revenue_growth: float
@@ -121,6 +130,7 @@ class RevenueAnalytics(BaseModel):
     projected_revenue: Dict[str, Decimal] = Field(default_factory=dict)
 
 class EngagementAnalytics(BaseModel):
+    """EngagementAnalytics class implementation"""
     total_engagement: int
     engagement_by_type: Dict[EngagementMetric, int]
     engagement_rate: float
@@ -132,6 +142,7 @@ class EngagementAnalytics(BaseModel):
     geographic_distribution: Dict[str, int]
 
 class PerformanceAnalytics(BaseModel):
+    """PerformanceAnalytics class implementation"""
     total_content_items: int
     content_by_type: Dict[str, int]
     content_by_status: Dict[str, int]
@@ -143,6 +154,7 @@ class PerformanceAnalytics(BaseModel):
     system_health_metrics: Dict[str, float]
 
 class ProtectionAnalytics(BaseModel):
+    """ProtectionAnalytics class implementation"""
     protected_content_count: int
     violations_detected: int
     violations_resolved: int
@@ -155,6 +167,7 @@ class ProtectionAnalytics(BaseModel):
     violation_trends: List[MetricDataPoint]
 
 class CollaborationAnalytics(BaseModel):
+    """CollaborationAnalytics class implementation"""
     total_collaborations: int
     active_collaborations: int
     completed_collaborations: int
@@ -166,6 +179,7 @@ class CollaborationAnalytics(BaseModel):
     collaboration_trends: List[MetricDataPoint]
 
 class PlatformAnalytics(BaseModel):
+    """PlatformAnalytics class implementation"""
     platform_name: str
     content_count: int
     total_views: int
@@ -177,6 +191,7 @@ class PlatformAnalytics(BaseModel):
     trends: List[MetricDataPoint]
 
 class CustomReport(BaseModel):
+    """CustomReport class implementation"""
     report_id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     name: str = Field(..., min_length=1, max_length=100)
     description: Optional[str] = Field(None, max_length=500)
@@ -849,7 +864,7 @@ async def get_realtime_metric(
 # BACKGROUND TASKS
 # ========================================
 
-async def generate_report_async(report_id: str, user_id: str):
+async def generate_report_async(report_id -> None: str, user_id -> None: str) -> None:
     """Background task to generate custom report"""
     await asyncio.sleep(30)  # Simulate report generation
     print(f"Custom report {report_id} generated for user {user_id}")

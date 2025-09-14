@@ -1,3 +1,8 @@
+"""
+Data Integration Service module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 🔄 DATA INTEGRATION SERVICE
@@ -176,7 +181,7 @@ class DataIntegrationService:
     - Scalable processing with performance optimization
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.redis_client = None
         self.data_sources = {}
         self.pipelines = {}
@@ -304,7 +309,7 @@ class DataIntegrationService:
         
         logger.info("🔄 DataIntegrationService initialized with multi-expert architecture")
     
-    async def initialize(self, redis_url: str = "redis://localhost:6379"):
+    async def initialize(self, redis_url -> None: str = "redis -> None://localhost -> None:6379") -> None:
         """Initialize the data integration service"""
         try:
             self.redis_client = redis.from_url(redis_url)
@@ -316,7 +321,7 @@ class DataIntegrationService:
             logger.error(f"❌ Failed to initialize DataIntegrationService: {e}")
             raise
     
-    async def _initialize_security(self):
+    async def _initialize_security(self) -> None:
         """🔒 Security: Initialize encryption and security features"""
         try:
             from cryptography.fernet import Fernet
@@ -328,7 +333,7 @@ class DataIntegrationService:
         except Exception as e:
             logger.error(f"❌ Failed to initialize security: {e}")
     
-    async def _start_processing_workers(self):
+    async def _start_processing_workers(self) -> None:
         """⚙️ DevOps: Start data processing workers"""
         try:
             # Start multiple workers for parallel processing
@@ -340,7 +345,7 @@ class DataIntegrationService:
         except Exception as e:
             logger.error(f"❌ Failed to start processing workers: {e}")
     
-    async def _load_configurations(self):
+    async def _load_configurations(self) -> None:
         """🗄️ DBA: Load integration configurations from storage"""
         try:
             if self.redis_client:
@@ -511,7 +516,7 @@ class DataIntegrationService:
             logger.error(f"❌ Failed to auto-detect schema: {e}")
             return None
     
-    async def _store_data_source(self, source: DataSource):
+    async def _store_data_source(self, source -> None: DataSource) -> None:
         """🗄️ DBA: Store data source configuration"""
         try:
             self.data_sources[source.source_id] = source
@@ -621,7 +626,7 @@ class DataIntegrationService:
             logger.error(f"❌ Failed to optimize transformation sequence: {e}")
             return transformations
     
-    async def _store_pipeline(self, pipeline: IntegrationPipeline):
+    async def _store_pipeline(self, pipeline -> None: IntegrationPipeline) -> None:
         """🗄️ DBA: Store integration pipeline"""
         try:
             self.pipelines[pipeline.pipeline_id] = pipeline
@@ -713,7 +718,7 @@ class DataIntegrationService:
                 'timestamp': datetime.now().isoformat()
             }
     
-    async def _processing_worker(self, worker_id: int):
+    async def _processing_worker(self, worker_id -> None: int) -> None:
         """⚙️ DevOps: Data processing worker"""
         logger.info(f"🔧 Starting data processing worker {worker_id}")
         
@@ -729,7 +734,7 @@ class DataIntegrationService:
                 logger.error(f"❌ Processing worker {worker_id} error: {e}")
                 await asyncio.sleep(5)  # Back off on error
     
-    async def _process_integration_task(self, task: Dict[str, Any]):
+    async def _process_integration_task(self, task -> None: Dict[str, Any]) -> None:
         """Process integration task"""
         try:
             task_type = task.get('type')
@@ -832,7 +837,7 @@ class DataIntegrationService:
             logger.error(f"❌ Failed to get service health: {e}")
             return {'status': 'error', 'error': str(e)}
     
-    async def cleanup(self):
+    async def cleanup(self) -> None:
         """⚙️ DevOps: Cleanup service resources"""
         try:
             # Cancel processing workers
@@ -858,7 +863,7 @@ class DataIntegrationService:
 
 
 # Example usage and testing
-async def main():
+async def main() -> None:
     """Example usage of DataIntegrationService"""
     service = DataIntegrationService()
     

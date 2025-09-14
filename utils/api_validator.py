@@ -48,7 +48,7 @@ class APIValidator:
     - Microservices communication validation
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize API validator"""
         # Validation rules
         self.validation_rules = {
@@ -193,7 +193,7 @@ class APIValidator:
                 timestamp=datetime.now()
             )
     
-    def _validate_headers(self, headers: Dict[str, str], errors: List, warnings: List):
+    def _validate_headers(self, headers -> None: Dict[str, str], errors -> None: List, warnings -> None: List) -> None:
         """Validate request headers"""
         # Check required headers
         for required_header in self.validation_rules['required_headers']:
@@ -222,7 +222,7 @@ class APIValidator:
                 'severity': ValidationSeverity.LOW.value
             })
     
-    def _validate_response_headers(self, headers: Dict[str, str], errors: List, warnings: List):
+    def _validate_response_headers(self, headers -> None: Dict[str, str], errors -> None: List, warnings -> None: List) -> None:
         """Validate response headers"""
         # Check for security headers
         security_headers = ['X-Content-Type-Options', 'X-Frame-Options', 'X-XSS-Protection']
@@ -244,7 +244,7 @@ class APIValidator:
                     'severity': ValidationSeverity.MEDIUM.value
                 })
     
-    def _validate_url(self, url: str, errors: List, warnings: List):
+    def _validate_url(self, url -> None: str, errors -> None: List, warnings -> None: List) -> None:
         """Validate URL format and parameters"""
         if not url:
             errors.append({
@@ -289,7 +289,7 @@ class APIValidator:
                     'severity': ValidationSeverity.LOW.value
                 })
     
-    def _validate_request_body(self, body: Any, errors: List, warnings: List):
+    def _validate_request_body(self, body -> None: Any, errors -> None: List, warnings -> None: List) -> None:
         """Validate request body"""
         # Check body size
         if isinstance(body, (str, bytes)):
@@ -315,7 +315,7 @@ class APIValidator:
                     'severity': ValidationSeverity.HIGH.value
                 })
     
-    def _validate_response_body(self, body: Any, errors: List, warnings: List):
+    def _validate_response_body(self, body -> None: Any, errors -> None: List, warnings -> None: List) -> None:
         """Validate response body"""
         if body is None:
             return
@@ -469,7 +469,7 @@ class APIValidator:
             timestamp=datetime.now()
         )
     
-    def _update_stats(self, is_valid: bool, start_time: float):
+    def _update_stats(self, is_valid -> None: bool, start_time -> None: float) -> None:
         """Update performance statistics"""
         validation_time = time.time() - start_time
         
@@ -485,7 +485,7 @@ class APIValidator:
         new_avg = (current_avg * (total_validations - 1) + validation_time) / total_validations
         self.performance_stats['average_validation_time'] = new_avg
     
-    def register_schema(self, name: str, schema: Dict[str, Any]):
+    def register_schema(self, name -> None: str, schema -> None: Dict[str, Any]) -> None:
         """Register a validation schema"""
         self.schemas[name] = schema
         logger.info(f"Schema registered: {name}")

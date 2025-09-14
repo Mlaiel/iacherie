@@ -105,7 +105,7 @@ class AIContentOrchestrator:
     Gestion workflow, scheduling et optimisation performance.
     """
     
-    def __init__(self, config: Optional[Dict] = None):
+    def __init__(self, config -> None: Optional[Dict] = None) -> None:
         """Initialise l'orchestrateur de contenu IA."""
         self.config = config or {}
         self.active_pipelines: Dict[str, ContentGenerationPipeline] = {}
@@ -115,7 +115,7 @@ class AIContentOrchestrator:
         self._initialize_agents()
         logger.info("AI Content Orchestrator initialisé avec 53 agents")
     
-    def _initialize_agents(self):
+    def _initialize_agents(self) -> None:
         """Initialise le pool des 53 agents IA."""
         # Content Generation Agents (12)
         content_agents = [
@@ -422,7 +422,7 @@ class AIContentOrchestrator:
         
         return datetime.now() + timedelta(minutes=total_time)
     
-    async def _process_pipeline(self, pipeline_id: str):
+    async def _process_pipeline(self, pipeline_id -> None: str) -> None:
         """Traite un pipeline de génération."""
         if pipeline_id not in self.active_pipelines:
             return
@@ -448,7 +448,7 @@ class AIContentOrchestrator:
             pipeline.status = TaskStatus.FAILED
             logger.error(f"Erreur pipeline {pipeline_id}: {e}")
     
-    async def _process_agent_task(self, task: AgentTask):
+    async def _process_agent_task(self, task -> None: AgentTask) -> None:
         """Traite une tâche d'agent individuelle."""
         task.status = TaskStatus.PROCESSING
         task.started_at = datetime.now()

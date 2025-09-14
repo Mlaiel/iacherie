@@ -1,3 +1,8 @@
+"""
+Gcp Infrastructure Provider module
+Enterprise implementation for Ainflue platform
+"""
+
 # Ainflue Infrastructure Module
 # =============================
 # 
@@ -47,7 +52,7 @@ class GCPInfrastructureProvider:
     Cloud Storage with enterprise security, monitoring, and cost optimization.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize GCP infrastructure provider."""
         self.config = config or {}
         self.project_id = self.config.get("project_id")
@@ -73,7 +78,7 @@ class GCPInfrastructureProvider:
         
         logger.info(f"GCPInfrastructureProvider initialized for project: {self.project_id}")
     
-    def _initialize_clients(self):
+    def _initialize_clients(self) -> None:
         """Initialize GCP service clients."""
         try:
             # In a real implementation, this would use google-cloud libraries
@@ -101,11 +106,11 @@ class GCPInfrastructureProvider:
             logger.error(f"Failed to initialize GCP clients: {str(e)}")
             raise
     
-    def _create_mock_client(self, service_name: str):
+    def _create_mock_client(self, service_name -> None: str) -> None:
         """Create mock client for demonstration."""
         return {"service": service_name, "initialized": True}
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize provider (async initialization tasks)."""
         try:
             # Validate credentials and permissions
@@ -120,7 +125,7 @@ class GCPInfrastructureProvider:
             logger.error(f"GCP provider initialization failed: {str(e)}")
             raise
     
-    async def _validate_credentials(self):
+    async def _validate_credentials(self) -> None:
         """Validate GCP credentials and permissions."""
         try:
             # In real implementation, would test authentication
@@ -130,7 +135,7 @@ class GCPInfrastructureProvider:
             logger.error(f"GCP credentials validation failed: {str(e)}")
             raise
     
-    async def _setup_default_infrastructure(self):
+    async def _setup_default_infrastructure(self) -> None:
         """Setup default network and firewall if needed."""
         try:
             # Ensure default network exists
@@ -142,7 +147,7 @@ class GCPInfrastructureProvider:
         except Exception as e:
             logger.error(f"Failed to setup default infrastructure: {str(e)}")
     
-    async def _ensure_network(self):
+    async def _ensure_network(self) -> None:
         """Ensure VPC network exists."""
         try:
             # In real implementation, would check and create VPC network
@@ -151,7 +156,7 @@ class GCPInfrastructureProvider:
         except Exception as e:
             logger.error(f"Failed to ensure network: {str(e)}")
     
-    async def _ensure_firewall_rules(self):
+    async def _ensure_firewall_rules(self) -> None:
         """Ensure default firewall rules exist."""
         try:
             # In real implementation, would check and create firewall rules

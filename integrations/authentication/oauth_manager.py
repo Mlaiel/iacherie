@@ -97,7 +97,7 @@ class OAuthManager:
     Supports multiple providers, token refresh, and session management.
     """
     
-    def __init__(self, encryption_key: Optional[str] = None):
+    def __init__(self, encryption_key -> None: Optional[str] = None) -> None:
         """Initialize OAuth manager with encryption."""
         # Generate or use provided encryption key
         self.encryption_key = encryption_key or Fernet.generate_key()

@@ -80,7 +80,7 @@ class KeywordGeneratorAI:
     AI-powered keyword generator that creates comprehensive keyword strategies
     for content optimization and SEO campaigns.
     """
-    def __init__(self, language: str = "en", region: str = "US"):
+    def __init__(self, language -> None: str = "en", region -> None: str = "US") -> None:
         """
         Initialize the keyword generator.
         

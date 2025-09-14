@@ -229,7 +229,7 @@ class DeploymentResult:
 class TrafficSplitter:
     """Handles traffic splitting for canary deployments"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.active_splits: Dict[str, Dict[str, Any]] = {}
         
     async def configure_traffic_split(
@@ -440,7 +440,7 @@ class TrafficSplitter:
 class HealthMonitor:
     """Monitors health of canary and baseline deployments"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.monitoring_tasks: Dict[str, asyncio.Task] = {}
         
     async def start_monitoring(
@@ -468,10 +468,10 @@ class HealthMonitor:
 
     async def _monitor_health(
         self,
-        deployment_id: str,
-        health_checks: List[HealthCheck],
-        callback: Optional[Callable]
-    ):
+        deployment_id -> None: str,
+        health_checks -> None: List[HealthCheck],
+        callback -> None: Optional[Callable]
+    ) -> None:
         """Monitor health continuously"""
         try:
             consecutive_failures = {check.name: 0 for check in health_checks}
@@ -615,7 +615,7 @@ class HealthMonitor:
         except Exception as e:
             return {"healthy": False, "error": str(e)}
 
-    async def stop_monitoring(self, deployment_id: str):
+    async def stop_monitoring(self, deployment_id -> None: str) -> None:
         """Stop health monitoring"""
         try:
             if deployment_id in self.monitoring_tasks:
@@ -637,7 +637,7 @@ class HealthMonitor:
 class MetricsCollector:
     """Collects deployment metrics for analysis"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.metrics_storage: Dict[str, List[DeploymentMetrics]] = {}
         
     async def collect_metrics(
@@ -782,7 +782,7 @@ class CanaryDeploymentManager:
     Enterprise canary deployment manager for MLOps
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.traffic_splitter = TrafficSplitter()
         self.health_monitor = HealthMonitor()
         self.metrics_collector = MetricsCollector()
@@ -838,9 +838,9 @@ class CanaryDeploymentManager:
 
     async def _execute_deployment_phases(
         self,
-        deployment: CanaryDeployment,
-        result: DeploymentResult
-    ):
+        deployment -> None: CanaryDeployment,
+        result -> None: DeploymentResult
+    ) -> None:
         """Execute all deployment phases"""
         try:
             # Phase 1: Preparation
@@ -869,9 +869,9 @@ class CanaryDeploymentManager:
 
     async def _phase_preparation(
         self,
-        deployment: CanaryDeployment,
-        result: DeploymentResult
-    ):
+        deployment -> None: CanaryDeployment,
+        result -> None: DeploymentResult
+    ) -> None:
         """Preparation phase"""
         try:
             logger.info(f"Phase 1: Preparation for {deployment.name}")
@@ -893,9 +893,9 @@ class CanaryDeploymentManager:
 
     async def _phase_initial_deployment(
         self,
-        deployment: CanaryDeployment,
-        result: DeploymentResult
-    ):
+        deployment -> None: CanaryDeployment,
+        result -> None: DeploymentResult
+    ) -> None:
         """Initial deployment phase"""
         try:
             logger.info(f"Phase 2: Initial deployment for {deployment.name}")
@@ -926,9 +926,9 @@ class CanaryDeploymentManager:
 
     async def _phase_start_monitoring(
         self,
-        deployment: CanaryDeployment,
-        result: DeploymentResult
-    ):
+        deployment -> None: CanaryDeployment,
+        result -> None: DeploymentResult
+    ) -> None:
         """Start monitoring phase"""
         try:
             logger.info(f"Phase 3: Starting monitoring for {deployment.name}")
@@ -954,9 +954,9 @@ class CanaryDeploymentManager:
 
     async def _phase_gradual_scaling(
         self,
-        deployment: CanaryDeployment,
-        result: DeploymentResult
-    ):
+        deployment -> None: CanaryDeployment,
+        result -> None: DeploymentResult
+    ) -> None:
         """Gradual scaling phase"""
         try:
             logger.info(f"Phase 4: Gradual scaling for {deployment.name}")
@@ -1019,9 +1019,9 @@ class CanaryDeploymentManager:
 
     async def _phase_completion(
         self,
-        deployment: CanaryDeployment,
-        result: DeploymentResult
-    ):
+        deployment -> None: CanaryDeployment,
+        result -> None: DeploymentResult
+    ) -> None:
         """Completion phase"""
         try:
             logger.info(f"Phase 5: Completion for {deployment.name}")
@@ -1062,7 +1062,7 @@ class CanaryDeploymentManager:
             logger.error(f"Completion phase failed: {e}")
             raise
 
-    async def _validate_deployment_config(self, deployment: CanaryDeployment):
+    async def _validate_deployment_config(self, deployment -> None: CanaryDeployment) -> None:
         """Validate deployment configuration"""
         try:
             # Basic validation
@@ -1091,7 +1091,7 @@ class CanaryDeploymentManager:
             logger.error(f"Deployment configuration validation failed: {e}")
             raise
 
-    async def _prepare_deployment_environment(self, deployment: CanaryDeployment):
+    async def _prepare_deployment_environment(self, deployment -> None: CanaryDeployment) -> None:
         """Prepare deployment environment"""
         try:
             # Simulate environment preparation
@@ -1103,7 +1103,7 @@ class CanaryDeploymentManager:
             logger.error(f"Environment preparation failed: {e}")
             raise
 
-    async def _deploy_canary_version(self, deployment: CanaryDeployment):
+    async def _deploy_canary_version(self, deployment -> None: CanaryDeployment) -> None:
         """Deploy canary version"""
         try:
             # Simulate canary deployment
@@ -1117,10 +1117,10 @@ class CanaryDeploymentManager:
 
     async def _health_check_callback(
         self,
-        deployment_id: str,
-        event_type: str,
-        data: Dict[str, Any]
-    ):
+        deployment_id -> None: str,
+        event_type -> None: str,
+        data -> None: Dict[str, Any]
+    ) -> None:
         """Handle health check events"""
         try:
             if event_type == "health_check_failed":
@@ -1257,9 +1257,9 @@ class CanaryDeploymentManager:
 
     async def _rollback_deployment(
         self,
-        deployment: CanaryDeployment,
-        result: DeploymentResult
-    ):
+        deployment -> None: CanaryDeployment,
+        result -> None: DeploymentResult
+    ) -> None:
         """Rollback deployment"""
         try:
             logger.info(f"Starting rollback for deployment {deployment.name}")
@@ -1404,7 +1404,7 @@ def create_health_check(
 
 # Example usage
 if __name__ == "__main__":
-    async def main():
+    async def main() -> None:
         # Create canary deployment manager
         manager = create_canary_deployment_manager()
         

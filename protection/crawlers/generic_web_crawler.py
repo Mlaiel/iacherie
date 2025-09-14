@@ -318,7 +318,7 @@ class GenericSpider(scrapy.Spider):
     
     name = 'generic_spider'
     
-    def __init__(self, crawl_config: CrawlConfig, *args, **kwargs):
+    def __init__(self, crawl_config -> None: CrawlConfig, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
         self.crawl_config = crawl_config
         self.allowed_domains = crawl_config.allowed_domains
@@ -332,7 +332,7 @@ class GenericSpider(scrapy.Spider):
         # Content analyzer
         self.content_analyzer = ContentAnalyzer()
     
-    def parse(self, response: Response):
+    def parse(self, response -> None: Response) -> None:
         """
 Parse web page response."""
         try:
@@ -477,7 +477,7 @@ class RobotsTxtChecker:
     """
 Robots.txt compliance checker."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.robots_cache = {}
         self.cache_timeout = timedelta(hours=24)
     
@@ -529,7 +529,7 @@ class GenericWebCrawler(BasePlatformCrawler):
     - Content deduplication
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """
 Initialize generic web crawler."""
         super().__init__("web", config)
@@ -656,7 +656,7 @@ Initialize generic web crawler."""
         
         return results
     
-    async def _wait_for_crawler(self, deferred):
+    async def _wait_for_crawler(self, deferred) -> None:
         """Wait for Scrapy crawler to complete."""
         # This is a simplified implementation
         # In a real implementation, you would properly handle Twisted deferreds
@@ -816,7 +816,7 @@ Get crawler statistics."""
             "failed_requests": self.failed_requests
         }
     
-    def cleanup(self):
+    def cleanup(self) -> None:
         """Cleanup crawler resources."""
         self.crawled_urls.clear()
         

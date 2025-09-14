@@ -271,7 +271,7 @@ class CollaborationMetricsCollector:
     Tracks partnership formation, progress, and success across the platform.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(self.__class__.__name__)
         self.collaboration_cache = {}
         self.network_graph = {}
@@ -3303,7 +3303,7 @@ class CollaborationSuccessAnalyzer:
     Provides insights, optimization recommendations, and success predictions.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(self.__class__.__name__)
         self.analysis_models = {}
         self.success_patterns = {}

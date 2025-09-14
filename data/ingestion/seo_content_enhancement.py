@@ -196,7 +196,7 @@ class SEOContentEnhancementEngine:
     - Competitor analysis and insights
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the SEO Content Enhancement Engine"""
         self.logger = logging.getLogger(__name__)
         self.initialized = False
@@ -251,7 +251,7 @@ class SEOContentEnhancementEngine:
             'average_processing_time': 0.0
         }
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize the SEO engine and components"""
         try:
             self.logger.info("Initializing SEO Content Enhancement Engine...")
@@ -269,7 +269,7 @@ class SEOContentEnhancementEngine:
             self.logger.error(f"Engine initialization failed: {e}")
             raise SEOError(f"Engine initialization failed: {str(e)}")
     
-    async def _initialize_ai_models(self):
+    async def _initialize_ai_models(self) -> None:
         """Initialize AI models for SEO analysis"""
         try:
             # Text analysis models
@@ -291,7 +291,7 @@ class SEOContentEnhancementEngine:
             self.logger.warning(f"AI model loading failed: {e}")
             self.models = {}
     
-    async def _initialize_seo_components(self):
+    async def _initialize_seo_components(self) -> None:
         """Initialize SEO component engines"""
         await self.keyword_researcher.initialize()
         await self.content_optimizer.initialize()
@@ -616,8 +616,8 @@ class SEOContentEnhancementEngine:
         
         return recommendations[:8]  # Top 8 recommendations
     
-    async def _apply_optimization_results(self, result: SEOOptimizationResult, 
-                                        optimization_results: Dict[str, Any]):
+    async def _apply_optimization_results(self, result -> None: SEOOptimizationResult, 
+                                        optimization_results -> None: Dict[str, Any]) -> None:
         """Apply optimization results to the main result"""
         # Apply keyword research results
         if 'keywords' in optimization_results and optimization_results['keywords'].get('status') != 'failed':
@@ -922,8 +922,8 @@ class SEOContentEnhancementEngine:
         
         return recommendations[:12]  # Limit to top 12 recommendations
     
-    async def _update_metrics(self, processing_time: float, success: bool, 
-                            seo_analysis: Optional[SEOAnalysis]):
+    async def _update_metrics(self, processing_time -> None: float, success -> None: bool, 
+                            seo_analysis -> None: Optional[SEOAnalysis]) -> None:
         """Update performance metrics"""
         self.seo_metrics['total_optimizations'] += 1
         
@@ -966,7 +966,7 @@ class SEOContentEnhancementEngine:
 class KeywordResearchEngine:
     """Specialized engine for keyword research"""
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize keyword research"""
         self.keyword_database = {
             'technology': ['tech', 'software', 'hardware', 'programming', 'AI', 'machine learning'],
@@ -1094,7 +1094,7 @@ class KeywordResearchEngine:
 class ContentSEOOptimizer:
     """Specialized engine for content SEO optimization"""
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize content SEO optimizer"""
         pass
     
@@ -1159,7 +1159,7 @@ class ContentSEOOptimizer:
 class MetadataEnhancementEngine:
     """Specialized engine for metadata enhancement"""
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize metadata enhancer"""
         pass
     
@@ -1213,7 +1213,7 @@ class MetadataEnhancementEngine:
 class TrendingKeywordsAnalyzer:
     """Specialized engine for trending keywords analysis"""
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize trending keywords analyzer"""
         # Simulated trending keywords database
         self.trending_keywords_db = {
@@ -1275,7 +1275,7 @@ class TrendingKeywordsAnalyzer:
 class CompetitorAnalysisEngine:
     """Specialized engine for competitor analysis"""
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize competitor analyzer"""
         pass
     

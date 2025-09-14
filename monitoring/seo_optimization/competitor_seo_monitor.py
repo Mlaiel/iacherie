@@ -178,7 +178,7 @@ class CompetitiveAlert:
 class CompetitorSEOMonitor:
     """Main competitor SEO monitoring system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.competitors: Dict[str, CompetitorProfile] = {}
         self.competitor_rankings: Dict[str, List[CompetitorRanking]] = defaultdict(list)
         self.content_gaps: List[ContentGap] = []
@@ -211,7 +211,7 @@ class CompetitorSEOMonitor:
             "full_analysis_frequency": 720  # hours (monthly)
         }
         
-    def _initialize_default_competitors(self):
+    def _initialize_default_competitors(self) -> None:
         """Initialize with default competitor profiles"""
         default_competitors = [
             {
@@ -324,7 +324,7 @@ class CompetitorSEOMonitor:
         base_backlinks = size_backlinks_map.get(size, 10000)
         return int(base_backlinks * random.uniform(0.6, 1.8))
         
-    async def start_monitoring(self):
+    async def start_monitoring(self) -> None:
         """Start competitive SEO monitoring"""
         self.monitoring_active = True
         
@@ -338,12 +338,12 @@ class CompetitorSEOMonitor:
         
         await asyncio.gather(*monitoring_tasks)
         
-    async def stop_monitoring(self):
+    async def stop_monitoring(self) -> None:
         """Stop competitive SEO monitoring"""
         self.monitoring_active = False
         logger.info("Competitor SEO monitoring stopped")
         
-    async def _monitor_competitor_rankings(self):
+    async def _monitor_competitor_rankings(self) -> None:
         """Monitor competitor rankings for target keywords"""
         while self.monitoring_active:
             try:
@@ -418,7 +418,7 @@ class CompetitorSEOMonitor:
             content_score=random.uniform(0.6, 0.95)
         )
         
-    async def _analyze_ranking_change(self, ranking: CompetitorRanking):
+    async def _analyze_ranking_change(self, ranking -> None: CompetitorRanking) -> None:
         """Analyze significant ranking changes"""
         
         if abs(ranking.position_change) >= 5:  # Significant change threshold
@@ -443,7 +443,7 @@ class CompetitorSEOMonitor:
                 metrics_change={"position_change": ranking.position_change}
             )
             
-    async def _analyze_content_gaps(self):
+    async def _analyze_content_gaps(self) -> None:
         """Analyze content gaps compared to competitors"""
         while self.monitoring_active:
             try:
@@ -721,7 +721,7 @@ class CompetitorSEOMonitor:
         
         return approaches.get(keyword, "Create high-quality, comprehensive content")
         
-    async def _create_gap_alert(self, gap: ContentGap):
+    async def _create_gap_alert(self, gap -> None: ContentGap) -> None:
         """Create alert for significant content gap"""
         
         severity = "high" if gap.gap_severity == "critical" else "medium"
@@ -750,14 +750,14 @@ class CompetitorSEOMonitor:
         )
         
     async def _create_competitive_alert(self,
-                                      competitor_id: str,
-                                      alert_type: str,
-                                      severity: str,
-                                      title: str,
-                                      description: str,
-                                      affected_keywords: List[str],
-                                      metrics_change: Dict[str, float] = None,
-                                      recommended_actions: List[str] = None):
+                                      competitor_id -> None: str,
+                                      alert_type -> None: str,
+                                      severity -> None: str,
+                                      title -> None: str,
+                                      description -> None: str,
+                                      affected_keywords -> None: List[str],
+                                      metrics_change -> None: Dict[str, float] = None,
+                                      recommended_actions -> None: List[str] = None) -> None:
         """Create competitive intelligence alert"""
         
         alert = CompetitiveAlert(
@@ -775,7 +775,7 @@ class CompetitorSEOMonitor:
         self.competitive_alerts.append(alert)
         logger.info(f"Competitive alert created: {title}")
         
-    async def _detect_competitive_changes(self):
+    async def _detect_competitive_changes(self) -> None:
         """Detect significant competitive changes"""
         while self.monitoring_active:
             try:
@@ -789,7 +789,7 @@ class CompetitorSEOMonitor:
                 logger.error(f"Error detecting competitive changes: {e}")
                 await asyncio.sleep(3600)
                 
-    async def _analyze_market_share_changes(self):
+    async def _analyze_market_share_changes(self) -> None:
         """Analyze changes in market share"""
         
         # Calculate current market share for each competitor
@@ -824,7 +824,7 @@ class CompetitorSEOMonitor:
                             metrics_change={"avg_position_change": position_change}
                         )
                         
-    async def _detect_new_competitors(self):
+    async def _detect_new_competitors(self) -> None:
         """Detect potential new competitors (simulated)"""
         import random
         
@@ -851,7 +851,7 @@ class CompetitorSEOMonitor:
                 ]
             )
             
-    async def _analyze_content_velocity(self):
+    async def _analyze_content_velocity(self) -> None:
         """Analyze competitor content publishing velocity"""
         
         for competitor_id, competitor in self.competitors.items():
@@ -876,7 +876,7 @@ class CompetitorSEOMonitor:
                     ]
                 )
                 
-    async def _generate_competitive_alerts(self):
+    async def _generate_competitive_alerts(self) -> None:
         """Generate and manage competitive alerts"""
         while self.monitoring_active:
             try:
@@ -893,7 +893,7 @@ class CompetitorSEOMonitor:
                 logger.error(f"Error managing competitive alerts: {e}")
                 await asyncio.sleep(3600)
                 
-    async def _update_competitor_profiles(self):
+    async def _update_competitor_profiles(self) -> None:
         """Update competitor profiles with latest data"""
         while self.monitoring_active:
             try:
@@ -907,7 +907,7 @@ class CompetitorSEOMonitor:
                 logger.error(f"Error updating competitor profiles: {e}")
                 await asyncio.sleep(3600)
                 
-    async def _refresh_competitor_metrics(self, competitor: CompetitorProfile):
+    async def _refresh_competitor_metrics(self, competitor -> None: CompetitorProfile) -> None:
         """Refresh competitor SEO metrics (simulated)"""
         import random
         

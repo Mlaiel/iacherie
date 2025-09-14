@@ -72,7 +72,7 @@ class DriftAlert:
 class ModelMonitoring:
     """Enterprise-grade AI model monitoring and performance tracking system."""
     
-    def __init__(self, database_connection=None, alert_thresholds=None):
+    def __init__(self, database_connection=None, alert_thresholds=None) -> None:
         """Initialize model monitoring system.
         
         Args:
@@ -386,7 +386,7 @@ class ModelMonitoring:
                 self.logger.warning(f"Monitoring already active for model {model_id}")
                 return True
             
-            async def monitor_loop():
+            async def monitor_loop() -> None:
                 while self._monitoring_active:
                     try:
                         # This would typically collect metrics from the model service

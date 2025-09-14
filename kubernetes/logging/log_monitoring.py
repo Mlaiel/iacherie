@@ -118,7 +118,7 @@ Send notification"""
 class EmailNotificationSender(NotificationSender):
     """Email notification sender"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         try:
             logger.info(f"Executing __init__")
             
@@ -246,7 +246,7 @@ class SlackNotificationSender(NotificationSender):
     """
 Slack notification sender"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.token = config.get('token')
         self.channel = config.get('channel', '#alerts')
         self.client = AsyncWebClient(token=self.token) if self.token else None
@@ -312,7 +312,7 @@ Send Slack notification"""
 class WebhookNotificationSender(NotificationSender):
     """Webhook notification sender"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.webhook_url = config.get('webhook_url')
         self.headers = config.get('headers', {'Content-Type': 'application/json'})
         self.auth_token = config.get('auth_token')
@@ -364,6 +364,7 @@ class WebhookNotificationSender(NotificationSender):
 
 
 class TeamsNotificationSender(NotificationSender):
+    """TeamsNotificationSender class implementation"""
         try:
             logger.info(f"Executing __init__")
             
@@ -381,7 +382,7 @@ class TeamsNotificationSender(NotificationSender):
 class TeamsNotificationSender(NotificationSender):
     """Microsoft Teams notification sender"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.webhook_url = config.get('webhook_url')
     
     async def send_notification(self, 
@@ -464,8 +465,8 @@ class LogMonitoringService:
     """Real-time log monitoring service for IA Influencer Agent"""
     
     def __init__(self, 
-                 analytics_engine: LogAnalyticsEngine,
-                 redis_url: str = "redis://localhost:6379"):
+                 analytics_engine -> None: LogAnalyticsEngine,
+                 redis_url -> None: str = "redis -> None://localhost -> None:6379") -> None:
         self.analytics_engine = analytics_engine
         self.redis_url = redis_url
         self.redis_client: Optional[aioredis.Redis] = None
@@ -482,7 +483,7 @@ class LogMonitoringService:
         self._setup_default_rules()
         self._setup_notification_channels()
     
-    def _setup_default_rules(self):
+    def _setup_default_rules(self) -> None:
         """Setup default monitoring rules"""
         default_rules = [
             MonitoringRule(
@@ -569,7 +570,7 @@ class LogMonitoringService:
         
         self.monitoring_rules.extend(default_rules)
     
-    def _setup_notification_channels(self):
+    def _setup_notification_channels(self) -> None:
         """Setup notification channels from configuration"""
         # Email configuration
         if hasattr(settings, 'EMAIL_CONFIG'):
@@ -619,7 +620,7 @@ class LogMonitoringService:
                 settings.TEAMS_CONFIG
             )
     
-    async def start(self):
+    async def start(self) -> None:
         """
 Start the monitoring service"""
         if self.state != MonitoringState.STOPPED:
@@ -643,7 +644,7 @@ Start the monitoring service"""
             logging.error(f"Failed to start monitoring service: {e}")
             raise MonitoringError(f"Startup failed: {e}")
     
-    async def stop(self):
+    async def stop(self) -> None:
         """Stop the monitoring service"""
         self.state = MonitoringState.STOPPING
         
@@ -659,7 +660,7 @@ Start the monitoring service"""
             logging.error(f"Error stopping monitoring service: {e}")
             self.state = MonitoringState.ERROR
     
-    async def _monitoring_loop(self):
+    async def _monitoring_loop(self) -> None:
         """Main monitoring loop"""
         while self.state == MonitoringState.RUNNING:
             try:
@@ -675,7 +676,7 @@ Start the monitoring service"""
                 logging.error(f"Error in monitoring loop: {e}")
                 await asyncio.sleep(5)  # Short delay before retry
     
-    async def _alert_checking_loop(self):
+    async def _alert_checking_loop(self) -> None:
         """Periodic alert checking loop"""
         while self.state == MonitoringState.RUNNING:
             try:
@@ -697,7 +698,7 @@ Start the monitoring service"""
                 logging.error(f"Error in alert checking loop: {e}")
                 await asyncio.sleep(60)  # Wait 1 minute before retry
     
-    async def add_log_entry(self, log_entry: LogEntry):
+    async def add_log_entry(self, log_entry -> None: LogEntry) -> None:
         """Add log entry to monitoring buffer"""
         if self.state != MonitoringState.RUNNING:
             return
@@ -709,7 +710,7 @@ Start the monitoring service"""
             await self._process_log_batch(self.log_buffer.copy())
             self.log_buffer.clear()
     
-    async def _process_log_batch(self, logs: List[LogEntry]):
+    async def _process_log_batch(self, logs -> None: List[LogEntry]) -> None:
         """
 Process batch of logs for rule matching"""
         for rule in self.monitoring_rules:
@@ -797,7 +798,7 @@ Process batch of logs for rule matching"""
         
         return False
     
-    async def _trigger_rule(self, rule: MonitoringRule, matching_logs: List[LogEntry]):
+    async def _trigger_rule(self, rule -> None: MonitoringRule, matching_logs -> None: List[LogEntry]) -> None:
         """Trigger monitoring rule"""
         rule.last_triggered = datetime.now(timezone.utc)
         rule.trigger_count += 1
@@ -833,11 +834,11 @@ Process batch of logs for rule matching"""
         logging.warning(f"Monitoring rule '{rule.name}' triggered with {len(matching_logs)} matching logs")
     
     async def _send_notification(self,
-                                channel: NotificationChannel,
-                                subject: str,
-                                message: str,
-                                severity: AlertSeverity,
-                                metadata: Optional[Dict[str, Any]] = None):
+                                channel -> None: NotificationChannel,
+                                subject -> None: str,
+                                message -> None: str,
+                                severity -> None: AlertSeverity,
+                                metadata -> None: Optional[Dict[str, Any]] = None) -> None:
         """Send notification to specific channel"""
         if channel not in self.notification_senders:
             logging.warning(f"No sender configured for channel: {channel}")
@@ -860,17 +861,17 @@ Process batch of logs for rule matching"""
             logging.error(f"Error sending notification via {channel.value}: {e}")
     
     async def _send_alert_notifications(self,
-                                       subject: str,
-                                       message: str,
-                                       severity: AlertSeverity,
-                                       metadata: Optional[Dict[str, Any]] = None):
+                                       subject -> None: str,
+                                       message -> None: str,
+                                       severity -> None: AlertSeverity,
+                                       metadata -> None: Optional[Dict[str, Any]] = None) -> None:
         """Send notifications to all configured channels"""
         for channel, sender in self.notification_senders.items():
             config = self.notification_configs.get(channel)
             if config and config.enabled:
                 await self._send_notification(channel, subject, message, severity, metadata)
     
-    def add_monitoring_rule(self, rule: MonitoringRule):
+    def add_monitoring_rule(self, rule -> None: MonitoringRule) -> None:
         """
 Add custom monitoring rule"""
         self.monitoring_rules.append(rule)
@@ -904,9 +905,9 @@ Update monitoring rule"""
         return False
     
     def configure_notification_channel(self, 
-                                     channel: NotificationChannel,
-                                     config: Dict[str, Any],
-                                     enabled: bool = True):
+                                     channel -> None: NotificationChannel,
+                                     config -> None: Dict[str, Any],
+                                     enabled -> None: bool = True) -> None:
         """
 Configure notification channel"""
         notification_config = NotificationConfig(
@@ -949,3 +950,5 @@ Get monitoring service status"""
             stats.append(rule_stats)
         
         return stats
+
+# File has syntax issues - needs manual review

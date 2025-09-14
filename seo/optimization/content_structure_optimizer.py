@@ -79,12 +79,12 @@ class ContentStructureOptimizer:
     - Mobile-first structure recommendations
     """
     
-    def __init__(self, db_pool: asyncpg.Pool):
+    def __init__(self, db_pool -> None: asyncpg.Pool) -> None:
         self.db_pool = db_pool
         self.nlp = None
         self._initialize_nlp()
         
-    def _initialize_nlp(self):
+    def _initialize_nlp(self) -> None:
         """Initialize spaCy NLP pipeline."""
         try:
             self.nlp = spacy.load("en_core_web_sm")
@@ -435,7 +435,7 @@ class ContentStructureOptimizer:
         
         return str(soup)
     
-    async def _store_analysis(self, analysis: StructureAnalysis):
+    async def _store_analysis(self, analysis -> None: StructureAnalysis) -> None:
         """Store structure analysis in database."""
         try:
             async with self.db_pool.acquire() as conn:

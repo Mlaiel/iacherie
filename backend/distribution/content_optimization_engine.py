@@ -191,7 +191,7 @@ class SEOOptimization:
 class ContentOptimizationEngine:
     """Core content optimization engine."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(f"{__name__}.ContentOptimizationEngine")
         
         # Optimization models and data
@@ -234,7 +234,7 @@ class ContentOptimizationEngine:
             self.logger.error(f"Failed to initialize optimization engine: {e}")
             return False
     
-    async def _load_platform_specifications(self):
+    async def _load_platform_specifications(self) -> None:
         """Load platform-specific content specifications."""
         self.platform_specifications = {
             "youtube": {
@@ -324,7 +324,7 @@ class ContentOptimizationEngine:
             }
         }
     
-    async def _initialize_hashtag_database(self):
+    async def _initialize_hashtag_database(self) -> None:
         """Initialize hashtag analysis database."""
         # Sample hashtag data - in production, this would be loaded from analytics
         sample_hashtags = [
@@ -357,7 +357,7 @@ class ContentOptimizationEngine:
         # Build similar hashtags relationships
         await self._build_hashtag_relationships()
     
-    async def _build_hashtag_relationships(self):
+    async def _build_hashtag_relationships(self) -> None:
         """Build relationships between similar hashtags."""
         hashtag_list = list(self.hashtag_database.keys())
         
@@ -375,7 +375,7 @@ class ContentOptimizationEngine:
             
             self.hashtag_database[hashtag].similar_hashtags = similar[:5]  # Top 5 similar
     
-    async def _load_trending_data(self):
+    async def _load_trending_data(self) -> None:
         """Load current trending hashtags and topics."""
         # Simulate trending data - in production, this would come from real-time APIs
         self.trending_hashtags = {
@@ -389,7 +389,7 @@ class ContentOptimizationEngine:
             "#innovation": 0.6
         }
     
-    async def _initialize_seo_keywords(self):
+    async def _initialize_seo_keywords(self) -> None:
         """Initialize SEO keyword database."""
         # Sample SEO keywords with search volume scores
         self.seo_keywords = {
@@ -1030,7 +1030,7 @@ class ContentOptimizationEngine:
             "active_ab_tests": len([t for t in self.active_ab_tests.values() if t.status != "completed"])
         }
     
-    async def cleanup(self):
+    async def cleanup(self) -> None:
         """Cleanup resources."""
         self.hashtag_database.clear()
         self.trending_hashtags.clear()

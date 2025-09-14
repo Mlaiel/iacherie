@@ -128,7 +128,7 @@ class ArchivalLifecycleController:
     - On-demand retrieval from archives
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._archival_events: Dict[str, ArchivalEvent] = {}
         self._retention_policies: List[RetentionPolicy] = []
         self._migration_queue: List[MigrationPlan] = []
@@ -158,7 +158,7 @@ class ArchivalLifecycleController:
         # Initialize Ainflue business retention policies
         self._initialize_business_policies()
     
-    def _initialize_business_policies(self):
+    def _initialize_business_policies(self) -> None:
         """Initialize Ainflue-specific retention policies"""
         
         # Content events - Long retention for creator rights
@@ -242,7 +242,7 @@ class ArchivalLifecycleController:
         )
         self._retention_policies.append(collaboration_policy)
     
-    async def initialize(self, storage_backends: Dict[str, Any]):
+    async def initialize(self, storage_backends -> None: Dict[str, Any]) -> None:
         """Initialize the archival lifecycle controller"""
         
         self._storage_backends = storage_backends
@@ -258,7 +258,7 @@ class ArchivalLifecycleController:
         self._is_initialized = True
         logger.info("Archival Lifecycle Controller initialized successfully")
     
-    async def _load_archival_registry(self):
+    async def _load_archival_registry(self) -> None:
         """Load existing archival events from registry"""
         
         try:
@@ -552,8 +552,8 @@ class ArchivalLifecycleController:
         logger.info(f"Migration plan executed: {success_count}/{len(plan.event_ids)} successful")
         return result
     
-    async def _migrate_event(self, event_id: str, target_tier: StorageTier,
-                           action: LifecycleAction):
+    async def _migrate_event(self, event_id -> None: str, target_tier -> None: StorageTier,
+                           action -> None: LifecycleAction) -> None:
         """Migrate single event to target tier"""
         
         if event_id not in self._archival_events:
@@ -592,7 +592,7 @@ class ArchivalLifecycleController:
         
         logger.debug(f"Migrated event {event_id} from {old_tier.value} to {target_tier.value}")
     
-    async def _compress_event(self, event: ArchivalEvent):
+    async def _compress_event(self, event -> None: ArchivalEvent) -> None:
         """Compress event data"""
         
         try:
@@ -617,7 +617,7 @@ class ArchivalLifecycleController:
             logger.error(f"Failed to compress event {event.event_id}: {e}")
             raise
     
-    async def _encrypt_event(self, event: ArchivalEvent):
+    async def _encrypt_event(self, event -> None: ArchivalEvent) -> None:
         """Encrypt event data"""
         
         try:
@@ -635,7 +635,7 @@ class ArchivalLifecycleController:
             logger.error(f"Failed to encrypt event {event.event_id}: {e}")
             raise
     
-    async def _physical_migration(self, event: ArchivalEvent, target_tier: StorageTier):
+    async def _physical_migration(self, event -> None: ArchivalEvent, target_tier -> None: StorageTier) -> None:
         """Perform physical migration in storage backends"""
         
         # This would interact with actual storage systems
@@ -799,7 +799,7 @@ class ArchivalLifecycleController:
         
         return self._metrics
     
-    async def _lifecycle_monitoring_task(self):
+    async def _lifecycle_monitoring_task(self) -> None:
         """Background task for lifecycle monitoring"""
         
         while self._is_initialized:
@@ -810,7 +810,7 @@ class ArchivalLifecycleController:
                 logger.error(f"Lifecycle monitoring task error: {e}")
                 await asyncio.sleep(3600)  # 1 hour retry
     
-    async def _monitor_lifecycle_events(self):
+    async def _monitor_lifecycle_events(self) -> None:
         """Monitor events for lifecycle transitions"""
         
         # Create and queue migration plans
@@ -822,7 +822,7 @@ class ArchivalLifecycleController:
         
         logger.info(f"Queued {len(migration_plans)} migration plans")
     
-    async def _migration_execution_task(self):
+    async def _migration_execution_task(self) -> None:
         """Background task for executing migrations"""
         
         while self._is_initialized:
@@ -837,7 +837,7 @@ class ArchivalLifecycleController:
                 logger.error(f"Migration execution task error: {e}")
                 await asyncio.sleep(600)  # 10 minutes retry
     
-    async def _compliance_monitoring_task(self):
+    async def _compliance_monitoring_task(self) -> None:
         """Background task for compliance monitoring"""
         
         while self._is_initialized:

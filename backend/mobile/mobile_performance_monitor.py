@@ -98,7 +98,7 @@ class MonitoringConfig:
 class MobilePerformanceMonitor:
     """Advanced mobile performance monitoring system"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         """Initialize mobile performance monitor"""
         self.config = config or {}
         self.monitoring_config = MonitoringConfig(
@@ -293,7 +293,7 @@ class MobilePerformanceMonitor:
             "mobile_optimization_effectiveness": await self._calculate_mobile_optimization_effectiveness()
         }
     
-    async def _collect_performance_metrics(self, monitor_id: str):
+    async def _collect_performance_metrics(self, monitor_id -> None: str) -> None:
         """Continuously collect performance metrics"""
         try:
             session = self.active_monitors[monitor_id]
@@ -462,7 +462,7 @@ class MobilePerformanceMonitor:
         
         return insights
     
-    async def _check_performance_alerts(self, device_id: str, metrics: List[PerformanceMetric]):
+    async def _check_performance_alerts(self, device_id -> None: str, metrics -> None: List[PerformanceMetric]) -> None:
         """Check for performance alerts based on thresholds"""
         thresholds = self.monitoring_config.performance_thresholds
         
@@ -474,7 +474,7 @@ class MobilePerformanceMonitor:
                 if metric.value > threshold:
                     await self._trigger_performance_alert(device_id, metric, threshold)
     
-    async def _trigger_performance_alert(self, device_id: str, metric: PerformanceMetric, threshold: float):
+    async def _trigger_performance_alert(self, device_id -> None: str, metric -> None: PerformanceMetric, threshold -> None: float) -> None:
         """Trigger performance alert"""
         alert = {
             "alert_id": f"alert_{uuid.uuid4().hex[:8]}",
@@ -513,11 +513,11 @@ class MobilePerformanceMonitor:
 class PerformanceTracker:
     """Performance metrics tracker"""
     
-    def __init__(self, config: MonitoringConfig):
+    def __init__(self, config -> None: MonitoringConfig) -> None:
         self.config = config
         self.metrics_buffer = []
         
-    async def track_metric(self, metric: PerformanceMetric):
+    async def track_metric(self, metric -> None: PerformanceMetric) -> None:
         """Track individual performance metric"""
         self.metrics_buffer.append(metric)
         
@@ -525,7 +525,7 @@ class PerformanceTracker:
         if len(self.metrics_buffer) > 1000:
             await self._flush_metrics()
     
-    async def _flush_metrics(self):
+    async def _flush_metrics(self) -> None:
         """Flush metrics buffer to storage"""
         # Implementation would save to database
         self.metrics_buffer.clear()
@@ -534,7 +534,7 @@ class PerformanceTracker:
 class MetricsCollector:
     """Advanced metrics collection system"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         
     async def collect_system_metrics(self) -> Dict[str, Any]:

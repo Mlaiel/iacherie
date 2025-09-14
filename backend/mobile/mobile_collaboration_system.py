@@ -192,7 +192,7 @@ class MobileWorkspaceRequest:
 class MobileCollaborationSystem:
     """Unified mobile collaboration system consolidating orchestration, matching, and workspace management"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         """Initialize mobile collaboration system with comprehensive capabilities"""
         self.config = config or {}
         self.collaboration_orchestrator = MobileCollaborationOrchestrator(self.config)
@@ -351,7 +351,7 @@ class MobileCollaborationSystem:
         }
         return sum(factors.values())
     
-    def _update_collaboration_metrics(self, collaboration_result: MobileCollaborationResult):
+    def _update_collaboration_metrics(self, collaboration_result -> None: MobileCollaborationResult) -> None:
         """Update collaboration system metrics"""
         # Update success rate based on mobile optimization score
         success_indicator = 1.0 if collaboration_result.mobile_optimization_score > 0.7 else 0.0
@@ -404,7 +404,7 @@ class MobileCollaborationSystem:
 class MobileCollaborationOrchestrator:
     """Mobile collaboration orchestrator for workflow coordination"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.orchestration_workflows = {}
         self.collaboration_events = {}
@@ -529,7 +529,7 @@ class MobileCollaborationOrchestrator:
 class MobileCreatorMatching:
     """Mobile creator matching with intelligent algorithm matching"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.creator_profiles = {}
         self.matching_algorithms = {}
@@ -713,7 +713,7 @@ class MobileCreatorMatching:
 class MobileTeamWorkspace:
     """Mobile team workspace with collaborative workspace management"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.active_workspaces = {}
         self.workspace_templates = {}

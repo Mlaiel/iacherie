@@ -32,12 +32,12 @@ class PaymentConfigurationLevel(str, Enum):
 class PaymentSystemConfigurationManager:
     """Payment system configuration manager"""
     
-    def __init__(self, level: PaymentConfigurationLevel = PaymentConfigurationLevel.ENTERPRISE):
+    def __init__(self, level -> None: PaymentConfigurationLevel = PaymentConfigurationLevel.ENTERPRISE) -> None:
         self.level = level
         self.configurations = {}
         self._initialize_payment_configs()
     
-    def _initialize_payment_configs(self):
+    def _initialize_payment_configs(self) -> None:
         """Initialize all payment configurations"""
         self.configurations = {
             "payment_gateway": PaymentGatewayConfiguration(level=self.level),

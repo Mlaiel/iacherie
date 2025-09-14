@@ -73,7 +73,7 @@ class MessageDelivery:
     payload_hash: Optional[str] = None
     idempotency_key: Optional[str] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if not self.delivery_tag:
             self.delivery_tag = f"{self.producer_id}:{self.sequence_number}:{self.message_id}"
 
@@ -109,7 +109,7 @@ class StateSnapshot:
     created_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     checksum: Optional[str] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if not self.checksum:
             self.checksum = self._calculate_checksum()
     
@@ -122,7 +122,7 @@ class StateSnapshot:
 class DeduplicationCache:
     """Cache for deduplicating messages"""
     
-    def __init__(self, max_size: int = 100000, ttl_seconds: int = 3600):
+    def __init__(self, max_size -> None: int = 100000, ttl_seconds -> None: int = 3600) -> None:
         self.max_size = max_size
         self.ttl_seconds = ttl_seconds
         self.cache: Dict[str, Tuple[Any, datetime]] = {}
@@ -152,7 +152,7 @@ class DeduplicationCache:
             logger.error(f"Error getting from deduplication cache: {e}")
             return None
     
-    def put(self, key: str, value: Any):
+    def put(self, key -> None: str, value -> None: Any) -> None:
         """Put value in cache"""
         try:
             current_time = datetime.now(timezone.utc)
@@ -174,7 +174,7 @@ class DeduplicationCache:
         except Exception as e:
             logger.error(f"Error putting to deduplication cache: {e}")
     
-    def _remove(self, key: str):
+    def _remove(self, key -> None: str) -> None:
         """Remove key from cache"""
         if key in self.cache:
             del self.cache[key]
@@ -182,7 +182,7 @@ class DeduplicationCache:
         if key in self._access_order:
             self._access_order.remove(key)
     
-    def cleanup_expired(self):
+    def cleanup_expired(self) -> None:
         """Clean up expired entries"""
         try:
             current_time = datetime.now(timezone.utc)
@@ -202,7 +202,7 @@ class DeduplicationCache:
 class IdempotentProcessor:
     """Processor with idempotent guarantees"""
     
-    def __init__(self, processor_id: str, deduplication_cache: DeduplicationCache):
+    def __init__(self, processor_id -> None: str, deduplication_cache -> None: DeduplicationCache) -> None:
         self.processor_id = processor_id
         self.deduplication_cache = deduplication_cache
         self.state_snapshots: Dict[int, StateSnapshot] = {}
@@ -274,7 +274,7 @@ class IdempotentProcessor:
         
         return snapshot
     
-    async def _restore_state_snapshot(self, snapshot: StateSnapshot):
+    async def _restore_state_snapshot(self, snapshot -> None: StateSnapshot) -> None:
         """Restore state from snapshot"""
         try:
             self.pending_operations = snapshot.state_data["pending_operations"]
@@ -293,7 +293,7 @@ class IdempotentProcessor:
 class TransactionCoordinator:
     """Coordinates distributed transactions for exactly-once delivery"""
     
-    def __init__(self, coordinator_id: str):
+    def __init__(self, coordinator_id -> None: str) -> None:
         self.coordinator_id = coordinator_id
         self.active_transactions: Dict[str, Transaction] = {}
         self.transaction_log: deque = deque(maxlen=10000)
@@ -326,7 +326,7 @@ class TransactionCoordinator:
             logger.error(f"Error beginning transaction: {e}")
             raise
     
-    async def add_operation(self, transaction_id: str, operation: Dict[str, Any]):
+    async def add_operation(self, transaction_id -> None: str, operation -> None: Dict[str, Any]) -> None:
         """Add operation to transaction"""
         try:
             if transaction_id not in self.active_transactions:
@@ -425,7 +425,7 @@ class TransactionCoordinator:
             await self.abort_transaction(transaction_id)
             return False
     
-    async def abort_transaction(self, transaction_id: str):
+    async def abort_transaction(self, transaction_id -> None: str) -> None:
         """Abort transaction"""
         try:
             if transaction_id not in self.active_transactions:
@@ -478,7 +478,7 @@ class TransactionCoordinator:
             logger.error(f"Error committing with participants: {e}")
             return False
     
-    async def _abort_with_participants(self, transaction: Transaction):
+    async def _abort_with_participants(self, transaction -> None: Transaction) -> None:
         """Abort with all transaction participants"""
         try:
             # In real implementation, would send abort messages to all participants
@@ -487,7 +487,7 @@ class TransactionCoordinator:
         except Exception as e:
             logger.error(f"Error aborting with participants: {e}")
     
-    def cleanup_expired_transactions(self):
+    def cleanup_expired_transactions(self) -> None:
         """Clean up expired transactions"""
         try:
             expired_transactions = []
@@ -506,7 +506,7 @@ class TransactionCoordinator:
 class ExactlyOnceDeliveryGuarantor:
     """Main exactly-once delivery guarantor for Ainflue platform"""
     
-    def __init__(self, guarantor_id: str, metrics_collector=None):
+    def __init__(self, guarantor_id -> None: str, metrics_collector=None) -> None:
         self.guarantor_id = guarantor_id
         self.metrics_collector = metrics_collector
         
@@ -524,7 +524,7 @@ class ExactlyOnceDeliveryGuarantor:
         self._guarantor_task: Optional[asyncio.Task] = None
         self._shutdown_event = asyncio.Event()
         
-    async def start(self):
+    async def start(self) -> None:
         """Start the exactly-once delivery guarantor"""
         try:
             logger.info("Starting Exactly-Once Delivery Guarantor")
@@ -538,7 +538,7 @@ class ExactlyOnceDeliveryGuarantor:
             logger.error(f"Failed to start exactly-once delivery guarantor: {e}")
             raise
     
-    async def stop(self):
+    async def stop(self) -> None:
         """Stop the guarantor"""
         try:
             logger.info("Stopping Exactly-Once Delivery Guarantor")
@@ -720,7 +720,7 @@ class ExactlyOnceDeliveryGuarantor:
             logger.error(f"Error sending to broker: {e}")
             return False
     
-    async def _guarantor_loop(self):
+    async def _guarantor_loop(self) -> None:
         """Main guarantor monitoring loop"""
         try:
             while not self._shutdown_event.is_set():
@@ -742,7 +742,7 @@ class ExactlyOnceDeliveryGuarantor:
         except Exception as e:
             logger.error(f"Error in guarantor loop: {e}")
     
-    async def _cleanup_old_deliveries(self):
+    async def _cleanup_old_deliveries(self) -> None:
         """Clean up old delivery tracking entries"""
         try:
             cutoff_time = datetime.now(timezone.utc) - timedelta(hours=24)
@@ -762,7 +762,7 @@ class ExactlyOnceDeliveryGuarantor:
         except Exception as e:
             logger.error(f"Error cleaning up old deliveries: {e}")
     
-    async def _update_metrics(self):
+    async def _update_metrics(self) -> None:
         """Update guarantor metrics"""
         try:
             if self.metrics_collector:

@@ -68,7 +68,7 @@ class MonetizationHealthChecker:
     Monitors all revenue tracking, payment processing, and platform
     integration components for the monetization pipeline.
     """
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """
         Initialize monetization health checker
         

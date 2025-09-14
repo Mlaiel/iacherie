@@ -112,7 +112,7 @@ class ContentIngestionCore:
     with enterprise-grade performance and reliability standards.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize Content Ingestion Core"""
         self.config = config or {}
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
@@ -913,7 +913,7 @@ class ContentIngestionCore:
             confidence_score=quality.confidence_score
         )
         
-    def _update_statistics(self, result: ValidationResult, processing_time: float):
+    def _update_statistics(self, result -> None: ValidationResult, processing_time -> None: float) -> None:
         """Update ingestion statistics"""
         self.ingestion_stats["total_processed"] += 1
         

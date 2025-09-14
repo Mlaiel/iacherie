@@ -96,7 +96,7 @@ class BlurDetector:
 class AdaptiveSharpener:
     """Adaptive sharpening based on local image characteristics."""
     
-    def __init__(self, config: SharpnessConfig):
+    def __init__(self, config -> None: SharpnessConfig) -> None:
         self.config = config
         
     def enhance_sharpness(self, image: np.ndarray) -> np.ndarray:
@@ -210,7 +210,7 @@ class AdaptiveSharpener:
 class UnsharpMaskSharpener:
     """Classic unsharp masking with advanced features."""
     
-    def __init__(self, config: SharpnessConfig):
+    def __init__(self, config -> None: SharpnessConfig) -> None:
         self.config = config
     
     def enhance_sharpness(self, image: np.ndarray) -> np.ndarray:
@@ -257,7 +257,7 @@ class UnsharpMaskSharpener:
 class RichardsonLucySharpener:
     """Richardson-Lucy deconvolution for sharpening."""
     
-    def __init__(self, config: SharpnessConfig):
+    def __init__(self, config -> None: SharpnessConfig) -> None:
         self.config = config
     
     def enhance_sharpness(self, image: np.ndarray) -> np.ndarray:
@@ -325,7 +325,7 @@ class RichardsonLucySharpener:
 class SharpnessEnhancementEngine:
     """Enterprise sharpness enhancement engine with multiple algorithms."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.config = SharpnessConfig()
         
     async def enhance_sharpness(

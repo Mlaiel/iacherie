@@ -1,3 +1,8 @@
+"""
+Index module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 🏆 AINFLUE ENTERPRISE QUALITY ASSURANCE - POINT D'ENTRÉE PRINCIPAL
@@ -80,7 +85,7 @@ class AinfluenceEnterpriseQualityOrchestrator:
     - IA Prompt Engineer: Intelligence artificielle scoring
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.modules: Dict[QualityModuleType, QualityModule] = {}
         self.is_initialized = False
         self._initialize_modules()
@@ -291,7 +296,7 @@ class AinfluenceEnterpriseQualityOrchestrator:
 # Instance singleton orchestrateur enterprise
 quality_orchestrator = AinfluenceEnterpriseQualityOrchestrator()
 
-async def main():
+async def main() -> None:
     """Point d'entrée principal pour démonstration"""
     logger.info("🏆 AINFLUE ENTERPRISE QUALITY ASSURANCE - DÉMARRAGE")
     

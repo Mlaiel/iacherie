@@ -1,4 +1,6 @@
 """Advanced Content Protection Monitoring System
+import logging
+
 Real-time monitoring across multiple platforms with intelligent violation detection.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -53,7 +55,7 @@ class PlatformCrawler:
     """
 Base class for platform-specific crawlers"""
     
-    def __init__(self, platform_name: str):
+    def __init__(self, platform_name -> None: str) -> None:
         self.platform_name = platform_name
         self.rate_limit_delay = 1.0  # seconds between requests
         self.session = None
@@ -62,7 +64,7 @@ Base class for platform-specific crawlers"""
         self.driver = None
         self._setup_selenium()
     
-    def _setup_selenium(self):
+    def _setup_selenium(self) -> None:
         """
 Setup headless Chrome driver"""
         try:
@@ -80,7 +82,7 @@ Setup headless Chrome driver"""
             logger.warning(f"Selenium setup failed for {self.platform_name}: {str(e)}")
             self.driver = None
     
-    async def initialize_session(self):
+    async def initialize_session(self) -> None:
         """Initialize HTTP session"""
         if not self.session:
             self.session = aiohttp.ClientSession(
@@ -90,7 +92,7 @@ Setup headless Chrome driver"""
                 }
             )
     
-    async def close_session(self):
+    async def close_session(self) -> None:
         """
 Close HTTP session"""
         if self.session:
@@ -302,7 +304,7 @@ class YouTubeCrawler(PlatformCrawler):
     """
 YouTube content crawler using API and web scraping"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__("youtube")
         self.api_key = settings.platforms.youtube_api_key
         self.youtube_service = None
@@ -433,7 +435,7 @@ YouTube content crawler using API and web scraping"""
 class InstagramCrawler(PlatformCrawler):
     """Instagram content crawler"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__("instagram")
         self.access_token = settings.platforms.instagram_access_token
     
@@ -473,7 +475,7 @@ class InstagramCrawler(PlatformCrawler):
 class TikTokCrawler(PlatformCrawler):
     """TikTok content crawler"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__("tiktok")
         self.api_key = settings.platforms.tiktok_api_key
     
@@ -509,7 +511,7 @@ class TikTokCrawler(PlatformCrawler):
 class TwitterCrawler(PlatformCrawler):
     """Twitter/X content crawler"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__("twitter")
         self.api_key = settings.platforms.twitter_api_key
         self.api_secret = settings.platforms.twitter_api_secret
@@ -557,7 +559,7 @@ class TwitterCrawler(PlatformCrawler):
 class ProtectionMonitor:
     """Main content protection monitoring system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.crawlers = {
             'youtube': YouTubeCrawler(),
             'instagram': InstagramCrawler(),
@@ -569,7 +571,7 @@ class ProtectionMonitor:
         self.monitoring_active = False
         self.check_interval = 3600  # 1 hour default
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """
 Initialize monitoring system"""
         try:
@@ -627,7 +629,7 @@ Initialize monitoring system"""
             logger.error(f"Failed to add content monitoring: {str(e)}")
             return False
     
-    async def start_monitoring(self):
+    async def start_monitoring(self) -> None:
         """Start the monitoring loop"""
         if self.monitoring_active:
             return
@@ -644,7 +646,7 @@ Initialize monitoring system"""
                 logger.error(f"Monitoring cycle error: {str(e)}")
                 await asyncio.sleep(60)  # Wait 1 minute before retry
     
-    async def stop_monitoring(self):
+    async def stop_monitoring(self) -> None:
         """Stop the monitoring loop"""
         self.monitoring_active = False
         
@@ -654,7 +656,7 @@ Initialize monitoring system"""
         
         logger.info("Content protection monitoring stopped")
     
-    async def _monitoring_cycle(self):
+    async def _monitoring_cycle(self) -> None:
         """Execute one monitoring cycle"""
         logger.info(f"Starting monitoring cycle for {len(self.active_monitors)} targets")
         
@@ -679,7 +681,7 @@ Initialize monitoring system"""
         time_since_check = datetime.utcnow() - target.last_checked
         return time_since_check.total_seconds() >= (target.monitoring_frequency * 3600)
     
-    async def _check_content_violations(self, target: MonitoringTarget):
+    async def _check_content_violations(self, target -> None: MonitoringTarget) -> None:
         """
 Check for violations of specific content"""
         logger.info(f"Checking content {target.content_id} for violations")
@@ -768,9 +770,9 @@ Check for violations of specific content"""
             logger.error(f"Similarity check failed: {str(e)}")
             return 0.0
     
-    async def _handle_violation_detected(self, target: MonitoringTarget, 
-                                       violation_data: Dict[str, Any], 
-                                       similarity_score: float):
+    async def _handle_violation_detected(self, target -> None: MonitoringTarget, 
+                                       violation_data -> None: Dict[str, Any], 
+                                       similarity_score -> None: float) -> None:
         """Handle detected violation"""
         try:
             # Create violation record
@@ -809,7 +811,7 @@ Check for violations of specific content"""
         except Exception as e:
             logger.error(f"Failed to handle violation: {str(e)}")
     
-    async def _load_monitoring_targets(self):
+    async def _load_monitoring_targets(self) -> None:
         """Load existing monitoring targets from database"""
         try:
             async with database_manager.get_postgres_session() as session:
@@ -843,7 +845,7 @@ Check for violations of specific content"""
         except Exception as e:
             logger.error(f"Failed to load monitoring targets: {str(e)}")
     
-    async def _update_last_checked(self, content_id: str, last_checked: datetime):
+    async def _update_last_checked(self, content_id -> None: str, last_checked -> None: datetime) -> None:
         """Update last checked timestamp in database"""
         try:
             async with database_manager.get_postgres_session() as session:

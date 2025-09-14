@@ -114,7 +114,7 @@ class StripeTestingFramework:
     - 🤖 IA Prompt Engineer: Intelligent documentation + automated reporting + smart insights
     """
     
-    def __init__(self, stripe_api_key: str, test_mode: bool = True, redis_client=None, db_pool=None):
+    def __init__(self, stripe_api_key -> None: str, test_mode -> None: bool = True, redis_client=None, db_pool=None) -> None:
         """Initialize Stripe Testing Framework with enterprise features"""
         if test_mode:
             stripe.api_key = stripe_api_key
@@ -149,7 +149,7 @@ class StripeTestingFramework:
         
         logger.info("🏆 Stripe Testing Framework initialized with multi-role expertise")
     
-    def _initialize_test_scenarios(self):
+    def _initialize_test_scenarios(self) -> None:
         """Initialize comprehensive test scenarios"""
         # Payment success scenarios
         self.register_test_case(TestCase(
@@ -231,14 +231,14 @@ class StripeTestingFramework:
         
         logger.info("🧪 Test scenarios initialized")
     
-    def register_test_case(self, test_case: TestCase):
+    def register_test_case(self, test_case -> None: TestCase) -> None:
         """
         🔧 Microservices: Register test case for distributed testing
         """
         self.test_cases[test_case.id] = test_case
         logger.info(f"📝 Registered test case: {test_case.id}")
     
-    def create_test_suite(self, suite_name: str, test_case_ids: List[str]):
+    def create_test_suite(self, suite_name -> None: str, test_case_ids -> None: List[str]) -> None:
         """Create a test suite with specific test cases"""
         self.test_suites[suite_name] = test_case_ids
         logger.info(f"📋 Created test suite '{suite_name}' with {len(test_case_ids)} tests")
@@ -698,7 +698,7 @@ class StripeTestingFramework:
         passed_security_tests = sum(1 for r in security_tests if r.result == TestResult.PASSED)
         return (passed_security_tests / len(security_tests)) * 100
     
-    async def _store_test_result(self, result: TestExecutionResult):
+    async def _store_test_result(self, result -> None: TestExecutionResult) -> None:
         """
         🗄️ DBA: Store test result in database for analysis
         """
@@ -721,7 +721,7 @@ class StripeTestingFramework:
         except Exception as e:
             logger.warning(f"⚠️ Test result storage failed: {str(e)}")
     
-    async def _store_test_suite_result(self, suite_result: TestSuiteResult):
+    async def _store_test_suite_result(self, suite_result -> None: TestSuiteResult) -> None:
         """Store test suite result in database"""
         try:
             if self.db_pool:
@@ -846,7 +846,7 @@ class StripeTestingFramework:
         failed_requests = 0
         response_times = []
         
-        async def benchmark_worker():
+        async def benchmark_worker() -> None:
             nonlocal completed_requests, failed_requests
             
             while (time.time() - start_time) < duration_seconds:

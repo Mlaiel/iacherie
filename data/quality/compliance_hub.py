@@ -138,7 +138,7 @@ class ComplianceRule:
     enabled: bool = True
     auto_fix: bool = False
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if not self.id:
             self.id = str(uuid.uuid4())
 
@@ -221,7 +221,7 @@ class ComplianceHub:
     compliance validation, policy enforcement, and audit trail management.
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """
         Initialize the compliance hub.
         
@@ -549,7 +549,7 @@ class ComplianceHub:
     
     # Private helper methods
     
-    async def _load_compliance_rules(self):
+    async def _load_compliance_rules(self) -> None:
         """Load compliance rules for supported regulations"""
         # GDPR Rules
         gdpr_rules = [
@@ -631,7 +631,7 @@ class ComplianceHub:
         for rule in all_rules:
             self.compliance_rules[rule.id] = rule
     
-    async def _load_protection_policies(self):
+    async def _load_protection_policies(self) -> None:
         """Load protection policies"""
         standard_policy = ProtectionPolicy(
             id="standard_protection",
@@ -667,7 +667,7 @@ class ComplianceHub:
         self.protection_policies[standard_policy.id] = standard_policy
         self.protection_policies[enhanced_policy.id] = enhanced_policy
     
-    async def _load_threat_signatures(self):
+    async def _load_threat_signatures(self) -> None:
         """Load threat detection signatures"""
         self.threat_signatures = {
             ThreatType.MALWARE: [
@@ -697,7 +697,7 @@ class ComplianceHub:
             ]
         }
     
-    async def _initialize_compliance_frameworks(self):
+    async def _initialize_compliance_frameworks(self) -> None:
         """Initialize compliance framework integrations"""
         # This would integrate with external compliance frameworks
         # For now, we'll use internal validation
@@ -723,11 +723,11 @@ class ComplianceHub:
     
     async def _log_compliance_check(
         self,
-        content_type: str,
-        regulations: List[ComplianceRegulation],
-        results: Dict[ComplianceRegulation, ComplianceResult],
-        processing_time: float
-    ):
+        content_type -> None: str,
+        regulations -> None: List[ComplianceRegulation],
+        results -> None: Dict[ComplianceRegulation, ComplianceResult],
+        processing_time -> None: float
+    ) -> None:
         """Log compliance check to audit trail"""
         audit_entry = {
             'type': 'compliance_check',
@@ -805,7 +805,7 @@ class ComplianceHub:
 class ComplianceValidator:
     """Compliance validation engine for regulatory requirements"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.logger = logger
     
@@ -917,7 +917,7 @@ class ComplianceValidator:
 class ProtectionEngine:
     """Content protection and threat detection engine"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.logger = logger
     
@@ -990,7 +990,7 @@ class ProtectionEngine:
 class IntegrityChecker:
     """Content integrity verification system"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.logger = logger
     

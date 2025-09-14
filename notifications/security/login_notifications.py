@@ -17,7 +17,7 @@ logger = logging.getLogger(__name__)
 class LoginNotifications:
     """Login activity monitoring and notification system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         logger.info("Login notifications initialized")
     
     async def notify_suspicious_login(self, login_data: Dict[str, Any]) -> bool:

@@ -109,7 +109,7 @@ class AttributionModelingEngine:
     - Incremental lift measurement
     """
     
-    def __init__(self, db_url: str, lookback_window: int = 30):
+    def __init__(self, db_url -> None: str, lookback_window -> None: int = 30) -> None:
         """Initialize attribution modeling engine"""
         self.db_url = db_url
         self.lookback_window = lookback_window
@@ -729,7 +729,7 @@ class AttributionModelingEngine:
         conversions = []
         return conversions
 
-    def _build_user_journeys(self):
+    def _build_user_journeys(self) -> None:
         """Build user journey maps from touchpoints"""
         self.user_journeys = {}
         for touchpoint in self.touchpoints:
@@ -741,7 +741,7 @@ class AttributionModelingEngine:
         for user_id in self.user_journeys:
             self.user_journeys[user_id].sort(key=lambda x: x.timestamp)
 
-    async def _build_markov_transition_matrix(self):
+    async def _build_markov_transition_matrix(self) -> None:
         """Build Markov chain transition matrix"""
         try:
             # Get all unique states (touchpoint types + conversion)
@@ -1085,7 +1085,7 @@ class AttributionModelingEngine:
         return recommendations
 
 # Usage example
-async def main():
+async def main() -> None:
     """Test the attribution modeling engine"""
     try:
         # Initialize engine

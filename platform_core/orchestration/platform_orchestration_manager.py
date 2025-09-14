@@ -1,3 +1,8 @@
+"""
+Platform Orchestration Manager module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Platform Orchestration Manager - Enterprise Core Component
@@ -114,7 +119,7 @@ class PlatformOrchestrationManager:
     dependencies with enterprise-grade reliability and monitoring.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.services: Dict[str, ServiceDefinition] = {}
         self.workflows: Dict[str, WorkflowDefinition] = {}
         self.executions: Dict[str, WorkflowExecution] = {}
@@ -670,11 +675,11 @@ class PlatformOrchestrationManager:
             logger.error(f"Error emitting event {event_type}: {e}")
     
     # Context Manager Support
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         await self.start()
         return self
     
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         await self.stop()
 
 
@@ -685,7 +690,7 @@ def create_platform_orchestrator() -> PlatformOrchestrationManager:
 
 
 # Example usage
-async def main():
+async def main() -> None:
     """Example usage of Platform Orchestration Manager"""
     async with create_platform_orchestrator() as orchestrator:
         # Register some example services

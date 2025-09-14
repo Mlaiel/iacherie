@@ -232,7 +232,7 @@ class EventOrderingValidator(ValidationRuleEngine):
 class ReferentialIntegrityValidator(ValidationRuleEngine):
     """Validates cross-aggregate references"""
     
-    def __init__(self, event_store: EventStoreInterface):
+    def __init__(self, event_store -> None: EventStoreInterface) -> None:
         self.event_store = event_store
     
     async def validate(self, events: List[DomainEvent], 
@@ -284,7 +284,7 @@ class ReferentialIntegrityValidator(ValidationRuleEngine):
             "creator_id", "collaborator_id", "referenced_aggregate"
         ]
         
-        def extract_from_dict(data: Dict[str, Any]):
+        def extract_from_dict(data -> None: Dict[str, Any]) -> None:
             for key, value in data.items():
                 if key in reference_fields and isinstance(value, str):
                     references.add(value)
@@ -304,11 +304,11 @@ class ReferentialIntegrityValidator(ValidationRuleEngine):
 class BusinessRuleValidator(ValidationRuleEngine):
     """Validates business rule compliance"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.business_rules = []
         self._register_default_rules()
     
-    def _register_default_rules(self):
+    def _register_default_rules(self) -> None:
         """Register default business rules"""
         # Example: Content upload must be followed by AI analysis
         self.business_rules.append({
@@ -468,7 +468,7 @@ class PerformanceAnomalyValidator(ValidationRuleEngine):
 class ConsistencyValidationService:
     """Enterprise consistency validation service"""
     
-    def __init__(self, event_store: EventStoreInterface):
+    def __init__(self, event_store -> None: EventStoreInterface) -> None:
         self.event_store = event_store
         self.validators = [
             EventOrderingValidator(),
@@ -483,7 +483,7 @@ class ConsistencyValidationService:
         # Initialize default rules
         self._initialize_default_rules()
     
-    def _initialize_default_rules(self):
+    def _initialize_default_rules(self) -> None:
         """Initialize default validation rules"""
         # Event ordering rule
         self.validation_rules.append(ValidationRule(

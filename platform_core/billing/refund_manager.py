@@ -1,4 +1,6 @@
 """🚀 Platform Core Billing - Refund Management System
+import asyncio
+
 ===========================================================
 Module: backend/platform_core/billing/refund_manager.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -85,7 +87,7 @@ class RefundRequest:
 class RefundManager:
     """Gestionnaire principal des remboursements"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialise le gestionnaire de remboursements
         
         Args:

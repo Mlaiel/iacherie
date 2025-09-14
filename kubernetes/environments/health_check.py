@@ -1,3 +1,8 @@
+"""
+Health Check module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """Environment Health Check Utility - IA Influencer Agent
 ======================================================
@@ -96,7 +101,7 @@ class EnvironmentHealthChecker:
     - Alerting and notification
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.coordinator = EnvironmentCoordinator()
         self.check_results: List[HealthCheckResult] = []
         self.start_time = time.time()
@@ -825,7 +830,7 @@ Generate alerts based on check results"""
         return recommendations
 
 
-async def main():
+async def main() -> None:
     """Main health check function"""
     parser = argparse.ArgumentParser(description='IA Influencer Agent Environment Health Check')
     parser.add_argument(

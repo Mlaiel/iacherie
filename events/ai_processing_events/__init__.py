@@ -115,11 +115,11 @@ class AIProcessingEvent(BaseEvent):
     
     def __init__(
         self,
-        event_type: AIProcessingEventType,
-        event_data: AIProcessingEventData,
-        priority: EventPriority = EventPriority.MEDIUM,
-        correlation_id: Optional[str] = None
-    ):
+        event_type -> None: AIProcessingEventType,
+        event_data -> None: AIProcessingEventData,
+        priority -> None: EventPriority = EventPriority.MEDIUM,
+        correlation_id -> None: Optional[str] = None
+    ) -> None:
         super().__init__(
             event_type=event_type.value,
             event_data=event_data.__dict__,
@@ -281,14 +281,14 @@ HANDLER_REGISTRY = {
     'bias_detection_events': 'BiasDetectionEvents'
 }
 
-def get_handler_class(handler_name: str):
+def get_handler_class(handler_name -> None: str) -> None:
     """Get handler class by name"""
     handler_class_name = HANDLER_REGISTRY.get(handler_name)
     if handler_class_name:
         return globals().get(handler_class_name)
     return None
 
-def create_event_processing_pipeline(ai_engine):
+def create_event_processing_pipeline(ai_engine) -> None:
     """
 Create a complete event processing pipeline with all handlers"""
     try:

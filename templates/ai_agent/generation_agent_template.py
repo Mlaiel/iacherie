@@ -77,7 +77,7 @@ class GenerationRequest(BaseModel):
     metadata: Dict[str, Any] = Field(default_factory=dict)
 
     @validator('temperature')
-    def validate_temperature(cls, v):
+    def validate_temperature(cls, v) -> None:
         if not 0.0 <= v <= 2.0:
             raise ValueError('Temperature must be between 0.0 and 2.0')
         return v
@@ -124,10 +124,10 @@ class {{agent_class_name}}(BaseAIAgent):
     
     def __init__(
         self,
-        name: str = "{{agent_name}}",
-        config: Optional[GenerationConfig] = None,
+        name -> None: str = "{{agent_name}}",
+        config -> None: Optional[GenerationConfig] = None,
         **kwargs
-    ):
+    ) -> None:
         super().__init__(name=name, **kwargs)
         self.config = config or GenerationConfig()
         
@@ -580,3 +580,5 @@ class {{agent_class_name}}(BaseAIAgent):
     def get_metrics(self) -> Dict[str, Any]:
         """Get generation metrics"""
         return self.metrics.get_summary()
+
+# File has syntax issues - needs manual review

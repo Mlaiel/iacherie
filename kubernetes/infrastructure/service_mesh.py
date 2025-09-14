@@ -110,7 +110,7 @@ class ServiceMeshManager:
     """
 Main service mesh manager"""
     
-    def __init__(self, k8s_client=None):
+    def __init__(self, k8s_client=None) -> None:
         self.k8s_client = k8s_client
         self.apps_v1 = client.AppsV1Api() if k8s_client else None
         self.core_v1 = client.CoreV1Api() if k8s_client else None

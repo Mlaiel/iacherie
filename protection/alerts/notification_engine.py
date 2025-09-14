@@ -1,4 +1,4 @@
-"""📧 Notification Engine
+"""# [EMOJI_REMOVED] Notification Engine
 ====================
 
 Multi-channel notification delivery system for content protection alerts.
@@ -110,6 +110,7 @@ Validate recipient address/identifier."""
         pass
 
 class EmailProvider(NotificationProvider):
+    """EmailProvider class implementation"""
         try:
             logger.info(f"Executing __init__")
             
@@ -183,14 +184,14 @@ class EmailProvider(NotificationProvider):
     async def validate_recipient(self, recipient: str) -> bool:
         """Validate email address."""
         import re
-        pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+        pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$'
         return bool(re.match(pattern, recipient))
 
 class SMSProvider(NotificationProvider):
     """
 SMS notification provider using Twilio."""
     
-    def __init__(self, twilio_config: Dict[str, Any]):
+    def __init__(self, twilio_config -> None: Dict[str, Any]) -> None:
         self.client = TwilioClient(
             twilio_config["account_sid"],
             twilio_config["auth_token"]
@@ -240,7 +241,7 @@ SMS notification provider using Twilio."""
 class WebhookProvider(NotificationProvider):
     """Webhook notification provider."""
     
-    def __init__(self, webhook_config: Dict[str, Any]):
+    def __init__(self, webhook_config -> None: Dict[str, Any]) -> None:
         self.default_headers = webhook_config.get("headers", {})
         self.timeout = webhook_config.get("timeout", 30)
     
@@ -306,7 +307,7 @@ class DiscordProvider(NotificationProvider):
     """
 Discord notification provider."""
     
-    def __init__(self, discord_config: Dict[str, Any]):
+    def __init__(self, discord_config -> None: Dict[str, Any]) -> None:
         self.webhook_url = discord_config.get("webhook_url")
         self.bot_token = discord_config.get("bot_token")
     
@@ -391,7 +392,7 @@ Discord notification provider."""
 class SlackProvider(NotificationProvider):
     """Slack notification provider."""
     
-    def __init__(self, slack_config: Dict[str, Any]):
+    def __init__(self, slack_config -> None: Dict[str, Any]) -> None:
         self.client = SlackClient(token=slack_config["bot_token"])
         self.default_channel = slack_config.get("default_channel")
     
@@ -483,10 +484,10 @@ class NotificationEngine:
     
     def __init__(
         self,
-        config: NotificationConfig,
-        cache_manager: CacheManager,
-        redis_client: redis.Redis
-    ):
+        config -> None: NotificationConfig,
+        cache_manager -> None: CacheManager,
+        redis_client -> None: redis.Redis
+    ) -> None:
         self.config = config
         self.cache_manager = cache_manager
         self.redis_client = redis_client
@@ -1003,14 +1004,14 @@ class EnterpriseNotificationEngine:
     - Compliance tracking
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
         self.notification_engine = NotificationEngine()
         self.routing_engine = NotificationRoutingEngine()
         self.orchestrator = NotificationOrchestrator()
         self.intelligence_engine = NotificationIntelligenceEngine()
         
-    async def initialize_enterprise_features(self):
+    async def initialize_enterprise_features(self) -> None:
         """
 Initialize enterprise notification features"""
         await self.notification_engine.initialize()
@@ -1084,12 +1085,12 @@ class NotificationRoutingEngine:
     Routes notifications based on content, context, urgency, and business rules.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
         self.routing_rules = {}
         self.ml_router = None
         
-    async def initialize(self):
+    async def initialize(self) -> None:
         """
 Initialize routing engine"""
         await self._load_routing_rules()
@@ -1274,12 +1275,12 @@ Combine all routing decisions into final routing plan"""
             'delivery_window': 'immediate' if analysis.get('urgency_score', 0) > 0.8 else 'standard'
         }
     
-    async def _load_routing_rules(self):
+    async def _load_routing_rules(self) -> None:
         """
 Load routing rules from configuration"""
         pass
     
-    async def _initialize_ml_router(self):
+    async def _initialize_ml_router(self) -> None:
         """
 Initialize ML-based routing component"""
         pass
@@ -1328,12 +1329,12 @@ class NotificationOrchestrator:
     multi-channel delivery with timing, dependencies, and fallbacks.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
         self.delivery_engines = {}
         self.orchestration_rules = {}
         
-    async def initialize(self):
+    async def initialize(self) -> None:
         """
 Initialize orchestration engine"""
         await self._setup_delivery_engines()
@@ -1475,12 +1476,12 @@ Execute the delivery plan with coordination"""
             'sla_met': True
         }
     
-    async def _setup_delivery_engines(self):
+    async def _setup_delivery_engines(self) -> None:
         """
 Setup individual delivery engines"""
         pass
     
-    async def _load_orchestration_rules(self):
+    async def _load_orchestration_rules(self) -> None:
         """
 Load orchestration rules from configuration"""
         pass
@@ -1492,12 +1493,12 @@ class NotificationIntelligenceEngine:
     personalization, and predictive delivery management.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
         self.ml_models = {}
         self.analytics_engine = None
         
-    async def initialize(self):
+    async def initialize(self) -> None:
         """
 Initialize intelligence engine"""
         await self._load_ml_models()
@@ -1629,12 +1630,12 @@ Generate business intelligence from notification data"""
             'compliance_score': 0.98
         }
     
-    async def _load_ml_models(self):
+    async def _load_ml_models(self) -> None:
         """
 Load ML models for intelligence analysis"""
         pass
     
-    async def _initialize_analytics(self):
+    async def _initialize_analytics(self) -> None:
         """
 Initialize analytics engine"""
         pass
@@ -1649,3 +1650,6 @@ __all__ = [
     "NotificationOrchestrator", 
     "NotificationIntelligenceEngine"
 ]
+)}
+
+# File has syntax issues - needs manual review

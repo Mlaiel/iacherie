@@ -139,7 +139,7 @@ class LicenseAgreement:
 class LicenseValidation:
     """License validation and compliance checker"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         """Initialize validation system"""
         self.config = config or {}
         self.validation_rules = self._load_validation_rules()
@@ -265,7 +265,7 @@ class LicenseValidation:
 class LicensingManager:
     """Advanced licensing management system"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         """Initialize licensing manager"""
         self.config = config or {}
         self.licenses: Dict[str, LicenseAgreement] = {}

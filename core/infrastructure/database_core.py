@@ -87,7 +87,7 @@ class DatabaseMetrics:
 class DatabaseCore:
     """Enterprise database core management system"""
     
-    def __init__(self, config: Optional[DatabaseConfig] = None, level: str = "enterprise"):
+    def __init__(self, config -> None: Optional[DatabaseConfig] = None, level -> None: str = "enterprise") -> None:
         """Initialize database core"""
         self.config = config or DatabaseConfig()
         self.level = level
@@ -221,7 +221,7 @@ class DatabaseCore:
             return False
     
     @asynccontextmanager
-    async def get_session(self):
+    async def get_session(self) -> None:
         """Get database session context manager"""
         if not self.session_factory:
             raise RuntimeError("Database not initialized")
@@ -315,7 +315,7 @@ class DatabaseCore:
             logger.error(f"Database health check failed: {str(e)}")
             return False
     
-    async def _health_monitor_loop(self):
+    async def _health_monitor_loop(self) -> None:
         """Health monitoring loop"""
         while not self._shutdown_event.is_set():
             try:

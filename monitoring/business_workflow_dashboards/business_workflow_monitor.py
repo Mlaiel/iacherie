@@ -37,7 +37,7 @@ class BusinessWorkflowMonitor:
     Tracks the complete user journey: Upload → AI Processing → Protection → SEO → Collaboration → Distribution
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize business workflow monitor"""
         self.workflow_stages = [
             "content_upload",
@@ -155,7 +155,7 @@ class BusinessWorkflowMonitor:
             logger.error(f"Error getting workflow overview: {e}")
             return {"error": str(e)}
     
-    def _update_stage_metrics(self, stage_name: str, processing_time: float, success: bool):
+    def _update_stage_metrics(self, stage_name -> None: str, processing_time -> None: float, success -> None: bool) -> None:
         """Update metrics for workflow stage"""
         if stage_name not in self.stage_metrics:
             self.stage_metrics[stage_name] = {
@@ -176,7 +176,7 @@ class BusinessWorkflowMonitor:
         else:
             metrics["failed_requests"] += 1
     
-    def _track_workflow_transition(self, user_id: str, current_stage: str, timestamp: datetime):
+    def _track_workflow_transition(self, user_id -> None: str, current_stage -> None: str, timestamp -> None: datetime) -> None:
         """Track transitions between workflow stages"""
         user_journey = self.user_journeys.get(user_id, [])
         
@@ -194,7 +194,7 @@ class BusinessWorkflowMonitor:
                     "transition_time": transition_time
                 })
     
-    def _update_business_kpis(self, stage_name: str, request_data: Dict[str, Any], success: bool):
+    def _update_business_kpis(self, stage_name -> None: str, request_data -> None: Dict[str, Any], success -> None: bool) -> None:
         """Update business KPIs based on workflow activity"""
         if "business_kpis" not in self.__dict__:
             self.business_kpis = defaultdict(lambda: defaultdict(int))
@@ -481,7 +481,7 @@ class BusinessWorkflowMonitor:
         else:
             return 24  # Default to 24 hours
     
-    def _initialize_metrics_collection(self):
+    def _initialize_metrics_collection(self) -> None:
         """Initialize metrics collection for all workflow stages"""
         for stage in self.workflow_stages:
             self.stage_metrics[stage] = {

@@ -83,7 +83,7 @@ class TranslationEngine:
     and intelligent provider selection for 644+ languages
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize translation engine"""
         self.config = config or {}
         self.providers = {}
@@ -210,7 +210,7 @@ class TranslationEngine:
         
         return None
     
-    async def _cache_translation(self, request: TranslationRequest, result: TranslationResult):
+    async def _cache_translation(self, request -> None: TranslationRequest, result -> None: TranslationResult) -> None:
         """Cache translation result"""
         cache_key = self._generate_cache_key(request)
         self.cache[cache_key] = result
@@ -271,7 +271,7 @@ class TranslationEngine:
         
         return TranslationQuality.FAILED
     
-    async def _update_provider_stats(self, provider: TranslationProvider, result: TranslationResult):
+    async def _update_provider_stats(self, provider -> None: TranslationProvider, result -> None: TranslationResult) -> None:
         """Update provider performance statistics"""
         if provider not in self.provider_stats:
             self.provider_stats[provider] = {
@@ -327,7 +327,7 @@ class TranslationEngine:
             results.append(result)
         return results
     
-    async def _cleanup_cache(self):
+    async def _cleanup_cache(self) -> None:
         """Clean up cache to maintain performance"""
         # Remove oldest entries (simple LRU-like cleanup)
         cache_items = list(self.cache.items())

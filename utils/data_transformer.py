@@ -61,7 +61,7 @@ class DataTransformer:
     - Memory-efficient streaming for large datasets
     """
     
-    def __init__(self, max_workers: int = 4, chunk_size: int = 10000):
+    def __init__(self, max_workers -> None: int = 4, chunk_size -> None: int = 10000) -> None:
         self.max_workers = max_workers
         self.chunk_size = chunk_size
         self.logger = logging.getLogger(__name__)
@@ -245,7 +245,7 @@ class DataTransformer:
                                    transformation_func: Callable,
                                    **kwargs) -> List[TransformationResult]:
         """Transform data batch asynchronously."""
-        async def transform_item(item):
+        async def transform_item(item) -> None:
             loop = asyncio.get_event_loop()
             return await loop.run_in_executor(
                 self.executor, transformation_func, item, **kwargs
@@ -606,7 +606,7 @@ class DataTransformer:
         self._dict_to_xml(data, root)
         return ET.tostring(root, encoding='unicode')
     
-    def _dict_to_xml(self, data: Any, parent: ET.Element):
+    def _dict_to_xml(self, data -> None: Any, parent -> None: ET.Element) -> None:
         """Convert dictionary to XML element."""
         if isinstance(data, dict):
             for key, value in data.items():

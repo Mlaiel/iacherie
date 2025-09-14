@@ -133,12 +133,12 @@ class BaseResponseGenerator(ABC):
 class TemplateEngine:
     """Template-based response generation engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.templates: Dict[str, ResponseTemplate] = {}
         self.template_categories: Dict[ResponseType, List[str]] = {}
         self._initialize_default_templates()
     
-    def _initialize_default_templates(self):
+    def _initialize_default_templates(self) -> None:
         """Initialize default response templates"""
         default_templates = [
             ResponseTemplate(
@@ -179,7 +179,7 @@ class TemplateEngine:
         for template in default_templates:
             self.add_template(template)
     
-    def add_template(self, template: ResponseTemplate):
+    def add_template(self, template -> None: ResponseTemplate) -> None:
         """Add a response template"""
         self.templates[template.template_id] = template
         
@@ -229,7 +229,7 @@ class TemplateEngine:
 class PersonalizedResponseGenerator(BaseResponseGenerator):
     """Advanced personalized response generator"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.template_engine = TemplateEngine()
         self.personalization_cache: Dict[str, Dict[str, Any]] = {}
         self.response_history: Dict[str, List[str]] = {}
@@ -745,7 +745,7 @@ class PersonalizedResponseGenerator(BaseResponseGenerator):
 class MultiModalResponseGenerator(BaseResponseGenerator):
     """Generator for multi-modal responses (text + other media suggestions)"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.personalized_generator = PersonalizedResponseGenerator()
     
     async def generate(self, context: ResponseContext) -> GeneratedResponse:
@@ -843,7 +843,7 @@ class MultiModalResponseGenerator(BaseResponseGenerator):
 class ABTestingResponseEngine:
     """Engine for A/B testing different response strategies"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.generators = {
             "personalized": PersonalizedResponseGenerator(),
             "multimodal": MultiModalResponseGenerator()
@@ -863,7 +863,7 @@ class ABTestingResponseEngine:
         
         return responses
     
-    async def record_test_result(self, test_id: str, variant: str, user_feedback: Dict[str, Any]):
+    async def record_test_result(self, test_id -> None: str, variant -> None: str, user_feedback -> None: Dict[str, Any]) -> None:
         """Record A/B test result"""
         if test_id not in self.test_results:
             self.test_results[test_id] = {}

@@ -69,7 +69,7 @@ Blockchain network configuration schema."""
     performance_metrics: Dict[str, float] = Field(default_factory=dict)
     
     @validator('network_type')
-    def validate_network_type(cls, v):
+    def validate_network_type(cls, v) -> None:
         """Validate network type."""
         allowed_types = {
             "mainnet", "testnet", "private", "consortium", "sidechain",
@@ -135,7 +135,7 @@ class SmartContract(UUIDSchema, TimestampSchema, AuditSchema):
     maintenance_schedule: Optional[str] = None
     
     @validator('contract_type')
-    def validate_contract_type(cls, v):
+    def validate_contract_type(cls, v) -> None:
         """Validate contract type."""
         allowed_types = {
             "nft_contract", "token_contract", "marketplace", "royalty_splitter",
@@ -209,7 +209,7 @@ class NFTCollection(UUIDSchema, TimestampSchema, AuditSchema):
     rarity_calculation_method: str = Field(default="trait_count")
     
     @validator('token_standard')
-    def validate_token_standard(cls, v):
+    def validate_token_standard(cls, v) -> None:
         """Validate token standard."""
         allowed_standards = {"ERC-721", "ERC-1155", "BEP-721", "SPL", "TRC-721"}
         if v not in allowed_standards:
@@ -333,7 +333,7 @@ class CryptoWallet(UUIDSchema, TimestampSchema, AuditSchema):
     tax_reporting_enabled: bool = Field(default=False)
     
     @validator('wallet_type')
-    def validate_wallet_type(cls, v):
+    def validate_wallet_type(cls, v) -> None:
         """Validate wallet type."""
         allowed_types = {
             "hot_wallet", "cold_wallet", "hardware_wallet", "multisig_wallet",
@@ -397,7 +397,7 @@ class BlockchainTransaction(UUIDSchema, TimestampSchema):
     replaced_by: Optional[str] = None
     
     @validator('transaction_type')
-    def validate_transaction_type(cls, v):
+    def validate_transaction_type(cls, v) -> None:
         """Validate transaction type."""
         allowed_types = {
             "transfer", "nft_mint", "nft_transfer", "contract_deployment",
@@ -465,7 +465,7 @@ class CryptoPayment(UUIDSchema, TimestampSchema):
     refund_transaction_hash: Optional[str] = None
     
     @validator('payment_status')
-    def validate_payment_status(cls, v):
+    def validate_payment_status(cls, v) -> None:
         """Validate payment status."""
         allowed_statuses = {
             "pending", "processing", "confirmed", "completed", "failed",
@@ -514,7 +514,7 @@ class DeFiIntegration(UUIDSchema, TimestampSchema):
     historical_performance: List[Dict[str, Any]] = Field(default_factory=list)
     
     @validator('protocol_type')
-    def validate_protocol_type(cls, v):
+    def validate_protocol_type(cls, v) -> None:
         """Validate protocol type."""
         allowed_types = {
             "dex", "lending", "staking", "yield_farming", "liquidity_mining",

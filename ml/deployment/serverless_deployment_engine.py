@@ -115,7 +115,7 @@ class InvocationResponse:
 class ColdStartOptimizer:
     """Optimize cold start performance"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.warm_pools: Dict[str, datetime] = {}
         self.optimization_strategies = {
             'model_preloading': True,
@@ -199,7 +199,7 @@ logger.setLevel(logging.INFO)
 MODEL = None
 MODEL_LOADED = False
 
-def load_model():
+def load_model() -> None:
     """Load model once during cold start"""
     global MODEL, MODEL_LOADED
     
@@ -219,7 +219,7 @@ def load_model():
             logger.error(f"Error loading model: {str(e)}")
             raise
 
-def lambda_handler(event, context):
+def lambda_handler(event, context) -> None:
     """Optimized Lambda handler with model caching"""
     try:
         # Load model if not already loaded
@@ -282,7 +282,7 @@ class ServerlessDeploymentEngine:
     Serverless deployment engine for cost-effective ML inference
     """
     
-    def __init__(self, default_provider: CloudProvider = CloudProvider.AWS):
+    def __init__(self, default_provider -> None: CloudProvider = CloudProvider.AWS) -> None:
         self.default_provider = default_provider
         self.deployed_functions: Dict[str, ServerlessFunction] = {}
         self.cold_start_optimizer = ColdStartOptimizer()
@@ -827,7 +827,7 @@ class ServerlessDeploymentEngine:
         metrics['error_rate'] = metrics['error_count'] / metrics['total_invocations']
 
 # Usage Example
-async def main():
+async def main() -> None:
     """Example usage of ServerlessDeploymentEngine"""
     engine = ServerlessDeploymentEngine()
     

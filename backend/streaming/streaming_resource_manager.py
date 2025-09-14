@@ -232,7 +232,7 @@ class ScalingEvent:
 class InfrastructureResourceManager:
     """Infrastructure resource discovery and management system"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         self.resource_discoverers = {}
@@ -346,7 +346,7 @@ class InfrastructureResourceManager:
 class CapacityPlanningEngine:
     """Capacity planning and forecasting system"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         self.forecasting_models = {}
@@ -481,7 +481,7 @@ class CapacityPlanningEngine:
 class CostOptimizationEngine:
     """Cost optimization and budget management system"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         self.cost_analyzers = {}
@@ -546,7 +546,7 @@ class CostOptimizationEngine:
 class AutoScalingOrchestrator:
     """Automated scaling orchestration system"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         self.scaling_engines = {}
@@ -604,7 +604,7 @@ class AutoScalingOrchestrator:
 class StreamingResourceManager:
     """Unified streaming resource manager - Main service class"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         

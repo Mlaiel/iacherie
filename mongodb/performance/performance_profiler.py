@@ -73,8 +73,8 @@ class SystemMetrics:
 class PerformanceProfiler:
     """Real-time MongoDB performance profiler with system monitoring."""
     
-    def __init__(self, client: MongoClient, sampling_interval: float = 1.0,
-                 slow_threshold_ms: float = 100, max_profiles: int = 10000):
+    def __init__(self, client -> None: MongoClient, sampling_interval -> None: float = 1.0,
+                 slow_threshold_ms -> None: float = 100, max_profiles -> None: int = 10000) -> None:
         """Initialize performance profiler.
         
         Args:
@@ -433,7 +433,7 @@ class PerformanceProfiler:
         current = self._metrics
         baseline = self._baseline_metrics
         
-        def percentage_change(current_val, baseline_val):
+        def percentage_change(current_val, baseline_val) -> None:
             if baseline_val == 0:
                 return 0
             return ((current_val - baseline_val) / baseline_val) * 100

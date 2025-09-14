@@ -1,3 +1,8 @@
+"""
+Keyword Analysis Service module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Enterprise Keyword Analysis Service
@@ -141,7 +146,7 @@ class KeywordAnalysisService:
     - Multi-platform support
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize keyword analysis service"""
         # Keyword database
         self.keyword_cache: Dict[str, KeywordMetrics] = {}
@@ -198,7 +203,7 @@ class KeywordAnalysisService:
         
         logger.info("KeywordAnalysisService initialized")
     
-    async def start(self):
+    async def start(self) -> None:
         """Start the keyword analysis service"""
         try:
             # Create HTTP session
@@ -212,7 +217,7 @@ class KeywordAnalysisService:
             logger.error("Failed to start KeywordAnalysisService: %s", e)
             raise
     
-    async def stop(self):
+    async def stop(self) -> None:
         """Stop the keyword analysis service"""
         try:
             self.shutdown_event.set()
@@ -1095,7 +1100,7 @@ class KeywordAnalysisService:
         
         return intent_mapping.get(metrics.intent, "blog_post")
     
-    def _update_avg_processing_time(self, processing_time: float):
+    def _update_avg_processing_time(self, processing_time -> None: float) -> None:
         """Update average processing time"""
         current_avg = self.analysis_stats["avg_processing_time"]
         total_analyses = self.analysis_stats["total_analyses"]
@@ -1107,12 +1112,12 @@ class KeywordAnalysisService:
                 (current_avg * (total_analyses - 1) + processing_time) / total_analyses
             )
     
-    def _update_error_rate(self):
+    def _update_error_rate(self) -> None:
         """Update error rate statistics"""
         # This would track errors in production
         pass
     
-    def _initialize_mock_data(self):
+    def _initialize_mock_data(self) -> None:
         """Initialize mock data for demonstration"""
         # Add some sample regional modifiers
         self.regional_modifiers = {
@@ -1122,7 +1127,7 @@ class KeywordAnalysisService:
             "AU": {"volume_multiplier": 0.15, "competition_multiplier": 0.6}
         }
     
-    async def _update_loop(self):
+    async def _update_loop(self) -> None:
         """Background update loop"""
         while not self.shutdown_event.is_set():
             try:
@@ -1133,7 +1138,7 @@ class KeywordAnalysisService:
             except Exception as e:
                 logger.error("Error in update loop: %s", e)
     
-    async def _refresh_cached_data(self):
+    async def _refresh_cached_data(self) -> None:
         """Refresh cached keyword data"""
         async with self._lock:
             current_time = time.time()
@@ -1158,7 +1163,7 @@ async def get_keyword_service() -> KeywordAnalysisService:
         await _keyword_service.start()
     return _keyword_service
 
-async def shutdown_keyword_service():
+async def shutdown_keyword_service() -> None:
     """Shutdown global keyword analysis service"""
     global _keyword_service
     if _keyword_service:
@@ -1166,7 +1171,7 @@ async def shutdown_keyword_service():
         _keyword_service = None
 
 if __name__ == "__main__":
-    async def test_keyword_service():
+    async def test_keyword_service() -> None:
         """Test keyword analysis service functionality"""
         service = KeywordAnalysisService()
         await service.start()

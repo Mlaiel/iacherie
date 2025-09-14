@@ -86,7 +86,7 @@ class LinkedInConfig:
     rate_limit_window: int = 86400  # 24 hours
     webhook_secret: Optional[str] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if not self.scopes:
             self.scopes = [
                 LinkedInScope.R_LITEPROFILE,
@@ -165,7 +165,7 @@ class LinkedInCreatorAPI(BaseIntegration):
     - Industry insights and trending topics
     """
 
-    def __init__(self, config: LinkedInConfig):
+    def __init__(self, config -> None: LinkedInConfig) -> None:
         super().__init__("linkedin_creator")
         self.config = config
         self.security_manager = SecurityManager()
@@ -932,7 +932,7 @@ def create_linkedin_creator_integration(
     return LinkedInCreatorAPI(config)
 
 # Example usage for Ainflue platform
-async def example_linkedin_creator_flow():
+async def example_linkedin_creator_flow() -> None:
     """Example LinkedIn Creator API integration usage"""
     
     # Initialize LinkedIn Creator API integration

@@ -1,4 +1,6 @@
 """🎵 Music Agent Schema - Enterprise AI Music Generation & Analysis
+import asyncio
+
 ================================================================
 Module: alembic/music_agent_schema.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -360,7 +362,7 @@ def upgrade() -> None:
     await create_advanced_music_analytics_tables()
 
 
-async def create_music_platforms_integration_tables():
+async def create_music_platforms_integration_tables() -> None:
     """🎵 Create 50+ music streaming platforms integration tables"""
     
     # Global music platforms registry
@@ -455,7 +457,7 @@ async def create_music_platforms_integration_tables():
     )
 
 
-async def create_ai_music_composition_tables():
+async def create_ai_music_composition_tables() -> None:
     """🤖 Create AI music composition assistance tables"""
     
     # AI composition models registry
@@ -552,7 +554,7 @@ async def create_ai_music_composition_tables():
     )
 
 
-async def create_blockchain_music_rights_tables():
+async def create_blockchain_music_rights_tables() -> None:
     """🔗 Create blockchain music rights management tables"""
     
     # NFT music collectibles
@@ -622,7 +624,7 @@ async def create_blockchain_music_rights_tables():
     )
 
 
-async def create_advanced_music_analytics_tables():
+async def create_advanced_music_analytics_tables() -> None:
     """📊 Create advanced music analytics and performance tracking tables"""
     
     # Real-time listening analytics

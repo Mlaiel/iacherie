@@ -5,7 +5,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use prohibited
 
 Team Specialties:
-- Lead Dev IA + Backend Senior: System architecture and core development
+    - Lead Dev IA + Backend Senior: System architecture and core development
 - ML Engineer + Security Expert: Machine learning security and threat detection
 - DBA + Data Engineer: Database security and data pipeline protection
 - DevOps + Infrastructure: Deployment automation and infrastructure management
@@ -14,15 +14,15 @@ Team Specialties:
 - Compliance + Audit Specialist: Regulatory compliance and audit trails
 - IA Prompt Engineering: AI-powered security automation
 
-⚠️ LEGAL WARNING & COPYRIGHT NOTICE ⚠️
+# [EMOJI_REMOVED] LEGAL WARNING & COPYRIGHT NOTICE # [EMOJI_REMOVED]
 This code, concept, and intellectual property are exclusively owned by:
-👤 Owner: Fahed Mlaiel | 📧 Contact: mlaiel@live.de | 🏢 Platform: IA-Influencer Agent
+    # [EMOJI_REMOVED] Owner: Fahed Mlaiel | # [EMOJI_REMOVED] Contact: mlaiel@live.de | # [EMOJI_REMOVED] Platform: IA-Influencer Agent
 
 PROHIBITED ACTIONS:
-❌ Copying, reproducing, or using code without explicit written permission
-❌ Distribution, modification, or creation of derivative works
-❌ Commercial or personal use without authorization
-❌ Reverse engineering, decompilation, or concept extraction
+    # [EMOJI_REMOVED] Copying, reproducing, or using code without explicit written permission
+# [EMOJI_REMOVED] Distribution, modification, or creation of derivative works
+# [EMOJI_REMOVED] Commercial or personal use without authorization
+# [EMOJI_REMOVED] Reverse engineering, decompilation, or concept extraction
 
 Any violation will result in immediate legal action under International Copyright Law.
 """
@@ -64,7 +64,7 @@ class SecurityUtils:
     and other security-related functionality.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """
 Initialize security utilities."""
         self.backend = default_backend()
@@ -668,7 +668,7 @@ class ValidationUtils:
     Validation utilities for secrets and configuration.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """
 Initialize validation utilities."""
         # Common validation patterns
@@ -676,7 +676,7 @@ Initialize validation utilities."""
             'secret_path': re.compile(r'^[a-zA-Z0-9/_-]+$'),
             'policy_name': re.compile(r'^[a-zA-Z0-9_-]+$'),
             'api_key': re.compile(r'^[a-zA-Z0-9+/=_-]+$'),
-            'jwt_token': re.compile(r'^[a-zA-Z0-9_-]+\.[a-zA-Z0-9_-]+\.[a-zA-Z0-9_-]+$'),
+            'jwt_token': re.compile(r'^[a-zA-Z0-9_-]+.[a-zA-Z0-9_-]+.[a-zA-Z0-9_-]+$'),
             'uuid': re.compile(r'^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'),
             'base64': re.compile(r'^[A-Za-z0-9+/]*={0,2}$')
         }
@@ -876,7 +876,7 @@ class NotificationUtils:
     Notification utilities for secrets management events.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """
 Initialize notification utilities."""
         self.session = requests.Session()
@@ -990,7 +990,7 @@ class KubernetesUtils:
     Kubernetes utilities for secrets management.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """
 Initialize Kubernetes utilities."""
         self.api_client = None
@@ -1142,7 +1142,7 @@ class InfluencerPlatformUtils:
     content protection utilities, and compliance helpers.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """
 Initialize platform utilities."""
         self.security = SecurityUtils()
@@ -2429,7 +2429,7 @@ class ContentProtectionUtils:
     Utilities for content protection and digital rights management.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """
 Initialize content protection utilities."""
         self.security = SecurityUtils()
@@ -2693,3 +2693,6 @@ Calculate similarity between two fingerprints."""
         except Exception as e:
             logger.error(f"Fingerprint similarity calculation failed: {e}")
             return 0.0
+)
+
+# File has syntax issues - needs manual review

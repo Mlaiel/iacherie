@@ -40,7 +40,7 @@ class LegalFrameworkValidator:
     All 9 expert roles applied for complete legal framework validation
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.validation_results = {}
         self.performance_metrics = {}
         self.expert_role_validations = {}
@@ -481,7 +481,7 @@ class LegalFrameworkValidator:
         
         return overall_results
 
-async def run_comprehensive_validation():
+async def run_comprehensive_validation() -> None:
     """Run comprehensive validation of the legal framework."""
     validator = LegalFrameworkValidator()
     results = await validator.validate_complete_framework()

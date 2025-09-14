@@ -1,3 +1,8 @@
+"""
+Cluster Manager module
+Enterprise implementation for Ainflue platform
+"""
+
 # Ainflue Infrastructure Module - Kubernetes Cluster Manager
 # ========================================================
 # 
@@ -36,7 +41,7 @@ class ClusterConfig:
 class KubernetesClusterManager:
     """Enterprise Kubernetes cluster management for multi-cloud environments"""
     
-    def __init__(self, config: ClusterConfig):
+    def __init__(self, config -> None: ClusterConfig) -> None:
         """Initialize the Kubernetes cluster manager
         
         Args:
@@ -488,7 +493,7 @@ class KubernetesClusterManager:
 class AinflueClusterManager:
     """High-level cluster management for Ainflue platform"""
     
-    def __init__(self, environment: str = "development"):
+    def __init__(self, environment -> None: str = "development") -> None:
         """Initialize Ainflue cluster manager
         
         Args:
@@ -591,7 +596,7 @@ class AinflueClusterManager:
 
 if __name__ == "__main__":
     # Example usage
-    async def main():
+    async def main() -> None:
         manager = AinflueClusterManager(environment="development")
         
         # Deploy the stack

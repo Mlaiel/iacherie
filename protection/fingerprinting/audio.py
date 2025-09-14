@@ -65,7 +65,7 @@ class ChromaprintExtractor:
     """
 Advanced Chromaprint fingerprinting with extended features."""
     
-    def __init__(self, algorithm: int = chromaprint.ALGORITHM_DEFAULT):
+    def __init__(self, algorithm -> None: int = chromaprint.ALGORITHM_DEFAULT) -> None:
         self.algorithm = algorithm
         self.duration_threshold = 30.0  # Minimum 30 seconds for reliable fingerprint
         
@@ -150,7 +150,7 @@ class EssentiaAnalyzer:
     """
 Advanced Essentia-based audio analysis and fingerprinting."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         try:
             logger.info(f"Executing __init__")
             
@@ -317,7 +317,7 @@ Initialize Essentia algorithms."""
 class SpectralHashGenerator:
     """Generate spectral-based audio hashes for similarity detection."""
     
-    def __init__(self, n_fft: int = 2048, hop_length: int = 512):
+    def __init__(self, n_fft -> None: int = 2048, hop_length -> None: int = 512) -> None:
         self.n_fft = n_fft
         self.hop_length = hop_length
         self.frequency_bins = 32  # Reduced dimensionality
@@ -396,13 +396,13 @@ Compute hash based on temporal evolution."""
 class NeuralAudioEmbedding:
     """Neural network-based audio embeddings using pre-trained models."""
     
-    def __init__(self, model_name: str = "facebook/wav2vec2-base"):
+    def __init__(self, model_name -> None: str = "facebook/wav2vec2-base") -> None:
         self.model_name = model_name
         self.model = None
         self.processor = None
         self._initialize_model()
         
-    def _initialize_model(self):
+    def _initialize_model(self) -> None:
         """Initialize the pre-trained model."""
         try:
             self.processor = Wav2Vec2Processor.from_pretrained(self.model_name)
@@ -477,7 +477,7 @@ class AudioFingerprintingService:
     - Multi-level similarity matching
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.chromaprint_extractor = ChromaprintExtractor()
         self.essentia_analyzer = EssentiaAnalyzer()

@@ -1,4 +1,6 @@
 """Data Validators Module - Industrial-Grade Validation System
+from typing import Dict, List, Optional, Union, Tuple
+
 ===========================================================
 
 Comprehensive validation framework for the IA Influencer Agent Platform

@@ -1,4 +1,6 @@
 """💳 Payment Gateway Core Infrastructure
+import logging
+
 =======================================
 
 Core infrastructure components for the enterprise payment gateway architecture.

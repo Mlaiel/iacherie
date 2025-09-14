@@ -1,5 +1,7 @@
 """Business Metrics Aggregator - Real-Time for Ainflue Platform
 
+import asyncio
+
 Real-time business metrics aggregation with intelligent dashboards,
 KPI tracking, and automated alerts for Ainflue business performance.
 
@@ -95,7 +97,7 @@ class BusinessMetricsAggregator:
     Tracks KPIs, generates insights, and provides automated alerting
     """
     
-    def __init__(self, buffer_size: int = 10000):
+    def __init__(self, buffer_size -> None: int = 10000) -> None:
         self.buffer_size = buffer_size
         self.metric_definitions = self._initialize_metric_definitions()
         self.raw_metrics: deque = deque(maxlen=buffer_size)
@@ -235,7 +237,7 @@ class BusinessMetricsAggregator:
         
         return definitions
     
-    async def record_metric_from_event(self, event_data: Dict[str, Any]):
+    async def record_metric_from_event(self, event_data -> None: Dict[str, Any]) -> None:
         """Extract and record metrics from event data"""
         
         event_type = event_data.get("event_type", "")
@@ -305,9 +307,9 @@ class BusinessMetricsAggregator:
             else:
                 await self.record_metric("error_rate", 0, timestamp)
     
-    async def record_metric(self, metric_name: str, value: float, 
-                          timestamp: Optional[datetime] = None,
-                          tags: Optional[Dict[str, str]] = None):
+    async def record_metric(self, metric_name -> None: str, value -> None: float, 
+                          timestamp -> None: Optional[datetime] = None,
+                          tags -> None: Optional[Dict[str, str]] = None) -> None:
         """Record a metric value"""
         
         if metric_name not in self.metric_definitions:
@@ -334,7 +336,7 @@ class BusinessMetricsAggregator:
         
         logger.debug(f"Recorded metric {metric_name}: {value}")
     
-    async def _update_real_time_aggregations(self, metric_value: MetricValue):
+    async def _update_real_time_aggregations(self, metric_value -> None: MetricValue) -> None:
         """Update real-time aggregations for a metric"""
         
         metric_def = self.metric_definitions[metric_value.metric_name]
@@ -526,7 +528,7 @@ class BusinessMetricsAggregator:
         
         return start, end
     
-    async def _check_metric_alerts(self, metric_name: str, value: float, tags: Dict[str, str]):
+    async def _check_metric_alerts(self, metric_name -> None: str, value -> None: float, tags -> None: Dict[str, str]) -> None:
         """Check if metric value triggers any alerts"""
         
         metric_def = self.metric_definitions.get(metric_name)
@@ -563,7 +565,7 @@ class BusinessMetricsAggregator:
                 self.active_alerts.append(alert)
                 await self._trigger_alert(alert)
     
-    async def _trigger_alert(self, alert: BusinessAlert):
+    async def _trigger_alert(self, alert -> None: BusinessAlert) -> None:
         """Trigger alert to registered handlers"""
         
         logger.warning(f"ALERT: {alert.message}")
@@ -574,7 +576,7 @@ class BusinessMetricsAggregator:
             except Exception as e:
                 logger.error(f"Alert handler failed: {e}")
     
-    def register_alert_handler(self, handler: Callable[[BusinessAlert], None]):
+    def register_alert_handler(self, handler -> None: Callable[[BusinessAlert], None]) -> None:
         """Register an alert handler function"""
         self.alert_handlers.append(handler)
     

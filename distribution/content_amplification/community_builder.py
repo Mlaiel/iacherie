@@ -100,7 +100,7 @@ class CommunityBuilder:
     - Cross-platform community management
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.community_database = {}
         self.engagement_models = {}
         self.growth_algorithms = {}

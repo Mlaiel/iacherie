@@ -5,7 +5,7 @@ Professional monitoring system for data pipeline health, performance metrics,
 and real-time status tracking with advanced alerting capabilities.
 
 Team Specialties:
-- Lead Developer AI: Fahed Mlaiel - Advanced monitoring architecture
+    - Lead Developer AI: Fahed Mlaiel - Advanced monitoring architecture
 - DevOps Engineer: Production-grade monitoring and observability
 - Backend Senior Engineer: High-performance metrics collection
 - Security Engineer: Security monitoring and threat detection
@@ -14,7 +14,7 @@ Team Specialties:
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 
-⚠️ STRICT WARNING ⚠️
+# [EMOJI_REMOVED] STRICT WARNING # [EMOJI_REMOVED]
 This monitoring technology and intellectual property belong exclusively to Fahed Mlaiel.
 Unauthorized use, copying, or reproduction without explicit written permission
 will result in immediate legal prosecution under international copyright laws.
@@ -163,7 +163,7 @@ class AnomalyDetector:
     Advanced anomaly detection system using machine learning
     """
     
-    def __init__(self, window_size: int = 100):
+    def __init__(self, window_size -> None: int = 100) -> None:
         self.window_size = window_size
         self.metric_windows = defaultdict(lambda: deque(maxlen=window_size))
         self.isolation_forests = {}
@@ -313,7 +313,7 @@ class PipelineMonitor:
     Comprehensive pipeline monitoring system with real-time health checking
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.notification_manager = NotificationManager()
         self.cache_manager = CacheManager()
         self.storage_manager = StorageManager()
@@ -354,7 +354,7 @@ class PipelineMonitor:
             PipelineComponent.EXTERNAL_APIS: 30
         }
 
-    def setup_prometheus_metrics(self):
+    def setup_prometheus_metrics(self) -> None:
         """
         Setup Prometheus metrics for monitoring
         """
@@ -397,7 +397,7 @@ class PipelineMonitor:
             )
         }
 
-    async def start_monitoring(self):
+    async def start_monitoring(self) -> None:
         """
         Start comprehensive pipeline monitoring
         """
@@ -433,7 +433,7 @@ class PipelineMonitor:
             logger.error(f"Monitoring system failed: {str(e)}")
             raise MonitoringError(f"Monitoring system failed: {str(e)}")
 
-    async def _monitor_component_health(self, component: PipelineComponent, interval: int):
+    async def _monitor_component_health(self, component -> None: PipelineComponent, interval -> None: int) -> None:
         """
         Monitor health of specific pipeline component
         """
@@ -914,7 +914,7 @@ Check external APIs health"""
         pass
 
     # Monitoring utility methods...
-    def _update_prometheus_metrics(self, component: PipelineComponent, health_check: HealthCheck):
+    def _update_prometheus_metrics(self, component -> None: PipelineComponent, health_check -> None: HealthCheck) -> None:
         """
 Update Prometheus metrics with health check data"""
         try:
@@ -1083,7 +1083,7 @@ class HealthChecker:
     Comprehensive health checking system for all pipeline components
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.notification_manager = NotificationManager()
         self.storage_manager = StorageManager()
         
@@ -1437,7 +1437,7 @@ class HealthChecker:
                 "message": f"Analytics check failed: {str(e)}"
             }
 
-    async def _process_health_alerts(self, results: Dict[str, HealthCheckResult]):
+    async def _process_health_alerts(self, results -> None: Dict[str, HealthCheckResult]) -> None:
         """Process health check results and send alerts if needed"""
         critical_issues = []
         warning_issues = []
@@ -1470,7 +1470,7 @@ class PipelineMonitor:
     Advanced pipeline monitoring system with metrics collection and analysis
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.health_checker = HealthChecker()
         
         # Prometheus metrics
@@ -1501,7 +1501,7 @@ class PipelineMonitor:
         # In-memory metrics storage
         self.metrics_cache = {}
 
-    async def start_monitoring(self):
+    async def start_monitoring(self) -> None:
         """
 Start continuous monitoring of all pipelines"""
         logger.info("Starting pipeline monitoring system")
@@ -1513,11 +1513,11 @@ Start continuous monitoring of all pipelines"""
 
     async def record_pipeline_execution(
         self,
-        pipeline_name: str,
-        execution_time: float,
-        status: str,
-        error_type: Optional[str] = None
-    ):
+        pipeline_name -> None: str,
+        execution_time -> None: float,
+        status -> None: str,
+        error_type -> None: Optional[str] = None
+    ) -> None:
         """Record pipeline execution metrics"""
         # Update Prometheus metrics
         self.pipeline_executions.labels(
@@ -1661,7 +1661,7 @@ Start continuous monitoring of all pipelines"""
         """Export metrics in Prometheus format"""
         return generate_latest().decode('utf-8')
 
-    async def _continuous_health_monitoring(self):
+    async def _continuous_health_monitoring(self) -> None:
         """
 Continuous health monitoring background task"""
         while True:
@@ -1673,7 +1673,7 @@ Continuous health monitoring background task"""
                 logger.error(f"Health monitoring error: {str(e)}")
                 await asyncio.sleep(60)
 
-    async def _metrics_collection_loop(self):
+    async def _metrics_collection_loop(self) -> None:
         """Background metrics collection loop"""
         while True:
             try:
@@ -1691,7 +1691,7 @@ Continuous health monitoring background task"""
                 logger.error(f"Metrics collection error: {str(e)}")
                 await asyncio.sleep(30)
 
-    async def _cleanup_old_metrics(self):
+    async def _cleanup_old_metrics(self) -> None:
         """Cleanup old metrics data"""
         while True:
             try:
@@ -1709,3 +1709,5 @@ Continuous health monitoring background task"""
             except Exception as e:
                 logger.error(f"Metrics cleanup error: {str(e)}")
                 await asyncio.sleep(3600)
+
+# File has syntax issues - needs manual review

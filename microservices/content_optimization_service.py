@@ -175,7 +175,7 @@ class ContentOptimizationService:
     with AI-powered enhancement, format adaptation, and performance optimization.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.optimization_requests: Dict[str, OptimizationRequest] = {}
         self.optimization_results: Dict[str, OptimizationResult] = {}
         self.platform_requirements: Dict[PlatformType, PlatformRequirements] = {}
@@ -192,7 +192,7 @@ class ContentOptimizationService:
         
         logger.info("ContentOptimizationService initialized successfully")
     
-    def _initialize_platform_requirements(self):
+    def _initialize_platform_requirements(self) -> None:
         """Initialize platform-specific requirements."""
         self.platform_requirements = {
             PlatformType.YOUTUBE: PlatformRequirements(
@@ -297,7 +297,7 @@ class ContentOptimizationService:
             )
         }
     
-    def _initialize_optimization_processors(self):
+    def _initialize_optimization_processors(self) -> None:
         """Initialize optimization processors."""
         self.optimization_processors = {
             OptimizationType.FORMAT_CONVERSION: self._process_format_conversion,
@@ -314,7 +314,7 @@ class ContentOptimizationService:
             OptimizationType.LOCALIZATION: self._process_localization
         }
     
-    def _initialize_format_converters(self):
+    def _initialize_format_converters(self) -> None:
         """Initialize format conversion capabilities."""
         self.format_converters = {
             "video": {
@@ -343,7 +343,7 @@ class ContentOptimizationService:
             }
         }
     
-    def _initialize_quality_enhancers(self):
+    def _initialize_quality_enhancers(self) -> None:
         """Initialize AI-powered quality enhancement modules."""
         self.quality_enhancers = {
             ContentType.VIDEO: {
@@ -395,7 +395,7 @@ class ContentOptimizationService:
             logger.error(f"Error starting optimization: {e}")
             raise
     
-    async def _process_optimization_request(self, request_id: str):
+    async def _process_optimization_request(self, request_id -> None: str) -> None:
         """Process optimization request."""
         try:
             request = self.optimization_requests[request_id]
@@ -1220,7 +1220,7 @@ def get_content_optimization_service() -> ContentOptimizationService:
 
 
 # Example usage and testing
-async def example_usage():
+async def example_usage() -> None:
     """Example usage of Content Optimization Service."""
     service = get_content_optimization_service()
     

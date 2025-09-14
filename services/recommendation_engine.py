@@ -57,7 +57,7 @@ class RecommendationEngine:
     """
 AI-powered recommendation system for content and collaborations"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.user_profiles = {}
         self.content_database = {}
         self.interaction_history = {}
@@ -65,9 +65,9 @@ AI-powered recommendation system for content and collaborations"""
         
     async def update_user_profile(
         self,
-        user_id: str,
-        interaction_data: Dict[str, Any]
-    ):
+        user_id -> None: str,
+        interaction_data -> None: Dict[str, Any]
+    ) -> None:
         """
 Update user profile based on interactions"""
         try:
@@ -355,10 +355,10 @@ Update user profile based on interactions"""
     
     async def _analyze_content_preferences(
         self,
-        user_id: str,
-        content_id: str,
-        interaction_type: str
-    ):
+        user_id -> None: str,
+        content_id -> None: str,
+        interaction_type -> None: str
+    ) -> None:
         """Analyze content to update user preferences"""
         try:
             # Simulate content analysis

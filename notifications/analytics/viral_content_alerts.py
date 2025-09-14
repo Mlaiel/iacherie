@@ -103,7 +103,7 @@ class ViralContentAlertsEngine:
     Utilise IA/ML pour détecter et prédire la viralité
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialise l'engine viral content alerts"""
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
@@ -132,7 +132,7 @@ class ViralContentAlertsEngine:
         
         self.logger.info("ViralContentAlertsEngine initialisé avec succès")
 
-    def _initialize_viral_thresholds(self):
+    def _initialize_viral_thresholds(self) -> None:
         """Initialise les seuils de détection virale"""
         self.viral_thresholds = {
             'emerging': {
@@ -901,7 +901,7 @@ class ViralContentAlertsEngine:
         
         return min(1.0, score)
 
-    async def _update_engine_metrics(self, viral_alert: ViralAlert):
+    async def _update_engine_metrics(self, viral_alert -> None: ViralAlert) -> None:
         """Met à jour les métriques de l'engine"""
         self.engine_metrics['viral_detected'] += 1
         

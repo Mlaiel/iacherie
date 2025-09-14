@@ -1,3 +1,8 @@
+"""
+Aws Infrastructure Provider module
+Enterprise implementation for Ainflue platform
+"""
+
 # Ainflue Infrastructure Module
 # =============================
 # 
@@ -48,7 +53,7 @@ class AWSInfrastructureProvider:
     with enterprise security, monitoring, and cost optimization.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize AWS infrastructure provider."""
         self.config = config or {}
         self.region = self.config.get("region", "us-west-2")
@@ -73,7 +78,7 @@ class AWSInfrastructureProvider:
         
         logger.info(f"AWSInfrastructureProvider initialized for region: {self.region}")
     
-    def _initialize_session(self):
+    def _initialize_session(self) -> None:
         """Initialize AWS session and clients."""
         try:
             # Create session
@@ -92,7 +97,7 @@ class AWSInfrastructureProvider:
             logger.error(f"Failed to initialize AWS session: {str(e)}")
             raise
     
-    def _initialize_clients(self):
+    def _initialize_clients(self) -> None:
         """Initialize AWS service clients."""
         try:
             # Core compute and storage
@@ -125,7 +130,7 @@ class AWSInfrastructureProvider:
             logger.error(f"Failed to initialize AWS clients: {str(e)}")
             raise
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize provider (async initialization tasks)."""
         try:
             # Validate credentials and permissions
@@ -140,7 +145,7 @@ class AWSInfrastructureProvider:
             logger.error(f"AWS provider initialization failed: {str(e)}")
             raise
     
-    async def _validate_credentials(self):
+    async def _validate_credentials(self) -> None:
         """Validate AWS credentials and permissions."""
         try:
             # Test basic AWS access
@@ -156,7 +161,7 @@ class AWSInfrastructureProvider:
             logger.error(f"AWS credentials validation failed: {str(e)}")
             raise
     
-    async def _test_required_permissions(self):
+    async def _test_required_permissions(self) -> None:
         """Test required AWS permissions."""
         try:
             # Test EC2 permissions
@@ -174,7 +179,7 @@ class AWSInfrastructureProvider:
             logger.error(f"Missing required AWS permissions: {str(e)}")
             raise
     
-    async def _setup_default_infrastructure(self):
+    async def _setup_default_infrastructure(self) -> None:
         """Setup default VPC and security groups if needed."""
         try:
             # Get default VPC if not specified
@@ -193,7 +198,7 @@ class AWSInfrastructureProvider:
         except Exception as e:
             logger.error(f"Failed to setup default infrastructure: {str(e)}")
     
-    async def _create_default_security_group(self):
+    async def _create_default_security_group(self) -> None:
         """Create default security group for Ainflue resources."""
         try:
             sg_name = "ainflue-default-sg"
@@ -667,7 +672,7 @@ class AWSInfrastructureProvider:
             logger.error(f"Failed to create S3 bucket {name}: {str(e)}")
             raise
     
-    async def _wait_for_instance_state(self, instance_id: str, desired_state: str, timeout: int = 600):
+    async def _wait_for_instance_state(self, instance_id -> None: str, desired_state -> None: str, timeout -> None: int = 600) -> None:
         """Wait for EC2 instance to reach desired state."""
         start_time = time.time()
         
@@ -691,7 +696,7 @@ class AWSInfrastructureProvider:
         
         raise Exception(f"Timeout waiting for instance {instance_id} to reach state {desired_state}")
     
-    async def _wait_for_volume_state(self, volume_id: str, desired_state: str, timeout: int = 300):
+    async def _wait_for_volume_state(self, volume_id -> None: str, desired_state -> None: str, timeout -> None: int = 300) -> None:
         """Wait for EBS volume to reach desired state."""
         start_time = time.time()
         
@@ -715,7 +720,7 @@ class AWSInfrastructureProvider:
         
         raise Exception(f"Timeout waiting for volume {volume_id} to reach state {desired_state}")
     
-    async def _wait_for_db_state(self, db_identifier: str, desired_state: str, timeout: int = 1200):
+    async def _wait_for_db_state(self, db_identifier -> None: str, desired_state -> None: str, timeout -> None: int = 1200) -> None:
         """Wait for RDS instance to reach desired state."""
         start_time = time.time()
         
@@ -739,7 +744,7 @@ class AWSInfrastructureProvider:
         
         raise Exception(f"Timeout waiting for DB instance {db_identifier} to reach state {desired_state}")
     
-    async def _wait_for_lb_state(self, lb_arn: str, desired_state: str, timeout: int = 600):
+    async def _wait_for_lb_state(self, lb_arn -> None: str, desired_state -> None: str, timeout -> None: int = 600) -> None:
         """Wait for load balancer to reach desired state."""
         start_time = time.time()
         
@@ -822,7 +827,7 @@ class AWSInfrastructureProvider:
             logger.error(f"Failed to terminate resource {resource_id}: {str(e)}")
             return False
     
-    def _empty_s3_bucket(self, bucket_name: str):
+    def _empty_s3_bucket(self, bucket_name -> None: str) -> None:
         """Empty S3 bucket before deletion."""
         try:
             # Delete all objects

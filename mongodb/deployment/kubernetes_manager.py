@@ -78,7 +78,7 @@ class KubernetesConfig:
 class KubernetesManager:
     """Kubernetes MongoDB deployment manager."""
     
-    def __init__(self, config: KubernetesConfig):
+    def __init__(self, config -> None: KubernetesConfig) -> None:
         """Initialize Kubernetes manager."""
         self.config = config
         self.manifests_dir = Path(f"k8s-manifests/{config.cluster_name}")
@@ -1321,7 +1321,7 @@ print('Users created successfully');
 
 
 # Example usage
-async def deploy_k8s_cluster():
+async def deploy_k8s_cluster() -> None:
     """Example Kubernetes MongoDB deployment."""
     config = KubernetesConfig(
         cluster_name="mongodb-prod",

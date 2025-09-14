@@ -169,7 +169,7 @@ class DataManagementSystem:
     Upload Multi-Format → Protection IA → SEO → Collaboration → Distribution → Monétisation
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """
         Initialise le système de gestion des données enterprise.
         
@@ -199,7 +199,7 @@ class DataManagementSystem:
         
         self.logger.info(f"🚀 Data Management System IA-Influencer-Agent initialisé - ID: {self.system_id}")
     
-    async def initialize_components(self, db_session, redis_client, vector_db_client=None):
+    async def initialize_components(self, db_session, redis_client, vector_db_client=None) -> None:
         """
         Initialise tous les composants système selon l'architecture enterprise.
         

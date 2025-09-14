@@ -246,7 +246,7 @@ class LegalCase:
 class EvidenceCollectionEngine:
     """Moteur de collecte de preuves légales."""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.logger = logging.getLogger(__name__)
         
@@ -442,7 +442,7 @@ class EvidenceCollectionEngine:
 class DMCAAutomationEngine:
     """Moteur d'automatisation DMCA."""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.logger = logging.getLogger(__name__)
         
@@ -744,7 +744,7 @@ Rights Owner: {copyright_owner_name}
 class ComplianceValidationEngine:
     """Moteur de validation de conformité légale."""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.logger = logging.getLogger(__name__)
         
@@ -964,8 +964,8 @@ class ConsolidatedLegalProtectionEngine:
     et gestion complète des affaires légales.
     """
     
-    def __init__(self, db_session: Any = None, redis_client: Any = None,
-                 config: Optional[Dict[str, Any]] = None):
+    def __init__(self, db_session -> None: Any = None, redis_client -> None: Any = None,
+                 config -> None: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialise le moteur de protection légale.
         
@@ -1149,19 +1149,19 @@ class ConsolidatedLegalProtectionEngine:
         
         return next_steps
     
-    def _update_legal_metrics(self, legal_case: LegalCase, submission_result: Optional[Dict[str, Any]]):
+    def _update_legal_metrics(self, legal_case -> None: LegalCase, submission_result -> None: Optional[Dict[str, Any]]) -> None:
         """Met à jour les métriques légales."""
         self.legal_metrics['total_cases'] += 1
         
         if submission_result and submission_result.get('success'):
             self.legal_metrics['successful_dmca_notices'] += 1
     
-    async def _load_legal_entities(self):
+    async def _load_legal_entities(self) -> None:
         """Charge les entités légales existantes."""
         # Simulation - à implémenter avec base de données
         pass
     
-    async def _load_active_cases(self):
+    async def _load_active_cases(self) -> None:
         """Charge les affaires actives."""
         # Simulation - à implémenter avec base de données
         pass

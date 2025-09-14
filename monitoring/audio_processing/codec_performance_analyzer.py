@@ -113,7 +113,7 @@ class CodecPerformanceAnalyzer:
     - Optimization strategy suggestions
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.performance_tests: deque = deque(maxlen=10000)
         self.benchmarks: List[CodecBenchmark] = []
@@ -310,7 +310,7 @@ class CodecPerformanceAnalyzer:
             }
         )
     
-    async def _analyze_test_performance(self, test_result: CodecPerformanceTest):
+    async def _analyze_test_performance(self, test_result -> None: CodecPerformanceTest) -> None:
         """Analyze individual test performance and flag issues."""
         # Check encoding speed (should be faster than real-time for most use cases)
         realtime_factor = test_result.encoding_time_ms / (test_result.audio_duration_seconds * 1000)

@@ -1,3 +1,8 @@
+"""
+Cache Config module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
@@ -198,7 +203,7 @@ class L4CacheConfig:
 class BusinessCacheConfig:
     """Business logic specific cache configuration"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         # Creator and content caching
         self.creator_profile_ttl = 1800  # 30 minutes
         self.content_metadata_ttl = 3600  # 1 hour
@@ -265,7 +270,7 @@ class BusinessCacheConfig:
 class CacheConfiguration:
     """Main cache configuration manager"""
     
-    def __init__(self, strategy: CacheStrategy = CacheStrategy.LAZY_LOADING):
+    def __init__(self, strategy -> None: CacheStrategy = CacheStrategy.LAZY_LOADING) -> None:
         """Initialize cache configuration"""
         self.strategy = strategy
         
@@ -288,7 +293,7 @@ class CacheConfiguration:
         
         self._initialize_cache_instances()
     
-    def _initialize_cache_instances(self):
+    def _initialize_cache_instances(self) -> None:
         """Initialize cache instances"""
         # L1 Cache (In-Memory)
         self.cache_instances[CacheLevel.L1] = {}
@@ -365,7 +370,7 @@ class CacheConfiguration:
         
         return default
     
-    async def set(self, key: str, value: Any, ttl: Optional[int] = None):
+    async def set(self, key -> None: str, value -> None: Any, ttl -> None: Optional[int] = None) -> None:
         """Set value in cache (all levels)"""
         # Set in all cache levels based on strategy
         if self.strategy in [CacheStrategy.WRITE_THROUGH, CacheStrategy.REFRESH_AHEAD]:
@@ -377,14 +382,14 @@ class CacheConfiguration:
             # Only set in L1 cache for lazy loading
             await self._set_to_l1(key, value, ttl or self.l1_config.ttl)
     
-    async def delete(self, key: str):
+    async def delete(self, key -> None: str) -> None:
         """Delete key from all cache levels"""
         await self._delete_from_l1(key)
         await self._delete_from_l2(key)
         await self._delete_from_l3(key)
         await self._delete_from_l4(key)
     
-    async def clear(self, level: Optional[CacheLevel] = None):
+    async def clear(self, level -> None: Optional[CacheLevel] = None) -> None:
         """Clear cache (specific level or all levels)"""
         if level:
             if level == CacheLevel.L1:
@@ -415,7 +420,7 @@ class CacheConfiguration:
             del cache[key]
         return None
     
-    async def _set_to_l1(self, key: str, value: Any, ttl: int):
+    async def _set_to_l1(self, key -> None: str, value -> None: Any, ttl -> None: int) -> None:
         """Set to L1 cache"""
         cache = self.cache_instances[CacheLevel.L1]
         cache[key] = {
@@ -427,12 +432,12 @@ class CacheConfiguration:
         if len(cache) > self.l1_config.max_size:
             await self._evict_from_l1()
     
-    async def _delete_from_l1(self, key: str):
+    async def _delete_from_l1(self, key -> None: str) -> None:
         """Delete from L1 cache"""
         cache = self.cache_instances[CacheLevel.L1]
         cache.pop(key, None)
     
-    async def _evict_from_l1(self):
+    async def _evict_from_l1(self) -> None:
         """Evict entries from L1 cache based on policy"""
         cache = self.cache_instances[CacheLevel.L1]
         if self.l1_config.eviction_policy == EvictionPolicy.LRU:
@@ -455,7 +460,7 @@ class CacheConfiguration:
             pass
         return None
     
-    async def _set_to_l2(self, key: str, value: Any, ttl: int):
+    async def _set_to_l2(self, key -> None: str, value -> None: Any, ttl -> None: int) -> None:
         """Set to L2 cache"""
         redis_client = self.cache_instances[CacheLevel.L2]
         if not redis_client:
@@ -466,7 +471,7 @@ class CacheConfiguration:
         except Exception:
             pass
     
-    async def _delete_from_l2(self, key: str):
+    async def _delete_from_l2(self, key -> None: str) -> None:
         """Delete from L2 cache"""
         redis_client = self.cache_instances[CacheLevel.L2]
         if redis_client:
@@ -483,7 +488,7 @@ class CacheConfiguration:
         except Exception:
             return None
     
-    async def _set_to_l3(self, key: str, value: Any, ttl: int):
+    async def _set_to_l3(self, key -> None: str, value -> None: Any, ttl -> None: int) -> None:
         """Set to L3 cache"""
         memcached_client = self.cache_instances[CacheLevel.L3]
         if not memcached_client:
@@ -493,7 +498,7 @@ class CacheConfiguration:
         except Exception:
             pass
     
-    async def _delete_from_l3(self, key: str):
+    async def _delete_from_l3(self, key -> None: str) -> None:
         """Delete from L3 cache"""
         memcached_client = self.cache_instances[CacheLevel.L3]
         if memcached_client:
@@ -516,7 +521,7 @@ class CacheConfiguration:
                 pass
         return None
     
-    async def _set_to_l4(self, key: str, value: Any, ttl: int):
+    async def _set_to_l4(self, key -> None: str, value -> None: Any, ttl -> None: int) -> None:
         """Set to L4 cache"""
         cache_dir = self.cache_instances[CacheLevel.L4]
         file_path = cache_dir / self._get_cache_file_path(key)
@@ -532,7 +537,7 @@ class CacheConfiguration:
         except Exception:
             pass
     
-    async def _delete_from_l4(self, key: str):
+    async def _delete_from_l4(self, key -> None: str) -> None:
         """Delete from L4 cache"""
         cache_dir = self.cache_instances[CacheLevel.L4]
         file_path = cache_dir / self._get_cache_file_path(key)

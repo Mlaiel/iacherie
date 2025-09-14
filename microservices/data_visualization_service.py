@@ -35,6 +35,7 @@ logging.basicConfig(
 logger = logging.getLogger("DataVisualizationService")
 
 class ChartType(str, Enum):
+    """ChartType class implementation"""
     LINE = "line"
     BAR = "bar"
     PIE = "pie"
@@ -47,6 +48,7 @@ class ChartType(str, Enum):
     SANKEY = "sankey"
 
 class WidgetType(str, Enum):
+    """WidgetType class implementation"""
     CHART = "chart"
     METRIC_CARD = "metric_card"
     TABLE = "table"
@@ -56,6 +58,7 @@ class WidgetType(str, Enum):
     CUSTOM = "custom"
 
 class ColorScheme(str, Enum):
+    """ColorScheme class implementation"""
     BLUE = "blue"
     GREEN = "green"
     RED = "red"
@@ -147,7 +150,7 @@ class DataVisualizationService:
     - **DevOps**: Performance monitoring and export capabilities
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.dashboards: Dict[str, DashboardModel] = {}
         self.data_sources: Dict[str, DataSourceModel] = {}
         self.chart_configs: Dict[str, ChartConfigModel] = {}
@@ -161,7 +164,7 @@ class DataVisualizationService:
         
         logger.info("📊 Data Visualization Service initialized")
     
-    def _initialize_default_data_sources(self):
+    def _initialize_default_data_sources(self) -> None:
         """Initialize default data sources"""
         default_sources = [
             {
@@ -191,7 +194,7 @@ class DataVisualizationService:
             source = DataSourceModel(**source_data)
             self.data_sources[source.id] = source
     
-    def _initialize_chart_templates(self):
+    def _initialize_chart_templates(self) -> None:
         """Initialize chart templates for common use cases"""
         self.chart_templates = {
             "user_growth": {
@@ -550,7 +553,7 @@ class DataVisualizationService:
                 "error": str(e)
             }
     
-    async def _refresh_data_source(self, source_id: str):
+    async def _refresh_data_source(self, source_id -> None: str) -> None:
         """Refresh data from data source"""
         try:
             source = self.data_sources[source_id]
@@ -927,53 +930,53 @@ app = FastAPI(title="Data Visualization Service", version="1.0.0")
 service = DataVisualizationService()
 
 @app.post("/data-sources/create")
-async def create_data_source(source: DataSourceModel):
+async def create_data_source(source -> None: DataSourceModel) -> None:
     """Create new data source"""
     return await service.create_data_source(source)
 
 @app.post("/charts/create")
-async def create_chart(chart_config: ChartConfigModel):
+async def create_chart(chart_config -> None: ChartConfigModel) -> None:
     """Create new chart configuration"""
     return await service.create_chart(chart_config)
 
 @app.post("/dashboards/create")
-async def create_dashboard(dashboard: DashboardModel):
+async def create_dashboard(dashboard -> None: DashboardModel) -> None:
     """Create new interactive dashboard"""
     return await service.create_dashboard(dashboard)
 
 @app.get("/dashboards/{dashboard_id}/data")
-async def get_dashboard_data(dashboard_id: str, user_id: str = None):
+async def get_dashboard_data(dashboard_id -> None: str, user_id -> None: str = None) -> None:
     """Get dashboard data with all widgets"""
     return await service.get_dashboard_data(dashboard_id, user_id)
 
 @app.post("/dashboards/create-from-template")
-async def create_from_template(template_name: str, dashboard_name: str, 
-                             owner_id: str, customization: Dict[str, Any] = None):
+async def create_from_template(template_name -> None: str, dashboard_name -> None: str, 
+                             owner_id -> None: str, customization -> None: Dict[str, Any] = None) -> None:
     """Create dashboard from template"""
     return await service.create_from_template(template_name, dashboard_name, owner_id, customization)
 
 @app.get("/charts/{chart_id}/data")
-async def get_chart_data(chart_id: str, time_range: Dict[str, Any] = None):
+async def get_chart_data(chart_id -> None: str, time_range -> None: Dict[str, Any] = None) -> None:
     """Get chart data with optional time filtering"""
     return await service.get_chart_data(chart_id, time_range)
 
 @app.put("/dashboards/{dashboard_id}/widgets/{widget_id}")
-async def update_widget(dashboard_id: str, widget_id: str, updates: Dict[str, Any]):
+async def update_widget(dashboard_id -> None: str, widget_id -> None: str, updates -> None: Dict[str, Any]) -> None:
     """Update dashboard widget"""
     return await service.update_widget(dashboard_id, widget_id, updates)
 
 @app.post("/dashboards/{dashboard_id}/export")
-async def export_dashboard(dashboard_id: str, format: str = "png", user_id: str = None):
+async def export_dashboard(dashboard_id -> None: str, format -> None: str = "png", user_id -> None: str = None) -> None:
     """Export dashboard in specified format"""
     return await service.export_dashboard(dashboard_id, format, user_id)
 
 @app.get("/metrics")
-async def get_metrics():
+async def get_metrics() -> None:
     """Get visualization service metrics"""
     return await service.get_visualization_metrics()
 
 @app.get("/health")
-async def health_check():
+async def health_check() -> None:
     """Service health check"""
     return {
         "service": "DataVisualizationService",

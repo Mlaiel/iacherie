@@ -1,3 +1,8 @@
+"""
+Kubernetes Orchestrator module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 ☸️ MLOps Kubernetes Orchestrator - Cloud-Native ML Deployment
@@ -141,7 +146,7 @@ class DeploymentStatus:
 class KubernetesClient:
     """Client Kubernetes simplifié pour demo"""
     
-    def __init__(self, config_path: Optional[str] = None):
+    def __init__(self, config_path -> None: Optional[str] = None) -> None:
         self.config_path = config_path
         self.cluster_info = {
             "name": "mlops-cluster",
@@ -266,7 +271,7 @@ class KubernetesOrchestrator:
     - GPU/TPU resource allocation
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.client = KubernetesClient(self.config.get('kubeconfig_path'))
         self.default_namespace = self.config.get('default_namespace', 'mlops')
@@ -394,7 +399,7 @@ class KubernetesOrchestrator:
             
             return False
     
-    def _apply_template_defaults(self, workload: MLWorkload, template: Dict[str, Any]):
+    def _apply_template_defaults(self, workload -> None: MLWorkload, template -> None: Dict[str, Any]) -> None:
         """Apply template defaults to workload"""
         if 'resource_requirements' in template:
             template_resources = template['resource_requirements']
@@ -408,7 +413,7 @@ class KubernetesOrchestrator:
                 if not getattr(workload.auto_scaling, attr, None):
                     setattr(workload.auto_scaling, attr, getattr(template_scaling, attr))
     
-    async def _ensure_namespace(self, namespace: str):
+    async def _ensure_namespace(self, namespace -> None: str) -> None:
         """Ensure namespace exists"""
         namespace_manifest = {
             'apiVersion': 'v1',
@@ -1016,7 +1021,7 @@ class KubernetesOrchestrator:
 
 
 # Demo function
-async def demo_kubernetes_orchestrator():
+async def demo_kubernetes_orchestrator() -> None:
     """Démonstration de l'orchestrateur Kubernetes"""
     print("☸️ MLOps Kubernetes Orchestrator Demo")
     

@@ -465,7 +465,7 @@ class AudioAIConfigManager:
     real-time processing, AI enhancement, and quality control.
     """
     
-    def __init__(self, config_path: Optional[str] = None):
+    def __init__(self, config_path -> None: Optional[str] = None) -> None:
         """
 Initialize audio AI configuration manager"""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")

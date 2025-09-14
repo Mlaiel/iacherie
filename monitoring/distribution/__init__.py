@@ -95,7 +95,7 @@ class DistributionMonitoringOrchestrator:
     - Bandwidth optimization
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.sync_jobs: Dict[str, CrossPlatformSync] = {}
         self.metrics_history: List[DistributionMetrics] = []
         self.active_distributions: Dict[str, Dict[str, Any]] = {}
@@ -108,7 +108,7 @@ class DistributionMonitoringOrchestrator:
         self._initialize_platform_configs()
         logger.info("Distribution Monitoring Orchestrator initialized")
     
-    def _initialize_platform_configs(self):
+    def _initialize_platform_configs(self) -> None:
         """Initialize platform-specific configurations"""
         default_config = {
             'retry_attempts': 3,
@@ -158,7 +158,7 @@ class DistributionMonitoringOrchestrator:
         logger.info(f"Started cross-platform sync {sync_id} for content {content_id}")
         return sync_id
     
-    async def _execute_sync(self, sync_id: str):
+    async def _execute_sync(self, sync_id -> None: str) -> None:
         """Execute the synchronization process"""
         try:
             sync_job = self.sync_jobs[sync_id]

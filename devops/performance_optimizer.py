@@ -160,7 +160,7 @@ class PerformanceOptimizer:
     - CDN and caching strategy optimization
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         # Performance metrics storage
         self.performance_metrics: deque = deque(maxlen=100000)
         self.aggregated_metrics: Dict[str, deque] = defaultdict(lambda: deque(maxlen=5000))
@@ -195,7 +195,7 @@ class PerformanceOptimizer:
         
         logger.info("PerformanceOptimizer initialized")
 
-    def _initialize_performance_optimizer(self):
+    def _initialize_performance_optimizer(self) -> None:
         """Initialize performance optimizer"""
         
         # Start background tasks
@@ -214,7 +214,7 @@ class PerformanceOptimizer:
         
         logger.info("Performance optimizer initialization complete")
 
-    def _setup_scaling_policies(self):
+    def _setup_scaling_policies(self) -> None:
         """Setup auto-scaling policies"""
         
         self.scaling_policies = {
@@ -253,7 +253,7 @@ class PerformanceOptimizer:
             }
         }
 
-    def _setup_performance_thresholds(self):
+    def _setup_performance_thresholds(self) -> None:
         """Setup performance monitoring thresholds"""
         
         self.performance_thresholds = {
@@ -281,7 +281,7 @@ class PerformanceOptimizer:
             }
         }
 
-    def _setup_optimization_strategies(self):
+    def _setup_optimization_strategies(self) -> None:
         """Setup optimization strategies"""
         
         self.optimization_strategies = {
@@ -327,7 +327,7 @@ class PerformanceOptimizer:
             }
         }
 
-    def _setup_capacity_thresholds(self):
+    def _setup_capacity_thresholds(self) -> None:
         """Setup capacity planning thresholds"""
         
         self.capacity_thresholds = {
@@ -355,12 +355,12 @@ class PerformanceOptimizer:
 
     async def collect_performance_metric(
         self,
-        metric_name: str,
-        value: float,
-        service: str,
-        labels: Optional[Dict[str, str]] = None,
-        unit: str = ""
-    ):
+        metric_name -> None: str,
+        value -> None: float,
+        service -> None: str,
+        labels -> None: Optional[Dict[str, str]] = None,
+        unit -> None: str = ""
+    ) -> None:
         """
         Collect performance metric
         
@@ -397,7 +397,7 @@ class PerformanceOptimizer:
         except Exception as e:
             logger.error(f"Performance metric collection failed: {str(e)}")
 
-    async def _update_performance_baseline(self, service: str, metric: str, value: float):
+    async def _update_performance_baseline(self, service -> None: str, metric -> None: str, value -> None: float) -> None:
         """Update performance baseline for service and metric"""
         
         try:
@@ -1223,7 +1223,7 @@ class PerformanceOptimizer:
         return scaling_plan
 
     # Background monitoring tasks
-    async def _performance_monitoring_loop(self):
+    async def _performance_monitoring_loop(self) -> None:
         """Background performance monitoring loop"""
         while True:
             try:
@@ -1235,7 +1235,7 @@ class PerformanceOptimizer:
             except Exception as e:
                 logger.error(f"Performance monitoring loop error: {str(e)}")
 
-    async def _collect_system_metrics(self):
+    async def _collect_system_metrics(self) -> None:
         """Collect system performance metrics"""
         
         # Mock system metrics collection
@@ -1257,7 +1257,7 @@ class PerformanceOptimizer:
                 value = max(0, base_values[metric])
                 await self.collect_performance_metric(metric, value, service)
 
-    async def _auto_scaling_loop(self):
+    async def _auto_scaling_loop(self) -> None:
         """Background auto-scaling analysis loop"""
         while True:
             try:
@@ -1273,7 +1273,7 @@ class PerformanceOptimizer:
             except Exception as e:
                 logger.error(f"Auto-scaling loop error: {str(e)}")
 
-    async def _bottleneck_detection_loop(self):
+    async def _bottleneck_detection_loop(self) -> None:
         """Background bottleneck detection loop"""
         while True:
             try:
@@ -1289,7 +1289,7 @@ class PerformanceOptimizer:
             except Exception as e:
                 logger.error(f"Bottleneck detection loop error: {str(e)}")
 
-    async def _capacity_planning_loop(self):
+    async def _capacity_planning_loop(self) -> None:
         """Background capacity planning loop"""
         while True:
             try:
@@ -1309,7 +1309,7 @@ class PerformanceOptimizer:
             except Exception as e:
                 logger.error(f"Capacity planning loop error: {str(e)}")
 
-    async def _optimization_analysis_loop(self):
+    async def _optimization_analysis_loop(self) -> None:
         """Background optimization analysis loop"""
         while True:
             try:
@@ -1325,7 +1325,7 @@ class PerformanceOptimizer:
             except Exception as e:
                 logger.error(f"Optimization analysis loop error: {str(e)}")
 
-    async def _model_training_loop(self):
+    async def _model_training_loop(self) -> None:
         """Background ML model training loop"""
         while True:
             try:
@@ -1337,7 +1337,7 @@ class PerformanceOptimizer:
             except Exception as e:
                 logger.error(f"Model training loop error: {str(e)}")
 
-    async def _train_prediction_models(self):
+    async def _train_prediction_models(self) -> None:
         """Train ML models for performance prediction"""
         
         # Mock model training

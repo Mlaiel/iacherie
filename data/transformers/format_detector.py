@@ -109,7 +109,7 @@ class ContentAnalysis:
 class FormatDetector:
     """Intelligent format detection engine with ML capabilities."""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize format detector with configuration."""
         self.config = config or {}
         
@@ -135,7 +135,7 @@ class FormatDetector:
         
         logger.info("FormatDetector initialized")
     
-    def _load_format_signatures(self):
+    def _load_format_signatures(self) -> None:
         """Load format signatures for known file types."""
         signatures = [
             # Audio formats
@@ -292,7 +292,7 @@ class FormatDetector:
         for signature in signatures:
             self.format_signatures[signature.format_name] = signature
     
-    def _build_magic_bytes_index(self):
+    def _build_magic_bytes_index(self) -> None:
         """Build index for fast magic bytes lookup."""
         for format_name, signature in self.format_signatures.items():
             for magic_bytes in signature.magic_bytes:
@@ -301,7 +301,7 @@ class FormatDetector:
                     self.magic_bytes_index[key] = []
                 self.magic_bytes_index[key].append((format_name, magic_bytes, signature.offset))
     
-    def _initialize_ml_models(self):
+    def _initialize_ml_models(self) -> None:
         """Initialize ML models for format detection."""
         # Placeholder for ML model initialization
         # In production, would load trained models
@@ -866,7 +866,7 @@ class FormatDetector:
         
         return False
     
-    def _update_detection_stats(self, result: DetectionResult):
+    def _update_detection_stats(self, result -> None: DetectionResult) -> None:
         """Update detection statistics."""
         self.detection_stats["total_detections"] += 1
         

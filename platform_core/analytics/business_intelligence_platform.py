@@ -1,3 +1,8 @@
+"""
+Business Intelligence Platform module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Business Intelligence Platform - Enterprise Analytics Component
@@ -144,7 +149,7 @@ class BusinessIntelligencePlatform:
     dashboard generation for enterprise-grade insights and decision making.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.data_sources: Dict[str, DataSource] = {}
         self.analytics_queries: Dict[str, AnalyticsQuery] = {}
         self.reports: Dict[str, Report] = {}
@@ -948,7 +953,7 @@ def create_business_intelligence_platform() -> BusinessIntelligencePlatform:
 
 
 # Example usage
-async def main():
+async def main() -> None:
     """Example usage of Business Intelligence Platform"""
     bi_platform = create_business_intelligence_platform()
     

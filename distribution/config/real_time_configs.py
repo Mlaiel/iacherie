@@ -193,7 +193,7 @@ class RealTimeConfig:
     # Feature flags
     feature_flags: Dict[str, bool] = field(default_factory=dict)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         """Initialize default configurations"""
         if not self.triggers:
             self.triggers = self._get_default_triggers()

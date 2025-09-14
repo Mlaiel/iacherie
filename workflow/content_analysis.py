@@ -136,7 +136,7 @@ class ContentAnalysisWorkflow:
     """
 Advanced content analysis and classification workflow system."""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.config = config or {}
         self.logger = logging.getLogger("workflow.content_analysis")
         
@@ -190,9 +190,9 @@ Advanced content analysis and classification workflow system."""
     
     async def _add_content_analysis_steps(
         self,
-        pipeline: IntelligentContentPipeline,
-        analysis_config: Dict[str, Any]
-    ):
+        pipeline -> None: IntelligentContentPipeline,
+        analysis_config -> None: Dict[str, Any]
+    ) -> None:
         """Add content analysis workflow steps."""
         
         # Step 1: Content validation and format detection
@@ -1376,10 +1376,10 @@ Advanced content analysis and classification workflow system."""
     
     async def _send_analysis_notifications(
         self,
-        compiled_results: Dict[str, Any],
-        generated_reports: List[Dict[str, Any]],
-        notification_channels: List[str]
-    ):
+        compiled_results -> None: Dict[str, Any],
+        generated_reports -> None: List[Dict[str, Any]],
+        notification_channels -> None: List[str]
+    ) -> None:
         """Send analysis completion notifications."""
         # Simplified notification sending
         for channel in notification_channels:

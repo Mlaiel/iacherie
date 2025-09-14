@@ -106,7 +106,7 @@ class DemucsSpleeterOrchestrator:
     enterprise-grade processing workflows.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.separation_jobs: Dict[str, SeparationJob] = {}
         self.job_queue: List[str] = []
         self.processing_jobs: Dict[str, SeparationJob] = {}
@@ -118,7 +118,7 @@ class DemucsSpleeterOrchestrator:
         self._initialize_model_configurations()
         logger.info("DEMUCS/Spleeter Orchestrator initialized")
     
-    def _initialize_model_configurations(self):
+    def _initialize_model_configurations(self) -> None:
         """Initialize model configurations and capabilities"""
         self.model_configurations = {
             SeparationModel.DEMUCS_V4_HT: {
@@ -338,7 +338,7 @@ class DemucsSpleeterOrchestrator:
         
         return True
     
-    async def _process_separation_queue(self):
+    async def _process_separation_queue(self) -> None:
         """Process queued separation jobs"""
         while len(self.processing_jobs) < self.max_concurrent_jobs and self.job_queue:
             job_id = self.job_queue.pop(0)
@@ -348,7 +348,7 @@ class DemucsSpleeterOrchestrator:
                 self.processing_jobs[job_id] = job
                 asyncio.create_task(self._execute_separation_job(job_id))
     
-    async def _execute_separation_job(self, job_id: str):
+    async def _execute_separation_job(self, job_id -> None: str) -> None:
         """Execute individual separation job"""
         job = self.processing_jobs[job_id]
         
@@ -435,7 +435,7 @@ class DemucsSpleeterOrchestrator:
             # Continue processing queue
             await self._process_separation_queue()
     
-    async def _load_model(self, model: SeparationModel, quality: SeparationQuality):
+    async def _load_model(self, model -> None: SeparationModel, quality -> None: SeparationQuality) -> None:
         """Load separation model (simulated)"""
         config = self.model_configurations[model]
         
@@ -539,7 +539,7 @@ class DemucsSpleeterOrchestrator:
         
         return {k: round(v, 3) for k, v in metrics.items()}
     
-    async def _update_model_performance(self, model: SeparationModel, processing_time: float, success: bool):
+    async def _update_model_performance(self, model -> None: SeparationModel, processing_time -> None: float, success -> None: bool) -> None:
         """Update model performance metrics"""
         if model not in self.model_performance:
             return

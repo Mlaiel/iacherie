@@ -1,3 +1,8 @@
+"""
+Commission Tracking Example module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Commission Tracking Example - Example Tracking Commissions Temps Réel
@@ -104,7 +109,7 @@ class CustomerJourney:
     journey_duration: timedelta = field(init=False)
     total_touchpoints: int = field(init=False)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         self.journey_duration = self.final_conversion["timestamp"] - self.journey_start
         self.total_touchpoints = len(self.touchpoints)
 
@@ -198,7 +203,7 @@ class CommissionTrackingExample:
     Multi-touch attribution avec fraud detection et compliance automation
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(f"{__name__}.CommissionTrackingExample")
         
         # Simulate service dependencies
@@ -1003,7 +1008,7 @@ class CommissionTrackingExample:
         }
 
 
-async def demonstrate():
+async def demonstrate() -> None:
     """Main demonstration function"""
     logger.info("🎬 DÉMARRAGE DÉMONSTRATION COMMISSION TRACKING")
     logger.info("=" * 70)
@@ -1065,7 +1070,7 @@ async def demonstrate():
         return False
 
 
-async def main():
+async def main() -> None:
     """Main entry point"""
     try:
         success = await demonstrate()

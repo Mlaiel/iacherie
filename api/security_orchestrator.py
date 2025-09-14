@@ -37,6 +37,7 @@ router = APIRouter(prefix="/api/v1/security", tags=["Security Orchestrator"])
 # ============ ENUMS ============
 
 class ThreatLevel(str, Enum):
+    """ThreatLevel class implementation"""
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -44,6 +45,7 @@ class ThreatLevel(str, Enum):
     INFO = "info"
 
 class SecurityEventType(str, Enum):
+    """SecurityEventType class implementation"""
     UNAUTHORIZED_ACCESS = "unauthorized_access"
     SUSPICIOUS_ACTIVITY = "suspicious_activity"
     MALWARE_DETECTION = "malware_detection"
@@ -56,6 +58,7 @@ class SecurityEventType(str, Enum):
     API_ABUSE = "api_abuse"
 
 class VulnerabilityCategory(str, Enum):
+    """VulnerabilityCategory class implementation"""
     INJECTION = "injection"
     BROKEN_AUTHENTICATION = "broken_authentication"
     SENSITIVE_DATA_EXPOSURE = "sensitive_data_exposure"
@@ -68,6 +71,7 @@ class VulnerabilityCategory(str, Enum):
     INSUFFICIENT_LOGGING = "insufficient_logging"
 
 class ComplianceStandard(str, Enum):
+    """ComplianceStandard class implementation"""
     GDPR = "gdpr"
     CCPA = "ccpa"
     SOC2 = "soc2"
@@ -78,6 +82,7 @@ class ComplianceStandard(str, Enum):
     OWASP = "owasp"
 
 class IncidentStatus(str, Enum):
+    """IncidentStatus class implementation"""
     OPEN = "open"
     INVESTIGATING = "investigating"
     CONTAINED = "contained"
@@ -85,6 +90,7 @@ class IncidentStatus(str, Enum):
     CLOSED = "closed"
 
 class AccessLevel(str, Enum):
+    """AccessLevel class implementation"""
     PUBLIC = "public"
     INTERNAL = "internal"
     CONFIDENTIAL = "confidential"
@@ -94,6 +100,7 @@ class AccessLevel(str, Enum):
 # ============ PYDANTIC MODELS ============
 
 class ThreatDetectionRequest(BaseModel):
+    """ThreatDetectionRequest class implementation"""
     source_ip: str = Field(..., description="Source IP address")
     user_agent: str = Field(..., description="User agent string")
     request_path: str = Field(..., description="Request path")
@@ -105,6 +112,7 @@ class ThreatDetectionRequest(BaseModel):
     additional_context: Dict[str, Any] = Field(default={}, description="Additional context data")
 
 class VulnerabilityAssessmentRequest(BaseModel):
+    """VulnerabilityAssessmentRequest class implementation"""
     target_type: str = Field(..., description="Assessment target type (application, network, system)")
     target_identifier: str = Field(..., description="Target identifier or URL")
     assessment_scope: List[str] = Field(..., description="Assessment scope areas")
@@ -114,6 +122,7 @@ class VulnerabilityAssessmentRequest(BaseModel):
     notification_settings: Dict[str, Any] = Field(default={}, description="Notification preferences")
 
 class SecurityIncidentRequest(BaseModel):
+    """SecurityIncidentRequest class implementation"""
     incident_type: SecurityEventType = Field(..., description="Type of security incident")
     severity: ThreatLevel = Field(..., description="Incident severity level")
     description: str = Field(..., description="Incident description")
@@ -125,6 +134,7 @@ class SecurityIncidentRequest(BaseModel):
     containment_required: bool = Field(default=True, description="Whether immediate containment is required")
 
 class ComplianceAuditRequest(BaseModel):
+    """ComplianceAuditRequest class implementation"""
     audit_scope: List[str] = Field(..., description="Systems/processes to audit")
     compliance_standards: List[ComplianceStandard] = Field(..., description="Standards to audit against")
     audit_type: str = Field(..., description="Type of audit (internal, external, regulatory)")
@@ -134,6 +144,7 @@ class ComplianceAuditRequest(BaseModel):
     previous_findings: List[str] = Field(default=[], description="Previous audit findings to verify")
 
 class AccessControlRequest(BaseModel):
+    """AccessControlRequest class implementation"""
     user_id: str = Field(..., description="User identifier")
     resource_id: str = Field(..., description="Resource identifier")
     requested_permissions: List[str] = Field(..., description="Requested permissions")
@@ -143,6 +154,7 @@ class AccessControlRequest(BaseModel):
     approval_required: bool = Field(default=True, description="Whether approval is required")
 
 class EncryptionRequest(BaseModel):
+    """EncryptionRequest class implementation"""
     data_type: str = Field(..., description="Type of data to encrypt")
     data_classification: AccessLevel = Field(..., description="Data classification level")
     encryption_algorithm: str = Field(default="AES-256-GCM", description="Encryption algorithm")
@@ -155,7 +167,7 @@ class EncryptionRequest(BaseModel):
 class ThreatDetectionEngine:
     """AI-powered threat detection and analysis engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.threat_signatures = {}
         self.ml_models = {}
         self.anomaly_baselines = {}
@@ -477,7 +489,7 @@ class ThreatDetectionEngine:
 class VulnerabilityScanner:
     """Comprehensive vulnerability assessment and scanning engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.scan_templates = {}
         self.vulnerability_database = {}
         self.compliance_checks = {}
@@ -902,7 +914,7 @@ vulnerability_scanner = VulnerabilityScanner()
 # ============ API ENDPOINTS ============
 
 @router.post("/threats/analyze")
-async def analyze_threat(request: ThreatDetectionRequest):
+async def analyze_threat(request -> None: ThreatDetectionRequest) -> None:
     """
     Analyze incoming requests for potential security threats
     
@@ -923,7 +935,7 @@ async def analyze_threat(request: ThreatDetectionRequest):
         raise HTTPException(status_code=500, detail=str(e))
 
 @router.post("/vulnerabilities/assess")
-async def assess_vulnerabilities(request: VulnerabilityAssessmentRequest):
+async def assess_vulnerabilities(request -> None: VulnerabilityAssessmentRequest) -> None:
     """
     Perform comprehensive vulnerability assessment
     
@@ -944,7 +956,7 @@ async def assess_vulnerabilities(request: VulnerabilityAssessmentRequest):
         raise HTTPException(status_code=500, detail=str(e))
 
 @router.get("/security/dashboard")
-async def get_security_dashboard():
+async def get_security_dashboard() -> None:
     """Get comprehensive security dashboard with real-time metrics"""
     try:
         dashboard_data = {
@@ -1035,7 +1047,7 @@ async def get_security_dashboard():
         raise HTTPException(status_code=500, detail=str(e))
 
 @router.get("/compliance/report/{standard}")
-async def get_compliance_report(standard: ComplianceStandard):
+async def get_compliance_report(standard -> None: ComplianceStandard) -> None:
     """Get detailed compliance report for specific standard"""
     try:
         compliance_report = {
@@ -1118,8 +1130,8 @@ async def get_compliance_report(standard: ComplianceStandard):
         raise HTTPException(status_code=500, detail=str(e))
 
 @router.get("/audit/trail")
-async def get_audit_trail(start_date: Optional[datetime] = None, end_date: Optional[datetime] = None, 
-                         event_type: Optional[str] = None, user_id: Optional[str] = None):
+async def get_audit_trail(start_date -> None: Optional[datetime] = None, end_date -> None: Optional[datetime] = None, 
+                         event_type -> None: Optional[str] = None, user_id -> None: Optional[str] = None) -> None:
     """Get comprehensive audit trail with filtering options"""
     try:
         # Set default date range if not provided

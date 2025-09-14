@@ -53,7 +53,8 @@ try:
 except ImportError:
     TORCH_AVAILABLE = False
     class TorchStub:
-        def device(self, device_type):
+    """TorchStub: class implementation"""
+        def device(self, device_type) -> None:
             return device_type
     torch = TorchStub()
 
@@ -240,7 +241,7 @@ class IntelligenceResult:
 class MediaIntelligenceEngine:
     """Advanced AI-powered media intelligence system"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         """Initialize media intelligence engine"""
         self.config = config or {}
         self.models = {}
@@ -256,7 +257,7 @@ class MediaIntelligenceEngine:
         
         logger.info("🧠 Media Intelligence Engine initialized")
     
-    def _initialize_models(self):
+    def _initialize_models(self) -> None:
         """Initialize AI models"""
         try:
             if TORCH_AVAILABLE:
@@ -270,7 +271,7 @@ class MediaIntelligenceEngine:
         except Exception as e:
             logger.error(f"Failed to initialize AI models: {e}")
     
-    def _initialize_classifiers(self):
+    def _initialize_classifiers(self) -> None:
         """Initialize content classifiers"""
         self.classifiers = {
             ClassificationDimension.GENRE: self._create_genre_classifier(),
@@ -282,7 +283,7 @@ class MediaIntelligenceEngine:
         }
         logger.info("Content classifiers initialized")
     
-    def _initialize_semantic_analyzers(self):
+    def _initialize_semantic_analyzers(self) -> None:
         """Initialize semantic analysis components"""
         self.semantic_analyzers = {
             'entity_extraction': self._create_entity_extractor(),
@@ -293,7 +294,7 @@ class MediaIntelligenceEngine:
         }
         logger.info("Semantic analyzers initialized")
     
-    def _initialize_feature_extractors(self):
+    def _initialize_feature_extractors(self) -> None:
         """Initialize feature extraction components"""
         self.feature_extractors = {
             MediaFormat.IMAGE: self._create_image_feature_extractor(),
@@ -675,19 +676,19 @@ class MediaIntelligenceEngine:
     
     # Model and component creators
     
-    def _load_vision_model(self):
+    def _load_vision_model(self) -> None:
         """Load computer vision model"""
         return {"type": "vision_model", "status": "loaded"}
     
-    def _load_text_model(self):
+    def _load_text_model(self) -> None:
         """Load text analysis model"""
         return {"type": "text_model", "status": "loaded"}
     
-    def _load_audio_model(self):
+    def _load_audio_model(self) -> None:
         """Load audio analysis model"""
         return {"type": "audio_model", "status": "loaded"}
     
-    def _create_genre_classifier(self):
+    def _create_genre_classifier(self) -> None:
         """Create genre classification component"""
         async def classify_genre(content_data: Any, features: MediaFeatures, config: AnalysisConfig) -> ClassificationResult:
             # Placeholder genre classification
@@ -703,7 +704,7 @@ class MediaIntelligenceEngine:
             )
         return classify_genre
     
-    def _create_quality_classifier(self):
+    def _create_quality_classifier(self) -> None:
         """Create quality classification component"""
         async def classify_quality(content_data: Any, features: MediaFeatures, config: AnalysisConfig) -> ClassificationResult:
             # Use quality metrics from features
@@ -724,7 +725,7 @@ class MediaIntelligenceEngine:
             )
         return classify_quality
     
-    def _create_audience_classifier(self):
+    def _create_audience_classifier(self) -> None:
         """Create audience classification component"""
         async def classify_audience(content_data: Any, features: MediaFeatures, config: AnalysisConfig) -> ClassificationResult:
             audiences = ["adults", "young_adults", "teens", "professionals", "general"]
@@ -739,7 +740,7 @@ class MediaIntelligenceEngine:
             )
         return classify_audience
     
-    def _create_emotion_classifier(self):
+    def _create_emotion_classifier(self) -> None:
         """Create emotion classification component"""
         async def classify_emotion(content_data: Any, features: MediaFeatures, config: AnalysisConfig) -> ClassificationResult:
             emotions = ["positive", "neutral", "negative", "exciting", "calming"]
@@ -754,7 +755,7 @@ class MediaIntelligenceEngine:
             )
         return classify_emotion
     
-    def _create_brand_safety_classifier(self):
+    def _create_brand_safety_classifier(self) -> None:
         """Create brand safety classification component"""
         async def classify_brand_safety(content_data: Any, features: MediaFeatures, config: AnalysisConfig) -> ClassificationResult:
             # Default to safe with high confidence
@@ -769,7 +770,7 @@ class MediaIntelligenceEngine:
             )
         return classify_brand_safety
     
-    def _create_viral_potential_classifier(self):
+    def _create_viral_potential_classifier(self) -> None:
         """Create viral potential classification component"""
         async def classify_viral_potential(content_data: Any, features: MediaFeatures, config: AnalysisConfig) -> ClassificationResult:
             # Simple viral potential calculation
@@ -784,7 +785,7 @@ class MediaIntelligenceEngine:
             )
         return classify_viral_potential
     
-    def _create_entity_extractor(self):
+    def _create_entity_extractor(self) -> None:
         """Create entity extraction component"""
         async def extract_entities(content_data: Any, features: MediaFeatures) -> List[Dict[str, Any]]:
             # Placeholder entity extraction
@@ -794,7 +795,7 @@ class MediaIntelligenceEngine:
             ]
         return extract_entities
     
-    def _create_relationship_mapper(self):
+    def _create_relationship_mapper(self) -> None:
         """Create relationship mapping component"""
         async def map_relationships(entities: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
             # Placeholder relationship mapping
@@ -803,14 +804,14 @@ class MediaIntelligenceEngine:
             ]
         return map_relationships
     
-    def _create_concept_identifier(self):
+    def _create_concept_identifier(self) -> None:
         """Create concept identification component"""
         async def identify_concepts(content_data: Any, features: MediaFeatures) -> List[str]:
             # Placeholder concept identification
             return ["technology", "innovation", "creativity", "communication"]
         return identify_concepts
     
-    def _create_sentiment_analyzer(self):
+    def _create_sentiment_analyzer(self) -> None:
         """Create sentiment analysis component"""
         async def analyze_sentiment(content_data: Any, features: MediaFeatures) -> Dict[str, float]:
             # Placeholder sentiment analysis
@@ -821,7 +822,7 @@ class MediaIntelligenceEngine:
             }
         return analyze_sentiment
     
-    def _create_cultural_analyzer(self):
+    def _create_cultural_analyzer(self) -> None:
         """Create cultural analysis component"""
         async def analyze_culture(content_data: Any, features: MediaFeatures) -> Dict[str, Any]:
             # Placeholder cultural analysis
@@ -832,7 +833,7 @@ class MediaIntelligenceEngine:
             }
         return analyze_culture
     
-    def _create_image_feature_extractor(self):
+    def _create_image_feature_extractor(self) -> None:
         """Create image feature extractor"""
         async def extract_image_features(content_data: Any) -> MediaFeatures:
             features = MediaFeatures()
@@ -846,7 +847,7 @@ class MediaIntelligenceEngine:
             return features
         return extract_image_features
     
-    def _create_video_feature_extractor(self):
+    def _create_video_feature_extractor(self) -> None:
         """Create video feature extractor"""
         async def extract_video_features(content_data: Any) -> MediaFeatures:
             features = MediaFeatures()
@@ -863,7 +864,7 @@ class MediaIntelligenceEngine:
             return features
         return extract_video_features
     
-    def _create_audio_feature_extractor(self):
+    def _create_audio_feature_extractor(self) -> None:
         """Create audio feature extractor"""
         async def extract_audio_features(content_data: Any) -> MediaFeatures:
             features = MediaFeatures()
@@ -877,7 +878,7 @@ class MediaIntelligenceEngine:
             return features
         return extract_audio_features
     
-    def _create_text_feature_extractor(self):
+    def _create_text_feature_extractor(self) -> None:
         """Create text feature extractor"""
         async def extract_text_features(content_data: Any) -> MediaFeatures:
             features = MediaFeatures()
@@ -893,7 +894,7 @@ class MediaIntelligenceEngine:
             return features
         return extract_text_features
     
-    def _create_voice_feature_extractor(self):
+    def _create_voice_feature_extractor(self) -> None:
         """Create voice feature extractor"""
         async def extract_voice_features(content_data: Any) -> MediaFeatures:
             features = MediaFeatures()
@@ -912,7 +913,7 @@ class MediaIntelligenceEngine:
 class IntelligentMediaAnalyzer:
     """Backward compatibility for IntelligentMediaAnalyzer"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.intelligence_engine = MediaIntelligenceEngine(config)
     
     async def analyze_content(self, content_data: Any, content_id: str, analysis_type: AnalysisType = AnalysisType.COMPREHENSIVE) -> IntelligenceResult:
@@ -926,7 +927,7 @@ class IntelligentMediaAnalyzer:
 class ContentClassifier:
     """Backward compatibility for ContentClassifier"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.intelligence_engine = MediaIntelligenceEngine(config)
     
     async def classify_content(self, content_data: Any, dimensions: List[ClassificationDimension]) -> List[ClassificationResult]:
@@ -941,7 +942,7 @@ class ContentClassifier:
 class ContentAnalyzer:
     """Backward compatibility for ContentAnalyzer"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.intelligence_engine = MediaIntelligenceEngine(config)
     
     async def analyze_content(self, content_data: Any) -> IntelligenceResult:
@@ -955,7 +956,7 @@ class ContentAnalyzer:
 class MultimodalIntelligence:
     """Backward compatibility for MultimodalIntelligence"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.intelligence_engine = MediaIntelligenceEngine(config)
     
     async def analyze_multimodal_content(self, content_data: Any, content_id: str) -> IntelligenceResult:

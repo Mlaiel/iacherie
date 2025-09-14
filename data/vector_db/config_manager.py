@@ -179,7 +179,7 @@ class ConfigManager:
     - Rollback capabilities
     """
     
-    def __init__(self, config_path: Optional[str] = None):
+    def __init__(self, config_path -> None: Optional[str] = None) -> None:
         """
         Initialize configuration manager.
         

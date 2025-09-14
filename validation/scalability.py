@@ -1,4 +1,6 @@
 """
+import asyncio
+
 Scalability Validation Module
 Ensures horizontal scaling, auto-scaling, database sharding, CDN integration, multi-region support
 """
@@ -28,7 +30,7 @@ class ScalabilityCheck:
 class ScalabilityValidator:
     """Validates scalability requirements"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.checks: List[ScalabilityCheck] = []
     
     def validate_horizontal_scaling(self) -> List[ScalabilityCheck]:

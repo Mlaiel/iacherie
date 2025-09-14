@@ -44,7 +44,7 @@ class CrisisResponse:
 class CrisisManagementEngine:
     """Main crisis management engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize crisis management engine"""
         self.crisis_types = [
             'reputation_damage', 'content_controversy', 'platform_violation',
@@ -214,7 +214,7 @@ class CrisisManagementEngine:
         days_to_add = 7 if level == CrisisLevel.HIGH else 3
         return datetime.utcnow().replace(day=datetime.utcnow().day + days_to_add)
     
-    async def _execute_immediate_response(self, actions: List[Dict], communication: Dict):
+    async def _execute_immediate_response(self, actions -> None: List[Dict], communication -> None: Dict) -> None:
         logger.info("Executing immediate crisis response actions")
         # Would execute actual response actions
     

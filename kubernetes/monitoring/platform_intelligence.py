@@ -154,11 +154,11 @@ class PlatformIntelligenceEngine:
     
     def __init__(
         self,
-        redis_client: Optional[aioredis.Redis] = None,
-        db_engine: Optional[AsyncEngine] = None,
-        analysis_interval: int = 300,  # 5 minutes
-        insight_retention_days: int = 30
-    ):
+        redis_client -> None: Optional[aioredis.Redis] = None,
+        db_engine -> None: Optional[AsyncEngine] = None,
+        analysis_interval -> None: int = 300,  # 5 minutes
+        insight_retention_days -> None: int = 30
+    ) -> None:
         self.redis_client = redis_client
         self.db_engine = db_engine
         self.analysis_interval = analysis_interval
@@ -182,7 +182,7 @@ class PlatformIntelligenceEngine:
         
         logger.info("Platform Intelligence Engine initialized")
     
-    async def start_intelligence_processing(self):
+    async def start_intelligence_processing(self) -> None:
         """Start continuous intelligence processing"""
         if self._running:
             logger.warning("Intelligence processing already running")
@@ -192,7 +192,7 @@ class PlatformIntelligenceEngine:
         self._analysis_task = asyncio.create_task(self._intelligence_loop())
         logger.info("Intelligence processing started")
     
-    async def stop_intelligence_processing(self):
+    async def stop_intelligence_processing(self) -> None:
         """Stop intelligence processing"""
         self._running = False
         if self._analysis_task:
@@ -203,7 +203,7 @@ class PlatformIntelligenceEngine:
                 pass
         logger.info("Intelligence processing stopped")
     
-    async def _intelligence_loop(self):
+    async def _intelligence_loop(self) -> None:
         """Main intelligence processing loop"""
         while self._running:
             try:
@@ -227,7 +227,7 @@ class PlatformIntelligenceEngine:
                 logger.error(f"Error in intelligence loop: {e}")
                 await asyncio.sleep(60)  # Backoff on error
     
-    async def _collect_platform_data(self):
+    async def _collect_platform_data(self) -> None:
         """Collect data from all platform sources"""
         try:
             # Collect metrics from Redis
@@ -241,7 +241,7 @@ class PlatformIntelligenceEngine:
         except Exception as e:
             logger.error(f"Error collecting platform data: {e}")
     
-    async def _collect_redis_metrics(self):
+    async def _collect_redis_metrics(self) -> None:
         """Collect metrics from Redis"""
         try:
             # Content protection metrics
@@ -271,7 +271,7 @@ class PlatformIntelligenceEngine:
         except Exception as e:
             logger.error(f"Error collecting Redis metrics: {e}")
     
-    async def _collect_database_metrics(self):
+    async def _collect_database_metrics(self) -> None:
         """Collect metrics from database"""
         try:
             async with self.db_engine.begin() as conn:
@@ -310,7 +310,7 @@ class PlatformIntelligenceEngine:
         except Exception as e:
             logger.error(f"Error collecting database metrics: {e}")
     
-    async def _generate_business_insights(self):
+    async def _generate_business_insights(self) -> None:
         """Generate business insights from collected data"""
         try:
             # Content protection insights
@@ -358,7 +358,7 @@ class PlatformIntelligenceEngine:
         except Exception as e:
             logger.error(f"Error generating business insights: {e}")
     
-    async def _update_trend_analysis(self):
+    async def _update_trend_analysis(self) -> None:
         """Update trend analysis for key metrics"""
         try:
             current_time = datetime.utcnow()
@@ -407,7 +407,7 @@ class PlatformIntelligenceEngine:
         
         return trends
     
-    async def _cleanup_expired_insights(self):
+    async def _cleanup_expired_insights(self) -> None:
         """Clean up expired insights"""
         try:
             current_time = datetime.utcnow()
@@ -761,7 +761,7 @@ Get high priority insights requiring attention"""
             if insight.priority in [InsightPriority.HIGH, InsightPriority.CRITICAL, InsightPriority.URGENT]
         ]
     
-    async def mark_insight_acted_upon(self, insight_id: str):
+    async def mark_insight_acted_upon(self, insight_id -> None: str) -> None:
         """
 Mark insight as acted upon"""
         if insight_id in self._insights_cache:

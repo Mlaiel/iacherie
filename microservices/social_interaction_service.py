@@ -1,3 +1,8 @@
+"""
+Social Interaction Service module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 🎯 SocialInteractionService - Advanced Social Features & Interaction Management
@@ -133,7 +138,7 @@ class SocialInteractionService:
     - AI Prompt: Intelligent social content and interaction suggestions
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.redis_client = redis.Redis(
             host=config.get('redis_host', 'localhost'),
@@ -422,7 +427,7 @@ class SocialInteractionService:
             self.logger.error(f"Error analyzing sentiment: {str(e)}")
             return 0.0
 
-    async def _store_interaction(self, interaction: SocialInteraction):
+    async def _store_interaction(self, interaction -> None: SocialInteraction) -> None:
         """🗄️ DBA: Store interaction with optimized social graph indexing"""
         try:
             interaction_data = asdict(interaction)
@@ -474,8 +479,8 @@ class SocialInteractionService:
             self.logger.error(f"Error storing interaction: {str(e)}")
             raise
 
-    async def _update_relationship_strength(self, user_id: str, target_user_id: str, 
-                                          interaction_type: InteractionType):
+    async def _update_relationship_strength(self, user_id -> None: str, target_user_id -> None: str, 
+                                          interaction_type -> None: InteractionType) -> None:
         """🤖 ML Engineer: Update relationship strength based on interactions"""
         try:
             relationship_key = f"relationship:{user_id}:{target_user_id}"
@@ -529,7 +534,7 @@ class SocialInteractionService:
         except Exception as e:
             self.logger.error(f"Error updating relationship strength: {str(e)}")
 
-    async def _store_relationship(self, relationship: UserRelationship):
+    async def _store_relationship(self, relationship -> None: UserRelationship) -> None:
         """Store user relationship data"""
         try:
             relationship_data = asdict(relationship)
@@ -558,7 +563,7 @@ class SocialInteractionService:
             self.logger.error(f"Error storing relationship: {str(e)}")
             raise
 
-    async def _generate_engagement_opportunities(self, interaction: SocialInteraction):
+    async def _generate_engagement_opportunities(self, interaction -> None: SocialInteraction) -> None:
         """🧠 Lead Dev IA: Generate AI-powered engagement opportunities"""
         try:
             opportunities = []
@@ -1121,7 +1126,7 @@ class SocialInteractionService:
             return {}
 
 # Usage Example and Testing
-async def main():
+async def main() -> None:
     """🎯 Example usage and testing of SocialInteractionService"""
     
     # Configuration

@@ -29,7 +29,7 @@ class EnterpriseMessageQueueSystem:
     - Consumer auto-scaling
     """
     
-    def __init__(self, config: Optional[MessagingConfig] = None):
+    def __init__(self, config -> None: Optional[MessagingConfig] = None) -> None:
         self.config = config or get_messaging_config()
         
         # Core components
@@ -368,23 +368,23 @@ async def quick_setup_with_queues(queue_configs: Dict[str, Dict[str, Any]],
 
 
 # Example usage demonstration
-async def demo_setup():
+async def demo_setup() -> None:
     """Demonstration of the complete message queue system"""
     
     # Example message handlers
-    async def content_processing_handler(message: Message):
+    async def content_processing_handler(message -> None: Message) -> None:
         """Handle content processing messages"""
         print(f"Processing content: {message.data}")
         # Simulate processing time
         await asyncio.sleep(0.1)
     
-    async def ai_analysis_handler(message: Message):
+    async def ai_analysis_handler(message -> None: Message) -> None:
         """Handle AI analysis messages"""
         print(f"AI analyzing: {message.data}")
         # Simulate AI processing
         await asyncio.sleep(0.5)
     
-    async def notification_handler(message: Message):
+    async def notification_handler(message -> None: Message) -> None:
         """Handle notification messages"""
         print(f"Sending notification: {message.data}")
         await asyncio.sleep(0.05)

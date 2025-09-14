@@ -25,7 +25,7 @@ class VideoEnhancementConfig:
 class VideoEnhancementEngine:
     """Advanced video enhancement with AI upscaling."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the video enhancement engine."""
         self.enhancement_models = self._load_models()
         

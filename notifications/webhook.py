@@ -140,7 +140,7 @@ Webhook delivery tracking and analytics result."""
 class WebhookNotifier:
     """
 Enterprise webhook notification service with intelligent delivery and comprehensive analytics."""
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
         self.metrics = MetricsCollector()
         
@@ -246,7 +246,7 @@ Enterprise webhook notification service with intelligent delivery and comprehens
         # Create semaphore for concurrency control
         semaphore = asyncio.Semaphore(self.max_concurrent_webhooks)
         
-        async def send_single_webhook(endpoint_id: str, payload: WebhookPayload):
+        async def send_single_webhook(endpoint_id -> None: str, payload -> None: WebhookPayload) -> None:
         try:
             logger.info(f"Executing send_single_webhook")
             
@@ -443,7 +443,7 @@ Get comprehensive status information for an endpoint."""
         # Simplified rate limiting - would use Redis or similar in production
         return True
 
-    async def _schedule_retry(self, endpoint: WebhookEndpoint, payload: WebhookPayload):
+    async def _schedule_retry(self, endpoint -> None: WebhookEndpoint, payload -> None: WebhookPayload) -> None:
         """
 Schedule webhook retry with appropriate delay."""
         delay_seconds = self.retry_delays[endpoint.retry_strategy][min(payload.retry_count, len(self.retry_delays[endpoint.retry_strategy]) - 1)]
@@ -454,7 +454,7 @@ Schedule webhook retry with appropriate delay."""
         # Schedule for retry (would use Celery or similar in production)
         self.logger.info(f"Webhook retry scheduled in {delay_seconds} seconds: {payload.webhook_id}")
 
-    async def _track_webhook_metrics(self, result: WebhookDeliveryResult):
+    async def _track_webhook_metrics(self, result -> None: WebhookDeliveryResult) -> None:
         """Track webhook delivery metrics for analytics."""
         await self.metrics.increment(
             "webhooks_sent_total",
@@ -671,3 +671,5 @@ Schedule webhook retry with appropriate delay."""
 
     async def _get_peak_usage_times(self, start_date: datetime, end_date: datetime, filters: Optional[Dict]) -> Dict[str, Any]:
         return {}
+
+# File has syntax issues - needs manual review

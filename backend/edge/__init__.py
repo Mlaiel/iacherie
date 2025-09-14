@@ -1,4 +1,7 @@
 """Backend Edge Computing Services - Enterprise Consolidated Architecture
+import asyncio
+import logging
+
 =======================================================================
 
 Architecture edge computing ultra-avancée consolidée pour l'écosystème Ainflue.
@@ -237,7 +240,7 @@ from .edge_resource_manager import (
 class AinfluEdgeComputingPlatform:
     """Plateforme Edge Computing unifiée pour l'écosystème Ainflue."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         # Composants consolidés
         self.intelligence_engine = create_edge_intelligence_engine()
         self.content_optimizer = create_edge_content_optimizer()

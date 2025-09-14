@@ -1,4 +1,6 @@
 """🚀 Platform Core Subscription - Upgrade Management System
+import asyncio
+
 ============================================================
 Module: backend/platform_core/subscription/upgrade_manager.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -67,7 +69,7 @@ class UpgradeStrategy:
     features_removed: List[str] = None
     metadata: Optional[Dict[str, Any]] = None
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.features_removed is None:
             self.features_removed = []
 
@@ -129,7 +131,7 @@ class UpgradeRecommendation:
 class UpgradeManager:
     """Gestionnaire principal des upgrades"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialise le gestionnaire d'upgrades
         
         Args:
@@ -146,7 +148,7 @@ class UpgradeManager:
         
         logger.info("UpgradeManager initialized")
 
-    def _initialize_default_strategies(self):
+    def _initialize_default_strategies(self) -> None:
         """Initialise les stratégies par défaut"""
         try:
             # Stratégie d'upgrade pour usage élevé

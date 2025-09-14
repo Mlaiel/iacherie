@@ -92,7 +92,7 @@ class AudioQualityMetrics:
     Implements industry-standard metrics and broadcast compliance monitoring.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.measurements: List[AudioQualityMeasurement] = []
         self.quality_reports: Dict[str, AudioQualityReport] = {}
         self.quality_thresholds: Dict[AudioQualityStandard, QualityThresholds] = {}
@@ -100,7 +100,7 @@ class AudioQualityMetrics:
         self._initialize_quality_thresholds()
         logger.info("Audio Quality Metrics system initialized")
     
-    def _initialize_quality_thresholds(self):
+    def _initialize_quality_thresholds(self) -> None:
         """Initialize quality thresholds for different standards"""
         self.quality_thresholds = {
             AudioQualityStandard.BROADCAST: QualityThresholds(

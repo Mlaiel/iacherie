@@ -129,7 +129,7 @@ class NotificationResult:
 class PaymentGatewayNotifier:
     """Enterprise payment gateway notification system"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.templates: Dict[str, NotificationTemplate] = {}
         self.preferences: Dict[str, NotificationPreferences] = {}
         
@@ -163,7 +163,7 @@ class PaymentGatewayNotifier:
         # Default templates
         self._setup_default_templates()
 
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize notification system"""
         # Start delivery workers
         for i in range(self.worker_count):
@@ -253,7 +253,7 @@ class PaymentGatewayNotifier:
         
         return request.request_id
 
-    async def _delivery_worker(self, worker_id: str):
+    async def _delivery_worker(self, worker_id -> None: str) -> None:
         """Notification delivery worker"""
         logger.info(f"Notification worker {worker_id} started")
         
@@ -512,7 +512,7 @@ class PaymentGatewayNotifier:
         
         return next_time
 
-    def _setup_default_templates(self):
+    def _setup_default_templates(self) -> None:
         """Setup default notification templates"""
         
         # Payment completed template
@@ -563,7 +563,7 @@ class PaymentGatewayNotifier:
             priority=NotificationPriority.CRITICAL
         )
 
-    async def set_user_preferences(self, user_id: str, preferences: NotificationPreferences):
+    async def set_user_preferences(self, user_id -> None: str, preferences -> None: NotificationPreferences) -> None:
         """Set notification preferences for user"""
         self.preferences[user_id] = preferences
 
@@ -596,7 +596,7 @@ class PaymentGatewayNotifier:
             'active_workers': len(self.delivery_workers)
         }
 
-    async def cleanup(self):
+    async def cleanup(self) -> None:
         """Cleanup notification system"""
         # Cancel all workers
         for worker in self.delivery_workers:

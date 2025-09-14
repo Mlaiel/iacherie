@@ -135,7 +135,7 @@ class FingerprintingPerformanceMetricsCollector:
     - Real-time performance analytics
     """
     
-    def __init__(self, prometheus_manager=None):
+    def __init__(self, prometheus_manager=None) -> None:
         self.prometheus_manager = prometheus_manager
         self.redis_manager = RedisManager()
         self.logger = logger

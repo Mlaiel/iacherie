@@ -340,7 +340,7 @@ class AudioAnalysisResult:
 class AudioModelProcessor(ABC):
     """Abstract base class for audio model processors"""
     
-    def __init__(self, task_type: AudioTaskType):
+    def __init__(self, task_type -> None: AudioTaskType) -> None:
         self.task_type = task_type
         self.logger = logging.getLogger(f"{__name__}.{task_type.value}")
     
@@ -362,7 +362,7 @@ class AudioModelProcessor(ABC):
 class SpeechRecognitionProcessor(AudioModelProcessor):
     """Speech recognition processor"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__(AudioTaskType.SPEECH_RECOGNITION)
     
     async def preprocess(self, audio_data: AudioData, config: Dict[str, Any]) -> Any:
@@ -452,7 +452,7 @@ class SpeechRecognitionProcessor(AudioModelProcessor):
 class MusicAnalysisProcessor(AudioModelProcessor):
     """Music analysis processor"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__(AudioTaskType.MUSIC_GENRE_CLASSIFICATION)
     
     async def preprocess(self, audio_data: AudioData, config: Dict[str, Any]) -> Any:
@@ -539,7 +539,7 @@ class MusicAnalysisProcessor(AudioModelProcessor):
 class AudioFingerprintingProcessor(AudioModelProcessor):
     """Audio fingerprinting processor"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__(AudioTaskType.AUDIO_FINGERPRINTING)
     
     async def preprocess(self, audio_data: AudioData, config: Dict[str, Any]) -> Any:
@@ -605,7 +605,7 @@ class AudioIntelligenceProcessor(BaseEventHandler):
     for the IA Influencer Agent platform.
     """
     
-    def __init__(self, max_workers: int = 4):
+    def __init__(self, max_workers -> None: int = 4) -> None:
         super().__init__()
         
         # Core components
@@ -651,7 +651,7 @@ class AudioIntelligenceProcessor(BaseEventHandler):
         
         logger.info("Audio Intelligence Processor initialized")
     
-    async def start_processor(self):
+    async def start_processor(self) -> None:
         """Start the audio intelligence processor"""
         self.is_running = True
         
@@ -664,7 +664,7 @@ class AudioIntelligenceProcessor(BaseEventHandler):
         
         logger.info("Audio Intelligence Processor started")
     
-    async def stop_processor(self):
+    async def stop_processor(self) -> None:
         """Stop the audio intelligence processor"""
         self.is_running = False
         self.executor.shutdown(wait=True)
@@ -725,7 +725,7 @@ class AudioIntelligenceProcessor(BaseEventHandler):
             logger.error(f"Request validation error: {str(e)}")
             return False
     
-    async def _worker_loop(self, worker_id: str):
+    async def _worker_loop(self, worker_id -> None: str) -> None:
         """Main worker loop for processing audio requests"""
         logger.info(f"Audio worker {worker_id} started")
         
@@ -879,8 +879,8 @@ class AudioIntelligenceProcessor(BaseEventHandler):
         return result
     
     async def _generate_additional_analysis(self, 
-                                           result: AudioAnalysisResult, 
-                                           request: AudioAnalysisRequest):
+                                           result -> None: AudioAnalysisResult, 
+                                           request -> None: AudioAnalysisRequest) -> None:
         """Generate additional analysis results"""
         try:
             audio_data = request.audio_data
@@ -924,7 +924,7 @@ class AudioIntelligenceProcessor(BaseEventHandler):
         except Exception as e:
             logger.error(f"Error generating additional analysis: {str(e)}")
     
-    def _update_performance_metrics(self, result: AudioAnalysisResult):
+    def _update_performance_metrics(self, result -> None: AudioAnalysisResult) -> None:
         """Update processor performance metrics"""
         # Update average processing time
         if self.total_requests > 0:
@@ -932,7 +932,7 @@ class AudioIntelligenceProcessor(BaseEventHandler):
             self.average_processing_time = (alpha * result.processing_time + 
                                           (1 - alpha) * self.average_processing_time)
     
-    async def _monitor_performance(self):
+    async def _monitor_performance(self) -> None:
         """Monitor audio processor performance"""
         while self.is_running:
             try:

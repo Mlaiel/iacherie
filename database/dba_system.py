@@ -177,7 +177,7 @@ class DatabaseAdministrator:
     - Security and access control optimization
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         # Query performance tracking
         self.query_performance_history: deque = deque(maxlen=10000)
         self.slow_queries: Dict[str, List[QueryPerformance]] = defaultdict(list)
@@ -212,7 +212,7 @@ class DatabaseAdministrator:
         
         logger.info("DatabaseAdministrator initialized - DBA")
 
-    def _initialize_dba_system(self):
+    def _initialize_dba_system(self) -> None:
         """Initialize DBA system components"""
         
         # Initialize database connection
@@ -236,7 +236,7 @@ class DatabaseAdministrator:
         
         logger.info("DBA system components initialized")
 
-    def _initialize_performance_thresholds(self):
+    def _initialize_performance_thresholds(self) -> None:
         """Initialize performance monitoring thresholds"""
         
         self.performance_thresholds = {
@@ -258,7 +258,7 @@ class DatabaseAdministrator:
             "connection_utilization": 0.6
         }
 
-    def _initialize_maintenance_schedules(self):
+    def _initialize_maintenance_schedules(self) -> None:
         """Initialize automated maintenance schedules"""
         
         self.maintenance_schedules = {
@@ -382,8 +382,8 @@ class DatabaseAdministrator:
 
     async def _generate_query_optimization_recommendations(
         self, 
-        performance: QueryPerformance
-    ):
+        performance -> None: QueryPerformance
+    ) -> None:
         """Generate query optimization recommendations"""
         
         recommendations = []
@@ -428,7 +428,7 @@ class DatabaseAdministrator:
         if recommendations:
             logger.info(f"Generated {len(recommendations)} optimization recommendations for query {performance.query_id}")
 
-    async def _analyze_index_opportunities(self, performance: QueryPerformance):
+    async def _analyze_index_opportunities(self, performance -> None: QueryPerformance) -> None:
         """Analyze query for index creation opportunities"""
         
         # Extract table and column information from query
@@ -696,7 +696,7 @@ class DatabaseAdministrator:
         # Mock calculation
         return 0.87
 
-    async def _check_health_thresholds(self, metrics: DatabaseHealthMetrics):
+    async def _check_health_thresholds(self, metrics -> None: DatabaseHealthMetrics) -> None:
         """Check health metrics against thresholds and trigger alerts"""
         
         alerts = []
@@ -754,7 +754,7 @@ class DatabaseAdministrator:
         for alert in alerts:
             await self._trigger_database_alert(alert)
 
-    async def _trigger_database_alert(self, alert: Dict[str, Any]):
+    async def _trigger_database_alert(self, alert -> None: Dict[str, Any]) -> None:
         """Trigger database alert"""
         
         alert["timestamp"] = datetime.now().isoformat()
@@ -940,7 +940,7 @@ class DatabaseAdministrator:
             logger.error(f"Log rotation failed: {str(e)}")
             return False
 
-    async def _health_monitoring_loop(self):
+    async def _health_monitoring_loop(self) -> None:
         """Background health monitoring loop"""
         while True:
             try:
@@ -950,7 +950,7 @@ class DatabaseAdministrator:
             except Exception as e:
                 logger.error(f"Health monitoring loop error: {str(e)}")
 
-    async def _maintenance_scheduler_loop(self):
+    async def _maintenance_scheduler_loop(self) -> None:
         """Background maintenance scheduler loop"""
         while True:
             try:
@@ -960,7 +960,7 @@ class DatabaseAdministrator:
             except Exception as e:
                 logger.error(f"Maintenance scheduler error: {str(e)}")
 
-    async def _schedule_maintenance_tasks(self):
+    async def _schedule_maintenance_tasks(self) -> None:
         """Schedule maintenance tasks based on configured schedules"""
         
         current_time = datetime.now()
@@ -1033,7 +1033,7 @@ class DatabaseAdministrator:
         
         return durations.get(task_type, 10)
 
-    async def _index_optimization_loop(self):
+    async def _index_optimization_loop(self) -> None:
         """Background index optimization loop"""
         while True:
             try:
@@ -1044,7 +1044,7 @@ class DatabaseAdministrator:
             except Exception as e:
                 logger.error(f"Index optimization loop error: {str(e)}")
 
-    async def _analyze_index_usage(self):
+    async def _analyze_index_usage(self) -> None:
         """Analyze index usage patterns"""
         
         # Mock analysis of index usage
@@ -1054,7 +1054,7 @@ class DatabaseAdministrator:
                (datetime.now() - stats["created_at"]).days > 7:
                 logger.warning(f"Index {index_name} has not been used in 7 days")
 
-    async def _cleanup_unused_indexes(self):
+    async def _cleanup_unused_indexes(self) -> None:
         """Clean up unused indexes"""
         
         # Identify unused indexes
@@ -1069,7 +1069,7 @@ class DatabaseAdministrator:
         if unused_indexes:
             logger.info(f"Identified {len(unused_indexes)} unused indexes for potential removal")
 
-    async def _query_analysis_loop(self):
+    async def _query_analysis_loop(self) -> None:
         """Background query analysis loop"""
         while True:
             try:
@@ -1079,7 +1079,7 @@ class DatabaseAdministrator:
             except Exception as e:
                 logger.error(f"Query analysis loop error: {str(e)}")
 
-    async def _analyze_query_patterns(self):
+    async def _analyze_query_patterns(self) -> None:
         """Analyze query patterns for optimization opportunities"""
         
         # Analyze most frequent slow queries

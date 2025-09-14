@@ -129,11 +129,11 @@ class DigitalOceanIntegration:
     
     def __init__(
         self,
-        api_token: str,
-        spaces_key: Optional[str] = None,
-        spaces_secret: Optional[str] = None,
-        default_region: DORegion = DORegion.NYC3
-    ):
+        api_token -> None: str,
+        spaces_key -> None: Optional[str] = None,
+        spaces_secret -> None: Optional[str] = None,
+        default_region -> None: DORegion = DORegion.NYC3
+    ) -> None:
         """Initialize DigitalOcean integration.
         
         Args:
@@ -164,7 +164,7 @@ class DigitalOceanIntegration:
             timeout=30.0
         )
 
-    def _init_spaces_client(self):
+    def _init_spaces_client(self) -> None:
         """Initialize DigitalOcean Spaces client."""
         try:
             self.spaces_client = boto3.client(
@@ -758,15 +758,15 @@ class DigitalOceanIntegration:
             self.logger.error(f"Unexpected error getting monitoring metrics: {e}")
             raise
 
-    async def close(self):
+    async def close(self) -> None:
         """Close HTTP session."""
         await self.session.aclose()
 
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         """Async context manager entry."""
         return self
 
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         """Async context manager exit."""
         await self.close()
 

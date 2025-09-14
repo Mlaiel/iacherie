@@ -1,5 +1,7 @@
 """Resource Allocation Workflow - Intelligent resource allocation optimization.
 
+import asyncio
+
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Ainflue Platform. All rights reserved.
 """
@@ -10,6 +12,7 @@ from datetime import datetime
 
 @dataclass
 class ResourceMetrics:
+    """ResourceMetrics: class implementation"""
     cpu_allocation: float
     memory_allocation: float
     storage_allocation: float
@@ -17,6 +20,7 @@ class ResourceMetrics:
 
 @dataclass
 class AllocationStrategy:
+    """AllocationStrategy: class implementation"""
     user_id: str
     resource_optimization: ResourceMetrics
     cost_savings: float
@@ -24,6 +28,7 @@ class AllocationStrategy:
     analysis_timestamp: datetime
 
 class ResourceAllocationWorkflow:
+    """ResourceAllocationWorkflow: class implementation"""
     async def optimize_resources(self, user_id: str, **kwargs) -> AllocationStrategy:
         return AllocationStrategy(
             user_id=user_id,

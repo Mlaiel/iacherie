@@ -147,7 +147,7 @@ class PerformanceMonitoringCore:
     with enterprise-grade reliability and observability standards.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize Performance Monitoring Core"""
         self.config = config or {}
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
@@ -216,7 +216,7 @@ class PerformanceMonitoringCore:
             
         self.logger.info("Performance Monitoring Core initialized")
         
-    def start_monitoring(self):
+    def start_monitoring(self) -> None:
         """Start performance monitoring"""
         
         if self.monitoring_thread and self.monitoring_thread.is_alive():
@@ -247,7 +247,7 @@ class PerformanceMonitoringCore:
         
         self.logger.info("Performance monitoring started")
         
-    def stop_monitoring(self):
+    def stop_monitoring(self) -> None:
         """Stop performance monitoring"""
         
         self._stop_monitoring.set()
@@ -263,7 +263,7 @@ class PerformanceMonitoringCore:
             
         self.logger.info("Performance monitoring stopped")
         
-    def _run_monitoring_loop(self):
+    def _run_monitoring_loop(self) -> None:
         """Main monitoring loop"""
         
         while not self._stop_monitoring.is_set():
@@ -291,7 +291,7 @@ class PerformanceMonitoringCore:
                 self.monitoring_stats["collection_errors"] += 1
                 self._stop_monitoring.wait(10)  # Wait 10 seconds on error
                 
-    def _run_health_check_loop(self):
+    def _run_health_check_loop(self) -> None:
         """Health check loop"""
         
         while not self._stop_monitoring.is_set():
@@ -316,7 +316,7 @@ class PerformanceMonitoringCore:
                 self.logger.error(f"Health check loop error: {e}")
                 self._stop_monitoring.wait(30)  # Wait 30 seconds on error
                 
-    def _run_cleanup_loop(self):
+    def _run_cleanup_loop(self) -> None:
         """Cleanup loop for old data"""
         
         while not self._stop_monitoring.is_set():
@@ -334,7 +334,7 @@ class PerformanceMonitoringCore:
                 self.logger.error(f"Cleanup loop error: {e}")
                 self._stop_monitoring.wait(300)  # Wait 5 minutes on error
                 
-    def _collect_system_metrics(self):
+    def _collect_system_metrics(self) -> None:
         """Collect system performance metrics"""
         
         try:
@@ -387,7 +387,7 @@ class PerformanceMonitoringCore:
         except Exception as e:
             self.logger.error(f"System metrics collection error: {e}")
             
-    def _collect_application_metrics(self):
+    def _collect_application_metrics(self) -> None:
         """Collect application-specific metrics"""
         
         try:
@@ -412,7 +412,7 @@ class PerformanceMonitoringCore:
         except Exception as e:
             self.logger.error(f"Application metrics collection error: {e}")
             
-    def _add_metric(self, name: str, value: float, unit: str, category: MonitoringCategory, timestamp: datetime, tags: Optional[Dict[str, str]] = None):
+    def _add_metric(self, name -> None: str, value -> None: float, unit -> None: str, category -> None: MonitoringCategory, timestamp -> None: datetime, tags -> None: Optional[Dict[str, str]] = None) -> None:
         """Add a metric to the buffer"""
         
         metric = PerformanceMetric(
@@ -430,7 +430,7 @@ class PerformanceMonitoringCore:
         self.metrics_by_category[category].append(metric)
         self.monitoring_stats["total_metrics_collected"] += 1
         
-    def _check_thresholds(self):
+    def _check_thresholds(self) -> None:
         """Check metrics against thresholds and trigger alerts"""
         
         if not self.alerting_enabled:
@@ -510,7 +510,7 @@ class PerformanceMonitoringCore:
         else:
             return False
             
-    def _trigger_alert(self, metric_name: str, level: AlertLevel, actual_value: float, threshold_value: float, metric: PerformanceMetric):
+    def _trigger_alert(self, metric_name -> None: str, level -> None: AlertLevel, actual_value -> None: float, threshold_value -> None: float, metric -> None: PerformanceMetric) -> None:
         """Trigger a performance alert"""
         
         try:
@@ -587,7 +587,7 @@ class PerformanceMonitoringCore:
                 details={"error": str(e)}
             )
             
-    def _register_default_health_checks(self):
+    def _register_default_health_checks(self) -> None:
         """Register default health checks"""
         
         # System health checks
@@ -730,7 +730,7 @@ class PerformanceMonitoringCore:
             
         return None
         
-    def _update_monitoring_stats(self, collection_time: float):
+    def _update_monitoring_stats(self, collection_time -> None: float) -> None:
         """Update monitoring statistics"""
         
         self.monitoring_stats["last_collection_time"] = datetime.utcnow()
@@ -744,7 +744,7 @@ class PerformanceMonitoringCore:
                 (current_avg * (total_collections - 1) + collection_time) / total_collections
             )
             
-    def _cleanup_old_data(self):
+    def _cleanup_old_data(self) -> None:
         """Clean up old metrics and data"""
         
         try:
@@ -772,7 +772,7 @@ class PerformanceMonitoringCore:
         except Exception as e:
             self.logger.error(f"Data cleanup error: {e}")
             
-    def _cleanup_resolved_alerts(self):
+    def _cleanup_resolved_alerts(self) -> None:
         """Clean up resolved alerts"""
         
         try:
@@ -792,11 +792,11 @@ class PerformanceMonitoringCore:
             
     # Public API methods
     
-    def register_health_check(self, name: str, check_func: Callable):
+    def register_health_check(self, name -> None: str, check_func -> None: Callable) -> None:
         """Register a custom health check"""
         self.health_checks[name] = check_func
         
-    def set_custom_threshold(self, threshold: PerformanceThreshold):
+    def set_custom_threshold(self, threshold -> None: PerformanceThreshold) -> None:
         """Set a custom threshold for a metric"""
         self.custom_thresholds[threshold.metric_name] = threshold
         

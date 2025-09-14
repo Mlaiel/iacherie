@@ -1,3 +1,8 @@
+"""
+System Maintenance module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """System Maintenance Manager
 Automated system maintenance, updates, and housekeeping for the IA Influencer Agent platform
@@ -118,7 +123,7 @@ class SystemMaintenance:
     Automates system updates, housekeeping, and preventive maintenance
     """
     
-    def __init__(self, config_path: Optional[str] = None):
+    def __init__(self, config_path -> None: Optional[str] = None) -> None:
         """
 Initialize system maintenance manager"""
         self.config_path = config_path or "/etc/maintenance/config.yaml"
@@ -1091,7 +1096,7 @@ Initialize system maintenance manager"""
             return []
 
 
-def main():
+def main() -> None:
     """Main function for standalone execution"""
     import argparse
     

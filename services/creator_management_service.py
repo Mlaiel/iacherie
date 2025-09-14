@@ -1,4 +1,6 @@
 """
+import logging
+
 👥 Creator Management Service
 Comprehensive creator profile and lifecycle management service
 
@@ -280,7 +282,7 @@ class CreatorRecommendation(BaseModel):
 class CreatorValidator:
     """Creator profile validation and verification"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.validation_rules = self._load_validation_rules()
         self.restricted_usernames = self._load_restricted_usernames()
     
@@ -462,7 +464,7 @@ class CreatorValidator:
 class CreatorMatchingEngine:
     """Creator matching and recommendation engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.matching_algorithms = {
             "content_similarity": self._match_by_content_similarity,
             "audience_overlap": self._match_by_audience_overlap,
@@ -681,7 +683,7 @@ class CreatorMatchingEngine:
 class CreatorAnalyticsEngine:
     """Creator analytics and performance tracking"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.metric_calculators = {
             "engagement": self._calculate_engagement_metrics,
             "growth": self._calculate_growth_metrics,
@@ -943,7 +945,7 @@ class CreatorAnalyticsEngine:
 class CreatorManagementOrchestrator:
     """Central orchestrator for creator management operations"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.creator_profiles: Dict[str, CreatorProfile] = {}
         self.social_accounts: Dict[str, List[SocialMediaAccount]] = {}
         self.verification_requests: Dict[str, CreatorVerification] = {}

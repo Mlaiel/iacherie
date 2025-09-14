@@ -77,7 +77,7 @@ class IStorageAdapter(ABC):
             logger.error(f"connect failed: {e}")
             raise
     
-    async def health_check(self):
+    async def health_check(self) -> None:
         try:
             logger.info(f"Executing health_check")
             
@@ -123,7 +123,7 @@ class PostgreSQLAdapter(IStorageAdapter):
     """
 Adaptateur PostgreSQL optimisé"""
     
-    def __init__(self, config: StorageConfig):
+    def __init__(self, config -> None: StorageConfig) -> None:
         self.config = config
         self.pool = None
         self.engine = None
@@ -179,7 +179,7 @@ Connexion PostgreSQL avec pool"""
             return False
     
     @asynccontextmanager
-    async def get_session(self):
+    async def get_session(self) -> None:
         """Gestionnaire de session SQLAlchemy"""
         async with self.session_factory() as session:
             try:
@@ -197,7 +197,7 @@ class RedisAdapter(IStorageAdapter):
     """
 Adaptateur Redis optimisé"""
     
-    def __init__(self, config: StorageConfig):
+    def __init__(self, config -> None: StorageConfig) -> None:
         self.config = config
         self.redis = None
     
@@ -263,7 +263,7 @@ Cache avec expiration"""
 class MongodbAdapterManager:
     """Gestionnaire principal du stockage"""
     
-    def __init__(self, config: StorageConfig):
+    def __init__(self, config -> None: StorageConfig) -> None:
         self.config = config
         self.postgres = PostgreSQLAdapter(config)
         self.redis = RedisAdapter(config)

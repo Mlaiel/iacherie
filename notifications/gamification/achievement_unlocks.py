@@ -1,3 +1,9 @@
+"""
+Achievement Unlocks module
+Enterprise implementation for Ainflue platform
+"""
+
 # Gamification Engine: achievement_unlocks.py
 class AchievementUnlocksEngine: 
-    def __init__(self, config=None): pass
+    """AchievementUnlocksEngine: class implementation"""
+    def __init__(self, config=None) -> None: pass

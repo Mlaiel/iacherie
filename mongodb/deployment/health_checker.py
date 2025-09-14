@@ -73,7 +73,7 @@ class HealthConfig:
 class HealthChecker:
     """MongoDB health checker and monitor."""
     
-    def __init__(self, config: HealthConfig):
+    def __init__(self, config -> None: HealthConfig) -> None:
         """Initialize health checker."""
         self.config = config
         self.health_dir = Path(f"health-monitoring/{config.cluster_name}")
@@ -336,12 +336,13 @@ app = Flask(__name__)
 logger = logging.getLogger(__name__)
 
 class MongoDBHealthChecker:
-    def __init__(self):
+    """MongoDBHealthChecker: class implementation"""
+    def __init__(self) -> None:
         self.client = None
         self.last_check_results = {{}}
         self.consecutive_failures = {{}}
         
-    def connect(self):
+    def connect(self) -> None:
         """Connect to MongoDB cluster."""
         try:
             self.client = pymongo.MongoClient(
@@ -648,30 +649,30 @@ class MongoDBHealthChecker:
 
 # Flask routes
 @app.route('/health')
-def health():
+def health() -> None:
     """Health endpoint for the health checker itself."""
     return jsonify({{"status": "healthy", "timestamp": datetime.now().isoformat()}})
 
 @app.route('/ready')
-def ready():
+def ready() -> None:
     """Readiness endpoint."""
     return jsonify({{"status": "ready", "timestamp": datetime.now().isoformat()}})
 
 @app.route('/mongodb/health')
-def mongodb_health():
+def mongodb_health() -> None:
     """MongoDB health check endpoint."""
     checker = MongoDBHealthChecker()
     result = checker.comprehensive_health_check()
     return jsonify(result)
 
 @app.route('/mongodb/basic')
-def mongodb_basic():
+def mongodb_basic() -> None:
     """Basic MongoDB health check."""
     checker = MongoDBHealthChecker()
     result = checker.basic_health_check()
     return jsonify(result)
 
-def main():
+def main() -> None:
     """Main health checker loop."""
     logging.basicConfig(level=logging.INFO)
     logger.info("Starting MongoDB Health Checker")
@@ -1228,7 +1229,7 @@ echo "Auto-healing check completed"
 
 
 # Example usage
-async def setup_mongodb_health_monitoring():
+async def setup_mongodb_health_monitoring() -> None:
     """Example health monitoring setup."""
     config = HealthConfig(
         cluster_name="mongodb-prod",

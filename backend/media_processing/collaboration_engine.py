@@ -73,7 +73,7 @@ class CollaborationConfig:
     redis_url: str = "redis://localhost:6379"
     notification_settings: Dict[str, bool] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.notification_settings is None:
             self.notification_settings = {
                 'match_found': True,
@@ -193,7 +193,7 @@ class EnterpriseCollaborationEngine:
     - Revenue sharing and contract management
     """
     
-    def __init__(self, config: Optional[CollaborationConfig] = None):
+    def __init__(self, config -> None: Optional[CollaborationConfig] = None) -> None:
         self.config = config or CollaborationConfig()
         self.logger = logging.getLogger(__name__)
         self.executor = ThreadPoolExecutor(max_workers=4)
@@ -209,7 +209,7 @@ class EnterpriseCollaborationEngine:
         self.creator_profiles = {}
         self.active_collaborations = {}
         
-    def _initialize_ml_models(self):
+    def _initialize_ml_models(self) -> None:
         """Initialize ML models for creator matching"""
         try:
             self.ml_models = {
@@ -224,7 +224,7 @@ class EnterpriseCollaborationEngine:
             self.logger.warning(f"ML models initialization failed: {e}")
             self.ml_models = {}
 
-    def _initialize_workflow_templates(self):
+    def _initialize_workflow_templates(self) -> None:
         """Initialize collaboration workflow templates"""
         self.workflow_templates = {
             CollaborationType.CONTENT_CREATION: [
@@ -262,7 +262,7 @@ class EnterpriseCollaborationEngine:
             ]
         }
 
-    async def initialize_redis(self):
+    async def initialize_redis(self) -> None:
         """Initialize Redis connection for caching"""
         try:
             self.redis_client = redis.from_url(self.config.redis_url)
@@ -775,10 +775,10 @@ class EnterpriseCollaborationEngine:
 
     async def _send_collaboration_notification(
         self,
-        creator_id: str,
-        notification_type: str,
-        data: Dict[str, Any]
-    ):
+        creator_id -> None: str,
+        notification_type -> None: str,
+        data -> None: Dict[str, Any]
+    ) -> None:
         """Send collaboration notification (mock implementation)"""
         # In production: Integrate with notification service
         notification = {
@@ -879,7 +879,7 @@ class EnterpriseCollaborationEngine:
             self.logger.error(f"Failed to get workflow: {e}")
             return None
 
-    async def _generate_collaboration_analytics(self, workflow: CollaborationWorkflow):
+    async def _generate_collaboration_analytics(self, workflow -> None: CollaborationWorkflow) -> None:
         """Generate analytics for completed collaboration"""
         try:
             collaboration_id = workflow.collaboration_id
@@ -987,7 +987,7 @@ class EnterpriseCollaborationEngine:
 class CollaborationWorkflowProcessor:
     """Legacy collaboration workflow interface"""
     
-    def __init__(self, engine: EnterpriseCollaborationEngine):
+    def __init__(self, engine -> None: EnterpriseCollaborationEngine) -> None:
         self.engine = engine
     
     async def process_workflow(
@@ -1008,7 +1008,7 @@ class CollaborationWorkflowProcessor:
 class CreatorMatchingProcessor:
     """Legacy creator matching interface"""
     
-    def __init__(self, engine: EnterpriseCollaborationEngine):
+    def __init__(self, engine -> None: EnterpriseCollaborationEngine) -> None:
         self.engine = engine
     
     async def find_matches(

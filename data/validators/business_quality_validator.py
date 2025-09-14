@@ -151,7 +151,7 @@ class QualityValidationResult:
 class BusinessQualityValidator:
     """Consolidated business rules and quality assessment validator."""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize the business quality validator.
         
         Args:

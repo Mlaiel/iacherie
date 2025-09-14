@@ -1,3 +1,8 @@
+"""
+Adaptive Authentication module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 🔒 Adaptive Authentication System - Ainflue Platform
@@ -132,7 +137,7 @@ class AdaptiveAuthenticationEngine:
     - Dynamic authentication requirements
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.redis_client = None
         self.encryption_key = Fernet.generate_key()
@@ -166,7 +171,7 @@ class AdaptiveAuthenticationEngine:
         
         logger.info("🔒 Adaptive Authentication Engine initialized")
 
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize async components"""
         try:
             # Initialize Redis connection
@@ -716,14 +721,14 @@ class AdaptiveAuthenticationEngine:
         # Placeholder implementation
         return False
 
-    async def _train_anomaly_detector(self):
+    async def _train_anomaly_detector(self) -> None:
         """Train the anomaly detection model with historical data"""
         # Placeholder - would train with real historical data
         dummy_data = np.random.rand(1000, 5)
         self.anomaly_detector.fit(dummy_data)
         logger.info("🤖 Anomaly detection model trained")
 
-    async def _store_authentication_decision(self, decision: AuthenticationDecision):
+    async def _store_authentication_decision(self, decision -> None: AuthenticationDecision) -> None:
         """Store authentication decision for learning and auditing"""
         if self.redis_client:
             key = f"auth_decision:{decision.user_id}:{decision.timestamp.isoformat()}"
@@ -731,7 +736,7 @@ class AdaptiveAuthenticationEngine:
             encrypted_data = self.cipher.encrypt(data.encode())
             await self.redis_client.setex(key, 86400, encrypted_data)  # 24 hour retention
 
-    async def close(self):
+    async def close(self) -> None:
         """Cleanup resources"""
         if self.redis_client:
             self.redis_client.close()
@@ -741,7 +746,7 @@ class AdaptiveAuthenticationEngine:
 __all__ = ['AdaptiveAuthenticationEngine', 'AuthenticationDecision', 'RiskLevel', 'AuthenticationMethod']
 
 if __name__ == "__main__":
-    async def test_adaptive_auth():
+    async def test_adaptive_auth() -> None:
         """Test the adaptive authentication system"""
         config = {
             'risk_thresholds': {

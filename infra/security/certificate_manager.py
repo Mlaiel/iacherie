@@ -1,3 +1,8 @@
+"""
+Certificate Manager module
+Enterprise implementation for Ainflue platform
+"""
+
 # Ainflue Infrastructure Module
 # =============================
 # 
@@ -91,7 +96,7 @@ class CertificateManager:
     PKI infrastructure, and certificate lifecycle management.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize certificate manager."""
         self.config = config or {}
         self.certificates: Dict[str, CertificateInfo] = {}
@@ -136,7 +141,7 @@ class CertificateManager:
         
         logger.info("CertificateManager initialized")
     
-    def _create_directories(self):
+    def _create_directories(self) -> None:
         """Create certificate directories."""
         try:
             self.cert_dir.mkdir(parents=True, exist_ok=True)
@@ -505,7 +510,7 @@ class CertificateManager:
             logger.error(f"Failed to renew certificate {cert_name}: {str(e)}")
             return False
     
-    async def _auto_renewal_loop(self):
+    async def _auto_renewal_loop(self) -> None:
         """Automatic certificate renewal loop."""
         while True:
             try:
@@ -524,7 +529,7 @@ class CertificateManager:
                 logger.error(f"Auto-renewal loop error: {str(e)}")
                 await asyncio.sleep(self.renewal_check_interval)
     
-    async def create_default_certificates(self):
+    async def create_default_certificates(self) -> None:
         """Create default certificates for Ainflue infrastructure."""
         try:
             # Create root CA if it doesn't exist

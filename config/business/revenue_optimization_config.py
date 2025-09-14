@@ -1,3 +1,8 @@
+"""
+Revenue Optimization Config module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
@@ -385,7 +390,7 @@ class RevenueAnalyticsConfig:
 class RevenueOptimizationConfiguration:
     """Main revenue optimization configuration manager"""
     
-    def __init__(self, tier: RevenueTier = RevenueTier.PREMIUM):
+    def __init__(self, tier -> None: RevenueTier = RevenueTier.PREMIUM) -> None:
         """Initialize revenue optimization configuration"""
         self.tier = tier
         
@@ -408,7 +413,7 @@ class RevenueOptimizationConfiguration:
         
         self._optimize_for_tier()
     
-    def _optimize_for_tier(self):
+    def _optimize_for_tier(self) -> None:
         """Optimize configurations based on revenue tier"""
         if self.tier == RevenueTier.BASIC:
             # Basic revenue optimization

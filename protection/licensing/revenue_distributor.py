@@ -109,7 +109,7 @@ class RevenueDistributor:
     with multi-party support and regulatory compliance.
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """
 Initialize revenue distributor with configuration."""
         self.config = config
@@ -138,7 +138,7 @@ Initialize revenue distributor with configuration."""
         self._initialize_payment_processors()
         self._initialize_tax_calculators()
     
-    def _initialize_payment_processors(self):
+    def _initialize_payment_processors(self) -> None:
         """Initialize payment processing integrations."""
         try:
             # Stripe integration
@@ -177,7 +177,7 @@ Initialize revenue distributor with configuration."""
             self.logger.error(f"Failed to initialize payment processors: {e}")
             raise
     
-    def _initialize_tax_calculators(self):
+    def _initialize_tax_calculators(self) -> None:
         """Initialize tax calculation engines."""
         tax_calculators = {
             'us': {

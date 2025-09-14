@@ -23,7 +23,7 @@ from backend.ai.analytics import (
     comprehensive_analytics
 )
 
-async def main():
+async def main() -> None:
     """Example usage of the analytics consolidation module"""
     
     print("🎯 Analytics Consolidation Module - Usage Examples")

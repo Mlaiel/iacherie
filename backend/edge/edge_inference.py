@@ -87,7 +87,7 @@ class EdgeInferenceOrchestrator:
     optimization strategies, load balancing, and monitoring.
     """
     
-    def __init__(self, config: Optional[EdgeInferenceConfig] = None):
+    def __init__(self, config -> None: Optional[EdgeInferenceConfig] = None) -> None:
         self.config = config or EdgeInferenceConfig()
         
         # Initialize local inference engine
@@ -108,7 +108,7 @@ class EdgeInferenceOrchestrator:
         
         logger.info(f"Edge inference orchestrator initialized with strategy: {self.config.optimization_strategy}")
     
-    async def start(self):
+    async def start(self) -> None:
         """Start the edge inference orchestrator."""
         if self.running:
             logger.warning("Edge inference orchestrator already running")
@@ -136,7 +136,7 @@ class EdgeInferenceOrchestrator:
         
         logger.info("Edge inference orchestrator started")
     
-    async def stop(self):
+    async def stop(self) -> None:
         """Stop the edge inference orchestrator."""
         if not self.running:
             return
@@ -272,7 +272,7 @@ class EdgeInferenceOrchestrator:
         
         return params
     
-    def _update_request_metrics(self, latency_ms: float, success: bool):
+    def _update_request_metrics(self, latency_ms -> None: float, success -> None: bool) -> None:
         """Update request metrics."""
         self.metrics.total_requests += 1
         
@@ -293,7 +293,7 @@ class EdgeInferenceOrchestrator:
             self.metrics.p95_latency_ms = sorted_latencies[int(n * 0.95)] if n > 0 else 0
             self.metrics.p99_latency_ms = sorted_latencies[int(n * 0.99)] if n > 0 else 0
     
-    async def _resource_monitor(self):
+    async def _resource_monitor(self) -> None:
         """Monitor system resources."""
         import psutil
         
@@ -319,7 +319,7 @@ class EdgeInferenceOrchestrator:
                 logger.error(f"Resource monitoring error: {e}")
                 await asyncio.sleep(60)
     
-    async def _metrics_updater(self):
+    async def _metrics_updater(self) -> None:
         """Update metrics periodically."""
         while self.running:
             try:
@@ -341,7 +341,7 @@ class EdgeInferenceOrchestrator:
                 logger.error(f"Metrics updater error: {e}")
                 await asyncio.sleep(60)
     
-    async def _warm_default_models(self):
+    async def _warm_default_models(self) -> None:
         """Warm up default models for better performance."""
         try:
             # This is a placeholder for model warming logic
@@ -363,7 +363,7 @@ async def create_edge_inference_orchestrator(
 
 
 # Example usage
-async def main():
+async def main() -> None:
     """Example usage of the edge inference orchestrator."""
     try:
         # Create configuration optimized for latency

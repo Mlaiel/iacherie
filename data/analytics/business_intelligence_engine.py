@@ -419,7 +419,7 @@ class BusinessIntelligenceEngine:
     Orchestrates all BI analysis, insights generation, and strategic recommendations
     """
     
-    def __init__(self, db_session: AsyncSession, redis_client: Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: Redis) -> None:
         self.db_session = db_session
         self.redis_client = redis_client
         self.logger = logging.getLogger(__name__)
@@ -711,7 +711,7 @@ class AIInsightGenerator:
     AI Insight Generator using multiple specialized agents
     """
     
-    def __init__(self, db_session: AsyncSession, redis_client: Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: Redis) -> None:
         self.db_session = db_session
         self.redis_client = redis_client
         self.logger = logging.getLogger(__name__)
@@ -1088,7 +1088,7 @@ class AIInsightGenerator:
 class MarketIntelligenceAnalyzer:
     """Market Intelligence Analysis Engine"""
     
-    def __init__(self, db_session: AsyncSession, redis_client: Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: Redis) -> None:
         self.db_session = db_session
         self.redis_client = redis_client
         self.logger = logging.getLogger(__name__)
@@ -1148,7 +1148,7 @@ class MarketIntelligenceAnalyzer:
 class PredictiveAnalyticsEngine:
     """Predictive Analytics Engine with ML Models"""
     
-    def __init__(self, db_session: AsyncSession, redis_client: Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: Redis) -> None:
         self.db_session = db_session
         self.redis_client = redis_client
         self.logger = logging.getLogger(__name__)
@@ -1203,7 +1203,8 @@ class PredictiveAnalyticsEngine:
 
 # Mock additional engine classes for completeness
 class CompetitorIntelligenceEngine:
-    def __init__(self, db_session: AsyncSession, redis_client: Redis):
+    """CompetitorIntelligenceEngine: class implementation"""
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: Redis) -> None:
         self.db_session = db_session
         self.redis_client = redis_client
         self.logger = logging.getLogger(__name__)
@@ -1220,7 +1221,8 @@ class CompetitorIntelligenceEngine:
 
 
 class TrendAnalysisEngine:
-    def __init__(self, db_session: AsyncSession, redis_client: Redis):
+    """TrendAnalysisEngine: class implementation"""
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: Redis) -> None:
         self.db_session = db_session
         self.redis_client = redis_client
         self.logger = logging.getLogger(__name__)
@@ -1241,7 +1243,8 @@ class TrendAnalysisEngine:
 
 
 class OpportunityIdentifier:
-    def __init__(self, db_session: AsyncSession, redis_client: Redis):
+    """OpportunityIdentifier: class implementation"""
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: Redis) -> None:
         self.db_session = db_session
         self.redis_client = redis_client
         self.logger = logging.getLogger(__name__)
@@ -1258,7 +1261,8 @@ class OpportunityIdentifier:
 
 
 class RiskAssessmentEngine:
-    def __init__(self, db_session: AsyncSession, redis_client: Redis):
+    """RiskAssessmentEngine: class implementation"""
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: Redis) -> None:
         self.db_session = db_session
         self.redis_client = redis_client
         self.logger = logging.getLogger(__name__)
@@ -1270,7 +1274,8 @@ class RiskAssessmentEngine:
 
 
 class PerformanceBenchmarking:
-    def __init__(self, db_session: AsyncSession, redis_client: Redis):
+    """PerformanceBenchmarking: class implementation"""
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: Redis) -> None:
         self.db_session = db_session
         self.redis_client = redis_client
         self.logger = logging.getLogger(__name__)
@@ -1282,7 +1287,8 @@ class PerformanceBenchmarking:
 
 
 class RecommendationEngine:
-    def __init__(self, db_session: AsyncSession, redis_client: Redis):
+    """RecommendationEngine: class implementation"""
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: Redis) -> None:
         self.db_session = db_session
         self.redis_client = redis_client
         self.logger = logging.getLogger(__name__)
@@ -1295,7 +1301,8 @@ class RecommendationEngine:
 
 
 class ROIOptimizer:
-    def __init__(self, db_session: AsyncSession, redis_client: Redis):
+    """ROIOptimizer: class implementation"""
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: Redis) -> None:
         self.db_session = db_session
         self.redis_client = redis_client
         self.logger = logging.getLogger(__name__)

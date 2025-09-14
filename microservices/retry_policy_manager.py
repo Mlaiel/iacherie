@@ -1,3 +1,8 @@
+"""
+Retry Policy Manager module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 🔄 RETRY POLICY MANAGER
@@ -115,7 +120,7 @@ class BackoffCalculator:
     @staticmethod
     def fibonacci_backoff(attempt: int, base_delay: float, **kwargs) -> float:
         """Fibonacci backoff strategy"""
-        def fibonacci(n):
+        def fibonacci(n) -> None:
             if n <= 1:
                 return 1
             return fibonacci(n - 1) + fibonacci(n - 2)
@@ -168,7 +173,7 @@ class TotalTimeoutExceededException(RetryException):
 class RetryPolicyManager:
     """Advanced retry mechanism orchestration service"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.service_name = "RetryPolicyManager"
         self.version = "1.0.0"
         self.retry_policies: Dict[str, RetryPolicy] = {}
@@ -180,7 +185,7 @@ class RetryPolicyManager:
         
         logger.info(f"✅ {self.service_name} v{self.version} initialized")
     
-    async def initialize(self, redis_url: str = "redis://localhost:6379/0"):
+    async def initialize(self, redis_url -> None: str = "redis -> None://localhost -> None:6379/0") -> None:
         """Initialize the retry policy manager"""
         try:
             # Initialize Redis connection
@@ -200,7 +205,7 @@ class RetryPolicyManager:
             logger.error(f"❌ Failed to initialize {self.service_name}: {str(e)}")
             return False
     
-    def _create_default_policies(self):
+    def _create_default_policies(self) -> None:
         """Create default retry policies"""
         default_policies = [
             RetryPolicy(
@@ -250,7 +255,7 @@ class RetryPolicyManager:
         
         logger.info(f"🔧 Created {len(default_policies)} default retry policies")
     
-    def add_retry_policy(self, policy: RetryPolicy):
+    def add_retry_policy(self, policy -> None: RetryPolicy) -> None:
         """Add a retry policy"""
         # Set default retryable exceptions if none specified
         if policy.retryable_exceptions is None:
@@ -266,11 +271,11 @@ class RetryPolicyManager:
         """Get a retry policy by name"""
         return self.retry_policies.get(name)
     
-    def retry(self, policy_name: str = "default"):
+    def retry(self, policy_name -> None: str = "default") -> None:
         """Decorator for retry functionality"""
-        def decorator(func: Callable):
+        def decorator(func -> None: Callable) -> None:
             @functools.wraps(func)
-            async def wrapper(*args, **kwargs):
+            async def wrapper(*args, **kwargs) -> None:
                 return await self.execute_with_retry(policy_name, func, *args, **kwargs)
             return wrapper
         return decorator
@@ -405,8 +410,8 @@ class RetryPolicyManager:
         
         return False
     
-    async def _apply_delay(self, policy: RetryPolicy, next_attempt: int, 
-                          execution: RetryExecution):
+    async def _apply_delay(self, policy -> None: RetryPolicy, next_attempt -> None: int, 
+                          execution -> None: RetryExecution) -> None:
         """Apply delay before next retry attempt"""
         delay = BackoffCalculator.calculate_delay(policy, next_attempt)
         execution.total_delay += delay
@@ -414,13 +419,13 @@ class RetryPolicyManager:
         logger.info(f"⏳ Waiting {delay:.2f}s before attempt {next_attempt}")
         await asyncio.sleep(delay)
     
-    async def start_monitoring(self):
+    async def start_monitoring(self) -> None:
         """Start monitoring retry operations"""
         if self.monitoring_task is None and self.monitoring_enabled:
             self.monitoring_task = asyncio.create_task(self._monitoring_loop())
             logger.info("📊 Retry policy monitoring started")
     
-    async def stop_monitoring(self):
+    async def stop_monitoring(self) -> None:
         """Stop monitoring retry operations"""
         self.monitoring_enabled = False
         if self.monitoring_task:
@@ -436,7 +441,7 @@ class RetryPolicyManager:
         
         logger.info("📊 Retry policy monitoring stopped")
     
-    async def _monitoring_loop(self):
+    async def _monitoring_loop(self) -> None:
         """Monitor retry operations and store metrics"""
         while self.monitoring_enabled:
             try:
@@ -511,7 +516,7 @@ class RetryPolicyManager:
             'policy_statistics': dict(policy_stats)
         }
     
-    async def _save_execution_to_storage(self, execution: RetryExecution):
+    async def _save_execution_to_storage(self, execution -> None: RetryExecution) -> None:
         """Save retry execution to Redis storage"""
         if self.redis_client:
             try:
@@ -592,7 +597,7 @@ class RetryPolicyManager:
 retry_policy_manager = RetryPolicyManager()
 
 # Example functions to test retry policies
-async def unreliable_function():
+async def unreliable_function() -> None:
     """Simulate an unreliable function"""
     if random.random() < 0.7:  # 70% failure rate
         raise ConnectionError("Connection failed")
@@ -600,20 +605,20 @@ async def unreliable_function():
     await asyncio.sleep(0.1)
     return "Success!"
 
-async def timeout_function():
+async def timeout_function() -> None:
     """Simulate a function that might timeout"""
     delay = random.uniform(0.1, 5.0)
     await asyncio.sleep(delay)
     return f"Completed after {delay:.2f}s"
 
-def sync_unreliable_function():
+def sync_unreliable_function() -> None:
     """Simulate an unreliable sync function"""
     if random.random() < 0.5:  # 50% failure rate
         raise ValueError("Random error")
     return "Sync success!"
 
 # Example usage
-async def main():
+async def main() -> None:
     """Example usage of the retry policy manager"""
     try:
         # Initialize service
@@ -631,7 +636,7 @@ async def main():
         
         # Test with decorator
         @retry_policy_manager.retry("default")
-        async def decorated_function():
+        async def decorated_function() -> None:
             return await unreliable_function()
         
         print("\nTesting with decorator...")

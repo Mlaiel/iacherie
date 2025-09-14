@@ -170,7 +170,7 @@ class StabilityConfiguration:
 class StabilityAIIntegration:
     """Comprehensive Stability AI integration."""
     
-    def __init__(self, config: StabilityConfiguration):
+    def __init__(self, config -> None: StabilityConfiguration) -> None:
         self.config = config
         self.session = None
         

@@ -71,7 +71,7 @@ class BackupExecution:
 class BackupScheduler:
     """Advanced backup scheduler with intelligent timing and resource management."""
     
-    def __init__(self, client: MongoClient, config: Dict[str, Any] = None):
+    def __init__(self, client -> None: MongoClient, config -> None: Dict[str, Any] = None) -> None:
         """Initialize backup scheduler.
         
         Args:

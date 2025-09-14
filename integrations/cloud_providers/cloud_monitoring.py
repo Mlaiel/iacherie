@@ -157,7 +157,7 @@ class HealthCheck:
 class MultiCloudMonitoringSystem:
     """Enterprise multi-cloud monitoring and observability platform."""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """Initialize multi-cloud monitoring system.
         
         Args:
@@ -1203,7 +1203,7 @@ class MultiCloudMonitoringSystem:
 
 
 # Example usage
-async def example_usage():
+async def example_usage() -> None:
     """Example usage of MultiCloudMonitoringSystem."""
     
     config = {

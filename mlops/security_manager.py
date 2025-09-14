@@ -165,12 +165,12 @@ class EnterpriseSecurityManager:
     
     def __init__(
         self,
-        organization_name: str,
-        encryption_key: Optional[str] = None,
-        jwt_secret: Optional[str] = None,
-        session_timeout_minutes: int = 480,  # 8 hours
-        max_failed_attempts: int = 5
-    ):
+        organization_name -> None: str,
+        encryption_key -> None: Optional[str] = None,
+        jwt_secret -> None: Optional[str] = None,
+        session_timeout_minutes -> None: int = 480,  # 8 hours
+        max_failed_attempts -> None: int = 5
+    ) -> None:
         """Initialize Enterprise Security Manager
         
         Args:

@@ -35,10 +35,12 @@ except ImportError:
     ML_AVAILABLE = False
     # Mock classes for compatibility
     class TfidfVectorizer:
-        def fit_transform(self, docs): return [[]]
-        def transform(self, docs): return [[]]
+    """TfidfVectorizer: class implementation"""
+        def fit_transform(self, docs) -> None: return [[]]
+        def transform(self, docs) -> None: return [[]]
     class cosine_similarity:
-        def __call__(self, a, b): return [[0.0]]
+    """cosine_similarity: class implementation"""
+        def __call__(self, a, b) -> None: return [[0.0]]
 
 logger = logging.getLogger(__name__)
 
@@ -77,7 +79,7 @@ class QueryAnalytics:
 class SearchSuggester:
     """Enterprise search suggestion engine with AI-powered query enhancement."""
     
-    def __init__(self, database_connection=None, cache_backend=None):
+    def __init__(self, database_connection=None, cache_backend=None) -> None:
         """Initialize search suggester.
         
         Args:

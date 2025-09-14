@@ -188,7 +188,7 @@ class SecurityAssessmentRecord(Base):
 class AuditLogger:
     """Comprehensive audit logging system"""
     
-    def __init__(self, db_session: AsyncSession, redis_client: aioredis.Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: aioredis.Redis) -> None:
         self.db = db_session
         self.redis = redis_client
         self.audit_queue = deque(maxlen=10000)
@@ -301,7 +301,7 @@ class AuditLogger:
 class EventTracker:
     """Advanced event tracking and analytics"""
     
-    def __init__(self, db_session: AsyncSession, redis_client: aioredis.Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: aioredis.Redis) -> None:
         self.db = db_session
         self.redis = redis_client
         
@@ -361,7 +361,7 @@ class EventTracker:
 class CertificationManager:
     """Compliance certification management"""
     
-    def __init__(self, db_session: AsyncSession, redis_client: aioredis.Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: aioredis.Redis) -> None:
         self.db = db_session
         self.redis = redis_client
         self.certification_frameworks = self._load_certification_frameworks()
@@ -481,7 +481,7 @@ class CertificationManager:
 class ComplianceVerifier:
     """Automated compliance verification system"""
     
-    def __init__(self, db_session: AsyncSession, redis_client: aioredis.Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: aioredis.Redis) -> None:
         self.db = db_session
         self.redis = redis_client
         
@@ -557,7 +557,7 @@ class ComplianceVerifier:
 class ComplianceDashboard:
     """Real-time compliance monitoring dashboard"""
     
-    def __init__(self, db_session: AsyncSession, redis_client: aioredis.Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: aioredis.Redis) -> None:
         self.db = db_session
         self.redis = redis_client
         
@@ -647,7 +647,7 @@ class ComplianceDashboard:
 class ReportingInterface:
     """Comprehensive compliance reporting interface"""
     
-    def __init__(self, db_session: AsyncSession, redis_client: aioredis.Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: aioredis.Redis) -> None:
         self.db = db_session
         self.redis = redis_client
         
@@ -793,7 +793,7 @@ class ReportingInterface:
 class ComplianceMonitor:
     """Real-time compliance monitoring system"""
     
-    def __init__(self, db_session: AsyncSession, redis_client: aioredis.Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: aioredis.Redis) -> None:
         self.db = db_session
         self.redis = redis_client
         self.monitoring_active = False
@@ -916,7 +916,7 @@ class ComplianceMonitor:
 class RealTimeTracker:
     """Real-time compliance tracking and metrics"""
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client -> None: aioredis.Redis) -> None:
         self.redis = redis_client
         
     async def track_compliance_metric(self, metric_name: str, value: float, 

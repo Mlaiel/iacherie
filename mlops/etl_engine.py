@@ -137,11 +137,11 @@ class ETLJobResult:
 class DataExtractor:
     """Extracts data from various sources"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.extractors = {}
         self._register_extractors()
     
-    def _register_extractors(self):
+    def _register_extractors(self) -> None:
         """Register data extractors for different source types"""
         self.extractors = {
             DataSourceType.DATABASE: self._extract_from_database,
@@ -346,11 +346,11 @@ class DataExtractor:
 class DataTransformer:
     """Performs data transformations"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.transformers = {}
         self._register_transformers()
     
-    def _register_transformers(self):
+    def _register_transformers(self) -> None:
         """Register transformation functions"""
         self.transformers = {
             TransformationType.CLEANING: self._clean_data,
@@ -701,8 +701,8 @@ class DataTransformer:
         
         return data
     
-    async def _validate_transformation_result(self, data: pd.DataFrame, 
-                                            validation_rules: List[Dict[str, Any]]):
+    async def _validate_transformation_result(self, data -> None: pd.DataFrame, 
+                                            validation_rules -> None: List[Dict[str, Any]]) -> None:
         """Validate transformation result"""
         for rule in validation_rules:
             rule_type = rule.get("type")
@@ -740,11 +740,11 @@ class DataTransformer:
 class DataLoader:
     """Loads transformed data to target destinations"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.loaders = {}
         self._register_loaders()
     
-    def _register_loaders(self):
+    def _register_loaders(self) -> None:
         """Register data loaders for different destinations"""
         self.loaders = {
             "database": self._load_to_database,
@@ -884,7 +884,7 @@ class DataLoader:
 class ETLEngine:
     """Main ETL engine orchestrating extraction, transformation, and loading"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.extractor = DataExtractor()
         self.transformer = DataTransformer()
         self.loader = DataLoader()

@@ -360,7 +360,7 @@ class ProfileValidator:
 class CreatorProfileService:
     """Creator Profile Management and Verification Service"""
     
-    def __init__(self, name: str = "creator_profile_service"):
+    def __init__(self, name -> None: str = "creator_profile_service") -> None:
         self.name = name
         self.profiles: Dict[str, CreatorProfile] = {}
         self.profiles_by_user: Dict[str, str] = {}  # user_id -> profile_id
@@ -375,12 +375,12 @@ class CreatorProfileService:
             'profile_updates': 0
         }
         
-    async def start(self):
+    async def start(self) -> None:
         """Start creator profile service"""
         self.running = True
         logger.info(f"Started creator profile service: {self.name}")
         
-    async def stop(self):
+    async def stop(self) -> None:
         """Stop creator profile service"""
         self.running = False
         logger.info(f"Stopped creator profile service: {self.name}")

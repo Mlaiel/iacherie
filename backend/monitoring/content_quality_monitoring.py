@@ -150,7 +150,7 @@ class ContentQualityMonitor:
     recommendations for all content formats with AI-powered analysis.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.quality_metrics_cache: Dict[str, QualityMetrics] = {}
         self.analysis_history: Dict[str, List[QualityAnalysisResult]] = defaultdict(list)
         self.quality_benchmarks: Dict[ContentFormat, Dict[str, float]] = defaultdict(dict)

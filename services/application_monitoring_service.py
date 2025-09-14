@@ -102,7 +102,7 @@ class ApplicationMonitoringService:
     - Custom metrics and dashboards
     """
 
-    def __init__(self, redis_url: str = "redis://localhost:6379"):
+    def __init__(self, redis_url -> None: str = "redis -> None://localhost -> None:6379") -> None:
         self.logger = logging.getLogger(__name__)
         self.redis_url = redis_url
         self.redis_client: Optional[aioredis.Redis] = None
@@ -172,7 +172,7 @@ class ApplicationMonitoringService:
         
         self.logger.info("Application Monitoring Service initialized")
 
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize monitoring service with Redis connection"""
         try:
             self.redis_client = aioredis.from_url(
@@ -197,7 +197,7 @@ class ApplicationMonitoringService:
             self.logger.error(f"Failed to initialize Application Monitoring: {e}")
             raise
 
-    def _initialize_default_health_checks(self):
+    def _initialize_default_health_checks(self) -> None:
         """Initialize default health checks for common services"""
         
         default_checks = [
@@ -230,7 +230,7 @@ class ApplicationMonitoringService:
         for check in default_checks:
             self.health_checks[check.name] = check
 
-    async def _start_monitoring_tasks(self):
+    async def _start_monitoring_tasks(self) -> None:
         """Start background monitoring tasks"""
         
         # System metrics collection
@@ -260,7 +260,7 @@ class ApplicationMonitoringService:
         
         self.logger.info(f"Started {len(self.monitoring_tasks)} monitoring tasks")
 
-    async def record_metric(self, metric: Metric):
+    async def record_metric(self, metric -> None: Metric) -> None:
         """Record a custom metric"""
         
         try:
@@ -292,8 +292,8 @@ class ApplicationMonitoringService:
         except Exception as e:
             self.logger.error(f"Error recording metric {metric.name}: {e}")
 
-    async def record_request(self, method: str, endpoint: str, 
-                           status_code: int, duration: float):
+    async def record_request(self, method -> None: str, endpoint -> None: str, 
+                           status_code -> None: int, duration -> None: float) -> None:
         """Record HTTP request metrics"""
         
         # Record request count
@@ -319,8 +319,8 @@ class ApplicationMonitoringService:
             }
         ))
 
-    async def record_business_metric(self, metric_name: str, value: float, 
-                                   labels: Optional[Dict[str, str]] = None):
+    async def record_business_metric(self, metric_name -> None: str, value -> None: float, 
+                                   labels -> None: Optional[Dict[str, str]] = None) -> None:
         """Record business-specific metrics"""
         
         if labels is None:
@@ -339,7 +339,7 @@ class ApplicationMonitoringService:
         # Update business metrics cache
         self.business_metrics[metric_name] = value
 
-    async def _collect_system_metrics(self):
+    async def _collect_system_metrics(self) -> None:
         """Collect system-level metrics continuously"""
         
         while True:
@@ -402,7 +402,7 @@ class ApplicationMonitoringService:
                 self.logger.error(f"Error collecting system metrics: {e}")
                 await asyncio.sleep(60)
 
-    async def _run_health_checks(self):
+    async def _run_health_checks(self) -> None:
         """Run health checks continuously"""
         
         while True:
@@ -475,7 +475,7 @@ class ApplicationMonitoringService:
         
         return result
 
-    async def _process_alerts(self):
+    async def _process_alerts(self) -> None:
         """Process and manage alerts"""
         
         while True:
@@ -499,7 +499,7 @@ class ApplicationMonitoringService:
                 self.logger.error(f"Error processing alerts: {e}")
                 await asyncio.sleep(120)
 
-    async def _aggregate_metrics(self):
+    async def _aggregate_metrics(self) -> None:
         """Aggregate metrics for analysis and storage"""
         
         while True:
@@ -539,7 +539,7 @@ class ApplicationMonitoringService:
                 self.logger.error(f"Error aggregating metrics: {e}")
                 await asyncio.sleep(60)
 
-    async def _analyze_performance(self):
+    async def _analyze_performance(self) -> None:
         """Analyze performance trends and anomalies"""
         
         while True:
@@ -562,7 +562,7 @@ class ApplicationMonitoringService:
                 self.logger.error(f"Error analyzing performance: {e}")
                 await asyncio.sleep(600)
 
-    async def _check_metric_alerts(self, metric: Metric):
+    async def _check_metric_alerts(self, metric -> None: Metric) -> None:
         """Check if metric triggers any alerts"""
         
         try:
@@ -627,7 +627,7 @@ class ApplicationMonitoringService:
         except Exception as e:
             self.logger.error(f"Error checking metric alerts: {e}")
 
-    async def _send_alert_notification(self, alert: Alert, action: str):
+    async def _send_alert_notification(self, alert -> None: Alert, action -> None: str) -> None:
         """Send alert notification"""
         
         notification_data = {
@@ -671,7 +671,7 @@ class ApplicationMonitoringService:
             else:
                 return sorted_values[lower_index]
 
-    async def _store_metric(self, metric: Metric):
+    async def _store_metric(self, metric -> None: Metric) -> None:
         """Store metric in Redis"""
         
         metric_data = {
@@ -707,7 +707,7 @@ class ApplicationMonitoringService:
             cutoff_time
         )
 
-    async def _store_metric_aggregations(self, metric_name: str, aggregations: Dict[str, float]):
+    async def _store_metric_aggregations(self, metric_name -> None: str, aggregations -> None: Dict[str, float]) -> None:
         """Store metric aggregations"""
         
         aggregation_data = {
@@ -722,7 +722,7 @@ class ApplicationMonitoringService:
             json.dumps(aggregation_data)
         )
 
-    async def _store_health_check_result(self, check_name: str, result: Dict[str, Any]):
+    async def _store_health_check_result(self, check_name -> None: str, result -> None: Dict[str, Any]) -> None:
         """Store health check result"""
         
         await self.redis_client.lpush(
@@ -758,7 +758,7 @@ class ApplicationMonitoringService:
         
         return below_threshold_count >= 3  # 3 out of 5 metrics below threshold
 
-    async def _archive_resolved_alert(self, alert: Alert):
+    async def _archive_resolved_alert(self, alert -> None: Alert) -> None:
         """Archive resolved alert"""
         
         alert_data = {
@@ -779,7 +779,7 @@ class ApplicationMonitoringService:
         # Keep only last 500 resolved alerts
         await self.redis_client.ltrim("resolved_alerts", 0, 499)
 
-    async def _analyze_response_times(self):
+    async def _analyze_response_times(self) -> None:
         """Analyze response time trends"""
         
         try:
@@ -809,7 +809,7 @@ class ApplicationMonitoringService:
         except Exception as e:
             self.logger.error(f"Error analyzing response times: {e}")
 
-    async def _analyze_error_rates(self):
+    async def _analyze_error_rates(self) -> None:
         """Analyze error rate trends"""
         
         try:
@@ -844,7 +844,7 @@ class ApplicationMonitoringService:
         except Exception as e:
             self.logger.error(f"Error analyzing error rates: {e}")
 
-    async def _analyze_resource_usage(self):
+    async def _analyze_resource_usage(self) -> None:
         """Analyze resource usage trends"""
         
         try:
@@ -901,7 +901,7 @@ class ApplicationMonitoringService:
         # Normalize slope to -1 to 1 range
         return max(-1.0, min(1.0, slope))
 
-    async def _update_performance_baselines(self):
+    async def _update_performance_baselines(self) -> None:
         """Update performance baselines based on historical data"""
         
         try:
@@ -928,7 +928,7 @@ class ApplicationMonitoringService:
         except Exception as e:
             self.logger.error(f"Error updating performance baselines: {e}")
 
-    async def _load_monitoring_config(self):
+    async def _load_monitoring_config(self) -> None:
         """Load monitoring configuration from Redis"""
         
         try:
@@ -1002,7 +1002,7 @@ class ApplicationMonitoringService:
         
         return generate_latest(self.registry).decode('utf-8')
 
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Shutdown monitoring service gracefully"""
         
         # Cancel monitoring tasks
@@ -1021,7 +1021,7 @@ class ApplicationMonitoringService:
 
 
 # Example usage
-async def main():
+async def main() -> None:
     """Example usage of Application Monitoring Service"""
     
     monitoring = ApplicationMonitoringService()

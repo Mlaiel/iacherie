@@ -172,7 +172,7 @@ class StreamingMetrics:
 class StreamingEngine:
     """Moteur principal de streaming"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         self.active_streams = {}
@@ -405,7 +405,7 @@ class StreamingEngine:
 class AdaptiveBitrateManager:
     """Gestionnaire de débit adaptatif"""
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client -> None: aioredis.Redis) -> None:
         self.redis = redis_client
         self.quality_algorithms = {}
         self.bandwidth_predictors = {}
@@ -471,7 +471,7 @@ class AdaptiveBitrateManager:
 class CDNOptimizer:
     """Optimiseur de réseau de distribution de contenu"""
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client -> None: aioredis.Redis) -> None:
         self.redis = redis_client
         self.cdn_providers = {}
         self.edge_servers = {}
@@ -530,7 +530,7 @@ class CDNOptimizer:
 class StreamingAnalytics:
     """Analytiques de streaming en temps réel"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         self.metrics_collectors = {}
@@ -605,7 +605,7 @@ class StreamingAnalytics:
 class MediaStreamingService:
     """Service principal de streaming média"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         self.streaming_engine = StreamingEngine(redis_client, db_session)

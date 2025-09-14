@@ -13,6 +13,7 @@ import statistics
 
 
 class ContentType(Enum):
+    """ContentType class implementation"""
     VIDEO = "video"
     IMAGE = "image"
     AUDIO = "audio"
@@ -25,6 +26,7 @@ class ContentType(Enum):
 
 @dataclass
 class ContentMetrics:
+    """ContentMetrics: class implementation"""
     content_id: str
     content_type: ContentType
     views: int = 0
@@ -40,6 +42,7 @@ class ContentMetrics:
 
 @dataclass
 class PerformanceReport:
+    """PerformanceReport: class implementation"""
     user_id: str
     content_metrics: List[ContentMetrics]
     top_performers: List[ContentMetrics]

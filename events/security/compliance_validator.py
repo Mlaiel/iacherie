@@ -68,7 +68,7 @@ class ComplianceViolation:
     remediation_required: bool = True
     auto_correctable: bool = False
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.business_context is None:
             self.business_context = {}
 
@@ -83,7 +83,7 @@ class ComplianceValidationResult:
     regulations_checked: List[ComplianceRegulation]
     validation_timestamp: datetime = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.validation_timestamp is None:
             self.validation_timestamp = datetime.utcnow()
 
@@ -94,7 +94,7 @@ class ComplianceValidator:
     Real-time validation against multiple regulatory frameworks.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.enabled = True
         self.compliance_rules = self._initialize_compliance_rules()
         self.user_consents = {}  # user_id -> {regulation: consent_data}
@@ -654,7 +654,7 @@ class ComplianceValidator:
         
         return False
     
-    async def _trigger_consent_collection(self, user_id: str, regulation: ComplianceRegulation):
+    async def _trigger_consent_collection(self, user_id -> None: str, regulation -> None: ComplianceRegulation) -> None:
         """Trigger consent collection workflow"""
         
         # In a real implementation, this would trigger the consent UI
@@ -671,7 +671,7 @@ class ComplianceValidator:
             'method': 'auto_collection'
         }
     
-    async def _trigger_parental_consent_collection(self, user_id: str):
+    async def _trigger_parental_consent_collection(self, user_id -> None: str) -> None:
         """Trigger parental consent collection workflow"""
         
         # In a real implementation, this would send email to parent
@@ -801,22 +801,22 @@ class ComplianceValidator:
             'recent_violations': recent_count
         }
     
-    def enable_validation(self):
+    def enable_validation(self) -> None:
         """Enable compliance validation"""
         self.enabled = True
         logger.info("Compliance validation enabled")
     
-    def disable_validation(self):
+    def disable_validation(self) -> None:
         """Disable compliance validation"""
         self.enabled = False
         logger.info("Compliance validation disabled")
     
-    def enable_auto_correction(self):
+    def enable_auto_correction(self) -> None:
         """Enable auto-correction of violations"""
         self.auto_correction_enabled = True
         logger.info("Auto-correction enabled")
     
-    def disable_auto_correction(self):
+    def disable_auto_correction(self) -> None:
         """Disable auto-correction of violations"""
         self.auto_correction_enabled = False
         logger.info("Auto-correction disabled")

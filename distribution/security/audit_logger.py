@@ -94,7 +94,7 @@ class AuditEvent:
     request_id: Optional[str] = None
     source_system: str = "distribution"
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         """Post-initialization processing"""
         # Ensure timestamp has timezone info
         if self.timestamp.tzinfo is None:
@@ -130,7 +130,7 @@ class AuditLogConfig:
 class AuditLogger:
     """Enterprise audit logging system"""
     
-    def __init__(self, config: AuditLogConfig):
+    def __init__(self, config -> None: AuditLogConfig) -> None:
         self.config = config
         self.logger = logging.getLogger("audit")
         self._setup_logger()
@@ -143,7 +143,7 @@ class AuditLogger:
         if config.encryption_enabled:
             self._setup_encryption()
     
-    def _setup_logger(self):
+    def _setup_logger(self) -> None:
         """Setup audit logger configuration"""
         formatter = logging.Formatter(
             '%(asctime)s | %(levelname)s | %(message)s',
@@ -158,7 +158,7 @@ class AuditLogger:
         self.logger.addHandler(file_handler)
         self.logger.setLevel(logging.INFO)
     
-    def _setup_encryption(self):
+    def _setup_encryption(self) -> None:
         """Setup encryption for audit logs"""
         try:
             # In production, this would use a proper key management system
@@ -168,7 +168,7 @@ class AuditLogger:
             logging.error(f"Failed to setup encryption: {e}")
             self.config.encryption_enabled = False
     
-    async def start(self):
+    async def start(self) -> None:
         """Start the audit logging system"""
         if self._is_running:
             return
@@ -183,7 +183,7 @@ class AuditLogger:
             details={"component": "audit_logger"}
         ))
     
-    async def stop(self):
+    async def stop(self) -> None:
         """Stop the audit logging system"""
         if not self._is_running:
             return
@@ -199,7 +199,7 @@ class AuditLogger:
         if self._log_processor_task:
             await self._log_processor_task
     
-    async def log_event(self, event: AuditEvent):
+    async def log_event(self, event -> None: AuditEvent) -> None:
         """Log an audit event"""
         try:
             # Add to queue for processing
@@ -212,7 +212,7 @@ class AuditLogger:
         except Exception as e:
             logging.error(f"Failed to log audit event: {e}")
     
-    async def _process_log_queue(self):
+    async def _process_log_queue(self) -> None:
         """Process audit log queue"""
         while self._is_running:
             try:
@@ -225,7 +225,7 @@ class AuditLogger:
             except Exception as e:
                 logging.error(f"Error processing audit log: {e}")
     
-    async def _write_log_event(self, event: AuditEvent):
+    async def _write_log_event(self, event -> None: AuditEvent) -> None:
         """Write audit event to storage"""
         try:
             # Standard logging
@@ -246,7 +246,7 @@ class AuditLogger:
         except Exception as e:
             logging.error(f"Failed to write audit log: {e}")
     
-    async def _write_encrypted_log(self, event: AuditEvent):
+    async def _write_encrypted_log(self, event -> None: AuditEvent) -> None:
         """Write encrypted audit log"""
         try:
             if not self._cipher:
@@ -260,7 +260,7 @@ class AuditLogger:
         except Exception as e:
             logging.error(f"Failed to write encrypted log: {e}")
     
-    async def _send_remote_log(self, event: AuditEvent):
+    async def _send_remote_log(self, event -> None: AuditEvent) -> None:
         """Send audit log to remote endpoint"""
         try:
             import aiohttp
@@ -277,7 +277,7 @@ class AuditLogger:
         except Exception as e:
             logging.error(f"Failed to send remote log: {e}")
     
-    async def _check_alert_conditions(self, event: AuditEvent):
+    async def _check_alert_conditions(self, event -> None: AuditEvent) -> None:
         """Check if event requires immediate alert"""
         alert_conditions = [
             event.severity == AuditSeverity.CRITICAL,
@@ -289,7 +289,7 @@ class AuditLogger:
         if any(alert_conditions):
             await self._send_alert(event)
     
-    async def _send_alert(self, event: AuditEvent):
+    async def _send_alert(self, event -> None: AuditEvent) -> None:
         """Send immediate alert for critical events"""
         try:
             if not self.config.alert_webhook_url:
@@ -320,7 +320,7 @@ class AuditLogger:
         except Exception as e:
             logging.error(f"Failed to send alert: {e}")
     
-    async def _handle_critical_event(self, event: AuditEvent):
+    async def _handle_critical_event(self, event -> None: AuditEvent) -> None:
         """Handle critical events immediately"""
         try:
             # Immediate response for critical events
@@ -413,13 +413,13 @@ class AuditLogger:
 
 # Convenience functions for common audit events
 async def log_authentication_event(
-    logger: AuditLogger,
-    event_type: AuditEventType,
-    user_id: str,
-    ip_address: str,
-    success: bool,
-    details: Optional[Dict] = None
-):
+    logger -> None: AuditLogger,
+    event_type -> None: AuditEventType,
+    user_id -> None: str,
+    ip_address -> None: str,
+    success -> None: bool,
+    details -> None: Optional[Dict] = None
+) -> None:
     """Log authentication event"""
     await logger.log_event(AuditEvent(
         event_type=event_type,
@@ -431,14 +431,14 @@ async def log_authentication_event(
     ))
 
 async def log_api_call(
-    logger: AuditLogger,
-    user_id: str,
-    endpoint: str,
-    method: str,
-    status_code: int,
-    ip_address: str,
-    details: Optional[Dict] = None
-):
+    logger -> None: AuditLogger,
+    user_id -> None: str,
+    endpoint -> None: str,
+    method -> None: str,
+    status_code -> None: int,
+    ip_address -> None: str,
+    details -> None: Optional[Dict] = None
+) -> None:
     """Log API call"""
     severity = AuditSeverity.INFO if status_code < 400 else AuditSeverity.MEDIUM
     if status_code >= 500:
@@ -456,12 +456,12 @@ async def log_api_call(
     ))
 
 async def log_security_violation(
-    logger: AuditLogger,
-    user_id: Optional[str],
-    violation_type: str,
-    ip_address: str,
-    details: Dict
-):
+    logger -> None: AuditLogger,
+    user_id -> None: Optional[str],
+    violation_type -> None: str,
+    ip_address -> None: str,
+    details -> None: Dict
+) -> None:
     """Log security violation"""
     await logger.log_event(AuditEvent(
         event_type=AuditEventType.SECURITY_VIOLATION,
@@ -473,13 +473,13 @@ async def log_security_violation(
     ))
 
 async def log_distribution_event(
-    logger: AuditLogger,
-    user_id: str,
-    content_id: str,
-    platforms: List[str],
-    success: bool,
-    details: Optional[Dict] = None
-):
+    logger -> None: AuditLogger,
+    user_id -> None: str,
+    content_id -> None: str,
+    platforms -> None: List[str],
+    success -> None: bool,
+    details -> None: Optional[Dict] = None
+) -> None:
     """Log content distribution event"""
     await logger.log_event(AuditEvent(
         event_type=AuditEventType.CONTENT_DISTRIBUTED,

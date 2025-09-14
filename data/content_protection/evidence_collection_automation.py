@@ -22,7 +22,7 @@ logger = structlog.get_logger()
 class EvidenceCollectionAutomation:
     """Automated evidence collection system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.redis_client = None
         self.mongo_client = None
         self.watermarking_engine = WatermarkingProtectionEngine()
@@ -113,7 +113,7 @@ class EvidenceCollectionAutomation:
         }
         return evidence
     
-    async def _store_evidence_package(self, evidence_package: Dict[str, Any]):
+    async def _store_evidence_package(self, evidence_package -> None: Dict[str, Any]) -> None:
         """Store evidence package"""
         try:
             if self.mongo_client:

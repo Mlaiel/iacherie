@@ -113,14 +113,14 @@ class BaseTimingModel(ABC):
         pass
     
     @abstractmethod
-    async def train(self, training_data: List[Tuple[TimingFeatures, float]]):
+    async def train(self, training_data -> None: List[Tuple[TimingFeatures, float]]) -> None:
         """Train the model with historical data"""
         pass
 
 class MLTimingModel(BaseTimingModel):
     """Machine learning-based timing model"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.model_weights: Dict[str, float] = {
             # Platform-specific weights
             "social_media_peak_hours": [8, 12, 17, 19, 21],
@@ -490,7 +490,7 @@ class MLTimingModel(BaseTimingModel):
             factors_considered={"fallback_mode": 1.0}
         )
     
-    async def train(self, training_data: List[Tuple[TimingFeatures, float]]):
+    async def train(self, training_data -> None: List[Tuple[TimingFeatures, float]]) -> None:
         """Train the model with historical data"""
         # Simplified training - in production would use proper ML algorithms
         logger.info(f"Training timing model with {len(training_data)} data points")
@@ -525,7 +525,7 @@ class MLTimingModel(BaseTimingModel):
 class AITimingOptimizer:
     """Main AI timing optimizer class"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.model = MLTimingModel()
         self.cache: Dict[str, TimingPrediction] = {}
         self.cache_ttl = timedelta(hours=1)
@@ -619,7 +619,7 @@ class AITimingOptimizer:
         
         return (now.month, now.day) in holidays
     
-    async def train_model(self, training_data: List[Dict[str, Any]]):
+    async def train_model(self, training_data -> None: List[Dict[str, Any]]) -> None:
         """Train the timing model with historical performance data"""
         formatted_data = []
         

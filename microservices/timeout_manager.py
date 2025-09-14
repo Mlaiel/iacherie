@@ -1,3 +1,8 @@
+"""
+Timeout Manager module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Enterprise Timeout Manager Service
@@ -87,7 +92,7 @@ class TimeoutManager:
     - Progressive timeouts for retries
     """
     
-    def __init__(self, config: Optional[TimeoutConfig] = None):
+    def __init__(self, config -> None: Optional[TimeoutConfig] = None) -> None:
         """Initialize timeout manager"""
         self.config = config or TimeoutConfig()
         self.metrics: Dict[str, ServiceMetrics] = {}
@@ -101,7 +106,7 @@ class TimeoutManager:
         
         logger.info("TimeoutManager initialized with config: %s", self.config)
     
-    async def start(self):
+    async def start(self) -> None:
         """Start the timeout manager"""
         try:
             # Start cleanup task
@@ -111,7 +116,7 @@ class TimeoutManager:
             logger.error("Failed to start TimeoutManager: %s", e)
             raise
     
-    async def stop(self):
+    async def stop(self) -> None:
         """Stop the timeout manager"""
         try:
             self.shutdown_event.set()
@@ -225,11 +230,11 @@ class TimeoutManager:
     @asynccontextmanager
     async def timeout_context(
         self,
-        service_name: str,
-        method_name: str,
-        timeout: Optional[float] = None,
-        strategy: TimeoutStrategy = TimeoutStrategy.FIXED
-    ):
+        service_name -> None: str,
+        method_name -> None: str,
+        timeout -> None: Optional[float] = None,
+        strategy -> None: TimeoutStrategy = TimeoutStrategy.FIXED
+    ) -> None:
         """Context manager for timeout operations"""
         operation_id = f"{service_name}_{method_name}_{int(time.time() * 1000)}"
         
@@ -304,7 +309,7 @@ class TimeoutManager:
         return self.config.default_timeout
     
     @asynccontextmanager
-    async def _track_operation(self, context: TimeoutContext):
+    async def _track_operation(self, context -> None: TimeoutContext) -> None:
         """Track operation lifecycle"""
         async with self._lock:
             self.active_operations[context.operation_id] = context
@@ -315,7 +320,7 @@ class TimeoutManager:
             async with self._lock:
                 self.active_operations.pop(context.operation_id, None)
     
-    async def _update_metrics(self, context: TimeoutContext):
+    async def _update_metrics(self, context -> None: TimeoutContext) -> None:
         """Update service metrics"""
         service_key = f"{context.service_name}.{context.method_name}"
         duration = (context.end_time or time.time()) - context.start_time
@@ -354,7 +359,7 @@ class TimeoutManager:
                     self.config.max_timeout
                 )
     
-    async def _cleanup_task(self):
+    async def _cleanup_task(self) -> None:
         """Background cleanup task"""
         while not self.shutdown_event.is_set():
             try:
@@ -365,7 +370,7 @@ class TimeoutManager:
             except Exception as e:
                 logger.error("Error in cleanup task: %s", e)
     
-    async def _cleanup_expired_operations(self):
+    async def _cleanup_expired_operations(self) -> None:
         """Cleanup expired operations"""
         current_time = time.time()
         expired_operations = []
@@ -381,7 +386,7 @@ class TimeoutManager:
         if expired_operations:
             logger.info("Cleaned up %d expired operations", len(expired_operations))
     
-    async def _cancel_all_operations(self):
+    async def _cancel_all_operations(self) -> None:
         """Cancel all active operations"""
         async with self._lock:
             operation_count = len(self.active_operations)
@@ -447,7 +452,7 @@ async def get_timeout_manager() -> TimeoutManager:
         await _timeout_manager.start()
     return _timeout_manager
 
-async def shutdown_timeout_manager():
+async def shutdown_timeout_manager() -> None:
     """Shutdown global timeout manager"""
     global _timeout_manager
     if _timeout_manager:
@@ -456,13 +461,13 @@ async def shutdown_timeout_manager():
 
 # Convenience decorators and functions
 def timeout(
-    timeout_value: Optional[float] = None,
-    strategy: TimeoutStrategy = TimeoutStrategy.FIXED,
-    service_name: Optional[str] = None
-):
+    timeout_value -> None: Optional[float] = None,
+    strategy -> None: TimeoutStrategy = TimeoutStrategy.FIXED,
+    service_name -> None: Optional[str] = None
+) -> None:
     """Decorator for timeout management"""
-    def decorator(func):
-        async def wrapper(*args, **kwargs):
+    def decorator(func) -> None:
+        async def wrapper(*args, **kwargs) -> None:
             manager = await get_timeout_manager()
             svc_name = service_name or func.__module__.split('.')[-1]
             method_name = func.__name__
@@ -474,14 +479,14 @@ def timeout(
     return decorator
 
 if __name__ == "__main__":
-    async def test_timeout_manager():
+    async def test_timeout_manager() -> None:
         """Test timeout manager functionality"""
         manager = TimeoutManager()
         await manager.start()
         
         try:
             # Test successful operation
-            async def quick_operation():
+            async def quick_operation() -> None:
                 await asyncio.sleep(0.1)
                 return "success"
             
@@ -491,7 +496,7 @@ if __name__ == "__main__":
             print(f"Quick operation result: {result}")
             
             # Test timeout operation
-            async def slow_operation():
+            async def slow_operation() -> None:
                 await asyncio.sleep(2.0)
                 return "too_slow"
             

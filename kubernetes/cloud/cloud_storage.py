@@ -133,7 +133,7 @@ class CloudStorageManager:
     """
 Enterprise cloud storage management system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """
 Initialize cloud storage manager"""
         self.logger = logging.getLogger(self.__class__.__name__)
@@ -1055,3 +1055,6 @@ Process lifecycle policies"""
 Check if backup should be executed"""
         # Implementation would check cron schedule
         return False
+}
+
+# File has syntax issues - needs manual review

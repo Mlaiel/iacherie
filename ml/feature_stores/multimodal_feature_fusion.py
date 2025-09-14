@@ -112,7 +112,7 @@ class FusedFeatures:
 class CrossModalAttention(nn.Module):
     """Module d'attention croisée entre modalités"""
     
-    def __init__(self, feature_dim: int, num_heads: int = 8):
+    def __init__(self, feature_dim -> None: int, num_heads -> None: int = 8) -> None:
         super().__init__()
         self.feature_dim = feature_dim
         self.num_heads = num_heads
@@ -166,9 +166,9 @@ class MultimodalFusionNetwork(nn.Module):
     """Réseau de fusion multimodale adaptatif"""
     
     def __init__(self, 
-                 modality_dims: Dict[ModalityType, int],
-                 fusion_dim: int = 512,
-                 creator_embedding_dim: int = 64):
+                 modality_dims -> None: Dict[ModalityType, int],
+                 fusion_dim -> None: int = 512,
+                 creator_embedding_dim -> None: int = 64) -> None:
         super().__init__()
         
         self.modality_dims = modality_dims
@@ -319,7 +319,7 @@ class MultimodalFeatureFusion:
         self.fusion_count = 0
         self.fusion_times = []
         
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialise les modèles de feature extraction"""
         try:
             # Text model (BERT)
@@ -869,7 +869,7 @@ class MultimodalFeatureFusion:
         }
 
 # Usage example
-async def demo_multimodal_fusion():
+async def demo_multimodal_fusion() -> None:
     """Démo du système de fusion multimodale"""
     fusion_engine = MultimodalFeatureFusion()
     await fusion_engine.initialize()

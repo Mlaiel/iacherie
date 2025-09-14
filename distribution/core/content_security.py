@@ -1,3 +1,8 @@
+"""
+Content Security module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """Content Security Engine
 
@@ -159,7 +164,7 @@ class ContentSecurity:
     - Blockchain-based provenance tracking
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize the content security engine"""
         self.config = config or {}
         self.fingerprints: Dict[str, ContentFingerprint] = {}

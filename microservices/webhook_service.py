@@ -1,3 +1,8 @@
+"""
+Webhook Service module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 🔗 WEBHOOK SERVICE
@@ -198,7 +203,7 @@ class WebhookService:
     - Multi-protocol support
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.redis_client = None
         self.subscriptions = {}
         self.delivery_queue = deque()
@@ -259,7 +264,7 @@ class WebhookService:
         
         logger.info("🔗 WebhookService initialized with multi-expert architecture")
     
-    async def initialize(self, redis_url: str = "redis://localhost:6379"):
+    async def initialize(self, redis_url -> None: str = "redis -> None://localhost -> None:6379") -> None:
         """Initialize the webhook service"""
         try:
             self.redis_client = redis.from_url(redis_url)
@@ -271,7 +276,7 @@ class WebhookService:
             logger.error(f"❌ Failed to initialize WebhookService: {e}")
             raise
     
-    async def _initialize_ml_models(self):
+    async def _initialize_ml_models(self) -> None:
         """🤖 ML Engineer: Initialize ML models for delivery optimization"""
         try:
             # Initialize delivery success predictor
@@ -301,7 +306,7 @@ class WebhookService:
         except Exception as e:
             logger.error(f"❌ Failed to initialize ML models: {e}")
     
-    async def _start_delivery_workers(self):
+    async def _start_delivery_workers(self) -> None:
         """⚙️ DevOps: Start webhook delivery workers"""
         try:
             # Start multiple delivery workers for parallel processing
@@ -313,7 +318,7 @@ class WebhookService:
         except Exception as e:
             logger.error(f"❌ Failed to start delivery workers: {e}")
     
-    async def _load_subscriptions(self):
+    async def _load_subscriptions(self) -> None:
         """🗄️ DBA: Load webhook subscriptions from storage"""
         try:
             if self.redis_client:
@@ -440,7 +445,7 @@ class WebhookService:
         """🔒 Security: Generate secure webhook secret"""
         return secrets.token_urlsafe(32)
     
-    async def _store_subscription(self, subscription: WebhookSubscription):
+    async def _store_subscription(self, subscription -> None: WebhookSubscription) -> None:
         """🗄️ DBA: Store webhook subscription"""
         try:
             self.subscriptions[subscription.subscription_id] = subscription
@@ -460,7 +465,7 @@ class WebhookService:
             logger.error(f"❌ Failed to store subscription: {e}")
             raise
     
-    async def _analyze_subscription_patterns(self, subscription: WebhookSubscription):
+    async def _analyze_subscription_patterns(self, subscription -> None: WebhookSubscription) -> None:
         """🧠 Lead Dev IA: Analyze subscription for AI optimization"""
         try:
             # Analyze event patterns
@@ -538,7 +543,7 @@ class WebhookService:
             logger.error(f"❌ Failed to publish webhook event: {e}")
             raise
     
-    async def _process_audio_event(self, event: WebhookEvent):
+    async def _process_audio_event(self, event -> None: WebhookEvent) -> None:
         """🎵 Audio Engineer: Process audio-specific webhook events"""
         try:
             audio_metadata = {}
@@ -743,7 +748,7 @@ class WebhookService:
             attempt_number=1
         )
     
-    async def _delivery_worker(self, worker_id: int):
+    async def _delivery_worker(self, worker_id -> None: int) -> None:
         """⚙️ DevOps: Webhook delivery worker"""
         logger.info(f"🔧 Starting delivery worker {worker_id}")
         
@@ -759,7 +764,7 @@ class WebhookService:
                 logger.error(f"❌ Delivery worker {worker_id} error: {e}")
                 await asyncio.sleep(5)  # Back off on error
     
-    async def _process_delivery(self, delivery: WebhookDelivery):
+    async def _process_delivery(self, delivery -> None: WebhookDelivery) -> None:
         """Process webhook delivery"""
         try:
             start_time = time.time()
@@ -1056,7 +1061,7 @@ class WebhookService:
         except Exception as e:
             return False, None, f"Unexpected error: {str(e)}"
     
-    async def _schedule_retry(self, delivery: WebhookDelivery, subscription: WebhookSubscription):
+    async def _schedule_retry(self, delivery -> None: WebhookDelivery, subscription -> None: WebhookSubscription) -> None:
         """🧠 Lead Dev IA: Schedule intelligent retry with AI-optimized timing"""
         try:
             # Calculate retry delay using exponential backoff with jitter
@@ -1083,7 +1088,7 @@ class WebhookService:
         except Exception as e:
             logger.error(f"❌ Failed to schedule retry: {e}")
     
-    async def _retry_delivery(self, delivery: WebhookDelivery, delay: int):
+    async def _retry_delivery(self, delivery -> None: WebhookDelivery, delay -> None: int) -> None:
         """Retry webhook delivery after delay"""
         try:
             await asyncio.sleep(delay)
@@ -1161,7 +1166,7 @@ class WebhookService:
             logger.error(f"❌ Failed to delete subscription: {e}")
             return False
     
-    async def _expire_subscription(self, subscription_id: str):
+    async def _expire_subscription(self, subscription_id -> None: str) -> None:
         """Expire webhook subscription"""
         try:
             subscription = self.subscriptions.get(subscription_id)
@@ -1308,7 +1313,7 @@ class WebhookService:
             logger.error(f"❌ Failed to get service health: {e}")
             return {'status': 'error', 'error': str(e)}
     
-    async def cleanup(self):
+    async def cleanup(self) -> None:
         """⚙️ DevOps: Cleanup webhook service resources"""
         try:
             # Cancel delivery workers
@@ -1329,7 +1334,7 @@ class WebhookService:
 
 
 # Example usage and testing
-async def main():
+async def main() -> None:
     """Example usage of WebhookService"""
     service = WebhookService()
     

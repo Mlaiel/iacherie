@@ -221,7 +221,7 @@ class VideoProcessingConfig(BaseModel):
     output_directory: str = Field(default="./processed_videos", description="Output directory for processed videos")
     
     @validator('max_video_size')
-    def validate_video_size(cls, v):
+    def validate_video_size(cls, v) -> None:
         if v <= 0 or v > 10 * 1024 * 1024 * 1024:  # 10GB limit
             raise ValueError("Video size must be between 1 byte and 10GB")
         return v
@@ -229,7 +229,7 @@ class VideoProcessingConfig(BaseModel):
 class VideoSecurityManager:
     """Security manager for video processing - Security Expert role"""
     
-    def __init__(self, config: VideoProcessingConfig):
+    def __init__(self, config -> None: VideoProcessingConfig) -> None:
         self.config = config
         self.encryption_key = self._generate_encryption_key()
         self.cipher_suite = Fernet(self.encryption_key)
@@ -360,7 +360,7 @@ class VideoSecurityManager:
 class VideoMLAnalyzer:
     """ML-powered video analysis - ML Engineer + Lead Dev IA roles"""
     
-    def __init__(self, config: VideoProcessingConfig):
+    def __init__(self, config -> None: VideoProcessingConfig) -> None:
         self.config = config
         self.openai_client = openai.OpenAI(api_key=config.openai_api_key)
         
@@ -898,7 +898,7 @@ class VideoMLAnalyzer:
 class VideoProcessor:
     """Core video processing engine - Backend Senior + DevOps roles"""
     
-    def __init__(self, config: VideoProcessingConfig):
+    def __init__(self, config -> None: VideoProcessingConfig) -> None:
         self.config = config
         
         # Ensure directories exist
@@ -1070,7 +1070,7 @@ class VideoProcessor:
 class VideoProcessingOrchestrator:
     """Main orchestrator for video processing - Lead Dev IA + Backend Senior roles"""
     
-    def __init__(self, config: VideoProcessingConfig):
+    def __init__(self, config -> None: VideoProcessingConfig) -> None:
         self.config = config
         self.security_manager = VideoSecurityManager(config)
         self.ml_analyzer = VideoMLAnalyzer(config)
@@ -1345,7 +1345,7 @@ class VideoProcessingOrchestrator:
 class VideoProcessingService:
     """Main video processing service facade - DevOps + Integration role"""
     
-    def __init__(self, config: Optional[VideoProcessingConfig] = None):
+    def __init__(self, config -> None: Optional[VideoProcessingConfig] = None) -> None:
         self.config = config or VideoProcessingConfig(
             openai_api_key="your-openai-key-here",  # Should be configured via environment
             watermark_enabled=True,
@@ -1354,7 +1354,7 @@ class VideoProcessingService:
         )
         self.orchestrator = VideoProcessingOrchestrator(self.config)
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize the video processing service"""
         logger.info("Initializing Video Processing Service")
         
@@ -1372,7 +1372,7 @@ class VideoProcessingService:
         
         logger.info("Video Processing Service initialized successfully")
     
-    async def _validate_configuration(self):
+    async def _validate_configuration(self) -> None:
         """Validate service configuration"""
         if not self.config.openai_api_key or self.config.openai_api_key == "your-openai-key-here":
             logger.warning("OpenAI API key not configured - AI features will be limited")
@@ -1383,7 +1383,7 @@ class VideoProcessingService:
         if not os.path.exists(self.config.output_directory):
             os.makedirs(self.config.output_directory, exist_ok=True)
     
-    async def _check_dependencies(self):
+    async def _check_dependencies(self) -> None:
         """Check required dependencies"""
         # Check FFmpeg
         try:
@@ -1398,14 +1398,14 @@ class VideoProcessingService:
         except Exception:
             logger.error("FFmpeg not found - please install FFmpeg")
     
-    async def _initialize_ml_models(self):
+    async def _initialize_ml_models(self) -> None:
         """Initialize ML models with proper error handling"""
         try:
             logger.info("ML models initialization completed")
         except Exception as e:
             logger.error(f"ML models initialization failed: {e}")
     
-    async def _setup_monitoring(self):
+    async def _setup_monitoring(self) -> None:
         """Setup monitoring and metrics collection"""
         logger.info("Video processing monitoring setup completed")
     
@@ -1440,7 +1440,7 @@ __all__ = [
 
 if __name__ == "__main__":
     # Example usage and testing
-    async def main():
+    async def main() -> None:
         # Initialize service
         service = VideoProcessingService()
         await service.initialize()

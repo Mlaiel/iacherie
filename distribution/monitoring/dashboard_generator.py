@@ -123,7 +123,7 @@ class DashboardGenerator:
     - Alert integration
     """
     
-    def __init__(self, data_sources: Dict[str, Any] = None):
+    def __init__(self, data_sources -> None: Dict[str, Any] = None) -> None:
         """
         Initialize dashboard generator
         
@@ -136,7 +136,7 @@ class DashboardGenerator:
         self.output_dir = "dashboards/generated"
         self._ensure_directories()
         
-    def _ensure_directories(self):
+    def _ensure_directories(self) -> None:
         """Ensure required directories exist"""
         os.makedirs(self.templates_dir, exist_ok=True)
         os.makedirs(self.output_dir, exist_ok=True)
@@ -767,7 +767,7 @@ class DashboardGenerator:
             return []
 
 # Usage example
-async def main():
+async def main() -> None:
     """Example usage of DashboardGenerator"""
     # Initialize dashboard generator
     generator = DashboardGenerator()

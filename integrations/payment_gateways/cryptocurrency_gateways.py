@@ -149,10 +149,10 @@ class CryptocurrencyPaymentProcessor:
     
     def __init__(
         self,
-        networks_config: Dict[str, Dict[str, Any]],
-        exchange_api_key: Optional[str] = None,
-        webhook_url: Optional[str] = None
-    ):
+        networks_config -> None: Dict[str, Dict[str, Any]],
+        exchange_api_key -> None: Optional[str] = None,
+        webhook_url -> None: Optional[str] = None
+    ) -> None:
         """Initialize cryptocurrency payment processor.
         
         Args:
@@ -179,7 +179,7 @@ class CryptocurrencyPaymentProcessor:
         self.logger = logging.getLogger(__name__)
         self.session = httpx.AsyncClient(timeout=30.0)
 
-    def _init_web3_connections(self):
+    def _init_web3_connections(self) -> None:
         """Initialize Web3 connections for Ethereum-based networks."""
         ethereum_networks = [
             CryptoNetwork.ETHEREUM,
@@ -835,15 +835,15 @@ class CryptocurrencyPaymentProcessor:
         except:
             return []
 
-    async def close(self):
+    async def close(self) -> None:
         """Close the HTTP session."""
         await self.session.aclose()
 
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         """Async context manager entry."""
         return self
 
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         """Async context manager exit."""
         await self.close()
 

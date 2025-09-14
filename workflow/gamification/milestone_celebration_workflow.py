@@ -47,7 +47,7 @@ class Milestone:
 class MilestoneCelebrationWorkflow:
     """AI-powered milestone celebration workflow"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.metrics_collector = MetricsCollector()
         self.user_milestones: Dict[str, List[Milestone]] = {}
         

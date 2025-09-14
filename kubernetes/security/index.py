@@ -1,5 +1,7 @@
 """Main Index for Deployment Security Module
 
+import json
+
 This module provides easy access to all security components for deployment
 environments in the IA Influencer Agent platform.
 
@@ -39,12 +41,12 @@ class DeploymentSecurityManager:
     
     def __init__(
         self,
-        config: Optional[Dict[str, Any]] = None,
-        redis_url: str = "redis://localhost:6379",
-        cert_dir: str = "/etc/ssl/certs",
-        key_dir: str = "/etc/ssl/private",
-        log_dir: str = "/var/log/ia-influencer/security"
-    ):
+        config -> None: Optional[Dict[str, Any]] = None,
+        redis_url -> None: str = "redis -> None://localhost -> None:6379",
+        cert_dir -> None: str = "/etc/ssl/certs",
+        key_dir -> None: str = "/etc/ssl/private",
+        log_dir -> None: str = "/var/log/ia-influencer/security"
+    ) -> None:
         """
         Initialize deployment security manager
         
@@ -66,7 +68,7 @@ class DeploymentSecurityManager:
         
         logger.info("Deployment security manager initialized")
     
-    def _initialize_components(self):
+    def _initialize_components(self) -> None:
         """Initialize all security components"""
         try:
             # Certificate management
@@ -401,7 +403,7 @@ class DeploymentSecurityManager:
             logger.error(f"Compliance monitoring failed: {e}")
             raise
     
-    async def cleanup_security_resources(self):
+    async def cleanup_security_resources(self) -> None:
         """Cleanup expired security resources"""
         try:
             logger.info("Starting security resources cleanup")
@@ -567,7 +569,7 @@ __all__ = [
 
 if __name__ == "__main__":
     # Example usage
-    async def main():
+    async def main() -> None:
         """Example of how to use the deployment security module"""
         
         # Initialize security for production environment

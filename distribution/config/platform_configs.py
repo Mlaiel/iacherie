@@ -95,7 +95,7 @@ class PlatformConfigManager:
     Provides centralized configuration management with environment-specific overrides
     """
     
-    def __init__(self, config_dir: str = "config/platforms"):
+    def __init__(self, config_dir -> None: str = "config/platforms") -> None:
         self.config_dir = Path(config_dir)
         self.configs: Dict[str, PlatformConfig] = {}
         self.environment = os.getenv("ENVIRONMENT", "development")
@@ -103,7 +103,7 @@ class PlatformConfigManager:
         # Load all platform configurations
         self._load_all_configs()
     
-    def _load_all_configs(self):
+    def _load_all_configs(self) -> None:
         """Load all platform configurations"""
         # YouTube Configuration
         self.configs["youtube"] = PlatformConfig(
@@ -429,7 +429,7 @@ class PlatformConfigManager:
             if content_format in config.limits.supported_formats and config.enabled
         ]
     
-    def update_platform_auth(self, platform_id: str, auth_data: Dict[str, Any]):
+    def update_platform_auth(self, platform_id -> None: str, auth_data -> None: Dict[str, Any]) -> None:
         """Update authentication data for a platform"""
         if platform_id in self.configs:
             config = self.configs[platform_id]
@@ -562,14 +562,14 @@ class PlatformConfigManager:
             "custom_settings": config.custom_settings
         }
     
-    def save_config_to_file(self, platform_id: str, file_path: str):
+    def save_config_to_file(self, platform_id -> None: str, file_path -> None: str) -> None:
         """Save platform configuration to JSON file"""
         config_data = self.export_config(platform_id)
         
         with open(file_path, 'w') as f:
             json.dump(config_data, f, indent=2)
     
-    def load_config_from_file(self, platform_id: str, file_path: str):
+    def load_config_from_file(self, platform_id -> None: str, file_path -> None: str) -> None:
         """Load platform configuration from JSON file"""
         with open(file_path, 'r') as f:
             config_data = json.load(f)

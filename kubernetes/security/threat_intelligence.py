@@ -145,16 +145,16 @@ class VirusTotalClient:
     VirusTotal API client for threat intelligence
     """
     
-    def __init__(self, api_key: str):
+    def __init__(self, api_key -> None: str) -> None:
         self.api_key = api_key
         self.base_url = "https://www.virustotal.com/vtapi/v2"
         self.session = None
         
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         self.session = aiohttp.ClientSession()
         return self
     
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         try:
             logger.info(f"Executing __aexit__")
             
@@ -293,7 +293,7 @@ class AlienVaultOTXClient:
     AlienVault OTX (Open Threat Exchange) client
     """
     
-    def __init__(self, api_key: str):
+    def __init__(self, api_key -> None: str) -> None:
         try:
             logger.info(f"Executing __aexit__")
             
@@ -308,18 +308,18 @@ class AlienVaultOTXClient:
         except Exception as e:
             logger.error(f"__aexit__ failed: {e}")
             raise
-    def __init__(self, api_key: str):
+    def __init__(self, api_key -> None: str) -> None:
         self.api_key = api_key
         self.base_url = "https://otx.alienvault.com/api/v1"
         self.session = None
         
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         self.session = aiohttp.ClientSession(
             headers={'X-OTX-API-KEY': self.api_key}
         )
         return self
     
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         if self.session:
             await self.session.close()
     
@@ -381,7 +381,7 @@ class ThreatIntelligenceDatabase:
     Local threat intelligence database with caching and aggregation
     """
     
-    def __init__(self, redis_url: str = "redis://localhost:6379"):
+    def __init__(self, redis_url -> None: str = "redis -> None://localhost -> None:6379") -> None:
         self.redis_url = redis_url
         self.redis_pool = None
         
@@ -399,7 +399,7 @@ class ThreatIntelligenceDatabase:
         
         logger.info("Threat intelligence database initialized")
     
-    async def initialize_redis(self):
+    async def initialize_redis(self) -> None:
         """Initialize Redis connection"""
         try:
             self.redis_pool = aioredis.ConnectionPool.from_url(self.redis_url)
@@ -408,7 +408,7 @@ class ThreatIntelligenceDatabase:
             logger.error(f"Failed to initialize Redis: {e}")
             raise
     
-    async def store_indicator(self, indicator: ThreatIndicator):
+    async def store_indicator(self, indicator -> None: ThreatIndicator) -> None:
         """
         Store threat indicator in database
         
@@ -545,7 +545,7 @@ class ThreatIntelligenceDatabase:
             logger.error(f"Failed to get indicators by type: {e}")
             return []
     
-    async def update_indicator_last_seen(self, indicator_id: str):
+    async def update_indicator_last_seen(self, indicator_id -> None: str) -> None:
         """Update indicator last seen timestamp"""
         try:
             if indicator_id in self.indicators_cache:
@@ -573,7 +573,7 @@ class ThreatIntelligenceDatabase:
         except Exception as e:
             logger.error(f"Failed to update indicator last seen: {e}")
     
-    async def cleanup_expired_indicators(self):
+    async def cleanup_expired_indicators(self) -> None:
         """Cleanup expired indicators from cache"""
         try:
             current_time = datetime.utcnow()
@@ -615,10 +615,10 @@ class ThreatIntelligenceCollector:
     
     def __init__(
         self,
-        database: ThreatIntelligenceDatabase,
-        virustotal_api_key: str = None,
-        otx_api_key: str = None
-    ):
+        database -> None: ThreatIntelligenceDatabase,
+        virustotal_api_key -> None: str = None,
+        otx_api_key -> None: str = None
+    ) -> None:
         self.database = database
         self.virustotal_api_key = virustotal_api_key
         self.otx_api_key = otx_api_key
@@ -632,7 +632,7 @@ class ThreatIntelligenceCollector:
         
         logger.info("Threat intelligence collector initialized")
     
-    async def start_collection(self, collection_interval: int = 3600):
+    async def start_collection(self, collection_interval -> None: int = 3600) -> None:
         """
         Start automated threat intelligence collection
         
@@ -674,12 +674,12 @@ class ThreatIntelligenceCollector:
         finally:
             self.collection_active = False
     
-    async def stop_collection(self):
+    async def stop_collection(self) -> None:
         """Stop threat intelligence collection"""
         self.collection_active = False
         logger.info("Threat intelligence collection stopped")
     
-    async def _collect_from_virustotal(self):
+    async def _collect_from_virustotal(self) -> None:
         """Collect threat intelligence from VirusTotal"""
         try:
             async with VirusTotalClient(self.virustotal_api_key) as vt_client:
@@ -764,7 +764,7 @@ class ThreatIntelligenceCollector:
             logger.error(f"Failed to create VT indicator: {e}")
             return None
     
-    async def _collect_from_otx(self):
+    async def _collect_from_otx(self) -> None:
         """Collect threat intelligence from AlienVault OTX"""
         try:
             async with AlienVaultOTXClient(self.otx_api_key) as otx_client:
@@ -856,7 +856,7 @@ class ThreatIntelligenceCollector:
             logger.error(f"Failed to create OTX indicator: {e}")
             return None
     
-    async def _collect_from_osint(self):
+    async def _collect_from_osint(self) -> None:
         """Collect threat intelligence from OSINT sources"""
         try:
             # Collect from public blacklists and threat feeds
@@ -889,9 +889,9 @@ class ThreatIntelligenceCollector:
     
     async def _collect_from_osint_source(
         self,
-        session: aiohttp.ClientSession,
-        source: Dict[str, str]
-    ):
+        session -> None: aiohttp.ClientSession,
+        source -> None: Dict[str, str]
+    ) -> None:
         """Collect from individual OSINT source"""
         try:
             async with session.get(source['url'], timeout=30) as response:
@@ -906,7 +906,7 @@ class ThreatIntelligenceCollector:
         except Exception as e:
             logger.error(f"Failed to collect from OSINT source {source['name']}: {e}")
     
-    async def _process_ip_list(self, content: str, source_name: str):
+    async def _process_ip_list(self, content -> None: str, source_name -> None: str) -> None:
         """Process IP list from OSINT source"""
         try:
             lines = content.strip().split('\n')
@@ -948,7 +948,7 @@ class ThreatIntelligenceCollector:
         except Exception as e:
             logger.error(f"Failed to process IP list from {source_name}: {e}")
     
-    async def _process_domain_list(self, content: str, source_name: str):
+    async def _process_domain_list(self, content -> None: str, source_name -> None: str) -> None:
         """Process domain list from OSINT source"""
         try:
             lines = content.strip().split('\n')
@@ -1014,10 +1014,10 @@ class ThreatIntelligenceEngine:
     
     def __init__(
         self,
-        redis_url: str = "redis://localhost:6379",
-        virustotal_api_key: str = None,
-        otx_api_key: str = None
-    ):
+        redis_url -> None: str = "redis -> None://localhost -> None:6379",
+        virustotal_api_key -> None: str = None,
+        otx_api_key -> None: str = None
+    ) -> None:
         self.database = ThreatIntelligenceDatabase(redis_url)
         self.collector = ThreatIntelligenceCollector(
             database=self.database,
@@ -1032,7 +1032,7 @@ class ThreatIntelligenceEngine:
         
         logger.info("Threat intelligence engine initialized")
     
-    async def start_engine(self, collection_interval: int = 3600):
+    async def start_engine(self, collection_interval -> None: int = 3600) -> None:
         """
         Start threat intelligence engine
         
@@ -1058,7 +1058,7 @@ class ThreatIntelligenceEngine:
             logger.error(f"Failed to start threat intelligence engine: {e}")
             raise
     
-    async def stop_engine(self):
+    async def stop_engine(self) -> None:
         """Stop threat intelligence engine"""
         try:
             self.engine_active = False
@@ -1078,7 +1078,7 @@ class ThreatIntelligenceEngine:
         except Exception as e:
             logger.error(f"Failed to stop threat intelligence engine: {e}")
     
-    async def _cleanup_loop(self):
+    async def _cleanup_loop(self) -> None:
         """Background cleanup loop"""
         while self.engine_active:
             try:

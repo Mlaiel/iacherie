@@ -1,3 +1,8 @@
+"""
+Health Checker module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Distribution Module Health Check System
@@ -65,7 +70,7 @@ class DistributionHealthReport:
 class DistributionHealthChecker:
     """Enterprise-grade health checker for distribution modules"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.modules_to_check = {
             # Crisis Management Suite
             'crisis_management.sentiment_monitor': {
@@ -321,7 +326,7 @@ class DistributionHealthChecker:
     
     def generate_report_json(self, report: DistributionHealthReport) -> str:
         """Generate JSON report"""
-        def serialize_datetime(obj):
+        def serialize_datetime(obj) -> None:
             if isinstance(obj, datetime):
                 return obj.isoformat()
             raise TypeError(f"Object of type {type(obj)} is not JSON serializable")
@@ -357,7 +362,7 @@ class DistributionHealthChecker:
         
         return json.dumps(report_dict, indent=2, default=serialize_datetime)
     
-    def print_console_report(self, report: DistributionHealthReport):
+    def print_console_report(self, report -> None: DistributionHealthReport) -> None:
         """Print a formatted console report"""
         print("\n" + "="*80)
         print("🚀 AINFLUE DISTRIBUTION MODULE HEALTH CHECK REPORT")
@@ -394,7 +399,7 @@ class DistributionHealthChecker:
         
         print("="*80 + "\n")
 
-async def main():
+async def main() -> None:
     """Main function to run the health check"""
     try:
         # Add the project root to Python path

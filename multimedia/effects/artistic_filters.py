@@ -28,7 +28,7 @@ class ArtisticConfig:
 class WatercolorFilter:
     """Watercolor painting effect."""
     
-    def __init__(self, config: ArtisticConfig):
+    def __init__(self, config -> None: ArtisticConfig) -> None:
         self.config = config
     
     def apply_watercolor(self, frame: np.ndarray, intensity: float = 0.7) -> np.ndarray:
@@ -74,7 +74,7 @@ class WatercolorFilter:
 class OilPaintingFilter:
     """Oil painting artistic effect."""
     
-    def __init__(self, config: ArtisticConfig):
+    def __init__(self, config -> None: ArtisticConfig) -> None:
         self.config = config
     
     def apply_oil_painting(self, frame: np.ndarray, intensity: float = 0.7) -> np.ndarray:
@@ -115,7 +115,7 @@ class OilPaintingFilter:
 class SketchFilter:
     """Pencil sketch and drawing effects."""
     
-    def __init__(self, config: ArtisticConfig):
+    def __init__(self, config -> None: ArtisticConfig) -> None:
         self.config = config
     
     def apply_pencil_sketch(self, frame: np.ndarray, intensity: float = 0.7) -> np.ndarray:
@@ -199,7 +199,7 @@ class SketchFilter:
 class ImpressionistFilter:
     """Impressionist painting style effects."""
     
-    def __init__(self, config: ArtisticConfig):
+    def __init__(self, config -> None: ArtisticConfig) -> None:
         self.config = config
     
     def apply_impressionist(self, frame: np.ndarray, intensity: float = 0.7) -> np.ndarray:
@@ -246,7 +246,7 @@ class ImpressionistFilter:
 class ColorPaletteProcessor:
     """Color palette transformations for artistic effects."""
     
-    def __init__(self, config: ArtisticConfig):
+    def __init__(self, config -> None: ArtisticConfig) -> None:
         self.config = config
     
     def apply_color_palette(self, frame: np.ndarray, palette_type: str = "warm") -> np.ndarray:
@@ -289,7 +289,7 @@ class ColorPaletteProcessor:
 class ArtisticFiltersEngine:
     """Enterprise artistic filters engine for creative content enhancement."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.config = ArtisticConfig()
         self.watercolor = WatercolorFilter(self.config)
         self.oil_painting = OilPaintingFilter(self.config)

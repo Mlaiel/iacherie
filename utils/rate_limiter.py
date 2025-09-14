@@ -19,7 +19,7 @@ logger = logging.getLogger(__name__)
 class RateLimiter:
     """Enterprise rate limiter implementation"""
     
-    def __init__(self, max_requests: int = 100, window_size: int = 60):
+    def __init__(self, max_requests -> None: int = 100, window_size -> None: int = 60) -> None:
         self.max_requests = max_requests
         self.window_size = window_size
         self.requests: Dict[str, List[float]] = defaultdict(list)

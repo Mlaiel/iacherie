@@ -185,10 +185,10 @@ class ComplianceMonitor:
     
     def __init__(
         self,
-        enabled_frameworks: Optional[List[ComplianceFramework]] = None,
-        enable_real_time_monitoring: bool = True,
-        enable_automated_reporting: bool = True
-    ):
+        enabled_frameworks -> None: Optional[List[ComplianceFramework]] = None,
+        enable_real_time_monitoring -> None: bool = True,
+        enable_automated_reporting -> None: bool = True
+    ) -> None:
         # Configuration
         self.enabled_frameworks = enabled_frameworks or [
             ComplianceFramework.GDPR,

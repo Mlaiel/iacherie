@@ -1,3 +1,8 @@
+"""
+Hashtag Optimizer module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
@@ -132,7 +137,7 @@ class HashtagOptimizer:
     performance prediction, and strategic content optimization for maximum reach.
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """Initialize hashtag optimizer with configuration"""
         self.config = config
         self.auth_handler = AuthenticationHandler(config)
@@ -171,7 +176,7 @@ class HashtagOptimizer:
         
         logger.info("Hashtag Optimizer initialized successfully")
     
-    async def _initialize_ml_models(self):
+    async def _initialize_ml_models(self) -> None:
         """Initialize machine learning models for hashtag optimization"""
         try:
             # Load pre-trained models or initialize new ones
@@ -813,7 +818,7 @@ if __name__ == "__main__":
     # Example usage and testing
     import asyncio
     
-    async def test_hashtag_optimizer():
+    async def test_hashtag_optimizer() -> None:
         config = {
             'redis_url': 'redis://localhost:6379',
             'openai_api_key': 'your-api-key',

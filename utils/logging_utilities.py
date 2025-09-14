@@ -86,7 +86,7 @@ class LogEntry:
 class CustomJSONFormatter(logging.Formatter):
     """Custom JSON formatter for structured logging."""
     
-    def __init__(self, include_context: bool = True):
+    def __init__(self, include_context -> None: bool = True) -> None:
         super().__init__()
         self.include_context = include_context
     
@@ -144,15 +144,15 @@ class StructuredLogger:
     """
     
     def __init__(self, 
-                 name: str = "Ainflue",
-                 level: LogLevel = LogLevel.INFO,
-                 format_type: LogFormat = LogFormat.JSON,
-                 log_dir: Optional[str] = None,
-                 max_file_size: int = 100 * 1024 * 1024,  # 100MB
-                 backup_count: int = 10,
-                 enable_console: bool = True,
-                 enable_file: bool = True,
-                 enable_compression: bool = True):
+                 name -> None: str = "Ainflue",
+                 level -> None: LogLevel = LogLevel.INFO,
+                 format_type -> None: LogFormat = LogFormat.JSON,
+                 log_dir -> None: Optional[str] = None,
+                 max_file_size -> None: int = 100 * 1024 * 1024,  # 100MB
+                 backup_count -> None: int = 10,
+                 enable_console -> None: bool = True,
+                 enable_file -> None: bool = True,
+                 enable_compression -> None: bool = True) -> None:
         
         self.name = name
         self.level = level
@@ -198,7 +198,7 @@ class StructuredLogger:
             (r'\b(?:\d{1,3}\.){3}\d{1,3}\b', '[IP_ADDRESS]'),  # IP addresses
         ]
     
-    def _setup_formatters(self):
+    def _setup_formatters(self) -> None:
         """Setup log formatters based on format type."""
         if self.format_type == LogFormat.JSON:
             self.formatter = CustomJSONFormatter()
@@ -215,7 +215,7 @@ class StructuredLogger:
                 '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
             )
     
-    def _setup_handlers(self):
+    def _setup_handlers(self) -> None:
         """Setup log handlers."""
         # Console handler
         if self.enable_console:
@@ -254,7 +254,7 @@ class StructuredLogger:
         error_handler.setFormatter(self.formatter)
         self.logger.addHandler(error_handler)
     
-    def set_context(self, context: LogContext):
+    def set_context(self, context -> None: LogContext) -> None:
         """Set logging context for current thread."""
         self._local.context = context
     
@@ -262,7 +262,7 @@ class StructuredLogger:
         """Get current logging context."""
         return getattr(self._local, 'context', None)
     
-    def clear_context(self):
+    def clear_context(self) -> None:
         """Clear logging context for current thread."""
         if hasattr(self._local, 'context'):
             delattr(self._local, 'context')
@@ -306,35 +306,35 @@ class StructuredLogger:
         
         return log_data
     
-    def debug(self, message: str, extra_fields: Optional[Dict[str, Any]] = None):
+    def debug(self, message -> None: str, extra_fields -> None: Optional[Dict[str, Any]] = None) -> None:
         """Log debug message."""
         log_data = self._create_log_record(LogLevel.DEBUG, message, extra_fields)
         self.logger.debug(message, extra=log_data)
     
-    def info(self, message: str, extra_fields: Optional[Dict[str, Any]] = None):
+    def info(self, message -> None: str, extra_fields -> None: Optional[Dict[str, Any]] = None) -> None:
         """Log info message."""
         log_data = self._create_log_record(LogLevel.INFO, message, extra_fields)
         self.logger.info(message, extra=log_data)
     
-    def warning(self, message: str, extra_fields: Optional[Dict[str, Any]] = None):
+    def warning(self, message -> None: str, extra_fields -> None: Optional[Dict[str, Any]] = None) -> None:
         """Log warning message."""
         log_data = self._create_log_record(LogLevel.WARNING, message, extra_fields)
         self.logger.warning(message, extra=log_data)
     
-    def error(self, message: str, exception: Optional[Exception] = None,
-              extra_fields: Optional[Dict[str, Any]] = None):
+    def error(self, message -> None: str, exception -> None: Optional[Exception] = None,
+              extra_fields -> None: Optional[Dict[str, Any]] = None) -> None:
         """Log error message."""
         log_data = self._create_log_record(LogLevel.ERROR, message, extra_fields, exception)
         self.logger.error(message, extra=log_data)
     
-    def critical(self, message: str, exception: Optional[Exception] = None,
-                 extra_fields: Optional[Dict[str, Any]] = None):
+    def critical(self, message -> None: str, exception -> None: Optional[Exception] = None,
+                 extra_fields -> None: Optional[Dict[str, Any]] = None) -> None:
         """Log critical message."""
         log_data = self._create_log_record(LogLevel.CRITICAL, message, extra_fields, exception)
         self.logger.critical(message, extra=log_data)
     
-    def log_performance(self, operation: str, duration: float, 
-                       extra_metrics: Optional[Dict[str, float]] = None):
+    def log_performance(self, operation -> None: str, duration -> None: float, 
+                       extra_metrics -> None: Optional[Dict[str, float]] = None) -> None:
         """Log performance metrics."""
         with self._performance_lock:
             if operation not in self.performance_data:
@@ -350,8 +350,8 @@ class StructuredLogger:
             'operation': operation
         })
     
-    def log_security_event(self, event_type: str, details: Dict[str, Any],
-                          severity: LogLevel = LogLevel.WARNING):
+    def log_security_event(self, event_type -> None: str, details -> None: Dict[str, Any],
+                          severity -> None: LogLevel = LogLevel.WARNING) -> None:
         """Log security-related events."""
         security_data = {
             'security_event': True,
@@ -371,8 +371,8 @@ class StructuredLogger:
         else:
             self.info(message, extra_fields=security_data)
     
-    def log_api_call(self, method: str, endpoint: str, status_code: int,
-                     duration: float, user_id: Optional[str] = None):
+    def log_api_call(self, method -> None: str, endpoint -> None: str, status_code -> None: int,
+                     duration -> None: float, user_id -> None: Optional[str] = None) -> None:
         """Log API call with standard fields."""
         api_data = {
             'api_call': True,
@@ -398,9 +398,9 @@ class StructuredLogger:
         else:
             self.info(message, extra_fields=api_data)
     
-    async def log_async(self, level: LogLevel, message: str,
-                       extra_fields: Optional[Dict[str, Any]] = None,
-                       exception: Optional[Exception] = None):
+    async def log_async(self, level -> None: LogLevel, message -> None: str,
+                       extra_fields -> None: Optional[Dict[str, Any]] = None,
+                       exception -> None: Optional[Exception] = None) -> None:
         """Asynchronous logging for high-performance applications."""
         loop = asyncio.get_event_loop()
         
@@ -469,7 +469,7 @@ class StructuredLogger:
 class CompressingRotatingFileHandler(RotatingFileHandler):
     """Rotating file handler with compression."""
     
-    def doRollover(self):
+    def doRollover(self) -> None:
         """Override to add compression."""
         super().doRollover()
         
@@ -495,16 +495,16 @@ class CompressingRotatingFileHandler(RotatingFileHandler):
 class PerformanceLogger:
     """Context manager for automatic performance logging."""
     
-    def __init__(self, logger: StructuredLogger, operation: str):
+    def __init__(self, logger -> None: StructuredLogger, operation -> None: str) -> None:
         self.logger = logger
         self.operation = operation
         self.start_time = None
     
-    def __enter__(self):
+    def __enter__(self) -> None:
         self.start_time = time.time()
         return self
     
-    def __exit__(self, exc_type, exc_val, exc_tb):
+    def __exit__(self, exc_type, exc_val, exc_tb) -> None:
         if self.start_time:
             duration = time.time() - self.start_time
             self.logger.log_performance(self.operation, duration)
@@ -515,31 +515,31 @@ global_logger = StructuredLogger()
 
 
 # Convenience functions
-def set_global_context(context: LogContext):
+def set_global_context(context -> None: LogContext) -> None:
     """Set global logging context."""
     global_logger.set_context(context)
 
 
-def log_info(message: str, extra_fields: Optional[Dict[str, Any]] = None):
+def log_info(message -> None: str, extra_fields -> None: Optional[Dict[str, Any]] = None) -> None:
     """Log info message using global logger."""
     global_logger.info(message, extra_fields)
 
 
-def log_error(message: str, exception: Optional[Exception] = None,
-              extra_fields: Optional[Dict[str, Any]] = None):
+def log_error(message -> None: str, exception -> None: Optional[Exception] = None,
+              extra_fields -> None: Optional[Dict[str, Any]] = None) -> None:
     """Log error message using global logger."""
     global_logger.error(message, exception, extra_fields)
 
 
-def log_performance(operation: str, duration: float):
+def log_performance(operation -> None: str, duration -> None: float) -> None:
     """Log performance using global logger."""
     global_logger.log_performance(operation, duration)
 
 
-def performance_monitor(operation: str):
+def performance_monitor(operation -> None: str) -> None:
     """Decorator for automatic performance monitoring."""
-    def decorator(func):
-        def wrapper(*args, **kwargs):
+    def decorator(func) -> None:
+        def wrapper(*args, **kwargs) -> None:
             start_time = time.time()
             try:
                 result = func(*args, **kwargs)

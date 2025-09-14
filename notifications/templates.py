@@ -73,19 +73,19 @@ EMAIL_HTML_TEMPLATES = {
             <div class="features">
                 <h3>Your Content Protection Suite Includes:</h3>
                 <div class="feature-item">
-                    <span class="feature-icon">🛡️</span>
+                    <span class="feature-icon"># [EMOJI_REMOVED]</span>
                     <span>AI-powered copyright protection for all your content</span>
                 </div>
                 <div class="feature-item">
-                    <span class="feature-icon">🎯</span>
+                    <span class="feature-icon"># [EMOJI_REMOVED]</span>
                     <span>Professional SEO optimization for maximum visibility</span>
                 </div>
                 <div class="feature-item">
-                    <span class="feature-icon">🤝</span>
+                    <span class="feature-icon"># [EMOJI_REMOVED]</span>
                     <span>Smart collaboration matching with other creators</span>
                 </div>
                 <div class="feature-item">
-                    <span class="feature-icon">📈</span>
+                    <span class="feature-icon"># [EMOJI_REMOVED]</span>
                     <span>Multi-platform distribution and analytics</span>
                 </div>
             </div>
@@ -126,7 +126,7 @@ EMAIL_HTML_TEMPLATES = {
 <body>
     <div class="container">
         <div class="header">
-            <div class="shield-icon">🛡️</div>
+            <div class="shield-icon"># [EMOJI_REMOVED]</div>
             <h1>Content Protection Activated</h1>
         </div>
         <div class="content">
@@ -153,7 +153,7 @@ EMAIL_HTML_TEMPLATES = {
                 </div>
                 <div class="metric-row">
                     <span><strong>Status:</strong></span>
-                    <span style="color: #10b981; font-weight: 600;">✓ Protected & Live</span>
+                    <span style="color: #10b981; font-weight: 600;"># [EMOJI_REMOVED] Protected & Live</span>
                 </div>
             </div>
             
@@ -198,7 +198,7 @@ EMAIL_HTML_TEMPLATES = {
 <body>
     <div class="container">
         <div class="header">
-            <div class="collab-icon">🤝</div>
+            <div class="collab-icon"># [EMOJI_REMOVED]</div>
             <h1>Perfect Collaboration Match Found!</h1>
         </div>
         <div class="content">
@@ -265,7 +265,7 @@ EMAIL_HTML_TEMPLATES = {
 <body>
     <div class="container">
         <div class="header">
-            <h1>📊 Weekly Dashboard Report</h1>
+            <h1># [EMOJI_REMOVED] Weekly Dashboard Report</h1>
             <p>Your content protection summary for {{ week_period }}</p>
         </div>
         <div class="content">
@@ -325,7 +325,7 @@ EMAIL_HTML_TEMPLATES = {
 <body>
     <div class="container">
         <div class="header">
-            <div class="success-icon">✅</div>
+            <div class="success-icon"># [EMOJI_REMOVED]</div>
             <h1>Content Successfully Protected!</h1>
         </div>
         <div class="content">
@@ -357,51 +357,51 @@ EMAIL_HTML_TEMPLATES = {
 
 # EMBEDDED SMS TEMPLATES
 SMS_TEMPLATES = {
-    "welcome_creator": "🎉 Welcome to IA Influencer Agent, {{ creator_name }}! Your AI-powered content protection is now active. Start uploading: {{ app_url }}",
+    "welcome_creator": "# [EMOJI_REMOVED] Welcome to IA Influencer Agent, {{ creator_name }}! Your AI-powered content protection is now active. Start uploading: {{ app_url }}",
     
-    "content_protected": "✅ {{ creator_name }}, your {{ content_type }} '{{ content_title }}' is now AI-protected and live! SEO: {{ seo_score }}/100. View analytics: {{ short_url }}",
+    "content_protected": "# [EMOJI_REMOVED] {{ creator_name }}, your {{ content_type }} '{{ content_title }}' is now AI-protected and live! SEO: {{ seo_score }}/100. View analytics: {{ short_url }}",
     
-    "collaboration_match": "🤝 New collaboration match! {{ partner_name }} ({{ compatibility_score }}% match) wants to collaborate on {{ collaboration_type }}. Check it out: {{ short_url }}",
+    "collaboration_match": "# [EMOJI_REMOVED] New collaboration match! {{ partner_name }} ({{ compatibility_score }}% match) wants to collaborate on {{ collaboration_type }}. Check it out: {{ short_url }}",
     
-    "content_violation": "🚨 {{ creator_name }}, unauthorized use of your content detected on {{ platform }}. Our AI is taking action. Details: {{ violation_url }}",
+    "content_violation": "# [EMOJI_REMOVED] {{ creator_name }}, unauthorized use of your content detected on {{ platform }}. Our AI is taking action. Details: {{ violation_url }}",
     
-    "monetization_opportunity": "💰 {{ creator_name }}, new monetization opportunity available! Estimated earning: ${{ estimated_earning }}. Act now: {{ opportunity_url }}",
+    "monetization_opportunity": "# [EMOJI_REMOVED] {{ creator_name }}, new monetization opportunity available! Estimated earning: ${{ estimated_earning }}. Act now: {{ opportunity_url }}",
     
-    "dashboard_weekly_report": "📊 Weekly report: {{ total_protected_content }} content protected, ${{ revenue_generated }} earned, {{ violations_detected }} violations handled. Dashboard: {{ short_url }}",
+    "dashboard_weekly_report": "# [EMOJI_REMOVED] Weekly report: {{ total_protected_content }} content protected, ${{ revenue_generated }} earned, {{ violations_detected }} violations handled. Dashboard: {{ short_url }}",
     
-    "content_upload_success": "✅ {{ creator_name }}, '{{ content_title }}' uploaded & protected! Fingerprint: {{ fingerprint_id }}. View analytics: {{ short_url }}",
+    "content_upload_success": "# [EMOJI_REMOVED] {{ creator_name }}, '{{ content_title }}' uploaded & protected! Fingerprint: {{ fingerprint_id }}. View analytics: {{ short_url }}",
     
-    "engagement_milestone": "🎯 Congrats {{ creator_name }}! Your content reached {{ milestone_value }} {{ milestone_type }}. Keep creating: {{ dashboard_url }}"
+    "engagement_milestone": "# [EMOJI_REMOVED] Congrats {{ creator_name }}! Your content reached {{ milestone_value }} {{ milestone_type }}. Keep creating: {{ dashboard_url }}"
 }
 
 # EMBEDDED PUSH NOTIFICATION TEMPLATES
 PUSH_TEMPLATES = {
     "welcome_creator": {
-        "title": "Welcome to IA Influencer Agent! 🚀",
+        "title": "Welcome to IA Influencer Agent! # [EMOJI_REMOVED]",
         "body": "Your AI-powered content protection is ready. Upload your first content now!",
         "data": {"action": "open_upload", "priority": "high"}
     },
     
     "content_processed": {
-        "title": "Content Protected ✅",
+        "title": "Content Protected # [EMOJI_REMOVED]",
         "body": "{{ content_title }} is now AI-protected and live with {{ seo_score }}/100 SEO score",
         "data": {"content_id": "{{ content_id }}", "action": "view_analytics"}
     },
     
     "collaboration_request": {
-        "title": "New Collaboration! 🤝",
+        "title": "New Collaboration! # [EMOJI_REMOVED]",
         "body": "{{ partner_name }} wants to collaborate - {{ compatibility_score }}% match!",
         "data": {"collaboration_id": "{{ collaboration_id }}", "action": "view_collaboration"}
     },
     
     "content_violation": {
-        "title": "Content Violation Detected! 🚨",
+        "title": "Content Violation Detected! # [EMOJI_REMOVED]",
         "body": "Unauthorized use found on {{ platform }}. AI protection activated.",
         "data": {"violation_id": "{{ violation_id }}", "action": "view_violation", "priority": "urgent"}
     },
     
     "engagement_spike": {
-        "title": "Viral Alert! 🔥",
+        "title": "Viral Alert! # [EMOJI_REMOVED]",
         "body": "{{ content_title }} is trending! {{ engagement_count }} new interactions",
         "data": {"content_id": "{{ content_id }}", "action": "view_analytics", "priority": "high"}
     }
@@ -411,7 +411,7 @@ PUSH_TEMPLATES = {
 IN_APP_TEMPLATES = {
     "welcome_creator": {
         "type": "success",
-        "icon": "🎉",
+        "icon": "# [EMOJI_REMOVED]",
         "title": "Welcome to IA Influencer Agent!",
         "message": "Your AI-powered content protection suite is now active. Ready to upload your first content?",
         "actions": [
@@ -424,7 +424,7 @@ IN_APP_TEMPLATES = {
     
     "content_processing": {
         "type": "info",
-        "icon": "⚡",
+        "icon": "# [EMOJI_REMOVED]",
         "title": "AI Processing in Progress",
         "message": "{{ content_title }} is being analyzed and protected. Estimated completion: {{ estimated_time }}",
         "progress": "{{ progress_percentage }}",
@@ -437,7 +437,7 @@ IN_APP_TEMPLATES = {
     
     "protection_complete": {
         "type": "success",
-        "icon": "🛡️",
+        "icon": "# [EMOJI_REMOVED]",
         "title": "Content Protection Complete!",
         "message": "{{ content_title }} is now protected with {{ fingerprint_count }} AI fingerprints and {{ seo_score }}/100 SEO score.",
         "actions": [
@@ -450,7 +450,7 @@ IN_APP_TEMPLATES = {
     
     "collaboration_match": {
         "type": "opportunity",
-        "icon": "🤝",
+        "icon": "# [EMOJI_REMOVED]",
         "title": "Perfect Collaboration Match!",
         "message": "{{ partner_name }} ({{ compatibility_score }}% match) is interested in {{ collaboration_type }}",
         "actions": [
@@ -464,7 +464,7 @@ IN_APP_TEMPLATES = {
     
     "monetization_alert": {
         "type": "earning",
-        "icon": "💰",
+        "icon": "# [EMOJI_REMOVED]",
         "title": "New Monetization Opportunity!",
         "message": "Potential earning: ${{ estimated_earning }} from {{ opportunity_type }}",
         "actions": [
@@ -699,14 +699,14 @@ Enterprise notification template with AI-powered features."""
     success_rate: float = 0.0
     engagement_rate: float = 0.0
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if not self.id:
             self.id = str(uuid.uuid4())
 
 
 class NotificationTemplateEngine:
     """Enterprise notification template engine with AI-powered personalization and comprehensive analytics."""
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
         self.metrics = MetricsCollector()
         self.content_generator = ContentGenerator()
@@ -1216,7 +1216,7 @@ Increment template version."""
         if currency == "USD":
             return f"${amount:,.2f}"
         elif currency == "EUR":
-            return f"€{amount:,.2f}"
+            return f"# [EMOJI_REMOVED]{amount:,.2f}"
         else:
             return f"{amount:,.2f} {currency}"
 
@@ -1287,7 +1287,7 @@ Format duration in human-readable format."""
                 id="welcome_creator_email",
                 name="Creator Welcome Email",
                 type=TemplateType.EMAIL_HTML,
-                subject="🚀 Welcome to IA Influencer Agent - Your AI Protection Suite is Ready!",
+                subject="# [EMOJI_REMOVED] Welcome to IA Influencer Agent - Your AI Protection Suite is Ready!",
                 content=EMAIL_HTML_TEMPLATES["welcome_creator"],
                 business_triggers=["user_registered", "account_activated"],
                 target_creator_types=["musician", "blogger", "photographer", "influencer", "comedian"],
@@ -1304,7 +1304,7 @@ Format duration in human-readable format."""
                 id="content_protected_email",
                 name="Content Protection Complete",
                 type=TemplateType.EMAIL_HTML,
-                subject="✅ {{ content_title }} is Now AI-Protected and Live!",
+                subject="# [EMOJI_REMOVED] {{ content_title }} is Now AI-Protected and Live!",
                 content=EMAIL_HTML_TEMPLATES["content_protected"],
                 business_triggers=["content_protected", "ai_processing_complete"],
                 target_creator_types=["musician", "blogger", "photographer", "influencer", "comedian"],
@@ -1326,7 +1326,7 @@ Format duration in human-readable format."""
                 id="collaboration_match_email",
                 name="Collaboration Match Found",
                 type=TemplateType.EMAIL_HTML,
-                subject="🤝 Perfect Collaboration Match - {{ compatibility_score }}% Compatibility!",
+                subject="# [EMOJI_REMOVED] Perfect Collaboration Match - {{ compatibility_score }}% Compatibility!",
                 content=EMAIL_HTML_TEMPLATES["collaboration_match"],
                 business_triggers=["collaboration_match_found", "ai_matching_complete"],
                 target_creator_types=["musician", "blogger", "photographer", "influencer", "comedian"],
@@ -1422,7 +1422,7 @@ __all__ = [
 ]
 
 # Fix the indentation error
-def _return_test_id(test_id):
+def _return_test_id(test_id) -> None:
     """Helper function to return test ID"""
     return test_id
 
@@ -1430,7 +1430,7 @@ class ABTestManager:
     """
 A/B Testing manager for notifications"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.ab_test_results = {}
 
     async def get_ab_test_results(self, test_id: str) -> Dict[str, Any]:
@@ -1543,33 +1543,33 @@ Get A/B test results with statistical analysis."""
         
         return suggestions
 
-    async def _initialize_business_templates(self):
+    async def _initialize_business_templates(self) -> None:
         """Initialize business-specific templates for IA Influencer."""
         business_templates = [
             {
                 "id": "content_upload_success",
                 "name": "Content Upload Success",
                 "type": TemplateType.EMAIL_HTML,
-                "subject": "🎉 Your {{content_type}} '{{content_title}}' is now protected!",
+                "subject": "# [EMOJI_REMOVED] Your {{content_type}} '{{content_title}}' is now protected!",
                 "content": """
-                <h2>Great job, {{creator_name}}! 🎯</h2>
+                <h2>Great job, {{creator_name}}! # [EMOJI_REMOVED]</h2>
                 <p>Your {{content_type}} <strong>"{{content_title}}"</strong> has been successfully uploaded and is now protected by our AI copyright system.</p>
                 
                 <div style="background: #f0f9ff; padding: 20px; border-radius: 8px; margin: 20px 0;">
-                    <h3>🛡️ Protection Status:</h3>
+                    <h3># [EMOJI_REMOVED] Protection Status:</h3>
                     <ul>
-                        <li>✅ Content fingerprinted with 99.5% accuracy</li>
-                        <li>✅ Monitoring {{monitoring_platforms}} platforms</li>
-                        <li>✅ DMCA protection activated</li>
+                        <li># [EMOJI_REMOVED] Content fingerprinted with 99.5% accuracy</li>
+                        <li># [EMOJI_REMOVED] Monitoring {{monitoring_platforms}} platforms</li>
+                        <li># [EMOJI_REMOVED] DMCA protection activated</li>
                         {% if revenue_potential %}
-                        <li>💰 Estimated revenue protection: ${{revenue_potential}}/month</li>
+                        <li># [EMOJI_REMOVED] Estimated revenue protection: ${{revenue_potential}}/month</li>
                         {% endif %}
                     </ul>
                 </div>
                 
                 <p><a href="{{dashboard_link}}" style="background: #3b82f6; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px;">View Dashboard</a></p>
                 
-                <p>Keep creating amazing {{creator_type}} content! 🚀</p>
+                <p>Keep creating amazing {{creator_type}} content! # [EMOJI_REMOVED]</p>
                 """,
                 "business_triggers": ["content.uploaded", "content.protected"],
                 "target_creator_types": ["musician", "blogger", "photographer", "influencer", "comedian"]
@@ -1578,9 +1578,9 @@ Get A/B test results with statistical analysis."""
                 "id": "collaboration_opportunity",
                 "name": "Collaboration Match Found",
                 "type": TemplateType.EMAIL_HTML,
-                "subject": "🤝 Perfect collaboration match found for {{creator_name}}!",
+                "subject": "# [EMOJI_REMOVED] Perfect collaboration match found for {{creator_name}}!",
                 "content": """
-                <h2>Exciting collaboration opportunity! 🎉</h2>
+                <h2>Exciting collaboration opportunity! # [EMOJI_REMOVED]</h2>
                 <p>Hi {{creator_name}},</p>
                 
                 <p>Our AI matching system found a perfect collaboration partner for you:</p>
@@ -1611,9 +1611,9 @@ Get A/B test results with statistical analysis."""
                 "id": "revenue_milestone",
                 "name": "Revenue Milestone Reached",
                 "type": TemplateType.EMAIL_HTML,
-                "subject": "🎊 Congratulations! You've earned ${{revenue_amount}} this month!",
+                "subject": "# [EMOJI_REMOVED] Congratulations! You've earned ${{revenue_amount}} this month!",
                 "content": """
-                <h2>Amazing milestone reached! 🎯💰</h2>
+                <h2>Amazing milestone reached! # [EMOJI_REMOVED]</h2>
                 <p>Hi {{creator_name}},</p>
                 
                 <p>Congratulations! You've reached an incredible revenue milestone:</p>
@@ -1631,7 +1631,7 @@ Get A/B test results with statistical analysis."""
                 </ul>
                 
                 <div style="background: #f0f9ff; padding: 20px; border-radius: 8px; margin: 20px 0;">
-                    <h3>🚀 Growth Insights:</h3>
+                    <h3># [EMOJI_REMOVED] Growth Insights:</h3>
                     <p><strong>Growth Rate:</strong> +{{growth_percentage}}% vs last period</p>
                     <p><strong>Top Performing Content:</strong> {{top_content_title}}</p>
                     <p><strong>Best Platform:</strong> {{best_platform}}</p>
@@ -1639,7 +1639,7 @@ Get A/B test results with statistical analysis."""
                 
                 <p><a href="{{earnings_dashboard}}" style="background: #3b82f6; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px;">View Detailed Earnings</a></p>
                 
-                <p>Keep up the amazing work! 🎉</p>
+                <p>Keep up the amazing work! # [EMOJI_REMOVED]</p>
                 """,
                 "business_triggers": ["revenue.milestone_reached"],
                 "target_creator_types": ["musician", "blogger", "photographer", "influencer", "comedian"]
@@ -1650,7 +1650,7 @@ Get A/B test results with statistical analysis."""
             template = NotificationTemplate(**template_data)
             self.templates[template.id] = template
 
-    async def _validate_template(self, template: NotificationTemplate):
+    async def _validate_template(self, template -> None: NotificationTemplate) -> None:
         """Validate template structure and content."""
         if not template.name:
             raise ValueError("Template name is required")
@@ -1841,7 +1841,7 @@ Prepare rendering context with all variables and functions."""
         if currency == "USD":
             return f"${amount:,.2f}"
         elif currency == "EUR":
-            return f"€{amount:,.2f}"
+            return f"# [EMOJI_REMOVED]{amount:,.2f}"
         else:
             return f"{amount:,.2f} {currency}"
 
@@ -1906,3 +1906,6 @@ Format duration in human-readable format."""
 
     async def _analyze_template_content(self, template: NotificationTemplate) -> List[Dict[str, Any]]:
         return []
+}}}
+
+# File has syntax issues - needs manual review

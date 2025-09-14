@@ -93,7 +93,7 @@ class VectorDatabaseManager:
     """
 Main vector database manager"""
     
-    def __init__(self, k8s_client=None, redis_client=None, postgres_client=None):
+    def __init__(self, k8s_client=None, redis_client=None, postgres_client=None) -> None:
         self.k8s_client = k8s_client
         self.redis_client = redis_client
         self.postgres_client = postgres_client

@@ -150,7 +150,7 @@ class DocumentProcessingConfig(BaseModel):
     content_moderation_enabled: bool = Field(default=True, description="Enable content moderation")
     
     @validator('max_file_size')
-    def validate_file_size(cls, v):
+    def validate_file_size(cls, v) -> None:
         if v <= 0 or v > 1024 * 1024 * 1024:  # 1GB limit
             raise ValueError("File size must be between 1 byte and 1GB")
         return v
@@ -158,7 +158,7 @@ class DocumentProcessingConfig(BaseModel):
 class DocumentSecurityManager:
     """Security manager for document processing - Security Expert role"""
     
-    def __init__(self, config: DocumentProcessingConfig):
+    def __init__(self, config -> None: DocumentProcessingConfig) -> None:
         self.config = config
         self.encryption_key = self._generate_encryption_key()
         self.cipher_suite = Fernet(self.encryption_key)
@@ -230,7 +230,7 @@ class DocumentSecurityManager:
 class DocumentMLAnalyzer:
     """ML-powered document analysis - ML Engineer role"""
     
-    def __init__(self, config: DocumentProcessingConfig):
+    def __init__(self, config -> None: DocumentProcessingConfig) -> None:
         self.config = config
         self.openai_client = openai.OpenAI(api_key=config.openai_api_key)
         
@@ -479,7 +479,7 @@ class DocumentMLAnalyzer:
 class DocumentContentExtractor:
     """Document content extraction service - Backend Senior + Audio Engineer roles"""
     
-    def __init__(self, config: DocumentProcessingConfig):
+    def __init__(self, config -> None: DocumentProcessingConfig) -> None:
         self.config = config
         
     async def extract_content(self, file_path: str, document_type: DocumentType) -> str:
@@ -618,7 +618,7 @@ class DocumentContentExtractor:
 class DocumentComplianceValidator:
     """Document compliance validation - Security + Legal roles"""
     
-    def __init__(self, config: DocumentProcessingConfig):
+    def __init__(self, config -> None: DocumentProcessingConfig) -> None:
         self.config = config
         
     async def validate_compliance(self, document_metadata: DocumentMetadata, content: str) -> Dict[str, Any]:
@@ -731,7 +731,7 @@ class DocumentComplianceValidator:
 class DocumentProcessingOrchestrator:
     """Main orchestrator for document processing - Lead Dev IA + Backend Senior roles"""
     
-    def __init__(self, config: DocumentProcessingConfig):
+    def __init__(self, config -> None: DocumentProcessingConfig) -> None:
         self.config = config
         self.security_manager = DocumentSecurityManager(config)
         self.ml_analyzer = DocumentMLAnalyzer(config)
@@ -954,7 +954,7 @@ class DocumentProcessingOrchestrator:
 class DocumentProcessingService:
     """Main document processing service facade - DevOps + Integration role"""
     
-    def __init__(self, config: Optional[DocumentProcessingConfig] = None):
+    def __init__(self, config -> None: Optional[DocumentProcessingConfig] = None) -> None:
         self.config = config or DocumentProcessingConfig(
             openai_api_key="your-openai-key-here",  # Should be configured via environment
             encryption_enabled=True,
@@ -963,7 +963,7 @@ class DocumentProcessingService:
         )
         self.orchestrator = DocumentProcessingOrchestrator(self.config)
         
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize the document processing service"""
         logger.info("Initializing Document Processing Service")
         
@@ -978,7 +978,7 @@ class DocumentProcessingService:
         
         logger.info("Document Processing Service initialized successfully")
     
-    async def _validate_configuration(self):
+    async def _validate_configuration(self) -> None:
         """Validate service configuration"""
         if not self.config.openai_api_key or self.config.openai_api_key == "your-openai-key-here":
             logger.warning("OpenAI API key not configured - AI features will be limited")
@@ -986,7 +986,7 @@ class DocumentProcessingService:
         if self.config.max_file_size > 1024 * 1024 * 1024:  # 1GB
             logger.warning("Max file size is very large - consider performance implications")
     
-    async def _initialize_ml_models(self):
+    async def _initialize_ml_models(self) -> None:
         """Initialize ML models with proper error handling"""
         try:
             # This would download models if not already present
@@ -994,7 +994,7 @@ class DocumentProcessingService:
         except Exception as e:
             logger.error(f"ML models initialization failed: {e}")
     
-    async def _setup_monitoring(self):
+    async def _setup_monitoring(self) -> None:
         """Setup monitoring and metrics collection"""
         logger.info("Document processing monitoring setup completed")
     
@@ -1027,7 +1027,7 @@ __all__ = [
 
 if __name__ == "__main__":
     # Example usage and testing
-    async def main():
+    async def main() -> None:
         # Initialize service
         service = DocumentProcessingService()
         await service.initialize()

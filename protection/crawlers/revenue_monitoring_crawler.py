@@ -126,7 +126,7 @@ class RevenueMonitoringCrawler(BasePlatformCrawler):
     analytics across all major content monetization platforms.
     """
     
-    def __init__(self, config: Dict[str, Any], platform_apis: PlatformAPIManager):
+    def __init__(self, config -> None: Dict[str, Any], platform_apis -> None: PlatformAPIManager) -> None:
         """
 Initialize revenue monitoring crawler with advanced tracking capabilities."""
         super().__init__(config)
@@ -814,7 +814,7 @@ Calculate comprehensive revenue impact analysis for unauthorized usage."""
 class RevenueCalculator:
     """Advanced revenue calculation engine with multi-platform support."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.currency_rates = {}
         self.platform_rates = {}
         
@@ -864,7 +864,7 @@ Calculate comprehensive revenue totals across all platforms."""
 class UnauthorizedUsageDetector:
     """Advanced unauthorized content usage detection system."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.detection_algorithms = []
         self.similarity_threshold = 0.85
         
@@ -909,7 +909,7 @@ Create unauthorized usage alert from detected content."""
 class FinancialAnalyzer:
     """Advanced financial analysis and reporting system."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         try:
             logger.info(f"Executing __init__")
             
@@ -1025,7 +1025,7 @@ Analyze revenue trends and patterns."""
 class RevenueAlertManager:
     """Advanced revenue alert and notification management system."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.alert_thresholds = {}
         self.notification_channels = []
         

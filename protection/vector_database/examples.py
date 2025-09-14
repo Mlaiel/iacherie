@@ -30,7 +30,7 @@ from .optimization_engine import OptimizationLevel
 from .query_engine import QueryType, QueryPriority, QueryFilter
 
 
-async def basic_content_protection_example():
+async def basic_content_protection_example() -> None:
     """
     Basic example: Store and search audio content for copyright protection
     """
@@ -112,7 +112,7 @@ async def basic_content_protection_example():
         await vector_db.shutdown()
 
 
-async def enterprise_analytics_example():
+async def enterprise_analytics_example() -> None:
     """
     Enterprise example: Advanced analytics and performance monitoring
     """
@@ -224,7 +224,7 @@ async def enterprise_analytics_example():
         await vector_db.shutdown()
 
 
-async def optimization_example():
+async def optimization_example() -> None:
     """
     Example: Automatic performance optimization
     """
@@ -296,7 +296,7 @@ async def optimization_example():
         await vector_db.shutdown()
 
 
-async def multi_modal_search_example():
+async def multi_modal_search_example() -> None:
     """
     Advanced example: Cross-modal content search
     """
@@ -383,7 +383,7 @@ async def multi_modal_search_example():
         await vector_db.shutdown()
 
 
-async def real_time_monitoring_example():
+async def real_time_monitoring_example() -> None:
     """
     Example: Real-time system monitoring and alerts
     """
@@ -461,7 +461,7 @@ async def real_time_monitoring_example():
         await vector_db.shutdown()
 
 
-async def main():
+async def main() -> None:
     """
     Run all examples to demonstrate the vector database capabilities
     """

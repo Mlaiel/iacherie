@@ -169,7 +169,7 @@ class LocalSEOService:
     automated monitoring, and intelligent optimization recommendations.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize Local SEO Service with enterprise configuration"""
         self.service_name = "LocalSEOService"
         self.version = "1.0.0"
@@ -826,7 +826,7 @@ Visit us today to experience why we're the top-rated {business.category.value} i
         return music_optimization
 
     # 🔒 Security Methods
-    async def _initiate_business_verification(self, business_id: str):
+    async def _initiate_business_verification(self, business_id -> None: str) -> None:
         """Initiate secure business verification process"""
         # Implement verification workflow
         logger.info(f"🔒 Business verification initiated for {business_id}")
@@ -857,7 +857,7 @@ Visit us today to experience why we're the top-rated {business.category.value} i
         """Generate unique business ID"""
         return hashlib.md5(f"{name}_{coordinates[0]}_{coordinates[1]}".encode()).hexdigest()[:16]
 
-    async def _store_ranking_metrics(self, business_id: str, metrics: Dict[str, Any]):
+    async def _store_ranking_metrics(self, business_id -> None: str, metrics -> None: Dict[str, Any]) -> None:
         """Store ranking metrics with time series data"""
         # In production: Use time-series database
         pass
@@ -876,7 +876,7 @@ Visit us today to experience why we're the top-rated {business.category.value} i
     # Additional utility methods would be implemented here...
 
 # Example usage and testing
-async def main():
+async def main() -> None:
     """Example usage of Local SEO Service"""
     service = LocalSEOService()
     

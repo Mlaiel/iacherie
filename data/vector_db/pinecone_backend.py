@@ -43,7 +43,7 @@ logger = logging.getLogger(__name__)
 class PineconeAPIManager:
     """Manages Pinecone API operations and rate limiting."""
     
-    def __init__(self, api_key: str, environment: str):
+    def __init__(self, api_key -> None: str, environment -> None: str) -> None:
         """
         Initialize API manager.
         
@@ -113,7 +113,7 @@ class PineconeAPIManager:
 class PineconeNamespaceManager:
     """Manages Pinecone namespaces for data organization."""
     
-    def __init__(self, index: Any):
+    def __init__(self, index -> None: Any) -> None:
         """
         Initialize namespace manager.
         
@@ -180,7 +180,7 @@ class PineconeNamespaceManager:
 class PineconeCostOptimizer:
     """Optimizes costs for Pinecone usage."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize cost optimizer."""
         self.usage_stats = {
             'reads': 0,
@@ -272,7 +272,7 @@ class PineconeBackend(BaseVectorBackend):
     - Compliance monitoring
     """
     
-    def __init__(self, config: Any, security_manager: Optional[Any] = None):
+    def __init__(self, config -> None: Any, security_manager -> None: Optional[Any] = None) -> None:
         """Initialize Pinecone backend."""
         super().__init__(config, security_manager)
         
@@ -441,7 +441,7 @@ class PineconeBackend(BaseVectorBackend):
             vector_list = vector.tolist()
             
             # Upsert vector
-            def upsert_vector():
+            def upsert_vector() -> None:
                 self.index.upsert(
                     vectors=[(vector_id, vector_list, pinecone_metadata)],
                     namespace=self.namespace
@@ -517,7 +517,7 @@ class PineconeBackend(BaseVectorBackend):
                 upsert_data.append((vector_id, vector.tolist(), pinecone_metadata))
             
             # Upsert batch
-            def upsert_batch():
+            def upsert_batch() -> None:
                 self.index.upsert(
                     vectors=upsert_data,
                     namespace=self.namespace
@@ -572,7 +572,7 @@ class PineconeBackend(BaseVectorBackend):
                         pinecone_filter[safe_key] = {'$eq': str(value)}
             
             # Perform search
-            def query_index():
+            def query_index() -> None:
                 query_params = {
                     'vector': query_list,
                     'top_k': top_k,
@@ -651,7 +651,7 @@ class PineconeBackend(BaseVectorBackend):
                 return None
             
             # Fetch vector from Pinecone
-            def fetch_vector():
+            def fetch_vector() -> None:
                 return self.index.fetch(
                     ids=[vector_id],
                     namespace=self.namespace
@@ -717,7 +717,7 @@ class PineconeBackend(BaseVectorBackend):
                 return False
             
             # Delete from Pinecone
-            def delete_vector():
+            def delete_vector() -> None:
                 self.index.delete(
                     ids=[vector_id],
                     namespace=self.namespace
@@ -838,7 +838,7 @@ class PineconeBackend(BaseVectorBackend):
                 return False
             
             # Test basic operations
-            def describe_index():
+            def describe_index() -> None:
                 return self.index.describe_index_stats()
             
             stats = await self.api_manager.make_request_with_retry(describe_index)
@@ -856,7 +856,7 @@ class PineconeBackend(BaseVectorBackend):
                 # Test with a dummy vector
                 dummy_vector = np.random.random(self.dimension).astype(np.float32)
                 
-                def test_query():
+                def test_query() -> None:
                     return self.index.query(
                         vector=dummy_vector.tolist(),
                         top_k=1,

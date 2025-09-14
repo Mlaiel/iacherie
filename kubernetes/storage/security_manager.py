@@ -243,7 +243,7 @@ class StorageSecurityManager:
     - Automated security monitoring and alerting
     """
     
-    def __init__(self, default_policy: Optional[SecurityPolicy] = None):
+    def __init__(self, default_policy -> None: Optional[SecurityPolicy] = None) -> None:
         self.policies: Dict[str, SecurityPolicy] = {}
         self.encryption_keys: Dict[str, EncryptionKey] = {}
         self.access_tokens: Dict[str, AccessToken] = {}
@@ -284,7 +284,7 @@ class StorageSecurityManager:
             multi_factor_auth=True
         )
     
-    def _initialize_master_key(self):
+    def _initialize_master_key(self) -> None:
         """Initialize master encryption key"""
         try:
             # In production, this would load from secure key management system
@@ -796,11 +796,11 @@ Get or generate encryption key for given security level and algorithm"""
             logger.error(f"❌ Key rotation failed: {e}")
             return {"success": False, "error": str(e)}
     
-    async def _log_audit_event(self, event_type: str, user_id: Optional[str], resource: str, 
-                              action: str, success: bool = True, error_message: Optional[str] = None,
-                              source_ip: Optional[str] = None, user_agent: Optional[str] = None,
-                              threat_level: ThreatLevel = ThreatLevel.LOW, suspicious: bool = False,
-                              metadata: Optional[Dict[str, Any]] = None):
+    async def _log_audit_event(self, event_type -> None: str, user_id -> None: Optional[str], resource -> None: str, 
+                              action -> None: str, success -> None: bool = True, error_message -> None: Optional[str] = None,
+                              source_ip -> None: Optional[str] = None, user_agent -> None: Optional[str] = None,
+                              threat_level -> None: ThreatLevel = ThreatLevel.LOW, suspicious -> None: bool = False,
+                              metadata -> None: Optional[Dict[str, Any]] = None) -> None:
         """Log security audit event"""
         try:
             event_id = secrets.token_urlsafe(16)
@@ -835,7 +835,7 @@ Get or generate encryption key for given security level and algorithm"""
         except Exception as e:
             logger.error(f"❌ Audit logging failed: {e}")
     
-    async def _analyze_suspicious_activity(self, event: SecurityAuditEvent):
+    async def _analyze_suspicious_activity(self, event -> None: SecurityAuditEvent) -> None:
         """Analyze event for suspicious activity patterns"""
         try:
             if not event.user_id:
@@ -1263,7 +1263,7 @@ Create high-security policy for sensitive data"""
 
 
 # Usage Example
-async def main():
+async def main() -> None:
     """Example usage of StorageSecurityManager"""
     try:
         # Create security manager with high-security policy

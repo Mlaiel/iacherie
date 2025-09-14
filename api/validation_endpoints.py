@@ -35,6 +35,7 @@ router = APIRouter(prefix="/validation", tags=["✅ Data Validation"])
 # ============ ENHANCED ENUMS ============
 
 class ValidationType(str, Enum):
+    """ValidationType class implementation"""
     CONTENT = "content"
     AGENT = "agent"
     CRAWLER = "crawler"
@@ -49,6 +50,7 @@ class ValidationType(str, Enum):
     COMPLIANCE = "compliance"
 
 class ValidationLevel(str, Enum):
+    """ValidationLevel class implementation"""
     BASIC = "basic"
     STANDARD = "standard"
     STRICT = "strict"
@@ -56,6 +58,7 @@ class ValidationLevel(str, Enum):
     COMPLIANCE = "compliance"
 
 class ValidationStatus(str, Enum):
+    """ValidationStatus class implementation"""
     VALID = "valid"
     INVALID = "invalid"
     WARNING = "warning"
@@ -63,6 +66,7 @@ class ValidationStatus(str, Enum):
     BLOCKED = "blocked"
 
 class ComplianceStandard(str, Enum):
+    """ComplianceStandard class implementation"""
     GDPR = "gdpr"
     CCPA = "ccpa"
     DMCA = "dmca"
@@ -74,6 +78,7 @@ class ComplianceStandard(str, Enum):
 # ============ ENHANCED MODELS ============
 
 class ValidationRule(BaseModel):
+    """ValidationRule class implementation"""
     field_name: str = Field(..., description="Name of the field to validate")
     rule_type: str = Field(..., description="Type of validation rule")
     rule_value: Any = Field(..., description="Value or pattern for validation")
@@ -82,6 +87,7 @@ class ValidationRule(BaseModel):
     compliance_related: bool = Field(default=False, description="Is this rule compliance-related")
 
 class ValidationSchema(BaseModel):
+    """ValidationSchema class implementation"""
     validation_type: ValidationType = Field(..., description="Type of validation")
     required_fields: List[str] = Field(..., description="List of required fields")
     optional_fields: List[str] = Field(default_factory=list, description="List of optional fields")
@@ -91,6 +97,7 @@ class ValidationSchema(BaseModel):
     compliance_standards: List[ComplianceStandard] = Field(default_factory=list, description="Compliance standards to check")
 
 class EnhancedValidationRequest(BaseModel):
+    """EnhancedValidationRequest class implementation"""
     data: Dict[str, Any] = Field(..., description="Data to validate")
     validation_type: ValidationType = Field(..., description="Type of validation to perform")
     validation_level: ValidationLevel = Field(default=ValidationLevel.STANDARD, description="Validation strictness level")
@@ -101,6 +108,7 @@ class EnhancedValidationRequest(BaseModel):
     context: Dict[str, Any] = Field(default_factory=dict, description="Additional context for validation")
 
 class ValidationIssue(BaseModel):
+    """ValidationIssue class implementation"""
     field: Optional[str] = Field(None, description="Field name with issue")
     issue_type: str = Field(..., description="Type of validation issue")
     severity: str = Field(..., description="Severity level: error, warning, info")
@@ -110,6 +118,7 @@ class ValidationIssue(BaseModel):
     compliance_impact: Optional[str] = Field(None, description="Impact on compliance")
 
 class EnhancedValidationResponse(BaseModel):
+    """EnhancedValidationResponse class implementation"""
     status: ValidationStatus = Field(..., description="Overall validation status")
     validation_id: str = Field(default_factory=lambda: str(uuid.uuid4()), description="Unique validation ID")
     timestamp: datetime = Field(default_factory=datetime.utcnow, description="Validation timestamp")
@@ -138,6 +147,7 @@ class EnhancedValidationResponse(BaseModel):
     compliance_standards_checked: List[ComplianceStandard] = Field(default_factory=list, description="Compliance standards verified")
 
 class ValidationReport(BaseModel):
+    """ValidationReport class implementation"""
     report_id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     report_type: str = Field(..., description="Type of validation report")
     generated_at: datetime = Field(default_factory=datetime.utcnow)
@@ -152,7 +162,7 @@ class ValidationReport(BaseModel):
 class EnterpriseValidationEngine:
     """Advanced validation engine with business rules and compliance checking"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.validation_schemas = self._load_validation_schemas()
         self.business_rules = self._load_business_rules()
         self.security_patterns = self._load_security_patterns()
@@ -373,7 +383,7 @@ class EnterpriseValidationEngine:
         
         return response
     
-    async def _validate_fields(self, data: Dict[str, Any], schema: ValidationSchema, response: EnhancedValidationResponse):
+    async def _validate_fields(self, data -> None: Dict[str, Any], schema -> None: ValidationSchema, response -> None: EnhancedValidationResponse) -> None:
         """Validate required and optional fields"""
         # Check required fields
         for field in schema.required_fields:
@@ -392,7 +402,7 @@ class EnterpriseValidationEngine:
                 for rule in rules:
                     await self._apply_field_rule(data[field_name], rule, response)
     
-    async def _apply_field_rule(self, value: Any, rule: ValidationRule, response: EnhancedValidationResponse):
+    async def _apply_field_rule(self, value -> None: Any, rule -> None: ValidationRule, response -> None: EnhancedValidationResponse) -> None:
         """Apply a specific validation rule to a field value"""
         try:
             if rule.rule_type == "length":
@@ -462,7 +472,7 @@ class EnterpriseValidationEngine:
                 code="RULE_APPLICATION_ERROR"
             ))
     
-    async def _validate_business_rules(self, data: Dict[str, Any], schema: ValidationSchema, response: EnhancedValidationResponse):
+    async def _validate_business_rules(self, data -> None: Dict[str, Any], schema -> None: ValidationSchema, response -> None: EnhancedValidationResponse) -> None:
         """Validate business rules"""
         for rule_name in schema.business_rules:
             validator = self.business_rules.get(rule_name)
@@ -485,7 +495,7 @@ class EnterpriseValidationEngine:
                         code="BUSINESS_RULE_ERROR"
                     ))
     
-    async def _validate_security(self, data: Dict[str, Any], response: EnhancedValidationResponse):
+    async def _validate_security(self, data -> None: Dict[str, Any], response -> None: EnhancedValidationResponse) -> None:
         """Validate security patterns"""
         for field_name, value in data.items():
             if isinstance(value, str):
@@ -499,7 +509,7 @@ class EnterpriseValidationEngine:
                             code=f"SECURITY_{pattern_name.upper()}"
                         ))
     
-    async def _validate_compliance(self, data: Dict[str, Any], schema: ValidationSchema, response: EnhancedValidationResponse):
+    async def _validate_compliance(self, data -> None: Dict[str, Any], schema -> None: ValidationSchema, response -> None: EnhancedValidationResponse) -> None:
         """Validate compliance standards"""
         for standard in schema.compliance_standards:
             validator = self.compliance_validators.get(standard)
@@ -524,7 +534,7 @@ class EnterpriseValidationEngine:
                         code="COMPLIANCE_CHECK_ERROR"
                     ))
     
-    async def _validate_custom_rules(self, data: Dict[str, Any], rules: List[ValidationRule], response: EnhancedValidationResponse):
+    async def _validate_custom_rules(self, data -> None: Dict[str, Any], rules -> None: List[ValidationRule], response -> None: EnhancedValidationResponse) -> None:
         """Validate custom rules"""
         for rule in rules:
             if rule.field_name in data:
@@ -649,9 +659,9 @@ validation_engine = EnterpriseValidationEngine()
 
 @router.post("/validate", response_model=EnhancedValidationResponse)
 async def validate_data(
-    request: EnhancedValidationRequest,
-    background_tasks: BackgroundTasks
-):
+    request -> None: EnhancedValidationRequest,
+    background_tasks -> None: BackgroundTasks
+) -> None:
     """
     🔍 **Enterprise Data Validation**
     
@@ -696,7 +706,7 @@ async def validate_data(
         )
 
 @router.get("/schemas", response_model=Dict[ValidationType, ValidationSchema])
-async def get_validation_schemas():
+async def get_validation_schemas() -> None:
     """
     📋 **Get Validation Schemas**
     
@@ -705,7 +715,7 @@ async def get_validation_schemas():
     return validation_engine.validation_schemas
 
 @router.get("/schemas/{validation_type}", response_model=ValidationSchema)
-async def get_validation_schema(validation_type: ValidationType):
+async def get_validation_schema(validation_type -> None: ValidationType) -> None:
     """
     📋 **Get Specific Validation Schema**
     
@@ -721,9 +731,9 @@ async def get_validation_schema(validation_type: ValidationType):
 
 @router.post("/bulk-validate", response_model=List[EnhancedValidationResponse])
 async def bulk_validate_data(
-    requests: List[EnhancedValidationRequest],
-    background_tasks: BackgroundTasks
-):
+    requests -> None: List[EnhancedValidationRequest],
+    background_tasks -> None: BackgroundTasks
+) -> None:
     """
     📦 **Bulk Data Validation**
     
@@ -768,10 +778,10 @@ async def bulk_validate_data(
 
 @router.get("/reports/validation-summary")
 async def get_validation_summary(
-    start_date: Optional[datetime] = None,
-    end_date: Optional[datetime] = None,
-    validation_type: Optional[ValidationType] = None
-):
+    start_date -> None: Optional[datetime] = None,
+    end_date -> None: Optional[datetime] = None,
+    validation_type -> None: Optional[ValidationType] = None
+) -> None:
     """
     📊 **Validation Analytics Summary**
     
@@ -813,9 +823,9 @@ async def get_validation_summary(
 
 @router.post("/custom-rules", response_model=Dict[str, str])
 async def create_custom_validation_rule(
-    rule: ValidationRule,
-    background_tasks: BackgroundTasks
-):
+    rule -> None: ValidationRule,
+    background_tasks -> None: BackgroundTasks
+) -> None:
     """
     ⚙️ **Create Custom Validation Rule**
     
@@ -848,9 +858,9 @@ async def create_custom_validation_rule(
 
 @router.get("/compliance-check/{standard}")
 async def check_compliance_standard(
-    standard: ComplianceStandard,
-    data: Dict[str, Any]
-):
+    standard -> None: ComplianceStandard,
+    data -> None: Dict[str, Any]
+) -> None:
     """
     ⚖️ **Compliance Standard Check**
     
@@ -873,7 +883,7 @@ async def check_compliance_standard(
     }
 
 @router.get("/health")
-async def validation_service_health():
+async def validation_service_health() -> None:
     """
     🏥 **Validation Service Health Check**
     
@@ -893,19 +903,19 @@ async def validation_service_health():
 
 # ============ BACKGROUND TASK FUNCTIONS ============
 
-async def log_validation_request(validation_type: ValidationType, level: ValidationLevel, data_size: int):
+async def log_validation_request(validation_type -> None: ValidationType, level -> None: ValidationLevel, data_size -> None: int) -> None:
     """Log validation request for analytics"""
     logger.info(f"Validation request: type={validation_type}, level={level}, size={data_size}")
 
-async def log_validation_result(validation_id: str, is_valid: bool, score: float):
+async def log_validation_result(validation_id -> None: str, is_valid -> None: bool, score -> None: float) -> None:
     """Log validation result for analytics"""
     logger.info(f"Validation result: id={validation_id}, valid={is_valid}, score={score}")
 
-async def log_bulk_validation(total_requests: int, successful: int):
+async def log_bulk_validation(total_requests -> None: int, successful -> None: int) -> None:
     """Log bulk validation operation"""
     logger.info(f"Bulk validation: total={total_requests}, successful={successful}")
 
-async def log_custom_rule_creation(rule_id: str, field_name: str, rule_type: str):
+async def log_custom_rule_creation(rule_id -> None: str, field_name -> None: str, rule_type -> None: str) -> None:
     """Log custom rule creation"""
     logger.info(f"Custom rule created: id={rule_id}, field={field_name}, type={rule_type}")
 

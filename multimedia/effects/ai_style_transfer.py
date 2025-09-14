@@ -37,7 +37,7 @@ class StyleTransferConfig:
 class VGGFeatureExtractor(nn.Module):
     """VGG-based feature extractor for style transfer."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super(VGGFeatureExtractor, self).__init__()
         
         # VGG19 layers for style and content extraction
@@ -74,7 +74,7 @@ class VGGFeatureExtractor(nn.Module):
         self.content_layers = ['conv4_2']
         self.style_layers = ['conv1_1', 'conv2_1', 'conv3_1', 'conv4_1', 'conv5_1']
         
-    def forward(self, x, layers=None):
+    def forward(self, x, layers=None) -> None:
         """Extract features from specified layers."""
         if layers is None:
             layers = self.content_layers + self.style_layers
@@ -98,7 +98,7 @@ class VGGFeatureExtractor(nn.Module):
 class FastStyleTransferNet(nn.Module):
     """Fast style transfer network for real-time processing."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super(FastStyleTransferNet, self).__init__()
         
         # Encoder
@@ -139,7 +139,7 @@ class FastStyleTransferNet(nn.Module):
             nn.Tanh()
         )
         
-    def forward(self, x):
+    def forward(self, x) -> None:
         x = self.encoder(x)
         x = self.residual_layers(x)
         x = self.decoder(x)
@@ -148,7 +148,7 @@ class FastStyleTransferNet(nn.Module):
 class ResidualBlock(nn.Module):
     """Residual block for style transfer network."""
     
-    def __init__(self, channels):
+    def __init__(self, channels) -> None:
         super(ResidualBlock, self).__init__()
         self.conv_block = nn.Sequential(
             nn.Conv2d(channels, channels, 3, stride=1, padding=1),
@@ -158,13 +158,13 @@ class ResidualBlock(nn.Module):
             nn.InstanceNorm2d(channels),
         )
         
-    def forward(self, x):
+    def forward(self, x) -> None:
         return x + self.conv_block(x)
 
 class AIStyleTransferEngine:
     """Enterprise AI style transfer engine with multiple algorithms."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.vgg = VGGFeatureExtractor().to(self.device)
         self.fast_style_nets = {}  # Cache for fast style transfer models
@@ -333,7 +333,7 @@ class AIStyleTransferEngine:
         
         # Optimization loop
         for iteration in range(self.config.num_iterations):
-            def closure():
+            def closure() -> None:
                 optimizer.zero_grad()
                 
                 # Extract features from current output

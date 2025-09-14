@@ -209,7 +209,7 @@ class CICDOrchestrator:
     and manage the complete creator workflow infrastructure.
     """
     
-    def __init__(self, config: CICDConfiguration = None):
+    def __init__(self, config -> None: CICDConfiguration = None) -> None:
         """
 Initialize CI/CD orchestrator"""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
@@ -517,7 +517,7 @@ Initialize CI/CD orchestrator"""
             return {"error": str(e), "system_status": "error"}
     
     # Helper methods for deployment and validation
-    async def _setup_ia_influencer_configurations(self):
+    async def _setup_ia_influencer_configurations(self) -> None:
         """Setup IA Influencer specific configurations"""
         self.logger.info("Setting up IA Influencer configurations...")
         
@@ -655,11 +655,11 @@ Initialize CI/CD orchestrator"""
         return {"success": True, "strategy": "rolling", "environment": environment}
     
     # Notification and rollback implementations (placeholder methods)
-    async def _send_deployment_notifications(self, deployment_id: str, results: Dict[str, Any], validation: Dict[str, Any]):
+    async def _send_deployment_notifications(self, deployment_id -> None: str, results -> None: Dict[str, Any], validation -> None: Dict[str, Any]) -> None:
         """Send deployment notifications"""
         await self.notification_system.send_deployment_notification(deployment_id, results, validation)
     
-    async def _rollback_creator_workflow_deployment(self, deployment_id: str, environment: str):
+    async def _rollback_creator_workflow_deployment(self, deployment_id -> None: str, environment -> None: str) -> None:
         """
 Rollback creator workflow deployment"""
         await self.rollback_automation.rollback_deployment(deployment_id, environment)
@@ -857,7 +857,7 @@ from .compliance_checker import (
 class CICDOrchestrator:
     """Enterprise CI/CD orchestrator"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """
 Initialize CI/CD orchestrator"""
         self.pipeline_manager = pipeline_manager
@@ -1057,7 +1057,7 @@ CI_CD_CONFIG = {
     "performance_monitoring_enabled": True,
 }
 
-def get_system_info():
+def get_system_info() -> None:
     """Get CI/CD system information"""
     return {
         "name": "IA-Influencer-Agent CI/CD System",
@@ -1069,7 +1069,7 @@ def get_system_info():
         "config": CI_CD_CONFIG,
     }
 
-def initialize_ci_cd_system():
+def initialize_ci_cd_system() -> None:
     """Initialize complete CI/CD system"""
     try:
         components = []

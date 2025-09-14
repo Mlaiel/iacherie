@@ -63,13 +63,13 @@ class UserBadge:
 class BadgeSystemWorkflow:
     """AI-powered badge system workflow"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.metrics_collector = MetricsCollector()
         self.available_badges: Dict[str, Badge] = {}
         self.user_badges: Dict[str, List[UserBadge]] = {}
         self._initialize_default_badges()
         
-    def _initialize_default_badges(self):
+    def _initialize_default_badges(self) -> None:
         """Initialize default badge collection"""
         default_badges = [
             Badge("first_post", "First Steps", "Created your first post", BadgeCategory.CREATOR, BadgeRarity.COMMON, "/badges/first_post.png", {"posts_created": 1}),

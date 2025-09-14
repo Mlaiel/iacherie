@@ -42,57 +42,69 @@ except ImportError:
     SQLALCHEMY_AVAILABLE = False
     # Comprehensive SQLAlchemy fallbacks
     class Column:
-        def __init__(self, *args, **kwargs): 
+    """Column: class implementation"""
+        def __init__(self, *args, **kwargs) -> None: 
             self.type = args[0] if args else None
     class Integer: pass
     class String: 
-        def __init__(self, length=None): self.length = length
+    """String: class implementation"""
+        def __init__(self, length=None) -> None: self.length = length
     class Text: pass
     class Float: pass
     class Boolean: pass
     class DateTime: pass
     class JSON: pass
     class ForeignKey:
-        def __init__(self, column): self.column = column
+    """ForeignKey: class implementation"""
+        def __init__(self, column) -> None: self.column = column
     class Index:
-        def __init__(self, *args, **kwargs): pass
+    """Index: class implementation"""
+        def __init__(self, *args, **kwargs) -> None: pass
     class UniqueConstraint:
-        def __init__(self, *args, **kwargs): pass
+    """UniqueConstraint: class implementation"""
+        def __init__(self, *args, **kwargs) -> None: pass
     class CheckConstraint:
-        def __init__(self, *args, **kwargs): pass
+    """CheckConstraint: class implementation"""
+        def __init__(self, *args, **kwargs) -> None: pass
     class BigInteger: pass
     class DECIMAL:
-        def __init__(self, *args, **kwargs): pass
+    """DECIMAL: class implementation"""
+        def __init__(self, *args, **kwargs) -> None: pass
     class LargeBinary: pass
     class Enum:
-        def __init__(self, enum_class): self.enum_class = enum_class
+    """Enum: class implementation"""
+        def __init__(self, enum_class) -> None: self.enum_class = enum_class
     
-    def declarative_base():
+    def declarative_base() -> None:
         class Base:
-            def __init__(self, **kwargs):
+    """Base: class implementation"""
+            def __init__(self, **kwargs) -> None:
                 for key, value in kwargs.items():
                     setattr(self, key, value)
         return Base
     
-    def relationship(*args, **kwargs):
+    def relationship(*args, **kwargs) -> None:
         return None
     
     class Session:
-        def __init__(self, *args, **kwargs): pass
+    """Session: class implementation"""
+        def __init__(self, *args, **kwargs) -> None: pass
     
     class UUID: pass
     class JSONB: pass
     class ARRAY:
-        def __init__(self, item_type): self.item_type = item_type
+    """ARRAY: class implementation"""
+        def __init__(self, item_type) -> None: self.item_type = item_type
     
     class FuncFallback:
-        def now(self): return datetime.utcnow()
-        def md5(self, value): return f"md5({value})"
-        def count(self, value): return f"count({value})"
-        def max(self, value): return f"max({value})"
-        def min(self, value): return f"min({value})"
-        def avg(self, value): return f"avg({value})"
-        def sum(self, value): return f"sum({value})"
+    """FuncFallback: class implementation"""
+        def now(self) -> None: return datetime.utcnow()
+        def md5(self, value) -> None: return f"md5({value})"
+        def count(self, value) -> None: return f"count({value})"
+        def max(self, value) -> None: return f"max({value})"
+        def min(self, value) -> None: return f"min({value})"
+        def avg(self, value) -> None: return f"avg({value})"
+        def sum(self, value) -> None: return f"sum({value})"
     func = FuncFallback()
 
 # Optional pydantic with fallback
@@ -102,12 +114,13 @@ try:
 except ImportError:
     PYDANTIC_AVAILABLE = False
     class BaseModel:
-        def __init__(self, **kwargs):
+    """BaseModel: class implementation"""
+        def __init__(self, **kwargs) -> None:
             for key, value in kwargs.items():
                 setattr(self, key, value)
-    def Field(*args, **kwargs): return None
-    def validator(*args, **kwargs):
-        def decorator(func): return func
+    def Field(*args, **kwargs) -> None: return None
+    def validator(*args, **kwargs) -> None:
+        def decorator(func) -> None: return func
         return decorator
 
 import uuid
@@ -116,12 +129,14 @@ Base = declarative_base()
 
 # Enums for database
 class MonitoringStatusEnum(PyEnum):
+    """MonitoringStatusEnum class implementation"""
     ACTIVE = "active"
     PAUSED = "paused" 
     STOPPED = "stopped"
     ERROR = "error"
 
 class PlatformTypeEnum(PyEnum):
+    """PlatformTypeEnum class implementation"""
     YOUTUBE = "youtube"
     SPOTIFY = "spotify"
     SOUNDCLOUD = "soundcloud"
@@ -132,6 +147,7 @@ class PlatformTypeEnum(PyEnum):
     GENERIC_WEB = "generic_web"
 
 class ThreatLevelEnum(PyEnum):
+    """ThreatLevelEnum class implementation"""
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -139,6 +155,7 @@ class ThreatLevelEnum(PyEnum):
     NOISE = "noise"
 
 class ViolationStatusEnum(PyEnum):
+    """ViolationStatusEnum class implementation"""
     PENDING = "pending"
     INVESTIGATING = "investigating"
     CONFIRMED = "confirmed"
@@ -147,6 +164,7 @@ class ViolationStatusEnum(PyEnum):
     ESCALATED = "escalated"
 
 class MonitoringPriorityEnum(PyEnum):
+    """MonitoringPriorityEnum class implementation"""
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -582,6 +600,7 @@ Violation detection response."""
     evidence_data: Dict[str, Any] = Field(default_factory=dict)
 
     class Config:
+    """Config: class implementation"""
         from_attributes = True
 
 class MonitoringMetricsResponse(BaseModel):
@@ -596,6 +615,7 @@ Monitoring metrics response."""
     recorded_at: datetime
 
     class Config:
+    """Config: class implementation"""
         from_attributes = True
 
 class SystemHealthResponse(BaseModel):
@@ -611,6 +631,7 @@ System health metrics response."""
     recorded_at: datetime
 
     class Config:
+    """Config: class implementation"""
         from_attributes = True
 
 class PlatformConfigUpdate(BaseModel):
@@ -625,7 +646,7 @@ Platform configuration update request."""
 
 # Database utility functions
 
-def create_monitoring_indexes(engine):
+def create_monitoring_indexes(engine) -> None:
     """
 Create additional database indexes for performance optimization."""
     from sqlalchemy import text
@@ -646,7 +667,7 @@ Create additional database indexes for performance optimization."""
             except Exception as e:
                 print(f"Index creation failed: {e}")
 
-def setup_monitoring_database(engine):
+def setup_monitoring_database(engine) -> None:
     """Set up monitoring database with all tables and indexes."""
     # Create all tables
     Base.metadata.create_all(engine)
@@ -657,7 +678,7 @@ def setup_monitoring_database(engine):
     # Set up partitioning for time-series tables (PostgreSQL specific)
     setup_time_series_partitioning(engine)
 
-def setup_time_series_partitioning(engine):
+def setup_time_series_partitioning(engine) -> None:
     """
 Set up time-series partitioning for high-volume tables."""
     from sqlalchemy import text

@@ -1,3 +1,8 @@
+"""
+Workflow Orchestration Service module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 🔄 WORKFLOW ORCHESTRATION SERVICE
@@ -75,7 +80,7 @@ class WorkflowTask:
     max_retries: int = 3
     timeout: int = 300  # seconds
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.dependencies is None:
             self.dependencies = []
         if self.inputs is None:
@@ -98,7 +103,7 @@ class Workflow:
     creator_id: Optional[str] = None
     metadata: Dict[str, Any] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.created_at is None:
             self.created_at = datetime.utcnow()
         if self.metadata is None:
@@ -119,7 +124,7 @@ class OrchestrationMetrics:
 class WorkflowOrchestrationService:
     """Enterprise workflow orchestration service"""
     
-    def __init__(self, redis_url: str = "redis://localhost:6379"):
+    def __init__(self, redis_url -> None: str = "redis -> None://localhost -> None:6379") -> None:
         self.redis_url = redis_url
         self.workflows: Dict[str, Workflow] = {}
         self.active_workflows: Dict[str, Workflow] = {}
@@ -606,7 +611,7 @@ class WorkflowOrchestrationService:
 
 
 # Example usage and testing
-async def main():
+async def main() -> None:
     """Test the workflow orchestration service"""
     service = WorkflowOrchestrationService()
     

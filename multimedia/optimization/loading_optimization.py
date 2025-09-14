@@ -39,7 +39,7 @@ class LoadingOptimization:
 class LoadingOptimizer:
     """Professional loading optimization system"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize loading optimizer"""
         self.config = config or {}
         self.loading_stats: Dict[str, Dict[str, Any]] = {}

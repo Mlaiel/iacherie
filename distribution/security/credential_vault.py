@@ -102,7 +102,7 @@ class CredentialVault:
     - Integration with external key management systems
     """
 
-    def __init__(self, master_key: Optional[str] = None, config: Dict[str, Any] = None):
+    def __init__(self, master_key -> None: Optional[str] = None, config -> None: Dict[str, Any] = None) -> None:
         self.config = config or {}
         self.credentials = {}
         self.access_logs = []
@@ -120,7 +120,7 @@ class CredentialVault:
         """Generate a secure master key"""
         return base64.urlsafe_b64encode(secrets.token_bytes(32)).decode()
 
-    def _initialize_encryption_keys(self):
+    def _initialize_encryption_keys(self) -> None:
         """Initialize encryption keys for different security levels"""
         
         # Create different encryption keys based on master key
@@ -564,14 +564,14 @@ class CredentialVault:
 
     async def _log_access(
         self,
-        credential_id: str,
-        access_type: str,
-        accessed_by: str,
-        ip_address: str = "unknown",
-        user_agent: str = "unknown",
-        success: bool = False,
-        reason: Optional[str] = None
-    ):
+        credential_id -> None: str,
+        access_type -> None: str,
+        accessed_by -> None: str,
+        ip_address -> None: str = "unknown",
+        user_agent -> None: str = "unknown",
+        success -> None: bool = False,
+        reason -> None: Optional[str] = None
+    ) -> None:
         """Log credential access"""
         
         try:

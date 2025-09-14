@@ -83,7 +83,7 @@ class DeploymentConfig:
 class ClusterDeployer:
     """MongoDB cluster deployment automation."""
     
-    def __init__(self, config: DeploymentConfig):
+    def __init__(self, config -> None: DeploymentConfig) -> None:
         """Initialize cluster deployer."""
         self.config = config
         self.deployment_dir = Path(f"deployments/{config.cluster_name}")
@@ -961,7 +961,7 @@ echo "Replica: {replica_id}" >> /etc/mongodb_instance_info
 
 
 # Example usage
-async def deploy_production_cluster():
+async def deploy_production_cluster() -> None:
     """Example deployment of production MongoDB cluster."""
     config = DeploymentConfig(
         cluster_name="ainflue-prod",

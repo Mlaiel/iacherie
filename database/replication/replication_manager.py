@@ -93,7 +93,7 @@ class DatabaseStatus:
 class ReplicationOrchestrator:
     """Central orchestrator for database replication operations."""
     
-    def __init__(self, config: Optional[ReplicationConfig] = None):
+    def __init__(self, config -> None: Optional[ReplicationConfig] = None) -> None:
         self.config = config or ReplicationConfig()
         self._state = ReplicationState.STOPPED
         self._databases: Dict[str, DatabaseStatus] = {}
@@ -137,7 +137,7 @@ class ReplicationOrchestrator:
             self._state = ReplicationState.ERROR
             return False
     
-    async def _setup_database_coordinators(self):
+    async def _setup_database_coordinators(self) -> None:
         """Setup database-specific coordinators."""
         try:
             # Setup database replication coordinator
@@ -234,7 +234,7 @@ class ReplicationOrchestrator:
             logger.error(f"❌ Failed to stop replication: {e}")
             return False
     
-    async def _start_monitoring_tasks(self):
+    async def _start_monitoring_tasks(self) -> None:
         """Start background monitoring tasks."""
         try:
             # Main health monitoring loop
@@ -258,7 +258,7 @@ class ReplicationOrchestrator:
             logger.error(f"❌ Failed to start monitoring tasks: {e}")
             raise
     
-    async def _health_monitoring_loop(self):
+    async def _health_monitoring_loop(self) -> None:
         """Main health monitoring loop."""
         while True:
             try:
@@ -287,7 +287,7 @@ class ReplicationOrchestrator:
                 logger.error(f"❌ Health monitoring error: {e}")
                 await asyncio.sleep(60)  # Wait before retry
     
-    async def _performance_monitoring_loop(self):
+    async def _performance_monitoring_loop(self) -> None:
         """Performance metrics monitoring loop."""
         while True:
             try:
@@ -327,7 +327,7 @@ class ReplicationOrchestrator:
                 logger.error(f"❌ Performance monitoring error: {e}")
                 await asyncio.sleep(60)
     
-    async def _optimization_loop(self):
+    async def _optimization_loop(self) -> None:
         """Automatic optimization loop."""
         while True:
             try:
@@ -352,7 +352,7 @@ class ReplicationOrchestrator:
                 logger.error(f"❌ Optimization error: {e}")
                 await asyncio.sleep(300)  # Wait longer on error
     
-    async def _consider_failover(self, db_type: DatabaseType, coordinator):
+    async def _consider_failover(self, db_type -> None: DatabaseType, coordinator) -> None:
         """Consider if failover is needed for a database."""
         try:
             # Check failover conditions
@@ -394,7 +394,7 @@ class ReplicationOrchestrator:
         except Exception as e:
             logger.error(f"❌ Failover consideration error for {db_type.value}: {e}")
     
-    async def _optimize_replication_performance(self):
+    async def _optimize_replication_performance(self) -> None:
         """Optimize replication performance across all databases."""
         try:
             logger.info("🔧 Starting replication performance optimization...")
@@ -412,7 +412,7 @@ class ReplicationOrchestrator:
         except Exception as e:
             logger.error(f"❌ Performance optimization error: {e}")
     
-    async def _update_database_status(self, db_type: DatabaseType, status):
+    async def _update_database_status(self, db_type -> None: DatabaseType, status) -> None:
         """Update the status of a database."""
         with self._lock:
             self._databases[db_type.value] = status
@@ -457,7 +457,7 @@ class ReplicationOrchestrator:
                 throughput_ops_per_sec=0
             )
     
-    async def _trigger_event(self, event_name: str, data: Dict[str, Any]):
+    async def _trigger_event(self, event_name -> None: str, data -> None: Dict[str, Any]) -> None:
         """Trigger an event to registered handlers."""
         try:
             handlers = self._event_handlers.get(event_name, [])
@@ -473,11 +473,11 @@ class ReplicationOrchestrator:
         except Exception as e:
             logger.error(f"❌ Event trigger error for {event_name}: {e}")
     
-    def register_event_handler(self, event_name: str, handler: Callable):
+    def register_event_handler(self, event_name -> None: str, handler -> None: Callable) -> None:
         """Register an event handler."""
         self._event_handlers[event_name].append(handler)
     
-    async def close(self):
+    async def close(self) -> None:
         """Close the replication orchestrator."""
         try:
             logger.info("🔄 Closing Database Replication Orchestrator...")
@@ -503,7 +503,7 @@ class ReplicationOrchestrator:
 class ReplicationManager:
     """High-level replication manager interface."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._orchestrator = None
     
     async def initialize(self, config: ReplicationConfig) -> bool:
@@ -529,7 +529,7 @@ class ReplicationManager:
             raise RuntimeError("Replication manager not initialized")
         return await self._orchestrator.get_overall_status()
     
-    async def close(self):
+    async def close(self) -> None:
         """Close the replication manager."""
         if self._orchestrator:
             await self._orchestrator.close()
@@ -537,11 +537,11 @@ class ReplicationManager:
 class GlobalReplicationCoordinator:
     """Global coordinator for multi-region replication."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._regional_managers: Dict[str, ReplicationManager] = {}
         self._global_config = None
     
-    async def initialize_regions(self, regional_configs: Dict[str, ReplicationConfig]):
+    async def initialize_regions(self, regional_configs -> None: Dict[str, ReplicationConfig]) -> None:
         """Initialize replication managers for multiple regions."""
         for region, config in regional_configs.items():
             manager = ReplicationManager()

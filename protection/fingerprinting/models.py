@@ -230,7 +230,7 @@ Result of similarity comparison between content items."""
     match_regions: Optional[List[Dict[str, Any]]] = None  # For spatial/temporal matches
     
     @validator('similarity_score', 'confidence')
-    def validate_scores(cls, v):
+    def validate_scores(cls, v) -> None:
         """
 Validate score ranges."""
         if not 0.0 <= v <= 1.0:
@@ -264,7 +264,7 @@ Complete result of content fingerprinting process."""
     retry_count: int = 0
     
     @validator('content_type')
-    def validate_metadata_consistency(cls, v, values):
+    def validate_metadata_consistency(cls, v, values) -> None:
         """Ensure metadata matches content type."""
         metadata_map = {
             ContentType.AUDIO: 'audio_metadata',

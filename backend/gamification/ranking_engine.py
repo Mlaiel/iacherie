@@ -270,7 +270,7 @@ class UnifiedRankingEngine:
     gaming leaderboards with sophisticated scoring and tier management.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.leaderboards: Dict[str, Leaderboard] = {}
         self.tournaments: Dict[str, Tournament] = {}
@@ -282,7 +282,7 @@ class UnifiedRankingEngine:
         self._initialize_ranking_system()
         logger.info("🏆 Unified Ranking Engine initialized")
     
-    def _initialize_ranking_system(self):
+    def _initialize_ranking_system(self) -> None:
         """Initialize ranking system with default configurations."""
         
         # Initialize tier thresholds
@@ -314,7 +314,7 @@ class UnifiedRankingEngine:
         # Initialize score components
         self._initialize_score_components()
     
-    def _create_default_leaderboards(self):
+    def _create_default_leaderboards(self) -> None:
         """Create default platform and gaming leaderboards."""
         
         # Platform leaderboards
@@ -354,7 +354,7 @@ class UnifiedRankingEngine:
             )
             self.leaderboards[board_id] = leaderboard
     
-    def _initialize_score_components(self):
+    def _initialize_score_components(self) -> None:
         """Initialize scoring components for different categories."""
         
         # Platform score components
@@ -561,7 +561,7 @@ class UnifiedRankingEngine:
                 return rank
         return CompetitiveRank.BRONZE
     
-    async def _recalculate_leaderboard_positions(self, leaderboard_ids: List[str]):
+    async def _recalculate_leaderboard_positions(self, leaderboard_ids -> None: List[str]) -> None:
         """Recalculate positions for specified leaderboards."""
         try:
             for leaderboard_id in leaderboard_ids:

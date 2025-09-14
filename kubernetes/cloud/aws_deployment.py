@@ -99,7 +99,7 @@ class AWSDeploymentManager:
     """
 Enterprise AWS deployment and management system"""
     
-    def __init__(self, credentials: AWSCredentials):
+    def __init__(self, credentials -> None: AWSCredentials) -> None:
         """
 Initialize AWS deployment manager"""
         self.logger = logging.getLogger(self.__class__.__name__)

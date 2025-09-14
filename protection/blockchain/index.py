@@ -85,7 +85,7 @@ class BlockchainContentProtectionHub:
     Central orchestrator for all blockchain-based content protection services
     """
     
-    def __init__(self, config: BlockchainServiceConfig):
+    def __init__(self, config -> None: BlockchainServiceConfig) -> None:
         self.config = config
         self.status = ServiceStatus.INITIALIZING
         self.services = {}
@@ -157,7 +157,7 @@ class BlockchainContentProtectionHub:
             self.status = ServiceStatus.ERROR
             return False
     
-    async def _initialize_core_services(self):
+    async def _initialize_core_services(self) -> None:
         """Initialize core blockchain services"""
         try:
             # Create blockchain configuration
@@ -177,7 +177,7 @@ class BlockchainContentProtectionHub:
             logger.error(f"Core services initialization failed: {e}")
             raise
     
-    async def _initialize_contract_manager(self):
+    async def _initialize_contract_manager(self) -> None:
         """Initialize smart contract manager"""
         try:
             contract_config = self.config.smart_contracts
@@ -192,7 +192,7 @@ class BlockchainContentProtectionHub:
             logger.error(f"Contract manager initialization failed: {e}")
             raise
     
-    async def _initialize_nft_manager(self):
+    async def _initialize_nft_manager(self) -> None:
         """Initialize NFT manager"""
         try:
             nft_config = self.config.nft_settings
@@ -207,7 +207,7 @@ class BlockchainContentProtectionHub:
             logger.error(f"NFT manager initialization failed: {e}")
             raise
     
-    async def _initialize_payment_processor(self):
+    async def _initialize_payment_processor(self) -> None:
         """Initialize payment processor"""
         try:
             payment_config = PaymentConfig(**self.config.payment_processors)
@@ -222,7 +222,7 @@ class BlockchainContentProtectionHub:
             logger.error(f"Payment processor initialization failed: {e}")
             raise
     
-    async def _initialize_defi_integration(self):
+    async def _initialize_defi_integration(self) -> None:
         """Initialize DeFi integration"""
         try:
             defi_config = self.config.defi_protocols
@@ -237,7 +237,7 @@ class BlockchainContentProtectionHub:
             logger.error(f"DeFi integration initialization failed: {e}")
             raise
     
-    async def _initialize_monitoring(self):
+    async def _initialize_monitoring(self) -> None:
         """Initialize blockchain monitoring"""
         try:
             monitoring_config = self.config.monitoring_config
@@ -252,7 +252,7 @@ class BlockchainContentProtectionHub:
             logger.error(f"Monitoring initialization failed: {e}")
             raise
     
-    async def _initialize_timestamping(self):
+    async def _initialize_timestamping(self) -> None:
         """Initialize cryptographic timestamping"""
         try:
             timestamping_config = self.config.timestamping_config
@@ -266,7 +266,7 @@ class BlockchainContentProtectionHub:
             logger.error(f"Timestamping initialization failed: {e}")
             raise
     
-    async def _initialize_validation(self):
+    async def _initialize_validation(self) -> None:
         """Initialize blockchain validation"""
         try:
             validation_config = self.config.validation_config
@@ -702,7 +702,7 @@ Check monitoring service health"""
             logger.error(f"Copyright contract deployment failed: {e}")
             raise ContractError(f"Copyright contract deployment failed: {e}")
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Gracefully shutdown all blockchain services"""
         try:
             logger.info("Shutting down Blockchain Content Protection Hub...")
@@ -921,7 +921,7 @@ class BlockchainModuleManager:
     Provides unified access to all blockchain services
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.blockchain_service: Optional[BlockchainService] = None
         self.smart_contract_manager: Optional[SmartContractManager] = None
@@ -1217,7 +1217,7 @@ class BlockchainModuleManager:
                 'timestamp': datetime.utcnow().isoformat()
             }
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Graceful shutdown of all blockchain components"""
         try:
             logger.info("Shutting down blockchain module...")

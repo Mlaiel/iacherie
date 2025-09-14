@@ -173,7 +173,7 @@ class KeywordResult:
 class CreatorVoiceIntelligence:
     """Advanced creator voice intelligence system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize creator voice intelligence"""
         self.voice_profiles = {}
         self.performance_analytics = {}
@@ -393,7 +393,7 @@ class CreatorVoiceIntelligence:
 class VoiceContentClassifier:
     """Advanced voice content classification system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize voice content classifier"""
         self.classification_models = {}
         self.feature_extractors = {}
@@ -534,7 +534,7 @@ class VoiceContentClassifier:
 class VoiceContentEnhancer:
     """Advanced voice content enhancement system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize voice content enhancer"""
         self.enhancement_models = {}
         self.quality_analyzers = {}
@@ -632,7 +632,7 @@ class VoiceContentEnhancer:
 class VoiceKeywordExtractor:
     """Advanced voice keyword extraction system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize voice keyword extractor"""
         self.nlp_models = {}
         self.keyword_extractors = {}
@@ -727,7 +727,7 @@ class VoiceKeywordExtractor:
 class VoiceAIIntelligence:
     """Unified voice AI intelligence system"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         """Initialize voice AI intelligence"""
         self.config = config or {}
         self.creator_intelligence = CreatorVoiceIntelligence()

@@ -1,4 +1,6 @@
 """
+import asyncio
+
 Enhanced API Integration Router
 ==============================
 
@@ -39,6 +41,7 @@ logger = logging.getLogger(__name__)
 
 # API Models
 class ContentAnalysisRequest(BaseModel):
+    """ContentAnalysisRequest class implementation"""
     title: str = Field(..., description="Content title")
     description: str = Field(default="", description="Content description")
     content_type: str = Field(default="unknown", description="Type of content")
@@ -46,6 +49,7 @@ class ContentAnalysisRequest(BaseModel):
     hashtags: List[str] = Field(default_factory=list, description="Content hashtags")
 
 class SecurityAnalysisRequest(BaseModel):
+    """SecurityAnalysisRequest class implementation"""
     source_ip: str = Field(..., description="Source IP address")
     path: str = Field(..., description="Request path")
     method: str = Field(default="GET", description="HTTP method")
@@ -59,7 +63,7 @@ api_router = APIRouter(prefix="/api", tags=["integration"])
 # AI Models Endpoints
 if AI_MODELS_AVAILABLE:
     @api_router.post("/ai/analyze")
-    async def analyze_content_with_ai(request: ContentAnalysisRequest):
+    async def analyze_content_with_ai(request -> None: ContentAnalysisRequest) -> None:
         """Analyze content using multiple AI models"""
         try:
             input_data = request.dict()
@@ -86,7 +90,7 @@ if AI_MODELS_AVAILABLE:
             raise HTTPException(status_code=500, detail=str(e))
     
     @api_router.get("/ai/models/stats")
-    async def get_ai_model_stats():
+    async def get_ai_model_stats() -> None:
         """Get AI model usage statistics"""
         try:
             stats = ai_model_manager.get_model_stats()
@@ -100,7 +104,7 @@ if AI_MODELS_AVAILABLE:
             raise HTTPException(status_code=500, detail=str(e))
     
     @api_router.post("/ai/classify")
-    async def classify_content(request: ContentAnalysisRequest):
+    async def classify_content(request -> None: ContentAnalysisRequest) -> None:
         """Classify content using AI"""
         try:
             input_data = request.dict()
@@ -124,7 +128,7 @@ if AI_MODELS_AVAILABLE:
             raise HTTPException(status_code=500, detail=str(e))
     
     @api_router.post("/ai/sentiment")
-    async def analyze_sentiment(request: ContentAnalysisRequest):
+    async def analyze_sentiment(request -> None: ContentAnalysisRequest) -> None:
         """Analyze sentiment of content"""
         try:
             input_data = request.dict()
@@ -148,7 +152,7 @@ if AI_MODELS_AVAILABLE:
             raise HTTPException(status_code=500, detail=str(e))
     
     @api_router.post("/ai/trend-prediction")
-    async def predict_trends(request: ContentAnalysisRequest):
+    async def predict_trends(request -> None: ContentAnalysisRequest) -> None:
         """Predict viral potential and trends"""
         try:
             input_data = request.dict()
@@ -174,7 +178,7 @@ if AI_MODELS_AVAILABLE:
 # Security Enhancement Endpoints
 if ENHANCED_SECURITY_AVAILABLE:
     @api_router.post("/security/analyze")
-    async def analyze_security_threat(request: SecurityAnalysisRequest):
+    async def analyze_security_threat(request -> None: SecurityAnalysisRequest) -> None:
         """Analyze request for security threats"""
         try:
             request_data = request.dict()
@@ -207,7 +211,7 @@ if ENHANCED_SECURITY_AVAILABLE:
             raise HTTPException(status_code=500, detail=str(e))
     
     @api_router.get("/security/dashboard")
-    async def get_security_dashboard():
+    async def get_security_dashboard() -> None:
         """Get comprehensive security dashboard"""
         try:
             dashboard = security_monitor.get_security_dashboard()
@@ -221,7 +225,7 @@ if ENHANCED_SECURITY_AVAILABLE:
             raise HTTPException(status_code=500, detail=str(e))
     
     @api_router.get("/security/blocked-ips")
-    async def get_blocked_ips():
+    async def get_blocked_ips() -> None:
         """Get list of blocked IP addresses"""
         try:
             blocked_ips = list(security_monitor.threat_detector.blocked_ips)
@@ -238,7 +242,7 @@ if ENHANCED_SECURITY_AVAILABLE:
 # Streaming Endpoints
 if STREAMING_AVAILABLE:
     @api_router.get("/streaming/stats")
-    async def get_streaming_stats():
+    async def get_streaming_stats() -> None:
         """Get real-time streaming statistics"""
         try:
             stats = streaming_service.connection_manager.get_connection_stats()
@@ -252,7 +256,7 @@ if STREAMING_AVAILABLE:
             raise HTTPException(status_code=500, detail=str(e))
     
     @api_router.get("/streaming/rooms/{room_id}/users")
-    async def get_streaming_room_users(room_id: str, stream_type: str = "collaboration"):
+    async def get_streaming_room_users(room_id -> None: str, stream_type -> None: str = "collaboration") -> None:
         """Get users in a streaming room"""
         try:
             users = streaming_service.connection_manager.get_room_users(room_id, stream_type)
@@ -270,7 +274,7 @@ if STREAMING_AVAILABLE:
 
 # Enhanced Features Status Endpoint
 @api_router.get("/status")
-async def get_enhanced_features_status():
+async def get_enhanced_features_status() -> None:
     """Get status of all enhanced features"""
     return {
         "success": True,
@@ -293,7 +297,7 @@ async def get_enhanced_features_status():
 
 # Health check for enhanced features
 @api_router.get("/health")
-async def enhanced_health_check():
+async def enhanced_health_check() -> None:
     """Health check for enhanced features"""
     health_status = "healthy"
     checks = []

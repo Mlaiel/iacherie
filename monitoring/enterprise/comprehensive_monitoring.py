@@ -166,7 +166,7 @@ class Dashboard:
 class MetricsCollector:
     """Advanced metrics collection and storage"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.metrics: Dict[str, Metric] = {}
         self.metric_buffer: Dict[str, List[MetricDataPoint]] = {}
         self.collectors: List[Callable] = []
@@ -317,7 +317,7 @@ Start automatic metric collection"""
 class AnomalyDetector:
     """Machine learning-based anomaly detection"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.models: Dict[str, Dict[str, Any]] = {}
         self.training_window = timedelta(days=7)
         self.detection_sensitivity = 0.95  # confidence threshold
@@ -399,7 +399,7 @@ Train anomaly detection model for metric"""
 class AlertManager:
     """Intelligent alert management system"""
     
-    def __init__(self, metrics_collector: MetricsCollector):
+    def __init__(self, metrics_collector -> None: MetricsCollector) -> None:
         self.metrics_collector = metrics_collector
         self.anomaly_detector = AnomalyDetector()
         self.rules: Dict[str, AlertRule] = {}
@@ -629,7 +629,7 @@ Evaluate a single alert rule"""
 class MonitoringSystem:
     """Main monitoring system orchestrator"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.metrics_collector = MetricsCollector()
         self.alert_manager = AlertManager(self.metrics_collector)
         self._setup_default_metrics()

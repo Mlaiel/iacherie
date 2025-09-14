@@ -175,7 +175,7 @@ class ComplianceAlertRecord(Base):
 class ComplianceRiskAnalyzer:
     """Advanced compliance risk analysis and assessment"""
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client -> None: aioredis.Redis) -> None:
         self.redis = redis_client
         
     async def assess_compliance_risk(self, compliance_data: Dict[str, Any]) -> Dict[str, Any]:
@@ -329,7 +329,7 @@ class ComplianceRiskAnalyzer:
 class ComplianceMonitor:
     """Real-time compliance monitoring and alerting"""
     
-    def __init__(self, db_session: AsyncSession, redis_client: aioredis.Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: aioredis.Redis) -> None:
         self.db = db_session
         self.redis = redis_client
         
@@ -448,7 +448,7 @@ class ComplianceMonitor:
 class ComplianceReportGenerator:
     """Comprehensive compliance reporting system"""
     
-    def __init__(self, db_session: AsyncSession, redis_client: aioredis.Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: aioredis.Redis) -> None:
         self.db = db_session
         self.redis = redis_client
         
@@ -651,7 +651,7 @@ class ComplianceReportGenerator:
 class ComplianceOrchestrator:
     """Main compliance orchestration system"""
     
-    def __init__(self, db_session: AsyncSession, redis_client: aioredis.Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: aioredis.Redis) -> None:
         self.db = db_session
         self.redis = redis_client
         

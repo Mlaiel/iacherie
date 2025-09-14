@@ -18,19 +18,19 @@ class BaseEvent:
     """Base class for all events in the system"""
     
     def __init__(self, 
-                 event_type: str, 
-                 data: Dict[str, Any] = None, 
-                 event_id: str = None, 
-                 timestamp: datetime = None,
-                 metadata: Dict[str, Any] = None,
+                 event_type -> None: str, 
+                 data -> None: Dict[str, Any] = None, 
+                 event_id -> None: str = None, 
+                 timestamp -> None: datetime = None,
+                 metadata -> None: Dict[str, Any] = None,
                  priority=None,  # Import after to avoid circular imports
                  status=None,
-                 source: Optional[str] = None,
-                 correlation_id: Optional[str] = None,
-                 causation_id: Optional[str] = None,
-                 aggregate_id: Optional[str] = None,
-                 aggregate_version: Optional[int] = None,
-                 error_message: Optional[str] = None):
+                 source -> None: Optional[str] = None,
+                 correlation_id -> None: Optional[str] = None,
+                 causation_id -> None: Optional[str] = None,
+                 aggregate_id -> None: Optional[str] = None,
+                 aggregate_version -> None: Optional[int] = None,
+                 error_message -> None: Optional[str] = None) -> None:
         self.event_id = event_id or str(uuid4())
         self.event_type = event_type
         self.data = data or {}
@@ -84,7 +84,7 @@ class BaseEvent:
         return result
     
     @classmethod
-    def from_dict(cls, data: Dict[str, Any]):
+    def from_dict(cls, data -> None: Dict[str, Any]) -> None:
         """Create event from dictionary"""
         kwargs = {
             'event_type': data['event_type'],
@@ -121,13 +121,13 @@ class BaseEvent:
         
         return event
     
-    def __str__(self):
+    def __str__(self) -> None:
         return f"{self.__class__.__name__}(id={self.event_id}, type={self.event_type})"
     
-    def __repr__(self):
+    def __repr__(self) -> None:
         return self.__str__()
     
-    def __repr__(self):
+    def __repr__(self) -> None:
         return self.__str__()
 
 

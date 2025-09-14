@@ -150,13 +150,13 @@ class LocalInferenceEngine:
     
     def __init__(
         self,
-        model_cache_dir: str = "./models",
-        max_models_in_memory: int = 5,
-        max_concurrent_requests: int = 10,
-        enable_gpu: bool = True,
-        optimization_enabled: bool = True,
-        metrics_enabled: bool = True
-    ):
+        model_cache_dir -> None: str = "./models",
+        max_models_in_memory -> None: int = 5,
+        max_concurrent_requests -> None: int = 10,
+        enable_gpu -> None: bool = True,
+        optimization_enabled -> None: bool = True,
+        metrics_enabled -> None: bool = True
+    ) -> None:
         self.model_cache_dir = Path(model_cache_dir)
         self.model_cache_dir.mkdir(exist_ok=True)
         
@@ -197,7 +197,7 @@ class LocalInferenceEngine:
         if self.gpu_available:
             logger.info(f"GPU available: {self._get_gpu_info()}")
     
-    async def start(self):
+    async def start(self) -> None:
         """Start the inference engine."""
         self.workers_running = True
         
@@ -213,7 +213,7 @@ class LocalInferenceEngine:
         
         logger.info("Inference engine started")
     
-    async def stop(self):
+    async def stop(self) -> None:
         """Stop the inference engine."""
         self.workers_running = False
         
@@ -378,7 +378,7 @@ class LocalInferenceEngine:
         # This should not be reached if everything works correctly
         raise RuntimeError("Request processing failed unexpectedly")
     
-    async def _inference_worker(self, worker_name: str):
+    async def _inference_worker(self, worker_name -> None: str) -> None:
         """Worker task for processing inference requests."""
         logger.info(f"Inference worker {worker_name} started")
         
@@ -614,7 +614,7 @@ class LocalInferenceEngine:
         # For now, return model as-is
         return model
     
-    async def _evict_least_used_model(self):
+    async def _evict_least_used_model(self) -> None:
         """Evict the least recently used model."""
         if not self.loaded_models:
             return
@@ -748,12 +748,12 @@ class LocalInferenceEngine:
     
     async def _update_performance_metrics(
         self,
-        model_id: str,
-        inference_time: float,
-        queue_time: float,
-        memory_usage: float,
-        success: bool
-    ):
+        model_id -> None: str,
+        inference_time -> None: float,
+        queue_time -> None: float,
+        memory_usage -> None: float,
+        success -> None: bool
+    ) -> None:
         """Update performance metrics for a model."""
         if model_id not in self.performance_metrics:
             return
@@ -791,7 +791,7 @@ class LocalInferenceEngine:
         if uptime > 0:
             metrics.throughput_requests_per_second = total_requests / uptime
     
-    async def _performance_monitor(self):
+    async def _performance_monitor(self) -> None:
         """Monitor performance and log metrics."""
         while self.workers_running:
             try:
@@ -895,7 +895,7 @@ async def quick_inference(
 
 if __name__ == "__main__":
     # Example usage
-    async def main():
+    async def main() -> None:
         engine = await create_inference_engine()
         
         try:

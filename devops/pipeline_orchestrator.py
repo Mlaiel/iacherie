@@ -167,7 +167,7 @@ class PipelineOrchestrator:
     - Pipeline monitoring and alerting
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         # Pipeline management
         self.pipelines: Dict[str, Pipeline] = {}
         self.pipeline_executions: Dict[str, PipelineExecution] = {}
@@ -199,7 +199,7 @@ class PipelineOrchestrator:
         
         logger.info("PipelineOrchestrator initialized")
 
-    def _initialize_pipeline_orchestrator(self):
+    def _initialize_pipeline_orchestrator(self) -> None:
         """Initialize pipeline orchestrator"""
         
         # Start background tasks
@@ -224,7 +224,7 @@ class PipelineOrchestrator:
         
         logger.info("Pipeline orchestrator initialization complete")
 
-    def _setup_default_quality_gates(self):
+    def _setup_default_quality_gates(self) -> None:
         """Setup default quality gates"""
         
         # Code quality gate
@@ -318,7 +318,7 @@ class PipelineOrchestrator:
         self.quality_gates[security_gate.gate_id] = security_gate
         self.quality_gates[performance_gate.gate_id] = performance_gate
 
-    def _setup_pipeline_templates(self):
+    def _setup_pipeline_templates(self) -> None:
         """Setup pipeline templates"""
         
         # Web application template
@@ -465,7 +465,7 @@ class PipelineOrchestrator:
         self.pipeline_templates["web_application"] = web_app_template
         self.pipeline_templates["microservice"] = microservice_template
 
-    def _setup_orchestrator_config(self):
+    def _setup_orchestrator_config(self) -> None:
         """Setup orchestrator configuration"""
         
         self.orchestrator_config = {
@@ -653,7 +653,7 @@ class PipelineOrchestrator:
             logger.error(f"Pipeline trigger failed: {str(e)}")
             raise
 
-    async def _execute_pipeline(self, execution: PipelineExecution):
+    async def _execute_pipeline(self, execution -> None: PipelineExecution) -> None:
         """Execute pipeline stages"""
         
         try:
@@ -742,7 +742,7 @@ class PipelineOrchestrator:
         
         return workspace_path
 
-    async def _cleanup_workspace(self, workspace_path: str):
+    async def _cleanup_workspace(self, workspace_path -> None: str) -> None:
         """Cleanup execution workspace"""
         
         try:
@@ -1085,7 +1085,7 @@ class PipelineOrchestrator:
                 "reason": f"Condition evaluation error: {str(e)}"
             }
 
-    async def _send_pipeline_notifications(self, pipeline: Pipeline, execution: PipelineExecution):
+    async def _send_pipeline_notifications(self, pipeline -> None: Pipeline, execution -> None: PipelineExecution) -> None:
         """Send pipeline notifications"""
         
         try:
@@ -1108,11 +1108,11 @@ class PipelineOrchestrator:
 
     async def _send_notification(
         self,
-        notification_type: str,
-        notification_config: Dict[str, Any],
-        pipeline: Pipeline,
-        execution: PipelineExecution
-    ):
+        notification_type -> None: str,
+        notification_config -> None: Dict[str, Any],
+        pipeline -> None: Pipeline,
+        execution -> None: PipelineExecution
+    ) -> None:
         """Send specific notification"""
         
         try:
@@ -1154,7 +1154,7 @@ class PipelineOrchestrator:
         
         return message
 
-    async def _collect_pipeline_metrics(self, execution: PipelineExecution):
+    async def _collect_pipeline_metrics(self, execution -> None: PipelineExecution) -> None:
         """Collect pipeline execution metrics"""
         
         try:
@@ -1206,7 +1206,7 @@ class PipelineOrchestrator:
             logger.error(f"Pipeline metrics collection failed: {str(e)}")
 
     # Background tasks
-    async def _pipeline_execution_loop(self):
+    async def _pipeline_execution_loop(self) -> None:
         """Background pipeline execution loop"""
         while True:
             try:
@@ -1243,7 +1243,7 @@ class PipelineOrchestrator:
             except Exception as e:
                 logger.error(f"Pipeline execution loop error: {str(e)}")
 
-    async def _execute_pipeline_with_worker(self, execution: PipelineExecution, worker_id: str):
+    async def _execute_pipeline_with_worker(self, execution -> None: PipelineExecution, worker_id -> None: str) -> None:
         """Execute pipeline with assigned worker"""
         
         try:
@@ -1258,7 +1258,7 @@ class PipelineOrchestrator:
             if execution.execution_id in self.active_executions:
                 del self.active_executions[execution.execution_id]
 
-    async def _artifact_cleanup_loop(self):
+    async def _artifact_cleanup_loop(self) -> None:
         """Background artifact cleanup loop"""
         while True:
             try:
@@ -1286,7 +1286,7 @@ class PipelineOrchestrator:
             except Exception as e:
                 logger.error(f"Artifact cleanup loop error: {str(e)}")
 
-    async def _metrics_collection_loop(self):
+    async def _metrics_collection_loop(self) -> None:
         """Background metrics collection loop"""
         while True:
             try:
@@ -1298,7 +1298,7 @@ class PipelineOrchestrator:
             except Exception as e:
                 logger.error(f"Metrics collection loop error: {str(e)}")
 
-    async def _collect_orchestrator_metrics(self):
+    async def _collect_orchestrator_metrics(self) -> None:
         """Collect orchestrator-level metrics"""
         
         try:
@@ -1330,7 +1330,7 @@ class PipelineOrchestrator:
         except Exception as e:
             logger.error(f"Orchestrator metrics collection failed: {str(e)}")
 
-    async def _pipeline_monitoring_loop(self):
+    async def _pipeline_monitoring_loop(self) -> None:
         """Background pipeline monitoring loop"""
         while True:
             try:

@@ -13,6 +13,7 @@ from datetime import datetime
 
 @dataclass
 class Event_streamingMetrics:
+    """Event_streamingMetrics: class implementation"""
     integration_health: float = 0.0
     success_rate: float = 0.0
     latency_ms: float = 0.0
@@ -22,6 +23,7 @@ class Event_streamingMetrics:
 
 @dataclass
 class Event_streamingResult:
+    """Event_streamingResult: class implementation"""
     user_id: str
     integration_status: str
     performance_metrics: Event_streamingMetrics
@@ -32,7 +34,7 @@ class Event_streamingResult:
 class Event_streamingWorkflow:
     """Event_streaming integration workflow for Ainflue platform."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize event streaming workflow."""
         self.integration_health = 0.95
         self.performance_threshold = 0.9

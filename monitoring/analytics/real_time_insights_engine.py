@@ -140,7 +140,7 @@ class RealTimeInsightsEngine:
     detect anomalies, and provide actionable recommendations.
     """
     
-    def __init__(self, buffer_size: int = 10000):
+    def __init__(self, buffer_size -> None: int = 10000) -> None:
         """Initialize the real-time insights engine."""
         self.buffer_size = buffer_size
         self.metric_buffer: deque = deque(maxlen=buffer_size)
@@ -169,7 +169,7 @@ class RealTimeInsightsEngine:
         # Start real-time processing
         asyncio.create_task(self._start_real_time_processing())
     
-    def _initialize_baseline_models(self):
+    def _initialize_baseline_models(self) -> None:
         """Initialize baseline models for anomaly detection."""
         
         # Common metrics baseline models
@@ -206,7 +206,7 @@ class RealTimeInsightsEngine:
             }
         }
     
-    def _setup_threshold_rules(self):
+    def _setup_threshold_rules(self) -> None:
         """Setup threshold rules for alerts."""
         
         self.threshold_rules = {
@@ -242,7 +242,7 @@ class RealTimeInsightsEngine:
             }
         }
     
-    def _setup_pattern_detectors(self):
+    def _setup_pattern_detectors(self) -> None:
         """Setup pattern detection algorithms."""
         
         self.pattern_detectors = {
@@ -269,7 +269,7 @@ class RealTimeInsightsEngine:
             }
         }
     
-    async def _start_real_time_processing(self):
+    async def _start_real_time_processing(self) -> None:
         """Start the real-time data processing loop."""
         
         while True:
@@ -280,7 +280,7 @@ class RealTimeInsightsEngine:
                 logger.error(f"Error in real-time processing: {e}")
                 await asyncio.sleep(5)  # Brief pause on error
     
-    async def _process_real_time_data(self):
+    async def _process_real_time_data(self) -> None:
         """Process real-time data and generate insights."""
         
         if len(self.metric_buffer) < 10:  # Need minimum data
@@ -298,7 +298,7 @@ class RealTimeInsightsEngine:
         # Cleanup expired items
         await self._cleanup_expired_items()
     
-    def ingest_metric(self, metric: RealTimeMetric):
+    def ingest_metric(self, metric -> None: RealTimeMetric) -> None:
         """Ingest a real-time metric for processing."""
         
         # Add to buffer
@@ -325,7 +325,7 @@ class RealTimeInsightsEngine:
         
         return metric.metric_name in critical_metrics
     
-    async def _process_critical_metric(self, metric: RealTimeMetric):
+    async def _process_critical_metric(self, metric -> None: RealTimeMetric) -> None:
         """Process critical metric immediately."""
         
         # Check for immediate anomalies
@@ -335,7 +335,7 @@ class RealTimeInsightsEngine:
             self.alerts.append(alert)
             logger.warning(f"Critical alert created: {alert.title}")
     
-    async def _detect_anomalies(self, metrics: List[RealTimeMetric]):
+    async def _detect_anomalies(self, metrics -> None: List[RealTimeMetric]) -> None:
         """Detect anomalies in the metric stream."""
         
         # Group metrics by name
@@ -705,7 +705,7 @@ class RealTimeInsightsEngine:
         
         return expected_values
     
-    async def _analyze_trends(self, metrics: List[RealTimeMetric]):
+    async def _analyze_trends(self, metrics -> None: List[RealTimeMetric]) -> None:
         """Analyze trends in the metric stream."""
         
         # Group metrics by name
@@ -938,7 +938,7 @@ class RealTimeInsightsEngine:
         all_factors = base_factors + factors
         return all_factors[:5]  # Return top 5 factors
     
-    async def _generate_insights(self, metrics: List[RealTimeMetric]):
+    async def _generate_insights(self, metrics -> None: List[RealTimeMetric]) -> None:
         """Generate insights from analyzed data."""
         
         insights = []
@@ -1227,7 +1227,7 @@ class RealTimeInsightsEngine:
         
         return recommendations[:3]
     
-    async def _check_thresholds(self, metrics: List[RealTimeMetric]):
+    async def _check_thresholds(self, metrics -> None: List[RealTimeMetric]) -> None:
         """Check metrics against threshold rules and generate alerts."""
         
         for metric in metrics[-20:]:  # Check recent metrics
@@ -1364,7 +1364,7 @@ class RealTimeInsightsEngine:
             ]
         )
     
-    async def _cleanup_expired_items(self):
+    async def _cleanup_expired_items(self) -> None:
         """Clean up expired insights and old data."""
         
         current_time = datetime.now()

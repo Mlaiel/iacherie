@@ -32,11 +32,11 @@ class UserCreatedEvent(BaseEvent):
     """User account created event"""
     
     def __init__(self,
-                 user_id: str,
-                 email: str,
-                 username: str,
-                 creator_type: str,
-                 metadata: Optional[Dict[str, Any]] = None):
+                 user_id -> None: str,
+                 email -> None: str,
+                 username -> None: str,
+                 creator_type -> None: str,
+                 metadata -> None: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(
             event_type="user.created",
             data={
@@ -55,10 +55,10 @@ class UserVerifiedEvent(BaseEvent):
     """User verification completed event"""
     
     def __init__(self,
-                 user_id: str,
-                 verification_type: str,
-                 verification_level: str,
-                 metadata: Optional[Dict[str, Any]] = None):
+                 user_id -> None: str,
+                 verification_type -> None: str,
+                 verification_level -> None: str,
+                 metadata -> None: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(
             event_type="user.verified",
             data={
@@ -76,12 +76,12 @@ class ContentUploadedEvent(BaseEvent):
     """Content uploaded to platform event"""
     
     def __init__(self,
-                 content_id: str,
-                 user_id: str,
-                 content_type: str,
-                 file_size: int,
-                 duration: Optional[float] = None,
-                 metadata: Optional[Dict[str, Any]] = None):
+                 content_id -> None: str,
+                 user_id -> None: str,
+                 content_type -> None: str,
+                 file_size -> None: int,
+                 duration -> None: Optional[float] = None,
+                 metadata -> None: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(
             event_type="content.uploaded",
             data={
@@ -101,11 +101,11 @@ class ContentProcessingStartedEvent(BaseEvent):
     """Content processing started event"""
     
     def __init__(self,
-                 content_id: str,
-                 processing_type: str,
-                 ai_model: str,
-                 estimated_duration: Optional[int] = None,
-                 metadata: Optional[Dict[str, Any]] = None):
+                 content_id -> None: str,
+                 processing_type -> None: str,
+                 ai_model -> None: str,
+                 estimated_duration -> None: Optional[int] = None,
+                 metadata -> None: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(
             event_type="content.processing.started",
             data={
@@ -124,12 +124,12 @@ class ContentProcessingCompletedEvent(BaseEvent):
     """Content processing completed event"""
     
     def __init__(self,
-                 content_id: str,
-                 processing_type: str,
-                 results: Dict[str, Any],
-                 processing_time: float,
-                 success: bool = True,
-                 metadata: Optional[Dict[str, Any]] = None):
+                 content_id -> None: str,
+                 processing_type -> None: str,
+                 results -> None: Dict[str, Any],
+                 processing_time -> None: float,
+                 success -> None: bool = True,
+                 metadata -> None: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(
             event_type="content.processing.completed",
             data={
@@ -149,11 +149,11 @@ class AIAnalysisStartedEvent(BaseEvent):
     """AI analysis started event"""
     
     def __init__(self,
-                 content_id: str,
-                 analysis_type: str,
-                 ai_model: str,
-                 parameters: Optional[Dict[str, Any]] = None,
-                 metadata: Optional[Dict[str, Any]] = None):
+                 content_id -> None: str,
+                 analysis_type -> None: str,
+                 ai_model -> None: str,
+                 parameters -> None: Optional[Dict[str, Any]] = None,
+                 metadata -> None: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(
             event_type="ai.analysis.started",
             data={
@@ -172,12 +172,12 @@ class AIAnalysisCompletedEvent(BaseEvent):
     """AI analysis completed event"""
     
     def __init__(self,
-                 content_id: str,
-                 analysis_type: str,
-                 results: Dict[str, Any],
-                 confidence_score: float,
-                 processing_time: float,
-                 metadata: Optional[Dict[str, Any]] = None):
+                 content_id -> None: str,
+                 analysis_type -> None: str,
+                 results -> None: Dict[str, Any],
+                 confidence_score -> None: float,
+                 processing_time -> None: float,
+                 metadata -> None: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(
             event_type="ai.analysis.completed",
             data={
@@ -197,12 +197,12 @@ class CopyrightDetectedEvent(BaseEvent):
     """Copyright detection event"""
     
     def __init__(self,
-                 content_id: str,
-                 detection_type: str,
-                 matches: List[Dict[str, Any]],
-                 confidence_score: float,
-                 action_required: bool,
-                 metadata: Optional[Dict[str, Any]] = None):
+                 content_id -> None: str,
+                 detection_type -> None: str,
+                 matches -> None: List[Dict[str, Any]],
+                 confidence_score -> None: float,
+                 action_required -> None: bool,
+                 metadata -> None: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(
             event_type="copyright.detected",
             data={
@@ -222,12 +222,12 @@ class CollaborationRequestedEvent(BaseEvent):
     """Collaboration request event"""
     
     def __init__(self,
-                 collaboration_id: str,
-                 requester_id: str,
-                 target_user_id: str,
-                 collaboration_type: str,
-                 message: Optional[str] = None,
-                 metadata: Optional[Dict[str, Any]] = None):
+                 collaboration_id -> None: str,
+                 requester_id -> None: str,
+                 target_user_id -> None: str,
+                 collaboration_type -> None: str,
+                 message -> None: Optional[str] = None,
+                 metadata -> None: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(
             event_type="collaboration.requested",
             data={
@@ -247,10 +247,10 @@ class CollaborationAcceptedEvent(BaseEvent):
     """Collaboration accepted event"""
     
     def __init__(self,
-                 collaboration_id: str,
-                 acceptor_id: str,
-                 terms: Dict[str, Any],
-                 metadata: Optional[Dict[str, Any]] = None):
+                 collaboration_id -> None: str,
+                 acceptor_id -> None: str,
+                 terms -> None: Dict[str, Any],
+                 metadata -> None: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(
             event_type="collaboration.accepted",
             data={
@@ -268,12 +268,12 @@ class RevenueGeneratedEvent(BaseEvent):
     """Revenue generated event"""
     
     def __init__(self,
-                 content_id: str,
-                 user_id: str,
-                 revenue_amount: Decimal,
-                 currency: str,
-                 source: str,
-                 metadata: Optional[Dict[str, Any]] = None):
+                 content_id -> None: str,
+                 user_id -> None: str,
+                 revenue_amount -> None: Decimal,
+                 currency -> None: str,
+                 source -> None: str,
+                 metadata -> None: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(
             event_type="revenue.generated",
             data={
@@ -293,13 +293,13 @@ class PayoutProcessedEvent(BaseEvent):
     """Payout processed event"""
     
     def __init__(self,
-                 payout_id: str,
-                 user_id: str,
-                 amount: Decimal,
-                 currency: str,
-                 payment_method: str,
-                 status: str,
-                 metadata: Optional[Dict[str, Any]] = None):
+                 payout_id -> None: str,
+                 user_id -> None: str,
+                 amount -> None: Decimal,
+                 currency -> None: str,
+                 payment_method -> None: str,
+                 status -> None: str,
+                 metadata -> None: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(
             event_type="payout.processed",
             data={
@@ -320,12 +320,12 @@ class ContentViewedEvent(BaseEvent):
     """Content viewed event"""
     
     def __init__(self,
-                 content_id: str,
-                 viewer_id: Optional[str],
-                 session_id: str,
-                 view_duration: Optional[float] = None,
-                 platform: Optional[str] = None,
-                 metadata: Optional[Dict[str, Any]] = None):
+                 content_id -> None: str,
+                 viewer_id -> None: Optional[str],
+                 session_id -> None: str,
+                 view_duration -> None: Optional[float] = None,
+                 platform -> None: Optional[str] = None,
+                 metadata -> None: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(
             event_type="content.viewed",
             data={
@@ -345,11 +345,11 @@ class ContentSharedEvent(BaseEvent):
     """Content shared event"""
     
     def __init__(self,
-                 content_id: str,
-                 sharer_id: str,
-                 platform: str,
-                 share_type: str,
-                 metadata: Optional[Dict[str, Any]] = None):
+                 content_id -> None: str,
+                 sharer_id -> None: str,
+                 platform -> None: str,
+                 share_type -> None: str,
+                 metadata -> None: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(
             event_type="content.shared",
             data={
@@ -368,11 +368,11 @@ class SEOOptimizationCompletedEvent(BaseEvent):
     """SEO optimization completed event"""
     
     def __init__(self,
-                 content_id: str,
-                 optimization_type: str,
-                 improvements: Dict[str, Any],
-                 seo_score: float,
-                 metadata: Optional[Dict[str, Any]] = None):
+                 content_id -> None: str,
+                 optimization_type -> None: str,
+                 improvements -> None: Dict[str, Any],
+                 seo_score -> None: float,
+                 metadata -> None: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(
             event_type="seo.optimization.completed",
             data={
@@ -391,13 +391,13 @@ class SecurityThreatDetectedEvent(BaseEvent):
     """Security threat detected event"""
     
     def __init__(self,
-                 threat_id: str,
-                 threat_type: str,
-                 severity: str,
-                 source_ip: Optional[str] = None,
-                 user_id: Optional[str] = None,
-                 details: Optional[Dict[str, Any]] = None,
-                 metadata: Optional[Dict[str, Any]] = None):
+                 threat_id -> None: str,
+                 threat_type -> None: str,
+                 severity -> None: str,
+                 source_ip -> None: Optional[str] = None,
+                 user_id -> None: Optional[str] = None,
+                 details -> None: Optional[Dict[str, Any]] = None,
+                 metadata -> None: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(
             event_type="security.threat.detected",
             data={
@@ -418,11 +418,11 @@ class SystemHealthCheckEvent(BaseEvent):
     """System health check event"""
     
     def __init__(self,
-                 component: str,
-                 status: str,
-                 metrics: Dict[str, Any],
-                 issues: Optional[List[str]] = None,
-                 metadata: Optional[Dict[str, Any]] = None):
+                 component -> None: str,
+                 status -> None: str,
+                 metrics -> None: Dict[str, Any],
+                 issues -> None: Optional[List[str]] = None,
+                 metadata -> None: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(
             event_type="system.health.check",
             data={
@@ -441,12 +441,12 @@ class BackupCompletedEvent(BaseEvent):
     """Backup completed event"""
     
     def __init__(self,
-                 backup_id: str,
-                 backup_type: str,
-                 size_bytes: int,
-                 duration_seconds: float,
-                 success: bool,
-                 metadata: Optional[Dict[str, Any]] = None):
+                 backup_id -> None: str,
+                 backup_type -> None: str,
+                 size_bytes -> None: int,
+                 duration_seconds -> None: float,
+                 success -> None: bool,
+                 metadata -> None: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(
             event_type="backup.completed",
             data={
@@ -466,12 +466,12 @@ class NotificationSentEvent(BaseEvent):
     """Notification sent event"""
     
     def __init__(self,
-                 notification_id: str,
-                 user_id: str,
-                 notification_type: str,
-                 channel: str,
-                 delivered: bool,
-                 metadata: Optional[Dict[str, Any]] = None):
+                 notification_id -> None: str,
+                 user_id -> None: str,
+                 notification_type -> None: str,
+                 channel -> None: str,
+                 delivered -> None: bool,
+                 metadata -> None: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(
             event_type="notification.sent",
             data={
@@ -491,12 +491,12 @@ class MetadataExtractionEvent(BaseEvent):
     """Metadata extraction event"""
     
     def __init__(self,
-                 content_id: str,
-                 extraction_type: str,
-                 metadata_extracted: Dict[str, Any],
-                 extraction_time: float,
-                 success: bool = True,
-                 metadata: Optional[Dict[str, Any]] = None):
+                 content_id -> None: str,
+                 extraction_type -> None: str,
+                 metadata_extracted -> None: Dict[str, Any],
+                 extraction_time -> None: float,
+                 success -> None: bool = True,
+                 metadata -> None: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(
             event_type="content.metadata.extraction",
             data={
@@ -516,12 +516,12 @@ class StorageAllocationEvent(BaseEvent):
     """Storage allocation event"""
     
     def __init__(self,
-                 content_id: str,
-                 storage_path: str,
-                 allocated_size: int,
-                 storage_tier: str,
-                 allocation_success: bool = True,
-                 metadata: Optional[Dict[str, Any]] = None):
+                 content_id -> None: str,
+                 storage_path -> None: str,
+                 allocated_size -> None: int,
+                 storage_tier -> None: str,
+                 allocation_success -> None: bool = True,
+                 metadata -> None: Optional[Dict[str, Any]] = None) -> None:
         super().__init__(
             event_type="content.storage.allocation",
             data={

@@ -6,10 +6,10 @@ Copyright: All rights reserved - Unauthorized use prohibited
 Project: IA Influencer Agent Platform - Content Protection & Monetization
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 
-⚠️  AVERTISSEMENT SÉVÈRE ⚠️
-Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
+# [EMOJI_REMOVED]  AVERTISSEMENT S# [EMOJI_REMOVED]V# [EMOJI_REMOVED]RE # [EMOJI_REMOVED]
+Ce code est la propri# [EMOJI_REMOVED]t# [EMOJI_REMOVED] intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution sans autorisation 
-écrite explicite est strictement interdite et passible de poursuites judiciaires.
+# [EMOJI_REMOVED]crite explicite est strictement interdite et passible de poursuites judiciaires.
 Contact autorisations: mlaiel@live.de
 """
 
@@ -94,7 +94,7 @@ class Subnet:
     tags: Dict[str, str] = field(default_factory=dict)
     created_at: datetime = field(default_factory=datetime.now)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         try:
                     # Request validation
                     if not data:
@@ -182,10 +182,10 @@ class VPCManager:
     
     def __init__(
         self,
-        config_path: str = "/etc/vpc/config.yaml",
-        terraform_config_path: str = "/etc/vpc/terraform",
-        cloud_credentials: Optional[Dict[str, Any]] = None
-    ):
+        config_path -> None: str = "/etc/vpc/config.yaml",
+        terraform_config_path -> None: str = "/etc/vpc/terraform",
+        cloud_credentials -> None: Optional[Dict[str, Any]] = None
+    ) -> None:
         self.config_path = config_path
         self.terraform_config_path = terraform_config_path
         self.cloud_credentials = cloud_credentials or {}
@@ -738,3 +738,5 @@ class VPCManager:
         except Exception as e:
             logger.error(f"Failed to create AWS subnet: {e}")
             return False
+
+# File has syntax issues - needs manual review

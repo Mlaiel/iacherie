@@ -132,10 +132,10 @@ class RedisEnterpriseQueue:
     """
     
     def __init__(self, 
-                 redis_cluster: RedisManager,
-                 queue_name: str,
-                 encryption_manager: Optional[EncryptionManager] = None,
-                 metrics_collector: Optional[MetricsCollector] = None):
+                 redis_cluster -> None: RedisManager,
+                 queue_name -> None: str,
+                 encryption_manager -> None: Optional[EncryptionManager] = None,
+                 metrics_collector -> None: Optional[MetricsCollector] = None) -> None:
         self.redis = redis_cluster
         self.queue_name = queue_name
         self.encryption = encryption_manager
@@ -411,7 +411,7 @@ class RedisEnterpriseQueue:
         # Placeholder for decryption
         return data
     
-    async def _store_message_data(self, message_id: str, data: str):
+    async def _store_message_data(self, message_id -> None: str, data -> None: str) -> None:
         """Store message data in Redis"""
         key = f"message:{message_id}"
         # Set with TTL for automatic cleanup
@@ -422,16 +422,16 @@ class RedisEnterpriseQueue:
         key = f"message:{message_id}"
         return await self._redis_get(key)
     
-    async def _cleanup_message_data(self, message_id: str):
+    async def _cleanup_message_data(self, message_id -> None: str) -> None:
         """Clean up message data"""
         key = f"message:{message_id}"
         await self._redis_delete(key)
     
-    async def _add_to_pending_queue(self, message_id: str, priority: float):
+    async def _add_to_pending_queue(self, message_id -> None: str, priority -> None: float) -> None:
         """Add message to pending queue with priority"""
         await self._redis_zadd(self.pending_key, {message_id: priority})
     
-    async def _add_to_scheduled_queue(self, message_id: str, timestamp: float):
+    async def _add_to_scheduled_queue(self, message_id -> None: str, timestamp -> None: float) -> None:
         """Add message to scheduled queue"""
         await self._redis_zadd(self.scheduled_key, {message_id: timestamp})
     
@@ -442,16 +442,16 @@ class RedisEnterpriseQueue:
             return result[0]  # (message_id, priority)
         return None
     
-    async def _move_to_processing(self, message_id: str):
+    async def _move_to_processing(self, message_id -> None: str) -> None:
         """Move message to processing queue"""
         timestamp = time.time()
         await self._redis_zadd(self.processing_key, {message_id: timestamp})
     
-    async def _remove_from_processing(self, message_id: str):
+    async def _remove_from_processing(self, message_id -> None: str) -> None:
         """Remove message from processing queue"""
         await self._redis_zrem(self.processing_key, message_id)
     
-    async def _move_to_dlq(self, message_id: str, reason: str = ""):
+    async def _move_to_dlq(self, message_id -> None: str, reason -> None: str = "") -> None:
         """Move message to dead letter queue"""
         timestamp = time.time()
         dlq_data = {
@@ -461,7 +461,7 @@ class RedisEnterpriseQueue:
         }
         await self._redis_zadd(self.dlq_key, {json.dumps(dlq_data): timestamp})
     
-    async def _process_scheduled_messages(self):
+    async def _process_scheduled_messages(self) -> None:
         """Move ready scheduled messages to pending queue"""
         current_time = time.time()
         
@@ -514,7 +514,7 @@ class RedisEnterpriseQueue:
         """Get approximate memory usage in bytes"""
         return await self._redis_memory_usage(self.queue_name)
     
-    async def _update_metrics(self, action: str, message: Optional[QueueMessage]):
+    async def _update_metrics(self, action -> None: str, message -> None: Optional[QueueMessage]) -> None:
         """Update queue metrics"""
         if not self.metrics:
             return
@@ -532,7 +532,7 @@ class RedisEnterpriseQueue:
     
     # Redis operation wrappers (placeholder implementations)
     
-    async def _redis_set(self, key: str, value: str, ex: int = None):
+    async def _redis_set(self, key -> None: str, value -> None: str, ex -> None: int = None) -> None:
         """Redis SET operation"""
         # Placeholder - would use actual Redis client
         logger.debug(f"Redis SET: {key}")
@@ -543,28 +543,28 @@ class RedisEnterpriseQueue:
         logger.debug(f"Redis GET: {key}")
         return None
     
-    async def _redis_delete(self, key: str):
+    async def _redis_delete(self, key -> None: str) -> None:
         """Redis DELETE operation"""
         # Placeholder - would use actual Redis client
         logger.debug(f"Redis DELETE: {key}")
     
-    async def _redis_zadd(self, key: str, mapping: Dict[str, float]):
+    async def _redis_zadd(self, key -> None: str, mapping -> None: Dict[str, float]) -> None:
         """Redis ZADD operation"""
         # Placeholder - would use actual Redis client
         logger.debug(f"Redis ZADD: {key}")
     
-    async def _redis_zpopmin(self, key: str):
+    async def _redis_zpopmin(self, key -> None: str) -> None:
         """Redis ZPOPMIN operation"""
         # Placeholder - would use actual Redis client
         logger.debug(f"Redis ZPOPMIN: {key}")
         return None
     
-    async def _redis_zrem(self, key: str, member: str):
+    async def _redis_zrem(self, key -> None: str, member -> None: str) -> None:
         """Redis ZREM operation"""
         # Placeholder - would use actual Redis client
         logger.debug(f"Redis ZREM: {key}")
     
-    async def _redis_zrangebyscore(self, key: str, min_score: float, max_score: float):
+    async def _redis_zrangebyscore(self, key -> None: str, min_score -> None: float, max_score -> None: float) -> None:
         """Redis ZRANGEBYSCORE operation"""
         # Placeholder - would use actual Redis client
         logger.debug(f"Redis ZRANGEBYSCORE: {key}")
@@ -582,17 +582,17 @@ class RedisEnterpriseQueue:
         logger.debug(f"Redis HGET: {key} {field}")
         return None
     
-    async def _redis_hincrby(self, key: str, field: str, increment: int):
+    async def _redis_hincrby(self, key -> None: str, field -> None: str, increment -> None: int) -> None:
         """Redis HINCRBY operation"""
         # Placeholder - would use actual Redis client
         logger.debug(f"Redis HINCRBY: {key} {field}")
     
-    async def _redis_incr(self, key: str):
+    async def _redis_incr(self, key -> None: str) -> None:
         """Redis INCR operation"""
         # Placeholder - would use actual Redis client
         logger.debug(f"Redis INCR: {key}")
     
-    async def _redis_expire(self, key: str, seconds: int):
+    async def _redis_expire(self, key -> None: str, seconds -> None: int) -> None:
         """Redis EXPIRE operation"""
         # Placeholder - would use actual Redis client
         logger.debug(f"Redis EXPIRE: {key}")

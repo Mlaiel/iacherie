@@ -60,7 +60,7 @@ class SecurityNotificationOrchestrator:
     Manages all security-related notifications and responses
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize security notification orchestrator"""
         self.copyright_protection = CopyrightProtectionAlerts()
         self.infringement_notifications = InfringementNotifications()

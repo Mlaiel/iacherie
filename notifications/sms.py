@@ -70,7 +70,7 @@ class SMSDeliveryResult:
 
 class SMSNotifier:
     """Enterprise SMS notification service with intelligent routing and analytics."""
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
         self.metrics = MetricsCollector()
         
@@ -436,7 +436,7 @@ Send batch of messages with rate limiting."""
         
         semaphore = asyncio.Semaphore(min(rate_limit, self.max_concurrent_requests))
         
-        async def send_single(message: SMSMessage):
+        async def send_single(message -> None: SMSMessage) -> None:
             async with semaphore:
                 try:
                     logger.info(f"Executing send_single for message to {message.to}")
@@ -461,7 +461,7 @@ Send batch of messages with rate limiting."""
         
         return filtered_results
 
-    async def _track_delivery_metrics(self, result: SMSDeliveryResult):
+    async def _track_delivery_metrics(self, result -> None: SMSDeliveryResult) -> None:
         """Track SMS delivery metrics for analytics."""
         await self.metrics.increment(
             "sms_sent_total",

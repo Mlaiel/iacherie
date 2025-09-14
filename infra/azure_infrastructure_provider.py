@@ -1,3 +1,8 @@
+"""
+Azure Infrastructure Provider module
+Enterprise implementation for Ainflue platform
+"""
+
 # Ainflue Infrastructure Module
 # =============================
 # 
@@ -46,7 +51,7 @@ class AzureInfrastructureProvider:
     with enterprise security, monitoring, and cost optimization.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize Azure infrastructure provider."""
         self.config = config or {}
         self.location = self.config.get("location", "West US 2")
@@ -71,7 +76,7 @@ class AzureInfrastructureProvider:
         
         logger.info(f"AzureInfrastructureProvider initialized for location: {self.location}")
     
-    def _initialize_clients(self):
+    def _initialize_clients(self) -> None:
         """Initialize Azure service clients."""
         try:
             # In a real implementation, this would use azure-identity and azure-mgmt libraries
@@ -97,11 +102,11 @@ class AzureInfrastructureProvider:
             logger.error(f"Failed to initialize Azure clients: {str(e)}")
             raise
     
-    def _create_mock_client(self, service_name: str):
+    def _create_mock_client(self, service_name -> None: str) -> None:
         """Create mock client for demonstration."""
         return {"service": service_name, "initialized": True}
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize provider (async initialization tasks)."""
         try:
             # Validate credentials and permissions
@@ -116,7 +121,7 @@ class AzureInfrastructureProvider:
             logger.error(f"Azure provider initialization failed: {str(e)}")
             raise
     
-    async def _validate_credentials(self):
+    async def _validate_credentials(self) -> None:
         """Validate Azure credentials and permissions."""
         try:
             # In real implementation, would test authentication
@@ -126,7 +131,7 @@ class AzureInfrastructureProvider:
             logger.error(f"Azure credentials validation failed: {str(e)}")
             raise
     
-    async def _setup_default_infrastructure(self):
+    async def _setup_default_infrastructure(self) -> None:
         """Setup default resource group and network if needed."""
         try:
             # Ensure resource group exists
@@ -138,7 +143,7 @@ class AzureInfrastructureProvider:
         except Exception as e:
             logger.error(f"Failed to setup default infrastructure: {str(e)}")
     
-    async def _ensure_resource_group(self):
+    async def _ensure_resource_group(self) -> None:
         """Ensure resource group exists."""
         try:
             # In real implementation, would check and create resource group
@@ -147,7 +152,7 @@ class AzureInfrastructureProvider:
         except Exception as e:
             logger.error(f"Failed to ensure resource group: {str(e)}")
     
-    async def _ensure_virtual_network(self):
+    async def _ensure_virtual_network(self) -> None:
         """Ensure virtual network exists."""
         try:
             # In real implementation, would check and create VNet

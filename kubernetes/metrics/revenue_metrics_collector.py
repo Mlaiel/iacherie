@@ -1,4 +1,6 @@
 """IA Influencer Agent - Revenue & Monetization Metrics Collector
+import logging
+
 Advanced revenue tracking and monetization analytics for multi-platform creators
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -161,7 +163,7 @@ class RevenueMetricsCollector:
     strategies for content creators in the IA Influencer ecosystem
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.redis_manager = RedisManager()
         self.logger = logger
         

@@ -1,5 +1,8 @@
 """Enterprise Cache Deployment Module for IA Influencer Agent Platform
 
+import asyncio
+from typing import Dict, List, Optional, Union, Tuple
+
 Comprehensive caching infrastructure providing:
 - Multi-format content caching (audio, video, image, text)
 - AI-powered performance optimization
@@ -116,7 +119,7 @@ class IAInfluencerCacheOrchestrator:
     - Creator-centric optimizations
     """
     
-    def __init__(self, config_path: str = None):
+    def __init__(self, config_path -> None: str = None) -> None:
         """
         Initialize the cache orchestrator
         
@@ -138,7 +141,7 @@ class IAInfluencerCacheOrchestrator:
             self.config_manager.get_config()
         )
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """
 Initialize all cache components"""
         await self.config_manager.initialize()
@@ -239,7 +242,7 @@ Trigger cache performance optimization"""
 Warm cache for a specific creator"""
         return await self.cache_warmer.warm_creator_content(creator_id)
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """
 Gracefully shutdown all cache components"""
         await self.health_monitor.shutdown()

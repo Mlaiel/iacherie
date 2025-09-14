@@ -35,7 +35,7 @@ class FrameInterpolationConfig:
 class OpticalFlowInterpolator:
     """Optical flow-based frame interpolation."""
     
-    def __init__(self, config: FrameInterpolationConfig):
+    def __init__(self, config -> None: FrameInterpolationConfig) -> None:
         self.config = config
         self.flow_estimator = cv2.FarnebackOpticalFlow_create()
         
@@ -70,7 +70,7 @@ class OpticalFlowInterpolator:
 class AIFrameInterpolator(nn.Module):
     """AI-based frame interpolation using neural networks."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super(AIFrameInterpolator, self).__init__()
         
         # Encoder layers
@@ -109,12 +109,12 @@ class AIFrameInterpolator(nn.Module):
 class FrameInterpolationEngine:
     """Enterprise frame interpolation engine with multiple algorithms."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.config = FrameInterpolationConfig()
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.ai_interpolator = None
         
-    async def initialize_ai_model(self):
+    async def initialize_ai_model(self) -> None:
         """Initialize AI interpolation model."""
         if self.config.gpu_acceleration and torch.cuda.is_available():
             self.ai_interpolator = AIFrameInterpolator().to(self.device)
@@ -262,13 +262,13 @@ class FrameInterpolationEngine:
         total_output_frames = 1
         
         # Convert frame to tensor
-        def frame_to_tensor(frame):
+        def frame_to_tensor(frame) -> None:
             frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
             frame = frame.astype(np.float32) / 255.0
             frame = torch.from_numpy(frame).permute(2, 0, 1).unsqueeze(0)
             return frame.to(self.device)
         
-        def tensor_to_frame(tensor):
+        def tensor_to_frame(tensor) -> None:
             frame = tensor.squeeze(0).permute(1, 2, 0).cpu().numpy()
             frame = (frame * 255).astype(np.uint8)
             frame = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
@@ -356,7 +356,7 @@ class FrameInterpolationEngine:
             "method": "linear"
         }
     
-    async def _preserve_audio(self, input_path: Path, output_path: Path):
+    async def _preserve_audio(self, input_path -> None: Path, output_path -> None: Path) -> None:
         """Preserve audio from original video."""
         try:
             # Use ffmpeg to copy audio track

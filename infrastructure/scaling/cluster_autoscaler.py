@@ -1,6 +1,9 @@
 """Cluster Autoscaler"""
+import asyncio
+
 import logging
 logger = logging.getLogger(__name__)
 class ClusterAutoscaler:
-    def __init__(self): logger.info("Cluster autoscaler initialized")
-    async def configure_autoscaling(self, config): return {'status': 'configured'}
+    """ClusterAutoscaler: class implementation"""
+    def __init__(self) -> None: logger.info("Cluster autoscaler initialized")
+    async def configure_autoscaling(self, config) -> None: return {'status': 'configured'}

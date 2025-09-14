@@ -97,7 +97,7 @@ class CDNMetrics:
 class CDNManagerCore:
     """Advanced CDN Manager Core System"""
     
-    def __init__(self, level: str = "enterprise"):
+    def __init__(self, level -> None: str = "enterprise") -> None:
         self.version = "2.1.0"
         self.level = level
         self.endpoints = {}
@@ -111,7 +111,7 @@ class CDNManagerCore:
         
         logger.info(f"CDN Manager Core initialized - Level: {level}")
 
-    def _initialize_providers(self):
+    def _initialize_providers(self) -> None:
         """Initialize CDN provider configurations"""
         self.providers_config = {
             CDNProvider.CLOUDFLARE: {
@@ -172,7 +172,7 @@ class CDNManagerCore:
             logger.error(f"Failed to create CDN endpoint: {str(e)}")
             return ""
 
-    async def _create_default_cache_rules(self, endpoint_id: str):
+    async def _create_default_cache_rules(self, endpoint_id -> None: str) -> None:
         """Create default cache rules for endpoint"""
         default_rules = [
             {

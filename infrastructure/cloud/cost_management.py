@@ -21,10 +21,12 @@ try:
 except ImportError:
     # Create mock objects for testing
     class MockPandas:
-        def DataFrame(self, *args, **kwargs): return None
+    """MockPandas: class implementation"""
+        def DataFrame(self, *args, **kwargs) -> None: return None
     class MockNumpy:
-        def array(self, *args, **kwargs): return []
-        def mean(self, *args, **kwargs): return 0.0
+    """MockNumpy: class implementation"""
+        def array(self, *args, **kwargs) -> None: return []
+        def mean(self, *args, **kwargs) -> None: return 0.0
     pd = MockPandas()
     np = MockNumpy()
 
@@ -109,7 +111,7 @@ class CostManagement:
     - Automated cost optimization actions
     """
     
-    def __init__(self, optimization_strategy: CostOptimizationStrategy = CostOptimizationStrategy.BALANCED):
+    def __init__(self, optimization_strategy -> None: CostOptimizationStrategy = CostOptimizationStrategy.BALANCED) -> None:
         self.strategy = optimization_strategy
         self.cost_data_history = []
         self.budget_allocations = {}
@@ -141,7 +143,7 @@ class CostManagement:
         
         logger.info(f"Cost management initialized with strategy: {optimization_strategy}")
     
-    def _initialize_cost_models(self):
+    def _initialize_cost_models(self) -> None:
         """Initialize AI models for cost prediction and optimization"""
         try:
             # Cost forecasting model
@@ -693,10 +695,13 @@ class CostManagement:
 
 # Mock cloud cost trackers (would be actual implementations)
 class AwsCostTracker:
-    async def get_costs(self): return {"total": 1000, "services": []}
+    """AwsCostTracker: class implementation"""
+    async def get_costs(self) -> None: return {"total": 1000, "services": []}
 
 class GcpCostTracker:
-    async def get_costs(self): return {"total": 800, "services": []}
+    """GcpCostTracker: class implementation"""
+    async def get_costs(self) -> None: return {"total": 800, "services": []}
 
 class AzureCostTracker:
-    async def get_costs(self): return {"total": 600, "services": []}
+    """AzureCostTracker: class implementation"""
+    async def get_costs(self) -> None: return {"total": 600, "services": []}

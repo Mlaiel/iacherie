@@ -196,7 +196,7 @@ class SimilarityMatch:
 class AI53AgentsOrchestrator:
     """Orchestrateur pour les 53 agents IA spécialisés."""
     
-    def __init__(self, config: FingerprintingConfig):
+    def __init__(self, config -> None: FingerprintingConfig) -> None:
         self.config = config
         self.logger = logging.getLogger(__name__)
         self.agents_active = config.ai_agents_enabled
@@ -211,7 +211,7 @@ class AI53AgentsOrchestrator:
         if self.agents_active:
             self._initialize_agent_pool()
     
-    def _initialize_agent_pool(self):
+    def _initialize_agent_pool(self) -> None:
         """Initialise le pool de 53 agents IA."""
         try:
             # Content Analysis Agents (15 agents)
@@ -439,8 +439,8 @@ class ConsolidatedFingerprintingEngine:
     avec optimisations spécialisées par type de créateur.
     """
     
-    def __init__(self, db_session: Any = None, redis_client: Any = None, 
-                 config: Optional[Dict[str, Any]] = None):
+    def __init__(self, db_session -> None: Any = None, redis_client -> None: Any = None, 
+                 config -> None: Optional[Dict[str, Any]] = None) -> None:
         """
         Initialise le moteur de fingerprinting enterprise.
         
@@ -1077,7 +1077,7 @@ class ConsolidatedFingerprintingEngine:
             self.logger.warning(f"⚠️ Erreur génération hash sécurité: {str(e)}")
             return hashlib.sha256(f"{fingerprint.content_id}_{time.time()}".encode()).hexdigest()
     
-    def _update_performance_stats(self, content_format: ContentFormat, success: bool, processing_time: float):
+    def _update_performance_stats(self, content_format -> None: ContentFormat, success -> None: bool, processing_time -> None: float) -> None:
         """Mise à jour statistiques performance."""
         try:
             self._performance_stats['total_processed'] += 1

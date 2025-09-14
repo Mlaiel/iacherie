@@ -1,3 +1,8 @@
+"""
+Security Testing Suite module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 🔒 SECURITY PENETRATION TESTING SUITE - ENTERPRISE VALIDATION
@@ -66,7 +71,7 @@ class SecurityTestResult:
 class EnterprisePenetrationTester:
     """🛡️ TESTEUR PÉNÉTRATION ENTERPRISE - EXPERTISE SÉCURITÉ"""
     
-    def __init__(self, base_url: str):
+    def __init__(self, base_url -> None: str) -> None:
         self.base_url = base_url.rstrip('/')
         self.session: Optional[aiohttp.ClientSession] = None
         self.vulnerabilities: List[SecurityVulnerability] = []
@@ -74,7 +79,7 @@ class EnterprisePenetrationTester:
         self.scan_timestamp = datetime.now()
         logger.info(f"🔒 Enterprise Penetration Tester initialized for {base_url}")
     
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         """Async context manager entry"""
         self.session = aiohttp.ClientSession(
             timeout=aiohttp.ClientTimeout(total=30),
@@ -82,12 +87,12 @@ class EnterprisePenetrationTester:
         )
         return self
     
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         """Async context manager exit"""
         if self.session:
             await self.session.close()
     
-    def add_vulnerability(self, vuln: SecurityVulnerability):
+    def add_vulnerability(self, vuln -> None: SecurityVulnerability) -> None:
         """📝 Ajouter vulnérabilité détectée"""
         self.vulnerabilities.append(vuln)
         severity_emoji = {

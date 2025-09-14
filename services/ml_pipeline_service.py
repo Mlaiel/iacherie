@@ -195,7 +195,7 @@ class MLPipelineStage(ABC):
 class DataPreprocessingStage(MLPipelineStage):
     """Data preprocessing pipeline stage"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.preprocessing_steps = config.get("steps", [])
     
@@ -262,7 +262,7 @@ class DataPreprocessingStage(MLPipelineStage):
 class ModelTrainingStage(MLPipelineStage):
     """Model training pipeline stage"""
     
-    def __init__(self, model_config: Dict[str, Any]):
+    def __init__(self, model_config -> None: Dict[str, Any]) -> None:
         self.model_config = model_config
         self.model_type = model_config.get("type")
         self.framework = model_config.get("framework")
@@ -399,7 +399,7 @@ class ModelTrainingStage(MLPipelineStage):
 class ModelDeploymentStage(MLPipelineStage):
     """Model deployment pipeline stage"""
     
-    def __init__(self, deployment_config: Dict[str, Any]):
+    def __init__(self, deployment_config -> None: Dict[str, Any]) -> None:
         self.deployment_config = deployment_config
         self.deployment_target = deployment_config.get("target", "local")
         self.resource_requirements = deployment_config.get("resources", {})
@@ -493,7 +493,7 @@ class ModelDeploymentStage(MLPipelineStage):
 class MLPipelineOrchestrator:
     """Central orchestrator for ML pipeline operations"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.models: Dict[str, MLModel] = {}
         self.training_jobs: Dict[str, TrainingJob] = {}
         self.active_pipelines: Dict[str, List[MLPipelineStage]] = {}
@@ -550,7 +550,7 @@ class MLPipelineOrchestrator:
         
         return training_job
     
-    async def _execute_training_pipeline(self, training_job: TrainingJob):
+    async def _execute_training_pipeline(self, training_job -> None: TrainingJob) -> None:
         """Execute the complete training pipeline"""
         try:
             training_job.status = TrainingStatus.RUNNING

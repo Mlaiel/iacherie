@@ -216,7 +216,7 @@ class ExperimentConfiguration:
 class ModelRegistry:
     """Model registry for version control and metadata management"""
     
-    def __init__(self, registry_path: str = "./models"):
+    def __init__(self, registry_path -> None: str = "./models") -> None:
         self.registry_path = Path(registry_path)
         self.registry_path.mkdir(exist_ok=True)
         self.models: Dict[str, Dict[str, ModelConfiguration]] = {}
@@ -399,7 +399,7 @@ class ModelRegistry:
 class TrainingPipelineManager:
     """Training pipeline orchestration and management"""
     
-    def __init__(self, model_registry: ModelRegistry):
+    def __init__(self, model_registry -> None: ModelRegistry) -> None:
         self.model_registry = model_registry
         self.active_trainings: Dict[str, Dict[str, Any]] = {}
         self.training_history: Dict[str, List[Dict[str, Any]]] = {}
@@ -696,7 +696,7 @@ class TrainingPipelineManager:
 class ModelDeploymentManager:
     """Model deployment and serving management"""
     
-    def __init__(self, model_registry: ModelRegistry):
+    def __init__(self, model_registry -> None: ModelRegistry) -> None:
         self.model_registry = model_registry
         self.active_deployments: Dict[str, Dict[str, Any]] = {}
         self.deployment_history: Dict[str, List[Dict[str, Any]]] = {}
@@ -962,7 +962,7 @@ class ModelDeploymentManager:
 class MLPipelineConfigManager:
     """Main ML pipeline configuration and management system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         # Core components
         self.model_registry = ModelRegistry()
         self.training_manager = TrainingPipelineManager(self.model_registry)

@@ -1,3 +1,8 @@
+"""
+Validate Enterprise Modules module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Validation Script for Enterprise Licensing Modules
@@ -18,7 +23,7 @@ import os
 import traceback
 from pathlib import Path
 
-def validate_module_imports():
+def validate_module_imports() -> None:
     """Validate that all new enterprise modules can be imported successfully."""
     print("🔍 Validating Enterprise Licensing Modules...")
     print("=" * 60)
@@ -87,7 +92,7 @@ def validate_module_imports():
     
     return results
 
-def validate_module_initialization():
+def validate_module_initialization() -> None:
     """Test basic initialization of enterprise modules."""
     print("\n\n🚀 Testing Module Initialization...")
     print("=" * 60)
@@ -137,7 +142,7 @@ def validate_module_initialization():
             print(f"Traceback:\n{traceback.format_exc()}")
         return False
 
-def print_summary(import_results, init_success):
+def print_summary(import_results, init_success) -> None:
     """Print validation summary."""
     print("\n\n📋 VALIDATION SUMMARY")
     print("=" * 60)
@@ -177,7 +182,7 @@ def print_summary(import_results, init_success):
     
     return all_success
 
-def main():
+def main() -> None:
     """Main validation function."""
     print("🏢 ENTERPRISE LICENSING MODULES VALIDATION")
     print("🎯 Ainflue IA-Influencer-Agent Platform")

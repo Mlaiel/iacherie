@@ -91,10 +91,10 @@ class NFTGenerator:
     """NFT generator for digital certificates and ownership proofs"""
     
     def __init__(self,
-                 blockchain_url: Optional[str] = None,
-                 private_key: Optional[str] = None,
-                 contract_address: Optional[str] = None,
-                 ipfs_gateway: str = "https://ipfs.io/ipfs/"):
+                 blockchain_url -> None: Optional[str] = None,
+                 private_key -> None: Optional[str] = None,
+                 contract_address -> None: Optional[str] = None,
+                 ipfs_gateway -> None: str = "https -> None://ipfs.io/ipfs/") -> None:
         """
         Initialize NFT generator
         

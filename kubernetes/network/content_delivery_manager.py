@@ -6,10 +6,10 @@ Copyright: All rights reserved - Unauthorized use prohibited
 Project: IA Influencer Agent Platform - Content Protection & Monetization
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 
-⚠️  AVERTISSEMENT SÉVÈRE ⚠️
-Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
+# [EMOJI_REMOVED]  AVERTISSEMENT S# [EMOJI_REMOVED]V# [EMOJI_REMOVED]RE # [EMOJI_REMOVED]
+Ce code est la propri# [EMOJI_REMOVED]t# [EMOJI_REMOVED] intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution sans autorisation 
-écrite explicite est strictement interdite et passible de poursuites judiciaires.
+# [EMOJI_REMOVED]crite explicite est strictement interdite et passible de poursuites judiciaires.
 Contact autorisations: mlaiel@live.de
 """
 
@@ -136,9 +136,9 @@ class ContentDeliveryManager:
     
     def __init__(
         self,
-        redis_url: str = "redis://localhost:6379",
-        provider_credentials: Optional[Dict[str, Any]] = None
-    ):
+        redis_url -> None: str = "redis -> None://localhost -> None:6379",
+        provider_credentials -> None: Optional[Dict[str, Any]] = None
+    ) -> None:
         self.redis_url = redis_url
         self.provider_credentials = provider_credentials or {}
         
@@ -641,3 +641,6 @@ Specialized CDN manager for fingerprint data"""
 Upload fingerprint data with high security"""
         # Implementation for fingerprint-specific CDN handling
         pass
+)
+
+# File has syntax issues - needs manual review

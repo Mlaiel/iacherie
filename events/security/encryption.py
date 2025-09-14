@@ -76,7 +76,7 @@ class EncryptionKey:
             return False
         return True
     
-    def increment_usage(self):
+    def increment_usage(self) -> None:
         """Increment usage counter"""
         self.usage_count += 1
 
@@ -117,10 +117,10 @@ class EncryptionManager:
     """
     
     def __init__(self, 
-                 master_key: Optional[str] = None,
-                 default_algorithm: EncryptionAlgorithm = EncryptionAlgorithm.AES_256_GCM,
-                 key_rotation_interval: int = 86400,  # 24 hours
-                 enable_quantum_resistance: bool = False):
+                 master_key -> None: Optional[str] = None,
+                 default_algorithm -> None: EncryptionAlgorithm = EncryptionAlgorithm.AES_256_GCM,
+                 key_rotation_interval -> None: int = 86400,  # 24 hours
+                 enable_quantum_resistance -> None: bool = False) -> None:
         
         self.master_key = master_key or secrets.token_urlsafe(32)
         self.default_algorithm = default_algorithm
@@ -529,7 +529,7 @@ class EncryptionManager:
         # Otherwise, keys can be reused across contexts
         return True
     
-    async def _log_encryption_event(self, operation: str, event_data: Dict[str, Any]):
+    async def _log_encryption_event(self, operation -> None: str, event_data -> None: Dict[str, Any]) -> None:
         """Log encryption event for audit purposes"""
         
         event = {
@@ -566,7 +566,7 @@ class EncryptionManager:
 class KeyRotationPredictor:
     """ML-powered key rotation prediction"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.usage_patterns = {}
     
     async def predict_optimal_rotation_time(self, 

@@ -1,4 +1,6 @@
 """Licensing Repository
+import asyncio
+
 ==================
 
 Professional data access layer for licensing management operations.
@@ -41,7 +43,7 @@ class LicensingRepository:
     caching, security, and performance optimization.
     """
     
-    def __init__(self, session: Session = None, cache_manager: CacheManager = None):
+    def __init__(self, session -> None: Session = None, cache_manager -> None: CacheManager = None) -> None:
         """
 Initialize repository with database session and cache"""
         self.session = session or get_db_session()

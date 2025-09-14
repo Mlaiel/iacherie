@@ -1,3 +1,8 @@
+"""
+Digital Rights Management module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 🎵 Digital Rights Management System - Ainflue Platform
@@ -191,7 +196,7 @@ class DigitalRightsManagement:
     - Blockchain integration ready
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         
         # Content storage
@@ -827,7 +832,7 @@ class DigitalRightsManagement:
         
         return {'valid': True}
 
-    async def _update_usage_analytics(self, usage_record: UsageRecord):
+    async def _update_usage_analytics(self, usage_record -> None: UsageRecord) -> None:
         """Update usage analytics"""
         content_metadata = self.content_metadata.get(usage_record.content_id)
         if content_metadata:
@@ -842,7 +847,7 @@ class DigitalRightsManagement:
                 
                 analytics['last_activity'] = datetime.now()
 
-    async def _update_license_usage(self, usage_record: UsageRecord):
+    async def _update_license_usage(self, usage_record -> None: UsageRecord) -> None:
         """Update license usage counters"""
         # This would update license usage counters in production
         pass
@@ -991,7 +996,7 @@ __all__ = [
 ]
 
 if __name__ == "__main__":
-    async def test_drm_system():
+    async def test_drm_system() -> None:
         """Test the DRM system"""
         config = {}
         

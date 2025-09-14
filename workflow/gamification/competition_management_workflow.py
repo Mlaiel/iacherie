@@ -72,7 +72,7 @@ class CompetitionSubmission:
 class CompetitionManagementWorkflow:
     """AI-powered competition management workflow"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.metrics_collector = MetricsCollector()
         self.competitions: Dict[str, Competition] = {}
         self.submissions: Dict[str, CompetitionSubmission] = {}
@@ -451,7 +451,7 @@ class CompetitionManagementWorkflow:
         
         return min(total_score, 1.0)
     
-    async def _award_prizes(self, competition: Competition, ranked_submissions: List[CompetitionSubmission]):
+    async def _award_prizes(self, competition -> None: Competition, ranked_submissions -> None: List[CompetitionSubmission]) -> None:
         """Award prizes to winners"""
         
         prizes = competition.prizes
@@ -468,7 +468,7 @@ class CompetitionManagementWorkflow:
                 if submission.rank > 3:  # Not already awarded
                     await self._grant_prize(submission.user_id, prizes["participation"], competition.competition_id)
     
-    async def _grant_prize(self, user_id: str, prize: Dict[str, Any], competition_id: str):
+    async def _grant_prize(self, user_id -> None: str, prize -> None: Dict[str, Any], competition_id -> None: str) -> None:
         """Grant prize to user"""
         
         logger.info(f"Granting prize to {user_id} for competition {competition_id}: {prize}")

@@ -141,12 +141,12 @@ class PayPalEnterpriseClient:
     
     def __init__(
         self,
-        credentials: PayPalCredentials,
-        timeout: int = 30,
-        max_retries: int = 3,
-        enable_webhook_verification: bool = True,
-        enable_creator_workflows: bool = True
-    ):
+        credentials -> None: PayPalCredentials,
+        timeout -> None: int = 30,
+        max_retries -> None: int = 3,
+        enable_webhook_verification -> None: bool = True,
+        enable_creator_workflows -> None: bool = True
+    ) -> None:
         """Initialize PayPal client with enterprise configuration."""
         self.credentials = credentials
         self.timeout = timeout
@@ -858,11 +858,11 @@ class PayPalEnterpriseClient:
             
         logger.info("✅ PayPal client closed")
 
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         """Async context manager entry."""
         return self
 
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         """Async context manager exit."""
         await self.close()
 
@@ -902,7 +902,7 @@ def create_paypal_client(
 
 
 # Example usage for creator monetization
-async def example_creator_monetization():
+async def example_creator_monetization() -> None:
     """Example of creator monetization workflow."""
     try:
         client = create_paypal_client(

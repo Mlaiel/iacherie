@@ -57,7 +57,7 @@ class AuthenticationCredentials:
     secondary_credential: Optional[str] = None
     metadata: Dict[str, Any] = field(default_factory=dict)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         # Hash sensitive data
         if self.method == AuthenticationMethod.PASSWORD:
             self.primary_credential = self._hash_password(self.primary_credential)
@@ -84,7 +84,7 @@ class UserSession:
     expires_at: datetime = None
     security_events: List[Dict[str, Any]] = field(default_factory=list)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.expires_at is None:
             # Default 8 hour session
             self.expires_at = self.created_at + timedelta(hours=8)
@@ -97,7 +97,7 @@ class UserSession:
             (datetime.utcnow() - self.last_activity) < timedelta(hours=2)
         )
     
-    def update_activity(self):
+    def update_activity(self) -> None:
         """Update last activity timestamp"""
         self.last_activity = datetime.utcnow()
 
@@ -128,10 +128,10 @@ class SecurityManager:
     """
     
     def __init__(self, 
-                 jwt_secret: str = None,
-                 session_timeout: int = 28800,  # 8 hours
-                 max_failed_attempts: int = 5,
-                 lockout_duration: int = 1800):  # 30 minutes
+                 jwt_secret -> None: str = None,
+                 session_timeout -> None: int = 28800,  # 8 hours
+                 max_failed_attempts -> None: int = 5,
+                 lockout_duration -> None: int = 1800) -> None:  # 30 minutes
         
         self.jwt_secret = jwt_secret or secrets.token_urlsafe(32)
         self.session_timeout = session_timeout
@@ -441,7 +441,7 @@ class SecurityManager:
         
         return len(recent_attempts) >= self.max_failed_attempts
     
-    async def _record_failed_attempt(self, user_id: str, device_info: Dict[str, Any]):
+    async def _record_failed_attempt(self, user_id -> None: str, device_info -> None: Dict[str, Any]) -> None:
         """Record a failed authentication attempt"""
         if user_id not in self.failed_attempts:
             self.failed_attempts[user_id] = []
@@ -459,7 +459,7 @@ class SecurityManager:
         # Simplified MFA validation - in production would integrate with MFA providers
         return credentials.secondary_credential is not None
     
-    async def _invalidate_session(self, session_id: str, reason: str):
+    async def _invalidate_session(self, session_id -> None: str, reason -> None: str) -> None:
         """Invalidate a session"""
         if session_id in self.active_sessions:
             session = self.active_sessions[session_id]
@@ -474,7 +474,7 @@ class SecurityManager:
             
             del self.active_sessions[session_id]
     
-    async def _log_security_event(self, event_type: str, event_data: Dict[str, Any]):
+    async def _log_security_event(self, event_type -> None: str, event_data -> None: Dict[str, Any]) -> None:
         """Log security event for audit and analysis"""
         
         event = {
@@ -490,7 +490,7 @@ class SecurityManager:
 class AuthenticationAnomalyDetector:
     """ML-powered anomaly detection for authentication patterns"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.user_patterns = {}
         self.global_patterns = {}
     

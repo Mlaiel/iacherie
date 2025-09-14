@@ -8,7 +8,7 @@ and advanced training strategies for large-scale AI model development.
 Project: IA Influencer Agent + Content Protection Platform
 Author: Fahed Mlaiel <mlaiel@live.de>
 
-⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
+# [EMOJI_REMOVED]  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED # [EMOJI_REMOVED]
 This software is protected by international copyright laws.
 Contact: mlaiel@live.de for licensing inquiries.
 """
@@ -117,7 +117,7 @@ class DistributedTrainingConfig:
     gradient_compression: bool = True
     communication_backend: str = "nccl"
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         try:
                     # Request validation
                     if not data:
@@ -154,7 +154,7 @@ class DistributedTrainingManager:
     - Cloud-native deployment
     """
     
-    def __init__(self, namespace: str = "ia-influencer-training"):
+    def __init__(self, namespace -> None: str = "ia-influencer-training") -> None:
         """
         Initialize distributed training manager
         
@@ -697,7 +697,7 @@ class DistributedTrainingManager:
             )
             
             # Define training function
-            def train_func(config_dict):
+            def train_func(config_dict) -> None:
                 # Training logic would be implemented here
                 # This is a placeholder for the actual training code
                 import torch
@@ -1074,3 +1074,5 @@ class DistributedTrainingManager:
         except Exception as e:
             logger.error(f"Distributed training cleanup failed: {e}")
             raise
+
+# File has syntax issues - needs manual review

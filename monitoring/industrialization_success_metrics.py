@@ -54,7 +54,7 @@ class IndustrializationSuccessMetrics:
     both technical and business KPIs as specified in the requirements.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
         self.kpis: Dict[str, IndustrializationKPI] = {}
         self.metrics_history: Dict[str, List[Tuple[datetime, float]]] = defaultdict(list)
@@ -69,7 +69,7 @@ class IndustrializationSuccessMetrics:
         
         self.logger.info("Industrialization Success Metrics initialized")
     
-    def _initialize_prometheus_metrics(self):
+    def _initialize_prometheus_metrics(self) -> None:
         """Initialize Prometheus metrics for monitoring"""
         self.technical_kpi_gauge = Gauge(
             'industrialization_technical_kpi_value',
@@ -99,7 +99,7 @@ class IndustrializationSuccessMetrics:
             registry=self.registry
         )
     
-    def _initialize_technical_kpis(self):
+    def _initialize_technical_kpis(self) -> None:
         """
         🎯 KPIs TECHNIQUES
         Initialize technical KPIs exactly as specified in problem statement
@@ -179,7 +179,7 @@ class IndustrializationSuccessMetrics:
                 kpi_type=kpi.kpi_type.value
             ).set(kpi.target_value)
     
-    def _initialize_business_kpis(self):
+    def _initialize_business_kpis(self) -> None:
         """
         💼 KPIs BUSINESS
         Initialize business KPIs exactly as specified in problem statement
@@ -297,7 +297,7 @@ class IndustrializationSuccessMetrics:
             self.logger.error(f"Error updating KPI {kpi_name}: {str(e)}")
             return False
     
-    def _update_trend(self, kpi_name: str, value: float, timestamp: datetime):
+    def _update_trend(self, kpi_name -> None: str, value -> None: float, timestamp -> None: datetime) -> None:
         """Update trend analysis for a KPI"""
         history = self.metrics_history[kpi_name]
         history.append((timestamp, value))
@@ -365,7 +365,7 @@ class IndustrializationSuccessMetrics:
         technical_kpis = await self.get_technical_kpis()
         business_kpis = await self.get_business_kpis()
         
-        def calculate_achievement_stats(kpis):
+        def calculate_achievement_stats(kpis) -> None:
             achievements = []
             for kpi_data in kpis.values():
                 if kpi_data["target_value"] > 0 and kpi_data["current_value"] > 0:
@@ -505,7 +505,7 @@ class IndustrializationSuccessMetrics:
 industrialization_metrics = IndustrializationSuccessMetrics()
 
 
-async def main():
+async def main() -> None:
     """Test the industrialization success metrics system"""
     logging.basicConfig(level=logging.INFO)
     

@@ -105,7 +105,7 @@ class ComplianceManager:
     content policies, and industry standards across all platform operations.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the compliance manager."""
         self.compliance_rules: Dict[str, ComplianceRule] = {}
         self.violations: Dict[str, ComplianceViolation] = {}
@@ -114,7 +114,7 @@ class ComplianceManager:
         self.logger = logging.getLogger(__name__)
         self._load_default_rules()
     
-    def _load_default_rules(self):
+    def _load_default_rules(self) -> None:
         """Load default compliance rules."""
         default_rules = [
             # GDPR/Data Protection Rules

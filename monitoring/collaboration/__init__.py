@@ -125,7 +125,7 @@ class CollaborationOrchestrator:
     and collaboration intelligence for enterprise creator networks.
     """
     
-    def __init__(self, config: CollaborationConfig):
+    def __init__(self, config -> None: CollaborationConfig) -> None:
         """Initialize collaboration monitoring orchestrator."""
         self.config = config
         self.modules = {}
@@ -140,7 +140,7 @@ class CollaborationOrchestrator:
         self._initialize_modules()
         self._setup_ai_models()
     
-    def _initialize_modules(self):
+    def _initialize_modules(self) -> None:
         """Initialize enabled collaboration modules."""
         for module in self.config.enabled_modules:
             try:
@@ -150,7 +150,7 @@ class CollaborationOrchestrator:
             except Exception as e:
                 logger.error(f"Failed to initialize module {module.value}: {e}")
     
-    def _create_collaboration_module(self, module: CollaborationModules):
+    def _create_collaboration_module(self, module -> None: CollaborationModules) -> None:
         """Create instance of specific collaboration monitoring module."""
         return {
             "name": module.value,
@@ -162,7 +162,7 @@ class CollaborationOrchestrator:
             "performance_score": 0.91
         }
     
-    def _setup_ai_models(self):
+    def _setup_ai_models(self) -> None:
         """Setup AI models for collaboration matching and prediction."""
         self.ai_models = {
             "compatibility_scorer": {"accuracy": 0.87, "last_trained": datetime.now()},
@@ -483,17 +483,17 @@ class CollaborationOrchestrator:
         logger.info(f"Tracked outcome for collaboration {match_id}: success={success}")
         return {"status": "tracked", "match_id": match_id}
     
-    def _boost_creator_trust(self, creator_id: str, boost: float):
+    def _boost_creator_trust(self, creator_id -> None: str, boost -> None: float) -> None:
         """Boost creator trust score."""
         if creator_id in self.creators:
             self.creators[creator_id].trust_score = min(1.0, self.creators[creator_id].trust_score + boost)
     
-    def _reduce_creator_trust(self, creator_id: str, reduction: float):
+    def _reduce_creator_trust(self, creator_id -> None: str, reduction -> None: float) -> None:
         """Reduce creator trust score."""
         if creator_id in self.creators:
             self.creators[creator_id].trust_score = max(0.0, self.creators[creator_id].trust_score - reduction)
     
-    def _update_metrics(self):
+    def _update_metrics(self) -> None:
         """Update collaboration metrics."""
         self.metrics.total_matches = len(self.matches)
         

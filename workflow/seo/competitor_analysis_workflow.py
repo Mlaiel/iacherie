@@ -50,7 +50,7 @@ class CompetitorAnalysisResult:
 class CompetitorAnalysisWorkflow:
     """AI-powered competitor analysis workflow"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.metrics_collector = MetricsCollector()
         self.cache_manager = CacheManager()
         self.analysis_history: List[CompetitorAnalysisResult] = []
@@ -310,7 +310,7 @@ class CompetitorAnalysisWorkflow:
         total_score = base_score + competitor_bonus + keyword_gap_bonus + content_opportunity_bonus
         return min(total_score, 1.0)
     
-    async def _cache_analysis_result(self, result: CompetitorAnalysisResult):
+    async def _cache_analysis_result(self, result -> None: CompetitorAnalysisResult) -> None:
         """Cache analysis result for quick access"""
         cache_key = f"competitor_analysis_{result.analysis_id}"
         await self.cache_manager.set(cache_key, result, ttl=3600)  # Cache for 1 hour

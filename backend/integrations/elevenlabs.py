@@ -89,10 +89,10 @@ class ElevenLabsIntegration:
     
     def __init__(
         self,
-        api_key: str,
-        base_url: str = "https://api.elevenlabs.io/v1",
-        timeout: int = 60
-    ):
+        api_key -> None: str,
+        base_url -> None: str = "https -> None://api.elevenlabs.io/v1",
+        timeout -> None: int = 60
+    ) -> None:
         self.api_key = api_key
         self.base_url = base_url
         self.timeout = timeout
@@ -105,16 +105,16 @@ class ElevenLabsIntegration:
         
         logger.info("ElevenLabs integration initialized")
     
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         """Async context manager entry."""
         await self._ensure_session()
         return self
     
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         """Async context manager exit."""
         await self.close()
     
-    async def _ensure_session(self):
+    async def _ensure_session(self) -> None:
         """Ensure HTTP session is available."""
         if self.session is None or self.session.closed:
             headers = {
@@ -128,7 +128,7 @@ class ElevenLabsIntegration:
                 timeout=aiohttp.ClientTimeout(total=self.timeout)
             )
     
-    async def close(self):
+    async def close(self) -> None:
         """Close HTTP session."""
         if self.session and not self.session.closed:
             await self.session.close()
@@ -448,11 +448,11 @@ class ElevenLabsIntegration:
     
     def _add_to_history(
         self,
-        operation: str,
-        request_data: Dict[str, Any],
-        response_data: Any,
-        metadata: Optional[Dict[str, Any]] = None
-    ):
+        operation -> None: str,
+        request_data -> None: Dict[str, Any],
+        response_data -> None: Any,
+        metadata -> None: Optional[Dict[str, Any]] = None
+    ) -> None:
         """Add operation to history."""
         history_entry = {
             "timestamp": datetime.now().isoformat(),
@@ -550,7 +550,7 @@ async def get_default_voice_id(api_key: str) -> str:
 
 if __name__ == "__main__":
     # Example usage
-    async def main():
+    async def main() -> None:
         import os
         api_key = os.getenv("ELEVENLABS_API_KEY")
         if not api_key:

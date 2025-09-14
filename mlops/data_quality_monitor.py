@@ -1,3 +1,8 @@
+"""
+Data Quality Monitor module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 📊 MLOps Data Quality Monitor - Real-Time Data Validation System
@@ -131,7 +136,7 @@ class DatasetQualityReport:
 class DataProfiler:
     """Profileur de données pour analyse statistique"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.cache = {}
     
     async def profile_dataset(self, data: List[Dict[str, Any]], 
@@ -327,11 +332,11 @@ class DataProfiler:
 class DataQualityRuleEngine:
     """Engine de règles de qualité de données"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.rules: Dict[str, DataQualityRule] = {}
         self._init_default_rules()
     
-    def _init_default_rules(self):
+    def _init_default_rules(self) -> None:
         """Initialize default data quality rules"""
         
         # Completeness rules
@@ -393,7 +398,7 @@ class DataQualityRuleEngine:
             fix_strategy="standardize_format"
         ))
     
-    def add_rule(self, rule: DataQualityRule):
+    def add_rule(self, rule -> None: DataQualityRule) -> None:
         """Add a new quality rule"""
         self.rules[rule.name] = rule
         logger.info(f"✅ Added data quality rule: {rule.name}")
@@ -448,7 +453,7 @@ class DataQualityMonitor:
     - Business-specific validation rules
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.profiler = DataProfiler()
         self.rule_engine = DataQualityRuleEngine()
@@ -889,7 +894,7 @@ class DataQualityMonitor:
         
         return list(set(recommendations))  # Remove duplicates
     
-    async def _send_quality_alert(self, report: DatasetQualityReport):
+    async def _send_quality_alert(self, report -> None: DatasetQualityReport) -> None:
         """Send quality alert for poor data quality"""
         
         self.metrics['quality_alerts_sent'] += 1
@@ -964,7 +969,7 @@ class DataQualityMonitor:
 
 
 # Demo function
-async def demo_data_quality_monitor():
+async def demo_data_quality_monitor() -> None:
     """Démonstration du data quality monitor"""
     print("📊 MLOps Data Quality Monitor Demo")
     

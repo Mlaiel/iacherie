@@ -32,12 +32,12 @@ class CoreConfigurationLevel(str, Enum):
 class CoreConfigurationManager:
     """Core infrastructure configuration manager"""
     
-    def __init__(self, level: CoreConfigurationLevel = CoreConfigurationLevel.ENTERPRISE):
+    def __init__(self, level -> None: CoreConfigurationLevel = CoreConfigurationLevel.ENTERPRISE) -> None:
         self.level = level
         self.configurations = {}
         self._initialize_core_configs()
     
-    def _initialize_core_configs(self):
+    def _initialize_core_configs(self) -> None:
         """Initialize all core configurations"""
         self.configurations = {
             "database": DatabaseConfiguration(level=self.level),

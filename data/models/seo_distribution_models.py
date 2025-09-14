@@ -322,7 +322,7 @@ class SEOOptimizationModel(Base):
         Index('idx_seo_active_updated', 'is_active', 'updated_at'),
     )
     
-    def __repr__(self):
+    def __repr__(self) -> None:
         return f"<SEOOptimizationModel(id={self.id}, strategy={self.strategy.value}, score={self.content_score})>"
 
 
@@ -478,7 +478,7 @@ class DistributionModel(Base):
         Index('idx_distribution_performance', 'engagement_rate', 'views'),
     )
     
-    def __repr__(self):
+    def __repr__(self) -> None:
         return f"<DistributionModel(id={self.id}, platform={self.platform.value}, status={self.status.value})>"
 
 
@@ -570,7 +570,7 @@ class SearchRankingModel(Base):
         Index('idx_ranking_date_tracked', 'measurement_date', 'is_tracked'),
     )
     
-    def __repr__(self):
+    def __repr__(self) -> None:
         return f"<SearchRankingModel(id={self.id}, keyword='{self.keyword}', position={self.current_position})>"
 
 

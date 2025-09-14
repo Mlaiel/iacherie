@@ -184,7 +184,7 @@ class CloudStorageConfig(BaseModel):
     cdn_domain: Optional[str] = Field(default=None, description="Custom CDN domain")
     
     @validator('concurrent_uploads')
-    def validate_concurrent_uploads(cls, v):
+    def validate_concurrent_uploads(cls, v) -> None:
         if v <= 0 or v > 20:
             raise ValueError("Concurrent uploads must be between 1 and 20")
         return v
@@ -192,7 +192,7 @@ class CloudStorageConfig(BaseModel):
 class CloudStorageSecurityManager:
     """Security manager for cloud storage - Security Expert role"""
     
-    def __init__(self, config: CloudStorageConfig):
+    def __init__(self, config -> None: CloudStorageConfig) -> None:
         self.config = config
         self.cipher_suite = None
         if config.enable_encryption:
@@ -278,7 +278,7 @@ class CloudStorageSecurityManager:
 class CloudStorageMLOptimizer:
     """ML-powered storage optimization - ML Engineer + Lead Dev IA roles"""
     
-    def __init__(self, config: CloudStorageConfig):
+    def __init__(self, config -> None: CloudStorageConfig) -> None:
         self.config = config
         self.access_patterns = {}
         
@@ -447,7 +447,7 @@ class CloudStorageMLOptimizer:
 class CloudStorageProvider:
     """Base class for cloud storage providers - Backend Senior role"""
     
-    def __init__(self, provider: CloudProvider, config: Dict[str, Any]):
+    def __init__(self, provider -> None: CloudProvider, config -> None: Dict[str, Any]) -> None:
         self.provider = provider
         self.config = config
         self.client = None
@@ -651,7 +651,7 @@ class CloudinaryProvider(CloudStorageProvider):
 class MultiCloudStorageManager:
     """Multi-cloud storage manager - Lead Dev IA + Backend Senior roles"""
     
-    def __init__(self, config: CloudStorageConfig):
+    def __init__(self, config -> None: CloudStorageConfig) -> None:
         self.config = config
         self.providers = {}
         self.security_manager = CloudStorageSecurityManager(config)
@@ -950,7 +950,7 @@ class MultiCloudStorageManager:
                 return storage_file
         return None
     
-    async def _backup_file(self, storage_file: StorageFile, file_data: bytes):
+    async def _backup_file(self, storage_file -> None: StorageFile, file_data -> None: bytes) -> None:
         """Backup file to secondary providers"""
         try:
             backup_providers = [p for p in self.providers.values() if p.provider != storage_file.provider]
@@ -970,7 +970,7 @@ class MultiCloudStorageManager:
         except Exception as e:
             logger.error(f"Backup process failed: {e}")
     
-    async def _track_file_access(self, file_id: str, user_id: str, operation: str):
+    async def _track_file_access(self, file_id -> None: str, user_id -> None: str, operation -> None: str) -> None:
         """Track file access for ML optimization"""
         try:
             access_record = {
@@ -1064,7 +1064,7 @@ class MultiCloudStorageManager:
 class CloudStorageService:
     """Main cloud storage service facade - DevOps + Integration role"""
     
-    def __init__(self, config: Optional[CloudStorageConfig] = None):
+    def __init__(self, config -> None: Optional[CloudStorageConfig] = None) -> None:
         self.config = config or CloudStorageConfig(
             primary_provider=CloudProvider.AWS_S3,
             backup_providers=[CloudProvider.GOOGLE_CLOUD],
@@ -1091,7 +1091,7 @@ class CloudStorageService:
         
         return success
     
-    async def _validate_configuration(self):
+    async def _validate_configuration(self) -> None:
         """Validate service configuration"""
         if not self.config.aws_access_key_id and not self.config.gcp_project_id and not self.config.cloudinary_cloud_name:
             logger.warning("No cloud storage providers configured")
@@ -1145,7 +1145,7 @@ __all__ = [
 
 if __name__ == "__main__":
     # Example usage and testing
-    async def main():
+    async def main() -> None:
         # Initialize service
         service = CloudStorageService()
         success = await service.initialize()

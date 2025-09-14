@@ -1,5 +1,7 @@
 """Realtime Analytics Events Module
 
+import logging
+
 Real-time analytics streaming, monitoring, and alerting for multi-format content creators.
 Provides live dashboard updates, anomaly detection, and instant insights.
 
@@ -158,7 +160,7 @@ class RealtimeAnalyticsEventHandler(BaseEventHandler):
     """
 Handles real-time analytics events with streaming capabilities"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
         self.cache_manager = CacheManager()
         self.db_manager = DatabaseManager()
@@ -169,7 +171,7 @@ Handles real-time analytics events with streaming capabilities"""
         self.redis_client = None
         self.websocket_connections = set()
         
-    async def initialize(self):
+    async def initialize(self) -> None:
         """
 Initialize real-time components"""
         self.redis_client = redis.Redis.from_url(settings.REDIS_URL)
@@ -295,13 +297,13 @@ class RealtimeMetricsStreamer:
     """
 Streams metrics in real-time to various channels"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.redis_client = None
         self.websocket_server = None
         self.active_streams = defaultdict(set)
         self.metrics_buffer = defaultdict(deque)
         
-    async def initialize(self):
+    async def initialize(self) -> None:
         """
 Initialize streaming infrastructure"""
         self.redis_client = redis.Redis.from_url(settings.REDIS_URL)
@@ -378,13 +380,13 @@ class RealtimeAlertEngine:
     """
 Generates real-time alerts based on metric thresholds and patterns"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.db_manager = DatabaseManager()
         self.redis_client = None
         self.alert_rules = {}
         self.active_alerts = {}
         
-    async def initialize(self):
+    async def initialize(self) -> None:
         """
 Initialize alert engine"""
         self.redis_client = redis.Redis.from_url(settings.REDIS_URL)
@@ -556,11 +558,11 @@ class RealtimeDashboardEngine:
     """
 Manages real-time dashboard updates"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.redis_client = None
         self.dashboard_cache = {}
         
-    async def initialize(self):
+    async def initialize(self) -> None:
         """
 Initialize dashboard engine"""
         self.redis_client = redis.Redis.from_url(settings.REDIS_URL)
@@ -629,13 +631,13 @@ class RealtimeAnomalyDetector:
     """
 Detects anomalies in real-time metrics"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.isolation_forest = IsolationForest(contamination=0.1, random_state=42)
         self.scaler = MinMaxScaler()
         self.detector = AnomalyDetector()
         self.redis_client = None
         
-    async def initialize(self):
+    async def initialize(self) -> None:
         """
 Initialize anomaly detector"""
         self.redis_client = redis.Redis.from_url(settings.REDIS_URL)

@@ -134,7 +134,7 @@ class SmartContractClause:
 class LegalNeuralNetwork(nn.Module):
     """Advanced Neural Network for Legal Contract Analysis"""
     
-    def __init__(self, vocab_size: int = 50000, embedding_dim: int = 512, hidden_dim: int = 1024):
+    def __init__(self, vocab_size -> None: int = 50000, embedding_dim -> None: int = 512, hidden_dim -> None: int = 1024) -> None:
         super(LegalNeuralNetwork, self).__init__()
         
         # Embedding layers for legal text
@@ -163,7 +163,7 @@ class LegalNeuralNetwork(nn.Module):
         
         self._initialize_weights()
     
-    def _initialize_weights(self):
+    def _initialize_weights(self) -> None:
         """Initialize neural network weights for legal analysis"""
         for module in self.modules():
             if isinstance(module, nn.Linear):
@@ -172,7 +172,7 @@ class LegalNeuralNetwork(nn.Module):
             elif isinstance(module, nn.Embedding):
                 nn.init.normal_(module.weight, 0, 0.1)
     
-    def forward(self, legal_tokens, attention_mask=None):
+    def forward(self, legal_tokens, attention_mask=None) -> None:
         """Forward pass for legal document analysis"""
         # Embedding and positional encoding
         embeddings = self.legal_embedding(legal_tokens)
@@ -213,7 +213,7 @@ class AILegalContractIntelligenceEngine:
     - Real-time legal optimization and enhancement
     """
     
-    def __init__(self, config: LegalAIConfig):
+    def __init__(self, config -> None: LegalAIConfig) -> None:
         self.config = config
         self.legal_neural_network = None
         self.legal_tokenizer = None
@@ -230,7 +230,7 @@ class AILegalContractIntelligenceEngine:
         
         logger.info("AI Legal Contract Intelligence Engine initialized")
 
-    def _initialize_legal_ai_models(self):
+    def _initialize_legal_ai_models(self) -> None:
         """Initialize all AI models for legal contract processing"""
         try:
             # Initialize legal neural network
@@ -265,7 +265,7 @@ class AILegalContractIntelligenceEngine:
         except Exception as e:
             logger.error(f"Failed to initialize legal AI models: {e}")
 
-    def _load_legal_precedents(self):
+    def _load_legal_precedents(self) -> None:
         """Load legal precedents database for AI analysis"""
         # Simulate loading comprehensive legal precedents database
         self.precedent_database = {
@@ -305,7 +305,7 @@ class AILegalContractIntelligenceEngine:
             ]
         }
 
-    def _setup_legal_templates(self):
+    def _setup_legal_templates(self) -> None:
         """Setup AI-optimized legal contract templates"""
         self.contract_templates = {
             LegalDocumentType.PERFORMANCE_LICENSE: {

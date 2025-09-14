@@ -542,7 +542,7 @@ import logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-def download_fingerprinting_models(cache_dir: str):
+def download_fingerprinting_models(cache_dir -> None: str) -> None:
     \"\"\"Download and cache fingerprinting models\"\"\"
     
     # Audio models

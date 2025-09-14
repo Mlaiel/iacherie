@@ -119,7 +119,7 @@ class MemoryManager(ABC):
 class InMemoryStorage(MemoryManager):
     """In-memory storage implementation"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.storage: Dict[str, MemoryEntry] = {}
         self.indices: Dict[str, Dict[str, List[str]]] = {
             "type": {},
@@ -185,14 +185,14 @@ class InMemoryStorage(MemoryManager):
             return True
         return False
     
-    def _update_index(self, index_type: str, key: str, memory_id: str):
+    def _update_index(self, index_type -> None: str, key -> None: str, memory_id -> None: str) -> None:
         """Update index"""
         if key not in self.indices[index_type]:
             self.indices[index_type][key] = []
         if memory_id not in self.indices[index_type][key]:
             self.indices[index_type][key].append(memory_id)
     
-    def _remove_from_index(self, index_type: str, key: str, memory_id: str):
+    def _remove_from_index(self, index_type -> None: str, key -> None: str, memory_id -> None: str) -> None:
         """Remove from index"""
         if key in self.indices[index_type] and memory_id in self.indices[index_type][key]:
             self.indices[index_type][key].remove(memory_id)
@@ -217,7 +217,7 @@ class InMemoryStorage(MemoryManager):
 class ConversationMemoryManager:
     """Manages conversation-specific memory"""
     
-    def __init__(self, storage: MemoryManager):
+    def __init__(self, storage -> None: MemoryManager) -> None:
         self.storage = storage
         self.active_conversations: Dict[str, ConversationContext] = {}
         self.memory_cleanup_interval = timedelta(hours=24)
@@ -365,7 +365,7 @@ class ConversationMemoryManager:
 class ContextTracker:
     """Tracks and manages various context types"""
     
-    def __init__(self, storage: MemoryManager):
+    def __init__(self, storage -> None: MemoryManager) -> None:
         self.storage = storage
         self.user_contexts: Dict[str, UserContext] = {}
         self.platform_contexts: Dict[str, Dict[str, Any]] = {}
@@ -475,7 +475,7 @@ class ContextTracker:
 class MemoryCleanupManager:
     """Manages memory cleanup and optimization"""
     
-    def __init__(self, storage: MemoryManager):
+    def __init__(self, storage -> None: MemoryManager) -> None:
         self.storage = storage
         self.cleanup_rules = {
             MemoryType.TEMPORARY: timedelta(hours=1),

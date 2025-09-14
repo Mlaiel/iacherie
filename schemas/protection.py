@@ -44,7 +44,7 @@ Content protection request schema."""
     contact_info: Dict[str, str] = Field(default_factory=dict, description="Legal contact information")
     
     @validator('protection_level')
-    def validate_protection_level(cls, v):
+    def validate_protection_level(cls, v) -> None:
         """Validate protection level."""
         allowed_levels = {"basic", "standard", "premium", "enterprise", "custom"}
         if v not in allowed_levels:
@@ -113,7 +113,7 @@ Content fingerprint creation request schema."""
     custom_parameters: Dict[str, Any] = Field(default_factory=dict)
     
     @validator('fingerprint_type')
-    def validate_fingerprint_type(cls, v):
+    def validate_fingerprint_type(cls, v) -> None:
         """Validate fingerprint type."""
         allowed_types = {
             "audio_chromaprint", "audio_spectral", "video_perceptual", "video_structural",
@@ -187,7 +187,7 @@ class WatermarkRequest(BaseSchema):
     batch_processing: bool = Field(default=False, description="Process in batch")
     
     @validator('watermark_type')
-    def validate_watermark_type(cls, v):
+    def validate_watermark_type(cls, v) -> None:
         """Validate watermark type."""
         allowed_types = {
             "visible_text", "visible_logo", "invisible_digital", "audio_spectral",
@@ -263,7 +263,7 @@ class ViolationReport(UUIDSchema, TimestampSchema):
     resolved_at: Optional[datetime] = None
     
     @validator('violation_type')
-    def validate_violation_type(cls, v):
+    def validate_violation_type(cls, v) -> None:
         """Validate violation type."""
         allowed_types = {
             "copyright_infringement", "unauthorized_distribution", "piracy",
@@ -315,7 +315,7 @@ class TakedownRequest(UUIDSchema, TimestampSchema, AuditSchema):
     follow_up_required: bool = Field(default=False)
     
     @validator('takedown_type')
-    def validate_takedown_type(cls, v):
+    def validate_takedown_type(cls, v) -> None:
         """Validate takedown type."""
         allowed_types = {
             "dmca", "european_copyright_directive", "national_copyright",

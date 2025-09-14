@@ -219,7 +219,7 @@ class AnalyticsEngine:
     performance reporting, predictive analytics, and automated insights generation.
     """
     
-    def __init__(self, db_session: AsyncSession, redis_client: Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: Redis) -> None:
         """
         Initialize Analytics Engine.
         
@@ -693,7 +693,7 @@ class AnalyticsEngine:
             for metric_type, value in base_metrics.items()
         }
     
-    async def _cache_metric(self, metric: AnalyticsMetric):
+    async def _cache_metric(self, metric -> None: AnalyticsMetric) -> None:
         """Cache metric for real-time access"""
         cache_key = f"metric:{metric.user_id}:{metric.platform.value if metric.platform else 'all'}:{metric.metric_type.value}"
         await self.redis.setex(
@@ -706,7 +706,7 @@ class AnalyticsEngine:
             })
         )
     
-    async def _check_metric_alerts(self, user_id: str, metric: AnalyticsMetric):
+    async def _check_metric_alerts(self, user_id -> None: str, metric -> None: AnalyticsMetric) -> None:
         """Check if metric triggers any alerts"""
         thresholds = self.performance_thresholds.get(metric.metric_type, {})
         
@@ -748,7 +748,7 @@ class AnalyticsEngine:
         
         return data
     
-    async def _store_metrics_batch(self, metrics: List[AnalyticsMetric]):
+    async def _store_metrics_batch(self, metrics -> None: List[AnalyticsMetric]) -> None:
         """Store batch of metrics"""
         # Placeholder implementation
         self.logger.info(f"Storing batch of {len(metrics)} metrics")

@@ -153,7 +153,7 @@ class VerificationResult:
 class IdentityVerificationEngine:
     """Identity verification and KYC/AML compliance system"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.config = config or {}
         self.verification_sessions: Dict[str, VerificationSession] = {}
         self.identity_documents: Dict[str, IdentityDocument] = {}
@@ -266,7 +266,7 @@ class IdentityVerificationEngine:
             logger.error(f"Document submission error: {e}")
             raise
     
-    async def _verify_document(self, document: IdentityDocument):
+    async def _verify_document(self, document -> None: IdentityDocument) -> None:
         """Verify submitted document"""
         try:
             verification_score = 0.0
@@ -410,7 +410,7 @@ class IdentityVerificationEngine:
             logger.error(f"Biometric verification error: {e}")
             raise
     
-    async def _verify_biometric(self, verification: BiometricVerification, biometric_data: Dict[str, Any]):
+    async def _verify_biometric(self, verification -> None: BiometricVerification, biometric_data -> None: Dict[str, Any]) -> None:
         """Verify biometric data"""
         try:
             # Mock implementation - would use biometric AI models

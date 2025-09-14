@@ -49,7 +49,7 @@ class ErrorAnalyzer:
     Provides pattern detection, trend analysis, and actionable insights
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize error analyzer"""
         self.patterns: Dict[str, ErrorPattern] = {}
         self.known_patterns = self._load_known_patterns()

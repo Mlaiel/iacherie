@@ -18,6 +18,7 @@ from ..core.base_event import BaseEvent
 
 
 class CollaborationType(Enum):
+    """CollaborationType class implementation"""
     REAL_TIME = "real_time"
     ASYNCHRONOUS = "asynchronous"
     REMIX = "remix"
@@ -25,6 +26,7 @@ class CollaborationType(Enum):
 
 
 class CollaborationStatus(Enum):
+    """CollaborationStatus class implementation"""
     PENDING = "pending"
     ACCEPTED = "accepted"
     REJECTED = "rejected"
@@ -33,6 +35,7 @@ class CollaborationStatus(Enum):
 
 
 class RemixType(Enum):
+    """RemixType class implementation"""
     FULL_REMIX = "full_remix"
     PARTIAL_REMIX = "partial_remix"
     MASHUP = "mashup"
@@ -41,13 +44,14 @@ class RemixType(Enum):
 
 @dataclass
 class AudioCollaborationRequestEvent(BaseEvent):
+    """AudioCollaborationRequestEvent class implementation"""
     user_id: UUID
     file_id: UUID
     collaboration_id: UUID
     requester_id: UUID
     collaboration_type: str
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.collaboration.request",
             data={
@@ -60,12 +64,13 @@ class AudioCollaborationRequestEvent(BaseEvent):
 
 @dataclass
 class AudioCollaborationAcceptedEvent(BaseEvent):
+    """AudioCollaborationAcceptedEvent class implementation"""
     user_id: UUID
     file_id: UUID
     collaboration_id: UUID
     accepter_id: UUID
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.collaboration.accepted",
             data={
@@ -77,13 +82,14 @@ class AudioCollaborationAcceptedEvent(BaseEvent):
 
 @dataclass
 class AudioCollaborationRejectedEvent(BaseEvent):
+    """AudioCollaborationRejectedEvent class implementation"""
     user_id: UUID
     file_id: UUID
     collaboration_id: UUID
     rejecter_id: UUID
     rejection_reason: str
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.collaboration.rejected",
             data={
@@ -96,12 +102,13 @@ class AudioCollaborationRejectedEvent(BaseEvent):
 
 @dataclass
 class AudioRemixCreatedEvent(BaseEvent):
+    """AudioRemixCreatedEvent class implementation"""
     user_id: UUID
     original_file_id: UUID
     remix_file_id: UUID
     remix_type: str
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.collaboration.remix_created",
             data={
@@ -114,12 +121,13 @@ class AudioRemixCreatedEvent(BaseEvent):
 
 @dataclass
 class AudioVersionCreatedEvent(BaseEvent):
+    """AudioVersionCreatedEvent class implementation"""
     user_id: UUID
     file_id: UUID
     version_id: UUID
     version_number: str
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.collaboration.version_created",
             data={
@@ -132,13 +140,14 @@ class AudioVersionCreatedEvent(BaseEvent):
 
 @dataclass
 class AudioRealTimeCollaborationEvent(BaseEvent):
+    """AudioRealTimeCollaborationEvent class implementation"""
     user_id: UUID
     session_id: UUID
     file_id: UUID
     action_type: str
     participants: List[UUID] = field(default_factory=list)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.collaboration.real_time",
             data={
@@ -152,12 +161,13 @@ class AudioRealTimeCollaborationEvent(BaseEvent):
 
 @dataclass
 class AudioVersionControlEvent(BaseEvent):
+    """AudioVersionControlEvent class implementation"""
     user_id: UUID
     file_id: UUID
     version_control_id: UUID
     operation: str  # commit, merge, branch, tag
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.collaboration.version_control",
             data={
@@ -170,12 +180,13 @@ class AudioVersionControlEvent(BaseEvent):
 
 @dataclass
 class AudioCollaborationRoomEvent(BaseEvent):
+    """AudioCollaborationRoomEvent class implementation"""
     user_id: UUID
     room_id: UUID
     action: str  # created, joined, left, closed
     participants: List[UUID] = field(default_factory=list)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.collaboration.room",
             data={
@@ -188,12 +199,13 @@ class AudioCollaborationRoomEvent(BaseEvent):
 
 @dataclass
 class AudioLiveSessionEvent(BaseEvent):
+    """AudioLiveSessionEvent class implementation"""
     user_id: UUID
     session_id: UUID
     session_type: str
     status: str  # started, active, paused, ended
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         super().__init__(
             event_type="audio.collaboration.live_session",
             data={

@@ -62,7 +62,7 @@ class BusinessLogicFlow(str, Enum):
 class AinflueMasterConfiguration:
     """Master configuration orchestrator for Ainflue platform"""
     
-    def __init__(self, level: ConfigurationLevel = ConfigurationLevel.ENTERPRISE):
+    def __init__(self, level -> None: ConfigurationLevel = ConfigurationLevel.ENTERPRISE) -> None:
         """Initialize master configuration"""
         self.level = level
         self.app_settings = app_settings
@@ -71,7 +71,7 @@ class AinflueMasterConfiguration:
         self._initialize_configurations()
         self._setup_business_logic_flows()
     
-    def _initialize_configurations(self):
+    def _initialize_configurations(self) -> None:
         """Initialize all configuration subsystems"""
         # Core infrastructure (basic configurations)
         self.configurations.update({
@@ -101,7 +101,7 @@ class AinflueMasterConfiguration:
             "media_processing": {"status": "placeholder", "level": self.level}
         })
     
-    def _setup_business_logic_flows(self):
+    def _setup_business_logic_flows(self) -> None:
         """Setup business logic flow configurations"""
         self.business_flow_configs = {
             BusinessLogicFlow.CREATOR_ONBOARDING: {
@@ -212,7 +212,7 @@ class AinflueMasterConfiguration:
         # Implement actual validation logic based on rule and stage
         return True  # Simplified for example
     
-    async def initialize_async_configurations(self):
+    async def initialize_async_configurations(self) -> None:
         """Initialize configurations that require async setup"""
         initialization_tasks = []
         
@@ -258,7 +258,7 @@ def get_business_flow_config(flow_stage: BusinessLogicFlow) -> Dict[str, Any]:
     """Get business flow configuration"""
     return master_config.get_business_flow_config(flow_stage)
 
-async def initialize_platform_config():
+async def initialize_platform_config() -> None:
     """Initialize complete platform configuration"""
     await master_config.initialize_async_configurations()
     return master_config.get_configuration_summary()

@@ -12,6 +12,7 @@ from datetime import datetime
 
 @dataclass
 class AttributionMetrics:
+    """AttributionMetrics: class implementation"""
     touchpoint_id: str
     attribution_weight: float
     conversion_contribution: float
@@ -20,6 +21,7 @@ class AttributionMetrics:
 
 @dataclass
 class ConversionPaths:
+    """ConversionPaths: class implementation"""
     user_id: str
     conversion_paths: List[List[str]]
     attribution_model: str

@@ -123,7 +123,7 @@ class ImageInferenceAnalyzer:
     - Edge computing ready
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialise l'analyseur d'images
         
         Args:
@@ -552,7 +552,7 @@ class ImageInferenceAnalyzer:
             logger.error(f"Viral potential calculation failed: {str(e)}")
             return 0.5
     
-    async def _update_analytics(self, creator_id: str, result: ImageAnalysisResult):
+    async def _update_analytics(self, creator_id -> None: str, result -> None: ImageAnalysisResult) -> None:
         """Mise à jour des analytics créateur"""
         try:
             if creator_id not in self.analytics:

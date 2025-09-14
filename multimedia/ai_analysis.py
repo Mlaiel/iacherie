@@ -29,16 +29,18 @@ try:
 except ImportError:
     # Create a minimal numpy stub
     class NumpyStub:
+    """NumpyStub: class implementation"""
         class ndarray:
+    """ndarray: class implementation"""
             pass
         @staticmethod
-        def array(data):
+        def array(data) -> None:
             return data
         @staticmethod
-        def zeros(shape):
+        def zeros(shape) -> None:
             return [0] * (shape[0] if isinstance(shape, (list, tuple)) else shape)
         @staticmethod
-        def uint8():
+        def uint8() -> None:
             return int
     np = NumpyStub()
 
@@ -47,6 +49,7 @@ try:
 except ImportError:
     # Create cv2 stub
     class CV2Stub:
+    """CV2Stub: class implementation"""
         pass
     cv2 = CV2Stub()
 
@@ -56,6 +59,7 @@ try:
 except ImportError:
     # Create torch stubs
     class TorchStub:
+    """TorchStub: class implementation"""
         pass
     torch = TorchStub()
     transforms = TorchStub()
@@ -88,7 +92,9 @@ try:
     from PIL import Image
 except ImportError:
     class ImageStub:
+    """ImageStub: class implementation"""
         class Image:
+    """Image: class implementation"""
             pass
     Image = ImageStub()
 
@@ -126,6 +132,7 @@ try:
 except ImportError:
     # Create stub if formats not available
     class ContentFormat:
+    """ContentFormat: class implementation"""
         AUDIO = "audio"
         VIDEO = "video"
         IMAGE = "image"
@@ -135,22 +142,25 @@ try:
     from ..core.exceptions import ProcessingError, AIAnalysisError
 except ImportError:
     class ProcessingError(Exception):
+    """ProcessingError class implementation"""
         pass
     class AIAnalysisError(Exception):
+    """AIAnalysisError class implementation"""
         pass
 
 try:
     from ..core.config import get_settings
 except ImportError:
-    def get_settings():
+    def get_settings() -> None:
         class Settings:
+    """Settings: class implementation"""
             MAX_WORKERS = 4
         return Settings()
 
 try:
     from ..utils.caching import cache_result
 except ImportError:
-    def cache_result(func):
+    def cache_result(func) -> None:
         return func  # No-op decorator
 
 logger = logging.getLogger(__name__)
@@ -216,7 +226,7 @@ Audio content analysis results"""
 class BaseAnalyzer(ABC):
     """Base class for all AI analyzers"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.executor = ThreadPoolExecutor(max_workers=settings.MAX_WORKERS)
         self._models_loaded = False
         
@@ -263,7 +273,7 @@ class ContentAnalyzer(BaseAnalyzer):
     """
 Main content analyzer orchestrating different analysis types"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
         self.scene_detector = SceneDetector()
         self.object_detector = ObjectDetector() 
@@ -365,7 +375,7 @@ class SceneDetector(BaseAnalyzer):
     """
 Advanced scene detection and video analysis"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
         self.model = None
         self.face_cascade = None
@@ -601,7 +611,7 @@ Analyze lighting conditions in frames"""
 class ObjectDetector(BaseAnalyzer):
     """Advanced object detection and recognition"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
         self.yolo_model = None
         self.clip_processor = None
@@ -848,7 +858,7 @@ Load object detection models"""
 class SentimentAnalyzer(BaseAnalyzer):
     """Advanced sentiment and emotion analysis"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
         self.text_classifier = None
         self.emotion_classifier = None
@@ -1088,7 +1098,7 @@ Load sentiment analysis models"""
 class AudioContentAnalyzer(BaseAnalyzer):
     """Advanced audio content analysis for music and speech"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
         self.genre_classifier = None
         self.speech_recognizer = None

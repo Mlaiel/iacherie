@@ -198,7 +198,7 @@ class EngagementForecast:
 class CrossPlatformEngagementTracker:
     """Enterprise cross-platform engagement analytics and tracking system."""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """Initialize engagement tracker.
         
         Args:
@@ -1255,7 +1255,7 @@ class CrossPlatformEngagementTracker:
 
 
 # Example usage
-async def example_usage():
+async def example_usage() -> None:
     """Example usage of CrossPlatformEngagementTracker."""
     
     config = {

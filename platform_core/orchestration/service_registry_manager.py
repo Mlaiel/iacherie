@@ -1,3 +1,8 @@
+"""
+Service Registry Manager module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Service Registry Manager - Enterprise Core Component
@@ -105,7 +110,7 @@ class ServiceRegistryManager:
     enterprise-grade reliability and performance.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.services: Dict[str, ServiceInstance] = {}  # instance_id -> ServiceInstance
         self.service_index: Dict[str, Set[str]] = {}  # service_name -> Set[instance_id]
@@ -578,11 +583,11 @@ class ServiceRegistryManager:
                 await asyncio.sleep(30)
     
     # Context Manager Support
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         await self.start()
         return self
     
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         await self.stop()
 
 
@@ -593,7 +598,7 @@ def create_service_registry(config: Optional[Dict[str, Any]] = None) -> ServiceR
 
 
 # Example usage
-async def main():
+async def main() -> None:
     """Example usage of Service Registry Manager"""
     async with create_service_registry() as registry:
         # Register a service instance

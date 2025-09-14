@@ -89,7 +89,7 @@ class KafkaManager:
     Enterprise Kafka cluster deployment and management system
     Handles high-throughput event streaming for IA content processing
     """
-    def __init__(self, config: Optional[KafkaClusterConfig] = None):
+    def __init__(self, config -> None: Optional[KafkaClusterConfig] = None) -> None:
         self.config = config or self._get_default_config()
         self.docker_client = docker.from_env()
         self.health_checker = HealthChecker()

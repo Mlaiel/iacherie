@@ -45,7 +45,7 @@ class ParticleSystemConfig:
 class Particle:
     """Individual particle with physics simulation."""
     
-    def __init__(self, config: ParticleConfig):
+    def __init__(self, config -> None: ParticleConfig) -> None:
         self.x, self.y = config.position
         self.vx, self.vy = config.velocity
         self.ax, self.ay = config.acceleration
@@ -57,7 +57,7 @@ class Particle:
         self.fade_rate = config.fade_rate
         self.active = True
     
-    def update(self, dt: float, gravity: Tuple[float, float], wind: Tuple[float, float]):
+    def update(self, dt -> None: float, gravity -> None: Tuple[float, float], wind -> None: Tuple[float, float]) -> None:
         """Update particle physics."""
         if not self.active:
             return
@@ -85,7 +85,7 @@ class Particle:
             # Fade out over time
             self.alpha = max(0.0, self.lifetime / self.max_lifetime)
     
-    def render(self, frame: np.ndarray):
+    def render(self, frame -> None: np.ndarray) -> None:
         """Render particle to frame."""
         if not self.active or self.alpha <= 0:
             return
@@ -119,17 +119,17 @@ class Particle:
 class ParticleSystem:
     """Complete particle system with emitters and physics."""
     
-    def __init__(self, config: ParticleSystemConfig):
+    def __init__(self, config -> None: ParticleSystemConfig) -> None:
         self.config = config
         self.particles: List[Particle] = []
         self.time_since_spawn = 0.0
         self.emitter_position = (0, 0)
         
-    def set_emitter_position(self, position: Tuple[float, float]):
+    def set_emitter_position(self, position -> None: Tuple[float, float]) -> None:
         """Set the position where new particles spawn."""
         self.emitter_position = position
     
-    def spawn_particle(self):
+    def spawn_particle(self) -> None:
         """Spawn a new particle at the emitter position."""
         if len(self.particles) >= self.config.particle_count:
             return
@@ -160,7 +160,7 @@ class ParticleSystem:
         particle = Particle(particle_config)
         self.particles.append(particle)
     
-    def update(self, dt: float):
+    def update(self, dt -> None: float) -> None:
         """Update all particles in the system."""
         # Update existing particles
         active_particles = []
@@ -179,7 +179,7 @@ class ParticleSystem:
             self.spawn_particle()
             self.time_since_spawn -= spawn_interval
     
-    def render(self, frame: np.ndarray):
+    def render(self, frame -> None: np.ndarray) -> None:
         """Render all particles to the frame."""
         for particle in self.particles:
             particle.render(frame)
@@ -298,7 +298,7 @@ class EffectPresets:
 class ParticleEffectsEngine:
     """Enterprise particle effects engine for dynamic visual content."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.particle_systems: List[ParticleSystem] = []
         
     async def add_particles(

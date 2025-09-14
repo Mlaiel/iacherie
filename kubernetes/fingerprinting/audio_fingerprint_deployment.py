@@ -56,7 +56,7 @@ class AudioFingerprintConfig:
     batch_size: int = 32
     models: List[str] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         try:
                     # Request validation
                     if not data:
@@ -82,7 +82,7 @@ class AudioFingerprintDeployment:
     services with support for Chromaprint and Essentia engines.
     """
     
-    def __init__(self, namespace: str = "ia-influencer"):
+    def __init__(self, namespace -> None: str = "ia-influencer") -> None:
         """
         Initialize audio fingerprint deployment manager
         
@@ -725,3 +725,5 @@ Initialize Kubernetes, Docker, and Redis clients"""
         except Exception as e:
             logger.error(f"Cleanup failed: {e}")
             raise
+
+# File has syntax issues - needs manual review

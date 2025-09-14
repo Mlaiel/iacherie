@@ -77,7 +77,7 @@ class SegmentOptimizer:
     based on real-time data and machine learning predictions.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the Segment Optimizer"""
         self.clustering_models = self._load_clustering_models()
         self.performance_predictors = self._load_performance_predictors()

@@ -100,7 +100,7 @@ class TransformedEvent:
 class TransformationError(Exception):
     """Custom exception for transformation errors"""
     
-    def __init__(self, message: str, transformation_name: str, original_error: Optional[Exception] = None):
+    def __init__(self, message -> None: str, transformation_name -> None: str, original_error -> None: Optional[Exception] = None) -> None:
         super().__init__(message)
         self.transformation_name = transformation_name
         self.original_error = original_error
@@ -109,7 +109,7 @@ class TransformationError(Exception):
 class TransformationPipelineError(Exception):
     """Exception for critical pipeline failures"""
     
-    def __init__(self, message: str, original_error: Exception, business_impact: str):
+    def __init__(self, message -> None: str, original_error -> None: Exception, business_impact -> None: str) -> None:
         super().__init__(message)
         self.original_error = original_error
         self.business_impact = business_impact
@@ -118,7 +118,7 @@ class TransformationPipelineError(Exception):
 class BusinessEnrichmentEngine:
     """Engine for business context analysis and enrichment"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.enrichment_cache = {}
         self.business_rules = self._load_business_rules()
     
@@ -339,7 +339,7 @@ class BusinessEnrichmentEngine:
 class SchemaMapper:
     """Mapper for schema transformations between services"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.schema_mappings = self._load_schema_mappings()
         self.default_mappings = self._load_default_mappings()
     
@@ -456,7 +456,7 @@ class SchemaMapper:
         
         return value
     
-    def _set_nested_value(self, data: Dict[str, Any], field_path: str, value: Any):
+    def _set_nested_value(self, data -> None: Dict[str, Any], field_path -> None: str, value -> None: Any) -> None:
         """Set value in nested dictionary using dot notation"""
         keys = field_path.split('.')
         current = data
@@ -578,7 +578,7 @@ class SchemaMapper:
 class TransformationPerformanceOptimizer:
     """Optimizer for transformation performance"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.performance_history = []
         self.optimization_cache = {}
     
@@ -700,7 +700,7 @@ class RecoveryResult:
 class BaseTransformation:
     """Base class for all transformations"""
     
-    def __init__(self, name: str, priority: TransformationPriority = TransformationPriority.MEDIUM):
+    def __init__(self, name -> None: str, priority -> None: TransformationPriority = TransformationPriority.MEDIUM) -> None:
         self.name = name
         self.priority = priority
         self.required_fields = []
@@ -725,7 +725,7 @@ class BaseTransformation:
 class SchemaTransformation(BaseTransformation):
     """Schema mapping transformation"""
     
-    def __init__(self, schema_mapper: SchemaMapper):
+    def __init__(self, schema_mapper -> None: SchemaMapper) -> None:
         super().__init__("schema_mapping", TransformationPriority.HIGH)
         self.schema_mapper = schema_mapper
         self.required_fields = ["event_id", "event_type"]
@@ -797,7 +797,7 @@ class SchemaTransformation(BaseTransformation):
 class BusinessEnrichmentTransformation(BaseTransformation):
     """Business data enrichment transformation"""
     
-    def __init__(self, enrichment_engine: BusinessEnrichmentEngine):
+    def __init__(self, enrichment_engine -> None: BusinessEnrichmentEngine) -> None:
         super().__init__("business_enrichment", TransformationPriority.MEDIUM)
         self.enrichment_engine = enrichment_engine
         self.required_fields = ["event_type"]
@@ -877,7 +877,7 @@ class BusinessEnrichmentTransformation(BaseTransformation):
 class FilteringTransformation(BaseTransformation):
     """Event filtering transformation"""
     
-    def __init__(self, filter_rules: Dict[str, Any]):
+    def __init__(self, filter_rules -> None: Dict[str, Any]) -> None:
         super().__init__("filtering", TransformationPriority.LOW)
         self.filter_rules = filter_rules
     
@@ -941,11 +941,11 @@ class FilteringTransformation(BaseTransformation):
 class TransformationRegistry:
     """Registry for managing transformations"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.transformations: Dict[str, BaseTransformation] = {}
         self.transformation_chains: Dict[str, List[str]] = {}
     
-    def register_transformation(self, transformation: BaseTransformation):
+    def register_transformation(self, transformation -> None: BaseTransformation) -> None:
         """Register a transformation"""
         self.transformations[transformation.name] = transformation
         logger.info(f"Registered transformation: {transformation.name}")
@@ -954,7 +954,7 @@ class TransformationRegistry:
         """Get transformation by name"""
         return self.transformations.get(name)
     
-    def register_transformation_chain(self, service: str, transformation_names: List[str]):
+    def register_transformation_chain(self, service -> None: str, transformation_names -> None: List[str]) -> None:
         """Register transformation chain for a service"""
         self.transformation_chains[service] = transformation_names
         logger.info(f"Registered transformation chain for {service}: {transformation_names}")
@@ -971,7 +971,7 @@ class EventTransformationPipeline:
     Business-aware transformations with streaming support and intelligent error recovery
     """
     
-    def __init__(self, transformation_registry: TransformationRegistry):
+    def __init__(self, transformation_registry -> None: TransformationRegistry) -> None:
         self.transformation_registry = transformation_registry
         self.business_enrichment_engine = BusinessEnrichmentEngine()
         self.schema_mapper = SchemaMapper()
@@ -983,7 +983,7 @@ class EventTransformationPipeline:
         
         logger.info("EventTransformationPipeline initialized for Ainflue cross-services")
     
-    def _initialize_default_transformations(self):
+    def _initialize_default_transformations(self) -> None:
         """Initialize default transformations"""
         
         # Register schema transformation

@@ -1,4 +1,6 @@
 """🛡️ Security Manager - Enterprise Security & Compliance Management
+from datetime import datetime
+
 =====================================================================
 Module: database/security_manager.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -186,7 +188,7 @@ class ComplianceReport:
 class EncryptionManager:
     """Advanced encryption and key management"""
     
-    def __init__(self, master_key: str = None):
+    def __init__(self, master_key -> None: str = None) -> None:
         self.master_key = master_key or self._generate_master_key()
         self.encryption_keys: Dict[str, bytes] = {}
         self.key_rotation_schedule: Dict[str, datetime.datetime] = {}
@@ -264,7 +266,7 @@ class EncryptionManager:
             logger.error(f"Password verification failed: {e}")
             return False
     
-    async def rotate_keys(self, key_ids: List[str] = None):
+    async def rotate_keys(self, key_ids -> None: List[str] = None) -> None:
         """Rotate encryption keys"""
         if key_ids is None:
             key_ids = list(self.encryption_keys.keys())
@@ -281,14 +283,14 @@ class EncryptionManager:
 class AccessControlManager:
     """Role-based access control and permissions"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.roles: Dict[str, Dict[str, Any]] = {}
         self.user_roles: Dict[str, Set[str]] = {}
         self.permissions: Dict[str, Dict[str, Any]] = {}
         self.access_cache: Dict[str, Any] = {}
         self._setup_default_roles()
     
-    def _setup_default_roles(self):
+    def _setup_default_roles(self) -> None:
         """Setup default security roles"""
         self.roles = {
             "admin": {
@@ -389,7 +391,7 @@ class AccessControlManager:
             logger.error(f"Failed to get user permissions: {e}")
             return []
     
-    def _clear_user_cache(self, user_id: str):
+    def _clear_user_cache(self, user_id -> None: str) -> None:
         """Clear cached permissions for user"""
         keys_to_remove = [key for key in self.access_cache.keys() if key.startswith(f"{user_id}:")]
         for key in keys_to_remove:
@@ -398,14 +400,14 @@ class AccessControlManager:
 class ThreatDetectionEngine:
     """Advanced threat detection and response"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.detection_rules: Dict[str, ThreatDetectionRule] = {}
         self.threat_history: List[SecurityEvent] = []
         self.blocked_ips: Set[str] = set()
         self.suspicious_patterns: Dict[str, Any] = {}
         self._setup_default_rules()
     
-    def _setup_default_rules(self):
+    def _setup_default_rules(self) -> None:
         """Setup default threat detection rules"""
         self.detection_rules = {
             "brute_force": ThreatDetectionRule(
@@ -549,7 +551,7 @@ class ThreatDetectionEngine:
         
         return denied_attempts >= conditions["denied_attempts"]
     
-    async def _execute_response_action(self, action: str, event: SecurityEvent):
+    async def _execute_response_action(self, action -> None: str, event -> None: SecurityEvent) -> None:
         """Execute threat response action"""
         try:
             if action == "block_ip" and event.ip_address:
@@ -578,13 +580,13 @@ class ThreatDetectionEngine:
 class ComplianceMonitor:
     """GDPR/CCPA and regulatory compliance monitoring"""
     
-    def __init__(self, connection_manager=None):
+    def __init__(self, connection_manager=None) -> None:
         self.connection_manager = connection_manager
         self.compliance_rules: Dict[ComplianceStandard, Dict[str, Any]] = {}
         self.compliance_events: List[Dict[str, Any]] = []
         self._setup_compliance_rules()
     
-    def _setup_compliance_rules(self):
+    def _setup_compliance_rules(self) -> None:
         """Setup compliance monitoring rules"""
         self.compliance_rules = {
             ComplianceStandard.GDPR: {
@@ -646,7 +648,7 @@ class ComplianceMonitor:
             })
             return report
     
-    async def _check_gdpr_compliance(self, report: ComplianceReport):
+    async def _check_gdpr_compliance(self, report -> None: ComplianceReport) -> None:
         """Check GDPR compliance requirements"""
         rules = self.compliance_rules[ComplianceStandard.GDPR]
         
@@ -665,7 +667,7 @@ class ComplianceMonitor:
         # Check data portability
         await self._check_data_portability(report)
     
-    async def _check_ccpa_compliance(self, report: ComplianceReport):
+    async def _check_ccpa_compliance(self, report -> None: ComplianceReport) -> None:
         """Check CCPA compliance requirements"""
         rules = self.compliance_rules[ComplianceStandard.CCPA]
         
@@ -681,7 +683,7 @@ class ComplianceMonitor:
         # Check data transparency
         await self._check_data_transparency(report)
     
-    async def _check_data_retention(self, report: ComplianceReport, max_retention_days: int):
+    async def _check_data_retention(self, report -> None: ComplianceReport, max_retention_days -> None: int) -> None:
         """Check data retention policies"""
         try:
             if self.connection_manager and SQLALCHEMY_AVAILABLE:
@@ -717,7 +719,7 @@ class ComplianceMonitor:
         except Exception as e:
             logger.error(f"Data retention check failed: {e}")
     
-    async def _check_deletion_requests(self, report: ComplianceReport, max_response_days: int):
+    async def _check_deletion_requests(self, report -> None: ComplianceReport, max_response_days -> None: int) -> None:
         """Check deletion request handling"""
         # Implementation would check actual deletion request processing times
         # This is a simplified example
@@ -732,7 +734,7 @@ class ComplianceMonitor:
                 "severity": "high"
             })
     
-    async def _check_consent_management(self, report: ComplianceReport):
+    async def _check_consent_management(self, report -> None: ComplianceReport) -> None:
         """Check consent management compliance"""
         # Implementation would verify consent records
         report.consent_records = 1250  # Mock data
@@ -746,7 +748,7 @@ class ComplianceMonitor:
                 "severity": "high"
             })
     
-    async def _check_breach_notifications(self, report: ComplianceReport, max_notification_hours: int):
+    async def _check_breach_notifications(self, report -> None: ComplianceReport, max_notification_hours -> None: int) -> None:
         """Check data breach notification compliance"""
         # Implementation would check actual breach notification times
         report.data_breaches = 0  # Mock data
@@ -754,17 +756,17 @@ class ComplianceMonitor:
         if report.data_breaches > 0:
             report.recommendations.append("Review data breach notification procedures")
     
-    async def _check_data_portability(self, report: ComplianceReport):
+    async def _check_data_portability(self, report -> None: ComplianceReport) -> None:
         """Check data portability compliance (GDPR)"""
         # Implementation would verify data export capabilities
         report.recommendations.append("Ensure data export functionality is available")
     
-    async def _check_opt_out_mechanisms(self, report: ComplianceReport):
+    async def _check_opt_out_mechanisms(self, report -> None: ComplianceReport) -> None:
         """Check opt-out mechanisms (CCPA)"""
         # Implementation would verify opt-out functionality
         report.recommendations.append("Verify opt-out mechanisms are functioning")
     
-    async def _check_data_transparency(self, report: ComplianceReport):
+    async def _check_data_transparency(self, report -> None: ComplianceReport) -> None:
         """Check data transparency requirements (CCPA)"""
         # Implementation would verify privacy policy and data usage transparency
         report.recommendations.append("Review data usage transparency documentation")
@@ -772,7 +774,7 @@ class ComplianceMonitor:
 class EnterpriseSecurityManager:
     """Enterprise security management coordination"""
     
-    def __init__(self, connection_manager=None):
+    def __init__(self, connection_manager=None) -> None:
         self.connection_manager = connection_manager
         self.encryption_manager = EncryptionManager()
         self.access_control = AccessControlManager()
@@ -900,7 +902,7 @@ class EnterpriseSecurityManager:
         
         return min(100.0, risk_score)
     
-    async def _store_security_event(self, event: SecurityEvent):
+    async def _store_security_event(self, event -> None: SecurityEvent) -> None:
         """Store security event in database"""
         try:
             conn = await self.connection_manager.get_connection("postgresql")
@@ -922,7 +924,7 @@ class EnterpriseSecurityManager:
         except Exception as e:
             logger.error(f"Failed to store security event: {e}")
     
-    async def _store_audit_entry(self, audit_entry: AuditTrail):
+    async def _store_audit_entry(self, audit_entry -> None: AuditTrail) -> None:
         """Store audit entry in database"""
         try:
             conn = await self.connection_manager.get_connection("postgresql")

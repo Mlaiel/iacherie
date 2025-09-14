@@ -160,7 +160,7 @@ class DRMService:
     - Revenue tracking integration
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """
 Initialize DRM service."""
         self.config = config

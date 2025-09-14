@@ -134,7 +134,7 @@ class ServiceOrchestrator:
     load balancing, and system-wide service orchestration.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the service orchestrator."""
         self.service_registry: Dict[str, ServiceDefinition] = {}
         self.service_instances: Dict[str, List[ServiceInstance]] = defaultdict(list)
@@ -146,7 +146,7 @@ class ServiceOrchestrator:
         self.logger = logging.getLogger(__name__)
         self._setup_default_services()
     
-    def _setup_default_services(self):
+    def _setup_default_services(self) -> None:
         """Setup default service definitions."""
         default_services = [
             ServiceDefinition(

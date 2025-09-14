@@ -135,7 +135,7 @@ class FinancialReporting:
     """
 Système de rapports financiers"""
     
-    def __init__(self, database_client: Optional[Any] = None):
+    def __init__(self, database_client -> None: Optional[Any] = None) -> None:
         self.database_client = database_client
         self.cache: Dict[str, Any] = {}
         self.cache_ttl = 3600  # 1 heure
@@ -399,7 +399,7 @@ Formate le libellé d'une période"""
 class RevenueAnalytics:
     """Analytics avancées de revenus"""
     
-    def __init__(self, database_client: Optional[Any] = None):
+    def __init__(self, database_client -> None: Optional[Any] = None) -> None:
         try:
             logger.info(f"Executing __init__")
             

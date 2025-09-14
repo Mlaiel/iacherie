@@ -71,7 +71,7 @@ class FailedEvent:
     tags: Set[str] = field(default_factory=set)
     metadata: Dict[str, Any] = field(default_factory=dict)
     
-    def __lt__(self, other):
+    def __lt__(self, other) -> None:
         """For priority queue ordering (earliest retry first)"""
         if self.next_retry_at is None:
             return False
@@ -115,11 +115,11 @@ class DeadLetterQueue:
     """Advanced dead letter queue for failed events"""
     
     def __init__(self,
-                 max_queue_size: int = 10000,
-                 default_max_retries: int = 3,
-                 base_retry_delay: float = 1.0,
-                 enable_auto_recovery: bool = True,
-                 recovery_interval: int = 60):
+                 max_queue_size -> None: int = 10000,
+                 default_max_retries -> None: int = 3,
+                 base_retry_delay -> None: float = 1.0,
+                 enable_auto_recovery -> None: bool = True,
+                 recovery_interval -> None: int = 60) -> None:
         """Initialize dead letter queue
         
         Args:

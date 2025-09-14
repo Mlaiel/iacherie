@@ -155,7 +155,7 @@ Backup configuration"""
 class ContainerStorageManager:
     """Professional container storage manager"""
     
-    def __init__(self, config_path: str = "/app/config/storage"):
+    def __init__(self, config_path -> None: str = "/app/config/storage") -> None:
         self.config_path = Path(config_path)
         self.k8s_client = None
         self.storage_classes = {}
@@ -1182,7 +1182,7 @@ class ContainerStorageManager:
 class StorageMetricsCollector:
     """Storage metrics collector for monitoring"""
     
-    def __init__(self, storage_manager: ContainerStorageManager):
+    def __init__(self, storage_manager -> None: ContainerStorageManager) -> None:
         self.storage_manager = storage_manager
         self.metrics = {}
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")

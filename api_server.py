@@ -1,3 +1,8 @@
+"""
+Api Server module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Ainflue Platform API Server
@@ -45,6 +50,7 @@ request_count = 0
 validation_cache = {}
 
 class HealthResponse(BaseModel):
+    """HealthResponse class implementation"""
     status: str
     timestamp: str
     uptime_seconds: float
@@ -52,13 +58,14 @@ class HealthResponse(BaseModel):
     services: Dict[str, str]
 
 class ValidationRequest(BaseModel):
+    """ValidationRequest class implementation"""
     include_performance: bool = True
     include_security: bool = True
     include_infrastructure: bool = True
     cache_results: bool = True
 
 @app.middleware("http")
-async def track_requests(request, call_next):
+async def track_requests(request, call_next) -> None:
     """Track API requests for performance monitoring"""
     global request_count
     request_count += 1
@@ -73,7 +80,7 @@ async def track_requests(request, call_next):
     return response
 
 @app.get("/", response_model=Dict[str, Any])
-async def root():
+async def root() -> None:
     """Root endpoint with platform information"""
     return {
         "platform": "Ainflue Platform",
@@ -93,7 +100,7 @@ async def root():
     }
 
 @app.get("/health", response_model=HealthResponse)
-async def health_check():
+async def health_check() -> None:
     """Health check endpoint for monitoring"""
     uptime = (datetime.now() - server_start_time).total_seconds()
     
@@ -121,7 +128,7 @@ async def health_check():
     )
 
 @app.get("/api/v1/status")
-async def api_status():
+async def api_status() -> None:
     """API status endpoint"""
     return {
         "api_version": "1.0.0",
@@ -138,7 +145,7 @@ async def api_status():
     }
 
 @app.post("/api/v1/validation")
-async def run_validation(request: ValidationRequest, background_tasks: BackgroundTasks):
+async def run_validation(request -> None: ValidationRequest, background_tasks -> None: BackgroundTasks) -> None:
     """Run comprehensive platform validation"""
     
     # Check cache first
@@ -183,7 +190,7 @@ async def run_validation(request: ValidationRequest, background_tasks: Backgroun
         raise HTTPException(status_code=500, detail=f"Validation failed: {str(e)}")
 
 @app.get("/api/v1/monitoring")
-async def monitoring_dashboard():
+async def monitoring_dashboard() -> None:
     """Get monitoring dashboard data"""
     try:
         dashboard = get_monitoring_dashboard()
@@ -202,7 +209,7 @@ async def monitoring_dashboard():
         raise HTTPException(status_code=500, detail=f"Monitoring dashboard failed: {str(e)}")
 
 @app.get("/api/v1/infrastructure")
-async def infrastructure_status():
+async def infrastructure_status() -> None:
     """Get infrastructure status and validation"""
     try:
         validator = InfrastructureValidator()
@@ -220,7 +227,7 @@ async def infrastructure_status():
         raise HTTPException(status_code=500, detail=f"Infrastructure validation failed: {str(e)}")
 
 @app.get("/api/v1/performance")
-async def performance_metrics():
+async def performance_metrics() -> None:
     """Get detailed performance metrics"""
     uptime = (datetime.now() - server_start_time).total_seconds()
     
@@ -252,7 +259,7 @@ async def performance_metrics():
     }
 
 @app.get("/api/v1/security")
-async def security_status():
+async def security_status() -> None:
     """Get security compliance status"""
     return {
         "security_compliance": {
@@ -280,7 +287,7 @@ async def security_status():
     }
 
 @app.on_event("startup")
-async def startup_event():
+async def startup_event() -> None:
     """Application startup event"""
     print("🚀 Ainflue Platform API Server Starting...")
     print(f"📊 Validation Framework: Ready")
@@ -290,14 +297,14 @@ async def startup_event():
     print(f"⏰ Started at: {server_start_time.isoformat()}")
 
 @app.on_event("shutdown")
-async def shutdown_event():
+async def shutdown_event() -> None:
     """Application shutdown event"""
     uptime = (datetime.now() - server_start_time).total_seconds()
     print(f"🛑 Ainflue Platform API Server Stopping...")
     print(f"⏱️ Total uptime: {uptime:.2f} seconds")
     print(f"📊 Total requests served: {request_count}")
 
-def run_server():
+def run_server() -> None:
     """Run the API server"""
     uvicorn.run(
         "api_server:app",

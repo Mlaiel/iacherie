@@ -139,9 +139,9 @@ class AdvancedSocialAnalytics:
     
     def __init__(
         self,
-        platform_apis: Dict[str, Dict[str, Any]],
-        ml_models_config: Optional[Dict[str, Any]] = None
-    ):
+        platform_apis -> None: Dict[str, Dict[str, Any]],
+        ml_models_config -> None: Optional[Dict[str, Any]] = None
+    ) -> None:
         """Initialize advanced social analytics.
         
         Args:
@@ -173,7 +173,7 @@ class AdvancedSocialAnalytics:
         self.logger = logging.getLogger(__name__)
         self.session = httpx.AsyncClient(timeout=30.0)
 
-    def _init_platform_clients(self):
+    def _init_platform_clients(self) -> None:
         """Initialize social media platform clients."""
         # This would initialize specific API clients for each platform
         for platform, config in self.platform_apis.items():
@@ -801,39 +801,39 @@ class AdvancedSocialAnalytics:
         return max(estimated_reach, follower_count)
 
     # Placeholder methods for complex ML operations
-    async def _assess_audience_quality(self, platform, content_data):
+    async def _assess_audience_quality(self, platform, content_data) -> None:
         """Assess audience quality score."""
         return 0.7  # Placeholder
 
-    async def _analyze_content_quality(self, content_data):
+    async def _analyze_content_quality(self, content_data) -> None:
         """Analyze content quality using ML models."""
         return 0.8  # Placeholder
 
-    async def _calculate_timing_optimization(self, platform, content_data):
+    async def _calculate_timing_optimization(self, platform, content_data) -> None:
         """Calculate timing optimization score."""
         return 0.6  # Placeholder
 
-    async def _analyze_hashtag_effectiveness(self, platform, hashtags):
+    async def _analyze_hashtag_effectiveness(self, platform, hashtags) -> None:
         """Analyze hashtag effectiveness."""
         return 0.7  # Placeholder
 
-    async def _calculate_creator_influence(self, platform, creator_id):
+    async def _calculate_creator_influence(self, platform, creator_id) -> None:
         """Calculate creator influence factor."""
         return 0.8  # Placeholder
 
-    async def _predict_peak_performance_time(self, platform, content_data, viral_score):
+    async def _predict_peak_performance_time(self, platform, content_data, viral_score) -> None:
         """Predict when content will peak."""
         return datetime.utcnow() + timedelta(hours=2)  # Placeholder
 
-    async def close(self):
+    async def close(self) -> None:
         """Close HTTP session."""
         await self.session.aclose()
 
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         """Async context manager entry."""
         return self
 
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         """Async context manager exit."""
         await self.close()
 

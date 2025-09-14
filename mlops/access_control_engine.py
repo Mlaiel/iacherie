@@ -1,3 +1,8 @@
+"""
+Access Control Engine module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 🔐 MLOps Access Control Engine - Enterprise RBAC System
@@ -134,7 +139,7 @@ class AccessControlEngine:
     - Multi-tenant support
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.roles: Dict[str, Role] = {}
         self.users: Dict[str, User] = {}
@@ -156,7 +161,7 @@ class AccessControlEngine:
         """Génère une clé secrète sécurisée"""
         return hashlib.sha256(f"{time.time()}{id(self)}".encode()).hexdigest()
     
-    def _initialize_default_roles(self):
+    def _initialize_default_roles(self) -> None:
         """Initialize default enterprise roles"""
         # MLOps Engineer Role
         mlops_engineer = Role(
@@ -303,7 +308,7 @@ class AccessControlEngine:
             logger.warning(f"⚠️ Invalid token: {token[:20]}...")
             return None
     
-    def _invalidate_session(self, token: str):
+    def _invalidate_session(self, token -> None: str) -> None:
         """Invalide une session"""
         if token in self.active_sessions:
             user_id = self.active_sessions[token]
@@ -453,9 +458,9 @@ class AccessControlEngine:
         logger.info(f"🎭 Custom role created: {role_name}")
         return True
     
-    async def _log_audit_entry(self, request_id: str, user_id: str, resource_type: ResourceType,
-                              resource_id: str, permission: Permission, decision: bool,
-                              reason: str, context: Dict[str, Any]):
+    async def _log_audit_entry(self, request_id -> None: str, user_id -> None: str, resource_type -> None: ResourceType,
+                              resource_id -> None: str, permission -> None: Permission, decision -> None: bool,
+                              reason -> None: str, context -> None: Dict[str, Any]) -> None:
         """Log audit entry for compliance"""
         audit_entry = AccessAuditEntry(
             request_id=request_id,
@@ -512,7 +517,7 @@ class AccessControlEngine:
         
         return user_permissions
     
-    async def cleanup_expired_sessions(self):
+    async def cleanup_expired_sessions(self) -> None:
         """Nettoie les sessions expirées"""
         expired_tokens = []
         
@@ -551,7 +556,7 @@ class AccessControlEngine:
 
 
 # Demo function for testing
-async def demo_access_control():
+async def demo_access_control() -> None:
     """Démo du système de contrôle d'accès"""
     print("🔐 MLOps Access Control Engine Demo")
     

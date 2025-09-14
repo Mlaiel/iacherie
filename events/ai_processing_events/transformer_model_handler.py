@@ -233,7 +233,7 @@ class TransformerInferenceResult:
 class TransformerModelInstance(ABC):
     """Abstract transformer model instance"""
     
-    def __init__(self, config: TransformerConfig):
+    def __init__(self, config -> None: TransformerConfig) -> None:
         self.config = config
         self.model = None
         self.tokenizer = None
@@ -268,7 +268,7 @@ class TransformerModelInstance(ABC):
         """Fine-tune the transformer model"""
         pass
     
-    def update_performance_stats(self, inference_time: float, token_count: int):
+    def update_performance_stats(self, inference_time -> None: float, token_count -> None: int) -> None:
         """Update model performance statistics"""
         with self.lock:
             self.total_inferences += 1
@@ -567,7 +567,7 @@ class TransformerModelHandler(BaseEventHandler):
     and deployment capabilities for the IA Influencer Agent platform.
     """
     
-    def __init__(self, max_models: int = 10, max_workers: int = 4):
+    def __init__(self, max_models -> None: int = 10, max_workers -> None: int = 4) -> None:
         super().__init__()
         
         self.max_models = max_models
@@ -600,7 +600,7 @@ class TransformerModelHandler(BaseEventHandler):
         
         logger.info("Transformer Model Handler initialized")
     
-    async def start_handler(self):
+    async def start_handler(self) -> None:
         """Start the transformer model handler"""
         self.is_running = True
         
@@ -614,7 +614,7 @@ class TransformerModelHandler(BaseEventHandler):
         
         logger.info("Transformer Model Handler started")
     
-    async def stop_handler(self):
+    async def stop_handler(self) -> None:
         """Stop the transformer model handler"""
         self.is_running = False
         
@@ -753,7 +753,7 @@ class TransformerModelHandler(BaseEventHandler):
             logger.error(f"Request validation error: {str(e)}")
             return False
     
-    async def _worker_loop(self, worker_id: str):
+    async def _worker_loop(self, worker_id -> None: str) -> None:
         """Main worker loop for processing inference requests"""
         logger.info(f"Transformer worker {worker_id} started")
         
@@ -817,7 +817,7 @@ class TransformerModelHandler(BaseEventHandler):
             logger.error(f"Transformer inference failed for {request.request_id}: {str(e)}")
             return result
     
-    def _apply_task_optimizations(self, request: TransformerInferenceRequest):
+    def _apply_task_optimizations(self, request -> None: TransformerInferenceRequest) -> None:
         """Apply task-specific optimizations to request"""
         task_opts = self.task_optimizations.get(request.task_type, {})
         
@@ -825,14 +825,14 @@ class TransformerModelHandler(BaseEventHandler):
             if key not in request.generation_config:
                 request.generation_config[key] = value
     
-    def _update_model_usage(self, model_id: str):
+    def _update_model_usage(self, model_id -> None: str) -> None:
         """Update model usage order for LRU tracking"""
         with self.lock:
             if model_id in self.model_usage_order:
                 self.model_usage_order.remove(model_id)
                 self.model_usage_order.append(model_id)
     
-    def _update_performance_metrics(self, result: TransformerInferenceResult):
+    def _update_performance_metrics(self, result -> None: TransformerInferenceResult) -> None:
         """Update handler performance metrics"""
         # Update average processing time
         if self.total_requests > 0:
@@ -840,14 +840,14 @@ class TransformerModelHandler(BaseEventHandler):
             self.average_processing_time = (alpha * result.processing_time + 
                                           (1 - alpha) * self.average_processing_time)
     
-    async def _unload_lru_model(self):
+    async def _unload_lru_model(self) -> None:
         """Unload least recently used model"""
         if self.model_usage_order:
             lru_model_id = self.model_usage_order[0]
             logger.info(f"Unloading LRU transformer model: {lru_model_id}")
             await self.unload_model(lru_model_id)
     
-    async def _monitor_performance(self):
+    async def _monitor_performance(self) -> None:
         """Monitor transformer handler performance"""
         while self.is_running:
             try:
@@ -867,7 +867,7 @@ class TransformerModelHandler(BaseEventHandler):
                 logger.error(f"Error in transformer performance monitoring: {str(e)}")
                 await asyncio.sleep(300)
     
-    async def _optimize_model_allocation(self):
+    async def _optimize_model_allocation(self) -> None:
         """Optimize model allocation based on usage patterns"""
         while self.is_running:
             try:

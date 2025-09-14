@@ -23,16 +23,17 @@ try:
 except ImportError:
     # Simple fallback for numpy operations
     class NumpyFallback:
+    """NumpyFallback: class implementation"""
         @staticmethod
-        def array(data):
+        def array(data) -> None:
             return data
         
         @staticmethod
-        def mean(data):
+        def mean(data) -> None:
             return sum(data) / len(data) if data else 0
         
         @staticmethod
-        def std(data):
+        def std(data) -> None:
             if not data:
                 return 0
             mean_val = sum(data) / len(data)
@@ -40,7 +41,7 @@ except ImportError:
             return variance ** 0.5
         
         @staticmethod
-        def corrcoef(x, y):
+        def corrcoef(x, y) -> None:
             return [[1.0, 0.8], [0.8, 1.0]]  # Simple correlation matrix
     
     np = NumpyFallback()
@@ -57,12 +58,13 @@ try:
 except ImportError:
     # Create mock numpy for testing environments
     class MockNumpy:
-        def array(self, data): return data
-        def mean(self, data): return sum(data) / len(data) if data else 0
-        def std(self, data): return 0.0
-        def max(self, data): return max(data) if data else 0
-        def min(self, data): return min(data) if data else 0
-        def percentile(self, data, p): return 0.0
+    """MockNumpy: class implementation"""
+        def array(self, data) -> None: return data
+        def mean(self, data) -> None: return sum(data) / len(data) if data else 0
+        def std(self, data) -> None: return 0.0
+        def max(self, data) -> None: return max(data) if data else 0
+        def min(self, data) -> None: return min(data) if data else 0
+        def percentile(self, data, p) -> None: return 0.0
     np = MockNumpy()
     NUMPY_AVAILABLE = False
 
@@ -154,7 +156,7 @@ class PredictiveScaler:
     - Content popularity prediction for proactive CDN scaling
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize predictive scaling system"""
         self.historical_metrics: deque = deque(maxlen=10080)  # 7 days of minute-level data
         self.creator_patterns: Dict[str, CreatorActivityPattern] = {}
@@ -190,7 +192,7 @@ class PredictiveScaler:
         
         logger.info("AI-powered predictive scaler initialized for Ainflue creator platform")
         
-    def _initialize_workload_models(self):
+    def _initialize_workload_models(self) -> None:
         """Initialize machine learning models for workload prediction"""
         # Initialize different models for different workload types
         for workload_type in WorkloadType:

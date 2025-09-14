@@ -1,4 +1,6 @@
 """Kubernetes Infrastructure Integration Module
+import asyncio
+
 ===========================================
 
 Complete Kubernetes infrastructure setup with all components
@@ -53,7 +55,7 @@ class KubernetesInfrastructureConfig:
     domains: List[str] = None
     tls_email: str = "admin@ainflue.com"
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         try:
                     # Request validation
                     if not data:
@@ -74,12 +76,12 @@ class KubernetesInfrastructureConfig:
 class KubernetesInfrastructureManager:
     """Complete Kubernetes infrastructure manager"""
     
-    def __init__(self, config: KubernetesInfrastructureConfig):
+    def __init__(self, config -> None: KubernetesInfrastructureConfig) -> None:
         self.config = config
         self.managers = {}
         self._initialize_managers()
     
-    def _initialize_managers(self):
+    def _initialize_managers(self) -> None:
         """Initialize all infrastructure managers"""
         logger.info("Initializing Kubernetes infrastructure managers...")
         
@@ -226,7 +228,7 @@ class KubernetesInfrastructureManager:
         logger.info(f"Successfully saved {total_files} manifest files to {base_output_dir}")
         return total_files
     
-    def _create_main_kustomization(self, base_dir: str, all_manifests: Dict[str, Dict[str, str]]):
+    def _create_main_kustomization(self, base_dir -> None: str, all_manifests -> None: Dict[str, Dict[str, str]]) -> None:
         """Create main kustomization.yaml file"""
         kustomization = {
             "apiVersion": "kustomize.config.k8s.io/v1beta1",
@@ -305,3 +307,5 @@ __k8s_infrastructure__ = [
     'MultiZoneManager',
     'ClusterHealthMonitor'
 ]
+
+# File has syntax issues - needs manual review

@@ -77,7 +77,7 @@ class EnvoyConfigGenerator:
     """
 Generate Envoy Proxy configurations"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.admin_config = {
             "access_log_path": "/dev/stdout",
             "address": {
@@ -284,7 +284,7 @@ Generate Envoy Proxy configurations"""
 class EnvoyManager:
     """Enterprise Envoy Proxy Load Balancer Manager"""
     
-    def __init__(self, config_file: str = "/etc/envoy/envoy.yaml"):
+    def __init__(self, config_file -> None: str = "/etc/envoy/envoy.yaml") -> None:
         self.config_file = Path(config_file)
         self.config_dir = self.config_file.parent
         self.config_generator = EnvoyConfigGenerator()

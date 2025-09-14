@@ -29,11 +29,11 @@ class URLType(str):
     """Enhanced URL type with validation."""
     
     @classmethod
-    def __get_validators__(cls):
+    def __get_validators__(cls) -> None:
         yield cls.validate
     
     @classmethod
-    def validate(cls, v):
+    def validate(cls, v) -> None:
         if not isinstance(v, str):
             raise TypeError('URL must be a string')
         
@@ -56,11 +56,11 @@ class PhoneNumberType(str):
     """Enhanced phone number type with international format support."""
     
     @classmethod
-    def __get_validators__(cls):
+    def __get_validators__(cls) -> None:
         yield cls.validate
     
     @classmethod
-    def validate(cls, v):
+    def validate(cls, v) -> None:
         if not isinstance(v, str):
             raise TypeError('Phone number must be a string')
         
@@ -78,11 +78,11 @@ class ColorHexType(str):
     """Hexadecimal color code type."""
     
     @classmethod
-    def __get_validators__(cls):
+    def __get_validators__(cls) -> None:
         yield cls.validate
     
     @classmethod
-    def validate(cls, v):
+    def validate(cls, v) -> None:
         if not isinstance(v, str):
             raise TypeError('Color must be a string')
         
@@ -96,11 +96,11 @@ class SlugType(str):
     """URL-friendly slug type."""
     
     @classmethod
-    def __get_validators__(cls):
+    def __get_validators__(cls) -> None:
         yield cls.validate
     
     @classmethod
-    def validate(cls, v):
+    def validate(cls, v) -> None:
         if not isinstance(v, str):
             raise TypeError('Slug must be a string')
         
@@ -113,15 +113,15 @@ class SlugType(str):
 class HashType(str):
     """Hash string type for various hash formats."""
     
-    def __init__(self, hash_type: str = "sha256"):
+    def __init__(self, hash_type -> None: str = "sha256") -> None:
         self.hash_type = hash_type
     
     @classmethod
-    def __get_validators__(cls):
+    def __get_validators__(cls) -> None:
         yield cls.validate
     
     @classmethod
-    def validate(cls, v):
+    def validate(cls, v) -> None:
         if not isinstance(v, str):
             raise TypeError('Hash must be a string')
         
@@ -147,11 +147,11 @@ class PercentageType(float):
     """Percentage type (0-100)."""
     
     @classmethod
-    def __get_validators__(cls):
+    def __get_validators__(cls) -> None:
         yield cls.validate
     
     @classmethod
-    def validate(cls, v):
+    def validate(cls, v) -> None:
         if not isinstance(v, (int, float)):
             raise TypeError('Percentage must be a number')
         
@@ -165,11 +165,11 @@ class CurrencyAmountType(Decimal):
     """Currency amount with precision control."""
     
     @classmethod
-    def __get_validators__(cls):
+    def __get_validators__(cls) -> None:
         yield cls.validate
     
     @classmethod
-    def validate(cls, v):
+    def validate(cls, v) -> None:
         if isinstance(v, str):
             v = Decimal(v)
         elif isinstance(v, (int, float)):
@@ -185,11 +185,11 @@ class RatingType(float):
     """Rating type (1-5 stars)."""
     
     @classmethod
-    def __get_validators__(cls):
+    def __get_validators__(cls) -> None:
         yield cls.validate
     
     @classmethod
-    def validate(cls, v):
+    def validate(cls, v) -> None:
         if not isinstance(v, (int, float)):
             raise TypeError('Rating must be a number')
         
@@ -203,11 +203,11 @@ class ScoreType(float):
     """Generic score type (0-1)."""
     
     @classmethod
-    def __get_validators__(cls):
+    def __get_validators__(cls) -> None:
         yield cls.validate
     
     @classmethod
-    def validate(cls, v):
+    def validate(cls, v) -> None:
         if not isinstance(v, (int, float)):
             raise TypeError('Score must be a number')
         
@@ -232,11 +232,11 @@ class CountryCodeType(str):
     }
     
     @classmethod
-    def __get_validators__(cls):
+    def __get_validators__(cls) -> None:
         yield cls.validate
     
     @classmethod
-    def validate(cls, v):
+    def validate(cls, v) -> None:
         if not isinstance(v, str):
             raise TypeError('Country code must be a string')
         
@@ -259,11 +259,11 @@ class LanguageCodeType(str):
     }
     
     @classmethod
-    def __get_validators__(cls):
+    def __get_validators__(cls) -> None:
         yield cls.validate
     
     @classmethod
-    def validate(cls, v):
+    def validate(cls, v) -> None:
         if not isinstance(v, str):
             raise TypeError('Language code must be a string')
         
@@ -278,11 +278,11 @@ class TimezoneType(str):
     """Timezone identifier type."""
     
     @classmethod
-    def __get_validators__(cls):
+    def __get_validators__(cls) -> None:
         yield cls.validate
     
     @classmethod
-    def validate(cls, v):
+    def validate(cls, v) -> None:
         if not isinstance(v, str):
             raise TypeError('Timezone must be a string')
         
@@ -299,11 +299,11 @@ class FileExtensionType(str):
     """File extension type."""
     
     @classmethod
-    def __get_validators__(cls):
+    def __get_validators__(cls) -> None:
         yield cls.validate
     
     @classmethod
-    def validate(cls, v):
+    def validate(cls, v) -> None:
         if not isinstance(v, str):
             raise TypeError('File extension must be a string')
         
@@ -321,11 +321,11 @@ class MimeTypeType(str):
     """MIME type validation."""
     
     @classmethod
-    def __get_validators__(cls):
+    def __get_validators__(cls) -> None:
         yield cls.validate
     
     @classmethod
-    def validate(cls, v):
+    def validate(cls, v) -> None:
         if not isinstance(v, str):
             raise TypeError('MIME type must be a string')
         
@@ -339,11 +339,11 @@ class FileSizeType(int):
     """File size in bytes with human-readable formatting."""
     
     @classmethod
-    def __get_validators__(cls):
+    def __get_validators__(cls) -> None:
         yield cls.validate
     
     @classmethod
-    def validate(cls, v):
+    def validate(cls, v) -> None:
         if not isinstance(v, int):
             raise TypeError('File size must be an integer')
         
@@ -352,7 +352,7 @@ class FileSizeType(int):
         
         return cls(v)
     
-    def __str__(self):
+    def __str__(self) -> None:
         """Human-readable file size."""
         for unit in ['B', 'KB', 'MB', 'GB', 'TB']:
             if self < 1024.0:
@@ -367,11 +367,11 @@ class UsernameType(str):
     """Username type with validation rules."""
     
     @classmethod
-    def __get_validators__(cls):
+    def __get_validators__(cls) -> None:
         yield cls.validate
     
     @classmethod
-    def validate(cls, v):
+    def validate(cls, v) -> None:
         if not isinstance(v, str):
             raise TypeError('Username must be a string')
         
@@ -391,11 +391,11 @@ class HandleType(str):
     """Social media handle type."""
     
     @classmethod
-    def __get_validators__(cls):
+    def __get_validators__(cls) -> None:
         yield cls.validate
     
     @classmethod
-    def validate(cls, v):
+    def validate(cls, v) -> None:
         if not isinstance(v, str):
             raise TypeError('Handle must be a string')
         
@@ -416,11 +416,11 @@ class TagType(str):
     """Content tag type."""
     
     @classmethod
-    def __get_validators__(cls):
+    def __get_validators__(cls) -> None:
         yield cls.validate
     
     @classmethod
-    def validate(cls, v):
+    def validate(cls, v) -> None:
         if not isinstance(v, str):
             raise TypeError('Tag must be a string')
         

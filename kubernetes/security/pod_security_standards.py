@@ -44,7 +44,7 @@ class PodSecurityStandard:
 class PodSecurityManager:
     """Manages Pod Security Standards and enforcement"""
     
-    def __init__(self, namespace: str = "ia-influencer"):
+    def __init__(self, namespace -> None: str = "ia-influencer") -> None:
         self.namespace = namespace
         self.standards: Dict[str, PodSecurityStandard] = {}
     
@@ -442,7 +442,7 @@ class PodSecurityManager:
         
         return manifests
     
-    def save_manifests_to_files(self, output_dir: str = "./k8s-manifests/pod-security"):
+    def save_manifests_to_files(self, output_dir -> None: str = "./k8s-manifests/pod-security") -> None:
         """Save all pod security manifests to files"""
         import os
         os.makedirs(output_dir, exist_ok=True)

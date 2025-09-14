@@ -85,7 +85,7 @@ class MetadataEntry:
     version: int = 1
     checksum: str = ""
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if not self.checksum:
             self.checksum = self._calculate_checksum()
             
@@ -141,7 +141,7 @@ class SyncHistory:
 class MetadataSynchronizationTracker:
     """Main metadata synchronization tracking system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.metadata_store: Dict[str, Dict[PlatformType, Dict[MetadataField, MetadataEntry]]] = defaultdict(
             lambda: defaultdict(dict)
         )
@@ -272,7 +272,7 @@ class MetadataSynchronizationTracker:
             logger.error(f"Failed to update metadata: {e}")
             return False
             
-    async def _detect_conflicts(self, content_id: str, field: MetadataField):
+    async def _detect_conflicts(self, content_id -> None: str, field -> None: MetadataField) -> None:
         """Detect metadata conflicts across platforms"""
         if content_id not in self.metadata_store:
             return
@@ -358,7 +358,7 @@ class MetadataSynchronizationTracker:
             
         return True
         
-    async def _trigger_sync(self, content_id: str, source_platform: PlatformType, field: MetadataField):
+    async def _trigger_sync(self, content_id -> None: str, source_platform -> None: PlatformType, field -> None: MetadataField) -> None:
         """Trigger metadata synchronization"""
         # Get target platforms (all platforms except source)
         all_platforms = list(PlatformType)
@@ -378,7 +378,7 @@ class MetadataSynchronizationTracker:
         # Execute synchronization
         await self._execute_sync_job(sync_job)
         
-    async def _execute_sync_job(self, job: SyncJob):
+    async def _execute_sync_job(self, job -> None: SyncJob) -> None:
         """Execute metadata synchronization job"""
         job.status = SyncStatus.SYNCING
         job.started_at = datetime.now()

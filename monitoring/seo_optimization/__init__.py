@@ -124,7 +124,7 @@ class SEOOrchestrator:
     content optimization.
     """
     
-    def __init__(self, config: SEOConfig):
+    def __init__(self, config -> None: SEOConfig) -> None:
         """Initialize SEO monitoring orchestrator."""
         self.config = config
         self.modules = {}
@@ -140,7 +140,7 @@ class SEOOrchestrator:
         self._initialize_modules()
         self._setup_seo_systems()
     
-    def _initialize_modules(self):
+    def _initialize_modules(self) -> None:
         """Initialize enabled SEO modules."""
         for module in self.config.enabled_modules:
             try:
@@ -150,7 +150,7 @@ class SEOOrchestrator:
             except Exception as e:
                 logger.error(f"Failed to initialize module {module.value}: {e}")
     
-    def _create_seo_module(self, module: SEOModules):
+    def _create_seo_module(self, module -> None: SEOModules) -> None:
         """Create instance of specific SEO monitoring module."""
         return {
             "name": module.value,
@@ -162,7 +162,7 @@ class SEOOrchestrator:
             "performance_score": 0.91
         }
     
-    def _setup_seo_systems(self):
+    def _setup_seo_systems(self) -> None:
         """Setup core SEO systems."""
         # Initialize hashtag intelligence
         self.hashtag_intelligence = {
@@ -690,7 +690,7 @@ class SEOOrchestrator:
         
         return predicted_performance
     
-    def _update_seo_metrics(self):
+    def _update_seo_metrics(self) -> None:
         """Update overall SEO metrics."""
         if not self.optimization_history:
             return

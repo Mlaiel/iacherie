@@ -188,7 +188,7 @@ class CrisisConfig:
     Handles detection rules, response templates, escalation procedures
     """
     
-    def __init__(self, config_path: Optional[str] = None):
+    def __init__(self, config_path -> None: Optional[str] = None) -> None:
         self.config_path = config_path or os.path.join(
             os.path.dirname(__file__), "crisis_config.json"
         )
@@ -224,7 +224,7 @@ class CrisisConfig:
         if os.path.exists(self.config_path):
             self.load_config()
             
-    def _load_default_config(self):
+    def _load_default_config(self) -> None:
         """Load default crisis management configuration"""
         
         # Default detection rules

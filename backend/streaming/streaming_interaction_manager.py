@@ -186,7 +186,7 @@ class CommunityReward:
 class RealTimeChatSystem:
     """Real-time chat system"""
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client -> None: aioredis.Redis) -> None:
         self.redis = redis_client
         self.active_connections = {}
         self.chat_rooms = {}
@@ -327,7 +327,7 @@ class RealTimeChatSystem:
 class ContentModerationEngine:
     """Advanced content moderation system"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         self.moderation_rules = {}
@@ -432,7 +432,7 @@ class ContentModerationEngine:
 class EngagementTracker:
     """User engagement tracking system"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         self.engagement_processors = {}
@@ -509,7 +509,7 @@ class EngagementTracker:
 class InteractiveFeatureManager:
     """Interactive features management system"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         self.active_features = {}
@@ -643,7 +643,7 @@ class InteractiveFeatureManager:
 class StreamingInteractionManager:
     """Unified streaming interaction manager - Main service class"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         

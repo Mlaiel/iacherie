@@ -116,9 +116,9 @@ class BenchmarkComparisonSystem:
     """
     
     def __init__(self,
-                 benchmark_cache_dir: str = "./benchmark_cache",
-                 enable_online_leaderboards: bool = True,
-                 enable_performance_profiling: bool = True):
+                 benchmark_cache_dir -> None: str = "./benchmark_cache",
+                 enable_online_leaderboards -> None: bool = True,
+                 enable_performance_profiling -> None: bool = True) -> None:
         """Initialize benchmark comparison system"""
         
         self.benchmark_cache_dir = Path(benchmark_cache_dir)
@@ -149,7 +149,7 @@ class BenchmarkComparisonSystem:
         
         logger.info("Benchmark comparison system initialized")
     
-    def _initialize_industry_benchmarks(self):
+    def _initialize_industry_benchmarks(self) -> None:
         """🔬 ML Engineer - Initialize industry standard benchmarks"""
         
         # Classification benchmarks
@@ -1105,7 +1105,7 @@ class BenchmarkComparisonSystem:
         return report
 
 # Example usage demonstrating all expert roles
-async def example_usage():
+async def example_usage() -> None:
     """🎖️ Lead Dev IA - Example demonstrating all expert roles"""
     
     # Initialize benchmark comparison system

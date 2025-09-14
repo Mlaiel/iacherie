@@ -152,7 +152,7 @@ class ComplianceReport:
 class ContentProtectionEngine:
     """Core content protection engine."""
     
-    def __init__(self, config: SecurityConfig):
+    def __init__(self, config -> None: SecurityConfig) -> None:
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.ContentProtectionEngine")
         self.session: Optional[aiohttp.ClientSession] = None
@@ -761,7 +761,7 @@ class ContentProtectionEngine:
         
         return issues, recommendations
     
-    async def cleanup(self):
+    async def cleanup(self) -> None:
         """Cleanup resources."""
         if self.session:
             await self.session.close()
@@ -774,7 +774,7 @@ class ContentProtectionEngine:
 class SecurityProtectionManager:
     """Manager for security protection across all content."""
     
-    def __init__(self, default_config: Optional[SecurityConfig] = None):
+    def __init__(self, default_config -> None: Optional[SecurityConfig] = None) -> None:
         self.default_config = default_config or SecurityConfig(
             security_level=SecurityLevel.HIGH,
             protection_types=[
@@ -865,7 +865,7 @@ class SecurityProtectionManager:
         
         return dashboard
     
-    async def cleanup(self):
+    async def cleanup(self) -> None:
         """Cleanup all protection engines."""
         cleanup_tasks = [engine.cleanup() for engine in self.protection_engines.values()]
         if cleanup_tasks:

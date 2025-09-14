@@ -117,7 +117,7 @@ class PerformanceAlert:
 class CDNPerformanceMonitor:
     """Main CDN performance monitoring system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.metrics: List[CDNMetric] = []
         self.cache_performance: List[CachePerformance] = []
         self.bandwidth_usage: List[BandwidthUsage] = []
@@ -185,7 +185,7 @@ class CDNPerformanceMonitor:
             }
         }
         
-    async def start_monitoring(self):
+    async def start_monitoring(self) -> None:
         """Start CDN performance monitoring"""
         self.monitoring_active = True
         
@@ -200,12 +200,12 @@ class CDNPerformanceMonitor:
         
         await asyncio.gather(*monitoring_tasks)
         
-    async def stop_monitoring(self):
+    async def stop_monitoring(self) -> None:
         """Stop CDN performance monitoring"""
         self.monitoring_active = False
         logger.info("CDN monitoring stopped")
         
-    async def _monitor_response_times(self):
+    async def _monitor_response_times(self) -> None:
         """Monitor CDN response times across all providers and locations"""
         while self.monitoring_active:
             try:
@@ -267,7 +267,7 @@ class CDNPerformanceMonitor:
         
         return base_time * location_factor * variation
         
-    async def _check_response_time_alert(self, metric: CDNMetric):
+    async def _check_response_time_alert(self, metric -> None: CDNMetric) -> None:
         """Check if response time metric triggers an alert"""
         thresholds = self.performance_thresholds[MetricType.RESPONSE_TIME]
         
@@ -293,7 +293,7 @@ class CDNPerformanceMonitor:
             self.alerts.append(alert)
             logger.warning(f"CDN alert: {alert.description}")
             
-    async def _monitor_cache_performance(self):
+    async def _monitor_cache_performance(self) -> None:
         """Monitor CDN cache performance"""
         while self.monitoring_active:
             try:
@@ -338,7 +338,7 @@ class CDNPerformanceMonitor:
             ttl_average_hours=self.provider_configs[provider].get("cache_ttl_default", 24)
         )
         
-    async def _check_cache_hit_rate_alert(self, cache_perf: CachePerformance):
+    async def _check_cache_hit_rate_alert(self, cache_perf -> None: CachePerformance) -> None:
         """Check if cache hit rate triggers an alert"""
         thresholds = self.performance_thresholds[MetricType.CACHE_HIT_RATE]
         
@@ -363,7 +363,7 @@ class CDNPerformanceMonitor:
             
             self.alerts.append(alert)
             
-    async def _monitor_bandwidth_usage(self):
+    async def _monitor_bandwidth_usage(self) -> None:
         """Monitor CDN bandwidth usage"""
         while self.monitoring_active:
             try:
@@ -407,7 +407,7 @@ class CDNPerformanceMonitor:
             requests_count=requests_count
         )
         
-    async def _monitor_error_rates(self):
+    async def _monitor_error_rates(self) -> None:
         """Monitor CDN error rates"""
         while self.monitoring_active:
             try:
@@ -454,7 +454,7 @@ class CDNPerformanceMonitor:
         factor = reliability_factors.get(provider, 1.0)
         return base_error_rate * factor
         
-    async def _check_error_rate_alert(self, metric: CDNMetric):
+    async def _check_error_rate_alert(self, metric -> None: CDNMetric) -> None:
         """Check if error rate triggers an alert"""
         thresholds = self.performance_thresholds[MetricType.ERROR_RATE]
         
@@ -479,7 +479,7 @@ class CDNPerformanceMonitor:
             
             self.alerts.append(alert)
             
-    async def _detect_performance_issues(self):
+    async def _detect_performance_issues(self) -> None:
         """Detect performance issues and patterns"""
         while self.monitoring_active:
             try:
@@ -493,7 +493,7 @@ class CDNPerformanceMonitor:
                 logger.error(f"Error detecting performance issues: {e}")
                 await asyncio.sleep(900)
                 
-    async def _analyze_performance_trends(self):
+    async def _analyze_performance_trends(self) -> None:
         """Analyze performance trends over time"""
         if len(self.metrics) < 10:
             return
@@ -527,7 +527,7 @@ class CDNPerformanceMonitor:
                     )
                     self.alerts.append(alert)
                     
-    async def _detect_anomalies(self):
+    async def _detect_anomalies(self) -> None:
         """Detect performance anomalies using statistical analysis"""
         if len(self.metrics) < 50:
             return
@@ -558,7 +558,7 @@ class CDNPerformanceMonitor:
                         )
                         self.alerts.append(alert)
                         
-    async def _optimize_cache_strategies(self):
+    async def _optimize_cache_strategies(self) -> None:
         """Optimize cache strategies based on performance data"""
         if not self.cache_performance:
             return

@@ -115,7 +115,7 @@ class PayPalRiskManager:
     - 🤖 IA Prompt Engineer: Intelligent notifications + automated workflows + smart responses
     """
     
-    def __init__(self, paypal_config: Dict[str, str], redis_client=None, db_pool=None):
+    def __init__(self, paypal_config -> None: Dict[str, str], redis_client=None, db_pool=None) -> None:
         """Initialize PayPal Risk Manager with enterprise security features"""
         self.paypal_config = paypal_config
         self.redis_client = redis_client
@@ -164,7 +164,7 @@ class PayPalRiskManager:
         
         logger.info("🏆 PayPal Risk Manager initialized with multi-role expertise")
     
-    def _initialize_ml_models(self):
+    def _initialize_ml_models(self) -> None:
         """Initialize ML models with baseline fraud detection capabilities"""
         try:
             # Generate sample training data for demonstration
@@ -796,7 +796,7 @@ class PayPalRiskManager:
             logger.warning(f"⚠️ Action determination failed: {str(e)}")
             return RiskAction.REVIEW  # Default to review for safety
     
-    async def _store_risk_assessment(self, risk_assessment: RiskAssessment):
+    async def _store_risk_assessment(self, risk_assessment -> None: RiskAssessment) -> None:
         """
         🗄️ DBA: Store risk assessment in database for analysis
         """
@@ -828,7 +828,7 @@ class PayPalRiskManager:
         except Exception as e:
             logger.warning(f"⚠️ Risk assessment storage failed: {str(e)}")
     
-    async def _generate_fraud_alert(self, risk_assessment: RiskAssessment):
+    async def _generate_fraud_alert(self, risk_assessment -> None: RiskAssessment) -> None:
         """
         🔒 Security + 🤖 IA Prompt Engineer: Generate fraud alert with intelligent response
         """
@@ -915,7 +915,7 @@ class PayPalRiskManager:
             'last_updated': datetime.utcnow().isoformat()
         }
     
-    async def update_risk_thresholds(self, new_thresholds: Dict[str, float]):
+    async def update_risk_thresholds(self, new_thresholds -> None: Dict[str, float]) -> None:
         """Update risk assessment thresholds"""
         try:
             self.risk_thresholds.update(new_thresholds)
@@ -923,7 +923,7 @@ class PayPalRiskManager:
         except Exception as e:
             logger.error(f"❌ Risk threshold update failed: {str(e)}")
     
-    async def retrain_ml_models(self, training_data: Optional[List[Dict]] = None):
+    async def retrain_ml_models(self, training_data -> None: Optional[List[Dict]] = None) -> None:
         """
         🧠 ML Engineer: Retrain ML models with new fraud data
         """

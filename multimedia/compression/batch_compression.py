@@ -36,7 +36,7 @@ class BatchProgress:
 class BatchCompressionProcessor:
     """Enterprise batch compression processor with queue management."""
     
-    def __init__(self, max_workers: int = 4, max_memory_gb: float = 8.0):
+    def __init__(self, max_workers -> None: int = 4, max_memory_gb -> None: float = 8.0) -> None:
         """Initialize the batch processor."""
         self.max_workers = max_workers
         self.max_memory_gb = max_memory_gb
@@ -88,8 +88,8 @@ class BatchCompressionProcessor:
     
     async def process_batch_queue(
         self,
-        progress_callback: Optional[Callable[[str, BatchProgress], None]] = None
-    ):
+        progress_callback -> None: Optional[Callable[[str, BatchProgress], None]] = None
+    ) -> None:
         """Process jobs from the batch queue."""
         while True:
             try:

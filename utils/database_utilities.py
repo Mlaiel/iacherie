@@ -55,7 +55,7 @@ class DatabaseUtilities:
     - Schema migration management
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize database utilities"""
         self.connection_pools: Dict[str, ConnectionPool] = {}
         self.query_metrics: List[QueryMetrics] = []
@@ -130,7 +130,7 @@ class DatabaseUtilities:
             raise
     
     @asynccontextmanager
-    async def get_connection(self, db_name: str):
+    async def get_connection(self, db_name -> None: str) -> None:
         """Get database connection from pool with automatic cleanup"""
         try:
             if db_name not in self.connection_pools:

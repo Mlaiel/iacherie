@@ -1,5 +1,7 @@
 """🎵 Backend Audio Processing Module - Streamlined Audio Intelligence System
 
+import asyncio
+
 Consolidated audio processing module for the IA Influencer Agent platform,
 providing comprehensive audio processing capabilities in a clean, maintainable structure.
 
@@ -182,7 +184,7 @@ __copyright__ = "(c) 2025 Fahed Mlaiel. All rights reserved."
 class AudioIntelligenceSystem:
     """Unified audio processing system orchestrating all modules."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.processing_modules = {
             'core': AudioProcessor(),
             'analysis': MusicIntelligenceEngine(),
@@ -192,7 +194,7 @@ class AudioIntelligenceSystem:
             'monitoring': PerformanceMonitor()
         }
         
-    async def process_audio_complete(self, audio_file, options=None):
+    async def process_audio_complete(self, audio_file, options=None) -> None:
         """Complete audio processing pipeline."""
         try:
             # Load and analyze

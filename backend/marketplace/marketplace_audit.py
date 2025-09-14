@@ -95,7 +95,7 @@ class AuditEvent:
     compliance_tags: List[ComplianceFramework] = field(default_factory=list)
     hash_chain: Optional[str] = None  # For blockchain-style integrity
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         """Calculate event hash for integrity"""
         self.hash_chain = self._calculate_hash()
     
@@ -165,7 +165,7 @@ class AuditAnalytics:
 class MarketplaceAuditManager:
     """Advanced audit trail and compliance management system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.audit_events: List[AuditEvent] = []
         self.compliance_reports: Dict[str, ComplianceReport] = {}
         self.audit_rules: Dict[str, Dict[str, Any]] = {}
@@ -176,7 +176,7 @@ class MarketplaceAuditManager:
         self._initialize_retention_policies()
         self._initialize_audit_rules()
     
-    def _initialize_retention_policies(self):
+    def _initialize_retention_policies(self) -> None:
         """Initialize data retention policies by compliance framework"""
         self.retention_policies = {
             ComplianceFramework.GDPR: timedelta(days=2555),      # 7 years
@@ -188,7 +188,7 @@ class MarketplaceAuditManager:
             ComplianceFramework.CCPA: timedelta(days=730)        # 2 years
         }
     
-    def _initialize_audit_rules(self):
+    def _initialize_audit_rules(self) -> None:
         """Initialize audit rules for compliance frameworks"""
         self.audit_rules = {
             "gdpr_data_access": {
@@ -313,7 +313,7 @@ class MarketplaceAuditManager:
         
         return tags
     
-    def _add_to_blockchain_chain(self, event: AuditEvent):
+    def _add_to_blockchain_chain(self, event -> None: AuditEvent) -> None:
         """Add event to blockchain chain for integrity"""
         # Get previous hash
         previous_hash = self.blockchain_chain[-1] if self.blockchain_chain else "genesis"
@@ -330,7 +330,7 @@ class MarketplaceAuditManager:
         chain_hash = hashlib.sha256(json.dumps(chain_data, sort_keys=True).encode()).hexdigest()
         self.blockchain_chain.append(chain_hash)
     
-    async def _check_compliance_violations(self, event: AuditEvent):
+    async def _check_compliance_violations(self, event -> None: AuditEvent) -> None:
         """Check for compliance violations"""
         # Check for suspicious patterns
         if event.severity == AuditSeverity.CRITICAL:
@@ -341,7 +341,7 @@ class MarketplaceAuditManager:
             if event.event_type == AuditEventType.DATA_EXPORT and not event.user_id:
                 await self._flag_compliance_violation(event, "GDPR: Data export without user identification")
     
-    async def _flag_compliance_violation(self, event: AuditEvent, reason: str):
+    async def _flag_compliance_violation(self, event -> None: AuditEvent, reason -> None: str) -> None:
         """Flag a compliance violation"""
         violation_event = await self.log_event(
             AuditEventType.COMPLIANCE_CHECK,
@@ -356,7 +356,7 @@ class MarketplaceAuditManager:
         
         logger.warning(f"Compliance violation flagged: {reason}")
     
-    async def _trigger_alerts(self, event: AuditEvent):
+    async def _trigger_alerts(self, event -> None: AuditEvent) -> None:
         """Trigger alerts for critical events"""
         if event.severity in [AuditSeverity.CRITICAL, AuditSeverity.SECURITY]:
             # In production, would send notifications to security team
@@ -756,7 +756,7 @@ class MarketplaceAuditManager:
         return next((e for e in self.audit_events if e.event_id == event_id), None)
 
 # Example usage
-async def main():
+async def main() -> None:
     """Example usage of MarketplaceAuditManager"""
     audit_manager = MarketplaceAuditManager()
     

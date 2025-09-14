@@ -240,7 +240,7 @@ class AchievementSystem:
     - Personnalisation par profil utilisateur
     """
     
-    def __init__(self, db_session=None, redis_client=None):
+    def __init__(self, db_session=None, redis_client=None) -> None:
         self.db_session = db_session
         self.redis_client = redis_client
         self.achievements = {}
@@ -253,7 +253,7 @@ class AchievementSystem:
         # Initialiser les achievements de base
         self._initialize_default_achievements()
     
-    def _initialize_default_achievements(self):
+    def _initialize_default_achievements(self) -> None:
         """Initialise les achievements par défaut"""
         default_achievements = [
             {
@@ -326,7 +326,7 @@ class AchievementSystem:
             achievement = Achievement(**achievement_data)
             self.achievements[achievement.id] = achievement
     
-    async def track_event(self, user_id: str, event_type: str, event_data: Dict[str, Any]):
+    async def track_event(self, user_id -> None: str, event_type -> None: str, event_data -> None: Dict[str, Any]) -> None:
         """Track un événement pour progression des achievements"""
         try:
             # Enregistrer l'événement
@@ -354,7 +354,7 @@ class AchievementSystem:
             logger.error(f"Erreur lors du tracking d'événement: {e}")
             raise
     
-    async def _update_user_progress(self, user_id: str, event_type: str, event_data: Dict):
+    async def _update_user_progress(self, user_id -> None: str, event_type -> None: str, event_data -> None: Dict) -> None:
         """Met à jour la progression utilisateur"""
         if user_id not in self.user_progress:
             self.user_progress[user_id] = defaultdict(int)
@@ -598,7 +598,7 @@ class AchievementSystem:
         
         return progress_data
     
-    async def _update_daily_streak(self, user_id: str):
+    async def _update_daily_streak(self, user_id -> None: str) -> None:
         """Met à jour la série quotidienne"""
         try:
             # Récupérer la dernière activité
@@ -653,7 +653,7 @@ class BadgeManager:
     - Analytics de collection et engagement
     """
     
-    def __init__(self, db_session=None, redis_client=None):
+    def __init__(self, db_session=None, redis_client=None) -> None:
         self.db_session = db_session
         self.redis_client = redis_client
         self.badges = {}
@@ -669,7 +669,7 @@ class BadgeManager:
         
         self._initialize_default_badges()
     
-    def _initialize_default_badges(self):
+    def _initialize_default_badges(self) -> None:
         """Initialise les badges par défaut"""
         default_badges = [
             {
@@ -994,7 +994,7 @@ class PointsCalculator:
     - Économie équilibrée avec ajustements automatiques
     """
     
-    def __init__(self, db_session=None, redis_client=None):
+    def __init__(self, db_session=None, redis_client=None) -> None:
         self.db_session = db_session
         self.redis_client = redis_client
         self.user_points = defaultdict(lambda: defaultdict(int))

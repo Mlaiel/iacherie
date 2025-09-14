@@ -191,7 +191,7 @@ class PostgreSQLBackupProvider(IBackupProvider):
     Enterprise PostgreSQL backup with pg_dump, WAL archiving, and point-in-time recovery.
     """
     
-    def __init__(self, connection_string: str, backup_directory: str):
+    def __init__(self, connection_string -> None: str, backup_directory -> None: str) -> None:
         self.connection_string = connection_string
         self.backup_directory = Path(backup_directory)
         self.backup_directory.mkdir(parents=True, exist_ok=True)
@@ -477,13 +477,13 @@ class BackupScheduler:
     Intelligent backup scheduling with retention management and automated cleanup.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._scheduled_backups: Dict[str, BackupConfig] = {}
         self._backup_providers: Dict[str, IBackupProvider] = {}
         self._scheduler_tasks: List[asyncio.Task] = []
         self._retention_policies: Dict[str, Dict[str, Any]] = {}
         
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize backup scheduler."""
         logger.info("⏰ Initializing Backup Scheduler...")
         
@@ -499,7 +499,7 @@ class BackupScheduler:
         
         logger.info("✅ Backup Scheduler initialized")
     
-    async def _scheduler_loop(self):
+    async def _scheduler_loop(self) -> None:
         """Main scheduler loop."""
         while True:
             try:
@@ -546,7 +546,7 @@ class BackupScheduler:
         
         return False
     
-    async def _execute_scheduled_backup(self, config: BackupConfig):
+    async def _execute_scheduled_backup(self, config -> None: BackupConfig) -> None:
         """Execute scheduled backup."""
         try:
             provider = self._backup_providers.get(config.database_name)
@@ -568,7 +568,7 @@ class BackupScheduler:
         except Exception as e:
             logger.error(f"❌ Failed to execute scheduled backup {config.backup_id}: {e}")
     
-    async def _retention_manager(self):
+    async def _retention_manager(self) -> None:
         """Manage backup retention and cleanup."""
         while True:
             try:
@@ -585,7 +585,7 @@ class BackupScheduler:
             except Exception as e:
                 logger.error(f"Retention manager error: {e}")
     
-    async def _cleanup_expired_backups(self, database_name: str, provider: IBackupProvider):
+    async def _cleanup_expired_backups(self, database_name -> None: str, provider -> None: IBackupProvider) -> None:
         """Clean up expired backups based on retention policy."""
         try:
             backups = await provider.list_backups(database_name)
@@ -613,23 +613,23 @@ class BackupScheduler:
         except Exception as e:
             logger.error(f"Failed to cleanup expired backups for {database_name}: {e}")
     
-    def add_backup_provider(self, database_name: str, provider: IBackupProvider):
+    def add_backup_provider(self, database_name -> None: str, provider -> None: IBackupProvider) -> None:
         """Add backup provider for database."""
         self._backup_providers[database_name] = provider
         logger.info(f"📋 Added backup provider for: {database_name}")
     
-    def schedule_backup(self, config: BackupConfig, frequency: str = "daily"):
+    def schedule_backup(self, config -> None: BackupConfig, frequency -> None: str = "daily") -> None:
         """Schedule regular backup."""
         config.metadata.setdefault("schedule", {})["frequency"] = frequency
         self._scheduled_backups[config.backup_id] = config
         logger.info(f"📅 Scheduled {frequency} backup: {config.backup_id}")
     
-    def set_retention_policy(self, database_name: str, retention_days: int):
+    def set_retention_policy(self, database_name -> None: str, retention_days -> None: int) -> None:
         """Set retention policy for database."""
         self._retention_policies[database_name] = {"days": retention_days}
         logger.info(f"📋 Set retention policy for {database_name}: {retention_days} days")
     
-    async def close(self):
+    async def close(self) -> None:
         """Close backup scheduler."""
         logger.info("🔌 Closing Backup Scheduler...")
         
@@ -651,12 +651,12 @@ class DatabaseBackupManager:
     comprehensive backup, restore, and disaster recovery capabilities.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.scheduler = BackupScheduler()
         self._backup_providers: Dict[str, IBackupProvider] = {}
         self._restore_requests: Dict[str, RestoreRequest] = {}
         
-    async def initialize(self, backup_directory: str = "/var/backups/ainflue"):
+    async def initialize(self, backup_directory -> None: str = "/var/backups/ainflue") -> None:
         """Initialize backup manager."""
         logger.info("🏢 Initializing Enterprise Database Backup Manager...")
         
@@ -672,7 +672,7 @@ class DatabaseBackupManager:
         
         logger.info("✅ Enterprise Database Backup Manager initialized")
     
-    def add_backup_provider(self, database_name: str, provider: IBackupProvider):
+    def add_backup_provider(self, database_name -> None: str, provider -> None: IBackupProvider) -> None:
         """Add backup provider for database."""
         self._backup_providers[database_name] = provider
         self.scheduler.add_backup_provider(database_name, provider)
@@ -697,7 +697,7 @@ class DatabaseBackupManager:
         self._restore_requests[restore_request.restore_id] = restore_request
         return await provider.restore_backup(restore_request)
     
-    async def schedule_regular_backup(self, config: BackupConfig, frequency: str = "daily"):
+    async def schedule_regular_backup(self, config -> None: BackupConfig, frequency -> None: str = "daily") -> None:
         """Schedule regular backup."""
         self.scheduler.schedule_backup(config, frequency)
     
@@ -727,7 +727,7 @@ class DatabaseBackupManager:
         
         return status
     
-    async def close(self):
+    async def close(self) -> None:
         """Close backup manager."""
         logger.info("🔌 Closing Database Backup Manager...")
         

@@ -89,7 +89,7 @@ class RateLimitMetrics:
 class RateLimiter:
     """Enterprise adaptive rate limiter for ML services"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.rate_limits: Dict[str, RateLimit] = {}
         self.request_counters: Dict[str, deque] = defaultdict(deque)
@@ -303,7 +303,7 @@ class RateLimiter:
             logger.error(f"Failed to reset limits: {e}")
             return False
     
-    async def _setup_default_limits(self):
+    async def _setup_default_limits(self) -> None:
         """Setup default rate limits"""
         # Global API limits
         await self.add_rate_limit(
@@ -334,7 +334,7 @@ class RateLimiter:
                     timedelta(minutes=1)
                 )
     
-    async def _setup_monitoring(self):
+    async def _setup_monitoring(self) -> None:
         """Setup rate limit monitoring"""
         # Initialize metrics collection
         self.metrics = RateLimitMetrics()
@@ -480,7 +480,7 @@ class RateLimiter:
             'retry_after': None if allowed else int(reset_time - current_time)
         }
     
-    async def _update_metrics(self, result: Dict[str, Any]):
+    async def _update_metrics(self, result -> None: Dict[str, Any]) -> None:
         """Update rate limiting metrics"""
         self.metrics.total_requests += 1
         
@@ -491,9 +491,9 @@ class RateLimiter:
             self.metrics.violations += 1
     
     async def _log_violation(self, 
-                           identifier: str,
-                           scope: RateLimitScope,
-                           result: Dict[str, Any]):
+                           identifier -> None: str,
+                           scope -> None: RateLimitScope,
+                           result -> None: Dict[str, Any]) -> None:
         """Log rate limit violation"""
         violation = RateLimitViolation(
             violation_id=str(uuid.uuid4()),
@@ -510,7 +510,7 @@ class RateLimiter:
         cutoff = datetime.utcnow() - timedelta(hours=24)
         self.violations = [v for v in self.violations if v.timestamp >= cutoff]
     
-    async def _calculate_current_metrics(self):
+    async def _calculate_current_metrics(self) -> None:
         """Calculate current metrics"""
         # Update timestamp
         self.metrics.timestamp = datetime.utcnow()
@@ -523,7 +523,7 @@ class RateLimiter:
         # This would be calculated from actual request timestamps
         self.metrics.peak_requests_per_second = 100.0  # Simulated
     
-    async def _cleanup_expired_entries(self):
+    async def _cleanup_expired_entries(self) -> None:
         """Cleanup expired rate limit entries"""
         while True:
             try:
@@ -578,7 +578,7 @@ class CreatorRateLimitManager:
 
 
 # Example usage and testing
-async def main():
+async def main() -> None:
     """Example usage of Rate Limiter"""
     limiter = RateLimiter()
     

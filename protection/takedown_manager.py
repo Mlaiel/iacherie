@@ -1,4 +1,8 @@
 """Takedown Management System
+import asyncio
+import logging
+import json
+
 Automated DMCA takedown and content removal management.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -17,7 +21,7 @@ class TakedownManager:
     """
 Automated takedown notice generation and management"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.supported_platforms = ["youtube", "instagram", "tiktok", "twitter"]
         self.takedown_templates = self._load_takedown_templates()
     

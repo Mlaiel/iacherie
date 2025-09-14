@@ -141,7 +141,7 @@ class CompetitorContentAnalysis:
 class ContentGapIdentifier:
     """Advanced content gap identification using AI and competitive analysis"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize Content Gap Identifier
         
         Args:
@@ -995,7 +995,7 @@ class ContentGapIdentifier:
 
 
 # Example usage
-async def main():
+async def main() -> None:
     """Example usage of Content Gap Identifier"""
     try:
         # Initialize identifier

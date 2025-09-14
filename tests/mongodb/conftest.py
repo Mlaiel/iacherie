@@ -30,7 +30,7 @@ except ImportError as e:
     MONGODB_MODULES_AVAILABLE = False
 
 # Test configuration
-def pytest_configure(config):
+def pytest_configure(config) -> None:
     """Configure pytest with custom settings."""
     config.addinivalue_line(
         "markers", "integration: marks tests as integration tests"
@@ -46,7 +46,7 @@ def pytest_configure(config):
     )
 
 @pytest.fixture(scope="session")
-def event_loop():
+def event_loop() -> None:
     """Create an instance of the default event loop for the test session."""
     loop = asyncio.get_event_loop_policy().new_event_loop()
     yield loop
@@ -54,7 +54,7 @@ def event_loop():
 
 # Environment setup
 @pytest.fixture(scope="session", autouse=True)
-def setup_test_environment():
+def setup_test_environment() -> None:
     """Setup test environment."""
     # Set test environment variables
     os.environ["TESTING"] = "true"
@@ -91,7 +91,7 @@ def mock_mongodb_config() -> MongoDBConfig:
         return mock
 
 @pytest.fixture
-async def mock_mongodb_connection(mock_mongodb_config):
+async def mock_mongodb_connection(mock_mongodb_config) -> None:
     """Mock MongoDB connection for testing."""
     if MONGODB_MODULES_AVAILABLE:
         connection = MongoDBConnection(mock_mongodb_config)
@@ -144,34 +144,34 @@ def sample_content_data() -> Dict[str, Any]:
 class AsyncTestCase:
     """Base class for async test cases."""
     
-    async def setup_method(self):
+    async def setup_method(self) -> None:
         """Setup for each test method."""
         pass
     
-    async def teardown_method(self):
+    async def teardown_method(self) -> None:
         """Cleanup for each test method."""
         pass
 
 class MongoDBTestCase(AsyncTestCase):
     """Base class for MongoDB test cases."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.connection = None
         self.config = None
     
-    async def setup_method(self):
+    async def setup_method(self) -> None:
         """Setup MongoDB test environment."""
         await super().setup_method()
         # Additional MongoDB-specific setup
         pass
     
-    async def teardown_method(self):
+    async def teardown_method(self) -> None:
         """Cleanup MongoDB test environment."""
         # Cleanup MongoDB-specific resources
         await super().teardown_method()
 
 # Test collection
-def pytest_collection_modifyitems(config, items):
+def pytest_collection_modifyitems(config, items) -> None:
     """Modify test collection to add markers based on test names."""
     for item in items:
         # Add integration marker

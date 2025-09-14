@@ -37,7 +37,7 @@ class AIIntelligenceEngine:
     Central AI Intelligence Engine that coordinates all AI operations
     """
     
-    def __init__(self, config: Optional[AIIntelligenceConfig] = None):
+    def __init__(self, config -> None: Optional[AIIntelligenceConfig] = None) -> None:
         """Initialize AI Intelligence Engine"""
         self.config = config or AIIntelligenceConfig()
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
@@ -214,7 +214,7 @@ class AIIntelligenceEngine:
             health_status["error"] = str(e)
             return health_status
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Shutdown AI Intelligence Engine"""
         try:
             self.logger.info("🔄 Shutting down AI Intelligence Engine...")

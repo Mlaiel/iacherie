@@ -1,4 +1,6 @@
 """SEO Schema Generator - Générateur de Schema Markup Enterprise
+import asyncio
+
 ==========================================================
 
 Générateur avancé de schema markup et structured data pour optimisation SEO,
@@ -113,7 +115,7 @@ class SEOSchemaGenerator:
     optimisation SEO et support multi-format.
     """
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         """Initialize SEO schema generator"""
         self.config = config or {}
         self.schema_templates = {}
@@ -353,7 +355,7 @@ class SEOSchemaGenerator:
     
     # === MÉTHODES PRIVÉES ===
     
-    def _initialize_schema_templates(self):
+    def _initialize_schema_templates(self) -> None:
         """Initialiser les templates de schema"""
         self.schema_templates = {
             SchemaType.ARTICLE: {
@@ -428,7 +430,7 @@ class SEOSchemaGenerator:
             }
         }
     
-    def _initialize_validation_rules(self):
+    def _initialize_validation_rules(self) -> None:
         """Initialiser les règles de validation"""
         self.validation_rules = {
             "general": [
@@ -896,7 +898,7 @@ class StructuredDataOptimizer:
     l'impact SEO et la compatibilité avec les moteurs de recherche.
     """
     
-    def __init__(self, schema_generator: SEOSchemaGenerator):
+    def __init__(self, schema_generator -> None: SEOSchemaGenerator) -> None:
         self.schema_generator = schema_generator
         self.optimization_strategies = {}
         

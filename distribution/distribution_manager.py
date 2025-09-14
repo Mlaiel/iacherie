@@ -72,7 +72,7 @@ class DistributionManager:
     with AI optimization, security, and comprehensive analytics.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize distribution manager with all subsystems"""
         self.analytics = AnalyticsAggregator()
         self.connectors = PlatformConnectors()

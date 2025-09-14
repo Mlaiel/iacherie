@@ -1,3 +1,8 @@
+"""
+Release Manager module
+Enterprise implementation for Ainflue platform
+"""
+
 # Ainflue Infrastructure Module
 # =============================
 # 
@@ -87,7 +92,7 @@ class ReleaseManager:
     strategies, monitoring, and automated rollback capabilities.
     """
     
-    def __init__(self, kubeconfig_path: Optional[str] = None):
+    def __init__(self, kubeconfig_path -> None: Optional[str] = None) -> None:
         self.kubeconfig_path = kubeconfig_path
         self.logger = self._setup_logging()
         self.releases: Dict[str, HelmRelease] = {}

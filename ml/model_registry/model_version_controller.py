@@ -72,7 +72,7 @@ class ModelVersionController:
     Enterprise model version controller with semantic versioning
     """
     
-    def __init__(self, registry_path: str = "./model_registry"):
+    def __init__(self, registry_path -> None: str = "./model_registry") -> None:
         self.registry_path = Path(registry_path)
         self.registry_path.mkdir(exist_ok=True)
         self.versions_db: Dict[str, List[ModelVersion]] = {}
@@ -430,7 +430,7 @@ class ModelVersionController:
             json.dump(version_data, f, indent=2)
 
 # Usage Example
-async def main():
+async def main() -> None:
     """Example usage of ModelVersionController"""
     controller = ModelVersionController()
     

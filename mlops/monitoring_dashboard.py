@@ -144,12 +144,12 @@ class RealTimeMonitoringDashboard:
     
     def __init__(
         self,
-        dashboard_name: str,
-        model_ids: List[str],
-        prometheus_gateway: Optional[str] = None,
-        websocket_port: int = 8765,
-        retention_days: int = 30
-    ):
+        dashboard_name -> None: str,
+        model_ids -> None: List[str],
+        prometheus_gateway -> None: Optional[str] = None,
+        websocket_port -> None: int = 8765,
+        retention_days -> None: int = 30
+    ) -> None:
         """Initialize real-time monitoring dashboard
         
         Args:
@@ -300,7 +300,7 @@ class RealTimeMonitoringDashboard:
     async def _start_websocket_server(self) -> None:
         """Start WebSocket server for real-time updates"""
         try:
-            async def handle_client(websocket, path):
+            async def handle_client(websocket, path) -> None:
                 self.websocket_connections.add(websocket)
                 try:
                     await websocket.wait_closed()
@@ -1137,7 +1137,7 @@ class CreatorMonitoringDashboard(RealTimeMonitoringDashboard):
     Enhanced for Ainflue platform with musician, blogger, photographer, influencer, comedian metrics
     """
     
-    def __init__(self, creator_type: str, *args, **kwargs):
+    def __init__(self, creator_type -> None: str, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
         self.creator_type = creator_type.lower()
         

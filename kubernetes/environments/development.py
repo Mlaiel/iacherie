@@ -1,4 +1,6 @@
 """Development Environment Manager - IA Influencer Agent
+from datetime import datetime
+
 =====================================================
 Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -156,7 +158,7 @@ class DevelopmentEnvironmentManager:
     - Multi-format content processing testing
     """
     
-    def __init__(self, config_path: Optional[str] = None):
+    def __init__(self, config_path -> None: Optional[str] = None) -> None:
         self.config_path = config_path or "./config/development.yml"
         self.environment = "development"
         self.debug_mode = True
@@ -431,67 +433,67 @@ class DevelopmentEnvironmentManager:
         }
     
     # Private helper methods
-    def _create_database_if_not_exists(self):
+    def _create_database_if_not_exists(self) -> None:
         """
 Create development database if it doesn't exist"""
         # Implementation for database creation
         pass
     
-    def _run_database_migrations(self):
+    def _run_database_migrations(self) -> None:
         """
 Run database migrations"""
         # Implementation for migrations
         pass
     
-    def _load_seed_data(self):
+    def _load_seed_data(self) -> None:
         """
 Load seed data for development"""
         # Implementation for seed data loading
         pass
     
-    def _setup_mock_spotify_service(self):
+    def _setup_mock_spotify_service(self) -> None:
         """
 Setup mock Spotify API service"""
         # Implementation for Spotify mock
         pass
     
-    def _setup_mock_youtube_service(self):
+    def _setup_mock_youtube_service(self) -> None:
         """
 Setup mock YouTube API service"""
         # Implementation for YouTube mock
         pass
     
-    def _setup_mock_social_media_services(self):
+    def _setup_mock_social_media_services(self) -> None:
         """
 Setup mock social media API services"""
         # Implementation for social media mocks
         pass
     
-    def _setup_mock_payment_services(self):
+    def _setup_mock_payment_services(self) -> None:
         """
 Setup mock payment services"""
         # Implementation for payment mocks
         pass
     
-    def _setup_file_watchers(self):
+    def _setup_file_watchers(self) -> None:
         """
 Setup file watchers for hot reload"""
         # Implementation for file watching
         pass
     
-    def _setup_debug_logging(self):
+    def _setup_debug_logging(self) -> None:
         """
 Setup enhanced debug logging"""
         # Implementation for debug logging
         pass
     
-    def _setup_performance_profiling(self):
+    def _setup_performance_profiling(self) -> None:
         """
 Setup performance profiling tools"""
         # Implementation for profiling
         pass
     
-    def _setup_request_debugging(self):
+    def _setup_request_debugging(self) -> None:
         """
 Setup request/response debugging"""
         # Implementation for request debugging
@@ -533,25 +535,25 @@ Validate debugging tools"""
         # Implementation for debugging validation
         return True
     
-    def _reset_database(self):
+    def _reset_database(self) -> None:
         """
 Reset database to clean state"""
         # Implementation for database reset
         pass
     
-    def _clear_redis_cache(self):
+    def _clear_redis_cache(self) -> None:
         """
 Clear Redis cache"""
         # Implementation for Redis clearing
         pass
     
-    def _clear_storage_directories(self):
+    def _clear_storage_directories(self) -> None:
         """
 Clear storage directories"""
         # Implementation for storage clearing
         pass
     
-    def _reset_logs(self):
+    def _reset_logs(self) -> None:
         """
 Reset log files"""
         # Implementation for log reset

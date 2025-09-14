@@ -164,7 +164,7 @@ class StreamSession:
 class EnterpriseLiveStreamingConfiguration:
     """Enterprise-grade live streaming configuration management"""
     
-    def __init__(self, level: str = "enterprise"):
+    def __init__(self, level -> None: str = "enterprise") -> None:
         """Initialize live streaming configuration"""
         self.level = level
         self.streaming_endpoints: Dict[str, StreamingEndpoint] = {}
@@ -366,7 +366,7 @@ class EnterpriseLiveStreamingConfiguration:
             }
         }
     
-    def _initialize_streaming_endpoints(self):
+    def _initialize_streaming_endpoints(self) -> None:
         """Initialize streaming endpoints for different protocols and regions"""
         
         endpoints = [
@@ -431,7 +431,7 @@ class EnterpriseLiveStreamingConfiguration:
         
         logger.info(f"✅ Initialized {len(endpoints)} streaming endpoints")
     
-    def _setup_creator_tier_limits(self):
+    def _setup_creator_tier_limits(self) -> None:
         """Setup creator tier-based streaming limits"""
         
         self.creator_limits = {
@@ -506,7 +506,7 @@ class EnterpriseLiveStreamingConfiguration:
         
         logger.info(f"📊 Configured limits for {len(self.creator_limits)} creator tiers")
     
-    def _configure_global_settings(self):
+    def _configure_global_settings(self) -> None:
         """Configure global streaming settings"""
         self.global_settings = {
             "adaptive_bitrate_ladder": [
@@ -666,7 +666,7 @@ class EnterpriseLiveStreamingConfiguration:
             logger.error(f"❌ Failed to start stream session: {str(e)}")
             return None
     
-    def _initialize_stream_infrastructure(self, session: StreamSession):
+    def _initialize_stream_infrastructure(self, session -> None: StreamSession) -> None:
         """Initialize streaming infrastructure for a session"""
         # This would set up:
         # - Transcoding pipelines
@@ -749,7 +749,7 @@ class EnterpriseLiveStreamingConfiguration:
             "embed": f"https://player.ainflue.com/embed/{stream_id}"
         }
     
-    def update_stream_metrics(self, session_id: str, metrics: Dict[str, Any]):
+    def update_stream_metrics(self, session_id -> None: str, metrics -> None: Dict[str, Any]) -> None:
         """Update real-time stream metrics"""
         if session_id not in self.active_sessions:
             return
@@ -810,7 +810,7 @@ class EnterpriseLiveStreamingConfiguration:
             logger.error(f"❌ Failed to end stream session: {str(e)}")
             return False
     
-    def _cleanup_stream_infrastructure(self, session: StreamSession):
+    def _cleanup_stream_infrastructure(self, session -> None: StreamSession) -> None:
         """Cleanup streaming infrastructure after session ends"""
         # This would cleanup:
         # - Stop transcoding pipelines

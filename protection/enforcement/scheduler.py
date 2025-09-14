@@ -164,7 +164,7 @@ Individual task in the enforcement system"""
         self.progress_percentage: float = 0.0
         self.progress_message: str = ""
     
-    def __lt__(self, other):
+    def __lt__(self, other) -> None:
         """Compare tasks for priority queue"""
         if not isinstance(other, Task):
             return NotImplemented
@@ -180,22 +180,22 @@ Individual task in the enforcement system"""
 Check if task can be executed based on dependencies"""
         return self.dependencies.issubset(completed_tasks)
     
-    def add_dependency(self, task_id: str):
+    def add_dependency(self, task_id -> None: str) -> None:
         """
 Add task dependency"""
         self.dependencies.add(task_id)
     
-    def add_dependent(self, task_id: str):
+    def add_dependent(self, task_id -> None: str) -> None:
         """
 Add dependent task"""
         self.dependents.add(task_id)
     
-    def add_tag(self, tag: str):
+    def add_tag(self, tag -> None: str) -> None:
         """
 Add tag to task"""
         self.tags.add(tag)
     
-    def update_progress(self, percentage: float, message: str = ""):
+    def update_progress(self, percentage -> None: float, message -> None: str = "") -> None:
         """Update task progress"""
         self.progress_percentage = max(0.0, min(100.0, percentage))
         self.progress_message = message
@@ -227,13 +227,13 @@ class TaskQueue:
     """
 Priority-based task queue"""
     
-    def __init__(self, name: str = "default"):
+    def __init__(self, name -> None: str = "default") -> None:
         self.name = name
         self._queue: List[Task] = []
         self._task_map: Dict[str, Task] = {}
         self._lock = asyncio.Lock()
         
-    async def put(self, task: Task):
+    async def put(self, task -> None: Task) -> None:
         """Add task to queue"""
         async with self._lock:
             if task.id in self._task_map:
@@ -293,7 +293,7 @@ Get queue size"""
 Check if queue is empty"""
         return await self.size() == 0
     
-    async def clear(self):
+    async def clear(self) -> None:
         """
 Clear all tasks from queue"""
         async with self._lock:
@@ -350,7 +350,7 @@ Check if step should be executed based on condition"""
 class Workflow:
     """Workflow definition and execution"""
     
-    def __init__(self, workflow_id: str, name: str, description: str = ""):
+    def __init__(self, workflow_id -> None: str, name -> None: str, description -> None: str = "") -> None:
         self.id = workflow_id
         self.name = name
         self.description = description
@@ -373,7 +373,7 @@ class Workflow:
         self.failure_tolerance = 0.8  # 80% success rate required
         self.timeout: Optional[float] = None
     
-    def add_step(self, step: WorkflowStep):
+    def add_step(self, step -> None: WorkflowStep) -> None:
         """Add step to workflow"""
         self.steps[step.id] = step
         
@@ -439,7 +439,7 @@ class TaskExecutor:
     """
 Task execution engine"""
     
-    def __init__(self, max_workers: int = 10):
+    def __init__(self, max_workers -> None: int = 10) -> None:
         self.max_workers = max_workers
         self.running_tasks: Dict[str, asyncio.Task] = {}
         self.task_results: Dict[str, TaskResult] = {}
@@ -537,7 +537,7 @@ Execute a single task"""
         
         return last_result
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Shutdown executor"""
         self._shutdown = True
         
@@ -557,7 +557,7 @@ Execute a single task"""
 class WorkflowEngine:
     """Workflow execution engine"""
     
-    def __init__(self, task_executor: TaskExecutor):
+    def __init__(self, task_executor -> None: TaskExecutor) -> None:
         self.task_executor = task_executor
         self.running_workflows: Dict[str, Workflow] = {}
         self.workflow_results: Dict[str, Dict[str, Any]] = {}
@@ -724,7 +724,7 @@ Execute a complete workflow"""
 class TaskScheduler:
     """Task scheduling and queue management"""
     
-    def __init__(self, task_executor: TaskExecutor, max_queues: int = 10):
+    def __init__(self, task_executor -> None: TaskExecutor, max_queues -> None: int = 10) -> None:
         self.task_executor = task_executor
         self.queues: Dict[str, TaskQueue] = {}
         self.max_queues = max_queues
@@ -738,7 +738,7 @@ class TaskScheduler:
         # Worker task
         self.worker_task: Optional[asyncio.Task] = None
         
-    async def start(self):
+    async def start(self) -> None:
         """Start the task scheduler"""
         if self.worker_task:
             return
@@ -746,7 +746,7 @@ class TaskScheduler:
         self.worker_task = asyncio.create_task(self._worker_loop())
         logger.info("Task scheduler started")
     
-    async def stop(self):
+    async def stop(self) -> None:
         try:
             logger.info(f"Executing stop")
             
@@ -761,7 +761,7 @@ class TaskScheduler:
         except Exception as e:
             logger.error(f"stop failed: {e}")
             raise
-    async def _worker_loop(self):
+    async def _worker_loop(self) -> None:
         """Main worker loop"""
         while not self._shutdown:
             try:

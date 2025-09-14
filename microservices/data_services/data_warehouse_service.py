@@ -1,3 +1,8 @@
+"""
+Data Warehouse Service module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 🏗️ DATA WAREHOUSE SERVICE
@@ -222,7 +227,7 @@ class DataWarehouseService:
     data quality monitoring, and advanced analytics capabilities.
     """
     
-    def __init__(self, redis_url: str = "redis://localhost:6379", db_path: str = ":memory:"):
+    def __init__(self, redis_url -> None: str = "redis -> None://localhost -> None:6379", db_path -> None: str = " -> None:memory -> None:") -> None:
         self.redis_url = redis_url
         self.db_path = db_path
         self.redis_client = None
@@ -1499,7 +1504,7 @@ class DataWarehouseService:
             logger.error(f"❌ Error stopping service: {str(e)}")
 
 # Example usage and testing
-async def main():
+async def main() -> None:
     """Example usage of DataWarehouseService"""
     service = DataWarehouseService()
     

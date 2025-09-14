@@ -48,7 +48,7 @@ class ThreatDetectionEngine:
     Enterprise-grade threat detection and analysis engine
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.threat_signatures = {}
         self.behavior_models = {}
@@ -64,7 +64,7 @@ class ThreatDetectionEngine:
         
         logger.info("Threat Detection Engine initialized")
     
-    def _initialize_detectors(self):
+    def _initialize_detectors(self) -> None:
         """Initialize all threat detection components"""
         try:
             # Load YARA rules for malware detection
@@ -82,7 +82,7 @@ class ThreatDetectionEngine:
             logger.error(f"Failed to initialize threat detectors: {str(e)}")
             raise
     
-    def _load_yara_rules(self):
+    def _load_yara_rules(self) -> None:
         """Load YARA rules for malware detection"""
         try:
             rules_path = self.config.get('yara_rules_path', '/rules/malware.yar')
@@ -97,7 +97,7 @@ class ThreatDetectionEngine:
             logger.warning(f"Failed to load YARA rules: {str(e)}")
             self.yara_rules = None
     
-    def _create_default_yara_rules(self):
+    def _create_default_yara_rules(self) -> None:
         """Create default YARA rules for basic malware detection"""
         default_rules = """
         rule SuspiciousExecutable {
@@ -132,7 +132,7 @@ class ThreatDetectionEngine:
             logger.error(f"Failed to create default YARA rules: {str(e)}")
             self.yara_rules = None
     
-    def _initialize_anomaly_detector(self):
+    def _initialize_anomaly_detector(self) -> None:
         """Initialize anomaly detection model"""
         try:
             # Load pre-trained model if available
@@ -523,7 +523,7 @@ Update threat detection models based on feedback"""
             logger.error(f"Threat detection model update failed: {str(e)}")
             raise
     
-    async def _update_threat_intelligence(self):
+    async def _update_threat_intelligence(self) -> None:
         """Update threat intelligence from external feeds"""
         try:
             for feed_url in self.threat_feeds:
@@ -595,7 +595,7 @@ Check if URL has suspicious patterns"""
 Extract features from feedback data for model training"""
         return None  # Placeholder
     
-    async def _process_threat_feed(self, feed_url: str):
+    async def _process_threat_feed(self, feed_url -> None: str) -> None:
         """
 Process a threat intelligence feed"""
         pass  # Placeholder

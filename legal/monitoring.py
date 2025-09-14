@@ -94,7 +94,7 @@ class AdvancedLegalMonitoringEngine:
     Advanced real-time legal monitoring with ML-powered predictive analytics
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.alerts = deque(maxlen=10000)
         self.metrics_history = deque(maxlen=5000)
         self.risk_patterns = {}
@@ -127,7 +127,7 @@ class AdvancedLegalMonitoringEngine:
         except ImportError:
             return False
 
-    def _initialize_ml_models(self):
+    def _initialize_ml_models(self) -> None:
         """Initialize ML models for legal risk prediction (ML Engineer expertise)."""
         # Simplified ML model initialization (in production, use actual trained models)
         self.ml_models = {
@@ -137,7 +137,7 @@ class AdvancedLegalMonitoringEngine:
         }
         logger.info("🤖 ML models initialized for legal risk prediction")
 
-    def _create_risk_prediction_model(self):
+    def _create_risk_prediction_model(self) -> None:
         """Create ML model for risk prediction."""
         # Simulated ML model - in production use actual trained models
         def predict_risk(features: Dict[str, float]) -> float:
@@ -147,7 +147,7 @@ class AdvancedLegalMonitoringEngine:
             return min(max(base_risk, 0.0), 1.0)
         return predict_risk
 
-    def _create_pattern_detection_model(self):
+    def _create_pattern_detection_model(self) -> None:
         """Create ML model for pattern detection."""
         def detect_patterns(historical_data: List[Dict]) -> List[str]:
             # Simple pattern detection logic
@@ -157,7 +157,7 @@ class AdvancedLegalMonitoringEngine:
             return patterns
         return detect_patterns
 
-    def _create_impact_estimation_model(self):
+    def _create_impact_estimation_model(self) -> None:
         """Create ML model for impact estimation."""
         def estimate_impact(alert_data: Dict) -> float:
             # Impact estimation based on risk level and category
@@ -344,7 +344,7 @@ class AdvancedLegalMonitoringEngine:
         
         return recommendations[:5]  # Return top 5 recommendations
 
-    async def _trigger_alert_handlers(self, alert: LegalAlert):
+    async def _trigger_alert_handlers(self, alert -> None: LegalAlert) -> None:
         """Trigger appropriate alert handlers based on risk level."""
         # Email notification for high/critical alerts
         if alert.risk_level in [LegalRiskLevel.HIGH, LegalRiskLevel.CRITICAL]:
@@ -357,17 +357,17 @@ class AdvancedLegalMonitoringEngine:
         # Log all alerts
         await self._log_alert(alert)
 
-    async def _send_email_notification(self, alert: LegalAlert):
+    async def _send_email_notification(self, alert -> None: LegalAlert) -> None:
         """Send email notification for legal alert."""
         # Email notification implementation (DevOps expertise)
         logger.info(f"📧 Email notification sent for alert: {alert.id}")
 
-    async def _send_slack_notification(self, alert: LegalAlert):
+    async def _send_slack_notification(self, alert -> None: LegalAlert) -> None:
         """Send Slack notification for legal alert."""
         # Slack notification implementation (DevOps expertise)
         logger.info(f"💬 Slack notification sent for alert: {alert.id}")
 
-    async def _log_alert(self, alert: LegalAlert):
+    async def _log_alert(self, alert -> None: LegalAlert) -> None:
         """Log alert to audit trail."""
         # Audit trail logging (Sécurité + DBA expertise)
         logger.info(f"📝 Alert logged to audit trail: {alert.id}")
@@ -378,7 +378,7 @@ class AudioLegalMonitor:
     Specialized monitoring for audio content legal compliance
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.pro_integrations = {
             'ASCAP': {'status': 'active', 'last_sync': datetime.now()},
             'BMI': {'status': 'active', 'last_sync': datetime.now()},
@@ -433,7 +433,7 @@ class LegalAnalyticsDashboard:
     Advanced analytics dashboard for legal compliance insights
     """
     
-    def __init__(self, monitoring_engine: AdvancedLegalMonitoringEngine):
+    def __init__(self, monitoring_engine -> None: AdvancedLegalMonitoringEngine) -> None:
         self.monitoring_engine = monitoring_engine
         self.dashboard_data = {}
         logger.info("📊 Legal Analytics Dashboard initialized")
@@ -515,7 +515,7 @@ class LegalAnalyticsDashboard:
 
 # Integration Functions for Expert Roles
 
-async def demonstrate_advanced_monitoring():
+async def demonstrate_advanced_monitoring() -> None:
     """
     🎯 DEMONSTRATION OF ALL 9 EXPERT ROLES APPLIED:
     Comprehensive demonstration of advanced legal monitoring capabilities

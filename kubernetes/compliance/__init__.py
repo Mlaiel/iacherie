@@ -1,4 +1,6 @@
 """IA Influencer Agent - Compliance Module
+import logging
+
 Comprehensive enterprise-grade compliance system for regulatory adherence
 
 Author: Fahed Mlaiel <mlaiel@live.de>

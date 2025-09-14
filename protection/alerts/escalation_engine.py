@@ -29,12 +29,13 @@ try:
 except ImportError:
     PYDANTIC_AVAILABLE = False
     class BaseModel:
-        def __init__(self, **kwargs):
+    """BaseModel: class implementation"""
+        def __init__(self, **kwargs) -> None:
             for key, value in kwargs.items():
                 setattr(self, key, value)
-    def Field(*args, **kwargs): return None
-    def validator(*args, **kwargs):
-        def decorator(func): return func
+    def Field(*args, **kwargs) -> None: return None
+    def validator(*args, **kwargs) -> None:
+        def decorator(func) -> None: return func
         return decorator
 
 # Optional SQLAlchemy with fallback
@@ -45,10 +46,10 @@ try:
 except ImportError:
     SQLALCHEMY_AVAILABLE = False
     AsyncSession = None
-    def select(*args): return None
-    def update(*args): return None
-    def and_(*args): return None
-    def or_(*args): return None
+    def select(*args) -> None: return None
+    def update(*args) -> None: return None
+    def and_(*args) -> None: return None
+    def or_(*args) -> None: return None
 
 from ..models.alert_models import Alert, AlertSeverity, AlertType, AlertStatus, AlertPriority
 
@@ -63,15 +64,20 @@ except ImportError:
     ESCALATION_MODELS_AVAILABLE = False
     # Create fallback classes
     class EscalationRule:
-        def __init__(self, *args, **kwargs): pass
+    """EscalationRule: class implementation"""
+        def __init__(self, *args, **kwargs) -> None: pass
     class EscalationLevel:
-        def __init__(self, *args, **kwargs): pass
+    """EscalationLevel: class implementation"""
+        def __init__(self, *args, **kwargs) -> None: pass
     class EscalationAction:
-        def __init__(self, *args, **kwargs): pass
+    """EscalationAction: class implementation"""
+        def __init__(self, *args, **kwargs) -> None: pass
     class EscalationHistory:
-        def __init__(self, *args, **kwargs): pass
+    """EscalationHistory: class implementation"""
+        def __init__(self, *args, **kwargs) -> None: pass
     class EscalationPolicy:
-        def __init__(self, *args, **kwargs): pass
+    """EscalationPolicy: class implementation"""
+        def __init__(self, *args, **kwargs) -> None: pass
 
 # Core imports with fallbacks
 try:
@@ -79,7 +85,7 @@ try:
     DATABASE_AVAILABLE = True
 except ImportError:
     DATABASE_AVAILABLE = False
-    def get_async_session(): return None
+    def get_async_session() -> None: return None
 
 try:
     from ...core.cache import CacheManager
@@ -87,7 +93,8 @@ try:
 except ImportError:
     CACHE_AVAILABLE = False
     class CacheManager:
-        def __init__(self, *args, **kwargs): pass
+    """CacheManager: class implementation"""
+        def __init__(self, *args, **kwargs) -> None: pass
 
 logger = logging.getLogger(__name__)
 
@@ -183,10 +190,10 @@ class EscalationEngine:
     
     def __init__(
         self,
-        config: EscalationConfig,
-        cache_manager: CacheManager,
-        redis_client: redis.Redis
-    ):
+        config -> None: EscalationConfig,
+        cache_manager -> None: CacheManager,
+        redis_client -> None: redis.Redis
+    ) -> None:
         self.config = config
         self.cache_manager = cache_manager
         self.redis_client = redis_client
@@ -1054,10 +1061,10 @@ Check if alert should be escalated based on patterns."""
 # Missing classes that are imported in __init__.py
 class EscalationTrigger:
     """Escalation trigger configuration"""
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs) -> None:
         pass
 
 class AutoResponseConfig:
     """Auto-response configuration"""
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs) -> None:
         pass

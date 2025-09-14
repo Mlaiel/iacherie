@@ -1,3 +1,8 @@
+"""
+Failover Manager module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Enterprise Failover Manager Service
@@ -107,7 +112,7 @@ class FailoverManager:
     - Geographic distribution
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize failover manager"""
         self.services: Dict[str, FailoverConfig] = {}
         self.instances: Dict[str, List[ServiceInstance]] = {}
@@ -126,7 +131,7 @@ class FailoverManager:
         
         logger.info("FailoverManager initialized")
     
-    async def start(self):
+    async def start(self) -> None:
         """Start the failover manager"""
         try:
             # Create HTTP session
@@ -142,7 +147,7 @@ class FailoverManager:
             logger.error("Failed to start FailoverManager: %s", e)
             raise
     
-    async def stop(self):
+    async def stop(self) -> None:
         """Stop the failover manager"""
         try:
             self.shutdown_event.set()
@@ -161,9 +166,9 @@ class FailoverManager:
     
     async def register_service(
         self,
-        config: FailoverConfig,
-        instances: List[ServiceInstance]
-    ):
+        config -> None: FailoverConfig,
+        instances -> None: List[ServiceInstance]
+    ) -> None:
         """Register a service with failover configuration"""
         async with self._lock:
             # Store configuration
@@ -192,7 +197,7 @@ class FailoverManager:
             config.service_name, len(instances)
         )
     
-    async def unregister_service(self, service_name: str):
+    async def unregister_service(self, service_name -> None: str) -> None:
         """Unregister a service"""
         async with self._lock:
             # Stop health check task
@@ -300,11 +305,11 @@ class FailoverManager:
     
     async def update_instance_metrics(
         self,
-        service_name: str,
-        instance_id: str,
-        response_time: float,
-        success: bool
-    ):
+        service_name -> None: str,
+        instance_id -> None: str,
+        response_time -> None: float,
+        success -> None: bool
+    ) -> None:
         """Update performance metrics for an instance"""
         instance_key = f"{service_name}.{instance_id}"
         
@@ -389,12 +394,12 @@ class FailoverManager:
             
             return events[-limit:]
     
-    async def _start_health_checks(self):
+    async def _start_health_checks(self) -> None:
         """Start health check tasks for all services"""
         for service_name in self.services.keys():
             await self._start_service_health_check(service_name)
     
-    async def _start_service_health_check(self, service_name: str):
+    async def _start_service_health_check(self, service_name -> None: str) -> None:
         """Start health check task for a specific service"""
         if service_name in self.health_check_tasks:
             self.health_check_tasks[service_name].cancel()
@@ -403,7 +408,7 @@ class FailoverManager:
             self._health_check_loop(service_name)
         )
     
-    async def _stop_health_checks(self):
+    async def _stop_health_checks(self) -> None:
         """Stop all health check tasks"""
         tasks = list(self.health_check_tasks.values())
         self.health_check_tasks.clear()
@@ -414,7 +419,7 @@ class FailoverManager:
         if tasks:
             await asyncio.gather(*tasks, return_exceptions=True)
     
-    async def _health_check_loop(self, service_name: str):
+    async def _health_check_loop(self, service_name -> None: str) -> None:
         """Health check loop for a service"""
         while not self.shutdown_event.is_set():
             try:
@@ -432,7 +437,7 @@ class FailoverManager:
                 logger.error("Error in health check loop for %s: %s", service_name, e)
                 await asyncio.sleep(30)  # Default interval on error
     
-    async def _perform_health_checks(self, service_name: str):
+    async def _perform_health_checks(self, service_name -> None: str) -> None:
         """Perform health checks for all instances of a service"""
         async with self._lock:
             config = self.services.get(service_name)
@@ -491,7 +496,7 @@ class FailoverManager:
         except Exception:
             return False
     
-    async def _handle_active_instance_failure(self, service_name: str):
+    async def _handle_active_instance_failure(self, service_name -> None: str) -> None:
         """Handle failure of the active instance"""
         logger.warning("Active instance failed for service %s, triggering failover", service_name)
         
@@ -504,7 +509,7 @@ class FailoverManager:
         if not success:
             logger.error("Failed to failover service %s", service_name)
     
-    async def _select_active_instance(self, service_name: str):
+    async def _select_active_instance(self, service_name -> None: str) -> None:
         """Select the initial active instance for a service"""
         best_instance = await self._select_best_instance(service_name)
         if best_instance:
@@ -552,7 +557,7 @@ class FailoverManager:
         
         elif strategy == FailoverStrategy.PERFORMANCE_BASED:
             # Select based on health score and performance
-            def score_instance(instance):
+            def score_instance(instance) -> None:
                 instance_key = f"{service_name}.{instance.id}"
                 metrics = self.instance_metrics.get(instance_key, {})
                 response_time = metrics.get("response_time", float('inf'))
@@ -626,7 +631,7 @@ async def get_failover_manager() -> FailoverManager:
         await _failover_manager.start()
     return _failover_manager
 
-async def shutdown_failover_manager():
+async def shutdown_failover_manager() -> None:
     """Shutdown global failover manager"""
     global _failover_manager
     if _failover_manager:
@@ -634,7 +639,7 @@ async def shutdown_failover_manager():
         _failover_manager = None
 
 if __name__ == "__main__":
-    async def test_failover_manager():
+    async def test_failover_manager() -> None:
         """Test failover manager functionality"""
         manager = FailoverManager()
         await manager.start()

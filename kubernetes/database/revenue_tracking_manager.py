@@ -244,7 +244,7 @@ class RevenueTrackingManager:
     with enterprise-grade performance, security, and compliance.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.logger = get_logger(f"{__name__}.RevenueTrackingManager")
         self.settings = get_settings()
@@ -287,7 +287,7 @@ class RevenueTrackingManager:
             self.logger.error(f"❌ Failed to initialize Revenue Tracking Manager: {e}")
             return False
     
-    async def _create_revenue_schema(self):
+    async def _create_revenue_schema(self) -> None:
         """Create revenue tracking database schema"""
         self.logger.debug("Creating revenue tracking database schema...")
         
@@ -643,7 +643,7 @@ class RevenueTrackingManager:
         
         self.logger.debug("✅ Revenue tracking schema created successfully")
     
-    async def _update_exchange_rates(self):
+    async def _update_exchange_rates(self) -> None:
         """Update exchange rates from external API"""
         try:
             # This would normally call a real exchange rate API
@@ -801,7 +801,7 @@ class RevenueTrackingManager:
             self.logger.error(f"❌ Failed to record revenue: {e}")
             raise
     
-    async def _update_revenue_aggregations(self, user_id: str, period_date: date):
+    async def _update_revenue_aggregations(self, user_id -> None: str, period_date -> None: date) -> None:
         """Update revenue aggregations"""
         try:
             aggregation_types = {
@@ -817,7 +817,7 @@ class RevenueTrackingManager:
         except Exception as e:
             self.logger.error(f"Failed to update aggregations: {e}")
     
-    async def _calculate_aggregation(self, user_id: str, agg_type: str, agg_date: date):
+    async def _calculate_aggregation(self, user_id -> None: str, agg_type -> None: str, agg_date -> None: date) -> None:
         """Calculate revenue aggregation for a specific period"""
         try:
             # Define date range based on aggregation type
@@ -1366,7 +1366,7 @@ class RevenueTrackingManager:
                 'timestamp': datetime.utcnow().isoformat()
             }
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Shutdown the revenue tracking manager"""
         try:
             self.logger.info("🚨 Shutting down Revenue Tracking Manager...")

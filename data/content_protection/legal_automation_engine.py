@@ -192,7 +192,7 @@ class ComplianceAudit:
 class LegalAutomationEngine:
     """Automated legal actions and DMCA system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.redis_client = None
         self.mongo_client = None
         self.dmca_generator = DMCANoticeGenerator()
@@ -440,7 +440,7 @@ class LegalAutomationEngine:
             logger.error(f"Failed to generate legal document: {e}")
             raise HTTPException(status_code=500, detail=f"Legal document generation failed: {e}")
     
-    def _load_legal_templates(self):
+    def _load_legal_templates(self) -> None:
         """Load legal document templates"""
         templates = {
             "dmca_notice.html": """
@@ -528,7 +528,7 @@ class LegalAutomationEngine:
             "copyright_registration": "TX0001234567"
         }
     
-    async def _store_dmca_notice(self, notice: DMCANotice):
+    async def _store_dmca_notice(self, notice -> None: DMCANotice) -> None:
         """Store DMCA notice in database"""
         try:
             if self.mongo_client:
@@ -558,7 +558,7 @@ class LegalAutomationEngine:
         
         return None
     
-    async def _update_dmca_notice(self, notice: DMCANotice):
+    async def _update_dmca_notice(self, notice -> None: DMCANotice) -> None:
         """Update DMCA notice in database"""
         try:
             if self.mongo_client:
@@ -687,7 +687,7 @@ class LegalAutomationEngine:
         # Placeholder for platform response checking logic
         return []
     
-    async def _initiate_escalation(self, notice: DMCANotice):
+    async def _initiate_escalation(self, notice -> None: DMCANotice) -> None:
         """Initiate escalation process for unresponded DMCA"""
         # Update status and create escalation tasks
         notice.status = DMCAStatus.ESCALATED
@@ -715,7 +715,7 @@ class LegalAutomationEngine:
         else:
             return "monitor_compliance"
     
-    async def _store_compliance_audits(self, audits: List[ComplianceAudit]):
+    async def _store_compliance_audits(self, audits -> None: List[ComplianceAudit]) -> None:
         """Store compliance audit results"""
         try:
             if self.mongo_client:
@@ -728,7 +728,7 @@ class LegalAutomationEngine:
         except Exception as e:
             logger.error(f"Failed to store compliance audits: {e}")
     
-    async def _store_legal_document(self, document: LegalDocument):
+    async def _store_legal_document(self, document -> None: LegalDocument) -> None:
         """Store legal document in database"""
         try:
             if self.mongo_client:
@@ -811,7 +811,7 @@ class DMCANoticeGenerator:
 class BlockchainSecurityInfrastructure:
     """Blockchain-based security and proof system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.web3 = None
         self.ipfs_client = None
         self.contract_address = None
@@ -872,10 +872,10 @@ class BlockchainSecurityInfrastructure:
     
     async def log_legal_action(
         self, 
-        action_id: str, 
-        action_type: str, 
-        action_data: Dict[str, Any]
-    ):
+        action_id -> None: str, 
+        action_type -> None: str, 
+        action_data -> None: Dict[str, Any]
+    ) -> None:
         """Log legal action on blockchain"""
         try:
             # Create immutable log entry

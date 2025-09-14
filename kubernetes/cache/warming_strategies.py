@@ -158,7 +158,7 @@ class AITrendPredictor:
     """
 AI-powered trend prediction for cache warming"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.models: Dict[str, RandomForestRegressor] = {}
         self.feature_scalers: Dict[str, StandardScaler] = {}
@@ -167,7 +167,7 @@ AI-powered trend prediction for cache warming"""
         # Initialize prediction models
         self._initialize_prediction_models()
     
-    def _initialize_prediction_models(self):
+    def _initialize_prediction_models(self) -> None:
         """
 Initialize machine learning models for trend prediction"""
         
@@ -411,7 +411,7 @@ class CollaborationNetworkAnalyzer:
     """
 Analyze creator collaboration networks for warming optimization"""
     
-    def __init__(self, redis_client: redis.Redis):
+    def __init__(self, redis_client -> None: redis.Redis) -> None:
         self.redis_client = redis_client
         self.collaboration_graph = nx.Graph()
         self.last_updated = datetime.utcnow()
@@ -465,7 +465,7 @@ Analyze collaboration patterns for warming decisions"""
             logging.error(f"Collaboration analysis failed: {e}")
             return {}
     
-    async def _update_collaboration_graph(self):
+    async def _update_collaboration_graph(self) -> None:
         """Update collaboration graph from recent data"""
         
         try:
@@ -561,7 +561,7 @@ Analyze collaboration patterns for warming decisions"""
 class GeographicWarmingOptimizer:
     """Geographic optimization for global content distribution warming"""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         self.config = config
         self.regional_preferences: Dict[str, Dict] = {}
         self.timezone_patterns: Dict[str, List[int]] = {}
@@ -569,7 +569,7 @@ class GeographicWarmingOptimizer:
         # Initialize geographic data
         self._initialize_geographic_data()
     
-    def _initialize_geographic_data(self):
+    def _initialize_geographic_data(self) -> None:
         """
 Initialize geographic preferences and timezone patterns"""
         
@@ -697,6 +697,7 @@ Initialize geographic preferences and timezone patterns"""
 
 
 class CacheWarmingStrategies:
+    """CacheWarmingStrategies: class implementation"""
     NORMAL = "normal"
     HIGH = "high"
     CRITICAL = "critical"
@@ -767,9 +768,9 @@ class CacheWarmingStrategies:
     """
     def __init__(
         self,
-        config: CacheConfiguration,
-        metrics_collector: CacheMetricsCollector
-    ):
+        config -> None: CacheConfiguration,
+        metrics_collector -> None: CacheMetricsCollector
+    ) -> None:
         """
         Initialize cache warming strategies manager.
         

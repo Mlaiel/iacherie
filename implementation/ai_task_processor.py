@@ -106,7 +106,7 @@ class AITaskProcessor:
     specialized business logic execution, and intelligent workflow orchestration
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
         
@@ -249,7 +249,7 @@ class AITaskProcessor:
         
         return False
     
-    async def _process_tasks(self):
+    async def _process_tasks(self) -> None:
         """Process tasks from queue"""
         while self.task_queue and len(self.active_tasks) < self.max_concurrent_tasks:
             task = self.task_queue.pop(0)
@@ -265,7 +265,7 @@ class AITaskProcessor:
             # Execute task asynchronously
             asyncio.create_task(self._execute_task(task))
     
-    async def _execute_task(self, task: AITask):
+    async def _execute_task(self, task -> None: AITask) -> None:
         """
 Execute individual task"""
         start_time = datetime.utcnow()

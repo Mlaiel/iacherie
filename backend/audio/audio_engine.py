@@ -201,7 +201,7 @@ class AudioEngineer:
     - Streaming audio optimization
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         # Audio storage and metadata
         self.audio_files: Dict[str, AudioMetadata] = {}
         self.audio_analyses: Dict[str, AudioAnalysis] = {}
@@ -234,7 +234,7 @@ class AudioEngineer:
         
         logger.info("AudioEngineer initialized - Audio Engineer")
 
-    def _initialize_audio_system(self):
+    def _initialize_audio_system(self) -> None:
         """Initialize audio processing system"""
         
         # Create audio storage directories
@@ -253,7 +253,7 @@ class AudioEngineer:
         
         logger.info("Audio system components initialized")
 
-    def _initialize_processing_presets(self):
+    def _initialize_processing_presets(self) -> None:
         """Initialize audio processing presets"""
         
         self.presets = {
@@ -288,7 +288,7 @@ class AudioEngineer:
             }
         }
 
-    def _initialize_quality_standards(self):
+    def _initialize_quality_standards(self) -> None:
         """Initialize audio quality standards"""
         
         self.quality_standards = {
@@ -648,7 +648,7 @@ class AudioEngineer:
         overall_score = np.mean(quality_factors) * 10
         return float(overall_score)
 
-    async def _queue_audio_analysis(self, file_id: str):
+    async def _queue_audio_analysis(self, file_id -> None: str) -> None:
         """Queue audio file for analysis"""
         
         analysis_job = ProcessingJob(
@@ -723,7 +723,7 @@ class AudioEngineer:
         
         return job_id
 
-    async def _execute_processing_job(self, job: ProcessingJob):
+    async def _execute_processing_job(self, job -> None: ProcessingJob) -> None:
         """Execute audio processing job"""
         
         try:
@@ -1072,7 +1072,7 @@ class AudioEngineer:
             logger.error(f"Audio stream stop failed: {str(e)}")
             return False
 
-    async def _processing_worker_loop(self):
+    async def _processing_worker_loop(self) -> None:
         """Background processing worker loop"""
         while True:
             try:
@@ -1091,7 +1091,7 @@ class AudioEngineer:
             except Exception as e:
                 logger.error(f"Processing worker error: {str(e)}")
 
-    async def _stream_processing_loop(self):
+    async def _stream_processing_loop(self) -> None:
         """Background stream processing loop"""
         while True:
             try:
@@ -1109,7 +1109,7 @@ class AudioEngineer:
             except Exception as e:
                 logger.error(f"Stream processing loop error: {str(e)}")
 
-    async def _quality_monitoring_loop(self):
+    async def _quality_monitoring_loop(self) -> None:
         """Background quality monitoring loop"""
         while True:
             try:
@@ -1133,7 +1133,7 @@ class AudioEngineer:
             except Exception as e:
                 logger.error(f"Quality monitoring loop error: {str(e)}")
 
-    async def _cleanup_loop(self):
+    async def _cleanup_loop(self) -> None:
         """Background cleanup loop"""
         while True:
             try:

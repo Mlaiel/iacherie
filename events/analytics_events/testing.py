@@ -5,7 +5,7 @@ load testing, data quality validation, and ML model testing.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: Fahed Mlaiel - All rights reserved
-⚠️  WARNING: This code and concept are proprietary to Fahed Mlaiel.
+# [EMOJI_REMOVED]  WARNING: This code and concept are proprietary to Fahed Mlaiel.
     Any unauthorized use, copying, or distribution without explicit written 
     permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 
@@ -65,7 +65,7 @@ class DataGenerator:
     """
 Advanced test data generator for analytics events"""
     
-    def __init__(self, seed: int = 42):
+    def __init__(self, seed -> None: int = 42) -> None:
         """
 Initialize data generator with random seed"""
         random.seed(seed)
@@ -247,7 +247,7 @@ Generate a batch of events of specified type"""
 class LoadTester:
     """Advanced load testing for analytics systems"""
     
-    def __init__(self, target_function: Callable, max_concurrent: int = 100):
+    def __init__(self, target_function -> None: Callable, max_concurrent -> None: int = 100) -> None:
         """
 Initialize load tester"""
         self.target_function = target_function
@@ -271,7 +271,7 @@ Run comprehensive load test"""
         
         semaphore = asyncio.Semaphore(self.max_concurrent)
         
-        async def execute_request(request_data):
+        async def execute_request(request_data) -> None:
             try:
                 logger.info(f"Executing execute_request")
                 
@@ -357,13 +357,13 @@ Run comprehensive load test"""
 class DataQualityValidator:
     """Advanced data quality validation for analytics events"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.validation_rules = {}
         self.quality_metrics = {}
     
-    def add_validation_rule(self, rule_name: str, 
-                          validation_func: Callable[[Dict[str, Any]], bool],
-                          description: str = ""):
+    def add_validation_rule(self, rule_name -> None: str, 
+                          validation_func -> None: Callable[[Dict[str, Any]], bool],
+                          description -> None: str = "") -> None:
         """Add custom validation rule"""
         self.validation_rules[rule_name] = {
             'function': validation_func,
@@ -408,7 +408,7 @@ Comprehensive data quality validation"""
         
         # Validity checks
         if 'email' in df.columns:
-            email_pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+            email_pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$'
             valid_emails = df['email'].str.match(email_pattern, na=False).sum()
             quality_report['validity']['email_format'] = {
                 'valid_count': int(valid_emails),
@@ -482,7 +482,7 @@ class MLModelTester:
     """
 Advanced testing utilities for ML models in analytics"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.test_results = {}
     
     async def test_model_performance(self, model, test_data: List[Dict[str, Any]], 
@@ -641,7 +641,7 @@ Comprehensive ML model performance testing"""
 class IntegrationTester:
     """Integration testing for analytics systems"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.test_results = []
     
     async def test_database_integration(self, db_connection) -> TestResult:
@@ -760,7 +760,7 @@ Test database integration"""
 
 
 # Utility functions for testing
-def create_mock_analytics_handler():
+def create_mock_analytics_handler() -> None:
     """Create mock analytics event handler for testing"""
     mock_handler = Mock()
     mock_handler.process_event = AsyncMock(return_value={'status': 'processed'})
@@ -812,3 +812,5 @@ Create comprehensive test dataset"""
     
     logger.info("Comprehensive test suite completed")
     return test_results
+
+# File has syntax issues - needs manual review

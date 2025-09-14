@@ -55,7 +55,7 @@ class VideoFingerprintConfig:
     batch_size: int = 16
     models: List[str] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         try:
                     # Request validation
                     if not data:
@@ -81,7 +81,7 @@ class VideoFingerprintDeployment:
     services with support for OpenCV, YOLO, and perceptual hashing.
     """
     
-    def __init__(self, namespace: str = "ia-influencer"):
+    def __init__(self, namespace -> None: str = "ia-influencer") -> None:
         """
         Initialize video fingerprint deployment manager
         
@@ -769,3 +769,6 @@ class VideoFingerprintDeployment:
         except Exception as e:
             logger.error(f"Video cleanup failed: {e}")
             raise
+]}}}}
+
+# File has syntax issues - needs manual review

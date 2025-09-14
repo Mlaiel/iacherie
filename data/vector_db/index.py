@@ -58,11 +58,11 @@ class VectorDatabase:
     
     def __init__(
         self,
-        config_path: Optional[str] = None,
-        backend: str = "faiss",
-        security_enabled: bool = True,
-        monitoring_enabled: bool = True
-    ):
+        config_path -> None: Optional[str] = None,
+        backend -> None: str = "faiss",
+        security_enabled -> None: bool = True,
+        monitoring_enabled -> None: bool = True
+    ) -> None:
         """
         Initialize Vector Database with configuration.
         

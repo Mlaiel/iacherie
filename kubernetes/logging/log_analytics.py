@@ -114,7 +114,7 @@ class AnomalyDetector:
     """
 Machine learning-based anomaly detection for logs"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.isolation_forest = IsolationForest(
             contamination=0.1,
             random_state=42
@@ -155,7 +155,7 @@ Prepare features for anomaly detection"""
         
         return np.array(features)
     
-    async def train(self, training_data: List[Dict[str, Any]]):
+    async def train(self, training_data -> None: List[Dict[str, Any]]) -> None:
         """
 Train anomaly detection model"""
         if len(training_data) < 100:
@@ -198,7 +198,7 @@ Train anomaly detection model"""
 class LogPatternAnalyzer:
     """Analyze log patterns and extract insights"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         try:
             logger.info(f"Executing __init__")
             
@@ -414,7 +414,7 @@ class LogAnalyticsEngine:
     """
 Complete log analytics engine for IA Influencer Agent"""
     
-    def __init__(self, elasticsearch_manager: ElasticsearchManager):
+    def __init__(self, elasticsearch_manager -> None: ElasticsearchManager) -> None:
         self.es_manager = elasticsearch_manager
         self.anomaly_detector = AnomalyDetector()
         self.pattern_analyzer = LogPatternAnalyzer()
@@ -423,7 +423,7 @@ Complete log analytics engine for IA Influencer Agent"""
         self.metrics: List[LogMetric] = []
         self._setup_default_alerts_and_metrics()
     
-    def _setup_default_alerts_and_metrics(self):
+    def _setup_default_alerts_and_metrics(self) -> None:
         """
 Setup default alerts and metrics for IA Influencer Agent"""
         
@@ -773,11 +773,11 @@ Setup default alerts and metrics for IA Influencer Agent"""
             }
         }
     
-    def add_alert(self, alert: LogAlert):
+    def add_alert(self, alert -> None: LogAlert) -> None:
         """Add custom alert"""
         self.alerts.append(alert)
     
-    def add_metric(self, metric: LogMetric):
+    def add_metric(self, metric -> None: LogMetric) -> None:
         """
 Add custom metric"""
         self.metrics.append(metric)
@@ -809,3 +809,5 @@ Delete alert"""
                 del self.alerts[i]
                 return True
         return False
+
+# File has syntax issues - needs manual review

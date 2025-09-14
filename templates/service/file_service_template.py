@@ -230,7 +230,7 @@ class AbstractStorageBackend(ABC):
 class LocalStorageBackend(AbstractStorageBackend):
     """Local filesystem storage backend"""
     
-    def __init__(self, config: FileServiceConfig):
+    def __init__(self, config -> None: FileServiceConfig) -> None:
         self.config = config
         self.storage_path = Path(config.local_storage_path)
         self.storage_path.mkdir(parents=True, exist_ok=True)
@@ -285,7 +285,7 @@ class LocalStorageBackend(AbstractStorageBackend):
 class S3StorageBackend(AbstractStorageBackend):
     """AWS S3 storage backend"""
     
-    def __init__(self, config: FileServiceConfig):
+    def __init__(self, config -> None: FileServiceConfig) -> None:
         self.config = config
         self.client = boto3.client(
             's3',
@@ -360,7 +360,7 @@ class S3StorageBackend(AbstractStorageBackend):
 class FileProcessor:
     """File processing utilities"""
     
-    def __init__(self, config: FileServiceConfig):
+    def __init__(self, config -> None: FileServiceConfig) -> None:
         self.config = config
         self.logger = logging.getLogger(__name__)
     
@@ -507,7 +507,7 @@ class FileProcessor:
 class VirusScanner:
     """Virus scanning utilities"""
     
-    def __init__(self, config: FileServiceConfig):
+    def __init__(self, config -> None: FileServiceConfig) -> None:
         self.config = config
         self.clamd_client = None
         self.logger = logging.getLogger(__name__)
@@ -549,7 +549,7 @@ class VirusScanner:
 class FileService:
     """Enterprise file service"""
     
-    def __init__(self, config: FileServiceConfig):
+    def __init__(self, config -> None: FileServiceConfig) -> None:
         self.config = config
         self.storage_backend = self._create_storage_backend()
         self.processor = FileProcessor(config)
@@ -568,7 +568,7 @@ class FileService:
         else:
             raise ValueError(f"Unsupported storage backend: {self.config.storage_backend}")
     
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialize file service"""
         if self.config.cache_enabled:
             self.cache = redis.Redis(
@@ -583,7 +583,7 @@ class FileService:
         
         self.logger.info("File service initialized")
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Shutdown file service"""
         if self.cache:
             await self.cache.close()
@@ -907,7 +907,7 @@ class FileService:
 
 
 # Usage example
-async def main():
+async def main() -> None:
     """Example usage of FileService"""
     
     # Configure file service

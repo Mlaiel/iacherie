@@ -99,7 +99,7 @@ class VideoProcessor:
     """
 Professional video processing engine"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or self._get_default_config()
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
@@ -128,7 +128,7 @@ Professional video processing engine"""
             'temp_dir': '/tmp/video_processor'
         }
     
-    def _initialize_engines(self):
+    def _initialize_engines(self) -> None:
         """
 Initialize video processing engines"""
         try:
@@ -865,7 +865,7 @@ Initialize video processing engines"""
             for i, result in enumerate(results)
         ]
     
-    def cleanup(self):
+    def cleanup(self) -> None:
         """
 Cleanup temporary files and resources"""
         try:
@@ -881,6 +881,6 @@ Cleanup temporary files and resources"""
         except Exception as e:
             self.logger.warning(f"Cleanup failed: {str(e)}")
     
-    def __del__(self):
+    def __del__(self) -> None:
         """Destructor"""
         self.cleanup()

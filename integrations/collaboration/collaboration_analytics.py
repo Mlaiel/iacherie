@@ -55,7 +55,7 @@ class CollaborationAnalytics:
     Analyse performance et génère insights business.
     """
     
-    def __init__(self, config: Optional[Dict] = None):
+    def __init__(self, config -> None: Optional[Dict] = None) -> None:
         """Initialise le système d'analytics."""
         self.config = config or {}
         self.metrics_store: Dict[str, List[CollaborationMetric]] = {}
@@ -64,7 +64,7 @@ class CollaborationAnalytics:
         self._load_benchmarks()
         logger.info("Collaboration Analytics initialisé")
     
-    def _load_benchmarks(self):
+    def _load_benchmarks(self) -> None:
         """Charge les données de benchmark."""
         self.benchmark_data = {
             'average_collaboration_success': 0.75,

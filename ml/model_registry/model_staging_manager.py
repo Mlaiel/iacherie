@@ -92,8 +92,8 @@ class ModelStagingManager:
     """🔧 Gestionnaire de staging de modèles ML"""
     
     def __init__(self, 
-                 mlflow_tracking_uri: str = "http://localhost:5000",
-                 kubernetes_config_path: Optional[str] = None):
+                 mlflow_tracking_uri -> None: str = "http -> None://localhost -> None:5000",
+                 kubernetes_config_path -> None: Optional[str] = None) -> None:
         self.mlflow_tracking_uri = mlflow_tracking_uri
         self.kubernetes_config_path = kubernetes_config_path
         
@@ -115,7 +115,7 @@ class ModelStagingManager:
         self.successful_promotions = 0
         self.failed_promotions = 0
         
-    async def initialize(self):
+    async def initialize(self) -> None:
         """Initialise les clients et configurations"""
         try:
             # MLflow client
@@ -143,7 +143,7 @@ class ModelStagingManager:
             logger.error(f"Failed to initialize ModelStagingManager: {e}")
             raise
     
-    async def _setup_default_environments(self):
+    async def _setup_default_environments(self) -> None:
         """Configure les environnements par défaut"""
         self.environments = {
             Environment.DEV: EnvironmentConfig(
@@ -306,11 +306,11 @@ model_uri = os.getenv('MODEL_URI')
 model = mlflow.pyfunc.load_model(model_uri)
 
 @app.route('/health')
-def health():
+def health() -> None:
     return jsonify({'status': 'healthy', 'deployment_id': os.getenv('DEPLOYMENT_ID')})
 
 @app.route('/predict', methods=['POST'])
-def predict():
+def predict() -> None:
     try:
         data = request.json
         predictions = model.predict(data['input'])
@@ -656,7 +656,7 @@ if __name__ == '__main__':
             "environment_distribution": env_distribution
         }
     
-    async def _wait_for_health(self, deployment_id: str, timeout_seconds: int = 300):
+    async def _wait_for_health(self, deployment_id -> None: str, timeout_seconds -> None: int = 300) -> None:
         """Attend que le déploiement soit healthy"""
         start_time = time.time()
         
@@ -669,7 +669,7 @@ if __name__ == '__main__':
         
         raise TimeoutError(f"Deployment {deployment_id} did not become healthy within {timeout_seconds}s")
     
-    async def _gradual_traffic_switch(self, old_deployment_id: str, new_deployment_id: str):
+    async def _gradual_traffic_switch(self, old_deployment_id -> None: str, new_deployment_id -> None: str) -> None:
         """Bascule graduelle du traffic"""
         # Simulation d'une bascule graduelle
         traffic_percentages = [10, 25, 50, 75, 100]
@@ -684,7 +684,7 @@ if __name__ == '__main__':
         # Supprimer l'ancien déploiement une fois le traffic complètement basculé
         await self._delete_deployment(old_deployment_id)
     
-    async def _delete_deployment(self, deployment_id: str):
+    async def _delete_deployment(self, deployment_id -> None: str) -> None:
         """Supprime un déploiement Kubernetes"""
         try:
             deployment = self.deployments.get(deployment_id)
@@ -723,7 +723,7 @@ if __name__ == '__main__':
             logger.error(f"Failed to delete deployment: {e}")
 
 # Usage example
-async def demo_staging_manager():
+async def demo_staging_manager() -> None:
     """Démo du gestionnaire de staging"""
     manager = ModelStagingManager()
     await manager.initialize()

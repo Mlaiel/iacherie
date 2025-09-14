@@ -82,7 +82,7 @@ class LoadBalancerOptimizer:
     - Cost-optimized resource allocation
     """
     
-    def __init__(self, config: Optional[Dict] = None):
+    def __init__(self, config -> None: Optional[Dict] = None) -> None:
         self.logger = logging.getLogger(__name__)
         self.servers: Dict[str, ServerInstance] = {}
         self.load_balancing_rules: Dict[str, LoadBalancingRule] = {}
@@ -714,15 +714,15 @@ class LoadBalancerOptimizer:
         
         return server_id
 
-    def _cache_route(self, cache_key: str, server_id: str):
+    def _cache_route(self, cache_key -> None: str, server_id -> None: str) -> None:
         """Cache routing decision"""
         self.routing_cache[cache_key] = (server_id, time.time())
 
     async def _update_server_metrics(
         self,
-        server_id: str,
-        request_metadata: Dict[str, Any]
-    ):
+        server_id -> None: str,
+        request_metadata -> None: Dict[str, Any]
+    ) -> None:
         """Update server metrics after routing decision"""
         
         if server_id not in self.servers:
@@ -751,7 +751,7 @@ class LoadBalancerOptimizer:
         }
         self.request_history.append(request_record)
 
-    async def _setup_default_rules(self):
+    async def _setup_default_rules(self) -> None:
         """Setup default load balancing rules"""
         
         default_rules = [
@@ -794,7 +794,7 @@ class LoadBalancerOptimizer:
         
         self.logger.info(f"✅ Setup {len(default_rules)} default load balancing rules")
 
-    async def _optimization_loop(self):
+    async def _optimization_loop(self) -> None:
         """Background optimization loop"""
         
         while True:
@@ -809,7 +809,7 @@ class LoadBalancerOptimizer:
                 self.logger.error(f"❌ Optimization loop error: {e}")
                 await asyncio.sleep(60)
 
-    async def _health_monitoring_loop(self):
+    async def _health_monitoring_loop(self) -> None:
         """Background health monitoring"""
         
         while True:
@@ -823,7 +823,7 @@ class LoadBalancerOptimizer:
                 self.logger.error(f"❌ Health monitoring error: {e}")
                 await asyncio.sleep(30)
 
-    async def _ml_training_loop(self):
+    async def _ml_training_loop(self) -> None:
         """Background ML model training and updates"""
         
         while True:
@@ -839,40 +839,40 @@ class LoadBalancerOptimizer:
                 self.logger.error(f"❌ ML training error: {e}")
                 await asyncio.sleep(300)
 
-    async def _initialize_ml_models(self):
+    async def _initialize_ml_models(self) -> None:
         """Initialize ML models for optimization"""
         # Placeholder for ML model initialization
         self.logger.info("🤖 ML models initialized for load balancing optimization")
 
-    async def _optimize_routing_weights(self):
+    async def _optimize_routing_weights(self) -> None:
         """Optimize routing weights based on performance data"""
         pass  # Placeholder for weight optimization
 
-    async def _analyze_performance_patterns(self):
+    async def _analyze_performance_patterns(self) -> None:
         """Analyze performance patterns for optimization"""
         pass  # Placeholder for pattern analysis
 
-    async def _update_ml_models(self):
+    async def _update_ml_models(self) -> None:
         """Update ML models with recent data"""
         pass  # Placeholder for model updates
 
-    async def _update_server_health_scores(self):
+    async def _update_server_health_scores(self) -> None:
         """Update health scores for all servers"""
         pass  # Placeholder for health score updates
 
-    async def _detect_performance_anomalies(self):
+    async def _detect_performance_anomalies(self) -> None:
         """Detect performance anomalies"""
         pass  # Placeholder for anomaly detection
 
-    async def _train_traffic_predictor(self):
+    async def _train_traffic_predictor(self) -> None:
         """Train traffic prediction model"""
         pass  # Placeholder for traffic prediction training
 
-    async def _train_performance_predictor(self):
+    async def _train_performance_predictor(self) -> None:
         """Train performance prediction model"""
         pass  # Placeholder for performance prediction training
 
-    async def _optimize_algorithm_weights(self):
+    async def _optimize_algorithm_weights(self) -> None:
         """Optimize algorithm weights using ML"""
         pass  # Placeholder for algorithm weight optimization
 
@@ -937,7 +937,7 @@ class LoadBalancerOptimizer:
         return True
 
 # Example usage
-async def main():
+async def main() -> None:
     """Example usage of Load Balancer Optimizer"""
     
     # Initialize optimizer

@@ -90,7 +90,7 @@ class MLPipeline:
 class PipelineIntegrator:
     """Enterprise ML pipeline integration and orchestration system."""
     
-    def __init__(self, database_connection=None, storage_backend=None):
+    def __init__(self, database_connection=None, storage_backend=None) -> None:
         """Initialize pipeline integrator.
         
         Args:

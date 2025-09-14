@@ -153,7 +153,7 @@ class CircuitBreakerConfig:
 class MLServiceRegistry:
     """Registry for ML services in the mesh"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.services: Dict[str, MLService] = {}
         self.service_instances: Dict[str, List[Dict[str, Any]]] = {}
         self.health_status: Dict[str, bool] = {}
@@ -193,7 +193,7 @@ class MLServiceRegistry:
 class IstioMeshIntegrator:
     """Istio service mesh integration for ML workloads"""
     
-    def __init__(self, kubernetes_config: Optional[Dict[str, Any]] = None):
+    def __init__(self, kubernetes_config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.k8s_config = kubernetes_config or {}
         self.istio_namespace = self.k8s_config.get('istio_namespace', 'istio-system')
         
@@ -458,7 +458,7 @@ class IstioMeshIntegrator:
 class MicroserviceMeshIntegration:
     """Advanced microservice mesh integration for ML workloads"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize microservice mesh integration"""
         self.config = config or {}
         
@@ -1046,7 +1046,7 @@ def get_mesh_integration() -> MicroserviceMeshIntegration:
     return _mesh_integration_instance
 
 # Test and validation functions
-async def test_microservice_mesh_integration():
+async def test_microservice_mesh_integration() -> None:
     """Test microservice mesh integration functionality"""
     mesh = MicroserviceMeshIntegration({
         'mesh_type': 'istio',

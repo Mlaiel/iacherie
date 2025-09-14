@@ -81,7 +81,7 @@ class ContentMetadata:
     age_rating: str = "general"
     monetization_enabled: bool = True
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.tags is None:
             self.tags = []
 
@@ -99,7 +99,7 @@ class PlatformAdaptation:
     posting_schedule: Optional[datetime] = None
     audience_targeting: Dict[str, Any] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.custom_metadata is None:
             self.custom_metadata = {}
         if self.audience_targeting is None:
@@ -123,7 +123,7 @@ class DistributionJob:
     progress: float = 0.0
     platform_results: Dict[str, Dict[str, Any]] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.platform_results is None:
             self.platform_results = {}
 
@@ -136,7 +136,7 @@ class ContentDistributor:
     AI-powered optimization, format adaptation, and audience targeting.
     """
     
-    def __init__(self, db: AsyncIOMotorDatabase, platform_manager: PlatformManager):
+    def __init__(self, db -> None: AsyncIOMotorDatabase, platform_manager -> None: PlatformManager) -> None:
         """
         Initialize Content Distributor
         

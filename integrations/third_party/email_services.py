@@ -135,16 +135,16 @@ class EmailEnterpriseService:
     
     def __init__(
         self,
-        sendgrid_api_key: Optional[str] = None,
-        mailgun_api_key: Optional[str] = None,
-        mailgun_domain: Optional[str] = None,
-        aws_access_key: Optional[str] = None,
-        aws_secret_key: Optional[str] = None,
-        aws_region: str = "us-east-1",
-        default_provider: EmailProvider = EmailProvider.SENDGRID,
-        enable_failover: bool = True,
-        enable_analytics: bool = True
-    ):
+        sendgrid_api_key -> None: Optional[str] = None,
+        mailgun_api_key -> None: Optional[str] = None,
+        mailgun_domain -> None: Optional[str] = None,
+        aws_access_key -> None: Optional[str] = None,
+        aws_secret_key -> None: Optional[str] = None,
+        aws_region -> None: str = "us-east-1",
+        default_provider -> None: EmailProvider = EmailProvider.SENDGRID,
+        enable_failover -> None: bool = True,
+        enable_analytics -> None: bool = True
+    ) -> None:
         """Initialize email service with enterprise configuration."""
         self.sendgrid_api_key = sendgrid_api_key
         self.mailgun_api_key = mailgun_api_key
@@ -973,11 +973,11 @@ class EmailEnterpriseService:
             
         logger.info("✅ Email Service closed")
 
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         """Async context manager entry."""
         return self
 
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         """Async context manager exit."""
         await self.close()
 
@@ -1016,7 +1016,7 @@ def create_email_service(
 
 
 # Example usage for creator emails
-async def example_creator_emails():
+async def example_creator_emails() -> None:
     """Example of creator-specific email workflows."""
     try:
         service = create_email_service(

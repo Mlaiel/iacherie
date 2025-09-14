@@ -112,7 +112,7 @@ class ProcessedResponse:
 class ResponseValidator:
     """AI response validation system."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.safety_patterns = [
             r'\b(?:kill|murder|suicide|bomb|weapon|drug|illegal)\b',
             r'\b(?:hack|steal|fraud|scam|phish)\b',
@@ -220,7 +220,7 @@ class ResponseValidator:
 class ResponseEnhancer:
     """AI response enhancement system."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.enhancement_rules = {
             'markdown_formatting': self._enhance_markdown,
             'link_enrichment': self._enhance_links,
@@ -293,7 +293,7 @@ class ResponseEnhancer:
         """Enhance with clickable links."""
         url_pattern = r'https?://[^\s<>"{}|\\^`\[\]]+'
         
-        def make_link(match):
+        def make_link(match) -> None:
             url = match.group()
             if content_format == ContentFormat.MARKDOWN:
                 return f"[{url}]({url})"
@@ -369,7 +369,7 @@ class ResponseEnhancer:
 class ResponseOptimizer:
     """AI response optimization system."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.encoding = tiktoken.get_encoding("cl100k_base")
     
     async def optimize_response(self, response: str, target_length: Optional[int] = None) -> Tuple[str, Dict[str, float]]:
@@ -504,7 +504,7 @@ class ResponseOptimizer:
 class AIResponseProcessor:
     """Main AI response processing system."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.validator = ResponseValidator()
         self.enhancer = ResponseEnhancer()
         self.optimizer = ResponseOptimizer()
@@ -639,7 +639,7 @@ class AIResponseProcessor:
         
         return str(response)
     
-    async def _process_validation_stage(self, processed_response: ProcessedResponse):
+    async def _process_validation_stage(self, processed_response -> None: ProcessedResponse) -> None:
         """Process validation stage."""
         try:
             is_valid, errors = await self.validator.validate_response(
@@ -659,7 +659,7 @@ class AIResponseProcessor:
         except Exception as e:
             processed_response.validation_errors.append(f"Validation stage error: {str(e)}")
     
-    async def _process_standardization_stage(self, processed_response: ProcessedResponse):
+    async def _process_standardization_stage(self, processed_response -> None: ProcessedResponse) -> None:
         """Process standardization stage."""
         try:
             # Standardize line endings
@@ -681,7 +681,7 @@ class AIResponseProcessor:
         except Exception as e:
             processed_response.validation_errors.append(f"Standardization stage error: {str(e)}")
     
-    async def _process_enhancement_stage(self, processed_response: ProcessedResponse):
+    async def _process_enhancement_stage(self, processed_response -> None: ProcessedResponse) -> None:
         """Process enhancement stage."""
         try:
             enhanced_content, enhancements = await self.enhancer.enhance_response(
@@ -702,7 +702,7 @@ class AIResponseProcessor:
         except Exception as e:
             processed_response.validation_errors.append(f"Enhancement stage error: {str(e)}")
     
-    async def _process_optimization_stage(self, processed_response: ProcessedResponse, target_length: Optional[int]):
+    async def _process_optimization_stage(self, processed_response -> None: ProcessedResponse, target_length -> None: Optional[int]) -> None:
         """Process optimization stage."""
         try:
             optimized_content, optimization_metrics = await self.optimizer.optimize_response(
@@ -729,7 +729,7 @@ class AIResponseProcessor:
         except Exception as e:
             processed_response.validation_errors.append(f"Optimization stage error: {str(e)}")
     
-    async def _process_finalization_stage(self, processed_response: ProcessedResponse):
+    async def _process_finalization_stage(self, processed_response -> None: ProcessedResponse) -> None:
         """Process finalization stage."""
         try:
             # Calculate quality scores
@@ -834,7 +834,7 @@ async def process_ai_response(original_response: Any,
 
 
 # Example usage
-async def main():
+async def main() -> None:
     """Example usage of AI response processor."""
     # Example OpenAI response
     openai_response = {

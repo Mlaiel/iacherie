@@ -5,7 +5,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
 Team Specialties:
-- Lead Dev IA: AI-powered collaboration matching
+    - Lead Dev IA: AI-powered collaboration matching
 - Backend Senior: Scalable partnership architecture  
 - ML Engineer: Performance prediction algorithms
 - DBA: Collaboration data management
@@ -172,7 +172,7 @@ class CollaborationMatchingEngine:
     """
 AI-powered collaboration matching system."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         try:
             logger.info(f"Executing __init__")
             
@@ -260,7 +260,7 @@ class CollaborationEngine:
     """
 Main collaboration management engine."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.matching_engine = CollaborationMatchingEngine()
         self.active_collaborations: Dict[str, ActiveCollaboration] = {}
         self.proposals: Dict[str, CollaborationProposal] = {}
@@ -520,3 +520,5 @@ __all__ = [
     'ActiveCollaboration',
     'CollaborationMatchingEngine'
 ]
+
+# File has syntax issues - needs manual review

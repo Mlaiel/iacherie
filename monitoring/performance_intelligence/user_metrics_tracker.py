@@ -126,7 +126,7 @@ class UserMetricsTracker:
     Monitors MAU, DAU, retention rates, and comprehensive user engagement analytics.
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(self.__class__.__name__)
         self.activity_cache = {}
         self.user_cache = {}

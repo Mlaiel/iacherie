@@ -171,7 +171,7 @@ class PerformanceMetrics:
 class MultiCloudDatabaseManager:
     """Enterprise multi-cloud database manager."""
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """Initialize multi-cloud database manager.
         
         Args:
@@ -1218,7 +1218,7 @@ class MultiCloudDatabaseManager:
 
 
 # Example usage
-async def example_usage():
+async def example_usage() -> None:
     """Example usage of MultiCloudDatabaseManager."""
     
     config = {

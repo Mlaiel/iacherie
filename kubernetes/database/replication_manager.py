@@ -1,4 +1,6 @@
 """Enterprise Database Replication Manager
+import logging
+
 Advanced replication, high availability and disaster recovery
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -100,7 +102,7 @@ class ReplicationManager:
     - Conflict resolution for logical replication
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = get_logger(__name__)
         self.config = get_database_settings()
         self.db_manager = get_postgresql_manager()

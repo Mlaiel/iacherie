@@ -1,4 +1,6 @@
 """Comprehensive API Documentation Generator
+import logging
+
 Creates complete Swagger/OpenAPI documentation for all API endpoints.
 
 Author: AI Assistant
@@ -69,7 +71,7 @@ class SwaggerDocumentationGenerator:
     """
 Generates comprehensive Swagger/OpenAPI documentation"""
     
-    def __init__(self, title: str = "Ainflue AI Platform API", version: str = "1.0.0"):
+    def __init__(self, title -> None: str = "Ainflue AI Platform API", version -> None: str = "1.0.0") -> None:
         self.title = title
         self.version = version
         self.endpoints = []
@@ -81,16 +83,16 @@ Generates comprehensive Swagger/OpenAPI documentation"""
             "examples": {}
         }
     
-    def add_endpoint(self, endpoint: APIEndpoint):
+    def add_endpoint(self, endpoint -> None: APIEndpoint) -> None:
         """Add an endpoint to the documentation"""
         self.endpoints.append(endpoint)
     
-    def add_schema(self, name: str, schema: Dict[str, Any]):
+    def add_schema(self, name -> None: str, schema -> None: Dict[str, Any]) -> None:
         """
 Add a schema definition"""
         self.components["schemas"][name] = schema
     
-    def add_security_scheme(self, name: str, scheme: Dict[str, Any]):
+    def add_security_scheme(self, name -> None: str, scheme -> None: Dict[str, Any]) -> None:
         """Add a security scheme"""
         self.components["securitySchemes"][name] = scheme
     
@@ -323,7 +325,7 @@ def create_comprehensive_api_documentation() -> SwaggerDocumentationGenerator:
     return doc_generator
 
 
-def _add_common_schemas(doc_generator: SwaggerDocumentationGenerator):
+def _add_common_schemas(doc_generator -> None: SwaggerDocumentationGenerator) -> None:
     """Add common schema definitions"""
     
     # Error response schema
@@ -494,7 +496,7 @@ def _add_common_schemas(doc_generator: SwaggerDocumentationGenerator):
     })
 
 
-def _add_health_endpoints(doc_generator: SwaggerDocumentationGenerator):
+def _add_health_endpoints(doc_generator -> None: SwaggerDocumentationGenerator) -> None:
     """Add health check endpoints"""
     
     # Health check endpoint
@@ -579,7 +581,7 @@ def _add_health_endpoints(doc_generator: SwaggerDocumentationGenerator):
     ))
 
 
-def _add_creator_endpoints(doc_generator: SwaggerDocumentationGenerator):
+def _add_creator_endpoints(doc_generator -> None: SwaggerDocumentationGenerator) -> None:
     """Add creator management endpoints"""
     
     # List creators
@@ -682,7 +684,7 @@ def _add_creator_endpoints(doc_generator: SwaggerDocumentationGenerator):
     ))
 
 
-def _add_content_endpoints(doc_generator: SwaggerDocumentationGenerator):
+def _add_content_endpoints(doc_generator -> None: SwaggerDocumentationGenerator) -> None:
     """Add content management endpoints"""
     
     # Upload content
@@ -795,7 +797,7 @@ def _add_content_endpoints(doc_generator: SwaggerDocumentationGenerator):
     ))
 
 
-def _add_protection_endpoints(doc_generator: SwaggerDocumentationGenerator):
+def _add_protection_endpoints(doc_generator -> None: SwaggerDocumentationGenerator) -> None:
     """Add content protection endpoints"""
     
     # Check for infringement
@@ -841,7 +843,7 @@ def _add_protection_endpoints(doc_generator: SwaggerDocumentationGenerator):
     ))
 
 
-def _add_monetization_endpoints(doc_generator: SwaggerDocumentationGenerator):
+def _add_monetization_endpoints(doc_generator -> None: SwaggerDocumentationGenerator) -> None:
     """Add monetization endpoints"""
     
     # Get revenue reports
@@ -887,7 +889,7 @@ def _add_monetization_endpoints(doc_generator: SwaggerDocumentationGenerator):
     ))
 
 
-def _add_analytics_endpoints(doc_generator: SwaggerDocumentationGenerator):
+def _add_analytics_endpoints(doc_generator -> None: SwaggerDocumentationGenerator) -> None:
     """Add analytics endpoints"""
     
     # Dashboard analytics
@@ -909,7 +911,7 @@ def _add_analytics_endpoints(doc_generator: SwaggerDocumentationGenerator):
     ))
 
 
-def _add_security_endpoints(doc_generator: SwaggerDocumentationGenerator):
+def _add_security_endpoints(doc_generator -> None: SwaggerDocumentationGenerator) -> None:
     """Add security and audit endpoints"""
     
     # Security audit
@@ -957,7 +959,7 @@ def _add_security_endpoints(doc_generator: SwaggerDocumentationGenerator):
     ))
 
 
-def _add_admin_endpoints(doc_generator: SwaggerDocumentationGenerator):
+def _add_admin_endpoints(doc_generator -> None: SwaggerDocumentationGenerator) -> None:
     """Add admin endpoints"""
     
     # System configuration
@@ -993,7 +995,7 @@ def _add_admin_endpoints(doc_generator: SwaggerDocumentationGenerator):
     ))
 
 
-def generate_swagger_json_file(output_path: str = "swagger.json"):
+def generate_swagger_json_file(output_path -> None: str = "swagger.json") -> None:
     """Generate and save Swagger JSON documentation to file"""
     doc_generator = create_comprehensive_api_documentation()
     swagger_spec = doc_generator.generate_openapi_spec()
@@ -1004,7 +1006,7 @@ def generate_swagger_json_file(output_path: str = "swagger.json"):
     return swagger_spec
 
 
-def generate_swagger_yaml_file(output_path: str = "swagger.yaml"):
+def generate_swagger_yaml_file(output_path -> None: str = "swagger.yaml") -> None:
     """Generate and save Swagger YAML documentation to file"""
     try:
         import yaml

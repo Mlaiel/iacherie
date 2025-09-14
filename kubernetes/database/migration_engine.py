@@ -236,7 +236,7 @@ class DatabaseMigrationEngine:
     Production-grade system with automated rollback, validation and monitoring
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or get_settings()
         self.logger = get_logger(f"{__name__}.DatabaseMigrationEngine")
         
@@ -265,7 +265,7 @@ class DatabaseMigrationEngine:
         # Initialize
         self._initialize_migration_runner()
     
-    def _initialize_migration_runner(self):
+    def _initialize_migration_runner(self) -> None:
         """Initialise le système de migration"""
         try:
             self.logger.info("🔄 Initializing database migration engine...")
@@ -283,7 +283,7 @@ class DatabaseMigrationEngine:
             self.logger.error(f"❌ Failed to initialize migration engine: {e}")
             raise
     
-    async def _load_migrations(self):
+    async def _load_migrations(self) -> None:
         """Charge les migrations depuis le système de fichiers"""
         try:
             migration_files = list(self.migrations_path.glob("*.sql"))
@@ -418,7 +418,7 @@ Sépare les scripts UP et DOWN d'un fichier SQL"""
         
         return up_script, down_script
     
-    async def _load_migration_history(self):
+    async def _load_migration_history(self) -> None:
         """Charge l'historique des migrations depuis la base"""
         try:
             if not self.db_pool:
@@ -461,7 +461,7 @@ Sépare les scripts UP et DOWN d'un fichier SQL"""
         except Exception as e:
             self.logger.warning(f"Failed to load migration history: {e}")
     
-    async def _create_migration_history_table(self, conn: asyncpg.Connection):
+    async def _create_migration_history_table(self, conn -> None: asyncpg.Connection) -> None:
         """Crée la table d'historique des migrations"""
         try:
             await conn.execute("""
@@ -652,7 +652,7 @@ Sépare les scripts UP et DOWN d'un fichier SQL"""
             self.logger.error(f"Failed to decrypt migration {migration.id}: {e}")
             raise
     
-    async def _save_migration(self, migration: MigrationScript):
+    async def _save_migration(self, migration -> None: MigrationScript) -> None:
         """Sauvegarde une migration sur disque"""
         try:
             file_path = self.migrations_path / f"{migration.id}.json"
@@ -836,7 +836,7 @@ Sépare les scripts UP et DOWN d'un fichier SQL"""
             self.logger.warning(f"Failed to check migration status: {e}")
             return False
     
-    async def _validate_dependencies(self, migration: MigrationScript):
+    async def _validate_dependencies(self, migration -> None: MigrationScript) -> None:
         """Valide que toutes les dépendances sont satisfaites"""
         try:
             for dep_id in migration.dependencies:
@@ -852,7 +852,7 @@ Sépare les scripts UP et DOWN d'un fichier SQL"""
             self.logger.error(f"Dependency validation failed: {e}")
             raise
     
-    async def _create_backup_before_migration(self, migration_id: str):
+    async def _create_backup_before_migration(self, migration_id -> None: str) -> None:
         """Crée un backup avant l'exécution de la migration"""
         try:
             backup_name = f"backup_{migration_id}_{int(datetime.utcnow().timestamp())}"
@@ -902,7 +902,7 @@ Sépare les scripts UP et DOWN d'un fichier SQL"""
             self.logger.error(f"Validation {validation_type} failed: {e}")
             return False
     
-    async def _validate_sql_syntax(self, sql_script: str):
+    async def _validate_sql_syntax(self, sql_script -> None: str) -> None:
         """Valide la syntaxe SQL d'un script"""
         try:
             # Validation basique avec sqlparse
@@ -921,7 +921,7 @@ Sépare les scripts UP et DOWN d'un fichier SQL"""
             self.logger.error(f"SQL syntax validation failed: {e}")
             raise
     
-    async def _execute_sql_script(self, migration: MigrationScript, result: MigrationResult):
+    async def _execute_sql_script(self, migration -> None: MigrationScript, result -> None: MigrationResult) -> None:
         """Exécute le script SQL de migration"""
         try:
             if not self.db_pool:
@@ -983,7 +983,7 @@ Sépare les scripts UP et DOWN d'un fichier SQL"""
             self.logger.error(f"Failed to execute statements: {e}")
             raise
     
-    async def _record_migration_result(self, result: MigrationResult):
+    async def _record_migration_result(self, result -> None: MigrationResult) -> None:
         """Enregistre le résultat de migration dans l'historique"""
         try:
             if not self.db_pool:
@@ -1100,7 +1100,7 @@ Effectue le rollback interne d'une migration"""
             self.logger.error(f"Failed to rollback migration {migration_id}: {e}")
             raise
     
-    async def _execute_rollback_script(self, migration: MigrationScript, result: MigrationResult):
+    async def _execute_rollback_script(self, migration -> None: MigrationScript, result -> None: MigrationResult) -> None:
         """Exécute le script de rollback"""
         try:
             if not self.db_pool:
@@ -1349,7 +1349,7 @@ Effectue le rollback interne d'une migration"""
             self.logger.error(f"❌ Failed to execute migration plan: {e}")
             raise
     
-    async def _create_plan_backup(self, plan_id: str):
+    async def _create_plan_backup(self, plan_id -> None: str) -> None:
         """Crée un backup complet avant l'exécution du plan"""
         try:
             backup_name = f"plan_backup_{plan_id}_{int(datetime.utcnow().timestamp())}"
@@ -1484,7 +1484,7 @@ Effectue le rollback interne d'une migration"""
             self.logger.error(f"Error calculating checksum: {e}")
             return "unknown"
     
-    async def _create_logical_backup(self, plan_id: str, backup_name: str):
+    async def _create_logical_backup(self, plan_id -> None: str, backup_name -> None: str) -> None:
         """Crée un backup logique simple comme fallback"""
         try:
             self.logger.info(f"Creating logical backup for plan {plan_id}")
@@ -1512,7 +1512,7 @@ Effectue le rollback interne d'une migration"""
         except Exception as e:
             self.logger.error(f"Logical backup creation failed: {e}")
     
-    async def _rollback_migration_plan(self, plan: MigrationPlan, results: List[MigrationResult]):
+    async def _rollback_migration_plan(self, plan -> None: MigrationPlan, results -> None: List[MigrationResult]) -> None:
         """Effectue le rollback d'un plan de migration"""
         try:
             self.logger.warning(f"Rolling back migration plan: {plan.name}")
@@ -1619,7 +1619,7 @@ Effectue le rollback interne d'une migration"""
                 'timestamp': datetime.utcnow().isoformat()
             }
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Arrêt propre du système de migration"""
         try:
             self.logger.info("🔒 Shutting down migration engine...")

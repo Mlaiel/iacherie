@@ -25,7 +25,7 @@ logger = logging.getLogger(__name__)
 class VoiceSession:
     """Voice session management"""
     
-    def __init__(self, session_id: str, creator_id: str, session_type: str):
+    def __init__(self, session_id -> None: str, creator_id -> None: str, session_type -> None: str) -> None:
         self.session_id = session_id
         self.creator_id = creator_id
         self.session_type = session_type  # 'podcast', 'voice_chat', 'audio_call', 'voice_note'
@@ -42,7 +42,7 @@ class VoiceSession:
 class VoiceParticipant:
     """Voice session participant"""
     
-    def __init__(self, participant_id: str, user_id: str, display_name: str):
+    def __init__(self, participant_id -> None: str, user_id -> None: str, display_name -> None: str) -> None:
         self.participant_id = participant_id
         self.user_id = user_id
         self.display_name = display_name
@@ -56,7 +56,7 @@ class VoiceParticipant:
 class PodcastEpisode:
     """Podcast episode management"""
     
-    def __init__(self, episode_id: str, podcast_id: str, title: str):
+    def __init__(self, episode_id -> None: str, podcast_id -> None: str, title -> None: str) -> None:
         self.episode_id = episode_id
         self.podcast_id = podcast_id
         self.title = title
@@ -73,7 +73,7 @@ class PodcastEpisode:
 class VoiceAnalytics:
     """Voice analytics and insights"""
     
-    def __init__(self, session_id: str):
+    def __init__(self, session_id -> None: str) -> None:
         self.session_id = session_id
         self.total_speaking_time = 0
         self.silence_percentage = 0.0
@@ -102,7 +102,7 @@ class VoiceServices:
     - Voice analytics and insights
     """
     
-    def __init__(self, services_config: Dict[str, Dict[str, Any]]):
+    def __init__(self, services_config -> None: Dict[str, Dict[str, Any]]) -> None:
         self.services_config = services_config
         self.session = None
         self.active_sessions = {}
@@ -112,17 +112,17 @@ class VoiceServices:
             'minute_start': datetime.utcnow().minute
         }
         
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         """Async context manager entry"""
         self.session = aiohttp.ClientSession()
         return self
         
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         """Async context manager exit"""
         if self.session:
             await self.session.close()
 
-    def _check_rate_limit(self):
+    def _check_rate_limit(self) -> None:
         """Check and enforce rate limiting"""
         current_minute = datetime.utcnow().minute
         
@@ -711,7 +711,7 @@ class VoiceServices:
     # Additional helper methods for comprehensive functionality...
 
 # Example usage and testing
-async def main():
+async def main() -> None:
     """Example usage of Voice Services integration"""
     
     # Initialize the service

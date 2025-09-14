@@ -85,7 +85,7 @@ class AssetVersion:
     size: int = 0
     metadata: Dict[str, Any] = field(default_factory=dict)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.created_at is None:
             self.created_at = datetime.now().timestamp()
 
@@ -134,7 +134,7 @@ class SharedAsset:
     comments: List[str] = field(default_factory=list)
     authorized_users: List[str] = field(default_factory=list)
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.created_at is None:
             self.created_at = datetime.now().timestamp()
         if self.updated_at is None:
@@ -154,7 +154,7 @@ class AssetCollection:
     created_at: Optional[float] = None
     updated_at: Optional[float] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.created_at is None:
             self.created_at = datetime.now().timestamp()
         if self.updated_at is None:
@@ -170,7 +170,7 @@ class AssetUsage:
     used_at: Optional[float] = None
     usage_context: str = ""  # "video_edit", "image_composite", etc.
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.used_at is None:
             self.used_at = datetime.now().timestamp()
 
@@ -178,7 +178,7 @@ class AssetUsage:
 class SharedAssetsManager:
     """Professional shared multimedia assets management system"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize shared assets manager"""
         self.config = config or {}
         self.assets: Dict[str, SharedAsset] = {}
@@ -669,11 +669,11 @@ class SharedAssetsManager:
     
     async def _track_usage(
         self,
-        asset_id: str,
-        user_id: str,
-        project_id: Optional[str] = None,
-        context: str = "download"
-    ):
+        asset_id -> None: str,
+        user_id -> None: str,
+        project_id -> None: Optional[str] = None,
+        context -> None: str = "download"
+    ) -> None:
         """Track asset usage"""
         try:
             usage = AssetUsage(

@@ -128,11 +128,11 @@ class BatchInferenceProcessor:
     """Processeur d'inférence par lot enterprise"""
     
     def __init__(self,
-                 max_workers: int = None,
-                 max_memory_mb: int = 8192,
-                 checkpoint_interval: int = 1000,
-                 enable_checkpointing: bool = True,
-                 temp_dir: str = "/tmp/batch_inference"):
+                 max_workers -> None: int = None,
+                 max_memory_mb -> None: int = 8192,
+                 checkpoint_interval -> None: int = 1000,
+                 enable_checkpointing -> None: bool = True,
+                 temp_dir -> None: str = "/tmp/batch_inference") -> None:
         
         self.max_workers = max_workers or min(32, (mp.cpu_count() or 1) + 4)
         self.max_memory_mb = max_memory_mb
@@ -167,7 +167,7 @@ class BatchInferenceProcessor:
         self.progress_callbacks: List[Callable[[str, float], None]] = []
         self.completion_callbacks: List[Callable[[BatchResult], None]] = []
     
-    async def start(self):
+    async def start(self) -> None:
         """Démarre le processeur batch"""
         try:
             self.is_running = True
@@ -183,7 +183,7 @@ class BatchInferenceProcessor:
             logger.error(f"Erreur démarrage processeur batch: {e}")
             raise
     
-    async def stop(self):
+    async def stop(self) -> None:
         """Arrête le processeur batch"""
         try:
             logger.info("Arrêt du processeur batch...")
@@ -334,7 +334,7 @@ class BatchInferenceProcessor:
             logger.error(f"Erreur calcul taille chunk: {e}")
             return default_size
     
-    async def _processing_loop(self):
+    async def _processing_loop(self) -> None:
         """Boucle principale de traitement"""
         while self.is_running:
             try:
@@ -358,7 +358,7 @@ class BatchInferenceProcessor:
                 logger.error(f"Erreur boucle traitement: {e}")
                 await asyncio.sleep(5.0)
     
-    async def _start_job(self, job_id: str):
+    async def _start_job(self, job_id -> None: str) -> None:
         """Démarre un job de traitement"""
         try:
             job = self.jobs[job_id]
@@ -381,7 +381,7 @@ class BatchInferenceProcessor:
             self.jobs[job_id].status = BatchStatus.FAILED
             self.jobs[job_id].error_message = str(e)
     
-    def _process_job(self, job_id: str):
+    def _process_job(self, job_id -> None: str) -> None:
         """Traite un job batch"""
         job = self.jobs[job_id]
         start_time = time.time()
@@ -668,7 +668,7 @@ class BatchInferenceProcessor:
                 items_processed=len(chunk_data) if hasattr(chunk_data, '__len__') else 1
             )
     
-    def _update_job_progress(self, job_id: str, progress: float):
+    def _update_job_progress(self, job_id -> None: str, progress -> None: float) -> None:
         """Met à jour le progrès d'un job"""
         try:
             if job_id in self.jobs:
@@ -684,7 +684,7 @@ class BatchInferenceProcessor:
         except Exception as e:
             logger.error(f"Erreur mise à jour progrès: {e}")
     
-    def _save_checkpoint(self, job: BatchJob, chunks_processed: int):
+    def _save_checkpoint(self, job -> None: BatchJob, chunks_processed -> None: int) -> None:
         """Sauvegarde un checkpoint"""
         try:
             if not job.checkpoint_path:
@@ -722,7 +722,7 @@ class BatchInferenceProcessor:
             logger.error(f"Erreur chargement checkpoint: {e}")
             return None
     
-    def _save_results(self, output_path: str, predictions: List[Any]):
+    def _save_results(self, output_path -> None: str, predictions -> None: List[Any]) -> None:
         """Sauvegarde les résultats"""
         try:
             output_file = Path(output_path)
@@ -745,7 +745,7 @@ class BatchInferenceProcessor:
         except Exception as e:
             logger.error(f"Erreur sauvegarde résultats: {e}")
     
-    async def _monitoring_loop(self):
+    async def _monitoring_loop(self) -> None:
         """Boucle de monitoring"""
         while self.is_running:
             try:
@@ -810,11 +810,11 @@ class BatchInferenceProcessor:
             jobs = [job for job in jobs if job.status == status_filter]
         return jobs
     
-    def add_progress_callback(self, callback: Callable[[str, float], None]):
+    def add_progress_callback(self, callback -> None: Callable[[str, float], None]) -> None:
         """Ajoute un callback de progrès"""
         self.progress_callbacks.append(callback)
     
-    def add_completion_callback(self, callback: Callable[[BatchResult], None]):
+    def add_completion_callback(self, callback -> None: Callable[[BatchResult], None]) -> None:
         """Ajoute un callback de completion"""
         self.completion_callbacks.append(callback)
     
@@ -911,7 +911,7 @@ class BatchProcessorFactory:
 
 
 # Exemple d'utilisation
-async def example_usage():
+async def example_usage() -> None:
     """Exemple d'utilisation du processeur batch"""
     
     from sklearn.ensemble import RandomForestClassifier
@@ -929,10 +929,10 @@ async def example_usage():
     processor = BatchProcessorFactory.create_development_processor()
     
     # Ajouter des callbacks
-    def progress_callback(job_id: str, progress: float):
+    def progress_callback(job_id -> None: str, progress -> None: float) -> None:
         print(f"Job {job_id}: {progress:.1f}% terminé")
     
-    def completion_callback(result: BatchResult):
+    def completion_callback(result -> None: BatchResult) -> None:
         print(f"Job terminé: {result.job_id}")
         print(f"- Éléments traités: {result.successful_items}/{result.total_items}")
         print(f"- Temps: {result.processing_time:.2f}s")

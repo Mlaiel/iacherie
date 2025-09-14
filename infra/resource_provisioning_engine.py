@@ -1,3 +1,8 @@
+"""
+Resource Provisioning Engine module
+Enterprise implementation for Ainflue platform
+"""
+
 # Ainflue Infrastructure Module
 # =============================
 # 
@@ -125,7 +130,7 @@ class ResourceProvisioningEngine:
     management across multiple cloud providers with cost optimization.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize resource provisioning engine."""
         self.config = config or {}
         self.resources: Dict[str, ResourceInstance] = {}
@@ -155,7 +160,7 @@ class ResourceProvisioningEngine:
         
         logger.info("ResourceProvisioningEngine initialized")
     
-    def _initialize_providers(self):
+    def _initialize_providers(self) -> None:
         """Initialize cloud provider clients."""
         try:
             # AWS provider
@@ -236,7 +241,7 @@ class ResourceProvisioningEngine:
             logger.error(f"Failed to provision resources: {str(e)}")
             raise
     
-    async def _execute_provisioning(self, request: ProvisioningRequest):
+    async def _execute_provisioning(self, request -> None: ProvisioningRequest) -> None:
         """Execute resource provisioning."""
         try:
             logger.info(f"Executing provisioning request: {request.id}")
@@ -495,7 +500,7 @@ class ResourceProvisioningEngine:
         
         return optimizations
     
-    async def _setup_auto_scaling(self, resource: ResourceInstance):
+    async def _setup_auto_scaling(self, resource -> None: ResourceInstance) -> None:
         """Setup auto-scaling for a resource."""
         try:
             if resource.spec.type not in [ResourceType.COMPUTE, ResourceType.DATABASE]:
@@ -516,7 +521,7 @@ class ResourceProvisioningEngine:
         except Exception as e:
             logger.error(f"Failed to setup auto-scaling for {resource.id}: {str(e)}")
     
-    async def _auto_scaling_loop(self):
+    async def _auto_scaling_loop(self) -> None:
         """Auto-scaling monitoring and execution loop."""
         while True:
             try:
@@ -577,7 +582,7 @@ class ResourceProvisioningEngine:
             logger.error(f"Failed to evaluate scaling decision: {str(e)}")
             return {"action": "none"}
     
-    async def _execute_scaling(self, resource: ResourceInstance, scaling_decision: Dict[str, Any]):
+    async def _execute_scaling(self, resource -> None: ResourceInstance, scaling_decision -> None: Dict[str, Any]) -> None:
         """Execute scaling action."""
         try:
             resource.status = ResourceStatus.SCALING
@@ -604,7 +609,7 @@ class ResourceProvisioningEngine:
             logger.error(f"Failed to execute scaling for {resource.id}: {str(e)}")
             resource.status = ResourceStatus.ACTIVE  # Reset status
     
-    async def _metrics_collection_loop(self):
+    async def _metrics_collection_loop(self) -> None:
         """Metrics collection loop."""
         while True:
             try:
@@ -667,7 +672,7 @@ class ResourceProvisioningEngine:
             logger.error(f"Failed to calculate cost for resource {resource.id}: {str(e)}")
             return resource.cost
     
-    async def _cleanup_resources(self, resources: List[ResourceInstance]):
+    async def _cleanup_resources(self, resources -> None: List[ResourceInstance]) -> None:
         """Cleanup resources on failure."""
         try:
             for resource in resources:
@@ -676,7 +681,7 @@ class ResourceProvisioningEngine:
         except Exception as e:
             logger.error(f"Failed to cleanup resources: {str(e)}")
     
-    async def _schedule_provisioning(self, request: ProvisioningRequest):
+    async def _schedule_provisioning(self, request -> None: ProvisioningRequest) -> None:
         """Schedule provisioning for later execution."""
         try:
             if not request.schedule:
@@ -693,7 +698,7 @@ class ResourceProvisioningEngine:
         except Exception as e:
             logger.error(f"Scheduled provisioning failed: {str(e)}")
     
-    async def _predictive_provisioning(self, request: ProvisioningRequest):
+    async def _predictive_provisioning(self, request -> None: ProvisioningRequest) -> None:
         """Execute predictive provisioning based on ML models."""
         try:
             # This would use ML models to predict optimal provisioning time and resources

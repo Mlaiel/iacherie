@@ -241,7 +241,7 @@ Ajoute une ligne à la facture"""
         self.items.append(item)
         return item
         
-    def add_payment(self, amount: Decimal, payment_method: str, transaction_id: str, **kwargs):
+    def add_payment(self, amount -> None: Decimal, payment_method -> None: str, transaction_id -> None: str, **kwargs) -> None:
         """
 Ajoute un paiement à la facture"""
         payment = {
@@ -264,7 +264,7 @@ Ajoute un paiement à la facture"""
 class InvoiceTemplate:
     """Template de facture personnalisable"""
     
-    def __init__(self, template_id: str, name: str):
+    def __init__(self, template_id -> None: str, name -> None: str) -> None:
         self.template_id = template_id
         self.name = name
         self.company_info = {}
@@ -406,7 +406,7 @@ Génère un PDF de facture"""
 class InvoiceManager:
     """Gestionnaire de factures enterprise"""
     
-    def __init__(self, database_client: Optional[Any] = None):
+    def __init__(self, database_client -> None: Optional[Any] = None) -> None:
         self.database_client = database_client
         self.templates: Dict[str, InvoiceTemplate] = {}
         self.auto_numbering_enabled = True
@@ -416,7 +416,7 @@ class InvoiceManager:
         # Charger les templates par défaut
         self._load_default_templates()
         
-    def _load_default_templates(self):
+    def _load_default_templates(self) -> None:
         """Charge les templates par défaut"""
         default_template = InvoiceTemplate("default", "Template Standard")
         default_template.company_info = {
@@ -456,7 +456,7 @@ class InvoiceManager:
             return await self._load_invoice(invoice_id)
         return None
         
-    async def update_invoice(self, invoice: Invoice):
+    async def update_invoice(self, invoice -> None: Invoice) -> None:
         """
 Met à jour une facture"""
         if self.database_client:
@@ -485,14 +485,14 @@ Met à jour une facture"""
             logger.error(f"Erreur lors de l'envoi de facture {invoice.invoice_number}: {e}")
             return False
             
-    async def mark_as_paid(self, invoice: Invoice, amount: Decimal, payment_method: str, transaction_id: str):
+    async def mark_as_paid(self, invoice -> None: Invoice, amount -> None: Decimal, payment_method -> None: str, transaction_id -> None: str) -> None:
         """Marque une facture comme payée"""
         invoice.add_payment(amount, payment_method, transaction_id)
         await self.update_invoice(invoice)
         
         logger.info(f"Paiement enregistré pour facture {invoice.invoice_number}: {amount} via {payment_method}")
         
-    async def cancel_invoice(self, invoice: Invoice, reason: str = ""):
+    async def cancel_invoice(self, invoice -> None: Invoice, reason -> None: str = "") -> None:
         """Annule une facture"""
         invoice.status = InvoiceStatus.CANCELLED
         if reason:
@@ -545,7 +545,7 @@ Génère le PDF d'une facture"""
         self.numbering_sequence += 1
         return number
         
-    async def _save_invoice(self, invoice: Invoice):
+    async def _save_invoice(self, invoice -> None: Invoice) -> None:
         """Sauvegarde une facture en base"""
         try:
             # Convert invoice to dict for storage

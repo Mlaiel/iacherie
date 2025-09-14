@@ -192,11 +192,11 @@ class EdgeDeploymentManager:
     
     def __init__(
         self,
-        default_strategy: DeploymentStrategy = DeploymentStrategy.LATENCY_OPTIMIZED,
-        max_nodes_per_region: int = 10,
-        enable_auto_scaling: bool = True,
-        heartbeat_interval: int = 30  # seconds
-    ):
+        default_strategy -> None: DeploymentStrategy = DeploymentStrategy.LATENCY_OPTIMIZED,
+        max_nodes_per_region -> None: int = 10,
+        enable_auto_scaling -> None: bool = True,
+        heartbeat_interval -> None: int = 30  # seconds
+    ) -> None:
         self.default_strategy = default_strategy
         self.max_nodes_per_region = max_nodes_per_region
         self.enable_auto_scaling = enable_auto_scaling
@@ -353,7 +353,7 @@ class EdgeDeploymentManager:
             # Par défaut: US-East et EU-West
             return [EdgeRegion.US_EAST, EdgeRegion.EU_WEST]
     
-    async def _execute_deployment(self, deployment: EdgeDeployment):
+    async def _execute_deployment(self, deployment -> None: EdgeDeployment) -> None:
         """Exécuter le déploiement sur les nœuds"""
         
         deployed_nodes = []
@@ -478,9 +478,9 @@ class EdgeDeploymentManager:
     
     async def update_node_metrics(
         self,
-        node_id: str,
-        metrics: Dict[str, Any]
-    ):
+        node_id -> None: str,
+        metrics -> None: Dict[str, Any]
+    ) -> None:
         """Mettre à jour les métriques d'un nœud"""
         
         if node_id not in self.edge_nodes:
@@ -532,7 +532,7 @@ class EdgeDeploymentManager:
         # Détecter les problèmes de performance
         await self._check_node_health(node)
     
-    async def _check_node_health(self, node: EdgeNode):
+    async def _check_node_health(self, node -> None: EdgeNode) -> None:
         """Vérifier la santé d'un nœud"""
         
         issues = []
@@ -559,7 +559,7 @@ class EdgeDeploymentManager:
             if self.enable_auto_scaling:
                 await self._trigger_auto_scaling(node)
     
-    async def _trigger_auto_scaling(self, overloaded_node: EdgeNode):
+    async def _trigger_auto_scaling(self, overloaded_node -> None: EdgeNode) -> None:
         """Déclencher l'auto-scaling"""
         
         logger.info(f"🔄 Triggering auto-scaling for region {overloaded_node.region.value}")
@@ -685,7 +685,7 @@ class EdgeDeploymentManager:
         }
 
 # Usage Example
-async def main():
+async def main() -> None:
     """Exemple d'utilisation du Edge Deployment Manager"""
     
     manager = EdgeDeploymentManager(

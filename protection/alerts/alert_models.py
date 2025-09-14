@@ -22,12 +22,13 @@ try:
 except ImportError:
     PYDANTIC_AVAILABLE = False
     class BaseModel:
-        def __init__(self, **kwargs):
+    """BaseModel: class implementation"""
+        def __init__(self, **kwargs) -> None:
             for key, value in kwargs.items():
                 setattr(self, key, value)
-    def Field(*args, **kwargs): return None
-    def validator(*args, **kwargs):
-        def decorator(func): return func
+    def Field(*args, **kwargs) -> None: return None
+    def validator(*args, **kwargs) -> None:
+        def decorator(func) -> None: return func
         return decorator
 
 import uuid
@@ -109,7 +110,7 @@ class AlertEvidenceModel(BaseModel):
     metadata: Dict[str, Any] = Field(default_factory=dict)
     
     @validator('evidence_type')
-    def validate_evidence_type(cls, v):
+    def validate_evidence_type(cls, v) -> None:
         valid_types = [
             'screenshot', 'video_frame', 'audio_sample', 'document',
             'metadata_dump', 'network_trace', 'system_log', 'user_action'
@@ -177,7 +178,7 @@ class ContentProtectionAlert(BaseModel):
     business_priority: str = Field(default="normal", description="Business priority level")
     
     @validator('confidence_score')
-    def validate_confidence_score(cls, v):
+    def validate_confidence_score(cls, v) -> None:
         if not 0.0 <= v <= 1.0:
             raise ValueError("Confidence score must be between 0.0 and 1.0")
         return v

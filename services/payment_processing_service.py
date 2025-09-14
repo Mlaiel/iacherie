@@ -1,4 +1,6 @@
 """
+import logging
+
 💳 Payment Processing Service
 Enterprise-grade payment processing with multi-provider support and advanced security
 
@@ -98,7 +100,7 @@ class BillingAddress(BaseModel):
     country_code: str = Field(..., min_length=2, max_length=3)
     
     @validator('country_code')
-    def validate_country_code(cls, v):
+    def validate_country_code(cls, v) -> None:
         if not re.match(r'^[A-Z]{2,3}$', v):
             raise ValueError('Country code must be 2-3 uppercase letters')
         return v
@@ -114,7 +116,7 @@ class PaymentCard(BaseModel):
     billing_address: BillingAddress
     
     @validator('last_four_digits')
-    def validate_last_four(cls, v):
+    def validate_last_four(cls, v) -> None:
         if not v.isdigit():
             raise ValueError('Last four digits must be numeric')
         return v
@@ -135,7 +137,7 @@ class PaymentRequest(BaseModel):
     metadata: Dict[str, Any] = Field(default_factory=dict)
     
     @validator('amount')
-    def validate_amount(cls, v):
+    def validate_amount(cls, v) -> None:
         if v <= 0:
             raise ValueError('Amount must be positive')
         return v.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
@@ -182,7 +184,7 @@ class RefundRequest(BaseModel):
 class PaymentGateway(ABC):
     """Abstract base class for payment gateways"""
     
-    def __init__(self, config: PaymentGatewayConfig):
+    def __init__(self, config -> None: PaymentGatewayConfig) -> None:
         self.config = config
     
     @abstractmethod
@@ -349,7 +351,7 @@ class FraudDetectionEngine:
     ML Engineer: Machine learning based risk assessment
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.risk_rules = [
             self._check_velocity_limits,
             self._check_geographic_anomalies,
@@ -591,7 +593,7 @@ class PaymentProcessingService:
     - DevOps: Multi-gateway orchestration, monitoring, alerting
     """
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.config = config or {}
         self.gateways: Dict[str, PaymentGateway] = {}
         self.fraud_engine = FraudDetectionEngine()
@@ -615,7 +617,7 @@ class PaymentProcessingService:
                    gateways=len(self.gateways),
                    config=self.config)
     
-    def _initialize_gateways(self):
+    def _initialize_gateways(self) -> None:
         """Initialize payment gateways"""
         
         # Stripe gateway
@@ -800,7 +802,7 @@ class PaymentProcessingService:
             'total_fee': total_fee.quantize(Decimal('0.01'))
         }
     
-    async def _store_transaction(self, transaction: PaymentTransaction):
+    async def _store_transaction(self, transaction -> None: PaymentTransaction) -> None:
         """Store transaction in database (with Redis caching)"""
         # Update timestamp
         transaction.updated_at = datetime.now()
@@ -831,7 +833,7 @@ class PaymentProcessingService:
         # Sort by creation date (most recent first)
         return sorted(transactions, key=lambda x: x.created_at, reverse=True)[:50]  # Last 50 transactions
     
-    def _update_processing_time_metrics(self, processing_time: float):
+    def _update_processing_time_metrics(self, processing_time -> None: float) -> None:
         """Update average processing time metrics"""
         total = self.metrics['total_transactions']
         if total > 0:
@@ -840,7 +842,7 @@ class PaymentProcessingService:
                 (current_avg * (total - 1) + processing_time) / total
             )
     
-    def _update_gateway_metrics(self, gateway_id: str, success: bool):
+    def _update_gateway_metrics(self, gateway_id -> None: str, success -> None: bool) -> None:
         """Update gateway success rate metrics"""
         current_rate = self.metrics['gateway_success_rates'][gateway_id]
         
@@ -1002,7 +1004,7 @@ class PaymentProcessingService:
         }
 
 # Example usage and testing
-async def example_usage():
+async def example_usage() -> None:
     """Example usage of the Payment Processing Service"""
     
     # Initialize service

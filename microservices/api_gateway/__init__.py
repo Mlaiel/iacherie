@@ -1,4 +1,7 @@
 """
+import asyncio
+import logging
+
 🔗 API GATEWAY MODULE - ENTERPRISE API GATEWAY & MANAGEMENT
 ===========================================================
 
@@ -41,7 +44,7 @@ __all__ = [
     'APIManagementService'
 ]
 
-def get_services():
+def get_services() -> None:
     """Get list of all available API gateway services."""
     return [
         'api_gateway_service.py',
@@ -60,7 +63,7 @@ def get_services():
         'gateway_transformation.py'
     ]
 
-async def start_services():
+async def start_services() -> None:
     """Start all API gateway services."""
     # Initialize and start API gateway services
     pass

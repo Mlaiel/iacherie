@@ -265,7 +265,7 @@ class ChangeLog:
 class MediaProjectManager:
     """Advanced media project coordination and management"""
     
-    def __init__(self, config: ProjectConfig):
+    def __init__(self, config -> None: ProjectConfig) -> None:
         self.config = config
         self.projects: Dict[str, Project] = {}
         self.project_cache = {}
@@ -577,7 +577,7 @@ class MediaProjectManager:
             logger.error(f"Failed to get user projects: {e}")
             return []
     
-    async def _update_project_status(self, project: Project):
+    async def _update_project_status(self, project -> None: Project) -> None:
         """Update project status based on task completion"""
         if not project.tasks:
             return
@@ -593,7 +593,7 @@ class MediaProjectManager:
             if project.status == ProjectStatus.PLANNING:
                 project.status = ProjectStatus.ACTIVE
     
-    async def _cache_project(self, project: Project):
+    async def _cache_project(self, project -> None: Project) -> None:
         """Cache project for quick access"""
         if self.redis_client:
             try:
@@ -616,7 +616,7 @@ class MediaProjectManager:
 class VersionControlSystem:
     """Advanced version control system for media assets"""
     
-    def __init__(self, storage_path: str):
+    def __init__(self, storage_path -> None: str) -> None:
         self.storage_path = Path(storage_path)
         self.storage_path.mkdir(parents=True, exist_ok=True)
         
@@ -1044,13 +1044,13 @@ class VersionControlSystem:
     
     async def _log_change(
         self,
-        asset_id: str,
-        version_id: str,
-        change_type: ChangeType,
-        changed_by: str,
-        message: str,
-        details: Optional[Dict[str, Any]] = None
-    ):
+        asset_id -> None: str,
+        version_id -> None: str,
+        change_type -> None: ChangeType,
+        changed_by -> None: str,
+        message -> None: str,
+        details -> None: Optional[Dict[str, Any]] = None
+    ) -> None:
         """Log change to change log"""
         try:
             change_log = ChangeLog(
@@ -1126,9 +1126,9 @@ class ProjectManagementEngine:
     
     def __init__(
         self, 
-        config: Optional[ProjectConfig] = None,
-        storage_path: str = "./project_storage"
-    ):
+        config -> None: Optional[ProjectConfig] = None,
+        storage_path -> None: str = "./project_storage"
+    ) -> None:
         """Initialize project management engine"""
         self.config = config or ProjectConfig()
         
@@ -1387,14 +1387,14 @@ class ProjectManagementEngine:
 # Backward compatibility classes for existing imports
 class MediaProjectManager_Legacy:
     """Legacy wrapper for media project manager"""
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs) -> None:
         config = ProjectConfig()
         self.manager = MediaProjectManager(config)
 
 
 class VersionControlSystem_Legacy:
     """Legacy wrapper for version control system"""
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs) -> None:
         storage_path = kwargs.get('storage_path', './version_storage')
         self.system = VersionControlSystem(storage_path)
 

@@ -145,7 +145,7 @@ class CohortAnalysis:
 class SubscriptionAnalyticsEngine:
     """Core subscription analytics processing engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.subscription_data: Dict[str, Dict[str, Any]] = {}
         self.churn_models: Dict[str, Any] = {}
         self.cohort_cache: Dict[str, CohortAnalysis] = {}
@@ -647,7 +647,7 @@ class SubscriptionAnalyticsEngine:
 class SubscriptionAnalyticsEventHandler:
     """Main event handler for subscription analytics"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.analytics_engine = SubscriptionAnalyticsEngine()
         
     async def handle_subscription_event(self, event: SubscriptionEvent) -> Dict[str, Any]:

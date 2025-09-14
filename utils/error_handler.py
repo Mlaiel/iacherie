@@ -119,11 +119,11 @@ class ErrorHandler:
     """
     
     def __init__(self, 
-                 app_name: str = "Ainflue",
-                 log_level: str = "INFO",
-                 enable_alerts: bool = True,
-                 alert_threshold: int = 5,
-                 aggregation_window: int = 300):  # 5 minutes
+                 app_name -> None: str = "Ainflue",
+                 log_level -> None: str = "INFO",
+                 enable_alerts -> None: bool = True,
+                 alert_threshold -> None: int = 5,
+                 aggregation_window -> None: int = 300) -> None:  # 5 minutes
         
         self.app_name = app_name
         self.enable_alerts = enable_alerts
@@ -194,7 +194,7 @@ class ErrorHandler:
         
         return logger
     
-    def _setup_default_recovery_strategies(self):
+    def _setup_default_recovery_strategies(self) -> None:
         """Setup default error recovery strategies."""
         # Database connection recovery
         self.recovery_strategies[ErrorCategory.DATABASE].append(
@@ -291,7 +291,7 @@ class ErrorHandler:
         exception = Exception(message)
         return self.capture_exception(exception, context, category, severity, message)
     
-    def mark_error_resolved(self, error_id: str, resolution_notes: str = ""):
+    def mark_error_resolved(self, error_id -> None: str, resolution_notes -> None: str = "") -> None:
         """Mark an error as resolved."""
         with self._lock:
             if error_id in self.error_records:
@@ -364,13 +364,13 @@ class ErrorHandler:
         
         return filtered_errors
     
-    def add_alert_handler(self, handler: Callable[[ErrorRecord], None]):
+    def add_alert_handler(self, handler -> None: Callable[[ErrorRecord], None]) -> None:
         """Add custom alert handler."""
         self.alert_handlers.append(handler)
     
     def add_recovery_strategy(self, 
-                             category: ErrorCategory,
-                             strategy: Callable[[ErrorRecord, Exception], bool]):
+                             category -> None: ErrorCategory,
+                             strategy -> None: Callable[[ErrorRecord, Exception], bool]) -> None:
         """Add custom recovery strategy."""
         self.recovery_strategies[category].append(strategy)
     
@@ -428,7 +428,7 @@ class ErrorHandler:
         
         return None
     
-    def _update_duplicate_error(self, error_id: str, new_error: ErrorRecord):
+    def _update_duplicate_error(self, error_id -> None: str, new_error -> None: ErrorRecord) -> None:
         """Update existing error record with new occurrence."""
         existing_record = self.error_records[error_id]
         existing_record.occurrences += 1
@@ -439,7 +439,7 @@ class ErrorHandler:
             (not existing_record.context or not existing_record.context.additional_data)):
             existing_record.context = new_error.context
     
-    def _log_error(self, error_record: ErrorRecord):
+    def _log_error(self, error_record -> None: ErrorRecord) -> None:
         """Log error record using structured logging."""
         log_data = {
             'error_id': error_record.error_id,
@@ -471,7 +471,7 @@ class ErrorHandler:
         
         return recent_count >= self.alert_threshold
     
-    def _trigger_alert(self, error_record: ErrorRecord):
+    def _trigger_alert(self, error_record -> None: ErrorRecord) -> None:
         """Trigger alerts for the error."""
         for handler in self.alert_handlers:
             try:
@@ -479,7 +479,7 @@ class ErrorHandler:
             except Exception as e:
                 self.logger.error(f"Alert handler failed: {str(e)}")
     
-    def _attempt_recovery(self, error_record: ErrorRecord, exception: Exception):
+    def _attempt_recovery(self, error_record -> None: ErrorRecord, exception -> None: Exception) -> None:
         """Attempt automatic error recovery."""
         strategies = self.recovery_strategies.get(error_record.category, [])
         
@@ -512,14 +512,14 @@ class ErrorHandler:
 
 
 # Decorator for automatic error handling
-def handle_errors(category: ErrorCategory = ErrorCategory.UNKNOWN,
-                 severity: ErrorSeverity = ErrorSeverity.ERROR,
-                 reraise: bool = True,
-                 fallback_return: Any = None):
+def handle_errors(category -> None: ErrorCategory = ErrorCategory.UNKNOWN,
+                 severity -> None: ErrorSeverity = ErrorSeverity.ERROR,
+                 reraise -> None: bool = True,
+                 fallback_return -> None: Any = None) -> None:
     """Decorator for automatic error handling."""
-    def decorator(func):
+    def decorator(func) -> None:
         @functools.wraps(func)
-        def wrapper(*args, **kwargs):
+        def wrapper(*args, **kwargs) -> None:
             try:
                 return func(*args, **kwargs)
             except Exception as e:
@@ -550,14 +550,14 @@ def handle_errors(category: ErrorCategory = ErrorCategory.UNKNOWN,
 
 
 # Async version of the decorator
-def handle_errors_async(category: ErrorCategory = ErrorCategory.UNKNOWN,
-                       severity: ErrorSeverity = ErrorSeverity.ERROR,
-                       reraise: bool = True,
-                       fallback_return: Any = None):
+def handle_errors_async(category -> None: ErrorCategory = ErrorCategory.UNKNOWN,
+                       severity -> None: ErrorSeverity = ErrorSeverity.ERROR,
+                       reraise -> None: bool = True,
+                       fallback_return -> None: Any = None) -> None:
     """Async decorator for automatic error handling."""
-    def decorator(func):
+    def decorator(func) -> None:
         @functools.wraps(func)
-        async def wrapper(*args, **kwargs):
+        async def wrapper(*args, **kwargs) -> None:
             try:
                 return await func(*args, **kwargs)
             except Exception as e:
@@ -629,7 +629,7 @@ if __name__ == "__main__":
     
     # Test decorator
     @handle_errors(category=ErrorCategory.BUSINESS_LOGIC)
-    def risky_function():
+    def risky_function() -> None:
         raise RuntimeError("Something went wrong")
     
     try:

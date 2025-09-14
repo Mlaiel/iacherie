@@ -35,7 +35,7 @@ class ImageProcessingConfig:
     enable_ai_enhancement: bool = True
     watermark_enabled: bool = True
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.quality_levels is None:
             self.quality_levels = {
                 "low": 60,
@@ -75,7 +75,7 @@ class EnterpriseImageProcessor:
     - Metadata preservation and watermarking
     """
     
-    def __init__(self, config: Optional[ImageProcessingConfig] = None):
+    def __init__(self, config -> None: Optional[ImageProcessingConfig] = None) -> None:
         self.config = config or ImageProcessingConfig()
         self.logger = logging.getLogger(__name__)
         self.executor = ThreadPoolExecutor(max_workers=4)
@@ -83,7 +83,7 @@ class EnterpriseImageProcessor:
         # Initialize AI models for enhancement
         self._initialize_ai_models()
         
-    def _initialize_ai_models(self):
+    def _initialize_ai_models(self) -> None:
         """Initialize AI models for image enhancement"""
         try:
             # Placeholder for AI model initialization
@@ -179,7 +179,7 @@ class EnterpriseImageProcessor:
 
     async def _load_image(self, image_path: Path) -> Dict[str, Any]:
         """Load image with format detection and metadata extraction"""
-        def _load():
+        def _load() -> None:
             with Image.open(image_path) as img:
                 # Convert to RGB if necessary
                 if img.mode in ('RGBA', 'LA', 'P'):
@@ -244,7 +244,7 @@ class EnterpriseImageProcessor:
         target_size: Tuple[int, int]
     ) -> Image.Image:
         """Smart resizing with aspect ratio preservation and quality enhancement"""
-        def _resize():
+        def _resize() -> None:
             # Calculate optimal resize strategy
             current_w, current_h = image.size
             target_w, target_h = target_size
@@ -280,7 +280,7 @@ class EnterpriseImageProcessor:
 
     async def _ai_enhance(self, image: Image.Image) -> Image.Image:
         """Apply AI-powered image enhancement"""
-        def _enhance():
+        def _enhance() -> None:
             # Convert PIL to numpy for processing
             img_array = np.array(image)
             
@@ -317,7 +317,7 @@ class EnterpriseImageProcessor:
         quality_level: str
     ) -> Image.Image:
         """Optimize image quality based on target level"""
-        def _optimize():
+        def _optimize() -> None:
             quality_value = self.config.quality_levels.get(quality_level, 85)
             
             # Apply quality-specific optimizations
@@ -343,7 +343,7 @@ class EnterpriseImageProcessor:
         target_format: str
     ) -> Image.Image:
         """Apply format-specific optimizations"""
-        def _optimize():
+        def _optimize() -> None:
             if target_format.lower() in ['jpeg', 'jpg']:
                 # JPEG optimization: convert to RGB, optimize for compression
                 if image.mode != 'RGB':
@@ -368,7 +368,7 @@ class EnterpriseImageProcessor:
         output_path: Path
     ) -> None:
         """Save processed image with optimal settings"""
-        def _save():
+        def _save() -> None:
             image = image_data['image']
             target_format = image_data['format']
             
@@ -510,7 +510,7 @@ class FormatConverter:
     Integrated from format_converter.py for image formats
     """
     
-    def __init__(self, image_processor: EnterpriseImageProcessor):
+    def __init__(self, image_processor -> None: EnterpriseImageProcessor) -> None:
         self.processor = image_processor
         self.logger = logging.getLogger(__name__)
     

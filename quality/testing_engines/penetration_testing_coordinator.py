@@ -167,7 +167,7 @@ class PenetrationTestingCoordinator:
     Coordinates automated penetration testing and security assessments
     """
     
-    def __init__(self, project_root: Optional[str] = None):
+    def __init__(self, project_root -> None: Optional[str] = None) -> None:
         """Initialize penetration testing coordinator"""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self.project_root = Path(project_root or ".")
@@ -264,7 +264,7 @@ class PenetrationTestingCoordinator:
             }
         }
 
-    def _initialize_platform_targets(self):
+    def _initialize_platform_targets(self) -> None:
         """Initialize default targets for Ainflue platform"""
         
         # Main API Target
@@ -326,7 +326,7 @@ class PenetrationTestingCoordinator:
             metadata={"scan_type": "infrastructure"}
         ))
 
-    def register_target(self, target: PenetrationTestTarget):
+    def register_target(self, target -> None: PenetrationTestTarget) -> None:
         """Register a penetration testing target"""
         if not hasattr(self, 'targets'):
             self.targets: Dict[str, PenetrationTestTarget] = {}
@@ -472,7 +472,7 @@ class PenetrationTestingCoordinator:
         
         return result
 
-    async def _run_network_scan(self, result: PenetrationTestResult):
+    async def _run_network_scan(self, result -> None: PenetrationTestResult) -> None:
         """Run network scan using nmap"""
         target = result.target
         
@@ -581,7 +581,7 @@ class PenetrationTestingCoordinator:
         
         return False
 
-    async def _run_port_scan(self, result: PenetrationTestResult):
+    async def _run_port_scan(self, result -> None: PenetrationTestResult) -> None:
         """Run port scan"""
         target = result.target
         
@@ -630,7 +630,7 @@ class PenetrationTestingCoordinator:
         
         result.scan_summary = {"open_ports": open_ports, "total_ports_scanned": len(common_ports)}
 
-    async def _run_web_application_scan(self, result: PenetrationTestResult):
+    async def _run_web_application_scan(self, result -> None: PenetrationTestResult) -> None:
         """Run web application security scan"""
         target = result.target
         
@@ -704,7 +704,7 @@ class PenetrationTestingCoordinator:
         
         return missing
 
-    async def _run_sql_injection_test(self, result: PenetrationTestResult):
+    async def _run_sql_injection_test(self, result -> None: PenetrationTestResult) -> None:
         """Run SQL injection tests"""
         target = result.target
         
@@ -768,7 +768,7 @@ class PenetrationTestingCoordinator:
         
         result.vulnerabilities.extend(vulnerabilities)
 
-    async def _run_xss_test(self, result: PenetrationTestResult):
+    async def _run_xss_test(self, result -> None: PenetrationTestResult) -> None:
         """Run XSS (Cross-Site Scripting) tests"""
         target = result.target
         
@@ -823,7 +823,7 @@ class PenetrationTestingCoordinator:
         
         result.vulnerabilities.extend(vulnerabilities)
 
-    async def _run_ssl_tls_test(self, result: PenetrationTestResult):
+    async def _run_ssl_tls_test(self, result -> None: PenetrationTestResult) -> None:
         """Run SSL/TLS security tests"""
         target = result.target
         
@@ -899,7 +899,7 @@ class PenetrationTestingCoordinator:
         
         result.vulnerabilities.extend(vulnerabilities)
 
-    async def _run_api_security_test(self, result: PenetrationTestResult):
+    async def _run_api_security_test(self, result -> None: PenetrationTestResult) -> None:
         """Run API security tests"""
         target = result.target
         
@@ -960,7 +960,7 @@ class PenetrationTestingCoordinator:
         
         result.vulnerabilities.extend(vulnerabilities)
 
-    async def _run_generic_vulnerability_scan(self, result: PenetrationTestResult):
+    async def _run_generic_vulnerability_scan(self, result -> None: PenetrationTestResult) -> None:
         """Run generic vulnerability scan"""
         # This is a placeholder for more comprehensive vulnerability scanning
         # In a real implementation, this would integrate with tools like OpenVAS, Nessus, etc.
@@ -1134,7 +1134,7 @@ The security posture of the platform is {"concerning and requires immediate atte
         
         return roadmap
 
-    async def _save_assessment_report(self, report: SecurityAssessmentReport):
+    async def _save_assessment_report(self, report -> None: SecurityAssessmentReport) -> None:
         """Save security assessment report"""
         timestamp = report.timestamp.strftime("%Y%m%d_%H%M%S")
         

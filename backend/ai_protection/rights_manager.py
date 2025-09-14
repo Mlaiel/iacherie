@@ -74,9 +74,9 @@ class DigitalRightsManager:
     """Comprehensive digital rights management system"""
     
     def __init__(self,
-                 blockchain_url: Optional[str] = None,
-                 private_key: Optional[str] = None,
-                 contract_address: Optional[str] = None):
+                 blockchain_url -> None: Optional[str] = None,
+                 private_key -> None: Optional[str] = None,
+                 contract_address -> None: Optional[str] = None) -> None:
         """
         Initialize digital rights manager
         
@@ -513,7 +513,7 @@ class DigitalRightsManager:
         
         return results
     
-    def _initialize_protection_policies(self):
+    def _initialize_protection_policies(self) -> None:
         """Initialize protection policies for different levels"""
         self._protection_policies = {
             ProtectionLevel.BASIC: {

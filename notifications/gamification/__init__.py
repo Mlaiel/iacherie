@@ -127,7 +127,7 @@ class GamificationNotificationsOrchestrator:
     Gère l'écosystème complet d'engagement Ainflue
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialise l'orchestrateur gamification notifications"""
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
@@ -159,7 +159,7 @@ class GamificationNotificationsOrchestrator:
         
         self.logger.info("GamificationNotificationsOrchestrator initialisé avec succès")
 
-    def _initialize_gamification_engines(self):
+    def _initialize_gamification_engines(self) -> None:
         """Initialise tous les engines gamification"""
         try:
             # Core Gamification Engines
@@ -187,7 +187,7 @@ class GamificationNotificationsOrchestrator:
             self.logger.error(f"Erreur initialisation gamification engines: {e}")
             raise
 
-    def _initialize_progression_system(self):
+    def _initialize_progression_system(self) -> None:
         """Initialise le système de progression et points"""
         
         # Configuration des niveaux et expérience requise
@@ -763,9 +763,9 @@ class GamificationNotificationsOrchestrator:
 
     async def _update_user_profile(
         self,
-        user_profile: UserGamificationProfile,
-        event_result: Dict[str, Any]
-    ):
+        user_profile -> None: UserGamificationProfile,
+        event_result -> None: Dict[str, Any]
+    ) -> None:
         """Met à jour le profil utilisateur"""
         
         # Mise à jour points
@@ -976,7 +976,7 @@ class GamificationNotificationsOrchestrator:
         
         return min(1.0, base_score + points_bonus + celebration_bonus + rewards_bonus)
 
-    async def _update_leaderboards(self, user_id: str, event_result: Dict[str, Any]):
+    async def _update_leaderboards(self, user_id -> None: str, event_result -> None: Dict[str, Any]) -> None:
         """Met à jour les leaderboards"""
         # Simulation mise à jour leaderboards
         if 'global_points' not in self.leaderboard_cache:
@@ -988,9 +988,9 @@ class GamificationNotificationsOrchestrator:
 
     async def _update_orchestrator_metrics(
         self,
-        event_result: Dict[str, Any],
-        processing_time: float
-    ):
+        event_result -> None: Dict[str, Any],
+        processing_time -> None: float
+    ) -> None:
         """Met à jour les métriques de l'orchestrateur"""
         self.orchestrator_metrics['events_processed'] += 1
         

@@ -156,7 +156,7 @@ class AccessRequest:
 class TeamPermissionEngine:
     """Core team permission management engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.roles = {}  # role_id -> Role
         self.user_roles = defaultdict(list)  # user_id -> [UserRole]
         self.permission_rules = defaultdict(list)  # resource_type -> [PermissionRule]
@@ -181,7 +181,7 @@ class TeamPermissionEngine:
         self.permission_inheritance = True
         self.audit_enabled = True
         
-    def _initialize_system_roles(self):
+    def _initialize_system_roles(self) -> None:
         """Initialize predefined system roles"""
         system_roles = [
             {
@@ -709,7 +709,7 @@ class TeamPermissionEngine:
             logger.error(f"Failed to get cached permission: {e}")
             return None
     
-    def _cache_permission(self, cache_key: str, result: bool):
+    def _cache_permission(self, cache_key -> None: str, result -> None: bool) -> None:
         """Cache permission result"""
         try:
             self.permission_cache[cache_key] = (result, time.time())
@@ -717,7 +717,7 @@ class TeamPermissionEngine:
         except Exception as e:
             logger.error(f"Failed to cache permission: {e}")
     
-    def _clear_user_cache(self, user_id: str):
+    def _clear_user_cache(self, user_id -> None: str) -> None:
         """Clear permission cache for user"""
         try:
             keys_to_remove = []
@@ -731,7 +731,7 @@ class TeamPermissionEngine:
         except Exception as e:
             logger.error(f"Failed to clear user cache: {e}")
     
-    def _clear_permission_cache(self):
+    def _clear_permission_cache(self) -> None:
         """Clear entire permission cache"""
         try:
             self.permission_cache.clear()
@@ -739,9 +739,9 @@ class TeamPermissionEngine:
         except Exception as e:
             logger.error(f"Failed to clear permission cache: {e}")
     
-    async def _log_access_request(self, user_id: str, resource_type: ResourceType,
-                                resource_id: str, permission: Permission,
-                                granted: bool, reason: str, session_id: Optional[str]):
+    async def _log_access_request(self, user_id -> None: str, resource_type -> None: ResourceType,
+                                resource_id -> None: str, permission -> None: Permission,
+                                granted -> None: bool, reason -> None: str, session_id -> None: Optional[str]) -> None:
         """Log access request for auditing"""
         try:
             if not self.audit_enabled:
@@ -764,7 +764,7 @@ class TeamPermissionEngine:
         except Exception as e:
             logger.error(f"Failed to log access request: {e}")
     
-    async def _store_role_redis(self, role: Role):
+    async def _store_role_redis(self, role -> None: Role) -> None:
         """Store role in Redis"""
         try:
             if self.redis_client:
@@ -778,7 +778,7 @@ class TeamPermissionEngine:
         except Exception as e:
             logger.error(f"Failed to store role in Redis: {e}")
     
-    async def _store_user_role_redis(self, user_role: UserRole):
+    async def _store_user_role_redis(self, user_role -> None: UserRole) -> None:
         """Store user role assignment in Redis"""
         try:
             if self.redis_client:
@@ -792,7 +792,7 @@ class TeamPermissionEngine:
 class RoleBasedAccessManager:
     """High-level role-based access management"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.permission_engine = TeamPermissionEngine()
         self.role_templates = self._load_role_templates()
     

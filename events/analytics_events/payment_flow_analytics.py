@@ -165,7 +165,7 @@ class PaymentFlowInsight:
 class PaymentAnalyticsEngine:
     """Core payment analytics processing engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.payment_data: Dict[str, PaymentEvent] = {}
         self.fraud_models: Dict[str, Any] = {}
         self.gateway_performance: Dict[str, Dict[str, Any]] = {}
@@ -681,7 +681,7 @@ class PaymentAnalyticsEngine:
 class PaymentAnalyticsEventHandler:
     """Main event handler for payment analytics"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.analytics_engine = PaymentAnalyticsEngine()
         
     async def handle_payment_event(self, event: PaymentEvent) -> Dict[str, Any]:

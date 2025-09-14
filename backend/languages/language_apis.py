@@ -209,7 +209,7 @@ class LanguageAPIManager:
     with intelligent routing, cost optimization, and performance monitoring
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize language API manager"""
         self.config = config or {}
         
@@ -764,7 +764,7 @@ class LanguageAPIManager:
                 latency_ms=latency_ms
             )
     
-    def _initialize_default_providers(self):
+    def _initialize_default_providers(self) -> None:
         """Initialize default provider configurations"""
         # This would load from configuration files or environment variables
         # For now, create placeholder configurations
@@ -858,7 +858,7 @@ class LanguageAPIManager:
             status_code=429
         )
     
-    async def _update_provider_stats(self, provider: APIProvider, response: APIResponse):
+    async def _update_provider_stats(self, provider -> None: APIProvider, response -> None: APIResponse) -> None:
         """Update provider statistics"""
         stats = self.api_stats[provider]
         stats.total_requests += 1
@@ -880,7 +880,7 @@ class LanguageAPIManager:
         # Update error rate
         stats.error_rate = (stats.failed_requests / stats.total_requests) * 100
     
-    async def _handle_provider_failure(self, provider: APIProvider):
+    async def _handle_provider_failure(self, provider -> None: APIProvider) -> None:
         """Handle provider failure for circuit breaker"""
         circuit_breaker = self.circuit_breakers[provider]
         circuit_breaker["failures"] += 1
@@ -906,8 +906,8 @@ class LanguageAPIManager:
         else:
             return 1
     
-    async def _update_quota_usage(self, provider: APIProvider, service_type: APIServiceType,
-                                request_data: Dict[str, Any]):
+    async def _update_quota_usage(self, provider -> None: APIProvider, service_type -> None: APIServiceType,
+                                request_data -> None: Dict[str, Any]) -> None:
         """Update quota usage after successful request"""
         key = f"{provider.value}:{service_type.value}"
         

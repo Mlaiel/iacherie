@@ -139,7 +139,7 @@ class QualityOptimization:
 class ContentDeliveryNetwork:
     """Content delivery network management"""
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client -> None: aioredis.Redis) -> None:
         self.redis = redis_client
         self.cdn_nodes = {}
         self.edge_servers = {}
@@ -266,7 +266,7 @@ class ContentDeliveryNetwork:
 class StreamingQualityOptimizer:
     """Streaming quality optimization engine"""
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client -> None: aioredis.Redis) -> None:
         self.redis = redis_client
         self.optimization_algorithms = {
             "adaptive_bitrate": self._optimize_adaptive_bitrate,
@@ -331,7 +331,7 @@ class StreamingQualityOptimizer:
 class PlatformStreamingCoordinator:
     """Multi-platform streaming coordination"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         self.platform_configs = {}
@@ -398,7 +398,7 @@ class PlatformStreamingCoordinator:
 class MultiPlatformDistributor:
     """Multi-platform content distribution"""
     
-    def __init__(self, redis_client: aioredis.Redis):
+    def __init__(self, redis_client -> None: aioredis.Redis) -> None:
         self.redis = redis_client
         self.distribution_queue = asyncio.Queue()
         self.platform_apis = {}
@@ -464,7 +464,7 @@ class MultiPlatformDistributor:
 class StreamingCDNManager:
     """Unified CDN management system - Main service class"""
     
-    def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
+    def __init__(self, redis_client -> None: aioredis.Redis, db_session -> None: AsyncSession) -> None:
         self.redis = redis_client
         self.db = db_session
         

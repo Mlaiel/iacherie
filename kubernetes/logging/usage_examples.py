@@ -35,7 +35,7 @@ class LoggingSystemExample:
     """
 Complete example of IA Influencer Agent logging system"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.aggregator = None
         self.es_manager = None
         self.fluentd_manager = None
@@ -43,7 +43,7 @@ Complete example of IA Influencer Agent logging system"""
         self.analytics_engine = None
         self.monitoring_service = None
     
-    async def setup_complete_system(self):
+    async def setup_complete_system(self) -> None:
         try:
             logger.info(f"Executing setup_complete_system")
             
@@ -58,7 +58,7 @@ Complete example of IA Influencer Agent logging system"""
         except Exception as e:
             logger.error(f"setup_complete_system failed: {e}")
             raise
-    async def example_ai_processing_logs(self):
+    async def example_ai_processing_logs(self) -> None:
         """Example of AI processing logs"""
         
         # Fingerprinting success
@@ -112,7 +112,7 @@ Complete example of IA Influencer Agent logging system"""
             }
         )
     
-    async def example_error_logs(self):
+    async def example_error_logs(self) -> None:
         """Example of error logging scenarios"""
         
         # AI processing error
@@ -164,7 +164,7 @@ Complete example of IA Influencer Agent logging system"""
             }
         )
     
-    async def example_user_activity_logs(self):
+    async def example_user_activity_logs(self) -> None:
         """Example of user activity logging"""
         
         # User upload
@@ -218,7 +218,7 @@ Complete example of IA Influencer Agent logging system"""
             }
         )
     
-    async def example_performance_logs(self):
+    async def example_performance_logs(self) -> None:
         """Example of performance monitoring logs"""
         
         # API response time
@@ -270,7 +270,7 @@ Complete example of IA Influencer Agent logging system"""
             }
         )
     
-    async def run_analytics_examples(self):
+    async def run_analytics_examples(self) -> None:
         """Example of analytics operations"""
         
         # Compute metrics
@@ -306,7 +306,7 @@ Complete example of IA Influencer Agent logging system"""
         print(f"- Active alerts: {len(dashboard_data['active_alerts'])}")
         print(f"- Anomalies: {dashboard_data['anomalies']['count']}")
     
-    async def run_retention_examples(self):
+    async def run_retention_examples(self) -> None:
         """Example of retention operations"""
         
         # Run retention policies
@@ -327,7 +327,7 @@ Complete example of IA Influencer Agent logging system"""
         print(f"- Total size: {stats['total_size_mb']:.1f} MB")
         print(f"- Compressed ratio: {stats['compression_ratio']:.2%}")
     
-    async def cleanup_system(self):
+    async def cleanup_system(self) -> None:
         """Cleanup and shutdown logging system"""
         
         if self.monitoring_service:
@@ -348,7 +348,7 @@ Complete example of IA Influencer Agent logging system"""
         logging.info("Logging system cleanup completed")
 
 
-async def main():
+async def main() -> None:
     """Main example execution"""
     
     # Initialize logging system

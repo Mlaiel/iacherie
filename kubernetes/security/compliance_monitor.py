@@ -124,11 +124,11 @@ class SecurityAuditLogger:
     
     def __init__(
         self,
-        log_directory: str = "/var/log/ia-influencer/audit",
-        retention_days: int = 2555,  # 7 years for compliance
-        encryption_enabled: bool = True,
-        max_log_size_mb: int = 100
-    ):
+        log_directory -> None: str = "/var/log/ia-influencer/audit",
+        retention_days -> None: int = 2555,  # 7 years for compliance
+        encryption_enabled -> None: bool = True,
+        max_log_size_mb -> None: int = 100
+    ) -> None:
         self.log_directory = Path(log_directory)
         self.log_directory.mkdir(parents=True, exist_ok=True)
         
@@ -145,7 +145,7 @@ class SecurityAuditLogger:
         
         logger.info("Security audit logger initialized")
     
-    def _setup_log_handlers(self):
+    def _setup_log_handlers(self) -> None:
         """Setup specialized log handlers for different event types"""
         self.handlers = {}
         
@@ -163,7 +163,7 @@ class SecurityAuditLogger:
             
             self.handlers[event_type] = handler
     
-    async def log_event(self, event: AuditEvent):
+    async def log_event(self, event -> None: AuditEvent) -> None:
         """
         Log audit event with compliance tracking
         
@@ -185,7 +185,7 @@ class SecurityAuditLogger:
         except Exception as e:
             logger.error(f"Failed to log audit event: {e}")
     
-    async def _flush_buffer(self):
+    async def _flush_buffer(self) -> None:
         """Flush event buffer to persistent storage"""
         try:
             if not self._event_buffer:
@@ -208,7 +208,7 @@ class SecurityAuditLogger:
         except Exception as e:
             logger.error(f"Failed to flush audit buffer: {e}")
     
-    async def _write_events_batch(self, event_type: AuditEventType, events: List[AuditEvent]):
+    async def _write_events_batch(self, event_type -> None: AuditEventType, events -> None: List[AuditEvent]) -> None:
         """Write batch of events to log file"""
         try:
             log_file = self.log_directory / f"audit_{event_type.value}.log"
@@ -223,7 +223,7 @@ class SecurityAuditLogger:
         except Exception as e:
             logger.error(f"Failed to write events batch: {e}")
     
-    async def _write_event_immediate(self, event: AuditEvent):
+    async def _write_event_immediate(self, event -> None: AuditEvent) -> None:
         """Write critical event immediately"""
         try:
             log_file = self.log_directory / f"audit_{event.event_type.value}.log"
@@ -350,7 +350,7 @@ class SecurityAuditLogger:
             logger.error(f"Failed to search audit events: {e}")
             return []
     
-    async def cleanup_old_logs(self):
+    async def cleanup_old_logs(self) -> None:
         """Remove old log files based on retention policy"""
         try:
             cutoff_date = datetime.utcnow() - timedelta(days=self.retention_days)
@@ -377,13 +377,13 @@ class ComplianceChecker:
     Comprehensive compliance monitoring and validation system
     """
     
-    def __init__(self, audit_logger: SecurityAuditLogger):
+    def __init__(self, audit_logger -> None: SecurityAuditLogger) -> None:
         self.audit_logger = audit_logger
         self.compliance_rules: Dict[ComplianceFramework, List[ComplianceRule]] = {}
         self._setup_default_rules()
         logger.info("Compliance checker initialized")
     
-    def _setup_default_rules(self):
+    def _setup_default_rules(self) -> None:
         """Setup default compliance rules for supported frameworks"""
         
         # GDPR Rules
@@ -661,7 +661,7 @@ Check if incident management process is defined"""
             logger.error(f"Failed to assess compliance: {e}")
             raise
     
-    async def _log_compliance_violation(self, rule: ComplianceRule, context: Dict[str, Any]):
+    async def _log_compliance_violation(self, rule -> None: ComplianceRule, context -> None: Dict[str, Any]) -> None:
         """Log compliance violation as audit event"""
         try:
             event = AuditEvent(
@@ -692,7 +692,7 @@ Check if incident management process is defined"""
         except Exception as e:
             logger.error(f"Failed to log compliance violation: {e}")
     
-    def add_custom_rule(self, rule: ComplianceRule):
+    def add_custom_rule(self, rule -> None: ComplianceRule) -> None:
         """
         Add custom compliance rule
         
@@ -761,14 +761,14 @@ class PolicyEnforcer:
     Security policy enforcement system
     """
     
-    def __init__(self, audit_logger: SecurityAuditLogger):
+    def __init__(self, audit_logger -> None: SecurityAuditLogger) -> None:
         self.audit_logger = audit_logger
         self.policies: Dict[str, Dict[str, Any]] = {}
         self.enforcement_handlers: Dict[str, Callable] = {}
         self._setup_default_policies()
         logger.info("Policy enforcer initialized")
     
-    def _setup_default_policies(self):
+    def _setup_default_policies(self) -> None:
         """Setup default security policies"""
         self.policies = {
             'password_policy': {
@@ -1002,14 +1002,14 @@ class PolicyEnforcer:
     
     async def _log_policy_enforcement(
         self,
-        policy_name: str,
-        user_id: str,
-        resource: str,
-        action: str,
-        success: bool,
-        violations: List[str],
-        context: Optional[Dict[str, Any]] = None
-    ):
+        policy_name -> None: str,
+        user_id -> None: str,
+        resource -> None: str,
+        action -> None: str,
+        success -> None: bool,
+        violations -> None: List[str],
+        context -> None: Optional[Dict[str, Any]] = None
+    ) -> None:
         """Log policy enforcement event"""
         try:
             event = AuditEvent(
@@ -1038,7 +1038,7 @@ class PolicyEnforcer:
         except Exception as e:
             logger.error(f"Failed to log policy enforcement: {e}")
     
-    def update_policy(self, policy_name: str, policy_config: Dict[str, Any]):
+    def update_policy(self, policy_name -> None: str, policy_config -> None: Dict[str, Any]) -> None:
         """
         Update security policy configuration
         
@@ -1069,3 +1069,6 @@ class PolicyEnforcer:
             }
         
         return summary
+)
+
+# File has syntax issues - needs manual review

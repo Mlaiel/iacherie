@@ -169,7 +169,7 @@ class VoiceAnalysis:
 class AudioProcessor:
     """Advanced audio processing engine."""
     
-    def __init__(self, temp_dir: Optional[str] = None, max_file_size: int = 100 * 1024 * 1024):
+    def __init__(self, temp_dir -> None: Optional[str] = None, max_file_size -> None: int = 100 * 1024 * 1024) -> None:
         self.temp_dir = temp_dir or tempfile.gettempdir()
         self.max_file_size = max_file_size  # 100MB default
         
@@ -810,7 +810,7 @@ class AudioProcessor:
 
 
 # Example usage
-async def main():
+async def main() -> None:
     """Example usage of audio processor."""
     processor = AudioProcessor()
     

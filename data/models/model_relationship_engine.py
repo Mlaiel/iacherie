@@ -167,7 +167,7 @@ class RelationshipManager:
     Provides intelligent query optimization, caching, and performance monitoring.
     """
     
-    def __init__(self, database_url: str, cache_strategy: CacheStrategy = CacheStrategy.HYBRID):
+    def __init__(self, database_url -> None: str, cache_strategy -> None: CacheStrategy = CacheStrategy.HYBRID) -> None:
         self.database_url = database_url
         self.cache_strategy = cache_strategy
         self.engine = create_engine(database_url, echo=False)
@@ -195,7 +195,7 @@ class RelationshipManager:
         # Load relationships
         self._discover_relationships()
     
-    def _discover_relationships(self):
+    def _discover_relationships(self) -> None:
         """Automatically discover relationships from database schema"""
         tables = self.inspector.get_table_names()
         
@@ -254,7 +254,7 @@ class RelationshipManager:
         reverse_relationships = self.reverse_relationships.get(model_name, [])
         return relationships + reverse_relationships
     
-    def add_relationship(self, rel_info: RelationshipInfo):
+    def add_relationship(self, rel_info -> None: RelationshipInfo) -> None:
         """Add a custom relationship"""
         if rel_info.source_model not in self.relationships:
             self.relationships[rel_info.source_model] = []
@@ -439,7 +439,7 @@ class RelationshipManager:
             
             return entry.data
     
-    def _store_in_cache(self, cache_key: str, data: Any, ttl_seconds: int):
+    def _store_in_cache(self, cache_key -> None: str, data -> None: Any, ttl_seconds -> None: int) -> None:
         """Store data in cache"""
         with self._cache_lock:
             # Check cache size limit
@@ -457,7 +457,7 @@ class RelationshipManager:
             
             self.memory_cache[cache_key] = entry
     
-    def _evict_cache_entries(self):
+    def _evict_cache_entries(self) -> None:
         """Evict least recently used cache entries"""
         if not self.memory_cache:
             return
@@ -499,7 +499,7 @@ class RelationshipManager:
                 "optimization_savings": self.metrics.optimization_savings
             }
     
-    def clear_cache(self):
+    def clear_cache(self) -> None:
         """Clear all cached data"""
         with self._cache_lock:
             self.memory_cache.clear()
@@ -549,7 +549,7 @@ class QueryOptimizer:
     Advanced query optimizer with intelligent join selection and performance tuning.
     """
     
-    def __init__(self, relationship_manager: RelationshipManager):
+    def __init__(self, relationship_manager -> None: RelationshipManager) -> None:
         self.relationship_manager = relationship_manager
         self.optimization_rules = self._load_optimization_rules()
         self.query_statistics = defaultdict(list)
@@ -702,7 +702,7 @@ class JoinStrategyEngine:
     Advanced join strategy engine for optimal query performance.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.join_costs = {
             JoinType.INNER: 1.0,
             JoinType.LEFT: 1.2,
@@ -773,7 +773,7 @@ class CacheManager:
     Enterprise cache manager with multiple caching strategies.
     """
     
-    def __init__(self, strategy: CacheStrategy = CacheStrategy.HYBRID):
+    def __init__(self, strategy -> None: CacheStrategy = CacheStrategy.HYBRID) -> None:
         self.strategy = strategy
         self.memory_cache = {}
         self.cache_stats = {
@@ -804,7 +804,7 @@ class CacheManager:
             self.cache_stats["misses"] += 1
             return None
     
-    def set(self, key: str, value: Any, ttl_seconds: int = 300):
+    def set(self, key -> None: str, value -> None: Any, ttl_seconds -> None: int = 300) -> None:
         """Set value in cache"""
         with self._lock:
             expires_at = datetime.utcnow() + timedelta(seconds=ttl_seconds)
@@ -819,7 +819,7 @@ class CacheManager:
             
             self.memory_cache[key] = entry
     
-    def clear(self):
+    def clear(self) -> None:
         """Clear all cache entries"""
         with self._lock:
             self.memory_cache.clear()

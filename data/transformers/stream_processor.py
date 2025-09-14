@@ -150,7 +150,7 @@ class StreamSession:
 class StreamProcessor:
     """Real-time stream processing engine."""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize stream processor with configuration."""
         self.config = config or {}
         self.max_concurrent_streams = self.config.get("max_concurrent_streams", 50)
@@ -177,7 +177,7 @@ class StreamProcessor:
         
         logger.info("StreamProcessor initialized")
     
-    async def start(self):
+    async def start(self) -> None:
         """Start the stream processor."""
         if self.running:
             logger.warning("StreamProcessor already running")
@@ -191,7 +191,7 @@ class StreamProcessor:
         
         logger.info("StreamProcessor started")
     
-    async def stop(self):
+    async def stop(self) -> None:
         """Stop the stream processor."""
         if not self.running:
             return
@@ -443,7 +443,7 @@ class StreamProcessor:
         
         return True
     
-    async def _process_stream(self, stream_id: str):
+    async def _process_stream(self, stream_id -> None: str) -> None:
         """Main stream processing loop."""
         try:
             with self.stream_lock:
@@ -473,7 +473,7 @@ class StreamProcessor:
             logger.error(f"Stream processing error for {stream_id}: {str(e)}")
             await self._handle_stream_error(stream_id, str(e))
     
-    async def _update_stream_metrics(self, stream_id: str):
+    async def _update_stream_metrics(self, stream_id -> None: str) -> None:
         """Update stream metrics."""
         try:
             with self.stream_lock:
@@ -490,7 +490,7 @@ class StreamProcessor:
         except Exception as e:
             logger.error(f"Failed to update metrics for stream {stream_id}: {str(e)}")
     
-    async def _check_stream_health(self, stream_id: str):
+    async def _check_stream_health(self, stream_id -> None: str) -> None:
         """Check stream health and handle issues."""
         try:
             with self.stream_lock:
@@ -519,7 +519,7 @@ class StreamProcessor:
         except Exception as e:
             logger.error(f"Health check failed for stream {stream_id}: {str(e)}")
     
-    async def _adaptive_quality_control(self, stream_id: str):
+    async def _adaptive_quality_control(self, stream_id -> None: str) -> None:
         """Adaptive quality control based on stream conditions."""
         try:
             with self.stream_lock:
@@ -580,7 +580,7 @@ class StreamProcessor:
         else:
             return StreamQuality.LOW
     
-    async def _handle_stream_error(self, stream_id: str, error_message: str):
+    async def _handle_stream_error(self, stream_id -> None: str, error_message -> None: str) -> None:
         """Handle stream errors."""
         try:
             with self.stream_lock:
@@ -604,7 +604,7 @@ class StreamProcessor:
         except Exception as e:
             logger.error(f"Error handling failed for stream {stream_id}: {str(e)}")
     
-    async def _attempt_stream_recovery(self, stream_id: str):
+    async def _attempt_stream_recovery(self, stream_id -> None: str) -> None:
         """Attempt to recover a failed stream."""
         try:
             with self.stream_lock:
@@ -628,17 +628,17 @@ class StreamProcessor:
             logger.error(f"Recovery failed for stream {stream_id}: {str(e)}")
             session.state = StreamState.ERROR
     
-    async def _handle_stream_timeout(self, stream_id: str):
+    async def _handle_stream_timeout(self, stream_id -> None: str) -> None:
         """Handle stream timeout."""
         logger.warning(f"Stream {stream_id} timed out")
         await self._handle_stream_error(stream_id, "Stream timeout")
     
-    async def _handle_high_latency(self, stream_id: str):
+    async def _handle_high_latency(self, stream_id -> None: str) -> None:
         """Handle high latency situation."""
         # Reduce quality to improve latency
         await self.adjust_stream_quality(stream_id, StreamQuality.LOW)
     
-    async def _handle_low_buffer(self, stream_id: str):
+    async def _handle_low_buffer(self, stream_id -> None: str) -> None:
         """Handle low buffer situation."""
         with self.stream_lock:
             session = self.active_streams.get(stream_id)
@@ -647,7 +647,7 @@ class StreamProcessor:
             session.state = StreamState.BUFFERING
             # Would implement buffer recovery logic here
     
-    async def _monitoring_loop(self):
+    async def _monitoring_loop(self) -> None:
         """Background monitoring loop."""
         while self.running:
             try:
@@ -663,7 +663,7 @@ class StreamProcessor:
                 logger.error(f"Monitoring loop error: {str(e)}")
                 await asyncio.sleep(1.0)
     
-    async def _cleanup_loop(self):
+    async def _cleanup_loop(self) -> None:
         """Background cleanup loop."""
         while self.running:
             try:
@@ -676,7 +676,7 @@ class StreamProcessor:
                 logger.error(f"Cleanup loop error: {str(e)}")
                 await asyncio.sleep(10.0)
     
-    async def _update_global_metrics(self):
+    async def _update_global_metrics(self) -> None:
         """Update global performance metrics."""
         try:
             with self.stream_lock:
@@ -709,7 +709,7 @@ class StreamProcessor:
         except Exception as e:
             logger.error(f"Failed to update global metrics: {str(e)}")
     
-    async def _cleanup_inactive_sessions(self):
+    async def _cleanup_inactive_sessions(self) -> None:
         """Cleanup inactive sessions."""
         current_time = time.time()
         inactive_streams = []
@@ -725,7 +725,7 @@ class StreamProcessor:
             logger.info(f"Cleaning up inactive stream: {stream_id}")
             await self.stop_stream(stream_id)
     
-    async def _cleanup_old_data(self):
+    async def _cleanup_old_data(self) -> None:
         """Cleanup old data and free memory."""
         # Would implement memory cleanup logic here
         pass
@@ -738,7 +738,7 @@ class StreamProcessor:
 class StreamChunkProcessor:
     """Processor for individual stream chunks."""
     
-    def __init__(self, config: StreamConfiguration, session: StreamSession):
+    def __init__(self, config -> None: StreamConfiguration, session -> None: StreamSession) -> None:
         """Initialize chunk processor."""
         self.config = config
         self.session = session
@@ -777,7 +777,7 @@ class StreamChunkProcessor:
             logger.error(f"Chunk processing failed: {str(e)}")
             return False
     
-    async def adjust_quality(self, quality: StreamQuality):
+    async def adjust_quality(self, quality -> None: StreamQuality) -> None:
         """Adjust processing quality."""
         self.current_quality = quality
         logger.debug(f"Quality adjusted to {quality.value}")
@@ -842,7 +842,7 @@ class StreamChunkProcessor:
             logger.error(f"Failed to get metrics: {str(e)}")
             return StreamMetrics()
     
-    async def _update_chunk_metrics(self, chunk: StreamChunk):
+    async def _update_chunk_metrics(self, chunk -> None: StreamChunk) -> None:
         """Update metrics based on processed chunk."""
         # Would update detailed chunk-level metrics here
         pass
@@ -917,7 +917,7 @@ class StreamChunkProcessor:
         
         return quality_score
     
-    async def stop(self):
+    async def stop(self) -> None:
         """Stop chunk processor."""
         self.buffer.clear()
         self.metrics_history.clear()

@@ -127,7 +127,7 @@ class SyncSummary:
 class DataMapper:
     """Maps data between different platform formats"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.field_mappings: Dict[str, Dict[str, str]] = {}
         self.transformation_rules: Dict[str, Callable] = {}
     
@@ -290,7 +290,7 @@ class ConflictResolver:
 class SyncEngine:
     """Core synchronization engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.active_syncs: Dict[str, SyncRecord] = {}
         self.data_mapper = DataMapper()
         self.conflict_resolver = ConflictResolver()
@@ -533,7 +533,7 @@ class PlatformSyncService:
     - Filter-based selective sync
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.sync_engine = SyncEngine()
         self.sync_configs: Dict[str, SyncConfig] = {}

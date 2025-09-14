@@ -59,13 +59,13 @@ class MultiZoneConfig:
 class MultiZoneManager:
     """Manages multi-zone deployment configuration"""
     
-    def __init__(self, config: MultiZoneConfig):
+    def __init__(self, config -> None: MultiZoneConfig) -> None:
         self.config = config
         self.namespace = "ia-influencer"
         if not self.config.zones:
             self._initialize_default_zones()
     
-    def _initialize_default_zones(self):
+    def _initialize_default_zones(self) -> None:
         """Initialize default availability zones"""
         self.config.zones = [
             ZoneConfig(
@@ -680,7 +680,7 @@ class MultiZoneManager:
         
         return manifests
     
-    def save_manifests_to_files(self, output_dir: str = "./k8s-manifests/multi-zone"):
+    def save_manifests_to_files(self, output_dir -> None: str = "./k8s-manifests/multi-zone") -> None:
         """Save all multi-zone manifests to files"""
         import os
         os.makedirs(output_dir, exist_ok=True)

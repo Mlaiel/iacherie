@@ -1,3 +1,8 @@
+"""
+Compliance Monitoring module
+Enterprise implementation for Ainflue platform
+"""
+
 # Ainflue Infrastructure Module
 # =============================
 # 
@@ -93,7 +98,7 @@ class ComplianceMonitor:
     violation detection, and remediation guidance.
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config -> None: Dict[str, Any]) -> None:
         """Initialize compliance monitor."""
         self.config = config
         self.enabled_frameworks = set(config.get('enabled_frameworks', []))
@@ -109,7 +114,7 @@ class ComplianceMonitor:
         self._initialize_cloud_clients()
         self._load_compliance_rules()
     
-    def _initialize_cloud_clients(self):
+    def _initialize_cloud_clients(self) -> None:
         """Initialize cloud provider clients."""
         try:
             # AWS clients
@@ -144,7 +149,7 @@ class ComplianceMonitor:
         except Exception as e:
             logger.error(f"Failed to initialize cloud clients: {e}")
     
-    def _load_compliance_rules(self):
+    def _load_compliance_rules(self) -> None:
         """Load compliance rules for enabled frameworks."""
         try:
             # GDPR Rules
@@ -784,7 +789,7 @@ if __name__ == "__main__":
         }
     }
     
-    async def main():
+    async def main() -> None:
         # Initialize compliance monitor
         monitor = ComplianceMonitor(config)
         

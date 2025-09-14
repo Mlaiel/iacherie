@@ -26,7 +26,7 @@ class AutocompleteResult:
 class AutocompleteEngine:
     """Fast autocomplete engine with intelligent suggestions."""
     
-    def __init__(self, client: MongoClient, database_name: str):
+    def __init__(self, client -> None: MongoClient, database_name -> None: str) -> None:
         """Initialize autocomplete engine.
         
         Args:

@@ -151,7 +151,7 @@ class FeatureEngineer:
     Lead Dev IA: Intelligent feature optimization and automation
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.feature_selectors = {}
         self.scalers = {}
         self.feature_rankings = {}
@@ -308,7 +308,7 @@ class ModelOptimizer:
     Lead Dev IA: Intelligent optimization strategies and automation
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.optimization_history = []
         self.best_params_cache = {}
     
@@ -433,7 +433,7 @@ class ModelOptimizer:
     ) -> Tuple[Any, Dict[str, Any], float]:
         """Bayesian optimization using Optuna"""
         
-        def objective(trial):
+        def objective(trial) -> None:
             # Sample parameters
             params = {}
             for param, values in param_grid.items():
@@ -477,7 +477,7 @@ class AutoMLPipeline:
     - Intelligent resource management and scaling
     """
     
-    def __init__(self, config: Optional[AutoMLConfig] = None):
+    def __init__(self, config -> None: Optional[AutoMLConfig] = None) -> None:
         self.config = config or AutoMLConfig()
         self.feature_engineer = FeatureEngineer()
         self.model_optimizer = ModelOptimizer()
@@ -805,7 +805,7 @@ class AutoMLPipeline:
 # Global AutoML instance
 automl_pipeline = AutoMLPipeline()
 
-async def main():
+async def main() -> None:
     """Demo function showcasing AutoML Pipeline capabilities"""
     print("🤖🔬 AutoML Pipeline System - ML Engineer + Lead Dev IA Demo")
     print("=" * 70)

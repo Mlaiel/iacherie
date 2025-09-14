@@ -1,3 +1,8 @@
+"""
+Duplication Detector module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Duplication Detector - Ainflue Quality Platform
@@ -145,7 +150,7 @@ class DuplicationDetector:
     - ML Engineer: Similarity algorithms and clustering analysis
     """
     
-    def __init__(self, project_path: str = "."):
+    def __init__(self, project_path -> None: str = ".") -> None:
         self.project_path = Path(project_path)
         self.supported_extensions = {'.py', '.js', '.ts', '.java', '.cpp', '.cs'}
         self.language_mapping = {
@@ -326,22 +331,23 @@ class DuplicationDetector:
             tree = ast.parse(content)
             
             class BlockExtractor(ast.NodeVisitor):
-                def __init__(self):
+    """BlockExtractor class implementation"""
+                def __init__(self) -> None:
                     self.blocks = []
                     self.current_class = ""
                 
-                def visit_FunctionDef(self, node):
+                def visit_FunctionDef(self, node) -> None:
                     self._extract_function_block(node)
                     self.generic_visit(node)
                 
-                def visit_ClassDef(self, node):
+                def visit_ClassDef(self, node) -> None:
                     old_class = self.current_class
                     self.current_class = node.name
                     self._extract_class_block(node)
                     self.generic_visit(node)
                     self.current_class = old_class
                 
-                def _extract_function_block(self, node):
+                def _extract_function_block(self, node) -> None:
                     start_line = node.lineno - 1
                     end_line = getattr(node, 'end_lineno', start_line + 10) - 1
                     
@@ -365,7 +371,7 @@ class DuplicationDetector:
                         )
                         self.blocks.append(block)
                 
-                def _extract_class_block(self, node):
+                def _extract_class_block(self, node) -> None:
                     start_line = node.lineno - 1
                     end_line = getattr(node, 'end_lineno', start_line + 20) - 1
                     
@@ -1019,7 +1025,7 @@ class DuplicationDetector:
         
         return effort
     
-    async def _generate_recommendations(self, report: DuplicationReport):
+    async def _generate_recommendations(self, report -> None: DuplicationReport) -> None:
         """Generate comprehensive recommendations (Lead Dev IA expertise)"""
         recommendations = []
         
@@ -1053,7 +1059,7 @@ class DuplicationDetector:
         
         report.recommendations = recommendations
     
-    async def _prioritize_refactoring(self, report: DuplicationReport):
+    async def _prioritize_refactoring(self, report -> None: DuplicationReport) -> None:
         """Create refactoring priority list"""
         priorities = []
         
@@ -1089,7 +1095,7 @@ class DuplicationDetector:
         
         report.refactoring_priorities = priorities[:15]  # Top 15 priorities
     
-    async def _save_duplication_report(self, report: DuplicationReport):
+    async def _save_duplication_report(self, report -> None: DuplicationReport) -> None:
         """Save duplication report to file (Backend expertise)"""
         timestamp = report.generated_at.strftime("%Y%m%d_%H%M%S")
         filename = f"duplication_report_{timestamp}.json"
@@ -1148,7 +1154,7 @@ async def find_exact_duplicates(project_path: str = ".") -> List[DuplicationMatc
 
 if __name__ == "__main__":
     # Example usage
-    async def main():
+    async def main() -> None:
         # Analyze duplications in current project
         report = await analyze_project_duplications(".", min_lines=10)
         

@@ -134,7 +134,7 @@ class DatabaseEncryptionManager:
     Fournit un chiffrement transparent et sécurisé des données sensibles
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or get_settings()
         self.logger = get_logger(f"{__name__}.DatabaseEncryptionManager")
         self.vault_client = VaultClient()
@@ -151,7 +151,7 @@ class DatabaseEncryptionManager:
         # Initialisation
         self._initialize_encryption_system()
     
-    def _initialize_encryption_system(self):
+    def _initialize_encryption_system(self) -> None:
         """Initialise le système de chiffrement"""
         try:
             self.logger.info("🔐 Initializing enterprise encryption system...")
@@ -171,7 +171,7 @@ class DatabaseEncryptionManager:
             self.logger.error(f"❌ Failed to initialize encryption system: {e}")
             raise
     
-    def _ensure_master_keys(self):
+    def _ensure_master_keys(self) -> None:
         """S'assure que les clés maîtres existent"""
         try:
             # Vérification clé maître principale
@@ -531,7 +531,7 @@ Récupère la version actuelle de la clé"""
         except:
             return '1'
     
-    def _setup_audit_logging(self):
+    def _setup_audit_logging(self) -> None:
         """Configure l'audit des opérations de chiffrement"""
         try:
             self.audit_logger = logging.getLogger('encryption_audit')
@@ -549,7 +549,7 @@ Récupère la version actuelle de la clé"""
         except Exception as e:
             self.logger.warning(f"Audit logging setup failed: {e}")
     
-    def _audit_encryption_event(self, operation: str, classification: DataClassification, data_size: int):
+    def _audit_encryption_event(self, operation -> None: str, classification -> None: DataClassification, data_size -> None: int) -> None:
         """Enregistre un événement de chiffrement dans l'audit"""
         try:
             audit_entry = {
@@ -567,7 +567,7 @@ Récupère la version actuelle de la clé"""
         except Exception as e:
             self.logger.warning(f"Audit logging failed: {e}")
     
-    def _run_encryption_tests(self):
+    def _run_encryption_tests(self) -> None:
         """Exécute des tests de validation du système de chiffrement"""
         try:
             test_data = "Test encryption data - 🔐 IA Influencer Agent"
@@ -778,7 +778,7 @@ Récupère la version actuelle de la clé"""
                 'timestamp': datetime.utcnow().isoformat()
             }
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Arrêt propre du système de chiffrement"""
         try:
             self.logger.info("🔒 Shutting down encryption system...")

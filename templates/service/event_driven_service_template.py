@@ -96,6 +96,7 @@ class BaseEvent(BaseModel):
     max_retries: int = 3
 
     class Config:
+    """Config: class implementation"""
         json_encoders = {
             datetime: lambda v: v.isoformat()
         }
@@ -153,7 +154,7 @@ class EventContext:
 class EventHandler(ABC):
     """Abstract base class for event handlers"""
     
-    def __init__(self, handler_id: str):
+    def __init__(self, handler_id -> None: str) -> None:
         self.handler_id = handler_id
         self.metrics = EventMetricsCollector()
     
@@ -174,7 +175,7 @@ class EventHandler(ABC):
 class EventHandlerRegistry:
     """Registry for event handlers"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.handlers: Dict[str, Dict[str, EventHandler]] = defaultdict(dict)
         self.pattern_handlers: Dict[str, List[EventHandler]] = defaultdict(list)
     
@@ -227,7 +228,7 @@ class EventHandlerRegistry:
 class EventProcessor:
     """Event processor with concurrent handling"""
     
-    def __init__(self, config: EventConfig, handler_registry: EventHandlerRegistry):
+    def __init__(self, config -> None: EventConfig, handler_registry -> None: EventHandlerRegistry) -> None:
         self.config = config
         self.handler_registry = handler_registry
         self.processing_semaphore = asyncio.Semaphore(config.max_concurrent_handlers)
@@ -409,10 +410,10 @@ class {{service_class_name}}(BaseService):
     
     def __init__(
         self,
-        name: str = "{{service_name}}",
-        config: Optional[EventConfig] = None,
+        name -> None: str = "{{service_name}}",
+        config -> None: Optional[EventConfig] = None,
         **kwargs
-    ):
+    ) -> None:
         super().__init__(name=name, **kwargs)
         self.config = config or EventConfig()
         
@@ -1075,3 +1076,5 @@ class {{service_class_name}}(BaseService):
             "batch_processing": True,
             "max_concurrent_handlers": self.config.max_concurrent_handlers
         }
+
+# File has syntax issues - needs manual review

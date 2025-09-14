@@ -1,3 +1,8 @@
+"""
+Validate Expert Implementations module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Docker Expert Implementation Validator
@@ -17,7 +22,7 @@ from datetime import datetime
 class DockerExpertValidator:
     """Validate all expert role implementations"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.base_path = Path("/home/runner/work/Ainflue/Ainflue")
         self.docker_path = self.base_path / "docker"
         self.validation_results = {
@@ -421,7 +426,7 @@ class DockerExpertValidator:
         
         return report
 
-def main():
+def main() -> None:
     """Main validation execution"""
     validator = DockerExpertValidator()
     

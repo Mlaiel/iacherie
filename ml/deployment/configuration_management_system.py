@@ -166,11 +166,11 @@ class ConfigurationManagementSystem:
     
     def __init__(
         self,
-        storage_path: str = "config",
-        enable_encryption: bool = True,
-        config_validation: bool = True,
-        auto_backup: bool = True
-    ):
+        storage_path -> None: str = "config",
+        enable_encryption -> None: bool = True,
+        config_validation -> None: bool = True,
+        auto_backup -> None: bool = True
+    ) -> None:
         self.storage_path = Path(storage_path)
         self.storage_path.mkdir(parents=True, exist_ok=True)
         
@@ -619,10 +619,10 @@ class ConfigurationManagementSystem:
     
     async def _validate_configuration_value(
         self,
-        config_type: ConfigType,
-        value: Any,
-        schema: Optional[Dict[str, Any]]
-    ):
+        config_type -> None: ConfigType,
+        value -> None: Any,
+        schema -> None: Optional[Dict[str, Any]]
+    ) -> None:
         """Valider une valeur de configuration"""
         
         if not self.config_validation or not schema:
@@ -646,7 +646,7 @@ class ConfigurationManagementSystem:
             if 'replicas' in value and value['replicas'] < 1:
                 raise ValueError("Replicas must be at least 1")
     
-    async def _persist_configuration(self, config_item: ConfigurationItem):
+    async def _persist_configuration(self, config_item -> None: ConfigurationItem) -> None:
         """Persister une configuration"""
         
         config_file = self.storage_path / f"configs/{config_item.config_id}.json"
@@ -655,7 +655,7 @@ class ConfigurationManagementSystem:
         with open(config_file, 'w') as f:
             json.dump(config_item.to_dict(), f, indent=2)
     
-    async def _persist_profile(self, profile: ConfigurationProfile):
+    async def _persist_profile(self, profile -> None: ConfigurationProfile) -> None:
         """Persister un profil"""
         
         profile_file = self.storage_path / f"profiles/{profile.profile_id}.json"
@@ -664,7 +664,7 @@ class ConfigurationManagementSystem:
         with open(profile_file, 'w') as f:
             json.dump(profile.to_dict(), f, indent=2)
     
-    async def _persist_change(self, change: ConfigurationChange):
+    async def _persist_change(self, change -> None: ConfigurationChange) -> None:
         """Persister un changement"""
         
         change_file = self.storage_path / f"changes/{change.change_id}.json"
@@ -673,7 +673,7 @@ class ConfigurationManagementSystem:
         with open(change_file, 'w') as f:
             json.dump(change.to_dict(), f, indent=2)
     
-    async def _create_backup(self):
+    async def _create_backup(self) -> None:
         """Créer un backup automatique"""
         
         backup_dir = self.storage_path / "backups" / datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -695,7 +695,7 @@ class ConfigurationManagementSystem:
         
         logger.debug(f"💾 Configuration backup created: {backup_file}")
     
-    async def _load_existing_configurations(self):
+    async def _load_existing_configurations(self) -> None:
         """Charger les configurations existantes"""
         
         configs_dir = self.storage_path / "configs"
@@ -797,7 +797,7 @@ class ConfigurationManagementSystem:
         }
 
 # Usage Example
-async def main():
+async def main() -> None:
     """Exemple d'utilisation du Configuration Management System"""
     
     cms = ConfigurationManagementSystem(

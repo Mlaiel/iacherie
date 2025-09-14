@@ -277,7 +277,7 @@ class AccessPolicy:
 class EncryptionManager:
     """Advanced encryption and key management"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.keys: Dict[str, bytes] = {}  # In production, use HSM or key vault
         self.key_metadata: Dict[str, EncryptionKey] = {}
         self.key_usage_log = []
@@ -485,7 +485,7 @@ class EncryptionManager:
 class ThreatDetector:
     """AI-powered threat detection and analysis"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.threat_patterns = {}
         self.user_behavior_profiles = defaultdict(list)
         self.anomaly_models = {}
@@ -736,7 +736,7 @@ class DataSecurityService:
     💡 AI Prompt: Intelligent security recommendations, threat analysis, and automated security policy generation
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.encryption_manager = EncryptionManager()
         self.threat_detector = ThreatDetector()
         self.access_policies: Dict[str, AccessPolicy] = {}
@@ -750,7 +750,7 @@ class DataSecurityService:
         
         logger.info("DataSecurityService initialized successfully")
     
-    def _initialize_default_policies(self):
+    def _initialize_default_policies(self) -> None:
         """Initialize default access control policies"""
         default_policies = [
             AccessPolicy(
@@ -970,9 +970,9 @@ class DataSecurityService:
                 'message': 'Failed to analyze security threat'
             }
     
-    async def _log_security_event(self, event_type: SecurityEventType, action: str = "", 
-                                 user_id: str = "", resource_id: str = "", resource_type: str = "",
-                                 details: Dict[str, Any] = None, blocked: bool = False):
+    async def _log_security_event(self, event_type -> None: SecurityEventType, action -> None: str = "", 
+                                 user_id -> None: str = "", resource_id -> None: str = "", resource_type -> None: str = "",
+                                 details -> None: Dict[str, Any] = None, blocked -> None: bool = False) -> None:
         """Log security event"""
         try:
             event = SecurityEvent(
@@ -1184,7 +1184,7 @@ class DataSecurityService:
 
 
 # Example usage and testing
-async def main():
+async def main() -> None:
     """Example usage of the DataSecurityService"""
     service = DataSecurityService()
     

@@ -206,7 +206,7 @@ class SharePayment:
 class ShareCalculator:
     """Advanced share calculation engine"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         """Initialize share calculator"""
         self.config = config or {}
         self.platform_fee_percentage = Decimal(str(self.config.get('platform_fee_percentage', '10.0')))
@@ -284,7 +284,7 @@ class ShareCalculator:
 class RevenueShareManager:
     """Advanced revenue sharing management system"""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         """Initialize revenue share manager"""
         self.config = config or {}
         self.transactions: Dict[str, RevenueTransaction] = {}

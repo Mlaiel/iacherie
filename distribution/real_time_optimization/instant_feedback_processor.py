@@ -92,10 +92,10 @@ class InstantFeedbackProcessor:
     """Real-time feedback processing and analysis engine"""
     
     def __init__(self, 
-                 sentiment_threshold: float = 0.7,
-                 spam_detection_threshold: float = 0.8,
-                 velocity_window_minutes: int = 5,
-                 max_processing_time_ms: float = 50.0):
+                 sentiment_threshold -> None: float = 0.7,
+                 spam_detection_threshold -> None: float = 0.8,
+                 velocity_window_minutes -> None: int = 5,
+                 max_processing_time_ms -> None: float = 50.0) -> None:
         self.sentiment_threshold = sentiment_threshold
         self.spam_detection_threshold = spam_detection_threshold
         self.velocity_window_minutes = velocity_window_minutes
@@ -675,7 +675,7 @@ class InstantFeedbackProcessor:
         
         return min(max(confidence, 0.0), 1.0)
     
-    def _update_processing_stats(self, signal_count: int, processing_time: float):
+    def _update_processing_stats(self, signal_count -> None: int, processing_time -> None: float) -> None:
         """Update processing performance statistics"""
         self.processing_stats["total_processed"] += signal_count
         
@@ -693,7 +693,7 @@ class InstantFeedbackProcessor:
         """Get current processing performance statistics"""
         return self.processing_stats.copy()
     
-    async def cleanup_old_data(self, max_age_hours: int = 24):
+    async def cleanup_old_data(self, max_age_hours -> None: int = 24) -> None:
         """Clean up old cached data"""
         cutoff_time = datetime.now(timezone.utc).timestamp() - (max_age_hours * 3600)
         
@@ -728,13 +728,13 @@ class FeedbackProcessorOptimizer:
     """Performance optimization utilities for feedback processing"""
     
     @staticmethod
-    def optimize_for_high_volume(processor: InstantFeedbackProcessor):
+    def optimize_for_high_volume(processor -> None: InstantFeedbackProcessor) -> None:
         """Optimize processor for high-volume scenarios"""
         processor.max_processing_time_ms = 30.0  # Stricter timing
         processor.velocity_window_minutes = 3     # Smaller window
     
     @staticmethod
-    def optimize_for_accuracy(processor: InstantFeedbackProcessor):
+    def optimize_for_accuracy(processor -> None: InstantFeedbackProcessor) -> None:
         """Optimize processor for maximum accuracy"""
         processor.sentiment_threshold = 0.8       # Higher threshold
         processor.spam_detection_threshold = 0.9  # Stricter spam detection

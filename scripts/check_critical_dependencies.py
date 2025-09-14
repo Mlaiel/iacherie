@@ -1,3 +1,8 @@
+"""
+Check Critical Dependencies module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Critical Dependencies Status Check
@@ -6,7 +11,7 @@ Validates which dependencies from PRIORITIES_IMMEDIATES_100_COMPLETION.md are av
 import sys
 import importlib
 
-def check_dependency(name, display_name=None):
+def check_dependency(name, display_name=None) -> None:
     """Check if a dependency is available"""
     if display_name is None:
         display_name = name
@@ -20,7 +25,7 @@ def check_dependency(name, display_name=None):
         print(f"  ❌ {display_name}: Not available")
         return False
 
-def main():
+def main() -> None:
     print("🔍 CRITICAL DEPENDENCIES STATUS CHECK")
     print("=" * 50)
     

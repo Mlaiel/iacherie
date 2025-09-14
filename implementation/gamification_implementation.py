@@ -213,7 +213,7 @@ class GamificationImplementation:
     and behavioral psychology optimization for creator motivation and platform growth.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
         
@@ -660,7 +660,7 @@ class GamificationImplementation:
         
         return levels
     
-    def _initialize_achievements(self):
+    def _initialize_achievements(self) -> None:
         """Initialize the achievement system"""
         
         achievements_data = [
@@ -742,7 +742,7 @@ class GamificationImplementation:
             )
             self.achievements[achievement_id] = achievement
     
-    def _initialize_quest_templates(self):
+    def _initialize_quest_templates(self) -> None:
         """Initialize quest templates for different types"""
         
         # Daily quest templates
@@ -807,7 +807,7 @@ class GamificationImplementation:
         
         return rewards
     
-    async def _update_activity_stats(self, creator_id: str, activity_type: str, context: Dict[str, Any]):
+    async def _update_activity_stats(self, creator_id -> None: str, activity_type -> None: str, context -> None: Dict[str, Any]) -> None:
         """Update creator stats based on activity"""
         
         stats = self.creator_stats[creator_id]
@@ -935,7 +935,7 @@ class GamificationImplementation:
         
         return user_achievement
     
-    async def _award_reward(self, creator_id: str, reward: Dict[str, Any]):
+    async def _award_reward(self, creator_id -> None: str, reward -> None: Dict[str, Any]) -> None:
         """Award a specific reward to creator"""
         
         stats = self.creator_stats[creator_id]
@@ -954,7 +954,7 @@ class GamificationImplementation:
         
         # Add more reward types as needed
     
-    async def _assign_beginner_quests(self, creator_id: str):
+    async def _assign_beginner_quests(self, creator_id -> None: str) -> None:
         """Assign initial quests to new creators"""
         
         beginner_quests = [
@@ -1126,7 +1126,7 @@ class GamificationImplementation:
         
         return True
     
-    async def _auto_assign_quest(self, quest_id: str):
+    async def _auto_assign_quest(self, quest_id -> None: str) -> None:
         """Auto-assign quest to eligible creators"""
         
         quest = self.quests[quest_id]
@@ -1278,11 +1278,11 @@ class GamificationImplementation:
     
     async def _update_leaderboard(
         self, 
-        leaderboard_id: str, 
-        leaderboard_type: LeaderboardType, 
-        period: str, 
-        limit: int
-    ):
+        leaderboard_id -> None: str, 
+        leaderboard_type -> None: LeaderboardType, 
+        period -> None: str, 
+        limit -> None: int
+    ) -> None:
         """Update existing leaderboard"""
         
         leaderboard = self.leaderboards[leaderboard_id]
@@ -1291,7 +1291,7 @@ class GamificationImplementation:
         leaderboard.rankings = new_rankings
         leaderboard.last_updated = datetime.utcnow()
     
-    async def _create_event_quests(self, event: GamificationEvent):
+    async def _create_event_quests(self, event -> None: GamificationEvent) -> None:
         """Create special quests for an event"""
         
         event_quests = [

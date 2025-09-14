@@ -170,7 +170,7 @@ class AudienceConfig:
     track_conversions: bool = True
     track_attribution: bool = True
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         """Initialize default configurations"""
         if not self.platform_settings:
             self.platform_settings = self._get_default_platform_settings()

@@ -76,7 +76,7 @@ class TimeWindow:
     timezone: str = "UTC"
     days_of_week: Set[int] = None  # 0=Monday, 6=Sunday
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.days_of_week is None:
             self.days_of_week = {0, 1, 2, 3, 4, 5, 6}  # All days
 
@@ -106,7 +106,7 @@ class ScheduleRule:
     rate_limit: RateLimitConfig = None
     enabled: bool = True
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.time_windows is None:
             self.time_windows = []
         if self.rate_limit is None:
@@ -134,7 +134,7 @@ class ScheduledTask:
     metadata: Dict[str, Any] = None
     dependencies: List[str] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.metadata is None:
             self.metadata = {}
         if self.dependencies is None:
@@ -161,7 +161,7 @@ class SyncScheduler:
     with AI-driven optimization, rate limiting, and conflict resolution.
     """
     
-    def __init__(self, db: AsyncIOMotorDatabase, platform_manager: PlatformManager):
+    def __init__(self, db -> None: AsyncIOMotorDatabase, platform_manager -> None: PlatformManager) -> None:
         """
         Initialize Sync Scheduler
         

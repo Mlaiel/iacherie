@@ -1,3 +1,8 @@
+"""
+Metrics Aggregation module
+Enterprise implementation for Ainflue platform
+"""
+
 # Ainflue Infrastructure Module
 # =============================
 # 
@@ -65,7 +70,7 @@ class AggregatedMetric:
 class MetricsAggregationEngine:
     """Enterprise metrics aggregation engine for Ainflue platform"""
     
-    def __init__(self, config_path: str = "config/metrics_config.yaml"):
+    def __init__(self, config_path -> None: str = "config/metrics_config.yaml") -> None:
         self.config = self._load_config(config_path)
         self.logger = self._setup_logging()
         self.redis_client = self._setup_redis()
@@ -428,7 +433,7 @@ class MetricsAggregationEngine:
             self.logger.error(f"Error generating analytics report: {str(e)}")
             raise
     
-    def __del__(self):
+    def __del__(self) -> None:
         """Cleanup connections"""
         try:
             if hasattr(self, 'db_connection'):
@@ -440,7 +445,7 @@ class MetricsAggregationEngine:
 
 # Usage example and testing
 if __name__ == "__main__":
-    async def main():
+    async def main() -> None:
         # Initialize metrics aggregation engine
         engine = MetricsAggregationEngine()
         

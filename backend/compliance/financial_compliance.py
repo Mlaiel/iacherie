@@ -325,7 +325,7 @@ class TaxComplianceRecord(Base):
 class PaymentSecurityManager:
     """Payment security and PCI DSS compliance management"""
     
-    def __init__(self, db_session: AsyncSession, redis_client: aioredis.Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: aioredis.Redis) -> None:
         self.db = db_session
         self.redis = redis_client
         
@@ -597,7 +597,7 @@ class PaymentSecurityManager:
 class AMLMonitor:
     """Anti-Money Laundering monitoring and compliance"""
     
-    def __init__(self, db_session: AsyncSession, redis_client: aioredis.Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: aioredis.Redis) -> None:
         self.db = db_session
         self.redis = redis_client
         
@@ -1001,7 +1001,7 @@ class AMLMonitor:
 class TaxComplianceManager:
     """Tax compliance management and reporting"""
     
-    def __init__(self, db_session: AsyncSession, redis_client: aioredis.Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: aioredis.Redis) -> None:
         self.db = db_session
         self.redis = redis_client
         
@@ -1222,7 +1222,7 @@ class TaxComplianceManager:
 class FinancialCompliance:
     """Main financial compliance management engine"""
     
-    def __init__(self, db_session: AsyncSession, redis_client: aioredis.Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: aioredis.Redis) -> None:
         self.db = db_session
         self.redis = redis_client
         

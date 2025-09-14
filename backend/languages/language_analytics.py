@@ -198,7 +198,7 @@ class LanguageAnalyticsEngine:
     insights into language usage, performance, and business impact
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize language analytics engine"""
         self.config = config or {}
         self.usage_events = []
@@ -914,7 +914,7 @@ class LanguageAnalyticsEngine:
             "UK": {"population": 67000000, "gdp_per_capita": 42000, "internet_penetration": 0.95}
         }
     
-    def _invalidate_analytics_cache(self):
+    def _invalidate_analytics_cache(self) -> None:
         """Invalidate analytics cache when new data is added"""
         self.cached_analytics.clear()
         self.insights_cache.clear()

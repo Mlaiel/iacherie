@@ -200,7 +200,7 @@ class PaymentDistributionProcessor:
     fraud detection, and compliance management.
     """
     
-    def __init__(self, db_session: AsyncSession, redis_client: Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: Redis) -> None:
         """
         Initialize Payment Distribution Processor.
         
@@ -459,7 +459,7 @@ class PaymentDistributionProcessor:
             return False
         return True
     
-    async def _store_payout_config(self, user_id: str, config: PayoutConfiguration):
+    async def _store_payout_config(self, user_id -> None: str, config -> None: PayoutConfiguration) -> None:
         """Store payout configuration"""
         cache_key = f"payout_config:{user_id}"
         await self.redis.setex(
@@ -474,7 +474,7 @@ class PaymentDistributionProcessor:
         self.logger.info(f"Setting up {gateway.value} account for user {user_id}")
         return True
     
-    async def _initialize_compliance_checks(self, user_id: str, config: PayoutConfiguration):
+    async def _initialize_compliance_checks(self, user_id -> None: str, config -> None: PayoutConfiguration) -> None:
         """Initialize compliance checks"""
         # Placeholder implementation
         self.logger.info(f"Initializing compliance checks for user {user_id}")
@@ -522,12 +522,12 @@ class PaymentDistributionProcessor:
             results.append(result)
         return results
     
-    async def _update_distribution_analytics(self, user_id: str, result: DistributionResult):
+    async def _update_distribution_analytics(self, user_id -> None: str, result -> None: DistributionResult) -> None:
         """Update distribution analytics"""
         # Placeholder implementation
         pass
     
-    async def _send_distribution_notifications(self, user_id: str, result: DistributionResult):
+    async def _send_distribution_notifications(self, user_id -> None: str, result -> None: DistributionResult) -> None:
         """Send distribution notifications"""
         # Placeholder implementation
         pass
@@ -536,7 +536,7 @@ class PaymentDistributionProcessor:
 class PaymentProcessor:
     """Core payment processing engine"""
     
-    def __init__(self, db_session: AsyncSession, redis_client: Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: Redis) -> None:
         self.db_session = db_session
         self.redis = redis_client
         self.logger = logging.getLogger(__name__)
@@ -581,7 +581,7 @@ class PaymentProcessor:
 class DistributionEngine:
     """Revenue distribution calculation and execution engine"""
     
-    def __init__(self, db_session: AsyncSession, redis_client: Redis):
+    def __init__(self, db_session -> None: AsyncSession, redis_client -> None: Redis) -> None:
         self.db_session = db_session
         self.redis = redis_client
         self.logger = logging.getLogger(__name__)

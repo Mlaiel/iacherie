@@ -127,16 +127,16 @@ Complete performance report"""
     generated_by: str = "automated_system"
     format: ReportFormat = ReportFormat.JSON
     
-    def add_metric(self, metric: MetricValue):
+    def add_metric(self, metric -> None: MetricValue) -> None:
         """Add metric to report"""
         self.metrics.append(metric)
     
-    def add_insight(self, insight: str):
+    def add_insight(self, insight -> None: str) -> None:
         """
 Add insight to report"""
         self.insights.append(insight)
     
-    def add_recommendation(self, recommendation: str):
+    def add_recommendation(self, recommendation -> None: str) -> None:
         """
 Add recommendation to report"""
         self.recommendations.append(recommendation)
@@ -146,7 +146,7 @@ class PerformanceAnalytics:
     """
 Advanced performance analytics engine"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.metric_definitions: Dict[str, MetricDefinition] = {}
         self.metric_cache: Dict[str, List[MetricValue]] = defaultdict(list)
@@ -162,7 +162,7 @@ Advanced performance analytics engine"""
         self._setup_default_metrics()
         logger.info("Performance analytics engine initialized")
     
-    def _setup_default_metrics(self):
+    def _setup_default_metrics(self) -> None:
         """Setup default performance metrics"""
         default_metrics = [
             # Content Detection Metrics
@@ -702,7 +702,7 @@ Apply aggregation method to data"""
             logger.error(f"Error getting cached values: {e}")
             return None
     
-    def _cache_values(self, cache_key: str, values: List[MetricValue]):
+    def _cache_values(self, cache_key -> None: str, values -> None: List[MetricValue]) -> None:
         """Cache metric values"""
         try:
             # Simple in-memory cache implementation with TTL

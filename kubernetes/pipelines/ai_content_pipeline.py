@@ -113,9 +113,9 @@ class AIContentProcessingPipelineManager:
     - Real-time content processing pipelines
     """
     
-    def __init__(self, base_pipeline_manager: AdvancedPipelineManager,
-                 storage_path: Optional[Path] = None,
-                 model_cache_path: Optional[Path] = None):
+    def __init__(self, base_pipeline_manager -> None: AdvancedPipelineManager,
+                 storage_path -> None: Optional[Path] = None,
+                 model_cache_path -> None: Optional[Path] = None) -> None:
         self.base_manager = base_pipeline_manager
         self.storage_path = storage_path or Path(__file__).parent / "ai_processing_data"
         self.model_cache_path = model_cache_path or Path(__file__).parent / "model_cache"
@@ -133,7 +133,7 @@ class AIContentProcessingPipelineManager:
         # Register AI processing pipeline templates
         self._register_ai_processing_pipelines()
         
-    def _register_ai_processing_pipelines(self):
+    def _register_ai_processing_pipelines(self) -> None:
         """Register AI content processing pipeline configurations"""
         # Audio processing pipeline
         audio_processing_config = PipelineConfig(

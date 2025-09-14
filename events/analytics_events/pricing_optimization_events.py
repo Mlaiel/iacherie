@@ -146,7 +146,7 @@ class DynamicPricingRule:
 class PricingOptimizationEngine:
     """Core pricing optimization engine"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.pricing_data: Dict[str, List[PricingEvent]] = {}
         self.optimization_models: Dict[str, Any] = {}
         self.dynamic_rules: Dict[str, DynamicPricingRule] = {}
@@ -716,7 +716,7 @@ class PricingOptimizationEngine:
 class PricingOptimizationEventHandler:
     """Main event handler for pricing optimization"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.optimization_engine = PricingOptimizationEngine()
         
     async def handle_pricing_event(self, event: PricingEvent) -> Dict[str, Any]:

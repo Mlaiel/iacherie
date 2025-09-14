@@ -99,7 +99,7 @@ class ROIReport:
 class ROICalculator:
     """Enterprise ROI calculator for ML investments"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.investments: Dict[str, MLInvestment] = {}
         self.benefits: List[ROIBenefit] = []
@@ -399,14 +399,14 @@ class ROICalculator:
             logger.error(f"Failed to analyze ROI trends: {e}")
             return {}
     
-    async def _setup_baseline_measurements(self):
+    async def _setup_baseline_measurements(self) -> None:
         """Setup baseline measurements for ROI calculation"""
         # Initialize baseline metrics for each creator type
         for creator_type in self.creator_value_metrics:
             # Record baseline measurements
             pass
     
-    async def _setup_tracking_systems(self):
+    async def _setup_tracking_systems(self) -> None:
         """Setup systems for tracking benefits and investments"""
         # Initialize tracking infrastructure
         pass
@@ -733,7 +733,7 @@ class ROICalculator:
 
 
 # Example usage and testing
-async def main():
+async def main() -> None:
     """Example usage of ROI Calculator"""
     calculator = ROICalculator()
     

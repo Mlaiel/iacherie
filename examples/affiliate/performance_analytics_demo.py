@@ -1,3 +1,8 @@
+"""
+Performance Analytics Demo module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """
 Performance Analytics Demo - Démonstration Analytics Performance Affiliation
@@ -115,7 +120,7 @@ class PerformanceAnalyticsDemo:
     Real-time tracking avec predictive analytics et business intelligence
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(f"{__name__}.PerformanceAnalyticsDemo")
         
         # Simulate analytics services

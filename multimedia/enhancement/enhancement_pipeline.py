@@ -299,7 +299,7 @@ class ContentAnalyzer:
 class EnhancementPipeline:
     """Enterprise enhancement pipeline orchestrator with AI-powered optimization."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.config = PipelineConfig()
         self.engines = self._initialize_engines()
         self.processing_stats = {}

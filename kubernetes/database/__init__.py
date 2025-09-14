@@ -1,4 +1,6 @@
 """IA Influencer Agent - Enterprise Database Deployment Module
+import logging
+
 Advanced PostgreSQL management with enterprise-grade features
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -383,7 +385,7 @@ class DatabaseManager:
     Orchestrates all database operations and components
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.logger = get_logger(f"{__name__}.DatabaseManager")
         
@@ -437,55 +439,55 @@ class DatabaseManager:
             await self.emergency_shutdown()
             return False
     
-    async def _initialize_postgresql_manager(self):
+    async def _initialize_postgresql_manager(self) -> None:
         """Initialize PostgreSQL manager"""
         self.logger.debug("Initializing PostgreSQL manager...")
         self._postgresql_manager = get_postgresql_manager()
         await self._postgresql_manager.initialize()
     
-    async def _initialize_migration_runner(self):
+    async def _initialize_migration_runner(self) -> None:
         """Initialize migration runner"""
         self.logger.debug("Initializing migration runner...")
         self._migration_runner = get_migration_runner()
         await self._migration_runner.initialize()
     
-    async def _initialize_backup_manager(self):
+    async def _initialize_backup_manager(self) -> None:
         """Initialize backup manager"""
         self.logger.debug("Initializing backup manager...")
         self._backup_manager = get_backup_manager()
         await self._backup_manager.initialize()
     
-    async def _initialize_replication_manager(self):
+    async def _initialize_replication_manager(self) -> None:
         """Initialize replication manager"""
         self.logger.debug("Initializing replication manager...")
         self._replication_manager = get_replication_manager()
         await self._replication_manager.initialize()
     
-    async def _initialize_performance_monitor(self):
+    async def _initialize_performance_monitor(self) -> None:
         """Initialize performance monitor"""
         self.logger.debug("Initializing performance monitor...")
         self._performance_monitor = get_performance_monitor()
         await self._performance_monitor.initialize()
     
-    async def _initialize_pool_manager(self):
+    async def _initialize_pool_manager(self) -> None:
         """Initialize connection pool manager"""
         self.logger.debug("Initializing connection pool manager...")
         self._pool_manager = get_pool_manager()
         await self._pool_manager.initialize()
     
-    async def _initialize_content_fingerprinting_manager(self):
+    async def _initialize_content_fingerprinting_manager(self) -> None:
         """Initialize content fingerprinting manager"""
         self.logger.debug("Initializing content fingerprinting manager...")
         self._content_fingerprinting_manager = get_content_fingerprinting_manager()
         await self._content_fingerprinting_manager.initialize()
     
-    async def _initialize_revenue_tracking_manager(self):
+    async def _initialize_revenue_tracking_manager(self) -> None:
         """Initialize revenue tracking manager"""
         self.logger.debug("Initializing revenue tracking manager...")
         self._revenue_tracking_manager = get_revenue_tracking_manager()
         await self._revenue_tracking_manager.initialize()
     
-    async def _initialize_web_surveillance_manager(self):
+    async def _initialize_web_surveillance_manager(self) -> None:
         """Initialize web surveillance manager"""
         self.logger.debug("Initializing web surveillance manager...")
         self._web_surveillance_manager = get_web_surveillance_manager()
@@ -620,7 +622,7 @@ class DatabaseManager:
             self.logger.error(f"Error getting system status: {e}")
             return {'error': str(e)}
     
-    async def emergency_shutdown(self):
+    async def emergency_shutdown(self) -> None:
         """Emergency shutdown of all database components"""
         try:
             self.logger.warning("🚨 Initiating emergency database shutdown...")
@@ -829,7 +831,7 @@ async def get_system_status() -> Dict[str, Any]:
         return {'error': str(e)}
 
 
-async def emergency_shutdown():
+async def emergency_shutdown() -> None:
     """Emergency shutdown of all database components"""
     try:
         global _database_manager

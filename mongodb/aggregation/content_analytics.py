@@ -18,7 +18,7 @@ logger = logging.getLogger(__name__)
 class ContentAnalytics:
     """Content performance analytics engine."""
     
-    def __init__(self, pipeline_builder: Optional[PipelineBuilder] = None):
+    def __init__(self, pipeline_builder -> None: Optional[PipelineBuilder] = None) -> None:
         """Initialize content analytics."""
         self.pipeline_builder = pipeline_builder or get_pipeline_builder()
     

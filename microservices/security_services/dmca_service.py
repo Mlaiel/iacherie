@@ -154,7 +154,7 @@ class RepeatInfringerRecord:
 class DMCAService:
     """Enterprise DMCA takedown automation and management service."""
     
-    def __init__(self, config_path: Optional[str] = None):
+    def __init__(self, config_path -> None: Optional[str] = None) -> None:
         """Initialize the DMCA service.
         
         Args:
@@ -1282,7 +1282,7 @@ Ainflue Legal Department
 
 
 # Example usage and testing
-async def main():
+async def main() -> None:
     """Example usage of the DMCAService."""
     # Initialize service
     service = DMCAService()

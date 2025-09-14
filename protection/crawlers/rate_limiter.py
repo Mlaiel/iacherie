@@ -118,7 +118,7 @@ Request performance metrics."""
 class SlidingWindowCounter:
     """Sliding window counter implementation."""
     
-    def __init__(self, window_size: int, limit: int):
+    def __init__(self, window_size -> None: int, limit -> None: int) -> None:
         """
 Initialize sliding window counter."""
         self.window_size = window_size
@@ -169,7 +169,7 @@ class TokenBucket:
     """
 Token bucket rate limiter implementation."""
     
-    def __init__(self, capacity: int, refill_rate: float):
+    def __init__(self, capacity -> None: int, refill_rate -> None: float) -> None:
         """
 Initialize token bucket."""
         self.capacity = capacity
@@ -187,7 +187,7 @@ Consume tokens and check availability."""
             return True
         return False
     
-    def _refill(self):
+    def _refill(self) -> None:
         """
 Refill tokens based on time elapsed."""
         now = time.time()
@@ -219,7 +219,7 @@ class AdaptiveRateLimiter:
     """
 Adaptive rate limiter that adjusts based on performance."""
     
-    def __init__(self, base_config: RateLimitConfig):
+    def __init__(self, base_config -> None: RateLimitConfig) -> None:
         """
 Initialize adaptive rate limiter."""
         self.base_config = base_config
@@ -228,7 +228,7 @@ Initialize adaptive rate limiter."""
         self.adjustment_factor = 1.0
         self.last_adjustment = time.time()
         
-    def record_performance(self, response_time: float, success: bool):
+    def record_performance(self, response_time -> None: float, success -> None: bool) -> None:
         """
 Record request performance for adaptation."""
         self.performance_history.append({
@@ -240,7 +240,7 @@ Record request performance for adaptation."""
         # Adjust rate limit based on performance
         self._adjust_rate_limit()
     
-    def _adjust_rate_limit(self):
+    def _adjust_rate_limit(self) -> None:
         """
 Adjust rate limit based on recent performance."""
         if len(self.performance_history) < 10:
@@ -283,7 +283,7 @@ class PriorityQueue:
     """
 Priority-based request queue."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """
 Initialize priority queue."""
         self.queues: Dict[Priority, deque] = {
@@ -291,7 +291,7 @@ Initialize priority queue."""
         }
         self.pending_count = 0
         
-    async def put(self, item: Any, priority: Priority = Priority.MEDIUM):
+    async def put(self, item -> None: Any, priority -> None: Priority = Priority.MEDIUM) -> None:
         """
 Add item to priority queue."""
         self.queues[priority].append({
@@ -336,7 +336,7 @@ class IntelligentRateLimiter:
     - Predictive analysis
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """
 Initialize intelligent rate limiter."""
         self.platform_configs: Dict[str, RateLimitConfig] = {}
@@ -374,7 +374,7 @@ Initialize intelligent rate limiter."""
         
         logger.info("Intelligent Rate Limiter initialized")
     
-    def configure_platform(self, config: RateLimitConfig):
+    def configure_platform(self, config -> None: RateLimitConfig) -> None:
         """Configure rate limiting for platform."""
         self.platform_configs[config.platform] = config
         
@@ -459,13 +459,13 @@ Initialize intelligent rate limiter."""
     
     async def record_request(
         self,
-        platform: str,
-        priority: Priority = Priority.MEDIUM,
-        response_time: float = 0.0,
-        success: bool = True,
-        size_bytes: int = 0,
-        endpoint: str = ""
-    ):
+        platform -> None: str,
+        priority -> None: Priority = Priority.MEDIUM,
+        response_time -> None: float = 0.0,
+        success -> None: bool = True,
+        size_bytes -> None: int = 0,
+        endpoint -> None: str = ""
+    ) -> None:
         """Record completed request for analytics and adaptation."""
         # Record metrics
         metrics = RequestMetrics(
@@ -521,7 +521,7 @@ Initialize intelligent rate limiter."""
         
         return await request_item['future']
     
-    async def _start_queue_processor(self):
+    async def _start_queue_processor(self) -> None:
         """
 Start background queue processor."""
         if self._queue_processor_task and not self._queue_processor_task.done():
@@ -530,7 +530,7 @@ Start background queue processor."""
         self._processing_active = True
         self._queue_processor_task = asyncio.create_task(self._process_queue())
     
-    async def _process_queue(self):
+    async def _process_queue(self) -> None:
         """
 Process queued requests with rate limiting."""
         logger.info("Started rate limited queue processor")
@@ -604,7 +604,7 @@ Process queued requests with rate limiting."""
         
         return 0.0
     
-    def _update_status(self, platform: str, can_proceed: bool):
+    def _update_status(self, platform -> None: str, can_proceed -> None: bool) -> None:
         """
 Update platform rate limit status."""
         if platform not in self.status_cache:
@@ -624,7 +624,7 @@ Update platform rate limit status."""
         status.is_limited = not can_proceed
         status.last_request_time = datetime.utcnow()
     
-    async def _check_alert_conditions(self, platform: str, metrics: RequestMetrics):
+    async def _check_alert_conditions(self, platform -> None: str, metrics -> None: RequestMetrics) -> None:
         """
 Check for alert conditions and trigger callbacks."""
         # Check high error rate
@@ -649,7 +649,7 @@ Check for alert conditions and trigger callbacks."""
                 'endpoint': metrics.endpoint
             })
     
-    async def _trigger_alert(self, alert_type: str, data: Dict[str, Any]):
+    async def _trigger_alert(self, alert_type -> None: str, data -> None: Dict[str, Any]) -> None:
         """
 Trigger alert callbacks."""
         alert_data = {
@@ -667,7 +667,7 @@ Trigger alert callbacks."""
             except Exception as e:
                 logger.error(f"Alert callback error: {e}")
     
-    def register_alert_callback(self, callback: Callable):
+    def register_alert_callback(self, callback -> None: Callable) -> None:
         """Register callback for rate limiting alerts."""
         self.alert_callbacks.append(callback)
     
@@ -718,7 +718,7 @@ Get performance metrics."""
             'max_response_time': max(response_times) if response_times else 0.0
         }
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         try:
             logger.info(f"Executing shutdown")
             
@@ -789,12 +789,12 @@ Get performance metrics."""
         
         return True, 0.0
     
-    def block_ip(self, ip_address: str, reason: str = "security_violation"):
+    def block_ip(self, ip_address -> None: str, reason -> None: str = "security_violation") -> None:
         """Block an IP address"""
         self.blocked_ips.add(ip_address)
         logger.warning(f"IP {ip_address} blocked: {reason}")
     
-    def unblock_ip(self, ip_address: str):
+    def unblock_ip(self, ip_address -> None: str) -> None:
         """Unblock an IP address"""
         self.blocked_ips.discard(ip_address)
         self.throttled_ips.pop(ip_address, None)
@@ -852,13 +852,13 @@ Get performance metrics."""
         # Simplified calculation - in production, use more sophisticated algorithm  
         return 30.0  # 30 seconds default wait
     
-    def configure_ip_limits(self, limit_value: int, window_size: int):
+    def configure_ip_limits(self, limit_value -> None: int, window_size -> None: int) -> None:
         """Configure global IP rate limits"""
         self.ip_config.limit_value = limit_value
         self.ip_config.window_size = window_size
         logger.info(f"IP rate limits configured: {limit_value} requests per {window_size} seconds")
     
-    def configure_user_limits(self, limit_value: int, window_size: int):
+    def configure_user_limits(self, limit_value -> None: int, window_size -> None: int) -> None:
         """Configure global user rate limits"""
         self.user_config.limit_value = limit_value
         self.user_config.window_size = window_size

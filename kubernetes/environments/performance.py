@@ -172,7 +172,7 @@ class PerformanceEnvironmentManager:
     - Performance monitoring and profiling
     """
     
-    def __init__(self, profile: PerformanceProfile = PerformanceProfile.PRODUCTION, config_path: Optional[str] = None):
+    def __init__(self, profile -> None: PerformanceProfile = PerformanceProfile.PRODUCTION, config_path -> None: Optional[str] = None) -> None:
         self.profile = profile
         self.config_path = config_path or f"./performance/{profile.value}_config.yml"
         self.environment = "performance"
@@ -549,7 +549,7 @@ class PerformanceEnvironmentManager:
         }
     
     # Private helper methods
-    def _apply_profile_optimizations(self):
+    def _apply_profile_optimizations(self) -> None:
         """
 Apply profile-specific performance optimizations"""
         if self.profile == PerformanceProfile.HIGH_PERFORMANCE:

@@ -1,3 +1,8 @@
+"""
+Platform Integration Deployment module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """Platform Integration Deployment Manager
 Handles deployment of platform APIs integration for multi-platform content monitoring
@@ -126,7 +131,7 @@ class PlatformIntegrationDeploymentManager:
     and revenue tracking across multiple platforms
     """
     
-    def __init__(self, config_path: Optional[str] = None):
+    def __init__(self, config_path -> None: Optional[str] = None) -> None:
         """
 Initialize platform integration deployment manager"""
         self.config_path = config_path or "/etc/ia-influencer/platform-integration-deployment.yaml"
@@ -794,7 +799,7 @@ Get detailed status for specific platform"""
             raise
 
 
-def main():
+def main() -> None:
     """Main function for CLI usage"""
     import argparse
     

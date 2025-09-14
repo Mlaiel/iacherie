@@ -1,4 +1,6 @@
 """
+import logging
+
 🚌 Event Bus Service
 Enterprise event-driven architecture with real-time messaging and event sourcing
 
@@ -135,7 +137,7 @@ class EventSubscription(BaseModel):
 class EventHandler(ABC):
     """Abstract base class for event handlers"""
     
-    def __init__(self, handler_id: str, name: str):
+    def __init__(self, handler_id -> None: str, name -> None: str) -> None:
         self.handler_id = handler_id
         self.name = name
         self.is_active = True
@@ -191,7 +193,7 @@ class EventHandler(ABC):
 class EmailNotificationHandler(EventHandler):
     """Email notification event handler"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__("email_notification", "Email Notification Handler")
     
     async def handle_event(self, event: Event) -> bool:
@@ -217,7 +219,7 @@ class EmailNotificationHandler(EventHandler):
 class WebhookHandler(EventHandler):
     """Webhook delivery event handler"""
     
-    def __init__(self, webhook_url: str):
+    def __init__(self, webhook_url -> None: str) -> None:
         super().__init__(f"webhook_{hashlib.md5(webhook_url.encode()).hexdigest()[:8]}", 
                         f"Webhook Handler ({webhook_url})")
         self.webhook_url = webhook_url
@@ -250,7 +252,7 @@ class EventStore:
     Backend Senior: Performance optimization, data integrity
     """
     
-    def __init__(self, max_events: int = 100000):
+    def __init__(self, max_events -> None: int = 100000) -> None:
         self.events: deque = deque(maxlen=max_events)
         self.event_index: Dict[str, Event] = {}
         self.type_index: Dict[EventType, List[str]] = defaultdict(list)
@@ -403,7 +405,7 @@ class EventBusService:
     - DBA: Event sourcing, data persistence, querying
     """
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config -> None: Dict[str, Any] = None) -> None:
         self.config = config or {}
         self.event_store = EventStore(max_events=self.config.get('max_stored_events', 100000))
         
@@ -440,7 +442,7 @@ class EventBusService:
         logger.info("Event Bus Service initialized",
                    config=self.config)
     
-    def _initialize_default_handlers(self):
+    def _initialize_default_handlers(self) -> None:
         """Initialize default system event handlers"""
         # Email notification handler
         email_handler = EmailNotificationHandler()
@@ -451,7 +453,7 @@ class EventBusService:
             webhook_handler = WebhookHandler(self.config['system_webhook_url'])
             self.event_handlers[webhook_handler.handler_id] = webhook_handler
     
-    def _start_background_processors(self):
+    def _start_background_processors(self) -> None:
         """Start background event processing tasks"""
         asyncio.create_task(self._event_processor())
         asyncio.create_task(self._dead_letter_processor())
@@ -493,7 +495,7 @@ class EventBusService:
                         error=str(e))
             return False
     
-    async def _event_processor(self):
+    async def _event_processor(self) -> None:
         """Background event processor"""
         while True:
             try:
@@ -555,7 +557,7 @@ class EventBusService:
         
         return matching
     
-    async def _deliver_event_to_subscription(self, event: Event, subscription: EventSubscription):
+    async def _deliver_event_to_subscription(self, event -> None: Event, subscription -> None: EventSubscription) -> None:
         """Deliver event to a specific subscription"""
         try:
             if subscription.subscription_type == SubscriptionType.PUSH:
@@ -580,7 +582,7 @@ class EventBusService:
             # Handle retry logic
             await self._handle_delivery_failure(event, subscription, str(e))
     
-    async def _deliver_push_event(self, event: Event, subscription: EventSubscription):
+    async def _deliver_push_event(self, event -> None: Event, subscription -> None: EventSubscription) -> None:
         """Deliver event via push (webhook)"""
         if not subscription.endpoint_url:
             raise ValueError("Push subscription requires endpoint_url")
@@ -602,7 +604,7 @@ class EventBusService:
         if not success:
             raise Exception("Webhook delivery failed")
     
-    async def _deliver_pull_event(self, event: Event, subscription: EventSubscription):
+    async def _deliver_pull_event(self, event -> None: Event, subscription -> None: EventSubscription) -> None:
         """Deliver event to pull queue"""
         # Get or create queue for subscription
         if subscription.subscription_id not in self.event_streams:
@@ -618,7 +620,7 @@ class EventBusService:
             await self.dead_letter_queue.put((event, subscription, "Queue full"))
             raise Exception("Subscription queue is full")
     
-    async def _deliver_stream_event(self, event: Event, subscription: EventSubscription):
+    async def _deliver_stream_event(self, event -> None: Event, subscription -> None: EventSubscription) -> None:
         """Deliver event to stream subscribers"""
         subscription_streams = self.stream_subscribers.get(subscription.subscription_id, set())
         
@@ -634,7 +636,7 @@ class EventBusService:
         for closed_stream in closed_streams:
             subscription_streams.discard(closed_stream)
     
-    async def _deliver_to_stream_subscribers(self, event: Event):
+    async def _deliver_to_stream_subscribers(self, event -> None: Event) -> None:
         """Deliver event to all real-time stream subscribers"""
         for subscription_id, streams in self.stream_subscribers.items():
             subscription = self.subscriptions.get(subscription_id)
@@ -656,7 +658,7 @@ class EventBusService:
                 for closed_stream in closed_streams:
                     streams.discard(closed_stream)
     
-    async def _handle_delivery_failure(self, event: Event, subscription: EventSubscription, error: str):
+    async def _handle_delivery_failure(self, event -> None: Event, subscription -> None: EventSubscription, error -> None: str) -> None:
         """Handle event delivery failure with retry logic"""
         
         # Check if event should be retried
@@ -688,12 +690,12 @@ class EventBusService:
                           subscription_id=subscription.subscription_id,
                           error=error)
     
-    async def _schedule_retry(self, event: Event, subscription: EventSubscription, delay: float):
+    async def _schedule_retry(self, event -> None: Event, subscription -> None: EventSubscription, delay -> None: float) -> None:
         """Schedule event retry after delay"""
         await asyncio.sleep(delay)
         await self._deliver_event_to_subscription(event, subscription)
     
-    async def _dead_letter_processor(self):
+    async def _dead_letter_processor(self) -> None:
         """Process dead letter queue"""
         while True:
             try:
@@ -714,7 +716,7 @@ class EventBusService:
                 logger.error("Dead letter processor error", error=str(e))
                 await asyncio.sleep(1)
     
-    async def _metrics_updater(self):
+    async def _metrics_updater(self) -> None:
         """Update throughput metrics"""
         last_events_published = 0
         
@@ -738,7 +740,7 @@ class EventBusService:
             except Exception as e:
                 logger.error("Metrics update failed", error=str(e))
     
-    def _update_processing_time_metric(self, processing_time: float):
+    def _update_processing_time_metric(self, processing_time -> None: float) -> None:
         """Update average processing time metric"""
         current_avg = self.metrics['average_processing_time']
         total_events = self.metrics['events_published']
@@ -989,7 +991,7 @@ class EventBusService:
         }
 
 # Example usage and testing
-async def example_usage():
+async def example_usage() -> None:
     """Example usage of the Event Bus Service"""
     
     # Initialize event bus

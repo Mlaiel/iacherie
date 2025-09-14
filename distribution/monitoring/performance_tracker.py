@@ -95,7 +95,7 @@ class ApplicationMetrics:
 class PerformanceTracker:
     """Enterprise performance tracking system"""
     
-    def __init__(self, redis_url: Optional[str] = None):
+    def __init__(self, redis_url -> None: Optional[str] = None) -> None:
         self.redis_url = redis_url
         self.redis_client = None
         self.metrics_buffer: Dict[str, deque] = defaultdict(lambda: deque(maxlen=1000))
@@ -118,7 +118,7 @@ class PerformanceTracker:
         self.error_count: int = 0
         self.total_requests: int = 0
     
-    async def start(self):
+    async def start(self) -> None:
         """Start performance monitoring"""
         if self.is_running:
             return
@@ -143,7 +143,7 @@ class PerformanceTracker:
         self._monitor_task = asyncio.create_task(self._monitoring_loop())
         logger.info("Performance tracking started")
     
-    async def stop(self):
+    async def stop(self) -> None:
         """Stop performance monitoring"""
         if not self.is_running:
             return
@@ -162,7 +162,7 @@ class PerformanceTracker:
         
         logger.info("Performance tracking stopped")
     
-    async def _monitoring_loop(self):
+    async def _monitoring_loop(self) -> None:
         """Main monitoring loop"""
         while self.is_running:
             try:
@@ -187,7 +187,7 @@ class PerformanceTracker:
                 logger.error(f"Error in monitoring loop: {e}")
                 await asyncio.sleep(5)
     
-    async def _collect_system_metrics(self):
+    async def _collect_system_metrics(self) -> None:
         """Collect system-level performance metrics"""
         try:
             # CPU metrics
@@ -235,7 +235,7 @@ class PerformanceTracker:
         except Exception as e:
             logger.error(f"Failed to collect system metrics: {e}")
     
-    async def _collect_application_metrics(self):
+    async def _collect_application_metrics(self) -> None:
         """Collect application-level performance metrics"""
         try:
             # Request rate (requests per second)
@@ -271,12 +271,12 @@ class PerformanceTracker:
     
     async def record_metric(
         self,
-        name: str,
-        value: float,
-        metric_type: MetricType,
-        tags: Optional[Dict[str, str]] = None,
-        unit: str = ""
-    ):
+        name -> None: str,
+        value -> None: float,
+        metric_type -> None: MetricType,
+        tags -> None: Optional[Dict[str, str]] = None,
+        unit -> None: str = ""
+    ) -> None:
         """Record a performance metric"""
         try:
             metric = PerformanceMetric(
@@ -300,7 +300,7 @@ class PerformanceTracker:
         except Exception as e:
             logger.error(f"Failed to record metric {name}: {e}")
     
-    async def _store_metric_in_redis(self, metric: PerformanceMetric):
+    async def _store_metric_in_redis(self, metric -> None: PerformanceMetric) -> None:
         """Store metric in Redis"""
         try:
             key = f"metrics:{metric.name}:{int(metric.timestamp.timestamp())}"
@@ -308,7 +308,7 @@ class PerformanceTracker:
         except Exception as e:
             logger.error(f"Failed to store metric in Redis: {e}")
     
-    def _update_time_series(self, name: str, value: float):
+    def _update_time_series(self, name -> None: str, value -> None: float) -> None:
         """Update time series data"""
         current_minute = int(time.time() // 60)
         
@@ -319,7 +319,7 @@ class PerformanceTracker:
             # Update current minute with latest value
             self.minute_metrics[name][-1] = (current_minute, value)
     
-    async def _aggregate_metrics(self):
+    async def _aggregate_metrics(self) -> None:
         """Aggregate metrics for different time intervals"""
         try:
             current_time = int(time.time())
@@ -347,7 +347,7 @@ class PerformanceTracker:
         except Exception as e:
             logger.error(f"Failed to aggregate metrics: {e}")
     
-    async def _check_thresholds(self):
+    async def _check_thresholds(self) -> None:
         """Check performance thresholds and trigger alerts"""
         try:
             for metric_name, threshold in self.thresholds.items():
@@ -387,7 +387,7 @@ class PerformanceTracker:
             return abs(value - threshold) < 0.01
         return False
     
-    async def _trigger_alert(self, metric_name: str, value: float, level: AlertLevel, threshold: PerformanceThreshold):
+    async def _trigger_alert(self, metric_name -> None: str, value -> None: float, level -> None: AlertLevel, threshold -> None: PerformanceThreshold) -> None:
         """Trigger performance alert"""
         try:
             alert_data = {
@@ -414,15 +414,15 @@ class PerformanceTracker:
         except Exception as e:
             logger.error(f"Failed to trigger alert: {e}")
     
-    def add_threshold(self, threshold: PerformanceThreshold):
+    def add_threshold(self, threshold -> None: PerformanceThreshold) -> None:
         """Add performance threshold"""
         self.thresholds[threshold.metric_name] = threshold
     
-    def add_alert_callback(self, callback: Callable):
+    def add_alert_callback(self, callback -> None: Callable) -> None:
         """Add alert callback function"""
         self.alert_callbacks.append(callback)
     
-    async def track_request(self, duration_ms: float, success: bool = True):
+    async def track_request(self, duration_ms -> None: float, success -> None: bool = True) -> None:
         """Track HTTP request performance"""
         current_time = time.time()
         self.request_times.append(current_time)
@@ -436,11 +436,11 @@ class PerformanceTracker:
         cutoff_time = current_time - 300  # Keep last 5 minutes
         self.timers['response_time'] = [t for t in self.timers['response_time'] if t > cutoff_time]
     
-    def increment_counter(self, name: str, value: float = 1.0):
+    def increment_counter(self, name -> None: str, value -> None: float = 1.0) -> None:
         """Increment a counter metric"""
         self.counters[name] += value
     
-    def set_gauge(self, name: str, value: float):
+    def set_gauge(self, name -> None: str, value -> None: float) -> None:
         """Set a gauge metric value"""
         self.counters[name] = value
     
@@ -519,16 +519,16 @@ class PerformanceTracker:
 class PerformanceTimer:
     """Context manager for timing operations"""
     
-    def __init__(self, tracker: PerformanceTracker, metric_name: str):
+    def __init__(self, tracker -> None: PerformanceTracker, metric_name -> None: str) -> None:
         self.tracker = tracker
         self.metric_name = metric_name
         self.start_time = None
     
-    async def __aenter__(self):
+    async def __aenter__(self) -> None:
         self.start_time = time.time()
         return self
     
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         if self.start_time:
             duration = (time.time() - self.start_time) * 1000  # Convert to milliseconds
             await self.tracker.record_metric(
@@ -543,18 +543,18 @@ class PerformanceTimer:
                 await self.tracker.track_request(duration, exc_type is None)
 
 # Decorator for tracking function performance
-def track_performance(tracker: PerformanceTracker, metric_name: Optional[str] = None):
+def track_performance(tracker -> None: PerformanceTracker, metric_name -> None: Optional[str] = None) -> None:
     """Decorator to track function performance"""
-    def decorator(func):
+    def decorator(func) -> None:
         name = metric_name or f"function.{func.__name__}.duration"
         
         if asyncio.iscoroutinefunction(func):
-            async def async_wrapper(*args, **kwargs):
+            async def async_wrapper(*args, **kwargs) -> None:
                 async with PerformanceTimer(tracker, name):
                     return await func(*args, **kwargs)
             return async_wrapper
         else:
-            def sync_wrapper(*args, **kwargs):
+            def sync_wrapper(*args, **kwargs) -> None:
                 start_time = time.time()
                 try:
                     result = func(*args, **kwargs)

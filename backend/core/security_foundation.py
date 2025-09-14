@@ -107,7 +107,7 @@ class CoreSecurityFramework:
     for the IA Influencer Agent platform with multi-layered security controls.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize the Core Security Framework"""
         self.config = config or {}
         self.security_events: List[SecurityEvent] = []
@@ -218,12 +218,12 @@ class CoreSecurityFramework:
         return response
     
     async def _log_security_event(self, 
-                                event_type: str,
-                                severity: ThreatLevel,
-                                source_ip: str = None,
-                                user_id: str = None,
-                                resource: str = None,
-                                metadata: Dict[str, Any] = None):
+                                event_type -> None: str,
+                                severity -> None: ThreatLevel,
+                                source_ip -> None: str = None,
+                                user_id -> None: str = None,
+                                resource -> None: str = None,
+                                metadata -> None: Dict[str, Any] = None) -> None:
         """Log security event"""
         
         event = SecurityEvent(
@@ -277,7 +277,7 @@ class EncryptionManager:
     key rotation, and secure key storage capabilities.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize the Encryption Manager"""
         self.config = config or {}
         self.encryption_keys: Dict[str, bytes] = {}
@@ -288,7 +288,7 @@ class EncryptionManager:
         # Generate default encryption key
         self._generate_default_keys()
     
-    def _generate_default_keys(self):
+    def _generate_default_keys(self) -> None:
         """Generate default encryption keys"""
         try:
             # Generate Fernet key for symmetric encryption
@@ -528,7 +528,7 @@ class AccessControlSystems:
     attribute-based access control, and dynamic authorization policies.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize the Access Control Systems"""
         self.config = config or {}
         self.user_permissions: Dict[str, Dict[str, Any]] = {}
@@ -539,7 +539,7 @@ class AccessControlSystems:
         # Initialize default roles and policies
         self._initialize_default_roles()
     
-    def _initialize_default_roles(self):
+    def _initialize_default_roles(self) -> None:
         """Initialize default role definitions"""
         
         self.role_definitions = {
@@ -702,7 +702,7 @@ class ThreatDetectionEngine:
     pattern recognition, and automated response capabilities.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize the Threat Detection Engine"""
         self.config = config or {}
         self.threat_patterns: Dict[str, Dict[str, Any]] = {}
@@ -712,7 +712,7 @@ class ThreatDetectionEngine:
         # Initialize threat patterns
         self._initialize_threat_patterns()
     
-    def _initialize_threat_patterns(self):
+    def _initialize_threat_patterns(self) -> None:
         """Initialize default threat detection patterns"""
         
         self.threat_patterns = {
@@ -881,7 +881,7 @@ class SecurityFoundation:
     across the IA Influencer Agent platform with enterprise-grade protection.
     """
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize the Security Foundation"""
         self.config = config or {}
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
@@ -907,7 +907,7 @@ class SecurityFoundation:
             self.logger.error(f"Security Foundation initialization failed: {e}")
             return False
     
-    async def _initialize_security_policies(self):
+    async def _initialize_security_policies(self) -> None:
         """Initialize default security policies"""
         
         # Register default access policies

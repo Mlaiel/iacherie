@@ -1,4 +1,6 @@
 """Database Schema Definitions
+from typing import Dict, List, Optional, Union, Tuple
+
 Enterprise database schema for IA Influencer Agent platform
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -28,6 +30,7 @@ Base = declarative_base()
 
 # Enums for database fields
 class ContentType(Enum):
+    """ContentType class implementation"""
     AUDIO = "audio"
     VIDEO = "video" 
     IMAGE = "image"
@@ -36,6 +39,7 @@ class ContentType(Enum):
 
 
 class ProtectionStatus(Enum):
+    """ProtectionStatus class implementation"""
     PENDING = "pending"
     PROCESSING = "processing"
     PROTECTED = "protected"
@@ -44,6 +48,7 @@ class ProtectionStatus(Enum):
 
 
 class AlertSeverity(Enum):
+    """AlertSeverity class implementation"""
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -51,6 +56,7 @@ class AlertSeverity(Enum):
 
 
 class RevenueStatus(Enum):
+    """RevenueStatus class implementation"""
     PENDING = "pending"
     CONFIRMED = "confirmed"
     DISPUTED = "disputed"
@@ -509,7 +515,7 @@ Database schema migration tracking"""
 
 
 # Function to create all tables
-def create_all_tables(engine):
+def create_all_tables(engine) -> None:
     """
 Create all database tables"""
     Base.metadata.create_all(engine)
@@ -1070,13 +1076,13 @@ User consent records for GDPR compliance"""
 
 
 # Function to create all tables
-def create_all_tables(engine):
+def create_all_tables(engine) -> None:
     """Create all database tables"""
     Base.metadata.create_all(engine)
 
 
 # Function to drop all tables (use with caution!)
-def drop_all_tables(engine):
+def drop_all_tables(engine) -> None:
     """
 Drop all database tables - USE WITH EXTREME CAUTION!"""
     Base.metadata.drop_all(engine)

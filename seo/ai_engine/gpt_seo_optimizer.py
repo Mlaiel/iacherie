@@ -119,7 +119,7 @@ class GPTSEOOptimizer:
     - Multi-language SEO optimization
     """
     
-    def __init__(self, db_pool: asyncpg.Pool, openai_api_key: str):
+    def __init__(self, db_pool -> None: asyncpg.Pool, openai_api_key -> None: str) -> None:
         self.db_pool = db_pool
         openai.api_key = openai_api_key
         self.encoding = tiktoken.get_encoding("cl100k_base")

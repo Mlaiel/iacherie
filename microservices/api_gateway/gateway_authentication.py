@@ -116,7 +116,7 @@ class GatewayAuthenticationService:
     JWT validation, multi-tenant support, and comprehensive security features.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize gateway authentication service."""
         self.is_active = False
         self.redis_client: Optional[aioredis.Redis] = None
@@ -166,7 +166,7 @@ class GatewayAuthenticationService:
         )
         return base64.urlsafe_b64encode(kdf.derive(password))
     
-    async def start(self):
+    async def start(self) -> None:
         """Start the gateway authentication service."""
         try:
             self.is_active = True
@@ -187,7 +187,7 @@ class GatewayAuthenticationService:
             self.is_active = False
             raise
     
-    async def stop(self):
+    async def stop(self) -> None:
         """Stop the gateway authentication service."""
         try:
             self.is_active = False
@@ -204,7 +204,7 @@ class GatewayAuthenticationService:
         except Exception as e:
             logger.error(f"❌ Error stopping Gateway Authentication Service: {e}")
     
-    async def _initialize_redis_connection(self):
+    async def _initialize_redis_connection(self) -> None:
         """Initialize Redis connection for session storage."""
         try:
             # In production, connect to actual Redis instance
@@ -213,12 +213,12 @@ class GatewayAuthenticationService:
         except Exception as e:
             logger.warning(f"⚠️ Redis connection failed: {e}")
     
-    async def _load_authentication_config(self):
+    async def _load_authentication_config(self) -> None:
         """Load authentication configuration."""
         # Load from configuration file or environment
         logger.info("⚙️ Authentication configuration loaded")
     
-    async def _initialize_default_api_keys(self):
+    async def _initialize_default_api_keys(self) -> None:
         """Initialize default API keys for testing."""
         # Create default API keys for different tiers
         default_keys = [
@@ -585,7 +585,7 @@ class GatewayAuthenticationService:
         
         return len(recent_failures) >= self.max_failed_attempts
     
-    async def _record_failed_attempt(self, ip_address: str):
+    async def _record_failed_attempt(self, ip_address -> None: str) -> None:
         """Record a failed authentication attempt."""
         if ip_address not in self.failed_attempts:
             self.failed_attempts[ip_address] = []
@@ -762,17 +762,17 @@ class GatewayAuthenticationService:
 gateway_authentication_service = GatewayAuthenticationService()
 
 
-async def start():
+async def start() -> None:
     """Start the Gateway Authentication Service."""
     await gateway_authentication_service.start()
 
 
-async def stop():
+async def stop() -> None:
     """Stop the Gateway Authentication Service."""
     await gateway_authentication_service.stop()
 
 
-async def main():
+async def main() -> None:
     """Main entry point for testing the service."""
     print("🔐 GATEWAY AUTHENTICATION SERVICE - ENTERPRISE")
     print("=" * 50)

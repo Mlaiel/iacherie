@@ -44,7 +44,7 @@ class FilterConfig:
 class InstagramFiltersEngine:
     """Enterprise Instagram and TikTok-style filters engine."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the Instagram filters engine."""
         self.filter_definitions = self._load_filter_definitions()
         self.social_media_presets = self._load_social_presets()

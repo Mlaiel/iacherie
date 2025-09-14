@@ -37,10 +37,10 @@ class NetworkMetricsDashboard:
     
     def __init__(
         self,
-        prometheus_endpoint: str = "http://localhost:9090",
-        grafana_endpoint: str = "http://localhost:3000",
-        redis_url: str = "redis://localhost:6379"
-    ):
+        prometheus_endpoint -> None: str = "http -> None://localhost -> None:9090",
+        grafana_endpoint -> None: str = "http -> None://localhost -> None:3000",
+        redis_url -> None: str = "redis -> None://localhost -> None:6379"
+    ) -> None:
         self.prometheus_endpoint = prometheus_endpoint
         self.grafana_endpoint = grafana_endpoint
         self.redis_url = redis_url
@@ -58,7 +58,7 @@ class NetworkMetricsDashboard:
         # Initialize custom metrics for IA platform
         self._initialize_platform_metrics()
     
-    def _initialize_platform_metrics(self):
+    def _initialize_platform_metrics(self) -> None:
         """Initialize platform-specific metrics"""
         
         # Content Protection Metrics
@@ -182,10 +182,10 @@ Initialize metrics dashboard"""
     
     async def record_content_fingerprint(
         self,
-        content_type: str,
-        protection_status: str,
-        processing_time: float
-    ):
+        content_type -> None: str,
+        protection_status -> None: str,
+        processing_time -> None: float
+    ) -> None:
         """Record content fingerprinting metrics"""
         try:
             # Update fingerprint counter
@@ -211,10 +211,10 @@ Initialize metrics dashboard"""
     
     async def record_content_violation(
         self,
-        violation_type: str,
-        action_taken: str,
-        content_metadata: Dict[str, Any]
-    ):
+        violation_type -> None: str,
+        action_taken -> None: str,
+        content_metadata -> None: Dict[str, Any]
+    ) -> None:
         """Record content violation detection"""
         try:
             # Update violation counter
@@ -245,10 +245,10 @@ Initialize metrics dashboard"""
     
     async def update_monetization_revenue(
         self,
-        content_type: str,
-        region: str,
-        revenue_amount: float
-    ):
+        content_type -> None: str,
+        region -> None: str,
+        revenue_amount -> None: float
+    ) -> None:
         """Update monetization revenue metrics"""
         try:
             # Update revenue gauge
@@ -275,12 +275,12 @@ Initialize metrics dashboard"""
     
     async def record_network_performance(
         self,
-        source_region: str,
-        target_region: str,
-        content_type: str,
-        latency_seconds: float,
-        bandwidth_bytes: int
-    ):
+        source_region -> None: str,
+        target_region -> None: str,
+        content_type -> None: str,
+        latency_seconds -> None: float,
+        bandwidth_bytes -> None: int
+    ) -> None:
         """Record network performance metrics"""
         try:
             # Record latency
@@ -302,10 +302,10 @@ Initialize metrics dashboard"""
     
     async def update_cdn_cache_efficiency(
         self,
-        region: str,
-        content_type: str,
-        hit_ratio: float
-    ):
+        region -> None: str,
+        content_type -> None: str,
+        hit_ratio -> None: float
+    ) -> None:
         """Update CDN cache efficiency metrics"""
         try:
             self.metrics['cdn_cache_efficiency'].labels(
@@ -318,10 +318,10 @@ Initialize metrics dashboard"""
     
     async def record_user_engagement(
         self,
-        content_id: str,
-        user_segment: str,
-        engagement_score: float
-    ):
+        content_id -> None: str,
+        user_segment -> None: str,
+        engagement_score -> None: float
+    ) -> None:
         """Record user engagement metrics"""
         try:
             self.metrics['user_engagement_score'].labels(
@@ -334,11 +334,11 @@ Initialize metrics dashboard"""
     
     async def update_content_popularity(
         self,
-        content_id: str,
-        content_type: str,
-        creator_tier: str,
-        popularity_score: float
-    ):
+        content_id -> None: str,
+        content_type -> None: str,
+        creator_tier -> None: str,
+        popularity_score -> None: float
+    ) -> None:
         """Update content popularity metrics"""
         try:
             self.metrics['content_popularity'].labels(
@@ -352,11 +352,11 @@ Initialize metrics dashboard"""
     
     async def record_security_event(
         self,
-        threat_type: str,
-        severity: str,
-        action: str,
-        source_details: Dict[str, Any]
-    ):
+        threat_type -> None: str,
+        severity -> None: str,
+        action -> None: str,
+        source_details -> None: Dict[str, Any]
+    ) -> None:
         """Record security event metrics"""
         try:
             # Update security counter
@@ -455,7 +455,7 @@ Initialize metrics dashboard"""
     
     # Private methods
     
-    async def _setup_prometheus_server(self):
+    async def _setup_prometheus_server(self) -> None:
         """Setup Prometheus metrics server"""
         try:
             # Start Prometheus metrics server on port 8000
@@ -464,7 +464,7 @@ Initialize metrics dashboard"""
         except Exception as e:
             logger.error(f"Failed to start Prometheus server: {e}")
     
-    async def _create_grafana_dashboards(self):
+    async def _create_grafana_dashboards(self) -> None:
         """Create Grafana dashboards for IA platform"""
         try:
             # Dashboard configurations
@@ -505,7 +505,7 @@ Initialize metrics dashboard"""
         except Exception as e:
             logger.error(f"Failed to create Grafana dashboards: {e}")
     
-    async def _setup_alerting_rules(self):
+    async def _setup_alerting_rules(self) -> None:
         """Setup alerting rules for critical metrics"""
         try:
             alerting_rules = {
@@ -537,7 +537,7 @@ Initialize metrics dashboard"""
         except Exception as e:
             logger.error(f"Failed to setup alerting rules: {e}")
     
-    async def _metrics_collection_loop(self):
+    async def _metrics_collection_loop(self) -> None:
         """Background metrics collection loop"""
         while True:
             try:
@@ -549,7 +549,7 @@ Initialize metrics dashboard"""
                 logger.error(f"Metrics collection loop error: {e}")
                 await asyncio.sleep(60)
     
-    async def _dashboard_update_loop(self):
+    async def _dashboard_update_loop(self) -> None:
         """Background dashboard update loop"""
         while True:
             try:
@@ -563,7 +563,7 @@ Initialize metrics dashboard"""
 
 
 # Example usage
-async def demo_metrics_dashboard():
+async def demo_metrics_dashboard() -> None:
     """Demonstrate metrics dashboard functionality"""
     
     print("🚀 IA Influencer Agent - Network Metrics Dashboard Demo")

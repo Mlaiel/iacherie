@@ -108,7 +108,7 @@ class RetryHandler:
     intelligent backoff, jitter, and detailed retry analytics.
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize retry handler."""
         self.logger = logging.getLogger(__name__)
         

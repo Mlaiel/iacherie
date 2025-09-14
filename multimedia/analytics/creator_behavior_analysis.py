@@ -158,7 +158,7 @@ class TrendAnalysis:
 class CreatorAnalyzer:
     """Main creator behavior analysis engine"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.logger = logger.getChild(self.__class__.__name__)
         
@@ -221,8 +221,8 @@ class CreatorAnalyzer:
             self.logger.error(f"Creator behavior analysis failed for {creator_id}: {e}")
             raise
     
-    async def _analyze_content_statistics(self, profile: CreatorProfile, 
-                                        content_data: List[Dict[str, Any]]):
+    async def _analyze_content_statistics(self, profile -> None: CreatorProfile, 
+                                        content_data -> None: List[Dict[str, Any]]) -> None:
         """Analyze basic content statistics"""
         try:
             profile.total_content_created = len(content_data)
@@ -250,8 +250,8 @@ class CreatorAnalyzer:
         except Exception as e:
             self.logger.error(f"Content statistics analysis failed: {e}")
     
-    async def _analyze_behavioral_patterns(self, profile: CreatorProfile, 
-                                         content_data: List[Dict[str, Any]]):
+    async def _analyze_behavioral_patterns(self, profile -> None: CreatorProfile, 
+                                         content_data -> None: List[Dict[str, Any]]) -> None:
         """Analyze creator behavioral patterns"""
         try:
             if not content_data:
@@ -319,8 +319,8 @@ class CreatorAnalyzer:
         except Exception as e:
             self.logger.error(f"Behavioral patterns analysis failed: {e}")
     
-    async def _analyze_performance_trends(self, profile: CreatorProfile, 
-                                        content_data: List[Dict[str, Any]]):
+    async def _analyze_performance_trends(self, profile -> None: CreatorProfile, 
+                                        content_data -> None: List[Dict[str, Any]]) -> None:
         """Analyze performance trends over time"""
         try:
             if len(content_data) < 5:  # Need sufficient data
@@ -363,8 +363,8 @@ class CreatorAnalyzer:
         except Exception as e:
             self.logger.error(f"Performance trends analysis failed: {e}")
     
-    async def _analyze_audience_insights(self, profile: CreatorProfile, 
-                                       content_data: List[Dict[str, Any]]):
+    async def _analyze_audience_insights(self, profile -> None: CreatorProfile, 
+                                       content_data -> None: List[Dict[str, Any]]) -> None:
         """Analyze audience insights and growth patterns"""
         try:
             # Calculate audience size (using unique viewers as proxy)
@@ -411,8 +411,8 @@ class CreatorAnalyzer:
         except Exception as e:
             self.logger.error(f"Audience insights analysis failed: {e}")
     
-    async def _analyze_content_strategy(self, profile: CreatorProfile, 
-                                      content_data: List[Dict[str, Any]]):
+    async def _analyze_content_strategy(self, profile -> None: CreatorProfile, 
+                                      content_data -> None: List[Dict[str, Any]]) -> None:
         """Analyze content strategy and themes"""
         try:
             # Analyze content themes
@@ -452,7 +452,7 @@ class CreatorAnalyzer:
         except Exception as e:
             self.logger.error(f"Content strategy analysis failed: {e}")
     
-    async def _classify_creator_type(self, profile: CreatorProfile):
+    async def _classify_creator_type(self, profile -> None: CreatorProfile) -> None:
         """Classify creator type based on behavior and performance"""
         try:
             score = 0
@@ -504,7 +504,7 @@ class CreatorAnalyzer:
         except Exception as e:
             self.logger.error(f"Creator type classification failed: {e}")
     
-    async def _generate_improvement_recommendations(self, profile: CreatorProfile):
+    async def _generate_improvement_recommendations(self, profile -> None: CreatorProfile) -> None:
         """Generate personalized improvement recommendations"""
         try:
             recommendations = []
@@ -546,7 +546,7 @@ class CreatorAnalyzer:
 class ContentPatternAnalyzer:
     """Content pattern detection and analysis"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.logger = logger.getChild(self.__class__.__name__)
     
@@ -768,7 +768,7 @@ class ContentPatternAnalyzer:
 class TrendDetector:
     """Trend detection and analysis for creator behavior"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         self.config = config or {}
         self.logger = logger.getChild(self.__class__.__name__)
     

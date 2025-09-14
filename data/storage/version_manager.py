@@ -186,7 +186,7 @@ class VersionManager:
     features like delta compression, conflict resolution, and collaboration support.
     """
     
-    def __init__(self, storage_path: Union[str, Path]):
+    def __init__(self, storage_path -> None: Union[str, Path]) -> None:
         """
         Initialize VersionManager with storage configuration.
         
@@ -215,7 +215,7 @@ class VersionManager:
         
         self.logger.info("🔄 VersionManager initialized with industrial capabilities")
     
-    def _create_version_structure(self):
+    def _create_version_structure(self) -> None:
         """Create organized version storage directory structure"""
         directories = [
             "versions/data",
@@ -472,7 +472,7 @@ Store version data in organized structure"""
             self.logger.warning(f"Delta creation failed: {e}")
             return {"delta_path": None, "compression_ratio": None}
     
-    async def _save_version_metadata(self, version_info: VersionInfo):
+    async def _save_version_metadata(self, version_info -> None: VersionInfo) -> None:
         """Save version metadata to storage"""
         try:
             metadata_dir = self.storage_path / "versions" / "metadata" / version_info.file_id
@@ -513,7 +513,7 @@ Store version data in organized structure"""
             self.logger.error(f"Failed to save version metadata: {e}")
             raise
     
-    async def _update_branch_info(self, file_id: str, branch_name: str, version_info: VersionInfo):
+    async def _update_branch_info(self, file_id -> None: str, branch_name -> None: str, version_info -> None: VersionInfo) -> None:
         """Update branch information with new version"""
         try:
             branch_key = f"{file_id}_{branch_name}"
@@ -548,7 +548,7 @@ Store version data in organized structure"""
         except Exception as e:
             self.logger.error(f"Failed to update branch info: {e}")
     
-    async def _save_branch_metadata(self, branch_key: str, branch_info: BranchInfo):
+    async def _save_branch_metadata(self, branch_key -> None: str, branch_info -> None: BranchInfo) -> None:
         """Save branch metadata to storage"""
         try:
             branch_dir = self.storage_path / "versions" / "branches"
@@ -575,7 +575,7 @@ Store version data in organized structure"""
         except Exception as e:
             self.logger.error(f"Failed to save branch metadata: {e}")
     
-    async def _load_file_versions(self, file_id: str):
+    async def _load_file_versions(self, file_id -> None: str) -> None:
         """Load all versions for a file from storage"""
         try:
             metadata_dir = self.storage_path / "versions" / "metadata" / file_id
@@ -1068,7 +1068,7 @@ Calculate overall similarity score between versions"""
         
         return conflicts
     
-    async def _save_merge_result(self, file_id: str, merge_result: MergeResult):
+    async def _save_merge_result(self, file_id -> None: str, merge_result -> None: MergeResult) -> None:
         """Save merge result for auditing"""
         try:
             merge_dir = self.storage_path / "versions" / "merges" / file_id
@@ -1094,7 +1094,7 @@ Calculate overall similarity score between versions"""
         except Exception as e:
             self.logger.error(f"Failed to save merge result: {e}")
     
-    async def _cleanup_old_versions(self, file_id: str):
+    async def _cleanup_old_versions(self, file_id -> None: str) -> None:
         """Clean up old versions based on retention policy"""
         try:
             if file_id not in self.versions:
@@ -1131,7 +1131,7 @@ Calculate overall similarity score between versions"""
         except Exception as e:
             self.logger.error(f"Version cleanup failed: {e}")
     
-    async def _remove_version(self, version: VersionInfo):
+    async def _remove_version(self, version -> None: VersionInfo) -> None:
         """Remove version data and metadata"""
         try:
             # Remove version data file

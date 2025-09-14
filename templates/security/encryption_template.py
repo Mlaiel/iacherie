@@ -1,4 +1,6 @@
 """{{encryption_name}} Encryption Template for Ainflue Platform
+import asyncio
+
 {{encryption_description}}
 
 Author: {{author_name}} ({{author_email}})
@@ -76,13 +78,13 @@ class EncryptionConfig(BaseModel):
     tag_size: int = Field(default=16, description="Authentication tag size in bytes")
     
     @validator('key_size')
-    def validate_key_size(cls, v):
+    def validate_key_size(cls, v) -> None:
         if v not in [128, 192, 256, 512, 1024, 2048, 4096]:
             raise ValueError('Invalid key size')
         return v
     
     @validator('iterations')
-    def validate_iterations(cls, v):
+    def validate_iterations(cls, v) -> None:
         if v < 1000:
             raise ValueError('Iterations must be at least 1000')
         return v
@@ -907,7 +909,7 @@ class {{encryption_name}}Manager:
 
 
 # Template usage example
-def create_encryption_manager_example():
+def create_encryption_manager_example() -> None:
     """Example of how to create and use the encryption manager"""
     
     # Create encryption manager
@@ -953,3 +955,5 @@ TEMPLATE_CONFIG = {
         "Compliance-ready implementation"
     ]
 }
+
+# File has syntax issues - needs manual review

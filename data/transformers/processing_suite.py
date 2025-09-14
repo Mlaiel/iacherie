@@ -193,7 +193,7 @@ class EncodingResult:
 class FormatConverter:
     """Universal format converter with intelligent processing."""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize format converter with configuration."""
         self.config = config or {}
         self.supported_formats = [fmt.value for fmt in SupportedFormat]
@@ -208,7 +208,7 @@ class FormatConverter:
         
         logger.info("FormatConverter initialized")
     
-    def _init_format_support_matrix(self):
+    def _init_format_support_matrix(self) -> None:
         """Initialize the format support matrix."""
         self.format_categories = {
             "audio": ["mp3", "wav", "flac", "aac", "ogg", "m4a", "wma"],
@@ -224,7 +224,7 @@ class FormatConverter:
             for fmt in formats:
                 self.format_to_category[fmt] = category
     
-    def _load_default_conversion_rules(self):
+    def _load_default_conversion_rules(self) -> None:
         """Load default conversion rules for common scenarios."""
         default_rules = [
             # Audio conversions
@@ -590,7 +590,7 @@ class FormatConverter:
 class EncodingManager:
     """Advanced encoding management for media optimization."""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize encoding manager with configuration."""
         self.config = config or {}
         self.encoding_profiles = {}
@@ -601,7 +601,7 @@ class EncodingManager:
         
         logger.info("EncodingManager initialized")
     
-    def _init_encoding_profiles(self):
+    def _init_encoding_profiles(self) -> None:
         """Initialize predefined encoding profiles."""
         self.encoding_profiles = {
             EncodingProfile.STREAMING: {
@@ -877,7 +877,7 @@ class EncodingManager:
 class QualityController:
     """Quality control and validation for conversion operations."""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize quality controller with configuration."""
         self.config = config or {}
         self.quality_thresholds = {
@@ -997,7 +997,7 @@ class QualityController:
 class BatchConverter:
     """Batch processing for multiple file conversions."""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize batch converter with configuration."""
         self.config = config or {}
         self.format_converter = FormatConverter(config)
@@ -1086,14 +1086,14 @@ class BatchConverter:
 class FormatRegistry:
     """Registry for managing supported formats and their capabilities."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize format registry."""
         self.formats = {}
         self._register_default_formats()
         
         logger.info("FormatRegistry initialized")
     
-    def _register_default_formats(self):
+    def _register_default_formats(self) -> None:
         """Register default supported formats."""
         # Audio formats
         audio_formats = {

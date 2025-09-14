@@ -1,4 +1,6 @@
 """{{model_name}} MongoDB Model Template for Ainflue Platform
+import asyncio
+
 {{model_description}}
 
 Author: {{author_name}} ({{author_email}})
@@ -33,17 +35,17 @@ class PyObjectId(ObjectId):
     """Custom ObjectId type for Pydantic"""
     
     @classmethod
-    def __get_validators__(cls):
+    def __get_validators__(cls) -> None:
         yield cls.validate
     
     @classmethod
-    def validate(cls, v):
+    def validate(cls, v) -> None:
         if not ObjectId.is_valid(v):
             raise ValueError("Invalid ObjectId")
         return ObjectId(v)
     
     @classmethod
-    def __modify_schema__(cls, field_schema):
+    def __modify_schema__(cls, field_schema) -> None:
         field_schema.update(type="string")
 
 
@@ -79,6 +81,7 @@ class BaseMongoModel(BaseModel):
     metadata: Dict[str, Any] = Field(default_factory=dict, description="Additional metadata")
     
     class Config:
+    """Config: class implementation"""
         allow_population_by_field_name = True
         arbitrary_types_allowed = True
         json_encoders = {ObjectId: str}
@@ -94,13 +97,13 @@ class BaseMongoModel(BaseModel):
         }
     
     @validator("created_at", "updated_at", pre=True)
-    def validate_datetime(cls, v):
+    def validate_datetime(cls, v) -> None:
         if isinstance(v, str):
             return datetime.fromisoformat(v.replace('Z', '+00:00'))
         return v
     
     @root_validator(pre=True)
-    def set_updated_at(cls, values):
+    def set_updated_at(cls, values) -> None:
         if "updated_at" not in values:
             values["updated_at"] = datetime.now(timezone.utc)
         return values
@@ -139,6 +142,7 @@ class {{model_name}}(BaseMongoModel):
     updated_by: Optional[PyObjectId] = Field(None, description="User who last updated this document")
     
     class Config:
+    """Config: class implementation"""
         schema_extra = {
             "example": {
                 "name": "Example {{model_name}}",
@@ -154,7 +158,7 @@ class {{model_name}}(BaseMongoModel):
         }
     
     @validator("name")
-    def validate_name(cls, v):
+    def validate_name(cls, v) -> None:
         if not v or len(v.strip()) == 0:
             raise ValueError("Name cannot be empty")
         if len(v) > 255:
@@ -162,14 +166,14 @@ class {{model_name}}(BaseMongoModel):
         return v.strip()
     
     @validator("tags", "categories")
-    def validate_lists(cls, v):
+    def validate_lists(cls, v) -> None:
         if v is None:
             return []
         # Remove duplicates and empty strings
         return list(set(filter(None, [item.strip() for item in v])))
     
     @validator("permissions")
-    def validate_permissions(cls, v):
+    def validate_permissions(cls, v) -> None:
         if v is None:
             return {}
         # Ensure permissions are properly structured
@@ -183,7 +187,7 @@ class {{model_name}}(BaseMongoModel):
 class {{model_name}}Repository:
     """MongoDB repository for {{model_name}} documents"""
     
-    def __init__(self, database: AsyncIOMotorDatabase, metrics_collector: Optional[DatabaseMetricsCollector] = None):
+    def __init__(self, database -> None: AsyncIOMotorDatabase, metrics_collector -> None: Optional[DatabaseMetricsCollector] = None) -> None:
         self.database = database
         self.collection: AsyncIOMotorCollection = database[self._get_collection_name()]
         self.metrics_collector = metrics_collector or DatabaseMetricsCollector()
@@ -194,7 +198,7 @@ class {{model_name}}Repository:
         """Get the collection name for this model"""
         return "{{collection_name}}"
     
-    async def ensure_indexes(self):
+    async def ensure_indexes(self) -> None:
         """Ensure database indexes are created"""
         if self._indexes_created:
             return
@@ -881,3 +885,5 @@ TEMPLATE_CONFIG = {
         "Performance metrics"
     ]
 }
+
+# File has syntax issues - needs manual review

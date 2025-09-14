@@ -25,7 +25,7 @@ logger = logging.getLogger(__name__)
 # Individual platform collector classes (simplified implementations)
 class EcommerceCollector(BaseCollector):
     """Ecommerce content collector."""
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs) -> None:
         super().__init__("ecommerce", rate_limit=60)
     
     async def search_content(self, query: str, config: CollectionConfig) -> List[CollectorResult]:
@@ -42,7 +42,7 @@ class EcommerceCollector(BaseCollector):
 
 class PinterestCollector(BaseCollector):
     """Pinterest content collector."""
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs) -> None:
         super().__init__("pinterest", rate_limit=50)
     
     async def search_content(self, query: str, config: CollectionConfig) -> List[CollectorResult]:
@@ -65,7 +65,7 @@ class MarketplaceCollector(BaseCollector):
     into a single interface for efficient marketplace content collection.
     """
     
-    def __init__(self, platform_configs: Optional[Dict[str, Dict]] = None):
+    def __init__(self, platform_configs -> None: Optional[Dict[str, Dict]] = None) -> None:
         """Initialize with platform-specific configurations."""
         super().__init__("marketplace", rate_limit=120)
         

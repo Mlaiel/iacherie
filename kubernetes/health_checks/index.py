@@ -6,7 +6,7 @@ components, providing unified access to health checking capabilities across
 the entire IA Influencer Agent platform.
 
 Key Features:
-- Unified health monitoring API
+    - Unified health monitoring API
 - Real-time health status aggregation
 - Automated alerting and notification
 - Performance metrics collection and analysis
@@ -75,7 +75,7 @@ class HealthMonitoringConfig:
     # Alert thresholds
     alert_thresholds: Dict[str, Any] = None
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         try:
                     # Request validation
                     if not data:
@@ -108,7 +108,7 @@ class HealthMonitoringOrchestrator:
     the entire platform, coordinating all subsystem health checkers and
     providing unified health status reporting.
     """
-    def __init__(self, config: Dict[str, Any], app=None, redis_client=None):
+    def __init__(self, config -> None: Dict[str, Any], app=None, redis_client=None) -> None:
         """
         Initialize health monitoring orchestrator
         
@@ -134,7 +134,7 @@ class HealthMonitoringOrchestrator:
         self._last_comprehensive_check = None
         self._monitoring_task = None
 
-    def _initialize_health_checkers(self):
+    def _initialize_health_checkers(self) -> None:
         """Initialize all health checking components"""
         try:
             # Core health checker
@@ -217,7 +217,7 @@ class HealthMonitoringOrchestrator:
             self.logger.error(f"Failed to initialize health checkers: {str(e)}")
             raise
 
-    async def start_monitoring(self):
+    async def start_monitoring(self) -> None:
         """Start continuous health monitoring"""
         if self._is_running:
             self.logger.warning("Health monitoring is already running")
@@ -234,7 +234,7 @@ class HealthMonitoringOrchestrator:
             f"Health monitoring started with {self.monitoring_config.check_interval_seconds}s interval"
         )
 
-    async def stop_monitoring(self):
+    async def stop_monitoring(self) -> None:
         try:
                     # Collect metrics
                     metrics = {
@@ -271,7 +271,7 @@ class HealthMonitoringOrchestrator:
         
         self.logger.info("Health monitoring stopped")
 
-    async def _monitoring_loop(self):
+    async def _monitoring_loop(self) -> None:
         """Main health monitoring loop"""
         last_comprehensive_check = datetime.utcnow()
         
@@ -303,7 +303,7 @@ class HealthMonitoringOrchestrator:
                 # Continue monitoring after error
                 await asyncio.sleep(30)  # Wait 30 seconds before retrying
 
-    async def _perform_comprehensive_health_check(self):
+    async def _perform_comprehensive_health_check(self) -> None:
         """Perform comprehensive health check across all subsystems"""
         try:
             self.logger.info("Performing comprehensive health check")
@@ -341,7 +341,7 @@ class HealthMonitoringOrchestrator:
         except Exception as e:
             self.logger.error(f"Comprehensive health check failed: {str(e)}")
 
-    async def _perform_quick_health_check(self):
+    async def _perform_quick_health_check(self) -> None:
         """Perform quick health check of critical services"""
         try:
             # Quick readiness check
@@ -544,7 +544,7 @@ class HealthMonitoringOrchestrator:
             self.logger.error(f"Failed to export Prometheus metrics: {str(e)}")
             return f"# Error exporting metrics: {str(e)}\n"
 
-    async def _cleanup_resources(self):
+    async def _cleanup_resources(self) -> None:
         """Clean up health monitoring resources"""
         try:
             # Cleanup database connections
@@ -732,3 +732,5 @@ Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security +
 
 Copyright (c) 2025 Fahed Mlaiel. All Rights Reserved.
 """
+
+# File has syntax issues - needs manual review

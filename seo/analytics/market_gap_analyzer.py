@@ -87,7 +87,7 @@ class CompetitorAnalysis:
 class MarketGapAnalyzer:
     """Advanced market gap analysis with AI-powered opportunity detection"""
     
-    def __init__(self, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, config -> None: Optional[Dict[str, Any]] = None) -> None:
         """Initialize Market Gap Analyzer
         
         Args:
@@ -724,7 +724,7 @@ class MarketGapAnalyzer:
 
 
 # Example usage and testing
-async def main():
+async def main() -> None:
     """Example usage of Market Gap Analyzer"""
     try:
         # Initialize analyzer

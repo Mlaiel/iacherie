@@ -1,3 +1,8 @@
+"""
+Saga Persistence Repository module
+Enterprise implementation for Ainflue platform
+"""
+
 #!/usr/bin/env python3
 """Saga Persistence Repository - Enterprise State Persistence
 ===========================================================
@@ -106,13 +111,13 @@ class SagaMetadata:
 class InMemoryStore:
     """In-memory storage implementation"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.snapshots: Dict[str, List[SagaSnapshot]] = {}
         self.events: Dict[str, List[SagaEvent]] = {}
         self.metadata: Dict[str, SagaMetadata] = {}
         self.locks: Dict[str, asyncio.Lock] = {}
     
-    async def store_snapshot(self, snapshot: SagaSnapshot):
+    async def store_snapshot(self, snapshot -> None: SagaSnapshot) -> None:
         """Store saga snapshot"""
         if snapshot.saga_id not in self.snapshots:
             self.snapshots[snapshot.saga_id] = []
@@ -130,7 +135,7 @@ class InMemoryStore:
         
         return self.snapshots[saga_id][-1]
     
-    async def store_event(self, event: SagaEvent):
+    async def store_event(self, event -> None: SagaEvent) -> None:
         """Store saga event"""
         if event.saga_id not in self.events:
             self.events[event.saga_id] = []
@@ -151,7 +156,7 @@ class InMemoryStore:
             if event.version > from_version
         ]
     
-    async def store_metadata(self, metadata: SagaMetadata):
+    async def store_metadata(self, metadata -> None: SagaMetadata) -> None:
         """Store saga metadata"""
         self.metadata[metadata.saga_id] = metadata
     
@@ -169,12 +174,12 @@ class InMemoryStore:
 class DatabaseStore:
     """Database storage implementation (mock)"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         # Mock database connection
         self.connection_pool = None
         self.table_prefix = "saga_"
     
-    async def store_snapshot(self, snapshot: SagaSnapshot):
+    async def store_snapshot(self, snapshot -> None: SagaSnapshot) -> None:
         """Store snapshot in database"""
         # Mock database storage
         logger.debug(f"Storing snapshot {snapshot.snapshot_id} for saga {snapshot.saga_id}")
@@ -187,7 +192,7 @@ class DatabaseStore:
         await asyncio.sleep(0.01)  # Simulate DB I/O
         return None
     
-    async def store_event(self, event: SagaEvent):
+    async def store_event(self, event -> None: SagaEvent) -> None:
         """Store event in database"""
         # Mock database storage
         logger.debug(f"Storing event {event.event_id} for saga {event.saga_id}")
@@ -204,7 +209,7 @@ class DatabaseStore:
         await asyncio.sleep(0.01)  # Simulate DB I/O
         return []
     
-    async def store_metadata(self, metadata: SagaMetadata):
+    async def store_metadata(self, metadata -> None: SagaMetadata) -> None:
         """Store metadata in database"""
         logger.debug(f"Storing metadata for saga {metadata.saga_id}")
         await asyncio.sleep(0.01)  # Simulate DB I/O
@@ -221,10 +226,10 @@ class SagaPersistenceRepository:
     
     def __init__(
         self,
-        mode: SagaPersistenceMode = SagaPersistenceMode.HYBRID,
-        snapshot_interval: int = 5,
-        retention_days: int = 30
-    ):
+        mode -> None: SagaPersistenceMode = SagaPersistenceMode.HYBRID,
+        snapshot_interval -> None: int = 5,
+        retention_days -> None: int = 30
+    ) -> None:
         self.mode = mode
         self.snapshot_interval = snapshot_interval
         self.retention_days = retention_days
@@ -381,13 +386,13 @@ class SagaPersistenceRepository:
     
     async def save_saga_metadata(
         self,
-        saga_id: str,
-        saga_type: str,
-        creator_id: str,
-        business_context: Dict[str, Any] = None,
-        tags: List[str] = None,
-        priority: str = "normal"
-    ):
+        saga_id -> None: str,
+        saga_type -> None: str,
+        creator_id -> None: str,
+        business_context -> None: Dict[str, Any] = None,
+        tags -> None: List[str] = None,
+        priority -> None: str = "normal"
+    ) -> None:
         """Save saga metadata"""
         now = datetime.now(timezone.utc)
         
@@ -440,7 +445,7 @@ class SagaPersistenceRepository:
         
         return None
     
-    async def mark_saga_completed(self, saga_id: str):
+    async def mark_saga_completed(self, saga_id -> None: str) -> None:
         """Mark saga as completed"""
         metadata = await self.get_saga_metadata(saga_id)
         if metadata:
@@ -512,7 +517,7 @@ class SagaPersistenceRepository:
             version=events[-1].version if events else 1
         )
     
-    async def _background_writer(self):
+    async def _background_writer(self) -> None:
         """Background task for write-behind mode"""
         while True:
             try:
@@ -538,7 +543,7 @@ class SagaPersistenceRepository:
                 logger.error(f"Background writer error: {e}")
                 await asyncio.sleep(1)
     
-    async def _cleanup_task(self):
+    async def _cleanup_task(self) -> None:
         """Background cleanup task"""
         while True:
             try:
@@ -570,7 +575,7 @@ class SagaPersistenceRepository:
         
         return stats
     
-    async def shutdown(self):
+    async def shutdown(self) -> None:
         """Shutdown repository and cleanup resources"""
         # Cancel background tasks
         for task in self.background_tasks:

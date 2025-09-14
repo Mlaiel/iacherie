@@ -38,7 +38,7 @@ class MobileSEOAnalysis:
 class MobileSEOWorkflow:
     """AI-powered mobile SEO workflow"""
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.metrics_collector = MetricsCollector()
         self.cache_manager = CacheManager()
         
@@ -187,7 +187,7 @@ class MobileSEOWorkflow:
         
         return recommendations
     
-    async def _cache_analysis(self, analysis: MobileSEOAnalysis):
+    async def _cache_analysis(self, analysis -> None: MobileSEOAnalysis) -> None:
         """Cache analysis result"""
         cache_key = f"mobile_seo_{analysis.analysis_id}"
         await self.cache_manager.set(cache_key, analysis, ttl=3600)

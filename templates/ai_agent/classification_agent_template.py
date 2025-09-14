@@ -1,4 +1,6 @@
 """{{agent_name}} Classification Agent for Ainflue Platform
+import asyncio
+
 {{agent_description}}
 
 Author: {{author_name}} ({{author_email}})
@@ -85,13 +87,13 @@ class ClassificationConfig(BaseModel):
     random_state: int = Field(default=42, description="Random state for reproducibility")
     
     @validator('test_size', 'validation_size')
-    def validate_splits(cls, v):
+    def validate_splits(cls, v) -> None:
         if not 0 < v < 1:
             raise ValueError('Split sizes must be between 0 and 1')
         return v
     
     @validator('cross_validation_folds')
-    def validate_cv_folds(cls, v):
+    def validate_cv_folds(cls, v) -> None:
         if v < 2:
             raise ValueError('CV folds must be at least 2')
         return v
@@ -173,12 +175,12 @@ class {{agent_name}}Agent(BaseAIAgent):
     
     def __init__(
         self,
-        agent_id: str,
-        model_configs: Dict[str, Dict[str, Any]],
-        enable_gpu: bool = True,
-        cache_size: int = 1000,
+        agent_id -> None: str,
+        model_configs -> None: Dict[str, Dict[str, Any]],
+        enable_gpu -> None: bool = True,
+        cache_size -> None: int = 1000,
         **kwargs
-    ):
+    ) -> None:
         super().__init__(agent_id=agent_id, **kwargs)
         self.model_configs = model_configs
         self.enable_gpu = enable_gpu and torch.cuda.is_available()
@@ -652,7 +654,7 @@ class {{agent_name}}Agent(BaseAIAgent):
             'feature_importance': feature_importance
         }
     
-    async def _store_model(self, model_id: str, model: Any, task: ClassificationTask):
+    async def _store_model(self, model_id -> None: str, model -> None: Any, task -> None: ClassificationTask) -> None:
         """Store trained model"""
         self.trained_models[model_id] = {
             'model': model,
@@ -818,7 +820,7 @@ class {{agent_name}}Agent(BaseAIAgent):
 
 
 # Template usage example
-def create_classification_agent_example():
+def create_classification_agent_example() -> None:
     """Example of how to create and use a classification agent"""
     
     # Define model configurations
@@ -880,3 +882,5 @@ TEMPLATE_CONFIG = {
         "Performance monitoring"
     ]
 }
+
+# File has syntax issues - needs manual review
