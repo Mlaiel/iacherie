@@ -46,7 +46,7 @@ class RoleValidation:
 class EnterpriseQualityValidator:
     """Ultra-strict enterprise quality validator for all expert roles"""
     
-    def __init__(self, project_root -> None: str) -> None:
+    def __init__(self, project_root: str):
         self.project_root = Path(project_root)
         self.results: List[ValidationResult] = []
         self.role_results: Dict[str, RoleValidation] = {}
