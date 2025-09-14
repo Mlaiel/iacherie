@@ -161,7 +161,7 @@ class ValidationResult:
     level: ValidationLevel
     validation_type: ValidationType
     message: str
-    field: Optional[str] = None
+    field_name: Optional[str] = None
     details: Dict[str, Any] = field(default_factory=dict)
     suggestions: List[str] = field(default_factory=list)
     timestamp: datetime = field(default_factory=datetime.utcnow)
