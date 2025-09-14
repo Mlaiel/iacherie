@@ -24,15 +24,32 @@ import json
 import pickle
 import msgpack
 import zlib
-import lz4.frame
-import brotli
 from typing import Dict, Any, Optional, List, Union, Tuple, Type
 from dataclasses import dataclass, field
 from enum import Enum
 from datetime import datetime, timedelta, timezone
 import yaml
-import aioredis
 from collections import defaultdict, deque
+
+# Optional Redis and compression imports
+try:
+    import aioredis
+    REDIS_AVAILABLE = True
+except ImportError:
+    REDIS_AVAILABLE = False
+    aioredis = None
+
+try:
+    import lz4.frame
+    LZ4_AVAILABLE = True
+except ImportError:
+    LZ4_AVAILABLE = False
+    
+try:
+    import brotli
+    BROTLI_AVAILABLE = True
+except ImportError:
+    BROTLI_AVAILABLE = False
 import hashlib
 import base64
 import struct

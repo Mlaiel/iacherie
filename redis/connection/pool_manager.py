@@ -24,13 +24,27 @@ import ssl
 from typing import Dict, Any, Optional, List, Tuple, Union
 from dataclasses import dataclass, field
 from contextlib import asynccontextmanager
-import aioredis
-from aioredis.sentinel import Sentinel
-import redis.asyncio as redis
-from redis.exceptions import (
-    ConnectionError, TimeoutError, RedisError,
-    AuthenticationError, ResponseError
-)
+
+# Optional Redis imports for enterprise environment
+try:
+    import aioredis
+    from aioredis.sentinel import Sentinel
+    import redis.asyncio as redis
+    from redis.exceptions import (
+        ConnectionError, TimeoutError, RedisError,
+        AuthenticationError, ResponseError
+    )
+    REDIS_AVAILABLE = True
+except ImportError:
+    # Fallback pour environnement sans Redis
+    REDIS_AVAILABLE = False
+    aioredis = None
+    redis = None
+    ConnectionError = Exception
+    TimeoutError = Exception
+    RedisError = Exception
+    AuthenticationError = Exception
+    ResponseError = Exception
 
 # Configuration du logging
 logging.basicConfig(level=logging.INFO)
@@ -502,3 +516,7 @@ if __name__ == "__main__":
         await pool_manager.close_all()
     
     asyncio.run(demo())
+
+# Alias pour conformité avec l'interface enterprise
+RedisPoolManager = ConnectionPoolManager
+PoolConfig = ConnectionPoolConfig
