@@ -48,8 +48,8 @@ class ServiceMeshOrchestrator:
                 'istio_integration': 'IstioIntegrationService',
                 'linkerd_integration': 'LinkerdIntegrationService',
                 'mtls_manager': 'MtlsManager',
-                'service_discovery': 'ServiceDiscoveryOrchestrator',
-                'metrics_collector': 'ServiceMetricsCollector',
+                'service_discovery_orchestrator': 'ServiceDiscoveryOrchestrator',
+                'service_metrics_collector': 'ServiceMetricsCollector',
                 'traffic_routing': 'TrafficRoutingService',
                 'observability': 'ObservabilityService',
                 'deployment_orchestrator': 'DeploymentOrchestrator'
