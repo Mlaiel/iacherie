@@ -84,6 +84,7 @@ class AinfluenceEnterpriseQualityOrchestrator:
         self.modules: Dict[QualityModuleType, QualityModule] = {}
         self.is_initialized = False
         self._initialize_modules()
+        self._modules_loaded = False
     
     def _initialize_modules(self) -> None:
         """Initialise tous les modules enterprise qualité"""
@@ -165,6 +166,14 @@ class AinfluenceEnterpriseQualityOrchestrator:
                 logger.error(f"❌ Module {module_type.value} non reconnu")
                 return False
             
+            # Add current directory to path for imports
+            import sys
+            import os
+            current_dir = os.path.dirname(os.path.abspath(__file__))
+            parent_dir = os.path.dirname(current_dir) 
+            if parent_dir not in sys.path:
+                sys.path.insert(0, parent_dir)
+            
             module_path = f"quality.{module_type.value}.index"
             module = importlib.import_module(module_path)
             
@@ -196,10 +205,22 @@ class AinfluenceEnterpriseQualityOrchestrator:
         loaded_count = sum(1 for result in results.values() if result)
         logger.info(f"🎯 {loaded_count}/{len(QualityModuleType)} modules qualité chargés")
         
+        self._modules_loaded = True
         return results
     
-    def get_module_status(self) -> Dict[str, Any]:
+    def get_module_status(self, auto_load: bool = True) -> Dict[str, Any]:
         """Retourne le statut de tous les modules enterprise"""
+        # Auto-load modules if they haven't been loaded yet
+        if auto_load and not self._modules_loaded:
+            import asyncio
+            try:
+                loop = asyncio.get_event_loop()
+                if not loop.is_running():
+                    asyncio.run(self.initialize_all_modules())
+                    self._modules_loaded = True
+            except Exception as e:
+                logger.warning(f"⚠️ Could not auto-load modules: {e}")
+        
         return {
             "total_modules": len(self.modules),
             "loaded_modules": sum(1 for module in self.modules.values() if module.is_loaded),
