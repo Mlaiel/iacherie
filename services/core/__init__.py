@@ -63,6 +63,22 @@ try:
 except ImportError:
     EnterpriseSecurityManager = security_manager = None
 
+# Phase 3 Enterprise Components
+try:
+    from .prometheus_observability import PrometheusObservability, get_observability
+except ImportError:
+    PrometheusObservability = get_observability = None
+
+try:
+    from .mtls_communication import mTLSManager, get_mtls_manager
+except ImportError:
+    mTLSManager = get_mtls_manager = None
+
+try:
+    from .kubernetes_autoscaling import KubernetesAutoScaler, get_autoscaler
+except ImportError:
+    KubernetesAutoScaler = get_autoscaler = None
+
 async def initialize_core_services() -> Dict[str, Any]:
     """
     Initialize all core services for enterprise deployment.
@@ -81,7 +97,11 @@ async def initialize_core_services() -> Dict[str, Any]:
         "metrics_collector": "MetricsCollector available" if MetricsCollector else "Not available",
         "performance_optimizer": "PerformanceOptimizer available" if PerformanceOptimizer else "Not available",
         "structured_logger": "StructuredLogger available" if StructuredLogger else "Not available",
-        "security_manager": "SecurityManager available" if EnterpriseSecurityManager else "Not available"
+        "security_manager": "SecurityManager available" if EnterpriseSecurityManager else "Not available",
+        # Phase 3 Enterprise Components
+        "prometheus_observability": "PrometheusObservability available" if PrometheusObservability else "Not available",
+        "mtls_communication": "mTLSManager available" if mTLSManager else "Not available",
+        "kubernetes_autoscaling": "KubernetesAutoScaler available" if KubernetesAutoScaler else "Not available"
     }
     
     logger.info("Core services initialization completed")
@@ -103,7 +123,11 @@ async def health_check_core() -> Dict[str, str]:
         "metrics_collector": "healthy" if MetricsCollector else "unavailable",
         "performance_optimizer": "healthy" if PerformanceOptimizer else "unavailable",
         "structured_logger": "healthy" if StructuredLogger else "unavailable",
-        "security_manager": "healthy" if EnterpriseSecurityManager else "unavailable"
+        "security_manager": "healthy" if EnterpriseSecurityManager else "unavailable",
+        # Phase 3 Enterprise Components
+        "prometheus_observability": "healthy" if PrometheusObservability else "unavailable",
+        "mtls_communication": "healthy" if mTLSManager else "unavailable",
+        "kubernetes_autoscaling": "healthy" if KubernetesAutoScaler else "unavailable"
     }
 
 __all__ = [
@@ -124,6 +148,14 @@ __all__ = [
     "service_logger",
     "EnterpriseSecurityManager",
     "security_manager",
+    
+    # Phase 3 Enterprise Components
+    "PrometheusObservability",
+    "get_observability",
+    "mTLSManager",
+    "get_mtls_manager",
+    "KubernetesAutoScaler",
+    "get_autoscaler",
     
     # Initialization functions
     "initialize_core_services",
