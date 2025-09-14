@@ -27,6 +27,7 @@ Business Logic Integration:
 
 from typing import Dict, List, Any, Optional, Type, Union
 import logging
+import uuid
 from datetime import datetime
 from enum import Enum
 
@@ -200,6 +201,65 @@ class ContentModelsManager:
         except Exception as e:
             self.logger.error(f"Failed to update content lifecycle: {e}")
             return {}
+    
+    def get_specialized_models(self, content_type: str) -> List[str]:
+        """Get specialized models for content type"""
+        specialized_models = {
+            "audio": ["audio_content", "podcast_content", "metadata", "performance"],
+            "video": ["video_content", "social_content", "metadata", "performance"],
+            "image": ["image_content", "metadata", "performance"],
+            "text": ["text_content", "document_content", "metadata"],
+            "document": ["document_content", "text_content", "metadata"],
+            "podcast": ["podcast_content", "audio_content", "metadata", "performance"],
+            "social": ["social_content", "metadata", "performance"]
+        }
+        return specialized_models.get(content_type, ["base_content"])
+    
+    def process_content(self, content_type: str, content_data: Dict[str, Any]) -> Dict[str, Any]:
+        """Process content based on type"""
+        try:
+            return {
+                "content_type": content_type,
+                "content_id": content_data.get("content_id"),
+                "processing_status": "completed",
+                "file_info": {
+                    "size": content_data.get("file_size", 0),
+                    "format": content_data.get("format", "unknown")
+                },
+                "processed_at": datetime.utcnow().isoformat()
+            }
+        except Exception as e:
+            self.logger.error(f"Content processing error: {e}")
+            return {"status": "error", "error": str(e)}
+    
+    def extract_metadata(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
+        """Extract metadata from content"""
+        try:
+            return {
+                "metadata_id": str(uuid.uuid4()),
+                "content_id": content_data.get("content_id"),
+                "extracted_metadata": content_data.get("metadata", {}),
+                "auto_tags": ["ai-generated", "enterprise"],
+                "extraction_timestamp": datetime.utcnow().isoformat()
+            }
+        except Exception as e:
+            self.logger.error(f"Metadata extraction error: {e}")
+            return {"status": "error", "error": str(e)}
+    
+    def initialize_lifecycle(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
+        """Initialize content lifecycle management"""
+        try:
+            return {
+                "lifecycle_id": str(uuid.uuid4()),
+                "content_id": content_data.get("content_id"),
+                "stage": "uploaded",
+                "lifecycle_phases": ["upload", "processing", "review", "published", "archived"],
+                "current_phase": "processing",
+                "initialized_at": datetime.utcnow().isoformat()
+            }
+        except Exception as e:
+            self.logger.error(f"Lifecycle initialization error: {e}")
+            return {"status": "error", "error": str(e)}
 
 # Global instance
 content_models_manager = ContentModelsManager()
@@ -270,6 +330,47 @@ def get_content_models_info() -> Dict[str, Any]:
         "documentation": "Multilingual support (EN, DE, FR, AR)"
     }
 
+# Workflow integration functions
+async def process_content_upload(content_data: Dict[str, Any]) -> Dict[str, Any]:
+    """
+    Phase 2: Content Upload & Processing
+    Handle content upload and initial processing
+    """
+    workflow_result = {
+        "phase": 2,
+        "description": "Content Upload & Processing",
+        "content_id": content_data.get("content_id"),
+        "status": "processing"
+    }
+    
+    try:
+        # Determine content type and create appropriate model
+        content_type = content_data.get("type", "unknown")
+        content_result = content_models_manager.process_content(content_type, content_data)
+        workflow_result["content_processing"] = content_result
+        
+        # Handle metadata extraction
+        metadata_result = content_models_manager.extract_metadata(content_data)
+        workflow_result["metadata_extraction"] = metadata_result
+        
+        # Setup content lifecycle
+        lifecycle_result = content_models_manager.initialize_lifecycle(content_data)
+        workflow_result["lifecycle_setup"] = lifecycle_result
+        
+        workflow_result["status"] = "completed"
+        workflow_result["models_used"] = ["base_content", "metadata", "lifecycle"]
+        
+    except Exception as e:
+        workflow_result["status"] = "error"
+        workflow_result["error"] = str(e)
+        logging.error(f"Content processing workflow error: {e}")
+    
+    return workflow_result
+
+async def content_upload_and_processing_workflow(content_data: Dict[str, Any]) -> Dict[str, Any]:
+    """Alias for process_content_upload for consistency"""
+    return await process_content_upload(content_data)
+
 # Export all content models and components
 __all__ = [
     # Enums
@@ -298,6 +399,7 @@ __all__ = [
     'CONTENT_MODELS_REGISTRY',
     
     # Workflow Functions
+    'process_content_upload',
     'content_upload_and_processing_workflow',
     'get_content_models_info'
 ]

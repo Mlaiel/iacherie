@@ -291,7 +291,7 @@ class AIModelsManager:
 ai_models_manager = AIModelsManager()
 
 # Workflow integration functions
-async def ai_analysis_and_protection_workflow(content_data: Dict[str, Any]) -> Dict[str, Any]:
+async def ai_analysis_and_protection_workflow(creator_id: int, content_data: Dict[str, Any]) -> Dict[str, Any]:
     """
     Phase 3: AI Analysis & Protection
     Complete AI-powered content analysis and protection setup
