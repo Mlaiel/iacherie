@@ -475,6 +475,49 @@ class SEOModelsManager:
             self.logger.error(f"Failed to optimize content for SEO: {e}")
             return {"error": str(e)}
     
+    def extract_keywords(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
+        """Extract keywords from content"""
+        try:
+            return KeywordModel.analyze_keywords(content_data.get("text", ""))
+        except Exception as e:
+            self.logger.error(f"Failed to extract keywords: {e}")
+            return {}
+    
+    def optimize_content(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
+        """Optimize content for search engines"""
+        try:
+            return SearchOptimizationModel.optimize_content(
+                content_data.get("text", ""),
+                content_data.get("target_keywords", [])
+            )
+        except Exception as e:
+            self.logger.error(f"Failed to optimize content: {e}")
+            return {}
+    
+    def generate_meta_tags(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
+        """Generate meta tags for content"""
+        try:
+            return SearchOptimizationModel.generate_meta_tags(content_data)
+        except Exception as e:
+            self.logger.error(f"Failed to generate meta tags: {e}")
+            return {}
+    
+    def setup_discovery(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
+        """Setup content discovery mechanisms"""
+        try:
+            return {
+                "content_id": content_data.get("content_id"),
+                "discovery_enabled": True,
+                "search_indexing": True,
+                "social_sharing": True,
+                "seo_friendly_url": f"/content/{content_data.get('content_id')}",
+                "sitemap_included": True,
+                "setup_at": datetime.utcnow().isoformat()
+            }
+        except Exception as e:
+            self.logger.error(f"Failed to setup discovery: {e}")
+            return {}
+    
     def generate_seo_strategy(self, domain: str, business_goals: List[str]) -> Dict[str, Any]:
         """Generate comprehensive SEO strategy"""
         try:
