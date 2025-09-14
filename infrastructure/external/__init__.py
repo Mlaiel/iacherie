@@ -47,6 +47,47 @@ try:
 except ImportError:
     pass
 
+# Import new critical business logic modules
+try:
+    from .content_protection_apis import (
+        ContentProtectionAPI, EnterpriseContentProtection, ProtectionLevel,
+        ContentFingerprint, DMCARequest, content_protection_api, enterprise_protection
+    )
+except ImportError:
+    ContentProtectionAPI = EnterpriseContentProtection = ProtectionLevel = None
+    ContentFingerprint = DMCARequest = content_protection_api = enterprise_protection = None
+
+try:
+    from .monetization_apis import (
+        MonetizationAPI, PricingOptimizer, MonetizationStrategy, PlatformTier,
+        RevenueStream, MonetizationConfig, monetization_api, pricing_optimizer
+    )
+except ImportError:
+    MonetizationAPI = PricingOptimizer = MonetizationStrategy = PlatformTier = None
+    RevenueStream = MonetizationConfig = monetization_api = pricing_optimizer = None
+
+try:
+    from .collaboration_matching import (
+        AICollaborationMatcher, CollaborationType, CompatibilityDimension, MatchQuality,
+        CreatorProfile, CompatibilityScore, CollaborationMatch, CollaborationProject,
+        ai_collaboration_matcher
+    )
+except ImportError:
+    AICollaborationMatcher = CollaborationType = CompatibilityDimension = MatchQuality = None
+    CreatorProfile = CompatibilityScore = CollaborationMatch = CollaborationProject = None
+    ai_collaboration_matcher = None
+
+try:
+    from .gamification_engine import (
+        GamificationEngine, AchievementCategory, AchievementType, RewardType,
+        ChallengeType, LeaderboardType, Achievement, UserAchievement, Challenge,
+        UserProgress, LeaderboardEntry, gamification_engine
+    )
+except ImportError:
+    GamificationEngine = AchievementCategory = AchievementType = RewardType = None
+    ChallengeType = LeaderboardType = Achievement = UserAchievement = Challenge = None
+    UserProgress = LeaderboardEntry = gamification_engine = None
+
 try:
     from .social_media_connectors import *
 except ImportError:
