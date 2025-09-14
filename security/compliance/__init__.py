@@ -27,10 +27,12 @@ from .audit_engine import (
 from .gdpr_processor import (
     GDPRProcessor,
     GDPRCompliance,
-    DataSubjectRequest,
-    ConsentManager,
-    PrivacyImpactAssessment,
-    DataProtectionOfficer
+    ConsentType,
+    LegalBasis,
+    DataSubjectRight,
+    ComplianceMonitor as GDPRMonitor,
+    PolicyEnforcer as GDPRPolicyEnforcer,
+    ReportingEngine as GDPRReportingEngine
 )
 
 from .compliance_monitor import (
@@ -75,18 +77,21 @@ __all__ = [
     "ReportingEngine",
     
     # Specialized components
-    "ConsentManager",
-    "PolicyEngine",
-    "MetricsCollector",
-    "ReportScheduler",
-    "DataProtectionOfficer",
+    "GDPRMonitor",
+    "GDPRPolicyEnforcer", 
+    "GDPRReportingEngine",
+    "ConsentType",
+    "LegalBasis",
+    "DataSubjectRight",
     
     # Data structures
     "AuditTrail",
     "AuditEvent",
     "ComplianceAudit",
     "GDPRCompliance",
-    "DataSubjectRequest",
+    "ConsentType",
+    "LegalBasis", 
+    "DataSubjectRight",
     "SecurityPolicy",
     "CompliancePolicy",
     "ComplianceReport",
