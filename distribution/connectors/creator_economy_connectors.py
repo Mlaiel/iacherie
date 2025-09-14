@@ -77,19 +77,140 @@ class BaseCreatorConnector:
         
     async def authenticate(self) -> bool:
         """Authenticate with platform API"""
-        raise NotImplementedError
+        try:
+            if not self.session:
+                self.session = aiohttp.ClientSession()
+            
+            auth_url = f"{self.base_url}/auth"
+            headers = {
+                "Authorization": f"Bearer {self.credentials.get('api_key', '')}",
+                "Content-Type": "application/json",
+                "User-Agent": "Ainflue-Distribution/1.0"
+            }
+            
+            async with self.session.get(auth_url, headers=headers) as response:
+                if response.status == 200:
+                    self.authenticated = True
+                    logger.info(f"Successfully authenticated with {self.platform.value}")
+                    return True
+                else:
+                    logger.error(f"Authentication failed for {self.platform.value}: {response.status}")
+                    return False
+                    
+        except Exception as e:
+            logger.error(f"Authentication error for {self.platform.value}: {str(e)}")
+            return False
     
     async def publish_content(self, content: CreatorContent) -> Dict[str, Any]:
         """Publish content to creator platform"""
-        raise NotImplementedError
+        if not self.authenticated:
+            auth_success = await self.authenticate()
+            if not auth_success:
+                return {"success": False, "error": "Authentication failed"}
+        
+        try:
+            publish_url = f"{self.base_url}/content"
+            headers = {
+                "Authorization": f"Bearer {self.credentials.get('api_key', '')}",
+                "Content-Type": "application/json"
+            }
+            
+            payload = {
+                "title": content.title,
+                "description": content.description,
+                "content_type": content.content_type.value,
+                "price": float(content.price) if content.price else None,
+                "tier_access": content.tier_access,
+                "tags": content.tags,
+                "scheduled_at": content.scheduled_at.isoformat() if content.scheduled_at else None
+            }
+            
+            async with self.session.post(publish_url, headers=headers, json=payload) as response:
+                result = await response.json()
+                if response.status == 201:
+                    logger.info(f"Content published successfully to {self.platform.value}")
+                    return {
+                        "success": True,
+                        "content_id": result.get("id"),
+                        "url": result.get("url"),
+                        "status": "published"
+                    }
+                else:
+                    logger.error(f"Content publish failed for {self.platform.value}: {result}")
+                    return {"success": False, "error": result.get("message", "Unknown error")}
+                    
+        except Exception as e:
+            logger.error(f"Content publishing error for {self.platform.value}: {str(e)}")
+            return {"success": False, "error": str(e)}
     
     async def create_tier(self, tier_data: Dict[str, Any]) -> Dict[str, Any]:
         """Create subscription tier"""
-        raise NotImplementedError
+        if not self.authenticated:
+            auth_success = await self.authenticate()
+            if not auth_success:
+                return {"success": False, "error": "Authentication failed"}
+        
+        try:
+            tiers_url = f"{self.base_url}/tiers"
+            headers = {
+                "Authorization": f"Bearer {self.credentials.get('api_key', '')}",
+                "Content-Type": "application/json"
+            }
+            
+            async with self.session.post(tiers_url, headers=headers, json=tier_data) as response:
+                result = await response.json()
+                if response.status == 201:
+                    logger.info(f"Tier created successfully on {self.platform.value}")
+                    return {
+                        "success": True,
+                        "tier_id": result.get("id"),
+                        "name": result.get("name"),
+                        "price": result.get("price")
+                    }
+                else:
+                    logger.error(f"Tier creation failed for {self.platform.value}: {result}")
+                    return {"success": False, "error": result.get("message", "Unknown error")}
+                    
+        except Exception as e:
+            logger.error(f"Tier creation error for {self.platform.value}: {str(e)}")
+            return {"success": False, "error": str(e)}
     
     async def get_subscriber_analytics(self) -> Dict[str, Any]:
         """Get subscriber and revenue analytics"""
-        raise NotImplementedError
+        if not self.authenticated:
+            auth_success = await self.authenticate()
+            if not auth_success:
+                return {"success": False, "error": "Authentication failed"}
+        
+        try:
+            analytics_url = f"{self.base_url}/analytics"
+            headers = {
+                "Authorization": f"Bearer {self.credentials.get('api_key', '')}",
+                "Content-Type": "application/json"
+            }
+            
+            async with self.session.get(analytics_url, headers=headers) as response:
+                if response.status == 200:
+                    data = await response.json()
+                    logger.info(f"Analytics retrieved successfully from {self.platform.value}")
+                    return {
+                        "success": True,
+                        "total_subscribers": data.get("total_subscribers", 0),
+                        "monthly_revenue": data.get("monthly_revenue", 0),
+                        "growth_rate": data.get("growth_rate", 0),
+                        "engagement_rate": data.get("engagement_rate", 0),
+                        "top_content": data.get("top_content", []),
+                        "demographics": data.get("demographics", {}),
+                        "last_updated": datetime.now().isoformat()
+                    }
+                else:
+                    result = await response.json()
+                    logger.error(f"Analytics retrieval failed for {self.platform.value}: {result}")
+                    return {"success": False, "error": result.get("message", "Unknown error")}
+                    
+        except Exception as e:
+            logger.error(f"Analytics retrieval error for {self.platform.value}: {str(e)}")
+            return {"success": False, "error": str(e)}
 
 class PatreonConnector(BaseCreatorConnector):
     """Patreon API v2 connector"""
