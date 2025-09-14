@@ -26,6 +26,34 @@ from .platform_reporting_service import PlatformReportingService
 from .platform_compliance_service import PlatformComplianceService
 from .platform_webhook_service import PlatformWebhookService
 from .social_media_service import SocialMediaService
+from .music_streaming_service import MusicStreamingService
+from .creator_economy_service import CreatorEconomyService
+
+# Import new platform services
+try:
+    from .gaming_platform_service import GamingPlatformService
+except ImportError:
+    GamingPlatformService = None
+
+try:
+    from .video_platform_service import VideoPlatformService
+except ImportError:
+    VideoPlatformService = None
+
+try:
+    from .photography_platform_service import PhotographyPlatformService
+except ImportError:
+    PhotographyPlatformService = None
+
+try:
+    from .blogging_platform_service import BloggingPlatformService
+except ImportError:
+    BloggingPlatformService = None
+
+try:
+    from .ecommerce_platform_service import EcommercePlatformService
+except ImportError:
+    EcommercePlatformService = None
 
 __all__ = [
     'PlatformConnectorService',
@@ -36,7 +64,14 @@ __all__ = [
     'PlatformReportingService',
     'PlatformComplianceService',
     'PlatformWebhookService',
-    'SocialMediaService'
+    'SocialMediaService',
+    'MusicStreamingService',
+    'CreatorEconomyService',
+    'GamingPlatformService',
+    'VideoPlatformService',
+    'PhotographyPlatformService',
+    'BloggingPlatformService',
+    'EcommercePlatformService'
 ]
 
 __version__ = "1.0.0"
