@@ -22,6 +22,8 @@ from typing import Any, Dict, List, Optional, Union, Tuple
 from datetime import datetime, timezone, timedelta
 from dataclasses import dataclass, field
 from concurrent.futures import ThreadPoolExecutor
+from collections import defaultdict, OrderedDict
+from functools import wraps
 import hashlib
 import weakref
 
@@ -31,6 +33,13 @@ try:
     REDIS_AVAILABLE = True
 except ImportError:
     REDIS_AVAILABLE = False
+
+# Memcache import with fallback
+try:
+    import memcache
+    MEMCACHE_AVAILABLE = True
+except ImportError:
+    MEMCACHE_AVAILABLE = False
 
 logger = logging.getLogger(__name__)
 
@@ -596,3 +605,238 @@ class CacheManagerFactory:
             'l2_ttl_seconds': 7200  # 2 hours
         }
         return await CacheManagerFactory.create_manager(config)
+
+# === ENHANCED ENTERPRISE CACHE UTILITIES ===
+# Consolidated from cache_utilities.py and caching.py
+
+import memcache
+from collections import OrderedDict
+
+class MemoryCache:
+    """Enhanced in-memory cache from caching.py with enterprise features"""
+    
+    def __init__(self, default_ttl: int = 3600, max_size: int = 1000):
+        self.default_ttl = default_ttl
+        self.max_size = max_size
+        self._cache = OrderedDict()
+        self._timestamps = {}
+        self._access_counts = defaultdict(int)
+        self._lock = asyncio.Lock()
+    
+    async def get(self, key: str) -> Optional[Any]:
+        """Get value from memory cache with thread safety"""
+        async with self._lock:
+            if key not in self._cache:
+                return None
+            
+            # Check if expired
+            if time.time() - self._timestamps[key] > self.default_ttl:
+                await self._delete(key)
+                return None
+            
+            # Move to end (LRU)
+            self._cache.move_to_end(key)
+            self._access_counts[key] += 1
+            
+            return self._cache[key]
+    
+    async def set(self, key: str, value: Any, ttl: Optional[int] = None) -> bool:
+        """Set value in memory cache with automatic eviction"""
+        async with self._lock:
+            # Evict if at capacity
+            if len(self._cache) >= self.max_size and key not in self._cache:
+                await self._evict_lru()
+            
+            self._cache[key] = value
+            self._timestamps[key] = time.time()
+            self._access_counts[key] = 1
+            
+            # Move to end
+            self._cache.move_to_end(key)
+            
+            return True
+    
+    async def _delete(self, key: str) -> bool:
+        """Delete from memory cache"""
+        if key in self._cache:
+            del self._cache[key]
+            del self._timestamps[key]
+            del self._access_counts[key]
+            return True
+        return False
+    
+    async def _evict_lru(self):
+        """Evict least recently used item"""
+        if self._cache:
+            lru_key = next(iter(self._cache))
+            await self._delete(lru_key)
+    
+    async def clear(self):
+        """Clear all cached items"""
+        async with self._lock:
+            self._cache.clear()
+            self._timestamps.clear()
+            self._access_counts.clear()
+    
+    async def get_stats(self) -> Dict[str, Any]:
+        """Get cache statistics"""
+        async with self._lock:
+            return {
+                'size': len(self._cache),
+                'max_size': self.max_size,
+                'hit_ratio': self._calculate_hit_ratio(),
+                'total_accesses': sum(self._access_counts.values())
+            }
+    
+    def _calculate_hit_ratio(self) -> float:
+        """Calculate cache hit ratio"""
+        total_accesses = sum(self._access_counts.values())
+        if total_accesses == 0:
+            return 0.0
+        
+        hits = len([k for k in self._access_counts if self._access_counts[k] > 1])
+        return hits / len(self._access_counts) if self._access_counts else 0.0
+
+class DistributedCache:
+    """Enhanced distributed cache from cache_utilities.py with multi-backend support"""
+    
+    def __init__(self, config: Optional[Dict[str, Any]] = None):
+        self.config = config or {}
+        self._redis_client = None
+        self._memcache_client = None
+        self._memory_cache = MemoryCache()
+        self.logger = logging.getLogger(__name__)
+    
+    async def initialize(self):
+        """Initialize distributed cache backends"""
+        # Initialize Redis
+        if self.config.get('redis_enabled', True):
+            redis_url = self.config.get('redis_url', 'redis://localhost:6379')
+            if REDIS_AVAILABLE:
+                try:
+                    self._redis_client = await aioredis.from_url(redis_url)
+                    await self._redis_client.ping()
+                    self.logger.info("Redis cache initialized")
+                except Exception as e:
+                    self.logger.warning(f"Redis initialization failed: {e}")
+        
+        # Initialize Memcached
+        if self.config.get('memcache_enabled', False):
+            memcache_servers = self.config.get('memcache_servers', ['127.0.0.1:11211'])
+            try:
+                self._memcache_client = memcache.Client(memcache_servers)
+                self.logger.info("Memcache initialized")
+            except Exception as e:
+                self.logger.warning(f"Memcache initialization failed: {e}")
+    
+    async def get(self, key: str) -> Optional[Any]:
+        """Get from distributed cache with fallback strategy"""
+        # Try memory cache first (L1)
+        value = await self._memory_cache.get(key)
+        if value is not None:
+            return value
+        
+        # Try Redis (L2)
+        if self._redis_client:
+            try:
+                data = await self._redis_client.get(key)
+                if data:
+                    value = pickle.loads(data)
+                    # Populate L1 cache
+                    await self._memory_cache.set(key, value)
+                    return value
+            except Exception as e:
+                self.logger.warning(f"Redis get failed: {e}")
+        
+        # Try Memcached (L3)
+        if self._memcache_client:
+            try:
+                value = self._memcache_client.get(key)
+                if value is not None:
+                    # Populate higher level caches
+                    await self._memory_cache.set(key, value)
+                    if self._redis_client:
+                        await self._redis_client.set(key, pickle.dumps(value), ex=3600)
+                    return value
+            except Exception as e:
+                self.logger.warning(f"Memcache get failed: {e}")
+        
+        return None
+    
+    async def set(self, key: str, value: Any, ttl: int = 3600) -> bool:
+        """Set in all available cache backends"""
+        success = True
+        
+        # Set in memory cache
+        await self._memory_cache.set(key, value, ttl)
+        
+        # Set in Redis
+        if self._redis_client:
+            try:
+                await self._redis_client.set(key, pickle.dumps(value), ex=ttl)
+            except Exception as e:
+                self.logger.warning(f"Redis set failed: {e}")
+                success = False
+        
+        # Set in Memcached
+        if self._memcache_client:
+            try:
+                self._memcache_client.set(key, value, time=ttl)
+            except Exception as e:
+                self.logger.warning(f"Memcache set failed: {e}")
+                success = False
+        
+        return success
+    
+    async def delete(self, key: str) -> bool:
+        """Delete from all cache backends"""
+        success = True
+        
+        # Delete from memory
+        await self._memory_cache._delete(key)
+        
+        # Delete from Redis
+        if self._redis_client:
+            try:
+                await self._redis_client.delete(key)
+            except Exception as e:
+                self.logger.warning(f"Redis delete failed: {e}")
+                success = False
+        
+        # Delete from Memcached
+        if self._memcache_client:
+            try:
+                self._memcache_client.delete(key)
+            except Exception as e:
+                self.logger.warning(f"Memcache delete failed: {e}")
+                success = False
+        
+        return success
+
+# Enhanced cache decorators for enterprise use
+def async_cache(ttl: int = 3600, key_prefix: str = ""):
+    """Async cache decorator with enterprise features"""
+    def decorator(func):
+        cache = MemoryCache(default_ttl=ttl)
+        
+        @wraps(func)
+        async def wrapper(*args, **kwargs):
+            # Generate cache key
+            cache_key = f"{key_prefix}:{func.__name__}:{hash(str(args) + str(kwargs))}"
+            
+            # Try to get from cache
+            result = await cache.get(cache_key)
+            if result is not None:
+                return result
+            
+            # Execute function and cache result
+            result = await func(*args, **kwargs)
+            await cache.set(cache_key, result, ttl)
+            return result
+        
+        return wrapper
+    return decorator
+
+# Export enhanced cache utilities
+__all__ = ['CacheManager', 'CacheManagerFactory', 'CacheResult', 'CacheEntry',
+           'MemoryCache', 'DistributedCache', 'async_cache']

@@ -724,3 +724,328 @@ class FileManagerFactory:
             yield manager
         finally:
             await manager.__aexit__(None, None, None)
+
+# === ENHANCED BACKUP UTILITIES ===
+# Consolidated from backup_utilities.py and file_utilities.py
+
+import gzip
+import bz2
+import lzma
+from datetime import timedelta
+
+class BackupStrategy(Enum):
+    """Backup strategies for enterprise data protection"""
+    FULL = "full"
+    INCREMENTAL = "incremental"
+    DIFFERENTIAL = "differential"
+    MIRROR = "mirror"
+
+@dataclass 
+class BackupJob:
+    """Enterprise backup job configuration"""
+    job_id: str
+    source_paths: List[str]
+    destination_path: str
+    strategy: BackupStrategy
+    compression: bool = True
+    encryption: bool = True
+    schedule: Optional[str] = None  # Cron expression
+    retention_days: int = 30
+    exclude_patterns: List[str] = field(default_factory=list)
+
+class EnterpriseBackupManager:
+    """Enhanced backup manager consolidated from backup_utilities.py
+    
+    Backend Senior: Enterprise backup and disaster recovery system
+    """
+    
+    def __init__(self, config: Optional[Dict[str, Any]] = None):
+        self.config = config or {}
+        self.logger = logging.getLogger(__name__)
+        self._thread_pool = ThreadPoolExecutor(max_workers=4)
+        
+        # Encryption for backups
+        self._encryption_key = self.config.get('encryption_key')
+        if self._encryption_key:
+            self._fernet = Fernet(self._encryption_key)
+        else:
+            self._fernet = None
+    
+    async def create_backup(
+        self,
+        backup_job: BackupJob,
+        progress_callback: Optional[Callable] = None
+    ) -> FileResult:
+        """Create backup based on job configuration"""
+        try:
+            start_time = time.time()
+            
+            # Validate source paths
+            valid_sources = []
+            for source in backup_job.source_paths:
+                if Path(source).exists():
+                    valid_sources.append(source)
+                else:
+                    self.logger.warning(f"Source path does not exist: {source}")
+            
+            if not valid_sources:
+                return FileResult(
+                    success=False,
+                    errors=["No valid source paths found"]
+                )
+            
+            # Create backup directory
+            backup_dir = Path(backup_job.destination_path)
+            backup_dir.mkdir(parents=True, exist_ok=True)
+            
+            # Generate backup filename
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            backup_filename = f"backup_{backup_job.job_id}_{timestamp}"
+            
+            if backup_job.compression:
+                backup_filename += ".tar.gz"
+                backup_path = backup_dir / backup_filename
+                await self._create_compressed_backup(valid_sources, backup_path, progress_callback)
+            else:
+                backup_filename += ".tar"
+                backup_path = backup_dir / backup_filename
+                await self._create_uncompressed_backup(valid_sources, backup_path, progress_callback)
+            
+            # Encrypt if requested
+            if backup_job.encryption and self._fernet:
+                encrypted_path = backup_path.with_suffix(backup_path.suffix + '.enc')
+                await self._encrypt_file(backup_path, encrypted_path)
+                backup_path.unlink()  # Remove unencrypted file
+                backup_path = encrypted_path
+            
+            # Calculate checksum
+            checksum = await self._calculate_file_checksum(str(backup_path))
+            
+            # Apply retention policy
+            await self._apply_retention_policy(backup_dir, backup_job.retention_days)
+            
+            execution_time = (time.time() - start_time) * 1000
+            
+            return FileResult(
+                success=True,
+                path=str(backup_path),
+                size_bytes=backup_path.stat().st_size,
+                checksum=checksum,
+                metadata={
+                    'operation': 'create_backup',
+                    'strategy': backup_job.strategy.value,
+                    'compressed': backup_job.compression,
+                    'encrypted': backup_job.encryption,
+                    'execution_time_ms': execution_time,
+                    'sources_count': len(valid_sources)
+                }
+            )
+        
+        except Exception as e:
+            self.logger.error(f"Backup creation failed: {e}")
+            return FileResult(
+                success=False,
+                errors=[str(e)],
+                metadata={'operation': 'create_backup'}
+            )
+    
+    async def _create_compressed_backup(
+        self, 
+        sources: List[str], 
+        output_path: Path,
+        progress_callback: Optional[Callable] = None
+    ):
+        """Create compressed tar.gz backup"""
+        def _create_tar():
+            with tarfile.open(output_path, 'w:gz') as tar:
+                total_files = sum(1 for source in sources for _ in Path(source).rglob('*') if _.is_file())
+                processed_files = 0
+                
+                for source in sources:
+                    source_path = Path(source)
+                    if source_path.is_file():
+                        tar.add(source_path, arcname=source_path.name)
+                        processed_files += 1
+                    else:
+                        for file_path in source_path.rglob('*'):
+                            if file_path.is_file():
+                                arcname = file_path.relative_to(source_path.parent)
+                                tar.add(file_path, arcname=arcname)
+                                processed_files += 1
+                                
+                                if progress_callback:
+                                    progress = (processed_files / total_files) * 100
+                                    progress_callback(progress)
+        
+        await asyncio.get_event_loop().run_in_executor(self._thread_pool, _create_tar)
+    
+    async def _create_uncompressed_backup(
+        self, 
+        sources: List[str], 
+        output_path: Path,
+        progress_callback: Optional[Callable] = None
+    ):
+        """Create uncompressed tar backup"""
+        def _create_tar():
+            with tarfile.open(output_path, 'w') as tar:
+                for source in sources:
+                    tar.add(source, arcname=Path(source).name)
+        
+        await asyncio.get_event_loop().run_in_executor(self._thread_pool, _create_tar)
+    
+    async def _encrypt_file(self, input_path: Path, output_path: Path):
+        """Encrypt backup file"""
+        async with aiofiles.open(input_path, 'rb') as infile:
+            data = await infile.read()
+        
+        encrypted_data = self._fernet.encrypt(data)
+        
+        async with aiofiles.open(output_path, 'wb') as outfile:
+            await outfile.write(encrypted_data)
+    
+    async def _calculate_file_checksum(self, file_path: str) -> str:
+        """Calculate SHA256 checksum of file"""
+        hash_sha256 = hashlib.sha256()
+        
+        async with aiofiles.open(file_path, 'rb') as f:
+            while chunk := await f.read(8192):
+                hash_sha256.update(chunk)
+        
+        return hash_sha256.hexdigest()
+    
+    async def _apply_retention_policy(self, backup_dir: Path, retention_days: int):
+        """Apply retention policy to remove old backups"""
+        cutoff_date = datetime.now() - timedelta(days=retention_days)
+        
+        for backup_file in backup_dir.glob('backup_*'):
+            if backup_file.is_file():
+                file_time = datetime.fromtimestamp(backup_file.stat().st_mtime)
+                if file_time < cutoff_date:
+                    backup_file.unlink()
+                    self.logger.info(f"Removed old backup: {backup_file}")
+    
+    async def restore_backup(
+        self,
+        backup_path: str,
+        restore_destination: str,
+        password: Optional[str] = None
+    ) -> FileResult:
+        """Restore from backup file"""
+        try:
+            start_time = time.time()
+            backup_file = Path(backup_path)
+            
+            if not backup_file.exists():
+                return FileResult(
+                    success=False,
+                    errors=[f"Backup file not found: {backup_path}"]
+                )
+            
+            # Handle encrypted backups
+            working_file = backup_file
+            if backup_file.suffix == '.enc':
+                if not self._fernet:
+                    return FileResult(
+                        success=False,
+                        errors=["No encryption key available for encrypted backup"]
+                    )
+                
+                # Decrypt to temporary file
+                decrypted_path = backup_file.with_suffix('')
+                await self._decrypt_file(backup_file, decrypted_path)
+                working_file = decrypted_path
+            
+            # Extract backup
+            restore_dir = Path(restore_destination)
+            restore_dir.mkdir(parents=True, exist_ok=True)
+            
+            def _extract():
+                with tarfile.open(working_file, 'r:*') as tar:
+                    tar.extractall(restore_dir)
+            
+            await asyncio.get_event_loop().run_in_executor(self._thread_pool, _extract)
+            
+            # Cleanup temporary decrypted file
+            if working_file != backup_file:
+                working_file.unlink()
+            
+            execution_time = (time.time() - start_time) * 1000
+            
+            return FileResult(
+                success=True,
+                path=restore_destination,
+                metadata={
+                    'operation': 'restore_backup',
+                    'backup_file': backup_path,
+                    'execution_time_ms': execution_time
+                }
+            )
+        
+        except Exception as e:
+            self.logger.error(f"Backup restore failed: {e}")
+            return FileResult(
+                success=False,
+                errors=[str(e)],
+                metadata={'operation': 'restore_backup'}
+            )
+    
+    async def _decrypt_file(self, input_path: Path, output_path: Path):
+        """Decrypt backup file"""
+        async with aiofiles.open(input_path, 'rb') as infile:
+            encrypted_data = await infile.read()
+        
+        decrypted_data = self._fernet.decrypt(encrypted_data)
+        
+        async with aiofiles.open(output_path, 'wb') as outfile:
+            await outfile.write(decrypted_data)
+    
+    async def verify_backup(self, backup_path: str) -> FileResult:
+        """Verify backup integrity"""
+        try:
+            backup_file = Path(backup_path)
+            
+            if not backup_file.exists():
+                return FileResult(
+                    success=False,
+                    errors=[f"Backup file not found: {backup_path}"]
+                )
+            
+            # Test if file can be opened and read
+            def _test_backup():
+                with tarfile.open(backup_file, 'r:*') as tar:
+                    # Get list of files in backup
+                    members = tar.getmembers()
+                    return len(members)
+            
+            file_count = await asyncio.get_event_loop().run_in_executor(
+                self._thread_pool, _test_backup
+            )
+            
+            # Calculate checksum
+            checksum = await self._calculate_file_checksum(backup_path)
+            
+            return FileResult(
+                success=True,
+                path=backup_path,
+                size_bytes=backup_file.stat().st_size,
+                checksum=checksum,
+                metadata={
+                    'operation': 'verify_backup',
+                    'file_count': file_count,
+                    'verified': True
+                }
+            )
+        
+        except Exception as e:
+            self.logger.error(f"Backup verification failed: {e}")
+            return FileResult(
+                success=False,
+                errors=[str(e)],
+                metadata={'operation': 'verify_backup'}
+            )
+
+from enum import Enum
+
+# Export enhanced file management utilities
+__all__ = ['FileManager', 'FileManagerFactory', 'FileResult', 'FileOperation',
+           'EnterpriseBackupManager', 'BackupJob', 'BackupStrategy']

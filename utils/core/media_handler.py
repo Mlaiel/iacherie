@@ -44,9 +44,16 @@ except ImportError:
 try:
     import librosa
     import soundfile as sf
+    from scipy import signal
     AUDIO_AVAILABLE = True
 except ImportError:
     AUDIO_AVAILABLE = False
+
+try:
+    import ffmpeg
+    FFMPEG_AVAILABLE = True
+except ImportError:
+    FFMPEG_AVAILABLE = False
 
 try:
     import ffmpeg
@@ -789,3 +796,368 @@ class MediaHandlerFactory:
             'temp_dir': temp_dir
         }
         return MediaHandler(config)
+
+# === ENHANCED AUDIO/VIDEO UTILITIES ===
+# Consolidated from audio_utilities.py and video_utilities.py
+
+from enum import Enum
+
+class VideoCodec(Enum):
+    """Video codec types for enterprise video processing"""
+    H264 = "h264"
+    H265 = "h265"
+    VP9 = "vp9"
+    AV1 = "av1"
+    PRORES = "prores"
+    DNX = "dnxhd"
+    MJPEG = "mjpeg"
+    MPEG2 = "mpeg2video"
+
+class AudioCodec(Enum):
+    """Audio codec types for enterprise audio processing"""
+    AAC = "aac"
+    MP3 = "mp3"
+    FLAC = "flac"
+    WAV = "wav"
+    OGG = "ogg"
+    OPUS = "opus"
+
+@dataclass
+class AudioMetadata:
+    """Enhanced audio metadata structure"""
+    duration: float
+    sample_rate: int
+    channels: int
+    bit_depth: int
+    format: str
+    size_bytes: int
+    codec: str = ""
+    bitrate: int = 0
+    peak_amplitude: float = 0.0
+    rms_amplitude: float = 0.0
+
+@dataclass
+class VideoMetadata:
+    """Enhanced video metadata structure"""
+    duration: float
+    width: int
+    height: int
+    fps: float
+    format: str
+    size_bytes: int
+    codec: str = ""
+    bitrate: int = 0
+    aspect_ratio: str = ""
+    color_space: str = ""
+
+class EnterpriseAudioProcessor:
+    """Enhanced audio processing consolidated from audio_utilities.py
+    
+    Audio Engineer: Professional audio processing with DSP, analysis, and optimization
+    """
+    
+    def __init__(self, config: Optional[Dict[str, Any]] = None):
+        self.config = config or {}
+        self.logger = logging.getLogger(__name__)
+        self._thread_pool = ThreadPoolExecutor(max_workers=4)
+    
+    async def process_audio(
+        self,
+        audio_data: bytes,
+        operations: List[str],
+        output_format: str = "wav"
+    ) -> MediaResult:
+        """Process audio with specified operations"""
+        try:
+            start_time = time.time()
+            
+            if not AUDIO_AVAILABLE:
+                return MediaResult(
+                    success=False,
+                    errors=["Audio processing libraries not available"]
+                )
+            
+            # Load audio data
+            audio_array, sample_rate = await self._load_audio_data(audio_data)
+            
+            # Apply operations
+            processed_audio = audio_array
+            effects_applied = []
+            
+            for operation in operations:
+                if operation == "normalize":
+                    processed_audio = self._normalize_audio(processed_audio)
+                    effects_applied.append("normalize")
+                elif operation == "denoise":
+                    processed_audio = self._denoise_audio(processed_audio, sample_rate)
+                    effects_applied.append("denoise")
+                elif operation == "eq_bass_boost":
+                    processed_audio = self._eq_bass_boost(processed_audio, sample_rate)
+                    effects_applied.append("eq_bass_boost")
+                elif operation == "compress":
+                    processed_audio = self._compress_audio(processed_audio)
+                    effects_applied.append("compress")
+            
+            # Convert back to bytes
+            output_data = await self._audio_to_bytes(processed_audio, sample_rate, output_format)
+            
+            # Generate metadata
+            metadata = AudioMetadata(
+                duration=len(processed_audio) / sample_rate,
+                sample_rate=sample_rate,
+                channels=1 if len(processed_audio.shape) == 1 else processed_audio.shape[1],
+                bit_depth=16,  # Default for processed audio
+                format=output_format,
+                size_bytes=len(output_data),
+                codec=output_format.upper(),
+                peak_amplitude=float(np.max(np.abs(processed_audio))),
+                rms_amplitude=float(np.sqrt(np.mean(processed_audio**2)))
+            )
+            
+            execution_time = (time.time() - start_time) * 1000
+            
+            return MediaResult(
+                success=True,
+                result=output_data,
+                metadata={
+                    'operation': 'process_audio',
+                    'effects_applied': effects_applied,
+                    'audio_metadata': metadata.__dict__,
+                    'execution_time_ms': execution_time
+                }
+            )
+        
+        except Exception as e:
+            self.logger.error(f"Audio processing failed: {e}")
+            return MediaResult(
+                success=False,
+                errors=[str(e)],
+                metadata={'operation': 'process_audio'}
+            )
+    
+    async def _load_audio_data(self, audio_data: bytes) -> Tuple[np.ndarray, int]:
+        """Load audio data from bytes"""
+        import io
+        audio_file = io.BytesIO(audio_data)
+        audio_array, sample_rate = librosa.load(audio_file, sr=None)
+        return audio_array, sample_rate
+    
+    def _normalize_audio(self, audio: np.ndarray) -> np.ndarray:
+        """Normalize audio to prevent clipping"""
+        max_val = np.max(np.abs(audio))
+        if max_val > 0:
+            return audio / max_val * 0.95  # Leave some headroom
+        return audio
+    
+    def _denoise_audio(self, audio: np.ndarray, sample_rate: int) -> np.ndarray:
+        """Simple noise reduction using spectral gating"""
+        # This is a simplified denoising - in production use more sophisticated algorithms
+        stft = librosa.stft(audio)
+        magnitude = np.abs(stft)
+        phase = np.angle(stft)
+        
+        # Simple spectral gating
+        noise_floor = np.percentile(magnitude, 20)
+        mask = magnitude > noise_floor * 2
+        
+        cleaned_magnitude = magnitude * mask
+        cleaned_stft = cleaned_magnitude * np.exp(1j * phase)
+        
+        return librosa.istft(cleaned_stft)
+    
+    def _eq_bass_boost(self, audio: np.ndarray, sample_rate: int) -> np.ndarray:
+        """Apply bass boost EQ"""
+        # Simple bass boost using high-pass filter to isolate low frequencies
+        from scipy import signal
+        
+        # Design a low-pass filter for bass frequencies
+        nyquist = sample_rate // 2
+        low_freq = 200  # Hz
+        b, a = signal.butter(2, low_freq / nyquist, btype='low')
+        
+        # Filter the audio
+        bass = signal.filtfilt(b, a, audio)
+        
+        # Boost bass and mix back
+        boosted_bass = bass * 1.5
+        return audio + boosted_bass * 0.3
+    
+    def _compress_audio(self, audio: np.ndarray) -> np.ndarray:
+        """Apply dynamic range compression"""
+        # Simple compressor
+        threshold = 0.7
+        ratio = 4.0
+        
+        compressed = np.copy(audio)
+        over_threshold = np.abs(compressed) > threshold
+        
+        compressed[over_threshold] = (
+            np.sign(compressed[over_threshold]) * 
+            (threshold + (np.abs(compressed[over_threshold]) - threshold) / ratio)
+        )
+        
+        return compressed
+    
+    async def _audio_to_bytes(self, audio: np.ndarray, sample_rate: int, format: str) -> bytes:
+        """Convert audio array to bytes"""
+        import io
+        
+        buffer = io.BytesIO()
+        sf.write(buffer, audio, sample_rate, format=format.upper())
+        buffer.seek(0)
+        return buffer.read()
+
+class EnterpriseVideoProcessor:
+    """Enhanced video processing consolidated from video_utilities.py
+    
+    Audio Engineer: Video processing with audio sync and multimedia optimization
+    """
+    
+    def __init__(self, config: Optional[Dict[str, Any]] = None):
+        self.config = config or {}
+        self.logger = logging.getLogger(__name__)
+        self._ffmpeg_path = self.config.get('ffmpeg_path', 'ffmpeg')
+    
+    async def process_video(
+        self,
+        video_path: str,
+        operations: List[str],
+        output_format: str = "mp4"
+    ) -> MediaResult:
+        """Process video with specified operations"""
+        try:
+            start_time = time.time()
+            
+            # Validate input file
+            if not Path(video_path).exists():
+                return MediaResult(
+                    success=False,
+                    errors=[f"Video file not found: {video_path}"]
+                )
+            
+            # Extract metadata
+            metadata = await self._extract_video_metadata(video_path)
+            
+            # Build FFmpeg command
+            cmd = [self._ffmpeg_path, "-i", video_path]
+            effects_applied = []
+            
+            for operation in operations:
+                if operation == "compress":
+                    cmd.extend(["-c:v", "libx264", "-crf", "23"])
+                    effects_applied.append("compress")
+                elif operation == "scale_720p":
+                    cmd.extend(["-vf", "scale=1280:720"])
+                    effects_applied.append("scale_720p")
+                elif operation == "normalize_audio":
+                    cmd.extend(["-af", "loudnorm"])
+                    effects_applied.append("normalize_audio")
+                elif operation == "stabilize":
+                    cmd.extend(["-vf", "vidstabdetect,vidstabtransform"])
+                    effects_applied.append("stabilize")
+            
+            # Output file
+            output_path = f"/tmp/processed_video_{int(time.time())}.{output_format}"
+            cmd.extend(["-y", output_path])  # -y to overwrite
+            
+            # Execute FFmpeg
+            process = await asyncio.create_subprocess_exec(
+                *cmd,
+                stdout=asyncio.subprocess.PIPE,
+                stderr=asyncio.subprocess.PIPE
+            )
+            
+            stdout, stderr = await process.communicate()
+            
+            if process.returncode != 0:
+                return MediaResult(
+                    success=False,
+                    errors=[f"FFmpeg error: {stderr.decode()}"]
+                )
+            
+            # Read processed file
+            async with aiofiles.open(output_path, 'rb') as f:
+                processed_data = await f.read()
+            
+            # Cleanup
+            Path(output_path).unlink(missing_ok=True)
+            
+            execution_time = (time.time() - start_time) * 1000
+            
+            return MediaResult(
+                success=True,
+                result=processed_data,
+                metadata={
+                    'operation': 'process_video',
+                    'effects_applied': effects_applied,
+                    'video_metadata': metadata.__dict__ if metadata else {},
+                    'execution_time_ms': execution_time
+                }
+            )
+        
+        except Exception as e:
+            self.logger.error(f"Video processing failed: {e}")
+            return MediaResult(
+                success=False,
+                errors=[str(e)],
+                metadata={'operation': 'process_video'}
+            )
+    
+    async def _extract_video_metadata(self, video_path: str) -> Optional[VideoMetadata]:
+        """Extract video metadata using FFprobe"""
+        try:
+            cmd = [
+                "ffprobe",
+                "-v", "quiet",
+                "-print_format", "json",
+                "-show_format",
+                "-show_streams",
+                video_path
+            ]
+            
+            process = await asyncio.create_subprocess_exec(
+                *cmd,
+                stdout=asyncio.subprocess.PIPE,
+                stderr=asyncio.subprocess.PIPE
+            )
+            
+            stdout, stderr = await process.communicate()
+            
+            if process.returncode != 0:
+                return None
+            
+            data = json.loads(stdout.decode())
+            
+            # Find video stream
+            video_stream = None
+            for stream in data.get('streams', []):
+                if stream.get('codec_type') == 'video':
+                    video_stream = stream
+                    break
+            
+            if not video_stream:
+                return None
+            
+            format_info = data.get('format', {})
+            
+            return VideoMetadata(
+                duration=float(format_info.get('duration', 0)),
+                width=int(video_stream.get('width', 0)),
+                height=int(video_stream.get('height', 0)),
+                fps=eval(video_stream.get('r_frame_rate', '0/1')),
+                format=format_info.get('format_name', ''),
+                size_bytes=int(format_info.get('size', 0)),
+                codec=video_stream.get('codec_name', ''),
+                bitrate=int(format_info.get('bit_rate', 0)),
+                aspect_ratio=video_stream.get('display_aspect_ratio', ''),
+                color_space=video_stream.get('color_space', '')
+            )
+        
+        except Exception as e:
+            self.logger.warning(f"Metadata extraction failed: {e}")
+            return None
+
+# Export enhanced media processing utilities
+__all__ = ['MediaHandler', 'MediaHandlerFactory', 'MediaResult', 'MediaType',
+           'EnterpriseAudioProcessor', 'EnterpriseVideoProcessor', 
+           'AudioMetadata', 'VideoMetadata', 'AudioCodec', 'VideoCodec']
