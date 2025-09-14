@@ -988,14 +988,26 @@ class EnterpriseEncryption:
             'salt_size': self.config.salt_size
         })
         
+        # Initialize the encryption layer asynchronously
+        self._initialized = False
+        
         # Initialize audit log
         self.audit_log = []
         
         logger.info("🏢 Enterprise encryption initialized with AES-256-GCM")
     
+    async def _ensure_initialized(self):
+        """Ensure encryption layer is properly initialized"""
+        if not self._initialized:
+            await self.encryption_layer._initialize_encryption()
+            self._initialized = True
+    
     async def encrypt_data(self, data: Union[Dict, str, bytes]) -> Union[str, bytes]:
         """🔐 Encrypt data with enterprise-grade security"""
         try:
+            # Ensure encryption layer is initialized
+            await self._ensure_initialized()
+            
             # Convert data to bytes if needed
             if isinstance(data, dict):
                 data_bytes = json.dumps(data).encode('utf-8')
@@ -1027,9 +1039,11 @@ class EnterpriseEncryption:
     async def decrypt_data(self, encrypted_data: Union[str, bytes]) -> Union[Dict, str]:
         """🔓 Decrypt data with enterprise validation"""
         try:
-            # For enterprise encryption, we need to extract the key_id
-            # This is a simplified implementation - in real world, key_id would be embedded
-            key_id = "enterprise_key_default"
+            # Ensure encryption layer is initialized
+            await self._ensure_initialized()
+            
+            # For enterprise encryption, we use the aes_high key for HIGH level encryption
+            key_id = "aes_high"
             
             # Decrypt using high-level encryption
             decrypted_bytes, metrics = await self.encryption_layer.decrypt_data(
