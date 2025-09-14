@@ -25,9 +25,9 @@ except ImportError:
     RecoveryOrchestrator = None
 
 try:
-    from .disaster_core import DisasterCore
+    from .disaster_core import DisasterRecoveryCore
 except ImportError:
-    DisasterCore = None
+    DisasterRecoveryCore = None
 
 try:
     from .service_orchestrator import ServiceOrchestrator
@@ -79,7 +79,7 @@ __all__ = [
     'BackupManager',
     'FailoverManager', 
     'RecoveryOrchestrator',
-    'DisasterCore',
+    'DisasterRecoveryCore',
     'ServiceOrchestrator',
     'ResourceOrchestrator',
     'DeploymentOrchestrator',
