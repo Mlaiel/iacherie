@@ -20,15 +20,28 @@ Copyright (c) 2025 Ainflue Platform. All rights reserved.
 Licensed under proprietary license - reproduction forbidden without written authorization.
 """
 
+# Optimized imports - lazy loading for enterprise performance
+from typing import TYPE_CHECKING
+from enum import Enum  # Import requis pour les classes
+from dataclasses import dataclass, field  # Import requis pour les classes
+
+if TYPE_CHECKING:
+    from typing import Dict, List, Optional, Any, Union, Callable, Tuple
+    from datetime import datetime, timedelta
+    import asyncio
+    import json
+    import uuid
+    import logging
+    from collections import defaultdict, deque
+
+# Imports nécessaires pour les classes runtime
 import asyncio
-from typing import Dict, List, Optional, Any, Union, Callable, Tuple
 from datetime import datetime, timedelta
-from enum import Enum
-from dataclasses import dataclass, field
-import json
 import uuid
 import logging
+from typing import Dict, List, Optional, Any, Union, Callable, Tuple
 from collections import defaultdict, deque
+import json
 
 # === CONSOLIDATED EXCEPTIONS ===
 

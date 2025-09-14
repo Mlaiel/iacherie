@@ -139,29 +139,42 @@ analytics:
     enable_pdf_export: true
     enable_excel_export: true
 
-# === PERFORMANCE CONFIGURATION ===
-performance:
-  memory:
-    max_heap_size_gb: 8
-    cache_size_gb: 2
-    buffer_size_mb: 512
-
-  cpu:
-    max_worker_threads: 16
-    thread_pool_size: 32
-    async_pool_size: 64
-
-  network:
-    connection_timeout_seconds: 30
-    read_timeout_seconds: 60
-    max_connections: 1000
-    connection_pool_size: 100
-
-  database:
-    connection_pool_size: 50
-    query_timeout_seconds: 30
-    max_connections: 200
-    enable_connection_pooling: true
+# === PERFORMANCE SPECIFIC CONFIGURATION (ULTRA-STRICT) ===
+performance_specific:
+  targets:
+    workflow_execution_ms: 500  # < 500ms (P95) - OBJECTIF CHECKLIST
+    pipeline_processing_ms: 2000  # < 2s (P95)
+    task_scheduling_ms: 100  # < 100ms (P95)
+    state_persistence_ms: 50  # < 50ms (P95)
+    event_processing_ms: 10  # < 10ms (P95)
+    
+  throughput:
+    workflows_per_minute: 1000  # > 1000 workflows/min - OBJECTIF CHECKLIST
+    tasks_per_second: 100
+    events_per_second: 1000
+    
+  resources:
+    max_per_workflow_mb: 200  # < 200MB per workflow - OBJECTIF CHECKLIST
+    
+  availability:
+    sla_percentage: 99.99  # 99.99% SLA - OBJECTIF CHECKLIST
+    
+  optimization:
+    caching:
+      enable_workflow_cache: true
+      enable_result_cache: true
+      cache_ttl_seconds: 3600
+      max_cache_size_mb: 1024
+      
+    async_processing:
+      enable_async_workflows: true
+      enable_async_tasks: true
+      enable_async_events: true
+      
+    parallel_processing:
+      enable_parallel_workflows: true
+      enable_parallel_tasks: true
+      max_parallel_branches: 50
 
 # === SECURITY CONFIGURATION ===
 security:

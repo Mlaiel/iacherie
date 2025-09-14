@@ -70,14 +70,14 @@ class WorkflowContext:
     workflow_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     user_id: str = ""
     content_item: Optional[ContentItem] = None
+    timeout: Optional[timedelta] = None
+    retry_count: int = 0
+    max_retries: int = 3
     metadata: Dict[str, Any] = field(default_factory=dict)
     results: Dict[str, Any] = field(default_factory=dict)
     stage_history: List[str] = field(default_factory=list)
     created_at: datetime = field(default_factory=datetime.utcnow)
     updated_at: datetime = field(default_factory=datetime.utcnow)
-    timeout: Optional[timedelta] = None
-    retry_count: int = 0
-    max_retries: int = 3
 
 
 @dataclass
