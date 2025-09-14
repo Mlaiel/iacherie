@@ -15,7 +15,10 @@ __all__ = [
     'SubscriptionManagementService',
     'BillingService',
     'RoyaltyDistributionService',
-    'FraudDetectionService'
+    'FraudDetectionService',
+    'TaxCalculationService',
+    'PaymentGatewayOrchestrator',
+    'FinancialForecastingService'
 ]
 
 def get_services():
@@ -27,7 +30,13 @@ def get_services():
         'subscription_management_service.py',
         'billing_service.py',
         'royalty_distribution_service.py',
-        'fraud_detection_service.py'
+        'fraud_detection_service.py',
+        'currency_conversion_service.py',
+        'invoice_generation_service.py',
+        'financial_reporting_service.py',
+        'tax_calculation_service.py',
+        'payment_gateway_orchestrator.py',
+        'financial_forecasting_service.py'
     ]
 
 async def start_services():
