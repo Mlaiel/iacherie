@@ -137,3 +137,9 @@ for module_name in compliance_modules:
             __all__.extend(module.__all__)
     except (ImportError, AttributeError):
         pass
+
+# Advanced enterprise security components (Expert Implementation)
+try:
+    from .zero_trust_security import *
+except ImportError:
+    pass

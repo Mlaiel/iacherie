@@ -52,6 +52,12 @@ try:
 except ImportError:
     PerformanceTuner = None
 
+# Enterprise database optimization (Expert Implementation)
+try:
+    from .enterprise_performance_optimizer import DatabasePerformanceOptimizer
+except ImportError:
+    DatabasePerformanceOptimizer = None
+
 __all__ = [
     'PostgreSQLCluster',
     'RedisCluster',
@@ -61,5 +67,6 @@ __all__ = [
     'BackupManager',
     'MigrationManager',
     'ReplicationManager',
-    'PerformanceTuner'
+    'PerformanceTuner',
+    'DatabasePerformanceOptimizer'
 ]

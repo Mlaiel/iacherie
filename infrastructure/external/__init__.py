@@ -62,6 +62,17 @@ try:
 except ImportError:
     pass
 
+# Advanced platform integration components (Expert Implementation)
+try:
+    from .platform_integration_manager import *
+except ImportError:
+    pass
+
+try:
+    from .seo_optimization import *
+except ImportError:
+    pass
+
 __version__ = "2.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
@@ -79,7 +90,7 @@ except ImportError:
     pass
 
 # Add exports from each submodule if they exist
-for module_name in ['ai_services', 'blockchain_networks', 'payment_gateways', 'social_media_apis', 'social_media_connectors', 'music_streaming_connectors', 'creator_economy_connectors']:
+for module_name in ['ai_services', 'blockchain_networks', 'payment_gateways', 'social_media_apis', 'social_media_connectors', 'music_streaming_connectors', 'creator_economy_connectors', 'platform_integration_manager', 'seo_optimization']:
     try:
         module = getattr(__import__(__name__ + '.' + module_name, fromlist=[module_name]), module_name)
         if hasattr(module, '__all__'):

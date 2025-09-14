@@ -99,6 +99,12 @@ try:
 except ImportError:
     LoadBalancer = None
 
+# Advanced container orchestration (Expert Implementation)
+try:
+    from .advanced_orchestration_manager import AdvancedOrchestrationManager
+except ImportError:
+    AdvancedOrchestrationManager = None
+
 __all__ = [
     # Core container functionality
     'DockerManager', 'ImageBuilder', 'ContainerOrchestrator',
@@ -109,5 +115,7 @@ __all__ = [
     # Specialized modules
     'AdvancedClusterManager', 'AdvancedServiceMeshManager', 'IngressController',
     'PodScheduler', 'VolumeManager', 'NetworkPolicyManager', 
-    'SecretManager', 'RegistryManager', 'LoadBalancer'
+    'SecretManager', 'RegistryManager', 'LoadBalancer',
+    # Advanced orchestration
+    'AdvancedOrchestrationManager'
 ]
