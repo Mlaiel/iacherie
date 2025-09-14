@@ -2,7 +2,7 @@
 LINKEDININTEGRATIONMODEL - ENTERPRISE GRADE PLACEHOLDER
 ======================================================
 
-Placeholder model for LinkedinIntegrationModel
+Placeholder model for LinkedInIntegrationModel
 Will be implemented with full enterprise patterns
 
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -16,9 +16,9 @@ from datetime import datetime
 from typing import Dict, Any
 import uuid
 
-class LinkedinIntegrationModel(Base):
+class LinkedInIntegrationModel(Base):
     """
-    LinkedinIntegrationModel - Enterprise implementation placeholder
+    LinkedInIntegrationModel - Enterprise implementation placeholder
     TODO: Implement full business logic and patterns
     """
     __tablename__ = 'linkedin_integration_models'
@@ -39,7 +39,7 @@ class LinkedinIntegrationModel(Base):
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
     
     def __repr__(self):
-        return f"<LinkedinIntegrationModel(id={self.id}, name='{self.name}')>"
+        return f"<LinkedInIntegrationModel(id={self.id}, name='{self.name}')>"
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert model to dictionary"""
@@ -55,9 +55,9 @@ class LinkedinIntegrationModel(Base):
             'updated_at': self.updated_at.isoformat() if self.updated_at else None
         }
 
-# Enterprise LinkedinIntegrationModel Registry
+# Enterprise LinkedInIntegrationModel Registry
 LINKEDININTEGRATIONMODEL_REGISTRY = {
-    'model_class': LinkedinIntegrationModel,
+    'model_class': LinkedInIntegrationModel,
     'table_name': 'linkedin_integration_models',
     'enterprise_ready': True,
     'implementation_status': 'placeholder'

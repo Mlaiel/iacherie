@@ -2,7 +2,7 @@
 KPITRACKINGMODEL - ENTERPRISE GRADE PLACEHOLDER
 ==============================================
 
-Placeholder model for KpiTrackingModel
+Placeholder model for KPITrackingModel
 Will be implemented with full enterprise patterns
 
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -18,7 +18,7 @@ import uuid
 
 class KPITrackingModel(Base):
     """
-    KpiTrackingModel - Enterprise implementation placeholder
+    KPITrackingModel - Enterprise implementation placeholder
     TODO: Implement full business logic and patterns
     """
     __tablename__ = 'kpi_tracking_models'
@@ -39,7 +39,7 @@ class KPITrackingModel(Base):
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
     
     def __repr__(self):
-        return f"<KpiTrackingModel(id={self.id}, name='{self.name}')>"
+        return f"<KPITrackingModel(id={self.id}, name='{self.name}')>"
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert model to dictionary"""
@@ -55,9 +55,9 @@ class KPITrackingModel(Base):
             'updated_at': self.updated_at.isoformat() if self.updated_at else None
         }
 
-# Enterprise KpiTrackingModel Registry
+# Enterprise KPITrackingModel Registry
 KPITRACKINGMODEL_REGISTRY = {
-    'model_class': KpiTrackingModel,
+    'model_class': KPITrackingModel,
     'table_name': 'kpi_tracking_models',
     'enterprise_ready': True,
     'implementation_status': 'placeholder'

@@ -2,7 +2,7 @@
 TIKTOKINTEGRATIONMODEL - ENTERPRISE GRADE PLACEHOLDER
 ====================================================
 
-Placeholder model for TiktokIntegrationModel
+Placeholder model for TikTokIntegrationModel
 Will be implemented with full enterprise patterns
 
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -16,9 +16,9 @@ from datetime import datetime
 from typing import Dict, Any
 import uuid
 
-class TiktokIntegrationModel(Base):
+class TikTokIntegrationModel(Base):
     """
-    TiktokIntegrationModel - Enterprise implementation placeholder
+    TikTokIntegrationModel - Enterprise implementation placeholder
     TODO: Implement full business logic and patterns
     """
     __tablename__ = 'tiktok_integration_models'
@@ -39,7 +39,7 @@ class TiktokIntegrationModel(Base):
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
     
     def __repr__(self):
-        return f"<TiktokIntegrationModel(id={self.id}, name='{self.name}')>"
+        return f"<TikTokIntegrationModel(id={self.id}, name='{self.name}')>"
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert model to dictionary"""
@@ -55,9 +55,9 @@ class TiktokIntegrationModel(Base):
             'updated_at': self.updated_at.isoformat() if self.updated_at else None
         }
 
-# Enterprise TiktokIntegrationModel Registry
+# Enterprise TikTokIntegrationModel Registry
 TIKTOKINTEGRATIONMODEL_REGISTRY = {
-    'model_class': TiktokIntegrationModel,
+    'model_class': TikTokIntegrationModel,
     'table_name': 'tiktok_integration_models',
     'enterprise_ready': True,
     'implementation_status': 'placeholder'

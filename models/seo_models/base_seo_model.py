@@ -2,7 +2,7 @@
 BASESEOMODEL - ENTERPRISE GRADE PLACEHOLDER
 ==========================================
 
-Placeholder model for BaseSeoModel
+Placeholder model for BaseSEOModel
 Will be implemented with full enterprise patterns
 
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -16,9 +16,9 @@ from datetime import datetime
 from typing import Dict, Any
 import uuid
 
-class BaseSeoModel(Base):
+class BaseSEOModel(Base):
     """
-    BaseSeoModel - Enterprise implementation placeholder
+    BaseSEOModel - Enterprise implementation placeholder
     TODO: Implement full business logic and patterns
     """
     __tablename__ = 'base_seo_models'
@@ -39,7 +39,7 @@ class BaseSeoModel(Base):
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
     
     def __repr__(self):
-        return f"<BaseSeoModel(id={self.id}, name='{self.name}')>"
+        return f"<BaseSEOModel(id={self.id}, name='{self.name}')>"
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert model to dictionary"""
@@ -55,9 +55,9 @@ class BaseSeoModel(Base):
             'updated_at': self.updated_at.isoformat() if self.updated_at else None
         }
 
-# Enterprise BaseSeoModel Registry
+# Enterprise BaseSEOModel Registry
 BASESEOMODEL_REGISTRY = {
-    'model_class': BaseSeoModel,
+    'model_class': BaseSEOModel,
     'table_name': 'base_seo_models',
     'enterprise_ready': True,
     'implementation_status': 'placeholder'

@@ -2,7 +2,7 @@
 SEOANALYTICSMODEL - ENTERPRISE GRADE PLACEHOLDER
 ===============================================
 
-Placeholder model for SeoAnalyticsModel
+Placeholder model for SEOAnalyticsModel
 Will be implemented with full enterprise patterns
 
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -18,7 +18,7 @@ import uuid
 
 class SEOAnalyticsModel(Base):
     """
-    SeoAnalyticsModel - Enterprise implementation placeholder
+    SEOAnalyticsModel - Enterprise implementation placeholder
     TODO: Implement full business logic and patterns
     """
     __tablename__ = 'seo_analytics_models'
@@ -39,7 +39,7 @@ class SEOAnalyticsModel(Base):
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
     
     def __repr__(self):
-        return f"<SeoAnalyticsModel(id={self.id}, name='{self.name}')>"
+        return f"<SEOAnalyticsModel(id={self.id}, name='{self.name}')>"
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert model to dictionary"""
@@ -55,9 +55,9 @@ class SEOAnalyticsModel(Base):
             'updated_at': self.updated_at.isoformat() if self.updated_at else None
         }
 
-# Enterprise SeoAnalyticsModel Registry
+# Enterprise SEOAnalyticsModel Registry
 SEOANALYTICSMODEL_REGISTRY = {
-    'model_class': SeoAnalyticsModel,
+    'model_class': SEOAnalyticsModel,
     'table_name': 'seo_analytics_models',
     'enterprise_ready': True,
     'implementation_status': 'placeholder'

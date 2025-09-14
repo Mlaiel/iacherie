@@ -2,7 +2,7 @@
 ROITRACKINGMODEL - ENTERPRISE GRADE PLACEHOLDER
 ==============================================
 
-Placeholder model for RoiTrackingModel
+Placeholder model for ROITrackingModel
 Will be implemented with full enterprise patterns
 
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -16,9 +16,9 @@ from datetime import datetime
 from typing import Dict, Any
 import uuid
 
-class RoiTrackingModel(Base):
+class ROITrackingModel(Base):
     """
-    RoiTrackingModel - Enterprise implementation placeholder
+    ROITrackingModel - Enterprise implementation placeholder
     TODO: Implement full business logic and patterns
     """
     __tablename__ = 'roi_tracking_models'
@@ -39,7 +39,7 @@ class RoiTrackingModel(Base):
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
     
     def __repr__(self):
-        return f"<RoiTrackingModel(id={self.id}, name='{self.name}')>"
+        return f"<ROITrackingModel(id={self.id}, name='{self.name}')>"
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert model to dictionary"""
@@ -55,9 +55,9 @@ class RoiTrackingModel(Base):
             'updated_at': self.updated_at.isoformat() if self.updated_at else None
         }
 
-# Enterprise RoiTrackingModel Registry
+# Enterprise ROITrackingModel Registry
 ROITRACKINGMODEL_REGISTRY = {
-    'model_class': RoiTrackingModel,
+    'model_class': ROITrackingModel,
     'table_name': 'roi_tracking_models',
     'enterprise_ready': True,
     'implementation_status': 'placeholder'

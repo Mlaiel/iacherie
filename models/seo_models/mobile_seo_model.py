@@ -2,7 +2,7 @@
 MOBILESEOMODEL - ENTERPRISE GRADE PLACEHOLDER
 ============================================
 
-Placeholder model for MobileSeoModel
+Placeholder model for MobileSEOModel
 Will be implemented with full enterprise patterns
 
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -16,9 +16,9 @@ from datetime import datetime
 from typing import Dict, Any
 import uuid
 
-class MobileSeoModel(Base):
+class MobileSEOModel(Base):
     """
-    MobileSeoModel - Enterprise implementation placeholder
+    MobileSEOModel - Enterprise implementation placeholder
     TODO: Implement full business logic and patterns
     """
     __tablename__ = 'mobile_seo_models'
@@ -39,7 +39,7 @@ class MobileSeoModel(Base):
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
     
     def __repr__(self):
-        return f"<MobileSeoModel(id={self.id}, name='{self.name}')>"
+        return f"<MobileSEOModel(id={self.id}, name='{self.name}')>"
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert model to dictionary"""
@@ -55,9 +55,9 @@ class MobileSeoModel(Base):
             'updated_at': self.updated_at.isoformat() if self.updated_at else None
         }
 
-# Enterprise MobileSeoModel Registry
+# Enterprise MobileSEOModel Registry
 MOBILESEOMODEL_REGISTRY = {
-    'model_class': MobileSeoModel,
+    'model_class': MobileSEOModel,
     'table_name': 'mobile_seo_models',
     'enterprise_ready': True,
     'implementation_status': 'placeholder'

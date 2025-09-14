@@ -2,7 +2,7 @@
 MULTILINGUALSEOMODEL - ENTERPRISE GRADE PLACEHOLDER
 ==================================================
 
-Placeholder model for MultilingualSeoModel
+Placeholder model for MultilingualSEOModel
 Will be implemented with full enterprise patterns
 
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -16,9 +16,9 @@ from datetime import datetime
 from typing import Dict, Any
 import uuid
 
-class MultilingualSeoModel(Base):
+class MultilingualSEOModel(Base):
     """
-    MultilingualSeoModel - Enterprise implementation placeholder
+    MultilingualSEOModel - Enterprise implementation placeholder
     TODO: Implement full business logic and patterns
     """
     __tablename__ = 'multilingual_seo_models'
@@ -39,7 +39,7 @@ class MultilingualSeoModel(Base):
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
     
     def __repr__(self):
-        return f"<MultilingualSeoModel(id={self.id}, name='{self.name}')>"
+        return f"<MultilingualSEOModel(id={self.id}, name='{self.name}')>"
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert model to dictionary"""
@@ -55,9 +55,9 @@ class MultilingualSeoModel(Base):
             'updated_at': self.updated_at.isoformat() if self.updated_at else None
         }
 
-# Enterprise MultilingualSeoModel Registry
+# Enterprise MultilingualSEOModel Registry
 MULTILINGUALSEOMODEL_REGISTRY = {
-    'model_class': MultilingualSeoModel,
+    'model_class': MultilingualSEOModel,
     'table_name': 'multilingual_seo_models',
     'enterprise_ready': True,
     'implementation_status': 'placeholder'

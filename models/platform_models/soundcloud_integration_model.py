@@ -2,7 +2,7 @@
 SOUNDCLOUDINTEGRATIONMODEL - ENTERPRISE GRADE PLACEHOLDER
 ========================================================
 
-Placeholder model for SoundcloudIntegrationModel
+Placeholder model for SoundCloudIntegrationModel
 Will be implemented with full enterprise patterns
 
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -16,9 +16,9 @@ from datetime import datetime
 from typing import Dict, Any
 import uuid
 
-class SoundcloudIntegrationModel(Base):
+class SoundCloudIntegrationModel(Base):
     """
-    SoundcloudIntegrationModel - Enterprise implementation placeholder
+    SoundCloudIntegrationModel - Enterprise implementation placeholder
     TODO: Implement full business logic and patterns
     """
     __tablename__ = 'soundcloud_integration_models'
@@ -39,7 +39,7 @@ class SoundcloudIntegrationModel(Base):
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
     
     def __repr__(self):
-        return f"<SoundcloudIntegrationModel(id={self.id}, name='{self.name}')>"
+        return f"<SoundCloudIntegrationModel(id={self.id}, name='{self.name}')>"
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert model to dictionary"""
@@ -55,9 +55,9 @@ class SoundcloudIntegrationModel(Base):
             'updated_at': self.updated_at.isoformat() if self.updated_at else None
         }
 
-# Enterprise SoundcloudIntegrationModel Registry
+# Enterprise SoundCloudIntegrationModel Registry
 SOUNDCLOUDINTEGRATIONMODEL_REGISTRY = {
-    'model_class': SoundcloudIntegrationModel,
+    'model_class': SoundCloudIntegrationModel,
     'table_name': 'soundcloud_integration_models',
     'enterprise_ready': True,
     'implementation_status': 'placeholder'

@@ -2,7 +2,7 @@
 SEOAUTOMATIONMODEL - ENTERPRISE GRADE PLACEHOLDER
 ================================================
 
-Placeholder model for SeoAutomationModel
+Placeholder model for SEOAutomationModel
 Will be implemented with full enterprise patterns
 
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -18,7 +18,7 @@ import uuid
 
 class SEOAutomationModel(Base):
     """
-    SeoAutomationModel - Enterprise implementation placeholder
+    SEOAutomationModel - Enterprise implementation placeholder
     TODO: Implement full business logic and patterns
     """
     __tablename__ = 'seo_automation_models'
@@ -39,7 +39,7 @@ class SEOAutomationModel(Base):
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
     
     def __repr__(self):
-        return f"<SeoAutomationModel(id={self.id}, name='{self.name}')>"
+        return f"<SEOAutomationModel(id={self.id}, name='{self.name}')>"
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert model to dictionary"""
@@ -55,9 +55,9 @@ class SEOAutomationModel(Base):
             'updated_at': self.updated_at.isoformat() if self.updated_at else None
         }
 
-# Enterprise SeoAutomationModel Registry
+# Enterprise SEOAutomationModel Registry
 SEOAUTOMATIONMODEL_REGISTRY = {
-    'model_class': SeoAutomationModel,
+    'model_class': SEOAutomationModel,
     'table_name': 'seo_automation_models',
     'enterprise_ready': True,
     'implementation_status': 'placeholder'
