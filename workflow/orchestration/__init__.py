@@ -14,7 +14,13 @@ try:
         WorkflowStage,
         WorkflowStatus,
         WorkflowContext,
-        WorkflowConfig
+        WorkflowConfig,
+        WorkflowEventType,
+        EnterpriseEventCoordinator,
+        WorkflowEvent,
+        EventHandler,
+        EventType,
+        EventPriority
     )
 except ImportError as e:
     print(f"Orchestration layer import warning: {e}")
@@ -25,19 +31,13 @@ try:
         AutomationRule,
         AutomationTrigger,
         AutomationAction,
-        ScheduledTask
+        ScheduledTask,
+        EnterpriseSchedulerCore,
+        SchedulePriority,
+        SchedulerConfig
     )
 except ImportError as e:
     print(f"Automation engine import warning: {e}")
-
-try:
-    from .event_coordinator import (
-        EventCoordinator,
-        WorkflowEvent,
-        EventHandler
-    )
-except ImportError as e:
-    print(f"Event coordinator import warning: {e}")
 
 # Enterprise exports - only available classes
 __all__ = [
@@ -47,6 +47,7 @@ __all__ = [
     "WorkflowStatus", 
     "WorkflowContext",
     "WorkflowConfig",
+    "WorkflowEventType",
     
     # Automation engine (if available)
     "AutomationEngine",
@@ -54,11 +55,16 @@ __all__ = [
     "AutomationTrigger",
     "AutomationAction",
     "ScheduledTask",
+    "EnterpriseSchedulerCore",
+    "SchedulePriority",
+    "SchedulerConfig",
     
     # Event coordination (if available)
-    "EventCoordinator",
+    "EnterpriseEventCoordinator",
     "WorkflowEvent",
-    "EventHandler"
+    "EventHandler",
+    "EventType",
+    "EventPriority"
 ]
 
 # Enterprise module metadata

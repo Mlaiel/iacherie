@@ -29,7 +29,10 @@ except ImportError as e:
 try:
     from .error_handler import (
         ErrorContext,
-        StructuredLogger
+        StructuredLogger,
+        EnterpriseRecoveryManager,
+        RecoveryStrategy,
+        RecoveryOperation
     )
 except ImportError as e:
     print(f"Error handler import warning: {e}")
@@ -48,7 +51,10 @@ __all__ = [
     
     # Error handling (if available)
     "ErrorContext",
-    "StructuredLogger"
+    "StructuredLogger",
+    "EnterpriseRecoveryManager",
+    "RecoveryStrategy",
+    "RecoveryOperation"
 ]
 
 # Enterprise module metadata

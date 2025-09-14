@@ -203,18 +203,16 @@ class WorkflowExecutionResult:
 try:
     from .orchestration.workflow_orchestrator import WorkflowOrchestrator
     from .orchestration.pipeline_manager import PipelineManager  
-    from .orchestration.automation_engine import AutomationEngine
-    from .orchestration.scheduler_core import SchedulerCore
+    from .orchestration.automation_engine import AutomationEngine, EnterpriseSchedulerCore
     from .orchestration.state_manager import StateManager
-    from .orchestration.event_coordinator import EventCoordinator
+    # Event coordinator is now integrated in workflow_orchestrator
 except ImportError as e:
     logging.warning(f"Orchestration layer import warning: {e}")
     WorkflowOrchestrator = None
     PipelineManager = None
     AutomationEngine = None
-    SchedulerCore = None
+    EnterpriseSchedulerCore = None
     StateManager = None
-    EventCoordinator = None
 
 # === EXECUTION LAYER ===
 try:
@@ -222,8 +220,8 @@ try:
     from .execution.task_processor import TaskProcessor
     from .execution.content_pipeline import ContentPipeline
     from .execution.validation_engine import ValidationEngine
-    from .execution.error_handler import ErrorHandler
-    from .execution.recovery_manager import RecoveryManager
+    from .execution.error_handler import ErrorHandler, EnterpriseRecoveryManager
+    # Recovery manager is now integrated in error_handler
 except ImportError as e:
     logging.warning(f"Execution layer import warning: {e}")
     WorkflowEngine = None
@@ -231,7 +229,7 @@ except ImportError as e:
     ContentPipeline = None
     ValidationEngine = None
     ErrorHandler = None
-    RecoveryManager = None
+    EnterpriseRecoveryManager = None
 
 # === ANALYTICS LAYER ===
 try:
@@ -316,9 +314,8 @@ __all__ = [
     'WorkflowOrchestrator',
     'PipelineManager', 
     'AutomationEngine',
-    'SchedulerCore',
+    'EnterpriseSchedulerCore',
     'StateManager',
-    'EventCoordinator',
     
     # EXECUTION
     'WorkflowEngine',
@@ -326,7 +323,7 @@ __all__ = [
     'ContentPipeline',
     'ValidationEngine',
     'ErrorHandler',
-    'RecoveryManager',
+    'EnterpriseRecoveryManager',
     
     # ANALYTICS
     'PerformanceAnalyzer',
