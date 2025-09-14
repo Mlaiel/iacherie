@@ -23,6 +23,12 @@ from .pipeline_validator import PipelineValidator
 from .regression_test_engine import RegressionTestEngine
 from .rollback_automation import RollbackAutomation
 from .helm_chart_manager import HelmChartManager
+from .continuous_integration import ContinuousIntegrationEngine
+from .continuous_deployment import ContinuousDeploymentEngine
+from .quality_gate_engine import QualityGateEngine
+from .pipeline_orchestration import PipelineOrchestrator
+from .automation_metrics import AutomationMetricsCollector
+from .deployment_strategy_manager import DeploymentStrategyManager
 
 __version__ = "1.0.0"
 __all__ = [
@@ -35,5 +41,11 @@ __all__ = [
     "PipelineValidator",
     "RegressionTestEngine",
     "RollbackAutomation",
-    "HelmChartManager"
+    "HelmChartManager",
+    "ContinuousIntegrationEngine",
+    "ContinuousDeploymentEngine", 
+    "QualityGateEngine",
+    "PipelineOrchestrator",
+    "AutomationMetricsCollector",
+    "DeploymentStrategyManager"
 ]
