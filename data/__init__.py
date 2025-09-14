@@ -32,8 +32,8 @@ _failed_modules = []
 def _safe_import(module_name):
     """Safely import a module with error handling"""
     try:
+        # Import the module properly
         module = __import__(f"data.{module_name}", fromlist=[module_name])
-        globals().update(getattr(module, '__dict__', {}))
         _loaded_modules.append(module_name)
         logger.info(f"Successfully loaded data.{module_name}")
         return True
@@ -42,11 +42,9 @@ def _safe_import(module_name):
         logger.warning(f"Failed to load data.{module_name}: {e}")
         return False
 
-# Attempt to load all submodules
-for module_name in ['analytics', 'content_protection', 'crawlers', 'fingerprinting', 
-                   'ingestion', 'licensing', 'models', 'monetization', 'pipelines', 
-                   'processors', 'quality', 'storage', 'streams', 'transformers', 
-                   'validators', 'vector_db']:
+# Attempt to load all submodules - Fixed import path
+existing_modules = ['content_protection', 'models', 'pipelines', 'processors', 'validators']
+for module_name in existing_modules:
     _safe_import(module_name)
 
 # Export information about loaded modules

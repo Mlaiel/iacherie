@@ -895,7 +895,7 @@ class ValidationEngine:
             config: Optional configuration
         """
         self.config = config or {}
-        self.registry = ValidatorRegistry(config.get('registry', {}))
+        self.registry = ValidatorRegistry(self.config.get('registry', {}))
         
         # Engine settings
         self.enable_caching = self.config.get('enable_caching', True)
