@@ -100,10 +100,12 @@ if MONETIZATION_MODELS_AVAILABLE:
         'LicenseType', 'LicenseCategory', 'UsageType', 'LicenseStatus', 'PaymentStructure'
     ])
 
-# Core utilities always available
+# Core utilities and availability flags always available
 __all__.extend([
     'MODEL_REGISTRY', 'RELATIONSHIP_MAPPINGS',
-    'get_model_by_table_name', 'get_all_models', 'get_model_relationships'
+    'get_model_by_table_name', 'get_all_models', 'get_model_relationships',
+    'CONTENT_MODELS_AVAILABLE', 'FINGERPRINT_MODELS_AVAILABLE', 
+    'MONETIZATION_MODELS_AVAILABLE', 'INDEX_AVAILABLE', 'UTILITIES_AVAILABLE'
 ])
 
 # Add utilities if available

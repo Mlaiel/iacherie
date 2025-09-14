@@ -109,6 +109,8 @@ try:
     from sqlalchemy.ext.declarative import declarative_base
     SQLALCHEMY_AVAILABLE = True
 except ImportError:
+    # Create dummy Session type if SQLAlchemy not available
+    Session = None
     SQLALCHEMY_AVAILABLE = False
 
 
