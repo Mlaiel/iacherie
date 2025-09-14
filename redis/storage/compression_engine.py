@@ -21,15 +21,37 @@ import asyncio
 import logging
 import time
 import zlib
-import lz4.frame
-import brotli
+
+# Optional compression libraries with fallbacks
+try:
+    import lz4.frame
+    LZ4_AVAILABLE = True
+except ImportError:
+    LZ4_AVAILABLE = False
+    lz4 = None
+
+try:
+    import brotli
+    BROTLI_AVAILABLE = True
+except ImportError:
+    BROTLI_AVAILABLE = False
+    brotli = None
+
 import gzip
 import lzma
 from typing import Dict, Any, Optional, List, Tuple
 from dataclasses import dataclass, field
 from enum import Enum
 from datetime import datetime, timezone
-import numpy as np
+
+# Optional ML libraries with fallbacks
+try:
+    import numpy as np
+    NUMPY_AVAILABLE = True
+except ImportError:
+    NUMPY_AVAILABLE = False
+    np = None
+
 from collections import defaultdict, deque
 import hashlib
 
@@ -56,6 +78,24 @@ class DataPattern(Enum):
     RANDOM = "random"
     SPARSE = "sparse"
     STRUCTURED = "structured"
+
+@dataclass
+class CompressionConfig:
+    """Configuration for Redis Compression Engine"""
+    default_algorithm: str = "zlib"
+    compression_level: int = 6
+    size_threshold: int = 512  # compress if larger than 512 bytes
+    adaptive_mode: bool = True
+    enable_metrics: bool = True
+    max_compression_time_ms: float = 100.0
+    fallback_algorithm: str = "gzip"
+    enable_pattern_detection: bool = True
+    
+    def __post_init__(self):
+        if self.compression_level < 1:
+            self.compression_level = 1
+        elif self.compression_level > 9:
+            self.compression_level = 9
 
 @dataclass
 class CompressionProfile:
@@ -721,3 +761,23 @@ if __name__ == "__main__":
         print(f"\n📊 Analytics: {analytics['global_metrics']}")
     
     asyncio.run(demo())
+
+
+# Enterprise alias for compatibility
+class RedisCompressionEngine(CompressionOptimizer):
+    """Enterprise Redis Compression Engine - alias for CompressionOptimizer"""
+    
+    def __init__(self, config: CompressionConfig):
+        """Initialize with CompressionConfig instead of dict"""
+        # Convert CompressionConfig to dict for parent class
+        config_dict = {
+            'default_algorithm': config.default_algorithm,
+            'compression_level': config.compression_level,
+            'size_threshold': config.size_threshold,
+            'adaptive_mode': config.adaptive_mode,
+            'enable_metrics': config.enable_metrics,
+            'max_compression_time_ms': config.max_compression_time_ms,
+            'fallback_algorithm': config.fallback_algorithm,
+            'enable_pattern_detection': config.enable_pattern_detection
+        }
+        super().__init__(config_dict)

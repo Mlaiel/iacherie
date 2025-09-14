@@ -28,7 +28,21 @@ from dataclasses import dataclass, field
 from enum import Enum
 from datetime import datetime, timedelta
 import bcrypt
-import aioredis
+
+# Enterprise Redis imports with fallback
+try:
+    import redis.asyncio as aioredis
+    AIOREDIS_AVAILABLE = True
+except ImportError:
+    # Fallback pour environnement sans redis
+    try:
+        import aioredis
+        AIOREDIS_AVAILABLE = True
+    except ImportError:
+        # Fallback pour environnement sans aioredis
+        AIOREDIS_AVAILABLE = False
+        aioredis = None
+
 from cryptography.fernet import Fernet
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
@@ -97,6 +111,31 @@ class ACLRule:
     priority: int = 100  # Priorité règle
 
 @dataclass
+class AuthConfig:
+    """Configuration for Redis Authentication Manager"""
+    secret_key: str
+    token_expiration: int = 3600  # 1 hour
+    refresh_token_expiration: int = 86400  # 24 hours
+    max_failed_attempts: int = 5
+    lockout_duration: int = 1800  # 30 minutes
+    enable_mfa: bool = True
+    session_timeout: int = 3600  # 1 hour
+    enable_ip_whitelist: bool = False
+    enable_audit_logging: bool = True
+    encryption_key: Optional[str] = None
+    jwt_algorithm: str = "HS256"
+    rate_limit_requests: int = 100
+    rate_limit_window: int = 3600  # 1 hour
+    
+    def __post_init__(self):
+        if not self.secret_key:
+            raise ValueError("secret_key is required for AuthConfig")
+        if not self.encryption_key:
+            # Generate encryption key if not provided
+            key = Fernet.generate_key()
+            self.encryption_key = key.decode()
+
+@dataclass
 class SecurityMetrics:
     """Métriques de sécurité"""
     successful_auths: int = 0
@@ -132,20 +171,21 @@ class RedisAuthManager:
     - Audit base données sécurisé
     """
     
-    def __init__(self, redis_pool, secret_key: str, config: Optional[Dict[str, Any]] = None):
-        self.redis_pool = redis_pool
-        self.secret_key = secret_key
-        self.config = config or {}
+    def __init__(self, config: AuthConfig):
+        """Initialize Redis Auth Manager with enterprise configuration"""
+        self.config = config
+        self.redis_pool = None  # Will be set during initialization
         
-        # Configuration sécurité
-        self.token_expiry = self.config.get('token_expiry', 3600)  # 1 heure
-        self.refresh_token_expiry = self.config.get('refresh_token_expiry', 86400)  # 24h
-        self.max_failed_attempts = self.config.get('max_failed_attempts', 5)
-        self.lockout_duration = self.config.get('lockout_duration', 1800)  # 30 minutes
-        self.mfa_required = self.config.get('mfa_required', False)
+        # Configuration from AuthConfig
+        self.secret_key = config.secret_key
+        self.token_expiry = config.token_expiration
+        self.refresh_token_expiry = config.refresh_token_expiration 
+        self.max_failed_attempts = config.max_failed_attempts
+        self.lockout_duration = config.lockout_duration
+        self.mfa_required = config.enable_mfa
         
         # Chiffrement
-        self.encryption_key = self._derive_encryption_key(secret_key)
+        self.encryption_key = self._derive_encryption_key(config.secret_key)
         self.fernet = Fernet(self.encryption_key)
         
         # Stockage en mémoire pour performance
@@ -156,9 +196,50 @@ class RedisAuthManager:
         
         # Rate limiting
         self.rate_limits: Dict[str, List[float]] = {}
-        self.rate_limit_window = 300  # 5 minutes
-        self.rate_limit_max = 100  # 100 tentatives par fenêtre
+        self.rate_limit_window = self.config.rate_limit_window
+        self.rate_limit_max = self.config.rate_limit_requests
         
+        # Initialize state
+        self._initialized = False
+        
+    async def initialize(self) -> None:
+        """Initialize the auth manager with Redis connection"""
+        try:
+            if not AIOREDIS_AVAILABLE:
+                logger.warning("Redis not available, using mock auth implementation")
+                self._initialized = True
+                return
+                
+            # Redis pool will be set by the connection layer
+            # For now, mark as initialized
+            self._initialized = True
+            logger.info("Redis Auth Manager initialized successfully")
+            
+        except Exception as e:
+            logger.error(f"Failed to initialize Auth Manager: {e}")
+            raise
+            
+    async def shutdown(self) -> None:
+        """Shutdown the auth manager"""
+        try:
+            self._initialized = False
+            logger.info("Redis Auth Manager shutdown completed")
+        except Exception as e:
+            logger.error(f"Error during Auth Manager shutdown: {e}")
+            
+    def set_redis_pool(self, redis_pool):
+        """Set Redis pool connection"""
+        self.redis_pool = redis_pool
+        
+        # Initialize patterns and monitoring when pool is available
+        if not hasattr(self, 'suspicious_patterns'):
+            self._initialize_security_patterns()
+            asyncio.create_task(self._initialize_default_users())
+            asyncio.create_task(self._load_acl_rules())
+            asyncio.create_task(self._start_security_monitoring())
+        
+    def _initialize_security_patterns(self):
+        """Initialize security patterns for threat detection"""
         # Patterns suspects
         self.suspicious_patterns = [
             r'(union|select|insert|delete|drop|create|alter)',  # SQL injection
@@ -166,13 +247,7 @@ class RedisAuthManager:
             r'(\.\./|\.\.\\)',  # Path traversal
             r'(exec|system|cmd|shell)',  # Command injection
         ]
-        
-        # Initialisation
-        asyncio.create_task(self._initialize_default_users())
-        asyncio.create_task(self._load_acl_rules())
-        asyncio.create_task(self._start_security_monitoring())
-        
-        logger.info("🔐 Redis Auth Manager initialisé")
+        logger.info("🔐 Redis Auth Manager security patterns initialized")
     
     def _derive_encryption_key(self, secret: str) -> bytes:
         """**Sécurité**: Dérivation clé chiffrement sécurisée"""

@@ -56,6 +56,29 @@ class KeyType(Enum):
     EPHEMERAL = "ephemeral"
 
 @dataclass
+class EncryptionConfig:
+    """Configuration for Redis Encryption Layer"""
+    algorithm: str = "AES-256-GCM"
+    key_rotation_interval: int = 86400  # 24 hours
+    enable_key_rotation: bool = True
+    master_key: Optional[str] = None
+    enable_compression: bool = True
+    enable_integrity_check: bool = True
+    key_derivation_rounds: int = 100000
+    salt_size: int = 16
+    
+    def __post_init__(self):
+        if not self.master_key:
+            # Generate a master key if not provided
+            try:
+                from cryptography.fernet import Fernet
+                self.master_key = Fernet.generate_key().decode()
+            except ImportError:
+                # Fallback to simple key generation
+                import secrets
+                self.master_key = secrets.token_urlsafe(32)
+
+@dataclass
 class EncryptionKey:
     """Clé de chiffrement"""
     key_id: str
@@ -918,3 +941,23 @@ if __name__ == "__main__":
         print(f"\n📊 Analytics: {analytics['global_metrics']}")
     
     asyncio.run(demo())
+
+
+# Enterprise alias for compatibility
+class RedisEncryptionLayer(EncryptionCacheLayer):
+    """Enterprise Redis Encryption Layer - alias for EncryptionCacheLayer"""
+    
+    def __init__(self, config: EncryptionConfig):
+        """Initialize with EncryptionConfig instead of dict"""
+        # Convert EncryptionConfig to dict for parent class
+        config_dict = {
+            'algorithm': config.algorithm,
+            'key_rotation_interval': config.key_rotation_interval,
+            'enable_key_rotation': config.enable_key_rotation,
+            'master_key': config.master_key,
+            'enable_compression': config.enable_compression,
+            'enable_integrity_check': config.enable_integrity_check,
+            'key_derivation_rounds': config.key_derivation_rounds,
+            'salt_size': config.salt_size
+        }
+        super().__init__(config_dict)

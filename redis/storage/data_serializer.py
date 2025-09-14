@@ -22,7 +22,22 @@ import logging
 import time
 import json
 import pickle
-import msgpack
+
+# Enterprise serialization imports with fallbacks
+try:
+    import msgpack
+    MSGPACK_AVAILABLE = True
+except ImportError:
+    MSGPACK_AVAILABLE = False
+    msgpack = None
+
+try:
+    import orjson as json_fast
+    ORJSON_AVAILABLE = True
+except ImportError:
+    ORJSON_AVAILABLE = False
+    json_fast = None
+
 import zlib
 from typing import Dict, Any, Optional, List, Union, Tuple, Type
 from dataclasses import dataclass, field
@@ -53,13 +68,6 @@ except ImportError:
 import hashlib
 import base64
 import struct
-import numpy as np
-import pandas as pd
-from cryptography.fernet import Fernet
-import orjson  # Fast JSON serialization
-import cbor2  # Concise Binary Object Representation
-import avro.schema
-import avro.io
 
 # Configuration du logging
 logging.basicConfig(level=logging.INFO)
@@ -94,6 +102,25 @@ class SerializationStrategy(Enum):
     BALANCED = "balanced"  # Équilibré
     SECURE = "secure"  # Sécurité maximale
     ADAPTIVE = "adaptive"  # Adaptatif intelligent
+
+@dataclass
+class SerializationConfig:
+    """Configuration for Redis Data Serializer"""
+    default_format: str = "json"
+    compression_type: str = "zlib"
+    compression_level: int = 6
+    enable_encryption: bool = False
+    encryption_key: Optional[str] = None
+    size_threshold_bytes: int = 1024  # compress if larger than 1KB
+    performance_mode: bool = False  # faster serialization with less compression
+    enable_metadata: bool = True
+    enable_type_hints: bool = True
+    
+    def __post_init__(self):
+        if self.compression_level < 1:
+            self.compression_level = 1
+        elif self.compression_level > 9:
+            self.compression_level = 9
 
 @dataclass
 class SerializationMetrics:
@@ -1112,3 +1139,24 @@ if __name__ == "__main__":
         print(f"\n📊 Analytics: {analytics['global_metrics']}")
     
     asyncio.run(demo())
+
+
+# Enterprise alias for compatibility
+class RedisDataSerializer(SerializationEngine):
+    """Enterprise Redis Data Serializer - alias for SerializationEngine"""
+    
+    def __init__(self, config: SerializationConfig):
+        """Initialize with SerializationConfig instead of dict"""
+        # Convert SerializationConfig to dict for parent class
+        config_dict = {
+            'default_format': config.default_format,
+            'compression_type': config.compression_type,
+            'compression_level': config.compression_level,
+            'enable_encryption': config.enable_encryption,
+            'encryption_key': config.encryption_key,
+            'size_threshold_bytes': config.size_threshold_bytes,
+            'performance_mode': config.performance_mode,
+            'enable_metadata': config.enable_metadata,
+            'enable_type_hints': config.enable_type_hints
+        }
+        super().__init__(config_dict)

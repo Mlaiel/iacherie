@@ -21,7 +21,14 @@ from dataclasses import dataclass, field
 from enum import Enum
 from datetime import datetime, timedelta
 from collections import defaultdict, deque
-import numpy as np
+
+# Optional imports with fallbacks for ML features
+try:
+    import numpy as np
+    NUMPY_AVAILABLE = True
+except ImportError:
+    NUMPY_AVAILABLE = False
+    np = None
 
 logger = logging.getLogger(__name__)
 

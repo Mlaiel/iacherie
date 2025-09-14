@@ -19,10 +19,32 @@ import uuid
 from typing import Dict, List, Optional, Tuple, Any, Set
 from dataclasses import dataclass, asdict
 from enum import Enum
-import redis.asyncio as redis
-from redis.asyncio.cluster import RedisCluster
+
+# Redis imports with fallback for enterprise environment
+try:
+    import redis.asyncio as redis
+    from redis.asyncio.cluster import RedisCluster
+    REDIS_AVAILABLE = True
+except ImportError:
+    try:
+        import redis
+        from redis.cluster import RedisCluster
+        REDIS_AVAILABLE = True
+    except ImportError:
+        # Fallback pour environnement sans Redis
+        REDIS_AVAILABLE = False
+        redis = None
+        RedisCluster = None
+
 from datetime import datetime, timedelta
-import aiohttp
+
+# Optional imports
+try:
+    import aiohttp
+    AIOHTTP_AVAILABLE = True
+except ImportError:
+    AIOHTTP_AVAILABLE = False
+    aiohttp = None
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -54,6 +76,26 @@ class NodeRole(Enum):
     MASTER = "master"
     REPLICA = "replica"
     SENTINEL = "sentinel"
+
+
+@dataclass
+class FailoverConfig:
+    """Configuration for Redis Failover Manager"""
+    failover_timeout: int = 180  # seconds
+    detection_interval: int = 5  # seconds
+    max_retries: int = 3
+    enable_automatic_failover: bool = True
+    enable_data_migration: bool = True
+    notification_webhook: Optional[str] = None
+    min_replicas_for_failover: int = 1
+    master_down_threshold: int = 30  # seconds
+    enable_split_brain_protection: bool = True
+    
+    def __post_init__(self):
+        if self.failover_timeout < 60:
+            self.failover_timeout = 60  # Minimum 1 minute
+        if self.detection_interval < 1:
+            self.detection_interval = 1  # Minimum 1 second
 
 
 @dataclass
@@ -983,6 +1025,27 @@ async def main():
         
     except Exception as e:
         print(f"Error: {e}")
+
+
+# Enterprise alias for compatibility
+class RedisFailoverManager(RedisFailoverCoordinationEngine):
+    """Enterprise Redis Failover Manager - alias for RedisFailoverCoordinationEngine"""
+    
+    def __init__(self, config: FailoverConfig):
+        """Initialize with FailoverConfig instead of dict"""
+        # Convert FailoverConfig to dict for parent class
+        config_dict = {
+            'failover_timeout': config.failover_timeout,
+            'detection_interval': config.detection_interval,
+            'max_retries': config.max_retries,
+            'enable_automatic_failover': config.enable_automatic_failover,
+            'enable_data_migration': config.enable_data_migration,
+            'notification_webhook': config.notification_webhook,
+            'min_replicas_for_failover': config.min_replicas_for_failover,
+            'master_down_threshold': config.master_down_threshold,
+            'enable_split_brain_protection': config.enable_split_brain_protection
+        }
+        super().__init__(config_dict)
 
 
 if __name__ == "__main__":
