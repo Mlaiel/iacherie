@@ -47,6 +47,21 @@ try:
 except ImportError:
     pass
 
+try:
+    from .social_media_connectors import *
+except ImportError:
+    pass
+
+try:
+    from .music_streaming_connectors import *
+except ImportError:
+    pass
+
+try:
+    from .creator_economy_connectors import *
+except ImportError:
+    pass
+
 __version__ = "2.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
@@ -64,7 +79,7 @@ except ImportError:
     pass
 
 # Add exports from each submodule if they exist
-for module_name in ['ai_services', 'blockchain_networks', 'payment_gateways', 'social_media_apis']:
+for module_name in ['ai_services', 'blockchain_networks', 'payment_gateways', 'social_media_apis', 'social_media_connectors', 'music_streaming_connectors', 'creator_economy_connectors']:
     try:
         module = getattr(__import__(__name__ + '.' + module_name, fromlist=[module_name]), module_name)
         if hasattr(module, '__all__'):
