@@ -111,6 +111,25 @@ class SessionMetrics:
     security_violations: int = 0
     session_hijack_attempts: int = 0
 
+@dataclass
+class SessionConfig:
+    """Configuration for Redis Session Store"""
+    default_ttl: int = 1800  # 30 minutes
+    max_ttl: int = 86400  # 24 hours
+    enable_encryption: bool = True
+    encryption_key: Optional[str] = None
+    compression_enabled: bool = True
+    compression_threshold: int = 1024  # bytes
+    max_session_size: int = 1048576  # 1MB
+    cleanup_interval: int = 300  # 5 minutes
+    enable_metrics: bool = True
+    session_key_prefix: str = "session:"
+    
+    def __post_init__(self):
+        if self.default_ttl > self.max_ttl:
+            self.default_ttl = self.max_ttl
+
+
 class SessionStoreManager:
     """
     🔐 Gestionnaire Stockage Sessions Enterprise
@@ -889,3 +908,25 @@ if __name__ == "__main__":
         await manager.stop_background_tasks()
     
     asyncio.run(demo())
+
+
+# Enterprise alias for compatibility
+class RedisSessionStore(SessionStoreManager):
+    """Enterprise Redis Session Store - alias for SessionStoreManager"""
+    
+    def __init__(self, config: SessionConfig):
+        """Initialize with SessionConfig instead of dict"""
+        # Convert SessionConfig to dict for parent class
+        config_dict = {
+            'default_ttl': config.default_ttl,
+            'max_ttl': config.max_ttl,
+            'enable_encryption': config.enable_encryption,
+            'encryption_key': config.encryption_key,
+            'compression_enabled': config.compression_enabled,
+            'compression_threshold': config.compression_threshold,
+            'max_session_size': config.max_session_size,
+            'cleanup_interval': config.cleanup_interval,
+            'enable_metrics': config.enable_metrics,
+            'session_key_prefix': config.session_key_prefix
+        }
+        super().__init__(config_dict)

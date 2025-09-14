@@ -19,12 +19,54 @@ import math
 from typing import Dict, List, Optional, Tuple, Any
 from dataclasses import dataclass, asdict
 from enum import Enum
-import redis.asyncio as redis
-from redis.asyncio.cluster import RedisCluster
-import numpy as np
-from sklearn.linear_model import LinearRegression
-from sklearn.preprocessing import StandardScaler
-import joblib
+
+# Redis imports with fallback for enterprise environment
+try:
+    import redis.asyncio as redis
+    from redis.asyncio.cluster import RedisCluster
+    REDIS_AVAILABLE = True
+except ImportError:
+    try:
+        import redis
+        from redis.cluster import RedisCluster
+        REDIS_AVAILABLE = True
+    except ImportError:
+        # Fallback pour environnement sans Redis
+        REDIS_AVAILABLE = False
+        redis = None
+        RedisCluster = None
+
+# Optional ML imports with fallbacks
+try:
+    import numpy as np
+    NUMPY_AVAILABLE = True
+except ImportError:
+    NUMPY_AVAILABLE = False
+    np = None
+
+try:
+    from sklearn.linear_model import LinearRegression
+    SKLEARN_AVAILABLE = True
+except ImportError:
+    SKLEARN_AVAILABLE = False
+    LinearRegression = None
+
+try:
+    from sklearn.preprocessing import StandardScaler
+    from sklearn.ensemble import RandomForestRegressor
+    SKLEARN_PREPROCESSING_AVAILABLE = True
+except ImportError:
+    SKLEARN_PREPROCESSING_AVAILABLE = False
+    StandardScaler = None
+    RandomForestRegressor = None
+
+try:
+    import joblib
+    JOBLIB_AVAILABLE = True
+except ImportError:
+    JOBLIB_AVAILABLE = False
+    joblib = None
+
 import yaml
 from datetime import datetime, timedelta
 
@@ -52,6 +94,26 @@ class ScalingTrigger(Enum):
     PREDICTIVE = "predictive"
     COST_OPTIMIZATION = "cost_optimization"
     PERFORMANCE_DEGRADATION = "performance_degradation"
+
+
+@dataclass
+class ScalingConfig:
+    """Configuration for Redis Scaling Controller"""
+    enable_auto_scaling: bool = True
+    min_nodes: int = 3
+    max_nodes: int = 20
+    scale_up_threshold: float = 0.8  # 80% resource usage
+    scale_down_threshold: float = 0.3  # 30% resource usage
+    monitoring_interval: int = 60  # seconds
+    cooldown_period: int = 300  # seconds between scaling actions
+    enable_ml_prediction: bool = True
+    prediction_horizon: int = 1800  # 30 minutes
+    
+    def __post_init__(self):
+        if self.min_nodes < 1:
+            self.min_nodes = 1
+        if self.max_nodes < self.min_nodes:
+            self.max_nodes = self.min_nodes
 
 
 @dataclass
@@ -967,6 +1029,27 @@ async def main():
         
     except Exception as e:
         print(f"Error: {e}")
+
+
+# Enterprise alias for compatibility
+class RedisScalingController(RedisClusterScalingController):
+    """Enterprise Redis Scaling Controller - alias for RedisClusterScalingController"""
+    
+    def __init__(self, config: ScalingConfig):
+        """Initialize with ScalingConfig instead of dict"""
+        # Convert ScalingConfig to dict for parent class
+        config_dict = {
+            'enable_auto_scaling': config.enable_auto_scaling,
+            'min_nodes': config.min_nodes,
+            'max_nodes': config.max_nodes,
+            'scale_up_threshold': config.scale_up_threshold,
+            'scale_down_threshold': config.scale_down_threshold,
+            'monitoring_interval': config.monitoring_interval,
+            'cooldown_period': config.cooldown_period,
+            'enable_ml_prediction': config.enable_ml_prediction,
+            'prediction_horizon': config.prediction_horizon
+        }
+        super().__init__(config_dict)
 
 
 if __name__ == "__main__":

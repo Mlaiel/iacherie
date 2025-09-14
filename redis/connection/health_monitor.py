@@ -19,12 +19,46 @@ import statistics
 from typing import Dict, List, Optional, Tuple, Any
 from dataclasses import dataclass, asdict
 from enum import Enum
-import redis.asyncio as redis
-from redis.asyncio.cluster import RedisCluster
-import psutil
-import aiohttp
+
+# Redis imports with fallback for enterprise environment
+try:
+    import redis.asyncio as redis
+    from redis.asyncio.cluster import RedisCluster
+    REDIS_AVAILABLE = True
+except ImportError:
+    try:
+        import redis
+        from redis.cluster import RedisCluster
+        REDIS_AVAILABLE = True
+    except ImportError:
+        # Fallback pour environnement sans Redis
+        REDIS_AVAILABLE = False
+        redis = None
+        RedisCluster = None
+
+# Optional imports with fallbacks
+try:
+    import psutil
+    PSUTIL_AVAILABLE = True
+except ImportError:
+    PSUTIL_AVAILABLE = False
+    psutil = None
+    
+try:
+    import aiohttp
+    AIOHTTP_AVAILABLE = True
+except ImportError:
+    AIOHTTP_AVAILABLE = False
+    aiohttp = None
+    
+try:
+    import numpy as np
+    NUMPY_AVAILABLE = True
+except ImportError:
+    NUMPY_AVAILABLE = False
+    np = None
+
 from datetime import datetime, timedelta
-import numpy as np
 from collections import deque, defaultdict
 
 # Configure logging
@@ -48,6 +82,30 @@ class AlertSeverity(Enum):
     WARNING = "warning"
     CRITICAL = "critical"
     EMERGENCY = "emergency"
+
+
+@dataclass
+class HealthConfig:
+    """Configuration for Connection Health Monitor"""
+    check_interval: int = 30  # seconds
+    timeout: float = 5.0  # seconds
+    max_retries: int = 3
+    retry_delay: float = 1.0  # seconds
+    memory_threshold: float = 0.8  # 80% memory usage threshold
+    cpu_threshold: float = 0.9  # 90% CPU usage threshold
+    connection_threshold: int = 1000  # max connections threshold
+    latency_threshold: float = 100.0  # milliseconds
+    enable_alerts: bool = True
+    alert_webhook: Optional[str] = None
+    enable_metrics_collection: bool = True
+    metrics_retention_hours: int = 24
+    enable_auto_recovery: bool = False
+    
+    def __post_init__(self):
+        if self.check_interval < 5:
+            self.check_interval = 5  # Minimum 5 seconds
+        if self.timeout < 1.0:
+            self.timeout = 1.0  # Minimum 1 second
 
 
 @dataclass
@@ -1084,6 +1142,39 @@ class RedisNodeHealthMonitor:
             
         except Exception as e:
             logger.error(f"Error during shutdown: {e}")
+
+
+# Enterprise alias for compatibility
+class ConnectionHealthMonitor(RedisNodeHealthMonitor):
+    """Enterprise Connection Health Monitor - alias for RedisNodeHealthMonitor"""
+    
+    def __init__(self, config: HealthConfig):
+        """Initialize with HealthConfig instead of dict"""
+        # Convert HealthConfig to dict for parent class
+        config_dict = {
+            'check_interval': config.check_interval,
+            'timeout': config.timeout,
+            'max_retries': config.max_retries,
+            'retry_delay': config.retry_delay,
+            'memory_threshold': config.memory_threshold,
+            'cpu_threshold': config.cpu_threshold,
+            'connection_threshold': config.connection_threshold,
+            'latency_threshold': config.latency_threshold,
+            'enable_alerts': config.enable_alerts,
+            'alert_webhook': config.alert_webhook,
+            'enable_metrics_collection': config.enable_metrics_collection,
+            'metrics_retention_hours': config.metrics_retention_hours,
+            'enable_auto_recovery': config.enable_auto_recovery
+        }
+        super().__init__(config_dict)
+        
+    async def start_monitoring(self) -> None:
+        """Start monitoring - enterprise interface"""
+        await self.start()
+        
+    async def stop_monitoring(self) -> None:
+        """Stop monitoring - enterprise interface"""
+        await self.shutdown()
 
 
 # Example usage

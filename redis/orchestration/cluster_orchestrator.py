@@ -18,9 +18,31 @@ import time
 from typing import Dict, List, Optional, Tuple, Any
 from dataclasses import dataclass, asdict
 from enum import Enum
-import redis.asyncio as redis
-from redis.asyncio.cluster import RedisCluster
-import aiohttp
+
+# Redis imports with fallback for enterprise environment
+try:
+    import redis.asyncio as redis
+    from redis.asyncio.cluster import RedisCluster
+    REDIS_AVAILABLE = True
+except ImportError:
+    try:
+        import redis
+        from redis.cluster import RedisCluster
+        REDIS_AVAILABLE = True
+    except ImportError:
+        # Fallback pour environnement sans Redis
+        REDIS_AVAILABLE = False
+        redis = None
+        RedisCluster = None
+
+# Optional imports with fallbacks
+try:
+    import aiohttp
+    AIOHTTP_AVAILABLE = True
+except ImportError:
+    AIOHTTP_AVAILABLE = False
+    aiohttp = None
+
 import yaml
 
 # Configure logging
@@ -62,6 +84,28 @@ class NodeInfo:
     version: str
     uptime: int
     replication_lag: Optional[float] = None
+
+
+@dataclass
+class ClusterOrchestratorConfig:
+    """Configuration for Redis Cluster Orchestrator"""
+    cluster_nodes: List[Dict[str, Any]]
+    health_check_interval: int = 30
+    failover_timeout: int = 300
+    auto_scaling_enabled: bool = True
+    min_replicas_per_master: int = 1
+    max_memory_usage_threshold: float = 0.8
+    enable_monitoring: bool = True
+    enable_auto_recovery: bool = True
+    backup_interval: int = 3600
+    alert_webhook: Optional[str] = None
+    
+    def __post_init__(self):
+        if not self.cluster_nodes:
+            self.cluster_nodes = [
+                {'host': 'localhost', 'port': 6379, 'role': 'master'},
+                {'host': 'localhost', 'port': 6380, 'role': 'replica'}
+            ]
 
 
 @dataclass

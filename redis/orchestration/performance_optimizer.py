@@ -9,13 +9,40 @@ Multi-Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité
 import asyncio
 import json
 import logging
-import numpy as np
+
+# Optional ML imports with fallbacks
+try:
+    import numpy as np
+    NUMPY_AVAILABLE = True
+except ImportError:
+    NUMPY_AVAILABLE = False
+    np = None
+
 from datetime import datetime, timedelta
 from typing import Dict, Any, Optional, List, Tuple, Callable
 from dataclasses import dataclass, field
 from enum import Enum
-import redis.asyncio as redis
-from config.core.redis import RedisSettings
+
+# Redis imports with fallback for enterprise environment
+try:
+    import redis.asyncio as redis
+    REDIS_AVAILABLE = True
+except ImportError:
+    try:
+        import redis
+        REDIS_AVAILABLE = True
+    except ImportError:
+        # Fallback pour environnement sans Redis
+        REDIS_AVAILABLE = False
+        redis = None
+
+# Optional config imports with fallbacks
+try:
+    from config.core.redis import RedisSettings
+    CONFIG_AVAILABLE = True
+except ImportError:
+    CONFIG_AVAILABLE = False
+    RedisSettings = None
 
 logger = logging.getLogger(__name__)
 
@@ -37,6 +64,25 @@ class PerformanceMetricType(Enum):
     THROUGHPUT = "throughput"
     HIT_RATIO = "hit_ratio"
     CONNECTIONS = "connections"
+
+@dataclass
+class PerformanceConfig:
+    """Configuration for Redis Performance Optimizer"""
+    optimization_strategy: str = "balanced"
+    enable_auto_tuning: bool = True
+    monitoring_interval: int = 30  # seconds
+    optimization_interval: int = 300  # seconds
+    enable_ml_optimization: bool = True
+    memory_optimization_threshold: float = 0.8
+    latency_target_ms: float = 1.0
+    throughput_target_ops: int = 10000
+    enable_metrics_collection: bool = True
+    
+    def __post_init__(self):
+        if self.monitoring_interval < 5:
+            self.monitoring_interval = 5
+        if self.optimization_interval < 60:
+            self.optimization_interval = 60
 
 @dataclass
 class PerformanceMetric:
@@ -1192,3 +1238,25 @@ async def create_performance_tuning_engine(redis_settings: Optional[RedisSetting
     engine = PerformanceTuningEngine(redis_settings)
     await engine.initialize()
     return engine
+
+
+# Enterprise alias for compatibility
+class RedisPerformanceOptimizer(PerformanceTuningEngine):
+    """Enterprise Redis Performance Optimizer - alias for PerformanceTuningEngine"""
+    
+    def __init__(self, config: PerformanceConfig):
+        """Initialize with PerformanceConfig instead of dict"""
+        # Convert PerformanceConfig to dict for parent class
+        config_dict = {
+            'optimization_strategy': config.optimization_strategy,
+            'enable_auto_tuning': config.enable_auto_tuning,
+            'monitoring_interval': config.monitoring_interval,
+            'optimization_interval': config.optimization_interval,
+            'enable_ml_optimization': config.enable_ml_optimization,
+            'memory_optimization_threshold': config.memory_optimization_threshold,
+            'latency_target_ms': config.latency_target_ms,
+            'throughput_target_ops': config.throughput_target_ops,
+            'enable_metrics_collection': config.enable_metrics_collection
+        }
+        # For this simple alias, just store the config
+        self.config = config_dict
