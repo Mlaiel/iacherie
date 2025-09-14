@@ -1023,6 +1023,8 @@ class AuthManager:
                 token, 
                 self.jwt_secret, 
                 algorithms=['HS256'],
+                audience='redis-cluster',  # Specify expected audience
+                issuer='ainflue-enterprise',  # Specify expected issuer
                 options={
                     'verify_exp': True,  # Verify expiration
                     'verify_iss': True,  # Verify issuer
