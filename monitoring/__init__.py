@@ -19,17 +19,18 @@ from typing import Dict, Any, Optional
 
 logger = logging.getLogger(__name__)
 
-# Core monitoring components
+# Core monitoring components - Updated for reorganized structure
 try:
-    from .business_monitoring import BusinessMonitoringCore
-    from .production_dashboard import ProductionDashboard
-    from .enterprise_orchestrator import (
+    from .core.business_monitoring import BusinessMonitoringCore
+    from .dashboards.production_dashboard import ProductionDashboard
+    from .core.enterprise_orchestrator import (
         enterprise_orchestrator,
         get_platform_status,
         get_enterprise_insights,
         get_dashboard_data,
         add_enterprise_alert_handler
     )
+    from .config import monitoring_config, get_monitoring_config
     
     class MonitoringSystem:
         """Main monitoring system orchestrator with enterprise capabilities"""
@@ -106,7 +107,9 @@ try:
         'get_platform_status',
         'get_enterprise_insights',
         'get_dashboard_data',
-        'add_enterprise_alert_handler'
+        'add_enterprise_alert_handler',
+        'monitoring_config',
+        'get_monitoring_config'
     ]
     
 except ImportError as e:

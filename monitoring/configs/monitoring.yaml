@@ -1,0 +1,121 @@
+# Monitoring Configuration Master File
+# =====================================
+# Configuration centralisée pour le système de monitoring Ainflue
+# Architecture réorganisée par l'équipe experte Lead Dev IA + Backend Senior + DevOps
+#
+# Author: Fahed Mlaiel (mlaiel@live.de)
+# Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
+
+# Service Configuration
+service:
+  name: "ainflue-monitoring"
+  version: "2.0.0"
+  environment: "${ENVIRONMENT:-production}"
+  
+# Modules Configuration (Respect 3 niveaux max)
+modules:
+  core:
+    enabled: true
+    path: "monitoring.core"
+    description: "Business monitoring core functionality"
+    
+  metrics:
+    enabled: true
+    path: "monitoring.metrics"
+    description: "Metrics collection and processing"
+    
+  dashboards:
+    enabled: true
+    path: "monitoring.dashboards"
+    description: "Dashboard systems (Grafana, custom)"
+    
+  alerts:
+    enabled: true
+    path: "monitoring.alerts"
+    description: "Alert management and notifications"
+    
+  analytics:
+    enabled: true
+    path: "monitoring.analytics"
+    description: "Analytics and business intelligence"
+    
+  intelligence:
+    enabled: true
+    path: "monitoring.intelligence"
+    description: "AI-powered monitoring intelligence"
+    
+  performance:
+    enabled: true
+    path: "monitoring.performance"
+    description: "Performance monitoring and optimization"
+    
+  reporting:
+    enabled: true
+    path: "monitoring.reporting"
+    description: "Stakeholder reporting and communications"
+
+# External Services Configuration
+external_services:
+  prometheus:
+    enabled: true
+    url: "${PROMETHEUS_URL:-http://prometheus:9090}"
+    retention: "${PROMETHEUS_RETENTION:-30d}"
+    config_file: "prometheus/prometheus.yml"
+    
+  grafana:
+    enabled: true
+    url: "${GRAFANA_URL:-http://grafana:3000}"
+    admin_user: "${GRAFANA_ADMIN_USER:-admin}"
+    admin_password: "${GRAFANA_ADMIN_PASSWORD:-admin}"
+    
+  alertmanager:
+    enabled: true
+    url: "${ALERTMANAGER_URL:-http://alertmanager:9093}"
+    config_file: "prometheus/alert_rules.yml"
+    
+  elasticsearch:
+    enabled: true
+    host: "${ELASTICSEARCH_HOST:-elasticsearch}"
+    port: "${ELASTICSEARCH_PORT:-9200}"
+    config_file: "configs/elasticsearch.yaml"
+    
+  jaeger:
+    enabled: true
+    endpoint: "${JAEGER_ENDPOINT:-http://jaeger:14268/api/traces}"
+    config_file: "configs/jaeger.yaml"
+
+# Security Configuration
+security:
+  authentication:
+    enabled: true
+    method: "jwt"
+    
+  authorization:
+    enabled: true
+    rbac: true
+    
+  encryption:
+    enabled: true
+    algorithm: "AES-256"
+
+# Performance Configuration
+performance:
+  metrics_collection_interval: 30
+  dashboard_refresh_interval: 60
+  alert_evaluation_interval: 10
+  
+# Logging Configuration
+logging:
+  level: "${LOG_LEVEL:-INFO}"
+  format: "json"
+  file: "/var/log/monitoring/ainflue-monitoring.log"
+  
+# Expert Team Signature
+# =====================
+# Réorganisation experte par:
+# - Lead Dev IA + Backend Senior + ML Engineer
+# - DBA + Sécurité + Microservices + Audio  
+# - DevOps + IA Prompt Engineer
+#
+# Architecture respectant STRICTEMENT 3 niveaux maximum
+# Zéro doublon, organisation modulaire enterprise-grade
