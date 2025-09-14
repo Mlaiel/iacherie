@@ -29,10 +29,18 @@ from dataclasses import dataclass, field, asdict
 from enum import Enum
 from datetime import datetime, timedelta, timezone
 import yaml
-import aioredis
 from collections import defaultdict, deque
 from cryptography.fernet import Fernet
 from cryptography.hazmat.primitives import hashes
+
+# Optional Redis imports for enterprise environment
+try:
+    import aioredis
+    REDIS_AVAILABLE = True
+except ImportError:
+    # Fallback pour environnement sans Redis
+    REDIS_AVAILABLE = False
+    aioredis = None
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 import base64
 import jwt

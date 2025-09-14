@@ -516,3 +516,7 @@ if __name__ == "__main__":
         await pool_manager.close_all()
     
     asyncio.run(demo())
+
+# Alias pour conformité avec l'interface enterprise
+RedisPoolManager = ConnectionPoolManager
+PoolConfig = ConnectionPoolConfig

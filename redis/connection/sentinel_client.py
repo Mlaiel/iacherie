@@ -19,11 +19,20 @@ import uuid
 from typing import Dict, List, Optional, Tuple, Any, Set
 from dataclasses import dataclass, asdict
 from enum import Enum
-import redis.asyncio as redis
-from redis.asyncio.sentinel import Sentinel
 import yaml
-import aiohttp
 from datetime import datetime, timedelta
+
+# Optional Redis imports for enterprise environment
+try:
+    import redis.asyncio as redis
+    from redis.asyncio.sentinel import Sentinel
+    import aiohttp
+    REDIS_AVAILABLE = True
+except ImportError:
+    # Fallback pour environnement sans Redis
+    REDIS_AVAILABLE = False
+    redis = None
+    aiohttp = None
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
