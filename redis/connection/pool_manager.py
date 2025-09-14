@@ -27,24 +27,23 @@ from contextlib import asynccontextmanager
 
 # Optional Redis imports for enterprise environment
 try:
-    import aioredis
-    from aioredis.sentinel import Sentinel
     import redis.asyncio as redis
     from redis.exceptions import (
         ConnectionError, TimeoutError, RedisError,
         AuthenticationError, ResponseError
     )
+    from redis.sentinel import Sentinel
     REDIS_AVAILABLE = True
 except ImportError:
     # Fallback pour environnement sans Redis
     REDIS_AVAILABLE = False
-    aioredis = None
     redis = None
     ConnectionError = Exception
     TimeoutError = Exception
     RedisError = Exception
     AuthenticationError = Exception
     ResponseError = Exception
+    Sentinel = None
 
 # Configuration du logging
 logging.basicConfig(level=logging.INFO)
