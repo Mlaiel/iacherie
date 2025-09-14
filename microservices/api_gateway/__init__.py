@@ -23,6 +23,12 @@ __all__ = [
     'GatewayLoadBalancer',
     'GatewayMonitoring',
     'GatewaySecurity',
+    'GatewayAnalytics',
+    'GatewayRouting',
+    'GatewayCircuitBreaker',
+    'GatewayTimeoutHandler',
+    'GatewayLogging',
+    'GatewayTransformation',
     'api_gateway_module'
 ]
 
@@ -167,3 +173,34 @@ try:
     from .gateway_security import *
 except ImportError as e:
     logger.warning(f"Some gateway services not available: {e}")
+
+# Import new enterprise services
+try:
+    from .gateway_analytics import GatewayAnalytics
+except ImportError:
+    GatewayAnalytics = None
+
+try:
+    from .gateway_routing import GatewayRouting
+except ImportError:
+    GatewayRouting = None
+
+try:
+    from .gateway_circuit_breaker import GatewayCircuitBreaker
+except ImportError:
+    GatewayCircuitBreaker = None
+
+try:
+    from .gateway_timeout_handler import GatewayTimeoutHandler
+except ImportError:
+    GatewayTimeoutHandler = None
+
+try:
+    from .gateway_logging import GatewayLogging
+except ImportError:
+    GatewayLogging = None
+
+try:
+    from .gateway_transformation import GatewayTransformation
+except ImportError:
+    GatewayTransformation = None
