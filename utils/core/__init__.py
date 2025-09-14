@@ -32,7 +32,13 @@ __all__ = [
     "DateTimeHandler",
     "TextProcessor",
     "MediaHandler",
-    "WorkflowEngine"
+    "WorkflowEngine",
+    "DataProcessorFactory",
+    "FileManagerFactory",
+    "DateTimeHandlerFactory", 
+    "TextProcessorFactory",
+    "MediaHandlerFactory",
+    "WorkflowEngineFactory"
 ]
 
 # Lazy loading for enterprise performance
@@ -55,5 +61,23 @@ def __getattr__(name: str):
     elif name == "WorkflowEngine":
         from .workflow_engine import WorkflowEngine
         return WorkflowEngine
+    elif name == "DataProcessorFactory":
+        from .data_processor import DataProcessorFactory
+        return DataProcessorFactory
+    elif name == "FileManagerFactory":
+        from .file_manager import FileManagerFactory
+        return FileManagerFactory
+    elif name == "DateTimeHandlerFactory":
+        from .datetime_handler import DateTimeHandlerFactory
+        return DateTimeHandlerFactory
+    elif name == "TextProcessorFactory":
+        from .text_processor import TextProcessorFactory
+        return TextProcessorFactory
+    elif name == "MediaHandlerFactory":
+        from .media_handler import MediaHandlerFactory
+        return MediaHandlerFactory
+    elif name == "WorkflowEngineFactory":
+        from .workflow_engine import WorkflowEngineFactory
+        return WorkflowEngineFactory
     else:
         raise AttributeError(f"module '{__name__}' has no attribute '{name}'")

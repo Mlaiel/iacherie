@@ -29,8 +29,8 @@ import weakref
 
 # Redis import with fallback
 try:
-    import aioredis
-    REDIS_AVAILABLE = True
+    # import aioredis  # Temporarily disabled due to compatibility issues
+    REDIS_AVAILABLE = False
 except ImportError:
     REDIS_AVAILABLE = False
 

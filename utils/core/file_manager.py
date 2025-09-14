@@ -732,6 +732,7 @@ import gzip
 import bz2
 import lzma
 from datetime import timedelta
+from enum import Enum
 
 class BackupStrategy(Enum):
     """Backup strategies for enterprise data protection"""

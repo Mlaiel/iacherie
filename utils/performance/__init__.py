@@ -33,7 +33,12 @@ __all__ = [
     "MetricsCollector",
     "PerformanceMonitor",
     "CircuitBreaker", 
-    "RateLimiter"
+    "RateLimiter",
+    "CacheManagerFactory",
+    "MetricsCollectorFactory",
+    "PerformanceMonitorFactory",
+    "CircuitBreakerFactory",
+    "RateLimiterFactory"
 ]
 
 # Lazy loading for enterprise performance
@@ -53,5 +58,20 @@ def __getattr__(name: str):
     elif name == "RateLimiter":
         from .rate_limiter import RateLimiter
         return RateLimiter
+    elif name == "CacheManagerFactory":
+        from .cache_manager import CacheManagerFactory
+        return CacheManagerFactory
+    elif name == "MetricsCollectorFactory":
+        from .metrics_collector import MetricsCollectorFactory
+        return MetricsCollectorFactory
+    elif name == "PerformanceMonitorFactory":
+        from .performance_monitor import PerformanceMonitorFactory
+        return PerformanceMonitorFactory
+    elif name == "CircuitBreakerFactory":
+        from .circuit_breaker import CircuitBreakerFactory
+        return CircuitBreakerFactory
+    elif name == "RateLimiterFactory":
+        from .rate_limiter import RateLimiterFactory
+        return RateLimiterFactory
     else:
         raise AttributeError(f"module '{__name__}' has no attribute '{name}'")

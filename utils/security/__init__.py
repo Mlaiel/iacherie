@@ -31,7 +31,13 @@ __all__ = [
     "ValidationEngine", 
     "SecurityScanner",
     "PasswordManager",
-    "AuditLogger"
+    "AuditLogger",
+    "EncryptionEngineFactory",
+    "AuthenticationUtilsFactory",
+    "ValidationEngineFactory",
+    "SecurityScannerFactory", 
+    "PasswordManagerFactory",
+    "AuditLoggerFactory"
 ]
 
 # Lazy loading for enterprise performance
@@ -54,5 +60,23 @@ def __getattr__(name: str):
     elif name == "AuditLogger":
         from .audit_logger import AuditLogger
         return AuditLogger
+    elif name == "EncryptionEngineFactory":
+        from .encryption_engine import EncryptionEngineFactory
+        return EncryptionEngineFactory
+    elif name == "AuthenticationUtilsFactory":
+        from .authentication_utils import AuthenticationUtilsFactory
+        return AuthenticationUtilsFactory
+    elif name == "ValidationEngineFactory":
+        from .validation_engine import ValidationEngineFactory
+        return ValidationEngineFactory
+    elif name == "SecurityScannerFactory":
+        from .security_scanner import SecurityScannerFactory
+        return SecurityScannerFactory
+    elif name == "PasswordManagerFactory":
+        from .password_manager import PasswordManagerFactory
+        return PasswordManagerFactory
+    elif name == "AuditLoggerFactory":
+        from .audit_logger import AuditLoggerFactory
+        return AuditLoggerFactory
     else:
         raise AttributeError(f"module '{__name__}' has no attribute '{name}'")
