@@ -781,3 +781,280 @@ class ValidationEngine:
             summary['overall_status'] = 'passed'
         
         return summary
+
+
+# ========== CONSOLIDATED WORKFLOW EXCEPTIONS ==========
+# Integrated from: exceptions.py
+
+from enum import Enum
+
+class WorkflowErrorCode(Enum):
+    """🔥 STANDARDIZED WORKFLOW ERROR CODES - ENTERPRISE GRADE"""
+    # General workflow errors (1000-1099)
+    WORKFLOW_INITIALIZATION_FAILED = "WF1000"
+    WORKFLOW_EXECUTION_FAILED = "WF1001"
+    WORKFLOW_TIMEOUT = "WF1002"
+    WORKFLOW_CANCELLED = "WF1003"
+    WORKFLOW_NOT_FOUND = "WF1004"
+    WORKFLOW_INVALID_STATE = "WF1005"
+    
+    # Pipeline errors (1100-1199)
+    PIPELINE_CREATION_FAILED = "WF1100"
+    PIPELINE_STEP_FAILED = "WF1101"
+    PIPELINE_DEPENDENCY_ERROR = "WF1102"
+    PIPELINE_DEADLOCK = "WF1103"
+    PIPELINE_RESOURCE_EXHAUSTED = "WF1104"
+    PIPELINE_VALIDATION_ERROR = "WF1105"
+    
+    # Validation errors (1500-1599)
+    VALIDATION_FAILED = "WF1500"
+    VALIDATION_RULE_ERROR = "WF1501"
+    VALIDATION_SCHEMA_ERROR = "WF1502"
+    VALIDATION_SECURITY_ERROR = "WF1503"
+    VALIDATION_PERFORMANCE_ERROR = "WF1504"
+
+
+class WorkflowException(Exception):
+    """🔥 BASE WORKFLOW EXCEPTION - ENTERPRISE EXCEPTION HANDLING"""
+    
+    def __init__(
+        self,
+        message: str,
+        error_code: WorkflowErrorCode = WorkflowErrorCode.WORKFLOW_EXECUTION_FAILED,
+        details: Optional[Dict[str, Any]] = None,
+        context: Optional[Dict[str, Any]] = None,
+        recovery_suggestions: Optional[List[str]] = None
+    ):
+        super().__init__(message)
+        self.message = message
+        self.error_code = error_code
+        self.details = details or {}
+        self.context = context or {}
+        self.recovery_suggestions = recovery_suggestions or []
+        self.timestamp = datetime.now()
+    
+    def to_dict(self) -> Dict[str, Any]:
+        """Convert exception to dictionary for serialization."""
+        return {
+            'error_code': self.error_code.value,
+            'message': self.message,
+            'details': self.details,
+            'context': self.context,
+            'recovery_suggestions': self.recovery_suggestions,
+            'timestamp': self.timestamp.isoformat(),
+            'exception_type': self.__class__.__name__
+        }
+
+
+class PipelineException(WorkflowException):
+    """🔥 PIPELINE-SPECIFIC EXCEPTION - ENTERPRISE PIPELINE ERROR HANDLING"""
+    
+    def __init__(
+        self,
+        message: str,
+        pipeline_id: Optional[str] = None,
+        step_id: Optional[str] = None,
+        error_code: WorkflowErrorCode = WorkflowErrorCode.PIPELINE_STEP_FAILED,
+        **kwargs
+    ):
+        super().__init__(message, error_code, **kwargs)
+        self.pipeline_id = pipeline_id
+        self.step_id = step_id
+
+
+class ValidationException(WorkflowException):
+    """🔥 VALIDATION-SPECIFIC EXCEPTION - ENTERPRISE VALIDATION ERROR HANDLING"""
+    
+    def __init__(
+        self,
+        message: str,
+        validation_type: Optional[str] = None,
+        validation_level: Optional[str] = None,
+        validation_failures: Optional[List[Dict[str, Any]]] = None,
+        error_code: WorkflowErrorCode = WorkflowErrorCode.VALIDATION_FAILED,
+        **kwargs
+    ):
+        super().__init__(message, error_code, **kwargs)
+        self.validation_type = validation_type
+        self.validation_level = validation_level
+        self.validation_failures = validation_failures or []
+
+
+class StepExecutionException(PipelineException):
+    """🔥 STEP EXECUTION EXCEPTION - ENTERPRISE STEP ERROR HANDLING"""
+    
+    def __init__(
+        self,
+        message: str,
+        step_name: Optional[str] = None,
+        execution_duration: Optional[float] = None,
+        retry_count: int = 0,
+        **kwargs
+    ):
+        super().__init__(message, **kwargs)
+        self.step_name = step_name
+        self.execution_duration = execution_duration
+        self.retry_count = retry_count
+
+
+class SecurityException(WorkflowException):
+    """🔥 SECURITY EXCEPTION - ENTERPRISE SECURITY ERROR HANDLING"""
+    
+    def __init__(
+        self,
+        message: str,
+        security_violation_type: Optional[str] = None,
+        threat_level: str = "medium",
+        error_code: WorkflowErrorCode = WorkflowErrorCode.VALIDATION_SECURITY_ERROR,
+        **kwargs
+    ):
+        super().__init__(message, error_code, **kwargs)
+        self.security_violation_type = security_violation_type
+        self.threat_level = threat_level
+
+
+class PerformanceException(WorkflowException):
+    """🔥 PERFORMANCE EXCEPTION - ENTERPRISE PERFORMANCE ERROR HANDLING"""
+    
+    def __init__(
+        self,
+        message: str,
+        performance_metric: Optional[str] = None,
+        threshold_exceeded: Optional[float] = None,
+        actual_value: Optional[float] = None,
+        error_code: WorkflowErrorCode = WorkflowErrorCode.VALIDATION_PERFORMANCE_ERROR,
+        **kwargs
+    ):
+        super().__init__(message, error_code, **kwargs)
+        self.performance_metric = performance_metric
+        self.threshold_exceeded = threshold_exceeded
+        self.actual_value = actual_value
+
+
+# ========== EXCEPTION HANDLING UTILITIES ==========
+
+class ExceptionHandler:
+    """🔥 ENTERPRISE EXCEPTION HANDLER - COMPREHENSIVE ERROR MANAGEMENT"""
+    
+    def __init__(self):
+        self.exception_history = []
+        self.recovery_strategies = {}
+        self.notification_callbacks = []
+        
+        self.logger = logging.getLogger(f"{__name__}.ExceptionHandler")
+    
+    def handle_exception(
+        self,
+        exception: Exception,
+        context: Optional[Dict[str, Any]] = None,
+        auto_recovery: bool = True
+    ) -> Dict[str, Any]:
+        """Handle workflow exceptions with enterprise-grade error management."""
+        
+        error_info = {
+            'exception_id': uuid.uuid4().hex[:8],
+            'timestamp': datetime.now(),
+            'exception_type': exception.__class__.__name__,
+            'message': str(exception),
+            'context': context or {},
+            'handled': False,
+            'recovery_attempted': False,
+            'recovery_successful': False
+        }
+        
+        # Log exception
+        self.logger.error(f"Exception occurred: {exception}")
+        
+        # Handle specific exception types
+        if isinstance(exception, WorkflowException):
+            error_info.update({
+                'error_code': exception.error_code.value,
+                'details': exception.details,
+                'recovery_suggestions': exception.recovery_suggestions
+            })
+            
+            # Attempt automatic recovery if enabled
+            if auto_recovery and exception.error_code in self.recovery_strategies:
+                recovery_result = self._attempt_recovery(exception)
+                error_info.update({
+                    'recovery_attempted': True,
+                    'recovery_successful': recovery_result.get('success', False),
+                    'recovery_details': recovery_result
+                })
+        
+        # Store in history
+        self.exception_history.append(error_info)
+        
+        # Notify callbacks
+        for callback in self.notification_callbacks:
+            try:
+                callback(error_info)
+            except Exception as callback_error:
+                self.logger.error(f"Exception notification callback failed: {callback_error}")
+        
+        error_info['handled'] = True
+        return error_info
+    
+    def _attempt_recovery(self, exception: WorkflowException) -> Dict[str, Any]:
+        """Attempt automatic recovery from workflow exception."""
+        
+        recovery_strategy = self.recovery_strategies.get(exception.error_code)
+        if not recovery_strategy:
+            return {'success': False, 'reason': 'No recovery strategy available'}
+        
+        try:
+            recovery_result = recovery_strategy(exception)
+            return {'success': True, 'result': recovery_result}
+        except Exception as recovery_error:
+            return {'success': False, 'reason': str(recovery_error)}
+    
+    def register_recovery_strategy(
+        self,
+        error_code: WorkflowErrorCode,
+        recovery_function: Callable[[WorkflowException], Any]
+    ):
+        """Register recovery strategy for specific error code."""
+        self.recovery_strategies[error_code] = recovery_function
+    
+    def add_notification_callback(self, callback: Callable[[Dict[str, Any]], None]):
+        """Add notification callback for exception events."""
+        self.notification_callbacks.append(callback)
+    
+    def get_exception_statistics(self) -> Dict[str, Any]:
+        """Get exception statistics and patterns."""
+        
+        if not self.exception_history:
+            return {'total_exceptions': 0}
+        
+        # Calculate statistics
+        total_exceptions = len(self.exception_history)
+        exception_types = {}
+        error_codes = {}
+        recovery_success_rate = 0
+        
+        for error_info in self.exception_history:
+            # Count by type
+            exc_type = error_info['exception_type']
+            exception_types[exc_type] = exception_types.get(exc_type, 0) + 1
+            
+            # Count by error code
+            if 'error_code' in error_info:
+                error_code = error_info['error_code']
+                error_codes[error_code] = error_codes.get(error_code, 0) + 1
+            
+            # Recovery statistics
+            if error_info.get('recovery_attempted') and error_info.get('recovery_successful'):
+                recovery_success_rate += 1
+        
+        recovery_attempts = sum(1 for e in self.exception_history if e.get('recovery_attempted'))
+        recovery_success_rate = (recovery_success_rate / recovery_attempts * 100) if recovery_attempts > 0 else 0
+        
+        return {
+            'total_exceptions': total_exceptions,
+            'exception_types': exception_types,
+            'error_codes': error_codes,
+            'recovery_attempts': recovery_attempts,
+            'recovery_success_rate': f"{recovery_success_rate:.1f}%",
+            'most_common_exception': max(exception_types, key=exception_types.get) if exception_types else None,
+            'most_common_error_code': max(error_codes, key=error_codes.get) if error_codes else None
+        }
