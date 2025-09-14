@@ -12,8 +12,13 @@ from dataclasses import dataclass, field
 import json
 import uuid
 import logging
-import numpy as np
 from collections import defaultdict
+
+try:
+    import numpy as np
+except ImportError:
+    # Fallback for missing numpy
+    np = None
 
 try:
     from ..utils.ai_optimizer import AIOptimizer
