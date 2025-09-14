@@ -26,8 +26,32 @@ import uuid
 
 import redis
 from cryptography.fernet import Fernet
-from fastapi import Request, Response, HTTPException
-from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+
+# Optional FastAPI imports
+try:
+    from fastapi import Request, Response, HTTPException
+    from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+    FASTAPI_AVAILABLE = True
+except ImportError:
+    FASTAPI_AVAILABLE = False
+    # Mock FastAPI classes when not available
+    class Request:
+        def __init__(self, **kwargs):
+            pass
+    class Response:
+        def __init__(self, **kwargs):
+            pass
+    class HTTPException(Exception):
+        def __init__(self, status_code, detail):
+            super().__init__(detail)
+            self.status_code = status_code
+    class HTTPBearer:
+        def __init__(self, **kwargs):
+            pass
+    class HTTPAuthorizationCredentials:
+        def __init__(self, scheme, credentials):
+            self.scheme = scheme
+            self.credentials = credentials
 
 logger = logging.getLogger(__name__)
 
