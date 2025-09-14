@@ -27,7 +27,7 @@ import uuid
 from urllib.parse import urlencode, parse_qs, urlparse
 
 import aiohttp
-import aioredis
+import redis
 from cryptography.fernet import Fernet
 
 logger = logging.getLogger(__name__)
@@ -129,7 +129,7 @@ class OAuth2Handler:
         encryption_key: Optional[bytes] = None
     ):
         self.redis_url = redis_url
-        self.redis: Optional[aioredis.Redis] = None
+        self.redis: Optional[redis.Redis] = None
         self.encryption_key = encryption_key or Fernet.generate_key()
         self.cipher_suite = Fernet(self.encryption_key)
         self.providers: Dict[OAuth2Provider, OAuth2SecurityConfig] = {}
@@ -149,7 +149,7 @@ class OAuth2Handler:
         """Initialize the OAuth2 handler"""
         try:
             # Initialize Redis connection
-            self.redis = aioredis.from_url(self.redis_url)
+            self.redis = redis.from_url(self.redis_url)
             await self.redis.ping()
             
             logger.info("OAuth2 handler initialized successfully")

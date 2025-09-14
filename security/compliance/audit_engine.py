@@ -18,12 +18,12 @@ import json
 import logging
 import time
 from datetime import datetime, timedelta, timezone
-from typing import Dict, List, Optional, Set, Any, Union
+from typing import Dict, List, Optional, Set, Any, Union, Tuple
 from dataclasses import dataclass, field
 from enum import Enum
 import uuid
 
-import aioredis
+import redis
 from cryptography.fernet import Fernet
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.asymmetric import rsa, padding
@@ -175,7 +175,7 @@ class AuditEngine:
         signing_key: Optional[bytes] = None
     ):
         self.redis_url = redis_url
-        self.redis: Optional[aioredis.Redis] = None
+        self.redis: Optional[redis.Redis] = None
         self.encryption_key = encryption_key or Fernet.generate_key()
         self.cipher_suite = Fernet(self.encryption_key)
         
@@ -221,7 +221,7 @@ class AuditEngine:
         """Initialize audit engine"""
         try:
             # Initialize Redis connection
-            self.redis = aioredis.from_url(self.redis_url)
+            self.redis = redis.from_url(self.redis_url)
             await self.redis.ping()
             
             # Load last trail hash for integrity chain

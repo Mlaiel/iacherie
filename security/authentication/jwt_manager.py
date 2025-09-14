@@ -28,7 +28,7 @@ from dataclasses import dataclass, field
 from enum import Enum
 import uuid
 
-import aioredis
+import redis
 import jwt
 from cryptography.hazmat.primitives import hashes, serialization
 from cryptography.hazmat.primitives.asymmetric import rsa, padding
@@ -127,7 +127,7 @@ class JWTManager:
         hsm_config: Optional[Dict[str, Any]] = None
     ):
         self.redis_url = redis_url
-        self.redis: Optional[aioredis.Redis] = None
+        self.redis: Optional[redis.Redis] = None
         self.algorithm = algorithm
         self.key_rotation_interval = key_rotation_interval
         self.enable_hsm = enable_hsm
@@ -166,7 +166,7 @@ class JWTManager:
         """Initialize the JWT manager"""
         try:
             # Initialize Redis connection
-            self.redis = aioredis.from_url(self.redis_url)
+            self.redis = redis.from_url(self.redis_url)
             await self.redis.ping()
             
             # Initialize HSM if enabled
