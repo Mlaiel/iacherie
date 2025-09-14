@@ -129,6 +129,13 @@ class MasterValidationEngine:
             except ImportError as e:
                 self.logger.warning(f"⚠️ API Contract Validator non disponible: {e}")
             
+            try:
+                from .business_rules_validator import BusinessRulesValidator
+                self.validators['business_rules'] = BusinessRulesValidator()
+                self.logger.info("✅ Business Rules Validator chargé")
+            except ImportError as e:
+                self.logger.warning(f"⚠️ Business Rules Validator non disponible: {e}")
+            
             # Initialize all loaded validators
             for name, validator in self.validators.items():
                 if hasattr(validator, 'initialize'):
@@ -176,6 +183,8 @@ class MasterValidationEngine:
                 result = await self._validate_content_ai(validator, data, config)
             elif validation_type == ValidationType.API_CONTRACT:
                 result = await self._validate_api_contract(validator, data, config)
+            elif validation_type == ValidationType.BUSINESS_RULES:
+                result = await self._validate_business_rules(validator, data, config)
             else:
                 result = await self._validate_generic(validator, data, config)
             
@@ -211,7 +220,8 @@ class MasterValidationEngine:
             ValidationType.DATA_INTEGRITY: 'data_integrity',
             ValidationType.SCHEMA_VALIDATION: 'schema',
             ValidationType.CONTENT_VALIDATION: 'content_ai',
-            ValidationType.API_CONTRACT: 'api_contract'
+            ValidationType.API_CONTRACT: 'api_contract',
+            ValidationType.BUSINESS_RULES: 'business_rules'
         }
         
         validator_key = validator_mapping.get(validation_type)
@@ -334,6 +344,39 @@ class MasterValidationEngine:
                 details={"error": str(e)}
             )
     
+    async def _validate_business_rules(self, validator, data: Any, config: Dict[str, Any]) -> ValidationResult:
+        """Validation règles métier - DBA + Backend Senior"""
+        try:
+            if hasattr(validator, 'validate'):
+                result = await validator.validate(data, config.get('rule_types'))
+                return ValidationResult(
+                    validation_type=ValidationType.BUSINESS_RULES,
+                    severity=ValidationSeverity.HIGH,
+                    passed=result.passed,
+                    score=result.score,
+                    details={
+                        "rules_checked": result.rules_checked,
+                        "rules_passed": result.rules_passed,
+                        "violations": [v.message for v in result.violations]
+                    }
+                )
+            else:
+                return ValidationResult(
+                    validation_type=ValidationType.BUSINESS_RULES,
+                    severity=ValidationSeverity.MEDIUM,
+                    passed=True,
+                    score=80.0,
+                    details={"message": "Validation règles métier basique"}
+                )
+        except Exception as e:
+            return ValidationResult(
+                validation_type=ValidationType.BUSINESS_RULES,
+                severity=ValidationSeverity.CRITICAL,
+                passed=False,
+                score=0.0,
+                details={"error": str(e)}
+            )
+    
     async def _validate_generic(self, validator, data: Any, config: Dict[str, Any]) -> ValidationResult:
         """Validation générique"""
         return ValidationResult(
@@ -406,6 +449,12 @@ async def validate_content_ai(data: Any, config: Optional[Dict[str, Any]] = None
         ValidationType.CONTENT_VALIDATION, data, config
     )
 
+async def validate_business_rules(data: Any, config: Optional[Dict[str, Any]] = None) -> ValidationResult:
+    """Validation règles métier enterprise"""
+    return await master_validation_engine.validate_comprehensive(
+        ValidationType.BUSINESS_RULES, data, config
+    )
+
 # Exports principaux
 __all__ = [
     'MasterValidationEngine',
@@ -416,5 +465,6 @@ __all__ = [
     'initialize_validation_engines',
     'validate_data_integrity',
     'validate_schema',
-    'validate_content_ai'
+    'validate_content_ai',
+    'validate_business_rules'
 ]
