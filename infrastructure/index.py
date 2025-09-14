@@ -20,6 +20,7 @@ import logging
 from typing import Dict, List, Optional, Any
 
 # Core infrastructure modules
+from . import ai_optimization
 from . import api_gateway
 from . import cloud
 from . import container
@@ -41,6 +42,7 @@ logger = logging.getLogger(__name__)
 # Exports publics
 __all__ = [
     # Modules
+    'ai_optimization',
     'api_gateway',
     'cloud', 
     'container',
@@ -85,6 +87,11 @@ AINFLUE_WORKFLOW = {
 
 # Infrastructure module mapping
 INFRASTRUCTURE_MODULES = {
+    'ai_optimization': {
+        'description': 'AI optimization and management for 53 specialized AI agents',
+        'business_function': 'Creator AI processing optimization and GPU cluster management',
+        'tier': 'tier_0'
+    },
     'api_gateway': {
         'description': 'API Gateway and REST/GraphQL/WebSocket endpoints',
         'business_function': 'Content upload and creator authentication endpoints',
