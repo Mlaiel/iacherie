@@ -27,16 +27,57 @@ from datetime import datetime, timezone
 from dataclasses import dataclass, field
 from concurrent.futures import ThreadPoolExecutor
 import aiofiles
-import nltk
-from nltk.corpus import stopwords
-from nltk.tokenize import word_tokenize, sent_tokenize
-from nltk.stem import PorterStemmer, WordNetLemmatizer
-from nltk.sentiment import SentimentIntensityAnalyzer
-import spacy
-from transformers import pipeline
-import openai
-from textblob import TextBlob
-import langdetect
+
+# Optional NLP dependencies with fallbacks for enterprise flexibility
+try:
+    import nltk
+    from nltk.corpus import stopwords
+    from nltk.tokenize import word_tokenize, sent_tokenize
+    from nltk.stem import PorterStemmer, WordNetLemmatizer
+    from nltk.sentiment import SentimentIntensityAnalyzer
+    NLTK_AVAILABLE = True
+except ImportError:
+    nltk = None
+    stopwords = None
+    word_tokenize = sent_tokenize = None
+    PorterStemmer = WordNetLemmatizer = None
+    SentimentIntensityAnalyzer = None
+    NLTK_AVAILABLE = False
+
+try:
+    import spacy
+    SPACY_AVAILABLE = True
+except ImportError:
+    spacy = None
+    SPACY_AVAILABLE = False
+
+try:
+    from transformers import pipeline
+    TRANSFORMERS_AVAILABLE = True
+except ImportError:
+    pipeline = None
+    TRANSFORMERS_AVAILABLE = False
+
+try:
+    import openai
+    OPENAI_AVAILABLE = True
+except ImportError:
+    openai = None
+    OPENAI_AVAILABLE = False
+
+try:
+    from textblob import TextBlob
+    TEXTBLOB_AVAILABLE = True
+except ImportError:
+    TextBlob = None
+    TEXTBLOB_AVAILABLE = False
+
+try:
+    import langdetect
+    LANGDETECT_AVAILABLE = True
+except ImportError:
+    langdetect = None
+    LANGDETECT_AVAILABLE = False
 # from googletrans import Translator  # Temporarily disabled due to dependency issues
 import html
 # import markdown  # Will install if needed

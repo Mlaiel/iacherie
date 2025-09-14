@@ -609,7 +609,7 @@ class CacheManagerFactory:
 # === ENHANCED ENTERPRISE CACHE UTILITIES ===
 # Consolidated from cache_utilities.py and caching.py
 
-import memcache
+# memcache already imported with fallback above
 from collections import OrderedDict
 
 class MemoryCache:

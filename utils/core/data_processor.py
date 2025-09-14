@@ -34,11 +34,32 @@ from contextlib import asynccontextmanager
 import aiohttp
 import aiofiles
 import asyncpg
-import aiomysql
-import motor.motor_asyncio
-from motor.motor_asyncio import AsyncIOMotorClient
-import pandas as pd
-import numpy as np
+
+# Optional dependencies with fallbacks for enterprise flexibility
+try:
+    import aiomysql
+    MYSQL_AVAILABLE = True
+except ImportError:
+    aiomysql = None
+    MYSQL_AVAILABLE = False
+
+try:
+    import motor.motor_asyncio
+    from motor.motor_asyncio import AsyncIOMotorClient
+    MONGO_AVAILABLE = True
+except ImportError:
+    motor = None
+    AsyncIOMotorClient = None
+    MONGO_AVAILABLE = False
+
+try:
+    import pandas as pd
+    import numpy as np
+    PANDAS_AVAILABLE = True
+except ImportError:
+    pd = None
+    np = None
+    PANDAS_AVAILABLE = False
 from pydantic import BaseModel, Field, validator
 from sqlalchemy import text, create_engine
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
