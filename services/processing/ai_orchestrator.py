@@ -1,1027 +1,1035 @@
 """
-AI Orchestrator - Enterprise AI Services Orchestration
-======================================================
+AI Content Analyzer - Advanced Multi-Provider AI Content Analysis
+================================================================
 
 **Author**: Fahed Mlaiel (mlaiel@live.de)
-**Roles**: Lead Dev IA + ML Engineer + Backend Senior + Security + DevOps
-**Module**: Processing Services - AI Orchestration
+**Role**: Lead Dev IA & IA Prompt Engineer
+**Module**: AI & Machine Learning Services
 **Version**: 1.0.0 Enterprise
 **Created**: 2025-01-07
 
-Enterprise-grade AI orchestration with multi-provider support, intelligent routing,
-performance optimization, and comprehensive monitoring.
+Advanced AI content analysis with multi-provider orchestration,
+intelligent prompt engineering, and comprehensive content insights.
 """
 
 import asyncio
 import json
 import logging
+import hashlib
 import time
 from datetime import datetime, timedelta
-from typing import Dict, List, Optional, Any, Union, Callable
-from dataclasses import dataclass, field, asdict
+from typing import Dict, List, Optional, Any, Union
+from dataclasses import dataclass, field
 from enum import Enum
-import aiohttp
 import aioredis
-from abc import ABC, abstractmethod
-import hashlib
-import uuid
+import aiohttp
+import openai
+from anthropic import AsyncAnthropic
+import base64
+import tiktoken
 
 
-# Configure logging
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
+class ContentType(Enum):
+    """Types of content to analyze"""
+    TEXT = "text"
+    IMAGE = "image"
+    AUDIO = "audio"
+    VIDEO = "video"
+    DOCUMENT = "document"
+    CODE = "code"
+    MIXED = "mixed"
+
+
+class AnalysisType(Enum):
+    """Types of analysis to perform"""
+    SENTIMENT = "sentiment"
+    TOXICITY = "toxicity"
+    TOPICS = "topics"
+    ENTITIES = "entities"
+    KEYWORDS = "keywords"
+    QUALITY = "quality"
+    ORIGINALITY = "originality"
+    READABILITY = "readability"
+    SEO_OPTIMIZATION = "seo"
+    ENGAGEMENT_POTENTIAL = "engagement"
+    MONETIZATION_SCORE = "monetization"
+    COMPLIANCE = "compliance"
 
 
 class AIProvider(Enum):
-    """Supported AI providers"""
-    OPENAI = "openai"
-    ANTHROPIC = "anthropic"
-    GOOGLE = "google"
-    AZURE_OPENAI = "azure_openai"
-    HUGGINGFACE = "huggingface"
-    LOCAL = "local"
-    CUSTOM = "custom"
-
-
-class AIModel(Enum):
-    """AI model types"""
-    GPT_4 = "gpt-4"
-    GPT_4_TURBO = "gpt-4-turbo"
-    GPT_3_5_TURBO = "gpt-3.5-turbo"
-    CLAUDE_3_OPUS = "claude-3-opus"
-    CLAUDE_3_SONNET = "claude-3-sonnet"
-    CLAUDE_3_HAIKU = "claude-3-haiku"
-    GEMINI_PRO = "gemini-pro"
-    GEMINI_ULTRA = "gemini-ultra"
-    LLAMA_70B = "llama-70b"
-    MIXTRAL_8X7B = "mixtral-8x7b"
-
-
-class AITaskType(Enum):
-    """Types of AI tasks"""
-    TEXT_GENERATION = "text_generation"
-    TEXT_ANALYSIS = "text_analysis"
-    TEXT_CLASSIFICATION = "text_classification"
-    TEXT_SUMMARIZATION = "text_summarization"
-    TEXT_TRANSLATION = "text_translation"
-    IMAGE_GENERATION = "image_generation"
-    IMAGE_ANALYSIS = "image_analysis"
-    AUDIO_GENERATION = "audio_generation"
-    AUDIO_TRANSCRIPTION = "audio_transcription"
-    CODE_GENERATION = "code_generation"
-    CODE_ANALYSIS = "code_analysis"
-    CONTENT_MODERATION = "content_moderation"
-    SENTIMENT_ANALYSIS = "sentiment_analysis"
-    ENTITY_EXTRACTION = "entity_extraction"
-    QUESTION_ANSWERING = "question_answering"
-
-
-class AITaskStatus(Enum):
-    """AI task processing status"""
-    PENDING = "pending"
-    QUEUED = "queued"
-    PROCESSING = "processing"
-    COMPLETED = "completed"
-    FAILED = "failed"
-    CANCELLED = "cancelled"
-    TIMEOUT = "timeout"
-
-
-class AITaskPriority(Enum):
-    """AI task priority levels"""
-    LOW = "low"
-    NORMAL = "normal"
-    HIGH = "high"
-    CRITICAL = "critical"
-    URGENT = "urgent"
+    """AI providers for content analysis"""
+    OPENAI_GPT4 = "openai_gpt4"
+    OPENAI_GPT35 = "openai_gpt35"
+    ANTHROPIC_CLAUDE = "anthropic_claude"
+    CUSTOM_MODEL = "custom_model"
+    ENSEMBLE = "ensemble"
 
 
 @dataclass
-class ProviderConfig:
-    """AI provider configuration"""
-    provider: AIProvider
-    api_key: str
-    api_endpoint: str
-    model_mappings: Dict[AIModel, str] = field(default_factory=dict)
-    
-    # Rate limiting
-    requests_per_minute: int = 60
-    requests_per_hour: int = 3600
-    max_concurrent: int = 10
-    
-    # Quality settings
-    temperature: float = 0.7
-    max_tokens: int = 4096
-    top_p: float = 1.0
-    frequency_penalty: float = 0.0
-    presence_penalty: float = 0.0
-    
-    # Reliability
-    timeout_seconds: int = 30
-    max_retries: int = 3
-    retry_delay: float = 1.0
-    
-    # Features
-    supports_streaming: bool = False
-    supports_functions: bool = False
-    supports_vision: bool = False
-    supports_audio: bool = False
-    
-    # Cost optimization
-    cost_per_1k_tokens: Dict[str, float] = field(default_factory=dict)
-    cost_optimization_enabled: bool = True
-    
-    # Monitoring
-    enabled: bool = True
-    health_check_interval: int = 300  # 5 minutes
-    
-    def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        data = asdict(self)
-        data['provider'] = self.provider.value
-        return data
-
-
-@dataclass
-class AITask:
-    """AI task definition"""
-    task_id: str
-    task_type: AITaskType
-    
-    # Input data
-    prompt: str
-    context: Dict[str, Any] = field(default_factory=dict)
-    parameters: Dict[str, Any] = field(default_factory=dict)
-    
-    # Configuration
-    preferred_provider: Optional[AIProvider] = None
-    preferred_model: Optional[AIModel] = None
-    priority: AITaskPriority = AITaskPriority.NORMAL
-    
-    # Processing settings
-    max_tokens: Optional[int] = None
-    temperature: Optional[float] = None
-    timeout_seconds: int = 30
-    
-    # Status tracking
-    status: AITaskStatus = AITaskStatus.PENDING
-    progress: float = 0.0
-    created_at: datetime = field(default_factory=datetime.now)
-    started_at: Optional[datetime] = None
-    completed_at: Optional[datetime] = None
-    
-    # Results
-    response: Optional[str] = None
-    usage_stats: Dict[str, Any] = field(default_factory=dict)
-    provider_used: Optional[AIProvider] = None
-    model_used: Optional[AIModel] = None
-    
-    # Error handling
-    error_message: Optional[str] = None
-    retry_count: int = 0
-    max_retries: int = 3
-    
-    # Cost tracking
-    estimated_cost: float = 0.0
-    actual_cost: float = 0.0
-    
-    # Metadata
-    user_id: Optional[str] = None
-    session_id: Optional[str] = None
-    tags: List[str] = field(default_factory=list)
+class ContentInput:
+    """Content input structure"""
+    content_id: str
+    content_type: ContentType
+    content_data: Union[str, bytes, Dict[str, Any]]
     metadata: Dict[str, Any] = field(default_factory=dict)
+    analysis_types: List[AnalysisType] = field(default_factory=list)
+    ai_provider: AIProvider = AIProvider.OPENAI_GPT4
+    custom_prompts: Dict[str, str] = field(default_factory=dict)
 
 
 @dataclass
-class AIResponse:
-    """AI response with comprehensive metadata"""
-    task_id: str
-    content: str
-    
-    # Provider information
-    provider: AIProvider
-    model: AIModel
-    
-    # Usage statistics
-    prompt_tokens: int = 0
-    completion_tokens: int = 0
-    total_tokens: int = 0
-    
-    # Performance metrics
-    response_time_ms: float = 0.0
-    processing_time_ms: float = 0.0
-    queue_time_ms: float = 0.0
-    
-    # Quality metrics
-    confidence_score: Optional[float] = None
-    quality_score: Optional[float] = None
-    
-    # Cost information
-    cost: float = 0.0
-    cost_currency: str = "USD"
-    
-    # Additional data
-    finish_reason: Optional[str] = None
-    raw_response: Dict[str, Any] = field(default_factory=dict)
-    timestamp: datetime = field(default_factory=datetime.now)
+class AnalysisResult:
+    """Analysis result structure"""
+    content_id: str
+    analysis_type: AnalysisType
+    ai_provider: AIProvider
+    score: float
+    confidence: float
+    details: Dict[str, Any]
+    insights: List[str]
+    recommendations: List[str]
+    processing_time: float
+    timestamp: datetime = field(default_factory=datetime.utcnow)
 
 
-class AIProviderInterface(ABC):
-    """Abstract interface for AI providers"""
-    
-    @abstractmethod
-    async def process_task(self, task: AITask, config: ProviderConfig) -> AIResponse:
-        """Process an AI task"""
-        pass
-    
-    @abstractmethod
-    async def health_check(self, config: ProviderConfig) -> bool:
-        """Check provider health"""
-        pass
-    
-    @abstractmethod
-    def estimate_cost(self, task: AITask, config: ProviderConfig) -> float:
-        """Estimate task cost"""
-        pass
+@dataclass
+class ContentAnalysisReport:
+    """Comprehensive content analysis report"""
+    content_id: str
+    content_type: ContentType
+    overall_score: float
+    analysis_results: List[AnalysisResult]
+    summary: Dict[str, Any]
+    actionable_insights: List[str]
+    optimization_suggestions: List[str]
+    compliance_status: bool
+    monetization_potential: float
+    created_at: datetime = field(default_factory=datetime.utcnow)
 
 
-class OpenAIProvider(AIProviderInterface):
-    """OpenAI provider implementation"""
-    
-    async def process_task(self, task: AITask, config: ProviderConfig) -> AIResponse:
-        """Process task using OpenAI API"""
-        start_time = time.time()
-        
-        try:
-            # Prepare request
-            headers = {
-                "Authorization": f"Bearer {config.api_key}",
-                "Content-Type": "application/json"
-            }
-            
-            # Map model
-            model_name = config.model_mappings.get(task.preferred_model, "gpt-3.5-turbo")
-            
-            payload = {
-                "model": model_name,
-                "messages": [{"role": "user", "content": task.prompt}],
-                "max_tokens": task.max_tokens or config.max_tokens,
-                "temperature": task.temperature or config.temperature,
-                "top_p": config.top_p,
-                "frequency_penalty": config.frequency_penalty,
-                "presence_penalty": config.presence_penalty
-            }
-            
-            # Add parameters
-            payload.update(task.parameters)
-            
-            # Make API call
-            async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=task.timeout_seconds)) as session:
-                async with session.post(f"{config.api_endpoint}/chat/completions", headers=headers, json=payload) as response:
-                    if response.status == 200:
-                        data = await response.json()
-                        
-                        # Parse response
-                        content = data['choices'][0]['message']['content']
-                        usage = data.get('usage', {})
-                        
-                        response_time = (time.time() - start_time) * 1000
-                        
-                        return AIResponse(
-                            task_id=task.task_id,
-                            content=content,
-                            provider=AIProvider.OPENAI,
-                            model=task.preferred_model or AIModel.GPT_3_5_TURBO,
-                            prompt_tokens=usage.get('prompt_tokens', 0),
-                            completion_tokens=usage.get('completion_tokens', 0),
-                            total_tokens=usage.get('total_tokens', 0),
-                            response_time_ms=response_time,
-                            cost=self._calculate_cost(usage, config),
-                            finish_reason=data['choices'][0].get('finish_reason'),
-                            raw_response=data
-                        )
-                    else:
-                        error_data = await response.json()
-                        raise Exception(f"OpenAI API error: {error_data}")
-        
-        except Exception as e:
-            logger.error(f"OpenAI provider error: {e}")
-            raise
-    
-    async def health_check(self, config: ProviderConfig) -> bool:
-        """Check OpenAI API health"""
-        try:
-            headers = {"Authorization": f"Bearer {config.api_key}"}
-            async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=10)) as session:
-                async with session.get(f"{config.api_endpoint}/models", headers=headers) as response:
-                    return response.status == 200
-        except Exception:
-            return False
-    
-    def estimate_cost(self, task: AITask, config: ProviderConfig) -> float:
-        """Estimate OpenAI API cost"""
-        # Rough estimation based on prompt length
-        estimated_tokens = len(task.prompt.split()) * 1.3  # Approximate token count
-        model_name = config.model_mappings.get(task.preferred_model, "gpt-3.5-turbo")
-        cost_per_1k = config.cost_per_1k_tokens.get(model_name, 0.002)
-        return (estimated_tokens / 1000) * cost_per_1k
-    
-    def _calculate_cost(self, usage: Dict[str, Any], config: ProviderConfig) -> float:
-        """Calculate actual cost from usage"""
-        total_tokens = usage.get('total_tokens', 0)
-        # This would use actual pricing tiers
-        return (total_tokens / 1000) * 0.002  # Simplified
-
-
-class AnthropicProvider(AIProviderInterface):
-    """Anthropic provider implementation"""
-    
-    async def process_task(self, task: AITask, config: ProviderConfig) -> AIResponse:
-        """Process task using Anthropic API"""
-        # Implementation similar to OpenAI but for Anthropic's API
-        # This is a simplified placeholder
-        start_time = time.time()
-        
-        try:
-            # Simulate API call
-            await asyncio.sleep(0.1)  # Simulate network delay
-            
-            response_time = (time.time() - start_time) * 1000
-            
-            return AIResponse(
-                task_id=task.task_id,
-                content=f"Anthropic response to: {task.prompt[:50]}...",
-                provider=AIProvider.ANTHROPIC,
-                model=task.preferred_model or AIModel.CLAUDE_3_SONNET,
-                response_time_ms=response_time,
-                total_tokens=100  # Placeholder
-            )
-        
-        except Exception as e:
-            logger.error(f"Anthropic provider error: {e}")
-            raise
-    
-    async def health_check(self, config: ProviderConfig) -> bool:
-        """Check Anthropic API health"""
-        # Simplified health check
-        return True
-    
-    def estimate_cost(self, task: AITask, config: ProviderConfig) -> float:
-        """Estimate Anthropic API cost"""
-        estimated_tokens = len(task.prompt.split()) * 1.3
-        return (estimated_tokens / 1000) * 0.01  # Placeholder pricing
-
-
-class AIOrchestrator:
+class AIContentAnalyzer:
     """
-    Enterprise AI Orchestrator with Multi-Provider Support & Intelligent Routing
+    Advanced AI Content Analyzer Service
     
-    **Expert Roles Implemented:**
-    - Lead Dev IA: Intelligent provider selection, task optimization, AI workflow orchestration
-    - ML Engineer: Model performance analytics, cost optimization, quality assessment
-    - Backend Senior: Robust async architecture, connection pooling, error handling
-    - Security: API key management, request validation, audit logging
-    - DevOps: Comprehensive monitoring, load balancing, auto-scaling
+    Multi-provider AI content analysis with:
+    - Advanced prompt engineering and optimization
+    - Multi-provider AI orchestration (OpenAI, Anthropic, Custom)
+    - Comprehensive content quality assessment
+    - SEO and monetization analysis
+    - Compliance and safety checking
+    - Real-time performance optimization
     """
-    
-    def __init__(
-        self,
-        redis_url: str = "redis://localhost:6379",
-        default_timeout: int = 30,
-        max_concurrent_tasks: int = 100,
-        task_queue_size: int = 1000
-    ):
+
+    def __init__(self, redis_url: str = "redis://localhost:6379"):
+        self.logger = logging.getLogger(__name__)
         self.redis_url = redis_url
-        self.default_timeout = default_timeout
-        self.max_concurrent_tasks = max_concurrent_tasks
-        self.task_queue_size = task_queue_size
-        
-        # Storage
         self.redis_client: Optional[aioredis.Redis] = None
-        self.provider_configs: Dict[AIProvider, ProviderConfig] = {}
-        self.providers: Dict[AIProvider, AIProviderInterface] = {}
         
-        # Task management
-        self.active_tasks: Dict[str, AITask] = {}
-        self.task_queue: asyncio.Queue = asyncio.Queue(maxsize=task_queue_size)
-        self.processing_semaphore = asyncio.Semaphore(max_concurrent_tasks)
+        # AI Provider configurations
+        self.ai_providers = {}
+        self.prompt_templates = {}
         
-        # Provider health tracking
-        self.provider_health: Dict[AIProvider, bool] = {}
-        self.provider_metrics: Dict[AIProvider, Dict[str, Any]] = {}
-        
-        # Background tasks
-        self.background_tasks: List[asyncio.Task] = []
-        self.running = False
-        
-        # Intelligent routing
-        self.routing_strategy = "cost_performance"  # cost_performance, performance, cost, availability
-        self.performance_history: Dict[AIProvider, List[float]] = {}
-        
-        # Initialize providers
-        self._initialize_providers()
-    
-    def _initialize_providers(self) -> None:
-        """Initialize AI providers"""
-        self.providers = {
-            AIProvider.OPENAI: OpenAIProvider(),
-            AIProvider.ANTHROPIC: AnthropicProvider(),
-            # Add other providers as needed
+        # Analysis cache and optimization
+        self.analysis_cache: Dict[str, ContentAnalysisReport] = {}
+        self.performance_metrics = {
+            "total_analyses": 0,
+            "avg_processing_time": 0.0,
+            "provider_performance": {},
+            "cache_hit_rate": 0.0
         }
-    
-    async def initialize(self) -> None:
-        """Initialize AI orchestrator"""
+        
+        # Content quality thresholds
+        self.quality_thresholds = {
+            "minimum_quality": 0.6,
+            "high_quality": 0.8,
+            "exceptional_quality": 0.9,
+            "toxicity_threshold": 0.3,
+            "originality_threshold": 0.7
+        }
+        
+        # Initialize AI providers and prompts
+        self._initialize_ai_providers()
+        self._initialize_prompt_templates()
+        
+        self.logger.info("AI Content Analyzer initialized with multi-provider support")
+
+    async def initialize(self):
+        """Initialize AI content analyzer"""
         try:
-            # Initialize Redis connection
-            self.redis_client = aioredis.from_url(self.redis_url)
+            self.redis_client = aioredis.from_url(
+                self.redis_url,
+                encoding="utf-8",
+                decode_responses=True
+            )
             await self.redis_client.ping()
             
-            # Load provider configurations
-            await self._load_provider_configs()
+            # Load cached prompts and configurations
+            await self._load_prompt_configurations()
             
-            # Start background tasks
-            self.running = True
-            self.background_tasks = [
-                asyncio.create_task(self._task_processor_loop()),
-                asyncio.create_task(self._health_monitoring_loop()),
-                asyncio.create_task(self._metrics_collection_loop()),
-                asyncio.create_task(self._cost_optimization_loop())
-            ]
+            # Initialize provider connections
+            await self._initialize_provider_connections()
             
-            logger.info("AI Orchestrator initialized successfully")
+            self.logger.info("AI Content Analyzer initialized successfully")
             
         except Exception as e:
-            logger.error(f"Failed to initialize AI Orchestrator: {e}")
+            self.logger.error(f"Failed to initialize AI Content Analyzer: {e}")
             raise
-    
-    async def shutdown(self) -> None:
-        """Graceful shutdown"""
-        self.running = False
+
+    def _initialize_ai_providers(self):
+        """Initialize AI provider configurations"""
         
-        # Cancel active tasks
-        for task_id in list(self.active_tasks.keys()):
-            await self.cancel_task(task_id)
+        # OpenAI configuration
+        self.ai_providers[AIProvider.OPENAI_GPT4] = {
+            "model": "gpt-4-turbo-preview",
+            "max_tokens": 4000,
+            "temperature": 0.3,
+            "timeout": 30
+        }
         
-        # Cancel background tasks
-        for task in self.background_tasks:
-            task.cancel()
+        self.ai_providers[AIProvider.OPENAI_GPT35] = {
+            "model": "gpt-3.5-turbo",
+            "max_tokens": 2000,
+            "temperature": 0.3,
+            "timeout": 20
+        }
         
-        await asyncio.gather(*self.background_tasks, return_exceptions=True)
+        # Anthropic configuration
+        self.ai_providers[AIProvider.ANTHROPIC_CLAUDE] = {
+            "model": "claude-3-sonnet-20240229",
+            "max_tokens": 3000,
+            "timeout": 25
+        }
+
+    def _initialize_prompt_templates(self):
+        """Initialize advanced prompt templates for different analysis types"""
         
-        # Close Redis connection
+        # Sentiment Analysis Prompt
+        self.prompt_templates[AnalysisType.SENTIMENT] = {
+            "system": """You are an expert sentiment analysis AI. Analyze the emotional tone and sentiment of content with high precision.""",
+            "user": """Analyze the sentiment of the following content:
+
+Content: {content}
+
+Provide analysis in JSON format with:
+- sentiment: positive/negative/neutral
+- intensity: 0-1 scale
+- emotional_components: list of detected emotions
+- confidence: 0-1 scale
+- reasoning: brief explanation
+
+Be thorough and consider context, sarcasm, and nuanced expressions."""
+        }
+        
+        # Content Quality Prompt
+        self.prompt_templates[AnalysisType.QUALITY] = {
+            "system": """You are a content quality expert. Evaluate content across multiple dimensions with professional standards.""",
+            "user": """Evaluate the quality of this content:
+
+Content: {content}
+
+Analyze and rate (0-1 scale) these aspects:
+- clarity: how clear and understandable
+- coherence: logical flow and structure
+- engagement: potential to capture audience attention
+- uniqueness: originality and distinctiveness
+- value: usefulness and informativeness
+- technical_quality: grammar, style, formatting
+
+Provide JSON response with scores, overall_quality (0-1), and detailed feedback."""
+        }
+        
+        # SEO Optimization Prompt
+        self.prompt_templates[AnalysisType.SEO_OPTIMIZATION] = {
+            "system": """You are an SEO expert analyzing content for search engine optimization potential.""",
+            "user": """Analyze this content for SEO optimization:
+
+Content: {content}
+
+Evaluate:
+- keyword_density: natural keyword usage
+- title_optimization: effectiveness of headlines
+- readability_seo: SEO-friendly readability
+- meta_potential: meta description quality
+- search_intent_match: alignment with user queries
+- content_structure: SEO-friendly formatting
+
+Provide JSON with scores (0-1), seo_score, and optimization_recommendations."""
+        }
+        
+        # Toxicity Detection Prompt
+        self.prompt_templates[AnalysisType.TOXICITY] = {
+            "system": """You are a content safety expert. Detect potentially harmful, toxic, or inappropriate content.""",
+            "user": """Analyze this content for toxicity and safety concerns:
+
+Content: {content}
+
+Check for:
+- hate_speech: discriminatory language
+- harassment: bullying or threatening content
+- violence: graphic or violent content
+- adult_content: inappropriate sexual content
+- misinformation: potentially false information
+- spam: promotional or spam content
+
+Provide JSON with boolean flags, toxicity_score (0-1), risk_level, and specific_concerns."""
+        }
+        
+        # Monetization Potential Prompt
+        self.prompt_templates[AnalysisType.MONETIZATION_SCORE] = {
+            "system": """You are a digital marketing and monetization expert. Assess content's commercial potential.""",
+            "user": """Evaluate the monetization potential of this content:
+
+Content: {content}
+
+Analyze:
+- commercial_appeal: attractiveness to advertisers
+- audience_engagement: potential for user interaction
+- shareability: viral and sharing potential
+- conversion_potential: ability to drive actions
+- brand_safety: suitability for brand partnerships
+- niche_value: value in specific market segments
+
+Provide JSON with scores (0-1), monetization_score, revenue_strategies, and market_insights."""
+        }
+
+    async def _initialize_provider_connections(self):
+        """Initialize connections to AI providers"""
+        
+        try:
+            # Initialize OpenAI client
+            openai.api_key = "your-openai-api-key"  # In production, use environment variables
+            
+            # Initialize Anthropic client
+            self.anthropic_client = AsyncAnthropic(
+                api_key="your-anthropic-api-key"  # In production, use environment variables
+            )
+            
+            self.logger.info("AI provider connections initialized")
+            
+        except Exception as e:
+            self.logger.warning(f"Could not initialize all AI providers: {e}")
+
+    async def analyze_content(self, content_input: ContentInput) -> ContentAnalysisReport:
+        """
+        Comprehensive content analysis using multiple AI providers
+        
+        Args:
+            content_input: Content to analyze with configuration
+            
+        Returns:
+            ContentAnalysisReport with comprehensive analysis
+        """
+        start_time = time.time()
+        
+        try:
+            # Check cache first
+            cache_key = self._generate_cache_key(content_input)
+            cached_result = await self._get_cached_analysis(cache_key)
+            
+            if cached_result:
+                self.performance_metrics["cache_hit_rate"] = (
+                    self.performance_metrics.get("cache_hit_rate", 0) * 0.9 + 0.1
+                )
+                return cached_result
+            
+            # Perform analysis
+            analysis_results = []
+            
+            # Run analysis for each requested type
+            for analysis_type in content_input.analysis_types:
+                result = await self._perform_single_analysis(
+                    content_input,
+                    analysis_type
+                )
+                analysis_results.append(result)
+            
+            # Generate comprehensive report
+            report = await self._generate_analysis_report(
+                content_input,
+                analysis_results
+            )
+            
+            # Cache result
+            await self._cache_analysis_result(cache_key, report)
+            
+            # Update performance metrics
+            processing_time = time.time() - start_time
+            await self._update_performance_metrics(processing_time, content_input.ai_provider)
+            
+            self.logger.info(f"Content analysis completed for {content_input.content_id}")
+            return report
+            
+        except Exception as e:
+            self.logger.error(f"Error analyzing content {content_input.content_id}: {e}")
+            raise
+
+    async def _perform_single_analysis(self, content_input: ContentInput,
+                                     analysis_type: AnalysisType) -> AnalysisResult:
+        """Perform single type of analysis using specified AI provider"""
+        
+        start_time = time.time()
+        
+        try:
+            # Get optimized prompt
+            prompt = await self._get_optimized_prompt(analysis_type, content_input)
+            
+            # Choose AI provider based on analysis type and performance
+            provider = await self._select_optimal_provider(analysis_type, content_input.ai_provider)
+            
+            # Perform AI analysis
+            ai_response = await self._call_ai_provider(provider, prompt, content_input)
+            
+            # Parse and validate response
+            parsed_result = await self._parse_ai_response(ai_response, analysis_type)
+            
+            # Create analysis result
+            result = AnalysisResult(
+                content_id=content_input.content_id,
+                analysis_type=analysis_type,
+                ai_provider=provider,
+                score=parsed_result.get("score", 0.0),
+                confidence=parsed_result.get("confidence", 0.0),
+                details=parsed_result.get("details", {}),
+                insights=parsed_result.get("insights", []),
+                recommendations=parsed_result.get("recommendations", []),
+                processing_time=time.time() - start_time
+            )
+            
+            return result
+            
+        except Exception as e:
+            self.logger.error(f"Error in single analysis {analysis_type.value}: {e}")
+            raise
+
+    async def _get_optimized_prompt(self, analysis_type: AnalysisType, 
+                                  content_input: ContentInput) -> Dict[str, str]:
+        """Get optimized prompt for specific analysis type"""
+        
+        # Get base template
+        template = self.prompt_templates.get(analysis_type)
+        if not template:
+            raise ValueError(f"No prompt template for analysis type: {analysis_type.value}")
+        
+        # Use custom prompt if provided
+        if analysis_type.value in content_input.custom_prompts:
+            template["user"] = content_input.custom_prompts[analysis_type.value]
+        
+        # Format prompt with content
+        content_text = await self._extract_text_content(content_input)
+        
+        formatted_prompt = {
+            "system": template["system"],
+            "user": template["user"].format(content=content_text[:4000])  # Limit content length
+        }
+        
+        return formatted_prompt
+
+    async def _extract_text_content(self, content_input: ContentInput) -> str:
+        """Extract text content from various content types"""
+        
+        if content_input.content_type == ContentType.TEXT:
+            return str(content_input.content_data)
+        
+        elif content_input.content_type == ContentType.DOCUMENT:
+            # Handle document content extraction
+            if isinstance(content_input.content_data, dict):
+                return content_input.content_data.get("text", "")
+            return str(content_input.content_data)
+        
+        elif content_input.content_type == ContentType.CODE:
+            return str(content_input.content_data)
+        
+        elif content_input.content_type in [ContentType.IMAGE, ContentType.AUDIO, ContentType.VIDEO]:
+            # For media content, use metadata or description
+            return content_input.metadata.get("description", "Media content")
+        
+        else:
+            return str(content_input.content_data)
+
+    async def _select_optimal_provider(self, analysis_type: AnalysisType, 
+                                     preferred_provider: AIProvider) -> AIProvider:
+        """Select optimal AI provider based on analysis type and performance"""
+        
+        # Provider performance mapping
+        provider_strengths = {
+            AnalysisType.SENTIMENT: [AIProvider.OPENAI_GPT4, AIProvider.ANTHROPIC_CLAUDE],
+            AnalysisType.TOXICITY: [AIProvider.OPENAI_GPT4, AIProvider.ANTHROPIC_CLAUDE],
+            AnalysisType.QUALITY: [AIProvider.OPENAI_GPT4, AIProvider.ANTHROPIC_CLAUDE],
+            AnalysisType.SEO_OPTIMIZATION: [AIProvider.OPENAI_GPT4, AIProvider.OPENAI_GPT35],
+            AnalysisType.MONETIZATION_SCORE: [AIProvider.OPENAI_GPT4, AIProvider.ANTHROPIC_CLAUDE]
+        }
+        
+        # Check if preferred provider is suitable
+        suitable_providers = provider_strengths.get(analysis_type, [preferred_provider])
+        
+        if preferred_provider in suitable_providers:
+            return preferred_provider
+        
+        # Select best performing provider for this analysis type
+        performance_scores = self.performance_metrics.get("provider_performance", {})
+        
+        best_provider = preferred_provider
+        best_score = 0.0
+        
+        for provider in suitable_providers:
+            provider_key = f"{provider.value}_{analysis_type.value}"
+            score = performance_scores.get(provider_key, 0.5)
+            
+            if score > best_score:
+                best_score = score
+                best_provider = provider
+        
+        return best_provider
+
+    async def _call_ai_provider(self, provider: AIProvider, prompt: Dict[str, str],
+                              content_input: ContentInput) -> Dict[str, Any]:
+        """Call specific AI provider with optimized parameters"""
+        
+        try:
+            if provider in [AIProvider.OPENAI_GPT4, AIProvider.OPENAI_GPT35]:
+                return await self._call_openai(provider, prompt)
+            
+            elif provider == AIProvider.ANTHROPIC_CLAUDE:
+                return await self._call_anthropic(prompt)
+            
+            else:
+                raise ValueError(f"Unsupported AI provider: {provider.value}")
+        
+        except Exception as e:
+            self.logger.error(f"Error calling AI provider {provider.value}: {e}")
+            raise
+
+    async def _call_openai(self, provider: AIProvider, prompt: Dict[str, str]) -> Dict[str, Any]:
+        """Call OpenAI API with optimized parameters"""
+        
+        config = self.ai_providers[provider]
+        
+        try:
+            response = await openai.ChatCompletion.acreate(
+                model=config["model"],
+                messages=[
+                    {"role": "system", "content": prompt["system"]},
+                    {"role": "user", "content": prompt["user"]}
+                ],
+                max_tokens=config["max_tokens"],
+                temperature=config["temperature"],
+                timeout=config["timeout"]
+            )
+            
+            return {
+                "response": response.choices[0].message.content,
+                "usage": response.usage,
+                "model": config["model"]
+            }
+            
+        except Exception as e:
+            self.logger.error(f"OpenAI API error: {e}")
+            raise
+
+    async def _call_anthropic(self, prompt: Dict[str, str]) -> Dict[str, Any]:
+        """Call Anthropic Claude API"""
+        
+        config = self.ai_providers[AIProvider.ANTHROPIC_CLAUDE]
+        
+        try:
+            response = await self.anthropic_client.messages.create(
+                model=config["model"],
+                max_tokens=config["max_tokens"],
+                messages=[
+                    {"role": "user", "content": f"{prompt['system']}\n\n{prompt['user']}"}
+                ]
+            )
+            
+            return {
+                "response": response.content[0].text,
+                "usage": {"total_tokens": len(response.content[0].text.split())},
+                "model": config["model"]
+            }
+            
+        except Exception as e:
+            self.logger.error(f"Anthropic API error: {e}")
+            raise
+
+    async def _parse_ai_response(self, ai_response: Dict[str, Any], 
+                               analysis_type: AnalysisType) -> Dict[str, Any]:
+        """Parse and validate AI response"""
+        
+        response_text = ai_response.get("response", "")
+        
+        try:
+            # Try to parse as JSON first
+            if response_text.strip().startswith("{"):
+                parsed = json.loads(response_text)
+                return self._validate_parsed_response(parsed, analysis_type)
+            
+            # Fallback: extract structured data from text
+            return await self._extract_structured_data(response_text, analysis_type)
+            
+        except json.JSONDecodeError:
+            # Fallback: create structured response from text
+            return await self._create_fallback_response(response_text, analysis_type)
+
+    def _validate_parsed_response(self, parsed_data: Dict[str, Any], 
+                                analysis_type: AnalysisType) -> Dict[str, Any]:
+        """Validate and normalize parsed response"""
+        
+        validated = {
+            "score": float(parsed_data.get("score", 0.0)),
+            "confidence": float(parsed_data.get("confidence", 0.5)),
+            "details": parsed_data.get("details", {}),
+            "insights": parsed_data.get("insights", []),
+            "recommendations": parsed_data.get("recommendations", [])
+        }
+        
+        # Ensure score is in valid range
+        validated["score"] = max(0.0, min(1.0, validated["score"]))
+        validated["confidence"] = max(0.0, min(1.0, validated["confidence"]))
+        
+        # Analysis-specific validation
+        if analysis_type == AnalysisType.SENTIMENT:
+            sentiment = parsed_data.get("sentiment", "neutral")
+            validated["details"]["sentiment"] = sentiment
+            validated["details"]["emotional_components"] = parsed_data.get("emotional_components", [])
+        
+        elif analysis_type == AnalysisType.TOXICITY:
+            validated["details"]["risk_level"] = parsed_data.get("risk_level", "low")
+            validated["details"]["specific_concerns"] = parsed_data.get("specific_concerns", [])
+        
+        return validated
+
+    async def _extract_structured_data(self, response_text: str, 
+                                     analysis_type: AnalysisType) -> Dict[str, Any]:
+        """Extract structured data from unstructured AI response"""
+        
+        # Use simple pattern matching for common structures
+        import re
+        
+        # Extract score
+        score_match = re.search(r'score[:\s]*([0-9.]+)', response_text, re.IGNORECASE)
+        score = float(score_match.group(1)) if score_match else 0.5
+        
+        # Extract confidence
+        conf_match = re.search(r'confidence[:\s]*([0-9.]+)', response_text, re.IGNORECASE)
+        confidence = float(conf_match.group(1)) if conf_match else 0.5
+        
+        return {
+            "score": max(0.0, min(1.0, score)),
+            "confidence": max(0.0, min(1.0, confidence)),
+            "details": {"raw_response": response_text},
+            "insights": [response_text[:200]],  # First 200 chars as insight
+            "recommendations": []
+        }
+
+    async def _create_fallback_response(self, response_text: str, 
+                                      analysis_type: AnalysisType) -> Dict[str, Any]:
+        """Create fallback response when parsing fails"""
+        
+        return {
+            "score": 0.5,  # Neutral score
+            "confidence": 0.3,  # Low confidence due to parsing failure
+            "details": {
+                "raw_response": response_text,
+                "parsing_error": True
+            },
+            "insights": ["AI response could not be parsed structured"],
+            "recommendations": ["Retry analysis with different prompt"]
+        }
+
+    async def _generate_analysis_report(self, content_input: ContentInput,
+                                      analysis_results: List[AnalysisResult]) -> ContentAnalysisReport:
+        """Generate comprehensive analysis report"""
+        
+        # Calculate overall score (weighted average)
+        weights = {
+            AnalysisType.QUALITY: 0.25,
+            AnalysisType.SENTIMENT: 0.15,
+            AnalysisType.TOXICITY: 0.20,  # Negative contribution
+            AnalysisType.SEO_OPTIMIZATION: 0.15,
+            AnalysisType.MONETIZATION_SCORE: 0.15,
+            AnalysisType.ENGAGEMENT_POTENTIAL: 0.10
+        }
+        
+        total_score = 0.0
+        total_weight = 0.0
+        
+        result_dict = {result.analysis_type: result for result in analysis_results}
+        
+        for analysis_type, weight in weights.items():
+            if analysis_type in result_dict:
+                result = result_dict[analysis_type]
+                
+                # Toxicity contributes negatively
+                if analysis_type == AnalysisType.TOXICITY:
+                    score_contribution = (1.0 - result.score) * weight
+                else:
+                    score_contribution = result.score * weight
+                
+                total_score += score_contribution
+                total_weight += weight
+        
+        overall_score = total_score / total_weight if total_weight > 0 else 0.5
+        
+        # Generate summary
+        summary = await self._generate_content_summary(analysis_results)
+        
+        # Generate actionable insights
+        insights = await self._generate_actionable_insights(analysis_results)
+        
+        # Generate optimization suggestions
+        optimizations = await self._generate_optimization_suggestions(analysis_results)
+        
+        # Check compliance
+        compliance_status = await self._check_compliance_status(analysis_results)
+        
+        # Calculate monetization potential
+        monetization_potential = await self._calculate_monetization_potential(analysis_results)
+        
+        report = ContentAnalysisReport(
+            content_id=content_input.content_id,
+            content_type=content_input.content_type,
+            overall_score=overall_score,
+            analysis_results=analysis_results,
+            summary=summary,
+            actionable_insights=insights,
+            optimization_suggestions=optimizations,
+            compliance_status=compliance_status,
+            monetization_potential=monetization_potential
+        )
+        
+        return report
+
+    async def _generate_content_summary(self, results: List[AnalysisResult]) -> Dict[str, Any]:
+        """Generate content summary from analysis results"""
+        
+        summary = {
+            "quality_assessment": "Unknown",
+            "content_safety": "Unknown",
+            "commercial_viability": "Unknown",
+            "key_strengths": [],
+            "areas_for_improvement": []
+        }
+        
+        for result in results:
+            if result.analysis_type == AnalysisType.QUALITY:
+                if result.score >= 0.8:
+                    summary["quality_assessment"] = "High Quality"
+                elif result.score >= 0.6:
+                    summary["quality_assessment"] = "Good Quality"
+                else:
+                    summary["quality_assessment"] = "Needs Improvement"
+            
+            elif result.analysis_type == AnalysisType.TOXICITY:
+                if result.score <= 0.2:
+                    summary["content_safety"] = "Safe"
+                elif result.score <= 0.5:
+                    summary["content_safety"] = "Moderate Risk"
+                else:
+                    summary["content_safety"] = "High Risk"
+            
+            elif result.analysis_type == AnalysisType.MONETIZATION_SCORE:
+                if result.score >= 0.7:
+                    summary["commercial_viability"] = "High Potential"
+                elif result.score >= 0.5:
+                    summary["commercial_viability"] = "Moderate Potential"
+                else:
+                    summary["commercial_viability"] = "Low Potential"
+            
+            # Add insights as strengths or improvements
+            if result.score >= 0.7:
+                summary["key_strengths"].extend(result.insights[:2])
+            else:
+                summary["areas_for_improvement"].extend(result.recommendations[:2])
+        
+        return summary
+
+    async def _generate_actionable_insights(self, results: List[AnalysisResult]) -> List[str]:
+        """Generate actionable insights from analysis results"""
+        
+        insights = []
+        
+        for result in results:
+            if result.insights:
+                insights.extend(result.insights[:2])  # Top 2 insights per analysis
+        
+        # Add cross-analysis insights
+        quality_result = next((r for r in results if r.analysis_type == AnalysisType.QUALITY), None)
+        seo_result = next((r for r in results if r.analysis_type == AnalysisType.SEO_OPTIMIZATION), None)
+        
+        if quality_result and seo_result:
+            if quality_result.score > 0.8 and seo_result.score < 0.6:
+                insights.append("High-quality content with SEO optimization potential")
+            elif quality_result.score < 0.6 and seo_result.score > 0.7:
+                insights.append("SEO-optimized content needs quality improvements")
+        
+        return list(set(insights))  # Remove duplicates
+
+    async def _generate_optimization_suggestions(self, results: List[AnalysisResult]) -> List[str]:
+        """Generate optimization suggestions"""
+        
+        suggestions = []
+        
+        for result in results:
+            if result.score < 0.7 and result.recommendations:
+                suggestions.extend(result.recommendations[:2])
+        
+        # Add prioritized suggestions based on impact
+        priority_suggestions = []
+        
+        toxicity_result = next((r for r in results if r.analysis_type == AnalysisType.TOXICITY), None)
+        if toxicity_result and toxicity_result.score > 0.3:
+            priority_suggestions.append("URGENT: Address content safety concerns before publication")
+        
+        quality_result = next((r for r in results if r.analysis_type == AnalysisType.QUALITY), None)
+        if quality_result and quality_result.score < 0.6:
+            priority_suggestions.append("Improve content quality for better audience engagement")
+        
+        return priority_suggestions + list(set(suggestions))
+
+    async def _check_compliance_status(self, results: List[AnalysisResult]) -> bool:
+        """Check if content meets compliance requirements"""
+        
+        # Check toxicity threshold
+        toxicity_result = next((r for r in results if r.analysis_type == AnalysisType.TOXICITY), None)
+        if toxicity_result and toxicity_result.score > self.quality_thresholds["toxicity_threshold"]:
+            return False
+        
+        # Check minimum quality threshold
+        quality_result = next((r for r in results if r.analysis_type == AnalysisType.QUALITY), None)
+        if quality_result and quality_result.score < self.quality_thresholds["minimum_quality"]:
+            return False
+        
+        return True
+
+    async def _calculate_monetization_potential(self, results: List[AnalysisResult]) -> float:
+        """Calculate overall monetization potential"""
+        
+        monetization_factors = {}
+        
+        for result in results:
+            if result.analysis_type == AnalysisType.MONETIZATION_SCORE:
+                monetization_factors["commercial_appeal"] = result.score
+            elif result.analysis_type == AnalysisType.QUALITY:
+                monetization_factors["content_quality"] = result.score
+            elif result.analysis_type == AnalysisType.SEO_OPTIMIZATION:
+                monetization_factors["discoverability"] = result.score
+            elif result.analysis_type == AnalysisType.ENGAGEMENT_POTENTIAL:
+                monetization_factors["engagement"] = result.score
+        
+        # Weighted calculation
+        weights = {
+            "commercial_appeal": 0.4,
+            "content_quality": 0.3,
+            "discoverability": 0.2,
+            "engagement": 0.1
+        }
+        
+        total_potential = 0.0
+        total_weight = 0.0
+        
+        for factor, score in monetization_factors.items():
+            weight = weights.get(factor, 0.1)
+            total_potential += score * weight
+            total_weight += weight
+        
+        return total_potential / total_weight if total_weight > 0 else 0.0
+
+    def _generate_cache_key(self, content_input: ContentInput) -> str:
+        """Generate cache key for content analysis"""
+        
+        # Create hash of content and analysis configuration
+        content_str = str(content_input.content_data)[:1000]  # First 1000 chars
+        analysis_config = f"{content_input.content_type.value}_{sorted(content_input.analysis_types)}"
+        
+        cache_content = f"{content_str}_{analysis_config}_{content_input.ai_provider.value}"
+        return hashlib.md5(cache_content.encode()).hexdigest()
+
+    async def _get_cached_analysis(self, cache_key: str) -> Optional[ContentAnalysisReport]:
+        """Get cached analysis result"""
+        
+        try:
+            cached_data = await self.redis_client.get(f"content_analysis:{cache_key}")
+            if cached_data:
+                data = json.loads(cached_data)
+                # Reconstruct ContentAnalysisReport from cached data
+                return self._deserialize_analysis_report(data)
+        except Exception as e:
+            self.logger.warning(f"Error reading cache: {e}")
+        
+        return None
+
+    async def _cache_analysis_result(self, cache_key: str, report: ContentAnalysisReport):
+        """Cache analysis result"""
+        
+        try:
+            # Serialize report
+            serialized = self._serialize_analysis_report(report)
+            
+            # Cache for 24 hours
+            await self.redis_client.setex(
+                f"content_analysis:{cache_key}",
+                86400,
+                json.dumps(serialized)
+            )
+        except Exception as e:
+            self.logger.warning(f"Error caching result: {e}")
+
+    def _serialize_analysis_report(self, report: ContentAnalysisReport) -> Dict[str, Any]:
+        """Serialize analysis report for caching"""
+        
+        return {
+            "content_id": report.content_id,
+            "content_type": report.content_type.value,
+            "overall_score": report.overall_score,
+            "analysis_results": [
+                {
+                    "content_id": r.content_id,
+                    "analysis_type": r.analysis_type.value,
+                    "ai_provider": r.ai_provider.value,
+                    "score": r.score,
+                    "confidence": r.confidence,
+                    "details": r.details,
+                    "insights": r.insights,
+                    "recommendations": r.recommendations,
+                    "processing_time": r.processing_time,
+                    "timestamp": r.timestamp.isoformat()
+                }
+                for r in report.analysis_results
+            ],
+            "summary": report.summary,
+            "actionable_insights": report.actionable_insights,
+            "optimization_suggestions": report.optimization_suggestions,
+            "compliance_status": report.compliance_status,
+            "monetization_potential": report.monetization_potential,
+            "created_at": report.created_at.isoformat()
+        }
+
+    def _deserialize_analysis_report(self, data: Dict[str, Any]) -> ContentAnalysisReport:
+        """Deserialize analysis report from cache"""
+        
+        analysis_results = []
+        for r_data in data["analysis_results"]:
+            result = AnalysisResult(
+                content_id=r_data["content_id"],
+                analysis_type=AnalysisType(r_data["analysis_type"]),
+                ai_provider=AIProvider(r_data["ai_provider"]),
+                score=r_data["score"],
+                confidence=r_data["confidence"],
+                details=r_data["details"],
+                insights=r_data["insights"],
+                recommendations=r_data["recommendations"],
+                processing_time=r_data["processing_time"],
+                timestamp=datetime.fromisoformat(r_data["timestamp"])
+            )
+            analysis_results.append(result)
+        
+        return ContentAnalysisReport(
+            content_id=data["content_id"],
+            content_type=ContentType(data["content_type"]),
+            overall_score=data["overall_score"],
+            analysis_results=analysis_results,
+            summary=data["summary"],
+            actionable_insights=data["actionable_insights"],
+            optimization_suggestions=data["optimization_suggestions"],
+            compliance_status=data["compliance_status"],
+            monetization_potential=data["monetization_potential"],
+            created_at=datetime.fromisoformat(data["created_at"])
+        )
+
+    async def _update_performance_metrics(self, processing_time: float, provider: AIProvider):
+        """Update performance metrics"""
+        
+        self.performance_metrics["total_analyses"] += 1
+        
+        # Update average processing time
+        current_avg = self.performance_metrics["avg_processing_time"]
+        total_analyses = self.performance_metrics["total_analyses"]
+        
+        self.performance_metrics["avg_processing_time"] = (
+            (current_avg * (total_analyses - 1) + processing_time) / total_analyses
+        )
+        
+        # Update provider performance
+        provider_key = provider.value
+        if "provider_performance" not in self.performance_metrics:
+            self.performance_metrics["provider_performance"] = {}
+        
+        current_perf = self.performance_metrics["provider_performance"].get(provider_key, 0.5)
+        
+        # Score based on processing time (lower is better)
+        time_score = max(0.1, min(1.0, 1.0 - (processing_time / 30.0)))
+        
+        # Exponential moving average
+        self.performance_metrics["provider_performance"][provider_key] = (
+            current_perf * 0.8 + time_score * 0.2
+        )
+
+    async def _load_prompt_configurations(self):
+        """Load custom prompt configurations from cache"""
+        
+        try:
+            prompts_data = await self.redis_client.get("ai_content_prompts")
+            if prompts_data:
+                custom_prompts = json.loads(prompts_data)
+                self.prompt_templates.update(custom_prompts)
+                
+                self.logger.info("Loaded custom prompt configurations")
+        except Exception as e:
+            self.logger.warning(f"Could not load prompt configurations: {e}")
+
+    async def get_analysis_dashboard(self) -> Dict[str, Any]:
+        """Get AI content analysis dashboard"""
+        
+        return {
+            "performance_metrics": self.performance_metrics,
+            "quality_thresholds": self.quality_thresholds,
+            "available_providers": list(self.ai_providers.keys()),
+            "supported_analysis_types": [t.value for t in AnalysisType],
+            "cache_size": len(self.analysis_cache),
+            "system_status": "operational",
+            "last_updated": datetime.utcnow().isoformat()
+        }
+
+    async def shutdown(self):
+        """Shutdown AI content analyzer"""
+        
         if self.redis_client:
             await self.redis_client.close()
         
-        logger.info("AI Orchestrator shutdown completed")
+        self.logger.info("AI Content Analyzer shutdown completed")
+
+
+# Example usage
+async def main():
+    """Example usage of AI Content Analyzer"""
     
-    async def submit_task(self, task: AITask) -> str:
-        """
-        Submit an AI task for processing
-        
-        **Roles**: Lead Dev IA + Backend Senior
-        """
-        try:
-            # Generate task ID if not provided
-            if not task.task_id:
-                task.task_id = str(uuid.uuid4())
-            
-            # Validate task
-            if not self._validate_task(task):
-                raise ValueError("Invalid task configuration")
-            
-            # Select optimal provider
-            provider = await self._select_provider(task)
-            if not provider:
-                raise Exception("No available providers for task")
-            
-            task.provider_used = provider
-            
-            # Estimate cost
-            if provider in self.provider_configs:
-                config = self.provider_configs[provider]
-                task.estimated_cost = self.providers[provider].estimate_cost(task, config)
-            
-            # Add to queue
-            try:
-                self.task_queue.put_nowait(task)
-                self.active_tasks[task.task_id] = task
-                
-                # Persist task
-                await self._save_task(task)
-                
-                logger.info(f"Task submitted: {task.task_id} ({task.task_type.value})")
-                return task.task_id
-                
-            except asyncio.QueueFull:
-                raise Exception("Task queue is full")
-        
-        except Exception as e:
-            logger.error(f"Failed to submit task: {e}")
-            raise
+    analyzer = AIContentAnalyzer()
+    await analyzer.initialize()
     
-    async def get_task_status(self, task_id: str) -> Optional[AITask]:
-        """Get task status"""
-        task = self.active_tasks.get(task_id)
-        if task:
-            return task
+    try:
+        # Example content analysis
+        content_input = ContentInput(
+            content_id="test_content_001",
+            content_type=ContentType.TEXT,
+            content_data="This is a sample blog post about artificial intelligence and its applications in modern business. AI is transforming how we work and live.",
+            analysis_types=[
+                AnalysisType.QUALITY,
+                AnalysisType.SENTIMENT,
+                AnalysisType.SEO_OPTIMIZATION,
+                AnalysisType.MONETIZATION_SCORE
+            ],
+            ai_provider=AIProvider.OPENAI_GPT4
+        )
         
-        # Check Redis for completed tasks
-        if self.redis_client:
-            try:
-                data = await self.redis_client.get(f"ai_task:{task_id}")
-                if data:
-                    task_data = json.loads(data)
-                    # Reconstruct task object
-                    task_data['task_type'] = AITaskType(task_data['task_type'])
-                    task_data['status'] = AITaskStatus(task_data['status'])
-                    task_data['priority'] = AITaskPriority(task_data['priority'])
-                    if task_data.get('provider_used'):
-                        task_data['provider_used'] = AIProvider(task_data['provider_used'])
-                    if task_data.get('model_used'):
-                        task_data['model_used'] = AIModel(task_data['model_used'])
-                    
-                    # Convert datetime strings
-                    for field in ['created_at', 'started_at', 'completed_at']:
-                        if task_data.get(field):
-                            task_data[field] = datetime.fromisoformat(task_data[field])
-                    
-                    return AITask(**task_data)
-            except Exception as e:
-                logger.error(f"Error retrieving task from Redis: {e}")
+        report = await analyzer.analyze_content(content_input)
+        print(f"Analysis report: {report}")
         
-        return None
-    
-    async def cancel_task(self, task_id: str) -> bool:
-        """Cancel a task"""
-        try:
-            if task_id in self.active_tasks:
-                task = self.active_tasks[task_id]
-                task.status = AITaskStatus.CANCELLED
-                task.completed_at = datetime.now()
-                
-                # Remove from active tasks
-                del self.active_tasks[task_id]
-                
-                # Update in storage
-                await self._save_task(task)
-                
-                logger.info(f"Task cancelled: {task_id}")
-                return True
-            
-            return False
-            
-        except Exception as e:
-            logger.error(f"Failed to cancel task {task_id}: {e}")
-            return False
-    
-    async def add_provider_config(self, config: ProviderConfig) -> bool:
-        """
-        Add or update provider configuration
+        # Get dashboard
+        dashboard = await analyzer.get_analysis_dashboard()
+        print(f"Analysis dashboard: {dashboard}")
         
-        **Roles**: DevOps + Security
-        """
-        try:
-            # Validate configuration
-            if not self._validate_provider_config(config):
-                return False
-            
-            # Store configuration
-            self.provider_configs[config.provider] = config
-            
-            # Initialize provider health
-            self.provider_health[config.provider] = True
-            self.provider_metrics[config.provider] = {
-                'total_requests': 0,
-                'successful_requests': 0,
-                'failed_requests': 0,
-                'average_response_time': 0.0,
-                'total_cost': 0.0
-            }
-            
-            # Save to Redis
-            await self._save_provider_config(config)
-            
-            logger.info(f"Provider configured: {config.provider.value}")
-            return True
-            
-        except Exception as e:
-            logger.error(f"Failed to add provider config: {e}")
-            return False
-    
-    async def _select_provider(self, task: AITask) -> Optional[AIProvider]:
-        """
-        Intelligent provider selection based on strategy
-        
-        **Roles**: Lead Dev IA + ML Engineer
-        """
-        # Filter available providers
-        available_providers = []
-        
-        for provider, config in self.provider_configs.items():
-            if (config.enabled and 
-                self.provider_health.get(provider, False) and
-                provider in self.providers):
-                available_providers.append(provider)
-        
-        if not available_providers:
-            return None
-        
-        # Prefer user-specified provider if available
-        if (task.preferred_provider and 
-            task.preferred_provider in available_providers):
-            return task.preferred_provider
-        
-        # Apply selection strategy
-        if self.routing_strategy == "cost_performance":
-            return self._select_by_cost_performance(task, available_providers)
-        elif self.routing_strategy == "performance":
-            return self._select_by_performance(available_providers)
-        elif self.routing_strategy == "cost":
-            return self._select_by_cost(task, available_providers)
-        else:  # availability
-            return available_providers[0]
-    
-    def _select_by_cost_performance(self, task: AITask, providers: List[AIProvider]) -> AIProvider:
-        """Select provider based on cost-performance ratio"""
-        best_provider = None
-        best_score = float('inf')
-        
-        for provider in providers:
-            config = self.provider_configs[provider]
-            provider_interface = self.providers[provider]
-            
-            # Calculate cost score
-            estimated_cost = provider_interface.estimate_cost(task, config)
-            
-            # Calculate performance score (lower is better)
-            avg_response_time = self.provider_metrics.get(provider, {}).get('average_response_time', 1000)
-            performance_score = avg_response_time / 1000  # Convert to seconds
-            
-            # Combined score (weighted)
-            cost_weight = 0.3
-            performance_weight = 0.7
-            combined_score = (estimated_cost * cost_weight) + (performance_score * performance_weight)
-            
-            if combined_score < best_score:
-                best_score = combined_score
-                best_provider = provider
-        
-        return best_provider or providers[0]
-    
-    def _select_by_performance(self, providers: List[AIProvider]) -> AIProvider:
-        """Select provider with best performance"""
-        best_provider = providers[0]
-        best_response_time = float('inf')
-        
-        for provider in providers:
-            avg_response_time = self.provider_metrics.get(provider, {}).get('average_response_time', float('inf'))
-            if avg_response_time < best_response_time:
-                best_response_time = avg_response_time
-                best_provider = provider
-        
-        return best_provider
-    
-    def _select_by_cost(self, task: AITask, providers: List[AIProvider]) -> AIProvider:
-        """Select provider with lowest cost"""
-        best_provider = providers[0]
-        lowest_cost = float('inf')
-        
-        for provider in providers:
-            config = self.provider_configs[provider]
-            provider_interface = self.providers[provider]
-            cost = provider_interface.estimate_cost(task, config)
-            
-            if cost < lowest_cost:
-                lowest_cost = cost
-                best_provider = provider
-        
-        return best_provider
-    
-    async def _process_task(self, task: AITask) -> AIResponse:
-        """
-        Process a single AI task
-        
-        **Roles**: Backend Senior + ML Engineer + Security
-        """
-        async with self.processing_semaphore:
-            start_time = time.time()
-            
-            try:
-                # Update task status
-                task.status = AITaskStatus.PROCESSING
-                task.started_at = datetime.now()
-                
-                # Get provider and config
-                provider = task.provider_used
-                if not provider or provider not in self.provider_configs:
-                    raise Exception(f"Provider not configured: {provider}")
-                
-                config = self.provider_configs[provider]
-                provider_interface = self.providers[provider]
-                
-                # Process task with retries
-                response = None
-                last_error = None
-                
-                for attempt in range(task.max_retries + 1):
-                    try:
-                        response = await provider_interface.process_task(task, config)
-                        break
-                    except Exception as e:
-                        last_error = e
-                        task.retry_count += 1
-                        
-                        if attempt < task.max_retries:
-                            await asyncio.sleep(config.retry_delay * (attempt + 1))
-                        else:
-                            raise last_error
-                
-                if not response:
-                    raise Exception("No response received")
-                
-                # Update task with results
-                task.status = AITaskStatus.COMPLETED
-                task.completed_at = datetime.now()
-                task.response = response.content
-                task.usage_stats = {
-                    'prompt_tokens': response.prompt_tokens,
-                    'completion_tokens': response.completion_tokens,
-                    'total_tokens': response.total_tokens
-                }
-                task.actual_cost = response.cost
-                task.progress = 100.0
-                
-                # Update provider metrics
-                await self._update_provider_metrics(provider, response, time.time() - start_time)
-                
-                logger.info(f"Task completed: {task.task_id} ({task.task_type.value})")
-                return response
-                
-            except Exception as e:
-                # Handle task failure
-                task.status = AITaskStatus.FAILED
-                task.completed_at = datetime.now()
-                task.error_message = str(e)
-                
-                # Update provider metrics
-                if task.provider_used:
-                    await self._update_provider_metrics(task.provider_used, None, time.time() - start_time, error=True)
-                
-                logger.error(f"Task failed: {task.task_id} - {e}")
-                raise
-            
-            finally:
-                # Save task state
-                await self._save_task(task)
-                
-                # Remove from active tasks
-                if task.task_id in self.active_tasks:
-                    del self.active_tasks[task.task_id]
-    
-    async def _task_processor_loop(self) -> None:
-        """Background task processing loop"""
-        while self.running:
-            try:
-                # Get task from queue
-                try:
-                    task = await asyncio.wait_for(self.task_queue.get(), timeout=1.0)
-                except asyncio.TimeoutError:
-                    continue
-                
-                # Process task
-                asyncio.create_task(self._process_task(task))
-                
-            except asyncio.CancelledError:
-                break
-            except Exception as e:
-                logger.error(f"Task processor error: {e}")
-                await asyncio.sleep(1)
-    
-    async def _health_monitoring_loop(self) -> None:
-        """Background health monitoring loop"""
-        while self.running:
-            try:
-                await self._check_provider_health()
-                await asyncio.sleep(60)  # Check every minute
-            except asyncio.CancelledError:
-                break
-            except Exception as e:
-                logger.error(f"Health monitoring error: {e}")
-                await asyncio.sleep(10)
-    
-    async def _check_provider_health(self) -> None:
-        """Check health of all providers"""
-        for provider, config in self.provider_configs.items():
-            if provider in self.providers:
-                try:
-                    is_healthy = await self.providers[provider].health_check(config)
-                    self.provider_health[provider] = is_healthy
-                    
-                    if not is_healthy:
-                        logger.warning(f"Provider unhealthy: {provider.value}")
-                
-                except Exception as e:
-                    self.provider_health[provider] = False
-                    logger.error(f"Health check failed for {provider.value}: {e}")
-    
-    async def _metrics_collection_loop(self) -> None:
-        """Background metrics collection loop"""
-        while self.running:
-            try:
-                await self._collect_metrics()
-                await asyncio.sleep(30)  # Collect every 30 seconds
-            except asyncio.CancelledError:
-                break
-            except Exception as e:
-                logger.error(f"Metrics collection error: {e}")
-                await asyncio.sleep(10)
-    
-    async def _collect_metrics(self) -> None:
-        """Collect orchestrator metrics"""
-        # Log current state
-        active_count = len(self.active_tasks)
-        queue_size = self.task_queue.qsize()
-        
-        logger.debug(f"AI Orchestrator metrics - Active tasks: {active_count}, Queue size: {queue_size}")
-        
-        # Store metrics in Redis if needed
-        if self.redis_client:
-            try:
-                metrics = {
-                    'active_tasks': active_count,
-                    'queue_size': queue_size,
-                    'provider_health': {p.value: h for p, h in self.provider_health.items()},
-                    'timestamp': datetime.now().isoformat()
-                }
-                await self.redis_client.setex(
-                    "ai_orchestrator:metrics",
-                    300,  # 5 minutes TTL
-                    json.dumps(metrics)
-                )
-            except Exception as e:
-                logger.error(f"Failed to store metrics: {e}")
-    
-    async def _cost_optimization_loop(self) -> None:
-        """Background cost optimization loop"""
-        while self.running:
-            try:
-                await self._optimize_costs()
-                await asyncio.sleep(3600)  # Optimize every hour
-            except asyncio.CancelledError:
-                break
-            except Exception as e:
-                logger.error(f"Cost optimization error: {e}")
-                await asyncio.sleep(300)
-    
-    async def _optimize_costs(self) -> None:
-        """Optimize costs based on usage patterns"""
-        # Analyze usage patterns and adjust routing strategy
-        total_costs = {}
-        for provider, metrics in self.provider_metrics.items():
-            total_costs[provider] = metrics.get('total_cost', 0.0)
-        
-        if total_costs:
-            logger.info(f"Cost analysis: {total_costs}")
-    
-    async def _update_provider_metrics(
-        self,
-        provider: AIProvider,
-        response: Optional[AIResponse],
-        processing_time: float,
-        error: bool = False
-    ) -> None:
-        """Update provider performance metrics"""
-        if provider not in self.provider_metrics:
-            self.provider_metrics[provider] = {
-                'total_requests': 0,
-                'successful_requests': 0,
-                'failed_requests': 0,
-                'average_response_time': 0.0,
-                'total_cost': 0.0
-            }
-        
-        metrics = self.provider_metrics[provider]
-        metrics['total_requests'] += 1
-        
-        if error:
-            metrics['failed_requests'] += 1
-        else:
-            metrics['successful_requests'] += 1
-            
-            if response:
-                # Update response time average
-                current_avg = metrics['average_response_time']
-                total_requests = metrics['total_requests']
-                new_avg = ((current_avg * (total_requests - 1)) + response.response_time_ms) / total_requests
-                metrics['average_response_time'] = new_avg
-                
-                # Update cost
-                metrics['total_cost'] += response.cost
-    
-    def _validate_task(self, task: AITask) -> bool:
-        """Validate task configuration"""
-        if not task.prompt or not task.task_type:
-            return False
-        
-        if task.timeout_seconds <= 0:
-            return False
-        
-        return True
-    
-    def _validate_provider_config(self, config: ProviderConfig) -> bool:
-        """Validate provider configuration"""
-        if not config.api_key or not config.api_endpoint:
-            return False
-        
-        if config.requests_per_minute <= 0 or config.max_concurrent <= 0:
-            return False
-        
-        return True
-    
-    async def _save_task(self, task: AITask) -> None:
-        """Save task to Redis"""
-        if not self.redis_client:
-            return
-        
-        try:
-            # Convert task to dict for serialization
-            task_data = asdict(task)
-            task_data['task_type'] = task.task_type.value
-            task_data['status'] = task.status.value
-            task_data['priority'] = task.priority.value
-            
-            if task.provider_used:
-                task_data['provider_used'] = task.provider_used.value
-            if task.model_used:
-                task_data['model_used'] = task.model_used.value
-            
-            # Convert datetime objects
-            for field in ['created_at', 'started_at', 'completed_at']:
-                if task_data.get(field):
-                    task_data[field] = task_data[field].isoformat()
-            
-            # Save with TTL
-            key = f"ai_task:{task.task_id}"
-            await self.redis_client.setex(key, 86400, json.dumps(task_data))  # 24 hours
-            
-        except Exception as e:
-            logger.error(f"Failed to save task to Redis: {e}")
-    
-    async def _save_provider_config(self, config: ProviderConfig) -> None:
-        """Save provider config to Redis"""
-        if not self.redis_client:
-            return
-        
-        try:
-            key = f"ai_provider_config:{config.provider.value}"
-            # Don't store API keys in Redis for security
-            safe_config = config.to_dict()
-            safe_config['api_key'] = "***REDACTED***"
-            
-            await self.redis_client.set(key, json.dumps(safe_config))
-            
-        except Exception as e:
-            logger.error(f"Failed to save provider config to Redis: {e}")
-    
-    async def _load_provider_configs(self) -> None:
-        """Load provider configurations from Redis"""
-        if not self.redis_client:
-            return
-        
-        try:
-            keys = await self.redis_client.keys("ai_provider_config:*")
-            for key in keys:
-                data = await self.redis_client.get(key)
-                if data:
-                    config_data = json.loads(data)
-                    # Note: API keys would need to be loaded from a secure store
-                    config_data['provider'] = AIProvider(config_data['provider'])
-                    # Skip loading configs without proper API keys
-                    if config_data.get('api_key') != "***REDACTED***":
-                        config = ProviderConfig(**config_data)
-                        self.provider_configs[config.provider] = config
-            
-            logger.info(f"Loaded {len(self.provider_configs)} provider configurations")
-            
-        except Exception as e:
-            logger.error(f"Failed to load provider configs from Redis: {e}")
-    
-    async def get_metrics(self) -> Dict[str, Any]:
-        """Get orchestrator metrics"""
-        return {
-            'active_tasks': len(self.active_tasks),
-            'queue_size': self.task_queue.qsize(),
-            'configured_providers': len(self.provider_configs),
-            'healthy_providers': sum(1 for h in self.provider_health.values() if h),
-            'provider_metrics': self.provider_metrics.copy(),
-            'provider_health': {p.value: h for p, h in self.provider_health.items()}
-        }
-    
-    async def get_provider_stats(self, provider: AIProvider) -> Optional[Dict[str, Any]]:
-        """Get statistics for a specific provider"""
-        if provider in self.provider_metrics:
-            metrics = self.provider_metrics[provider].copy()
-            metrics['health_status'] = self.provider_health.get(provider, False)
-            metrics['configuration'] = self.provider_configs.get(provider) is not None
-            return metrics
-        return None
+    finally:
+        await analyzer.shutdown()
+
+
+if __name__ == "__main__":
+    asyncio.run(main())

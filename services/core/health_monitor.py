@@ -1,34 +1,28 @@
 """
-Health Monitor - Enterprise Health Monitoring and Circuit Breaker
-================================================================
+Health Check Service - Enterprise Health Monitoring and Service Discovery
+========================================================================
 
 **Author**: Fahed Mlaiel (mlaiel@live.de)
-**Roles**: DevOps Engineer + Backend Senior + Microservices + Security
-**Module**: Core Services - Health Monitoring
+**Role**: DevOps Engineer & Backend Senior
+**Module**: Security & Monitoring Services  
 **Version**: 1.0.0 Enterprise
 **Created**: 2025-01-07
 
-Comprehensive health monitoring with circuit breakers, dependency tracking,
-automated recovery, and intelligent alerting systems.
+Comprehensive health monitoring with service discovery, dependency tracking,
+circuit breaker patterns, and automated recovery mechanisms.
 """
 
 import asyncio
 import json
 import logging
 import time
-import psutil
 from datetime import datetime, timedelta
-from typing import Dict, List, Optional, Any, Callable, Union
-from dataclasses import dataclass, field, asdict
+from typing import Dict, List, Optional, Any, Callable
+from dataclasses import dataclass, field
 from enum import Enum
 import aioredis
 import aiohttp
-from urllib.parse import urlparse
-
-
-# Configure logging
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
+import psutil
 
 
 class HealthStatus(Enum):
@@ -38,887 +32,1074 @@ class HealthStatus(Enum):
     UNHEALTHY = "unhealthy"
     CRITICAL = "critical"
     UNKNOWN = "unknown"
-    DEGRADED = "degraded"
+
+
+class ServiceType(Enum):
+    """Types of services to monitor"""
+    DATABASE = "database"
+    CACHE = "cache"
+    API = "api"
+    EXTERNAL = "external"
+    MICROSERVICE = "microservice"
+    QUEUE = "queue"
+    STORAGE = "storage"
 
 
 class CircuitBreakerState(Enum):
     """Circuit breaker states"""
-    CLOSED = "closed"          # Normal operation
-    OPEN = "open"              # Failing fast
-    HALF_OPEN = "half_open"    # Testing recovery
-
-
-class CheckType(Enum):
-    """Health check types"""
-    HTTP = "http"
-    TCP = "tcp"
-    DATABASE = "database"
-    REDIS = "redis"
-    CUSTOM = "custom"
-    DEPENDENCY = "dependency"
-    RESOURCE = "resource"
+    CLOSED = "closed"      # Normal operation
+    OPEN = "open"          # Failing, reject requests
+    HALF_OPEN = "half_open"  # Testing if service recovered
 
 
 @dataclass
-class HealthCheck:
-    """Health check definition"""
-    check_id: str
+class HealthCheckConfig:
+    """Health check configuration"""
     name: str
-    check_type: CheckType
-    target: str  # URL, host:port, etc.
-    timeout_seconds: int = 10
-    interval_seconds: int = 30
+    service_type: ServiceType
+    endpoint: str
+    method: str = "GET"
+    timeout: int = 5
+    interval: int = 30
     retries: int = 3
-    success_threshold: int = 2
-    failure_threshold: int = 3
+    expected_status: int = 200
+    expected_response: Optional[str] = None
+    headers: Dict[str, str] = field(default_factory=dict)
+    body: Optional[str] = None
     enabled: bool = True
-    critical: bool = False
-    tags: List[str] = field(default_factory=list)
-    metadata: Dict[str, Any] = field(default_factory=dict)
+    dependencies: List[str] = field(default_factory=list)
 
 
 @dataclass
 class HealthResult:
     """Health check result"""
-    check_id: str
+    service_name: str
     status: HealthStatus
-    response_time_ms: float
-    message: str
+    response_time: float
+    timestamp: datetime
     details: Dict[str, Any] = field(default_factory=dict)
-    timestamp: datetime = field(default_factory=datetime.now)
-    error: Optional[str] = None
+    error_message: Optional[str] = None
+    metadata: Dict[str, Any] = field(default_factory=dict)
 
 
 @dataclass
-class ServiceHealthMetrics:
+class ServiceMetrics:
     """Service health metrics"""
-    service_id: str
-    overall_status: HealthStatus
-    last_updated: datetime
-    
-    # Check metrics
+    service_name: str
     total_checks: int = 0
     successful_checks: int = 0
     failed_checks: int = 0
-    average_response_time: float = 0.0
-    peak_response_time: float = 0.0
-    min_response_time: float = float('inf')
-    
-    # Resource metrics
-    cpu_usage: float = 0.0
-    memory_usage: float = 0.0
-    disk_usage: float = 0.0
-    network_io: Dict[str, float] = field(default_factory=dict)
-    
-    # Availability metrics
-    uptime_percentage: float = 100.0
-    downtime_minutes: int = 0
+    avg_response_time: float = 0.0
+    uptime_percentage: float = 0.0
+    last_success: Optional[datetime] = None
     last_failure: Optional[datetime] = None
-    recovery_time_seconds: float = 0.0
 
 
 @dataclass
-class CircuitBreakerConfig:
-    """Circuit breaker configuration"""
-    failure_threshold: int = 5
-    recovery_timeout_seconds: int = 60
-    success_threshold: int = 3
-    half_open_max_calls: int = 5
-    timeout_seconds: int = 30
-
-
-@dataclass
-class CircuitBreakerMetrics:
-    """Circuit breaker metrics"""
+class CircuitBreaker:
+    """Circuit breaker for service protection"""
+    service_name: str
     state: CircuitBreakerState = CircuitBreakerState.CLOSED
     failure_count: int = 0
-    success_count: int = 0
-    last_failure_time: Optional[datetime] = None
-    last_state_change: datetime = field(default_factory=datetime.now)
-    total_requests: int = 0
-    successful_requests: int = 0
-    failed_requests: int = 0
-    half_open_calls: int = 0
+    failure_threshold: int = 5
+    recovery_timeout: int = 60
+    last_failure: Optional[datetime] = None
+    last_success: Optional[datetime] = None
 
 
-class HealthMonitor:
+class HealthCheckService:
     """
-    Enterprise Health Monitor with Circuit Breakers & Intelligent Recovery
+    Enterprise Health Check Service
     
-    **Expert Roles Implemented:**
-    - DevOps Engineer: Comprehensive monitoring, alerting, observability
-    - Backend Senior: Robust async architecture, connection management
-    - Microservices: Circuit breakers, fault tolerance, service resilience
-    - Security: Secure health endpoints, authentication, audit logging
+    Comprehensive health monitoring with:
+    - Multi-service health checking and monitoring
+    - Service discovery and dependency tracking
+    - Circuit breaker pattern for service protection
+    - Automated recovery and healing mechanisms
+    - Real-time health dashboard and alerting
+    - Performance metrics and trend analysis
     """
-    
-    def __init__(
-        self,
-        redis_url: str = "redis://localhost:6379",
-        check_interval: int = 30,
-        cleanup_interval: int = 300,
-        metrics_retention_hours: int = 24,
-        alert_thresholds: Optional[Dict[str, Any]] = None
-    ):
+
+    def __init__(self, redis_url: str = "redis://localhost:6379"):
+        self.logger = logging.getLogger(__name__)
         self.redis_url = redis_url
-        self.check_interval = check_interval
-        self.cleanup_interval = cleanup_interval
-        self.metrics_retention_hours = metrics_retention_hours
-        self.alert_thresholds = alert_thresholds or self._default_alert_thresholds()
-        
-        # Storage
         self.redis_client: Optional[aioredis.Redis] = None
-        self.health_checks: Dict[str, HealthCheck] = {}
-        self.check_results: Dict[str, List[HealthResult]] = {}
-        self.service_metrics: Dict[str, ServiceHealthMetrics] = {}
         
-        # Circuit Breakers
-        self.circuit_breakers: Dict[str, CircuitBreakerMetrics] = {}
-        self.circuit_breaker_configs: Dict[str, CircuitBreakerConfig] = {}
+        # Health check configurations
+        self.health_checks: Dict[str, HealthCheckConfig] = {}
         
-        # Background tasks
-        self.check_tasks: Dict[str, asyncio.Task] = {}
-        self.background_tasks: List[asyncio.Task] = []
-        self.running = False
+        # Circuit breakers for service protection
+        self.circuit_breakers: Dict[str, CircuitBreaker] = {}
         
-        # Alert handlers
-        self.alert_handlers: List[Callable] = []
+        # Health results and metrics
+        self.health_results: Dict[str, HealthResult] = {}
+        self.service_metrics: Dict[str, ServiceMetrics] = {}
         
-        # Resource monitoring
-        self.resource_monitoring_enabled = True
-    
-    def _default_alert_thresholds(self) -> Dict[str, Any]:
-        """Default alerting thresholds"""
-        return {
-            'cpu_usage_warning': 80.0,
-            'cpu_usage_critical': 95.0,
-            'memory_usage_warning': 85.0,
-            'memory_usage_critical': 95.0,
-            'disk_usage_warning': 80.0,
-            'disk_usage_critical': 90.0,
-            'response_time_warning': 1000.0,  # ms
-            'response_time_critical': 5000.0,  # ms
-            'error_rate_warning': 5.0,  # %
-            'error_rate_critical': 10.0,  # %
-            'downtime_warning': 60,  # seconds
-            'downtime_critical': 300  # seconds
-        }
-    
-    async def initialize(self) -> None:
-        """Initialize health monitor"""
+        # Monitoring tasks
+        self.monitoring_tasks: List[asyncio.Task] = []
+        
+        # Service registry
+        self.service_registry: Dict[str, Dict[str, Any]] = {}
+        
+        # Overall system health
+        self.system_health = HealthStatus.UNKNOWN
+        
+        # Initialize default health checks
+        self._initialize_default_health_checks()
+        
+        self.logger.info("Health Check Service initialized")
+
+    async def initialize(self):
+        """Initialize health check service"""
         try:
-            self.redis_client = aioredis.from_url(self.redis_url)
+            self.redis_client = aioredis.from_url(
+                self.redis_url,
+                encoding="utf-8",
+                decode_responses=True
+            )
             await self.redis_client.ping()
             
-            # Load existing health checks
-            await self._load_health_checks()
+            # Load existing configuration
+            await self._load_health_check_config()
             
-            # Start background tasks
-            self.running = True
-            self.background_tasks = [
-                asyncio.create_task(self._metrics_collection_loop()),
-                asyncio.create_task(self._cleanup_loop()),
-                asyncio.create_task(self._alert_processing_loop())
-            ]
+            # Initialize circuit breakers
+            self._initialize_circuit_breakers()
             
-            logger.info("Health Monitor initialized successfully")
+            # Start monitoring tasks
+            await self._start_monitoring_tasks()
+            
+            self.logger.info("Health Check Service initialized successfully")
             
         except Exception as e:
-            logger.error(f"Failed to initialize Health Monitor: {e}")
+            self.logger.error(f"Failed to initialize Health Check Service: {e}")
             raise
-    
-    async def shutdown(self) -> None:
-        """Graceful shutdown"""
-        self.running = False
+
+    def _initialize_default_health_checks(self):
+        """Initialize default health checks for common services"""
         
-        # Cancel all check tasks
-        for task in self.check_tasks.values():
-            task.cancel()
+        default_checks = [
+            HealthCheckConfig(
+                name="redis_health",
+                service_type=ServiceType.CACHE,
+                endpoint="redis://localhost:6379",
+                timeout=3,
+                interval=30
+            ),
+            HealthCheckConfig(
+                name="database_health",
+                service_type=ServiceType.DATABASE,
+                endpoint="/health/database",
+                timeout=5,
+                interval=30,
+                dependencies=["redis_health"]
+            ),
+            HealthCheckConfig(
+                name="api_gateway",
+                service_type=ServiceType.API,
+                endpoint="/health",
+                timeout=5,
+                interval=60
+            ),
+            HealthCheckConfig(
+                name="content_service",
+                service_type=ServiceType.MICROSERVICE,
+                endpoint="/health/content",
+                timeout=10,
+                interval=60,
+                dependencies=["database_health", "redis_health"]
+            ),
+            HealthCheckConfig(
+                name="ai_service",
+                service_type=ServiceType.MICROSERVICE,
+                endpoint="/health/ai",
+                timeout=15,
+                interval=90,
+                dependencies=["content_service"]
+            ),
+            HealthCheckConfig(
+                name="external_api",
+                service_type=ServiceType.EXTERNAL,
+                endpoint="https://api.external-service.com/health",
+                timeout=10,
+                interval=300  # Check less frequently for external services
+            )
+        ]
         
-        # Cancel background tasks
-        for task in self.background_tasks:
-            task.cancel()
+        for check in default_checks:
+            self.health_checks[check.name] = check
+
+    def _initialize_circuit_breakers(self):
+        """Initialize circuit breakers for all services"""
         
-        await asyncio.gather(
-            *self.check_tasks.values(),
-            *self.background_tasks,
-            return_exceptions=True
+        for service_name in self.health_checks.keys():
+            self.circuit_breakers[service_name] = CircuitBreaker(
+                service_name=service_name,
+                failure_threshold=5,
+                recovery_timeout=60
+            )
+
+    async def _start_monitoring_tasks(self):
+        """Start background monitoring tasks"""
+        
+        # Health checking task
+        self.monitoring_tasks.append(
+            asyncio.create_task(self._health_check_loop())
         )
+        
+        # Circuit breaker management
+        self.monitoring_tasks.append(
+            asyncio.create_task(self._circuit_breaker_management())
+        )
+        
+        # Service discovery
+        self.monitoring_tasks.append(
+            asyncio.create_task(self._service_discovery_loop())
+        )
+        
+        # Metrics calculation
+        self.monitoring_tasks.append(
+            asyncio.create_task(self._calculate_metrics_loop())
+        )
+        
+        # System health assessment
+        self.monitoring_tasks.append(
+            asyncio.create_task(self._assess_system_health_loop())
+        )
+        
+        self.logger.info(f"Started {len(self.monitoring_tasks)} monitoring tasks")
+
+    async def _health_check_loop(self):
+        """Main health checking loop"""
+        
+        while True:
+            try:
+                # Run health checks for all configured services
+                check_tasks = []
+                
+                for service_name, config in self.health_checks.items():
+                    if config.enabled:
+                        # Check circuit breaker state
+                        circuit_breaker = self.circuit_breakers.get(service_name)
+                        if circuit_breaker and circuit_breaker.state == CircuitBreakerState.OPEN:
+                            # Skip check if circuit breaker is open and timeout hasn't passed
+                            if self._should_skip_check(circuit_breaker):
+                                continue
+                        
+                        # Create health check task
+                        task = asyncio.create_task(
+                            self._perform_health_check(service_name, config)
+                        )
+                        check_tasks.append(task)
+                
+                # Wait for all health checks to complete
+                if check_tasks:
+                    results = await asyncio.gather(*check_tasks, return_exceptions=True)
+                    
+                    # Process results
+                    for result in results:
+                        if isinstance(result, HealthResult):
+                            await self._process_health_result(result)
+                        elif isinstance(result, Exception):
+                            self.logger.error(f"Health check error: {result}")
+                
+                # Wait for next check cycle
+                await asyncio.sleep(10)  # Check every 10 seconds
+                
+            except Exception as e:
+                self.logger.error(f"Error in health check loop: {e}")
+                await asyncio.sleep(30)
+
+    async def _perform_health_check(self, service_name: str, 
+                                  config: HealthCheckConfig) -> HealthResult:
+        """Perform individual health check"""
+        
+        start_time = time.time()
+        
+        result = HealthResult(
+            service_name=service_name,
+            status=HealthStatus.UNKNOWN,
+            response_time=0.0,
+            timestamp=datetime.utcnow()
+        )
+        
+        try:
+            # Check dependencies first
+            if config.dependencies:
+                dependency_check = await self._check_dependencies(config.dependencies)
+                if not dependency_check["all_healthy"]:
+                    result.status = HealthStatus.UNHEALTHY
+                    result.error_message = f"Dependencies unhealthy: {dependency_check['unhealthy']}"
+                    result.response_time = time.time() - start_time
+                    return result
+            
+            # Perform actual health check based on service type
+            if config.service_type == ServiceType.CACHE and "redis" in config.endpoint:
+                result = await self._check_redis_health(service_name, config, start_time)
+            elif config.service_type == ServiceType.DATABASE:
+                result = await self._check_database_health(service_name, config, start_time)
+            else:
+                result = await self._check_http_health(service_name, config, start_time)
+            
+        except Exception as e:
+            result.status = HealthStatus.CRITICAL
+            result.error_message = str(e)
+            result.response_time = time.time() - start_time
+            
+            self.logger.error(f"Health check failed for {service_name}: {e}")
+        
+        return result
+
+    async def _check_redis_health(self, service_name: str, 
+                                config: HealthCheckConfig, 
+                                start_time: float) -> HealthResult:
+        """Check Redis health"""
+        
+        result = HealthResult(
+            service_name=service_name,
+            status=HealthStatus.UNKNOWN,
+            response_time=0.0,
+            timestamp=datetime.utcnow()
+        )
+        
+        try:
+            # Connect to Redis
+            redis_client = aioredis.from_url(config.endpoint)
+            
+            # Ping Redis
+            ping_result = await asyncio.wait_for(
+                redis_client.ping(),
+                timeout=config.timeout
+            )
+            
+            # Get Redis info
+            info = await redis_client.info()
+            
+            result.response_time = time.time() - start_time
+            result.status = HealthStatus.HEALTHY if ping_result else HealthStatus.UNHEALTHY
+            
+            result.details = {
+                "ping_successful": ping_result,
+                "connected_clients": info.get("connected_clients", 0),
+                "used_memory": info.get("used_memory", 0),
+                "uptime_in_seconds": info.get("uptime_in_seconds", 0)
+            }
+            
+            await redis_client.close()
+            
+        except asyncio.TimeoutError:
+            result.status = HealthStatus.CRITICAL
+            result.error_message = "Redis connection timeout"
+            result.response_time = time.time() - start_time
+        except Exception as e:
+            result.status = HealthStatus.CRITICAL
+            result.error_message = f"Redis error: {str(e)}"
+            result.response_time = time.time() - start_time
+        
+        return result
+
+    async def _check_database_health(self, service_name: str,
+                                   config: HealthCheckConfig,
+                                   start_time: float) -> HealthResult:
+        """Check database health"""
+        
+        result = HealthResult(
+            service_name=service_name,
+            status=HealthStatus.UNKNOWN,
+            response_time=0.0,
+            timestamp=datetime.utcnow()
+        )
+        
+        try:
+            # Simulate database health check
+            # In production, use actual database connection
+            timeout = aiohttp.ClientTimeout(total=config.timeout)
+            
+            async with aiohttp.ClientSession(timeout=timeout) as session:
+                url = f"http://localhost:8000{config.endpoint}"
+                
+                async with session.request(
+                    config.method,
+                    url,
+                    headers=config.headers,
+                    data=config.body
+                ) as response:
+                    
+                    result.response_time = time.time() - start_time
+                    
+                    if response.status == config.expected_status:
+                        result.status = HealthStatus.HEALTHY
+                        
+                        # Try to get response data
+                        try:
+                            response_data = await response.json()
+                            result.details = response_data
+                        except:
+                            result.details = {"status_code": response.status}
+                    else:
+                        result.status = HealthStatus.UNHEALTHY
+                        result.error_message = f"Unexpected status code: {response.status}"
+                        
+        except asyncio.TimeoutError:
+            result.status = HealthStatus.CRITICAL
+            result.error_message = "Database connection timeout"
+            result.response_time = time.time() - start_time
+        except Exception as e:
+            result.status = HealthStatus.CRITICAL
+            result.error_message = f"Database error: {str(e)}"
+            result.response_time = time.time() - start_time
+        
+        return result
+
+    async def _check_http_health(self, service_name: str,
+                               config: HealthCheckConfig,
+                               start_time: float) -> HealthResult:
+        """Check HTTP service health"""
+        
+        result = HealthResult(
+            service_name=service_name,
+            status=HealthStatus.UNKNOWN,
+            response_time=0.0,
+            timestamp=datetime.utcnow()
+        )
+        
+        try:
+            timeout = aiohttp.ClientTimeout(total=config.timeout)
+            
+            async with aiohttp.ClientSession(timeout=timeout) as session:
+                # Determine URL
+                if config.endpoint.startswith("http"):
+                    url = config.endpoint
+                else:
+                    url = f"http://localhost:8000{config.endpoint}"
+                
+                async with session.request(
+                    config.method,
+                    url,
+                    headers=config.headers,
+                    data=config.body
+                ) as response:
+                    
+                    result.response_time = time.time() - start_time
+                    
+                    if response.status == config.expected_status:
+                        result.status = HealthStatus.HEALTHY
+                        
+                        # Check response content if expected
+                        if config.expected_response:
+                            response_text = await response.text()
+                            if config.expected_response in response_text:
+                                result.status = HealthStatus.HEALTHY
+                            else:
+                                result.status = HealthStatus.WARNING
+                                result.error_message = "Unexpected response content"
+                        
+                        # Try to get response data
+                        try:
+                            response_data = await response.json()
+                            result.details = response_data
+                        except:
+                            result.details = {
+                                "status_code": response.status,
+                                "content_length": len(await response.text())
+                            }
+                    else:
+                        result.status = HealthStatus.UNHEALTHY
+                        result.error_message = f"HTTP {response.status}: {response.reason}"
+                        
+        except asyncio.TimeoutError:
+            result.status = HealthStatus.CRITICAL
+            result.error_message = f"HTTP timeout after {config.timeout}s"
+            result.response_time = time.time() - start_time
+        except aiohttp.ClientConnectorError as e:
+            result.status = HealthStatus.CRITICAL
+            result.error_message = f"Connection error: {str(e)}"
+            result.response_time = time.time() - start_time
+        except Exception as e:
+            result.status = HealthStatus.CRITICAL
+            result.error_message = f"HTTP error: {str(e)}"
+            result.response_time = time.time() - start_time
+        
+        return result
+
+    async def _check_dependencies(self, dependencies: List[str]) -> Dict[str, Any]:
+        """Check if all dependencies are healthy"""
+        
+        dependency_status = {
+            "all_healthy": True,
+            "healthy": [],
+            "unhealthy": []
+        }
+        
+        for dep_name in dependencies:
+            if dep_name in self.health_results:
+                result = self.health_results[dep_name]
+                if result.status == HealthStatus.HEALTHY:
+                    dependency_status["healthy"].append(dep_name)
+                else:
+                    dependency_status["unhealthy"].append(dep_name)
+                    dependency_status["all_healthy"] = False
+            else:
+                dependency_status["unhealthy"].append(f"{dep_name} (no data)")
+                dependency_status["all_healthy"] = False
+        
+        return dependency_status
+
+    async def _process_health_result(self, result: HealthResult):
+        """Process health check result and update state"""
+        
+        # Store result
+        self.health_results[result.service_name] = result
+        
+        # Update circuit breaker
+        await self._update_circuit_breaker(result)
+        
+        # Update service metrics
+        await self._update_service_metrics(result)
+        
+        # Store result in Redis
+        await self._store_health_result(result)
+        
+        # Send alerts if needed
+        await self._check_health_alerts(result)
+        
+        self.logger.debug(f"Health result processed: {result.service_name} - {result.status.value}")
+
+    async def _update_circuit_breaker(self, result: HealthResult):
+        """Update circuit breaker state based on health result"""
+        
+        circuit_breaker = self.circuit_breakers.get(result.service_name)
+        if not circuit_breaker:
+            return
+        
+        if result.status == HealthStatus.HEALTHY:
+            # Success - reset failure count and update state
+            circuit_breaker.failure_count = 0
+            circuit_breaker.last_success = result.timestamp
+            
+            if circuit_breaker.state == CircuitBreakerState.HALF_OPEN:
+                circuit_breaker.state = CircuitBreakerState.CLOSED
+                self.logger.info(f"Circuit breaker CLOSED for {result.service_name}")
+        
+        elif result.status in [HealthStatus.UNHEALTHY, HealthStatus.CRITICAL]:
+            # Failure - increment failure count
+            circuit_breaker.failure_count += 1
+            circuit_breaker.last_failure = result.timestamp
+            
+            # Check if threshold exceeded
+            if (circuit_breaker.failure_count >= circuit_breaker.failure_threshold and
+                circuit_breaker.state == CircuitBreakerState.CLOSED):
+                circuit_breaker.state = CircuitBreakerState.OPEN
+                self.logger.warning(f"Circuit breaker OPENED for {result.service_name}")
+
+    async def _circuit_breaker_management(self):
+        """Manage circuit breaker state transitions"""
+        
+        while True:
+            try:
+                for service_name, circuit_breaker in self.circuit_breakers.items():
+                    if circuit_breaker.state == CircuitBreakerState.OPEN:
+                        # Check if recovery timeout has passed
+                        if (circuit_breaker.last_failure and 
+                            datetime.utcnow() - circuit_breaker.last_failure >= 
+                            timedelta(seconds=circuit_breaker.recovery_timeout)):
+                            
+                            circuit_breaker.state = CircuitBreakerState.HALF_OPEN
+                            self.logger.info(f"Circuit breaker HALF-OPEN for {service_name}")
+                
+                await asyncio.sleep(30)  # Check every 30 seconds
+                
+            except Exception as e:
+                self.logger.error(f"Error in circuit breaker management: {e}")
+                await asyncio.sleep(60)
+
+    def _should_skip_check(self, circuit_breaker: CircuitBreaker) -> bool:
+        """Check if health check should be skipped due to circuit breaker"""
+        
+        if circuit_breaker.state == CircuitBreakerState.OPEN:
+            if (circuit_breaker.last_failure and
+                datetime.utcnow() - circuit_breaker.last_failure < 
+                timedelta(seconds=circuit_breaker.recovery_timeout)):
+                return True
+        
+        return False
+
+    async def _update_service_metrics(self, result: HealthResult):
+        """Update service metrics based on health result"""
+        
+        metrics = self.service_metrics.get(result.service_name)
+        if not metrics:
+            metrics = ServiceMetrics(service_name=result.service_name)
+            self.service_metrics[result.service_name] = metrics
+        
+        # Update counters
+        metrics.total_checks += 1
+        
+        if result.status == HealthStatus.HEALTHY:
+            metrics.successful_checks += 1
+            metrics.last_success = result.timestamp
+        else:
+            metrics.failed_checks += 1
+            metrics.last_failure = result.timestamp
+        
+        # Update average response time
+        metrics.avg_response_time = (
+            (metrics.avg_response_time * (metrics.total_checks - 1) + result.response_time) /
+            metrics.total_checks
+        )
+        
+        # Calculate uptime percentage
+        if metrics.total_checks > 0:
+            metrics.uptime_percentage = (metrics.successful_checks / metrics.total_checks) * 100
+
+    async def _service_discovery_loop(self):
+        """Service discovery and registration loop"""
+        
+        while True:
+            try:
+                # Discover new services
+                await self._discover_services()
+                
+                # Update service registry
+                await self._update_service_registry()
+                
+                await asyncio.sleep(300)  # Discovery every 5 minutes
+                
+            except Exception as e:
+                self.logger.error(f"Error in service discovery: {e}")
+                await asyncio.sleep(600)
+
+    async def _discover_services(self):
+        """Discover new services automatically"""
+        
+        try:
+            # Check for new Redis instances
+            await self._discover_redis_services()
+            
+            # Check for new HTTP services
+            await self._discover_http_services()
+            
+            # Check system processes for known services
+            await self._discover_process_services()
+            
+        except Exception as e:
+            self.logger.error(f"Service discovery error: {e}")
+
+    async def _discover_redis_services(self):
+        """Discover Redis services"""
+        
+        common_redis_ports = [6379, 6380, 6381]
+        
+        for port in common_redis_ports:
+            service_name = f"redis_auto_{port}"
+            
+            if service_name not in self.health_checks:
+                try:
+                    # Test connection
+                    redis_client = aioredis.from_url(f"redis://localhost:{port}")
+                    await asyncio.wait_for(redis_client.ping(), timeout=3)
+                    await redis_client.close()
+                    
+                    # Add to health checks
+                    self.health_checks[service_name] = HealthCheckConfig(
+                        name=service_name,
+                        service_type=ServiceType.CACHE,
+                        endpoint=f"redis://localhost:{port}",
+                        timeout=3,
+                        interval=60
+                    )
+                    
+                    self.logger.info(f"Discovered Redis service: {service_name}")
+                    
+                except:
+                    pass  # Service not available
+
+    async def _discover_http_services(self):
+        """Discover HTTP services"""
+        
+        common_ports = [8080, 8081, 8082, 3000, 3001, 5000, 5001]
+        
+        for port in common_ports:
+            service_name = f"http_auto_{port}"
+            
+            if service_name not in self.health_checks:
+                try:
+                    timeout = aiohttp.ClientTimeout(total=3)
+                    async with aiohttp.ClientSession(timeout=timeout) as session:
+                        async with session.get(f"http://localhost:{port}/health") as response:
+                            if response.status in [200, 404]:  # Service responds
+                                self.health_checks[service_name] = HealthCheckConfig(
+                                    name=service_name,
+                                    service_type=ServiceType.API,
+                                    endpoint=f"http://localhost:{port}/health",
+                                    timeout=5,
+                                    interval=120
+                                )
+                                
+                                self.logger.info(f"Discovered HTTP service: {service_name}")
+                except:
+                    pass
+
+    async def _discover_process_services(self):
+        """Discover services by process names"""
+        
+        service_processes = {
+            "postgres": ServiceType.DATABASE,
+            "mysql": ServiceType.DATABASE,
+            "nginx": ServiceType.API,
+            "rabbitmq": ServiceType.QUEUE,
+            "elasticsearch": ServiceType.DATABASE
+        }
+        
+        for proc in psutil.process_iter(['pid', 'name', 'cmdline']):
+            try:
+                proc_name = proc.info['name'].lower()
+                
+                for service_name, service_type in service_processes.items():
+                    if service_name in proc_name:
+                        auto_service_name = f"{service_name}_process"
+                        
+                        if auto_service_name not in self.health_checks:
+                            # Create a process-based health check
+                            self.health_checks[auto_service_name] = HealthCheckConfig(
+                                name=auto_service_name,
+                                service_type=service_type,
+                                endpoint=f"/health/{service_name}",
+                                timeout=5,
+                                interval=120
+                            )
+                            
+                            self.logger.info(f"Discovered process service: {auto_service_name}")
+            except:
+                pass
+
+    async def _update_service_registry(self):
+        """Update service registry with current service information"""
+        
+        registry_data = {}
+        
+        for service_name, config in self.health_checks.items():
+            result = self.health_results.get(service_name)
+            metrics = self.service_metrics.get(service_name)
+            circuit_breaker = self.circuit_breakers.get(service_name)
+            
+            registry_data[service_name] = {
+                "service_type": config.service_type.value,
+                "endpoint": config.endpoint,
+                "status": result.status.value if result else "unknown",
+                "last_check": result.timestamp.isoformat() if result else None,
+                "response_time": result.response_time if result else None,
+                "uptime_percentage": metrics.uptime_percentage if metrics else 0.0,
+                "circuit_breaker_state": circuit_breaker.state.value if circuit_breaker else "unknown",
+                "dependencies": config.dependencies
+            }
+        
+        self.service_registry = registry_data
+        
+        # Store in Redis
+        await self.redis_client.setex(
+            "service_registry",
+            300,  # 5 minutes TTL
+            json.dumps(registry_data)
+        )
+
+    async def _calculate_metrics_loop(self):
+        """Calculate and update service metrics periodically"""
+        
+        while True:
+            try:
+                # Calculate aggregated metrics
+                total_services = len(self.health_checks)
+                healthy_services = sum(
+                    1 for result in self.health_results.values()
+                    if result.status == HealthStatus.HEALTHY
+                )
+                
+                system_uptime = (healthy_services / total_services * 100) if total_services > 0 else 0
+                
+                # Store system metrics
+                system_metrics = {
+                    "total_services": total_services,
+                    "healthy_services": healthy_services,
+                    "unhealthy_services": total_services - healthy_services,
+                    "system_uptime_percentage": system_uptime,
+                    "last_calculated": datetime.utcnow().isoformat()
+                }
+                
+                await self.redis_client.setex(
+                    "health_system_metrics",
+                    300,
+                    json.dumps(system_metrics)
+                )
+                
+                await asyncio.sleep(60)  # Calculate every minute
+                
+            except Exception as e:
+                self.logger.error(f"Error calculating metrics: {e}")
+                await asyncio.sleep(120)
+
+    async def _assess_system_health_loop(self):
+        """Assess overall system health periodically"""
+        
+        while True:
+            try:
+                await self._assess_overall_system_health()
+                await asyncio.sleep(30)  # Assess every 30 seconds
+                
+            except Exception as e:
+                self.logger.error(f"Error assessing system health: {e}")
+                await asyncio.sleep(60)
+
+    async def _assess_overall_system_health(self):
+        """Assess overall system health status"""
+        
+        if not self.health_results:
+            self.system_health = HealthStatus.UNKNOWN
+            return
+        
+        # Count services by status
+        status_counts = {
+            HealthStatus.HEALTHY: 0,
+            HealthStatus.WARNING: 0,
+            HealthStatus.UNHEALTHY: 0,
+            HealthStatus.CRITICAL: 0
+        }
+        
+        for result in self.health_results.values():
+            status_counts[result.status] += 1
+        
+        total_services = len(self.health_results)
+        critical_services = status_counts[HealthStatus.CRITICAL]
+        unhealthy_services = status_counts[HealthStatus.UNHEALTHY]
+        healthy_services = status_counts[HealthStatus.HEALTHY]
+        
+        # Determine overall system health
+        if critical_services > 0:
+            self.system_health = HealthStatus.CRITICAL
+        elif unhealthy_services > total_services * 0.5:  # More than 50% unhealthy
+            self.system_health = HealthStatus.UNHEALTHY
+        elif unhealthy_services > 0 or status_counts[HealthStatus.WARNING] > 0:
+            self.system_health = HealthStatus.WARNING
+        else:
+            self.system_health = HealthStatus.HEALTHY
+
+    async def _store_health_result(self, result: HealthResult):
+        """Store health result in Redis"""
+        
+        result_data = {
+            "service_name": result.service_name,
+            "status": result.status.value,
+            "response_time": result.response_time,
+            "timestamp": result.timestamp.isoformat(),
+            "details": result.details,
+            "error_message": result.error_message,
+            "metadata": result.metadata
+        }
+        
+        # Store latest result
+        await self.redis_client.setex(
+            f"health_result:{result.service_name}",
+            3600,  # 1 hour TTL
+            json.dumps(result_data)
+        )
+        
+        # Store in time series
+        await self.redis_client.lpush(
+            f"health_history:{result.service_name}",
+            json.dumps(result_data)
+        )
+        
+        # Keep only last 100 results
+        await self.redis_client.ltrim(f"health_history:{result.service_name}", 0, 99)
+
+    async def _check_health_alerts(self, result: HealthResult):
+        """Check if health result should trigger alerts"""
+        
+        if result.status in [HealthStatus.UNHEALTHY, HealthStatus.CRITICAL]:
+            alert_data = {
+                "service_name": result.service_name,
+                "status": result.status.value,
+                "error_message": result.error_message,
+                "response_time": result.response_time,
+                "timestamp": result.timestamp.isoformat(),
+                "alert_type": "service_health"
+            }
+            
+            # Send alert notification
+            await self.redis_client.lpush(
+                f"health_alerts:{result.status.value}",
+                json.dumps(alert_data)
+            )
+            
+            self.logger.warning(f"Health alert for {result.service_name}: {result.status.value}")
+
+    async def _load_health_check_config(self):
+        """Load health check configuration from Redis"""
+        
+        try:
+            config_data = await self.redis_client.get("health_check_config")
+            if config_data:
+                configs = json.loads(config_data)
+                
+                for name, config in configs.items():
+                    self.health_checks[name] = HealthCheckConfig(**config)
+                
+                self.logger.info(f"Loaded {len(configs)} health check configurations")
+        
+        except Exception as e:
+            self.logger.warning(f"Could not load health check config: {e}")
+
+    async def register_service(self, config: HealthCheckConfig):
+        """Register a new service for health monitoring"""
+        
+        self.health_checks[config.name] = config
+        
+        # Initialize circuit breaker
+        self.circuit_breakers[config.name] = CircuitBreaker(
+            service_name=config.name,
+            failure_threshold=5,
+            recovery_timeout=60
+        )
+        
+        # Save configuration
+        await self._save_health_check_config()
+        
+        self.logger.info(f"Registered service for health monitoring: {config.name}")
+
+    async def unregister_service(self, service_name: str):
+        """Unregister a service from health monitoring"""
+        
+        if service_name in self.health_checks:
+            del self.health_checks[service_name]
+        
+        if service_name in self.circuit_breakers:
+            del self.circuit_breakers[service_name]
+        
+        if service_name in self.health_results:
+            del self.health_results[service_name]
+        
+        if service_name in self.service_metrics:
+            del self.service_metrics[service_name]
+        
+        # Save configuration
+        await self._save_health_check_config()
+        
+        self.logger.info(f"Unregistered service from health monitoring: {service_name}")
+
+    async def _save_health_check_config(self):
+        """Save health check configuration to Redis"""
+        
+        configs = {}
+        for name, config in self.health_checks.items():
+            configs[name] = {
+                "name": config.name,
+                "service_type": config.service_type.value,
+                "endpoint": config.endpoint,
+                "method": config.method,
+                "timeout": config.timeout,
+                "interval": config.interval,
+                "retries": config.retries,
+                "expected_status": config.expected_status,
+                "expected_response": config.expected_response,
+                "headers": config.headers,
+                "body": config.body,
+                "enabled": config.enabled,
+                "dependencies": config.dependencies
+            }
+        
+        await self.redis_client.setex(
+            "health_check_config",
+            86400,  # 24 hours
+            json.dumps(configs)
+        )
+
+    async def get_health_dashboard(self) -> Dict[str, Any]:
+        """Get comprehensive health dashboard data"""
+        
+        # Service health summary
+        service_health = {}
+        for service_name, result in self.health_results.items():
+            service_health[service_name] = {
+                "status": result.status.value,
+                "response_time": result.response_time,
+                "last_check": result.timestamp.isoformat(),
+                "error_message": result.error_message
+            }
+        
+        # Circuit breaker status
+        circuit_breaker_status = {}
+        for service_name, cb in self.circuit_breakers.items():
+            circuit_breaker_status[service_name] = {
+                "state": cb.state.value,
+                "failure_count": cb.failure_count,
+                "last_failure": cb.last_failure.isoformat() if cb.last_failure else None
+            }
+        
+        # Service metrics summary
+        metrics_summary = {}
+        for service_name, metrics in self.service_metrics.items():
+            metrics_summary[service_name] = {
+                "total_checks": metrics.total_checks,
+                "uptime_percentage": metrics.uptime_percentage,
+                "avg_response_time": metrics.avg_response_time
+            }
+        
+        return {
+            "system_health": self.system_health.value,
+            "service_health": service_health,
+            "circuit_breakers": circuit_breaker_status,
+            "service_metrics": metrics_summary,
+            "service_registry": self.service_registry,
+            "total_services": len(self.health_checks),
+            "monitoring_active": len(self.monitoring_tasks) > 0,
+            "last_updated": datetime.utcnow().isoformat()
+        }
+
+    async def shutdown(self):
+        """Shutdown health check service gracefully"""
+        
+        # Cancel monitoring tasks
+        for task in self.monitoring_tasks:
+            task.cancel()
+        
+        # Wait for tasks to complete
+        if self.monitoring_tasks:
+            await asyncio.gather(*self.monitoring_tasks, return_exceptions=True)
         
         # Close Redis connection
         if self.redis_client:
             await self.redis_client.close()
         
-        logger.info("Health Monitor shutdown completed")
+        self.logger.info("Health Check Service shutdown completed")
+
+
+# Example usage
+async def main():
+    """Example usage of Health Check Service"""
     
-    async def add_health_check(self, health_check: HealthCheck) -> bool:
-        """
-        Add a new health check
-        
-        **Roles**: DevOps + Backend Senior
-        """
-        try:
-            # Validate health check
-            if not self._validate_health_check(health_check):
-                return False
-            
-            # Store health check
-            self.health_checks[health_check.check_id] = health_check
-            self.check_results[health_check.check_id] = []
-            
-            # Initialize circuit breaker if needed
-            if health_check.check_type in [CheckType.HTTP, CheckType.TCP, CheckType.DEPENDENCY]:
-                self.circuit_breakers[health_check.check_id] = CircuitBreakerMetrics()
-                self.circuit_breaker_configs[health_check.check_id] = CircuitBreakerConfig()
-            
-            # Save to Redis
-            await self._save_health_check(health_check)
-            
-            # Start checking if enabled
-            if health_check.enabled:
-                await self._start_health_check_task(health_check)
-            
-            logger.info(f"Health check added: {health_check.name}")
-            return True
-            
-        except Exception as e:
-            logger.error(f"Failed to add health check {health_check.name}: {e}")
-            return False
+    health_service = HealthCheckService()
+    await health_service.initialize()
     
-    async def remove_health_check(self, check_id: str) -> bool:
-        """Remove a health check"""
-        try:
-            if check_id not in self.health_checks:
-                return False
-            
-            # Stop checking task
-            if check_id in self.check_tasks:
-                self.check_tasks[check_id].cancel()
-                del self.check_tasks[check_id]
-            
-            # Remove from storage
-            del self.health_checks[check_id]
-            if check_id in self.check_results:
-                del self.check_results[check_id]
-            if check_id in self.circuit_breakers:
-                del self.circuit_breakers[check_id]
-            if check_id in self.circuit_breaker_configs:
-                del self.circuit_breaker_configs[check_id]
-            
-            # Remove from Redis
-            await self._remove_health_check(check_id)
-            
-            logger.info(f"Health check removed: {check_id}")
-            return True
-            
-        except Exception as e:
-            logger.error(f"Failed to remove health check {check_id}: {e}")
-            return False
-    
-    async def perform_health_check(self, check_id: str) -> Optional[HealthResult]:
-        """
-        Perform a single health check
-        
-        **Roles**: DevOps + Microservices + Security
-        """
-        if check_id not in self.health_checks:
-            return None
-        
-        health_check = self.health_checks[check_id]
-        
-        # Check circuit breaker
-        if check_id in self.circuit_breakers:
-            if not await self._check_circuit_breaker(check_id):
-                return HealthResult(
-                    check_id=check_id,
-                    status=HealthStatus.CRITICAL,
-                    response_time_ms=0,
-                    message="Circuit breaker is OPEN",
-                    error="Service circuit breaker protection activated"
-                )
-        
-        try:
-            start_time = time.time()
-            
-            if health_check.check_type == CheckType.HTTP:
-                result = await self._perform_http_check(health_check)
-            elif health_check.check_type == CheckType.TCP:
-                result = await self._perform_tcp_check(health_check)
-            elif health_check.check_type == CheckType.DATABASE:
-                result = await self._perform_database_check(health_check)
-            elif health_check.check_type == CheckType.REDIS:
-                result = await self._perform_redis_check(health_check)
-            elif health_check.check_type == CheckType.RESOURCE:
-                result = await self._perform_resource_check(health_check)
-            elif health_check.check_type == CheckType.CUSTOM:
-                result = await self._perform_custom_check(health_check)
-            else:
-                result = HealthResult(
-                    check_id=check_id,
-                    status=HealthStatus.UNKNOWN,
-                    response_time_ms=0,
-                    message=f"Unsupported check type: {health_check.check_type}"
-                )
-            
-            result.response_time_ms = (time.time() - start_time) * 1000
-            
-            # Update circuit breaker
-            if check_id in self.circuit_breakers:
-                await self._update_circuit_breaker(check_id, result.status == HealthStatus.HEALTHY)
-            
-            # Store result
-            await self._store_health_result(result)
-            
-            # Update metrics
-            await self._update_service_metrics(check_id, result)
-            
-            return result
-            
-        except Exception as e:
-            error_result = HealthResult(
-                check_id=check_id,
-                status=HealthStatus.CRITICAL,
-                response_time_ms=(time.time() - start_time) * 1000 if 'start_time' in locals() else 0,
-                message=f"Health check failed: {str(e)}",
-                error=str(e)
-            )
-            
-            # Update circuit breaker on failure
-            if check_id in self.circuit_breakers:
-                await self._update_circuit_breaker(check_id, False)
-            
-            await self._store_health_result(error_result)
-            return error_result
-    
-    async def _perform_http_check(self, health_check: HealthCheck) -> HealthResult:
-        """Perform HTTP health check"""
-        timeout = aiohttp.ClientTimeout(total=health_check.timeout_seconds)
-        
-        async with aiohttp.ClientSession(timeout=timeout) as session:
-            async with session.get(health_check.target) as response:
-                if response.status == 200:
-                    return HealthResult(
-                        check_id=health_check.check_id,
-                        status=HealthStatus.HEALTHY,
-                        response_time_ms=0,  # Will be set by caller
-                        message=f"HTTP check successful (status: {response.status})",
-                        details={'status_code': response.status, 'url': health_check.target}
-                    )
-                else:
-                    return HealthResult(
-                        check_id=health_check.check_id,
-                        status=HealthStatus.UNHEALTHY,
-                        response_time_ms=0,
-                        message=f"HTTP check failed (status: {response.status})",
-                        details={'status_code': response.status, 'url': health_check.target}
-                    )
-    
-    async def _perform_tcp_check(self, health_check: HealthCheck) -> HealthResult:
-        """Perform TCP connection check"""
-        try:
-            # Parse host:port from target
-            host, port = health_check.target.split(':')
-            port = int(port)
-            
-            # Attempt TCP connection
-            reader, writer = await asyncio.wait_for(
-                asyncio.open_connection(host, port),
-                timeout=health_check.timeout_seconds
-            )
-            
-            writer.close()
-            await writer.wait_closed()
-            
-            return HealthResult(
-                check_id=health_check.check_id,
-                status=HealthStatus.HEALTHY,
-                response_time_ms=0,
-                message=f"TCP connection successful to {host}:{port}",
-                details={'host': host, 'port': port}
-            )
-            
-        except Exception as e:
-            return HealthResult(
-                check_id=health_check.check_id,
-                status=HealthStatus.UNHEALTHY,
-                response_time_ms=0,
-                message=f"TCP connection failed to {health_check.target}",
-                error=str(e)
-            )
-    
-    async def _perform_database_check(self, health_check: HealthCheck) -> HealthResult:
-        """Perform database health check"""
-        # This would integrate with your database clients
-        # For now, return a placeholder implementation
-        return HealthResult(
-            check_id=health_check.check_id,
-            status=HealthStatus.HEALTHY,
-            response_time_ms=0,
-            message="Database check not implemented",
-            details={'type': 'database'}
+    try:
+        # Register a custom service
+        custom_service = HealthCheckConfig(
+            name="custom_api",
+            service_type=ServiceType.API,
+            endpoint="/api/custom/health",
+            timeout=10,
+            interval=60
         )
-    
-    async def _perform_redis_check(self, health_check: HealthCheck) -> HealthResult:
-        """Perform Redis health check"""
-        try:
-            redis_client = aioredis.from_url(health_check.target)
-            await asyncio.wait_for(
-                redis_client.ping(),
-                timeout=health_check.timeout_seconds
-            )
-            await redis_client.close()
-            
-            return HealthResult(
-                check_id=health_check.check_id,
-                status=HealthStatus.HEALTHY,
-                response_time_ms=0,
-                message="Redis ping successful",
-                details={'url': health_check.target}
-            )
-            
-        except Exception as e:
-            return HealthResult(
-                check_id=health_check.check_id,
-                status=HealthStatus.UNHEALTHY,
-                response_time_ms=0,
-                message="Redis ping failed",
-                error=str(e)
-            )
-    
-    async def _perform_resource_check(self, health_check: HealthCheck) -> HealthResult:
-        """Perform system resource check"""
-        try:
-            # Get system metrics
-            cpu_percent = psutil.cpu_percent(interval=1)
-            memory = psutil.virtual_memory()
-            disk = psutil.disk_usage('/')
-            
-            # Determine status based on thresholds
-            status = HealthStatus.HEALTHY
-            messages = []
-            
-            if cpu_percent > self.alert_thresholds['cpu_usage_critical']:
-                status = HealthStatus.CRITICAL
-                messages.append(f"CPU usage critical: {cpu_percent:.1f}%")
-            elif cpu_percent > self.alert_thresholds['cpu_usage_warning']:
-                status = HealthStatus.WARNING
-                messages.append(f"CPU usage high: {cpu_percent:.1f}%")
-            
-            if memory.percent > self.alert_thresholds['memory_usage_critical']:
-                status = HealthStatus.CRITICAL
-                messages.append(f"Memory usage critical: {memory.percent:.1f}%")
-            elif memory.percent > self.alert_thresholds['memory_usage_warning']:
-                status = HealthStatus.WARNING
-                messages.append(f"Memory usage high: {memory.percent:.1f}%")
-            
-            if disk.percent > self.alert_thresholds['disk_usage_critical']:
-                status = HealthStatus.CRITICAL
-                messages.append(f"Disk usage critical: {disk.percent:.1f}%")
-            elif disk.percent > self.alert_thresholds['disk_usage_warning']:
-                status = HealthStatus.WARNING
-                messages.append(f"Disk usage high: {disk.percent:.1f}%")
-            
-            message = "; ".join(messages) if messages else "System resources healthy"
-            
-            return HealthResult(
-                check_id=health_check.check_id,
-                status=status,
-                response_time_ms=0,
-                message=message,
-                details={
-                    'cpu_percent': cpu_percent,
-                    'memory_percent': memory.percent,
-                    'memory_available': memory.available,
-                    'disk_percent': disk.percent,
-                    'disk_free': disk.free
-                }
-            )
-            
-        except Exception as e:
-            return HealthResult(
-                check_id=health_check.check_id,
-                status=HealthStatus.CRITICAL,
-                response_time_ms=0,
-                message="Resource check failed",
-                error=str(e)
-            )
-    
-    async def _perform_custom_check(self, health_check: HealthCheck) -> HealthResult:
-        """Perform custom health check"""
-        # Custom checks would be implemented based on metadata
-        return HealthResult(
-            check_id=health_check.check_id,
-            status=HealthStatus.HEALTHY,
-            response_time_ms=0,
-            message="Custom check not implemented",
-            details={'type': 'custom'}
-        )
-    
-    async def _check_circuit_breaker(self, check_id: str) -> bool:
-        """Check if circuit breaker allows the call"""
-        if check_id not in self.circuit_breakers:
-            return True
+        await health_service.register_service(custom_service)
         
-        cb_metrics = self.circuit_breakers[check_id]
-        cb_config = self.circuit_breaker_configs[check_id]
-        current_time = datetime.now()
+        # Let monitoring run for a bit
+        await asyncio.sleep(30)
         
-        if cb_metrics.state == CircuitBreakerState.CLOSED:
-            return True
+        # Get dashboard
+        dashboard = await health_service.get_health_dashboard()
+        print(f"Health dashboard: {dashboard}")
         
-        elif cb_metrics.state == CircuitBreakerState.OPEN:
-            # Check if recovery timeout has passed
-            if (cb_metrics.last_failure_time and 
-                (current_time - cb_metrics.last_failure_time).total_seconds() >= cb_config.recovery_timeout_seconds):
-                # Move to half-open state
-                cb_metrics.state = CircuitBreakerState.HALF_OPEN
-                cb_metrics.half_open_calls = 0
-                cb_metrics.last_state_change = current_time
-                return True
-            return False
-        
-        elif cb_metrics.state == CircuitBreakerState.HALF_OPEN:
-            # Allow limited calls in half-open state
-            if cb_metrics.half_open_calls < cb_config.half_open_max_calls:
-                cb_metrics.half_open_calls += 1
-                return True
-            return False
-        
-        return False
-    
-    async def _update_circuit_breaker(self, check_id: str, success: bool) -> None:
-        """Update circuit breaker state based on result"""
-        if check_id not in self.circuit_breakers:
-            return
-        
-        cb_metrics = self.circuit_breakers[check_id]
-        cb_config = self.circuit_breaker_configs[check_id]
-        current_time = datetime.now()
-        
-        cb_metrics.total_requests += 1
-        
-        if success:
-            cb_metrics.successful_requests += 1
-            cb_metrics.success_count += 1
-            cb_metrics.failure_count = 0  # Reset failure count on success
-            
-            # If in half-open state and enough successes, close circuit
-            if (cb_metrics.state == CircuitBreakerState.HALF_OPEN and 
-                cb_metrics.success_count >= cb_config.success_threshold):
-                cb_metrics.state = CircuitBreakerState.CLOSED
-                cb_metrics.last_state_change = current_time
-                logger.info(f"Circuit breaker closed for {check_id}")
-        
-        else:
-            cb_metrics.failed_requests += 1
-            cb_metrics.failure_count += 1
-            cb_metrics.success_count = 0  # Reset success count on failure
-            cb_metrics.last_failure_time = current_time
-            
-            # If too many failures, open circuit
-            if cb_metrics.failure_count >= cb_config.failure_threshold:
-                if cb_metrics.state != CircuitBreakerState.OPEN:
-                    cb_metrics.state = CircuitBreakerState.OPEN
-                    cb_metrics.last_state_change = current_time
-                    logger.warning(f"Circuit breaker opened for {check_id}")
-    
-    async def _start_health_check_task(self, health_check: HealthCheck) -> None:
-        """Start background health check task"""
-        async def health_check_worker():
-            while self.running and health_check.check_id in self.health_checks:
-                try:
-                    await self.perform_health_check(health_check.check_id)
-                    await asyncio.sleep(health_check.interval_seconds)
-                except asyncio.CancelledError:
-                    break
-                except Exception as e:
-                    logger.error(f"Health check task error for {health_check.check_id}: {e}")
-                    await asyncio.sleep(5)  # Short retry delay
-        
-        task = asyncio.create_task(health_check_worker())
-        self.check_tasks[health_check.check_id] = task
-    
-    async def _store_health_result(self, result: HealthResult) -> None:
-        """Store health check result"""
-        if result.check_id not in self.check_results:
-            self.check_results[result.check_id] = []
-        
-        # Add result to memory
-        self.check_results[result.check_id].append(result)
-        
-        # Keep only recent results (last 100)
-        if len(self.check_results[result.check_id]) > 100:
-            self.check_results[result.check_id] = self.check_results[result.check_id][-100:]
-        
-        # Store in Redis
-        if self.redis_client:
-            try:
-                key = f"health_result:{result.check_id}"
-                value = {
-                    'status': result.status.value,
-                    'response_time_ms': result.response_time_ms,
-                    'message': result.message,
-                    'details': result.details,
-                    'timestamp': result.timestamp.isoformat(),
-                    'error': result.error
-                }
-                await self.redis_client.lpush(key, json.dumps(value))
-                await self.redis_client.ltrim(key, 0, 99)  # Keep last 100
-                await self.redis_client.expire(key, 86400)  # 24 hours
-            except Exception as e:
-                logger.error(f"Failed to store health result in Redis: {e}")
-    
-    async def _update_service_metrics(self, check_id: str, result: HealthResult) -> None:
-        """Update service health metrics"""
-        if check_id not in self.service_metrics:
-            self.service_metrics[check_id] = ServiceHealthMetrics(
-                service_id=check_id,
-                overall_status=result.status,
-                last_updated=datetime.now()
-            )
-        
-        metrics = self.service_metrics[check_id]
-        metrics.total_checks += 1
-        metrics.last_updated = datetime.now()
-        
-        if result.status == HealthStatus.HEALTHY:
-            metrics.successful_checks += 1
-        else:
-            metrics.failed_checks += 1
-            metrics.last_failure = datetime.now()
-        
-        # Update response time metrics
-        if result.response_time_ms > 0:
-            if metrics.total_checks == 1:
-                metrics.average_response_time = result.response_time_ms
-                metrics.min_response_time = result.response_time_ms
-                metrics.peak_response_time = result.response_time_ms
-            else:
-                # Running average
-                metrics.average_response_time = (
-                    (metrics.average_response_time * (metrics.total_checks - 1) + result.response_time_ms) /
-                    metrics.total_checks
-                )
-                metrics.min_response_time = min(metrics.min_response_time, result.response_time_ms)
-                metrics.peak_response_time = max(metrics.peak_response_time, result.response_time_ms)
-        
-        # Update overall status
-        metrics.overall_status = self._calculate_overall_status(check_id)
-        
-        # Calculate uptime percentage
-        if metrics.total_checks > 0:
-            metrics.uptime_percentage = (metrics.successful_checks / metrics.total_checks) * 100
-    
-    def _calculate_overall_status(self, check_id: str) -> HealthStatus:
-        """Calculate overall health status for a service"""
-        if check_id not in self.check_results:
-            return HealthStatus.UNKNOWN
-        
-        recent_results = self.check_results[check_id][-10:]  # Last 10 results
-        if not recent_results:
-            return HealthStatus.UNKNOWN
-        
-        # Count status types in recent results
-        status_counts = {}
-        for result in recent_results:
-            status = result.status
-            status_counts[status] = status_counts.get(status, 0) + 1
-        
-        # Determine overall status
-        total_results = len(recent_results)
-        critical_count = status_counts.get(HealthStatus.CRITICAL, 0)
-        unhealthy_count = status_counts.get(HealthStatus.UNHEALTHY, 0)
-        warning_count = status_counts.get(HealthStatus.WARNING, 0)
-        
-        if critical_count > 0:
-            return HealthStatus.CRITICAL
-        elif unhealthy_count >= total_results * 0.5:  # 50% or more unhealthy
-            return HealthStatus.UNHEALTHY
-        elif warning_count >= total_results * 0.3:  # 30% or more warnings
-            return HealthStatus.WARNING
-        else:
-            return HealthStatus.HEALTHY
-    
-    def _validate_health_check(self, health_check: HealthCheck) -> bool:
-        """Validate health check configuration"""
-        if not health_check.check_id or not health_check.name:
-            return False
-        
-        if health_check.timeout_seconds <= 0 or health_check.interval_seconds <= 0:
-            return False
-        
-        if health_check.check_type in [CheckType.HTTP, CheckType.TCP] and not health_check.target:
-            return False
-        
-        return True
-    
-    async def _save_health_check(self, health_check: HealthCheck) -> None:
-        """Save health check to Redis"""
-        if not self.redis_client:
-            return
-        
-        try:
-            key = f"health_check:{health_check.check_id}"
-            value = {
-                'check_id': health_check.check_id,
-                'name': health_check.name,
-                'check_type': health_check.check_type.value,
-                'target': health_check.target,
-                'timeout_seconds': health_check.timeout_seconds,
-                'interval_seconds': health_check.interval_seconds,
-                'retries': health_check.retries,
-                'success_threshold': health_check.success_threshold,
-                'failure_threshold': health_check.failure_threshold,
-                'enabled': health_check.enabled,
-                'critical': health_check.critical,
-                'tags': health_check.tags,
-                'metadata': health_check.metadata
-            }
-            await self.redis_client.set(key, json.dumps(value))
-        except Exception as e:
-            logger.error(f"Failed to save health check to Redis: {e}")
-    
-    async def _remove_health_check(self, check_id: str) -> None:
-        """Remove health check from Redis"""
-        if not self.redis_client:
-            return
-        
-        try:
-            await self.redis_client.delete(f"health_check:{check_id}")
-            await self.redis_client.delete(f"health_result:{check_id}")
-        except Exception as e:
-            logger.error(f"Failed to remove health check from Redis: {e}")
-    
-    async def _load_health_checks(self) -> None:
-        """Load health checks from Redis"""
-        if not self.redis_client:
-            return
-        
-        try:
-            keys = await self.redis_client.keys("health_check:*")
-            for key in keys:
-                data = await self.redis_client.get(key)
-                if data:
-                    health_check_data = json.loads(data)
-                    health_check_data['check_type'] = CheckType(health_check_data['check_type'])
-                    
-                    health_check = HealthCheck(**health_check_data)
-                    self.health_checks[health_check.check_id] = health_check
-                    self.check_results[health_check.check_id] = []
-                    
-                    # Start checking if enabled
-                    if health_check.enabled:
-                        await self._start_health_check_task(health_check)
-        except Exception as e:
-            logger.error(f"Failed to load health checks from Redis: {e}")
-    
-    async def _metrics_collection_loop(self) -> None:
-        """Background metrics collection loop"""
-        while self.running:
-            try:
-                if self.resource_monitoring_enabled:
-                    # Add system resource monitoring
-                    system_check = HealthCheck(
-                        check_id="system_resources",
-                        name="System Resources",
-                        check_type=CheckType.RESOURCE,
-                        target="localhost"
-                    )
-                    
-                    if "system_resources" not in self.health_checks:
-                        await self.add_health_check(system_check)
-                
-                await asyncio.sleep(60)  # Collect every minute
-            except asyncio.CancelledError:
-                break
-            except Exception as e:
-                logger.error(f"Metrics collection error: {e}")
-                await asyncio.sleep(10)
-    
-    async def _cleanup_loop(self) -> None:
-        """Background cleanup loop"""
-        while self.running:
-            try:
-                await self._cleanup_old_metrics()
-                await asyncio.sleep(self.cleanup_interval)
-            except asyncio.CancelledError:
-                break
-            except Exception as e:
-                logger.error(f"Cleanup loop error: {e}")
-                await asyncio.sleep(10)
-    
-    async def _cleanup_old_metrics(self) -> None:
-        """Clean up old metrics and results"""
-        cutoff_time = datetime.now() - timedelta(hours=self.metrics_retention_hours)
-        
-        # Clean up in-memory results
-        for check_id in self.check_results:
-            self.check_results[check_id] = [
-                result for result in self.check_results[check_id]
-                if result.timestamp > cutoff_time
-            ]
-    
-    async def _alert_processing_loop(self) -> None:
-        """Background alert processing loop"""
-        while self.running:
-            try:
-                await self._process_alerts()
-                await asyncio.sleep(30)  # Check every 30 seconds
-            except asyncio.CancelledError:
-                break
-            except Exception as e:
-                logger.error(f"Alert processing error: {e}")
-                await asyncio.sleep(10)
-    
-    async def _process_alerts(self) -> None:
-        """Process and send alerts based on health status"""
-        for check_id, metrics in self.service_metrics.items():
-            if metrics.overall_status in [HealthStatus.CRITICAL, HealthStatus.UNHEALTHY]:
-                await self._send_alert(check_id, metrics)
-    
-    async def _send_alert(self, check_id: str, metrics: ServiceHealthMetrics) -> None:
-        """Send alert for unhealthy service"""
-        alert_data = {
-            'service_id': check_id,
-            'status': metrics.overall_status.value,
-            'message': f"Service {check_id} is {metrics.overall_status.value}",
-            'timestamp': datetime.now().isoformat(),
-            'metrics': asdict(metrics)
-        }
-        
-        # Call alert handlers
-        for handler in self.alert_handlers:
-            try:
-                await handler(alert_data)
-            except Exception as e:
-                logger.error(f"Alert handler error: {e}")
-    
-    def add_alert_handler(self, handler: Callable) -> None:
-        """Add alert handler function"""
-        self.alert_handlers.append(handler)
-    
-    async def get_service_health(self, check_id: str) -> Optional[ServiceHealthMetrics]:
-        """Get health metrics for a service"""
-        return self.service_metrics.get(check_id)
-    
-    async def get_all_health_metrics(self) -> Dict[str, ServiceHealthMetrics]:
-        """Get all service health metrics"""
-        return self.service_metrics.copy()
-    
-    async def get_circuit_breaker_status(self, check_id: str) -> Optional[CircuitBreakerMetrics]:
-        """Get circuit breaker status"""
-        return self.circuit_breakers.get(check_id)
-    
-    async def reset_circuit_breaker(self, check_id: str) -> bool:
-        """Manually reset a circuit breaker"""
-        if check_id not in self.circuit_breakers:
-            return False
-        
-        cb_metrics = self.circuit_breakers[check_id]
-        cb_metrics.state = CircuitBreakerState.CLOSED
-        cb_metrics.failure_count = 0
-        cb_metrics.success_count = 0
-        cb_metrics.last_state_change = datetime.now()
-        
-        logger.info(f"Circuit breaker manually reset for {check_id}")
-        return True
+    finally:
+        await health_service.shutdown()
+
+
+if __name__ == "__main__":
+    asyncio.run(main())

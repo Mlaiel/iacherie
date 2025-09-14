@@ -1,712 +1,1085 @@
 """
-Service Registry - Enterprise Service Discovery & Management
-===========================================================
+🔧 Microservice Orchestrator
+Enterprise microservices orchestration with service mesh, circuit breakers, and auto-scaling
 
-**Author**: Fahed Mlaiel (mlaiel@live.de)
-**Roles**: Lead Dev IA + Backend Senior + Microservices Architect + DevOps
-**Module**: Core Services - Service Discovery
-**Version**: 1.0.0 Enterprise
-**Created**: 2025-01-07
+Demonstrates: Microservices + DevOps + Backend Senior expertise
+Features: Service discovery, load balancing, circuit breakers, health monitoring
 
-Enterprise-grade service registry with discovery, load balancing, health monitoring,
-and intelligent service mesh coordination.
+Author: Fahed Mlaiel <mlaiel@live.de>
+Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
 
-import asyncio
-import json
-import logging
-import time
-from datetime import datetime, timedelta
-from typing import Dict, List, Optional, Any, Set, Callable
-from dataclasses import dataclass, field, asdict
+from typing import Dict, List, Any, Optional, Union, Tuple, Set, Callable
+from pydantic import BaseModel, Field, validator
 from enum import Enum
-import aioredis
-import aiohttp
-from urllib.parse import urlparse
-import hashlib
+from datetime import datetime, timedelta
+import asyncio
 import uuid
+import json
+import time
+from dataclasses import dataclass, field
+import structlog
+from abc import ABC, abstractmethod
+from collections import defaultdict, deque
+import aiohttp
+import weakref
+import random
+import statistics
 
+logger = structlog.get_logger(__name__)
 
-# Configure logging
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
-
-
-class ServiceStatus(Enum):
-    """Service status enumeration"""
-    UNKNOWN = "unknown"
-    STARTING = "starting" 
+class ServiceStatus(str, Enum):
+    """Service health status"""
     HEALTHY = "healthy"
-    WARNING = "warning"
+    DEGRADED = "degraded"
     UNHEALTHY = "unhealthy"
-    CRITICAL = "critical"
-    SHUTTING_DOWN = "shutting_down"
-    OFFLINE = "offline"
+    UNKNOWN = "unknown"
+    MAINTENANCE = "maintenance"
 
+class CircuitBreakerState(str, Enum):
+    """Circuit breaker states"""
+    CLOSED = "closed"
+    OPEN = "open"
+    HALF_OPEN = "half_open"
 
-class ServiceType(Enum):
-    """Service type classification"""
-    CORE = "core"
-    PROCESSING = "processing"
-    ORCHESTRATION = "orchestration"
-    GATEWAY = "gateway"
-    DATABASE = "database"
-    CACHE = "cache"
-    QUEUE = "queue"
-    EXTERNAL = "external"
-
-
-class DiscoveryStrategy(Enum):
-    """Service discovery strategies"""
+class LoadBalancingStrategy(str, Enum):
+    """Load balancing strategies"""
     ROUND_ROBIN = "round_robin"
-    LEAST_CONNECTIONS = "least_connections"
     WEIGHTED_ROUND_ROBIN = "weighted_round_robin"
+    LEAST_CONNECTIONS = "least_connections"
     LEAST_RESPONSE_TIME = "least_response_time"
-    HEALTH_BASED = "health_based"
-    GEOGRAPHIC = "geographic"
+    RANDOM = "random"
+    CONSISTENT_HASH = "consistent_hash"
 
+class ScalingDirection(str, Enum):
+    """Scaling directions"""
+    UP = "up"
+    DOWN = "down"
+    NONE = "none"
 
 @dataclass
 class ServiceEndpoint:
-    """Service endpoint definition"""
-    path: str
-    method: str
-    description: str
-    timeout_ms: int = 5000
-    retries: int = 3
-    circuit_breaker: bool = True
-    rate_limit: Optional[int] = None
-    auth_required: bool = True
-
-
-@dataclass
-class ServiceInstance:
-    """Service instance with comprehensive metadata"""
-    service_id: str
-    service_name: str
-    service_type: ServiceType
-    version: str
+    """Service endpoint configuration"""
     host: str
     port: int
-    health_endpoint: str
+    protocol: str = "http"
+    path: str = "/"
+    weight: int = 100
+    max_connections: int = 1000
+    timeout_seconds: float = 30.0
+    health_check_path: str = "/health"
+    
+    @property
+    def url(self) -> str:
+        return f"{self.protocol}://{self.host}:{self.port}{self.path}"
+    
+    @property
+    def health_url(self) -> str:
+        return f"{self.protocol}://{self.host}:{self.port}{self.health_check_path}"
+
+class ServiceDefinition(BaseModel):
+    """Service definition and configuration"""
+    service_id: str = Field(..., description="Unique service identifier")
+    name: str = Field(..., description="Human-readable service name")
+    version: str = Field(..., description="Service version")
+    description: Optional[str] = None
+    endpoints: List[ServiceEndpoint] = Field(default_factory=list)
+    dependencies: List[str] = Field(default_factory=list)
+    tags: List[str] = Field(default_factory=list)
+    metadata: Dict[str, Any] = Field(default_factory=dict)
+    min_instances: int = Field(default=1, ge=1)
+    max_instances: int = Field(default=10, ge=1)
+    target_cpu_utilization: float = Field(default=70.0, ge=0.0, le=100.0)
+    target_memory_utilization: float = Field(default=80.0, ge=0.0, le=100.0)
+    load_balancing_strategy: LoadBalancingStrategy = LoadBalancingStrategy.ROUND_ROBIN
+    circuit_breaker_enabled: bool = True
+    retry_attempts: int = Field(default=3, ge=0, le=10)
+    timeout_seconds: float = Field(default=30.0, gt=0.0)
+    registered_at: datetime = Field(default_factory=datetime.now)
+    
+    @validator('max_instances')
+    def validate_max_instances(cls, v, values):
+        min_instances = values.get('min_instances', 1)
+        if v < min_instances:
+            raise ValueError('max_instances must be >= min_instances')
+        return v
+
+class ServiceInstance(BaseModel):
+    """Running service instance"""
+    instance_id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    service_id: str
+    endpoint: ServiceEndpoint
     status: ServiceStatus = ServiceStatus.UNKNOWN
-    
-    # Network & Discovery
-    endpoints: List[ServiceEndpoint] = field(default_factory=list)
-    dependencies: List[str] = field(default_factory=list)
-    load_balancer_weight: int = 100
-    priority: int = 1
-    
-    # Operational Metadata
-    registration_time: datetime = field(default_factory=datetime.now)
-    last_heartbeat: Optional[datetime] = None
+    started_at: datetime = Field(default_factory=datetime.now)
     last_health_check: Optional[datetime] = None
-    failure_count: int = 0
-    success_count: int = 0
-    
-    # Configuration
-    tags: List[str] = field(default_factory=list)
-    metadata: Dict[str, Any] = field(default_factory=dict)
-    environment: str = "production"
-    region: str = "default"
-    
-    # Performance Metrics
-    response_time_ms: float = 0.0
-    cpu_usage: float = 0.0
-    memory_usage: float = 0.0
+    consecutive_failures: int = 0
     active_connections: int = 0
-    
-    def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for storage"""
-        data = asdict(self)
-        data['service_type'] = self.service_type.value
-        data['status'] = self.status.value
-        data['registration_time'] = self.registration_time.isoformat()
-        if self.last_heartbeat:
-            data['last_heartbeat'] = self.last_heartbeat.isoformat()
-        if self.last_health_check:
-            data['last_health_check'] = self.last_health_check.isoformat()
-        return data
-    
-    @classmethod
-    def from_dict(cls, data: Dict[str, Any]) -> 'ServiceInstance':
-        """Create instance from dictionary"""
-        # Convert enum values
-        data['service_type'] = ServiceType(data['service_type'])
-        data['status'] = ServiceStatus(data['status'])
-        
-        # Convert datetime strings
-        data['registration_time'] = datetime.fromisoformat(data['registration_time'])
-        if data.get('last_heartbeat'):
-            data['last_heartbeat'] = datetime.fromisoformat(data['last_heartbeat'])
-        if data.get('last_health_check'):
-            data['last_health_check'] = datetime.fromisoformat(data['last_health_check'])
-        
-        # Convert endpoints
-        endpoints_data = data.get('endpoints', [])
-        data['endpoints'] = [ServiceEndpoint(**ep) for ep in endpoints_data]
-        
-        return cls(**data)
-
-
-@dataclass
-class LoadBalancerMetrics:
-    """Load balancer performance metrics"""
     total_requests: int = 0
     successful_requests: int = 0
     failed_requests: int = 0
     average_response_time: float = 0.0
-    peak_response_time: float = 0.0
-    min_response_time: float = float('inf')
-    requests_per_second: float = 0.0
-    last_reset: datetime = field(default_factory=datetime.now)
+    cpu_utilization: float = 0.0
+    memory_utilization: float = 0.0
+    metadata: Dict[str, Any] = Field(default_factory=dict)
 
+class CircuitBreaker:
+    """
+    Circuit breaker implementation for service resilience
+    
+    DevOps: Resilience patterns, failure handling
+    Backend Senior: Advanced state management, performance optimization
+    """
+    
+    def __init__(self, service_id: str, failure_threshold: int = 5, 
+                 recovery_timeout: float = 60.0, success_threshold: int = 3):
+        self.service_id = service_id
+        self.failure_threshold = failure_threshold
+        self.recovery_timeout = recovery_timeout
+        self.success_threshold = success_threshold
+        
+        self.state = CircuitBreakerState.CLOSED
+        self.failure_count = 0
+        self.success_count = 0
+        self.last_failure_time = 0.0
+        self.request_history = deque(maxlen=100)  # Last 100 requests
+        
+        logger.info("Circuit breaker initialized",
+                   service_id=service_id,
+                   failure_threshold=failure_threshold,
+                   recovery_timeout=recovery_timeout)
+    
+    async def call(self, func: Callable, *args, **kwargs):
+        """Execute function with circuit breaker protection"""
+        if self.state == CircuitBreakerState.OPEN:
+            if time.time() - self.last_failure_time > self.recovery_timeout:
+                self.state = CircuitBreakerState.HALF_OPEN
+                self.success_count = 0
+                logger.info("Circuit breaker transitioning to half-open",
+                           service_id=self.service_id)
+            else:
+                raise Exception(f"Circuit breaker OPEN for service {self.service_id}")
+        
+        try:
+            start_time = time.time()
+            result = await func(*args, **kwargs)
+            response_time = time.time() - start_time
+            
+            # Record success
+            self.request_history.append({
+                'success': True,
+                'response_time': response_time,
+                'timestamp': time.time()
+            })
+            
+            if self.state == CircuitBreakerState.HALF_OPEN:
+                self.success_count += 1
+                if self.success_count >= self.success_threshold:
+                    self.state = CircuitBreakerState.CLOSED
+                    self.failure_count = 0
+                    logger.info("Circuit breaker closed after recovery",
+                               service_id=self.service_id)
+            else:
+                self.failure_count = max(0, self.failure_count - 1)
+            
+            return result
+            
+        except Exception as e:
+            self.failure_count += 1
+            self.last_failure_time = time.time()
+            
+            # Record failure
+            self.request_history.append({
+                'success': False,
+                'error': str(e),
+                'timestamp': time.time()
+            })
+            
+            if (self.state == CircuitBreakerState.CLOSED and 
+                self.failure_count >= self.failure_threshold):
+                self.state = CircuitBreakerState.OPEN
+                logger.warning("Circuit breaker opened due to failures",
+                             service_id=self.service_id,
+                             failure_count=self.failure_count)
+            elif self.state == CircuitBreakerState.HALF_OPEN:
+                self.state = CircuitBreakerState.OPEN
+                logger.warning("Circuit breaker reopened during half-open state",
+                             service_id=self.service_id)
+            
+            raise
+    
+    def get_metrics(self) -> Dict[str, Any]:
+        """Get circuit breaker metrics"""
+        recent_requests = [r for r in self.request_history 
+                          if time.time() - r['timestamp'] < 300]  # Last 5 minutes
+        
+        success_rate = 0.0
+        avg_response_time = 0.0
+        
+        if recent_requests:
+            successful = [r for r in recent_requests if r['success']]
+            success_rate = len(successful) / len(recent_requests)
+            
+            if successful:
+                avg_response_time = statistics.mean(r['response_time'] for r in successful)
+        
+        return {
+            'state': self.state.value,
+            'failure_count': self.failure_count,
+            'success_count': self.success_count,
+            'success_rate': success_rate,
+            'average_response_time': avg_response_time,
+            'total_requests': len(self.request_history),
+            'recent_requests': len(recent_requests)
+        }
+
+class LoadBalancer:
+    """
+    Intelligent load balancer with multiple strategies
+    
+    Microservices: Service mesh capabilities, intelligent routing
+    Backend Senior: Performance optimization, algorithm implementation
+    """
+    
+    def __init__(self, strategy: LoadBalancingStrategy = LoadBalancingStrategy.ROUND_ROBIN):
+        self.strategy = strategy
+        self.round_robin_index = 0
+        self.connection_counts: Dict[str, int] = defaultdict(int)
+        self.response_times: Dict[str, deque] = defaultdict(lambda: deque(maxlen=50))
+    
+    async def select_instance(self, instances: List[ServiceInstance]) -> Optional[ServiceInstance]:
+        """Select best instance based on load balancing strategy"""
+        
+        # Filter healthy instances
+        healthy_instances = [
+            instance for instance in instances 
+            if instance.status == ServiceStatus.HEALTHY
+        ]
+        
+        if not healthy_instances:
+            # Try degraded instances as fallback
+            healthy_instances = [
+                instance for instance in instances
+                if instance.status == ServiceStatus.DEGRADED
+            ]
+        
+        if not healthy_instances:
+            return None
+        
+        if self.strategy == LoadBalancingStrategy.ROUND_ROBIN:
+            return self._round_robin_select(healthy_instances)
+        elif self.strategy == LoadBalancingStrategy.WEIGHTED_ROUND_ROBIN:
+            return self._weighted_round_robin_select(healthy_instances)
+        elif self.strategy == LoadBalancingStrategy.LEAST_CONNECTIONS:
+            return self._least_connections_select(healthy_instances)
+        elif self.strategy == LoadBalancingStrategy.LEAST_RESPONSE_TIME:
+            return self._least_response_time_select(healthy_instances)
+        elif self.strategy == LoadBalancingStrategy.RANDOM:
+            return self._random_select(healthy_instances)
+        elif self.strategy == LoadBalancingStrategy.CONSISTENT_HASH:
+            return self._consistent_hash_select(healthy_instances)
+        else:
+            return self._round_robin_select(healthy_instances)
+    
+    def _round_robin_select(self, instances: List[ServiceInstance]) -> ServiceInstance:
+        """Simple round-robin selection"""
+        instance = instances[self.round_robin_index % len(instances)]
+        self.round_robin_index += 1
+        return instance
+    
+    def _weighted_round_robin_select(self, instances: List[ServiceInstance]) -> ServiceInstance:
+        """Weighted round-robin based on endpoint weights"""
+        total_weight = sum(instance.endpoint.weight for instance in instances)
+        if total_weight == 0:
+            return self._round_robin_select(instances)
+        
+        target_weight = (self.round_robin_index % total_weight) + 1
+        current_weight = 0
+        
+        for instance in instances:
+            current_weight += instance.endpoint.weight
+            if current_weight >= target_weight:
+                self.round_robin_index += 1
+                return instance
+        
+        return instances[0]  # Fallback
+    
+    def _least_connections_select(self, instances: List[ServiceInstance]) -> ServiceInstance:
+        """Select instance with least active connections"""
+        return min(instances, key=lambda i: i.active_connections)
+    
+    def _least_response_time_select(self, instances: List[ServiceInstance]) -> ServiceInstance:
+        """Select instance with lowest average response time"""
+        best_instance = instances[0]
+        best_time = float('inf')
+        
+        for instance in instances:
+            avg_time = instance.average_response_time
+            if avg_time < best_time:
+                best_time = avg_time
+                best_instance = instance
+        
+        return best_instance
+    
+    def _random_select(self, instances: List[ServiceInstance]) -> ServiceInstance:
+        """Random selection"""
+        return random.choice(instances)
+    
+    def _consistent_hash_select(self, instances: List[ServiceInstance]) -> ServiceInstance:
+        """Consistent hash selection (simplified)"""
+        # Simplified implementation - in production would use proper consistent hashing
+        hash_value = hash(str(time.time())) % len(instances)
+        return instances[hash_value]
+    
+    def record_request(self, instance_id: str, response_time: float, success: bool):
+        """Record request metrics for load balancing decisions"""
+        if success:
+            self.response_times[instance_id].append(response_time)
+
+class AutoScaler:
+    """
+    Auto-scaling manager for service instances
+    
+    DevOps: Auto-scaling, resource management
+    Microservices: Dynamic service mesh scaling
+    """
+    
+    def __init__(self, scale_up_threshold: float = 70.0, scale_down_threshold: float = 30.0,
+                 cooldown_minutes: float = 5.0):
+        self.scale_up_threshold = scale_up_threshold
+        self.scale_down_threshold = scale_down_threshold
+        self.cooldown_period = cooldown_minutes * 60  # Convert to seconds
+        self.last_scaling_actions: Dict[str, float] = {}
+        
+        logger.info("Auto-scaler initialized",
+                   scale_up_threshold=scale_up_threshold,
+                   scale_down_threshold=scale_down_threshold,
+                   cooldown_minutes=cooldown_minutes)
+    
+    async def evaluate_scaling(self, service_id: str, instances: List[ServiceInstance],
+                             service_def: ServiceDefinition) -> ScalingDirection:
+        """Evaluate if service needs scaling"""
+        
+        # Check cooldown period
+        last_action_time = self.last_scaling_actions.get(service_id, 0)
+        if time.time() - last_action_time < self.cooldown_period:
+            return ScalingDirection.NONE
+        
+        if not instances:
+            return ScalingDirection.UP
+        
+        # Calculate average utilization
+        healthy_instances = [i for i in instances if i.status == ServiceStatus.HEALTHY]
+        if not healthy_instances:
+            return ScalingDirection.NONE
+        
+        avg_cpu = statistics.mean(i.cpu_utilization for i in healthy_instances)
+        avg_memory = statistics.mean(i.memory_utilization for i in healthy_instances)
+        
+        # Use the higher of CPU or memory utilization
+        utilization = max(avg_cpu, avg_memory)
+        
+        current_count = len(instances)
+        
+        # Scale up conditions
+        if (utilization > self.scale_up_threshold and 
+            current_count < service_def.max_instances):
+            logger.info("Scaling up recommended",
+                       service_id=service_id,
+                       utilization=utilization,
+                       current_instances=current_count)
+            return ScalingDirection.UP
+        
+        # Scale down conditions
+        elif (utilization < self.scale_down_threshold and 
+              current_count > service_def.min_instances):
+            logger.info("Scaling down recommended",
+                       service_id=service_id,
+                       utilization=utilization,
+                       current_instances=current_count)
+            return ScalingDirection.DOWN
+        
+        return ScalingDirection.NONE
+    
+    def record_scaling_action(self, service_id: str):
+        """Record scaling action for cooldown tracking"""
+        self.last_scaling_actions[service_id] = time.time()
 
 class ServiceRegistry:
     """
-    Enterprise Service Registry with Discovery, Load Balancing & Health Management
+    Service registry for service discovery
     
-    **Expert Roles Implemented:**
-    - Lead Dev IA: Intelligent service discovery algorithms
-    - Backend Senior: Robust async architecture with connection pooling
-    - Microservices: Service mesh patterns, circuit breakers
-    - DevOps: Health monitoring, metrics collection, observability
-    - Security: Service authentication, secure communication
+    Microservices: Service discovery, registration
+    Backend Senior: Efficient data structures, performance
     """
     
-    def __init__(
-        self,
-        redis_url: str = "redis://localhost:6379",
-        registry_ttl: int = 300,  # 5 minutes
-        health_check_interval: int = 30,  # 30 seconds
-        cleanup_interval: int = 60,  # 1 minute
-        max_retries: int = 3
-    ):
-        self.redis_url = redis_url
-        self.registry_ttl = registry_ttl
-        self.health_check_interval = health_check_interval
-        self.cleanup_interval = cleanup_interval
-        self.max_retries = max_retries
+    def __init__(self):
+        self.services: Dict[str, ServiceDefinition] = {}
+        self.instances: Dict[str, List[ServiceInstance]] = defaultdict(list)
+        self.service_dependencies: Dict[str, Set[str]] = defaultdict(set)
         
-        # Storage
-        self.redis_client: Optional[aioredis.Redis] = None
-        self.services: Dict[str, ServiceInstance] = {}
-        self.service_groups: Dict[str, List[str]] = {}  # service_name -> [service_ids]
-        
-        # Load Balancing
-        self.round_robin_indices: Dict[str, int] = {}
-        self.lb_metrics: Dict[str, LoadBalancerMetrics] = {}
-        
-        # Health & Monitoring
-        self.health_checkers: Dict[str, asyncio.Task] = {}
-        self.circuit_breakers: Dict[str, Dict[str, Any]] = {}
-        
-        # Background tasks
-        self.background_tasks: List[asyncio.Task] = []
-        self.running = False
-        
-    async def initialize(self) -> None:
-        """Initialize service registry"""
-        try:
-            self.redis_client = aioredis.from_url(self.redis_url)
-            await self.redis_client.ping()
-            
-            # Start background tasks
-            self.running = True
-            self.background_tasks = [
-                asyncio.create_task(self._health_check_loop()),
-                asyncio.create_task(self._cleanup_loop()),
-                asyncio.create_task(self._metrics_collection_loop())
-            ]
-            
-            logger.info("Service Registry initialized successfully")
-            
-        except Exception as e:
-            logger.error(f"Failed to initialize Service Registry: {e}")
-            raise
+        logger.info("Service registry initialized")
     
-    async def shutdown(self) -> None:
-        """Graceful shutdown"""
-        self.running = False
-        
-        # Cancel background tasks
-        for task in self.background_tasks:
-            task.cancel()
-        
-        await asyncio.gather(*self.background_tasks, return_exceptions=True)
-        
-        # Close Redis connection
-        if self.redis_client:
-            await self.redis_client.close()
-        
-        logger.info("Service Registry shutdown completed")
-    
-    async def register_service(self, service: ServiceInstance) -> bool:
-        """
-        Register a service instance
-        
-        **Roles**: Backend Senior + Microservices + Security
-        """
+    async def register_service(self, service_def: ServiceDefinition) -> bool:
+        """Register a new service"""
         try:
-            # Validate service
-            if not self._validate_service(service):
-                return False
+            self.services[service_def.service_id] = service_def
             
-            # Generate unique service ID if not provided
-            if not service.service_id:
-                service.service_id = self._generate_service_id(service)
+            # Initialize instance list if not exists
+            if service_def.service_id not in self.instances:
+                self.instances[service_def.service_id] = []
             
-            # Update registration time
-            service.registration_time = datetime.now()
-            service.last_heartbeat = datetime.now()
+            # Store dependencies
+            for dep in service_def.dependencies:
+                self.service_dependencies[service_def.service_id].add(dep)
             
-            # Store in memory
-            self.services[service.service_id] = service
+            logger.info("Service registered",
+                       service_id=service_def.service_id,
+                       name=service_def.name,
+                       version=service_def.version)
             
-            # Group by service name
-            if service.service_name not in self.service_groups:
-                self.service_groups[service.service_name] = []
-            if service.service_id not in self.service_groups[service.service_name]:
-                self.service_groups[service.service_name].append(service.service_id)
-            
-            # Store in Redis
-            await self._store_service_in_redis(service)
-            
-            # Initialize metrics
-            self.lb_metrics[service.service_id] = LoadBalancerMetrics()
-            
-            # Start health checking
-            await self._start_health_checking(service)
-            
-            logger.info(f"Service registered: {service.service_name}:{service.service_id}")
             return True
             
         except Exception as e:
-            logger.error(f"Failed to register service {service.service_name}: {e}")
+            logger.error("Service registration failed",
+                        service_id=service_def.service_id,
+                        error=str(e))
             return False
     
-    async def deregister_service(self, service_id: str) -> bool:
-        """
-        Deregister a service instance
-        
-        **Roles**: Backend Senior + DevOps
-        """
+    async def register_instance(self, service_id: str, endpoint: ServiceEndpoint) -> Optional[ServiceInstance]:
+        """Register a new service instance"""
         try:
             if service_id not in self.services:
-                return False
-            
-            service = self.services[service_id]
-            
-            # Update status
-            service.status = ServiceStatus.SHUTTING_DOWN
-            
-            # Remove from groups
-            if service.service_name in self.service_groups:
-                if service_id in self.service_groups[service.service_name]:
-                    self.service_groups[service.service_name].remove(service_id)
-                    if not self.service_groups[service.service_name]:
-                        del self.service_groups[service.service_name]
-            
-            # Stop health checking
-            if service_id in self.health_checkers:
-                self.health_checkers[service_id].cancel()
-                del self.health_checkers[service_id]
-            
-            # Remove from storage
-            del self.services[service_id]
-            await self._remove_service_from_redis(service_id)
-            
-            logger.info(f"Service deregistered: {service.service_name}:{service_id}")
-            return True
-            
-        except Exception as e:
-            logger.error(f"Failed to deregister service {service_id}: {e}")
-            return False
-    
-    async def discover_service(
-        self,
-        service_name: str,
-        strategy: DiscoveryStrategy = DiscoveryStrategy.HEALTH_BASED,
-        tags: Optional[List[str]] = None,
-        region: Optional[str] = None
-    ) -> Optional[ServiceInstance]:
-        """
-        Discover and select optimal service instance
-        
-        **Roles**: Lead Dev IA + Microservices
-        """
-        try:
-            # Get available instances
-            instances = await self.get_healthy_instances(service_name, tags, region)
-            if not instances:
+                logger.error("Cannot register instance for unknown service", service_id=service_id)
                 return None
             
-            # Apply discovery strategy
-            selected = self._apply_discovery_strategy(instances, strategy, service_name)
+            instance = ServiceInstance(
+                service_id=service_id,
+                endpoint=endpoint,
+                status=ServiceStatus.UNKNOWN
+            )
             
-            if selected:
-                # Update load balancer metrics
-                await self._update_lb_metrics(selected.service_id)
+            self.instances[service_id].append(instance)
             
-            return selected
+            logger.info("Service instance registered",
+                       service_id=service_id,
+                       instance_id=instance.instance_id,
+                       endpoint=endpoint.url)
+            
+            return instance
             
         except Exception as e:
-            logger.error(f"Failed to discover service {service_name}: {e}")
+            logger.error("Instance registration failed",
+                        service_id=service_id,
+                        error=str(e))
             return None
     
-    async def get_healthy_instances(
-        self,
-        service_name: str,
-        tags: Optional[List[str]] = None,
-        region: Optional[str] = None
-    ) -> List[ServiceInstance]:
-        """Get all healthy instances of a service"""
-        instances = []
-        
-        if service_name not in self.service_groups:
-            return instances
-        
-        for service_id in self.service_groups[service_name]:
-            if service_id not in self.services:
-                continue
-                
-            service = self.services[service_id]
+    async def deregister_instance(self, service_id: str, instance_id: str) -> bool:
+        """Deregister a service instance"""
+        try:
+            instances = self.instances.get(service_id, [])
+            for i, instance in enumerate(instances):
+                if instance.instance_id == instance_id:
+                    instances.pop(i)
+                    logger.info("Service instance deregistered",
+                               service_id=service_id,
+                               instance_id=instance_id)
+                    return True
             
-            # Check health status
-            if service.status not in [ServiceStatus.HEALTHY, ServiceStatus.WARNING]:
-                continue
-            
-            # Filter by tags
-            if tags and not all(tag in service.tags for tag in tags):
-                continue
-            
-            # Filter by region
-            if region and service.region != region:
-                continue
-            
-            instances.append(service)
-        
-        return instances
-    
-    def _apply_discovery_strategy(
-        self,
-        instances: List[ServiceInstance],
-        strategy: DiscoveryStrategy,
-        service_name: str
-    ) -> Optional[ServiceInstance]:
-        """Apply load balancing strategy"""
-        if not instances:
-            return None
-        
-        if strategy == DiscoveryStrategy.ROUND_ROBIN:
-            return self._round_robin_selection(instances, service_name)
-        
-        elif strategy == DiscoveryStrategy.LEAST_CONNECTIONS:
-            return min(instances, key=lambda x: x.active_connections)
-        
-        elif strategy == DiscoveryStrategy.WEIGHTED_ROUND_ROBIN:
-            return self._weighted_round_robin_selection(instances, service_name)
-        
-        elif strategy == DiscoveryStrategy.LEAST_RESPONSE_TIME:
-            return min(instances, key=lambda x: x.response_time_ms)
-        
-        elif strategy == DiscoveryStrategy.HEALTH_BASED:
-            return self._health_based_selection(instances)
-        
-        else:
-            return instances[0]  # Default fallback
-    
-    def _round_robin_selection(
-        self,
-        instances: List[ServiceInstance],
-        service_name: str
-    ) -> ServiceInstance:
-        """Round robin selection"""
-        if service_name not in self.round_robin_indices:
-            self.round_robin_indices[service_name] = 0
-        
-        index = self.round_robin_indices[service_name] % len(instances)
-        self.round_robin_indices[service_name] = (index + 1) % len(instances)
-        
-        return instances[index]
-    
-    def _weighted_round_robin_selection(
-        self,
-        instances: List[ServiceInstance],
-        service_name: str
-    ) -> ServiceInstance:
-        """Weighted round robin selection"""
-        total_weight = sum(instance.load_balancer_weight for instance in instances)
-        if total_weight == 0:
-            return instances[0]
-        
-        # Simple weighted selection (could be optimized)
-        import random
-        weighted_instances = []
-        for instance in instances:
-            weighted_instances.extend([instance] * instance.load_balancer_weight)
-        
-        return random.choice(weighted_instances)
-    
-    def _health_based_selection(self, instances: List[ServiceInstance]) -> ServiceInstance:
-        """Health-based selection with multiple factors"""
-        def health_score(instance: ServiceInstance) -> float:
-            score = 0.0
-            
-            # Health status weight
-            if instance.status == ServiceStatus.HEALTHY:
-                score += 100
-            elif instance.status == ServiceStatus.WARNING:
-                score += 50
-            
-            # Response time weight (inverse)
-            if instance.response_time_ms > 0:
-                score += max(0, 100 - instance.response_time_ms / 10)
-            
-            # Resource usage weight (inverse)
-            score += max(0, 100 - instance.cpu_usage)
-            score += max(0, 100 - instance.memory_usage)
-            
-            # Success rate weight
-            total_requests = instance.success_count + instance.failure_count
-            if total_requests > 0:
-                success_rate = instance.success_count / total_requests
-                score += success_rate * 100
-            
-            return score
-        
-        return max(instances, key=health_score)
-    
-    async def _store_service_in_redis(self, service: ServiceInstance) -> None:
-        """Store service in Redis with TTL"""
-        if not self.redis_client:
-            return
-        
-        key = f"service:{service.service_id}"
-        value = json.dumps(service.to_dict())
-        await self.redis_client.setex(key, self.registry_ttl, value)
-        
-        # Store in service name index
-        name_key = f"service_name:{service.service_name}"
-        await self.redis_client.sadd(name_key, service.service_id)
-        await self.redis_client.expire(name_key, self.registry_ttl)
-    
-    async def _remove_service_from_redis(self, service_id: str) -> None:
-        """Remove service from Redis"""
-        if not self.redis_client:
-            return
-        
-        # Get service to find name
-        key = f"service:{service_id}"
-        service_data = await self.redis_client.get(key)
-        
-        if service_data:
-            service_dict = json.loads(service_data)
-            service_name = service_dict.get('service_name')
-            
-            # Remove from name index
-            if service_name:
-                name_key = f"service_name:{service_name}"
-                await self.redis_client.srem(name_key, service_id)
-        
-        # Remove service key
-        await self.redis_client.delete(key)
-    
-    def _validate_service(self, service: ServiceInstance) -> bool:
-        """Validate service instance"""
-        if not service.service_name or not service.host or not service.port:
+            logger.warning("Instance not found for deregistration",
+                          service_id=service_id,
+                          instance_id=instance_id)
             return False
-        
-        if service.port < 1 or service.port > 65535:
+            
+        except Exception as e:
+            logger.error("Instance deregistration failed",
+                        service_id=service_id,
+                        instance_id=instance_id,
+                        error=str(e))
             return False
+    
+    async def discover_services(self, tags: List[str] = None) -> List[ServiceDefinition]:
+        """Discover services by tags"""
+        if not tags:
+            return list(self.services.values())
         
-        return True
-    
-    def _generate_service_id(self, service: ServiceInstance) -> str:
-        """Generate unique service ID"""
-        content = f"{service.service_name}-{service.host}-{service.port}-{time.time()}"
-        return hashlib.md5(content.encode()).hexdigest()[:16]
-    
-    async def _start_health_checking(self, service: ServiceInstance) -> None:
-        """Start health checking for service"""
-        async def health_check_worker():
-            while self.running and service.service_id in self.services:
-                try:
-                    await self._perform_health_check(service)
-                    await asyncio.sleep(self.health_check_interval)
-                except asyncio.CancelledError:
-                    break
-                except Exception as e:
-                    logger.error(f"Health check error for {service.service_id}: {e}")
-                    await asyncio.sleep(5)  # Short retry delay
+        matching_services = []
+        for service in self.services.values():
+            if any(tag in service.tags for tag in tags):
+                matching_services.append(service)
         
-        task = asyncio.create_task(health_check_worker())
-        self.health_checkers[service.service_id] = task
+        return matching_services
     
-    async def _perform_health_check(self, service: ServiceInstance) -> None:
-        """Perform health check on service"""
+    async def get_service_instances(self, service_id: str) -> List[ServiceInstance]:
+        """Get all instances for a service"""
+        return self.instances.get(service_id, [])
+    
+    async def get_healthy_instances(self, service_id: str) -> List[ServiceInstance]:
+        """Get only healthy instances for a service"""
+        instances = self.instances.get(service_id, [])
+        return [i for i in instances if i.status == ServiceStatus.HEALTHY]
+
+class MicroserviceOrchestrator:
+    """
+    Enterprise Microservice Orchestrator
+    
+    Demonstrates expertise in:
+    - Microservices: Service mesh, discovery, communication patterns
+    - DevOps: Auto-scaling, health monitoring, resilience patterns
+    - Backend Senior: Complex async orchestration, performance optimization
+    """
+    
+    def __init__(self, config: Dict[str, Any] = None):
+        self.config = config or {}
+        self.registry = ServiceRegistry()
+        self.load_balancers: Dict[str, LoadBalancer] = {}
+        self.circuit_breakers: Dict[str, CircuitBreaker] = {}
+        self.auto_scaler = AutoScaler(
+            scale_up_threshold=self.config.get('scale_up_threshold', 70.0),
+            scale_down_threshold=self.config.get('scale_down_threshold', 30.0),
+            cooldown_minutes=self.config.get('cooldown_minutes', 5.0)
+        )
+        
+        self.health_check_interval = self.config.get('health_check_interval', 30)  # seconds
+        self.metrics = {
+            'total_requests': 0,
+            'successful_requests': 0,
+            'failed_requests': 0,
+            'circuit_breaker_trips': 0,
+            'auto_scaling_actions': 0,
+            'average_response_time': 0.0
+        }
+        
+        # Start background tasks
+        self._health_check_task = None
+        self._auto_scaling_task = None
+        self._start_background_tasks()
+        
+        logger.info("Microservice Orchestrator initialized",
+                   config=self.config)
+    
+    def _start_background_tasks(self):
+        """Start background monitoring tasks"""
+        self._health_check_task = asyncio.create_task(self._health_check_loop())
+        self._auto_scaling_task = asyncio.create_task(self._auto_scaling_loop())
+    
+    async def register_service(self, service_def: ServiceDefinition) -> bool:
+        """Register a new service with the orchestrator"""
+        success = await self.registry.register_service(service_def)
+        
+        if success:
+            # Initialize load balancer
+            self.load_balancers[service_def.service_id] = LoadBalancer(
+                service_def.load_balancing_strategy
+            )
+            
+            # Initialize circuit breaker if enabled
+            if service_def.circuit_breaker_enabled:
+                self.circuit_breakers[service_def.service_id] = CircuitBreaker(
+                    service_def.service_id,
+                    failure_threshold=self.config.get('circuit_breaker_failure_threshold', 5),
+                    recovery_timeout=self.config.get('circuit_breaker_recovery_timeout', 60.0)
+                )
+        
+        return success
+    
+    async def register_instance(self, service_id: str, endpoint: ServiceEndpoint) -> Optional[ServiceInstance]:
+        """Register a new service instance"""
+        return await self.registry.register_instance(service_id, endpoint)
+    
+    async def call_service(self, service_id: str, method: str = "GET", 
+                          path: str = "/", data: Any = None, 
+                          headers: Dict[str, str] = None) -> Dict[str, Any]:
+        """
+        Make a call to a service through the orchestrator
+        
+        Microservices: Service-to-service communication
+        Backend Senior: Resilient request handling
+        DevOps: Circuit breaker, load balancing
+        """
+        start_time = time.time()
+        
+        try:
+            # Get service instances
+            instances = await self.registry.get_service_instances(service_id)
+            if not instances:
+                raise Exception(f"No instances available for service {service_id}")
+            
+            # Select instance using load balancer
+            load_balancer = self.load_balancers.get(service_id)
+            if not load_balancer:
+                raise Exception(f"No load balancer configured for service {service_id}")
+            
+            selected_instance = await load_balancer.select_instance(instances)
+            if not selected_instance:
+                raise Exception(f"No healthy instances available for service {service_id}")
+            
+            # Get circuit breaker
+            circuit_breaker = self.circuit_breakers.get(service_id)
+            
+            # Make the actual request
+            async def make_request():
+                return await self._execute_http_request(
+                    selected_instance, method, path, data, headers
+                )
+            
+            # Execute with circuit breaker if available
+            if circuit_breaker:
+                result = await circuit_breaker.call(make_request)
+            else:
+                result = await make_request()
+            
+            # Update metrics
+            response_time = time.time() - start_time
+            self.metrics['total_requests'] += 1
+            self.metrics['successful_requests'] += 1
+            self._update_average_response_time(response_time)
+            
+            # Update load balancer metrics
+            load_balancer.record_request(selected_instance.instance_id, response_time, True)
+            
+            # Update instance metrics
+            selected_instance.total_requests += 1
+            selected_instance.successful_requests += 1
+            selected_instance.active_connections = max(0, selected_instance.active_connections - 1)
+            
+            logger.info("Service call successful",
+                       service_id=service_id,
+                       instance_id=selected_instance.instance_id,
+                       response_time=response_time,
+                       method=method,
+                       path=path)
+            
+            return result
+            
+        except Exception as e:
+            # Update failure metrics
+            response_time = time.time() - start_time
+            self.metrics['total_requests'] += 1
+            self.metrics['failed_requests'] += 1
+            
+            logger.error("Service call failed",
+                        service_id=service_id,
+                        error=str(e),
+                        response_time=response_time,
+                        method=method,
+                        path=path)
+            
+            raise
+    
+    async def _execute_http_request(self, instance: ServiceInstance, method: str,
+                                  path: str, data: Any, headers: Dict[str, str]) -> Dict[str, Any]:
+        """Execute HTTP request to service instance"""
+        url = f"{instance.endpoint.url.rstrip('/')}{path}"
+        timeout = aiohttp.ClientTimeout(total=instance.endpoint.timeout_seconds)
+        
+        # Update active connections
+        instance.active_connections += 1
+        
+        try:
+            async with aiohttp.ClientSession(timeout=timeout) as session:
+                async with session.request(
+                    method=method,
+                    url=url,
+                    json=data if data else None,
+                    headers=headers or {}
+                ) as response:
+                    
+                    if response.status >= 400:
+                        raise aiohttp.ClientResponseError(
+                            request_info=response.request_info,
+                            history=response.history,
+                            status=response.status,
+                            message=f"HTTP {response.status}"
+                        )
+                    
+                    return {
+                        'status': response.status,
+                        'data': await response.json() if response.content_type == 'application/json' else await response.text(),
+                        'headers': dict(response.headers)
+                    }
+        
+        except Exception as e:
+            instance.failed_requests += 1
+            raise
+        
+        finally:
+            instance.active_connections = max(0, instance.active_connections - 1)
+    
+    async def _health_check_loop(self):
+        """Background health check loop"""
+        while True:
+            try:
+                await self._perform_health_checks()
+                await asyncio.sleep(self.health_check_interval)
+            except Exception as e:
+                logger.error("Health check loop error", error=str(e))
+                await asyncio.sleep(5)  # Short retry interval
+    
+    async def _perform_health_checks(self):
+        """Perform health checks on all service instances"""
+        all_services = await self.registry.discover_services()
+        
+        for service in all_services:
+            instances = await self.registry.get_service_instances(service.service_id)
+            
+            # Perform health checks in parallel
+            health_check_tasks = [
+                self._check_instance_health(instance)
+                for instance in instances
+            ]
+            
+            if health_check_tasks:
+                await asyncio.gather(*health_check_tasks, return_exceptions=True)
+    
+    async def _check_instance_health(self, instance: ServiceInstance):
+        """Check health of a single service instance"""
         try:
             start_time = time.time()
             
-            async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=5)) as session:
-                url = f"http://{service.host}:{service.port}{service.health_endpoint}"
-                
-                async with session.get(url) as response:
-                    response_time = (time.time() - start_time) * 1000  # ms
+            async with aiohttp.ClientSession() as session:
+                async with session.get(
+                    instance.endpoint.health_url,
+                    timeout=aiohttp.ClientTimeout(total=10)
+                ) as response:
+                    
+                    response_time = time.time() - start_time
                     
                     if response.status == 200:
-                        service.status = ServiceStatus.HEALTHY
-                        service.success_count += 1
-                        service.failure_count = max(0, service.failure_count - 1)
+                        health_data = await response.json()
+                        
+                        # Update instance status
+                        old_status = instance.status
+                        instance.status = ServiceStatus.HEALTHY
+                        instance.last_health_check = datetime.now()
+                        instance.consecutive_failures = 0
+                        
+                        # Update resource utilization if available
+                        if 'cpu_utilization' in health_data:
+                            instance.cpu_utilization = health_data['cpu_utilization']
+                        if 'memory_utilization' in health_data:
+                            instance.memory_utilization = health_data['memory_utilization']
+                        
+                        # Update average response time
+                        if instance.average_response_time == 0:
+                            instance.average_response_time = response_time
+                        else:
+                            # Exponential moving average
+                            alpha = 0.1
+                            instance.average_response_time = (
+                                alpha * response_time + 
+                                (1 - alpha) * instance.average_response_time
+                            )
+                        
+                        if old_status != ServiceStatus.HEALTHY:
+                            logger.info("Instance recovered",
+                                       service_id=instance.service_id,
+                                       instance_id=instance.instance_id)
+                    
                     else:
-                        service.status = ServiceStatus.WARNING
-                        service.failure_count += 1
-                    
-                    service.response_time_ms = response_time
-                    service.last_health_check = datetime.now()
-                    
-                    # Update metrics
-                    await self._update_service_metrics(service, response_time, True)
+                        await self._mark_instance_unhealthy(instance, f"Health check returned {response.status}")
         
         except Exception as e:
-            service.status = ServiceStatus.UNHEALTHY
-            service.failure_count += 1
-            service.last_health_check = datetime.now()
-            
-            # Critical status if too many failures
-            if service.failure_count >= 5:
-                service.status = ServiceStatus.CRITICAL
-            
-            await self._update_service_metrics(service, 0, False)
-            logger.warning(f"Health check failed for {service.service_id}: {e}")
+            await self._mark_instance_unhealthy(instance, str(e))
     
-    async def _update_service_metrics(
-        self,
-        service: ServiceInstance,
-        response_time: float,
-        success: bool
-    ) -> None:
-        """Update service performance metrics"""
-        if service.service_id not in self.lb_metrics:
-            self.lb_metrics[service.service_id] = LoadBalancerMetrics()
+    async def _mark_instance_unhealthy(self, instance: ServiceInstance, reason: str):
+        """Mark instance as unhealthy"""
+        instance.consecutive_failures += 1
         
-        metrics = self.lb_metrics[service.service_id]
-        metrics.total_requests += 1
+        if instance.consecutive_failures >= 3:
+            old_status = instance.status
+            instance.status = ServiceStatus.UNHEALTHY
+            
+            if old_status != ServiceStatus.UNHEALTHY:
+                logger.warning("Instance marked unhealthy",
+                             service_id=instance.service_id,
+                             instance_id=instance.instance_id,
+                             reason=reason,
+                             consecutive_failures=instance.consecutive_failures)
+        elif instance.consecutive_failures >= 1:
+            instance.status = ServiceStatus.DEGRADED
+    
+    async def _auto_scaling_loop(self):
+        """Background auto-scaling loop"""
+        while True:
+            try:
+                await self._perform_auto_scaling()
+                await asyncio.sleep(60)  # Check every minute
+            except Exception as e:
+                logger.error("Auto-scaling loop error", error=str(e))
+                await asyncio.sleep(30)  # Retry after 30 seconds
+    
+    async def _perform_auto_scaling(self):
+        """Perform auto-scaling evaluation for all services"""
+        all_services = await self.registry.discover_services()
         
-        if success:
-            metrics.successful_requests += 1
-        else:
-            metrics.failed_requests += 1
-        
-        if response_time > 0:
-            # Update response time metrics
-            if metrics.total_requests == 1:
-                metrics.average_response_time = response_time
-                metrics.min_response_time = response_time
-                metrics.peak_response_time = response_time
-            else:
-                # Running average
-                metrics.average_response_time = (
-                    (metrics.average_response_time * (metrics.total_requests - 1) + response_time) /
-                    metrics.total_requests
+        for service in all_services:
+            try:
+                instances = await self.registry.get_service_instances(service.service_id)
+                scaling_direction = await self.auto_scaler.evaluate_scaling(
+                    service.service_id, instances, service
                 )
-                metrics.min_response_time = min(metrics.min_response_time, response_time)
-                metrics.peak_response_time = max(metrics.peak_response_time, response_time)
-    
-    async def _update_lb_metrics(self, service_id: str) -> None:
-        """Update load balancer metrics for service selection"""
-        if service_id in self.lb_metrics:
-            # Calculate requests per second
-            metrics = self.lb_metrics[service_id]
-            time_diff = datetime.now() - metrics.last_reset
-            if time_diff.total_seconds() > 0:
-                metrics.requests_per_second = metrics.total_requests / time_diff.total_seconds()
-    
-    async def _health_check_loop(self) -> None:
-        """Background health checking loop"""
-        while self.running:
-            try:
-                # Health checks are handled by individual service tasks
-                await asyncio.sleep(self.health_check_interval)
-            except asyncio.CancelledError:
-                break
+                
+                if scaling_direction == ScalingDirection.UP:
+                    await self._scale_up_service(service)
+                elif scaling_direction == ScalingDirection.DOWN:
+                    await self._scale_down_service(service)
+                    
             except Exception as e:
-                logger.error(f"Health check loop error: {e}")
-                await asyncio.sleep(5)
+                logger.error("Auto-scaling evaluation failed",
+                           service_id=service.service_id,
+                           error=str(e))
     
-    async def _cleanup_loop(self) -> None:
-        """Background cleanup loop"""
-        while self.running:
+    async def _scale_up_service(self, service: ServiceDefinition):
+        """Scale up a service by adding instances"""
+        try:
+            # In a real implementation, this would trigger container/VM creation
+            # For now, we'll simulate by adding a new endpoint
+            
+            instances = await self.registry.get_service_instances(service.service_id)
+            if len(instances) >= service.max_instances:
+                return
+            
+            # Create new endpoint (simulated)
+            new_port = 8000 + len(instances)
+            new_endpoint = ServiceEndpoint(
+                host="localhost",
+                port=new_port,
+                protocol="http"
+            )
+            
+            new_instance = await self.registry.register_instance(service.service_id, new_endpoint)
+            if new_instance:
+                self.auto_scaler.record_scaling_action(service.service_id)
+                self.metrics['auto_scaling_actions'] += 1
+                
+                logger.info("Service scaled up",
+                           service_id=service.service_id,
+                           new_instance_id=new_instance.instance_id,
+                           total_instances=len(instances) + 1)
+                
+        except Exception as e:
+            logger.error("Scale up failed",
+                        service_id=service.service_id,
+                        error=str(e))
+    
+    async def _scale_down_service(self, service: ServiceDefinition):
+        """Scale down a service by removing instances"""
+        try:
+            instances = await self.registry.get_service_instances(service.service_id)
+            if len(instances) <= service.min_instances:
+                return
+            
+            # Find least utilized instance to remove
+            healthy_instances = [i for i in instances if i.status == ServiceStatus.HEALTHY]
+            if not healthy_instances:
+                return
+            
+            # Remove instance with lowest utilization
+            instance_to_remove = min(
+                healthy_instances,
+                key=lambda i: max(i.cpu_utilization, i.memory_utilization)
+            )
+            
+            success = await self.registry.deregister_instance(
+                service.service_id, instance_to_remove.instance_id
+            )
+            
+            if success:
+                self.auto_scaler.record_scaling_action(service.service_id)
+                self.metrics['auto_scaling_actions'] += 1
+                
+                logger.info("Service scaled down",
+                           service_id=service.service_id,
+                           removed_instance_id=instance_to_remove.instance_id,
+                           total_instances=len(instances) - 1)
+                
+        except Exception as e:
+            logger.error("Scale down failed",
+                        service_id=service.service_id,
+                        error=str(e))
+    
+    def _update_average_response_time(self, response_time: float):
+        """Update average response time metric"""
+        total = self.metrics['total_requests']
+        if total <= 1:
+            self.metrics['average_response_time'] = response_time
+        else:
+            current_avg = self.metrics['average_response_time']
+            self.metrics['average_response_time'] = (
+                (current_avg * (total - 1) + response_time) / total
+            )
+    
+    async def get_service_topology(self) -> Dict[str, Any]:
+        """Get complete service topology and dependencies"""
+        topology = {
+            'services': {},
+            'dependencies': {},
+            'metrics': self.metrics
+        }
+        
+        all_services = await self.registry.discover_services()
+        
+        for service in all_services:
+            instances = await self.registry.get_service_instances(service.service_id)
+            
+            topology['services'][service.service_id] = {
+                'definition': service.dict(),
+                'instances': [
+                    {
+                        'instance_id': instance.instance_id,
+                        'endpoint': f"{instance.endpoint.host}:{instance.endpoint.port}",
+                        'status': instance.status.value,
+                        'health': {
+                            'consecutive_failures': instance.consecutive_failures,
+                            'last_health_check': instance.last_health_check.isoformat() if instance.last_health_check else None,
+                            'response_time': instance.average_response_time
+                        },
+                        'metrics': {
+                            'total_requests': instance.total_requests,
+                            'successful_requests': instance.successful_requests,
+                            'failed_requests': instance.failed_requests,
+                            'active_connections': instance.active_connections,
+                            'cpu_utilization': instance.cpu_utilization,
+                            'memory_utilization': instance.memory_utilization
+                        }
+                    }
+                    for instance in instances
+                ],
+                'circuit_breaker': None,
+                'load_balancer': {
+                    'strategy': service.load_balancing_strategy.value
+                }
+            }
+            
+            # Add circuit breaker info if available
+            if service.service_id in self.circuit_breakers:
+                cb_metrics = self.circuit_breakers[service.service_id].get_metrics()
+                topology['services'][service.service_id]['circuit_breaker'] = cb_metrics
+            
+            # Add dependencies
+            topology['dependencies'][service.service_id] = list(service.dependencies)
+        
+        return topology
+    
+    async def get_service_metrics(self) -> Dict[str, Any]:
+        """Get comprehensive orchestrator metrics"""
+        all_services = await self.registry.discover_services()
+        
+        service_metrics = {}
+        for service in all_services:
+            instances = await self.registry.get_service_instances(service.service_id)
+            healthy_count = len([i for i in instances if i.status == ServiceStatus.HEALTHY])
+            
+            service_metrics[service.service_id] = {
+                'total_instances': len(instances),
+                'healthy_instances': healthy_count,
+                'health_ratio': healthy_count / max(len(instances), 1),
+                'circuit_breaker_state': (
+                    self.circuit_breakers[service.service_id].state.value
+                    if service.service_id in self.circuit_breakers else None
+                )
+            }
+        
+        return {
+            **self.metrics,
+            'services': service_metrics,
+            'total_services': len(all_services),
+            'orchestrator_status': 'healthy'
+        }
+    
+    async def health_check(self) -> Dict[str, Any]:
+        """Orchestrator health check"""
+        all_services = await self.registry.discover_services()
+        total_instances = sum(
+            len(await self.registry.get_service_instances(service.service_id))
+            for service in all_services
+        )
+        
+        return {
+            'service': 'microservice_orchestrator',
+            'status': 'healthy',
+            'version': '1.0.0',
+            'registered_services': len(all_services),
+            'total_instances': total_instances,
+            'background_tasks': {
+                'health_check': not self._health_check_task.done() if self._health_check_task else False,
+                'auto_scaling': not self._auto_scaling_task.done() if self._auto_scaling_task else False
+            }
+        }
+    
+    async def shutdown(self):
+        """Graceful shutdown of orchestrator"""
+        logger.info("Shutting down Microservice Orchestrator")
+        
+        if self._health_check_task:
+            self._health_check_task.cancel()
+        if self._auto_scaling_task:
+            self._auto_scaling_task.cancel()
+        
+        # Wait for tasks to complete
+        if self._health_check_task:
             try:
-                await self._cleanup_stale_services()
-                await asyncio.sleep(self.cleanup_interval)
+                await self._health_check_task
             except asyncio.CancelledError:
-                break
-            except Exception as e:
-                logger.error(f"Cleanup loop error: {e}")
-                await asyncio.sleep(5)
-    
-    async def _cleanup_stale_services(self) -> None:
-        """Clean up stale service instances"""
-        current_time = datetime.now()
-        stale_threshold = timedelta(minutes=10)
+                pass
         
-        stale_services = []
-        for service_id, service in self.services.items():
-            if service.last_heartbeat:
-                time_since_heartbeat = current_time - service.last_heartbeat
-                if time_since_heartbeat > stale_threshold:
-                    stale_services.append(service_id)
-        
-        for service_id in stale_services:
-            logger.warning(f"Removing stale service: {service_id}")
-            await self.deregister_service(service_id)
-    
-    async def _metrics_collection_loop(self) -> None:
-        """Background metrics collection loop"""
-        while self.running:
+        if self._auto_scaling_task:
             try:
-                await self._collect_registry_metrics()
-                await asyncio.sleep(30)  # Collect every 30 seconds
+                await self._auto_scaling_task
             except asyncio.CancelledError:
-                break
-            except Exception as e:
-                logger.error(f"Metrics collection error: {e}")
-                await asyncio.sleep(5)
+                pass
+
+# Example usage and testing
+async def example_usage():
+    """Example usage of the Microservice Orchestrator"""
     
-    async def _collect_registry_metrics(self) -> None:
-        """Collect and log registry metrics"""
-        total_services = len(self.services)
-        healthy_services = len([s for s in self.services.values() if s.status == ServiceStatus.HEALTHY])
-        service_types = {}
-        
-        for service in self.services.values():
-            service_type = service.service_type.value
-            service_types[service_type] = service_types.get(service_type, 0) + 1
-        
-        logger.info(f"Registry metrics - Total: {total_services}, Healthy: {healthy_services}, Types: {service_types}")
+    # Initialize orchestrator
+    orchestrator = MicroserviceOrchestrator({
+        'health_check_interval': 10,
+        'scale_up_threshold': 70.0,
+        'scale_down_threshold': 30.0,
+        'cooldown_minutes': 2.0
+    })
     
-    async def get_service_status(self, service_id: str) -> Optional[ServiceInstance]:
-        """Get current status of a service"""
-        return self.services.get(service_id)
+    # Define a service
+    user_service = ServiceDefinition(
+        service_id="user_service",
+        name="User Management Service",
+        version="1.0.0",
+        description="Manages user accounts and authentication",
+        dependencies=["database_service"],
+        tags=["authentication", "user_management"],
+        min_instances=2,
+        max_instances=5,
+        load_balancing_strategy=LoadBalancingStrategy.LEAST_CONNECTIONS
+    )
     
-    async def get_all_services(self) -> List[ServiceInstance]:
-        """Get all registered services"""
-        return list(self.services.values())
+    # Register service
+    await orchestrator.register_service(user_service)
     
-    async def get_services_by_type(self, service_type: ServiceType) -> List[ServiceInstance]:
-        """Get services by type"""
-        return [s for s in self.services.values() if s.service_type == service_type]
+    # Register service instances
+    for i in range(2):
+        endpoint = ServiceEndpoint(
+            host="localhost",
+            port=8000 + i,
+            protocol="http",
+            health_check_path="/health"
+        )
+        await orchestrator.register_instance("user_service", endpoint)
     
-    async def update_service_metadata(
-        self,
-        service_id: str,
-        metadata: Dict[str, Any]
-    ) -> bool:
-        """Update service metadata"""
-        if service_id not in self.services:
-            return False
-        
-        self.services[service_id].metadata.update(metadata)
-        await self._store_service_in_redis(self.services[service_id])
-        return True
+    # Wait a bit for health checks
+    await asyncio.sleep(2)
+    
+    # Get service topology
+    topology = await orchestrator.get_service_topology()
+    print(f"Service topology: {json.dumps(topology, indent=2, default=str)}")
+    
+    # Get metrics
+    metrics = await orchestrator.get_service_metrics()
+    print(f"Orchestrator metrics: {metrics}")
+    
+    # Shutdown
+    await orchestrator.shutdown()
+
+if __name__ == "__main__":
+    asyncio.run(example_usage())
