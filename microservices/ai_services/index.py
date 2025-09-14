@@ -197,7 +197,19 @@ class AIServicesModule:
             elif service_name == 'content_classification':
                 from . import content_classification_service
                 service_info.instance = content_classification_service
-            # New services will be loaded as they are created
+            elif service_name == 'ai_performance_optimizer':
+                from . import ai_performance_optimizer
+                service_info.instance = ai_performance_optimizer
+            elif service_name == 'ai_pipeline_orchestrator':
+                from . import ai_pipeline_orchestrator
+                service_info.instance = ai_pipeline_orchestrator
+            elif service_name == 'ai_model_serving':
+                from . import ai_model_serving
+                service_info.instance = ai_model_serving
+            elif service_name == 'ai_experiment_tracker':
+                from . import ai_experiment_tracker
+                service_info.instance = ai_experiment_tracker
+            # Additional services to be implemented later
             
             service_info.is_active = True
             
