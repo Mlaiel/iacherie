@@ -18,6 +18,12 @@ from .retry_policy_engine import RetryPolicyEngine
 from .bulkhead_isolation_manager import BulkheadIsolationManager, Bulkhead
 from .timeout_management_system import TimeoutManagementSystem
 
+# Phase 2: Distributed Error Management
+from .distributed_error_orchestrator import DistributedErrorOrchestrator
+from .error_propagation_controller import ErrorPropagationController
+from .distributed_tracing_integration import DistributedTracingIntegration
+from .compensation_transaction_manager import CompensationTransactionManager
+
 # Public exports
 __all__ = [
     # Core Error Handling
@@ -30,6 +36,12 @@ __all__ = [
     'BulkheadIsolationManager',
     'Bulkhead',
     'TimeoutManagementSystem',
+    
+    # Phase 2: Distributed Error Management
+    'DistributedErrorOrchestrator',
+    'ErrorPropagationController',
+    'DistributedTracingIntegration',
+    'CompensationTransactionManager',
 ]
 
 # Metadata
@@ -48,9 +60,14 @@ AINFLUE_ERROR_HANDLING = {
         'circuit_breaker_patterns',
         'adaptive_retry_policies',
         'bulkhead_isolation',
-        'timeout_management'
+        'timeout_management',
+        'distributed_orchestration',
+        'error_propagation_control',
+        'distributed_tracing',
+        'saga_compensation'
     ],
     'workflow': 'connect→auth→transform→process→distribute→monitor',
     'phase_1_complete': True,
-    'implementation_coverage': '38.9%'  # 7/18 files implemented
+    'phase_2_complete': True,
+    'implementation_coverage': '61.1%'  # 11/18 files implemented
 }

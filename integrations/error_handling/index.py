@@ -19,12 +19,22 @@ from .retry_policy_engine import *
 from .bulkhead_isolation_manager import *
 from .timeout_management_system import *
 
+# Phase 2: Distributed Error Management
+from .distributed_error_orchestrator import *
+from .error_propagation_controller import *
+from .distributed_tracing_integration import *
+from .compensation_transaction_manager import *
+
 # Re-export for convenience
 from . import error_handler
 from . import circuit_breaker_manager
 from . import retry_policy_engine
 from . import bulkhead_isolation_manager
 from . import timeout_management_system
+from . import distributed_error_orchestrator
+from . import error_propagation_controller
+from . import distributed_tracing_integration
+from . import compensation_transaction_manager
 
 # Exports publics
 __all__ = [
@@ -35,6 +45,10 @@ __all__ = [
     'BulkheadIsolationManager',
     'Bulkhead',
     'TimeoutManagementSystem',
+    'DistributedErrorOrchestrator',
+    'ErrorPropagationController',
+    'DistributedTracingIntegration',
+    'CompensationTransactionManager',
 ]
 
 # Metadata
@@ -57,7 +71,11 @@ AINFLUE_INTEGRATIONS = {
         'circuit_breaker_patterns',
         'adaptive_retry_policies', 
         'bulkhead_isolation',
-        'timeout_management'
+        'timeout_management',
+        'distributed_orchestration',
+        'error_propagation_control',
+        'distributed_tracing',
+        'saga_compensation'
     ],
     'phase_1_resilience_patterns': {
         'circuit_breaker_manager': 'implemented',
@@ -65,5 +83,11 @@ AINFLUE_INTEGRATIONS = {
         'bulkhead_isolation_manager': 'implemented',
         'timeout_management_system': 'implemented'
     },
-    'implementation_coverage': '38.9%'  # 7/18 files implemented
+    'phase_2_distributed_management': {
+        'distributed_error_orchestrator': 'implemented',
+        'error_propagation_controller': 'implemented',
+        'distributed_tracing_integration': 'implemented',
+        'compensation_transaction_manager': 'implemented'
+    },
+    'implementation_coverage': '61.1%'  # 11/18 files implemented
 }
