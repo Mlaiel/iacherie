@@ -9,12 +9,35 @@ Project: Ainflue Integrations
 Version: 1.0 Production
 """
 
-from .video_generation_engine import VideoGenerationEngine
-from .audio_generation_engine import AudioGenerationEngine
-from .image_generation_engine import ImageGenerationEngine
-from .text_generation_engine import TextGenerationEngine
-from .ai_content_orchestrator import AIContentOrchestrator
-from .quality_enhancement_engine import QualityEnhancementEngine
+try:
+    from .video_generation_engine import VideoGenerationEngine
+except ImportError:
+    VideoGenerationEngine = None
+
+try:
+    from .audio_generation_engine import AudioGenerationEngine
+except ImportError:
+    AudioGenerationEngine = None
+
+try:
+    from .image_generation_engine import ImageGenerationEngine
+except ImportError:
+    ImageGenerationEngine = None
+
+try:
+    from .text_generation_engine import TextGenerationEngine
+except ImportError:
+    TextGenerationEngine = None
+
+try:
+    from .ai_content_orchestrator import AIContentOrchestrator
+except ImportError:
+    AIContentOrchestrator = None
+
+try:
+    from .quality_enhancement_engine import QualityEnhancementEngine
+except ImportError:
+    QualityEnhancementEngine = None
 
 # Configuration logique métier Ainflue
 CONTENT_GENERATION_CONFIG = {
@@ -31,11 +54,19 @@ CONTENT_GENERATION_CONFIG = {
 
 def get_content_generator():
     """Factory pour créer le gestionnaire principal de génération."""
-    return {
-        'orchestrator': AIContentOrchestrator(),
-        'video': VideoGenerationEngine(),
-        'audio': AudioGenerationEngine(),
-        'image': ImageGenerationEngine(),
-        'text': TextGenerationEngine(),
-        'quality': QualityEnhancementEngine()
-    }
+    generators = {}
+    
+    if AIContentOrchestrator:
+        generators['orchestrator'] = AIContentOrchestrator()
+    if VideoGenerationEngine:
+        generators['video'] = VideoGenerationEngine()
+    if AudioGenerationEngine:
+        generators['audio'] = AudioGenerationEngine()
+    if ImageGenerationEngine:
+        generators['image'] = ImageGenerationEngine()
+    if TextGenerationEngine:
+        generators['text'] = TextGenerationEngine()
+    if QualityEnhancementEngine:
+        generators['quality'] = QualityEnhancementEngine()
+    
+    return generators
