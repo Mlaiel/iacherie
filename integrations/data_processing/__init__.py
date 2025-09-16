@@ -13,12 +13,20 @@ Version: 1.0 Production
 from .transformation_engine import TransformationEngine
 from .cache_manager import CacheManager
 from .sync_manager import SyncManager
+from .etl_pipeline_orchestrator import ETLPipelineOrchestrator
+from .streaming_data_processor import StreamingDataProcessor
+from .data_validation_engine import DataValidationEngine
+from .quality_assessment_manager import QualityAssessmentManager
 
 # Public exports
 __all__ = [
     'TransformationEngine',
     'CacheManager',
     'SyncManager',
+    'ETLPipelineOrchestrator',
+    'StreamingDataProcessor',
+    'DataValidationEngine',
+    'QualityAssessmentManager',
 ]
 
 # Metadata
@@ -30,6 +38,9 @@ __description__ = "Enterprise data processing and transformation for Ainflue pla
 # Configuration logique métier Ainflue
 AINFLUE_DATA_PROCESSING = {
     'platforms': 65,
-    'processing_features': ['transformation', 'caching', 'synchronization', 'validation'],
-    'workflow': 'connect→auth→transform→process→distribute→monitor'
+    'processing_features': [
+        'transformation', 'caching', 'synchronization', 'validation',
+        'etl_orchestration', 'streaming_processing', 'quality_assessment'
+    ],
+    'workflow': 'connect→auth→extract→transform→validate→load→monitor→improve'
 }
