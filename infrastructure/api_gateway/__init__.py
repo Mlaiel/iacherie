@@ -30,6 +30,11 @@ except ImportError:
     WebSocketAPIManager = None
 
 try:
+    from .monitoring import EnterpriseMonitoringSystem
+except ImportError:
+    EnterpriseMonitoringSystem = None
+
+try:
     from .rate_limiter import RateLimiter
 except ImportError:
     RateLimiter = None
@@ -66,6 +71,7 @@ __all__ = [
     'GraphQLAPIManager', 
     'WebSocketAPIManager',
     'RateLimiter',
+    'EnterpriseMonitoringSystem',
     'MiddlewareStack',
     'APIDocumentationGenerator',
     'APITestingFramework',
