@@ -74,6 +74,23 @@ try:
 except ImportError:
     APIVersionManager = None
 
+# Phase 3 Components - Advanced Features
+try:
+    from .analytics import GatewayAnalytics
+except ImportError:
+    GatewayAnalytics = None
+
+try:
+    from .circuit_breaker import CircuitBreaker, CircuitBreakerManager
+except ImportError:
+    CircuitBreaker = None
+    CircuitBreakerManager = None
+
+try:
+    from .grpc_api import GRPCGateway
+except ImportError:
+    GRPCGateway = None
+
 __version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
@@ -93,7 +110,12 @@ __all__ = [
     'MiddlewareStack',
     'APIDocumentationGenerator',
     'APITestingFramework',
-    'APIVersionManager'
+    'APIVersionManager',
+    # Phase 3 Advanced Components
+    'GatewayAnalytics',
+    'CircuitBreaker',
+    'CircuitBreakerManager',
+    'GRPCGateway'
 ]
 
 # Configuration for Ainflue creator platform APIs
