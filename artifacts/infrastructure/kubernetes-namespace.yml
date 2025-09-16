@@ -1,0 +1,353 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ainflue-artifacts
+  labels:
+    app.kubernetes.io/name: ainflue-artifacts
+    app.kubernetes.io/component: artifacts-module
+    app.kubernetes.io/part-of: ainflue-platform
+    app.kubernetes.io/managed-by: fahed-mlaiel
+    owner: fahed-mlaiel
+    environment: production
+    classification: confidential
+  annotations:
+    description: "Ainflue Artifacts Module - Documentation and Configuration Management"
+    contact: "mlaiel@live.de"
+    legal-notice: "© 2025 Fahed Mlaiel. All rights reserved."
+    compliance: "GDPR, SOX, PCI-DSS"
+---
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: ainflue-artifacts-quota
+  namespace: ainflue-artifacts
+spec:
+  hard:
+    # Compute Resources
+    requests.cpu: "10"
+    requests.memory: "20Gi"
+    limits.cpu: "20"
+    limits.memory: "40Gi"
+    
+    # Storage Resources
+    requests.storage: "100Gi"
+    persistentvolumeclaims: "10"
+    
+    # Network Resources
+    services: "20"
+    services.loadbalancers: "5"
+    services.nodeports: "5"
+    
+    # Object Resources
+    pods: "50"
+    replicationcontrollers: "10"
+    deployments.apps: "20"
+    statefulsets.apps: "10"
+    configmaps: "50"
+    secrets: "30"
+---
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: ainflue-artifacts-limits
+  namespace: ainflue-artifacts
+spec:
+  limits:
+  - type: "Container"
+    default:
+      cpu: "500m"
+      memory: "1Gi"
+    defaultRequest:
+      cpu: "100m"
+      memory: "256Mi"
+    max:
+      cpu: "4"
+      memory: "8Gi"
+    min:
+      cpu: "50m"
+      memory: "128Mi"
+  - type: "PersistentVolumeClaim"
+    max:
+      storage: "50Gi"
+    min:
+      storage: "1Gi"
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: ainflue-artifacts-network-policy
+  namespace: ainflue-artifacts
+spec:
+  podSelector: {}
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: ainflue-api-gateway
+    - namespaceSelector:
+        matchLabels:
+          name: ainflue-backend
+    - namespaceSelector:
+        matchLabels:
+          name: monitoring
+    ports:
+    - protocol: TCP
+      port: 8080
+    - protocol: TCP
+      port: 9090
+  egress:
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          name: ainflue-database
+    ports:
+    - protocol: TCP
+      port: 5432
+    - protocol: TCP
+      port: 27017
+    - protocol: TCP
+      port: 6379
+  - to: []
+    ports:
+    - protocol: TCP
+      port: 443
+    - protocol: TCP
+      port: 80
+    - protocol: UDP
+      port: 53
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: ainflue-artifacts-sa
+  namespace: ainflue-artifacts
+  labels:
+    app.kubernetes.io/name: ainflue-artifacts
+    app.kubernetes.io/component: service-account
+  annotations:
+    description: "Service account for Ainflue Artifacts Module"
+    owner: "fahed-mlaiel"
+automountServiceAccountToken: true
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: ainflue-artifacts-role
+  namespace: ainflue-artifacts
+rules:
+- apiGroups: [""]
+  resources: ["configmaps", "secrets", "persistentvolumeclaims"]
+  verbs: ["get", "list", "watch", "create", "update", "patch"]
+- apiGroups: ["apps"]
+  resources: ["deployments", "replicasets"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["networking.k8s.io"]
+  resources: ["networkpolicies"]
+  verbs: ["get", "list", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: ainflue-artifacts-rolebinding
+  namespace: ainflue-artifacts
+subjects:
+- kind: ServiceAccount
+  name: ainflue-artifacts-sa
+  namespace: ainflue-artifacts
+roleRef:
+  kind: Role
+  name: ainflue-artifacts-role
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: ainflue-artifacts-secrets
+  namespace: ainflue-artifacts
+  labels:
+    app.kubernetes.io/name: ainflue-artifacts
+    app.kubernetes.io/component: secrets
+type: Opaque
+data:
+  # These would be base64 encoded in production
+  database-url: ""
+  api-key: ""
+  jwt-secret: ""
+  encryption-key: ""
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ainflue-artifacts-config
+  namespace: ainflue-artifacts
+  labels:
+    app.kubernetes.io/name: ainflue-artifacts
+    app.kubernetes.io/component: configuration
+data:
+  app.yaml: |
+    server:
+      port: 8080
+      host: 0.0.0.0
+      environment: production
+    
+    artifacts:
+      documentation_path: "/app/artifacts/docs"
+      configuration_path: "/app/artifacts/configs"
+      infrastructure_path: "/app/artifacts/infrastructure"
+      workflows_path: "/app/artifacts/workflows"
+    
+    security:
+      cors_origins:
+        - "https://artifacts.ainflue.com"
+        - "https://admin.ainflue.com"
+      rate_limit:
+        requests_per_minute: 1000
+        burst_size: 100
+    
+    monitoring:
+      metrics_enabled: true
+      metrics_path: "/metrics"
+      health_check_path: "/health"
+      log_level: "info"
+    
+    database:
+      pool_size: 10
+      connection_timeout: 30
+      idle_timeout: 300
+    
+    legal:
+      copyright: "© 2025 Fahed Mlaiel. All rights reserved."
+      license: "Proprietary"
+      classification: "CONFIDENTIAL"
+
+  nginx.conf: |
+    events {
+        worker_connections 1024;
+    }
+    
+    http {
+        include       /etc/nginx/mime.types;
+        default_type  application/octet-stream;
+        
+        # Security Headers
+        add_header X-Content-Type-Options nosniff;
+        add_header X-Frame-Options DENY;
+        add_header X-XSS-Protection "1; mode=block";
+        add_header Strict-Transport-Security "max-age=31536000; includeSubDomains";
+        add_header Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'";
+        
+        # Rate Limiting
+        limit_req_zone $binary_remote_addr zone=api:10m rate=10r/s;
+        limit_req_zone $binary_remote_addr zone=docs:10m rate=30r/s;
+        
+        server {
+            listen 8080;
+            server_name artifacts.ainflue.com;
+            
+            # API Endpoints
+            location /api/ {
+                limit_req zone=api burst=20 nodelay;
+                proxy_pass http://artifacts-service:8080;
+                proxy_set_header Host $host;
+                proxy_set_header X-Real-IP $remote_addr;
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                proxy_set_header X-Forwarded-Proto $scheme;
+            }
+            
+            # Documentation
+            location /docs/ {
+                limit_req zone=docs burst=50 nodelay;
+                alias /app/artifacts/docs/;
+                index index.md README.md;
+                try_files $uri $uri/ =404;
+            }
+            
+            # Health Check
+            location /health {
+                access_log off;
+                return 200 "healthy";
+                add_header Content-Type text/plain;
+            }
+            
+            # Metrics (protected)
+            location /metrics {
+                allow 10.0.0.0/8;
+                allow 172.16.0.0/12;
+                allow 192.168.0.0/16;
+                deny all;
+                proxy_pass http://artifacts-service:8080;
+            }
+        }
+    }
+---
+# PodSecurityPolicy for enhanced security
+apiVersion: policy/v1beta1
+kind: PodSecurityPolicy
+metadata:
+  name: ainflue-artifacts-psp
+  namespace: ainflue-artifacts
+spec:
+  privileged: false
+  allowPrivilegeEscalation: false
+  requiredDropCapabilities:
+    - ALL
+  volumes:
+    - 'configMap'
+    - 'emptyDir'
+    - 'projected'
+    - 'secret'
+    - 'downwardAPI'
+    - 'persistentVolumeClaim'
+  hostNetwork: false
+  hostIPC: false
+  hostPID: false
+  runAsUser:
+    rule: 'MustRunAsNonRoot'
+  supplementalGroups:
+    rule: 'MustRunAs'
+    ranges:
+      - min: 1
+        max: 65535
+  fsGroup:
+    rule: 'MustRunAs'
+    ranges:
+      - min: 1
+        max: 65535
+  readOnlyRootFilesystem: false
+  seLinux:
+    rule: 'RunAsAny'
+---
+# Service Monitor for Prometheus
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: ainflue-artifacts-metrics
+  namespace: ainflue-artifacts
+  labels:
+    app.kubernetes.io/name: ainflue-artifacts
+    app.kubernetes.io/component: monitoring
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: ainflue-artifacts
+      monitoring: enabled
+  endpoints:
+  - port: metrics
+    interval: 30s
+    path: /metrics
+    honorLabels: true
+---
+# Pod Disruption Budget
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: ainflue-artifacts-pdb
+  namespace: ainflue-artifacts
+spec:
+  minAvailable: 2
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: ainflue-artifacts
