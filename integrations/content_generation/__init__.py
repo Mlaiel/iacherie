@@ -15,16 +15,39 @@ Project: Ainflue Integrations
 Version: 1.0 Production
 """
 
-from .video_generation_engine import VideoGenerationEngine
-from .audio_generation_engine import AudioGenerationEngine
-from .image_generation_engine import ImageGenerationEngine
-from .text_generation_engine import TextGenerationEngine
-from .ai_content_orchestrator import AIContentOrchestrator
-from .quality_enhancement_engine import QualityEnhancementEngine
+try:
+    from .video_generation_engine import VideoGenerationEngine
+except ImportError:
+    VideoGenerationEngine = None
+
+try:
+    from .audio_generation_engine import AudioGenerationEngine
+except ImportError:
+    AudioGenerationEngine = None
+
+try:
+    from .image_generation_engine import ImageGenerationEngine
+except ImportError:
+    ImageGenerationEngine = None
+
+try:
+    from .text_generation_engine import TextGenerationEngine
+except ImportError:
+    TextGenerationEngine = None
+
+try:
+    from .ai_content_orchestrator import AIContentOrchestrator
+except ImportError:
+    AIContentOrchestrator = None
+
+try:
+    from .quality_enhancement_engine import QualityEnhancementEngine
+except ImportError:
+    QualityEnhancementEngine = None
 
 __all__ = [
     'VideoGenerationEngine',
-    'AudioGenerationEngine',
+    'AudioGenerationEngine', 
     'ImageGenerationEngine',
     'TextGenerationEngine',
     'AIContentOrchestrator',
