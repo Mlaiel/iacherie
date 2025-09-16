@@ -25,6 +25,8 @@ from .revenue_sharing import RevenueSharing
 from .enterprise_collaboration_gateway import EnterpriseCollaborationGateway
 from .collaboration_security import CollaborationSecurityManager
 from .notification_orchestrator import NotificationOrchestrator
+from .advanced_gamification import AdvancedGamificationEngine
+from .ai_conflict_resolution import AIConflictResolutionSystem
 
 __all__ = [
     'AIMatchingEngine',
@@ -35,7 +37,9 @@ __all__ = [
     'RevenueSharing',
     'EnterpriseCollaborationGateway',
     'CollaborationSecurityManager',
-    'NotificationOrchestrator'
+    'NotificationOrchestrator',
+    'AdvancedGamificationEngine',
+    'AIConflictResolutionSystem'
 ]
 
 __version__ = "1.0.0"
