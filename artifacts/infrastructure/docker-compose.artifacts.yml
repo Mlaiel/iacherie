@@ -1,0 +1,401 @@
+version: '3.8'
+
+# 🏗️ Ainflue Platform - Artifacts Module Container Orchestration
+# Author: Fahed Mlaiel (mlaiel@live.de)
+# Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
+# License: Proprietary
+#
+# ⚠️ INTELLECTUAL PROPERTY WARNING ⚠️
+# This Docker Compose configuration is the exclusive intellectual property of Fahed Mlaiel.
+# Unauthorized copying, distribution, or implementation is strictly prohibited.
+
+networks:
+  ainflue-artifacts:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
+  ainflue-monitoring:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.21.0.0/16
+
+volumes:
+  artifacts_data:
+    driver: local
+  prometheus_data:
+    driver: local
+  grafana_data:
+    driver: local
+  elasticsearch_data:
+    driver: local
+
+services:
+  # ═══════════════════════════════════════════════════════════════
+  # 📋 DOCUMENTATION SERVICES
+  # ═══════════════════════════════════════════════════════════════
+  
+  documentation-server:
+    image: nginx:1.25-alpine
+    container_name: ainflue-docs
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    volumes:
+      - ../:/usr/share/nginx/html/artifacts:ro
+      - ./nginx-docs.conf:/etc/nginx/conf.d/default.conf:ro
+    networks:
+      - ainflue-artifacts
+    environment:
+      - NGINX_HOST=docs.ainflue.local
+      - NGINX_PORT=80
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.docs.rule=Host(`docs.ainflue.local`)"
+      - "traefik.http.services.docs.loadbalancer.server.port=80"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/artifacts/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # ═══════════════════════════════════════════════════════════════
+  # 🔧 CONFIGURATION VALIDATION SERVICES
+  # ═══════════════════════════════════════════════════════════════
+  
+  config-validator:
+    image: node:18-alpine
+    container_name: ainflue-config-validator
+    restart: "no"
+    working_dir: /app
+    volumes:
+      - ../configs:/app/configs:ro
+      - ./validation:/app/validation:ro
+    networks:
+      - ainflue-artifacts
+    command: >
+      sh -c "
+        npm install -g ajv-cli &&
+        echo 'Validating JSON configurations...' &&
+        ajv validate -s /app/validation/technical-specs.schema.json -d /app/configs/technical_specifications.json &&
+        ajv validate -s /app/validation/platform-integrations.schema.json -d /app/configs/platform_integrations.json &&
+        echo 'All configurations validated successfully!'
+      "
+    depends_on:
+      - documentation-server
+
+  # ═══════════════════════════════════════════════════════════════
+  # 📊 MONITORING SERVICES
+  # ═══════════════════════════════════════════════════════════════
+
+  prometheus:
+    image: prom/prometheus:v2.47.0
+    container_name: ainflue-prometheus
+    restart: unless-stopped
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./prometheus-rules.yml:/etc/prometheus/rules.yml:ro
+      - prometheus_data:/prometheus
+    networks:
+      - ainflue-monitoring
+      - ainflue-artifacts
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--storage.tsdb.retention.time=30d'
+      - '--web.enable-lifecycle'
+      - '--web.enable-admin-api'
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.prometheus.rule=Host(`prometheus.ainflue.local`)"
+      - "traefik.http.services.prometheus.loadbalancer.server.port=9090"
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:9090/-/healthy"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  grafana:
+    image: grafana/grafana:10.1.0
+    container_name: ainflue-grafana
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./grafana-dashboards:/etc/grafana/provisioning/dashboards:ro
+      - ./grafana-datasources:/etc/grafana/provisioning/datasources:ro
+    networks:
+      - ainflue-monitoring
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=ainflue_secure_2025
+      - GF_USERS_ALLOW_SIGN_UP=false
+      - GF_INSTALL_PLUGINS=grafana-piechart-panel,grafana-clock-panel
+      - GF_SERVER_ROOT_URL=http://grafana.ainflue.local
+    depends_on:
+      - prometheus
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.grafana.rule=Host(`grafana.ainflue.local`)"
+      - "traefik.http.services.grafana.loadbalancer.server.port=3000"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:3000/api/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # ═══════════════════════════════════════════════════════════════
+  # 🔍 LOGGING & SEARCH SERVICES
+  # ═══════════════════════════════════════════════════════════════
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.10.0
+    container_name: ainflue-elasticsearch
+    restart: unless-stopped
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    volumes:
+      - elasticsearch_data:/usr/share/elasticsearch/data
+    networks:
+      - ainflue-monitoring
+    environment:
+      - discovery.type=single-node
+      - "ES_JAVA_OPTS=-Xms2g -Xmx2g"
+      - xpack.security.enabled=false
+      - xpack.security.enrollment.enabled=false
+      - cluster.name=ainflue-logs
+      - node.name=artifacts-node
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:9200/_cluster/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:8.10.0
+    container_name: ainflue-kibana
+    restart: unless-stopped
+    ports:
+      - "5601:5601"
+    networks:
+      - ainflue-monitoring
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+      - SERVER_NAME=kibana.ainflue.local
+      - XPACK_SECURITY_ENABLED=false
+    depends_on:
+      - elasticsearch
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.kibana.rule=Host(`kibana.ainflue.local`)"
+      - "traefik.http.services.kibana.loadbalancer.server.port=5601"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:5601/api/status || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  # ═══════════════════════════════════════════════════════════════
+  # 🔄 REVERSE PROXY & LOAD BALANCER
+  # ═══════════════════════════════════════════════════════════════
+
+  traefik:
+    image: traefik:v3.0
+    container_name: ainflue-traefik
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8081:8080"  # Traefik dashboard
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./traefik.yml:/etc/traefik/traefik.yml:ro
+      - ./traefik-dynamic.yml:/etc/traefik/dynamic.yml:ro
+    networks:
+      - ainflue-artifacts
+      - ainflue-monitoring
+    command:
+      - "--api.dashboard=true"
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--log.level=INFO"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.traefik.rule=Host(`traefik.ainflue.local`)"
+      - "traefik.http.services.traefik.loadbalancer.server.port=8080"
+    healthcheck:
+      test: ["CMD", "traefik", "healthcheck"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # ═══════════════════════════════════════════════════════════════
+  # 📦 REDIS CACHE
+  # ═══════════════════════════════════════════════════════════════
+
+  redis:
+    image: redis:7.2-alpine
+    container_name: ainflue-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./redis.conf:/usr/local/etc/redis/redis.conf:ro
+    networks:
+      - ainflue-artifacts
+    command: redis-server /usr/local/etc/redis/redis.conf
+    environment:
+      - REDIS_PASSWORD=ainflue_redis_2025
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # ═══════════════════════════════════════════════════════════════
+  # 🔐 SECURITY SCANNING
+  # ═══════════════════════════════════════════════════════════════
+
+  security-scanner:
+    image: aquasec/trivy:latest
+    container_name: ainflue-security-scanner
+    restart: "no"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./security-reports:/reports
+    networks:
+      - ainflue-artifacts
+    command: >
+      sh -c "
+        echo 'Running security scans...' &&
+        trivy image --format json --output /reports/docs-scan.json nginx:1.25-alpine &&
+        trivy image --format json --output /reports/prometheus-scan.json prom/prometheus:v2.47.0 &&
+        trivy image --format json --output /reports/grafana-scan.json grafana/grafana:10.1.0 &&
+        echo 'Security scans completed. Reports saved to /reports/'
+      "
+    depends_on:
+      - documentation-server
+      - prometheus
+      - grafana
+
+  # ═══════════════════════════════════════════════════════════════
+  # 🧪 HEALTH CHECK SERVICE
+  # ═══════════════════════════════════════════════════════════════
+
+  health-monitor:
+    image: curlimages/curl:8.4.0
+    container_name: ainflue-health-monitor
+    restart: unless-stopped
+    networks:
+      - ainflue-artifacts
+      - ainflue-monitoring
+    command: >
+      sh -c "
+        while true; do
+          echo '=== Health Check Report $(date) ===' &&
+          echo 'Documentation Server:' &&
+          curl -f -s -o /dev/null http://documentation-server/artifacts/ && echo 'OK' || echo 'FAILED' &&
+          echo 'Prometheus:' &&
+          curl -f -s -o /dev/null http://prometheus:9090/-/healthy && echo 'OK' || echo 'FAILED' &&
+          echo 'Grafana:' &&
+          curl -f -s -o /dev/null http://grafana:3000/api/health && echo 'OK' || echo 'FAILED' &&
+          echo 'Elasticsearch:' &&
+          curl -f -s -o /dev/null http://elasticsearch:9200/_cluster/health && echo 'OK' || echo 'FAILED' &&
+          echo 'Redis:' &&
+          nc -z redis 6379 && echo 'OK' || echo 'FAILED' &&
+          echo '================================' &&
+          sleep 300
+        done
+      "
+    depends_on:
+      - documentation-server
+      - prometheus
+      - grafana
+      - elasticsearch
+      - redis
+
+# ═══════════════════════════════════════════════════════════════
+# 📊 RESOURCE LIMITS & CONSTRAINTS
+# ═══════════════════════════════════════════════════════════════
+
+x-common-limits: &common-limits
+  cpus: '0.5'
+  memory: 512M
+
+x-monitoring-limits: &monitoring-limits
+  cpus: '1.0'  
+  memory: 2G
+
+x-search-limits: &search-limits
+  cpus: '2.0'
+  memory: 4G
+
+# Apply resource limits to services
+services:
+  documentation-server:
+    deploy:
+      resources:
+        limits:
+          <<: *common-limits
+        reservations:
+          cpus: '0.1'
+          memory: 128M
+
+  prometheus:
+    deploy:
+      resources:
+        limits:
+          <<: *monitoring-limits
+        reservations:
+          cpus: '0.5'
+          memory: 1G
+
+  grafana:
+    deploy:
+      resources:
+        limits:
+          <<: *monitoring-limits
+        reservations:
+          cpus: '0.2'
+          memory: 512M
+
+  elasticsearch:
+    deploy:
+      resources:
+        limits:
+          <<: *search-limits
+        reservations:
+          cpus: '1.0'
+          memory: 2G
+
+  kibana:
+    deploy:
+      resources:
+        limits:
+          <<: *monitoring-limits
+        reservations:
+          cpus: '0.3'
+          memory: 768M
+
+  redis:
+    deploy:
+      resources:
+        limits:
+          <<: *common-limits
+        reservations:
+          cpus: '0.1'
+          memory: 256M
