@@ -123,6 +123,141 @@ from .audio_quality_analyzer import (
     create_quality_analyzer
 )
 
+from .audio_effects_processor import (
+    AudioEffectsProcessor,
+    EffectType,
+    EffectQuality,
+    ProcessingMode,
+    EffectParameter,
+    EffectConfiguration,
+    EffectsChain,
+    EffectResult,
+    EQProcessor,
+    DynamicsProcessor,
+    ModulationEffects,
+    ReverbProcessor,
+    create_audio_effects_processor,
+    create_preset_effects_chain
+)
+
+from .audio_transcription_engine import (
+    AudioTranscriptionEngine,
+    TranscriptionLanguage,
+    TranscriptionModel,
+    TranscriptionQuality,
+    SpeakerDiarizationMode,
+    OutputFormat,
+    TranscriptionConfiguration,
+    TranscriptionResult,
+    TranscriptionSegment,
+    SpeakerInfo,
+    AudioPreprocessor,
+    LanguageDetector,
+    SpeakerDiarization,
+    TranscriptionEngine,
+    SubtitleGenerator,
+    create_audio_transcription_engine,
+    create_transcription_config
+)
+
+from .audio_fingerprinting_system import (
+    AudioFingerprintingSystem,
+    FingerprintAlgorithm,
+    MatchQuality,
+    ContentType,
+    ProtectionLevel,
+    AudioFingerprint,
+    ContentMetadata,
+    MatchResult,
+    FingerprintingConfiguration,
+    SpectralPeaksFingerprinter,
+    MFCCHashFingerprinter,
+    PerceptualHashFingerprinter,
+    create_audio_fingerprinting_system,
+    create_content_metadata
+)
+
+from .audio_normalization_engine import (
+    AudioNormalizationEngine,
+    BroadcastStandard,
+    NormalizationType,
+    QualityMode,
+    ProcessingMode,
+    LoudnessMetrics,
+    NormalizationTarget,
+    NormalizationConfiguration,
+    NormalizationResult,
+    LoudnessMeter,
+    TruePeakLimiter,
+    DynamicRangeProcessor,
+    create_audio_normalization_engine,
+    create_normalization_config
+)
+
+from .audio_codec_manager import (
+    AudioCodecManager,
+    AudioCodec,
+    CompressionMode,
+    EncodingSpeed,
+    QualityMetric,
+    CodecParameters,
+    EncodingConfiguration,
+    EncodingResult,
+    AudioPreprocessor,
+    QualityAnalyzer,
+    FFmpegCodecManager,
+    create_audio_codec_manager,
+    create_encoding_config
+)
+
+from .audio_metadata_processor import (
+    AudioMetadataProcessor,
+    MetadataStandard,
+    TagType,
+    ImageType,
+    AudioImage,
+    AudioMetadata,
+    MetadataProcessingConfig,
+    MetadataExtractor,
+    MetadataEnricher,
+    create_audio_metadata_processor,
+    create_metadata_config
+)
+
+from .audio_security_manager import (
+    AudioSecurityManager,
+    SecurityLevel,
+    DRMPolicy,
+    AccessLevel,
+    ThreatType,
+    SecurityCredentials,
+    DRMConfiguration,
+    SecurityEvent,
+    AccessAuditLog,
+    CryptographyManager,
+    TokenManager,
+    DRMManager,
+    ThreatDetector,
+    create_audio_security_manager,
+    create_drm_config
+)
+
+from .audio_performance_monitor import (
+    AudioPerformanceMonitor,
+    MetricType,
+    AlertSeverity,
+    ResourceType,
+    PerformanceMetric,
+    PerformanceAlert,
+    ResourceHealth,
+    PerformanceReport,
+    SystemMonitor,
+    AudioMetricsCollector,
+    AlertManager,
+    PerformancePredictor,
+    create_audio_performance_monitor
+)
+
 __version__ = "2.5.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
@@ -232,5 +367,116 @@ __all__ = [
     "QualityStandard",
     "QualityMetric",
     "QualityAnalysisResult",
-    "create_quality_analyzer"
+    "create_quality_analyzer",
+    
+    # Audio Effects Processor
+    "AudioEffectsProcessor",
+    "EffectType",
+    "EffectQuality",
+    "EffectParameter",
+    "EffectConfiguration",
+    "EffectsChain",
+    "EffectResult",
+    "EQProcessor",
+    "DynamicsProcessor",
+    "ModulationEffects",
+    "ReverbProcessor",
+    "create_audio_effects_processor",
+    "create_preset_effects_chain",
+    
+    # Audio Transcription Engine
+    "AudioTranscriptionEngine",
+    "TranscriptionLanguage",
+    "TranscriptionModel",
+    "TranscriptionQuality",
+    "SpeakerDiarizationMode",
+    "OutputFormat",
+    "TranscriptionConfiguration",
+    "TranscriptionResult",
+    "TranscriptionSegment",
+    "SpeakerInfo",
+    "create_audio_transcription_engine",
+    "create_transcription_config",
+    
+    # Audio Fingerprinting System
+    "AudioFingerprintingSystem",
+    "FingerprintAlgorithm",
+    "MatchQuality",
+    "ContentType",
+    "ProtectionLevel",
+    "AudioFingerprint",
+    "ContentMetadata",
+    "MatchResult",
+    "FingerprintingConfiguration",
+    "create_audio_fingerprinting_system",
+    "create_content_metadata",
+    
+    # Audio Normalization Engine
+    "AudioNormalizationEngine",
+    "BroadcastStandard",
+    "NormalizationType",
+    "LoudnessMetrics",
+    "NormalizationTarget",
+    "NormalizationConfiguration",
+    "NormalizationResult",
+    "LoudnessMeter",
+    "TruePeakLimiter",
+    "DynamicRangeProcessor",
+    "create_audio_normalization_engine",
+    "create_normalization_config",
+    
+    # Audio Codec Manager
+    "AudioCodecManager",
+    "CompressionMode",
+    "EncodingSpeed",
+    "CodecParameters",
+    "EncodingConfiguration",
+    "EncodingResult",
+    "FFmpegCodecManager",
+    "create_audio_codec_manager",
+    "create_encoding_config",
+    
+    # Audio Metadata Processor
+    "AudioMetadataProcessor",
+    "MetadataStandard",
+    "TagType",
+    "ImageType",
+    "AudioImage",
+    "AudioMetadata",
+    "MetadataProcessingConfig",
+    "MetadataExtractor",
+    "MetadataEnricher",
+    "create_audio_metadata_processor",
+    "create_metadata_config",
+    
+    # Audio Security Manager
+    "AudioSecurityManager",
+    "SecurityLevel",
+    "DRMPolicy",
+    "AccessLevel",
+    "ThreatType",
+    "SecurityCredentials",
+    "DRMConfiguration",
+    "SecurityEvent",
+    "AccessAuditLog",
+    "CryptographyManager",
+    "TokenManager",
+    "DRMManager",
+    "ThreatDetector",
+    "create_audio_security_manager",
+    "create_drm_config",
+    
+    # Audio Performance Monitor
+    "AudioPerformanceMonitor",
+    "AlertSeverity",
+    "ResourceType",
+    "PerformanceMetric",
+    "PerformanceAlert",
+    "ResourceHealth",
+    "PerformanceReport",
+    "SystemMonitor",
+    "AudioMetricsCollector",
+    "AlertManager",
+    "PerformancePredictor",
+    "create_audio_performance_monitor"
 ]
