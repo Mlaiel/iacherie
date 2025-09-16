@@ -105,6 +105,59 @@ from .ml_monitoring_system import (
     create_ml_monitoring_system
 )
 
+# Experiment Tracking System  
+from .experiment_tracking import (
+    ExperimentTrackingSystem,
+    ExperimentStatus,
+    ExperimentType,
+    MetricType as ExperimentMetricType,
+    ExperimentParameter,
+    ExperimentMetric,
+    ExperimentArtifact,
+    ExperimentRun,
+    ExperimentComparison
+)
+
+# Model Validation Engine
+from .model_validation_engine import (
+    ModelValidationEngine,
+    ValidationCategory,
+    ValidationSeverity,
+    ValidationStatus,
+    ModelType as ValidationModelType,
+    ValidationTest,
+    ValidationResult,
+    ValidationReport,
+    BiasDetectionResult,
+    SecurityTestResult
+)
+
+# AutoML Pipeline
+from .automl_pipeline import (
+    AutoMLPipeline,
+    AutoMLTask,
+    OptimizationStrategy as AutoMLOptimizationStrategy,
+    ModelFamily,
+    AutoMLStatus,
+    AutoMLConfiguration,
+    ModelCandidate,
+    FeatureEngineering,
+    AutoMLResult
+)
+
+# Edge AI Optimizer
+from .edge_ai_optimizer import (
+    EdgeAIOptimizer,
+    DeviceType,
+    CompressionTechnique,
+    DeploymentStrategy as EdgeDeploymentStrategy,
+    OptimizationLevel,
+    DeviceSpecs,
+    EdgeModel,
+    EdgeDeployment,
+    OptimizationResult
+)
+
 __version__ = "3.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
@@ -172,6 +225,51 @@ __all__ = [
     "AlertSeverity",
     "DriftType",
     "create_ml_monitoring_system",
+    
+    # Experiment Tracking
+    "ExperimentTrackingSystem",
+    "ExperimentStatus",
+    "ExperimentType",
+    "ExperimentMetricType",
+    "ExperimentParameter",
+    "ExperimentMetric",
+    "ExperimentArtifact",
+    "ExperimentRun",
+    "ExperimentComparison",
+    
+    # Model Validation
+    "ModelValidationEngine",
+    "ValidationCategory",
+    "ValidationSeverity",
+    "ValidationStatus",
+    "ValidationModelType",
+    "ValidationTest",
+    "ValidationResult",
+    "ValidationReport",
+    "BiasDetectionResult",
+    "SecurityTestResult",
+    
+    # AutoML Pipeline
+    "AutoMLPipeline",
+    "AutoMLTask",
+    "AutoMLOptimizationStrategy",
+    "ModelFamily",
+    "AutoMLStatus",
+    "AutoMLConfiguration",
+    "ModelCandidate",
+    "FeatureEngineering",
+    "AutoMLResult",
+    
+    # Edge AI Optimizer
+    "EdgeAIOptimizer",
+    "DeviceType",
+    "CompressionTechnique",
+    "EdgeDeploymentStrategy",
+    "OptimizationLevel",
+    "DeviceSpecs",
+    "EdgeModel",
+    "EdgeDeployment",
+    "OptimizationResult",
     
     # Factory Functions
     "create_complete_ai_ml_pipeline"
