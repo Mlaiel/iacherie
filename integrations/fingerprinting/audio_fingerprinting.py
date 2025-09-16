@@ -551,3 +551,35 @@ class AudioFingerprinting:
             'supported_formats': [fmt.value for fmt in AudioFormat],
             'available_algorithms': [algo.value for algo in FingerprintAlgorithm]
         }
+    
+    def get_supported_formats(self) -> List[str]:
+        """Retourne la liste des formats audio supportés."""
+        return [fmt.value for fmt in AudioFormat]
+    
+    def get_algorithm_info(self, algorithm: FingerprintAlgorithm) -> Dict[str, Any]:
+        """Retourne les informations sur un algorithme."""
+        algorithm_info = {
+            FingerprintAlgorithm.CHROMAPRINT: {
+                'name': 'Chromaprint',
+                'description': 'Audio fingerprinting basé sur des caractéristiques chromatiques',
+                'best_for': 'Identification de musique et détection de similarité audio',
+                'performance': 'Rapide',
+                'accuracy': 'Très haute pour audio musical'
+            },
+            FingerprintAlgorithm.SPECTRAL_HASH: {
+                'name': 'Spectral Hash',
+                'description': 'Hash basé sur l\'analyse spectrale',
+                'best_for': 'Détection robuste avec modifications audio',
+                'performance': 'Modérée',
+                'accuracy': 'Haute pour contenu audio général'
+            },
+            FingerprintAlgorithm.MFCC_FINGERPRINT: {
+                'name': 'MFCC Fingerprint',
+                'description': 'Fingerprinting basé sur les coefficients MFCC',
+                'best_for': 'Reconnaissance vocale et analyse de parole',
+                'performance': 'Rapide',
+                'accuracy': 'Excellente pour contenu vocal'
+            }
+        }
+        
+        return algorithm_info.get(algorithm, {})
