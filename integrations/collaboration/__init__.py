@@ -22,6 +22,9 @@ from .collaboration_analytics import CollaborationAnalytics
 from .project_management import ProjectManagement
 from .reputation_system import ReputationSystem
 from .revenue_sharing import RevenueSharing
+from .enterprise_collaboration_gateway import EnterpriseCollaborationGateway
+from .collaboration_security import CollaborationSecurityManager
+from .notification_orchestrator import NotificationOrchestrator
 
 __all__ = [
     'AIMatchingEngine',
@@ -29,7 +32,10 @@ __all__ = [
     'CollaborationAnalytics',
     'ProjectManagement',
     'ReputationSystem',
-    'RevenueSharing'
+    'RevenueSharing',
+    'EnterpriseCollaborationGateway',
+    'CollaborationSecurityManager',
+    'NotificationOrchestrator'
 ]
 
 __version__ = "1.0.0"
