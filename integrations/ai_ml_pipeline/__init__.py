@@ -158,6 +158,71 @@ from .edge_ai_optimizer import (
     OptimizationResult
 )
 
+# Security Manager
+from .ml_security_manager import (
+    MLSecurityManager,
+    SecurityThreat,
+    SecurityPolicy,
+    SecurityAudit,
+    ComplianceFramework,
+    create_ml_security_manager
+)
+
+# Phase 3 - New Components (Analytics & Advanced Features)
+
+# Distributed Training Manager
+from .distributed_training_manager import (
+    DistributedTrainingOrchestrator,
+    DistributedTrainingConfig,
+    TrainingNode,
+    TrainingJob,
+    ScalingDecision,
+    create_distributed_training_manager
+)
+
+# Model Analytics Engine
+from .model_analytics_engine import (
+    ModelAnalyticsEngine,
+    ModelPerformanceMetrics,
+    ModelAnalysisReport,
+    BusinessImpactAnalysis,
+    create_model_analytics_engine
+)
+
+# Pipeline Orchestration
+from .pipeline_orchestration import (
+    PipelineOrchestrationEngine,
+    PipelineDefinition,
+    PipelineTask,
+    PipelineExecution,
+    PipelineStatus,
+    TaskType,
+    create_pipeline_orchestration_engine
+)
+
+# GPU Resource Manager
+from .gpu_resource_manager import (
+    GPUResourceManager,
+    GPUDevice,
+    GPUNode,
+    ResourceRequest,
+    ResourceAllocation,
+    GPUType,
+    WorkloadType,
+    create_gpu_resource_manager
+)
+
+# Model Performance Analyzer
+from .model_performance_analyzer import (
+    ModelPerformanceAnalyzer,
+    ModelProfile,
+    PerformanceMetric,
+    OptimizationResult,
+    PerformanceBenchmark,
+    PerformanceMetricType,
+    create_model_performance_analyzer
+)
+
 __version__ = "3.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
@@ -270,6 +335,49 @@ __all__ = [
     "EdgeModel",
     "EdgeDeployment",
     "OptimizationResult",
+    
+    # Phase 3 - Distributed Training Manager
+    "DistributedTrainingOrchestrator",
+    "DistributedTrainingConfig",
+    "TrainingNode",
+    "TrainingJob",
+    "ScalingDecision",
+    "create_distributed_training_manager",
+    
+    # Phase 3 - Model Analytics Engine
+    "ModelAnalyticsEngine",
+    "ModelPerformanceMetrics",
+    "ModelAnalysisReport",
+    "BusinessImpactAnalysis",
+    "create_model_analytics_engine",
+    
+    # Phase 3 - Pipeline Orchestration
+    "PipelineOrchestrationEngine",
+    "PipelineDefinition",
+    "PipelineTask",
+    "PipelineExecution",
+    "PipelineStatus",
+    "TaskType",
+    "create_pipeline_orchestration_engine",
+    
+    # Phase 3 - GPU Resource Manager
+    "GPUResourceManager",
+    "GPUDevice",
+    "GPUNode",
+    "ResourceRequest",
+    "ResourceAllocation",
+    "GPUType",
+    "WorkloadType",
+    "create_gpu_resource_manager",
+    
+    # Phase 3 - Model Performance Analyzer
+    "ModelPerformanceAnalyzer",
+    "ModelProfile",
+    "PerformanceMetric",
+    "OptimizationResult",
+    "PerformanceBenchmark",
+    "PerformanceMetricType",
+    "create_model_performance_analyzer",
     
     # Factory Functions
     "create_complete_ai_ml_pipeline"
