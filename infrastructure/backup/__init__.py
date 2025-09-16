@@ -14,13 +14,21 @@ Version: 1.0 Production
 Cette architecture est la propriété intellectuelle EXCLUSIVE de Fahed Mlaiel (mlaiel@live.de).
 """
 
-# Core backup components
-from . import database_backup_manager
-from . import file_backup_manager
-from . import media_backup_manager
-from . import configuration_backup
+# Core backup components (Available)
+try:
+    from . import database_backup_manager
+    from . import file_backup_manager
+    from . import media_backup_manager
+    from . import configuration_backup
+except ImportError as e:
+    import logging
+    logging.getLogger(__name__).warning(f"Core backup components import error: {e}")
+    database_backup_manager = None
+    file_backup_manager = None
+    media_backup_manager = None
+    configuration_backup = None
 
-# Advanced backup components (Expert Implementation)
+# Advanced backup components (To be implemented)
 try:
     from . import incremental_backup
     from . import cross_region_backup
@@ -31,9 +39,9 @@ try:
     from . import backup_alerting
     from . import automated_backup_scheduling
 except ImportError as e:
-    # Log import errors but continue
+    # Expected for components not yet implemented
     import logging
-    logging.getLogger(__name__).warning(f"Some backup components not available: {e}")
+    logging.getLogger(__name__).debug(f"Advanced backup components not yet available: {e}")
     incremental_backup = None
     cross_region_backup = None
     backup_monitoring = None
