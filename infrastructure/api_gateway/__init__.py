@@ -30,6 +30,26 @@ except ImportError:
     WebSocketAPIManager = None
 
 try:
+    from .monitoring import EnterpriseMonitoringSystem
+except ImportError:
+    EnterpriseMonitoringSystem = None
+
+try:
+    from .authentication import AuthenticationGateway
+except ImportError:
+    AuthenticationGateway = None
+
+try:
+    from .authorization import AuthorizationEngine
+except ImportError:
+    AuthorizationEngine = None
+
+try:
+    from .security_middleware import SecurityMiddleware
+except ImportError:
+    SecurityMiddleware = None
+
+try:
     from .rate_limiter import RateLimiter
 except ImportError:
     RateLimiter = None
@@ -66,6 +86,10 @@ __all__ = [
     'GraphQLAPIManager', 
     'WebSocketAPIManager',
     'RateLimiter',
+    'EnterpriseMonitoringSystem',
+    'AuthenticationGateway',
+    'AuthorizationEngine',
+    'SecurityMiddleware',
     'MiddlewareStack',
     'APIDocumentationGenerator',
     'APITestingFramework',
