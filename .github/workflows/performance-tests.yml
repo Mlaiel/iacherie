@@ -285,7 +285,7 @@ jobs:
         sys.path.append('.')
 
         # Simulate application workload
-        from business_logic_core import BusinessLogicCore
+        from business_logic import BusinessLogicCore
 
         core = BusinessLogicCore()
 

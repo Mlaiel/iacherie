@@ -58,7 +58,7 @@ from .core.config import (
     BackendConfig, 
     get_backend_settings
 )
-from .core.business_logic import AinflueCoreBusinessLogic
+from .core.business_logic import BusinessLogicCore
 from .core.core_orchestrator import (
     PlatformWideOrchestrationEngine as PlatformOrchestrator,
     ServiceDiscoveryManager,

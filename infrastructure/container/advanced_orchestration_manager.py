@@ -124,7 +124,7 @@ class AdvancedOrchestrationManager:
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         """Initialize Advanced Orchestration Manager"""
         self.config = config or self._get_default_config()
-        self.k8s_clients = {}
+        self.kubernetes_clients = {}
         self.cluster_configs = {}
         self.active_deployments = {}
         self.scaling_policies = {}
@@ -133,7 +133,7 @@ class AdvancedOrchestrationManager:
         self.gitops_config = {}
         
         # Initialize Kubernetes clients
-        self._initialize_k8s_clients()
+        self._initialize_kubernetes_clients()
         
         # Initialize monitoring
         self._initialize_monitoring()
@@ -203,12 +203,12 @@ class AdvancedOrchestrationManager:
             }
         }
     
-    def _initialize_k8s_clients(self) -> None:
+    def _initialize_kubernetes_clients(self) -> None:
         """Initialize Kubernetes clients for multiple clusters"""
         try:
             # Load primary cluster config
             config.load_incluster_config()
-            self.k8s_clients["primary"] = {
+            self.kubernetes_clients["primary"] = {
                 "core_v1": client.CoreV1Api(),
                 "apps_v1": client.AppsV1Api(),
                 "autoscaling_v2": client.AutoscalingV2Api(),
@@ -245,72 +245,72 @@ class AdvancedOrchestrationManager:
         # Deployment monitoring
         threading.Thread(target=self._deployment_monitoring_loop, daemon=True).start()
     
-    async def deploy_application(self, app_config: ApplicationConfig) -> DeploymentResult:
+    async def deploy_application(self, deployment_configuration: ApplicationConfig) -> DeploymentResult:
         """
         Deploy application with specified strategy
         
         Args:
-            app_config: Application configuration with deployment strategy
+            deployment_configuration: Application configuration with deployment strategy
             
         Returns:
             DeploymentResult with deployment status and metrics
         """
         start_time = datetime.now()
-        deployment_id = f"{app_config.name}-{app_config.version}-{int(time.time())}"
+        deployment_id = f"{deployment_configuration.name}-{deployment_configuration.version}-{int(time.time())}"
         
-        logger.info(f"🚀 Starting {app_config.deployment_strategy.value} deployment for {app_config.name}")
+        logger.info(f"🚀 Starting {deployment_configuration.deployment_strategy.value} deployment for {deployment_configuration.name}")
         
         try:
             # Store deployment state
             self.active_deployments[deployment_id] = {
-                "config": app_config,
+                "config": deployment_configuration,
                 "start_time": start_time,
                 "status": "in_progress",
-                "strategy": app_config.deployment_strategy,
+                "strategy": deployment_configuration.deployment_strategy,
                 "metrics": {}
             }
             
             # Execute deployment strategy
-            if app_config.deployment_strategy == DeploymentStrategy.BLUE_GREEN:
-                success = await self._execute_blue_green_deployment(app_config, deployment_id)
-            elif app_config.deployment_strategy == DeploymentStrategy.CANARY:
-                success = await self._execute_canary_deployment(app_config, deployment_id)
-            elif app_config.deployment_strategy == DeploymentStrategy.ROLLING_UPDATE:
-                success = await self._execute_rolling_deployment(app_config, deployment_id)
-            elif app_config.deployment_strategy == DeploymentStrategy.A_B_TESTING:
-                success = await self._execute_ab_testing_deployment(app_config, deployment_id)
+            if deployment_configuration.deployment_strategy == DeploymentStrategy.BLUE_GREEN:
+                deployment_successful = await self._execute_blue_green_deployment(deployment_configuration, deployment_id)
+            elif deployment_configuration.deployment_strategy == DeploymentStrategy.CANARY:
+                deployment_successful = await self._execute_canary_deployment(deployment_configuration, deployment_id)
+            elif deployment_configuration.deployment_strategy == DeploymentStrategy.ROLLING_UPDATE:
+                deployment_successful = await self._execute_rolling_deployment(deployment_configuration, deployment_id)
+            elif deployment_configuration.deployment_strategy == DeploymentStrategy.A_B_TESTING:
+                deployment_successful = await self._execute_ab_testing_deployment(deployment_configuration, deployment_id)
             else:
-                success = await self._execute_recreate_deployment(app_config, deployment_id)
+                deployment_successful = await self._execute_recreate_deployment(deployment_configuration, deployment_id)
             
             end_time = datetime.now()
             duration = (end_time - start_time).total_seconds()
             
             result = DeploymentResult(
-                application_name=app_config.name,
-                version=app_config.version,
-                strategy=app_config.deployment_strategy,
-                status="completed" if success else "failed",
+                application_name=deployment_configuration.name,
+                version=deployment_configuration.version,
+                strategy=deployment_configuration.deployment_strategy,
+                status="completed" if deployment_successful else "failed",
                 start_time=start_time,
                 end_time=end_time,
-                success=success,
-                message=f"Deployment {'successful' if success else 'failed'} in {duration:.2f}s",
+                success=deployment_successful,
+                message=f"Deployment {'successful' if deployment_successful else 'failed'} in {duration:.2f}s",
                 metrics=self.active_deployments[deployment_id]["metrics"]
             )
             
             # Update deployment record
             self.active_deployments[deployment_id]["result"] = result
             
-            logger.info(f"✅ Deployment completed: {app_config.name} - {result.status}")
+            logger.info(f"✅ Deployment completed: {deployment_configuration.name} - {result.status}")
             return result
             
-        except Exception as e:
+        except Exception as deployment_exception:
             end_time = datetime.now()
-            error_message = f"Deployment failed: {str(e)}"
+            error_message = f"Deployment failed: {str(deployment_exception)}"
             
             result = DeploymentResult(
-                application_name=app_config.name,
-                version=app_config.version,
-                strategy=app_config.deployment_strategy,
+                application_name=deployment_configuration.name,
+                version=deployment_configuration.version,
+                strategy=deployment_configuration.deployment_strategy,
                 status="error",
                 start_time=start_time,
                 end_time=end_time,
@@ -321,57 +321,57 @@ class AdvancedOrchestrationManager:
             logger.error(f"❌ {error_message}")
             return result
     
-    async def _execute_blue_green_deployment(self, app_config: ApplicationConfig, deployment_id: str) -> bool:
+    async def _execute_blue_green_deployment(self, deployment_configuration: ApplicationConfig, deployment_id: str) -> bool:
         """Execute blue-green deployment strategy"""
         try:
             # Phase 1: Deploy green environment
-            green_name = f"{app_config.name}-green"
-            await self._deploy_version(app_config, green_name, "green")
+            green_name = f"{deployment_configuration.name}-green"
+            await self._deploy_version(deployment_configuration, green_name, "green")
             
             # Phase 2: Wait for green environment to be ready
-            ready = await self._wait_for_deployment_ready(green_name, app_config.namespace)
-            if not ready:
+            is_deployment_ready = await self._wait_for_deployment_ready(green_name, deployment_configuration.namespace)
+            if not is_deployment_ready:
                 return False
             
             # Phase 3: Run health checks on green
-            healthy = await self._perform_health_checks(green_name, app_config.namespace, app_config.health_checks)
-            if not healthy:
+            is_deployment_healthy = await self._perform_health_checks(green_name, deployment_configuration.namespace, deployment_configuration.health_checks)
+            if not is_deployment_healthy:
                 return False
             
             # Phase 4: Switch traffic to green (atomic switch)
-            await self._switch_traffic(app_config.name, app_config.namespace, "green")
+            await self._switch_traffic(deployment_configuration.name, deployment_configuration.namespace, "green")
             
             # Phase 5: Monitor green environment
             await self._monitor_deployment(deployment_id, 300)  # Monitor for 5 minutes
             
             # Phase 6: Clean up blue environment
-            blue_name = f"{app_config.name}-blue"
-            await self._cleanup_deployment(blue_name, app_config.namespace)
+            blue_name = f"{deployment_configuration.name}-blue"
+            await self._cleanup_deployment(blue_name, deployment_configuration.namespace)
             
-            logger.info(f"✅ Blue-green deployment successful for {app_config.name}")
+            logger.info(f"✅ Blue-green deployment successful for {deployment_configuration.name}")
             return True
             
-        except Exception as e:
-            logger.error(f"❌ Blue-green deployment failed: {str(e)}")
+        except Exception as deployment_exception:
+            logger.error(f"❌ Blue-green deployment failed: {str(deployment_exception)}")
             # Rollback if needed
-            await self._rollback_deployment(app_config, deployment_id)
+            await self._rollback_deployment(deployment_configuration, deployment_id)
             return False
     
-    async def _execute_canary_deployment(self, app_config: ApplicationConfig, deployment_id: str) -> bool:
+    async def _execute_canary_deployment(self, deployment_configuration: ApplicationConfig, deployment_id: str) -> bool:
         """Execute canary deployment strategy"""
         try:
-            canary_name = f"{app_config.name}-canary"
-            stable_name = f"{app_config.name}-stable"
+            canary_name = f"{deployment_configuration.name}-canary"
+            stable_name = f"{deployment_configuration.name}-stable"
             
             # Phase 1: Deploy canary version with small traffic percentage
-            await self._deploy_version(app_config, canary_name, "canary")
+            await self._deploy_version(deployment_configuration, canary_name, "canary")
             
             # Phase 2: Gradually increase traffic to canary
             traffic_steps = self.config["deployment"]["progressive_traffic_increase"]
             
             for traffic_percent in traffic_steps:
                 # Update traffic split
-                await self._update_traffic_split(app_config.name, app_config.namespace, 
+                await self._update_traffic_split(deployment_configuration.name, deployment_configuration.namespace, 
                                                stable_name, canary_name, traffic_percent)
                 
                 # Wait for analysis period
@@ -379,31 +379,31 @@ class AdvancedOrchestrationManager:
                 await asyncio.sleep(analysis_duration)
                 
                 # Analyze canary metrics
-                analysis_result = await self._analyze_canary_metrics(canary_name, app_config.namespace)
+                analysis_result = await self._analyze_canary_metrics(canary_name, deployment_configuration.namespace)
                 
                 if not analysis_result["success"]:
                     logger.warning(f"⚠️ Canary analysis failed at {traffic_percent}% traffic")
-                    await self._rollback_canary(stable_name, app_config.namespace)
+                    await self._rollback_canary(stable_name, deployment_configuration.namespace)
                     return False
                 
                 logger.info(f"✅ Canary analysis passed at {traffic_percent}% traffic")
             
             # Phase 3: Promote canary to stable
-            await self._promote_canary_to_stable(app_config.name, app_config.namespace, canary_name)
+            await self._promote_canary_to_stable(deployment_configuration.name, deployment_configuration.namespace, canary_name)
             
-            logger.info(f"✅ Canary deployment successful for {app_config.name}")
+            logger.info(f"✅ Canary deployment successful for {deployment_configuration.name}")
             return True
             
-        except Exception as e:
-            logger.error(f"❌ Canary deployment failed: {str(e)}")
-            await self._rollback_deployment(app_config, deployment_id)
+        except Exception as deployment_exception:
+            logger.error(f"❌ Canary deployment failed: {str(deployment_exception)}")
+            await self._rollback_deployment(deployment_configuration, deployment_id)
             return False
     
-    async def _execute_rolling_deployment(self, app_config: ApplicationConfig, deployment_id: str) -> bool:
+    async def _execute_rolling_deployment(self, deployment_configuration: ApplicationConfig, deployment_id: str) -> bool:
         """Execute rolling update deployment strategy"""
         try:
             # Create deployment manifest
-            deployment_manifest = self._create_deployment_manifest(app_config)
+            deployment_manifest = self._create_deployment_manifest(deployment_configuration)
             
             # Configure rolling update strategy
             deployment_manifest["spec"]["strategy"] = {
@@ -415,116 +415,116 @@ class AdvancedOrchestrationManager:
             }
             
             # Apply deployment
-            k8s_client = self.k8s_clients["primary"]["apps_v1"]
+            kubernetes_client = self.kubernetes_clients["primary"]["apps_v1"]
             
             try:
                 # Update existing deployment
-                k8s_client.patch_namespaced_deployment(
-                    name=app_config.name,
-                    namespace=app_config.namespace,
+                kubernetes_client.patch_namespaced_deployment(
+                    name=deployment_configuration.name,
+                    namespace=deployment_configuration.namespace,
                     body=deployment_manifest
                 )
-            except client.exceptions.ApiException as e:
-                if e.status == 404:
+            except client.exceptions.ApiException as api_exception:
+                if api_exception.status == 404:
                     # Create new deployment
-                    k8s_client.create_namespaced_deployment(
-                        namespace=app_config.namespace,
+                    kubernetes_client.create_namespaced_deployment(
+                        namespace=deployment_configuration.namespace,
                         body=deployment_manifest
                     )
                 else:
                     raise
             
             # Wait for rollout to complete
-            success = await self._wait_for_rollout_complete(app_config.name, app_config.namespace)
+            rollout_successful = await self._wait_for_rollout_complete(deployment_configuration.name, deployment_configuration.namespace)
             
-            if success:
-                logger.info(f"✅ Rolling deployment successful for {app_config.name}")
+            if rollout_successful:
+                logger.info(f"✅ Rolling deployment successful for {deployment_configuration.name}")
             else:
-                logger.error(f"❌ Rolling deployment failed for {app_config.name}")
+                logger.error(f"❌ Rolling deployment failed for {deployment_configuration.name}")
             
-            return success
+            return rollout_successful
             
-        except Exception as e:
-            logger.error(f"❌ Rolling deployment failed: {str(e)}")
+        except Exception as deployment_exception:
+            logger.error(f"❌ Rolling deployment failed: {str(deployment_exception)}")
             return False
     
-    async def _execute_ab_testing_deployment(self, app_config: ApplicationConfig, deployment_id: str) -> bool:
+    async def _execute_ab_testing_deployment(self, deployment_configuration: ApplicationConfig, deployment_id: str) -> bool:
         """Execute A/B testing deployment strategy"""
         try:
             # Deploy both A and B versions
-            version_a = f"{app_config.name}-a"
-            version_b = f"{app_config.name}-b"
+            version_a = f"{deployment_configuration.name}-a"
+            version_b = f"{deployment_configuration.name}-b"
             
             # Deploy version A (stable)
-            await self._deploy_version(app_config, version_a, "version-a")
+            await self._deploy_version(deployment_configuration, version_a, "version-a")
             
             # Deploy version B (test)
-            await self._deploy_version(app_config, version_b, "version-b")
+            await self._deploy_version(deployment_configuration, version_b, "version-b")
             
             # Configure traffic splitting (50/50 for A/B test)
-            await self._update_traffic_split(app_config.name, app_config.namespace, 
+            await self._update_traffic_split(deployment_configuration.name, deployment_configuration.namespace, 
                                            version_a, version_b, 50)
             
             # Run A/B test for specified duration
-            test_duration = app_config.rollback_config.get("ab_test_duration", 3600)  # 1 hour
+            test_duration = deployment_configuration.rollback_config.get("ab_test_duration", 3600)  # 1 hour
             await asyncio.sleep(test_duration)
             
             # Analyze A/B test results
-            ab_results = await self._analyze_ab_test_results(version_a, version_b, app_config.namespace)
+            ab_results = await self._analyze_ab_test_results(version_a, version_b, deployment_configuration.namespace)
             
             # Determine winner and route all traffic
             if ab_results["winner"] == "version-b":
-                await self._promote_version(version_b, app_config.name, app_config.namespace)
-                await self._cleanup_deployment(version_a, app_config.namespace)
+                await self._promote_version(version_b, deployment_configuration.name, deployment_configuration.namespace)
+                await self._cleanup_deployment(version_a, deployment_configuration.namespace)
             else:
-                await self._promote_version(version_a, app_config.name, app_config.namespace)
-                await self._cleanup_deployment(version_b, app_config.namespace)
+                await self._promote_version(version_a, deployment_configuration.name, deployment_configuration.namespace)
+                await self._cleanup_deployment(version_b, deployment_configuration.namespace)
             
-            logger.info(f"✅ A/B testing deployment completed for {app_config.name}")
+            logger.info(f"✅ A/B testing deployment completed for {deployment_configuration.name}")
             return True
             
-        except Exception as e:
-            logger.error(f"❌ A/B testing deployment failed: {str(e)}")
+        except Exception as deployment_exception:
+            logger.error(f"❌ A/B testing deployment failed: {str(deployment_exception)}")
             return False
     
-    async def _execute_recreate_deployment(self, app_config: ApplicationConfig, deployment_id: str) -> bool:
+    async def _execute_recreate_deployment(self, deployment_configuration: ApplicationConfig, deployment_id: str) -> bool:
         """Execute recreate deployment strategy"""
         try:
             # Delete existing deployment
-            k8s_client = self.k8s_clients["primary"]["apps_v1"]
+            kubernetes_client = self.kubernetes_clients["primary"]["apps_v1"]
             
             try:
-                k8s_client.delete_namespaced_deployment(
-                    name=app_config.name,
-                    namespace=app_config.namespace
+                kubernetes_client.delete_namespaced_deployment(
+                    name=deployment_configuration.name,
+                    namespace=deployment_configuration.namespace
                 )
                 
                 # Wait for pods to terminate
                 await asyncio.sleep(30)
                 
-            except client.exceptions.ApiException as e:
-                if e.status != 404:  # Not found is OK
+            except client.exceptions.ApiException as api_exception:
+                if api_exception.status != 404:  # Not found is OK
                     raise
             
             # Create new deployment
-            deployment_manifest = self._create_deployment_manifest(app_config)
-            k8s_client.create_namespaced_deployment(
-                namespace=app_config.namespace,
+            deployment_manifest = self._create_deployment_manifest(deployment_configuration)
+            kubernetes_client.create_namespaced_deployment(
+                namespace=deployment_configuration.namespace,
                 body=deployment_manifest
             )
             
             # Wait for deployment to be ready
-            success = await self._wait_for_deployment_ready(app_config.name, app_config.namespace)
+            deployment_successful = await self._wait_for_deployment_ready(deployment_configuration.name, deployment_configuration.namespace)
             
-            if success:
-                logger.info(f"✅ Recreate deployment successful for {app_config.name}")
+            if deployment_successful:
+                logger.info(f"✅ Recreate deployment successful for {deployment_configuration.name}")
             else:
-                logger.error(f"❌ Recreate deployment failed for {app_config.name}")
+                logger.error(f"❌ Recreate deployment failed for {deployment_configuration.name}")
             
-            return success
+            return deployment_successful
             
-        except Exception as e:
-            logger.error(f"❌ Recreate deployment failed: {str(e)}")
+        except Exception as deployment_exception:
+            logger.error(f"❌ Recreate deployment failed: {str(deployment_exception)}")
             return False
     
     def _create_deployment_manifest(self, app_config: ApplicationConfig) -> Dict[str, Any]:
@@ -653,16 +653,16 @@ class AdvancedOrchestrationManager:
                 }
             }
             
-            k8s_client = self.k8s_clients["primary"]["autoscaling_v2"]
+            kubernetes_client = self.kubernetes_clients["primary"]["autoscaling_v2"]
             
             try:
-                k8s_client.create_namespaced_horizontal_pod_autoscaler(
+                kubernetes_client.create_namespaced_horizontal_pod_autoscaler(
                     namespace=namespace,
                     body=hpa_manifest
                 )
             except client.exceptions.ApiException as e:
                 if e.status == 409:  # Already exists
-                    k8s_client.patch_namespaced_horizontal_pod_autoscaler(
+                    kubernetes_client.patch_namespaced_horizontal_pod_autoscaler(
                         name=f"{app_name}-hpa",
                         namespace=namespace,
                         body=hpa_manifest
@@ -679,12 +679,12 @@ class AdvancedOrchestrationManager:
     
     async def _wait_for_deployment_ready(self, name: str, namespace: str, timeout: int = 600) -> bool:
         """Wait for deployment to be ready"""
-        k8s_client = self.k8s_clients["primary"]["apps_v1"]
+        kubernetes_client = self.kubernetes_clients["primary"]["apps_v1"]
         start_time = time.time()
         
         while time.time() - start_time < timeout:
             try:
-                deployment = k8s_client.read_namespaced_deployment(name=name, namespace=namespace)
+                deployment = kubernetes_client.read_namespaced_deployment(name=name, namespace=namespace)
                 
                 if (deployment.status.ready_replicas and 
                     deployment.status.ready_replicas == deployment.spec.replicas):
@@ -751,8 +751,8 @@ class AdvancedOrchestrationManager:
     async def _check_deployment_health(self, name: str, namespace: str) -> HealthStatus:
         """Check health of specific deployment"""
         try:
-            k8s_client = self.k8s_clients["primary"]["apps_v1"]
-            deployment = k8s_client.read_namespaced_deployment(name=name, namespace=namespace)
+            kubernetes_client = self.kubernetes_clients["primary"]["apps_v1"]
+            deployment = kubernetes_client.read_namespaced_deployment(name=name, namespace=namespace)
             
             if not deployment.status.ready_replicas:
                 return HealthStatus.UNHEALTHY
@@ -872,7 +872,7 @@ class AdvancedOrchestrationManager:
             "failed_deployments": failed_deployments,
             "success_rate": successful_deployments / len(self.active_deployments) 
                           if self.active_deployments else 0,
-            "clusters_connected": len(self.k8s_clients),
+            "clusters_connected": len(self.kubernetes_clients),
             "scaling_policies": len(self.scaling_policies),
             "gitops_enabled": self.config["gitops"]["enabled"]
         }

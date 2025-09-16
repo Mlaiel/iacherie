@@ -55,14 +55,14 @@ except ImportError:
 
 # Specialized container modules
 try:
-    from .cluster_manager import ClusterManager as AdvancedClusterManager
+    from .cluster_manager import ClusterManager as EnterpriseClusterManager
 except ImportError:
-    AdvancedClusterManager = None
+    EnterpriseClusterManager = None
 
 try:
-    from .service_mesh_manager import ServiceMeshManager as AdvancedServiceMeshManager
+    from .service_mesh_manager import ServiceMeshManager as EnterpriseServiceMeshManager
 except ImportError:
-    AdvancedServiceMeshManager = None
+    EnterpriseServiceMeshManager = None
 
 try:
     from .ingress_controller import IngressController
@@ -99,11 +99,11 @@ try:
 except ImportError:
     LoadBalancer = None
 
-# Advanced container orchestration (Expert Implementation)
+# Enterprise container orchestration (Expert Implementation)
 try:
-    from .advanced_orchestration_manager import AdvancedOrchestrationManager
+    from .enterprise_orchestration_engine import EnterpriseOrchestrationEngine
 except ImportError:
-    AdvancedOrchestrationManager = None
+    EnterpriseOrchestrationEngine = None
 
 __all__ = [
     # Core container functionality
@@ -113,11 +113,11 @@ __all__ = [
     'OperatorManager', 'CustomResourceManager', 'ControllerManager',
     'NetworkingManager', 'LoadBalancerManager', 'IngressManager', 'DNSManager', 'ServiceMeshManager',
     # Specialized modules
-    'AdvancedClusterManager', 'AdvancedServiceMeshManager', 'IngressController',
+    'EnterpriseClusterManager', 'EnterpriseServiceMeshManager', 'IngressController',
     'PodScheduler', 'VolumeManager', 'NetworkPolicyManager', 
     'SecretManager', 'RegistryManager', 'LoadBalancer',
-    # Advanced orchestration
-    'AdvancedOrchestrationManager'
+    # Enterprise orchestration
+    'EnterpriseOrchestrationEngine'
 ]
 # Metadata
 __version__ = "1.0.0"

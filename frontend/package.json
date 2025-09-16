@@ -4,7 +4,8 @@
   "description": "Ainflue Professional Frontend Platform - Multi-Format Content Creation & AI-Powered Distribution",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "node server.js",
+    "dev:next": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -27,6 +28,7 @@
     "autoprefixer": "^10.4.16",
     "axios": "^1.6.2",
     "clsx": "^2.0.0",
+    "http-proxy-middleware": "^3.0.5",
     "i18next": "^23.16.8",
     "lucide-react": "^0.294.0",
     "next": "^14.0.4",
