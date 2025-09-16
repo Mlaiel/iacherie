@@ -21,7 +21,7 @@ from enum import Enum
 import json
 from pathlib import Path
 import uuid
-import numpy as np
+# import numpy as np  # Optional dependency
 import time
 from collections import defaultdict
 import hashlib
@@ -276,8 +276,10 @@ class ModelSelectionAgent:
         # Performance calculation based on historical data
         recent_performances = self.performance_history.get(model.model_id, [])
         if recent_performances:
-            avg_response_time = np.mean([p.response_time for p in recent_performances[-10:]])
-            avg_success_rate = np.mean([p.success_rate for p in recent_performances[-10:]])
+            # avg_response_time = np.mean([p.response_time for p in recent_performances[-10:]])
+            # avg_success_rate = np.mean([p.success_rate for p in recent_performances[-10:]])
+            avg_response_time = sum(p.response_time for p in recent_performances[-10:]) / len(recent_performances[-10:])
+            avg_success_rate = sum(p.success_rate for p in recent_performances[-10:]) / len(recent_performances[-10:])
             
             # Normalize and combine
             response_time_score = max(0, 1 - (avg_response_time / requirements["max_latency"]))
@@ -365,8 +367,10 @@ class PerformanceMonitoringAgent:
         
         response_time_trend = "stable"
         if len(response_times) >= 10:
-            recent_avg = np.mean(response_times[-5:])
-            earlier_avg = np.mean(response_times[-10:-5])
+            # recent_avg = np.mean(response_times[-5:])
+            # earlier_avg = np.mean(response_times[-10:-5])
+            recent_avg = sum(response_times[-5:]) / len(response_times[-5:])
+            earlier_avg = sum(response_times[-10:-5]) / len(response_times[-10:-5])
             
             if recent_avg > earlier_avg * 1.2:
                 response_time_trend = "degrading"
@@ -375,9 +379,12 @@ class PerformanceMonitoringAgent:
                 
         return {
             "trend": response_time_trend,
-            "avg_response_time": np.mean(response_times),
-            "avg_quality": np.mean(quality_scores),
-            "success_rate": np.mean([r.success_rate for r in recent_records])
+            # "avg_response_time": np.mean(response_times),
+            # "avg_quality": np.mean(quality_scores),
+            # "success_rate": np.mean([r.success_rate for r in recent_records])
+            "avg_response_time": sum(response_times) / len(response_times),
+            "avg_quality": sum(quality_scores) / len(quality_scores),
+            "success_rate": sum(r.success_rate for r in recent_records) / len(recent_records)
         }
         
     async def _check_performance_alerts(self, model_id: str, performance: ModelPerformance) -> List[str]:
