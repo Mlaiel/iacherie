@@ -92,7 +92,38 @@ from .audio_analytics_engine import (
     create_audio_analytics_engine
 )
 
-__version__ = "2.2.0"
+from .realtime_audio_processor import (
+    RealtimeAudioProcessor,
+    ProcessingMode,
+    AudioEffect,
+    LatencyTarget,
+    AudioBuffer,
+    ProcessingChain,
+    LatencyMetrics,
+    QualityMetrics,
+    RealtimeProcessingResult,
+    create_realtime_processor,
+    create_processing_chain
+)
+
+from .audio_streaming_optimizer import (
+    AudioStreamingOptimizer,
+    StreamingProtocol,
+    QualityLevel,
+    NetworkConditions,
+    StreamingResult,
+    create_streaming_optimizer
+)
+
+from .audio_quality_analyzer import (
+    AudioQualityAnalyzer,
+    QualityStandard,
+    QualityMetric,
+    QualityAnalysisResult,
+    create_quality_analyzer
+)
+
+__version__ = "2.5.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
 
@@ -173,5 +204,33 @@ __all__ = [
     "CommercialViability",
     "PerformancePrediction",
     "AudioAnalyticsResult",
-    "create_audio_analytics_engine"
+    "create_audio_analytics_engine",
+    
+    # Realtime Processing
+    "RealtimeAudioProcessor",
+    "ProcessingMode",
+    "AudioEffect",
+    "LatencyTarget",
+    "AudioBuffer",
+    "ProcessingChain",
+    "LatencyMetrics",
+    "QualityMetrics",
+    "RealtimeProcessingResult",
+    "create_realtime_processor",
+    "create_processing_chain",
+    
+    # Streaming Optimization
+    "AudioStreamingOptimizer",
+    "StreamingProtocol",
+    "QualityLevel",
+    "NetworkConditions",
+    "StreamingResult",
+    "create_streaming_optimizer",
+    
+    # Quality Analysis
+    "AudioQualityAnalyzer",
+    "QualityStandard",
+    "QualityMetric",
+    "QualityAnalysisResult",
+    "create_quality_analyzer"
 ]
