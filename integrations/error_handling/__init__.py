@@ -12,9 +12,24 @@ Version: 1.0 Production
 # Error Handling Core Components
 from .error_handler import ErrorHandler
 
+# Phase 1: Resilience Patterns Enterprise
+from .circuit_breaker_manager import CircuitBreakerManager, CircuitBreaker
+from .retry_policy_engine import RetryPolicyEngine
+from .bulkhead_isolation_manager import BulkheadIsolationManager, Bulkhead
+from .timeout_management_system import TimeoutManagementSystem
+
 # Public exports
 __all__ = [
+    # Core Error Handling
     'ErrorHandler',
+    
+    # Phase 1: Resilience Patterns Enterprise
+    'CircuitBreakerManager',
+    'CircuitBreaker', 
+    'RetryPolicyEngine',
+    'BulkheadIsolationManager',
+    'Bulkhead',
+    'TimeoutManagementSystem',
 ]
 
 # Metadata
@@ -26,6 +41,16 @@ __description__ = "Enterprise error handling and recovery for Ainflue platform"
 # Configuration logique métier Ainflue
 AINFLUE_ERROR_HANDLING = {
     'platforms': 65,
-    'error_features': ['intelligent_recovery', 'automated_logging', 'escalation_management'],
-    'workflow': 'connect→auth→transform→process→distribute→monitor'
+    'error_features': [
+        'intelligent_recovery', 
+        'automated_logging', 
+        'escalation_management',
+        'circuit_breaker_patterns',
+        'adaptive_retry_policies',
+        'bulkhead_isolation',
+        'timeout_management'
+    ],
+    'workflow': 'connect→auth→transform→process→distribute→monitor',
+    'phase_1_complete': True,
+    'implementation_coverage': '38.9%'  # 7/18 files implemented
 }
