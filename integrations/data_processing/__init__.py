@@ -17,6 +17,10 @@ from .etl_pipeline_orchestrator import ETLPipelineOrchestrator
 from .streaming_data_processor import StreamingDataProcessor
 from .data_validation_engine import DataValidationEngine
 from .quality_assessment_manager import QualityAssessmentManager
+from .warehouse_integration_manager import WarehouseIntegrationManager
+from .analytics_query_engine import AnalyticsQueryEngine
+from .machine_learning_processor import MachineLearningProcessor
+from .data_governance_controller import DataGovernanceController
 
 # Public exports
 __all__ = [
@@ -27,6 +31,10 @@ __all__ = [
     'StreamingDataProcessor',
     'DataValidationEngine',
     'QualityAssessmentManager',
+    'WarehouseIntegrationManager',
+    'AnalyticsQueryEngine',
+    'MachineLearningProcessor',
+    'DataGovernanceController',
 ]
 
 # Metadata
@@ -40,7 +48,8 @@ AINFLUE_DATA_PROCESSING = {
     'platforms': 65,
     'processing_features': [
         'transformation', 'caching', 'synchronization', 'validation',
-        'etl_orchestration', 'streaming_processing', 'quality_assessment'
+        'etl_orchestration', 'streaming_processing', 'quality_assessment',
+        'warehouse_integration', 'analytics_query', 'machine_learning', 'data_governance'
     ],
-    'workflow': 'connect→auth→extract→transform→validate→load→monitor→improve'
+    'workflow': 'connect→auth→extract→transform→validate→load→analyze→govern→monitor→improve'
 }
