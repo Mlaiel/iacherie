@@ -25,13 +25,111 @@ from .tenant_manager import (
     TenantTier
 )
 
+from .tenant_data_isolator import (
+    TenantDataIsolator as DataIsolator,
+    IsolationLevel,
+    DataClassification,
+    TenantEncryptionConfig,
+    TenantIsolationPolicy,
+    get_tenant_data_isolator
+)
+
+from .tenant_router_engine import (
+    TenantRouterEngine,
+    RoutingStrategy,
+    LoadBalancingAlgorithm,
+    TenantPlan,
+    RoutingDecision,
+    RequestContext,
+    get_tenant_router_engine
+)
+
+from .creator_workspace_manager import (
+    CreatorWorkspaceManager,
+    CreatorType,
+    WorkspaceType,
+    CollaborationLevel,
+    ContentVisibility,
+    CreatorProfile,
+    WorkspaceConfig,
+    get_creator_workspace_manager
+)
+
+from .tenant_scaling_orchestrator import (
+    TenantScalingOrchestrator,
+    ScalingDirection,
+    ScalingStrategy,
+    ResourceType,
+    CloudProvider,
+    ScalingEvent,
+    get_tenant_scaling_orchestrator
+)
+
+from .tenant_compliance_monitor import (
+    TenantComplianceMonitor,
+    ComplianceFramework,
+    DataSubjectRights,
+    ComplianceStatus,
+    DataLocation,
+    PersonalDataRecord,
+    ConsentRecord,
+    get_tenant_compliance_monitor
+)
+
 __all__ = [
+    # Core tenant management
     "TenantManager",
-    "TenantDataIsolator",
-    "TenantConfig", 
-    "TenantUsage",
+    "TenantDataIsolator", 
+    "TenantConfig",
+    "TenantUsage", 
     "TenantStatus",
-    "TenantTier"
+    "TenantTier",
+    
+    # Data isolation
+    "DataIsolator",
+    "IsolationLevel",
+    "DataClassification", 
+    "TenantEncryptionConfig",
+    "TenantIsolationPolicy",
+    "get_tenant_data_isolator",
+    
+    # Routing engine
+    "TenantRouterEngine",
+    "RoutingStrategy",
+    "LoadBalancingAlgorithm",
+    "TenantPlan",
+    "RoutingDecision", 
+    "RequestContext",
+    "get_tenant_router_engine",
+    
+    # Creator workspaces
+    "CreatorWorkspaceManager",
+    "CreatorType",
+    "WorkspaceType", 
+    "CollaborationLevel",
+    "ContentVisibility",
+    "CreatorProfile",
+    "WorkspaceConfig",
+    "get_creator_workspace_manager",
+    
+    # Scaling orchestrator
+    "TenantScalingOrchestrator",
+    "ScalingDirection",
+    "ScalingStrategy",
+    "ResourceType", 
+    "CloudProvider",
+    "ScalingEvent",
+    "get_tenant_scaling_orchestrator",
+    
+    # Compliance monitor
+    "TenantComplianceMonitor",
+    "ComplianceFramework",
+    "DataSubjectRights",
+    "ComplianceStatus",
+    "DataLocation",
+    "PersonalDataRecord", 
+    "ConsentRecord",
+    "get_tenant_compliance_monitor"
 ]
 
 __version__ = "1.0.0"
