@@ -27,6 +27,12 @@ from .revenue_forecasting_engine import RevenueForecastingEngine
 from .marketplace_revenue_manager import MarketplaceRevenueManager
 from .collaboration_revenue_splitter import CollaborationRevenueSplitter
 
+# New Phase 3 modules - Enterprise Features (December 2025)
+from .tiered_pricing_calculator import TieredPricingCalculator
+from .revenue_recovery_manager import RevenueRecoveryManager
+from .multi_currency_revenue_manager import MultiCurrencyRevenueManager
+from .revenue_compliance_validator import RevenueComplianceValidator
+
 __all__ = [
     # Existing modules
     "RevenueSplitCalculator",
@@ -45,5 +51,11 @@ __all__ = [
     
     # Phase 2 - Advanced Revenue Systems
     "MarketplaceRevenueManager",
-    "CollaborationRevenueSplitter"
+    "CollaborationRevenueSplitter",
+    
+    # Phase 3 - Enterprise Features (December 2025)
+    "TieredPricingCalculator",
+    "RevenueRecoveryManager", 
+    "MultiCurrencyRevenueManager",
+    "RevenueComplianceValidator"
 ]
