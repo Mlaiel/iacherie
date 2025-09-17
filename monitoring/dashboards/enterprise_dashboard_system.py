@@ -37,6 +37,16 @@ class DashboardType(Enum):
     REAL_TIME_OPERATIONS = "real_time_operations"
     COMPLIANCE = "compliance"
     PERFORMANCE = "performance"
+    # === CREATOR ECONOMY DASHBOARD TYPES ===
+    CREATOR_ECONOMY_OVERVIEW = "creator_economy_overview"
+    CREATOR_ANALYTICS = "creator_analytics"
+    CREATOR_COLLABORATION = "creator_collaboration"
+    CREATOR_MONETIZATION = "creator_monetization" 
+    CREATOR_TIER_PROGRESSION = "creator_tier_progression"
+    MULTI_FORMAT_CONTENT = "multi_format_content"
+    GAMIFICATION_ENGAGEMENT = "gamification_engagement"
+    CROSS_PLATFORM_DISTRIBUTION = "cross_platform_distribution"
+    CREATOR_PERFORMANCE_INTELLIGENCE = "creator_performance_intelligence"
 
 class VisualizationType(Enum):
     """Types of visualizations available."""
@@ -171,6 +181,42 @@ class EnterpriseDashboardSystem:
                 'endpoint': '/monitoring/business/kpis',
                 'cache_duration': 600,
                 'fields': ['total_revenue', 'user_growth', 'content_processed', 'platform_health']
+            },
+            # === CREATOR ECONOMY DASHBOARD ENHANCEMENTS ===
+            'creator_economy_metrics': {
+                'endpoint': '/monitoring/creator_economy/metrics',
+                'cache_duration': 120,
+                'fields': ['active_creators', 'creator_tier_distribution', 'average_creator_revenue', 'creator_growth_rate', 'collaboration_success_rate']
+            },
+            'creator_performance_analytics': {
+                'endpoint': '/monitoring/creator_economy/performance',
+                'cache_duration': 180,
+                'fields': ['content_quality_score', 'engagement_rates', 'cross_platform_reach', 'monetization_efficiency']
+            },
+            'creator_collaboration_insights': {
+                'endpoint': '/monitoring/creator_economy/collaboration',
+                'cache_duration': 300,
+                'fields': ['collaboration_matches', 'partnership_success_rate', 'creator_network_density', 'collaboration_revenue']
+            },
+            'creator_tier_progression': {
+                'endpoint': '/monitoring/creator_economy/tiers',
+                'cache_duration': 600,
+                'fields': ['tier_distributions', 'progression_rates', 'tier_benefits_usage', 'upgrade_patterns']
+            },
+            'multi_format_content_analytics': {
+                'endpoint': '/monitoring/creator_economy/content',
+                'cache_duration': 240,
+                'fields': ['content_type_performance', 'format_optimization_scores', 'cross_format_engagement', 'ai_enhancement_usage']
+            },
+            'gamification_engagement_metrics': {
+                'endpoint': '/monitoring/creator_economy/gamification',
+                'cache_duration': 150,
+                'fields': ['achievement_completion_rates', 'leaderboard_activity', 'challenge_participation', 'reward_redemption']
+            },
+            'cross_platform_distribution_analytics': {
+                'endpoint': '/monitoring/creator_economy/distribution',
+                'cache_duration': 200,
+                'fields': ['platform_performance', 'cross_platform_synergy', 'distribution_optimization', 'audience_correlation']
             }
         }
     
@@ -231,6 +277,136 @@ class EnterpriseDashboardSystem:
             }
         )
         
+        # === CREATOR ECONOMY DASHBOARD WIDGET TEMPLATES ===
+        
+        # Creator Economy Overview KPI
+        templates['creator_economy_overview_kpi'] = DashboardWidget(
+            widget_id='template_creator_economy_kpi',
+            title='Creator Economy Overview',
+            visualization_type=VisualizationType.KPI_CARD,
+            data_source='creator_economy_metrics',
+            query='SELECT COUNT(*) as active_creators, AVG(revenue) as avg_revenue, SUM(content_created) as total_content FROM creator_metrics WHERE timestamp >= NOW() - INTERVAL 24 HOUR',
+            update_frequency=UpdateFrequency.MEDIUM_FREQUENCY,
+            position={'x': 0, 'y': 0, 'width': 6, 'height': 3},
+            configuration={
+                'metrics': [
+                    {'name': 'Active Creators', 'field': 'active_creators', 'unit': '', 'format': '0,0'},
+                    {'name': 'Average Creator Revenue', 'field': 'avg_revenue', 'unit': '$', 'format': '0,0.00'},
+                    {'name': 'Content Created Today', 'field': 'total_content', 'unit': '', 'format': '0,0'}
+                ],
+                'thresholds': {'revenue_warning': 100, 'revenue_excellent': 1000}
+            }
+        )
+        
+        # Creator Tier Distribution Chart
+        templates['creator_tier_distribution'] = DashboardWidget(
+            widget_id='template_tier_distribution',
+            title='Creator Tier Distribution',
+            visualization_type=VisualizationType.PIE_CHART,
+            data_source='creator_tier_progression',
+            query='SELECT tier, COUNT(*) as count FROM creator_tiers GROUP BY tier',
+            update_frequency=UpdateFrequency.HOURLY,
+            position={'x': 6, 'y': 0, 'width': 6, 'height': 4},
+            configuration={
+                'colors': ['#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7', '#DDA0DD'],
+                'show_labels': True,
+                'show_legend': True,
+                'animate': True
+            }
+        )
+        
+        # Real-time Creator Analytics
+        templates['real_time_creator_analytics'] = DashboardWidget(
+            widget_id='template_realtime_creator',
+            title='Real-time Creator Activity',
+            visualization_type=VisualizationType.REAL_TIME_STREAM,
+            data_source='creator_performance_analytics',
+            query='SELECT timestamp, creator_id, engagement_rate, content_views FROM creator_activity WHERE timestamp >= NOW() - INTERVAL 1 HOUR ORDER BY timestamp DESC',
+            update_frequency=UpdateFrequency.REAL_TIME,
+            position={'x': 0, 'y': 3, 'width': 12, 'height': 4},
+            configuration={
+                'max_items': 100,
+                'auto_scroll': True,
+                'highlight_anomalies': True,
+                'stream_type': 'creator_activity'
+            }
+        )
+        
+        # Multi-format Content Performance
+        templates['multi_format_content_chart'] = DashboardWidget(
+            widget_id='template_content_format',
+            title='Multi-format Content Performance',
+            visualization_type=VisualizationType.BAR_CHART,
+            data_source='multi_format_content_analytics',
+            query='SELECT content_type, AVG(engagement_rate) as avg_engagement, SUM(views) as total_views FROM content_analytics GROUP BY content_type',
+            update_frequency=UpdateFrequency.MEDIUM_FREQUENCY,
+            position={'x': 0, 'y': 7, 'width': 8, 'height': 5},
+            configuration={
+                'x_axis': 'content_type',
+                'y_axis': 'avg_engagement',
+                'color_scheme': 'creator_economy',
+                'show_grid': True,
+                'animate_bars': True
+            }
+        )
+        
+        # Collaboration Network Heatmap
+        templates['collaboration_heatmap'] = DashboardWidget(
+            widget_id='template_collaboration_heatmap',
+            title='Creator Collaboration Network',
+            visualization_type=VisualizationType.HEATMAP,
+            data_source='creator_collaboration_insights',
+            query='SELECT creator_a, creator_b, collaboration_strength FROM collaboration_matrix WHERE timestamp >= NOW() - INTERVAL 7 DAY',
+            update_frequency=UpdateFrequency.HOURLY,
+            position={'x': 8, 'y': 7, 'width': 4, 'height': 5},
+            configuration={
+                'color_scale': 'viridis',
+                'show_values': True,
+                'cluster_similar': True
+            }
+        )
+        
+        # Gamification Engagement Gauge
+        templates['gamification_gauge'] = DashboardWidget(
+            widget_id='template_gamification_gauge',
+            title='Platform Engagement Score',
+            visualization_type=VisualizationType.GAUGE,
+            data_source='gamification_engagement_metrics',
+            query='SELECT AVG(engagement_score) as score FROM gamification_metrics WHERE timestamp >= NOW() - INTERVAL 1 HOUR',
+            update_frequency=UpdateFrequency.HIGH_FREQUENCY,
+            position={'x': 0, 'y': 12, 'width': 4, 'height': 4},
+            configuration={
+                'min_value': 0,
+                'max_value': 100,
+                'thresholds': [
+                    {'value': 30, 'color': '#FF4444', 'label': 'Low'},
+                    {'value': 70, 'color': '#FFA500', 'label': 'Medium'},
+                    {'value': 100, 'color': '#00FF00', 'label': 'High'}
+                ],
+                'show_needle': True,
+                'animate': True
+            }
+        )
+        
+        # Cross-platform Distribution Analytics
+        templates['cross_platform_analytics'] = DashboardWidget(
+            widget_id='template_cross_platform',
+            title='Cross-platform Performance',
+            visualization_type=VisualizationType.LINE_CHART,
+            data_source='cross_platform_distribution_analytics',
+            query='SELECT DATE(timestamp) as date, platform, SUM(reach) as total_reach FROM distribution_analytics WHERE timestamp >= NOW() - INTERVAL 30 DAY GROUP BY DATE(timestamp), platform',
+            update_frequency=UpdateFrequency.HOURLY,
+            position={'x': 4, 'y': 12, 'width': 8, 'height': 4},
+            configuration={
+                'x_axis': 'date',
+                'y_axis': 'total_reach',
+                'group_by': 'platform',
+                'show_points': True,
+                'smooth_lines': True,
+                'fill_area': False
+            }
+        )
+        
         return templates
     
     def _create_default_dashboards(self):
@@ -242,6 +418,20 @@ class EnterpriseDashboardSystem:
         # Audio Processing Dashboard
         audio_dashboard = self._create_audio_processing_dashboard()
         self.dashboards[audio_dashboard.dashboard_id] = audio_dashboard
+        
+        # === CREATOR ECONOMY DASHBOARDS ===
+        
+        # Creator Economy Overview Dashboard
+        creator_overview_dashboard = self._create_creator_economy_overview_dashboard()
+        self.dashboards[creator_overview_dashboard.dashboard_id] = creator_overview_dashboard
+        
+        # Creator Analytics Dashboard  
+        creator_analytics_dashboard = self._create_creator_analytics_dashboard()
+        self.dashboards[creator_analytics_dashboard.dashboard_id] = creator_analytics_dashboard
+        
+        # Multi-format Content Dashboard
+        content_dashboard = self._create_multi_format_content_dashboard()
+        self.dashboards[content_dashboard.dashboard_id] = content_dashboard
     
     def _create_executive_dashboard(self) -> Dashboard:
         """Create executive overview dashboard."""
@@ -331,6 +521,102 @@ class EnterpriseDashboardSystem:
             'active_dashboards': len(self.dashboards),
             'avg_load_time_ms': statistics.mean([m.load_time_ms for m in recent_metrics]) if recent_metrics else 0
         }
+    
+    # === CREATOR ECONOMY DASHBOARD CREATION METHODS ===
+    
+    def _create_creator_economy_overview_dashboard(self) -> Dashboard:
+        """Create Creator Economy overview dashboard."""
+        widgets = []
+        
+        # Creator Economy KPI Card
+        widgets.append(self.widget_templates['creator_economy_overview_kpi'])
+        
+        # Creator Tier Distribution
+        widgets.append(self.widget_templates['creator_tier_distribution'])
+        
+        # Gamification Engagement Gauge
+        widgets.append(self.widget_templates['gamification_gauge'])
+        
+        return Dashboard(
+            dashboard_id=str(uuid.uuid4()),
+            name='Creator Economy Overview',
+            description='Comprehensive overview of Creator Economy metrics, tier distributions, and engagement analytics',
+            dashboard_type=DashboardType.CREATOR_ECONOMY_OVERVIEW,
+            owner='system',
+            role_permissions=['creator', 'admin', 'manager', 'analyst'],
+            widgets=widgets,
+            layout_config={'columns': 12, 'row_height': 60},
+            theme_config=self.theme_templates['ainflue_dark'],
+            auto_refresh=True,
+            refresh_interval_seconds=120
+        )
+    
+    def _create_creator_analytics_dashboard(self) -> Dashboard:
+        """Create Creator Analytics dashboard."""
+        widgets = []
+        
+        # Real-time Creator Analytics Stream
+        widgets.append(self.widget_templates['real_time_creator_analytics'])
+        
+        # Cross-platform Analytics
+        widgets.append(self.widget_templates['cross_platform_analytics'])
+        
+        # Collaboration Network Heatmap
+        widgets.append(self.widget_templates['collaboration_heatmap'])
+        
+        return Dashboard(
+            dashboard_id=str(uuid.uuid4()),
+            name='Creator Analytics Dashboard',
+            description='Real-time creator performance analytics with cross-platform insights and collaboration network analysis',
+            dashboard_type=DashboardType.CREATOR_ANALYTICS,
+            owner='system',
+            role_permissions=['creator', 'admin', 'analyst', 'data_scientist'],
+            widgets=widgets,
+            layout_config={'columns': 12, 'row_height': 60},
+            theme_config=self.theme_templates['professional'],
+            auto_refresh=True,
+            refresh_interval_seconds=60
+        )
+    
+    def _create_multi_format_content_dashboard(self) -> Dashboard:
+        """Create Multi-format Content dashboard."""
+        widgets = []
+        
+        # Multi-format Content Performance Chart
+        widgets.append(self.widget_templates['multi_format_content_chart'])
+        
+        # Content Quality KPI
+        widgets.append(DashboardWidget(
+            widget_id=str(uuid.uuid4()),
+            title='Content Quality Metrics',
+            visualization_type=VisualizationType.KPI_CARD,
+            data_source='multi_format_content_analytics',
+            query='SELECT AVG(quality_score) as avg_quality, COUNT(*) as total_content, AVG(ai_enhancement_score) as ai_score FROM content_quality WHERE timestamp >= NOW() - INTERVAL 24 HOUR',
+            update_frequency=UpdateFrequency.MEDIUM_FREQUENCY,
+            position={'x': 8, 'y': 0, 'width': 4, 'height': 5},
+            configuration={
+                'metrics': [
+                    {'name': 'Average Quality Score', 'field': 'avg_quality', 'unit': '/100', 'format': '0.1f'},
+                    {'name': 'Content Processed', 'field': 'total_content', 'unit': '', 'format': '0,0'},
+                    {'name': 'AI Enhancement Score', 'field': 'ai_score', 'unit': '/100', 'format': '0.1f'}
+                ],
+                'thresholds': {'quality_excellent': 85, 'quality_good': 70}
+            }
+        ))
+        
+        return Dashboard(
+            dashboard_id=str(uuid.uuid4()),
+            name='Multi-format Content Dashboard',
+            description='AI-powered multi-format content analysis with quality metrics and optimization insights',
+            dashboard_type=DashboardType.MULTI_FORMAT_CONTENT,
+            owner='system',
+            role_permissions=['creator', 'content_manager', 'admin', 'quality_analyst'],
+            widgets=widgets,
+            layout_config={'columns': 12, 'row_height': 60},
+            theme_config=self.theme_templates['ainflue_light'],
+            auto_refresh=True,
+            refresh_interval_seconds=180
+        )
 
 # Global enterprise dashboard system instance
 enterprise_dashboard_system = EnterpriseDashboardSystem()
