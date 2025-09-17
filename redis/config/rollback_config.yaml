@@ -1,0 +1,54 @@
+# ⚡ Redis Rollback Configuration - Ainflue Enterprise
+# © 2025 Fahed Mlaiel <mlaiel@live.de) - All Rights Reserved
+# Rollback Configuration for Creator Economy Platform
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: redis-rollback-config
+  namespace: ainflue-redis
+  labels:
+    app: ainflue-redis
+    component: rollback-config
+    environment: enterprise
+    owner: fahed-mlaiel
+    version: "4.0.0"
+  annotations:
+    author: "Fahed Mlaiel <mlaiel@live.de>"
+    license: "Proprietary - All Rights Reserved"
+
+data:
+  rollback_config: |
+    # Rollback Strategy
+    rollback_strategy: "automated_with_manual_approval"
+    rollback_time_limit: "15_minutes"
+    
+    # Rollback Triggers
+    rollback_triggers:
+      performance_degradation: "20%_below_baseline"
+      error_rate_increase: "5%_above_normal"
+      availability_drop: "below_99.9%"
+      data_corruption_detected: "immediate"
+      
+    # Rollback Types
+    rollback_types:
+      configuration_rollback:
+        time_limit: "30_seconds"
+        automatic: true
+        
+      version_rollback:
+        time_limit: "5_minutes"
+        approval_required: true
+        
+      data_rollback:
+        time_limit: "15_minutes"
+        manual_approval: true
+        data_verification: required
+    
+    # Creator Data Rollback Protection
+    creator_rollback_protection:
+      revenue_data: "protected_with_audit"
+      user_profiles: "backup_verification_required"
+      content_metadata: "rollback_allowed"
+      session_data: "no_protection_needed"
+---
