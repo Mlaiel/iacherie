@@ -31,9 +31,16 @@ from datetime import datetime, timedelta
 from enum import Enum
 from abc import ABC, abstractmethod
 import json
-import numpy as np
 from collections import defaultdict, deque
 import hashlib
+
+# Optional numpy import with fallback
+try:
+    import numpy as np
+    HAS_NUMPY = True
+except ImportError:
+    HAS_NUMPY = False
+    np = None
 
 logger = logging.getLogger(__name__)
 

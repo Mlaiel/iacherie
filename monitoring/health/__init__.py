@@ -78,9 +78,11 @@ try:
         ModelPerformanceLevel,
         AIResourceType
     )
+    AI_ML_AVAILABLE = True
 except ImportError as e:
     print(f"⚠️ AI/ML intelligence engine not available: {e}")
     AIMLHealthIntelligenceEngine = None
+    AI_ML_AVAILABLE = False
 
 # Existing core health checks
 from .health_checks import (
