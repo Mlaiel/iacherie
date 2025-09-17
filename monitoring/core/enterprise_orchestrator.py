@@ -82,7 +82,28 @@ class EnterpriseMonitoringOrchestrator:
         self.metrics_cache: Dict[str, Any] = {}
         self.cache_ttl = 300  # 5 minutes
         
-        logger.info("Initializing Enterprise Monitoring Orchestrator")
+        # Creator Economy specific monitoring
+        self.creator_economy_metrics = {
+            "total_creators": 0,
+            "active_creators_24h": 0,
+            "revenue_24h": 0.0,
+            "collaboration_success_rate": 0.0,
+            "avg_creator_satisfaction": 0.0,
+            "content_processing_efficiency": 0.0,
+            "ai_enhancement_usage": 0.0,
+            "tier_distribution": {},
+            "growth_rate": 0.0
+        }
+        
+        # Integration with core monitoring components
+        self.core_monitoring_components = {
+            "creator_economy_engine": None,
+            "multi_format_core": None,
+            "ai_processing_controller": None,
+            "creator_tier_orchestrator": None
+        }
+        
+        logger.info("Initializing Enterprise Monitoring Orchestrator with Creator Economy features")
         self._initialize_monitoring_modules()
     
     def _initialize_monitoring_modules(self):
@@ -96,12 +117,50 @@ class EnterpriseMonitoringOrchestrator:
                     uptime_seconds=0.0
                 )
             
+            # Initialize Creator Economy monitoring integration
+            self._initialize_creator_economy_integration()
+            
             self.modules_initialized = True
-            logger.info("All monitoring modules initialized successfully")
+            logger.info("All monitoring modules initialized successfully with Creator Economy integration")
             
         except Exception as e:
             logger.error(f"Failed to initialize monitoring modules: {e}")
             self.modules_initialized = False
+    
+    def _initialize_creator_economy_integration(self):
+        """Initialize Creator Economy monitoring integration."""
+        try:
+            # Try to import and initialize Creator Economy components
+            try:
+                from .creator_economy_monitoring_engine import creator_economy_engine
+                self.core_monitoring_components["creator_economy_engine"] = creator_economy_engine
+                logger.info("Creator Economy Engine integrated")
+            except ImportError:
+                logger.warning("Creator Economy Engine not available")
+            
+            try:
+                from .multi_format_content_monitoring_core import multi_format_monitoring_core
+                self.core_monitoring_components["multi_format_core"] = multi_format_monitoring_core
+                logger.info("Multi-Format Content Core integrated")
+            except ImportError:
+                logger.warning("Multi-Format Content Core not available")
+            
+            try:
+                from .ai_processing_monitoring_controller import ai_processing_controller
+                self.core_monitoring_components["ai_processing_controller"] = ai_processing_controller
+                logger.info("AI Processing Controller integrated")
+            except ImportError:
+                logger.warning("AI Processing Controller not available")
+            
+            try:
+                from .creator_tier_monitoring_orchestrator import creator_tier_orchestrator
+                self.core_monitoring_components["creator_tier_orchestrator"] = creator_tier_orchestrator
+                logger.info("Creator Tier Orchestrator integrated")
+            except ImportError:
+                logger.warning("Creator Tier Orchestrator not available")
+            
+        except Exception as e:
+            logger.error(f"Failed to initialize Creator Economy integration: {e}")
     
     async def get_platform_health(self) -> Dict[str, Any]:
         """Get comprehensive platform health status."""
@@ -143,11 +202,15 @@ class EnterpriseMonitoringOrchestrator:
                     "metrics": health.metrics
                 }
             
+            # Get Creator Economy specific health
+            creator_economy_health = await self._get_creator_economy_health()
+            
             return {
                 "overall_status": overall_status.value,
                 "platform_uptime_seconds": total_uptime,
                 "modules_initialized": self.modules_initialized,
                 "components": health_data,
+                "creator_economy": creator_economy_health,
                 "timestamp": datetime.now().isoformat(),
                 "version": "3.1.0"
             }
@@ -158,6 +221,128 @@ class EnterpriseMonitoringOrchestrator:
                 "overall_status": PlatformStatus.CRITICAL.value,
                 "error": str(e),
                 "timestamp": datetime.now().isoformat()
+            }
+    
+    async def _get_creator_economy_health(self) -> Dict[str, Any]:
+        """Get Creator Economy specific health metrics."""
+        try:
+            creator_economy_health = {
+                "status": "healthy",
+                "metrics": self.creator_economy_metrics.copy(),
+                "component_status": {}
+            }
+            
+            # Check Creator Economy Engine
+            creator_engine = self.core_monitoring_components.get("creator_economy_engine")
+            if creator_engine:
+                try:
+                    engine_health = await creator_engine.get_creator_economy_health()
+                    creator_economy_health["component_status"]["creator_economy_engine"] = {
+                        "status": engine_health.get("status", "unknown"),
+                        "health_score": engine_health.get("health_score", 0.0),
+                        "total_creators": engine_health.get("total_creators", 0),
+                        "active_creators": engine_health.get("active_creators", 0)
+                    }
+                    
+                    # Update metrics
+                    self.creator_economy_metrics.update({
+                        "total_creators": engine_health.get("total_creators", 0),
+                        "active_creators_24h": engine_health.get("active_creators", 0),
+                        "revenue_24h": engine_health.get("total_revenue", 0.0),
+                        "avg_creator_satisfaction": engine_health.get("avg_satisfaction", 0.0)
+                    })
+                    
+                except Exception as e:
+                    creator_economy_health["component_status"]["creator_economy_engine"] = {
+                        "status": "error",
+                        "error": str(e)
+                    }
+            
+            # Check Multi-Format Content Core
+            multi_format_core = self.core_monitoring_components.get("multi_format_core")
+            if multi_format_core:
+                try:
+                    content_health = await multi_format_core.get_content_monitoring_health()
+                    creator_economy_health["component_status"]["multi_format_core"] = {
+                        "status": content_health.get("status", "unknown"),
+                        "health_score": content_health.get("health_score", 0.0),
+                        "total_content": content_health.get("total_content_items", 0)
+                    }
+                    
+                    # Update metrics
+                    self.creator_economy_metrics["content_processing_efficiency"] = content_health.get("health_score", 0.0) / 100.0
+                    
+                except Exception as e:
+                    creator_economy_health["component_status"]["multi_format_core"] = {
+                        "status": "error",
+                        "error": str(e)
+                    }
+            
+            # Check AI Processing Controller
+            ai_controller = self.core_monitoring_components.get("ai_processing_controller")
+            if ai_controller:
+                try:
+                    ai_health = await ai_controller.get_ai_processing_health()
+                    creator_economy_health["component_status"]["ai_processing_controller"] = {
+                        "status": ai_health.get("status", "unknown"),
+                        "health_score": ai_health.get("health_score", 0.0),
+                        "total_models": ai_health.get("total_models", 0)
+                    }
+                    
+                    # Update metrics
+                    self.creator_economy_metrics["ai_enhancement_usage"] = ai_health.get("health_score", 0.0) / 100.0
+                    
+                except Exception as e:
+                    creator_economy_health["component_status"]["ai_processing_controller"] = {
+                        "status": "error",
+                        "error": str(e)
+                    }
+            
+            # Check Creator Tier Orchestrator
+            tier_orchestrator = self.core_monitoring_components.get("creator_tier_orchestrator")
+            if tier_orchestrator:
+                try:
+                    tier_health = await tier_orchestrator.get_tier_monitoring_health()
+                    creator_economy_health["component_status"]["creator_tier_orchestrator"] = {
+                        "status": tier_health.get("status", "unknown"),
+                        "health_score": tier_health.get("health_score", 0.0),
+                        "tier_distribution": tier_health.get("tier_distribution", {})
+                    }
+                    
+                    # Update metrics
+                    self.creator_economy_metrics["tier_distribution"] = tier_health.get("tier_distribution", {})
+                    
+                except Exception as e:
+                    creator_economy_health["component_status"]["creator_tier_orchestrator"] = {
+                        "status": "error",
+                        "error": str(e)
+                    }
+            
+            # Calculate overall Creator Economy health
+            component_scores = []
+            for component_status in creator_economy_health["component_status"].values():
+                if "health_score" in component_status:
+                    component_scores.append(component_status["health_score"])
+            
+            if component_scores:
+                overall_score = sum(component_scores) / len(component_scores)
+                if overall_score >= 80:
+                    creator_economy_health["status"] = "healthy"
+                elif overall_score >= 60:
+                    creator_economy_health["status"] = "warning"
+                else:
+                    creator_economy_health["status"] = "critical"
+                    
+                creator_economy_health["overall_health_score"] = overall_score
+            
+            return creator_economy_health
+            
+        except Exception as e:
+            logger.error(f"Failed to get Creator Economy health: {e}")
+            return {
+                "status": "error",
+                "error": str(e),
+                "metrics": self.creator_economy_metrics
             }
     
     async def _check_component_health(self, component_type: ComponentType) -> Dict[str, Any]:
