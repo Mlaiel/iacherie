@@ -143,13 +143,13 @@ class APIMetrics:
     method: HTTPMethod
     api_type: APIType
     category: APICategory
+    total_time_ms: float
     
     # Request/Response metadata
     request_metadata: APIRequestMetadata
     response_metadata: Optional[APIResponseMetadata] = None
     
     # Performance metrics
-    total_time_ms: float
     auth_time_ms: Optional[float] = None
     processing_time_ms: Optional[float] = None
     database_time_ms: Optional[float] = None
@@ -894,8 +894,8 @@ async def example_creator_api_profiling():
     )
     
     metrics = await profiler.profile_api_request(
-        request_metadata=request_metadata,
-        api_func=get_creator_profile,
+        request_metadata,
+        get_creator_profile,
         "123"
     )
     

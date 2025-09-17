@@ -728,11 +728,11 @@ async def example_creator_content_profiling():
     )
     
     metrics = await profiler.profile_storage_operation(
-        operation_type=IOOperationType.UPLOAD,
-        storage_type=StorageType.S3_CLOUD,
-        location=StorageLocation.CREATOR_CONTENT,
-        file_metadata=file_metadata,
-        operation_func=upload_video,
+        IOOperationType.UPLOAD,
+        StorageType.S3_CLOUD,
+        StorageLocation.CREATOR_CONTENT,
+        file_metadata,
+        upload_video,
         "/tmp/creator_video.mp4",
         "s3://ainflue-content/videos/"
     )

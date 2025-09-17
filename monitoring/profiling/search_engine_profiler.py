@@ -113,13 +113,13 @@ class SearchMetrics:
     engine_type: SearchEngineType
     operation_type: SearchOperationType
     domain: SearchDomain
+    total_time_ms: float
     
     # Query/Index metadata
     query_metadata: Optional[SearchQueryMetadata] = None
     index_metadata: Optional[SearchIndexMetadata] = None
     
     # Performance metrics
-    total_time_ms: float
     query_time_ms: Optional[float] = None
     fetch_time_ms: Optional[float] = None
     index_time_ms: Optional[float] = None
@@ -915,10 +915,10 @@ async def example_creator_search_profiling():
     )
     
     metrics = await profiler.profile_search_query(
-        engine_type=SearchEngineType.ELASTICSEARCH,
-        domain=SearchDomain.CREATOR_PROFILES,
-        query_metadata=query_metadata,
-        search_func=search_creators,
+        SearchEngineType.ELASTICSEARCH,
+        SearchDomain.CREATOR_PROFILES,
+        query_metadata,
+        search_creators,
         "gaming content creator",
         {"category": "gaming"}
     )

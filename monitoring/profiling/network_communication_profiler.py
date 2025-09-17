@@ -975,8 +975,8 @@ async def example_creator_network_profiling():
     )
     
     metrics = await profiler.profile_network_request(
-        metadata=metadata,
-        network_func=upload_to_cdn,
+        metadata,
+        upload_to_cdn,
         file_data,
         "cdn://ainflue-content/videos/"
     )
