@@ -84,6 +84,95 @@ except ImportError as e:
     AIMLHealthIntelligenceEngine = None
     AI_ML_AVAILABLE = False
 
+try:
+    from .creator_collaboration_health_analyzer import (
+        CreatorCollaborationHealthAnalyzer,
+        CollaborationHealthStatus,
+        CollaborationType,
+        CollaborationSuccessLevel,
+        CollaborationRisk,
+        CollaborationMetrics,
+        CreatorCollaborationProfile,
+        CollaborationNetworkAnalysis,
+        CollaborationHealthSnapshot,
+        create_collaboration_health_analyzer,
+        collaboration_health_context
+    )
+except ImportError as e:
+    print(f"⚠️ Collaboration health analyzer not available: {e}")
+    CreatorCollaborationHealthAnalyzer = None
+
+try:
+    from .monetization_pipeline_health_monitor import (
+        MonetizationPipelineHealthMonitor,
+        MonetizationHealthStatus,
+        RevenueStreamType,
+        PaymentProcessorHealth,
+        RevenueRisk,
+        RevenueStreamMetrics,
+        CreatorMonetizationProfile,
+        PaymentProcessorMetrics,
+        MonetizationHealthSnapshot,
+        create_monetization_health_monitor,
+        monetization_health_context
+    )
+except ImportError as e:
+    print(f"⚠️ Monetization health monitor not available: {e}")
+    MonetizationPipelineHealthMonitor = None
+
+try:
+    from .creator_tier_health_orchestrator import (
+        CreatorTierHealthOrchestrator,
+        CreatorTierLevel,
+        TierHealthStatus,
+        TierProgression,
+        TierMetricType,
+        TierRequirements,
+        TierMetrics,
+        TierProgressionAnalysis,
+        TierEcosystemHealth,
+        create_tier_health_orchestrator,
+        tier_health_context
+    )
+except ImportError as e:
+    print(f"⚠️ Creator tier health orchestrator not available: {e}")
+    CreatorTierHealthOrchestrator = None
+
+try:
+    from .cross_platform_distribution_health_engine import (
+        CrossPlatformDistributionHealthEngine,
+        PlatformType,
+        PlatformHealthStatus,
+        DistributionStrategy,
+        ContentSyncStatus,
+        PlatformMetrics,
+        DistributionCampaign,
+        CrossPlatformSyncHealth,
+        DistributionHealthSnapshot,
+        create_distribution_health_engine,
+        distribution_health_context
+    )
+except ImportError as e:
+    print(f"⚠️ Distribution health engine not available: {e}")
+    CrossPlatformDistributionHealthEngine = None
+
+try:
+    from .creator_engagement_health_intelligence import (
+        CreatorEngagementHealthIntelligence,
+        EngagementHealthStatus,
+        EngagementType,
+        EngagementTrend,
+        AudienceSegment,
+        EngagementMetrics,
+        AudienceEngagementProfile,
+        EngagementHealthSnapshot,
+        create_engagement_health_intelligence,
+        engagement_health_context
+    )
+except ImportError as e:
+    print(f"⚠️ Engagement health intelligence not available: {e}")
+    CreatorEngagementHealthIntelligence = None
+
 # Existing core health checks
 from .health_checks import (
     HealthChecksManager,
@@ -161,6 +250,80 @@ if AIMLHealthIntelligenceEngine:
         "AIResourceType"
     ])
 
+if CreatorCollaborationHealthAnalyzer:
+    __all__.extend([
+        "CreatorCollaborationHealthAnalyzer",
+        "CollaborationHealthStatus",
+        "CollaborationType",
+        "CollaborationSuccessLevel",
+        "CollaborationRisk",
+        "CollaborationMetrics",
+        "CreatorCollaborationProfile",
+        "CollaborationNetworkAnalysis",
+        "CollaborationHealthSnapshot",
+        "create_collaboration_health_analyzer",
+        "collaboration_health_context"
+    ])
+
+if MonetizationPipelineHealthMonitor:
+    __all__.extend([
+        "MonetizationPipelineHealthMonitor",
+        "MonetizationHealthStatus",
+        "RevenueStreamType",
+        "PaymentProcessorHealth",
+        "RevenueRisk",
+        "RevenueStreamMetrics",
+        "CreatorMonetizationProfile",
+        "PaymentProcessorMetrics",
+        "MonetizationHealthSnapshot",
+        "create_monetization_health_monitor",
+        "monetization_health_context"
+    ])
+
+if CreatorTierHealthOrchestrator:
+    __all__.extend([
+        "CreatorTierHealthOrchestrator",
+        "CreatorTierLevel",
+        "TierHealthStatus",
+        "TierProgression",
+        "TierMetricType",
+        "TierRequirements",
+        "TierMetrics",
+        "TierProgressionAnalysis",
+        "TierEcosystemHealth",
+        "create_tier_health_orchestrator",
+        "tier_health_context"
+    ])
+
+if CrossPlatformDistributionHealthEngine:
+    __all__.extend([
+        "CrossPlatformDistributionHealthEngine",
+        "PlatformType",
+        "PlatformHealthStatus",
+        "DistributionStrategy",
+        "ContentSyncStatus",
+        "PlatformMetrics",
+        "DistributionCampaign",
+        "CrossPlatformSyncHealth",
+        "DistributionHealthSnapshot",
+        "create_distribution_health_engine",
+        "distribution_health_context"
+    ])
+
+if CreatorEngagementHealthIntelligence:
+    __all__.extend([
+        "CreatorEngagementHealthIntelligence",
+        "EngagementHealthStatus",
+        "EngagementType",
+        "EngagementTrend",
+        "AudienceSegment",
+        "EngagementMetrics",
+        "AudienceEngagementProfile",
+        "EngagementHealthSnapshot",
+        "create_engagement_health_intelligence",
+        "engagement_health_context"
+    ])
+
 # =============== HEALTH MONITORING UTILITY FUNCTIONS ===============
 
 def get_health_monitoring_info() -> dict:
@@ -179,6 +342,16 @@ def get_health_monitoring_info() -> dict:
         available_components["performance"] = "CreatorPerformanceHealthMonitor"
     if AIMLHealthIntelligenceEngine:
         available_components["ai_ml"] = "AIMLHealthIntelligenceEngine"
+    if CreatorCollaborationHealthAnalyzer:
+        available_components["collaboration"] = "CreatorCollaborationHealthAnalyzer"
+    if MonetizationPipelineHealthMonitor:
+        available_components["monetization"] = "MonetizationPipelineHealthMonitor"
+    if CreatorTierHealthOrchestrator:
+        available_components["tier_orchestration"] = "CreatorTierHealthOrchestrator"
+    if CrossPlatformDistributionHealthEngine:
+        available_components["distribution"] = "CrossPlatformDistributionHealthEngine"
+    if CreatorEngagementHealthIntelligence:
+        available_components["engagement"] = "CreatorEngagementHealthIntelligence"
     
     available_components["core_checks"] = "HealthChecksManager"
     
