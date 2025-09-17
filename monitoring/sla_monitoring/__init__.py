@@ -10,6 +10,8 @@ from .sla_tracker import SLATracker, SLAMetric, SLATarget, sla_tracker
 from .creator_experience_sla import CreatorExperienceSLA, CreatorExperienceMetric, CreatorSLATargets, creator_experience_sla
 from .revenue_monetization_sla import RevenueMonetizationSLA, RevenueMetric, MonetizationSLATargets, revenue_monetization_sla
 from .content_processing_sla import ContentProcessingSLA, ContentProcessingMetric, ContentProcessingSLATargets, content_processing_sla
+from .collaboration_platform_sla import CollaborationPlatformSLA, CollaborationMetric, CollaborationSLATargets, collaboration_platform_sla
+from .api_performance_sla import APIPerformanceSLA, APIPerformanceMetric, APIPerformanceSLATargets, api_performance_sla
 
 __all__ = [
     # Core SLA Tracking
@@ -23,4 +25,10 @@ __all__ = [
     
     # Content Processing SLA
     'ContentProcessingSLA', 'ContentProcessingMetric', 'ContentProcessingSLATargets', 'content_processing_sla',
+    
+    # Collaboration Platform SLA
+    'CollaborationPlatformSLA', 'CollaborationMetric', 'CollaborationSLATargets', 'collaboration_platform_sla',
+    
+    # API Performance SLA
+    'APIPerformanceSLA', 'APIPerformanceMetric', 'APIPerformanceSLATargets', 'api_performance_sla',
 ]

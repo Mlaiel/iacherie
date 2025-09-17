@@ -45,14 +45,6 @@ except ImportError:
                 if not hasattr(self, 'data'):
                     raise ValueError("Invalid request")
                 return {}
-                    if not data:
-                        raise ValueError("Invalid request")
-            
-                    # Process request
-                    result = await self._handle_get_performance_summary_request(data)
-            
-                    # Return response
-                    return {"status": "success", "data": result}
             
                 except Exception as e:
                     logger.error(f"API handler get_performance_summary failed: {e}")
