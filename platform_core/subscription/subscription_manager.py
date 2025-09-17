@@ -417,3 +417,16 @@ class SubscriptionManager:
         except Exception as e:
             logger.error(f"Error generating subscription stats: {e}")
             return {}
+
+
+# Instance globale
+subscription_manager = SubscriptionManager()
+
+# Export des classes principales
+__all__ = [
+    'SubscriptionManager',
+    'Subscription',
+    'SubscriptionStatus',
+    'BillingCycle',
+    'subscription_manager'
+]
