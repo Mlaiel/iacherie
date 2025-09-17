@@ -14,6 +14,7 @@ from .collaboration_platform_sla import CollaborationPlatformSLA, CollaborationM
 from .api_performance_sla import APIPerformanceSLA, APIPerformanceMetric, APIPerformanceSLATargets, api_performance_sla
 from .multi_platform_distribution_sla import MultiPlatformDistributionSLA, DistributionMetric, MultiPlatformDistributionSLATargets, multi_platform_distribution_sla
 from .infrastructure_health_sla import InfrastructureHealthSLA, InfrastructureMetric, InfrastructureHealthSLATargets, infrastructure_health_sla
+from .sla_automation_engine import SLAAutomationEngine, AutomationRule, AutomationExecution, sla_automation_engine
 
 __all__ = [
     # Core SLA Tracking
@@ -39,4 +40,7 @@ __all__ = [
     
     # Infrastructure Health SLA
     'InfrastructureHealthSLA', 'InfrastructureMetric', 'InfrastructureHealthSLATargets', 'infrastructure_health_sla',
+    
+    # SLA Automation Engine
+    'SLAAutomationEngine', 'AutomationRule', 'AutomationExecution', 'sla_automation_engine',
 ]
