@@ -16,8 +16,8 @@ Gestion complète des plans et abonnements avec intelligence artificielle
 - Analytics d'utilisation et recommandations IA
 """
 
-from .plan_manager import PlanManager, SubscriptionPlan, PlanFeature
-from .subscription_manager import SubscriptionManager, Subscription, SubscriptionStatus
+from .plan_manager import PlanManager, SubscriptionPlan, PlanFeature, plan_manager
+from .subscription_manager import SubscriptionManager, Subscription, SubscriptionStatus, subscription_manager
 from .quota_manager import QuotaManager, ResourceQuota, UsageTracker
 from .upgrade_manager import UpgradeManager, UpgradeStrategy, UpgradeRecommendation
 from .usage_analytics import UsageAnalytics, UsageReport, PredictiveAnalytics
@@ -27,13 +27,21 @@ from .creator_tier_manager import CreatorTierManager, creator_tier_manager
 from .subscription_automation_engine import SubscriptionAutomationEngine, subscription_automation_engine
 from .subscription_lifecycle_manager import SubscriptionLifecycleManager, subscription_lifecycle_manager
 from .revenue_optimization_engine import RevenueOptimizationEngine, revenue_optimization_engine
-# from .plan_optimizer import PlanOptimizer, OptimizationStrategy, PlanRecommendation
+# Import nouveaux modules
+from .plan_recommendation_system import PlanRecommendationSystem, plan_recommendation_system
+from .usage_forecasting_engine import UsageForecastingEngine, usage_forecasting_engine
+from .subscription_metrics_collector import SubscriptionMetricsCollector, subscription_metrics_collector
+from .feature_flag_manager import FeatureFlagManager, feature_flag_manager
+from .trial_optimization_system import TrialOptimizationSystem, trial_optimization_system
+from .subscription_fraud_detector import SubscriptionFraudDetector, subscription_fraud_detector
 
 __all__ = [
     "PlanManager",
+    "plan_manager",
     "SubscriptionPlan", 
     "PlanFeature",
     "SubscriptionManager",
+    "subscription_manager",
     "Subscription",
     "SubscriptionStatus",
     "QuotaManager",
@@ -57,9 +65,18 @@ __all__ = [
     "subscription_lifecycle_manager",
     "RevenueOptimizationEngine",
     "revenue_optimization_engine",
-    # "PlanOptimizer",
-    # "OptimizationStrategy",
-    # "PlanRecommendation"
+    "PlanRecommendationSystem",
+    "plan_recommendation_system",
+    "UsageForecastingEngine",
+    "usage_forecasting_engine",
+    "SubscriptionMetricsCollector",
+    "subscription_metrics_collector",
+    "FeatureFlagManager",
+    "feature_flag_manager",
+    "TrialOptimizationSystem",
+    "trial_optimization_system",
+    "SubscriptionFraudDetector",
+    "subscription_fraud_detector"
 ]
 
 __version__ = "1.0.0"

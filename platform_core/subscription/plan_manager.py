@@ -799,3 +799,16 @@ Retourne les statistiques du gestionnaire"""
             "ab_testing_enabled": self.ab_testing_enabled,
             "dynamic_pricing_enabled": self.dynamic_pricing_enabled
         }
+
+
+# Instance globale
+plan_manager = PlanManager()
+
+# Export des classes principales
+__all__ = [
+    'PlanManager',
+    'SubscriptionPlan',
+    'PlanFeature',
+    'PlanTier',
+    'plan_manager'
+]
