@@ -21,6 +21,10 @@ from .subscription_manager import SubscriptionManager, Subscription, Subscriptio
 from .quota_manager import QuotaManager, ResourceQuota, UsageTracker
 from .upgrade_manager import UpgradeManager, UpgradeStrategy, UpgradeRecommendation
 from .usage_analytics import UsageAnalytics, UsageReport, PredictiveAnalytics
+from .pricing_intelligence_engine import PricingIntelligenceEngine, pricing_intelligence_engine
+from .churn_prediction_system import ChurnPredictionSystem, churn_prediction_system
+from .creator_tier_manager import CreatorTierManager, creator_tier_manager
+from .subscription_automation_engine import SubscriptionAutomationEngine, subscription_automation_engine
 # from .plan_optimizer import PlanOptimizer, OptimizationStrategy, PlanRecommendation
 
 __all__ = [
@@ -39,6 +43,14 @@ __all__ = [
     "UsageAnalytics",
     "UsageReport", 
     "PredictiveAnalytics",
+    "PricingIntelligenceEngine",
+    "pricing_intelligence_engine",
+    "ChurnPredictionSystem",
+    "churn_prediction_system",
+    "CreatorTierManager",
+    "creator_tier_manager",
+    "SubscriptionAutomationEngine",
+    "subscription_automation_engine",
     # "PlanOptimizer",
     # "OptimizationStrategy",
     # "PlanRecommendation"
