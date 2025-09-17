@@ -22,6 +22,11 @@ from .backup_automation import RedisBackupAutomation, BackupConfig, BackupType, 
 from .disaster_recovery import RedisDisasterRecovery, DisasterRecoveryConfig, DisasterType, RecoveryStatus
 from .performance_optimizer import RedisPerformanceOptimizer, PerformanceConfig
 
+# AI-Powered Orchestration Modules - NEW DECEMBER 2025
+from .predictive_manager import RedisPredictiveManager, PredictionConfig, PredictionResult, PredictionType, PredictionAccuracy, TimeHorizon
+from .adaptive_controller import RedisAdaptiveController, AdaptationConfig, AdaptationRule, AdaptationResult, AdaptationType, AdaptationStrategy
+from .ml_optimization_engine import RedisMLOptimizationEngine, OptimizationConfig, OptimizationObjective, OptimizationAlgorithm
+
 __version__ = "2.0.0-enterprise"
 __author__ = "Fahed Mlaiel <mlaiel@live.de>"
 __status__ = "Production-Ready"
@@ -30,22 +35,53 @@ logger = logging.getLogger(__name__)
 
 # Export enterprise-grade orchestration components
 __all__ = [
+    # Core Orchestration Components
     "RedisClusterOrchestrator",
     "RedisFailoverManager",
     "RedisScalingController", 
     "RedisBackupAutomation",
     "RedisDisasterRecovery",
     "RedisPerformanceOptimizer",
+    
+    # AI-Powered Orchestration Components - NEW
+    "RedisPredictiveManager",
+    "RedisAdaptiveController",
+    "RedisMLOptimizationEngine",
+    
+    # Configuration Classes
     "ClusterOrchestratorConfig",
     "FailoverConfig",
     "ScalingConfig",
     "BackupConfig",
     "DisasterRecoveryConfig",
     "PerformanceConfig",
+    
+    # AI Configuration Classes - NEW
+    "PredictionConfig",
+    "AdaptationConfig", 
+    "OptimizationConfig",
+    
+    # Enums and Types
     "BackupType",
     "BackupStatus",
     "DisasterType",
     "RecoveryStatus",
+    
+    # AI Enums and Types - NEW
+    "PredictionType",
+    "PredictionAccuracy",
+    "TimeHorizon",
+    "AdaptationType",
+    "AdaptationStrategy",
+    "OptimizationObjective",
+    "OptimizationAlgorithm",
+    
+    # Result Classes - NEW
+    "PredictionResult",
+    "AdaptationResult",
+    "AdaptationRule",
+    
+    # Factory Functions
     "create_enterprise_orchestration"
 ]
 
