@@ -74,6 +74,86 @@ from .multi_format_content_error_analyzer import (
     content_analyzer
 )
 
+from .creator_collaboration_error_intelligence import (
+    CreatorCollaborationErrorIntelligence,
+    CollaborationErrorEvent,
+    CollaborationType,
+    CollaborationErrorCategory,
+    CollaborationSeverity,
+    CollaborationErrorPattern,
+    creator_collaboration_intelligence
+)
+
+from .monetization_error_detection_system import (
+    MonetizationErrorDetectionSystem,
+    MonetizationErrorEvent,
+    MonetizationChannel,
+    MonetizationErrorType,
+    MonetizationSeverity,
+    MonetizationHealthMetrics,
+    monetization_detection_system
+)
+
+from .creator_tier_error_orchestrator import (
+    CreatorTierErrorOrchestrator,
+    TierErrorEvent,
+    CreatorTier,
+    CreatorSpecialization,
+    TierErrorPriority,
+    ErrorEscalationLevel,
+    tier_orchestrator
+)
+
+from .real_time_error_response_automation import (
+    RealTimeErrorResponseAutomation,
+    AutomationRule,
+    AutomationExecution,
+    AutomationTrigger,
+    AutomationAction,
+    AutomationSeverity,
+    real_time_automation
+)
+
+from .creator_performance_error_correlation_engine import (
+    CreatorPerformanceErrorCorrelationEngine,
+    PerformanceMetric,
+    ErrorPerformanceCorrelation,
+    PerformanceImpactAssessment,
+    PerformancePrediction,
+    performance_correlation_engine
+)
+
+from .cross_platform_error_synchronization_hub import (
+    CrossPlatformErrorSynchronizationHub,
+    PlatformEndpoint,
+    ErrorSyncEvent,
+    SyncConflict,
+    PlatformType,
+    SynchronizationStatus,
+    cross_platform_sync_hub
+)
+
+from .error_prediction_machine_learning_engine import (
+    ErrorPredictionMachineLearningEngine,
+    FeatureVector,
+    ErrorPrediction,
+    PredictionModel,
+    PredictionConfidence,
+    ErrorRiskLevel,
+    error_prediction_engine
+)
+
+from .creator_error_impact_assessment_platform import (
+    CreatorErrorImpactAssessmentPlatform,
+    ErrorImpactAssessment,
+    ImpactMetric,
+    CreatorProfile,
+    RecoveryProgress,
+    ImpactCategory,
+    ImpactSeverity,
+    impact_assessment_platform
+)
+
 __all__ = [
     # Core components
     'SentryErrorTracker',
@@ -131,5 +211,77 @@ __all__ = [
     'ContentFormat',
     'ContentProcessingStage',
     'ContentErrorSeverity',
-    'content_analyzer'
+    'content_analyzer',
+    
+    # Creator Collaboration Intelligence
+    'CreatorCollaborationErrorIntelligence',
+    'CollaborationErrorEvent',
+    'CollaborationType',
+    'CollaborationErrorCategory',
+    'CollaborationSeverity',
+    'CollaborationErrorPattern',
+    'creator_collaboration_intelligence',
+    
+    # Monetization Error Detection
+    'MonetizationErrorDetectionSystem',
+    'MonetizationErrorEvent',
+    'MonetizationChannel',
+    'MonetizationErrorType',
+    'MonetizationSeverity',
+    'MonetizationHealthMetrics',
+    'monetization_detection_system',
+    
+    # Creator Tier Error Orchestrator
+    'CreatorTierErrorOrchestrator',
+    'TierErrorEvent',
+    'CreatorTier',
+    'CreatorSpecialization',
+    'TierErrorPriority',
+    'ErrorEscalationLevel',
+    'tier_orchestrator',
+    
+    # Real-Time Error Response Automation
+    'RealTimeErrorResponseAutomation',
+    'AutomationRule',
+    'AutomationExecution',
+    'AutomationTrigger',
+    'AutomationAction',
+    'AutomationSeverity',
+    'real_time_automation',
+    
+    # Creator Performance Error Correlation
+    'CreatorPerformanceErrorCorrelationEngine',
+    'PerformanceMetric',
+    'ErrorPerformanceCorrelation',
+    'PerformanceImpactAssessment',
+    'PerformancePrediction',
+    'performance_correlation_engine',
+    
+    # Cross-Platform Error Synchronization
+    'CrossPlatformErrorSynchronizationHub',
+    'PlatformEndpoint',
+    'ErrorSyncEvent',
+    'SyncConflict',
+    'PlatformType',
+    'SynchronizationStatus',
+    'cross_platform_sync_hub',
+    
+    # Error Prediction Machine Learning
+    'ErrorPredictionMachineLearningEngine',
+    'FeatureVector',
+    'ErrorPrediction',
+    'PredictionModel',
+    'PredictionConfidence',
+    'ErrorRiskLevel',
+    'error_prediction_engine',
+    
+    # Creator Error Impact Assessment
+    'CreatorErrorImpactAssessmentPlatform',
+    'ErrorImpactAssessment',
+    'ImpactMetric',
+    'CreatorProfile',
+    'RecoveryProgress',
+    'ImpactCategory',
+    'ImpactSeverity',
+    'impact_assessment_platform'
 ]
