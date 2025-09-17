@@ -142,6 +142,84 @@ except ImportError as e:
     logger.warning(f"❌ Failed to import Predictive Creator Success: {e}")
     PredictiveCreatorSuccess = None
 
+try:
+    from .ai_insights_generator import (
+        AIInsightsGenerator,
+        AIInsight,
+        TrendAnalysis,
+        AnomalyDetection,
+        PatternDiscovery,
+        InsightType,
+        InsightPriority,
+        ConfidenceLevel
+    )
+    logger.info("✅ AI Insights Generator loaded")
+except ImportError as e:
+    logger.warning(f"❌ Failed to import AI Insights Generator: {e}")
+    AIInsightsGenerator = None
+
+try:
+    from .real_time_analytics_engine import (
+        RealTimeAnalyticsEngine,
+        RealTimeProcessor,
+        StreamDataPoint,
+        RealTimeMetric,
+        RealTimeAlert,
+        StreamingInsight,
+        StreamType,
+        AlertSeverity,
+        ProcessingMode
+    )
+    logger.info("✅ Real-Time Analytics Engine loaded")
+except ImportError as e:
+    logger.warning(f"❌ Failed to import Real-Time Analytics Engine: {e}")
+    RealTimeAnalyticsEngine = None
+
+try:
+    from .market_intelligence_engine import (
+        MarketIntelligenceEngine,
+        MarketData,
+        MarketSegment,
+        CompetitorType,
+        MarketTrend,
+        TrendDirection
+    )
+    logger.info("✅ Market Intelligence Engine loaded")
+except ImportError as e:
+    logger.warning(f"❌ Failed to import Market Intelligence Engine: {e}")
+    MarketIntelligenceEngine = None
+
+try:
+    from .audience_analytics_platform import (
+        AudienceAnalyticsPlatform,
+        AudienceSegmentationEngine,
+        BehavioralPatternDetector,
+        AudienceMember,
+        AudienceSegmentProfile,
+        BehavioralPattern,
+        CrossPlatformAnalysis,
+        AudienceSegment,
+        EngagementLevel,
+        LifecycleStage
+    )
+    logger.info("✅ Audience Analytics Platform loaded")
+except ImportError as e:
+    logger.warning(f"❌ Failed to import Audience Analytics Platform: {e}")
+    AudienceAnalyticsPlatform = None
+
+try:
+    from .engagement_intelligence_system import (
+        EngagementIntelligenceSystem,
+        EngagementEvent,
+        EngagementInsight,
+        EngagementType,
+        EngagementPattern
+    )
+    logger.info("✅ Engagement Intelligence System loaded")
+except ImportError as e:
+    logger.warning(f"❌ Failed to import Engagement Intelligence System: {e}")
+    EngagementIntelligenceSystem = None
+
 
 class AnalyticsPlatformCore:
     """
@@ -194,6 +272,31 @@ class AnalyticsPlatformCore:
             if PredictiveCreatorSuccess:
                 self.initialized_components['predictive_success'] = PredictiveCreatorSuccess()
                 logger.info("✅ Predictive Creator Success initialized")
+            
+            # AI Insights Generator
+            if AIInsightsGenerator:
+                self.initialized_components['ai_insights'] = AIInsightsGenerator()
+                logger.info("✅ AI Insights Generator initialized")
+            
+            # Real-Time Analytics Engine
+            if RealTimeAnalyticsEngine:
+                self.initialized_components['real_time_analytics'] = RealTimeAnalyticsEngine()
+                logger.info("✅ Real-Time Analytics Engine initialized")
+            
+            # Market Intelligence Engine
+            if MarketIntelligenceEngine:
+                self.initialized_components['market_intelligence'] = MarketIntelligenceEngine()
+                logger.info("✅ Market Intelligence Engine initialized")
+            
+            # Audience Analytics Platform
+            if AudienceAnalyticsPlatform:
+                self.initialized_components['audience_analytics'] = AudienceAnalyticsPlatform()
+                logger.info("✅ Audience Analytics Platform initialized")
+            
+            # Engagement Intelligence System
+            if EngagementIntelligenceSystem:
+                self.initialized_components['engagement_intelligence'] = EngagementIntelligenceSystem()
+                logger.info("✅ Engagement Intelligence System initialized")
                 
         except Exception as e:
             logger.error(f"❌ Failed to initialize components: {e}")
@@ -226,6 +329,26 @@ class AnalyticsPlatformCore:
         """Get Predictive Creator Success component"""
         return self.get_component('predictive_success')
     
+    def get_ai_insights(self):
+        """Get AI Insights Generator component"""
+        return self.get_component('ai_insights')
+    
+    def get_real_time_analytics(self):
+        """Get Real-Time Analytics Engine component"""
+        return self.get_component('real_time_analytics')
+    
+    def get_market_intelligence(self):
+        """Get Market Intelligence Engine component"""
+        return self.get_component('market_intelligence')
+    
+    def get_audience_analytics(self):
+        """Get Audience Analytics Platform component"""
+        return self.get_component('audience_analytics')
+    
+    def get_engagement_intelligence(self):
+        """Get Engagement Intelligence System component"""
+        return self.get_component('engagement_intelligence')
+    
     def get_platform_status(self) -> Dict[str, Any]:
         """Get comprehensive platform status"""
         return {
@@ -245,7 +368,12 @@ class AnalyticsPlatformCore:
                 "content_analytics": bool(self.get_content_analytics()),
                 "collaboration_intelligence": bool(self.get_collaboration_intelligence()),
                 "predictive_modeling": bool(self.get_predictive_success()),
-                "business_intelligence": bool(self.get_business_intelligence())
+                "business_intelligence": bool(self.get_business_intelligence()),
+                "ai_insights": bool(self.get_ai_insights()),
+                "real_time_analytics": bool(self.get_real_time_analytics()),
+                "market_intelligence": bool(self.get_market_intelligence()),
+                "audience_analytics": bool(self.get_audience_analytics()),
+                "engagement_intelligence": bool(self.get_engagement_intelligence())
             },
             "enterprise_features": [
                 "ML-powered creator success prediction",
@@ -253,7 +381,13 @@ class AnalyticsPlatformCore:
                 "Viral content prediction algorithms",
                 "Brand-creator matching intelligence",
                 "Real-time performance analytics",
-                "Comprehensive business intelligence"
+                "Comprehensive business intelligence",
+                "AI-powered insight generation",
+                "Real-time streaming analytics",
+                "Market intelligence and competitive analysis",
+                "Automated anomaly detection",
+                "Pattern discovery and recognition",
+                "Strategic opportunity identification"
             ],
             "supported_platforms": [
                 "YouTube", "Instagram", "TikTok", "Twitter", 
@@ -353,6 +487,31 @@ def get_predictive_success():
     platform = get_analytics_platform()
     return platform.get_predictive_success()
 
+def get_ai_insights():
+    """Get AI Insights Generator component"""
+    platform = get_analytics_platform()
+    return platform.get_ai_insights()
+
+def get_real_time_analytics():
+    """Get Real-Time Analytics Engine component"""
+    platform = get_analytics_platform()
+    return platform.get_real_time_analytics()
+
+def get_market_intelligence():
+    """Get Market Intelligence Engine component"""
+    platform = get_analytics_platform()
+    return platform.get_market_intelligence()
+
+def get_audience_analytics():
+    """Get Audience Analytics Platform component"""
+    platform = get_analytics_platform()
+    return platform.get_audience_analytics()
+
+def get_engagement_intelligence():
+    """Get Engagement Intelligence System component"""
+    platform = get_analytics_platform()
+    return platform.get_engagement_intelligence()
+
 
 # Module exports
 __all__ = [
@@ -367,6 +526,11 @@ __all__ = [
     'get_content_analytics',
     'get_collaboration_intelligence',
     'get_predictive_success',
+    'get_ai_insights',
+    'get_real_time_analytics',
+    'get_market_intelligence',
+    'get_audience_analytics',
+    'get_engagement_intelligence',
     
     # Business Intelligence Platform
     'BusinessIntelligencePlatform',
@@ -434,6 +598,54 @@ __all__ = [
     'RiskLevel',
     'PredictionModel',
     'SuccessMetric',
+    
+    # AI Insights Generator
+    'AIInsightsGenerator',
+    'AIInsight',
+    'TrendAnalysis',
+    'AnomalyDetection',
+    'PatternDiscovery',
+    'InsightType',
+    'InsightPriority',
+    'ConfidenceLevel',
+    
+    # Real-Time Analytics Engine
+    'RealTimeAnalyticsEngine',
+    'RealTimeProcessor',
+    'StreamDataPoint',
+    'RealTimeMetric',
+    'RealTimeAlert',
+    'StreamingInsight',
+    'StreamType',
+    'AlertSeverity',
+    'ProcessingMode',
+    
+    # Market Intelligence Engine
+    'MarketIntelligenceEngine',
+    'MarketData',
+    'MarketSegment',
+    'CompetitorType',
+    'MarketTrend',
+    'TrendDirection',
+    
+    # Audience Analytics Platform
+    'AudienceAnalyticsPlatform',
+    'AudienceSegmentationEngine',
+    'BehavioralPatternDetector',
+    'AudienceMember',
+    'AudienceSegmentProfile',
+    'BehavioralPattern',
+    'CrossPlatformAnalysis',
+    'AudienceSegment',
+    'EngagementLevel',
+    'LifecycleStage',
+    
+    # Engagement Intelligence System
+    'EngagementIntelligenceSystem',
+    'EngagementEvent',
+    'EngagementInsight',
+    'EngagementType',
+    'EngagementPattern',
     
     # Module metadata
     '__version__',
