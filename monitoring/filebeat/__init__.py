@@ -46,8 +46,60 @@ __all__ = [
     "__version__",
     "__author__",
     "__email__",
-    "__copyright__"
+    "__copyright__",
+    
+    # Core Filebeat Classes
+    "CreatorEconomyLogOrchestrator",
+    "MultiFormatContentLogProcessor", 
+    "CreatorActivityLogIntelligence",
+    "RealTimeLogStreamingEngine",
+    "LogCorrelationIntelligenceSystem",
+    "CreatorPerformanceLogAnalyzer",
+    "AIProcessingLogMonitoringEngine",
+    "CreatorCollaborationLogTracker",
+    "FilebeatConfigurationManager",
+    
+    # New Components
+    "MonetizationEventLogProcessor",
+    "CreatorTierLogAnalyticsEngine", 
+    "CrossPlatformLogIntegrationHub",
+    "LogSecurityComplianceMonitor",
+    "CreatorEngagementLogIntelligence",
+    "LogPerformanceOptimizationEngine",
+    "CreatorRevenueLogAnalyticsPlatform",
+    
+    # Configuration and Business Logic
+    "CREATOR_ECONOMY_PIPELINE_LOGIC"
 ]
+
+# Core imports for external access
+try:
+    from .creator_economy_log_orchestrator import CreatorEconomyLogOrchestrator
+    from .multi_format_content_log_processor import MultiFormatContentLogProcessor
+    from .creator_activity_log_intelligence import CreatorActivityLogIntelligence
+    from .real_time_log_streaming_engine import RealTimeLogStreamingEngine
+    from .log_correlation_intelligence_system import LogCorrelationIntelligenceSystem
+    from .creator_performance_log_analyzer import CreatorPerformanceLogAnalyzer
+    from .ai_processing_log_monitoring_engine import AIProcessingLogMonitoringEngine
+    from .creator_collaboration_log_tracker import CreatorCollaborationLogTracker
+    from .filebeat_configuration_manager import FilebeatConfigurationManager
+    from .index import FilebeatOrchestrator, FilebeatConfig, create_orchestrator
+    
+    # New components
+    from .monetization_event_log_processor import MonetizationEventLogProcessor
+    from .creator_tier_log_analytics_engine import CreatorTierLogAnalyticsEngine
+    from .cross_platform_log_integration_hub import CrossPlatformLogIntegrationHub
+    from .log_security_compliance_monitor import LogSecurityComplianceMonitor
+    from .creator_engagement_log_intelligence import CreatorEngagementLogIntelligence
+    from .log_performance_optimization_engine import LogPerformanceOptimizationEngine
+    from .creator_revenue_log_analytics_platform import CreatorRevenueLogAnalyticsPlatform
+    
+    # Add orchestrator exports
+    __all__.extend(["FilebeatOrchestrator", "FilebeatConfig", "create_orchestrator"])
+    
+except ImportError as e:
+    print(f"⚠️ Warning: Some filebeat components not available: {e}")
+    print("💡 This is normal during development phase")
 
 # Creator Economy Business Logic Integration
 CREATOR_ECONOMY_PIPELINE_LOGIC = {
