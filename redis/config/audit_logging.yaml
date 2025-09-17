@@ -1,0 +1,430 @@
+# ⚡ Redis Audit Logging Configuration - Ainflue Enterprise
+# © 2025 Fahed Mlaiel <mlaiel@live.de> - All Rights Reserved
+# Comprehensive Audit Logging for Creator Economy Platform
+
+# ========================================================================================
+# ⚠️  PROTECTION PROPRIÉTÉ INTELLECTUELLE - Fahed Mlaiel (mlaiel@live.de)
+# TOUS DROITS RÉSERVÉS - Utilisation commerciale strictement encadrée
+# ========================================================================================
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: redis-audit-logging
+  namespace: ainflue-redis
+  labels:
+    app: ainflue-redis
+    component: audit-logging
+    environment: enterprise
+    owner: fahed-mlaiel
+    version: "4.0.0"
+    audit-level: "comprehensive"
+  annotations:
+    author: "Fahed Mlaiel <mlaiel@live.de>"
+    license: "Proprietary - All Rights Reserved"
+    description: "Enterprise Audit Logging for Redis"
+    compliance: "SOX,GDPR,PCI-DSS,HIPAA"
+    retention-period: "7-years"
+
+data:
+  # ===================================================================================
+  # COMPREHENSIVE AUDIT CONFIGURATION
+  # ===================================================================================
+  audit_configuration: |
+    # Audit Logging Settings
+    audit_enabled: true
+    audit_level: "comprehensive"
+    audit_format: "json"
+    
+    # Log Destinations
+    log_destinations:
+      - type: "file"
+        path: "/var/log/redis/audit/redis-audit.log"
+        rotation: "daily"
+        retention_days: 2555  # 7 years
+      - type: "syslog"
+        facility: "local1"
+        priority: "info"
+      - type: "elasticsearch"
+        url: "https://elasticsearch.ainflue.com:9200"
+        index: "redis-audit-logs"
+      - type: "splunk"
+        url: "https://splunk.ainflue.com:8088"
+        token: "HEC-TOKEN-HERE"
+    
+    # Log Buffering
+    buffer_size: "64MB"
+    buffer_flush_interval: 5  # seconds
+    async_logging: true
+    
+    # Log Encryption
+    log_encryption_enabled: true
+    log_encryption_algorithm: "AES-256-GCM"
+    log_signing_enabled: true
+
+  # ===================================================================================
+  # AUTHENTICATION & AUTHORIZATION AUDIT
+  # ===================================================================================
+  auth_audit_events: |
+    # Authentication Events
+    authentication_events:
+      - event: "auth_success"
+        log_level: "info"
+        include_fields: ["timestamp", "username", "client_ip", "user_agent", "session_id"]
+      - event: "auth_failure"
+        log_level: "warning"
+        include_fields: ["timestamp", "username", "client_ip", "failure_reason", "attempt_count"]
+      - event: "auth_locked"
+        log_level: "error"
+        include_fields: ["timestamp", "username", "client_ip", "lockout_duration"]
+      - event: "password_change"
+        log_level: "info"
+        include_fields: ["timestamp", "username", "client_ip", "change_method"]
+      - event: "mfa_enabled"
+        log_level: "info"
+        include_fields: ["timestamp", "username", "mfa_method"]
+      - event: "mfa_disabled"
+        log_level: "warning"
+        include_fields: ["timestamp", "username", "disabled_by"]
+    
+    # Authorization Events
+    authorization_events:
+      - event: "permission_granted"
+        log_level: "info"
+        include_fields: ["timestamp", "username", "resource", "permission", "granted_by"]
+      - event: "permission_denied"
+        log_level: "warning"
+        include_fields: ["timestamp", "username", "resource", "requested_permission", "denial_reason"]
+      - event: "role_assigned"
+        log_level: "info"
+        include_fields: ["timestamp", "username", "role", "assigned_by"]
+      - event: "role_removed"
+        log_level: "warning"
+        include_fields: ["timestamp", "username", "role", "removed_by"]
+      - event: "privilege_escalation"
+        log_level: "error"
+        include_fields: ["timestamp", "username", "from_role", "to_role", "escalation_method"]
+
+  # ===================================================================================
+  # DATA ACCESS & MODIFICATION AUDIT
+  # ===================================================================================
+  data_audit_events: |
+    # Data Access Events
+    data_access_events:
+      - event: "creator_data_access"
+        log_level: "info"
+        include_fields: ["timestamp", "accessor", "creator_id", "data_type", "access_method"]
+      - event: "financial_data_access"
+        log_level: "warning"
+        include_fields: ["timestamp", "accessor", "financial_record_id", "data_classification"]
+      - event: "pii_data_access"
+        log_level: "warning"
+        include_fields: ["timestamp", "accessor", "pii_record_id", "justification"]
+      - event: "bulk_data_export"
+        log_level: "error"
+        include_fields: ["timestamp", "exporter", "record_count", "export_format", "approval_id"]
+    
+    # Data Modification Events
+    data_modification_events:
+      - event: "creator_profile_update"
+        log_level: "info"
+        include_fields: ["timestamp", "modifier", "creator_id", "changed_fields", "old_values", "new_values"]
+      - event: "content_upload"
+        log_level: "info"
+        include_fields: ["timestamp", "uploader", "content_id", "content_type", "file_size"]
+      - event: "content_deletion"
+        log_level: "warning"
+        include_fields: ["timestamp", "deleter", "content_id", "deletion_reason"]
+      - event: "financial_record_update"
+        log_level: "error"
+        include_fields: ["timestamp", "modifier", "record_id", "changed_fields", "authorization_code"]
+      - event: "payment_processing"
+        log_level: "info"
+        include_fields: ["timestamp", "processor", "transaction_id", "amount", "payment_method"]
+
+  # ===================================================================================
+  # CREATOR ECONOMY SPECIFIC AUDIT EVENTS
+  # ===================================================================================
+  creator_economy_audit: |
+    # Creator Activity Events
+    creator_activity_events:
+      - event: "content_monetization_enabled"
+        log_level: "info"
+        include_fields: ["timestamp", "creator_id", "content_id", "monetization_type"]
+      - event: "collaboration_invite_sent"
+        log_level: "info"
+        include_fields: ["timestamp", "inviter_id", "invitee_id", "project_id"]
+      - event: "revenue_calculation"
+        log_level: "info"
+        include_fields: ["timestamp", "creator_id", "period", "revenue_amount", "calculation_method"]
+      - event: "payout_processed"
+        log_level: "warning"
+        include_fields: ["timestamp", "creator_id", "payout_amount", "payment_method", "transaction_id"]
+      - event: "commission_rate_change"
+        log_level: "warning"
+        include_fields: ["timestamp", "creator_id", "old_rate", "new_rate", "changed_by"]
+    
+    # Gamification Events
+    gamification_events:
+      - event: "achievement_unlocked"
+        log_level: "info"
+        include_fields: ["timestamp", "user_id", "achievement_id", "points_awarded"]
+      - event: "leaderboard_update"
+        log_level: "info"
+        include_fields: ["timestamp", "user_id", "category", "old_rank", "new_rank"]
+      - event: "points_transaction"
+        log_level: "info"
+        include_fields: ["timestamp", "user_id", "points_change", "transaction_type", "reference_id"]
+      - event: "reward_redemption"
+        log_level: "info"
+        include_fields: ["timestamp", "user_id", "reward_id", "points_cost"]
+
+  # ===================================================================================
+  # ADMINISTRATIVE & SYSTEM AUDIT EVENTS
+  # ===================================================================================
+  admin_system_audit: |
+    # Administrative Events
+    administrative_events:
+      - event: "config_change"
+        log_level: "warning"
+        include_fields: ["timestamp", "admin_user", "config_parameter", "old_value", "new_value"]
+      - event: "user_account_created"
+        log_level: "info"
+        include_fields: ["timestamp", "created_by", "new_username", "initial_roles"]
+      - event: "user_account_disabled"
+        log_level: "warning"
+        include_fields: ["timestamp", "disabled_by", "username", "disable_reason"]
+      - event: "backup_initiated"
+        log_level: "info"
+        include_fields: ["timestamp", "initiated_by", "backup_type", "backup_location"]
+      - event: "recovery_initiated"
+        log_level: "error"
+        include_fields: ["timestamp", "initiated_by", "recovery_type", "backup_source"]
+    
+    # System Events
+    system_events:
+      - event: "redis_startup"
+        log_level: "info"
+        include_fields: ["timestamp", "version", "configuration_file", "memory_limit"]
+      - event: "redis_shutdown"
+        log_level: "warning"
+        include_fields: ["timestamp", "shutdown_reason", "initiated_by"]
+      - event: "cluster_node_join"
+        log_level: "info"
+        include_fields: ["timestamp", "node_id", "node_ip", "cluster_state"]
+      - event: "cluster_node_leave"
+        log_level: "warning"
+        include_fields: ["timestamp", "node_id", "leave_reason", "cluster_state"]
+      - event: "memory_threshold_exceeded"
+        log_level: "error"
+        include_fields: ["timestamp", "current_memory", "threshold", "eviction_policy"]
+
+  # ===================================================================================
+  # SECURITY AUDIT EVENTS
+  # ===================================================================================
+  security_audit_events: |
+    # Security Events
+    security_events:
+      - event: "suspicious_activity_detected"
+        log_level: "error"
+        include_fields: ["timestamp", "user_id", "activity_type", "risk_score", "detection_method"]
+      - event: "rate_limit_exceeded"
+        log_level: "warning"
+        include_fields: ["timestamp", "client_ip", "endpoint", "request_count", "limit"]
+      - event: "encryption_key_rotation"
+        log_level: "info"
+        include_fields: ["timestamp", "key_type", "old_key_id", "new_key_id", "rotation_reason"]
+      - event: "certificate_expiry_warning"
+        log_level: "warning"
+        include_fields: ["timestamp", "certificate_type", "expiry_date", "days_remaining"]
+      - event: "intrusion_attempt"
+        log_level: "error"
+        include_fields: ["timestamp", "source_ip", "attack_type", "mitigation_action"]
+    
+    # Compliance Events
+    compliance_events:
+      - event: "gdpr_data_request"
+        log_level: "info"
+        include_fields: ["timestamp", "requester", "request_type", "data_subject", "processing_status"]
+      - event: "data_retention_policy_applied"
+        log_level: "info"
+        include_fields: ["timestamp", "policy_type", "affected_records", "retention_period"]
+      - event: "audit_log_access"
+        log_level: "warning"
+        include_fields: ["timestamp", "accessor", "log_type", "access_reason", "approval_id"]
+      - event: "compliance_violation"
+        log_level: "error"
+        include_fields: ["timestamp", "violation_type", "affected_data", "remediation_action"]
+
+  # ===================================================================================
+  # LOG ENRICHMENT & CORRELATION
+  # ===================================================================================
+  log_enrichment: |
+    # Automatic Enrichment
+    enrichment_enabled: true
+    
+    # Geo-location Enrichment
+    geolocation_enabled: true
+    geoip_database: "/etc/redis/geoip/GeoLite2-City.mmdb"
+    
+    # User Agent Parsing
+    user_agent_parsing: true
+    
+    # Session Correlation
+    session_correlation: true
+    session_timeout: 3600  # seconds
+    
+    # Risk Scoring
+    risk_scoring_enabled: true
+    risk_factors:
+      - unusual_access_time
+      - geolocation_change
+      - multiple_failed_attempts
+      - privilege_escalation
+      - bulk_operations
+    
+    # Threat Intelligence Integration
+    threat_intel_enabled: true
+    threat_intel_sources:
+      - "internal_blacklist"
+      - "external_threat_feeds"
+      - "ml_anomaly_detection"
+
+  # ===================================================================================
+  # COMPLIANCE REPORTING
+  # ===================================================================================
+  compliance_reporting: |
+    # Automated Reports
+    automated_reports:
+      - name: "sox_compliance_report"
+        frequency: "monthly"
+        format: "pdf"
+        recipients: ["compliance@ainflue.com", "audit@ainflue.com"]
+        includes: ["financial_data_access", "administrative_changes", "privilege_changes"]
+      
+      - name: "gdpr_data_processing_report"
+        frequency: "monthly"
+        format: "json"
+        recipients: ["dpo@ainflue.com", "privacy@ainflue.com"]
+        includes: ["pii_access", "data_modifications", "consent_changes"]
+      
+      - name: "pci_audit_report"
+        frequency: "quarterly"
+        format: "pdf"
+        recipients: ["security@ainflue.com", "pci-compliance@ainflue.com"]
+        includes: ["payment_transactions", "cardholder_data_access", "security_events"]
+      
+      - name: "security_incident_report"
+        frequency: "weekly"
+        format: "html"
+        recipients: ["security-team@ainflue.com", "incident-response@ainflue.com"]
+        includes: ["security_events", "suspicious_activities", "failed_authentications"]
+    
+    # Report Retention
+    report_retention_years: 7
+    report_encryption: true
+    report_digital_signature: true
+
+---
+# Audit Management Scripts
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: redis-audit-management
+  namespace: ainflue-redis
+data:
+  setup_audit_logging.sh: |
+    #!/bin/bash
+    # Audit Logging Setup Script
+    # © 2025 Fahed Mlaiel <mlaiel@live.de>
+    
+    echo "📋 Setting up Redis Audit Logging..."
+    
+    # Create audit directories
+    mkdir -p /var/log/redis/audit/{current,archive,reports}
+    chmod 750 /var/log/redis/audit
+    
+    # Setup log rotation
+    cat > /etc/logrotate.d/redis-audit << EOF
+    /var/log/redis/audit/*.log {
+        daily
+        rotate 2555
+        compress
+        delaycompress
+        notifempty
+        postrotate
+            systemctl reload redis
+        endscript
+    }
+    EOF
+    
+    # Configure rsyslog for audit logs
+    cat > /etc/rsyslog.d/50-redis-audit.conf << EOF
+    local1.*    /var/log/redis/audit/redis-audit.log
+    & stop
+    EOF
+    
+    systemctl restart rsyslog
+    
+    echo "✅ Audit logging setup completed"
+
+  query_audit_logs.sh: |
+    #!/bin/bash
+    # Audit Log Query Script
+    # © 2025 Fahed Mlaiel <mlaiel@live.de>
+    
+    echo "🔍 Querying Redis Audit Logs..."
+    
+    # Function to query logs by date range
+    query_by_date() {
+        local start_date="$1"
+        local end_date="$2"
+        local event_type="$3"
+        
+        jq --arg start "$start_date" --arg end "$end_date" --arg event "$event_type" '
+        select(.timestamp >= $start and .timestamp <= $end and .event == $event)
+        ' /var/log/redis/audit/redis-audit.log
+    }
+    
+    # Query failed authentication attempts in last 24 hours
+    echo "Failed authentication attempts (last 24 hours):"
+    query_by_date "$(date -d '24 hours ago' --iso-8601)" "$(date --iso-8601)" "auth_failure"
+    
+    # Query administrative changes in last week
+    echo "Administrative changes (last week):"
+    query_by_date "$(date -d '1 week ago' --iso-8601)" "$(date --iso-8601)" "config_change"
+    
+    echo "✅ Audit log query completed"
+
+  generate_compliance_report.sh: |
+    #!/bin/bash
+    # Compliance Report Generation Script
+    # © 2025 Fahed Mlaiel <mlaiel@live.de>
+    
+    echo "📊 Generating Compliance Reports..."
+    
+    # Generate SOX compliance report
+    echo "Generating SOX compliance report..."
+    jq '
+    select(.event | test("financial|admin|privilege")) |
+    {
+        timestamp: .timestamp,
+        event: .event,
+        user: .username,
+        details: .details
+    }
+    ' /var/log/redis/audit/redis-audit.log > /var/log/redis/audit/reports/sox-compliance-$(date +%Y%m).json
+    
+    # Generate GDPR data processing report
+    echo "Generating GDPR data processing report..."
+    jq '
+    select(.event | test("pii|personal|data_access")) |
+    {
+        timestamp: .timestamp,
+        event: .event,
+        data_subject: .data_subject,
+        processing_purpose: .processing_purpose
+    }
+    ' /var/log/redis/audit/redis-audit.log > /var/log/redis/audit/reports/gdpr-processing-$(date +%Y%m).json
+    
+    echo "✅ Compliance reports generated"
