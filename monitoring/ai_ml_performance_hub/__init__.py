@@ -84,6 +84,79 @@ from .model_drift_detection_engine import (
     FeatureStatistics
 )
 
+# High Priority Components
+from .training_pipeline_performance_tracker import (
+    TrainingPipelinePerformanceTracker,
+    TrainingMetrics,
+    ConvergenceAnalysis,
+    ResourceEfficiencyMetrics,
+    TrainingComparison,
+    TrainingPhase,
+    ModelFramework,
+    TrainingType,
+    CreatorContentType
+)
+
+from .memory_optimization_controller import (
+    MemoryOptimizationController,
+    MemoryUsageMetrics,
+    MemoryOptimizationAction,
+    MemoryPoolConfiguration,
+    OOMPreventionAlert,
+    MemoryType,
+    OptimizationStrategy,
+    MemoryPressureLevel,
+    CreatorTierMemory
+)
+
+from .prediction_accuracy_validator import (
+    PredictionAccuracyValidator,
+    PredictionAccuracyMetrics,
+    ValidationReport,
+    AccuracyAlert,
+    ConfidenceCalibration,
+    PredictionType,
+    AccuracyThreshold,
+    ValidationMethod,
+    CreatorContentCategory
+)
+
+from .resource_allocation_optimizer import (
+    ResourceAllocationOptimizer,
+    ResourceUnit,
+    AllocationRequest,
+    ResourceAllocation,
+    OptimizationResult,
+    ResourcePool,
+    ResourceType,
+    AllocationStrategy,
+    CreatorTierPriority,
+    ResourceStatus,
+    WorkloadType
+)
+
+from .real_time_inference_metrics_collector import (
+    RealTimeInferenceMetricsCollector,
+    InferenceMetric,
+    StreamingWindow,
+    HotPathMetrics,
+    EdgeInferenceMetrics,
+    AlertThreshold,
+    MetricType,
+    AggregationMethod,
+    MetricPriority,
+    CreatorInteractionType
+)
+
+from .feature_importance_tracker import (
+    FeatureImportanceTracker,
+    FeatureImportanceScore,
+    FeatureType,
+    ImportanceMethod,
+    CreatorContentDomain,
+    FeatureRelevanceLevel
+)
+
 __all__ = [
     # Core orchestrator
     'AIMLPerformanceHub',
@@ -133,6 +206,70 @@ __all__ = [
     'DriftSeverity',
     'DetectionMethod',
     'FeatureStatistics',
+    
+    # Training Pipeline Performance Tracker
+    'TrainingPipelinePerformanceTracker',
+    'TrainingMetrics',
+    'ConvergenceAnalysis',
+    'ResourceEfficiencyMetrics',
+    'TrainingComparison',
+    'TrainingPhase',
+    'ModelFramework',
+    'TrainingType',
+    'CreatorContentType',
+    
+    # Memory Optimization Controller
+    'MemoryOptimizationController',
+    'MemoryUsageMetrics',
+    'MemoryOptimizationAction',
+    'MemoryPoolConfiguration',
+    'OOMPreventionAlert',
+    'MemoryType',
+    'MemoryPressureLevel',
+    'CreatorTierMemory',
+    
+    # Prediction Accuracy Validator
+    'PredictionAccuracyValidator',
+    'PredictionAccuracyMetrics',
+    'ValidationReport',
+    'AccuracyAlert',
+    'ConfidenceCalibration',
+    'PredictionType',
+    'AccuracyThreshold',
+    'ValidationMethod',
+    'CreatorContentCategory',
+    
+    # Resource Allocation Optimizer
+    'ResourceAllocationOptimizer',
+    'ResourceUnit',
+    'AllocationRequest',
+    'ResourceAllocation',
+    'OptimizationResult',
+    'ResourcePool',
+    'ResourceType',
+    'AllocationStrategy',
+    'CreatorTierPriority',
+    'ResourceStatus',
+    
+    # Real-Time Inference Metrics Collector
+    'RealTimeInferenceMetricsCollector',
+    'InferenceMetric',
+    'StreamingWindow',
+    'HotPathMetrics',
+    'EdgeInferenceMetrics',
+    'AlertThreshold',
+    'MetricType',
+    'AggregationMethod',
+    'MetricPriority',
+    'CreatorInteractionType',
+    
+    # Feature Importance Tracker
+    'FeatureImportanceTracker',
+    'FeatureImportanceScore',
+    'FeatureType',
+    'ImportanceMethod',
+    'CreatorContentDomain',
+    'FeatureRelevanceLevel',
     
     # Common enums
     'CreatorTier',
