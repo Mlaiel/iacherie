@@ -40,6 +40,25 @@ from .collaboration_incident_manager import (
     StakeholderRole,
     CollaborationIncident
 )
+from .content_protection_alerting import (
+    ContentProtectionAlerting,
+    ViolationType,
+    ThreatLevel,
+    ProtectionViolation
+)
+from .predictive_incident_engine import (
+    PredictiveIncidentEngine,
+    PredictionType,
+    PredictionConfidence,
+    IncidentPrediction,
+    MetricData
+)
+from .multi_channel_notification import (
+    MultiChannelNotificationSystem,
+    NotificationChannel,
+    NotificationPriority,
+    NotificationMessage
+)
 
 __all__ = [
     # Core PagerDuty Integration
@@ -67,7 +86,26 @@ __all__ = [
     'CollaborationIncidentManager',
     'CollaborationType',
     'StakeholderRole',
-    'CollaborationIncident'
+    'CollaborationIncident',
+    
+    # Content Protection
+    'ContentProtectionAlerting',
+    'ViolationType',
+    'ThreatLevel',
+    'ProtectionViolation',
+    
+    # Predictive Intelligence
+    'PredictiveIncidentEngine',
+    'PredictionType',
+    'PredictionConfidence',
+    'IncidentPrediction',
+    'MetricData',
+    
+    # Multi-Channel Notifications
+    'MultiChannelNotificationSystem',
+    'NotificationChannel',
+    'NotificationPriority',
+    'NotificationMessage'
 ]
 
 # Module metadata
