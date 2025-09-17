@@ -31,17 +31,29 @@ import bcrypt
 
 # Enterprise Redis imports with fallback
 try:
-    import redis.asyncio as aioredis
+    # Import Redis library directly from site-packages
+    import sys
+    import importlib
+    # Temporarily remove the local redis module from the path
+    original_path = sys.path[:]
+    local_redis_path = [p for p in sys.path if 'Ainflue' in p and 'redis' not in p]
+    sys.path = [p for p in sys.path if 'Ainflue' not in p] + local_redis_path
+    
+    redis_module = importlib.import_module('redis')
+    # For Redis 5.x, async is typically in redis.asyncio or use redis directly
+    if hasattr(redis_module, 'asyncio'):
+        aioredis = redis_module.asyncio
+    else:
+        # Use redis directly for async operations
+        aioredis = redis_module
+    
+    # Restore original path
+    sys.path = original_path
     AIOREDIS_AVAILABLE = True
 except ImportError:
-    # Fallback pour environnement sans redis
-    try:
-        import aioredis
-        AIOREDIS_AVAILABLE = True
-    except ImportError:
-        # Fallback pour environnement sans aioredis
-        AIOREDIS_AVAILABLE = False
-        aioredis = None
+    # Complete fallback - disable Redis functionality
+    AIOREDIS_AVAILABLE = False
+    aioredis = None
 
 from cryptography.fernet import Fernet
 from cryptography.hazmat.primitives import hashes

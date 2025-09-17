@@ -22,19 +22,32 @@ from enum import Enum
 
 # Redis imports with fallback for enterprise environment
 try:
-    import redis.asyncio as redis
-    from redis.asyncio.cluster import RedisCluster
+    # Import Redis library directly from site-packages
+    import sys
+    import importlib
+    # Temporarily remove the local redis module from the path
+    original_path = sys.path[:]
+    local_redis_path = [p for p in sys.path if 'Ainflue' in p and 'redis' not in p]
+    sys.path = [p for p in sys.path if 'Ainflue' not in p] + local_redis_path
+    
+    redis_module = importlib.import_module('redis')
+    # For Redis 5.x, async is typically in redis.asyncio or use redis directly
+    if hasattr(redis_module, 'asyncio'):
+        redis = redis_module.asyncio
+        from redis.asyncio.cluster import RedisCluster
+    else:
+        # Use redis directly for async operations
+        redis = redis_module
+        from redis.cluster import RedisCluster
+    
+    # Restore original path
+    sys.path = original_path
     REDIS_AVAILABLE = True
 except ImportError:
-    try:
-        import redis
-        from redis.cluster import RedisCluster
-        REDIS_AVAILABLE = True
-    except ImportError:
-        # Fallback pour environnement sans Redis
-        REDIS_AVAILABLE = False
-        redis = None
-        RedisCluster = None
+    # Complete fallback - disable Redis functionality
+    REDIS_AVAILABLE = False
+    redis = None
+    RedisCluster = None
 
 # Optional imports with fallbacks
 try:
