@@ -21,6 +21,16 @@ from .data_serializer import RedisDataSerializer, SerializationConfig
 from .compression_engine import RedisCompressionEngine, CompressionConfig
 from .encryption_layer import RedisEncryptionLayer, EncryptionConfig
 
+# Advanced Analytics Storage Modules (Phase 2 - ✅ Complete)
+from .analytics_storage_engine import AnalyticsStorageEngine, AnalyticsConfig, create_analytics_storage_engine
+from .metrics_aggregation_store import MetricsAggregationStore, AggregationConfig, create_metrics_aggregation_store
+from .real_time_analytics_storage import RealTimeAnalyticsStorage, RealTimeConfig, create_real_time_analytics_storage
+from .user_behavior_storage import UserBehaviorStorage, BehaviorConfig, create_user_behavior_storage
+from .content_analytics_storage import ContentAnalyticsStorage, ContentAnalyticsConfig, create_content_analytics_storage
+from .performance_metrics_storage import PerformanceMetricsStorage, PerformanceConfig, create_performance_metrics_storage
+from .conversion_tracking_storage import ConversionTrackingStorage, ConversionConfig, create_conversion_tracking_storage
+from .business_intelligence_storage import BusinessIntelligenceStorage, BusinessIntelligenceConfig, create_business_intelligence_storage
+
 __version__ = "2.0.0-enterprise"
 __author__ = "Fahed Mlaiel <mlaiel@live.de>"
 __status__ = "Production-Ready"
@@ -29,6 +39,7 @@ logger = logging.getLogger(__name__)
 
 # Export enterprise-grade storage components
 __all__ = [
+    # Core Storage Components (Phase 1 - ✅ Completed)
     "RedisCacheEngine",
     "RedisSessionStore", 
     "RedisDataSerializer",
@@ -39,7 +50,33 @@ __all__ = [
     "SerializationConfig",
     "CompressionConfig",
     "EncryptionConfig",
-    "create_enterprise_storage"
+    "create_enterprise_storage",
+    
+    # Advanced Analytics Storage Modules (Phase 2 - ✅ Complete)
+    "AnalyticsStorageEngine",
+    "MetricsAggregationStore", 
+    "RealTimeAnalyticsStorage",
+    "UserBehaviorStorage",
+    "ContentAnalyticsStorage",
+    "PerformanceMetricsStorage",
+    "ConversionTrackingStorage",
+    "BusinessIntelligenceStorage",
+    "AnalyticsConfig",
+    "AggregationConfig",
+    "RealTimeConfig", 
+    "BehaviorConfig",
+    "ContentAnalyticsConfig",
+    "PerformanceConfig",
+    "ConversionConfig",
+    "BusinessIntelligenceConfig",
+    "create_analytics_storage_engine",
+    "create_metrics_aggregation_store",
+    "create_real_time_analytics_storage",
+    "create_user_behavior_storage",
+    "create_content_analytics_storage",
+    "create_performance_metrics_storage",
+    "create_conversion_tracking_storage",
+    "create_business_intelligence_storage"
 ]
 
 async def create_enterprise_storage(
