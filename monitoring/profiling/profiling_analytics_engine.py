@@ -166,32 +166,24 @@ class OptimizationRecommendation:
     recommendation_id: str
     category: OptimizationCategory
     component: str
-    
-    # Recommendation details
     title: str
     description: str
     priority: str  # "low", "medium", "high", "critical"
-    
-    # Implementation
     implementation_steps: List[str]
     estimated_effort_hours: float
     required_resources: List[str]
-    
-    # Expected benefits
     performance_improvement: Dict[str, float]
-    cost_savings_usd: Optional[float] = None
-    reliability_improvement: Optional[float] = None
-    user_experience_improvement: Optional[float] = None
-    
-    # Risk analysis
     implementation_risk: str  # "low", "medium", "high"
     rollback_plan: List[str]
     testing_requirements: List[str]
-    
-    # ML insights
     confidence_score: float  # 0-1
     similar_cases: List[str]
     success_probability: float  # 0-1
+    
+    # Expected benefits (optional)
+    cost_savings_usd: Optional[float] = None
+    reliability_improvement: Optional[float] = None
+    user_experience_improvement: Optional[float] = None
     
     timestamp: datetime = field(default_factory=datetime.utcnow)
 

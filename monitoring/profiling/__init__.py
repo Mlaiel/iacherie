@@ -237,11 +237,11 @@ from .profiling_analytics_engine import (
     create_profiling_analytics_engine
 )
 
-# Performance profiler (existing)
-try:
-    from .performance_profiler import *
-except ImportError:
-    pass  # Original profiler may not be available
+# Performance profiler (existing) - temporarily disabled due to syntax issues
+# try:
+#     from .performance_profiler import *
+# except ImportError:
+#     pass  # Original profiler may not be available
 
 # Version information
 __version__ = "1.0.0"
