@@ -142,6 +142,9 @@ class IntegrationSecurityProfile:
     # Scan history
     scan_history: List[str] = field(default_factory=list)
 
+# Create alias for backward compatibility
+SecurityScannerCore = SecurityScanner
+
 class SecurityScanner:
     """Comprehensive security scanner for integrations."""
     
