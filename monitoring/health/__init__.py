@@ -84,6 +84,42 @@ except ImportError as e:
     AIMLHealthIntelligenceEngine = None
     AI_ML_AVAILABLE = False
 
+try:
+    from .creator_collaboration_health_analyzer import (
+        CreatorCollaborationHealthAnalyzer,
+        CollaborationHealthStatus,
+        CollaborationType,
+        CollaborationSuccessLevel,
+        CollaborationRisk,
+        CollaborationMetrics,
+        CreatorCollaborationProfile,
+        CollaborationNetworkAnalysis,
+        CollaborationHealthSnapshot,
+        create_collaboration_health_analyzer,
+        collaboration_health_context
+    )
+except ImportError as e:
+    print(f"⚠️ Collaboration health analyzer not available: {e}")
+    CreatorCollaborationHealthAnalyzer = None
+
+try:
+    from .monetization_pipeline_health_monitor import (
+        MonetizationPipelineHealthMonitor,
+        MonetizationHealthStatus,
+        RevenueStreamType,
+        PaymentProcessorHealth,
+        RevenueRisk,
+        RevenueStreamMetrics,
+        CreatorMonetizationProfile,
+        PaymentProcessorMetrics,
+        MonetizationHealthSnapshot,
+        create_monetization_health_monitor,
+        monetization_health_context
+    )
+except ImportError as e:
+    print(f"⚠️ Monetization health monitor not available: {e}")
+    MonetizationPipelineHealthMonitor = None
+
 # Existing core health checks
 from .health_checks import (
     HealthChecksManager,
@@ -161,6 +197,36 @@ if AIMLHealthIntelligenceEngine:
         "AIResourceType"
     ])
 
+if CreatorCollaborationHealthAnalyzer:
+    __all__.extend([
+        "CreatorCollaborationHealthAnalyzer",
+        "CollaborationHealthStatus",
+        "CollaborationType",
+        "CollaborationSuccessLevel",
+        "CollaborationRisk",
+        "CollaborationMetrics",
+        "CreatorCollaborationProfile",
+        "CollaborationNetworkAnalysis",
+        "CollaborationHealthSnapshot",
+        "create_collaboration_health_analyzer",
+        "collaboration_health_context"
+    ])
+
+if MonetizationPipelineHealthMonitor:
+    __all__.extend([
+        "MonetizationPipelineHealthMonitor",
+        "MonetizationHealthStatus",
+        "RevenueStreamType",
+        "PaymentProcessorHealth",
+        "RevenueRisk",
+        "RevenueStreamMetrics",
+        "CreatorMonetizationProfile",
+        "PaymentProcessorMetrics",
+        "MonetizationHealthSnapshot",
+        "create_monetization_health_monitor",
+        "monetization_health_context"
+    ])
+
 # =============== HEALTH MONITORING UTILITY FUNCTIONS ===============
 
 def get_health_monitoring_info() -> dict:
@@ -179,6 +245,10 @@ def get_health_monitoring_info() -> dict:
         available_components["performance"] = "CreatorPerformanceHealthMonitor"
     if AIMLHealthIntelligenceEngine:
         available_components["ai_ml"] = "AIMLHealthIntelligenceEngine"
+    if CreatorCollaborationHealthAnalyzer:
+        available_components["collaboration"] = "CreatorCollaborationHealthAnalyzer"
+    if MonetizationPipelineHealthMonitor:
+        available_components["monetization"] = "MonetizationPipelineHealthMonitor"
     
     available_components["core_checks"] = "HealthChecksManager"
     
