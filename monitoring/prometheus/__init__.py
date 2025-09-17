@@ -61,3 +61,35 @@ logging.basicConfig(
 
 logger = logging.getLogger(__name__)
 logger.info("Prometheus Enterprise Monitoring Module Initialized - v%s", __version__)
+
+# Exports publics
+from .creator_metrics_config import CreatorMetricsConfig
+from .ai_model_metrics_exporter import AIModelMetricsExporter
+from .business_kpi_collector import BusinessKPICollector
+from .security_metrics_monitor import SecurityMetricsMonitor
+from .intelligent_alert_manager import IntelligentAlertManager
+from .creator_incident_classifier import CreatorIncidentClassifier
+from .collaboration_monitoring_rules import CollaborationMonitoringRules
+from .content_pipeline_monitor import ContentPipelineMonitor
+from .prometheus_query_optimizer import PrometheusQueryOptimizer
+
+# Note: Les composants suivants seront implémentés dans les prochaines itérations
+# from .real_time_dashboard_backend import RealTimeDashboardBackend
+# from .multi_cloud_federation import MultiCloudFederation
+# from .compliance_reporting_engine import ComplianceReportingEngine
+
+__all__ = [
+    "PrometheusConfig",
+    "CreatorMetricsConfig",
+    "AIModelMetricsExporter", 
+    "BusinessKPICollector",
+    "SecurityMetricsMonitor",
+    "IntelligentAlertManager",
+    "CreatorIncidentClassifier",
+    "CollaborationMonitoringRules",
+    "ContentPipelineMonitor",
+    "PrometheusQueryOptimizer"
+    # "RealTimeDashboardBackend",
+    # "MultiCloudFederation",
+    # "ComplianceReportingEngine"
+]
