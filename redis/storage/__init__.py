@@ -21,6 +21,12 @@ from .data_serializer import RedisDataSerializer, SerializationConfig
 from .compression_engine import RedisCompressionEngine, CompressionConfig
 from .encryption_layer import RedisEncryptionLayer, EncryptionConfig
 
+# Advanced Analytics Storage Modules (Phase 2)
+from .analytics_storage_engine import AnalyticsStorageEngine, AnalyticsConfig, create_analytics_storage_engine
+from .metrics_aggregation_store import MetricsAggregationStore, AggregationConfig, create_metrics_aggregation_store
+from .real_time_analytics_storage import RealTimeAnalyticsStorage, RealTimeConfig, create_real_time_analytics_storage
+from .user_behavior_storage import UserBehaviorStorage, BehaviorConfig, create_user_behavior_storage
+
 __version__ = "2.0.0-enterprise"
 __author__ = "Fahed Mlaiel <mlaiel@live.de>"
 __status__ = "Production-Ready"
@@ -29,6 +35,7 @@ logger = logging.getLogger(__name__)
 
 # Export enterprise-grade storage components
 __all__ = [
+    # Core Storage Components (Phase 1 - ✅ Completed)
     "RedisCacheEngine",
     "RedisSessionStore", 
     "RedisDataSerializer",
@@ -39,7 +46,21 @@ __all__ = [
     "SerializationConfig",
     "CompressionConfig",
     "EncryptionConfig",
-    "create_enterprise_storage"
+    "create_enterprise_storage",
+    
+    # Advanced Analytics Storage Modules (Phase 2 - 🚧 In Progress)
+    "AnalyticsStorageEngine",
+    "MetricsAggregationStore", 
+    "RealTimeAnalyticsStorage",
+    "UserBehaviorStorage",
+    "AnalyticsConfig",
+    "AggregationConfig",
+    "RealTimeConfig", 
+    "BehaviorConfig",
+    "create_analytics_storage_engine",
+    "create_metrics_aggregation_store",
+    "create_real_time_analytics_storage",
+    "create_user_behavior_storage"
 ]
 
 async def create_enterprise_storage(
