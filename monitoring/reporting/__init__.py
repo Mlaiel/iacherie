@@ -101,6 +101,235 @@ except ImportError as e:
     logger.warning(f"⚠️ Automated report generator not available: {e}")
     AutomatedReportGenerator = None
 
+try:
+    from .collaboration_intelligence_reports import (
+        CollaborationIntelligenceReports,
+        CollaborationType,
+        MatchingQuality,
+        CollaborationStatus,
+        collaboration_intelligence_reports
+    )
+    logger.info("✅ Collaboration intelligence reports loaded successfully")
+except ImportError as e:
+    logger.warning(f"⚠️ Collaboration intelligence reports not available: {e}")
+    CollaborationIntelligenceReports = None
+
+try:
+    from .ai_performance_reports import (
+        AIPerformanceReports,
+        AIModelType,
+        ModelStatus,
+        PerformanceMetricType,
+        ai_performance_reports
+    )
+    logger.info("✅ AI performance reports loaded successfully")
+except ImportError as e:
+    logger.warning(f"⚠️ AI performance reports not available: {e}")
+    AIPerformanceReports = None
+
+# Import new analytics and intelligence components
+try:
+    from .content_analytics_reports import (
+        ContentAnalyticsReports,
+        ContentType,
+        PlatformType,
+        ContentPerformanceMetric,
+        SEOMetricType,
+        ViralityIndicator,
+        ContentMetrics,
+        SEOPerformanceData,
+        ViralContentAnalysis,
+        content_analytics_reports
+    )
+    logger.info("✅ Content analytics reports loaded successfully")
+except ImportError as e:
+    logger.warning(f"⚠️ Content analytics reports not available: {e}")
+    ContentAnalyticsReports = None
+
+try:
+    from .user_engagement_reports import (
+        UserEngagementReports,
+        UserSegment,
+        EngagementType,
+        JourneyStage,
+        CohortPeriod,
+        EngagementMetric,
+        UserEngagementData,
+        CohortAnalysisData,
+        FunnelAnalysisData,
+        BehavioralSegmentData,
+        user_engagement_reports
+    )
+    logger.info("✅ User engagement reports loaded successfully")
+except ImportError as e:
+    logger.warning(f"⚠️ User engagement reports not available: {e}")
+    UserEngagementReports = None
+
+try:
+    from .security_compliance_reports import (
+        SecurityComplianceReports,
+        SecurityIncidentType,
+        IncidentSeverity,
+        ComplianceFramework,
+        AuditEventType,
+        RiskLevel,
+        ComplianceStatus,
+        SecurityIncident,
+        ComplianceViolation,
+        AuditEvent,
+        RiskAssessment,
+        IPProtectionReport,
+        security_compliance_reports
+    )
+    logger.info("✅ Security compliance reports loaded successfully")
+except ImportError as e:
+    logger.warning(f"⚠️ Security compliance reports not available: {e}")
+    SecurityComplianceReports = None
+
+try:
+    from .real_time_report_builder import (
+        RealTimeReportBuilder,
+        ComponentType,
+        ChartType,
+        DataSourceType,
+        RefreshInterval,
+        ReportStatus,
+        PermissionLevel,
+        DataSource,
+        ReportComponent,
+        ReportDefinition,
+        CollaborationSession,
+        real_time_report_builder
+    )
+    logger.info("✅ Real-time report builder loaded successfully")
+except ImportError as e:
+    logger.warning(f"⚠️ Real-time report builder not available: {e}")
+    RealTimeReportBuilder = None
+
+try:
+    from .custom_visualization_engine import (
+        CustomVisualizationEngine,
+        VisualizationType,
+        ColorScheme,
+        InteractionType,
+        AnimationType,
+        ExportFormat,
+        VisualizationTheme,
+        DataMapping,
+        VisualizationConfig,
+        VisualizationData,
+        VisualizationResult,
+        custom_visualization_engine
+    )
+    logger.info("✅ Custom visualization engine loaded successfully")
+except ImportError as e:
+    logger.warning(f"⚠️ Custom visualization engine not available: {e}")
+    CustomVisualizationEngine = None
+
+try:
+    from .report_distribution_manager import (
+        ReportDistributionManager,
+        DeliveryChannel,
+        DeliveryStatus,
+        RecipientType,
+        ScheduleType,
+        Priority,
+        SecurityLevel,
+        Recipient,
+        DeliverySchedule,
+        DeliveryJob,
+        DeliveryResult,
+        ChannelConfig,
+        report_distribution_manager
+    )
+    logger.info("✅ Report distribution manager loaded successfully")
+except ImportError as e:
+    logger.warning(f"⚠️ Report distribution manager not available: {e}")
+    ReportDistributionManager = None
+
+try:
+    from .predictive_analytics_reports import (
+        PredictiveAnalyticsReports,
+        PredictionType,
+        ModelType,
+        Confidence,
+        TimeHorizon,
+        TrendDirection,
+        PredictionInput,
+        PredictionResult,
+        TrendAnalysis,
+        OpportunityIdentification,
+        RiskPrediction,
+        ModelPerformance,
+        predictive_analytics_reports
+    )
+    logger.info("✅ Predictive analytics reports loaded successfully")
+except ImportError as e:
+    logger.warning(f"⚠️ Predictive analytics reports not available: {e}")
+    PredictiveAnalyticsReports = None
+
+try:
+    from .competitive_intelligence_reports import (
+        CompetitiveIntelligenceReports,
+        CompetitorTier,
+        MarketPosition,
+        CompetitiveAdvantage,
+        ThreatLevel,
+        MarketTrend,
+        Competitor,
+        MarketMetrics,
+        CompetitiveAnalysis,
+        BenchmarkReport,
+        MarketIntelligence,
+        competitive_intelligence_reports
+    )
+    logger.info("✅ Competitive intelligence reports loaded successfully")
+except ImportError as e:
+    logger.warning(f"⚠️ Competitive intelligence reports not available: {e}")
+    CompetitiveIntelligenceReports = None
+
+try:
+    from .roi_impact_analyzer import (
+        ROIImpactAnalyzer,
+        InvestmentType,
+        ROIMetric,
+        ImpactCategory,
+        ROIStatus,
+        AttributionModel,
+        Investment,
+        BusinessImpact,
+        ROICalculation,
+        CostBenefitAnalysis,
+        PerformanceAttribution,
+        roi_impact_analyzer
+    )
+    logger.info("✅ ROI impact analyzer loaded successfully")
+except ImportError as e:
+    logger.warning(f"⚠️ ROI impact analyzer not available: {e}")
+    ROIImpactAnalyzer = None
+
+try:
+    from .data_quality_reports import (
+        DataQualityReports,
+        DataQualityDimension,
+        QualityStatus,
+        DataSourceType as DQDataSourceType,
+        LineageType,
+        GovernanceRule,
+        DataAsset,
+        QualityCheck,
+        QualityResult,
+        LineageNode,
+        DataLineage,
+        GovernancePolicy,
+        DataCatalogEntry,
+        data_quality_reports
+    )
+    logger.info("✅ Data quality reports loaded successfully")
+except ImportError as e:
+    logger.warning(f"⚠️ Data quality reports not available: {e}")
+    DataQualityReports = None
+
 # Configuration constants
 REPORTING_CONFIG = {
     "max_report_generation_time": 300,  # 5 minutes
@@ -128,6 +357,20 @@ __all__ = [
     "RevenueMonetizationReports", 
     "ExecutiveDashboardReports",
     "AutomatedReportGenerator",
+    "CollaborationIntelligenceReports",
+    "AIPerformanceReports",
+    
+    # New analytics and intelligence systems
+    "ContentAnalyticsReports",
+    "UserEngagementReports",
+    "SecurityComplianceReports",
+    "RealTimeReportBuilder",
+    "CustomVisualizationEngine",
+    "ReportDistributionManager",
+    "PredictiveAnalyticsReports",
+    "CompetitiveIntelligenceReports",
+    "ROIImpactAnalyzer",
+    "DataQualityReports",
     
     # Creator Performance enums
     "CreatorTier",
@@ -150,11 +393,157 @@ __all__ = [
     "ReportPriority",
     "BrandingTheme",
     
+    # Collaboration enums
+    "CollaborationType",
+    "MatchingQuality",
+    "CollaborationStatus",
+    
+    # AI Performance enums
+    "AIModelType",
+    "ModelStatus",
+    "PerformanceMetricType",
+    
+    # Content Analytics enums
+    "ContentType",
+    "PlatformType",
+    "ContentPerformanceMetric",
+    "SEOMetricType",
+    "ViralityIndicator",
+    
+    # User Engagement enums
+    "UserSegment",
+    "EngagementType",
+    "JourneyStage",
+    "CohortPeriod",
+    "EngagementMetric",
+    
+    # Security Compliance enums
+    "SecurityIncidentType",
+    "IncidentSeverity",
+    "ComplianceFramework",
+    "AuditEventType",
+    "RiskLevel",
+    "ComplianceStatus",
+    
+    # Real-time Builder enums
+    "ComponentType",
+    "ChartType",
+    "DataSourceType",
+    "RefreshInterval",
+    "ReportStatus",
+    "PermissionLevel",
+    
+    # Visualization enums
+    "VisualizationType",
+    "ColorScheme",
+    "InteractionType",
+    "AnimationType",
+    "ExportFormat",
+    
+    # Distribution enums
+    "DeliveryChannel",
+    "DeliveryStatus",
+    "RecipientType",
+    "ScheduleType",
+    "Priority",
+    "SecurityLevel",
+    
+    # Predictive Analytics enums
+    "PredictionType",
+    "ModelType",
+    "Confidence",
+    "TimeHorizon",
+    "TrendDirection",
+    
+    # Competitive Intelligence enums
+    "CompetitorTier",
+    "MarketPosition",
+    "CompetitiveAdvantage",
+    "ThreatLevel",
+    "MarketTrend",
+    
+    # ROI Impact enums
+    "InvestmentType",
+    "ROIMetric",
+    "ImpactCategory",
+    "ROIStatus",
+    "AttributionModel",
+    
+    # Data Quality enums
+    "DataQualityDimension",
+    "QualityStatus",
+    "DQDataSourceType",
+    "LineageType",
+    "GovernanceRule",
+    
+    # Data structures
+    "ContentMetrics",
+    "SEOPerformanceData",
+    "ViralContentAnalysis",
+    "UserEngagementData",
+    "CohortAnalysisData",
+    "FunnelAnalysisData",
+    "BehavioralSegmentData",
+    "SecurityIncident",
+    "ComplianceViolation",
+    "AuditEvent",
+    "RiskAssessment",
+    "IPProtectionReport",
+    "DataSource",
+    "ReportComponent",
+    "ReportDefinition",
+    "CollaborationSession",
+    "VisualizationTheme",
+    "DataMapping",
+    "VisualizationConfig",
+    "VisualizationData",
+    "VisualizationResult",
+    "Recipient",
+    "DeliverySchedule",
+    "DeliveryJob",
+    "DeliveryResult",
+    "ChannelConfig",
+    "PredictionInput",
+    "PredictionResult",
+    "TrendAnalysis",
+    "OpportunityIdentification",
+    "RiskPrediction",
+    "ModelPerformance",
+    "Competitor",
+    "MarketMetrics",
+    "CompetitiveAnalysis",
+    "BenchmarkReport",
+    "MarketIntelligence",
+    "Investment",
+    "BusinessImpact",
+    "ROICalculation",
+    "CostBenefitAnalysis",
+    "PerformanceAttribution",
+    "DataAsset",
+    "QualityCheck",
+    "QualityResult",
+    "LineageNode",
+    "DataLineage",
+    "GovernancePolicy",
+    "DataCatalogEntry",
+    
     # Instances
     "creator_performance_reports",
     "revenue_monetization_reports",
     "executive_dashboard_reports", 
     "automated_report_generator",
+    "collaboration_intelligence_reports",
+    "ai_performance_reports",
+    "content_analytics_reports",
+    "user_engagement_reports",
+    "security_compliance_reports",
+    "real_time_report_builder",
+    "custom_visualization_engine",
+    "report_distribution_manager",
+    "predictive_analytics_reports",
+    "competitive_intelligence_reports",
+    "roi_impact_analyzer",
+    "data_quality_reports",
     
     # Configuration
     "REPORTING_CONFIG",
