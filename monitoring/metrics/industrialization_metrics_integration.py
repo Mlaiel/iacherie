@@ -46,37 +46,6 @@ except ImportError:
                     raise ValueError("Invalid request")
                 return {}
             
-                    # Process request
-                    result = await self._handle_get_current_metrics_request(data)
-            
-                    # Return response
-                    return {"status": "success", "data": result}
-        try:
-                    # Request validation
-                    if not data:
-                        raise ValueError("Invalid request")
-            
-                    # Process request
-                    result = await self._handle_get_kpi_results_request(data)
-            
-                    # Return response
-                    return {"status": "success", "data": result}
-            
-                except Exception as e:
-                    logger.error(f"API handler get_kpi_results failed: {e}")
-                    return {"status": "error", "message": str(e)}
-                    return {"status": "success", "data": result}
-        try:
-                    # Request validation
-                    if not data:
-                        raise ValueError("Invalid request")
-            
-                    # Process request
-                    result = await self._handle_get_performance_summary_request(data)
-            
-                    # Return response
-                    return {"status": "success", "data": result}
-            
                 except Exception as e:
                     logger.error(f"API handler get_performance_summary failed: {e}")
                     return {"status": "error", "message": str(e)}
