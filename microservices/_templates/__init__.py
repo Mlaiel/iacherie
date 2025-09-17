@@ -30,6 +30,82 @@ except ImportError:
     APIServiceTemplate = None
 
 try:
+    from .authentication_service_template import AuthServiceTemplate
+except ImportError:
+    AuthServiceTemplate = None
+
+try:
+    from .message_service_template import MessageServiceTemplate
+except ImportError:
+    MessageServiceTemplate = None
+
+try:
+    from .data_service_template import DataServiceTemplate
+except ImportError:
+    DataServiceTemplate = None
+
+try:
+    from .ml_service_template import MLServiceTemplate
+except ImportError:
+    MLServiceTemplate = None
+
+try:
+    from .monitoring_service_template import MonitoringServiceTemplate
+except ImportError:
+    MonitoringServiceTemplate = None
+
+try:
+    from .notification_service_template import NotificationServiceTemplate
+except ImportError:
+    NotificationServiceTemplate = None
+
+try:
+    from .file_service_template import FileServiceTemplate
+except ImportError:
+    FileServiceTemplate = None
+
+try:
+    from .cache_service_template import CacheServiceTemplate
+except ImportError:
+    CacheServiceTemplate = None
+
+try:
+    from .workflow_service_template import WorkflowServiceTemplate
+except ImportError:
+    WorkflowServiceTemplate = None
+
+# New templates added
+try:
+    from .integration_service_template import IntegrationServiceTemplate
+except ImportError:
+    IntegrationServiceTemplate = None
+
+try:
+    from .testing_service_template import TestingServiceTemplate
+except ImportError:
+    TestingServiceTemplate = None
+
+try:
+    from .deployment_service_template import DeploymentServiceTemplate
+except ImportError:
+    DeploymentServiceTemplate = None
+
+try:
+    from .documentation_service_template import DocumentationServiceTemplate
+except ImportError:
+    DocumentationServiceTemplate = None
+
+try:
+    from .configuration_service_template import ConfigurationServiceTemplate
+except ImportError:
+    ConfigurationServiceTemplate = None
+
+try:
+    from .logging_service_template import LoggingServiceTemplate
+except ImportError:
+    LoggingServiceTemplate = None
+
+try:
     from .message_service_template import MessageServiceTemplate
 except ImportError:
     MessageServiceTemplate = None
