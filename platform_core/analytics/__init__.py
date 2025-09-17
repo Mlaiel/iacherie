@@ -189,6 +189,37 @@ except ImportError as e:
     logger.warning(f"❌ Failed to import Market Intelligence Engine: {e}")
     MarketIntelligenceEngine = None
 
+try:
+    from .audience_analytics_platform import (
+        AudienceAnalyticsPlatform,
+        AudienceSegmentationEngine,
+        BehavioralPatternDetector,
+        AudienceMember,
+        AudienceSegmentProfile,
+        BehavioralPattern,
+        CrossPlatformAnalysis,
+        AudienceSegment,
+        EngagementLevel,
+        LifecycleStage
+    )
+    logger.info("✅ Audience Analytics Platform loaded")
+except ImportError as e:
+    logger.warning(f"❌ Failed to import Audience Analytics Platform: {e}")
+    AudienceAnalyticsPlatform = None
+
+try:
+    from .engagement_intelligence_system import (
+        EngagementIntelligenceSystem,
+        EngagementEvent,
+        EngagementInsight,
+        EngagementType,
+        EngagementPattern
+    )
+    logger.info("✅ Engagement Intelligence System loaded")
+except ImportError as e:
+    logger.warning(f"❌ Failed to import Engagement Intelligence System: {e}")
+    EngagementIntelligenceSystem = None
+
 
 class AnalyticsPlatformCore:
     """
@@ -256,6 +287,16 @@ class AnalyticsPlatformCore:
             if MarketIntelligenceEngine:
                 self.initialized_components['market_intelligence'] = MarketIntelligenceEngine()
                 logger.info("✅ Market Intelligence Engine initialized")
+            
+            # Audience Analytics Platform
+            if AudienceAnalyticsPlatform:
+                self.initialized_components['audience_analytics'] = AudienceAnalyticsPlatform()
+                logger.info("✅ Audience Analytics Platform initialized")
+            
+            # Engagement Intelligence System
+            if EngagementIntelligenceSystem:
+                self.initialized_components['engagement_intelligence'] = EngagementIntelligenceSystem()
+                logger.info("✅ Engagement Intelligence System initialized")
                 
         except Exception as e:
             logger.error(f"❌ Failed to initialize components: {e}")
@@ -300,6 +341,14 @@ class AnalyticsPlatformCore:
         """Get Market Intelligence Engine component"""
         return self.get_component('market_intelligence')
     
+    def get_audience_analytics(self):
+        """Get Audience Analytics Platform component"""
+        return self.get_component('audience_analytics')
+    
+    def get_engagement_intelligence(self):
+        """Get Engagement Intelligence System component"""
+        return self.get_component('engagement_intelligence')
+    
     def get_platform_status(self) -> Dict[str, Any]:
         """Get comprehensive platform status"""
         return {
@@ -322,7 +371,9 @@ class AnalyticsPlatformCore:
                 "business_intelligence": bool(self.get_business_intelligence()),
                 "ai_insights": bool(self.get_ai_insights()),
                 "real_time_analytics": bool(self.get_real_time_analytics()),
-                "market_intelligence": bool(self.get_market_intelligence())
+                "market_intelligence": bool(self.get_market_intelligence()),
+                "audience_analytics": bool(self.get_audience_analytics()),
+                "engagement_intelligence": bool(self.get_engagement_intelligence())
             },
             "enterprise_features": [
                 "ML-powered creator success prediction",
@@ -451,6 +502,16 @@ def get_market_intelligence():
     platform = get_analytics_platform()
     return platform.get_market_intelligence()
 
+def get_audience_analytics():
+    """Get Audience Analytics Platform component"""
+    platform = get_analytics_platform()
+    return platform.get_audience_analytics()
+
+def get_engagement_intelligence():
+    """Get Engagement Intelligence System component"""
+    platform = get_analytics_platform()
+    return platform.get_engagement_intelligence()
+
 
 # Module exports
 __all__ = [
@@ -468,6 +529,8 @@ __all__ = [
     'get_ai_insights',
     'get_real_time_analytics',
     'get_market_intelligence',
+    'get_audience_analytics',
+    'get_engagement_intelligence',
     
     # Business Intelligence Platform
     'BusinessIntelligencePlatform',
@@ -564,6 +627,25 @@ __all__ = [
     'CompetitorType',
     'MarketTrend',
     'TrendDirection',
+    
+    # Audience Analytics Platform
+    'AudienceAnalyticsPlatform',
+    'AudienceSegmentationEngine',
+    'BehavioralPatternDetector',
+    'AudienceMember',
+    'AudienceSegmentProfile',
+    'BehavioralPattern',
+    'CrossPlatformAnalysis',
+    'AudienceSegment',
+    'EngagementLevel',
+    'LifecycleStage',
+    
+    # Engagement Intelligence System
+    'EngagementIntelligenceSystem',
+    'EngagementEvent',
+    'EngagementInsight',
+    'EngagementType',
+    'EngagementPattern',
     
     # Module metadata
     '__version__',
