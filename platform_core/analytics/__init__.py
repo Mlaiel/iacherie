@@ -48,6 +48,69 @@ try:
         AnalyticsQuery,
         Report
     )
+    
+    # NEW: Advanced Analytics Components - NEWLY IMPLEMENTED
+    from .behavioral_analytics_platform import (
+        BehavioralAnalyticsPlatform,
+        BehaviorType,
+        BehaviorCategory,
+        BehaviorMetrics,
+        BehaviorInsight,
+        UserJourney,
+        BehaviorSegmentation
+    )
+    
+    from .performance_optimization_analytics import (
+        PerformanceOptimizationAnalytics,
+        PerformanceMetricType,
+        OptimizationLevel,
+        PerformanceMetrics,
+        OptimizationRecommendation,
+        PerformanceBottleneck,
+        OptimizationResult
+    )
+    
+    from .executive_dashboard_engine import (
+        ExecutiveDashboardEngine,
+        DashboardType,
+        ExecutiveRole,
+        ExecutiveKPI,
+        ExecutiveInsight,
+        StrategicAlert,
+        ExecutiveDashboard,
+        StrategicReport
+    )
+    
+    from .data_visualization_platform import (
+        DataVisualizationPlatform,
+        VisualizationType,
+        ChartTheme,
+        VisualizationConfig,
+        DataMapping,
+        Visualization,
+        Dashboard as VisualizationDashboard
+    )
+    
+    from .analytics_automation_engine import (
+        AnalyticsAutomationEngine,
+        AutomationType,
+        TriggerType,
+        AutomationWorkflow,
+        AutomationJob,
+        ExecutionResult,
+        AutomationTrigger,
+        AutomationAction
+    )
+    
+    from .data_quality_analytics import (
+        DataQualityAnalytics,
+        QualityDimension,
+        QualityLevel,
+        QualityMetric,
+        DataQualityIssue,
+        ValidationResult,
+        QualityReport
+    )
     logger.info("✅ Business Intelligence Platform loaded")
 except ImportError as e:
     logger.warning(f"❌ Failed to import Business Intelligence Platform: {e}")
@@ -539,6 +602,63 @@ __all__ = [
     'DataSource',
     'AnalyticsQuery',
     'Report',
+    
+    # NEW: Advanced Analytics Components - NEWLY IMPLEMENTED
+    # Behavioral Analytics Platform
+    'BehavioralAnalyticsPlatform',
+    'BehaviorType',
+    'BehaviorCategory',
+    'BehaviorMetrics',
+    'BehaviorInsight',
+    'UserJourney',
+    'BehaviorSegmentation',
+    
+    # Performance Optimization Analytics
+    'PerformanceOptimizationAnalytics',
+    'PerformanceMetricType',
+    'OptimizationLevel',
+    'PerformanceMetrics',
+    'OptimizationRecommendation',
+    'PerformanceBottleneck',
+    'OptimizationResult',
+    
+    # Executive Dashboard Engine
+    'ExecutiveDashboardEngine',
+    'DashboardType',
+    'ExecutiveRole',
+    'ExecutiveKPI',
+    'ExecutiveInsight',
+    'StrategicAlert',
+    'ExecutiveDashboard',
+    'StrategicReport',
+    
+    # Data Visualization Platform
+    'DataVisualizationPlatform',
+    'VisualizationType',
+    'ChartTheme',
+    'VisualizationConfig',
+    'DataMapping',
+    'Visualization',
+    'VisualizationDashboard',
+    
+    # Analytics Automation Engine
+    'AnalyticsAutomationEngine',
+    'AutomationType',
+    'TriggerType',
+    'AutomationWorkflow',
+    'AutomationJob',
+    'ExecutionResult',
+    'AutomationTrigger',
+    'AutomationAction',
+    
+    # Data Quality Analytics
+    'DataQualityAnalytics',
+    'QualityDimension',
+    'QualityLevel',
+    'QualityMetric',
+    'DataQualityIssue',
+    'ValidationResult',
+    'QualityReport',
     
     # Creator Performance Analytics
     'CreatorPerformanceAnalytics',
