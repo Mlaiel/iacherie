@@ -64,6 +64,9 @@ __all__ = [
     "CreatorTierLogAnalyticsEngine", 
     "CrossPlatformLogIntegrationHub",
     "LogSecurityComplianceMonitor",
+    "CreatorEngagementLogIntelligence",
+    "LogPerformanceOptimizationEngine",
+    "CreatorRevenueLogAnalyticsPlatform",
     
     # Configuration and Business Logic
     "CREATOR_ECONOMY_PIPELINE_LOGIC"
@@ -87,6 +90,9 @@ try:
     from .creator_tier_log_analytics_engine import CreatorTierLogAnalyticsEngine
     from .cross_platform_log_integration_hub import CrossPlatformLogIntegrationHub
     from .log_security_compliance_monitor import LogSecurityComplianceMonitor
+    from .creator_engagement_log_intelligence import CreatorEngagementLogIntelligence
+    from .log_performance_optimization_engine import LogPerformanceOptimizationEngine
+    from .creator_revenue_log_analytics_platform import CreatorRevenueLogAnalyticsPlatform
     
     # Add orchestrator exports
     __all__.extend(["FilebeatOrchestrator", "FilebeatConfig", "create_orchestrator"])
