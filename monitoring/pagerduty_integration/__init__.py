@@ -59,6 +59,18 @@ from .multi_channel_notification import (
     NotificationPriority,
     NotificationMessage
 )
+from .incident_analytics_engine import (
+    IncidentAnalyticsEngine,
+    AnalyticsType,
+    IncidentMetrics,
+    AnalyticsResult
+)
+from .automated_runbook_executor import (
+    RunbookExecutor,
+    ActionType,
+    RunbookDefinition,
+    ExecutionStatus
+)
 
 __all__ = [
     # Core PagerDuty Integration
@@ -105,7 +117,19 @@ __all__ = [
     'MultiChannelNotificationSystem',
     'NotificationChannel',
     'NotificationPriority',
-    'NotificationMessage'
+    'NotificationMessage',
+    
+    # Incident Analytics
+    'IncidentAnalyticsEngine',
+    'AnalyticsType',
+    'IncidentMetrics',
+    'AnalyticsResult',
+    
+    # Automated Runbooks
+    'RunbookExecutor',
+    'ActionType',
+    'RunbookDefinition',
+    'ExecutionStatus'
 ]
 
 # Module metadata
