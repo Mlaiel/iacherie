@@ -26,13 +26,28 @@ from typing import Dict, List, Optional, Any
 import logging
 
 # Core Governance Components
-from .model_governance import ModelGovernanceCore
-from .model_registry import ModelRegistry, ModelStatus, ModelType, ModelFramework
+from .model_governance import ModelGovernanceEngine
+from .model_registry import ModelRegistryEnhanced, ModelStatus, ModelType, ModelFramework
 from .access_control_engine import AccessControlEngine
 from .audit_logger import AuditLogger
 from .dependency_resolver import DependencyResolver
 from .model_poisoning_detector import ModelPoisoningDetector
 from .vulnerability_scanner import VulnerabilityScanner
+
+# Advanced Governance Components
+from .model_lifecycle_manager import ModelLifecycleManager
+from .compliance_automation_engine import ComplianceAutomationEngine
+from .model_performance_monitor import ModelPerformanceMonitor
+from .data_lineage_tracker import DataLineageTracker
+from .model_approval_workflow import ModelApprovalWorkflow
+from .risk_assessment_engine import RiskAssessmentEngine
+
+# Enterprise Components (New)
+from .model_retirement_manager import ModelRetirementManager
+from .governance_dashboard_controller import GovernanceDashboardController
+from .creator_model_permissions import CreatorModelPermissions
+from .model_impact_analyzer import ModelImpactAnalyzer
+from .governance_policy_engine import GovernancePolicyEngine
 
 logger = logging.getLogger(__name__)
 
@@ -44,8 +59,8 @@ __copyright__ = "© 2025 Fahed Mlaiel - Tous droits réservés"
 # Public API exports
 __all__ = [
     # Core governance
-    "ModelGovernanceCore",
-    "ModelRegistry", 
+    "ModelGovernanceEngine",
+    "ModelRegistryEnhanced", 
     "ModelStatus",
     "ModelType", 
     "ModelFramework",
@@ -56,6 +71,21 @@ __all__ = [
     "DependencyResolver",
     "ModelPoisoningDetector", 
     "VulnerabilityScanner",
+    
+    # Advanced Governance
+    "ModelLifecycleManager",
+    "ComplianceAutomationEngine",
+    "ModelPerformanceMonitor",
+    "DataLineageTracker",
+    "ModelApprovalWorkflow",
+    "RiskAssessmentEngine",
+    
+    # Enterprise Components
+    "ModelRetirementManager",
+    "GovernanceDashboardController",
+    "CreatorModelPermissions",
+    "ModelImpactAnalyzer",
+    "GovernancePolicyEngine",
     
     # Utility functions
     "init_governance_module",
