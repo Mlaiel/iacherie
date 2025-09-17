@@ -78,6 +78,58 @@ from .sharding_controller import (
     initialize_sharding_controller
 )
 
+# Phase 2: Performance & Monitoring
+from .backup_automation_manager import (
+    BackupAutomationManager,
+    BackupType,
+    BackupStatus,
+    CompressionLevel,
+    EncryptionMethod,
+    BackupConfiguration,
+    BackupJob,
+    RestoreRequest,
+    initialize_backup_automation_manager
+)
+
+from .performance_monitoring_dashboard import (
+    PerformanceMonitoringDashboard,
+    MetricType,
+    AlertLevel,
+    DatabaseEngine as MonitoringDatabaseEngine,
+    PerformanceMetric,
+    QueryMetrics as MonitoringQueryMetrics,
+    PerformanceAlert as MonitoringPerformanceAlert,
+    DatabaseHealthScore,
+    initialize_performance_monitoring_dashboard
+)
+
+from .replica_management_system import (
+    ReplicaManagementSystem,
+    ReplicaType,
+    ReplicaStatus,
+    ReplicationStrategy as ReplicaReplicationStrategy,
+    LoadBalancingStrategy as ReplicaLoadBalancingStrategy,
+    GeographicRegion,
+    ReplicaNode,
+    ReplicationConfiguration as ReplicaConfiguration,
+    FailoverEvent,
+    initialize_replica_management_system
+)
+
+from .transaction_coordinator import (
+    TransactionCoordinator,
+    TransactionStatus,
+    IsolationLevel,
+    TransactionType,
+    SagaStepStatus,
+    TransactionContext,
+    TransactionParticipant,
+    SagaStep,
+    SagaTransaction,
+    DeadlockInfo,
+    initialize_transaction_coordinator
+)
+
 __version__ = "2.1.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
@@ -145,5 +197,53 @@ __all__ = [
     "ShardState",
     "RebalancingTrigger",
     "DataDistributionMethod",
-    "initialize_sharding_controller"
+    "initialize_sharding_controller",
+    
+    # Phase 2: Performance & Monitoring
+    # Backup Automation Manager
+    "BackupAutomationManager",
+    "BackupType",
+    "BackupStatus", 
+    "CompressionLevel",
+    "EncryptionMethod",
+    "BackupConfiguration",
+    "BackupJob",
+    "RestoreRequest",
+    "initialize_backup_automation_manager",
+    
+    # Performance Monitoring Dashboard
+    "PerformanceMonitoringDashboard",
+    "MetricType",
+    "AlertLevel",
+    "MonitoringDatabaseEngine",
+    "PerformanceMetric",
+    "MonitoringQueryMetrics",
+    "MonitoringPerformanceAlert",
+    "DatabaseHealthScore",
+    "initialize_performance_monitoring_dashboard",
+    
+    # Replica Management System
+    "ReplicaManagementSystem",
+    "ReplicaType",
+    "ReplicaStatus",
+    "ReplicaReplicationStrategy",
+    "ReplicaLoadBalancingStrategy",
+    "GeographicRegion",
+    "ReplicaNode",
+    "ReplicaConfiguration",
+    "FailoverEvent",
+    "initialize_replica_management_system",
+    
+    # Transaction Coordinator
+    "TransactionCoordinator",
+    "TransactionStatus",
+    "IsolationLevel",
+    "TransactionType",
+    "SagaStepStatus",
+    "TransactionContext",
+    "TransactionParticipant",
+    "SagaStep",
+    "SagaTransaction",
+    "DeadlockInfo",
+    "initialize_transaction_coordinator"
 ]
