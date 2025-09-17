@@ -84,6 +84,79 @@ from .model_drift_detection_engine import (
     FeatureStatistics
 )
 
+# Medium Priority Components (New)
+from .batch_processing_performance_analyzer import (
+    BatchProcessingPerformanceAnalyzer,
+    BatchJob,
+    BatchMetrics,
+    QueueAnalytics,
+    BatchOptimizationRecommendation,
+    ParallelProcessingMetrics,
+    BatchProcessingType,
+    BatchStatus,
+    OptimizationStrategy
+)
+
+from .model_serving_scalability_manager import (
+    ModelServingScalabilityManager,
+    ModelInstance,
+    ScalingMetrics,
+    LoadBalancingMetrics,
+    CanaryDeploymentMetrics,
+    ScalabilityRecommendation,
+    ModelServingFramework,
+    ScalingStrategy,
+    LoadBalancingAlgorithm,
+    DeploymentStrategy
+)
+
+from .ai_workload_distribution_controller import (
+    AIWorkloadDistributionController,
+    AICluster,
+    WorkloadRequest,
+    RoutingDecision,
+    LoadDistributionMetrics,
+    WorkloadMigration,
+    PeakShavingRecommendation,
+    WorkloadType,
+    RoutingStrategy,
+    ClusterType
+)
+
+from .performance_anomaly_detection_system import (
+    PerformanceAnomalyDetectionSystem,
+    PerformanceMetric,
+    AnomalyDetection,
+    AnomalyPattern,
+    RootCauseAnalysis,
+    AnomalyAlert,
+    AnomalyType,
+    AnomalySeverity,
+    DetectionMethod
+)
+
+from .creator_ai_usage_analytics_engine import (
+    CreatorAIUsageAnalyticsEngine,
+    CreatorProfile,
+    AIUsageSession,
+    ROIAnalytics,
+    ContentType,
+    AIFeatureType
+)
+
+from .model_performance_benchmarking_suite import (
+    ModelPerformanceBenchmarkingSuite,
+    ModelConfiguration,
+    BenchmarkResult,
+    CrossModelComparison,
+    IndustryBenchmark,
+    RegressionTestResult,
+    BenchmarkSuite,
+    BenchmarkType,
+    ModelFramework as BenchmarkModelFramework,
+    ContentDomain
+)
+
 # High Priority Components
 from .training_pipeline_performance_tracker import (
     TrainingPipelinePerformanceTracker,
@@ -206,6 +279,67 @@ __all__ = [
     'DriftSeverity',
     'DetectionMethod',
     'FeatureStatistics',
+    
+    # Medium Priority Components (New)
+    'BatchProcessingPerformanceAnalyzer',
+    'BatchJob',
+    'BatchMetrics',
+    'QueueAnalytics',
+    'BatchOptimizationRecommendation',
+    'ParallelProcessingMetrics',
+    'BatchProcessingType',
+    'BatchStatus',
+    'OptimizationStrategy',
+    
+    'ModelServingScalabilityManager',
+    'ModelInstance',
+    'ScalingMetrics',
+    'LoadBalancingMetrics',
+    'CanaryDeploymentMetrics',
+    'ScalabilityRecommendation',
+    'ModelServingFramework',
+    'ScalingStrategy',
+    'LoadBalancingAlgorithm',
+    'DeploymentStrategy',
+    
+    'AIWorkloadDistributionController',
+    'AICluster',
+    'WorkloadRequest',
+    'RoutingDecision',
+    'LoadDistributionMetrics',
+    'WorkloadMigration',
+    'PeakShavingRecommendation',
+    'WorkloadType',
+    'RoutingStrategy',
+    'ClusterType',
+    
+    'PerformanceAnomalyDetectionSystem',
+    'PerformanceMetric',
+    'AnomalyDetection',
+    'AnomalyPattern',
+    'RootCauseAnalysis',
+    'AnomalyAlert',
+    'AnomalyType',
+    'AnomalySeverity',
+    'DetectionMethod',
+    
+    'CreatorAIUsageAnalyticsEngine',
+    'CreatorProfile',
+    'AIUsageSession',
+    'ROIAnalytics',
+    'ContentType',
+    'AIFeatureType',
+    
+    'ModelPerformanceBenchmarkingSuite',
+    'ModelConfiguration',
+    'BenchmarkResult',
+    'CrossModelComparison',
+    'IndustryBenchmark',
+    'RegressionTestResult',
+    'BenchmarkSuite',
+    'BenchmarkType',
+    'BenchmarkModelFramework',
+    'ContentDomain',
     
     # Training Pipeline Performance Tracker
     'TrainingPipelinePerformanceTracker',
