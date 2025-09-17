@@ -593,7 +593,7 @@ class InfluencerAlertHandler(SpecializedAlertHandler):
             return await self._handle_engagement_alert(creator_profile, metrics, alert_data)
         
         # Cross-platform synchronization alerts
-            if 'platform' in alert_type.lower() or 'sync' in alert_type.lower():
+        if 'platform' in alert_type.lower() or 'sync' in alert_type.lower():
             return await self._handle_platform_sync_alert(creator_profile, metrics, alert_data)
         
         # Audience analytics alerts

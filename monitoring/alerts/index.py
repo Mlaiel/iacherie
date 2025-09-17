@@ -129,9 +129,9 @@ class AlertsSystemOrchestrator:
         # Core alert managers
         self.intelligent_manager = IntelligentAlertManager()
         self.coordinator = AlertCoordinator()
-        self.business_manager = BusinessAlertManager()
-        self.technical_manager = TechnicalAlertManager()
-        self.ai_manager = AIAlertManager()
+        self.business_manager = BusinessAlertManager(self.intelligent_manager)
+        self.technical_manager = TechnicalAlertManager(self.intelligent_manager)
+        self.ai_manager = AIAlertManager(self.intelligent_manager)
         
         # Creator-specific managers (will be initialized when components are created)
         self.creator_specific_engine = None
