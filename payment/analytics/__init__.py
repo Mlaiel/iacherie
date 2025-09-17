@@ -35,6 +35,49 @@ from .gateway_analytics import (
     DashboardData
 )
 
+# Import implemented modules
+from .payment_performance_monitor import (
+    PaymentPerformanceMonitor,
+    PerformanceTracker,
+    SLAMonitor,
+    AlertManager
+)
+
+from .cost_optimization_analyzer import (
+    CostOptimizationAnalyzer,
+    CostAnalyzer,
+    OptimizationEngine,
+    SavingsCalculator
+)
+
+from .transaction_intelligence import (
+    TransactionIntelligence,
+    TransactionAnalyzer,
+    PatternRecognizer,
+    IntelligenceEngine
+)
+
+from .payment_forecasting import (
+    PaymentForecasting,
+    ForecastingEngine,
+    MLPredictor,
+    TrendAnalyzer
+)
+
+from .compliance_analytics import (
+    ComplianceAnalytics,
+    ComplianceMonitor,
+    RegulatoryAnalyzer,
+    AuditManager
+)
+
+from .merchant_analytics import (
+    MerchantAnalytics,
+    MerchantAnalyzer,
+    OnboardingTracker,
+    PerformanceEvaluator
+)
+
 # Export all analytics modules when implemented
 __all__ = [
     # Core Gateway Analytics
@@ -70,37 +113,37 @@ __all__ = [
     "PerformanceAnalyzer",
     "PayoutTracker",
     
-    # Performance Monitoring
+    # Performance Monitoring - IMPLEMENTED
     "PaymentPerformanceMonitor",
     "PerformanceTracker",
     "SLAMonitor",
     "AlertManager",
     
-    # Cost Optimization
+    # Cost Optimization - IMPLEMENTED
     "CostOptimizationAnalyzer",
     "CostAnalyzer",
     "OptimizationEngine",
     "SavingsCalculator",
     
-    # Transaction Intelligence
+    # Transaction Intelligence - IMPLEMENTED
     "TransactionIntelligence",
     "TransactionAnalyzer",
     "PatternRecognizer",
     "IntelligenceEngine",
     
-    # Payment Forecasting
+    # Payment Forecasting - IMPLEMENTED
     "PaymentForecasting",
     "ForecastingEngine",
     "MLPredictor",
     "TrendAnalyzer",
     
-    # Compliance Analytics
+    # Compliance Analytics - IMPLEMENTED
     "ComplianceAnalytics",
     "ComplianceMonitor",
     "RegulatoryAnalyzer",
     "AuditManager",
     
-    # Merchant Analytics
+    # Merchant Analytics - IMPLEMENTED
     "MerchantAnalytics",
     "MerchantAnalyzer",
     "OnboardingTracker",
