@@ -120,6 +120,14 @@ class EnterpriseComplianceCenter:
         self.gdpr_checks: Dict[str, GDPRChecker] = {}
         self.dmca_protections: Dict[str, DMCAProtection] = {}
         
+        # Initialize new enterprise compliance modules
+        self.gdpr_engine = None
+        self.dmca_intelligence = None
+        self.privacy_orchestrator = None
+        self.jurisdiction_manager = None
+        self.content_validator = None
+        self.audit_system = None
+        
         # Audit trail
         self.audit_log: List[Dict[str, Any]] = []
         
@@ -171,13 +179,57 @@ class EnterpriseComplianceCenter:
         """Initialisation centre conformité"""
         self.logger.info("🛡️ Initialisation Enterprise Compliance Center...")
         
+        # Initialize enterprise compliance modules
+        await self._initialize_enterprise_modules()
+        
         # Initialize sample compliance data
         await self._initialize_sample_data()
         
         # Start compliance monitoring
         await self._start_compliance_monitoring()
         
-        self.logger.info("✅ Compliance Center initialisé")
+        self.logger.info("✅ Compliance Center initialisé with enterprise modules")
+    
+    async def _initialize_enterprise_modules(self):
+        """Initialisation modules enterprise"""
+        try:
+            # Import and initialize new modules
+            from .creator_economy_gdpr_compliance_engine import CreatorEconomyGDPRComplianceEngine
+            from .dmca_copyright_protection_intelligence import DMCACopyrightProtectionIntelligence
+            from .creator_data_privacy_orchestrator import CreatorDataPrivacyOrchestrator
+            from .multi_jurisdiction_compliance_manager import MultiJurisdictionComplianceManager
+            from .creator_content_compliance_validator import CreatorContentComplianceValidator
+            from .audit_trail_intelligence_system import AuditTrailIntelligenceSystem
+            
+            # Initialize GDPR Engine
+            self.gdpr_engine = CreatorEconomyGDPRComplianceEngine({'debug': self.config.debug})
+            await self.gdpr_engine.initialize()
+            
+            # Initialize DMCA Intelligence
+            self.dmca_intelligence = DMCACopyrightProtectionIntelligence({'debug': self.config.debug})
+            await self.dmca_intelligence.initialize()
+            
+            # Initialize Privacy Orchestrator
+            self.privacy_orchestrator = CreatorDataPrivacyOrchestrator({'debug': self.config.debug})
+            await self.privacy_orchestrator.initialize()
+            
+            # Initialize Jurisdiction Manager
+            self.jurisdiction_manager = MultiJurisdictionComplianceManager({'debug': self.config.debug})
+            await self.jurisdiction_manager.initialize()
+            
+            # Initialize Content Validator
+            self.content_validator = CreatorContentComplianceValidator({'debug': self.config.debug})
+            await self.content_validator.initialize()
+            
+            # Initialize Audit System
+            self.audit_system = AuditTrailIntelligenceSystem({'debug': self.config.debug})
+            await self.audit_system.initialize()
+            
+            self.logger.info("✅ Enterprise compliance modules initialized")
+            
+        except Exception as e:
+            self.logger.error(f"Error initializing enterprise modules: {e}")
+            # Continue with basic functionality if enterprise modules fail
     
     async def _initialize_sample_data(self):
         """Initialisation données échantillon"""
